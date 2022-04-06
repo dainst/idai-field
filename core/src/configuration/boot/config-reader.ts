@@ -14,6 +14,7 @@ import configHeliopolis from '../../../config/Config-Heliopolis.json';
 import configKalapodi from '../../../config/Config-Kalapodi.json';
 import configKarthagoCircus from '../../../config/Config-KarthagoCircus.json';
 import configKephissostal from '../../../config/Config-Kephissostal.json';
+import configKGR from '../../../config/Config-KGR.json';
 import configMeninx from '../../../config/Config-Meninx.json';
 import configMilet from '../../../config/Config-Milet.json';
 import configMonTur from '../../../config/Config-MonTur.json';
@@ -49,6 +50,7 @@ import languageGadara_en from '../../../config/Language-Gadara.en.json';
 import languageHeliopolis_en from '../../../config/Language-Heliopolis.en.json';
 import languageKalapodi_de from '../../../config/Language-Kalapodi.de.json';
 import languageKephissostal_de from '../../../config/Language-Kephissostal.de.json';
+import languageKGR_de from '../../../config/Language-KGR.de.json';
 import languageMeninx_de from '../../../config/Language-Meninx.de.json';
 import languageMeninx_en from '../../../config/Language-Meninx.en.json';
 import languageMilet_de from '../../../config/Language-Milet.de.json';
@@ -107,6 +109,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Kalapodi.json': configKalapodi,
     '/Config-KarthagoCircus.json': configKarthagoCircus,
     '/Config-Kephissostal.json': configKephissostal,
+    '/Config-KGR.json': configKGR,
     '/Config-Meninx.json': configMeninx,
     '/Config-Milet.json': configMilet,
     '/Config-MonTur.json': configMonTur,
@@ -134,6 +137,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Heliopolis': { en: languageHeliopolis_en },
     'Kalapodi': { de: languageKalapodi_de },
     'Kephissostal': { de: languageKephissostal_de },
+    'KGR': { de: languageKGR_de },
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
     'Milet': { de: languageMilet_de, en: languageMilet_en, fr: languageMilet_fr },
     'MonTur': { de: languageMonTur_de },

@@ -1,21 +1,18 @@
-$image-view-background-color: #f8f9fa;
-
-.modal-content {
-  background-color: $image-view-background-color;
-
-  .no-images-message {
-    top: 50%;
-    padding: 20px;
-    background-color: white;
-    text-align: center;
-    position: relative;
+#image-view-modal-buttons {
+  #manage-images-button {
+    margin-right: 7px;
   }
 
-  #view-modal-body {
-    background-color: $image-view-background-color;
-
-    .image-edit-content {
-      height: calc(100% - 10px) !important;
-    }
+  #tiles-mode-button,
+  #viewer-mode-button {
+    width: 100px;
   }
+
+  #close-button {
+    margin-left: 7px;
+  }
+}
+
+.image-edit-content {
+  height: calc(100% - 10px) !important;
 }

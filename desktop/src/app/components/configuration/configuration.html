@@ -77,7 +77,7 @@
                 <div id="category-picker-container">
                     <category-picker *ngIf="filteredTopLevelCategoriesArray"
                                     [topLevelCategoriesArray]="filteredTopLevelCategoriesArray"
-                                    [selectedCategories]="[selectedCategory.name]"
+                                    [selectedCategories]="selectedCategory ? [selectedCategory.name] : []"
                                     [allowPickingAbstractCategories]="true"
                                     [highlightCustomCategories]="true"
                                     [showCreateButtons]="true"
@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <div class="col-10">
+            <div *ngIf="selectedCategory" class="col-10">
                 <configuration-category [category]="selectedCategory"
                                         [configurationDocument]="configurationDocument"
                                         [clonedProjectConfiguration]="clonedProjectConfiguration"

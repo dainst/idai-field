@@ -55,6 +55,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public setExpandAllGroups = (expand: boolean) => this.imagesState.setExpandAllGroups(expand);
 
+    public isEditingAllowed = () => !this.linkedDocument?.project;
+
     protected getDocument = () => (this.selectedImage as ImageRowItem).document;
 
     protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = document;

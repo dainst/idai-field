@@ -16,7 +16,7 @@ const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').i
  */
 export class MenuNavigator {
 
-    private valuelistsManagementObservers: Array<Observer<void>> = [];
+    private configurationMenuObservers: Array<Observer<string>> = [];
 
 
     constructor(private router: Router,
@@ -51,14 +51,14 @@ export class MenuNavigator {
             await this.zone.run(() => this.projectModalLauncher.deleteProject());
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
-        } else if (menuItem === 'valuelists') {
-            await this.zone.run(() => ObserverUtil.notify(this.valuelistsManagementObservers, undefined));
+        } else if (menuItem === 'valuelists' || menuItem === 'importConfiguration') {
+            await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
         } else {
             await this.zone.run(async () => await this.router.navigate([menuItem]));
         }
     }
 
 
-    public valuelistsManagementNotifications =
-        (): Observable<Document> => ObserverUtil.register(this.valuelistsManagementObservers);   
+    public configurationMenuNotifications =
+        (): Observable<string> => ObserverUtil.register(this.configurationMenuObservers);   
 }

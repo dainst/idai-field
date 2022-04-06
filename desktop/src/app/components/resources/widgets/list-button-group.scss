@@ -20,12 +20,16 @@ $button-width: 24px;
     padding-left: 0;
     padding-right: 0;
     padding-top: 17px;
+  }
 
-    &:hover {
-      color: darken($activated-color, 10%);
-      background-color: darken($list-item-hover-color, 5%);
-      transition: background-color .2s ease;
-    }
+  .info-button:hover,
+  .info-button:active,
+  .hierarchy-button:hover,
+  .hierarchy-button:active,
+  .sidebar-list-button-group-active-button {
+    color: darken($activated-color, 10%);
+    background-color: darken($list-item-hover-color, 5%) !important;
+    transition: background-color .2s ease;
   }
 
   .info-button {
@@ -34,11 +38,6 @@ $button-width: 24px;
     &.sidebar-list-button-group-active-button {
       display: block !important;
     }
-  }
-
-  .btn:active,
-  .sidebar-list-button-group-active-button {
-    box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
   }
 
   .sidebar-list-button-group-active-button {

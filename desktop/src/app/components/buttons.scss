@@ -4,6 +4,7 @@ $lightgraybgr: #eeeeee;
 
 .btn {
   cursor: default !important;
+  box-shadow: none !important;
 }
 
 .btn-square {
@@ -71,10 +72,6 @@ $lightgraybgr: #eeeeee;
 
 .red-button:hover {
   background-color: lighten($redbgr, 35%);
-}
-
-.btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {
-  box-shadow: none !important;
 }
 
 .nav-link {

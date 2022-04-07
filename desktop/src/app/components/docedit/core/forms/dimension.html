@@ -2,7 +2,7 @@
 	<div class="input-group mb-2" *ngIf="!isInEditing(dimension)">
 		<input value="{{getLabel(dimension)}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
-            <button class="btn btn-danger" [disabled]="isEditingAllowed()" (click)="removeDimensionAtIndex(i)">
+            <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeDimensionAtIndex(i)">
 				<span class="mdi mdi-delete"></span>
 			</button>
             <button class="btn btn-info" [disabled]="!isEditingAllowed()" (click)="startEditing(dimension)">

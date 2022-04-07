@@ -1,6 +1,7 @@
 {
   "groups": {
     "stem": "Dati base",
+    "properties": "Eigenschaften",
     "time": "Cronologia",
     "position": "Posizione",
     "dimension": "Dimensioni",

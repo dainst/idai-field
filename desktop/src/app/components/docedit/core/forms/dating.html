@@ -60,11 +60,11 @@
                 <div class="form-group">
                     <div class="form-inline">
                         <ng-container [ngTemplateOutlet]="editDate"
-                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                                      [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'before'">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'after'">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'scientific'">
@@ -125,7 +125,7 @@
     <div class="input-group mb-2">
         <input value="{{getLabel(dating)}}" type="text" disabled class="form-control">
         <div class="input-group-append">
-            <button class="btn btn-danger" type="button" (click)="removeDating(i)">
+            <button class="btn btn-danger" [disabled]="newDating" type="button" (click)="removeDating(i)">
                 <span class="mdi mdi-delete"></span>
             </button>
         </div>

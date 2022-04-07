@@ -25,6 +25,10 @@ export class LiteratureComponent {
 
     constructor(private utilTranslations: UtilTranslations) {}
 
+    public isEditing = () => this.inEditing.length > 0;
+
+    public isEditingAllowed = () => !this.isEditing() && !this.newLiterature;
+
 
     public isInEditing(literature: Literature) {
 

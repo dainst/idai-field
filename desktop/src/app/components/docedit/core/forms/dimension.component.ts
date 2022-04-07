@@ -32,6 +32,10 @@ export class DimensionComponent {
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
 
+    public isEditing = () => this.dimensionsInEditing.length > 0;
+
+    public isEditingAllowed = () => !this.isEditing() && !this.newDimension;
+
 
     public createNewDimension() {
 

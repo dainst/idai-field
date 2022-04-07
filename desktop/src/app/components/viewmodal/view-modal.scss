@@ -1,5 +1,6 @@
 @import 'image/image-view-modal';
 @import 'image/image-view-edit';
+@import 'image/view-modal-drop-area';
 @import 'resource/resource-view-modal';
 
 ngb-modal-window {
@@ -23,23 +24,6 @@ ngb-modal-window {
     line-height: 40px;
     margin-left: 7px;
     color: $modal-header-font-color;
-  }
-
-  #manage-images-button {
-    margin-right: 7px;
-  }
-
-  #tiles-mode-button {
-    margin-right: 7px;
-    width: 100px;
-  }
-  
-  #viewer-mode-button {
-    width: 100px;
-  }
-
-  .selection-actions {
-    margin-right: 7px;
   }
 }
 

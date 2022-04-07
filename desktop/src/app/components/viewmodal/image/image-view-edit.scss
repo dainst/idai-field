@@ -1,12 +1,12 @@
 image-view-edit {
   #image-grid-container {
     position: relative;
-    top: 10px;
+    padding-top: 10px;
     margin-top: 0;
     height: 100%;
-    background-color: #f8f9fa;
+    background-color: #fff;
     padding-left: 20px;
-    padding-right: 6px;
+    padding-right: 20px;
     overflow-y: auto;
 
     .card-block {
@@ -26,28 +26,6 @@ image-view-edit {
 
     .image-grid {
       margin-top: 0;
-    }
-
-    #link-images-button,
-    #add-images-button {
-      border-style: none;
-      border-radius: 0;
-      width: 100%;
-      background-color: white;
-      color: $primary-button-color;
-
-      &:hover {
-        background: darken(white, 5%)
-      }
-    }
-
-    .popover-body {
-      padding: 5px !important;
-    }
-
-    #add-images-button {
-      border-bottom-style: solid;
-      border-bottom-color: lighten($primary-button-color, 33%);
     }
   }
 }

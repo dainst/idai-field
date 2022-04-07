@@ -4,86 +4,92 @@
         Mit <strong>{{linkedDocument.resource.identifier}}</strong> verknüpfte Bilder
     </div>
 
-    <div id="image-view-modal-buttons">
-        <span *ngIf="selected.length && mode === 'edit'" class="btn-group selection-actions">
-            <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
-                class="btn btn-primary" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
-                i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="bottom" container="body">
-                <span class="mdi mdi-star"></span>
-            </button>
-            <button id="delete-images" type="button" class="btn btn-danger" (click)="removeLinks()"
-                ngbTooltip="{{getRemoveLinksTooltip()}}" placement="bottom" container="body">
-                <span class="mdi mdi-link-off"></span>
-            </button>
-            <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()"
-                ngbTooltip="Auswahl aufheben" i18n-ngbTooltip="@@docedit.tabs.images.tooltips.deselect" placement="bottom"
-                container="body">
-                <span class="mdi mdi-selection-off"></span>
-            </button>
-        </span>
-        <button *ngIf="isEditingAllowed()"class="btn btn-link btn-square m-0"
-            id="viewer-mode-button"
-            tabindex="-1"
-            [class.active]="isActive('view')"
-            (click)="setMode('view')"
-            ngbTooltip="Ansicht"
-            i18n-ngbTooltip="@@image-view-modal.modal.view"
-            placement="left">
-            <span class="mdi mdi-image"></span>
-        </button>
-        <button *ngIf="isEditingAllowed()" class="btn btn-link btn-square m-0"
-            id="tiles-mode-button"
-            tabindex="-1"
-            [class.active]="isActive('edit')"
-            (click)="setMode('edit')"
-            ngbTooltip="Bearbeiten"
-            i18n-ngbTooltip="@@image-view-modal.modal-edit"
-            placement="left">
-            <span class="mdi mdi-image-edit"></span>
-        </button>
-        <button class="btn btn-primary btn-square"
+    <button class="btn btn-primary btn-square"
             id="close-button"
             tabindex="-1"
             (click)="close()">
             <span class="mdi mdi-close"></span>
-        </button>
-    </div>
+    </button>
 </div>
 
-<div *ngIf="mode === 'view'" id="view-modal-body" class="modal-body px-0">
-    <div id="view-modal-content" class="flex-nowrap bg-light px-0">
-        <div *ngIf="!images || images.length === 0"
-             id="no-images-placeholder"
-             class="d-flex align-items-center justify-content-center">
-            <div class="alert alert-info" i18n="@@viewModal.noImages">
-                Mit dieser Ressource sind keine Bilder verknüpft.
-            </div>
+<div id="view-modal-body" class="modal-body px-0">
+    <div *ngIf="isEditingAllowed()" id="image-view-modal-buttons" class="bg-light">
+        <span *ngIf="selected.length && mode === 'edit'" id="image-view-modal-selection-buttons">
+            <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
+                class="btn btn-primary mr-2" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
+                i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="right" container="body">
+                <span class="mdi mdi-star"></span>
+            </button>
+            <button id="delete-images" type="button" class="btn btn-danger mr-2" (click)="removeLinks()"
+                ngbTooltip="{{getRemoveLinksTooltip()}}" placement="right" container="body">
+                <span class="mdi mdi-link-off"></span>
+            </button>
+            <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()"
+                ngbTooltip="Auswahl aufheben" i18n-ngbTooltip="@@docedit.tabs.images.tooltips.deselect" placement="right"
+                container="body">
+                <span class="mdi mdi-selection-off"></span>
+            </button>
+        </span>
+        <div id="image-view-modal-mode-buttons">
+            <button class="btn btn-link btn-square m-0"
+                id="viewer-mode-button"
+                tabindex="-1"
+                [class.active]="isActive('view')"
+                (click)="setMode('view')"
+                ngbTooltip="Ansicht"
+                i18n-ngbTooltip="@@image-view-modal.modal.view"
+                placement="left">
+                <span class="mdi mdi-image"></span>
+            </button>
+            <button class="btn btn-link btn-square m-0"
+                id="tiles-mode-button"
+                tabindex="-1"
+                [class.active]="isActive('edit')"
+                (click)="setMode('edit')"
+                ngbTooltip="Bearbeiten"
+                i18n-ngbTooltip="@@image-view-modal.modal-edit"
+                placement="left">
+                <span class="mdi mdi-image-edit"></span>
+            </button>
         </div>
-
-        <document-info [document]="selectedImage?.document"
-                       [getExpandAllGroups]="getExpandAllGroups"
-                       [setExpandAllGroups]="setExpandAllGroups"
-                       (onStartEdit)="startEdit(true)"
-                       (onJumpToResource)="jumpToResource($event)"></document-info>
-
-        <image-viewer *ngIf="selectedImage" [image]="selectedImage?.document"></image-viewer>
-
-        <image-row [images]="images"
-                   [selectedImage]="selectedImage"
-                   [highlightOnHover]="true"
-                   [allowSelection]="true"
-                   (onImageSelected)="onSelected($event)"></image-row>
     </div>
-</div>
 
-<div *ngIf="mode === 'edit'" id="view-modal-body" class="modal-body px-0">
-    <div id="view-modal-content" class="image-edit-content flew-nowrap bg-light px-0">
-        <image-view-edit
-            [document]="linkedDocument"
-            [images]="images"
-            [(selected)]="selected"
-            (onImagesUploaded)="onImagesUploaded($event)"
-            (startEditImages)="startEditImages()">
-        </image-view-edit>
+    <div *ngIf="mode === 'view'" id="image-view-modal-content-container"
+         [class.shortened-container]="isEditingAllowed()">
+        <div id="view-modal-content" class="flex-nowrap px-0">
+            <div *ngIf="!images || images.length === 0"
+                 id="no-images-placeholder"
+                 class="d-flex align-items-center justify-content-center">
+                <div class="alert alert-info" i18n="@@viewModal.noImages">
+                    Mit dieser Ressource sind keine Bilder verknüpft.
+                </div>
+            </div>
+    
+            <document-info [document]="selectedImage?.document"
+                           [getExpandAllGroups]="getExpandAllGroups"
+                           [setExpandAllGroups]="setExpandAllGroups"
+                           (onStartEdit)="startEdit(true)"
+                           (onJumpToResource)="jumpToResource($event)"></document-info>
+    
+            <image-viewer *ngIf="selectedImage" [image]="selectedImage?.document"></image-viewer>
+    
+            <image-row [images]="images"
+                       [selectedImage]="selectedImage"
+                       [highlightOnHover]="true"
+                       [allowSelection]="true"
+                       (onImageSelected)="onSelected($event)"></image-row>
+        </div>
     </div>
+    
+    <div *ngIf="mode === 'edit'" id="image-view-modal-content-container"
+         [class.shortened-container]="isEditingAllowed()">
+        <div id="view-modal-content" class="image-edit-content flew-nowrap px-0">
+            <image-view-edit [document]="linkedDocument"
+                             [images]="images"
+                             [(selected)]="selected"
+                             (onImagesUploaded)="onImagesUploaded($event)"
+                             (startEditImages)="startEditImages()">
+            </image-view-edit>
+        </div>
+    </div>    
 </div>

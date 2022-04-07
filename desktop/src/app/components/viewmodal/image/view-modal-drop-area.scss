@@ -1,0 +1,28 @@
+.view-modal-drop-area-popover {
+  .popover-body {
+    padding: 5px !important;
+
+    #link-images-button,
+    #add-images-button {
+      border-style: none;
+      border-radius: 0;
+      width: 100%;
+      background-color: white;
+      color: $primary-button-color;
+  
+      &:hover {
+        background: darken(white, 5%)
+      }
+    }
+
+    #add-images-button {
+      border-bottom-style: solid;
+      border-bottom-color: lighten($primary-button-color, 33%);
+    }
+
+    label {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+}

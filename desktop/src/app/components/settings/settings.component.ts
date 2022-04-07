@@ -30,6 +30,7 @@ export class SettingsComponent implements OnInit {
     public settings: Settings;
     public ipAddress: string = address.ip();
     public saving: boolean = false;
+    public isLinux: boolean;
 
 
     constructor(private settingsProvider: SettingsProvider,
@@ -41,13 +42,8 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
 
+        this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
-    }
-
-
-    public isLinux(): boolean {
-
-        return remote.getGlobal('os') === 'Linux';
     }
 
 

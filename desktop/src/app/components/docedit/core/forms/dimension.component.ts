@@ -94,7 +94,7 @@ export class DimensionComponent {
 
     private stopEditing(dimension: Dimension) {
 
-        this.dimensionsInEditing === this.dimensionsInEditing.filter(d => d.clone !== dimension);
+        this.dimensionsInEditing = this.dimensionsInEditing.filter(d => d.clone !== dimension);
     }
 
 

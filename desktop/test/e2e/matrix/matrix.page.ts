@@ -115,7 +115,7 @@ export class MatrixPage {
     public static async performSelectOperation(index) {
 
         await waitForExist('.dropdown');
-        await click('.dropdown .dropdown-toggle-split');
+        await click('.dropdown');
         await waitForExist('.dropdown .dropdown-menu');
         await click((await getElements('.dropdown .dropdown-menu button'))[index]);
     }

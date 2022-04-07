@@ -32,6 +32,10 @@ export class DimensionComponent {
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
 
+    public isEditing = () => this.dimensionsInEditing.length > 0;
+
+    public isEditingAllowed = () => !this.isEditing() && !this.newDimension;
+
 
     public createNewDimension() {
 
@@ -90,7 +94,7 @@ export class DimensionComponent {
 
     private stopEditing(dimension: Dimension) {
 
-        this.dimensionsInEditing === this.dimensionsInEditing.filter(d => d.clone !== dimension);
+        this.dimensionsInEditing = this.dimensionsInEditing.filter(d => d.clone !== dimension);
     }
 
 

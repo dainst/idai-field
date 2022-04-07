@@ -30,17 +30,15 @@
 </ng-template>
 
 <ng-template #editDating let-dating="dating">
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <select class="form-control" [(ngModel)]="dating.type" name="type" (ngModelChange)="createNewDating()">
-                    <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
-                    <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
-                    <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
-                    <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
-                    <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
-                </select>
-            </div>
+    <div class="card object-array-field-widget">
+        <div>
+            <select class="form-control" [(ngModel)]="dating.type" name="type" (ngModelChange)="createNewDating()">
+                <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
+                <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
+                <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
+                <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
+                <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
+            </select>
         </div>
 
         <div class="card-block">
@@ -62,11 +60,11 @@
                 <div class="form-group">
                     <div class="form-inline">
                         <ng-container [ngTemplateOutlet]="editDate"
-                                        [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
+                                      [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'before'">
@@ -77,7 +75,7 @@
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'after'">
@@ -88,7 +86,7 @@
                     </div>
                 </div>
                 <ng-container [ngTemplateOutlet]="checkboxes"
-                                [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                              [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
             </div>
 
             <div *ngIf="dating.type === 'scientific'">
@@ -127,13 +125,13 @@
     <div class="input-group mb-2">
         <input value="{{getLabel(dating)}}" type="text" disabled class="form-control">
         <div class="input-group-append">
-            <button class="btn btn-danger" type="button" (click)="removeDating(i)">
+            <button class="btn btn-danger" [disabled]="newDating" type="button" (click)="removeDating(i)">
                 <span class="mdi mdi-delete"></span>
             </button>
         </div>
     </div>
 </div>
-<div class="input-group">
+<div *ngIf="!newDating" class="input-group">
     <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dating.add" type="text"
            disabled class="form-control">
     <div class="input-group-append">

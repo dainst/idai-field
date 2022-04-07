@@ -50,6 +50,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private editablePolygons: Array<L.Polygon>;
     public selectedPolygon: L.Polygon;
 
+    public dragging: boolean = false;
+
     private drawMode: DrawMode = 'None';
 
 
@@ -69,8 +71,6 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     public getLocale = () => remote.getGlobal('config').locale;
-
-    public isInDragMode = () => this.map.pm.globalDragModeEnabled();
 
 
     @HostListener('document:keyup', ['$event'])
@@ -229,26 +229,41 @@ export class EditableMapComponent extends LayerMapComponent {
     public toggleDragMode() {
 
         this.zone.runOutsideAngular(() => {
-            if (this.map.pm.globalDragModeEnabled()) {
-                if (this.selectedPolyline) (this.selectedPolyline as any).pm.enable();
-                if (this.selectedPolygon) (this.selectedPolygon as any).pm.enable();
+
+            if (this.dragging) {
+                this.editablePolygons.forEach(polygon => this.disableDragging(polygon));
+                this.editablePolylines.forEach(polyline => this.disableDragging(polyline));
                 this.map.dragging.enable();
             } else {
-                if (this.selectedPolyline) (this.selectedPolyline as any).pm.disable();
-                if (this.selectedPolygon) (this.selectedPolygon as any).pm.disable();
+                this.editablePolygons.forEach(polygon => this.enableDragging(polygon));
+                this.editablePolylines.forEach(polyline => this.enableDragging(polyline));
                 this.map.dragging.disable();
             }
 
-            this.map.pm.toggleGlobalDragMode();
+            this.dragging = !this.dragging;
 
             this.redrawGeometries();
         });
     }
 
 
+    private enableDragging(layer: any) {
+
+        layer.pm.disable();
+        layer.pm.enableLayerDrag();
+    }
+
+
+    private disableDragging(layer: any) {
+
+        layer.pm.disableLayerDrag();
+        if (this.selectedPolygon === layer || this.selectedPolyline === layer) layer.pm.enable();
+    }
+
+
     private finishDrawing() {
 
-        if (this.map.pm.globalDragModeEnabled()) this.map.pm.toggleGlobalDragMode();
+        if (this.dragging) this.toggleDragMode();
 
         if (this.drawMode === 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
             ((this.map.pm.Draw).Line)._finishShape();
@@ -282,6 +297,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private addPolyLayer(drawMode: DrawMode) {
 
         if (this.drawMode !== 'None') this.finishDrawing();
+        if (this.dragging) this.toggleDragMode();
 
         const drawOptions: any = {
             templineStyle: { color: 'blue', weight: 1 },
@@ -301,6 +317,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     private resetEditing() {
+
+        if (this.dragging) this.toggleDragMode();
 
         if (this.editablePolygons) {
             this.editablePolygons.forEach((polygon: any) => {
@@ -325,7 +343,6 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editableMarkers = [];
 
         this.map.dragging.enable();
-        if (this.map.pm.globalDragModeEnabled()) this.map.pm.toggleGlobalDragMode();
         if (this.drawMode !== 'None') this.map.pm.disableDraw(this.drawMode);
         this.drawMode = 'None';
 
@@ -525,7 +542,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         polygon.on('click', function() {
-            if (!mapComponent.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolygon(this);
+            if (!mapComponent.dragging) mapComponent.setSelectedPolygon(this);
         });
     }
 
@@ -596,7 +613,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         polyline.on('click', function() {
-            if (!mapComponent.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolyline(this);
+            if (!mapComponent.dragging) mapComponent.setSelectedPolyline(this);
         });
     }
 

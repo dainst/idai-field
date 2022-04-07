@@ -34,6 +34,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public saving: boolean = false;
     public areAdvancedSettingCollapsed: boolean = true;
     public scrollToBottom: boolean = false;
+    public isLinux: boolean;
 
 
     constructor(private settingsProvider: SettingsProvider,
@@ -45,22 +46,17 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     ngOnInit() {
 
+        this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
     }
 
-
+    
     ngAfterViewChecked() {
 
         if (this.scrollToBottom) {
             this.settingsContainer.nativeElement.scrollTo(0, this.settingsContainer.nativeElement.scrollHeight);
             this.scrollToBottom = false;
         }
-    }
-
-
-    public isLinux(): boolean {
-
-        return remote.getGlobal('os') === 'Linux';
     }
 
 

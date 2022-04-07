@@ -2,8 +2,12 @@
 	<div class="input-group mb-2" *ngIf="!isInEditing(dimension)">
 		<input value="{{getLabel(dimension)}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
-            <button class="btn btn-danger" (click)="removeDimensionAtIndex(i)"><span class="mdi mdi-delete"></span></button>
-            <button class="btn btn-info" (click)="startEditing(dimension)"><span class="mdi mdi-pencil"></span></button>
+            <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeDimensionAtIndex(i)">
+				<span class="mdi mdi-delete"></span>
+			</button>
+            <button class="btn btn-info" [disabled]="!isEditingAllowed()" (click)="startEditing(dimension)">
+				<span class="mdi mdi-pencil"></span>
+			</button>
         </div>
 	</div>
 
@@ -14,7 +18,7 @@
 	</div>
 </div>
 
-<div class="input-group" *ngIf="!newDimension">
+<div class="input-group" *ngIf="isEditingAllowed()">
 	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text" disabled class="form-control">
 	<div class="input-group-append">
         <button class="btn btn-success" (click)="createNewDimension()"><span class="mdi mdi-plus-circle"></span></button>
@@ -28,7 +32,7 @@
 </div>
 
 <ng-template #dimensionFormTemplate let-dimension="dimension">
-	<div class="card">
+	<div class="card object-array-field-widget">
 		<div class="card-block">
 			<select class="form-control w100 mb-2" [(ngModel)]="dimension['isRange']"
 					(ngModelChange)="toggleRangeOnOff(dimension, $event)" name="range">

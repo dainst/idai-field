@@ -2,15 +2,138 @@
   "forms": {
     "Project:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "configVersion": {
+          "inputType": "input"
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "category",
+            "shortName",
+            "shortDescription"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "institution",
+            "projectSupervisor",
+            "contactPerson",
+            "contactMail",
+            "staff",
+            "campaigns",
+            "projectURI",
+            "externalReference",
+            "bibliographicReferences",
+            "license",
+            "gazId",
+            "latitude",
+            "longitude",
+            "epsgId",
+            "coordinateReferenceSystem",
+            "configVersion"
+          ]
+        }
+      ]
     },
     "Operation:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "vaguenessOfGeometry": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "fixMe": {
+          "inputType": "input",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "vaguenessOfGeometry": "vaguenessOfGeometry-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "vaguenessOfGeometry",
+            "fixMe"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "Survey:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "researchMethod"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
     },
     "SurveyUnit:default": {
       "hidden": [],
@@ -26,11 +149,111 @@
     },
     "Trench:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate",
+            "diary"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "trenchComment"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent",
+            "orientation"
+          ]
+        }
+      ]
     },
     "Building:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "supervisor",
+            "processor",
+            "campaign",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "diaryAbstract",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "material",
+            "context",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "hasRestoration",
+            "buildingType",
+            "buildingTechnique",
+            "buildingCategory",
+            "buildingCategorySpecific",
+            "buildingResearchHistory"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "BuildingPart:default": {
       "hidden": [],
@@ -38,10 +261,112 @@
     },
     "Find:default": {
       "hidden": [],
-      "fields": {},
+      "fields": {
+        "isMultiFind": {
+          "inputType": "boolean",
+          "constraintIndexed": true
+        },
+        "storageShelf": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "storageShelfCompartment": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "storagePlaceOld": {
+          "inputType": "radio"
+        },
+        "inscriptionInventoryNumber": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "vaguenessOfGeometry": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "fixMe": {
+          "inputType": "input",
+          "constraintIndexed": true
+        }
+      },
       "valuelists": {
-        "storagePlace": "Find-storagePlace-Olympia"
-      }
+        "vaguenessOfGeometry": "vaguenessOfGeometry-olympia",
+        "storagePlace": "Find-storagePlace-Olympia",
+        "storagePlaceOld": "Find-storagePlaceOld-Olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Feature:default": {
       "hidden": [],
@@ -65,23 +390,361 @@
     },
     "Inscription:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "ivoNumber": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "ivoCategory": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "fixMe": {
+          "inputType": "input",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "objectType": "Inscription-objectType-olympia",
+        "ivoCategory": "Inscription-ivoCategory-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "objectType",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "language",
+            "content",
+            "comparison",
+            "ivoNumber",
+            "ivoCategory",
+            "fixMe"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Image:default": {
-      "hidden": [],
-      "fields": {}
+      "fields": {
+        "fixMe": {
+          "inputType": "input",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "fixMe"
+          ]
+        }
+      ]
     },
     "Glass:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "formDescription",
+            "color",
+            "transparency",
+            "decorationTechnique",
+            "decorationDescription",
+            "manufacturingMethod",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Mollusk:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "classification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Brick:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Burial:default": {
       "hidden": [],
@@ -89,7 +752,95 @@
     },
     "Wood:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Architecture:default": {
       "hidden": [],
@@ -105,11 +856,243 @@
     },
     "Pottery:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "materialType",
+            "specificType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "temperTypeClay",
+            "clayHardness",
+            "clayColorOutside",
+            "clayColorOutsideMunsell",
+            "clayColorInside",
+            "clayColorInsideMunsell",
+            "clayColorBreak",
+            "clayColorBreakMunsell",
+            "breakStructure",
+            "coatInside",
+            "coatColorInside",
+            "coatInsideType",
+            "coatOutside",
+            "coatColorOutside",
+            "coatOutsideType",
+            "formDescription",
+            "decorationTechnique",
+            "decorationDescription",
+            "objectType",
+            "purpose",
+            "provenance",
+            "sample",
+            "residueAnalysis",
+            "amountSherdsWall",
+            "amountSherdsBase",
+            "amountSherdsHandles",
+            "amountSherdsLip",
+            "amountSherdsPedestal",
+            "amountSherdsLid",
+            "amountSherdsRim",
+            "amountSherdsRimBase",
+            "amountSherdsRimShoulder",
+            "amountSherdsOther",
+            "amountSherdsShoulder",
+            "amountSherdsPercent",
+            "hasCoat",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Metal:default": {
-      "hidden": [],
-      "fields": {}
+      "fields": {
+        "objectTypeGeneral": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "objectType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "objectTypeSpecific": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "metalMaterial": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "objectTypeGeneral": "Metal-objectTypeGeneral-olympia",
+        "objectType": "Metal-objectType-olympia",
+        "metalMaterial": "Metal-metalMaterial-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "objectTypeGeneral",
+            "objectTypeSpecific",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Grave:default": {
       "hidden": [],
@@ -117,31 +1100,546 @@
     },
     "Bone:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "boneType",
+            "species",
+            "boneClassification",
+            "burningGrade",
+            "objectType",
+            "biologicalAge",
+            "sex"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Terracotta:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Photo:default": {
-      "hidden": [],
-      "fields": {}
+      "fields": {
+        "imageSubject": {
+          "inputType": "radio"
+        },
+        "originalType": {
+          "inputType": "radio"
+        }
+      },
+      "valuelists": {
+        "imageSubject": "Photo-imageSubject-olympia",
+        "originalType": "Photo-originalType-default"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "fixMe",
+            "imageSubject",
+            "originalType"
+          ]
+        }
+      ]
     },
     "Drawing:default": {
-      "hidden": [],
-      "fields": {}
+      "fields": {
+        "imageSubject": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "drawingType": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "imageSubject": "Photo-imageSubject-olympia",
+        "drawingType": "Drawing-drawingType-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "draughtsmen",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "height",
+            "width",
+            "literature",
+            "fixMe",
+            "drawingMaterial",
+            "drawingTool",
+            "drawingType",
+            "scale",
+            "imageSubject"
+          ]
+        }
+      ]
     },
     "Stone:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "material": "Stone-material-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "material",
+            "temperAmount",
+            "treatment",
+            "workmanship",
+            "color",
+            "formDescription",
+            "objectType",
+            "architectureElement",
+            "purpose",
+            "origin",
+            "provenance",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Coin:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "metalMaterial": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "metalMaterial": "Coin-metalMaterial-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "metalMaterial",
+            "manufacturingMethod",
+            "preservedDiameter",
+            "frontSideDescription",
+            "reverseSideDescription",
+            "provenance",
+            "stampPositioning",
+            "denomination",
+            "mint",
+            "mintingRuler"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "PlasterFragment:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "plasterComponents",
+            "color",
+            "composition",
+            "hasDecoration",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther",
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     },
     "Excavation:default": {
       "hidden": [],
@@ -158,6 +1656,422 @@
     "Type:default": {
       "hidden": [],
       "fields": {}
+    },
+    "Helmet": {
+      "color": "#cef500",
+      "parent": "Find",
+      "fields": {
+        "fragmentDescription": {
+          "inputType": "input"
+        },
+        "metalMaterial": {
+          "inputType": "input"
+        },
+        "objectTypeGeneral": {
+          "inputType": "input"
+        },
+        "objectTypeSpecific": {
+          "inputType": "dropdown"
+        },
+        "typeFrielinghaus": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "objectTypeSpecific": "Helmet-objectTypeSpecific-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "fragmentDescription",
+            "metalMaterial",
+            "objectTypeGeneral",
+            "objectTypeSpecific",
+            "typeFrielinghaus"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "SculptureFragment": {
+      "color": "#FFD700",
+      "parent": "Find",
+      "fields": {
+        "stoneMaterial": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "referencesToPublications": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "isFragmentOf": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "stoneMaterial": "Stone-material-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "stoneMaterial",
+            "referencesToPublications",
+            "isFragmentOf",
+            "spatialLocation2"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "RoofElement": {
+      "color": "#CC0000",
+      "parent": "Find",
+      "hidden": [],
+      "fields": {
+        "inventoryNumberMallwitz": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "descriptionInventoryMallwitz": {
+          "inputType": "text"
+        },
+        "catalogueNumberOF24": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "descriptionCatalogueOF24": {
+          "inputType": "text"
+        },
+        "spatialLocationInventoryMallwitz": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "spatialLocationCatalogueOF24": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "spatialLocation2": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "roofTypeGeneral": {
+          "inputType": "radio"
+        },
+        "roofingSystem": {
+          "inputType": "radio"
+        },
+        "roofElementMaterial": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "roofElementWorkflowSteps": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "roofElementType": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "roofElementTypeSpecific": {
+          "inputType": "checkboxes"
+        },
+        "roofElementPosition": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "roofElementFindContext": {
+          "inputType": "radio",
+          "constraintIndexed": true
+        },
+        "roofElementProperties": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "amountFragmentsUndefined": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithCornerTopLeft": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithCornerTopRight": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithCornerBottomLeft": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithCornerBottomRight": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithEdgeTop": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithEdgeBottom": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithEdgeLeft": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithEdgeRight": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithBody": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithSupportiveFeatures": {
+          "inputType": "unsignedInt"
+        },
+        "amountFragmentsWithSpecialFeatures": {
+          "inputType": "unsignedInt"
+        }
+      },
+      "valuelists": {
+        "roofElementMaterial": "roofElement-material-standard",
+        "roofElementType": "roofElementType-standard",
+        "roofElementProperties": "roofElementProperties-standard",
+        "roofElementPosition": "roofElementPosition-standard",
+        "roofElementForm": "roofElementForm-standard",
+        "roofElementFindContext": "roofElementFindContext-standard",
+        "roofElementWorkflowSteps": "roofElementWorkflowSteps-olympia",
+        "roofElementTypeSpecific": "roofElementTypeSpecific-standard",
+        "roofingSystem": "roofingSystem-olympia",
+        "roofTypeGeneral": "roofingSystem-olympia"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "hasRestoration",
+            "catalogueNumber",
+            "amount",
+            "condition",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "weight",
+            "storagePlace",
+            "storageInventoryNumber",
+            "comparison",
+            "bibliography",
+            "isMultiFind",
+            "storageShelf",
+            "storageShelfCompartment",
+            "storagePlaceOld",
+            "inscriptionInventoryNumber",
+            "vaguenessOfGeometry",
+            "fixMe",
+            "inventoryNumberMallwitz",
+            "descriptionInventoryMallwitz",
+            "catalogueNumberOF24",
+            "descriptionCatalogueOF24",
+            "spatialLocationInventoryMallwitz",
+            "spatialLocationCatalogueOF24",
+            "spatialLocation2",
+            "roofTypeGeneral",
+            "roofingSystem",
+            "roofElementMaterial",
+            "roofElementWorkflowSteps",
+            "roofElementType",
+            "roofElementTypeSpecific",
+            "roofElementPosition",
+            "roofElementFindContext",
+            "roofElementProperties",
+            "amountFragmentsUndefined",
+            "amountFragmentsWithCornerTopLeft",
+            "amountFragmentsWithCornerTopRight",
+            "amountFragmentsWithCornerBottomLeft",
+            "amountFragmentsWithCornerBottomRight",
+            "amountFragmentsWithEdgeTop",
+            "amountFragmentsWithEdgeBottom",
+            "amountFragmentsWithEdgeLeft",
+            "amountFragmentsWithEdgeRight",
+            "amountFragmentsWithBody",
+            "amountFragmentsWithSupportiveFeatures",
+            "amountFragmentsWithSpecialFeatures"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
     }
   },
   "order": [
@@ -179,14 +2093,17 @@
     "Find",
     "Pottery",
     "Terracotta",
+    "RoofElement",
+    "Metal",
+    "Helmet",
+    "SculptureFragment",
+    "Stone",
+    "Coin",
+    "Glass",
+    "PlasterFragment",
     "Brick",
     "Bone",
-    "Glass",
-    "Metal",
-    "Stone",
     "Wood",
-    "Coin",
-    "PlasterFragment",
     "Mollusk",
     "Inscription",
     "Sample",

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
 import { isUndefinedOrEmpty } from 'tsfun';
+import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
 
 const PROJECT = 'project';
 

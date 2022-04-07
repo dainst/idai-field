@@ -3,10 +3,10 @@
         <input value="{{getLabel(literature)}}" type="text" disabled class="form-control">
 
         <div class="input-group-append">
-            <button class="btn btn-danger" (click)="remove(literature)">
+            <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="remove(literature)">
                 <span class="mdi mdi-delete"></span>
             </button>
-            <button class="btn btn-info" (click)="startEditing(literature)">
+            <button class="btn btn-info" [disabled]="!isEditingAllowed()" (click)="startEditing(literature)">
                 <span class="mdi mdi-pencil"></span>
             </button>
         </div>
@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="input-group" *ngIf="!newLiterature">
+<div class="input-group" *ngIf="isEditingAllowed()">
     <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.literature.add"
            type="text" disabled class="form-control">
 
@@ -38,7 +38,7 @@
 
 
 <ng-template #literatureFormTemplate let-literature="literature">
-    <div class="card">
+    <div class="card object-array-field-widget">
         <div class="card-block">
             <div class="form-group">
                 <label i18n="@@docedit.forms.literature.quotation">Literaturzitat nach DAI-Richtlinien:</label>

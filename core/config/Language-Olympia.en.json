@@ -1,0 +1,207 @@
+{
+  "categories": {
+    "Operation": {
+      "fields": {
+        "vaguenessOfGeometry": {
+          "label": "Vagueness of the geometry",
+          "description": "How vaguely is the geometry defined? Select a value"
+        },
+        "fixMe": {
+          "label": "Fix me!",
+          "description": "What has to be corrected in this object record."
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "isMultiFind": {
+          "label": "is multiple find",
+          "description": "yes if the find consists of more than 1 fragment"
+        },
+        "inscriptionInventoryNumber": {
+          "label": "Only for finds of the insciption inventory: Inv. Nr.",
+          "description": "Because the volumes of the inscription are lost -despite one- this number is taken from OLYMPIA V. It must not be mixed up with the IvO-Number!"
+        },
+        "storagePlaceOld": {
+          "label": "Alter Aufbewahrungsort",
+          "description": "Wo wurde der Fund früher aufbewahrt?"
+        },
+        "vaguenessOfGeometry": {
+          "label": "Vagueness of the geometry",
+          "description": "How vaguely is the geometry defined? Select a value"
+        },
+        "fixMe": {
+          "label": "Fix me!",
+          "description": "What has to be corrected in this object record."
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "fixMe": {
+          "label": "Fix me!",
+          "description": "What has to be corrected in this object record."
+        }
+      }
+    },
+    "Drawing" :{
+      "fields": {
+        "imageSubject": {
+          "label": "Drawing subject",
+          "description": "Choose a value. In doubt choose 'indet.'"
+        }
+      }
+    },
+    "Helmet" :{
+      "label": "Helmet",
+      "fields": {
+        "fragmentDescription": {
+          "label": "Description of the fragments",
+          "description": ""
+        },
+        "metalMaterial": {
+          "label": "Metal",
+          "description": "Specification of the material"
+        },
+        "objectTypeGeneral": {
+          "label": "General object type",
+          "description": ""
+        },
+        "objectTypeSpecific": {
+          "label": "Specific object type",
+          "description": ""
+        },
+        "typeFrielinghaus": {
+          "label": "Type according Frielinghaus",
+          "description": ""
+        }
+      }
+    },
+    "SculptureFragment" :{
+      "label": "Sculptur fragment",
+      "fields": {
+        "referencesToPublications": {
+          "label": "References to publications",
+          "description": "Publications mentioning the object"
+        },
+        "stoneMaterial": {
+          "label": "Type of stone material",
+          "description": "Which type of Stone?"
+        },
+        "isFragmentOf": {
+          "label": "Sculpture the fragment is belonging to",
+          "description": "Name of sculpture"
+        },
+        "spatialLocation2": {
+          "label": "Additional description of the object's find spot",
+          "description": "Here you may add more info about the find spot"
+        }
+      }
+    },
+    "RoofElement" :{
+      "label": "Roof Element",
+      "fields": {
+        "inventoryNumberMallwitz": {
+          "label": "Inventorynumber acc. Mallwitz",
+          "description": "Inventorynumber from the handwritten Inventory of Mallwitz"
+        },
+        "descriptionInventoryMallwitz": {
+          "label": "Description acc. Mallwitz",
+          "description": "Description from the handwritten Inventory of Mallwitz"
+        },
+        "catalogueNumberOF24": {
+          "label": "Catalogue number in Olymp. Forschungen 24",
+          "description": "Catalogue number in OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "descriptionCatalogueOF24": {
+          "label": "Description in Olymp. Forschungen 24",
+          "description": "Description from OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "spatialLocationInventoryMallwitz": {
+          "label": "Find location acc. Mallwitz",
+          "description": "Find location from the handwritten Inventory of Mallwitz"
+        },
+        "spatialLocationCatalogueOF24": {
+          "label": "Find location in Olymp. Forschungen 24",
+          "description": "Find location from OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "roofElementMaterial": {
+          "label": "Material",
+          "description": "Material of the object"
+        },
+        "roofElementType": {
+          "label": "Type of roof element",
+          "description": "The term that describes the overall type of object"
+        },
+        "roofElementPosition": {
+          "label": "roofElementPosition",
+          "description": "The position of the object on the roof"
+        },
+        "roofElementForm": {
+          "label": "roofElementForm",
+          "description": "todo"
+        },
+        "roofElementFindContext": {
+          "label": "Find-context of the tile(s)",
+          "description": "Rooftiles were used in a wide variety of context. In theory this data should already be recorded in the excavation stratigraphic unit. But need to double check."
+        },
+        "roofElementProperties": {
+          "label": "roofElementProperties",
+          "description": "todo"
+        },
+        "amountFragmentsUndefined": {
+          "label": "Amount of undefined fragments",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerTopLeft": {
+          "label": "Amount of fragments with top left corner",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerTopRight": {
+          "label": "Amount of fragments with top rigth corner",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerBottomLeft": {
+          "label": "Amount of fragments with bottom left corner",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerBottomRight": {
+          "label": "Amount of fragments with bottom right corner",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeTop": {
+          "label": "Amount of fragments with top edge",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeBottom": {
+          "label": "Amount of fragments with bottom edge",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeLeft": {
+          "label": "Amount of fragments with left edge",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeRight": {
+          "label": "Amount of fragments with right edge",
+          "description": "todo"
+        },
+        "amountFragmentsWithSupportiveFeatures": {
+          "label": "Amount of fragments with supportive features",
+          "description": "todo"
+        },
+        "amountFragmentsWithSpecialFeatures": {
+          "label": "Amount of fragments with special features",
+          "description": "todo"
+        },
+        "amountFragmentsWithBody": {
+          "label": "Amount of fragments with body",
+          "description": "todo"
+        },
+        "roofElementWorkflowSteps": {
+          "label": "Workflow, tasks done",
+          "description": "Check when task is done"
+        }
+      }
+    }
+  }
+}

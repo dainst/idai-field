@@ -61,6 +61,8 @@ import languagePergamon_de from '../../../config/Language-Pergamon.de.json';
 import languagePergamon_en from '../../../config/Language-Pergamon.en.json';
 import languagePostumii_de from '../../../config/Language-Postumii.de.json';
 import languagePostumii_it from '../../../config/Language-Postumii.it.json';
+import languageOlympia_de from '../../../config/Language-Olympia.de.json';
+import languageOlympia_en from '../../../config/Language-Olympia.en.json';
 import languageSelinunt_de from '../../../config/Language-Selinunt.de.json';
 import languageSelinunt_it from '../../../config/Language-Selinunt.it.json';
 import languageSelinuntBauteile_de from '../../../config/Language-SelinuntBauteile.de.json';
@@ -141,6 +143,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
     'Milet': { de: languageMilet_de, en: languageMilet_en, fr: languageMilet_fr },
     'MonTur': { de: languageMonTur_de },
+    'Olympia': { de: languageOlympia_de, en: languageOlympia_en },
     'Pergamon': { de: languagePergamon_de, en: languagePergamon_en },
     'Postumii': { de: languagePostumii_de, it: languagePostumii_it },
     'Selinunt': { de: languageSelinunt_de, it: languageSelinunt_it },

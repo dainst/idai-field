@@ -13,14 +13,16 @@
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge badge-secondary">
         <b>Y:</b> {{mousePositionCoordinates[1]}}
     </div>
-    <div *ngIf="selectedPolygon || selectedPolyline || selectedMarker" id="map-editor-button-delete"
+    <div *ngIf="(selectedPolygon || selectedPolyline || selectedMarker) && !dragging"
+         id="map-editor-button-delete"
          class="btn btn-danger" (click)="deleteGeometry()"
          ngbTooltip="Löschen"
          i18n-ngbTooltip="@@resources.map.delete"
          placement="top" container="body">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
-    <div *ngIf="!selectedPolygon && !selectedPolyline && !selectedMarker" id="map-editor-button-delete-disabled"
+    <div *ngIf="!selectedPolygon && !selectedPolyline && !selectedMarker || dragging"
+         id="map-editor-button-delete-disabled"
          class="btn btn-danger disabled">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
@@ -46,7 +48,7 @@
         <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
     <div *ngIf="getEditorType() === 'polygon' || getEditorType() === 'polyline'" id="map-editor-button-drag"
-         class="btn btn-primary" [class.active]="isInDragMode()" (click)="toggleDragMode()"
+         class="btn btn-primary" [class.active]="dragging" (click)="toggleDragMode()"
          ngbTooltip="Verschieben"
          i18n-ngbTooltip="@@resources.map.drag"
          placement="top" container="body">

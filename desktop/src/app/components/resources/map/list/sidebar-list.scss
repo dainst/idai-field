@@ -25,12 +25,9 @@ sidebar-list {
       background-color: #d7ffd9;
     }
 
-    .selected {
-      background-color: $list-item-hover-color;
-    }
-
+    .selected,
     .additional-selected {
-      background-color: lighten($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
     }
 
     #document-limit-info {

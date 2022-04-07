@@ -4,6 +4,7 @@
 @import 'widgets/relationpicker/relation-picker';
 @import 'widgets/relationpicker/relation-picker-group';
 @import 'core/edit-form';
+@import 'core/edit-form-group';
 @import 'core/forms/geometry';
 @import 'core/forms/dropdown';
 @import 'core/forms/dropdown-range';
@@ -20,7 +21,6 @@
 #document-edit-wrapper {
   height: calc(100vh - 65px);
   overflow-y: hidden;
-  background-color: #eee;
 
   .form-group.card {
     margin-bottom: 0;
@@ -96,7 +96,6 @@
     top: 8px;
     height: 39px;
     border: 0;
-    border-radius: 2px;
     color: #fff;
   }
 
@@ -112,20 +111,19 @@
     }
   }
 
-  #document-edit-dropdown-menu {
-    .dropdown-entry-label {
-      margin-left: 5px;
-    }
+  main {
+    height: 86%;
+    padding: 0;
+    position: relative;
+  }
+}
+
+#document-edit-dropdown-menu {
+  .dropdown-entry-label {
+    margin-left: 5px;
   }
 
   .mdi-expand-all {
     color: #28a745;
-  }
-
-  main {
-    height: 86%;
-    padding: 0;
-
-    position: relative;
   }
 }

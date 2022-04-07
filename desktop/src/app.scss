@@ -1,12 +1,12 @@
 $mdi-font-path: 'fonts' !default;
-$roboto-font-path: 'fonts/' !default;
-@import '../node_modules/roboto-fontface';
 @import '../node_modules/@mdi/font/css/materialdesignicons';
+
+@import '@fontsource/open-sans/variable-full.css';
+@import "@fontsource/open-sans/variable-full-italic.css";
 
 @import 'app/components/variables';
 @import 'app/components/messages/messages';
 @import 'bootstrap';
-
 @import 'app/components/initialization';
 @import 'app/components/spinner';
 @import 'app/components/buttons';
@@ -25,6 +25,7 @@ $roboto-font-path: 'fonts/' !default;
 @import 'app/components/help/help';
 @import 'app/components/configuration/configuration';
 @import 'app/components/project/project';
+@import 'app/components/backup/backup';
 
 .search-help-tooltip {
   .tooltip-inner {
@@ -42,6 +43,10 @@ $roboto-font-path: 'fonts/' !default;
 
 .tooltip {
   pointer-events: none;
+
+  .arrow {
+    width: 0.5rem !important;
+  }
 }
 
 @keyframes delayedFadeIn {
@@ -56,7 +61,7 @@ html {
 }
 
 body {
-  font-family: Roboto, sans-serif !important;
+  font-family: 'Open SansVariable', sans-serif !important;
   overflow: hidden;
 }
 
@@ -66,53 +71,48 @@ body {
 
 .btn {
   text-transform: none !important;
-  border-radius: 0 !important;
 }
 
 .btn:focus, .btn.focus {
   box-shadow: none;
 }
 
-.btn:active, .btn.active {
-  box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
 .btn-primary {
-  background-color: rgba(85, 114, 161, 1);
-  border-color: rgba(85, 114, 161, 1);
+  background-color: $primary-button-color;
+  border-color: $primary-button-color;
 }
 
 .btn-primary:hover {
-  background-color: lighten(rgba(85, 114, 161, 1), 10%);
-  border-color: lighten(rgba(85, 114, 161, 1), 10%);
+  background-color: lighten($primary-button-color, 10%);
+  border-color: lighten($primary-button-color, 10%);
 }
 
 .btn-primary:disabled, .btn-primary.disabled {
-  background-color: darken(rgba(85, 114, 161, 1), 10%);
-  border-color: darken(rgba(85, 114, 161, 1), 10%);
+  background-color: darken($primary-button-color, 10%);
+  border-color: darken($primary-button-color, 10%);
   cursor: not-allowed;
 }
 
 .btn-primary:active, .btn-primary.active {
-  background-color: saturate(rgba(85, 114, 161, 1), 10%);
-  border-color: saturate(rgba(85, 114, 161, 1), 10%);
+  background-color: saturate($primary-button-color, 10%);
+  border-color: saturate($primary-button-color, 10%);
 }
 
 .btn-outline-primary {
-  border-color: #5572A1;
-  color: #5572A1;
+  border-color: $primary-button-color;
+  color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:hover {
-  border-color: lighten(#5572A1, 10%);
-  color: lighten(#5572A1, 10%);
+  border-color: lighten($primary-button-color, 10%);
+  color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  border-color: darken(#5572A1, 10%);
-  color: darken(#5572A1, 10%);
+  border-color: darken($primary-button-color, 10%);
+  color: darken($primary-button-color, 10%);
   cursor: not-allowed;
   background-color: white;
 }
@@ -152,6 +152,16 @@ body {
 
 .btn-light {
   color: $link-color;
+}
+
+.btn-link {
+  &:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+  }
+
+  &.active {
+    background-color: lighten($link-color, 50%);
+  }
 }
 
 .md-form {
@@ -325,8 +335,8 @@ relations-view .fieldvalue:hover {
 }
 
 .modal-content {
-  border-radius: 0;
   border: none;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -347,6 +357,7 @@ a {
 
 .alert {
   text-align: center;
+  user-select: none;
 }
 
 .small-info-text {

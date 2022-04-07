@@ -2,10 +2,11 @@
 
 const electron = require('electron');
 const remoteMain = require('@electron/remote/main');
-const fs = require('fs');
+const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
+require('./asynchronous-fs.js');
 
 remoteMain.initialize();
 
@@ -45,7 +46,6 @@ global.setConfigDefaults = config => {
 
     return config;
 };
-
 
 const setFileSync = config => {
     // migration for version 3 image sync rework 
@@ -215,6 +215,7 @@ const createWindow = () => {
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,
+            preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),
             webSecurity: global.mode === 'production'
         },
         titleBarStyle: 'hiddenInset'
@@ -230,11 +231,9 @@ const createWindow = () => {
         mainWindow.setIcon(electron.nativeImage.createFromPath(path));
     }
 
-    // and load the index.html of the app.
-    mainWindow.loadURL(global.distUrl + 'index.html');
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    setTimeout(() => {
+        mainWindow.loadURL(global.distUrl + 'index.html');
+    }, 100);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
@@ -313,20 +312,22 @@ electron.app.on('window-all-closed', () => {
 
 electron.ipcMain.on('reload', (event, route) => {
     mainWindow.reload();
-    mainWindow.loadURL(
-        url.format(
-            global.mode === 'production'
-            ? {
-                pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
-                protocol: 'file:',
-                slahes: true,
-                hash: route
-            }
-            : {
-                pathname: 'localhost:4200/dist/index.html',
-                protocol: 'http:',
-                slahes: true,
-                hash: route
-            })
-    );
+    setTimeout(() => {
+        mainWindow.loadURL(
+            url.format(
+                global.mode === 'production'
+                ? {
+                    pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
+                    protocol: 'file:',
+                    slahes: true,
+                    hash: route
+                }
+                : {
+                    pathname: 'localhost:4200/dist/index.html',
+                    protocol: 'http:',
+                    slahes: true,
+                    hash: route
+                })
+        )
+    }, 100);
 });

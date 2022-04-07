@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -13,7 +13,9 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class TaskbarComponent {
+export class TaskbarComponent implements OnInit {
+
+    public isLinux: boolean;
 
     private projectName: string;
 
@@ -24,9 +26,9 @@ export class TaskbarComponent {
     }
 
 
-    public isLinux(): boolean {
-
-        return remote.getGlobal('os') === 'Linux';
+    ngOnInit() {
+        
+        this.isLinux = remote.getGlobal('os') === 'Linux';
     }
 
 

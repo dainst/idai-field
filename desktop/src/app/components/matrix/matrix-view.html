@@ -2,9 +2,13 @@
 
     <div class="col col-md-6">
         <div class="row">
-            <div *ngIf="showTrenchSelector()" class="btn-group dropdown"
+            <div *ngIf="showTrenchSelector()" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
-                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                    <span *ngIf="selectedTrench" id="selected-trench-label">
+                        {{getDocumentLabel(selectedTrench)}}
+                    </span>
+                </button>
                 <div id="trench-selection-menu" class="dropdown-menu" ngbDropdownMenu>
                     <div id="trench-selection-buttons">
                         <button *ngFor="let trench of trenches"
@@ -14,10 +18,6 @@
                         </button>
                     </div>
                 </div>
-
-                <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
-                    {{getDocumentLabel(selectedTrench)}}
-                </div>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="col col-md-6 text-right toolbar">
         <div class="btn-group">
             <div id="edit-mode-button"
-                 class="btn btn-primary"
+                 class="btn btn-outline-primary"
                  [class.active]="getSelectionMode() === 'none'"
                  ngbTooltip="Bearbeitungsmodus"
                  i18n-ngbTooltip="@@matrix.view.tooltips.editMode"
@@ -39,7 +39,7 @@
                 <span class="mdi mdi-pencil"></span>
             </div>
             <div id="single-selection-mode-button"
-                 class="btn btn-primary"
+                 class="btn btn-outline-primary"
                  [class.active]="getSelectionMode() === 'single'"
                  ngbTooltip="Einzelauswahlmodus"
                  i18n-ngbTooltip="@@matrix.view.tooltips.singleSelectionMode"
@@ -53,7 +53,7 @@
                 <span class="mdi mdi-cursor-default-outline"></span>
             </div>
             <div id="group-selection-mode-button"
-                 class="btn btn-primary"
+                 class="btn btn-outline-primary"
                  [class.active]="getSelectionMode() === 'rect'"
                  ngbTooltip="Gruppenauswahlmodus"
                  i18n-ngbTooltip="@@matrix.view.tooltips.groupSelectionMode"
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="btn-group">
+        <div class="btn-group pl-2">
             <div id="clear-selection-button"
                  class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"

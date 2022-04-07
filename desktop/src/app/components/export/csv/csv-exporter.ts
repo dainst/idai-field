@@ -2,8 +2,7 @@ import { CategoryForm, FieldResource } from 'idai-field-core';
 import { CSVExport, CSVExportResult } from './csv-export';
 import { M } from '../../../components/messages/m';
 import { PerformExport } from '../export-helper';
-
-const fs = typeof window !== 'undefined' ? window.require('fs').promises : require('fs').promises;
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
 
 /**
  * Small wrapper to separate async and file handling, including
@@ -34,7 +33,7 @@ export module CsvExporter {
     async function writeFile(outputFilePath: string, lines: string[]): Promise<void> {
         
         try {
-            return await fs.writeFile(outputFilePath, lines.join('\n'));
+            return await getAsynchronousFs().writeFile(outputFilePath, lines.join('\n'));
         } catch (err) {
             console.error('Error while trying to write file: ' + outputFilePath, err);
             throw [M.EXPORT_ERROR_GENERIC];

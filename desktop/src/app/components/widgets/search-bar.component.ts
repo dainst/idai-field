@@ -91,9 +91,9 @@ export class SearchBarComponent implements OnChanges {
 
         if (!this.popover) return;
 
-        if (!ComponentHelpers.isInside(event.target, target =>
-                target.id && target.id.includes('filter-button'))) {
-
+        if (!ComponentHelpers.isInside(event.target, target => {
+            return target.id && (target.id.includes('filter-button') || target.id.includes('filter-menu'));
+        })) {
             this.popover.close();
         }
     }

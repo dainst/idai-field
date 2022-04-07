@@ -13,7 +13,7 @@ configuration-category {
     .header {
       height: 45px;
       border-bottom: 1px solid #ccc;
-      background-color: #e7e7e7;
+      background-color: #ededed;
 
       &.header-left {
         padding: 7px;
@@ -101,7 +101,7 @@ configuration-category {
 
         &:hover,
         &.active {
-          background-color: darken($list-item-hover-color, 5%) !important;
+          background-color: $list-item-hover-color !important;
           transition: background-color .5s ease, border .5s ease;
         }
 
@@ -206,7 +206,7 @@ configuration-category {
   background-color: #fff;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
-  font-family: Roboto, sans-serif;
+  font-family: 'Open SansVariable';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;

@@ -43,9 +43,11 @@
                         <input id="path-file-input" class="file-input" type="file"
                                (change)="path = $event.target.files[0].path"
                                style="display: none">
-                        <label for="path-file-input" class="btn btn-secondary file-input-label">
-                            <span class="mdi mdi-folder"></span>
-                        </label>
+                        <div class="input-group-append">
+                            <label for="path-file-input" class="btn btn-secondary file-input-label">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </div>
                     </div>
 
                     <label i18n="@@backup.loading.project">Projekt</label>

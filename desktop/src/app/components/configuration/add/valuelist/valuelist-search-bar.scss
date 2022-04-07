@@ -1,12 +1,23 @@
 valuelist-search-bar {
   #valuelist-search-input {
     width: calc(100% - 50px);
-    height: 39px;
+    height: 38px;
     border-right: none;
   }
 
-  #valuelist-filter-button .btn {
-    width: 50px;
+  .input-group-append {
+    z-index: 100;
+
+    #valuelist-filter-button .btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      width: 50px;
+
+      .mdi {
+        position: relative;
+        right: 1px;
+      }
+    }
   }
 
   .arrow {

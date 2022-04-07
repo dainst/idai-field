@@ -2,12 +2,12 @@
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
 
-<div class="modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 class="modal-title"
         i18n="@@configuration.selectValuelist">Werteliste auswählen</h5>
 </div>
 
-<div class="modal-body row add-valuelist-modal-body">
+<div class="modal-body row add-valuelist-modal-body bg-light">
     <div class="col-md-6">
         <valuelist-search-bar [searchQuery]="searchQuery"
                               (onQueryChanged)="applyValuelistSearch()"></valuelist-search-bar>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer bg-light">
     <div id="confirm-selection-button"
          class="btn btn-success"
          [class.disabled]="!selectedValuelist"

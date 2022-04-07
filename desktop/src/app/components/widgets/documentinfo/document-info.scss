@@ -44,20 +44,13 @@ document-info {
       .expand-all-groups-button {
         left: -109px;
         top: -11px;
-
-        &.active,
-        &:active {
-          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
-        }
+        border-radius: 0;
       }
 
       .edit-button {
         left: 109px;
         top: -71px;
-
-        &:active {
-          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
-        }
+        border-radius: 0;
       }
 
       .btn {
@@ -67,7 +60,11 @@ document-info {
         border: none;
 
         &:hover {
-          background-color: darken($list-item-hover-color, 5%);
+          background-color: $list-item-hover-color;
+        }
+
+        &.active {
+          background-color: darken($popover-header-hover-bg-color, 10%);
         }
 
         &:active:focus {

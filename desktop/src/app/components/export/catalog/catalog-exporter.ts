@@ -1,10 +1,10 @@
 import { Resource, StringUtils, Datastore } from 'idai-field-core';
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 import { Settings } from '../../../services/settings/settings';
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
 import { getExportDocuments } from './get-export-documents';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';
@@ -51,27 +51,15 @@ export module CatalogExporter {
                 .join('\n')
         );
 
-        zipFiles(outputFilePath, tmpDir, imgDir, () => {
+        try {
+            await getAsynchronousFs().createCatalogZip(
+                outputFilePath, tmpDir + CATALOG_JSONL, CATALOG_JSONL, imgDir, CATALOG_IMAGES
+            );
+        } catch (err) {
+            console.error(err); // TODO Improve error handling
+        } finally {
             fs.rmdirSync(tmpDir, { recursive: true });
-        });
-    }
-
-
-    function zipFiles(outputFilePath: string,
-                      tmpDir: string,
-                      imgDir: string,
-                      onClose: () => void) {
-
-        const archive = archiver('zip');
-        archive.on('error', function (err) {
-            throw err;
-        });
-        const output = fs.createWriteStream(outputFilePath);
-        output.on('close', onClose);
-        archive.pipe(output);
-        archive.file(tmpDir + CATALOG_JSONL, { name: CATALOG_JSONL });
-        archive.directory(imgDir, CATALOG_IMAGES);
-        archive.finalize();
+        }
     }
 
 

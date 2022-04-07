@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FieldDocument, FieldGeometry, CategoryForm } from 'idai-field-core';
-import {FieldPolyline} from './field-polyline';
-import {FieldPolygon} from './field-polygon';
-import {FieldMarker} from './field-marker';
-import {ProjectConfiguration} from 'idai-field-core';
-import {MapComponentHelper as H} from './map-component-helper';
+import { AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output,
+    SimpleChanges } from '@angular/core';
+import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { FieldPolyline } from './field-polyline';
+import { FieldPolygon } from './field-polygon';
+import { FieldMarker } from './field-marker';
+import { MapComponentHelper as H } from './map-component-helper';
 
 
 @Component({

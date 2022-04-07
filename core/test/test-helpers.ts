@@ -113,13 +113,14 @@ export type NiceDocs =
         |[Resource.Id, string]>;
 
 
-export function createDocuments(documents: NiceDocs) {
+export function createDocuments(documents: NiceDocs, project?: string) {
 
     const documentsLookup: Lookup<FieldDocument> = {}
     const relationsLookup = {};
 
     for (const [id, type, _] of documents) {
         const d = doc('', 'identifier' + id, type, id) as FieldDocument;
+        if (project) d.project = project;
         if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
         relationsLookup[id] = d.resource.relations;
         documentsLookup[id] = d;

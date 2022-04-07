@@ -202,11 +202,11 @@ describe('images --', function() {
         await ImageOverviewPage.clickLinkButton();
 
         await SearchBarPage.typeInSearchField('S');
-        let entries = await ImageOverviewPage.getLinkModalListEntries()
+        let entries = await ImageOverviewPage.getLinkModalListEntries();
         expect(entries.length).toBeGreaterThan(2);
 
         await SearchBarPage.clickChooseCategoryFilter('operation-trench', 'modal');
-        entries = await ImageOverviewPage.getLinkModalListEntries()
+        entries = await ImageOverviewPage.getLinkModalListEntries();
         expect(entries.length).toBe(2);
 
         await ImageOverviewPage.clickCancelLinkModalButton();

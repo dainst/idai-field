@@ -45,22 +45,23 @@
     .popover-header-button {
       position: absolute;
       top: 0;
-
       height: 39px;
       background-color: transparent;
       border: none;
+      border-radius: 0;
 
       &:hover {
         background-color: $popover-header-hover-bg-color;
+      }
+
+      &.active {
+        background-color: darken($popover-header-hover-bg-color, 10%);
       }
 
       .mdi {
         position: relative;
         top: 3px;
         color: #000;
-      }
-      .mdi.active {
-        background-color: darken($popover-header-hover-bg-color, 10%);
       }
     }
   }

@@ -2,7 +2,7 @@ $teaser-width: $resources-listing-item-slim-width;
 
 sidebar-list {
   #sidebar-viewport {
-    height: calc(100vh - 100px);
+    height: calc(100vh - #{$navbar-height + $toolbar-height});
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -26,11 +26,11 @@ sidebar-list {
     }
 
     .selected {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
     }
 
     .additional-selected {
-      background-color: $list-item-hover-color;
+      background-color: lighten($list-item-hover-color, 5%);
     }
 
     #document-limit-info {
@@ -42,7 +42,7 @@ sidebar-list {
       background-color: $sidebar-bg-color;
 
       &:hover {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: $list-item-hover-color;
       }
     }
   }

@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 *ngIf="categoryFormToReplace" class="modal-title"
         i18n="@@configuration.swapForm">Formular wechseln</h5>
     <h5 *ngIf="!categoryFormToReplace && !parentCategory" class="modal-title"
@@ -7,9 +7,9 @@
         i18n="@@configuration.addSubcategory">Unterkategorie hinzufügen</h5>
 </div>
 
-<div class="modal-body row add-category-modal-body">
+<div class="modal-body row add-category-modal-body bg-light">
     <div class="col-md-6">
-        <div class="input-group mb-2">
+        <div class="mb-2">
             <input type="text"
                    id="category-name"
                    class="form-control"
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer bg-light">
     <div id="confirm-selection-button"
          class="btn btn-success"
          [class.disabled]="!selectedForm"

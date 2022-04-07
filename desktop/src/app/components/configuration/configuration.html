@@ -5,9 +5,15 @@
 <div *ngIf="ready" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
         <div id="configuration-toolbar" class="row">
-            <div id="categories-filter" class="btn-group dropdown"
+            <div id="categories-filter" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
-                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+
+                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                    <span *ngIf="selectedCategoriesFilter"
+                        id="selected-categories-filter-label">
+                        {{selectedCategoriesFilter.label}}
+                    </span>
+                </button>
                 <div id="categories-filter-selection-menu" class="dropdown-menu" ngbDropdownMenu>
                     <div id="categories-filter-selection-buttons">
                         <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[0].name"
@@ -40,7 +46,7 @@
                                 (click)="setCategoriesFilter(categoriesFilterOptions[4])">
                             {{categoriesFilterOptions[4].label}}
                         </button>
-                        <div *ngIf="isCategoryConfigured('Trench') 
+                        <div *ngIf="isCategoryConfigured('Trench')
                                     || isCategoryConfigured('Building')
                                     || isCategoryConfigured('Survey')"
                             class="dropdown-divider"></div>
@@ -55,12 +61,6 @@
                             {{categoriesFilterOptions[6].label}}
                         </button>
                     </div>
-                </div>
-
-                <div *ngIf="selectedCategoriesFilter"
-                     id="selected-categories-filter-label"
-                     class="btn btn-outline-primary">
-                     {{selectedCategoriesFilter.label}}
                 </div>
             </div>
             <div class="col">

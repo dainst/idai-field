@@ -56,7 +56,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "node_modules/roboto-fontface/css/roboto/sass",
+                "node_modules/@fontsource/open-sans/scss/",
                 "node_modules/bootstrap/scss",
                 "node_modules/@mdi/font/scss/"
               ]

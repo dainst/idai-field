@@ -1,10 +1,9 @@
 import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
-import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from 'idai-field-core';
-import { Document } from 'idai-field-core';
 import L from 'leaflet';
+import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore, ProjectConfiguration,
+    Document } from 'idai-field-core';
 import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
-import { ProjectConfiguration } from 'idai-field-core';
 import { ImageContainer } from '../../../../services/imagestore/image-container';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
@@ -12,10 +11,7 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
 
-
-const fs = typeof window !== 'undefined'
-  ? window.require('fs')
-  : require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 @Component({

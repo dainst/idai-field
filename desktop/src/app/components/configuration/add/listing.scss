@@ -19,7 +19,7 @@
     }
 
     &.selected {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
       transition: background-color .5s ease;
     }
 

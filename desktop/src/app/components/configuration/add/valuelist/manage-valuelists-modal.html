@@ -1,19 +1,18 @@
-
 <configuration-context-menu *ngIf="contextMenu.isOpen()"
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
 
-<div class="modal-header manage-valuelists-modal-header configuration-editor-modal-header">
+<div class="modal-header configuration-editor-modal-header">
     <h5 class="modal-title"
         i18n="@@configuration.manageValuelists">Wertelisten verwalten</h5>
     <button id="cancel-manage-valuelists-modal-button"
-            class="btn btn-primary" 
+            class="btn btn-primary btn-square" 
             (click)="cancel()">
         <span class="mdi mdi-close"></span>
     </button>
 </div>
 
-<div class="modal-body row manage-valuelists-modal-body">
+<div class="modal-body row manage-valuelists-modal-body bg-light">
     <div class="col-md-6">
         <valuelist-search-bar [searchQuery]="searchQuery"
                               (onQueryChanged)="applyValuelistSearch()"></valuelist-search-bar>

@@ -3,8 +3,10 @@
  */
 #search-suggestions {
   position: absolute;
+  top: 38px;
+  left: 0;
   text-align: left;
-  width: calc(100% - 11px);
+  width: calc(100% - 50px);
   background-color: rgb(238, 238, 238);
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   user-select: none;
@@ -23,7 +25,7 @@
     transition: background-color .25s ease;
 
     &.selected-suggestion {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: $list-item-hover-color;
       transition: background-color .5s ease;
     }
   }

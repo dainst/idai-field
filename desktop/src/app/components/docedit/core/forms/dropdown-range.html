@@ -1,8 +1,10 @@
 <div class="dating-component">
     <div class="input-group">
-        <label *ngIf="showEndElements()">
-            <span i18n="@@docedit.forms.dropdownRange.from">von</span>
-        </label>
+        <div class="input-group-prepend">
+            <label *ngIf="showEndElements()">
+                <span i18n="@@docedit.forms.dropdownRange.from">von</span>
+            </label>
+        </div>
 
 
         <!-- the following block is duplicated for
@@ -35,14 +37,16 @@
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
         </select>
-        <button *ngIf="!showEndElements()"
-                ngbTooltip="Start- und Endzeitraum angeben"
-                i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
-                placement="left"
-                class="btn btn-outline-primary"
-                type="button"
-                (click)="activateEnd()">
-            <span class="mdi mdi-arrow-expand-horizontal"></span>
-        </button>
+        <div class="input-group-append">
+            <button *ngIf="!showEndElements()"
+                    ngbTooltip="Start- und Endzeitraum angeben"
+                    i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
+                    placement="left"
+                    class="btn btn-outline-primary"
+                    type="button"
+                    (click)="activateEnd()">
+                <span class="mdi mdi-arrow-expand-horizontal"></span>
+            </button>
+        </div>
     </div>
 </div>

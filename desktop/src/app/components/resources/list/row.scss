@@ -65,4 +65,10 @@
   .btn-small:hover {
     background-color: darken($list-item-hover-color, 5%);
   }
+
+  .list-edit-button,
+  .list-move-button,
+  .list-delete-button {
+    border-radius: 32px !important;
+  }
 }

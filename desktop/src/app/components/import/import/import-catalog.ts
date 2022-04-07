@@ -47,7 +47,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
             const importCatalog = getImportTypeCatalog(importDocuments);
 
             if (isOwned(context, importCatalog)) {
-                await assertCatalogNotOwned(services, context, importCatalog);
+                await assertCatalogNotOwned(services, importCatalog);
                 await assertNoImagesOverwritten(services, importDocuments);
                 for (const importDocument of importDocuments) {
                     delete importDocument.project;
@@ -68,13 +68,13 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 importOneDocument(services, existingCatalogAndImageDocuments));
 
             await removeRelatedImages(
-                services, updateDocuments, existingDocumentsRelatedImages);
+                services, updateDocuments, existingDocumentsRelatedImages
+            );
             await removeObsoleteCatalogDocuments(
-                services, existingCatalogDocuments, updateDocuments);
+                services, existingCatalogDocuments, updateDocuments
+            );
             return { errors: [], successfulImports: updateDocuments.length };
-
         } catch (errWithParams) {
-
             await cleanUpLeftOverImagesFromReader(services, importDocuments);
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -92,7 +92,7 @@ async function assertNoIdentifierClashes(services: ImportCatalogServices,
                 { constraints: { 'identifier:match': document.resource.identifier } });
 
         if (found.totalCount > 0
-            && (document.resource.id !== found.documents[0].resource.id
+            && (document.project !== found.documents[0].project
                 // This is just to double check. Even if it has the same id and same identifier
                 // we won't import it if it is owned by the user.
                 // Currrently reimport of catalog as owner is forbidden, so this won't interfere there.
@@ -147,7 +147,6 @@ async function assertNoImagesOverwritten(services: ImportCatalogServices,
 // the owner of the catalog to remove the catalog consciously so that he then can
 // re-import it afterwards.
 async function assertCatalogNotOwned(services: ImportCatalogServices,
-                                     context: ImportCatalogContext,
                                      importCatalog: Document) {
 
 

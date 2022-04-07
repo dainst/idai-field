@@ -2,6 +2,8 @@
  * @author Thomas Kleinke
  */
 
+ $active-navigation-button-background-color: #d5dfef;
+
 navigation {
   width: 100%;
 
@@ -20,11 +22,19 @@ navigation {
 
     .root-document {
       @extend .btn-outline-primary, :active;
+      background-color: $active-navigation-button-background-color !important;
+      color: $primary !important;
       z-index: auto !important;
     }
 
     .navigation-button {
       padding-top: 7px;
+      white-space: nowrap;
+
+      &:active {
+        color: $primary !important;
+        background-color: $active-navigation-button-background-color !important;
+      }
     }
 
     #selected-operation {
@@ -33,22 +43,26 @@ navigation {
 
     .root-document ~ .navigation-button,
     .root-document ~ .navigation-button:active {
-      color: lighten(#5572A1, 30%);
-      border-color: lighten(#5572A1, 30%);
+      color: lighten($primary-button-color, 30%);
+      border-color: lighten($primary-button-color, 30%);
     }
 
     .root-document ~ .navigation-button:hover {
-      color: lighten(#5572A1, 35%);
-      border-color: lighten(#5572A1, 35%);
+      color: lighten($primary-button-color, 35%);
+      border-color: lighten($primary-button-color, 35%);
     }
 
     .root-document + .navigation-button,
     .root-document + .navigation-button:hover {
-      border-left-color: #5572A1;
+      border-left-color: $primary-button-color;
     }
 
     #navigation-button-group {
       max-width: calc(100% - 50px);
+    }
+
+    .navigation-button {
+      box-shadow: none !important;
     }
 
     .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
@@ -64,24 +78,31 @@ navigation {
     }
 
     .navigation-button:not(:last-child):before {
-      border-left-color: darken(#5572A1, 5%);
+      border-left-color: darken($primary-button-color, 5%);
       border-width: 6px;
       margin-top: -6px;
+      transition: border-left-color 0.15s ease-in-out;
     }
 
     .navigation-button:not(:last-child):after {
       border-left-color: #fff;
       border-width: 5px;
       margin-top: -5px;
+      transition: border-left-color 0.15s ease-in-out;
+    }
+
+    .navigation-button.root-document:not(:last-child):after,
+    .navigation-button:active:not(:last-child):after {
+      border-left-color: $active-navigation-button-background-color;
     }
 
     .root-document ~ .navigation-button:not(:last-child):before {
-      border-left-color: lighten(#5572A1, 30%);
+      border-left-color: lighten($primary-button-color, 30%);
     }
 
     #hierarchy-mode-switch {
       padding: 0;
-      width: 42px;
+      width: 39px;
       height: 39px;
 
       .mdi {

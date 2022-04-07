@@ -4,12 +4,19 @@ $lightgraybgr: #eeeeee;
 
 .btn {
   cursor: default !important;
+  box-shadow: none !important;
+}
+
+.btn-square {
+  height: 39px !important;
+  width: 39px !important;
+  padding: 0;
 }
 
 .circular-button {
   cursor: default !important;
   text-align: center;
-  padding: 4px 0 0 1px;
+  padding: 3px 0 0 1px;
   border-radius: 50%;
   min-width: 35px;
   height: 39px;
@@ -65,10 +72,6 @@ $lightgraybgr: #eeeeee;
 
 .red-button:hover {
   background-color: lighten($redbgr, 35%);
-}
-
-.btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {
-  box-shadow: none !important;
 }
 
 .nav-link {
@@ -133,7 +136,6 @@ category-switcher-button {
 }
 
 .category-button:hover {
-
   category-icon {
     filter: brightness(1.15);
     transition: filter .3s ease;
@@ -163,7 +165,7 @@ category-switcher-button {
 
 .show > .btn-outline-primary.dropdown-toggle {
   @extend :active;
-  border-color: #5572A1;
+  border-color: $primary-button-color;
 }
 
 .dropdown {

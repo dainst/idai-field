@@ -49,6 +49,10 @@ export class ResourcesMapComponent {
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.parentDocument = this.getParentDocument(path);
         });
+
+        this.menuService.menuContextNotifications().subscribe(menuContext => {
+            if (menuContext === MenuContext.MAP_LAYERS_EDIT) this.resourcesComponent.closePopover();
+        });
     }
 
 

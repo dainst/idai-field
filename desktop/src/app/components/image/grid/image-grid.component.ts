@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Datastore, ImageDocument} from 'idai-field-core';
-import {constructGrid} from './construct-grid';
-import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
-import {ImageVariant} from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
+import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { constructGrid } from './construct-grid';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 
 const DROPAREA = 'droparea';
@@ -50,6 +49,7 @@ export class ImageGridComponent implements OnChanges {
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
+        
         if (event.shiftKey) {
             this.onShiftClick.emit(document);
         } else {
@@ -98,9 +98,6 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-
-
-
     private async _calcGrid() {
 
         if (!this.documents) return;
@@ -141,7 +138,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) this.documents = [];
 
-        this.documents.unshift({
+        this.documents = [{
             id: DROPAREA,
             resource: {
                 id: DROPAREA,
@@ -153,7 +150,6 @@ export class ImageGridComponent implements OnChanges {
                 height: this.compressDropArea ? 0.2 : 1,
                 relations: { depicts: [] }
             }
-        } as any);
+        } as any].concat(this.documents);
     }
-
 }

@@ -55,7 +55,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public setExpandAllGroups = (expand: boolean) => this.imagesState.setExpandAllGroups(expand);
 
-    public isEditingAllowed = () => !this.linkedDocument?.project;
+    public isEditingAllowed = () => this.linkedDocument && !this.linkedDocument.project;
 
     protected getDocument = () => (this.selectedImage as ImageRowItem).document;
 
@@ -169,7 +169,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
     private async removeImageLinks(documents: Array<ImageDocument>) {
 
         await this.imageRelationsManager.unlink(
-            this.linkedDocument as FieldDocument, ...documents);
+            this.linkedDocument as FieldDocument, ...documents
+        );
 
         await this.loadImages();
     }

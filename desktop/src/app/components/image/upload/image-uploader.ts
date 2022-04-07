@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageSyncService} from 'idai-field-core';
+    ImageStore} from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -32,7 +32,6 @@ export class ImageUploader {
 
 
     public constructor(private imagestore: ImageStore,
-                       private imageSyncService: ImageSyncService,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,

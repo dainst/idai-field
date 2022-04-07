@@ -38,8 +38,7 @@ export class SearchBarPage {
 
     public static async clickCategoryFilterButton(context: SearchBarContext = 'resources') {
 
-        const filterButtonElement = await this.getFilterButton(context);
-        return click(await filterButtonElement.$('.search-filter'));
+        return click(await this.getFilterButton(context));
     }
 
 

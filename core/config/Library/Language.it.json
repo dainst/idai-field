@@ -1,11 +1,12 @@
 {
   "groups": {
     "stem": "Dati base",
-    "properties": "Eigenschaften",
+    "properties": "Proprietà",
     "time": "Cronologia",
     "position": "Posizione",
     "dimension": "Dimensioni",
-    "identification": "Definizione"
+    "identification": "Definizione",
+    "other": "Altri"
   },
   "commons": {
     "dimensionLength": {

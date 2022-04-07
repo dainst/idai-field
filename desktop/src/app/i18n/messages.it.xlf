@@ -1477,7 +1477,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.header" datatype="html">
         <source> Konfiguration aus anderem Projekt importieren </source>
-        <target state="new"> Konfiguration aus anderem Projekt importieren </target>
+        <target state="final"> Importare la configurazione da un altro progetto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">45,61</context>
@@ -1485,7 +1485,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
-        <target state="new"> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </target>
+        <target state="final"> Si prega di notare che tutte le modifiche alla configurazione (incluse le liste di valori) vengono perse durante l'importazione. La configurazione del progetto verrà completamente sostituita dalla configurazione del progetto selezionato. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -5965,7 +5965,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.importFailure" datatype="html">
         <source>Die Projektkonfiguration konnte nicht importiert werden.</source>
-        <target state="new">Die Projektkonfiguration konnte nicht importiert werden.</target>
+        <target state="final">Non è stato possibile importare la configurazione del progetto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

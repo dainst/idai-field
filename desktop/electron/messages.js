@@ -133,7 +133,7 @@ const messageDictionary = {
         'menu.tools.import': 'Importa',
         'menu.tools.export': 'Esporta',
         'menu.configuration.valuelistManagement': 'Gesione delle liste di valori',
-        'menu.configuration.importConfiguration': 'TRANSLATE',
+        'menu.configuration.importConfiguration': 'Importare la configurazione...',
         'menu.configuration.showHiddenFields': 'Mostrare i campi nascosti',
         'menu.view': 'Mostra',
         'menu.view.reload': 'Aggiorna',

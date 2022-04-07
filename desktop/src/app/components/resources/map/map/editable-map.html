@@ -46,7 +46,7 @@
         <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
     <div *ngIf="getEditorType() === 'polygon' || getEditorType() === 'polyline'" id="map-editor-button-drag"
-         class="btn btn-primary" [class.active]="isInDragMode()" (click)="toggleDragMode()"
+         class="btn btn-primary" [class.active]="dragging" (click)="toggleDragMode()"
          ngbTooltip="Verschieben"
          i18n-ngbTooltip="@@resources.map.drag"
          placement="top" container="body">

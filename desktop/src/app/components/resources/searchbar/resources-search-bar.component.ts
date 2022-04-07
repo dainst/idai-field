@@ -56,7 +56,10 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
         let insideSearchBarComponent: boolean = false;
 
         do {
-            if (target.id === 'resources-search-bar-filter-button') insideFilterMenu = true;
+            if (target.id === 'resources-search-bar-filter-button'
+                    || target.id === 'resources-search-bar-filter-menu') {
+                insideFilterMenu = true;
+            }
             if (target === this.elementRef.nativeElement) insideSearchBarComponent = true;
 
             target = target.parentNode;

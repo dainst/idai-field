@@ -8,8 +8,9 @@
             class="form-control search-bar-input"
             placeholder="Suchen..." i18n-placeholder="@@widgets.searchBar.placeholder">
 
-        <div *ngIf="isFilterMenuAvailable()" id="filter-button" class="input-group-append filter-button">
-            <button class="btn btn-primary search-filter"
+        <div *ngIf="isFilterMenuAvailable()" class="input-group-append filter-button">
+            <button id="filter-button"
+                    class="btn btn-primary search-filter"
                     type="button"
                     [ngbPopover]="filterMenu"
                     [autoClose]="false"
@@ -23,7 +24,7 @@
                 </span>
             </button>
             <ng-template #filterMenu>
-                <div class="filtermenu">
+                <div id="filter-menu" class="filtermenu">
                     <div class="popover-custom-title">
                         <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                     </div>

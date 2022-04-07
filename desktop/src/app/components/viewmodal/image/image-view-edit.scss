@@ -31,6 +31,7 @@ image-view-edit {
     #link-images-button,
     #add-images-button {
       border-style: none;
+      border-radius: 0;
       width: 100%;
       background-color: white;
       color: $primary-button-color;

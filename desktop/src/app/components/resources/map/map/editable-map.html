@@ -13,14 +13,16 @@
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge badge-secondary">
         <b>Y:</b> {{mousePositionCoordinates[1]}}
     </div>
-    <div *ngIf="selectedPolygon || selectedPolyline || selectedMarker" id="map-editor-button-delete"
+    <div *ngIf="(selectedPolygon || selectedPolyline || selectedMarker) && !dragging"
+         id="map-editor-button-delete"
          class="btn btn-danger" (click)="deleteGeometry()"
          ngbTooltip="Löschen"
          i18n-ngbTooltip="@@resources.map.delete"
          placement="top" container="body">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
-    <div *ngIf="!selectedPolygon && !selectedPolyline && !selectedMarker" id="map-editor-button-delete-disabled"
+    <div *ngIf="!selectedPolygon && !selectedPolyline && !selectedMarker || dragging"
+         id="map-editor-button-delete-disabled"
          class="btn btn-danger disabled">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>

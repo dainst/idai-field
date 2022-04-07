@@ -1,12 +1,21 @@
-.object-array-field-widget {
-	@extend .bg-light;
-	.card-footer {
-		margin-left: -10px;
-		margin-right: -10px;
-		border-top: none;
+dai-dating,
+dai-dimension,
+dai-literature {
+	.btn-info {
+		margin-left: 0 !important;
+	}
 
-		.btn-primary {
-			margin-right: 7px;
+	.object-array-field-widget {
+		@extend .bg-light;
+
+		.card-footer {
+			margin-left: -10px;
+			margin-right: -10px;
+			border-top: none;
+
+			.btn-primary {
+				margin-right: 7px;
+			}
 		}
 	}
 }

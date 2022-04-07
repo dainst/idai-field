@@ -1,0 +1,316 @@
+{
+  "categories": {
+    "Project": {
+      "fields": {
+        "configVersion": {
+          "label": "Version der Konfiguration: 11.02.2022",
+          "description": "Die Überschrift dieses Feldes besagt, mit welcher Version der Konfiguration Sie arbeiten."
+        }
+      }
+    },
+    "Operation": {
+      "fields": {
+        "vaguenessOfGeometry": {
+          "label": "Vagheit der Geometrie",
+          "description": "Wie vage ist die Geometrie der Ressource definiert? Wählen Sie einen Wert"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "isMultiFind": {
+          "label": "ist Sammelfund"
+        },
+        "inscriptionInventoryNumber": {
+          "label": "Inventarnummer der Inschrift auf dem Fund",
+          "description": "Am Inventarbucheintrag des Fundes vermerkte Inventarnummer der Inschriften. Nicht zu verwechseln mit der IvO-Nummer!"
+        },
+        "storageShelf": {
+          "label": "Regal (, Schrank, Vitrine o.ä.)",
+          "description": "Regal, Schrank, Vitrine o. ä. am Aufbewahrungsort"
+        },
+        "storageShelfCompartment": {
+          "label": "Fach in Regal o. ä.",
+          "description": "Fach, Schublade o. ä. in Regal, Schrank, Vitrine o. ä. am Aufbewahrungsort"
+        },
+        "storagePlaceOld": {
+          "label": "Alter Aufbewahrungsort",
+          "description": "Wo wurde der Fund früher aufbewahrt?"
+        },
+        "vaguenessOfGeometry": {
+          "label": "Vagheit der Geometrie",
+          "description": "Wie vage ist die Geometrie der Ressource definiert? Wählen Sie einen Wert"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Inscription": {
+      "fields": {
+        "ivoNumber": {
+          "label": "IvO-Nummer, s. OLYMPIA V - IvO"
+        },
+        "ivoCategory": {
+          "label": "IvO-Kategorie, s. OLYMPIA V - IvO"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Drawing" :{
+      "fields": {
+        "imageSubject": {
+          "label": "Fotomotiv",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall wählen Sie 'unklar'."
+        }
+      }
+    },
+    "Stone" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Terracotta" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Glass" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Brick" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "PlasterFragment" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Pottery" :{
+      "fields": {
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Metal" :{
+      "fields": {
+        "objectTypeGeneral": {
+          "label": "Allgemeiner Metalltyp",
+          "description": ""
+        },
+        "objectType": {
+          "label": "Metalltyp",
+          "description": ""
+        },
+        "objectTypeSpecific": {
+          "label": "spezifischer Metalltyp",
+          "description": ""
+        },
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "Helmet" :{
+      "label": "Helm",
+      "fields": {
+        "fragmentDescription": {
+          "label": "Beschreibung der Fragmente",
+          "description": ""
+        },
+        "metalMaterial": {
+          "label": "Metall",
+          "description": "Genauere Spezifikation des Materials"
+        },
+        "objectTypeGeneral": {
+          "label": "Allgemeiner Metalltyp",
+          "description": ""
+        },
+        "objectType": {
+          "label": "Metalltyp",
+          "description": ""
+        },
+        "objectTypeSpecific": {
+          "label": "spezifischer Metalltyp",
+          "description": ""
+        },
+        "typeFrielinghaus": {
+          "label": "Helmtyp nach Frielinghaus",
+          "description": ""
+        }
+      }
+    },
+    "SculptureFragment" :{
+      "label": "Skulpturfragment",
+      "fields": {
+        "referencesToPublications": {
+          "label": "Verweise auf Publikationen",
+          "description": "Welche Publicationen erwähnen das Fragment)"
+        },
+        "stoneMaterial": {
+          "label": "Art des Steins",
+          "description": "Genauere Spezifikation des Steinmaterials"
+        },
+        "isFragmentOf": {
+          "label": "Skulpur, zu der das Fragment gehört",
+          "description": "Name der Skulptur"
+        },
+        "spatialLocation2": {
+          "label": "Zusätzliche Beschreibung der räumlichen Lage",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        }
+      }
+    },
+    "RoofElement" :{
+      "label": "Dachelement",
+      "fields": {
+        "inventoryNumberMallwitz": {
+          "label": "Inventarnummer nach Mallwitz",
+          "description": "Inventarnummer aus dem handgeschriebenen Ziegel-Inventar von Mallwitz"
+        },
+        "descriptionInventoryMallwitz": {
+          "label": "Beschreibung aus dem Ziegel-Inventar von Mallwitz",
+          "description": "Beschreibung aus dem handgeschriebenen Ziegel-Inventar von Mallwitz"
+        },
+        "catalogueNumberOF24": {
+          "label": "Katalognummer nach Olymp. Forschungen 24",
+          "description": "Katalognummer aus OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "descriptionCatalogueOF24": {
+          "label": "Beschreibung nach Olymp. Forschungen 24",
+          "description": "Beschreibung aus OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "spatialLocationInventoryMallwitz": {
+          "label": "Fundort aus dem Ziegel-Inventar von Mallwitz",
+          "description": "Fundort aus dem handgeschriebenen Ziegel-Inventar von Mallwitz"
+        },
+        "spatialLocationCatalogueOF24": {
+          "label": "Fundort nach Olymp. Forschungen 24",
+          "description": "Fundort aus OF24: Heiden, J. (1995). Die Tondächer von Olympia. Berlin: W. de Gruyter."
+        },
+        "spatialLocation2": {
+          "label": "Fundort nach Olympia V u.a.",
+          "description": "Hier können Sie die Beschreibung der räumlichen Lage erweitern"
+        },
+        "roofingSystem": {
+          "label": "Art der Dachdeckung",
+          "description": "Dachdeckungs-System, zu dem das Objekt gehört"
+        },
+        "roofElementMaterial": {
+          "label": "Material",
+          "description": "Material des Dachelements"
+        },
+        "roofElementType": {
+          "label": "Typ des Dachelement",
+          "description": "todo"
+        },
+        "roofElementPosition": {
+          "label": "roofElementPosition",
+          "description": "Einbauort des Objektes am Dach"
+        },
+        "roofElementForm": {
+          "label": "roofElementForm",
+          "description": "todo"
+        },
+        "roofElementFindContext": {
+          "label": "roofElementFindContext",
+          "description": "Dachterrakotten können in verschiedenen Kontexten gefunden werden. Theoretisch sind diese in bereits in der Stratigr. Einheit dokumentiert, was allerdings zu prüfen ist."
+        },
+        "roofElementProperties": {
+          "label": "roofElementProperties",
+          "description": "todo"
+        },
+        "amountFragmentsUndefined": {
+          "label": "Anzahl der undefinierten Fragmente",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerTopLeft": {
+          "label": "Anzahl der Fragmente mit Ecke oben links",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerTopRight": {
+          "label": "Anzahl der Fragmente mit Ecke oben rechts",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerBottomLeft": {
+          "label": "Anzahl der Fragmente mit Ecke unten links",
+          "description": "todo"
+        },
+        "amountFragmentsWithCornerBottomRight": {
+          "label": "Anzahl der Fragmente mit Ecke unten rechts",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeTop": {
+          "label": "Anzahl der Fragmente mit Oberkante",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeBottom": {
+          "label": "Anzahl der Fragmente mit Unterkante",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeLeft": {
+          "label": "Anzahl der Fragmente mit Kante links",
+          "description": "todo"
+        },
+        "amountFragmentsWithEdgeRight": {
+          "label": "Anzahl der Fragmente mit Kante rechts",
+          "description": "todo"
+        },
+        "amountFragmentsWithSupportiveFeatures": {
+          "label": "Anzahl der Fragmente mit Stützelementen",
+          "description": "todo"
+        },
+        "amountFragmentsWithSpecialFeatures": {
+          "label": "Anzahl der Fragmente mit besonderen Merkmalen",
+          "description": "todo"
+        },
+        "amountFragmentsWithBody": {
+          "label": "Anzahl der Fragmente mit 'body'",
+          "description": "todo"
+        },
+        "roofElementWorkflowSteps": {
+          "label": "Workflow, erledigte Aufgaben",
+          "description": "Haken setzen bei den erledigten Aufgaben"
+        }
+      }
+    }
+  }
+}

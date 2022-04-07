@@ -16,12 +16,13 @@
                             [visible]="suggestionsVisible">
         </search-suggestions>
 
-        <div *ngIf="isFilterMenuAvailable()" id="resources-search-bar-filter-button"
+        <div *ngIf="isFilterMenuAvailable()"
              class="input-group-append">
             <resources-search-constraints *ngIf="extendedSearch"
                     [category]="getSelectedCategory()">
             </resources-search-constraints>
-            <button class="btn btn-primary search-filter"
+            <button id="resources-search-bar-filter-button"
+                    class="btn btn-primary search-filter"
                     type="button"
                     (click)="hideSuggestions()"
                     [ngbPopover]="filterMenu"
@@ -36,7 +37,7 @@
                 </span>
             </button>
             <ng-template #filterMenu>
-                <div class="filtermenu">
+                <div id="resources-search-bar-filter-menu" class="filtermenu">
                     <div class="popover-custom-title">
                         <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                     </div>

@@ -57,8 +57,12 @@ export class ImageConverter {
 
     private convertWithElectron(buffer: Buffer) {
 
-        return nativeImage.createFromBuffer(buffer)
+        const x = nativeImage.createFromBuffer(buffer)
             .resize({ height: TARGET_HEIGHT });
+        console.log('electron result:', x);
+        console.log('is empty?', x.isEmpty());
+
+        return x;
     }
 
 

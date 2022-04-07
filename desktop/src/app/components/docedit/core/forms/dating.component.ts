@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Resource, Dating} from 'idai-field-core';
-import {UtilTranslations} from '../../../../util/util-translations';
+import { Component, Input } from '@angular/core';
+import { Resource, Dating } from 'idai-field-core';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({

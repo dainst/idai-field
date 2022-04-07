@@ -1,0 +1,12 @@
+.object-array-field-widget {
+	@extend .bg-light;
+	.card-footer {
+		margin-left: -10px;
+		margin-right: -10px;
+		border-top: none;
+
+		.btn-primary {
+			margin-right: 7px;
+		}
+	}
+}

@@ -28,7 +28,7 @@
 </div>
 
 <ng-template #dimensionFormTemplate let-dimension="dimension">
-	<div class="card">
+	<div class="card object-array-field-widget">
 		<div class="card-block">
 			<select class="form-control w100 mb-2" [(ngModel)]="dimension['isRange']"
 					(ngModelChange)="toggleRangeOnOff(dimension, $event)" name="range">
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 		<div class="card-footer" align="right">
-			<button class="btn btn-primary dimension-ok-button" [disabled]="!isValid(dimension)"
+			<button class="btn btn-primary" [disabled]="!isValid(dimension)"
 					(click)="saveDimension(dimension)"
 					i18n="@@buttons.ok">OK</button>
 			<button class="btn btn-secondary" *ngIf="newDimension == dimension"

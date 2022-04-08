@@ -525,6 +525,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const result: string = await modalRef.result;
 
             if (result === 'save') {
+                AngularUtility.blurActiveElement();
                 return await this.openSaveModal();
             } else if (result === 'discard') {
                 await this.discardChanges();

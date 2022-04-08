@@ -1,24 +1,12 @@
 @import 'taskbar-conflicts';
 @import 'taskbar-update';
+@import 'taskbar-sync-status';
 
 .taskbar {
   margin-top: 2px;
 
   .mdi {
     font-size: 1.7em;
-  }
-
-  .mdi-cloud,
-  .mdi-cloud-outline-off,
-  .mdi-alert-outline {
-    color: #fff;
-  }
-
-  .cloud-overlay {
-    position: absolute;
-    padding-left: 5px;
-    color: $navbar-default-bg;
-    pointer-events: none;
   }
 
   #update {

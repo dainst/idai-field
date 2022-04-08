@@ -1,0 +1,37 @@
+taskbar-sync-status {
+  #sync-status {
+    position: relative;
+    top: 1px;
+    left: 1px;
+
+    &.animated-icon {
+      position: relative;
+      top: 12px;
+      height: 18px;
+      overflow: hidden;
+  
+      .mdi-cloud,
+      .mdi-alert-outline {
+        position: relative;
+        bottom: 52px;
+        color: $navbar-link-color;
+      }
+    
+      .cloud-overlay {
+        position: relative;
+        padding-left: 5px;
+        bottom: 12px;
+        z-index: 1;
+        color: #ddd;
+        pointer-events: none;
+      }
+    }
+
+    .mdi-cloud:hover,
+    .mdi-cloud-off-outline:hover,
+    .mdi-cloud-check:hover {
+      color: $link-hover-color;
+    }
+
+  }
+}

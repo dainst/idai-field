@@ -1,4 +1,4 @@
-import { Document } from '../../model/document';
+import { Document, NewDocument } from '../../model/document';
 import { getSampleDocuments } from './sample-data';
 
 
@@ -18,28 +18,31 @@ export class SampleDataLoaderBase {
 
     protected async loadSampleDocuments(db: any): Promise<any> {
 
-        for (let document of getSampleDocuments(this.locale)) {
-            await SampleDataLoaderBase.createDocument(document as Document, db);
+        try {
+            const project = await db.get('project');
+            await db.remove('project', project._rev);
+        } catch {
+            // Ignore errors
         }
+
+        const documents = getSampleDocuments(this.locale).map(document => {
+            return SampleDataLoaderBase.createDocument(document, db);
+        });
+
+        return db.bulkDocs(documents);
     }
 
 
-    protected static async createDocument(document: Document, db: PouchDB.Database) {
+    protected static createDocument(document: NewDocument, db: PouchDB.Database): Document {
 
-        document.created = { user: 'sample_data', date: new Date() };
-        document.modified = [{ user: 'sample_data', date: new Date() }];
-        document._id = document.resource.id;
-        document.resource.type = document.resource.category;
-        delete document.resource.category;
+        const result: Document = Document.clone(document as Document);
 
-        if (document.resource.id === 'project') {
-            try {
-                const project = await db.get('project');
-                await db.remove('project', project._rev);
-            } catch {
-                // Ignore errors
-            }
-        }
-        await db.put(document);
+        result.created = { user: 'sample_data', date: new Date() };
+        result.modified = [{ user: 'sample_data', date: new Date() }];
+        result._id = document.resource.id;
+        result.resource.type = document.resource.category;
+        delete result.resource.category;
+
+        return result;
     }
 }

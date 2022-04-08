@@ -151,7 +151,7 @@ export class ImageOverviewTaskbarComponent {
 
     private async addLinks(targetDocument: FieldDocument) {
 
-        const savingLinkChangesModal = this.modalService.open(
+        const savingChangesModal = this.modalService.open(
             SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
@@ -163,14 +163,14 @@ export class ImageOverviewTaskbarComponent {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
-            savingLinkChangesModal.close();
+            savingChangesModal.close();
         }
     }
 
 
     private async removeLinks() {
 
-        const savingLinkChangesModal = this.modalService.open(
+        const savingChangesModal = this.modalService.open(
             SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
@@ -184,7 +184,7 @@ export class ImageOverviewTaskbarComponent {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
-            savingLinkChangesModal.close();
+            savingChangesModal.close();
         }
     }
 

@@ -64,7 +64,11 @@
   }
 
   #loading-icon-container {
+    position: relative;
+    top: 18px;
+    width: calc(100% - 50px);
     height: calc(100vh - 150px);
+    margin: auto;
 
     loading-icon {
       position: relative;

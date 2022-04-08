@@ -18,6 +18,9 @@
 }
 
 .conflicts-popover {
+  border-top: none !important;
+  box-shadow: none !important;
+
   .popover-header {
     width: 350px;
     position: absolute;

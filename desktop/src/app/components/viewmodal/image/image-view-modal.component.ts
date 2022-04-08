@@ -81,19 +81,21 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public setMainImage() {
+    public async setMainImage() {
 
         if (this.selected.length !== 1) return;
 
-        const mainImageId: string = this.selected[0].resource.id;
-
-        this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN] = [mainImageId].concat(
-            this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN].filter(targetId => {
-                return targetId !== mainImageId;
-            })
+        const savingChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
-        this.loadImages();
+        try {
+            await this.changeMainImage();
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingChangesModal.close();
+        }
     }
 
 
@@ -128,7 +130,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async removeLinks() {
 
-        const savingLinkChangesModal = this.modalService.open(
+        const savingChangesModal = this.modalService.open(
             SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
@@ -138,7 +140,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
-            savingLinkChangesModal.close();
+            savingChangesModal.close();
         }
     }
 
@@ -175,7 +177,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     private async saveChanges(selectedImages: Array<ImageDocument>) {
 
-        const savingLinkChangesModal = this.modalService.open(
+        const savingChangesModal = this.modalService.open(
             SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
@@ -187,8 +189,23 @@ export class ImageViewModalComponent extends ViewModalComponent {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
-            savingLinkChangesModal.close();
+            savingChangesModal.close();
         }
+    }
+
+
+    private async changeMainImage() {
+
+        const mainImageId: string = this.selected[0].resource.id;
+
+        this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN] = [mainImageId].concat(
+            this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN].filter(targetId => {
+                return targetId !== mainImageId;
+            })
+        );
+
+        this.linkedDocument = await this.datastore.update(this.linkedDocument);
+        this.loadImages();
     }
 
 

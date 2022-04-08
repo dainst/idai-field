@@ -8,7 +8,7 @@
       transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
     }
 
-    .value-item {
+    .value-items {
       margin-bottom: 0.5rem !important;
 
       &.hidden-value {
@@ -27,13 +27,13 @@
           .mdi {
             position: relative;
             bottom: 2px;
-            right: 4px;
+            right: 5px;
           }
         }
 
         .cdk-drag-handle {
           position: relative;
-          top: 7px;
+          top: 5px;
           right: 4px;
           cursor: grab;
         }
@@ -42,7 +42,15 @@
   }
 
   #add-value-button {
-    height: 38px;
+    position: relative;
+    left: 1px;
+    height: 33.5px;
+
+    .mdi {
+      position: relative;
+      bottom: 2px;
+      right: 1px;
+    }
   }
 
   #new-value-input {
@@ -51,6 +59,7 @@
   }
 
   #sort-label {
+    font-size: 15px;
     width: 300px;
     float: left;
     user-select: none;

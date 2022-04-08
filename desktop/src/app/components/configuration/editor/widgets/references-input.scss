@@ -3,7 +3,13 @@ references-input {
     border-right: none;
   }
 
-  button {
-    height: 38px;
+  .btn-danger {
+    height: 33.5px;
+
+    .mdi {  
+      position: relative;
+      bottom: 2px;
+      right: 1px;
+    }
   }
 }

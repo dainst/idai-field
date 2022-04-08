@@ -18,6 +18,10 @@ valuelist-view {
       border: 1px solid white;
       border-radius: 5px;
 
+      code {
+        font-size: 11px;
+      }
+
       &:hover {
         position: relative;
         max-width: none;

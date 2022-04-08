@@ -30,9 +30,9 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public readFile(path: string): Promise<Buffer> {
+    public async readFile(path: string): Promise<Buffer> {
 
-        return getAsynchronousFs().readFile(path);
+        return Buffer.from(await getAsynchronousFs().readFile(path));
     }
 
 

@@ -3,6 +3,7 @@
       "categoryName": "RoomCeiling",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -30,6 +31,7 @@
       "categoryName": "RoomFloor",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "valuelists": {},
       "groups": [
         {
@@ -58,6 +60,7 @@
       "categoryName": "RoomWall",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -85,6 +88,7 @@
       "categoryName": "Trench",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -108,6 +112,7 @@
       "categoryName": "Glass",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "properties",
@@ -533,6 +538,7 @@
     "Stone:default": {
       "categoryName": "Stone",
       "description": {},
+      "createdBy": "",
       "creationDate": "2019",
       "groups": [
         {

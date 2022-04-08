@@ -5,7 +5,6 @@ import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
-import { ImageOverviewComponent } from './image-overview.component';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
@@ -14,6 +13,7 @@ import { Menus } from '../../../services/menus';
 import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../services/image-relations-manager';
 import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 
 
 @Component({
@@ -41,7 +41,6 @@ export class ImageOverviewTaskbarComponent {
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
-                private imageOverviewComponent: ImageOverviewComponent,
                 private menuService: Menus) {}
 
 
@@ -66,13 +65,8 @@ export class ImageOverviewTaskbarComponent {
             const targetDocument: FieldDocument = await modalRef.result;
             if (!targetDocument) return;
 
-            try {
-                await this.addDepictsRelationsToSelectedDocuments(targetDocument);
-                this.imageOverviewFacade.clearSelection();
-            } catch(msgWithParams) {
-                this.messages.add(msgWithParams);
-            }
-        } catch(err) {
+            await this.addLinks(targetDocument);
+        } catch (err) {
             // LinkModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
@@ -107,10 +101,7 @@ export class ImageOverviewTaskbarComponent {
 
         try {
             await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
-            await this.removeDepictsRelationsOnSelectedDocuments();
-            this.imageOverviewFacade.clearSelection();
-            await this.imageOverviewFacade.fetchDocuments();
-            this.imageGrid.calcGrid();
+            await this.removeLinks();
         } catch(err) {
             // RemoveLinkModal has been canceled
         } finally {
@@ -154,6 +145,46 @@ export class ImageOverviewTaskbarComponent {
 
         for (let document of this.imageOverviewFacade.getSelected()) {
             this.imageOverviewFacade.remove(document);
+        }
+    }
+
+
+    private async addLinks(targetDocument: FieldDocument) {
+
+        const savingLinkChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        AngularUtility.blurActiveElement();
+
+        try {
+            await this.addDepictsRelationsToSelectedDocuments(targetDocument);
+            this.imageOverviewFacade.clearSelection();
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingLinkChangesModal.close();
+        }
+    }
+
+
+    private async removeLinks() {
+
+        const savingLinkChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        AngularUtility.blurActiveElement();
+
+        try {
+            await this.removeDepictsRelationsOnSelectedDocuments();
+            this.imageOverviewFacade.clearSelection();
+            await this.imageOverviewFacade.fetchDocuments();
+            this.imageGrid.calcGrid();
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingLinkChangesModal.close();
         }
     }
 

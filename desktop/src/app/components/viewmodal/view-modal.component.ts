@@ -21,7 +21,7 @@ export abstract class ViewModalComponent {
                 protected modalService: NgbModal,
                 private routingService: Routing,
                 private menuService: Menus,
-                private messages: Messages) {}
+                protected messages: Messages) {}
 
 
     protected abstract getDocument(isImageDocument?: boolean): Document;

@@ -11,6 +11,7 @@ import { ImageRelationsManager } from '../../../services/image-relations-manager
 import { Menus } from '../../../services/menus';
 import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
+import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 
 
 export namespace ImageViewModalComponent {
@@ -127,8 +128,18 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async removeLinks() {
 
-        await this.removeImageLinks(this.selected);
-        this.selected = [];
+        const savingLinkChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await this.removeImageLinks(this.selected);
+            this.selected = [];
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingLinkChangesModal.close();
+        }
     }
 
 
@@ -155,13 +166,28 @@ export class ImageViewModalComponent extends ViewModalComponent {
         imagePickerModal.componentInstance.setDocument(this.linkedDocument);
 
         try {
-            const selectedImages: Array<ImageDocument> = await imagePickerModal.result;
+            await this.saveChanges(await imagePickerModal.result);
+        } catch {
+            // modal cancelled
+        }
+    }
+
+
+    private async saveChanges(selectedImages: Array<ImageDocument>) {
+
+        const savingLinkChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        try {
             await this.imageRelationsManager.link(this.linkedDocument as FieldDocument, ...selectedImages);
             this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
             this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
                 .map(ImageRowItem.ofDocument);
-        } catch {
-            // modal cancelled
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingLinkChangesModal.close();
         }
     }
 
@@ -180,10 +206,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
-        this.selectedImage =
-            isEmpty(this.images)
-                ? undefined
-                : first(this.images);
+        this.selectedImage = isEmpty(this.images)
+            ? undefined
+            : first(this.images);
         this.selected = [];
     }
 

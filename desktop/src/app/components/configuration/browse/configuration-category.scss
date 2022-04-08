@@ -154,13 +154,15 @@ configuration-category {
   }
 
   #add-field-button {
-    transform: translate(-20px, -45px);
-    padding: 4px 0 0 2px;
+    transform: translate(-20px, -40px);
+    padding: 2px 0 0 1px;
   }
 
   #add-group-button {
     position: absolute;
-    bottom: 6px;
+    bottom: 1px;
+    padding-top: 2px;
+    padding-right: 1px;
     transform: translate(-20px, 0);
   }
 

@@ -2,48 +2,56 @@ $add-georeference-color: #657faa;
 $delete-georeference-color: #d9534f;
 
 georeference-view {
-    .card-body {
-        padding: 0 !important;
+  .card-body {
+    padding: 0 !important;
 
-        .field {
-            margin-bottom: 0 !important;
-        }
-    }
+    .field {
+      margin-bottom: 0 !important;
+      padding-top: 1px;
 
-    #worldfile-upload {
-        position: relative;
-        overflow: hidden;
-        padding: 0;
-        font-size: 23px;
-        color: $add-georeference-color !important;
+      .field-value {
+        padding-left: $item-horizontal-padding;
+        margin-right: 3px;
+        font-size: 14px;
+        user-select: none;
+      }
     }
+  }
 
-    #worldfile-upload:hover {
-        color: lighten($add-georeference-color, 10%) !important;
-    }
+  #worldfile-upload {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    font-size: 23px;
+    color: $add-georeference-color !important;
+  }
 
-    #worldfile-upload input {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        padding: 0;
-        opacity: 0;
-        filter: alpha(opacity = 0);
-    }
+  #worldfile-upload:hover {
+    color: lighten($add-georeference-color, 10%) !important;
+  }
 
-    #delete-georeference-button {
-        padding: 0;
-        font-size: 23px;
-        color: $delete-georeference-color !important;
-    }
+  #worldfile-upload input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+  }
 
-    #delete-georeference-button:hover {
-        color: lighten($delete-georeference-color, 10%) !important;
-    }
+  #delete-georeference-button {
+    padding: 0;
+    font-size: 23px;
+    color: $delete-georeference-color !important;
+  }
 
-    #export-georeference-button {
-        padding: 0;
-        font-size: 20px;
-    }
+  #delete-georeference-button:hover {
+    color: lighten($delete-georeference-color, 10%) !important;
+  }
+
+  #export-georeference-button {
+    padding: 0;
+    font-size: 20px;
+  }
 }

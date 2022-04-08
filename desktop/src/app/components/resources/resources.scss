@@ -71,7 +71,7 @@ $deactivated-button-color: lightgray;
 
   position: absolute;
   top: -2px;
-  left: 59px;
+  left: 55px;
   width: 235px;
   max-height: 39px;
   padding: 8px;
@@ -80,7 +80,6 @@ $deactivated-button-color: lightgray;
   text-align: center;
   cursor: default;
   user-select: none;
-  border-radius: 0;
   background-color: #fefefe;
 
   &.document-limit-exceeded {

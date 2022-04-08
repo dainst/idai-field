@@ -1,7 +1,6 @@
 {
     "RoomCeiling:default": {
       "categoryName": "RoomCeiling",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
       "groups": [
@@ -29,7 +28,6 @@
     },
     "RoomFloor:default": {
       "categoryName": "RoomFloor",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
       "valuelists": {},
@@ -58,7 +56,6 @@
     },
     "RoomWall:default": {
       "categoryName": "RoomWall",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
       "groups": [
@@ -86,9 +83,8 @@
     },
     "Trench:default": {
       "categoryName": "Trench",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "description": { "de": "Schnitt; IT-Referat, 2019" },
+      "description": {},
       "groups": [
         {
           "name": "stem",
@@ -110,9 +106,8 @@
     },
     "Glass:default": {
       "categoryName": "Glass",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "description": { "de": "Glass; IT-Referat, 2019" },
+      "description": {},
       "groups": [
         {
           "name": "properties",
@@ -538,7 +533,6 @@
     "Stone:default": {
       "categoryName": "Stone",
       "description": {},
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "groups": [
         {

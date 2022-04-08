@@ -2,7 +2,7 @@ $tab-bg-color: $gray-100;
 $tab-bg-color-hover: $navbar-default-bg;
 $tab-separator-color: darken($navbar-default-bg, 4%);
 $navbar-link-color: $gray-800;
-$link-hover-color: darken($navbar-link-color, 30%);
+$link-hover-color: lighten($navbar-link-color, 30%);
 $border-radius: 4px;
 
 @import 'taskbar';

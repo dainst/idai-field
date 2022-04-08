@@ -4,6 +4,16 @@
 
   #taskbar-conflicts-container {
     margin-left: 18px;
+
+    &:hover {
+      #taskbar-conflicts-button-icon {
+        color: $link-hover-color;
+      }
+    }
+
+    #taskbar-conflicts-button-icon {
+      color: $navbar-link-color;
+    }
   }
 }
 

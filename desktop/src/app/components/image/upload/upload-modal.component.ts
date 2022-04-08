@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {UploadStatus} from './upload-status';
+import { Component } from '@angular/core';
+import { UploadStatus } from './upload-status';
+
 
 @Component({
     selector: 'upload-modal',

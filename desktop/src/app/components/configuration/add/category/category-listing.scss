@@ -37,5 +37,14 @@ category-listing {
         background-color: #37588e;
       }
     }
+
+    .item-label,
+    .search-result-label {
+      bottom: 0;
+    }
+
+    code {
+      bottom: 2px;
+    }
   }
 }

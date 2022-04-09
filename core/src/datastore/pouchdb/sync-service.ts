@@ -111,7 +111,7 @@ export class SyncService {
     }
 
 
-    public async startSync(filter?: (doc: any) => boolean) {
+    public async startSync(setConnectingStatus: boolean = true, filter?: (doc: any) => boolean) {
 
         if (!this.syncTarget || !this.project) return;
 
@@ -119,6 +119,8 @@ export class SyncService {
             console.warn('sync already running, will not start sync again');
             return;
         }
+
+        if (setConnectingStatus) this.setStatus(SyncStatus.Connecting);
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
@@ -134,7 +136,7 @@ export class SyncService {
                 }
                 this.cancelSync();
                 this.setStatus(syncStatus);
-                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
+                this.currentSyncTimeout = setTimeout(() => this.startSync(false), 5000); // retry
             }
         );
     }

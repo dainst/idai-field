@@ -1,6 +1,7 @@
 export enum SyncStatus {
 
     Offline = 'OFFLINE',
+    Connecting = 'CONNECTING',
     Pushing = 'PUSHING',
     Pulling = 'PULLING',
     InSync = 'IN_SYNC',

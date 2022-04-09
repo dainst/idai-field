@@ -16,6 +16,11 @@ taskbar-sync-status {
         bottom: 50px;
         color: $navbar-link-color;
       }
+
+      .mdi-refresh {
+        position: relative;
+        bottom: 1px;
+      }
     
       .cloud-overlay {
         position: relative;

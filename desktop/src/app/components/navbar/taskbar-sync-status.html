@@ -1,26 +1,33 @@
-<div [class.animated-icon]="getStatus() === 'PUSHING' || getStatus() === 'PULLING'"
+<div [class.animated-icon]="getStatus() === 'PUSHING' || getStatus() === 'PULLING' || getStatus() === 'CONNECTING'"
      id="sync-status">
     <a (click)="openSynchronizationModal()" (contextmenu)="printStatus()">
         <div class="slide-up cloud-overlay" *ngIf="getStatus() === 'PUSHING'">
             <span class="mdi mdi-arrow-up-bold mdi-18px"></span>
         </div>
         <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PUSHING'"
-                ngbTooltip="Es werden Daten hochgeladen."
-                i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
-                placement="bottom" container="body">
+              ngbTooltip="Es werden Daten hochgeladen."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
+              placement="bottom" container="body">
         </span>
         <div class="slide-down cloud-overlay" *ngIf="getStatus() === 'PULLING'">
             <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         </div>
         <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PULLING'"
-                ngbTooltip="Es werden Daten heruntergeladen."
-                i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
-                placement="bottom" container="body">
+              ngbTooltip="Es werden Daten heruntergeladen."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
+              placement="bottom" container="body">
         </span>
+        <div class="cloud-overlay" *ngIf="getStatus() === 'CONNECTING'">
+            <span class="mdi mdi-refresh mdi-18px mdi-spin"></span>
+        </div>
+        <span class="mdi mdi-cloud" *ngIf="getStatus() === 'CONNECTING'"
+              ngbTooltip="Synchronisationsverbindung wird hergestellt..."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.connecting"
+              placement="bottom" container="body"></span>
         <span class="mdi mdi-cloud-off-outline" *ngIf="getStatus() === 'OFFLINE'"
-                ngbTooltip="Synchronisation ist deaktiviert."
-                i18n-ngbTooltip="@@navbar.taskbar.synchronization.offline"
-                placement="bottom" container="body">
+              ngbTooltip="Synchronisation ist deaktiviert."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.offline"
+              placement="bottom" container="body">
         </span>
         <span class="mdi mdi-cloud-check"  *ngIf="getStatus() === 'IN_SYNC'"
                 ngbTooltip="Synchronisation abgeschlossen."

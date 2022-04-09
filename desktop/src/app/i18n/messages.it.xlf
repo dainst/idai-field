@@ -1532,8 +1532,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saveInfo.synchronization" datatype="html">
-        <source> Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die iDAI.field-Anwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen. </source>
-        <target state="final">Gli altri utenti che lavorano allo stesso progetto tramite sincronizzazione dovranno riavviare l'applicazione iDAI.field per applicare le modifiche effettuate alla configurazione. </target>
+        <source> Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen. </source>
+        <target state="final">Gli altri utenti che lavorano allo stesso progetto tramite sincronizzazione dovranno riavviare l'applicazione Field Desktop per applicare le modifiche effettuate alla configurazione. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -1848,8 +1848,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
-        <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter.</source>
-        <target state="final">Si è verificato un errore durante lo scaricamento della versione <x id="INTERPOLATION" equiv-text="{{version}}"/>. Si prega di scaricare l'ultima versione da http://field.dainst.org.</target>
+        <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
+        <target state="final">Si è verificato un errore durante lo scaricamento della versione <x id="INTERPOLATION" equiv-text="{{version}}"/>. Si prega di scaricare l'ultima versione da https://field.idai.world/download.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">46</context>
@@ -1996,8 +1996,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.address.info" datatype="html">
-        <source> Als Adresse kann sowohl die URL eines iDAI.field-Datenbankservers als auch die Netzwerkadresse einer anderen iDAI.field-Desktopinstallation angegeben werden. </source>
-        <target state="final"> Come indirizzo può essere indicato l'URL di un server con banca dati di iDAI.field dell'Istituto Archeologico Germanico o l'indirizzo di rete di un'altra installazione di iDAI.field su un altro computer. </target>
+        <source> Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden. </source>
+        <target state="final"> Come indirizzo può essere indicato l'URL di un server di Field o l'indirizzo di rete di un'altra installazione di Field Desktop su un altro computer. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">101</context>
@@ -2008,7 +2008,7 @@
         <target state="final">Nome del progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
@@ -2016,7 +2016,7 @@
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
@@ -2024,7 +2024,7 @@
         <target state="final">Scaricare le immagini di anteprima</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
@@ -2032,7 +2032,7 @@
         <target state="final">Scaricare le immagini originali</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
@@ -2060,8 +2060,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
-        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
-        <target state="final">Il controllo automatico degli aggiornamenti è stato disattivato. È possibile che non si stia utilizzando l'ultima versione di iDAI.field.</target>
+        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von Field Desktop.</source>
+        <target state="final">Il controllo automatico degli aggiornamenti è stato disattivato. È possibile che non si stia utilizzando l'ultima versione di Field Desktop.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -3928,12 +3928,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
-        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
+        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
         <target state="final">
                         Questo nome viene salvato nella cronologia di modifica,
                         in modo che le modifiche ai record dei dati possano essere assegnate a una persona.
                         Questo dato è molto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>importante<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> per la sincronizzazione tra gli utenti
-                        e con i server della banca dati iDAI.field, perché il sistema può
+                        e con i server della banca dati Field, perché il sistema può
                         assegnare e risolvere meglio eventuali conflitti. Pertanto deve essere sempre configurato prima della sincronizzazione.
                         Si consiglia di inserire il nome completo dell'utente nella banca dati
                         attuale.
@@ -3992,9 +3992,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
-        <source> Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann. </source>
+        <source> Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann. </source>
         <target state="final">
-                            Questo indirizzo e questa password devono essere inseriti negli altri client iDAI.field
+                            Questo indirizzo e questa password devono essere inseriti negli altri client Field
                             per poter sincronizzare i dati
                             su questo computer.
                         </target>
@@ -4022,8 +4022,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
-        <source> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </source>
-        <target state="final">Questo percorso di solito può essere lasciato all'impostazione predefinita. Potrebbe essere necessario modificarlo se il percorso delle immagini utilizzato da iDAI.field si trova su un dispositivo di rete (NAS) condiviso da diversi utenti. L'applicazione crea una sottocartella a questo indirizzo per ogni progetto. I file delle immagini memorizzati in queste cartelle sono completamente gestiti da iDAI.field. I file delle immagini non possono essere salvati in queste cartelle manualmente, ma devono essere importati dalla panoramica delle immagini o dal pannello “immagini” per la visualizzazione delle risorse.</target>
+        <source> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </source>
+        <target state="final">Questo percorso di solito può essere lasciato all'impostazione predefinita. Potrebbe essere necessario modificarlo se il percorso delle immagini utilizzato da Field si trova su un dispositivo di rete (NAS) condiviso da diversi utenti. L'applicazione crea una sottocartella a questo indirizzo per ogni progetto. I file delle immagini memorizzati in queste cartelle sono completamente gestiti da Field. I file delle immagini non possono essere salvati in queste cartelle manualmente, ma devono essere importati dalla panoramica delle immagini o dal pannello “immagini” per la visualizzazione delle risorse.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">147</context>
@@ -4716,8 +4716,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.warning.unsimilarProjectName" datatype="html">
-        <source>Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen iDAI.field-Instanzen oder Datenbanken synchronisieren.</source>
-        <target state="final">Il nome del progetto selezionato è molto diverso dal nome del progetto originale. Controllare di aver selezionato il file di backup corretto prima di sincronizzare i dati del progetto ripristinato con altre istanze o banche dati iDAI.field.</target>
+        <source>Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
+        <target state="final">Il nome del progetto selezionato è molto diverso dal nome del progetto originale. Controllare di aver selezionato il file di backup corretto prima di sincronizzare i dati del progetto ripristinato con altre istanze o banche dati Field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4764,8 +4764,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.initialSync.targetDbNotEmpty" datatype="html">
-        <source>Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.</source>
-        <target state="final">Scaricamento fallito: il progetto selezionazo esiste già in questa installazione di iDAI.field</target>
+        <source>Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser Field-Desktop-Installation.</source>
+        <target state="final">Scaricamento fallito: il progetto selezionazo esiste già in questa installazione di Field Desktop.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

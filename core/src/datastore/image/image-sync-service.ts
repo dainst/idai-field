@@ -48,6 +48,8 @@ export class ImageSyncService {
             clearTimeout(this.schedules[variant]);
         }
 
+        this.status[variant] = SyncStatus.Connecting;
+
         this.sync(variant);
     }
 

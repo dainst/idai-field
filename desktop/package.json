@@ -1,6 +1,6 @@
 {
   "name": "idai-field-client",
-  "description": "iDAI.field 2 Client",
+  "description": "Field Desktop",
   "version": "2.21.0",
   "main": "electron/main.js",
   "license": "Apache-2.0",
@@ -34,14 +34,14 @@
   },
   "build": {
     "appId": "org.dainst.field",
-    "productName": "iDAI.field",
+    "productName": "Field Desktop",
     "directories": {
       "output": "release"
     },
     "mac": {
       "category": "public.app-category.productivity",
       "icon": "img/logo.icns",
-      "artifactName": "iDAI.field-${version}-MacOS.${ext}",
+      "artifactName": "Field-Desktop-${version}-MacOS.${ext}",
       "publish": "github",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
@@ -51,14 +51,14 @@
     "win": {
       "target": "zip",
       "icon": "img/logo.ico",
-      "artifactName": "iDAI.field-${version}-Windows.${ext}",
+      "artifactName": "Field-Desktop-${version}-Windows.${ext}",
       "publish": "github"
     },
     "linux": {
       "target": "AppImage",
       "icon": "img/logo.png",
       "publish": "github",
-      "artifactName": "iDAI.field-${version}-Linux.${ext}",
+      "artifactName": "Field-Desktop-${version}-Linux.${ext}",
       "category": "Science"
     },
     "npmRebuild": false,

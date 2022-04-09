@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "iDAI.field 3 API file listing",
+  "title": "Field 3 API file listing",
   "type": "object",
   "patternProperties": {
     ".+": { 

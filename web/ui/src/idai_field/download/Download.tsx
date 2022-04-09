@@ -99,19 +99,19 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
                 <div>{ t('download.linuxInfo') }</div>
             </div>
             <p>
-                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/iDAI.field-'
+                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/Field-Desktop-'
                 + latestVersion + '-Windows.exe' } className="btn btn-primary my-2 mr-1">
                     <Icon path={ mdiMicrosoftWindows } size={ 0.8 } className="windows-icon" />
                     { t('download.windows') }
                     <Icon path={ mdiDownload } size={ 0.8 } className="download-icon" />
                 </a>
-                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/iDAI.field-'
+                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/Field-Desktop-'
                 + latestVersion + '-MacOS.dmg' } className="btn btn-primary my-2 mr-1">
                     <Icon path={ mdiApple } size={ 0.8 } className="apple-icon" />
                     { t('download.macOS') }
                     <Icon path={ mdiDownload } size={ 0.8 } className="download-icon" />
                 </a>
-                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/iDAI.field-'
+                <a href={ 'https://github.com/dainst/idai-field/releases/download/v' + latestVersion + '/Field-Desktop-'
                 + latestVersion + '-Linux.AppImage' } className="btn btn-primary my-2">
                     <Icon path={ mdiLinux } size={ 0.8 } className="linux-icon" />
                     { t('download.linux') }

@@ -1,6 +1,6 @@
-# iDAI.field Mobile
+# Field Mobile
 
-This package contains the mobile client for iDAI.field.
+This package contains the mobile client for Field.
 The app is developed in [React Native](https://reactnative.dev/) and the [Expo CLI](https://expo.io/).
 
 ## Development

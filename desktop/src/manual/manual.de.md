@@ -1,15 +1,14 @@
 ## Erste Schritte
 
-Nach dem ersten Start der iDAI.field-Desktopanwendung befinden Sie sich zunächst im Projekt "test", das es
+Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Projekt "test", das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Installationen
-oder Datenbanken statt.
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
 
-Um mit iDAI.field produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
+Um mit Field Desktop produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
 
-1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Werkzeuge" (Windows)
+1. Im Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows)
 erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
 bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
@@ -19,7 +18,7 @@ Daten synchronisiert werden sollen.
 ändern. Dies ist erforderlich, wenn Sie auf ein Bilderverzeichnis zugreifen möchten,
 das auf einem Netzwerk-Gerät (NAS) liegt und das von mehreren Nutzern bzw. Nutzerinnen
 gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über die
-iDAI.field-Anwendung importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
+Field-Desktop-Anwendung importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
 eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche.
@@ -33,8 +32,6 @@ Sicherungen Ihrer Projektdaten anzulegen.
 <hr>
 
 ## Ressourcen
-
-Die Ressourcenverwaltung bildet das Herzstück von iDAI.field.
 
 ### Maßnahmen
 
@@ -371,18 +368,18 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 ## Synchronisation
 
-Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
+Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen Field-Desktop-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die auf einem anderen Rechner in Field Desktop vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
 Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** in den Einstellungen ausgefüllt sein sollte.
 
 
 ### Projekt herunterladen
 
-Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen iDAI.field-Desktopinstallation oder auf einem Datenbankserver vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
+Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktopinstallation oder auf einem Datenbankserver vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
 
-* *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
+* *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, der über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
 * *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.
-* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, von der Sie das Projekt herunterladen möchten.
+* *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, von der Sie das Projekt herunterladen möchten.
 
 Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
 
@@ -391,8 +388,8 @@ Der Download kann bei größeren Projekten unter Umständen eine längere Zeit d
 
 Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
-* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
-* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
+* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
+* *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
 
 Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
 
@@ -419,9 +416,9 @@ Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu
 Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
 
 
-### Synchronisationsverbindungen zur eigenen iDAI.field-Installation erlauben
+### Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
 
 Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt herzustellen, indem Sie ihnen die Zugangsdaten mitteilen, die Sie im Menü **Einstellungen** im Abschnitt **Synchronisation** finden können:
 
-* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer iDAI.field-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
+* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer Field-Desktop-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
 * *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.

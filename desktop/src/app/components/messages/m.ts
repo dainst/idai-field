@@ -367,7 +367,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME] = {
             content: i18n({
                 id: 'messages.backup.read.warning.unsimilarProjectName',
-                value: 'Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen iDAI.field-Instanzen oder Datenbanken synchronisieren.'
+                value: 'Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Datenbanken synchronisieren.'
             }),
             level: 'warning',
             params: [],
@@ -421,7 +421,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
             content: i18n({
                 id: 'messages.initialSync.targetDbNotEmpty',
-                value: 'Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser iDAI.field-Installation.'
+                value: 'Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser Field-Desktop-Installation.'
             }),
             level: 'danger',
             params: [],

@@ -1,15 +1,15 @@
 const messageDictionary = {
     de: {
         'autoUpdate.available.title': 'Update verfügbar',
-        'autoUpdate.available.message.1': 'Eine neue Version von iDAI.field (',
+        'autoUpdate.available.message.1': 'Eine neue Version von Field Desktop (',
         'autoUpdate.available.message.2': ') ist verfügbar. Möchten Sie sie herunterladen und installieren?',
         'autoUpdate.available.yes': 'Ja',
         'autoUpdate.available.no': 'Nein',
         'autoUpdate.downloaded.title': 'Update installieren',
         'autoUpdate.downloaded.message.1': 'Version ',
-        'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, ' +
+        'autoUpdate.downloaded.message.2': ' von Field Desktop wurde geladen. Starten Sie die Anwendung neu, ' +
             'um sie zu installieren.',
-        'menu.about': 'Über iDAI.field',
+        'menu.about': 'Über Field Desktop',
         'menu.settings': 'Einstellungen',
         'menu.project': 'Projekt',
         'menu.project.newProject': 'Neu...',
@@ -49,15 +49,15 @@ const messageDictionary = {
     },
     en: {
         'autoUpdate.available.title': 'Update available',
-        'autoUpdate.available.message.1': 'A new version of iDAI.field (',
+        'autoUpdate.available.message.1': 'A new version of Field Desktop (',
         'autoUpdate.available.message.2': ') is available. Do you want to download and install it?',
         'autoUpdate.available.yes': ' Yes ',
         'autoUpdate.available.no': ' No ',
         'autoUpdate.downloaded.title': 'Install update',
         'autoUpdate.downloaded.message.1': 'Version ',
-        'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the ' +
+        'autoUpdate.downloaded.message.2': ' of Field Desktop has been downloaded. Please restart the ' +
             'application to install it.',
-        'menu.about': 'About iDAI.field',
+        'menu.about': 'About Field Desktop',
         'menu.settings': 'Settings',
         'menu.project': 'Project',
         'menu.project.newProject': 'New...',
@@ -97,15 +97,15 @@ const messageDictionary = {
     },
     it: {
         'autoUpdate.available.title': 'Update disponibile',
-        'autoUpdate.available.message.1': 'Una nuova versione di iDAI.field (',
+        'autoUpdate.available.message.1': 'Una nuova versione di Field Desktop (',
         'autoUpdate.available.message.2': ') è disponibile. Si desidera scaricarla e installarla?',
         'autoUpdate.available.yes': 'Sì',
         'autoUpdate.available.no': 'No',
         'autoUpdate.downloaded.title': 'Installa aggiornamento',
         'autoUpdate.downloaded.message.1': 'La versione ',
-        'autoUpdate.downloaded.message.2': ' di iDAI.field è stata scaricata. Riavviare l’applicazione, '
+        'autoUpdate.downloaded.message.2': ' di Field Desktop è stata scaricata. Riavviare l’applicazione, '
             + 'per installarla.',
-        'menu.about': 'Informazioni su iDAI.field',
+        'menu.about': 'Informazioni su Field Desktop',
         'menu.settings': 'Impostazioni',
         'menu.project': 'Progetto',
         'menu.project.newProject': 'Nuovo...',

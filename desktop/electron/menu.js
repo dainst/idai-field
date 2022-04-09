@@ -8,7 +8,7 @@ const messages = require('./messages');
 const getTemplate = (mainWindow, context, config) => {
 
     const template = [{
-        label: 'iDAI.field',
+        label: 'Field',
         submenu: [{
             label: messages.get('menu.about'),
             role: 'about'
@@ -253,7 +253,7 @@ const getTemplate = (mainWindow, context, config) => {
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);
     } else {
-        // Remove 'iDAI.field' menu
+        // Remove 'Field' menu
         template.splice(0, 1);
     }
 

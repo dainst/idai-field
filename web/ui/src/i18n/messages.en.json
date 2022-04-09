@@ -81,9 +81,9 @@
     "back": "Back"
   },
   "download": {
-    "download": "Download the iDAI.field desktop application",
+    "download": "Download Field Desktop",
     "currentVersion": "Current Version:",
-    "packageInfo": "iDAI.field can be used on the following operating systems:",
+    "packageInfo": "The Field desktop application can be used on the following operating systems:",
     "windowsInfo": "Windows 7 and later",
     "macInfo": "macOS 10.11 and later",
     "linuxInfo": "Linux (Ubuntu 14.04, Fedora 24, Debian 8 and later)",
@@ -104,7 +104,7 @@
   "contact": {
     "mailingList": {
       "heading": "Mailing list",
-      "info": "If you have any questions or comments regarding the use of iDAI.field in your project or if you want to exchange ideas with other users, please contact the iDAI.field mailing list:",
+      "info": "If you have any questions or comments regarding the use of Field in your project or if you want to exchange ideas with other users, please contact the Field mailing list:",
       "subscription": "Subscribe to the mailing list"
     },
     "errorReports": {

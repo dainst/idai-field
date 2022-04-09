@@ -14,7 +14,7 @@ export interface Dimension {
     // instead of saving those to the pouchdb, drop them before saving
     // and when loading from the db into the cache/indexer, drop them as well
     // and recalculate them from inputValue,inputRangeEndValue, inputUnit.
-    // Then, for the presentation via iDAI.field-Web, calculate those values
+    // Then, for the presentation via iDAI.field Web, calculate those values
     // again during the indexing and mapping process.
     value?: number;
     rangeMin?: number;

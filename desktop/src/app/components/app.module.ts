@@ -4,28 +4,13 @@ import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import {
-    AppConfigurator,
-    ConfigLoader,
-    ConfigReader,
-    ConstraintIndex,
-    Datastore,
-    DocumentCache,
-    FulltextIndex,
-    IndexFacade,
-    PouchdbDatastore,
-    ProjectConfiguration,
-    Query,
-    RelationsManager,
-    SyncService,
-    Labels,
-    ImageStore,
-    ImageSyncService
-} from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
+    IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
+    ImageStore, ImageSyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';

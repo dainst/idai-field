@@ -61,8 +61,8 @@ $border-radius: 4px;
 }
 
 .navbar-dark .navbar-tabbed .tab {
-
-  &:hover + .closable-tab:before {
+  &:hover + .closable-tab:before,
+  &.active + .closable-tab:before {
     background-color: transparent;
   }
 
@@ -91,62 +91,6 @@ $border-radius: 4px;
       outline: none;
     }
 
-    &.active {
-      background-color: $tab-bg-color;
-      color: #000;
-      z-index: 10;
-
-      &:before {
-        border-color: $tab-bg-color;
-        box-shadow: 2px 2px 0 $tab-bg-color;
-        border-bottom-right-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color;
-        border-right: 1px solid $tab-bg-color;
-      }
-
-      &:after {
-        border-color: $tab-bg-color;
-        box-shadow: -2px 2px 0 $tab-bg-color;
-        border-bottom-left-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color;
-        border-left: 1px solid $tab-bg-color;
-      }
-
-      .mdi-close:hover {
-        color: #000;
-        background-color: #dee2e6;
-      }
-    }
-
-    &:not(.active) {
-      .mdi-close:hover {
-        color: $navbar-link-color;
-        background-color: lighten($navbar-default-bg, 5%);
-      }
-    }
-
-    &:hover:not(.active) {
-      background-color: $tab-bg-color-hover;
-      z-index: 5;
-      color: $navbar-link-color;
-
-      &:before {
-        border-color: $tab-bg-color-hover;
-        box-shadow: 2px 2px 0 $tab-bg-color-hover;
-        border-bottom-right-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color-hover;
-        border-right: 1px solid $tab-bg-color-hover;
-      }
-
-      &:after {
-        border-color: $tab-bg-color-hover;
-        box-shadow: -2px 2px 0 $tab-bg-color-hover;
-        border-bottom-left-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color-hover;
-        border-left: 1px solid $tab-bg-color-hover;
-      }
-    }
-
     .mdi-home {
       font-size: 22px;
       line-height: 22px;
@@ -164,6 +108,62 @@ $border-radius: 4px;
       margin-left: 1px;
       line-height: normal;
       transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
+  }
+
+  &.active a.nav-link {
+    background-color: $tab-bg-color;
+    color: #000;
+    z-index: 10;
+
+    &:before {
+      border-color: $tab-bg-color;
+      box-shadow: 2px 2px 0 $tab-bg-color;
+      border-bottom-right-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color;
+      border-right: 1px solid $tab-bg-color;
+    }
+
+    &:after {
+      border-color: $tab-bg-color;
+      box-shadow: -2px 2px 0 $tab-bg-color;
+      border-bottom-left-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color;
+      border-left: 1px solid $tab-bg-color;
+    }
+
+    .mdi-close:hover {
+      color: #000;
+      background-color: #dee2e6;
+    }
+  }
+
+  &:not(.active) a.nav-link {
+    .mdi-close:hover {
+      color: $navbar-link-color;
+      background-color: lighten($navbar-default-bg, 5%);
+    }
+  }
+
+  &:hover:not(.active) a.nav-link {
+    background-color: $tab-bg-color-hover;
+    z-index: 5;
+    color: $navbar-link-color;
+
+    &:before {
+      border-color: $tab-bg-color-hover;
+      box-shadow: 2px 2px 0 $tab-bg-color-hover;
+      border-bottom-right-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-right: 1px solid $tab-bg-color-hover;
+    }
+
+    &:after {
+      border-color: $tab-bg-color-hover;
+      box-shadow: -2px 2px 0 $tab-bg-color-hover;
+      border-bottom-left-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-left: 1px solid $tab-bg-color-hover;
     }
   }
 

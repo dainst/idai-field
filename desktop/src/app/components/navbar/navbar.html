@@ -3,15 +3,15 @@
     <div id="navbarSupportedContent" class="navbar-collapse" [class.mac-margin]="isRunningOnMac()">
         <ul #tabSpace id="resources-tabs" *ngIf="isActiveRoute('/resources') && !isActiveRoute('/resources/types')"
             class="nav navbar-nav navbar-tabbed mr-auto">
-            <li id="navbar-project" class="nav-item tab">
-                <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
+            <li id="navbar-project" class="nav-item tab" [class.active]="isActiveRoute('/resources/project')">
+                <a class="nav-link" 
                    href="#" routerLink="/resources/project">
                    <span class="mdi mdi-home"></span>
                </a>
             </li>
-            <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}" class="nav-item tab closable-tab">
+            <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}"
+                class="nav-item tab closable-tab" [class.active]="isActiveRoute(getTabRoute(tab))">
                 <a class="nav-link"
-                   [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
                     <category-icon [size]="23" [category]="tab.operationCategory"></category-icon>
                     <span class="closable-tab-label">{{tab.label}}</span>

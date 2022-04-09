@@ -43,8 +43,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
         try {
             return await getAsynchronousFs().rm(path, { recursive });
         } catch (err) {
-            console.error('Error while trying to remove file: ' + path, err);
-            throw err;
+            // Ignore
         }
     }
 

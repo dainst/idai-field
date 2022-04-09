@@ -22,28 +22,11 @@ $border-radius: 4px;
       top: -7px !important;
       z-index: 1050;
     }
-
-    .nav-link:hover, .btn-link:hover {
-      color: $link-hover-color !important;
-    }
   }
 }
 
 .navbar.bg-primary {
   background: linear-gradient(to top, #ccc, #efefef);
-}
-
-.navbar a {
-  color: $navbar-link-color;
-  cursor: default;
-
-  &:hover {
-    color: $link-hover-color;
-  }
-}
-
-.navbar .mdi:hover, .navbar button .mdi:hover {
-  color: $link-hover-color;
 }
 
 .navbar-tabbed .nav-link {

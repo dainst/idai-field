@@ -17,6 +17,15 @@
     z-index: 1;
   }
 
+  a {
+    color: $navbar-link-color;
+    cursor: default;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
   @keyframes slide-down {
     from {
       transform: translateY(-17px);

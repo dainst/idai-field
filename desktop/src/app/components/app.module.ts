@@ -176,8 +176,10 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: ImageSyncService,
-            useFactory: (imageStore: ImageStore, remoteImageStore: RemoteImageStore) => new ImageSyncService(imageStore, remoteImageStore),
-            deps: [ImageStore, RemoteImageStore]
+            useFactory: (imageStore: ImageStore, remoteImageStore: RemoteImageStore,
+                         pouchdbDatastore: PouchdbDatastore) =>
+                new ImageSyncService(imageStore, remoteImageStore, pouchdbDatastore),
+            deps: [ImageStore, RemoteImageStore, PouchdbDatastore]
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ImageUrlMaker,

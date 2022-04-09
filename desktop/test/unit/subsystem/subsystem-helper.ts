@@ -21,7 +21,6 @@ import { makeExpectDocuments } from '../../../../core/test/test-helpers';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
 import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
-
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 
 import PouchDB = require('pouchdb-node');
@@ -39,7 +38,7 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbdatastore, projectName = 'testdb') {
+export async function setupSettingsService(pouchdbDatastore, projectName = 'testdb') {
 
     const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
@@ -51,12 +50,12 @@ export async function setupSettingsService(pouchdbdatastore, projectName = 'test
 
     const remoteImageStore = new RemoteImageStore(settingsProvider);
 
-    const imageSync = new ImageSyncService(imageStore, remoteImageStore);
+    const imageSync = new ImageSyncService(imageStore, remoteImageStore, pouchdbDatastore);
     const configReader = new ConfigReader();
 
     const settingsService = new SettingsService(
         imageStore,
-        pouchdbdatastore,
+        pouchdbDatastore,
         pouchdbServer,
         undefined,
         new AppConfigurator(new ConfigLoader(configReader)),

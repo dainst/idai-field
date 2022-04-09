@@ -1,3 +1,4 @@
+import { PouchdbDatastore } from '../pouchdb';
 import { SyncStatus } from '../sync-status';
 import { ImageVariant, ImageStore } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
@@ -13,7 +14,8 @@ interface SyncDifference {
 
 export class ImageSyncService {
 
-    private readonly intervalDuration = 1000 * 60 * 5;
+    private readonly longIntervalDuration = 1000 * 60 * 5;
+    private readonly shortIntervalDuration = 1000;
 
     private active: ImageVariant[] = [];
     private schedules: { [variant in ImageVariant]?: ReturnType<typeof setTimeout> } = {};
@@ -21,9 +23,15 @@ export class ImageSyncService {
         'original_image': SyncStatus.Offline,
         'thumbnail_image': SyncStatus.Offline
     };
+    private inProcess: { [variant in ImageVariant]?: boolean } = {};
 
     constructor(private imageStore: ImageStore,
-                private remoteImagestore: RemoteImageStoreInterface) {}
+                private remoteImagestore: RemoteImageStoreInterface,
+                datastore: PouchdbDatastore) {
+
+        datastore.changesNotifications().subscribe(async _ => this.triggerUpdate());
+        datastore.deletedNotifications().subscribe(_ => this.triggerUpdate());
+    }
 
 
     public getStatus(): { [variant in ImageVariant]: SyncStatus } {
@@ -80,15 +88,30 @@ export class ImageSyncService {
     }
 
 
-    private scheduleNextSync(variant: ImageVariant) {
+    private triggerUpdate() {
+
+        this.active.forEach(variant => {
+            clearTimeout(this.schedules[variant]);            
+            this.scheduleNextSync(variant, this.shortIntervalDuration);
+        });
+    }
+
+
+    private scheduleNextSync(variant: ImageVariant, duration: number = this.longIntervalDuration) {
 
         if (!this.active.includes(variant)) return;
 
-        this.schedules[variant] = setTimeout(this.sync.bind(this), this.intervalDuration, variant);
+        this.schedules[variant] = setTimeout(this.sync.bind(this), duration, variant);
     }
 
 
     private async sync(variant: ImageVariant) {
+
+        if (this.inProcess[variant]) {
+            return this.scheduleNextSync(variant, this.shortIntervalDuration);
+        }
+
+        this.inProcess[variant] = true;
 
         try {
             const activeProject = this.imageStore.getActiveProject();
@@ -111,7 +134,7 @@ export class ImageSyncService {
                 if (data !== null) {
                     await this.imageStore.store(uuid, data, activeProject, variant);
                 } else {
-                    throw Error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`)
+                    throw Error(`Expected remote image ${uuid}, ${variant} for project ${activeProject}, received null.`);
                 }
             }
 
@@ -147,6 +170,7 @@ export class ImageSyncService {
             console.error(e);
         }
 
+        this.inProcess[variant] = false;
         this.scheduleNextSync(variant);
     }
 

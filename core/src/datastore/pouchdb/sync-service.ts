@@ -1,17 +1,9 @@
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { ObserverUtil } from '../../tools/observer-util';
 import { PouchdbDatastore } from './pouchdb-datastore';
 import { SyncStatus } from '../sync-status';
 
 type ReplicationHandle = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
-
-
-interface SyncProcess {
-
-    url: string;
-    cancel(): void;
-    observer: Observable<SyncStatus>;
-}
 
 
 /**
@@ -28,6 +20,8 @@ export class SyncService {
 
     private sync: ReplicationHandle = null;
     private replication: ReplicationHandle = null;
+
+    private syncStatusSubscription: Subscription = null;
 
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
@@ -130,16 +124,16 @@ export class SyncService {
 
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
         
-        const syncProcess: SyncProcess = await this.setupSync(url, filter);
-        syncProcess.observer.subscribe(
+        const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, filter);
+        this.syncStatusSubscription = syncStatusObserver.subscribe(
             status => this.setStatus(status),
             err => {
                 const syncStatus = SyncService.getStatusFromError(err);
                 if (syncStatus !== SyncStatus.AuthenticationError && syncStatus !== SyncStatus.AuthorizationError) {
-                        console.error('SyncService.startSync received error from pouchdbManager.setupSync', err);
+                    console.error('Synchronization error', err);
                 }
+                this.cancelSync();
                 this.setStatus(syncStatus);
-                syncProcess.cancel();
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             }
         );
@@ -148,9 +142,7 @@ export class SyncService {
 
     public stopSync() {
 
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        if (this.sync) this.sync.cancel();
-        this.sync = null;
+        this.cancelSync();
         this.setStatus(SyncStatus.Offline);
     }
 
@@ -162,7 +154,7 @@ export class SyncService {
     }
 
 
-    private async setupSync(url: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
+    private setupSync(url: string, filter?: (doc: any) => boolean): Observable<SyncStatus> {
 
         console.log('Start syncing', url);
 
@@ -178,23 +170,28 @@ export class SyncService {
             }
         );
 
-        return {
-            url: url,
-            cancel: () => {
-                this.sync.cancel();
-                this.sync = null;
-            },
-            observer: Observable.create((obs: Observer<SyncStatus>) => {
-                this.sync.on('change', (info: any) => obs.next(SyncService.getStatusFromInfo(info)))
-                    .on('paused', () => obs.next(SyncStatus.InSync))
-                    .on('active', () => obs.next(SyncStatus.Pulling))
-                    .on('complete', (info: any) => {
-                        obs.next(SyncStatus.Offline);
-                        obs.complete();
-                    })
-                    .on('error', (err: any) => obs.error(err));
-            })
-        };
+        return Observable.create((obs: Observer<SyncStatus>) => {
+            this.sync.on('change', (info: any) => obs.next(SyncService.getStatusFromInfo(info)))
+                .on('paused', () => obs.next(SyncStatus.InSync))
+                .on('active', () => obs.next(SyncStatus.Pulling))
+                .on('complete', (info: any) => {
+                    obs.next(SyncStatus.Offline);
+                    obs.complete();
+                })
+                .on('error', (err: any) => obs.error(err));
+        });
+    }
+
+
+    private cancelSync() {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+        if (this.sync) this.sync.cancel();
+        if (this.syncStatusSubscription) this.syncStatusSubscription.unsubscribe();
+        
+        this.currentSyncTimeout = null;
+        this.sync = null;
+        this.syncStatusSubscription = null;
     }
 
 

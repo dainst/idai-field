@@ -3,11 +3,11 @@ taskbar-sync-status {
     position: relative;
     top: 1px;
     left: 1px;
+    height: 20px;
 
     &.animated-icon {
       position: relative;
       top: 11px;
-      height: 10px;
       overflow: hidden;
   
       .mdi-cloud,

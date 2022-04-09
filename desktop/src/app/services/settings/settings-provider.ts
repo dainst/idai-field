@@ -1,10 +1,12 @@
+import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { set } from 'tsfun';
-import { ObjectUtils, Name } from 'idai-field-core';
+import { ObjectUtils, Name, ObserverUtil } from 'idai-field-core';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
-import { Injectable } from '@angular/core';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 @Injectable()
 /**
@@ -16,9 +18,15 @@ export class SettingsProvider {
 
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private settings: Settings;
+    private settingsChangesObservers: Array<Observer<Settings>> = [];
+
 
     constructor() {}
+    
 
+    public settingsChangesNotifications = (): Observable<Settings> =>
+        ObserverUtil.register(this.settingsChangesObservers);
+    
 
     /**
      * Retrieve the current settings.
@@ -33,6 +41,7 @@ export class SettingsProvider {
             settings.dbs && settings.dbs.length > 0
                 ? settings.dbs[0]
                 : 'test';
+
         return settings;
     }
 
@@ -98,6 +107,7 @@ export class SettingsProvider {
     private async serialize() {
 
         await this.settingsSerializer.store(this.settings);
+        ObserverUtil.notify(this.settingsChangesObservers, this.getSettings());
     }
 
 

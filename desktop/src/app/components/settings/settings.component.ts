@@ -41,7 +41,10 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
                 private settingsService: SettingsService,
                 private messages: Messages,
                 private tabManager: TabManager,
-                private menuService: Menus) {}
+                private menuService: Menus) {
+     
+        this.settingsProvider.settingsChangesNotifications().subscribe(settings => this.settings = settings);
+    }
 
 
     ngOnInit() {

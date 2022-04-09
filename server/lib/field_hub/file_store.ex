@@ -72,6 +72,8 @@ defmodule FieldHub.FileStore do
 
     if not File.exists?(file_path) do
       File.write(file_path, content)
+    else
+      :ok
     end
   end
 

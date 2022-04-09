@@ -110,7 +110,8 @@ export class ImageRowComponent implements OnChanges {
 
         return this.thumbnailUrls !== undefined
             && this.thumbnailUrls[image.imageId] !== undefined
-            && this.thumbnailUrls[image.imageId] !== PLACEHOLDER;
+            && this.thumbnailUrls[image.imageId] !== PLACEHOLDER
+            && this.thumbnailUrls[image.imageId] !== ImageUrlMaker.blackImg;
     }
 
 

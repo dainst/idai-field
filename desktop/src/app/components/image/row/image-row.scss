@@ -24,7 +24,8 @@ image-row {
         &.selected-image {
           background-color: #37588e;
 
-          img {
+          img,
+          .image-placeholder {
             opacity: 0.5;
           }
         }

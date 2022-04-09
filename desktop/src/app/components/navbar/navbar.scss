@@ -23,6 +23,12 @@ $border-radius: 4px;
       z-index: 1050;
     }
   }
+
+  .dropdown-toggle:hover,
+  .dropdown-toggle:active,
+  .show .dropdown-toggle {
+    color: $link-hover-color !important;  
+  }
 }
 
 .navbar.bg-primary {

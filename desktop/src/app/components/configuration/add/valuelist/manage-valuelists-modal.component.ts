@@ -66,6 +66,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     public initialize() {
 
         this.applyValuelistSearch();
+        AngularUtility.blurActiveElement();
     }
 
 

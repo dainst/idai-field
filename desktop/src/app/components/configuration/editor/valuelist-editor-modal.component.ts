@@ -129,13 +129,24 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         
         return this.new
             || !equal(this.getCustomValuelistDefinition().values)(this.getClonedValuelistDefinition().values)
-            || !equal(this.getCustomValuelistDefinition().hidden)(this.getClonedValuelistDefinition().hidden)
+            || this.isHiddenChanged()
             || !equal(this.description)(this.clonedDescription)
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
         || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
                 this.getClonedValuelistDefinition());
+    }
+
+
+    private isHiddenChanged(): boolean {
+
+        const originalHidden: string[]|undefined = this.getCustomValuelistDefinition().hidden;
+        const clonedHidden: string[]|undefined = this.getClonedValuelistDefinition().hidden;
+
+        return originalHidden === undefined && clonedHidden !== undefined
+            || originalHidden !== undefined && clonedHidden === undefined
+            || !equal(this.getCustomValuelistDefinition().hidden)(this.getClonedValuelistDefinition().hidden);
     }
 
 

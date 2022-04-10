@@ -80,6 +80,8 @@
   background: #ccc;
   border: dotted 3px #999;
   transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  position: relative;
+  z-index: 1 !important;
 }
 
 .value-drag-preview {

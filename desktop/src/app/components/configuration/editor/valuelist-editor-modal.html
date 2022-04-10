@@ -53,7 +53,7 @@
              (cdkDropListDropped)="onDrop($event)"
              [cdkDropListDisabled]="sortAlphanumerically">
             <div *ngFor="let valueId of getValueIds()"
-                 class="value-items"
+                 class="value-item-container"
                  cdkDrag cdkDragBoundary="#value-items" cdkDragLockAxis="y"
                  (cdkDragStarted)="dragging = true"
                  (cdkDragEnded)="dragging = false">

@@ -10,12 +10,6 @@
          [class.parent-element]="parentField"
          [class.opened]="opened || isContextMenuOpen()">
         <ng-content></ng-content>
-        <span *ngIf="highlightAsCustomField()"
-            class="mdi mdi-alert-circle-outline"
-            ngbTooltip="Projektspezifisches Feld"
-            i18n-ngbTooltip="@@config.source.custom"
-            placement="right">
-        </span>
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
         <category-icon *ngIf="parentField"

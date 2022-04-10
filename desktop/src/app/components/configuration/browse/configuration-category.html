@@ -6,16 +6,7 @@
         <div class="col header header-left d-flex"
              (dblclick)="onEditCategory.emit()">
             <category-icon size="35" [category]="category"></category-icon>
-            <h6>
-                <span *ngIf="category.source === 'custom'"
-                    class="mdi mdi-alert-circle-outline"
-                    ngbTooltip="Projektspezifisches Formular"
-                    i18n-ngbTooltip="@@config.form.custom"
-                    container="body"
-                    placement="right">
-                </span>
-                {{label}}
-            </h6>
+            <h6>{{label}}</h6>
             <code class="category-name">{{category.name}}</code>
         </div>
         <div class="col header header-right text-right">

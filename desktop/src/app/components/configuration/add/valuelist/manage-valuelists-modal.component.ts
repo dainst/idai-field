@@ -113,7 +113,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
             this.searchQuery, this.valuelists, this.configurationIndex
         );
 
-        this.selectedValuelist = this.valuelists?.[0];
+        this.selectedValuelist = this.filteredValuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();
     }
 

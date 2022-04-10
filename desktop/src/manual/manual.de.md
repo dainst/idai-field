@@ -1,30 +1,22 @@
 ## Erste Schritte
 
-Nach dem ersten Start der iDAI.field-Desktopanwendung befinden Sie sich zunächst im Projekt "test", das es
+Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Projekt "test", das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Installationen
-oder Datenbanken statt.
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
 
-Um mit iDAI.field produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
+Um mit Field Desktop produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
 
-1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Werkzeuge" (Windows)
+1. Im Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows)
 erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
 bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
 Daten synchronisiert werden sollen.
 
-2. Darüber hinaus können Sie im Untermenü **Einstellungen** den Pfad des Bilderverzeichnisses
-ändern. Dies ist erforderlich, wenn Sie auf ein Bilderverzeichnis zugreifen möchten,
-das auf einem Netzwerk-Gerät (NAS) liegt und das von mehreren Nutzern bzw. Nutzerinnen
-gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über die
-iDAI.field-Anwendung importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
-eingefügt werden, können von der Anwendung **nicht** verwendet werden.
+2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben außerdem die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration. Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten.
 
-3. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche.
-
-4. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
+3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 Verwenden Sie das Untermenü **Backup erstellen...**, das Sie über das Menü "Projekt" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.
@@ -32,11 +24,8 @@ Sicherungen Ihrer Projektdaten anzulegen.
 
 <hr>
 
+
 ## Ressourcen
-
-Die Ressourcenverwaltung bildet das Herzstück von iDAI.field.
-
-### Maßnahmen
 
 Nach dem Anlegen bzw. Öffnen eines Projekts befinden Sie sich zunächst im Tab **Übersicht** (gekennzeichnet
 durch ein Haus-Symbol), in dem alle Maßnahmen und Orte des Projekts verwaltet werden.
@@ -86,14 +75,16 @@ jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere E
 
 <p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
 
-### Verwaltung
 
-Ressourcen in der Liste können per Klick ausgewählt werden; bei gedrückter Strg/Cmd- oder Shift-Taste lassen
+### Ressourcen verwalten
+
+Ressourcen in der Liste können per Klick ausgewählt werden. Bei gedrückter Strg/Cmd- oder Shift-Taste lassen
 sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
 * *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
 erreichbar)
+* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können.
 * *Verschieben*: Erlaubt es, Ressourcen aus ihrem aktuellen Kontext zu entfernen und einer anderen
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
@@ -246,7 +237,7 @@ die ausgeblendeten Ressourcen zugreifen zu können.
  
 Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
 anstoßen, indem Sie auf den Plus-Button links neben dem Kategoriefilter-Button klicken. Dabei werden Felder
-zur Suche angeboten, die der als Filter ausgewählten Kategorie entsprechen. Sie können beliebig viele Felder
+zur Suche angeboten, die der als Filter ausgewählten Kategorie entsprechen und für die in der Projektkonfiguration die Option "Feldspezifische Suche erlauben" aktiviert wurde. Sie können beliebig viele Felder
 auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber hinaus können Sie die
 feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter verwenden.
 
@@ -265,6 +256,271 @@ denen das Feld gesetzt (Option "Beliebiger Wert") bzw. nicht gesetzt ist (Option
 Die Zahl neben dem Kategoriefilter-Button gibt die Anzahl der aktiven Suchkriterien an. Sie können
 Suchkriterien auch nachträglich wieder entfernen, indem Sie das Menü durch einen Klick auf die Zahl erneut
 öffnen und das entsprechende Kriterium auswählen.
+
+
+<hr>
+
+
+## Synchronisation
+
+Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen Field-Desktop-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen sowie hinzugefügte oder gelöschte Bilder), die auf einem anderen Rechner in Field Desktop vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
+
+Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** in den Einstellungen ausgefüllt sein sollte.
+
+
+### Projekt herunterladen
+
+Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
+
+* *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, der über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
+* *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.
+* *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, von der Sie das Projekt herunterladen möchten.
+* *Vorschaubilder herunterladen*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten herunterladen möchten, können Sie sie deaktivieren.
+* *Originalbilder herunterladen*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung herunterladen möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+
+Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
+
+
+### Synchronisation konfigurieren
+
+Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
+
+* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
+* *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
+* *Vorschaubilder synchronisieren*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten hoch- bzw. herunterladen möchten, können Sie sie deaktivieren.
+* *Originalbilder synchronisieren*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung synchronisieren möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten hoch- bzw. heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+
+Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
+
+
+### Synchronisationsstatus
+
+Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status der von Ihnen eingerichteten Synchronisationsverbindung an.
+
+<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronisations-Icon"/></p>
+
+Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken an. Werden gerade Dateien herunter- oder hochgeladen, wird dies durch einen Pfeil signalisiert. Im Falle eines Fehlers erscheint ein Ausrufezeichen. Zusätzliche Informationen zum Synchronisationsstatus können Sie abfragen, indem Sie den Mauszeiger über das Icon bewegen.
+
+
+### Konflikte
+
+Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
+
+Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
+
+<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
+
+Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
+
+Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
+
+
+### Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
+
+Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt herzustellen, indem Sie ihnen die Zugangsdaten mitteilen, die Sie im Menü **Einstellungen** im Abschnitt **Synchronisation** finden können:
+
+* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer Field-Desktop-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
+* *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.
+
+
+<hr>
+
+
+## Projektkonfiguration
+
+Eine mit Field Desktop verwaltete Datenbank enthält eine Reihe von Ressourcen, die immer einer bestimmten **Kategorie** angehören, beispielsweise "Ort", "Fund" oder "Abbildung". Dabei wird unterschieden zwischen **Oberkategorien** (z. B. "Fund") und **Unterkategorien** (z. B. "Ziegel" oder "Keramik"). Eine Ressource der Unterkategorie gehört dabei immer auch der Oberkategorie an (ein Ziegel ist gleichzeitig ein Fund).
+
+Jede Kategorie stellt eine Reihe von **Feldern** bereit, durch die Merkmale und Metadaten der Ressource beschrieben werden können (z. B. "Gewicht", "Farbe", "Bearbeiter/Bearbeiterin" usw.). Felder wiederum besitzen jeweils einen bestimmten Eingabetyp, der bestimmt, welche Daten für das Feld auf welche Weise eingetragen werden können (z. B.: Textfeld, Zahleneingabe, Datierungsangabe). Für Felder einiger Eingabetypen kann eine **Werteliste** angegeben werden, die eine Reihe von Textwerten als vorgegebene Auswahlmöglichkeiten definiert.
+
+Welche Felder für eine Kategorie konkret im Ressourceneditor zur Verfügung stehen, wird durch die Wahl des **Formulars** bestimmt, das eine Auswahl aus den verfügbaren Feldern vornimmt und diese in **Gruppen** sortiert. Für jede Kategorie steht dabei ein gleichnamiges Basisformular zur Verfügung, das lediglich wenige obligatorische Felder enthält, sowieso eines oder mehrere weitere Formulare mit umfangreicherer Feldauswahl (z. B. "Pottery:default" mit den Standardfeldern des Field-Datenmodells für die Kategorie "Keramik"). Formulare sowie ihre Feldgruppen und Felder können über den Konfigurationseditor beliebig angepasst und erweitert werden. Ein Formular einer Unterkategorie erbt dabei immer die Felder des ausgewählten Formulars der entsprechenden Oberkategorie.
+
+Durch **Relationen** werden Beziehungen zwischen Ressourcen angegeben (z. B.: Erdbefund "A1" liegt räumlich unter Erdbefund "A2"). Relationen können im Konfigurationseditor ausgeblendet, aber nicht neu angelegt werden.
+
+Über das Menü "Werkzeuge" ➝ "Projektkonfiguration" erreichen Sie den Konfigurationseditor, der es Ihnen erlaubt, die im Projekt verfügbaren Kategorien, Felder und Wertelisten anzupassen und zu erweitern. Änderungen an der Konfiguration werden bei bestehender Synchronisationsverbindung an andere Nutzer und Nutzerinnen übertragen, sobald sie über den "Speichern"-Button bestätigt werden.
+
+
+### Kategorien und Formulare
+
+In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfigurierten Kategorien aufgelistet. Über das Filtermenü links oben können Sie die Auswahl der angezeigten Kategorien auf einen bestimmten Bereich der Anwendung beschränken (z. B. "Schnitt" für die Beschränkung auf Kategorien, die innerhalb eines Schnitt-Tabs angelegt werden können). Bei Wahl der Option "Alle" werden sämtliche Kategorien des Projekts aufgeführt.
+
+<p align="center"><img src="images/de/configuration/categories_filter.png" alt="Kategorien-Filtermenü"/></p>
+
+Wenn Sie eine Kategorie in der Liste auswählen, wird auf der rechten Seite das für diese Kategorie konfigurierte Formular mit den entsprechenden Feldgruppen und Feldern angezeigt.
+
+
+#### Hinzufügen von Oberkategorien
+
+Über den grünen Plus-Button unten in der Liste können Sie eine neue Oberkategorie zum Projekt hinzufügen. Dabei haben Sie die Auswahl zwischen allen Oberkategorien der Field-Kategoriebibliothek, die aktuell noch nicht für das Projekt konfiguriert sind. Über das Textfeld oberhalb der Liste können Sie die angezeigten Kategorien und Formulare filtern. Für jede Kategorie werden die verfügbaren Formulare aufgelistet; bei Klick auf eines der Formulare sehen Sie auf der rechten Seite die entsprechenden Feldgruppen und Felder. Bestätigen Sie Ihre Auswahl über den Button "Kategorie hinzufügen".
+
+Beachten Sie bitte, dass aktuell keine neuen Oberkategorien über den Konfigurationseditor hinzugefügt werden können.
+
+
+#### Hinzufügen von Unterkategorien
+
+Möchten Sie eine neue Unterkategorie zu einer bestehenden Oberkategorie hinzufügen, klicken Sie auf den kleinen Plus-Button, der rechts neben der entsprechenden Oberkategorie angezeigt wird. Fehlt der Plus-Button, so ist das Anlegen von Unterkategorien für diese Kategorie nicht möglich.
+
+Analog zum Hinzufügen von Oberkategorien haben Sie auch hier die Auswahl zwischen verschiedenen Formularen für jede Kategorie. Möchten Sie eine eigene Kategorie anlegen, geben Sie den gewünschten Kategoriebezeichner in das Textfeld oberhalb der Liste ein und wählen Sie die Option "Neue Kategorie erstellen". Es öffnet sich der Kategorieeditor, in dem Sie die Eigenschaften der Kategorie festlegen können (siehe Abschnitt *Kategorien bearbeiten*). Für eine neu erstellte Kategorie wird automatisch auch ein neues Formular angelegt, das die Felder des ausgewählten Formulars der Oberkategorie erbt.
+
+Projektspezifische Kategorien werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
+
+
+#### Kategorien verwalten
+
+Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
+
+* *Bearbeiten*: Öffnet den Kategorieeditor (siehe Abschnitt *Kategorien bearbeiten*).
+* *Formular wechseln*: Öffnet ein Auswahlmenü zum Wechseln des Formulars für diese Kategorie. Bitte beachten Sie, dass sämtliche Änderungen, die am derzeitigen Formular und der Kategorie vorgenommen wurden, beim Wechsel verloren gehen. Handelt es sich um eine Oberkategorie, so betrifft dies auch sämtliche Unterkategorien und deren Formulare.
+* *Löschen*: Entfernt die Kategorie nach einer Sicherheitsabfrage. Wurden bereits Ressourcen dieser Kategorie im Projekt angelegt, so gehen diese nicht verloren, werden allerdings nicht mehr angezeigt, bis die Kategorie erneut hinzugefügt wurde. Da beim Löschen auch sämtliche Anpassungen des für die Kategorie ausgewählten Formulars verloren, sollte eine Kategorie allerdings im Regelfall nicht gelöscht werden, wenn bereits Ressourcen mit dem entsprechenden Formular angelegt wurden.
+
+
+#### Kategorien bearbeiten
+
+Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Kategorieliste kann der Kategorieeditor geöffnet werden, in dem die Eigenschaften der Kategorie editiert werden können:
+
+* *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden
+
+Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
+* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
+* *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
+
+
+#### Hierarchie
+
+Die Kategorie bestimmt, an welcher Stelle der Ressourcenhierarchie eine Ressource angelegt werden kann: So können beispielsweise Funde innerhalb von stratigraphischen Einheiten angelegt werden, nicht aber umgekehrt. Mit den beiden Buttons rechts oben über der Formularanzeige können Sie sich anzeigen lassen, unterhalb von Ressourcen welcher Kategorien eine Ressource der ausgewählten Kategorie angelegt werden kann bzw. Ressourcen welcher Kategorien sie beinhalten kann.
+
+<p align="center"><img src="images/de/configuration/hierarchy.png" alt="Hierarchie-Info-Buttons"/></p>
+
+Die Kategorienhierarchie kann aktuell nicht im Konfigurationseditor geändert werden. Für neu angelegte Unterkategorien gelten die hierarchischen Restriktionen der Oberkategorie.
+
+
+### Gruppen
+
+Rechts neben der Kategorieliste werden die Feldgruppen des derzeit ausgewählten Kategorieformulars angezeigt. Klicken Sie auf eine Gruppe, um rechts davon die entsprechenden Felder anzuzeigen.
+
+
+#### Hinzufügen von Gruppen
+
+Über den grünen Plus-Button unten in der Liste können Sie eine neue Gruppe zum Formular hinzufügen. Dabei können Sie eine der Gruppen auswählen, die bereits in anderen für das Projekt konfigurierten Formularen enthalten sind, oder eine neue Gruppe erstellen. Hierzu geben Sie den Bezeichner der neuen Gruppe in das Textfeld oberhalb der Liste ein und wählen die Option "Neue Gruppe erstellen". Es öffnet sich der Gruppeneditor, in dem Sie den Anzeigenamen der neuen Gruppe eintragen können.
+
+
+#### Gruppen verwalten
+
+Bei einem Rechtsklick auf eine Gruppe wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
+
+* *Bearbeiten*: Öffnet den Gruppeneditor, in dem Sie den Anzeigenamen der Gruppe eintragen können. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen. Der Gruppeneditor kann auch per Doppelklick auf die Gruppe geöffnet werden.
+* *Löschen*: Entfernt die Gruppe aus dem Formular. Bitte beachten Sie, dass eine Gruppe nur dann gelöscht werden kann, wenn sie keine Felder enthält. Verschieben Sie vor dem Löschen der Gruppe alle Felder in andere Gruppen oder entfernen Sie sie.
+
+
+### Felder
+
+Rechts neben der Gruppenliste werden die Felder angezeigt, die in der ausgewählten Gruppe enthalten sind. Klicken Sie auf einen Eintrag in der Felderliste, um weitere Informationen zum Feld einzublenden (Beschreibung, Eingabetyp und gegebenenfalls die zugeordnete Werteliste).
+
+
+#### Hinzufügen von Feldern
+
+Klicken Sie auf den Plus-Button unten in der Feldliste, um ein neues Feld zur Gruppe hinzuzufügen. Sie haben dabei zunächst die Auswahl aus allen Feldern, die für die ausgewählte Kategorie zur Verfügung stehen und die noch nicht zum Formular hinzugefügt wurden. Wählen Sie einen Eintrag in der Liste aus, um auf der rechten Seite Informationen über das Feld einzublenden. Um ein neues Feld anzulegen, geben Sie den gewünschten Bezeichner in das Eingabefeld oberhalb der Liste ein und wählen Sie die Option "Neues Feld erstellen". Es öffnet sich der Feldeditor, in dem Sie die Eigenschaften des Feldes angeben können (siehe Abschnitt *Felder bearbeiten*).
+
+Projektspezifische Felder werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
+
+
+#### Felder verwalten
+
+Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
+
+* *Bearbeiten*: Öffnet den Feldeditor (siehe Abschnitt *Felder bearbeiten*).
+* *Löschen*: Löscht das Feld nach einer Sicherheitsabfrage. Wurden bereits Daten für dieses Feld in Ressourcen eingetragen, so gehen diese nicht verloren, werden aber nicht mehr angezeigt, bis das Feld erneut hinzugefügt wird. Diese Option steht nur für projektspezifische Felder zur Verfügung. Felder, die einem ausgewählten Formular der Field-Formularbibliothek angehören, können nicht gelöscht, sondern lediglich im Feldeditor ausgeblendet werden. 
+
+
+#### Felder bearbeiten
+
+Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Feldliste kann der Feldeditor geöffnet werden, in dem die Eigenschaften des Feldes editiert werden können:
+
+* *Feldbezeichnung*: Der Anzeigename des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Feldnamen eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+
+
+#### Eingabetyp ändern
+
+Über das Auswahlfeld *Eingabetyp* im Feldeditor können Sie den Eingabetyp des Feldes wechseln. Bitte beachten Sie, dass Sie für die mit Field mitgelieferten Felder nur Eingabetypen wählen können, deren Datenformat mit dem standardmäßig eingestellten Eingabetyp kompatibel sind (beispielsweise ist der Wechsel von einem einzeiligen Textfeld auf ein mehrzeiliges Textfeld möglich, nicht aber der Wechsel von einem Datierungsfeld zu einem Checkbox-Auswahlfeld). Bei projektspezifischen Feldern können Sie den Eingabetyp jederzeit frei ändern.
+
+Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps weiterhin angezeigt. Im Ressourceneditor werden mit dem aktuellen Eingabetyp inkompatible Daten allerdings entsprechend markiert und können dort nicht mehr editiert, sondern nur noch gelöscht werden.
+
+
+#### Felder verstecken
+
+Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
+
+
+#### Feldspezifische Suche
+
+Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
+
+
+#### Werteliste wechseln
+
+Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
+
+Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden.
+
+
+### Anpassen der Reihenfolge und der Gruppenzugehörigkeit
+
+Die Reihenfolge von Ober- und Unterkategorien, Gruppen und Feldern lässt sich per Drag & Drop ändern. Dazu klicken Sie auf das Icon links im Listeneintrag, halten die Maustaste gedrückt und schieben das Element an die gewünschte Position.
+
+<p align="center"><img src="images/de/configuration/drag_and_drop_handle.png" alt="Drag-and-Drop-Icon"/></p>
+
+Auf die gleiche Weise können Felder auch einer anderen Gruppe zugeordnet werden: Ziehen Sie das Feld einfach auf den Eintrag der entsprechenden Gruppe in der Gruppenliste. Beachten Sie dabei, dass Änderungen der Feld- oder Gruppenreihenfolge bzw. der Gruppenzugehörigkeit nicht automatisch vom Formular einer Oberkategorie auf Formulare der entsprechenden Unterkategorien übertragen werden (und umgekehrt).
+
+
+### Wertelisten
+
+Über das Menü "Projektkonfiguration" ➝ "Wertelistenverwaltung" kann eine Übersicht sämtlicher Wertelisten aufgerufen werden, die mit Field mitgeliefert werden. Die hier aufgeführten Wertelisten werden entweder von den Feldern der Standard-Formulare verwendet oder wurden im Rahmen von Projekten angelegt, die Field bereits eingesetzt haben.
+
+Verwenden Sie das Textfeld oberhalb der Liste, um die Wertelisten auf Basis beliebiger Suchbegriffe zu filtern. Die Suche berücksichtigt dabei sowohl Wertelisten-Bezeichner als auch Bezeichner und Anzeigetexte von einzelnen Werten. Über den Button rechts des Suchfeldes können Sie das Filtermenü öffnen, das es erlaubt, wahlweise nur projektspezifische (d. h. für das Projekt neu angelegte) und/oder innerhalb des Projekts derzeit verwendete Wertelisten anzuzeigen.
+
+<p align="center"><img src="images/de/configuration/valuelists_filter.png" alt="Wertelisten-Filtermenü"/></p>
+
+Bitte beachten Sie, dass sämtliche Änderungen, die in der Wertelistenverwaltung vorgenommen werden, anschließend per Klick auf den "Speichern"-Button des Konfigurationseditors bestätigt werden müssen, bevor sie für das Projekt angewendet werden.
+
+
+#### Erstellen und Erweitern von Wertelisten
+
+Um eine neue Werteliste anzulegen, geben Sie den gewünschten Bezeichner in das Textfeld ein und wählen Sie die Option "Neue Werteliste erstellen". Es öffnet sich der Wertelisteneditor, in dem Sie die gewünschten Werte eintragen und weitere Einstellungen vornehmen können (siehe Abschnitt *Wertelisten bearbeiten*).
+
+Anstatt eine komplett neue Werteliste anzulegen, können Sie alternativ eine bereits bestehende erweitern. Öffnen Sie dazu per Rechtsklick auf den entsprechenden Listeneintrag das Kontextmenü, wählen Sie die Option *Werteliste erweitern* und geben Sie einen Bezeichner für Ihre Erweiterungsliste ein. Alle Werte der ausgewählten Werteliste werden übernommen und können nun im Editor durch zusätzliche Werte ergänzt werden. Sie haben außerdem die Möglichkeit, existierende Werte zu verstecken und die Reihenfolge anzupassen. Bitte beachten Sie, dass Erweiterungslisten sowie projektspezifische Listen nicht erweitert werden können.
+
+
+#### Projektspezifische Wertelisten verwalten
+
+Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
+
+* *Bearbeiten*: Öffnet den Wertelisteneditor (siehe Abschnitt *Wertelisten bearbeiten*).
+* *Löschen*: Löscht die Werteliste nach einer Sicherheitsabfrage. Das Löschen einer Werteliste ist nicht möglich, solange sie von einem oder mehreren Feldern verwendet wird. Wählen Sie in diesem Fall zunächst eine andere Werteliste für die entsprechenden Felder aus.
+
+
+#### Wertelisten bearbeiten
+
+Über das Kontextmenü oder per Doppelklick auf eine Werteliste kann ein Editor geöffnet werden, in dem die Eigenschaften der Werteliste bearbeitet werden können:
+
+* *Beschreibung der Werteliste*: Ein Beschreibungstext, in dem Sie nähere Informationen zur Werteliste angeben können. Dieser Text wird in der Wertelistenverwaltung bei Auswahl der Liste angezeigt.
+* *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zur Werteliste oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
+* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" die Werte ein, die von der Werteliste angeboten werden sollen. Es öffnet sich jeweils der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
+* *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stetsin alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
+
+
+#### Werte bearbeiten
+
+Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
+
+* *Anzeigetext*: Der Anzeigetext des Wertes. Sie können Texte für unterschiedliche Sprachen eintragen.
+* *Beschreibung*: Ein Beschreibungstext, in dem Sie nähere Informationen zum Wert angeben können. Dieser Text wird im Konfigurationseditor als Tooltip für den entsprechenden Wert angezeigt.
+* *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
+
+
+### Konfiguration importieren
+
+Um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen, öffnen Sie das neue Projekt, wechseln in den Konfigurationseditor und rufen die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf. Wählen Sie das Projekt, deren Konfiguration Sie übernehmen möchten, anschließend aus der Liste aus, und bestätigen Sie Ihre Auswahl per Klick auf den "OK"-Button. Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
 
 
 <hr>
@@ -364,64 +620,3 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts
   wird wiederhergestellt.
-
-
-<hr>
-
-
-## Synchronisation
-
-Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
-
-Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** in den Einstellungen ausgefüllt sein sollte.
-
-
-### Projekt herunterladen
-
-Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen iDAI.field-Desktopinstallation oder auf einem Datenbankserver vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
-
-* *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
-* *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.
-* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, von der Sie das Projekt herunterladen möchten.
-
-Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
-
-
-### Synchronisation konfigurieren
-
-Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
-
-* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
-* *Passwort*: Das Passwort des Projekts bzw. der iDAI.field-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
-
-Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
-
-
-### Synchronisationsstatus
-
-Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status der von Ihnen eingerichteten Synchronisationsverbindung an.
-
-<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronisations-Icon"/></p>
-
-Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken an. Werden gerade Dateien herunter- oder hochgeladen, wird dies durch einen Pfeil signalisiert. Im Falle eines Fehlers erscheint ein Ausrufezeichen. Zusätzliche Informationen zum Synchronisationsstatus können Sie abfragen, indem Sie den Mauszeiger über das Icon bewegen.
-
-
-### Konflikte
-
-Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
-
-Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
-
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
-
-Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
-
-Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
-
-
-### Synchronisationsverbindungen zur eigenen iDAI.field-Installation erlauben
-
-Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt herzustellen, indem Sie ihnen die Zugangsdaten mitteilen, die Sie im Menü **Einstellungen** im Abschnitt **Synchronisation** finden können:
-
-* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer iDAI.field-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
-* *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.

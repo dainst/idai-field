@@ -1,26 +1,21 @@
 ## First steps
 
-After starting the iDAI.field desktop application for the first time, the project "test" will be active, allowing
+After starting the Field Desktop application for the first time, the project "test" will be active, allowing
 you to experiment with the application's functionality using a set of test data. Please note that as long as the
 test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting
-the application. For this reason, synchronization with other iDAI.field instances or databases is not performed for
+the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for
 the test project.  
 
-In order to work with iDAI.field productively and create your own project, you should first follow these steps:
+In order to work with Field Desktop productively and create your own project, you should first follow these steps:
 
-1. The submenu **Settings**, which is accessible via the menu "iDAI.field" (MacOS) respectively "Tools"
+1. The submenu **Settings**, which is accessible via the menu "Field" (MacOS) respectively "Tools"
 (Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
 your editor name. This name will be stored in the database along with every change you make. It is strongly
 recommended to fill in this field, especially if data is going to be synchronized.  
 
-2. In the submenu **Settings** you can also change the path to the image directory. This may be necessary if
-you want to access an image directory located on a network device (NAS) used by several users simultaneously.
-Please note that in each case images must be imported via the iDAI.field application. Image files that are
-manually placed in the image directory can **not** be used by the application. 
+2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You also have the choice between several presets for the project configuration. Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields.
 
-3. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores.
-
-4. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
+3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
@@ -30,10 +25,6 @@ your project data regularly.
 <hr>
 
 ## Resources
-
-The resource management facilities are at the core of iDAI.field.
-
-### Operations
 
 After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
 home symbol) where all of the project's operations and places are managed.
@@ -62,6 +53,7 @@ operation tab via the plus button (e. g. stratigraphical units within a trench o
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
+
 ### Hierarchical ordering
 
 Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphical unit.
@@ -79,13 +71,15 @@ switch to another level by clicking one of the buttons of the navigation path.
 
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
-### Management
 
-Resources in the list can be selected by clicking; by holding down the Ctrl/Cmd or Shift key, multiple resources
+### Manage resources
+
+Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
 can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
 providing the following options:
 
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed.
 * *Move*: Allows removing resources from their current context and assigning them to another parent resource
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
@@ -255,6 +249,268 @@ criterion to remove.
 <hr>
 
 
+## Synchronization
+
+In order to collaborate on a single project, data can be synchronized between multiple Field Desktop installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources as well as added or deleted images) coming from an Field Desktop application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
+
+Please make sure to fill in the field **Editor name** before setting up the configuration.
+
+
+### Download project
+
+To work with an existing project that is available on another Field Desktop installation or a Field server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
+
+* *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which Field Desktop is currently open (this address can be viewed in the settings section *Your address*) or the address of a Field server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the server of the DAI).
+* *Project name*: The name of the project you want to download.
+* *Password*: The password of the project or the Field Desktop installation from which you want to download the project.
+* *Download preview images*: This option is enabled by default. If you have a weak internet connection and want to download as little data as possible, you may want to disable it.
+* *Download original images*: Enable this option if you want to download the images in their original image resolution. Depending on the number and size of images managed in the project, this may involve downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
+
+Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
+
+
+### Configuration
+
+Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
+
+* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Desktop database server of the DAI). 
+* *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
+* *Synchronize preview images*: This option is enabled by default. If you have a weak internet connection and want to upload/download as little data as possible, you may want to disable it.
+* *Synchronize original images*: Enable this option if you want to synchronize the images in their original image resolution. Depending on the number and size of images managed in the project, this may involve uploading/downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
+
+Use the switch **Enable synchronization** to start or interrupt the connection. Finally, confirm your settings by clicking the **Apply settings** button.
+
+### Synchronization state
+
+The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
+
+<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
+
+If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
+
+### Conflicts
+
+Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
+
+Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
+
+<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
+
+Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
+
+To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
+
+### Allow synchronization connections to your own Field Desktop installation
+
+You can allow others to establish a synchronization connection with your project by providing them with the credentials that can be found in the **Settings** menu in the section **Synchronization**:
+
+* *Your address*: Your network address, which others can use to connect to your database from their own Field Desktop installation. You can share this address along with your password to allow others to synchronize their project data with you.
+* *Your password*: By default, the database is protected from unauthorized access with a randomly generated password. At this point you can change the password.
+
+
+<hr>
+
+
+## Project configuration
+
+A database managed with Field Desktop contains a number of resources that always belong to a specific **category**, for example "Place", "Find" or "Image". A distinction is made between **supercategories** (e.g. "Find") and **subcategories** (e.g. "Brick" or "Pottery"). A resource of the subcategory always belongs to the supercategory as well (a brick is also a find).
+
+Each category provides a set of **fields** that can be used to describe properties and metadata of the resource (e.g. "weight", "color", "processor", etc.). Fields each have a specific input type that determines what data can be entered for the field in which way (e.g.: text field, number input, dating input). For fields of some input types, a **valuelist** can be specified that defines a set of text values as predefined choices.
+
+Which fields are specifically available for a category in the resource editor is determined by the choice of **form**, which makes a selection from the available fields and sorts them into **groups**. For each category a basic form of the same name is available, which contains only a few obligatory fields, in addition to one or more forms with a more extensive field selection (e.g. "Pottery:default" with the standard fields of the Field data model for the category "Pottery"). Forms and their field groups and fields can be customized and extended as desired using the configuration editor. A form of a subcategory always inherits the fields of the selected form of the corresponding supercategory.
+
+**Relations** are used to specify relationships between resources (e.g.: layer "A1" lies spatially below layer "A2"). Relations can be hidden in the configuration editor, but not newly created.
+
+Via the "Tools" ➝ "Project configuration" menu, you can access the configuration editor, which allows you to adjust and extend the categories, fields and valuelists available in the project. If a synchronization connection is established, changes to the configuration will be transferred to other users as soon as they are confirmed via the "Save" button.
+
+
+### Categories and forms
+
+The left sidebar of the editor lists the categories currently configured for the project. Using the filter menu at the top left, you can limit the selection of displayed categories to a specific part of the application (e.g. "Trench" for limiting to categories that can be created within a trench tab). If you select the "All" option, all categories of the project will be listed.
+
+<p align="center"><img src="images/en/configuration/categories_filter.png" alt="Categories filter menu"/></p>
+
+When you select a category in the list, the form configured for that category is displayed on the right side with the corresponding field groups and fields.
+
+
+#### Add supercategories
+
+Using the green plus button at the bottom of the list, you can add a new supercategory to the project. A new window opens where you can choose between all supercategories of the Field category library that are not already configured for the project. You can filter the displayed categories and forms using the text field above the list. For each category, the available forms are listed; when you select one of the forms, you will see the corresponding field groups and fields on the right side. Confirm your selection by clicking the "Add category" button.
+
+Please note that currently no new supercategories can be added via the configuration editor.
+
+
+#### Add subcategories
+
+If you want to add a new subcategory to an existing supercategory, click on the small plus button displayed to the right of the corresponding supercategory. If the plus button is missing, it is not possible to create subcategories for this category.
+
+Similar to adding supercategories, you also have the choice between different forms for each category. If you want to create your own category, enter the desired category name in the text field above the list and select the "Create new category" option. The category editor will open, where you can set the category's properties (see the *Edit category* section). For a newly created category, a new form is also created automatically, which inherits the fields of the selected form of the parent category.
+
+Project specific categories are highlighted in blue in the list, provided that the "Highlight custom categories/fields" option is enabled in the "Project configuration" menu.
+
+
+#### Manage categories
+
+Right-clicking on a category brings up a context menu that provides the following options:
+
+* *Edit*: Opens the category editor (see section *Edit categories*).
+* *Swap form*: Opens a menu to select another form for this category. Please note that any changes made to the current form and category will be lost in this process. If this is a supercategory, this will also affect all subcategories and their forms.
+* *Delete*: Removes the category after a confirmation prompt. If resources of this category have already been created in the project, they will not be lost, but will no longer be displayed until the category is added again. Since deleting also loses all customizations of the form selected for the category, however, a category should not be deleted in most cases if resources have already been created based on the corresponding form.
+
+
+#### Edit categories
+
+Via the context menu or by double-clicking on an entry in the category list, the category editor can be opened, in which the properties of the category can be edited:
+
+* *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
+* *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
+
+You can also specify the following properties for project-specific categories:
+* *Description*: A description text that informs in which contexts the category should be used.
+* *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+
+
+#### Hierarchy
+
+The category determines where in the resource hierarchy a resource can be created: For example, finds can be created within stratigraphic units, but not vice versa. With the two buttons on the top right above the form display you can see below resources of which categories a resource of the selected category can be created and resources of which categories it can contain.
+
+<p align="center"><img src="images/en/configuration/hierarchy.png" alt="Hierarchy info buttons"/></p>
+
+The category hierarchy cannot currently be changed in the configuration editor. For newly created subcategories, the hierarchical restrictions of the supercategory apply.
+
+
+### Groups
+
+To the right of the category list, the field groups of the currently selected category form are displayed. Click on a group to display the corresponding fields to the right of it.
+
+
+#### Add groups
+
+You can add a new group to the form using the green plus button at the bottom of the list. You can select one of the groups already included in other forms configured for the project or create a new group. To do this, enter the name of the new group in the text field above the list and select the "Create new group" option. The group editor will open where you can enter the display label of the new group.
+
+
+#### Manage groups
+
+Right-clicking on a group brings up a context menu with the following options:
+
+* *Edit*: Opens the group editor where you can enter the display label of the group. You can enter labels for different languages. The group editor can also be opened by double-clicking on the group.
+* *Delete*: Removes the group from the form. Please note that a group can only be deleted if it does not contain any fields. Before deleting the group, move all the fields to other groups or remove them.
+
+
+### Fields
+
+To the right of the group list, the fields that are included in the selected group are displayed. Click on an entry in the fields list to display more information about the field (description, input type, and the assigned valuelist, if any).
+
+
+#### Add fields
+
+Click the plus button at the bottom of the field list to add a new field to the group. You can choose between all the fields available for the selected category that have not yet been added to the form. Select an entry in the list to show information about the field on the right side. To create a new field, enter the desired identifier in the input field above the list and select the "Create new field" option. The field editor opens, where you can specify the properties of the field (see section *Edit field*).
+
+Project-specific fields are highlighted in blue in the list, provided that the "Highlight custom categories/fields" option is enabled in the "Project configuration" menu.
+
+
+#### Manage fields
+
+Right-clicking on a field brings up a context menu that provides the following options:
+
+* *Edit*: Opens the field editor (see section *Edit field*).
+* *Delete*: Deletes the field after a confirmation prompt. If data for this field has already been entered in resources, it will not be lost, but will no longer be displayed until the field is added again. This option is only available for project specific fields. Fields that belong to a form selected from the Field form library cannot be deleted, only hidden in the field editor. 
+
+
+#### Edit fields
+
+Via the context menu or by double-clicking on an entry in the field list, the field editor can be opened, in which the properties of the field can be edited:
+
+* *Field label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
+* *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field name and is intended to help with data entry.
+
+
+#### Change input type
+
+The *Input type* checkbox in the field editor allows you to change the input type of the field. Please note that for the fields that come with Field Desktop, you can only select input types whose data format is compatible with the default input type (for example, it is possible to change from a single-line text field to a multi-line text field, but not to change from a dating field to a checkbox selection field). For project-specific fields, you can freely change the input type at any time.
+
+Field data that has already been entered will continue to be displayed even after the input type has been changed. In the resource editor, however, data that is incompatible with the current input type is marked accordingly and can no longer be edited there, only deleted.
+
+
+#### Hide fields
+
+Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
+
+
+#### Field specific search
+
+The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
+
+
+#### Replace valuelist
+
+The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
+
+If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
+
+
+### Adjusting order and group assignment
+
+The order of supercategories, subcategories, groups and fields can be changed using drag & drop. To do so, click on the handle icon on the left of the list entry, hold down the mouse button and move the element to the desired position.
+
+<p align="center"><img src="images/en/configuration/drag_and_drop_handle.png" alt="Drag and drop handle"/></p>
+
+Fields can also be assigned to another group in the same way: Simply drag the field to the entry of the corresponding group in the group list. Note that changes to the field or group order or group assignment are not automatically transferred from the form of a supercategory to forms of the corresponding subcategories (and vice versa).
+
+
+### Valuelists
+
+The "Project configuration" ➝ "Valuelist management" menu opens an overview of all the valuelists that come with Field. The valuelists listed here are either used by the fields of the standard forms or were created in the context of projects that have already used Field.
+
+Use the text field above the list to filter the valuelists based on any search terms. The search takes into account valuelist identifiers as well as identifiers and display labels of individual values. Using the button to the right of the search field, you can open the filter menu, which allows you to selectively display only project specific (i.e. newly created) valuelists and/or valuelists currently used within the project.
+
+<p align="center"><img src="images/en/configuration/valuelists_filter.png" alt="Valuelists filter menu"/></p>
+
+Please note that all changes made in the valuelist management window must subsequently be confirmed by clicking on the "Save" button of the configuration editor before they are applied to the project.
+
+
+#### Create and expand valuelists
+
+To create a new valuelist, enter the desired identifier in the text field and select the "Create new valuelist" option. The valuelist editor will open, where you can enter the desired values and make further settings (see section *Edit valuelists*).
+
+Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Expand valuelist* option and enter an identifier for your expansion list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
+
+
+#### Manage project specific valuelists
+
+Right-clicking on a project specific valuelist brings up a context menu that provides the following options:
+
+* *Edit*: Opens the valuelist editor (see section *Edit valuelists*).
+* *Delete*: Deletes the valuelist after a confirmation prompt. Deleting a valuelist is not possible as long as it is used by one or more fields. In this case, first select another valuelist for the corresponding fields.
+
+
+#### Edit valuelists
+
+Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
+
+* *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
+* *References*: Specify URLs here to reference more information about the valuelist or definitions in other systems.
+* *Values*: Use the "New value" text field to enter values to be included in the value list. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
+* *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
+
+
+#### Edit values
+
+The value editor allows you to customize the properties of a value:
+
+* *Label*: The display label of the value. You can enter labels for different languages.
+* *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
+* *References*: Specify URLs here to reference definitions in other systems.
+
+
+### Import configuration
+
+To import an existing configuration from another project, open the new project, switch to the configuration editor, and choose the "Project configuration" ➝ "Import configuration..." menu option. Then select the project whose configuration you want to take over from the list and confirm your selection by clicking the "OK" button. The result of the import can now be checked in the editor and accepted by clicking the "Save" button. Please note that all previous configuration settings will be replaced by the imported configuration.
+
+
+<hr>
+
+
 ## Matrix
 
 The **Matrix** view (accessible via the menu "Tools") displays a matrix for each trench of the project,
@@ -338,61 +594,3 @@ from the current selection:
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
   fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
-  
-
-<hr>
-
-
-## Synchronization
-
-In order to collaborate on a single project, data can be synchronized between multiple iDAI.field installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
-
-Please make sure to fill in the field **Editor name** before setting up the configuration.
-
-
-### Download project
-
-To work with an existing project that is available on another iDAI.field desktop installation or a database server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
-
-* *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which iDAI.field is currently open (this address can be viewed in the settings section *Your address*) or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI).
-* *Project name*: The name of the project you want to download.
-* *Password*: The password of the project or the iDAI.field installation from which you want to download the project.
-
-Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
-
-
-### Configuration
-
-Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
-
-* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where iDAI.field is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://field.dainst.org/sync* for the iDAI.field database server of the DAI). 
-* *Password*: The password of the project or iDAI.field installation you want to establish the synchronization connection with.
-
-Use the switch **Enable synchronization** to start or interrupt the connection. Finally, confirm your settings by clicking the **Apply settings** button.
-
-### Synchronization state
-
-The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
-
-<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
-
-If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
-
-### Conflicts
-
-Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
-
-Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
-
-<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
-
-Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
-
-To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
-
-### Allow synchronization connections to your own iDAI.field installation
-
-You can allow others to establish a synchronization connection with your project by providing them with the credentials that can be found in the **Settings** menu in the section **Synchronization**:
-
-* *Your address*: Your network address, which others can use to connect to your database from their own iDAI.field installation. You can share this address along with your password to allow others to synchronize their project data with you.
-* *Your password*: By default, the database is protected from unauthorized access with a randomly generated password. At this point you can change the password.

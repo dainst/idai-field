@@ -92,6 +92,9 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroupId = (group: Group) => 'group-' + group.name.replace(':', '-');
 
+    public highlightForCustomFields = (group: Group) => this.hasCustomFields(group)
+        && this.settingsProvider.getSettings().highlightCustomElements;
+
     public hasCustomFields: Predicate<Group> = compose(
         to<Array<Field>>(Group.FIELDS),
         map(_ => _.source),

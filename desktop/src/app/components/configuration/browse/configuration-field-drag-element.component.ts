@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { CategoryForm, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil } from '../configuration-util';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class ConfigurationFieldDragElement implements OnChanges {
     public parentField: boolean = false;
     public label: string;
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private settingsProvider: SettingsProvider) {}
 
 
     ngOnChanges() {
@@ -32,5 +34,6 @@ export class ConfigurationFieldDragElement implements OnChanges {
     }
 
 
-    public isCustomField = () => this.field.source === 'custom';
+    public highlightAsCustomField = () => this.field.source === 'custom'
+        && this.settingsProvider.getSettings().highlightCustomElements;
 }

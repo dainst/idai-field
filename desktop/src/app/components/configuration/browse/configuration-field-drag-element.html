@@ -2,7 +2,7 @@
     <div class="card-header"
          [class.parent-element]="parentField"
          [class.hidden-element]="hidden"
-         [class.custom-element]="isCustomField()">
+         [class.custom-element]="highlightAsCustomField()">
         <b *ngIf="label"> {{label}}</b>
         <code> {{field.name}}</code>
         <category-icon *ngIf="parentField"

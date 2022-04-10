@@ -57,11 +57,11 @@
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
-                    <span *ngIf="hasCustomFields(group)" class="custom-marking"> *</span>
+                    <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
                 </a>
                 <div *cdkDragPreview class="group-drag-preview">
                     {{getGroupLabel(group)}}
-                    <span *ngIf="hasCustomFields(group)" class="custom-marking"> *</span>
+                    <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
                 </div>
                 <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>

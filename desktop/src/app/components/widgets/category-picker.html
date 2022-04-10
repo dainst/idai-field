@@ -29,7 +29,8 @@
                                size="30"></category-icon>
                 <div class="category-label">
                     {{getCategoryLabel(parentCategory)}}
-                    <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
+                    <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"
+                          class="custom-marking"> *</span>
                 </div>
             </div>
             <button *ngIf="isCreateButtonVisible(parentCategory)"
@@ -49,7 +50,8 @@
                            size="30"></category-icon>
             <div class="category-label">
                 {{getCategoryLabel(parentCategory)}}
-                <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"> *</span>
+                <span *ngIf="highlightCustomCategories && hasCustomFields(parentCategory)"
+                      class="custom-marking"> *</span>
             </div>
         </div>
         <div *cdkDragPlaceholder class="category-drag-placeholder"></div>
@@ -78,7 +80,8 @@
                                    size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}
-                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
+                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"
+                              class="custom-marking"> *</span>
                     </div>
                 </div>
                 <div *cdkDragPreview class="category-drag-preview">
@@ -87,7 +90,8 @@
                                    size="30"></category-icon>
                     <div class="category-label">
                         {{getCategoryLabel(childCategory)}}
-                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"> *</span>
+                        <span *ngIf="highlightCustomCategories && hasCustomFields(childCategory)"
+                              class="custom-marking"> *</span>
                     </div>
                 </div>
                 <div *cdkDragPlaceholder class="category-drag-placeholder"></div>

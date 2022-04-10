@@ -19,7 +19,7 @@
   #confirm-valuelist-button,
   #confirm-value-button {
     position: absolute;
-    right: 57px;
+    right: 52px;
     height: 39px;
     
     .button-label {
@@ -52,5 +52,6 @@
   select {
     height: 33.5px;
     line-height: 19px;
+    font-size: 15px;
   }
 }

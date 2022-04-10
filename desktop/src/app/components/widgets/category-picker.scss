@@ -158,6 +158,10 @@ category-picker .category-item,
     margin-left: 40px;
     width: calc(100% - 65px);
   }
+
+  .custom-marking {
+    color: darken($custom-highlight-color, 50%);
+  }
 }
 
 .category-drag-preview {

@@ -2,7 +2,7 @@
      class="category-header"
      [class.with-description]="description"
      (contextmenu)="contextMenu.open($event, category)">
-    <div class="row" [class.custom-category]="category.source === 'custom'">
+    <div class="row" [class.custom-category]="highlightAsCustomCategory()">
         <div class="col header header-left d-flex"
              (dblclick)="onEditCategory.emit()">
             <category-icon size="35" [category]="category"></category-icon>
@@ -66,11 +66,11 @@
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
                     {{getGroupLabel(group)}}
-                    <span *ngIf="hasCustomFields(group)"> *</span>
+                    <span *ngIf="hasCustomFields(group)" class="custom-marking"> *</span>
                 </a>
                 <div *cdkDragPreview class="group-drag-preview">
                     {{getGroupLabel(group)}}
-                    <span *ngIf="hasCustomFields(group)"> *</span>
+                    <span *ngIf="hasCustomFields(group)" class="custom-marking"> *</span>
                 </div>
                 <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>

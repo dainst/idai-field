@@ -373,3 +373,7 @@ a {
   margin-top: 13px;
   user-select: none;
 }
+
+.custom-marking {
+  color: darken($custom-highlight-color, 50%);
+}

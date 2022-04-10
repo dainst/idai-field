@@ -44,7 +44,8 @@
                 <span class="mdi mdi-plus-circle text-success"></span>
             </button>
         </li>
-        <div *cdkDragPreview class="category-drag-preview">
+        <div *cdkDragPreview class="category-drag-preview"
+             [class.custom-category]="highlightCustomCategories && isCustomCategory(parentCategory)">
             <category-icon [category]="parentCategory.name"
                            [customProjectConfiguration]="customProjectConfiguration"
                            size="30"></category-icon>
@@ -84,7 +85,8 @@
                               class="custom-marking"> *</span>
                     </div>
                 </div>
-                <div *cdkDragPreview class="category-drag-preview">
+                <div *cdkDragPreview class="category-drag-preview"
+                     [class.custom-category]="highlightCustomCategories && isCustomCategory(childCategory)">
                     <category-icon [category]="childCategory.name"
                                    [customProjectConfiguration]="customProjectConfiguration"
                                    size="30"></category-icon>

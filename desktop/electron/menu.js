@@ -119,7 +119,7 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [
         {
             label: messages.get('menu.tools.configuration'),
-            accelerator: 'CmdOrCtrl+F',
+            accelerator: 'CmdOrCtrl+P',
             click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
             enabled: isDefaultContext(context)
         }, {

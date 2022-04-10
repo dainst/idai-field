@@ -26,7 +26,8 @@ export class ProjectModalLauncher {
 
    public async createProject() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
 
         const modalRef = this.modalService.open(
             CreateProjectModalComponent,
@@ -39,12 +40,13 @@ export class ProjectModalLauncher {
             // Create project modal has been canceled
         }
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
     }
 
 
     public async editProject(activeGroup: string = 'stem') {
 
+        const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.DOCEDIT);
 
         const projectDocument: Document = await this.datastore.get('project');
@@ -62,13 +64,14 @@ export class ProjectModalLauncher {
             // Docedit modal has been canceled
         }
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
     }
 
 
     public async deleteProject() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
 
         const modalRef = this.modalService.open(
             DeleteProjectModalComponent,
@@ -83,13 +86,14 @@ export class ProjectModalLauncher {
             // Delete project modal has been canceled
         }
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
     }
 
 
     public async openSynchronizationModal() {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
 
         const modalRef = this.modalService.open(
             SynchronizationModalComponent,
@@ -102,7 +106,7 @@ export class ProjectModalLauncher {
             // Synchronization project modal has been canceled
         }
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
     }
 
 
@@ -110,6 +114,16 @@ export class ProjectModalLauncher {
 
         await this.viewModalLauncher.openImageViewModal(
             await this.datastore.get('project'), 'view'
+        );
+    }
+    
+
+    private setModalContext(currentMenuContext: MenuContext) {
+
+        this.menuService.setContext(
+            currentMenuContext === MenuContext.CONFIGURATION
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
         );
     }
 }

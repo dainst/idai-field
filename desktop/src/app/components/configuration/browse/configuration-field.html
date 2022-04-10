@@ -1,7 +1,7 @@
 <div *ngIf="field && category"
      [id]="getFieldId(field)"
      class="card"
-     [class.custom]="isCustomField()"
+     [class.custom]="highlightAsCustomField()"
      [class.hidden-element]="hidden"
      (click)="!parentField && onOpen.emit()"
      (dblclick)="!parentField && onEdit.emit()"
@@ -10,7 +10,7 @@
          [class.parent-element]="parentField"
          [class.opened]="opened || isContextMenuOpen()">
         <ng-content></ng-content>
-        <span *ngIf="isCustomField()"
+        <span *ngIf="highlightAsCustomField()"
             class="mdi mdi-alert-circle-outline"
             ngbTooltip="Projektspezifisches Feld"
             i18n-ngbTooltip="@@config.source.custom"

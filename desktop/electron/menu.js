@@ -265,8 +265,9 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.configuration.valuelistManagement'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)
-            },
-            {
+            }, {
+                type: 'separator'
+            }, {
                 label: messages.get('menu.configuration.importConfiguration'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'importConfiguration'),
                 enabled: isDefaultContext(context)
@@ -283,6 +284,19 @@ const getTemplate = (mainWindow, context, config) => {
                         !config.hideHiddenFieldsInConfigurationEditor
                     );
                     config.hideHiddenFieldsInConfigurationEditor = !config.hideHiddenFieldsInConfigurationEditor;
+                },
+                enabled: isDefaultContext(context)
+            }, {
+                type: 'checkbox',
+                label: messages.get('menu.configuration.highlightProjectSpecificElements'),
+                checked: config.highlightCustomElements,
+                click: () => {
+                    mainWindow.webContents.send(
+                        'settingChanged',
+                        'highlightCustomElements',
+                        !config.highlightCustomElements
+                    );
+                    config.highlightCustomElements = !config.highlightCustomElements;
                 },
                 enabled: isDefaultContext(context)
             }]

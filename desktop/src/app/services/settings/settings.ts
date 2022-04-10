@@ -23,6 +23,7 @@ export interface Settings {
     selectedProject: string;
     imagestorePath: string;
     hideHiddenFieldsInConfigurationEditor?: boolean;
+    highlightCustomElements: string;
 }
 
 

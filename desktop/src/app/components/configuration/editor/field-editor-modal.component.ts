@@ -15,6 +15,7 @@ import { ValuelistEditorModalComponent } from './valuelist-editor-modal.componen
 import { ApplyChangesResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../messages/m';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -116,6 +117,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         await super.confirm(this.isValuelistChanged());
     }
 
+
     public getAvailableInputTypes(): Array<InputType> {
 
         if (this.field.fixedInputType) return [];
@@ -170,6 +172,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             },
             nop
         );
+
+        AngularUtility.blurActiveElement();
     }
 
 
@@ -199,6 +203,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             },
             nop
         );
+
+        AngularUtility.blurActiveElement();
     }
 
 

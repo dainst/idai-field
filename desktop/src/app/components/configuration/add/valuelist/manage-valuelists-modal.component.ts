@@ -302,7 +302,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     private scrollValuelistElementIntoView(valuelistId: string) {
 
-        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId);
+        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId.replace(':', '-'));
         if (element) element.scrollIntoView(true);
     }
 }

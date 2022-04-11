@@ -401,6 +401,8 @@ Right-clicking on a group brings up a context menu with the following options:
 
 To the right of the group list, the fields that are included in the selected group are displayed. Click on an entry in the fields list to display more information about the field (description, input type, and the assigned valuelist, if any).
 
+Fields inherited from the supercategory form are marked by the supercategory icon and cannot be edited or deleted. To do this, switch to the form of the corresponding supercategory.
+
 
 #### Add fields
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { FileInfo, ImageStore, ImageVariant, SyncService } from 'idai-field-core';
+import { FileInfo, ImageStore, ImageVariant, PouchdbDatastore, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
@@ -46,7 +46,8 @@ export class DownloadProjectComponent {
                 private menuService: Menus,
                 private tabManager: TabManager,
                 private imageStore: ImageStore,
-                private remoteImageStore: RemoteImageStore) {}
+                private remoteImageStore: RemoteImageStore,
+                private pouchdbDatastore: PouchdbDatastore) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -70,16 +71,7 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.filesProgressPercent = 0;
 
         progressModalRef.result.catch(async (canceled) => {
-            try {
-                this.cancelling = true;
-                this.syncService.stopReplication();
-                await Promise.all(this.fileDownloadPromises);
-            } catch (err) {
-            } finally {
-                await this.imageStore.deleteData(this.projectName);
-                this.cancelling = false;
-                this.closeModal(progressModalRef);
-            }
+            this.cancel(progressModalRef);
         });
 
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
@@ -121,6 +113,7 @@ export class DownloadProjectComponent {
                 console.log('Download cancelled.');
             }
             else {
+                await this.cancel(progressModalRef);
                 this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
                 console.error('Error while downloading project', e);
             }
@@ -209,6 +202,24 @@ export class DownloadProjectComponent {
             }
         } catch (e) {
             throw (e);
+        }
+    }
+
+
+    private async cancel(progressModalRef: NgbModalRef) {
+
+        if (this.cancelling) return;
+
+        try {
+            this.cancelling = true;
+            this.syncService.stopReplication();
+            this.pouchdbDatastore.destroyDb(this.projectName);
+            await Promise.all(this.fileDownloadPromises);
+        } catch (err) {
+        } finally {
+            await this.imageStore.deleteData(this.projectName);
+            this.cancelling = false;
+            this.closeModal(progressModalRef);
         }
     }
 

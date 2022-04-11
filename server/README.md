@@ -56,7 +56,7 @@ Start the server:
 mix phx.server
 ``` 
 
-FieldHub is now runnig at http://localhost:4000 (and your machines IP address and port 4000) as a sync target for your desktop client. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
+FieldHub is now runnig at http://localhost:4000 as a sync target for your desktop client. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
 
 ## Building a new docker image version

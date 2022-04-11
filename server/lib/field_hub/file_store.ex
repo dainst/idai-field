@@ -4,6 +4,8 @@ defmodule FieldHub.FileStore do
   @tombstoneSuffix ".deleted"
   @variant_types Application.get_env(:field_hub, :file_variant_types)
 
+  require Logger
+
   def create_directories(project) do
     @variant_types
     |> Enum.map(fn(type) ->
@@ -49,6 +51,16 @@ defmodule FieldHub.FileStore do
             {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}
           _ ->
             {uuid, Map.put_new(info, :deleted, false)}
+        end
+      end)
+      |> Enum.reject(fn({uuid, _}) ->
+        case String.contains?(uuid, ".") do
+          false ->
+            false
+          true ->
+            Logger.warning("Encountered file name (uuid) containing '.', omitting from file list:")
+            Logger.warning("#{uuid} in project #{project}.")
+            true
         end
       end)
       |> Enum.into(%{}) # tuple to map, because tuple can't be encoded as JSON

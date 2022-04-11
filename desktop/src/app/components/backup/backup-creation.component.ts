@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {BackupCreationModalComponent} from './backup-creation-modal.component';
-import {DialogProvider} from './dialog-provider';
-import {BackupProvider} from './backup-provider';
-import {M} from '../messages/m';
-import {TabManager} from '../../services/tabs/tab-manager';
-import {Messages} from '../messages/messages';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
+import { Component } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BackupCreationModalComponent } from './backup-creation-modal.component';
+import { DialogProvider } from './dialog-provider';
+import { BackupProvider } from './backup-provider';
+import { M } from '../messages/m';
+import { TabManager } from '../../services/tabs/tab-manager';
+import { Messages } from '../messages/messages';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({

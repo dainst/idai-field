@@ -85,7 +85,8 @@ export class FsAdapter implements FilesystemAdapterInterface {
         let results = [];
         if (!(await this.isDirectory(folderPath))) return results;
 
-        const list: string[] = (await getAsynchronousFs().readdir(folderPath)).filter(name => !name.includes('DS_Store'));
+        const list: string[] = (await getAsynchronousFs().readdir(folderPath))
+            .filter(name => !name.includes('.') || name.includes('.deleted'));
 
         for (const file of list) {
             const currentFile = folderPath + file;

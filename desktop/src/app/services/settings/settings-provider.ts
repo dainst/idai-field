@@ -58,6 +58,7 @@ export class SettingsProvider {
 
         this.settings.dbs = set(this.settings.dbs.concat([project]));
         await this.serialize();
+        if (remote) remote.getGlobal('updateConfig')(this.settings);
     }
 
 

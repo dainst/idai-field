@@ -54,8 +54,6 @@ In Abhängigkeit von der Maßnahmenkategorie können innerhalb eines Maßnahmen-
 Ressourcen verschiedener Kategorien angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts
 oder Räume innerhalb eines Gebäudes).
 
-<p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
-
 ### Hierarchische Anordnung
 
 Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer

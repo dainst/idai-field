@@ -51,8 +51,6 @@ up right) in order to open a new tab for the operation.
 Depending on the category of the operation, resources of different categories can be created within an
 operation tab via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
 
-<p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
-
 
 ### Hierarchical ordering
 

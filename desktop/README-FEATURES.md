@@ -1,15 +1,14 @@
 # Features
 
-Here is a short overview of iDAI.field's key features.
+Here is a short overview of Field's key features.
 
 ## Metadata editor
 
 ![idai-field](img/README-FEATURES-1.png) 
 
-Available types and their fields can be defined 
-via a JSON based configuration.
+Available categories and their fields can be edited in the app.
 
-## Shape editor
+## Geometry editor
 
 ![idai-field](img/README-FEATURES-2.png)
  

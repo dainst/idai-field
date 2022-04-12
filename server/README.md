@@ -56,7 +56,7 @@ Start the server:
 mix phx.server
 ``` 
 
-FieldHub is now runnig at http://localhost:4000 as a sync target for your desktop client. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
+FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
 
 ## Building a new docker image version
@@ -79,4 +79,4 @@ Finally you have to push the new or updated image to the registry:
 docker push ghcr.io/dainst/field_hub:<version>
 ```
 
-In order to push images, you have authenticate your local machine with the the registry, see: [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
+In order to push images, you have to authenticate your local machine with the registry, see: [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).

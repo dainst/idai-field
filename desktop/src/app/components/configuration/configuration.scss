@@ -42,6 +42,10 @@
     }
   }
 
+  .mdi-drag {
+    font-size: 18px;
+  }
+
   #project-configuration-content {
     font-size: 15px;
   }
@@ -121,7 +125,13 @@
         }
 
         .list-group-item {
+          height: 45px;
           border-top: 1px solid #f8f9fa !important;
+
+          .category-label {
+            position: relative;
+            bottom: 1px;
+          }
         }
       }
     }

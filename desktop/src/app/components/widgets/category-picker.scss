@@ -127,12 +127,14 @@ category-picker {
     .parent-category {
       category-icon {
         left: 37px;
+        bottom: 7px;
       }
     }
 
     .child-category {
       category-icon {
         left: 57px;
+        bottom: 7px;
       }
     }
   }
@@ -157,6 +159,7 @@ category-picker .category-item,
     display: inline-block;
     margin-left: 40px;
     width: calc(100% - 50px);
+    font-size: 15px;
   }
 }
 

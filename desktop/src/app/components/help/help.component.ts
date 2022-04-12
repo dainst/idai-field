@@ -1,14 +1,15 @@
-import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {HttpClient} from '@angular/common/http';
-import {Chapter, HelpLoader} from './help-loader';
-import {TabManager} from '../../services/tabs/tab-manager';
-import {SettingsService} from '../../services/settings/settings-service';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
-import {Settings} from '../../services/settings/settings';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { Chapter, HelpLoader } from './help-loader';
+import { TabManager } from '../../services/tabs/tab-manager';
+import { SettingsService } from '../../services/settings/settings-service';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
+import { Settings } from '../../services/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 const HELP_LANGUAGES = ['de', 'en'];
 const FALLBACK_LANGUAGE = 'en';

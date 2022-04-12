@@ -1,6 +1,5 @@
-import { RESOURCE_DOT_IDENTIFIER } from 'idai-field-core';
-import { Document } from 'idai-field-core';
 import { duplicates, size, to, update } from 'tsfun';
+import { RESOURCE_DOT_IDENTIFIER, Document } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { ImportValidator } from './import-validator';
 import { mergeResource } from './merge-resource';

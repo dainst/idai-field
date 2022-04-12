@@ -1,7 +1,6 @@
-import {Document} from 'idai-field-core';
-import {Get, Id, IdMap} from '../types';
-import {Either, isUndefinedOrEmpty, sameset} from 'tsfun';
-import {Relation} from 'idai-field-core';
+import { Either, isUndefinedOrEmpty, sameset } from 'tsfun';
+import { Relation, Document } from 'idai-field-core';
+import { Get, Id, IdMap } from '../types';
 import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
 import RECORDEDIN = Relation.Hierarchy.RECORDEDIN;
 

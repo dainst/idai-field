@@ -36,9 +36,7 @@ export class CatalogFilesystemReader implements Reader {
             if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
             try {
-                console.log('extract...');
                 await getAsynchronousFs().extractZip(this.file.path, tmpDir);
-                console.log('extracted!');
 
                 const idGenerator = new IdGenerator();
                 const replacementMap: Map<string> = {};
@@ -49,13 +47,11 @@ export class CatalogFilesystemReader implements Reader {
 
                     if (!fs.existsSync(targetDir + newImageFileName)) {
                         fs.copyFileSync(imgDir + imageFileName, targetDir + newImageFileName);
-                        console.log('creating thumbnail...', newImageFileName);
                         await this.imagestore.createThumbnail(
                             newImageFileName,
                             fs.readFileSync(targetDir + newImageFileName),
                             this.settings.selectedProject
                         );
-                        console.log('created thumbnail!', newImageFileName);
                     }
                 }
 

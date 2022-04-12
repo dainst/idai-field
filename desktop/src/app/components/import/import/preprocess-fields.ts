@@ -1,7 +1,7 @@
-import {detach} from 'tsfun';
-import {Document, Resource} from 'idai-field-core';
-import {trimFields} from '../../../util/trim-fields';
-import {removeNullProperties} from './remove-null-properties';
+import { detach } from 'tsfun';
+import { Document, Resource } from 'idai-field-core';
+import { trimFields } from '../../../util/trim-fields';
+import { removeNullProperties } from './remove-null-properties';
 
 
 /**

@@ -1,6 +1,5 @@
-import { Lookup, Resource } from 'idai-field-core';
-import { Document } from 'idai-field-core';
 import { aMap, aReduce, compose, flatten, flow, isDefined, lookup, map, Pair, remove, subtract, union } from 'tsfun';
+import { Lookup, Resource, Document } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { makeDocumentsLookup } from '../utils';
 

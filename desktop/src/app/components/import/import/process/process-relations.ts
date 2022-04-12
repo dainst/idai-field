@@ -1,20 +1,12 @@
-import {
-    and,
-    isEmpty,
-    isDefined,
-    on,
-    to,
-    isUndefinedOrEmpty,
-    not
-} from 'tsfun';
-import {Document, NewDocument, Relation, Resource} from 'idai-field-core';
-import {ImportValidator} from './import-validator';
-import {ImportErrors as E} from '../import-errors';
-import {Get, Id} from '../types';
-import {completeInverseRelations} from './complete-inverse-relations';
-import {ImportOptions} from '../import-documents';
-import {makeLookups} from './make-lookups';
-import {inferRecordedIns} from './infer-recorded-ins';
+import { and, isEmpty, isDefined, on, to, isUndefinedOrEmpty, not } from 'tsfun';
+import { Document, NewDocument, Relation, Resource } from 'idai-field-core';
+import { ImportValidator } from './import-validator';
+import { ImportErrors as E } from '../import-errors';
+import { Get, Id } from '../types';
+import { completeInverseRelations } from './complete-inverse-relations';
+import { ImportOptions } from '../import-documents';
+import { makeLookups } from './make-lookups';
+import { inferRecordedIns } from './infer-recorded-ins';
 import RECORDEDIN = Relation.Hierarchy.RECORDEDIN;
 import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
 

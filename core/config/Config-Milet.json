@@ -1125,7 +1125,6 @@
       ]
     },
     "Pottery": {
-      "parent": "Find",
       "fields": {
         "potteryGroup": {
           "inputType": "dropdown"

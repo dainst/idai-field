@@ -834,6 +834,45 @@
         },
         "if1TiefeRelativ": {
           "inputType": "input"
+        },
+        "if1Befundart": {
+          "inputType": "input"
+        },
+        "if1SchichtKuenstlichNatuerlich": {
+          "inputType": "input"
+        },
+        "if1AutoKlassifizierungOhneBefundart": {
+          "inputType": "input"
+        },
+        "if1SchichtPartikel": {
+          "inputType": "input"
+        },
+        "if1SchichtBrocken": {
+          "inputType": "input"
+        },
+        "if1SchichtBroeckchen": {
+          "inputType": "input"
+        },
+        "if1SchichtMaxGroesze": {
+          "inputType": "input"
+        },
+        "if1SchichtKonsistenz": {
+          "inputType": "input"
+        },
+        "if1SchichtBesondereBeobachtungen": {
+          "inputType": "input"
+        },
+        "if1SchichtFormat": {
+          "inputType": "input"
+        },
+        "if1SchichtKlassifizSonst": {
+          "inputType": "input"
+        },
+        "if1MasseSonstige": {
+          "inputType": "input"
+        },
+        "fixMe": {
+          "inputType": "input"
         }
       },
       "valuelists": {
@@ -845,20 +884,39 @@
           "fields": [
             "identifier",
             "category",
-            "shortDescription"
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "if1Befundart",
+            "if1SchichtKuenstlichNatuerlich",
+            "if1AutoKlassifizierungOhneBefundart",
+            "if1SchichtPartikel",
+            "if1SchichtBrocken",
+            "if1SchichtBroeckchen",
+            "if1SchichtMaxGroesze",
+            "if1SchichtKonsistenz",
+            "if1SchichtBesondereBeobachtungen",
+            "if1SchichtFormat",
+            "if1SchichtKlassifizSonst",
+            "if1MasseSonstige",
+            "fixMe",
+            "objectOrigin",
+            "if1TiefeRelativ"
           ]
         },
         {
           "name": "position",
           "fields": [
             "geometry"
-          ]
-        },
-        {
-          "name": "properties",
-          "fields": [
-            "objectOrigin",
-            "if1TiefeRelativ"
           ]
         }
       ]

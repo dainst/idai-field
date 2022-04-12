@@ -1404,7 +1404,6 @@
           "inputType": "checkboxes"
         }
       },
-      "parent": "Find",
       "groups": [
         {
           "name": "stem",
@@ -1989,7 +1988,6 @@
           "inputType": "input"
         }
       },
-      "parent": "Find",
       "groups": [
         {
           "name": "stem",
@@ -2118,7 +2116,6 @@
           "inputType": "checkboxes"
         }
       },
-      "parent": "Find",
       "groups": [
         {
           "name": "stem",

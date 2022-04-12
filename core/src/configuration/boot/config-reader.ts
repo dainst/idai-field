@@ -22,6 +22,7 @@ import configOlympia from '../../../config/Config-Olympia.json';
 import configPergamon from '../../../config/Config-Pergamon.json';
 import configPostumii from '../../../config/Config-Postumii.json';
 import configSelinunt from '../../../config/Config-Selinunt.json';
+import configSelinuntAkropolis from '../../../config/Config-SelinuntAkropolis.json';
 import configSelinuntBauteile from '../../../config/Config-SelinuntBauteile.json';
 import configSudanHeritage from '../../../config/Config-SudanHeritage.json';
 import configUruk from '../../../config/Config-Uruk.json';
@@ -39,6 +40,7 @@ import languageAyamonte_es from '../../../config/Language-Ayamonte.es.json';
 import languageBoha_de from '../../../config/Language-Boha.de.json';
 import languageBourgou_de from '../../../config/Language-Bourgou.de.json';
 import languageBourgou_en from '../../../config/Language-Bourgou.en.json';
+import languageBourgou_fr from '../../../config/Language-Bourgou.fr.json';
 import languageCampidoglio_en from '../../../config/Language-Campidoglio.en.json';
 import languageCastiglione_en from '../../../config/Language-Castiglione.en.json';
 import languageDefault_de from '../../../config/Language-Default.de.json';
@@ -49,6 +51,8 @@ import languageGadara_de from '../../../config/Language-Gadara.de.json';
 import languageGadara_en from '../../../config/Language-Gadara.en.json';
 import languageHeliopolis_en from '../../../config/Language-Heliopolis.en.json';
 import languageKalapodi_de from '../../../config/Language-Kalapodi.de.json';
+import languageKarthagoCircus_en from '../../../config/Language-KarthagoCircus.en.json';
+import languageKarthagoCircus_fr from '../../../config/Language-KarthagoCircus.fr.json';
 import languageKephissostal_de from '../../../config/Language-Kephissostal.de.json';
 import languageKGR_de from '../../../config/Language-KGR.de.json';
 import languageMeninx_de from '../../../config/Language-Meninx.de.json';
@@ -64,10 +68,12 @@ import languagePostumii_it from '../../../config/Language-Postumii.it.json';
 import languageOlympia_de from '../../../config/Language-Olympia.de.json';
 import languageOlympia_en from '../../../config/Language-Olympia.en.json';
 import languageSelinunt_de from '../../../config/Language-Selinunt.de.json';
+import languageSelinunt_en from '../../../config/Language-Selinunt.en.json';
 import languageSelinunt_it from '../../../config/Language-Selinunt.it.json';
 import languageSelinuntBauteile_de from '../../../config/Language-SelinuntBauteile.de.json';
 import languageSelinuntBauteile_en from '../../../config/Language-SelinuntBauteile.en.json';
 import languageSelinuntBauteile_it from '../../../config/Language-SelinuntBauteile.it.json';
+import languageSelinuntAkropolis_de from '../../../config/Language-SelinuntAkropolis.de.json';
 import languageSudanHeritage_en from '../../../config/Language-SudanHeritage.en.json';
 import languageUruk_en from '../../../config/Language-Uruk.en.json';
 import libraryForms from '../../../config/Library/Forms.json';
@@ -119,6 +125,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Pergamon.json': configPergamon,
     '/Config-Postumii.json': configPostumii,
     '/Config-Selinunt.json': configSelinunt,
+    '/Config-SelinuntAkropolis.json': configSelinuntAkropolis,
     '/Config-SelinuntBauteile.json': configSelinuntBauteile,
     '/Config-SudanHeritage.json': configSudanHeritage,
     '/Config-Uruk.json': configUruk
@@ -130,7 +137,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'AlUla': { en: languageAlUla_en },
     'Ayamonte': { de: languageAyamonte_de, en: languageAyamonte_en, es: languageAyamonte_es },
     'Boha': { de: languageBoha_de },
-    'Bourgou': { de: languageBourgou_de, en: languageBourgou_en },
+    'Bourgou': { de: languageBourgou_de, en: languageBourgou_en, fr: languageBourgou_fr },
     'Campidoglio': { en: languageCampidoglio_en },
     'Castiglione': { en: languageCastiglione_en },
     'Default': { de: languageDefault_de, en: languageDefault_en },
@@ -138,6 +145,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Gadara': { de: languageGadara_de, en: languageGadara_en },
     'Heliopolis': { en: languageHeliopolis_en },
     'Kalapodi': { de: languageKalapodi_de },
+    'KarthagoCircus': { en: languageKarthagoCircus_en, fr: languageKarthagoCircus_fr },
     'Kephissostal': { de: languageKephissostal_de },
     'KGR': { de: languageKGR_de },
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
@@ -146,8 +154,9 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Olympia': { de: languageOlympia_de, en: languageOlympia_en },
     'Pergamon': { de: languagePergamon_de, en: languagePergamon_en },
     'Postumii': { de: languagePostumii_de, it: languagePostumii_it },
-    'Selinunt': { de: languageSelinunt_de, it: languageSelinunt_it },
+    'Selinunt': { de: languageSelinunt_de, en: languageSelinunt_en, it: languageSelinunt_it },
     'SelinuntBauteile' : { de: languageSelinuntBauteile_de, en: languageSelinuntBauteile_en, it: languageSelinuntBauteile_it },
+    'SelinuntAkropolis' : { de: languageSelinuntAkropolis_de },
     'SudanHeritage': { en: languageSudanHeritage_en },
     'Uruk': { en: languageUruk_en }
 };

@@ -827,7 +827,6 @@
     },
     "Planum": {
       "color": "#cef500",
-      "parent": "Feature",
       "fields": {
         "objectOrigin": {
           "inputType": "radio"

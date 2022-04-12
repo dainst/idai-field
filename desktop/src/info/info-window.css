@@ -8,25 +8,31 @@ img {
 body {
   background-color: #fff;
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
   text-align: center;
 }
 
 p#brand {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 25px;
+  font-family: Helvetica;
   font-weight: bold;
+  user-select: none;
 }
 
 p#about-version {
   text-align: center;
+  font-family: Helvetica;
   font-size: 14px;
+  user-select: none;
 }
 
 #close-button {
+  position: relative;
+  top: 15px;
   background-color: rgb(114, 123, 132);
-  border: 0;
+  border: none;
+  border-radius: 0.3rem;
   color: white;
   font-weight: 400;
   font-size: 16px;

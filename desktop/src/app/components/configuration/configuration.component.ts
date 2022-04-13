@@ -163,7 +163,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
 
         this.menus.setContext(MenuContext.DEFAULT);
-        this.menuSubscription.unsubscribe();
+        if (this.menuSubscription) this.menuSubscription.unsubscribe();
     }
 
 

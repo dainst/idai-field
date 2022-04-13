@@ -2,7 +2,7 @@
     <image-grid *ngIf="documents && documents.length > 0"
                 #imageGrid [nrOfColumns]="4" [showDropArea]="true" [selected]="selected" [documents]="documents"
                 [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15"
-                [main]="documents && documents.length > 2 && documents[1]"
+                [main]="documents && documents.length > 1 && documents[0]"
                 (onClick)="select($event)">
         <view-modal-drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document"
             (startEditImages)="startEditImages.emit()">

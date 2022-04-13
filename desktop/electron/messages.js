@@ -137,7 +137,7 @@ const messageDictionary = {
         'menu.configuration.valuelistManagement': 'Gesione delle liste di valori',
         'menu.configuration.importConfiguration': 'Importare la configurazione...',
         'menu.configuration.showHiddenFields': 'Mostrare i campi nascosti',
-        'menu.configuration.highlightProjectSpecificElements': 'TRANSLATE',
+        'menu.configuration.highlightProjectSpecificElements': 'Evidenziare le proprie categorie/campi',
         'menu.view': 'Mostra',
         'menu.view.reload': 'Aggiorna',
         'menu.view.toggleFullscreen': 'Schermo intero on/off',

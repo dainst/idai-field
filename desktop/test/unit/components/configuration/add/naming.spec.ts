@@ -30,6 +30,7 @@ describe('naming', () => {
         expect(Naming.getValuelistId('valuelist-name', 'project')).toEqual('project:valuelist-name');
         expect(Naming.getValuelistId('value list-name', 'project')).toEqual('project:valuelist-name');
         expect(Naming.getValuelistId('Valuelist-name', 'project')).toEqual('project:Valuelist-name');
+        expect(Naming.getValuelistId('Valuelist-name-äüöß', 'project')).toEqual('project:Valuelist-name-äüöß');
         expect(Naming.getValuelistId('valuelist-name!\"§$%&/()=', 'project')).toEqual('project:valuelist-name');
         expect(Naming.getValuelistId('project:valuelist-name', 'project')).toEqual('project:valuelist-name');
     });

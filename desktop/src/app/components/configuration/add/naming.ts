@@ -36,7 +36,7 @@ export module Naming {
 
     function removeSpecialCharacters(name: string): string {
 
-        return name.replace(/[^a-zA-Z0-9]/g, '');
+        return name.replace(/[^a-zA-Z0-9ÄÖÜäöüß]/g, '');
     }
 
 

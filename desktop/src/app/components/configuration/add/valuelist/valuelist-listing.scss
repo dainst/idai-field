@@ -1,26 +1,63 @@
 valuelist-listing {
-    display: block;
+  display: block;
+  width: 100%;
+
+  #valuelist-listing-viewport {
+    height: 100%;
     width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .cdk-virtual-scroll-content-wrapper {
+      width: 100%;
+
+      .listing {
+        width: 100%;
   
-    .listing {
-      li:not(.btn):hover {
-          background-color: $list-item-hover-color;
-          transition: background-color .5s ease;
-      }
+        li {
+          height: 40px;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 
-      .in-use {
-        font-weight: bold; 
-      }
-      
-      .custom {
-        background-color: $custom-highlight-color;
+          code {
+            font-size: 14px;
+          }
+        }
+    
+        li:not(.btn):hover {
+            background-color: $list-item-hover-color;
+            transition: background-color .5s ease;
+        }
+    
+        li:not(.new-entry-button) {
+          padding: 8px 5px 5px 45px;
 
-        &.selected,
-        &:not(.btn):hover {
-          background-color: darken($custom-highlight-color, 5%);
-          transition: background-color .5s ease;
+          code {
+            top: 0;
+          }
+        }
+    
+        .in-use {
+          font-weight: bold; 
+        }
+    
+        .search-result-label {
+          font-weight: normal;
+          top: 0;
+        }
+        
+        .custom {
+          background-color: $custom-highlight-color;
+    
+          &.selected,
+          &:not(.btn):hover {
+            background-color: darken($custom-highlight-color, 5%);
+            transition: background-color .5s ease;
+          }
         }
       }
     }
   }
-  
+}

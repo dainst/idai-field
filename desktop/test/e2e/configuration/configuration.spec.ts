@@ -526,6 +526,7 @@ describe('configuration --', () => {
         expect(await EditConfigurationPage.getSelectedValuelist()).toEqual('periods-default-1');
         expect(await EditConfigurationPage.getValue(0)).toEqual('Archaisch');
         await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('colors-default-1');
         await ManageValuelistsModalPage.clickSelectValuelist('colors-default-1');
         await ManageValuelistsModalPage.clickConfirmSelection();
 
@@ -584,6 +585,7 @@ describe('configuration --', () => {
         await ConfigurationPage.clickContextMenuEditOption();
 
         await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('test:new-valuelist');
         await ManageValuelistsModalPage.clickSelectValuelist('test:new-valuelist');
         await ManageValuelistsModalPage.clickConfirmSelection();
 
@@ -601,8 +603,6 @@ describe('configuration --', () => {
     it('filter valuelists in valuelists management', async done => {
 
         await navigateTo('valuelists');
-        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('periods-default-1'));
-        await waitForExist(await ManageValuelistsModalPage.getSelectValuelistButton('Wood-color-default'));
 
         await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color-custom');
         await ManageValuelistsModalPage.clickCreateNewValuelist();

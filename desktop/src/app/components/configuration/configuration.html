@@ -2,6 +2,9 @@
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></configuration-context-menu>
 
+<div *ngIf="!ready" id="configuration-loading-icon-container">
+    <div class="spinner"></div>
+</div>
 <div *ngIf="ready" class="project-configuration row bg-light" [class.dragging]="dragging">
     <div class="col">
         <div id="configuration-toolbar" class="row">

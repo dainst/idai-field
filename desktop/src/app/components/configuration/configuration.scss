@@ -33,6 +33,18 @@
 @import './import/import-configuration-modal';
 
 
+#configuration-loading-icon-container {
+  width: 100%;
+  height: calc(100vh - 45px);
+
+  .spinner {
+    position: absolute;
+    top: calc(50% - 45px);
+    left: calc(50% - 20px);
+  }
+}
+
+
 .project-configuration {
   &.dragging {
     cursor: grabbing !important;

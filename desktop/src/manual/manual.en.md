@@ -26,11 +26,6 @@ your project data regularly.
 
 ## Resources
 
-<<<<<<< HEAD
-=======
-### Operations
-
->>>>>>> master
 After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
 home symbol) where all of the project's operations and places are managed.
 
@@ -599,64 +594,3 @@ from the current selection:
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
   fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
-<<<<<<< HEAD
-=======
-  
-
-<hr>
-
-
-## Synchronization
-
-In order to collaborate on a single project, data can be synchronized between multiple Field Desktop installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an Field Desktop application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
-
-Please make sure to fill in the field **Editor name** before setting up the configuration.
-
-
-### Download project
-
-To work with an existing project that is available on another Field Desktop installation or a database server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
-
-* *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which Field Desktop is currently open (this address can be viewed in the settings section *Your address*) or the address of a Field server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the server of the DAI).
-* *Project name*: The name of the project you want to download.
-* *Password*: The password of the project or the Field Desktop installation from which you want to download the project.
-
-Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
-
-
-### Configuration
-
-Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
-
-* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Desktop database server of the DAI). 
-* *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
-
-Use the switch **Enable synchronization** to start or interrupt the connection. Finally, confirm your settings by clicking the **Apply settings** button.
-
-### Synchronization state
-
-The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
-
-<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
-
-If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
-
-### Conflicts
-
-Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
-
-Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
-
-<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
-
-Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
-
-To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
-
-### Allow synchronization connections to your own Field Desktop installation
-
-You can allow others to establish a synchronization connection with your project by providing them with the credentials that can be found in the **Settings** menu in the section **Synchronization**:
-
-* *Your address*: Your network address, which others can use to connect to your database from their own Field Desktop installation. You can share this address along with your password to allow others to synchronize their project data with you.
-* *Your password*: By default, the database is protected from unauthorized access with a randomly generated password. At this point you can change the password.
->>>>>>> master

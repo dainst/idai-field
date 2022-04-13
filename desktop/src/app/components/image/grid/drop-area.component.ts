@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@angular/core';
-import {Document} from 'idai-field-core';
-import {ImageUploader, ImageUploadResult} from '../upload/image-uploader';
-import {Messages} from '../../messages/messages';
-import {MsgWithParams} from '../../messages/msg-with-params';
+import { Component, Output, EventEmitter, Input, ElementRef, ViewChild } from '@angular/core';
+import { Document } from 'idai-field-core';
+import { ImageUploader, ImageUploadResult } from '../upload/image-uploader';
+import { Messages } from '../../messages/messages';
+import { MsgWithParams } from '../../messages/msg-with-params';
 
 
 @Component({

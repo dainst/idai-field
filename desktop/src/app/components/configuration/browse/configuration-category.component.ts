@@ -12,6 +12,7 @@ import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
 import { ApplyChangesResult } from '../configuration.component';
 import { ConfigurationState } from '../configuration-state';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 @Component({
@@ -50,7 +51,8 @@ export class ConfigurationCategoryComponent implements OnChanges {
     constructor(private modals: Modals,
                 private messages: Messages,
                 private labels: Labels,
-                private configurationState: ConfigurationState) {}
+                private configurationState: ConfigurationState,
+                private settingsProvider: SettingsProvider) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
@@ -90,11 +92,17 @@ export class ConfigurationCategoryComponent implements OnChanges {
 
     public getGroupId = (group: Group) => 'group-' + group.name.replace(':', '-');
 
+    public highlightForCustomFields = (group: Group) => this.hasCustomFields(group)
+        && this.settingsProvider.getSettings().highlightCustomElements;
+
     public hasCustomFields: Predicate<Group> = compose(
         to<Array<Field>>(Group.FIELDS),
         map(_ => _.source),
         any(is(Field.Source.CUSTOM))
     );
+
+    public highlightAsCustomCategory = () => this.category.source === 'custom'
+        && this.settingsProvider.getSettings().highlightCustomElements;
 
 
     public getFields(): Array<Field> {

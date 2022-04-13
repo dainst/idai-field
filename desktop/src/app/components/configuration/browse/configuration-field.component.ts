@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
@@ -33,7 +34,8 @@ export class ConfigurationFieldComponent implements OnChanges {
     public description: string;
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private settingsProvider: SettingsProvider) {}
 
 
     public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
@@ -49,9 +51,12 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
-    public isCustomField = () => this.parentField
-        ? this.category.parentCategory.customFields?.includes(this.field.name)
-        : this.category.customFields?.includes(this.field.name);
+    public highlightAsCustomField = () => this.settingsProvider.getSettings().highlightCustomElements
+        && this.field.source === 'custom'
+        && (this.parentField
+            ? this.category.parentCategory.customFields?.includes(this.field.name)
+            : this.category.customFields?.includes(this.field.name)
+        );
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 

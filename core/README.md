@@ -1,6 +1,6 @@
-# iDAI.field Core
+# Field Core
 
-This package contains shared code for the different iDAI.field packages.
+This package contains shared code for the different Field packages.
 
 ## Development
 

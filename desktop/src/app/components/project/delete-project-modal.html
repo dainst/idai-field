@@ -1,33 +1,46 @@
-
 <div class="modal-header">
     <h5 class="modal-title" i18n="@@project.deleteModal.header">
-        Projekt <b>{{getProjectName()}}</b> löschen?
+        Projekt <b>{{projectName}}</b> löschen?
     </h5>
 </div>
 
-<div class="modal-body">
-    <div id="confirm-delete-info" >
-        <span i18n="@@project.deleteModal.confirmDeleteInfo">
-            Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen.
-        </span>
-    </div>
-    <div>
-        <input id="delete-project-input"
-               type="text"
-               class="form-control"
-               [(ngModel)]="confirmDeletionProjectName"
-               (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+<div *ngIf="isDeleting()" class="modal-body process-modal">
+    <div class="process-modal-container">
+        <div class="spinner"></div>
     </div>
 </div>
+<div *ngIf="!isDeleting()">
+    <div id="delete-project-modal-body" class="modal-body">
+        <div id="file-deletion-slider" class="row">
+            <div class="col-auto mr-auto">
+                <span i18n="@@settings.deleteModal.deleteFiles">Bilder löschen</span>
+            </div>
+            <div class="col-auto">
+                <label class="switch">
+                    <input type="checkbox" [checked]="deleteFiles" (change)="deleteFiles = !deleteFiles">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div id="confirm-delete-info">
+            <span i18n="@@project.deleteModal.confirmDeleteInfo">
+                Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen.
+            </span>
+        </div>
+        <div>
+            <input id="delete-project-input" type="text" class="form-control"
+                [(ngModel)]="confirmDeletionProjectName" (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+        </div>
+    </div>
 
-<div class="modal-footer">
-    <button id="delete-project-confirm" class="btn btn-danger" type="button"
-            [ngClass]="{ 'disabled': !this.checkConfirmDeletionProjectName() }"
-            (click)="confirmDeletion()">
-        <span i18n="@@buttons.delete">Löschen</span>
-    </button>
-    <button type="button" id="delete-project-cancel" class="btn btn-secondary"
+    <div class="modal-footer">
+        <button id="delete-project-confirm" class="btn btn-danger" type="button"
+            [ngClass]="{ 'disabled': !this.checkConfirmDeletionProjectName() }" (click)="confirmDeletion()">
+            <span i18n="@@buttons.delete">Löschen</span>
+        </button>
+        <button type="button" id="delete-project-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">
-        <span i18n="@@buttons.cancel">Abbrechen</span>
-    </button>
+            <span i18n="@@buttons.cancel">Abbrechen</span>
+        </button>
+    </div>
 </div>

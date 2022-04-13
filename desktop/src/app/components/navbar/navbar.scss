@@ -2,7 +2,7 @@ $tab-bg-color: $gray-100;
 $tab-bg-color-hover: $navbar-default-bg;
 $tab-separator-color: darken($navbar-default-bg, 4%);
 $navbar-link-color: $gray-800;
-$link-hover-color: darken($navbar-link-color, 30%);
+$link-hover-color: lighten($navbar-link-color, 30%);
 $border-radius: 4px;
 
 @import 'taskbar';
@@ -22,28 +22,17 @@ $border-radius: 4px;
       top: -7px !important;
       z-index: 1050;
     }
+  }
 
-    .nav-link:hover, .btn-link:hover {
-      color: $link-hover-color !important;
-    }
+  .dropdown-toggle:hover,
+  .dropdown-toggle:active,
+  .show .dropdown-toggle {
+    color: $link-hover-color !important;  
   }
 }
 
 .navbar.bg-primary {
   background: linear-gradient(to top, #ccc, #efefef);
-}
-
-.navbar a {
-  color: $navbar-link-color;
-  cursor: default;
-
-  &:hover {
-    color: $link-hover-color;
-  }
-}
-
-.navbar .mdi:hover, .navbar button .mdi:hover {
-  color: $link-hover-color;
 }
 
 .navbar-tabbed .nav-link {
@@ -78,8 +67,8 @@ $border-radius: 4px;
 }
 
 .navbar-dark .navbar-tabbed .tab {
-
-  &:hover + .closable-tab:before {
+  &:hover + .closable-tab:before,
+  &.active + .closable-tab:before {
     background-color: transparent;
   }
 
@@ -108,62 +97,6 @@ $border-radius: 4px;
       outline: none;
     }
 
-    &.active {
-      background-color: $tab-bg-color;
-      color: #000;
-      z-index: 10;
-
-      &:before {
-        border-color: $tab-bg-color;
-        box-shadow: 2px 2px 0 $tab-bg-color;
-        border-bottom-right-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color;
-        border-right: 1px solid $tab-bg-color;
-      }
-
-      &:after {
-        border-color: $tab-bg-color;
-        box-shadow: -2px 2px 0 $tab-bg-color;
-        border-bottom-left-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color;
-        border-left: 1px solid $tab-bg-color;
-      }
-
-      .mdi-close:hover {
-        color: #000;
-        background-color: #dee2e6;
-      }
-    }
-
-    &:not(.active) {
-      .mdi-close:hover {
-        color: $navbar-link-color;
-        background-color: lighten($navbar-default-bg, 5%);
-      }
-    }
-
-    &:hover:not(.active) {
-      background-color: $tab-bg-color-hover;
-      z-index: 5;
-      color: $navbar-link-color;
-
-      &:before {
-        border-color: $tab-bg-color-hover;
-        box-shadow: 2px 2px 0 $tab-bg-color-hover;
-        border-bottom-right-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color-hover;
-        border-right: 1px solid $tab-bg-color-hover;
-      }
-
-      &:after {
-        border-color: $tab-bg-color-hover;
-        box-shadow: -2px 2px 0 $tab-bg-color-hover;
-        border-bottom-left-radius: $border-radius;
-        border-bottom: 1px solid $tab-bg-color-hover;
-        border-left: 1px solid $tab-bg-color-hover;
-      }
-    }
-
     .mdi-home {
       font-size: 22px;
       line-height: 22px;
@@ -181,6 +114,62 @@ $border-radius: 4px;
       margin-left: 1px;
       line-height: normal;
       transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
+  }
+
+  &.active a.nav-link {
+    background-color: $tab-bg-color;
+    color: #000;
+    z-index: 10;
+
+    &:before {
+      border-color: $tab-bg-color;
+      box-shadow: 2px 2px 0 $tab-bg-color;
+      border-bottom-right-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color;
+      border-right: 1px solid $tab-bg-color;
+    }
+
+    &:after {
+      border-color: $tab-bg-color;
+      box-shadow: -2px 2px 0 $tab-bg-color;
+      border-bottom-left-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color;
+      border-left: 1px solid $tab-bg-color;
+    }
+
+    .mdi-close:hover {
+      color: #000;
+      background-color: #dee2e6;
+    }
+  }
+
+  &:not(.active) a.nav-link {
+    .mdi-close:hover {
+      color: $navbar-link-color;
+      background-color: lighten($navbar-default-bg, 5%);
+    }
+  }
+
+  &:hover:not(.active) a.nav-link {
+    background-color: $tab-bg-color-hover;
+    z-index: 5;
+    color: $navbar-link-color;
+
+    &:before {
+      border-color: $tab-bg-color-hover;
+      box-shadow: 2px 2px 0 $tab-bg-color-hover;
+      border-bottom-right-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-right: 1px solid $tab-bg-color-hover;
+    }
+
+    &:after {
+      border-color: $tab-bg-color-hover;
+      box-shadow: -2px 2px 0 $tab-bg-color-hover;
+      border-bottom-left-radius: $border-radius;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-left: 1px solid $tab-bg-color-hover;
     }
   }
 

@@ -51,7 +51,7 @@ export class ResourcesMapComponent {
         });
 
         this.menuService.menuContextNotifications().subscribe(menuContext => {
-            if (menuContext === MenuContext.MAP_LAYERS_EDIT) this.resourcesComponent.closePopover();
+            if (this.isEditing(menuContext)) this.resourcesComponent.closePopover();
         });
     }
 
@@ -60,8 +60,8 @@ export class ResourcesMapComponent {
 
     public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
 
-    public isEditing = () => [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT]
-        .includes(this.menuService.getContext());
+    public isEditing = (menuContext = this.menuService.getContext()) =>
+        [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT].includes(menuContext);
 
     public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
         || this.menuService.getContext() === MenuContext.DOCEDIT;

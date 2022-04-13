@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { PouchdbServer } from './pouchdb/pouchdb-server';
+import { ExpressServer } from '../express-server';
 
 const PouchDB = window.require('pouchdb-browser');
 
@@ -29,7 +29,7 @@ const PouchDB = window.require('pouchdb-browser');
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
         },
-        PouchdbServer,
+        ExpressServer,
         {
             provide: CategoryConverter,
             useFactory: function(projectConfiguration: ProjectConfiguration) {

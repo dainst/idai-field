@@ -11,6 +11,7 @@ import { ImageRelationsManager } from '../../../services/image-relations-manager
 import { Menus } from '../../../services/menus';
 import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
+import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 
 
 export namespace ImageViewModalComponent {
@@ -55,7 +56,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public setExpandAllGroups = (expand: boolean) => this.imagesState.setExpandAllGroups(expand);
 
-    public isEditingAllowed = () => !this.linkedDocument?.project;
+    public isEditingAllowed = () => this.linkedDocument && !this.linkedDocument.project;
 
     protected getDocument = () => (this.selectedImage as ImageRowItem).document;
 
@@ -80,19 +81,21 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public setMainImage() {
+    public async setMainImage() {
 
         if (this.selected.length !== 1) return;
 
-        const mainImageId: string = this.selected[0].resource.id;
-
-        this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN] = [mainImageId].concat(
-            this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN].filter(targetId => {
-                return targetId !== mainImageId;
-            })
+        const savingChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
         );
 
-        this.loadImages();
+        try {
+            await this.changeMainImage();
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingChangesModal.close();
+        }
     }
 
 
@@ -127,8 +130,18 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async removeLinks() {
 
-        await this.removeImageLinks(this.selected);
-        this.selected = [];
+        const savingChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await this.removeImageLinks(this.selected);
+            this.selected = [];
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingChangesModal.close();
+        }
     }
 
 
@@ -155,21 +168,52 @@ export class ImageViewModalComponent extends ViewModalComponent {
         imagePickerModal.componentInstance.setDocument(this.linkedDocument);
 
         try {
-            const selectedImages: Array<ImageDocument> = await imagePickerModal.result;
-            await this.imageRelationsManager.link(this.linkedDocument as FieldDocument, ...selectedImages);
-            this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
-            this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
-                .map(ImageRowItem.ofDocument);
+            await this.saveChanges(await imagePickerModal.result);
         } catch {
             // modal cancelled
         }
     }
 
 
+    private async saveChanges(selectedImages: Array<ImageDocument>) {
+
+        const savingChangesModal = this.modalService.open(
+            SavingChangesModal, { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await this.imageRelationsManager.link(this.linkedDocument as FieldDocument, ...selectedImages);
+            this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
+            this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
+                .map(ImageRowItem.ofDocument);
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        } finally {
+            savingChangesModal.close();
+        }
+    }
+
+
+    private async changeMainImage() {
+
+        const mainImageId: string = this.selected[0].resource.id;
+
+        this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN] = [mainImageId].concat(
+            this.linkedDocument.resource.relations[Relation.Image.ISDEPICTEDIN].filter(targetId => {
+                return targetId !== mainImageId;
+            })
+        );
+
+        this.linkedDocument = await this.datastore.update(this.linkedDocument);
+        this.loadImages();
+    }
+
+
     private async removeImageLinks(documents: Array<ImageDocument>) {
 
         await this.imageRelationsManager.unlink(
-            this.linkedDocument as FieldDocument, ...documents);
+            this.linkedDocument as FieldDocument, ...documents
+        );
 
         await this.loadImages();
     }
@@ -179,10 +223,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
-        this.selectedImage =
-            isEmpty(this.images)
-                ? undefined
-                : first(this.images);
+        this.selectedImage = isEmpty(this.images)
+            ? undefined
+            : first(this.images);
         this.selected = [];
     }
 

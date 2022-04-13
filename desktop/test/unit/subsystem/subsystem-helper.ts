@@ -1,10 +1,9 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
+import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
+    ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
-    SyncService } from 'idai-field-core';
-import { PouchdbServer } from '../../../src/app/services/datastore/pouchdb/pouchdb-server';
-import { Imagestore } from '../../../src/app/services/imagestore/imagestore';
-import { PouchDbFsImagestore } from '../../../src/app/services/imagestore/pouch-db-fs-imagestore';
+    SyncService, ImageStore, ImageSyncService } from 'idai-field-core';
+import { ExpressServer } from '../../../src/app/services/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
@@ -19,6 +18,9 @@ import { TabManager } from '../../../src/app/services/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../src/app/indexer-configuration';
 import { StateSerializer } from '../../../src/app/services/state-serializer';
 import { makeExpectDocuments } from '../../../../core/test/test-helpers';
+import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
+import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
+import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 
 import PouchDB = require('pouchdb-node');
@@ -36,19 +38,29 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbdatastore, pouchdbserver, projectName = 'testdb') {
+export async function setupSettingsService(pouchdbDatastore, projectName = 'testdb') {
 
+    const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
+    const fileSystemAdapter = new FsAdapter();
+    const imageStore = new ImageStore(
+        fileSystemAdapter,
+        new ThumbnailGenerator()
+    ) as ImageStore;
+
+    const remoteImageStore = new RemoteImageStore(settingsProvider);
+
+    const imageSync = new ImageSyncService(imageStore, remoteImageStore, pouchdbDatastore);
     const configReader = new ConfigReader();
 
     const settingsService = new SettingsService(
-        new PouchDbFsImagestore(
-            undefined, undefined, pouchdbdatastore.getDb()) as Imagestore,
-        pouchdbdatastore,
-        pouchdbserver,
+        imageStore,
+        pouchdbDatastore,
+        pouchdbServer,
         undefined,
         new AppConfigurator(new ConfigLoader(configReader)),
         undefined,
+        imageSync,
         settingsProvider,
         configReader
     );
@@ -67,31 +79,29 @@ export async function setupSettingsService(pouchdbdatastore, pouchdbserver, proj
     await settingsService.bootProjectDb(settings.selectedProject, true);
 
     const projectConfiguration = await settingsService.loadConfiguration();
-    return { settingsService, projectConfiguration, settingsProvider };
+    return { settingsService, projectConfiguration, fileSystemAdapter, imageStore, remoteImageStore, settingsProvider };
 }
 
 
 export interface App {
 
-    remoteChangesStream: ChangesStream,
-    viewFacade: ViewFacade,
-    documentHolder: DocumentHolder,
-    datastore: Datastore,
-    settingsService: SettingsService,
-    settingsProvider: SettingsProvider,
-    resourcesStateManager: ResourcesStateManager,
-    stateSerializer: StateSerializer,
-    tabManager: TabManager,
-    imageOverviewFacade: ImageOverviewFacade,
-    relationsManager: RelationsManager,
-    imagestore: Imagestore,
-    imageRelationsManager: ImageRelationsManager
+    remoteChangesStream: ChangesStream;
+    viewFacade: ViewFacade;
+    documentHolder: DocumentHolder;
+    datastore: Datastore;
+    settingsService: SettingsService;
+    settingsProvider: SettingsProvider;
+    resourcesStateManager: ResourcesStateManager;
+    stateSerializer: StateSerializer;
+    tabManager: TabManager;
+    imageOverviewFacade: ImageOverviewFacade;
+    relationsManager: RelationsManager;
+    imageStore: ImageStore;
+    imageRelationsManager: ImageRelationsManager;
 }
 
 
 export async function createApp(projectName = 'testdb'): Promise<App> {
-
-    const pouchdbServer = new PouchdbServer();
 
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
@@ -99,19 +109,25 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     pouchdbDatastore.createDbForTesting(projectName);
     pouchdbDatastore.setupChangesEmitter();
 
-    const { settingsService, projectConfiguration, settingsProvider } = await setupSettingsService(
-        pouchdbDatastore, pouchdbServer, projectName);
+    const {
+        settingsService,
+        projectConfiguration,
+        settingsProvider,
+        fileSystemAdapter,
+        imageStore,
+        remoteImageStore
+    } = await setupSettingsService(pouchdbDatastore, projectName);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbDatastore.getDb());
-    imagestore.init(settingsProvider.getSettings());
+    await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 
     const documentCache = new DocumentCache();
     const categoryConverter = new CategoryConverter(projectConfiguration);
 
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => settingsProvider.getSettings().username);
+        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter,
+        () => settingsProvider.getSettings().username);
 
     const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
@@ -164,7 +180,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
     const imageRelationsManager = new ImageRelationsManager(
         datastore,
         relationsManager,
-        imagestore,
+        imageStore,
         projectConfiguration
     );
 
@@ -191,9 +207,9 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         tabManager,
         imageOverviewFacade,
         relationsManager,
-        imagestore,
+        imageStore,
         imageRelationsManager
-    }
+    };
 }
 
 
@@ -202,6 +218,7 @@ export function createHelpers(app) {
     const projectImageDir = app.settingsProvider.getSettings().imagestorePath
         + app.settingsProvider.getSettings().selectedProject
         + '/';
+    // tslint:disable-next-line: no-shadowed-variable
     const createDocuments = makeCreateDocuments(
         app.datastore, projectImageDir, app.settingsProvider.getSettings().username);
     const updateDocument = makeUpdateDocument(
@@ -224,7 +241,7 @@ export function createHelpers(app) {
         createProjectDir,
         createImageInProjectDir,
         getDocument
-    }
+    };
 }
 
 
@@ -232,17 +249,14 @@ function makeCreateProjectDir(projectImageDir) {
 
     return function createProjectDir() {
         try {
-            // TODO node 12 supports fs.rmdirSync(path, {recursive: true})
-            const files = fs.readdirSync(projectImageDir);
-            for (const file of files) {
-                fs.unlinkSync(projectImageDir + file);
+            if (fs.existsSync(projectImageDir)) {
+                fs.rmdirSync(projectImageDir, { recursive: true });
             }
-            if (fs.existsSync(projectImageDir)) fs.rmdirSync(projectImageDir);
         } catch (e) {
-            console.log("error deleting tmp project dir", e)
+            console.log('error deleting tmp project dir', e);
         }
-        fs.mkdirSync(projectImageDir, { recursive: true });
-    }
+        fs.mkdirSync(projectImageDir + 'thumbs/', { recursive: true });  // thumbnail directory is defined in ImageStore
+    };
 }
 
 
@@ -253,7 +267,7 @@ function makeExpectImagesExist(projectImageDir) {
         for (const id of ids) {
             expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
         }
-    }
+    };
 }
 
 
@@ -264,7 +278,7 @@ function makeExpectImagesDontExist(projectImageDir) {
         for (const id of ids) {
             expect(fs.existsSync(projectImageDir + id)).not.toBeTruthy();
         }
-    }
+    };
 }
 
 
@@ -288,7 +302,7 @@ function makeCreateDocuments(datastore: Datastore,
             storedDocuments.push( await datastore.get(doc.resource.id) );
         }
         return makeDocumentsLookup(storedDocuments);
-    }
+    };
 }
 
 
@@ -300,7 +314,7 @@ function makeUpdateDocument(datastore: Datastore, username: string) {
         const oldDocument = await datastore.get(id);
         callback(oldDocument);
         await datastore.update(oldDocument);
-    }
+    };
 }
 
 
@@ -310,7 +324,7 @@ function makeExpectResources(datastore: Datastore) {
 
         const documents = (await datastore.find({})).documents;
         expect(sameset(documents.map(doc => doc.resource.identifier), resourceIdentifiers)).toBeTruthy();
-    }
+    };
 }
 
 
@@ -319,8 +333,10 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
     return function createImageInProjectImageDir(id: string) {
 
         fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
+        fs.closeSync(fs.openSync(projectImageDir + 'thumbs/' + id, 'w')); // thumbnail directory is defined in ImageStore
         expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
-    }
+        expect(fs.existsSync(projectImageDir + 'thumbs/' + id)).toBeTruthy(); // thumbnail directory is defined in ImageStore
+    };
 }
 
 
@@ -329,5 +345,5 @@ function makeGetDocument(datastore: Datastore) {
     return async function getDocument(id: Resource.Id) {
 
         return await datastore.get(id);
-    }
+    };
 }

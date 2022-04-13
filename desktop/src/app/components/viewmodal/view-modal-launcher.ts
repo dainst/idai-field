@@ -19,7 +19,8 @@ export class ViewModalLauncher {
 
     public async openImageViewModal(document: Document, mode: ImageViewModalComponent.Mode) {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
 
         const modalRef = this.modalService.open(
             ImageViewModalComponent,
@@ -29,7 +30,7 @@ export class ViewModalLauncher {
         await modalRef.componentInstance.initialize(document);
         await modalRef.result;
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
     }
 
 
@@ -38,7 +39,8 @@ export class ViewModalLauncher {
      */
     public async openResourceViewModal(document: Document): Promise<boolean> {
 
-        this.menuService.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
 
         const modalRef: NgbModalRef = this.modalService.open(
             ResourceViewModalComponent,
@@ -47,9 +49,19 @@ export class ViewModalLauncher {
         await modalRef.componentInstance.initialize(document);
         const edited: boolean = await modalRef.result;
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
 
         return edited;
+    }
+
+
+    private setModalContext(currentMenuContext: MenuContext) {
+
+        this.menuService.setContext(
+            currentMenuContext === MenuContext.CONFIGURATION
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
+        );
     }
 }
 

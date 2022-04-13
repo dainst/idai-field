@@ -221,15 +221,15 @@
       ]
     }
   },
-  "minimal": {
+  "minimalExcavation": {
     "author": "DAI",
     "label": {
-      "de": "Minimal",
-      "en": "Minimal"
+      "de": "Basis (Grabung)",
+      "en": "Basic (Excavation)"
     },
     "description": {
-      "de": "Minimal-Konfiguration",
-      "en": "Minimal configuration"
+      "de": "Basis-Konfiguration für Grabungen",
+      "en": "Basic configuration for excavations"
     },
     "configuration": {
       "forms": {
@@ -276,6 +276,160 @@
         "Trench",
         "Place",
         "Feature",
+        "Find",
+        "Image",
+        "TypeCatalog",
+        "Type"
+      ]
+    }
+  },
+  "minimalBuilding": {
+    "author": "DAI",
+    "label": {
+      "de": "Basis (Bauaufnahme)",
+      "en": "Basic (Building survey)"
+    },
+    "description": {
+      "de": "Basis-Konfiguration für die Bauaufnahme",
+      "en": "Basic configuration for building surveys"
+    },
+    "configuration": {
+      "forms": {
+        "Project": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Operation": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Place": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Building": {
+          "hidden": [],
+          "fields": {}
+        },
+        "BuildingPart": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Find": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Room": {
+          "hidden": [],
+          "fields": {}
+        },
+        "RoomCeiling": {
+          "hidden": [],
+          "fields": {}
+        },
+        "RoomFloor": {
+          "hidden": [],
+          "fields": {}
+        },
+        "RoomWall": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Image": {
+          "hidden": [],
+          "fields": {}
+        },
+        "TypeCatalog": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Type": {
+          "hidden": [],
+          "fields": {}
+        }
+      },
+      "order": [
+        "Project",
+        "Operation",
+        "Building",
+        "Place",
+        "Find",
+        "BuildingPart",
+        "Room",
+        "RoomCeiling",
+        "RoomWall",
+        "RoomFloor",
+        "Image",
+        "TypeCatalog",
+        "Type"
+      ]
+    }
+  },
+  "minimalSurvey": {
+    "author": "DAI",
+    "label": {
+      "de": "Basis (Survey)",
+      "en": "Basic (Survey)"
+    },
+    "description": {
+      "de": "Basis-Konfiguration für Surveys",
+      "en": "Basic configuration for surveys"
+    },
+    "configuration": {
+      "forms": {
+        "Project": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Operation": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Survey": {
+          "hidden": [],
+          "fields": {}
+        },
+        "SurveyUnit": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Place": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Area": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Find": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Image": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Excavation": {
+          "hidden": [],
+          "fields": {}
+        },
+        "TypeCatalog": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Type": {
+          "hidden": [],
+          "fields": {}
+        }
+      },
+      "order": [
+        "Project",
+        "Operation",
+        "Survey",
+        "Place",
+        "Area",
+        "SurveyUnit",
+        "Excavation",
         "Find",
         "Image",
         "TypeCatalog",

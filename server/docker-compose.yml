@@ -3,24 +3,9 @@ version: "3.7"
 services:
 
   couchdb:
-    image: couchdb:3
+    image: couchdb:3.2.1
     ports:
       - "5984:5984"
     environment:
-      - 'COUCHDB_USER=synctest'
-      - 'COUCHDB_PASSWORD=abcdef'
-
-  server:
-    image: "dainst/idai-field-web-server"
-    build: .
-    ports:
-      - "4000:4000"
-    environment:
-      - IN_CONTAINER=true
-    volumes:
-      - "./config:/opt/src/server/config"
-      - "./resources:/opt/src/server/resources"
-      - "./lib:/opt/src/server/lib"
-      - "./test:/opt/src/server/test"
-      - "./assets:/opt/src/server/assets"
-      - "./_build:/opt/src/server/_build"
+      - 'COUCHDB_USER=${COUCHDB_ADMIN_USER}'
+      - 'COUCHDB_PASSWORD=${COUCHDB_ADMIN_PASSWORD}'

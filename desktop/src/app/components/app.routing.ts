@@ -8,7 +8,7 @@ import { MatrixViewComponent } from './matrix/matrix-view.component';
 import { HelpComponent } from './help/help.component';
 import { ExportComponent } from './export/export.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
-import { NetworkProjectComponent } from './project/network-project.component';
+import { DownloadProjectComponent } from './project/download-project.component';
 import { ConfigurationGuard } from './configuration/configuration-guard';
 
 
@@ -20,7 +20,7 @@ const routes: Routes = [
     { path: 'resources/:view/:id/:menu/:group', component: ResourcesComponent },
     { path: 'matrix', component: MatrixViewComponent },
     { path: 'help', component: HelpComponent },
-    { path: 'networkProject', component: NetworkProjectComponent },
+    { path: 'downloadProject', component: DownloadProjectComponent },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },
     { path: 'backup-creation', component: BackupCreationComponent },

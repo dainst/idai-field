@@ -1,11 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {flatten} from 'tsfun';
-import {Datastore, ImageDocument} from 'idai-field-core';
-import {Document} from 'idai-field-core';
-import {ImageUploadResult} from '../upload/image-uploader';
-import {Imagestore} from '../../../services/imagestore/imagestore';
-import {constructGrid} from './construct-grid';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
+import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { constructGrid } from './construct-grid';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 
 const DROPAREA = 'droparea';
@@ -48,12 +44,12 @@ export class ImageGridComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private imagestore: Imagestore,
                 private datastore: Datastore,
-                private blobMaker: BlobMaker) {}
+                private imageUrlMaker: ImageUrlMaker) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
+        
         if (event.shiftKey) {
             this.onShiftClick.emit(document);
         } else {
@@ -75,7 +71,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.showLinkBadges) return;
 
-        for (let depictsRelId of doc.resource.relations.depicts) {
+        for (const depictsRelId of doc.resource.relations.depicts) {
 
             if (!this.resourceIdentifiers[depictsRelId]) {
                 const target = await this.datastore.get(depictsRelId);
@@ -102,9 +98,6 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-
-
-
     private async _calcGrid() {
 
         if (!this.documents) return;
@@ -122,33 +115,19 @@ export class ImageGridComponent implements OnChanges {
 
 
     private async loadImages(rows: any) {
-
-        const imageData: { [imageId: string]: Blob } = await this.getImageData(rows);
-
-        for (let row of rows) {
-            for (let cell of row) {
-                if (!cell.document
+        for (const row of rows) {
+            for (const cell of row) {
+                if (
+                    !cell.document
                     || !cell.document.resource
                     || !cell.document.resource.id
-                    || cell.document.resource.id === DROPAREA) continue;
+                    || cell.document.resource.id === DROPAREA
+                ) continue;
 
-                if (imageData[cell.document.resource.id] ) {
-                    cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
-                }
+                cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, ImageVariant.THUMBNAIL);
             }
         }
     }
-
-
-    private getImageData(rows: any): Promise<{ [imageId: string]: Blob }> {
-
-        const imageIds: string[] =
-            (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
-                .filter(id => id !== DROPAREA);
-
-        return this.imagestore.readThumbnails(imageIds);
-    }
-
 
     /**
      * Insert stub document for first cell that will act as drop area for uploading images
@@ -159,7 +138,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) this.documents = [];
 
-        this.documents.unshift({
+        this.documents = [{
             id: DROPAREA,
             resource: {
                 id: DROPAREA,
@@ -171,7 +150,6 @@ export class ImageGridComponent implements OnChanges {
                 height: this.compressDropArea ? 0.2 : 1,
                 relations: { depicts: [] }
             }
-        } as any);
+        } as any].concat(this.documents);
     }
-
 }

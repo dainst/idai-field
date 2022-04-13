@@ -6,8 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteProjectModalComponent } from './delete-project-modal.component';
 import { CreateProjectModalComponent } from './create-project-modal.component';
 import { SynchronizationModalComponent } from './synchronization-modal.component';
-import { NetworkProjectComponent } from './network-project.component';
-import { NetworkProjectProgressModalComponent } from './network-project-progress-modal.component';
+import { DownloadProjectComponent } from './download-project.component';
+import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
 import { CancelModalComponent } from './cancel-modal.component';
 
 
@@ -22,23 +22,23 @@ import { CancelModalComponent } from './cancel-modal.component';
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
-        NetworkProjectComponent,
-        NetworkProjectProgressModalComponent,
+        DownloadProjectComponent,
+        DownloadProjectProgressModalComponent,
         CancelModalComponent
     ],
     providers: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
-        NetworkProjectComponent,
-        NetworkProjectProgressModalComponent,
+        DownloadProjectComponent,
+        DownloadProjectProgressModalComponent,
         CancelModalComponent
     ],
     entryComponents: [
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
-        NetworkProjectProgressModalComponent,
+        DownloadProjectProgressModalComponent,
         CancelModalComponent
     ]
 })

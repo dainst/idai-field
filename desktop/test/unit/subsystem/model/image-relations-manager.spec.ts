@@ -34,10 +34,10 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 'i1', 'i2');
         helpers.expectImagesExist('i1', 'i2');
 
-        await app.imageRelationsManager.remove([documentsLookup['tc1']]);
+        await app.imageRelationsManager.remove([documentsLookup.tc1]);
 
         await helpers.expectDocuments();
-        helpers.expectImagesDontExist('i1', 'i2')
+        helpers.expectImagesDontExist('i1', 'i2');
         done();
     });
 
@@ -56,7 +56,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 'i1', 'i2');
         helpers.expectImagesExist('i1', 'i2');
 
-        await app.imageRelationsManager.remove([documentsLookup['t1']]);
+        await app.imageRelationsManager.remove([documentsLookup.t1]);
 
         await helpers.expectDocuments('tc1', 'i1');
         helpers.expectImagesExist('i1');
@@ -78,7 +78,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 'i1');
         helpers.expectImagesExist('i1');
 
-        await app.imageRelationsManager.remove([documentsLookup['tc1']]);
+        await app.imageRelationsManager.remove([documentsLookup.tc1]);
 
         await helpers.expectDocuments();
         helpers.expectImagesDontExist('i1');
@@ -101,7 +101,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 'r1', 'i1', 'i2');
         helpers.expectImagesExist('i1', 'i2');
 
-        await app.imageRelationsManager.remove([documentsLookup['tc1']]);
+        await app.imageRelationsManager.remove([documentsLookup.tc1]);
 
         await helpers.expectDocuments('i2', 'r1');
         helpers.expectImagesDontExist('i1');
@@ -124,7 +124,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 't2', 'i1');
         helpers.expectImagesExist('i1');
 
-        await app.imageRelationsManager.remove([documentsLookup['t1'], documentsLookup['t2']]);
+        await app.imageRelationsManager.remove([documentsLookup.t1, documentsLookup.t2]);
 
         await helpers.expectDocuments('tc1');
         helpers.expectImagesDontExist('i1');
@@ -147,7 +147,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 't2', 'i1', 'r1');
         helpers.expectImagesExist('i1');
 
-        await app.imageRelationsManager.remove([documentsLookup['t1'], documentsLookup['t2']]);
+        await app.imageRelationsManager.remove([documentsLookup.t1, documentsLookup.t2]);
 
         await helpers.expectDocuments('tc1', 'r1', 'i1');
         helpers.expectImagesExist('i1');
@@ -168,7 +168,7 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('tc1', 't1', 'i1');
         helpers.expectImagesExist('i1');
 
-        await app.imageRelationsManager.remove([documentsLookup['t1']]);
+        await app.imageRelationsManager.remove([documentsLookup.t1]);
 
         await helpers.expectDocuments('tc1', 'i1');
         helpers.expectImagesExist('i1');
@@ -184,8 +184,8 @@ describe('subsystem/image-relations-manager', () => {
                 ['i1', 'Image', ['tc1']]
             ]
         );
-        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        await app.imageRelationsManager.remove([documentsLookup['i1']]);
+        expect(documentsLookup.tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        await app.imageRelationsManager.remove([documentsLookup.i1]);
 
         await helpers.expectDocuments('tc1');
         const tc1 = await app.datastore.get('tc1');
@@ -206,7 +206,7 @@ describe('subsystem/image-relations-manager', () => {
 
         helpers.expectImagesExist('i1');
 
-        await app.imageRelationsManager.remove([documentsLookup['t1'], documentsLookup['i1']]);
+        await app.imageRelationsManager.remove([documentsLookup.t1, documentsLookup.i1]);
 
         await helpers.expectDocuments('r1');
         helpers.expectImagesDontExist('i1');
@@ -223,10 +223,10 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined()
-        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual([]);
+        expect(documentsLookup.tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
+        expect(documentsLookup.i1.resource.relations[Relation.Image.DEPICTS]).toEqual([]);
 
-        await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
+        await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
 
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
@@ -245,15 +245,15 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        documentsLookup['tc1'].project = 'other-project';
+        documentsLookup.tc1.project = 'other-project';
         try {
-            await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
+            await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
             fail();
         } catch {}
 
-        documentsLookup['i1'].project = 'other-project';
+        documentsLookup.i1.project = 'other-project';
         try {
-            await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
+            await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
             fail();
         } catch {}
         done();
@@ -269,10 +269,10 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1'])
-        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
+        expect(documentsLookup.tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup.i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
 
-        await app.imageRelationsManager.unlink(documentsLookup['i1']);
+        await app.imageRelationsManager.unlink(documentsLookup.i1);
 
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
@@ -292,11 +292,11 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect(documentsLookup['tc1'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(documentsLookup['tc2'].resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
-        expect(documentsLookup['i1'].resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1', 'tc2']);
+        expect(documentsLookup.tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup.tc2.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup.i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1', 'tc2']);
 
-        await app.imageRelationsManager.unlink(documentsLookup['tc1'], documentsLookup['i1']);
+        await app.imageRelationsManager.unlink(documentsLookup.tc1, documentsLookup.i1);
 
         const tc1 = await app.datastore.get('tc1');
         const tc2 = await app.datastore.get('tc2');
@@ -320,7 +320,7 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         try {
-            await app.imageRelationsManager.unlink(documentsLookup['tc1'], documentsLookup['tc2']);
+            await app.imageRelationsManager.unlink(documentsLookup.tc1, documentsLookup.tc2);
             fail();
         } catch (err) {
             expect(err.includes('illegal argument')).toBeTruthy();

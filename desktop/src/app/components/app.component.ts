@@ -6,9 +6,9 @@ import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
 import { Settings } from '../services/settings/settings';
 import { MenuNavigator } from './menu-navigator';
-import { UtilTranslations } from '../util/util-translations';
-import { AppController } from '../services/app-controller';
-import { Imagestore } from '../services/imagestore/imagestore';
+import {UtilTranslations} from '../util/util-translations';
+import {AppController} from '../services/app-controller';
+import {ImageUrlMaker} from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -37,9 +37,9 @@ export class AppComponent {
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
                 appController: AppController,
-                imagestore: Imagestore,
-                settingsService: SettingsService,
-                configurationChangeNotifications: ConfigurationChangeNotifications) {
+                configurationChangeNotifications: ConfigurationChangeNotifications,
+                imageUrlMaker: ImageUrlMaker,
+                settingsService: SettingsService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -49,7 +49,7 @@ export class AppComponent {
         //
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationStart) {
-                imagestore.revokeAll();
+                imageUrlMaker.revokeAllUrls();
                 this.messages.removeAllMessages();
             }
         });

@@ -1,6 +1,10 @@
 valuelist-preview {
   display: block;
 
+  #preview-header code {
+    font-size: 14px;
+  }
+
   #preview-header.extending-valuelist {
     height: 64px;
   }
@@ -13,11 +17,17 @@ valuelist-preview {
     b {
       font-weight: 500;
     }
+
+    .valuelist-preview-label {
+      position: relative;
+      top: 2px;
+      left: 4px;
+    }
   }
 
   #extension-info {
     width: fit-content;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .valuelist-preview-text {
@@ -34,8 +44,13 @@ valuelist-preview {
     margin-right: 1px;
   }
 
-  .field-in-use {
-    margin-left: 28px;
-    font-size: 14px;
+  .fields-in-use {
+    position: relative;
+    top: 2px;
+
+    .field-in-use {
+      margin-left: 28px;
+      font-size: 13px;  
+    }
   }
 }

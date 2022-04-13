@@ -40,7 +40,7 @@ const useSync = (
 
         if(!syncService || !project || !projectSettings?.connected) return;
 
-        syncService.startSync(isNotAnImage);
+        syncService.startSync(true, isNotAnImage);
         
         return () => syncService.stopSync();
     }, [live, syncService, project, projectSettings?.connected]);

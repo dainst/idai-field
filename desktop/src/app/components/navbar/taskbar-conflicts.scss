@@ -4,15 +4,30 @@
 
   #taskbar-conflicts-container {
     margin-left: 18px;
+
+    &:hover {
+      #taskbar-conflicts-button-icon {
+        color: $link-hover-color;
+      }
+    }
+
+    #taskbar-conflicts-button-icon {
+      color: $navbar-link-color;
+    }
   }
 }
 
 .conflicts-popover {
+  border-top: none !important;
+  box-shadow: none !important;
+
   .popover-header {
     width: 350px;
     position: absolute;
     right: 0;
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
   }
 
   .popover-body {
@@ -23,6 +38,8 @@
     top: 33px;
     background-color: rgb(238, 238, 238);
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
 
     .list-group {
       max-height: calc(100vh - 337px);

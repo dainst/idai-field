@@ -1,5 +1,4 @@
 <div class="settings row" (dragover)="false" (dragleave)="false" (drop)="false">
-
     <div class="col">
         <div class="row">
             <div class="col default-nav bg-light text-right">
@@ -13,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col default-container">
+            <div #settingsContainer class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <h5 i18n="@@settings.general">Allgemeine Einstellungen</h5>
 
@@ -48,7 +47,7 @@
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
-                        sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System
+                        sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System
                         so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall
                         vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen
                         Datenbanknutzers bzw. der Datenbanknutzerin einzutragen.
@@ -72,49 +71,12 @@
                                class="form-control">
 
                         <div class="small-info-text" i18n="@@settings.synchronization.info">
-                            Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients
+                            Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen
                             eingetragen werden, damit dieser Computer als Synchronisationsziel
                             eingerichtet werden kann.
                         </div>
                     </div>
-
-
-                    <hr>
-
-                    <h5 style="margin-top: 32px;" i18n="@@settings.images">Bilder</h5>
-
-                    <div class="form-group" style="margin-bottom: 0;">
-
-                        <label class="control-label col-form-label"
-                               for="imagestorepath-input"
-                               i18n="@@settings.images.path">
-                            Pfad
-                        </label>
-                        <div class="input-group">
-                            <input id="imagestorepath-input"
-                                   [ngModel]="settings.imagestorePath"
-                                   (ngModelChange)="settings.imagestorePath = $event"
-                                   class="form-control">
-                            <div class="input-group-append">
-                                <label for="imagestorepath-input" class="btn btn-secondary file-input-label"
-                                       (click)="chooseImagestoreDirectory()">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="small-info-text" i18n="@@settings.images.path.info">
-                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
-                            sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
-                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
-                            Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
-                            Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field
-                            verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
-                            Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
-                        </div>
-                    </div>
-
-
+                    
                     <div *ngIf="!isLinux">
                         <hr>
 
@@ -132,6 +94,49 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
+
+                    <hr>
+
+                    <button id="advanced-settings-button"
+                            type="button" class="btn btn-link btn-block" (click)="toggleAdvancedSettings()"
+                            [attr.aria-expanded]="!areAdvancedSettingCollapsed" aria-controls="advanced-settings">
+                        <span *ngIf="areAdvancedSettingCollapsed" i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
+                        <span *ngIf="!areAdvancedSettingCollapsed" i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
+                    </button>
+                    <div id="advanced-settings" [ngbCollapse]="areAdvancedSettingCollapsed">
+                        <h5 style="margin-top: 32px;" i18n="@@settings.images">Bilder</h5>
+
+                        <div id="advanced-settings"class="form-group" style="margin-bottom: 0;">
+
+                            <label class="control-label col-form-label"
+                                for="imagestorepath-input"
+                                i18n="@@settings.images.path">
+                                Pfad
+                            </label>
+                            <div class="input-group"> 
+                                <input id="imagestorepath-input"
+                                    [ngModel]="settings.imagestorePath"
+                                    (ngModelChange)="settings.imagestorePath = $event"
+                                    class="form-control">
+                                <div class="input-group-append">
+                                    <label for="imagestorepath-input" class="btn btn-secondary file-input-label"
+                                            (click)="chooseImagestoreDirectory()">
+                                        <span class="mdi mdi-folder"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="small-info-text" i18n="@@settings.images.path.info">
+                                Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
+                                sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem
+                                Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
+                                Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
+                                Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field
+                                verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
+                                Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>

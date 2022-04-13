@@ -1,4 +1,4 @@
-<div class="modal-header value-editor-modal-header">
+<div class="modal-header configuration-editor-modal-header value-editor-modal-header">
     <h6 *ngIf="!new" i18n="@@configuration.editValue">Wert <code>{{valueId}}</code> bearbeiten</h6>
     <h6 *ngIf="new" i18n="@@configuration.createValue">Wert <code>{{valueId}}</code> erstellen</h6>
 </div>
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<div class="modal-footer value-editor-modal-footer">
+<div class="modal-footer value-editor-modal-footer bg-light">
     <button id="confirm-value-button" class="btn btn-primary" (click)="confirmChanges()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>

@@ -121,7 +121,7 @@
       "hidden": [],
       "fields": {},
       "valuelists": {
-        "period": " periods-Gadara"
+        "period": "periods-Gadara"
       }
     },
     "BuildingPart:default": {
@@ -987,7 +987,6 @@
       ]
     },
     "Architecture": {
-      "parent": "Feature",
       "color": "#707070",
       "hidden": [],
       "fields": {
@@ -1555,7 +1554,6 @@
       ]
     },
     "Grave": {
-      "parent": "Feature",
       "color": "#339900",
       "valuelists": {
         "condition": "Building-condition-default",

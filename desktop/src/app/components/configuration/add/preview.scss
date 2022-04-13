@@ -20,6 +20,9 @@
       }
       
       .preview-item-title {
+        position: relative;
+        top: 2px;
+        
         b {
           margin: 6px;
         }

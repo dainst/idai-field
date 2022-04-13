@@ -7,6 +7,7 @@ import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
 import { ApplyChangesResult } from '../configuration.component';
 import { Modals } from '../../../services/modals';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 /**
@@ -87,6 +88,8 @@ export abstract class ConfigurationEditorModalComponent {
         this.clonedDescription = this.description ? clone(this.description) : {};
 
         this.applyingChanges = false;
+
+        AngularUtility.blurActiveElement();
     }
 
 

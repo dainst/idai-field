@@ -9,12 +9,16 @@
   width: calc(100% - 50px);
   background-color: rgb(238, 238, 238);
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  overflow: hidden;
   user-select: none;
 
   h6 {
     background-color: #f7f7f7;
     padding: 10px;
     margin-bottom: 0;
+    font-size: 15px;
     cursor: default;
   }
 
@@ -33,6 +37,7 @@
   #no-results-info {
     background-color: white;
     padding: 12px;
+    font-size: 14px;
     cursor: default;
   }
 }

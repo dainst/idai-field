@@ -65,7 +65,7 @@ export function navigateTo(menu) {
 export async function resetConfigJson() {
 
     const configPath = await app.electron.remote.getGlobal('configPath');
-    const configTemplate = await app.electron.remote.getGlobal('configTemplate')
+    const configTemplate = await app.electron.remote.getGlobal('configTemplate');
 
     return new Promise(resolve => {
         fs.writeFile(configPath, JSON.stringify(configTemplate), err => {

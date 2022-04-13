@@ -4,8 +4,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
-    getConfigurationName, Field, Group, Groups, Labels, IndexFacade, Tree, InPlace,
-    ConfigReader, Indexer, CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
+    CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -132,6 +132,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
+
+    public isHighlightCustomElements = () => this.settingsProvider.getSettings().highlightCustomElements;
 
     public isCategoryConfigured = (categoryName: string) =>
         this.clonedProjectConfiguration.getCategory(categoryName) !== undefined;
@@ -525,6 +527,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const result: string = await modalRef.result;
 
             if (result === 'save') {
+                AngularUtility.blurActiveElement();
                 return await this.openSaveModal();
             } else if (result === 'discard') {
                 await this.discardChanges();

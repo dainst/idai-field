@@ -1,7 +1,7 @@
+import { getAsynchronousFs } from '../getAsynchronousFs';
 import { Settings } from './settings';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 /**
@@ -10,25 +10,18 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class SettingsSerializer {
 
-    public load(): Promise<Settings> {
+    public async load(): Promise<Settings> {
 
-        return new Promise((resolve, reject) => {
-            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    const settings = JSON.parse(content);
-                    settings.selectedProject = '';
-                    resolve(remote.getGlobal('setConfigDefaults')(settings));
-                }
-            });
-        });
+        const content: string = await getAsynchronousFs().readFile(remote.getGlobal('configPath'), 'utf-8');       
+        const settings = JSON.parse(content);
+        settings.selectedProject = '';
+        return remote.getGlobal('setConfigDefaults')(settings);
     }
 
 
-    public store(settings: Settings): Promise<any> {
+    public store(settings: Settings): Promise<void> {
 
-        if (!settings) return Promise.resolve(undefined);
+        if (!settings || !remote) return Promise.resolve(undefined);
 
         let configToWrite: any = {};
 
@@ -55,20 +48,17 @@ export class SettingsSerializer {
             configToWrite['dbs'] = settings.dbs;
         }
 
-        if (remote) return this.writeConfigFile(configToWrite);
+        return this.writeConfigFile(configToWrite);
     }
 
 
-    private writeConfigFile(config: any): Promise<any> {
+    private async writeConfigFile(config: any): Promise<void> {
 
-        return new Promise((resolve, reject) => {
-            fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config), (err: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(undefined);
-                }
-            });
-        });
+        try {
+            await getAsynchronousFs().writeFile(remote.getGlobal('configPath'), JSON.stringify(config));
+        } catch (err) {
+            console.error('Error while trying to write config file', err);
+            throw err;
+        }
     }
 }

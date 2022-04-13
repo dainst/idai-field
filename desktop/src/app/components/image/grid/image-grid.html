@@ -20,8 +20,7 @@
                  (mouseenter)="onCellMouseEnter(cell['document'])"
                  [id]="'resource-' + cell['document'].resource.identifier.replace('.', '_')"
                  class="cell"
-                 [class.selected]="selected.includes(cell['document'])"
-                 >
+                 [class.selected]="selected.includes(cell['document'])">
 
                 <image-grid-cell
                         [cell]="cell"

@@ -2,11 +2,12 @@
 
 This is a monorepo containing five packages:
 
-* [iDAI.field Desktop](desktop): The iDAI.field desktop client based on AngularJS and Electron
-* [iDAI.field Mobile](mobile): The iDAI.field mobile client based on React Native
-* [iDAI.field Server](server): Server components
+* [Field Desktop](desktop): The Field Desktop client based on AngularJS and Electron
+* [Field Mobile](mobile): The Field Mobile client based on React Native
+* [Field Server](server): The FieldHub server application
+* [Field Core](core): Shared TypeScript modules
 * [iDAI.field Web](web): The iDAI.field Web publication platform
-* [iDAI.field Core](core): Shared TypeScript modules
+
 
 ## Development
 

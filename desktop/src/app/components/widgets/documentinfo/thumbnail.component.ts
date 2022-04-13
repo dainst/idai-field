@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { FieldResource } from 'idai-field-core';
-import { Imagestore } from '../../../services/imagestore/imagestore';
-import { BlobMaker } from '../../../services/imagestore/blob-maker';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {FieldResource} from 'idai-field-core';
+import {ImageStore, ImageVariant} from 'idai-field-core';
+import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 
 
 @Component({
@@ -22,11 +22,14 @@ export class ThumbnailComponent implements OnChanges {
     public thumbnailUrl: SafeResourceUrl|undefined;
 
 
-    constructor(private imagestore: Imagestore,
-                private i18n: I18n) {}
+    constructor(
+        private imageUrlMaker: ImageUrlMaker,
+        private i18n: I18n
+    ) {}
 
 
-    public isThumbnailFound = (): boolean => this.thumbnailUrl !== BlobMaker.blackImg;
+    public isThumbnailFound = (): boolean => this.thumbnailUrl !== ImageUrlMaker.blackImg;
+
 
     public onImageClicked = () => this.onClick.emit();
 
@@ -70,9 +73,9 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return await this.imagestore.read(relations[0], false, true);
+            return this.imageUrlMaker.getUrl(relations[0], ImageVariant.THUMBNAIL);
         } catch (e) {
-            return BlobMaker.blackImg;
+            return ImageUrlMaker.blackImg;
         }
     }
 }

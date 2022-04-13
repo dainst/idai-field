@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {reloadAndSwitchToHomeRoute} from '../../services/reload';
+import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
 import { StateSerializer } from '../../services/state-serializer';
@@ -15,14 +15,17 @@ import { Messages } from '../messages/messages';
         '(window:keydown)': 'onKeyDown($event)',
     }
 })
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export class DeleteProjectModalComponent {
 
+    public projectName: string;
     public confirmDeletionProjectName: string;
+    public deleteFiles = false;
+
+    private deleting = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -38,27 +41,31 @@ export class DeleteProjectModalComponent {
     }
 
 
-    public getProjectName = () => this.settingsProvider.getSettings().selectedProject;
-
-
     public async confirmDeletion() {
 
         if (!this.checkConfirmDeletionProjectName()) return;
 
         await this.performDeletion();
-        this.activeModal.close();
     }
 
 
     public checkConfirmDeletionProjectName(): boolean {
 
-        return this.getProjectName() === this.confirmDeletionProjectName;
+        return this.projectName === this.confirmDeletionProjectName;
+    }
+
+
+    public isDeleting(): boolean {
+        
+        return this.deleting;
     }
 
 
     private async performDeletion() {
 
         if (!this.canDeleteProject()) return;
+
+        this.deleting = true;
 
         try {
             await this.stateSerializer.delete('resources-state');
@@ -69,7 +76,7 @@ export class DeleteProjectModalComponent {
             // Ignore state file deletion errors
         }
 
-        await this.settingsService.deleteProject(this.getProjectName());
+        await this.settingsService.deleteProject(this.projectName, this.deleteFiles);
 
         reloadAndSwitchToHomeRoute();
     }

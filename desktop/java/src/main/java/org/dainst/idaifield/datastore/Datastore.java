@@ -50,7 +50,7 @@ public class Datastore {
     private static JSONArray getJsonData(String projectName, String password, String query) throws Exception {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost("http://localhost:3000/" + projectName + "/_find");
+            HttpPost httpPost = new HttpPost("http://localhost:3001/" + projectName + "/_find");
             httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             httpPost.setHeader(HttpHeaders.ACCEPT, "application/json");
 

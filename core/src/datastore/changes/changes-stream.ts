@@ -76,7 +76,7 @@ export class ChangesStream {
     }
 
 
-    private static async isRemoteChange(document: Document, username: string): Promise<boolean> {
+    public static isRemoteChange(document: Document, username: string): boolean {
 
         const latestAction: Action = Document.getLastModified(document);
         return latestAction && latestAction.user !== username;

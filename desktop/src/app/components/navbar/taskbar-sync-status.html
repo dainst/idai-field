@@ -1,61 +1,71 @@
-<a (click)="openSynchronizationModal()">
-    <div class="slide-up cloud-overlay" *ngIf="getStatus() === 'PUSHING'">
-        <span class="mdi mdi-arrow-up-bold mdi-18px"></span>
-    </div>
-    <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PUSHING'"
-            ngbTooltip="Es werden Daten hochgeladen."
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
-            placement="bottom" container="body">
-    </span>
-    <div class="slide-down cloud-overlay" *ngIf="getStatus() === 'PULLING'">
-        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
-    </div>
-    <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PULLING'"
-            ngbTooltip="Es werden Daten heruntergeladen."
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
-            placement="bottom" container="body">
-    </span>
-    <span class="mdi mdi-cloud-off-outline" *ngIf="getStatus() === 'OFFLINE'"
-            ngbTooltip="Synchronisation ist deaktiviert."
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.offline"
-            placement="bottom" container="body">
-    </span>
-    <span class="mdi mdi-cloud-check"  *ngIf="getStatus() === 'IN_SYNC'"
-            ngbTooltip="Synchronisation abgeschlossen."
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.inSync"
-            placement="bottom" container="body">
-    </span>
-    <ng-template #tipError>
-        <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
-        <p>
-            <span i18n="@@navbar.taskbar.synchronization.error.general">Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</span>
-        </p>
-    </ng-template>
-    <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'ERROR'"
-            [ngbTooltip]="tipError"
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.error"
-            placement="bottom" container="body">
-    </span>
-    <ng-template #tipAuthenticationError>
-        <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
-        <p>
-            <span i18n="@@navbar.taskbar.synchronization.error.authentication">Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</span>
-        </p>
-    </ng-template>
-    <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'AUTHENTICATION_ERROR'"
-            [ngbTooltip]="tipAuthenticationError"
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.authenticationError"
-            placement="bottom" container="body">
-    </span>
-    <ng-template #tipAuthorizationError>
-        <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
-        <p>
-            <span i18n="@@navbar.taskbar.synchronization.error.authorization">Sie besitzen nicht die nötigen Rechte.</span>
-        </p>
-    </ng-template>
-    <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'AUTHORIZATION_ERROR'"
-            [ngbTooltip]="tipAuthorizationError"
-            i18n-ngbTooltip="@@navbar.taskbar.synchronization.authorizationError"
-            placement="bottom" container="body">
-    </span>
-</a>
+<div [class.animated-icon]="getStatus() === 'PUSHING' || getStatus() === 'PULLING' || getStatus() === 'CONNECTING'"
+     id="sync-status">
+    <a (click)="openSynchronizationModal()" (contextmenu)="printStatus()">
+        <div class="slide-up cloud-overlay" *ngIf="getStatus() === 'PUSHING'">
+            <span class="mdi mdi-arrow-up-bold mdi-18px"></span>
+        </div>
+        <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PUSHING'"
+              ngbTooltip="Es werden Daten hochgeladen."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
+              placement="bottom" container="body">
+        </span>
+        <div class="slide-down cloud-overlay" *ngIf="getStatus() === 'PULLING'">
+            <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+        </div>
+        <span class="mdi mdi-cloud" *ngIf="getStatus() === 'PULLING'"
+              ngbTooltip="Es werden Daten heruntergeladen."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
+              placement="bottom" container="body">
+        </span>
+        <div class="cloud-overlay" *ngIf="getStatus() === 'CONNECTING'">
+            <span class="mdi mdi-refresh mdi-18px mdi-spin"></span>
+        </div>
+        <span class="mdi mdi-cloud" *ngIf="getStatus() === 'CONNECTING'"
+              ngbTooltip="Synchronisationsverbindung wird hergestellt..."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.connecting"
+              placement="bottom" container="body"></span>
+        <span class="mdi mdi-cloud-off-outline" *ngIf="getStatus() === 'OFFLINE'"
+              ngbTooltip="Synchronisation ist deaktiviert."
+              i18n-ngbTooltip="@@navbar.taskbar.synchronization.offline"
+              placement="bottom" container="body">
+        </span>
+        <span class="mdi mdi-cloud-check"  *ngIf="getStatus() === 'IN_SYNC'"
+                ngbTooltip="Synchronisation abgeschlossen."
+                i18n-ngbTooltip="@@navbar.taskbar.synchronization.inSync"
+                placement="bottom" container="body">
+        </span>
+        <ng-template #tipError>
+            <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
+            <p>
+                <span i18n="@@navbar.taskbar.synchronization.error.general">Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</span>
+            </p>
+        </ng-template>
+        <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'ERROR'"
+                [ngbTooltip]="tipError"
+                i18n-ngbTooltip="@@navbar.taskbar.synchronization.error"
+                placement="bottom" container="body">
+        </span>
+        <ng-template #tipAuthenticationError>
+            <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
+            <p>
+                <span i18n="@@navbar.taskbar.synchronization.error.authentication">Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</span>
+            </p>
+        </ng-template>
+        <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'AUTHENTICATION_ERROR'"
+                [ngbTooltip]="tipAuthenticationError"
+                i18n-ngbTooltip="@@navbar.taskbar.synchronization.authenticationError"
+                placement="bottom" container="body">
+        </span>
+        <ng-template #tipAuthorizationError>
+            <p><b i18n="@@navbar.taskbar.synchronization.error">Synchronisation fehlgeschlagen</b>!</p>
+            <p>
+                <span i18n="@@navbar.taskbar.synchronization.error.authorization">Sie besitzen nicht die nötigen Rechte.</span>
+            </p>
+        </ng-template>
+        <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() === 'AUTHORIZATION_ERROR'"
+                [ngbTooltip]="tipAuthorizationError"
+                i18n-ngbTooltip="@@navbar.taskbar.synchronization.authorizationError"
+                placement="bottom" container="body">
+        </span>
+    </a>
+</div>

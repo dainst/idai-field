@@ -96,6 +96,8 @@ category-picker {
     background: #ccc;
     border: dotted 3px #999;
     transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+    position: relative;
+    z-index: 1 !important;
   }
 
   .cdk-drop-list-dragging {
@@ -125,12 +127,14 @@ category-picker {
     .parent-category {
       category-icon {
         left: 37px;
+        bottom: 7px;
       }
     }
 
     .child-category {
       category-icon {
         left: 57px;
+        bottom: 7px;
       }
     }
   }
@@ -154,7 +158,8 @@ category-picker .category-item,
   .category-label {
     display: inline-block;
     margin-left: 40px;
-    width: calc(100% - 65px);
+    width: calc(100% - 50px);
+    font-size: 15px;
   }
 }
 
@@ -171,6 +176,10 @@ category-picker .category-item,
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2),
               0 9px 11px 2px rgba(0, 0, 0, 0.14),
               0 3px 14px 3px rgba(0, 0, 0, 0.12);
+
+    &.custom-category {
+      background-color: $custom-highlight-color;
+    }
 }
 
 

@@ -10,7 +10,7 @@ import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
-import {ImageViewModalPage} from '../image-view-modal.page';
+import { ImageViewModalPage } from '../image-view-modal.page';
 
 
 /**

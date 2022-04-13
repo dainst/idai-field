@@ -77,7 +77,7 @@ export class NavbarPage {
 
     public static async getActiveNavLinkLabel() {
 
-        return getText('#navbarSupportedContent .nav-link.active');
+        return getText('#navbarSupportedContent .active .nav-link');
     }
 
 

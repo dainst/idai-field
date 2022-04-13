@@ -18,6 +18,12 @@
     }
   }
 
+  revision-selector {
+    .conflict-resolver-field div {
+      padding-left: 0;
+    }
+  }
+
   loading-icon {
     position: absolute;
     top: 100px;

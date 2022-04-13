@@ -57,6 +57,7 @@ export class DoceditComponent {
                 public labels: Labels,
                 private i18n: I18n) {}
 
+
     public isChanged = () => this.documentHolder.isChanged();
 
     public isLoading = () => this.loading.isLoading('docedit');

@@ -1,9 +1,9 @@
 {
     "RoomCeiling:default": {
       "categoryName": "RoomCeiling",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -29,9 +29,9 @@
     },
     "RoomFloor:default": {
       "categoryName": "RoomFloor",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "valuelists": {},
       "groups": [
         {
@@ -58,9 +58,9 @@
     },
     "RoomWall:default": {
       "categoryName": "RoomWall",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
       "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -86,9 +86,9 @@
     },
     "Trench:default": {
       "categoryName": "Trench",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "description": { "de": "Schnitt; IT-Referat, 2019" },
+      "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "stem",
@@ -110,9 +110,9 @@
     },
     "Glass:default": {
       "categoryName": "Glass",
-      "createdBy": "IT-Referat",
       "creationDate": "2019",
-      "description": { "de": "Glass; IT-Referat, 2019" },
+      "description": {},
+      "createdBy": "",
       "groups": [
         {
           "name": "properties",
@@ -538,7 +538,7 @@
     "Stone:default": {
       "categoryName": "Stone",
       "description": {},
-      "createdBy": "IT-Referat",
+      "createdBy": "",
       "creationDate": "2019",
       "groups": [
         {

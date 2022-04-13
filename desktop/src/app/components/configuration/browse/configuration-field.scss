@@ -33,7 +33,7 @@ configuration-field {
 
       .category-icon {
         position: relative;
-        top: 5px;
+        top: 2px;
         right: 2px;
         margin-left: 12px;
       }
@@ -42,7 +42,7 @@ configuration-field {
       code,
       .mdi-alert-circle-outline {
         position: relative;
-        top: 3px;
+        top: 2px;
       }
     }
 
@@ -61,13 +61,13 @@ configuration-field {
 
     &.custom {
       .card-header {
-        background-color: #fff3cd !important;
+        background-color: $custom-highlight-color !important;
       }
 
       .card-header.opened,
       .card-header:hover:not(.parent-element),
       .card-body {
-          background-color: darken(#fff3cd, 5%) !important;
+          background-color: darken($custom-highlight-color, 5%) !important;
       }
     }
 

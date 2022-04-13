@@ -179,8 +179,8 @@ html [type='button'],
 /* override popover styles */
 .popover {
   padding: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 0.3rem;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   min-width: 200px;
 }
@@ -204,11 +204,19 @@ html [type='button'],
 
 .popover-custom-title {
   padding: 10px 10px 8px 10px;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+
+  &:last-child {
+    border-radius: 0.3rem;
+  }
 }
 
 .popover-body .list-group {
   max-height: calc(100vh - 230px);
   overflow: auto;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
 }
 
 .popover-item {
@@ -364,4 +372,8 @@ a {
   font-size: 14px;
   margin-top: 13px;
   user-select: none;
+}
+
+.custom-marking {
+  color: darken($custom-highlight-color, 50%);
 }

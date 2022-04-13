@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading()" id="conflict-resolver">
+<div *ngIf="!isLoading()" id="conflict-resolver" class="bg-light">
     <revision-selector [document]="document"
                        [conflictedRevisions]="conflictedRevisions"
                        [inspectedRevisions]="inspectedRevisions"
@@ -6,7 +6,7 @@
                        [winningSide]="getWinningSide()"
                        (onSelectWinningSide)="setWinningSide($event)"
                        (onSelectRevision)="setSelectedRevision($event)"></revision-selector>
-    <div *ngFor="let field of differingFields" class="card">
+    <div *ngFor="let field of differingFields" class="card bg-light">
         <div class="card-header">
             <h3 class="card-title">{{field.label}}</h3>
         </div>

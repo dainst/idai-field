@@ -1,6 +1,5 @@
 import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
 import { FieldDocument } from 'idai-field-core';
 
 @Component({
@@ -11,33 +10,11 @@ import { FieldDocument } from 'idai-field-core';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypeGridElementComponent implements OnChanges {
+export class TypeGridElementComponent {
 
     @Input() document: FieldDocument;
+    @Input() images: Array<SafeResourceUrl>;
     @Input() subtype?: FieldDocument;
-    @Input() images?: Array<Blob>;
 
-    public imageUrls: Array<SafeResourceUrl> = [];
-
-
-    constructor(private blobMaker: BlobMaker) {}
-
-
-    async ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['document'] || changes['images']) await this.loadImages();
-    }
-
-
-    private async loadImages() {
-
-        this.imageUrls = [];
-
-        if (!this.images) return;
-
-        for (let blob of this.images) {
-            const url = this.blobMaker.makeBlob(blob);
-            this.imageUrls.push(url.safeResourceUrl);
-        }
-    }
+    constructor() {}
 }

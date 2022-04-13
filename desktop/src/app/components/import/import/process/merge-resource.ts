@@ -1,12 +1,6 @@
-import { Relation, typeOf } from 'idai-field-core';
-import { NewResource, Resource } from 'idai-field-core';
-import {
-    Associative, cond, detach, dropRightWhile,
-    filter, flow, forEach, includedIn, is, isArray, isAssociative,
-    isEmpty, isNot,
-    isnt, isObject, Map,
-    update, values, clone
-} from 'tsfun';
+import { Associative, cond, detach, dropRightWhile, filter, flow, forEach, includedIn, is, isArray,
+    isAssociative, isEmpty, isNot, isnt, isObject, Map, update, values, clone } from 'tsfun';
+import { Relation, typeOf, NewResource, Resource } from 'idai-field-core';
 import { hasEmptyAssociatives } from '../../util';
 import { ImportErrors } from '../import-errors';
 

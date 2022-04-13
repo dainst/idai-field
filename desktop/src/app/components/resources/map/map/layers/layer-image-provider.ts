@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { Imagestore } from '../../../../../services/imagestore/imagestore';
+import { Injectable, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ImageVariant } from 'idai-field-core';
+import { ImageUrlMaker } from '../../../../../services/imagestore/image-url-maker';
 import { ImageContainer } from '../../../../../services/imagestore/image-container';
-import { BlobMaker } from '../../../../../services/imagestore/blob-maker';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class LayerImageProvider {
     private imageContainers: { [resourceId: string]: ImageContainer } = {};
 
 
-    constructor(private imagestore: Imagestore) {}
+    constructor(private imageUrlMaker: ImageUrlMaker, private sanitizer: DomSanitizer) {}
 
 
     public async getImageContainer(resourceId: string): Promise<ImageContainer> {
@@ -27,14 +27,8 @@ export class LayerImageProvider {
         return this.imageContainers[resourceId];
     }
 
-
     public reset() {
-
-        for (let resourceId of Object.keys(this.imageContainers)) {
-            const thumb: boolean = !this.imageContainers[resourceId].imgSrc;
-            this.imagestore.revoke(resourceId, thumb);
-        }
-
+        this.imageUrlMaker.revokeAllUrls();
         this.imageContainers = {};
     }
 
@@ -43,20 +37,26 @@ export class LayerImageProvider {
 
         let url: string|SafeResourceUrl;
         try {
-            url = await this.imagestore.read(resourceId, true, false);
+            url = this.sanitizer.sanitize(
+                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.ORIGINAL)
+            );
+
+            return { imgSrc: url };
         } catch (err) {
+            console.error(err);
             console.error('Error while creating image container. Original image not found in imagestore ' +
                 'for document:', document);
-            return { imgSrc: BlobMaker.blackImg };
-        }
 
-        if (url !== '') {
-            return { imgSrc: url };
-        } else {
             try {
-                return { thumbSrc: await this.imagestore.read(resourceId, true, true) };
+                url =  this.sanitizer.sanitize(
+                    SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.THUMBNAIL)
+                );
+                return { imgSrc: url };
             } catch (err) {
-                return { imgSrc: BlobMaker.blackImg };
+
+                console.error('Error while creating fallback image container. Thumbnail image also not found in imagestore ' +
+                    'for document:', document);
+                return { imgSrc: ImageUrlMaker.blackImg };
             }
         }
     }

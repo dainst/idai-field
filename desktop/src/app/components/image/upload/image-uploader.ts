@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Document, Datastore, NewImageDocument, ImageDocument, ProjectConfiguration,
-    RelationsManager } from 'idai-field-core';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
+    ImageStore} from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -32,7 +31,7 @@ export class ImageUploader {
     public static readonly supportedWorldFileTypes: string[] = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
 
 
-    public constructor(private imagestore: Imagestore,
+    public constructor(private imagestore: ImageStore,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
@@ -50,7 +49,7 @@ export class ImageUploader {
 
         let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
-        if (!this.imagestore.getPath()) {
+        if (!this.imagestore.getAbsoluteRootPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
             return uploadResult;
         }
@@ -139,7 +138,7 @@ export class ImageUploader {
 
         const duplicateFilenames: string[] = [];
 
-        for (let file of files) {
+        for (const file of files) {
             if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
@@ -151,14 +150,14 @@ export class ImageUploader {
                         await this.uploadFile(file, category, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
-                } catch(e) {
+                } catch (e) {
                     uploadResult.messages.push(e);
                 }
             }
         }
 
         uploadResult.uploadedImages = this.uploadStatus.getHandledImages() - duplicateFilenames.length;
-        if (duplicateFilenames.length == 1) {
+        if (duplicateFilenames.length === 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
         } else if (duplicateFilenames.length > 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
@@ -170,11 +169,11 @@ export class ImageUploader {
 
     private async uploadWldFiles(files: File[]) {
 
-        let messages: string[][] = [];
-        let unmatchedWldFiles = [];
+        const messages: string[][] = [];
+        const unmatchedWldFiles = [];
 
-        outer: for (let file of files) {
-            for (let extension of ImageUploader.supportedImageFileTypes) {
+        outer: for (const file of files) {
+            for (const extension of ImageUploader.supportedImageFileTypes) {
                 const candidateName = ExtensionUtil.replaceExtension(file.name, extension);
                 const result = await this.findImageByFilename(candidateName);
                 if (result.totalCount > 0) {
@@ -189,12 +188,11 @@ export class ImageUploader {
             unmatchedWldFiles.push(file.name);
         }
 
-        (unmatchedWldFiles.length > 0)
-            && messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        if (unmatchedWldFiles.length > 0) messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
 
         const matchedFiles = files.length - unmatchedWldFiles.length;
-        (matchedFiles == 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
-        (matchedFiles > 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
 
         return messages;
     }
@@ -221,7 +219,7 @@ export class ImageUploader {
 
         return new Promise<any>((resolve, reject) => {
 
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, category, depictsRelationTarget)
@@ -229,10 +227,7 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(async () =>
-                            // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
-                            (await this.datastore.get(doc.resource.id, { skipCache: true })) as ImageDocument
-                        ))
+                        .then(doc => that.imagestore.store(doc.resource.id, Buffer.from(reader.result) as any))
                         .then(() =>
                             resolve(undefined)
                         )
@@ -240,13 +235,13 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_WRITE, file.name]);
                         });
-                }
+                };
             })(this);
             reader.onerror = () => {
                 return (error: any) => {
                     console.error(error);
                     reject([M.IMAGES_ERROR_FILEREADER, file.name]);
-                }
+                };
             };
             reader.readAsArrayBuffer(file);
         });
@@ -258,7 +253,7 @@ export class ImageUploader {
 
         return new Promise((resolve, reject) => {
 
-            let img = new Image();
+            const img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
                 const doc: NewImageDocument = {
@@ -275,7 +270,7 @@ export class ImageUploader {
                 };
 
                 if (depictsRelationTarget && depictsRelationTarget.resource.id) {
-                    doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
+                    doc.resource.relations.depicts = [depictsRelationTarget.resource.id];
                 }
 
                 this.relationsManager.update(doc)
@@ -287,17 +282,17 @@ export class ImageUploader {
     }
 
 
-    private static getFiles(_event: Event): Array<File> {
+    private static getFiles(e: Event): Array<File> {
 
-        const event = _event as any;
+        const event = e as any;
 
         if (!event) return [];
         let files = [];
 
-        if (event['dataTransfer']) {
-            if (event['dataTransfer']['files']) files = event['dataTransfer']['files'];
-        } else if (event['srcElement']) {
-            if (event['srcElement']['files']) files = event['srcElement']['files'];
+        if (event.dataTransfer) {
+            if (event.dataTransfer.files) files = event.dataTransfer.files;
+        } else if (event.srcElement) {
+            if (event.srcElement.files) files = event.srcElement.files;
         }
 
         return Array.from(files);

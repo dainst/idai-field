@@ -8,7 +8,7 @@ const messages = require('./messages');
 const getTemplate = (mainWindow, context, config) => {
 
     const template = [{
-        label: 'iDAI.field',
+        label: 'Field',
         submenu: [{
             label: messages.get('menu.about'),
             role: 'about'
@@ -29,9 +29,9 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'createProject'),
                 enabled: isDefaultContext(context)
             }, {
-                label: messages.get('menu.project.networkProject'),
+                label: messages.get('menu.project.downloadProject'),
                 accelerator: 'CmdOrCtrl+D',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'networkProject'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'downloadProject'),
                 enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
@@ -119,7 +119,7 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [
         {
             label: messages.get('menu.tools.configuration'),
-            accelerator: 'CmdOrCtrl+F',
+            accelerator: 'CmdOrCtrl+P',
             click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
             enabled: isDefaultContext(context)
         }, {
@@ -253,7 +253,7 @@ const getTemplate = (mainWindow, context, config) => {
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);
     } else {
-        // Remove 'iDAI.field' menu
+        // Remove 'Field' menu
         template.splice(0, 1);
     }
 
@@ -265,8 +265,9 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.configuration.valuelistManagement'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)
-            },
-            {
+            }, {
+                type: 'separator'
+            }, {
                 label: messages.get('menu.configuration.importConfiguration'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'importConfiguration'),
                 enabled: isDefaultContext(context)
@@ -283,6 +284,19 @@ const getTemplate = (mainWindow, context, config) => {
                         !config.hideHiddenFieldsInConfigurationEditor
                     );
                     config.hideHiddenFieldsInConfigurationEditor = !config.hideHiddenFieldsInConfigurationEditor;
+                },
+                enabled: isDefaultContext(context)
+            }, {
+                type: 'checkbox',
+                label: messages.get('menu.configuration.highlightProjectSpecificElements'),
+                checked: config.highlightCustomElements,
+                click: () => {
+                    mainWindow.webContents.send(
+                        'settingChanged',
+                        'highlightCustomElements',
+                        !config.highlightCustomElements
+                    );
+                    config.highlightCustomElements = !config.highlightCustomElements;
                 },
                 enabled: isDefaultContext(context)
             }]

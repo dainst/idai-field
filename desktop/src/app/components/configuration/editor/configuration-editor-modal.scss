@@ -19,7 +19,7 @@
   #confirm-valuelist-button,
   #confirm-value-button {
     position: absolute;
-    right: 57px;
+    right: 52px;
     height: 39px;
     
     .button-label {
@@ -35,11 +35,23 @@
 
   .configuration-editor-section-title {
     margin-bottom: 10px;
+    font-size: 15px;
     font-weight: bold;
     user-select: none;
   }
 
   .configuration-editor-section {
     margin-bottom: 25px;
+  }
+
+  input {
+    height: 33.5px;
+    font-size: 13px;
+  }
+
+  select {
+    height: 33.5px;
+    line-height: 19px;
+    font-size: 15px;
   }
 }

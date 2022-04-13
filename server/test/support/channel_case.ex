@@ -1,4 +1,4 @@
-defmodule IdaiFieldServerWeb.ChannelCase do
+defmodule FieldHubWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule IdaiFieldServerWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use IdaiFieldServerWeb.ChannelCase, async: true`, although
+  by setting `use FieldHubWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,20 +21,14 @@ defmodule IdaiFieldServerWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import IdaiFieldServerWeb.ChannelCase
+      import FieldHubWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint IdaiFieldServerWeb.Endpoint
+      @endpoint FieldHubWeb.Endpoint
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(IdaiFieldServer.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(IdaiFieldServer.Repo, {:shared, self()})
-    end
-
+  setup _tags do
     :ok
   end
 end

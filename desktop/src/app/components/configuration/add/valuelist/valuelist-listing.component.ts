@@ -42,6 +42,8 @@ export class ValuelistListingComponent {
 
     public isCustomValuelist = (valuelist: Valuelist) => valuelist.source === 'custom';
 
+    public trackValuelist = (_: number, item: Valuelist) => item.id;
+
     public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
         && !this.valuelists.map(valuelist => valuelist.id).includes(this.emptyValuelist.id)
         && (!this.currentValuelistId || this.emptyValuelist.id !== this.currentValuelistId);

@@ -12,6 +12,12 @@ export class SettingsPage {
     };
 
 
+    public static clickOpenAdvancedSettings() {
+
+        return click('#advanced-settings-button');
+    }
+
+
     public static getImagestorePathInput() {
 
         return getElement('#imagestorepath-input');

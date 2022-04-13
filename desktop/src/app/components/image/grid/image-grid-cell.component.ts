@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {ImageDocument} from 'idai-field-core';
+import { Component, Input } from '@angular/core';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageDocument } from 'idai-field-core';
 
 @Component({
     selector: 'image-grid-cell',
@@ -29,5 +30,11 @@ export class ImageGridCellComponent {
             return undefined;
         }
         return this.resourceIdentifiers[id];
+    }
+
+
+    public isEmpty(): boolean {
+
+        return this.cell.imgSrc === ImageUrlMaker.blackImg;
     }
 }

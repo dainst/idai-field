@@ -1,7 +1,7 @@
-import {DomSanitizer} from '@angular/platform-browser';
-import {HttpClient} from '@angular/common/http';
-import {Converter} from 'showdown';
-import {HttpReader} from '../../components/import/reader/http-reader';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { Converter } from 'showdown';
+import { HttpReader } from '../../components/import/reader/http-reader';
 
 
 export type Chapter = { id: string, label: string };

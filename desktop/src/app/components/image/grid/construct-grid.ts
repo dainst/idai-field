@@ -1,6 +1,6 @@
 import {ImageResource} from 'idai-field-core';
 import {Document} from 'idai-field-core';
-import {BlobMaker} from '../../../services/imagestore/blob-maker';
+import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
 import {ImageContainer} from '../../../services/imagestore/image-container';
 
 
@@ -48,7 +48,7 @@ function calcRow(documents: Array<Document>, rowIndex: any, calculatedHeight: an
         if (!document) break;
 
         const cell = newCell(document, calculatedHeight);
-        if ((document as any)['id'] !== 'droparea') cell.imgSrc = BlobMaker.blackImg;
+        if ((document as any)['id'] !== 'droparea') cell.imgSrc = ImageUrlMaker.blackImg;
 
         row.push(cell as never);
     }

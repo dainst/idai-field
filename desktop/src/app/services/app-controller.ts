@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, getConfigurationName, Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, getConfigurationName, ImageStore,
+    Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
-import { ImageConverter } from './imagestore/image-converter';
-import { Imagestore } from './imagestore/imagestore';
+import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
 import { ImagesState } from '../components/image/overview/view/images-state';
 import { ResourcesStateManager } from '../components/resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
@@ -27,9 +27,9 @@ export class AppController {
                 private configurationState: ConfigurationState,
                 private documentCache: DocumentCache,
                 private indexFacade: IndexFacade,
-                private imageConverter: ImageConverter,
+                private thumbnailGenerator: ThumbnailGenerator,
                 private pouchdbDatastore: PouchdbDatastore,
-                private imagestore: Imagestore,
+                private imagestore: ImageStore,
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
@@ -71,7 +71,6 @@ export class AppController {
 
         const db = this.pouchdbDatastore.createDbForTesting('test');
         this.pouchdbDatastore.setDb_e2e(db);
-        this.imagestore.setDb(db);
 
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();
@@ -80,7 +79,7 @@ export class AppController {
         this.documentCache.reset();
 
         await new SampleDataLoader(
-            this.imageConverter,
+            this.thumbnailGenerator,
             this.settingsProvider.getSettings().imagestorePath,
             Settings.getLocale())
             .go(db,this.settingsProvider.getSettings().selectedProject);

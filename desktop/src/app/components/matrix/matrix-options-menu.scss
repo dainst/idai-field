@@ -12,7 +12,11 @@
 #matrix-options-button {
   top: 59px;
   width: 42px;
-  padding-left: 11px;
+
+  .mdi {
+    position: relative;
+    top: 5px;
+  }
 }
 
 #matrix-options-menu {

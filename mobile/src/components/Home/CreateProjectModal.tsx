@@ -63,7 +63,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ onProjectCreate
                 autoFocus
                 helpText="The project name is the unique identifier for the project.
                     Make sure to use the exact same project name if you intend to sync
-                    to other instances of iDAI.field."
+                    to other instances of Field."
                 invalidText="Project name must not be empty."
                 isValid={ project !== '' }
                 style={ { margin: 10 } }

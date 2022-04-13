@@ -1,4 +1,4 @@
-import { click, getElements, typeIn, waitForExist } from '../app';
+import { click, getElement, getElements, typeIn, waitForExist, waitForNotExist } from '../app';
 
 
 /**
@@ -14,9 +14,10 @@ export class ImagePickerModalPage {
     }
 
 
-    public static clickAddImages() {
+    public static async clickAddImages() {
 
-        return click('#image-picker-modal-header #add-images');
+        await click('#image-picker-modal-header #add-images');
+        return waitForNotExist(await getElement('.spinner'));
     }
 
 

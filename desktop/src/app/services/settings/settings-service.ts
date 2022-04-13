@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { isString } from 'tsfun';
-import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, Name, PouchdbDatastore,
-    ProjectConfiguration, SyncService, Template } from 'idai-field-core';
+import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
-import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
-import { Imagestore } from '../imagestore/imagestore';
-import { ImagestoreErrors } from '../imagestore/imagestore-errors';
+import { ExpressServer } from '../express-server';
 import { Settings, SyncTarget } from './settings';
 import { SettingsProvider } from './settings-provider';
 
@@ -30,15 +28,15 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  */
 export class SettingsService {
 
-    constructor(private imagestore: Imagestore,
+    constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
-                private pouchdbServer: PouchdbServer,
+                private pouchdbServer: ExpressServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
+                private imageSyncService: ImageSyncService,
                 private settingsProvider: SettingsProvider,
-                private configReader: ConfigReader) {
-    }
+                private configReader: ConfigReader) {}
 
 
     public async bootProjectDb(selectedProject: string,
@@ -63,34 +61,33 @@ export class SettingsService {
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      */
-    public async updateSettings(settings_: Settings): Promise<Settings> {
+    public async updateSettings(settingsParam: Settings): Promise<Settings> {
 
-        this.settingsProvider.setSettings(settings_);
+        this.settingsProvider.setSettings(settingsParam);
         const settings = this.settingsProvider.getSettings();
 
         Object.values(settings.syncTargets).forEach(syncTarget => {
             if (syncTarget.address) {
                 syncTarget.address = syncTarget.address.trim();
                 if (!SettingsService.validateAddress(syncTarget.address)) {
-                    throw 'malformed_address';
+                    throw Error('malformed_address');
                 }
             }
         });
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 
+        try {
+            await this.imagestore.init(settings.imagestorePath, settings.selectedProject);
+        } catch (e) {
+            this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
+        }
+
         this.pouchdbServer.setPassword(settings.hostPassword);
 
-        return this.imagestore.init(settings)
-            .catch((errWithParams: any) => {
-                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
-                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
-                } else {
-                    console.error('Something went wrong with imagestore.setPath', errWithParams);
-                }
-            })
-            .then(() => this.settingsProvider.setSettingsAndSerialize(settings))
-            .then(() => settings);
+        await this.settingsProvider.setSettingsAndSerialize(settings);
+
+        return settings;
     }
 
 
@@ -125,6 +122,7 @@ export class SettingsService {
 
     public async setupSync() {
 
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
         const settings = this.settingsProvider.getSettings();
@@ -139,6 +137,10 @@ export class SettingsService {
             settings.selectedProject,
             syncTarget?.password
         );
+
+        for (const variant of syncTarget.activeFileSync) {
+            this.imageSyncService.startSync(variant);
+        }
 
         return this.synchronizationService.startSync();
     }
@@ -160,14 +162,25 @@ export class SettingsService {
 
     public async selectProject(project: Name) {
 
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
         await this.settingsProvider.selectProjectAndSerialize(project);
     }
 
 
-    public async deleteProject(project: Name) {
+    public async deleteProject(project: Name, deleteFiles: boolean = false) {
 
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
+
+        if (deleteFiles) {
+            try {
+                await this.imagestore.deleteData(project);
+            } catch (e) {
+                console.error('Error while trying to delete image data:');
+                console.error(e);
+            }
+        }
 
         await this.pouchdbDatastore.destroyDb(project);
         await this.settingsProvider.deleteProjectAndSerialize(project);
@@ -176,6 +189,7 @@ export class SettingsService {
 
     public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
 
+        this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
         await this.selectProject(project);
@@ -234,7 +248,7 @@ export class SettingsService {
 
     private static validateAddress(address: any) {
 
-        return (address == '')
+        return (address === '')
             ? true
             : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
     }

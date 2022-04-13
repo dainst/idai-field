@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
-    SyncService, Tree } from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
+import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
+    SyncService, Tree, ImageStore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
-import { Imagestore } from '../../services/imagestore/imagestore';
 import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
@@ -55,7 +54,7 @@ export class ImportComponent implements OnInit {
                 private datastore: Datastore,
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
-                private imagestore: Imagestore,
+                private imagestore: ImageStore,
                 private http: HttpClient,
                 private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
@@ -258,11 +257,14 @@ export class ImportComponent implements OnInit {
         const fileContents = await Importer.doRead(
             this.http,
             this.settingsProvider.getSettings(),
+            this.imagestore,
             options
-        )
+        );
+
         const documents = await Importer.doParse(
             options,
-            fileContents);
+            fileContents
+        );
 
         return Importer.doImport(
             {
@@ -278,7 +280,8 @@ export class ImportComponent implements OnInit {
             },
             () => this.idGenerator.generateId(),
             options,
-            documents);
+            documents
+        );
     }
 
 
@@ -336,7 +339,8 @@ export class ImportComponent implements OnInit {
             map(MessagesConversion.convertMessage),
             remove(isEmpty),
             take(1),
-            forEach((msgWithParams: any) => this.messages.add(msgWithParams)));
+            forEach((msgWithParams: any) => this.messages.add(msgWithParams))
+        );
     }
 
 

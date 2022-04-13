@@ -9,14 +9,15 @@ taskbar-update {
 
   #taskbar-update {
     position: relative;
-    right: 5px;
+    height: 25px;
+    right: 10px;
 
     &.with-sync-status {
-      right: 10px;
+      right: 8px;
     }
 
     .mdi-arrow-down-bold {
-      color: #fff;
+      color: $navbar-link-color;
       position: relative;
       top: -8px;
       width: 28px;

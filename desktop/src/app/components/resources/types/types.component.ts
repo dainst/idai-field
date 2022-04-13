@@ -1,9 +1,21 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource,
-    ProjectConfiguration, Named, Hierarchy, SortUtil } from 'idai-field-core';
+import {
+    Document,
+    Datastore,
+    FieldDocument,
+    Relation,
+    SyncService,
+    SyncStatus,
+    Resource,
+    ProjectConfiguration,
+    ImageVariant,
+    Named,
+    Hierarchy,
+    SortUtil
+} from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -15,6 +27,7 @@ import { ViewModalLauncher } from '../../viewmodal/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { Routing } from '../../../services/routing';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -61,7 +74,7 @@ export class TypesComponent extends BaseList implements OnChanges {
      */
     public linkedDocuments: Array<FieldDocument> = [];
 
-    public images: { [resourceId: string]: Array<Blob> } = {};
+    public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     private expandAllGroups: boolean = false;
@@ -69,7 +82,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private imagestore: Imagestore,
+                private imageUrlMaker: ImageUrlMaker,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: Routing,
                 private tabManager: TabManager,
@@ -300,18 +313,17 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.images) this.images = {};
 
-        const imageLinks: Array<{ resourceId: string, imageIds: string[] }> = [];
-
         for (const document of documents) {
             if (!reload && this.images[document.resource.id]) continue;
-            imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
+
+            const linkedImageIds = this.getLinkedImageIds(document);
+
+            this.images[document.resource.id] = await Promise.all(
+                linkedImageIds.map(async (id): Promise<SafeResourceUrl> => {
+                    return this.imageUrlMaker.getUrl(id, ImageVariant.THUMBNAIL);
+                })
+            );
         }
-
-        const imageIds: string[] = flatten(imageLinks.map(_ => _.imageIds));
-
-        const urls: { [imageId: string]: Blob } = await this.imagestore.readThumbnails(imageIds);
-
-        imageLinks.forEach(imageLink => this.images[imageLink.resourceId] = imageLink.imageIds.map(id => urls[id]));
     }
 
 

@@ -1,4 +1,4 @@
-# iDAI.field Desktop
+# Field Desktop
  
 ![idai-field](img/README-1.png) 
     
@@ -17,12 +17,12 @@ interested third party is free to reuse and adjust it to their needs.
 
 ## Installation
 
-You can install the latest version of iDAI.field by downloading it from the [github releases page](https://github.com/dainst/idai-field/releases/latest) or the [idai-field homepage](http://field.dainst.org). Choose the installer for your operating system (**MacOS**, **Windows** or **Linux**).
+You can install the latest version of Field Desktop by downloading it from the [GitHub releases page](https://github.com/dainst/idai-field/releases/latest) or the [iDAI.field homepage](https://field.idai.world/download). Choose the installer for your operating system (**MacOS**, **Windows** or **Linux**).
 
    
 ## Development
 
-Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 

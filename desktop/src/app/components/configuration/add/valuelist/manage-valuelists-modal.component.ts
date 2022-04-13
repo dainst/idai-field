@@ -66,6 +66,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     public initialize() {
 
         this.applyValuelistSearch();
+        AngularUtility.blurActiveElement();
     }
 
 
@@ -112,7 +113,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
             this.searchQuery, this.valuelists, this.configurationIndex
         );
 
-        this.selectedValuelist = this.valuelists?.[0];
+        this.selectedValuelist = this.filteredValuelists?.[0];
         this.emptyValuelist = this.getEmptyValuelist();
     }
 
@@ -302,7 +303,7 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
 
     private scrollValuelistElementIntoView(valuelistId: string) {
 
-        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId);
+        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId.replace(':', '-'));
         if (element) element.scrollIntoView(true);
     }
 }

@@ -1,22 +1,6 @@
-import {
-    Lookup,
-} from 'idai-field-core';
-import { Document, Relation, Resource } from 'idai-field-core';
-import {
-    isEmpty,
-    filter,
-    flow,
-    forEach,
-    intersect,
-    isDefined,
-    isUndefinedOrEmpty,
-    lookup,
-    map,
-    pairWith,
-    throws,
-    to,
-    not
-} from 'tsfun';
+import { isEmpty, filter, flow, forEach, intersect, isDefined, isUndefinedOrEmpty, lookup, map, pairWith,
+    throws, to, not } from 'tsfun';
+import { Document, Relation, Resource, Lookup} from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith } from '../utils';

@@ -6,8 +6,8 @@ import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
-import { BlobMaker } from '../../../services/imagestore/blob-maker';
-import { Imagestore } from '../../../services/imagestore/imagestore';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageVariant } from 'idai-field-core';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -46,7 +46,7 @@ export class ImageRowComponent implements OnChanges {
     private imageRow: ImageRow;
 
 
-    constructor(private imagestore: Imagestore,
+    constructor(private imageUrlMaker: ImageUrlMaker,
                 private datastore: Datastore) {}
 
 
@@ -110,7 +110,8 @@ export class ImageRowComponent implements OnChanges {
 
         return this.thumbnailUrls !== undefined
             && this.thumbnailUrls[image.imageId] !== undefined
-            && this.thumbnailUrls[image.imageId] !== PLACEHOLDER;
+            && this.thumbnailUrls[image.imageId] !== PLACEHOLDER
+            && this.thumbnailUrls[image.imageId] !== ImageUrlMaker.blackImg;
     }
 
 
@@ -163,9 +164,9 @@ export class ImageRowComponent implements OnChanges {
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {
                     try {
-                        result[imageId] = await this.imagestore.read(imageId, false, true);
+                        result[imageId] = await this.imageUrlMaker.getUrl(imageId, ImageVariant.THUMBNAIL);
                     } catch (e) {
-                        result[imageId] = BlobMaker.blackImg;
+                        result[imageId] = ImageUrlMaker.blackImg;
                         showMissingThumbnailMessageOnConsole(imageId);
                     }
                 }

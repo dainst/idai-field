@@ -1,6 +1,6 @@
-import {Reader} from './reader';
-import {JavaToolExecutor} from '../../../services/java/java-tool-executor';
-import {ReaderErrors} from './reader-errors';
+import { Reader } from './reader';
+import { JavaToolExecutor } from '../../../services/java/java-tool-executor';
+import { ReaderErrors} from './reader-errors';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -14,28 +14,23 @@ export class ShapefileFilesystemReader implements Reader {
     constructor(private file: any) {}
 
 
-    public go(): Promise<string> {
+    public async go(): Promise<string> {
 
-        return new Promise(async (resolve, reject) => {
+        ShapefileFilesystemReader.removeTempFileIfExisting();
 
-            ShapefileFilesystemReader.removeTempFileIfExisting();
+        try {
+            await JavaToolExecutor.executeJavaTool('shapefile-tool.jar', this.getArguments());
+        } catch (err) {
+            throw ShapefileFilesystemReader.getImportErrorMsgWithParams(err);
+        }
 
-            try {
-                await JavaToolExecutor.executeJavaTool('shapefile-tool.jar', this.getArguments());
-            } catch (err) {
-                reject(ShapefileFilesystemReader.getImportErrorMsgWithParams(err));
-            }
-
-            fs.readFile(ShapefileFilesystemReader.getTempFilePath(), 'utf-8', (err, data) => {
-                fs.unlinkSync(ShapefileFilesystemReader.getTempFilePath());
-
-                if (err) {
-                    reject([ReaderErrors.SHAPEFILE_GENERIC]);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        try {
+            const data = fs.readFileSync(ShapefileFilesystemReader.getTempFilePath(), 'utf-8');
+            fs.unlinkSync(ShapefileFilesystemReader.getTempFilePath());
+            return data;
+        } catch (err) {
+            throw [ReaderErrors.SHAPEFILE_GENERIC];
+        }
     }
 
 

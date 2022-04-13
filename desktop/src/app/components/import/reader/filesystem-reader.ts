@@ -1,7 +1,6 @@
-import {Reader} from './reader';
-import {ReaderErrors} from './reader-errors';
-
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { Reader } from './reader';
+import { ReaderErrors } from './reader-errors';
 
 
 /**
@@ -17,17 +16,13 @@ export class FilesystemReader implements Reader {
     constructor(private file: any) {}
 
 
-    public go(): Promise<string> {
+    public async go(): Promise<string> {
 
-        return new Promise((resolve, reject) => {
-
-            fs.readFile(this.file.path, 'utf-8', (err: any, content: any) => {
-                if (err) {
-                    reject([ReaderErrors.FILE_UNREADABLE, this.file.path]);
-                } else {
-                    resolve(content);
-                }
-            });
-        });
+        try {
+            return await getAsynchronousFs().readFile(this.file.path, 'utf-8');
+        } catch (err) {
+            console.error('Error while trying to read file: ' + this.file.path, err);
+            throw [ReaderErrors.FILE_UNREADABLE, this.file.path];
+        }
     }
 }

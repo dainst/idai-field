@@ -44,6 +44,12 @@
 
     .list-group {
       max-height: calc(100vh - 350px) !important;
+      border-bottom-left-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
+    }
+
+    .popover-custom-title {
+      background-color: #e3e3e3;
     }
   }
 }

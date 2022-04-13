@@ -25,7 +25,7 @@ describe('subsystem/import/importCatalog', () => {
                 datastore: app.datastore,
                 relationsManager: app.relationsManager,
                 imageRelationsManager: app.imageRelationsManager,
-                imagestore: app.imagestore
+                imagestore: app.imageStore
             },
             {
                 username: app.settingsProvider.getSettings().username,
@@ -60,7 +60,7 @@ describe('subsystem/import/importCatalog', () => {
             document.resource.relations[Relation.Type.INSTANCEOF] = ['t1'];
         });
 
-        const documentsLookup = createDocuments(documents);
+        const documentsLookup = createDocuments(documents, 'imported');
         const result = await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
         expect(result.successfulImports).toBe(2);
 
@@ -82,7 +82,8 @@ describe('subsystem/import/importCatalog', () => {
         const documentsLookup = createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
-        ]);
+        ], 'imported');
+
         await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
 
         helpers.expectImagesDontExist('i1');
@@ -104,7 +105,7 @@ describe('subsystem/import/importCatalog', () => {
             document.resource.relations[Relation.Type.HASINSTANCE] = ['F1'];
         });
 
-        const documentsLookup = createDocuments(documents);
+        const documentsLookup = createDocuments(documents, 'imported');
         const result = await importCatalog([documentsLookup['tc1']]);
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
@@ -121,7 +122,7 @@ describe('subsystem/import/importCatalog', () => {
         ], 'imported');
         const catalog = Object.values(createDocuments([
             ['tc1', 'TypeCatalog'],
-        ]));
+        ], 'imported'));
         const result = await importCatalog(catalog);
         expect(result.successfulImports).toBe(1);
         expect(result.errors).toEqual([]);

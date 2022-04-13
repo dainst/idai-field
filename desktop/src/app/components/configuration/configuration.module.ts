@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigurationComponent } from './configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
@@ -55,6 +56,7 @@ import { ImportConfigurationModalComponent } from './import/import-configuration
         NgbModule,
         WidgetsModule,
         DragDropModule,
+        ScrollingModule,
         DoceditModule
     ],
     declarations: [

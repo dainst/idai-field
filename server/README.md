@@ -1,89 +1,82 @@
-# IdaiFieldServer
+# FieldHub
 
-Provides an API for syncing files as well as a user interface.
-For both the api credentials and the log in data in the UI the `_users` table of
-a couchdb gets used to store user data.
+## Prerequisites
 
-As a normal user, one can log in to the user interface and change one owns password.
-As an admin user, one gets the additional option to list the existing databases.
+* Elixir >= 1.12 (Development)
+* Docker & docker-compose
 
-## Getting started
+## CLI
 
-### Prerequisites
+FieldHub provides its own command line interface, which is documented separately in [CLI.md](CLI.md).
 
-* Docker
-* docker-compose
-* elixir
-* erlang-dev
-* inotify-tools 
-* Couchdb (optional, see below)
+## Deployment
 
-Make sure you have a running couchdb instance before proceeding. If they do not run on the host machine, you can start them as containers via
+The Docker images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub).
 
-    $ docker-compose up couchdb
+For an example deployment configuration using docker-compose (including CouchDB and Traefik) see: [docker-compose.deploy.yml](docker-compose.deploy.yml)
 
-### Preparations
 
-    $ npm i --prefix=./assets
-    $ mix ecto.setup # or `mix ecto.create` and `mix ecto.migrate`
-    $ docker-compose up couchdb
-    $ curl -X PUT http://admin:abcdef@localhost:5984/user-tokens # For the user interface credentials to work, this db is necessary
+### Environment variables
+* HOST, the host domain you will run the application from, for example "server.field.idai.world". (required)
+* SECRET_KEY_BASE, see https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets (required)
+* COUCHDB_URL, base url to your CouchDB installation, for example "http://example.com:5984". (required)
+* COUCHDB_ADMIN_NAME, admin username for the CouchDB (optional, required for FieldHub CLI scripts)
+* COUCHDB_ADMIN_PASSWORD, admin password for the CouchDB (optional, required for FieldHub CLI scripts)
 
-### Run
+### Volumes
+The application will save images at `/files` within the container. If you want to make the images persistent, you should therefore mount a host volume accordingly.
 
-#### On host machine
-
-    $ mix phx.server      
-    Visit localhost:4000
-
-#### In container 
-
-    $ docker-compose run --entrypoint "mix phx.server" server
-    Visit localhost:4000
-
-## API
-
-Note that subsequently calls to `GET /files/:project/path/to/file.png` are shorthands for `GET https://user:pwd@hostname:port/files/:project/path/to/file.png`. Typically the user has the same name as the `:project` to be accessed.
-
-Get a file, if `path/to/file.png` exists and is a file.
-
-```
-GET /files/:project/path/to/file.png
-```
-
-Get a recursive directory listing of all files under a certain path, if
-the given `path/to/files` is a directory
-
-```
-GET /files/:project/path/to/files
-```
-
-When the path does not exist, an error, wrapped in a JSON object, is returned.
-
-To post a new file, use
-
-```
-POST /files/:project/path/to/file.png
-```
-
-`/path/to/` gets created in case it does not yet exist. The request will be rejected if the file already exists.
-
-To delete a file, use
-
-```
-DELETE /files/:project/path/to/file.png
-```
 
 ## Development
+Create an `.env` file:
 
-## Testing
+```
+cp .env_template .env
+```
 
-    $ mix test                                                # run on your local machine
-    $ docker-compose run --entrypoint "mix test" server       # run inside Docker container
+If you change the default CouchDB credentials in your `.env` file, make sure to also adjust [config/dev.exs](config/dev.exs) and [config/test.exs](config/test.exs).
 
-### Working with Containers
+### CouchDB
+Start a dockerized CouchDB:
 
-Access mix and elixir inside container
+```bash
+docker-compose up
+```
 
-    $ docker-compose run --entrypoint "/bin/bash" server 
-    $ mix test
+### Phoenix Server
+Install dependencies, finish the CouchDB setup as single node and seed a project and user:
+
+```bash
+mix setup
+```
+
+Start the server:
+
+```bash
+mix phx.server
+``` 
+
+FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
+
+
+## Building a new docker image version
+
+In the commands below you should change the image names according to your institution (`ghcr.io/dainst` are the official images created by the DAI).
+
+To build a new image run:
+
+```bash
+docker build . -t ghcr.io/dainst/field_hub:latest
+```
+
+Alternatively, you may want to tag a new release version:
+```bash
+docker build . -t ghcr.io/dainst/field_hub:<MAJOR>.<MINOR>.<PATCH>
+```
+
+Finally you have to push the new or updated image to the registry:
+```
+docker push ghcr.io/dainst/field_hub:<version>
+```
+
+In order to push images, you have to authenticate your local machine with the registry, see: [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).

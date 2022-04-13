@@ -1,21 +1,22 @@
-<ul class="bg-light listing">
-    <li *ngFor="let valuelist of filteredValuelists"
-        [id]="getValuelistId(valuelist)"
-        [class.selected]="selectedValuelist === valuelist"
-        [class.in-use]="isInUse(valuelist)"
-        [class.custom]="isCustomValuelist(valuelist)"
-        (click)="select(valuelist)"
-        (dblclick)="openEditor(valuelist)"
-        (contextmenu)="contextMenu && contextMenu.open($event, undefined, undefined, undefined, valuelist)">
-        <code>{{valuelist.id}}</code>
-        <span *ngIf="getSearchResultLabel(valuelist)"
-              class="search-result-label"> ({{getSearchResultLabel(valuelist)}})</span>
-    </li>
-    <li *ngIf="isNewValuelistOptionShown()"
-        class="new-entry-button btn btn-success"
-        (click)="select(emptyValuelist)">
-        <span class="mdi mdi-plus-circle"></span>
-        <div i18n="@@configuration.newValuelist">Neue Werteliste <code>{{emptyValuelist.id}}</code> erstellen</div>
-    </li>
-</ul>
-    
+<cdk-virtual-scroll-viewport itemSize="40" id="valuelist-listing-viewport">
+    <ul class="bg-light listing">
+        <li  *cdkVirtualFor="let valuelist of filteredValuelists; trackBy: trackValuelist"
+            [id]="getValuelistId(valuelist)"
+            [class.selected]="selectedValuelist === valuelist"
+            [class.in-use]="isInUse(valuelist)"
+            [class.custom]="isCustomValuelist(valuelist)"
+            (click)="select(valuelist)"
+            (dblclick)="openEditor(valuelist)"
+            (contextmenu)="contextMenu && contextMenu.open($event, undefined, undefined, undefined, valuelist)">
+            <code>{{valuelist.id}}</code>
+            <span *ngIf="getSearchResultLabel(valuelist)"
+                class="search-result-label"> ({{getSearchResultLabel(valuelist)}})</span>
+        </li>
+        <li *ngIf="isNewValuelistOptionShown()"
+            class="new-entry-button btn btn-success"
+            (click)="select(emptyValuelist)">
+            <span class="mdi mdi-plus-circle"></span>
+            <div i18n="@@configuration.newValuelist">Neue Werteliste <code>{{emptyValuelist.id}}</code> erstellen</div>
+        </li>
+    </ul>
+</cdk-virtual-scroll-viewport>

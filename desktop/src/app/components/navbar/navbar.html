@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand navbar-dark bg-primary"
+<nav class="navbar navbar-expand navbar-dark bg-primary" [class.mac-margin]="isRunningOnMac()"
      (dragover)="false" (dragleave)="false" (drop)="false">
-    <div id="navbarSupportedContent" class="navbar-collapse" [class.mac-margin]="isRunningOnMac()">
+    <div id="navbarSupportedContent" class="navbar-collapse">
         <ul #tabSpace id="resources-tabs" *ngIf="isActiveRoute('/resources') && !isActiveRoute('/resources/types')"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item tab" [class.active]="isActiveRoute('/resources/project')">

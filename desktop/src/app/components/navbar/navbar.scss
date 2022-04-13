@@ -29,6 +29,16 @@ $border-radius: 4px;
   .show .dropdown-toggle {
     color: $link-hover-color !important;  
   }
+
+  &.mac-margin {
+    #navbarSupportedContent {
+      margin-left: 70px;
+    }
+  }
+
+  &:not(.mac-margin) {
+    padding-left: 0;
+  }
 }
 
 .navbar.bg-primary {
@@ -218,10 +228,6 @@ $border-radius: 4px;
 
 #navbarSupportedContent {
   cursor: default;
-
-  &.mac-margin {
-    margin-left: 70px;
-  }
 }
 
 .navbar-nav {

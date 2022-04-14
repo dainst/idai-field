@@ -13,6 +13,7 @@ If you are already running your own CouchDB, you can install FieldHub alongside 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/)
+* CouchDB installation (Deployment)
 * [Elixir](https://elixir-lang.org/) >= 1.12 (Development)
 * [docker-compose](https://docs.docker.com/compose/) (Development)
 

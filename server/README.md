@@ -8,7 +8,7 @@ There are two aspects to syncing Field data:
 
 Image data is held directly in filesystem, while the database syncing is handled by [CouchDB](https://couchdb.apache.org/) (FieldHub) or [PouchDB](https://pouchdb.com/) (Field Desktop). FieldHub serves as a simple reverse proxy to a CouchDB installation and implements the image data syncing. 
 
-If you are already running your own CouchDB, you can install FieldHub alongside by setting its environment variables accordingly (see below). Otherwise you could spin up your own CouchdDB container using Docker/docker-compose alongside the FieldHub container.
+If you are already running your own CouchDB, you can install FieldHub alongside by setting its environment variables accordingly (see below).
 
 ## Prerequisites
 

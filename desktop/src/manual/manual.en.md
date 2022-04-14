@@ -455,7 +455,7 @@ The order of supercategories, subcategories, groups and fields can be changed us
 
 <p align="center"><img src="images/en/configuration/drag_and_drop_handle.png" alt="Drag and drop handle"/></p>
 
-Fields can also be assigned to another group in the same way: Simply drag the field to the entry of the corresponding group in the group list. Note that changes to the field or group order or group assignment are not automatically transferred from the form of a supercategory to forms of the corresponding subcategories (and vice versa).
+Fields can also be assigned to another group in the same way: Simply drag the field to the entry of the corresponding group in the group list. Note that changes to the field/group order or group assignment are not automatically transferred from the form of a supercategory to forms of the corresponding subcategories (and vice versa).
 
 
 ### Valuelists

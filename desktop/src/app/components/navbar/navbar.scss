@@ -95,9 +95,11 @@ $border-radius: 4px;
       height: $border-radius;
       content: " ";
     }
+
     &:before {
       left: 1 - $border-radius;
     }
+    
     &:after {
       right: 1 - $border-radius;
     }

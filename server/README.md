@@ -44,7 +44,7 @@ Create an `.env` file:
 cp .env_template .env
 ```
 
-If you change the default CouchDB credentials in your `.env` file, make sure to also adjust [config/dev.exs](config/dev.exs) and [config/test.exs](config/test.exs).
+If you change the default CouchDB credentials in your `.env` file, make sure to also adjust [config/config.exs](config/config.exs).
 
 ### CouchDB
 Start a dockerized CouchDB:

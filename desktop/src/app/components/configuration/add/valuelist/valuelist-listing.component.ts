@@ -1,10 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { all } from 'tsfun';
 import { Labels, Valuelist } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { containsSearchTerm } from '../getSearchResultLabel';
 import { tokenize } from '../../../../services/configuration/index/tokenize';
+import { scrollTo } from '../../../../angular/scrolling';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { tokenize } from '../../../../services/configuration/index/tokenize';
 /**
  * @author Thomas Kleinke
  */
-export class ValuelistListingComponent {
+export class ValuelistListingComponent implements OnChanges {
 
     @Input() valuelists: Array<Valuelist> = [];
     @Input() filteredValuelists: Array<Valuelist> = [];
@@ -27,9 +29,11 @@ export class ValuelistListingComponent {
     @Output() onValuelistSelected = new EventEmitter<Valuelist>();
     @Output() onOpenEditor = new EventEmitter<Valuelist>();
 
+    @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
+
 
     constructor(private labels: Labels,
-               private configurationIndex: ConfigurationIndex) {}
+                private configurationIndex: ConfigurationIndex) {}
 
 
     public select = (valuelist: Valuelist) => this.onValuelistSelected.emit(valuelist);
@@ -47,6 +51,13 @@ export class ValuelistListingComponent {
     public isNewValuelistOptionShown = (): boolean => this.emptyValuelist !== undefined
         && !this.valuelists.map(valuelist => valuelist.id).includes(this.emptyValuelist.id)
         && (!this.currentValuelistId || this.emptyValuelist.id !== this.currentValuelistId);
+
+
+    ngOnChanges() {
+        
+        if (this.selectedValuelist) this.scrollTo(this.selectedValuelist.id);
+    }
+
 
 
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {
@@ -78,5 +89,14 @@ export class ValuelistListingComponent {
     public isInUse(valuelist: Valuelist): boolean {
      
         return this.configurationIndex.getValuelistUsage(valuelist.id).length > 0;
+    }
+
+
+    private scrollTo(valuelistId: string) {
+
+        if (!this.scrollViewport) return;
+
+        const index = this.filteredValuelists.findIndex(valuelist => valuelist.id === valuelistId);
+        scrollTo(index, 'valuelist-' + valuelistId.replace(':', '-'), this.scrollViewport);
     }
 }

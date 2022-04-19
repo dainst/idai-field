@@ -1,13 +1,14 @@
-import {Component, ViewChild} from '@angular/core';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {FieldDocument} from 'idai-field-core';
-import {ResourcesComponent} from './resources.component';
-import {Loading} from '../widgets/loading';
-import {PlusButtonStatus} from './plus-button.component';
-import {NavigationPath} from '../../components/resources/view/state/navigation-path';
-import {ViewFacade} from '../../components/resources/view/view-facade';
+import { Component, ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { FieldDocument } from 'idai-field-core';
+import { ResourcesComponent } from './resources.component';
+import { Loading } from '../widgets/loading';
+import { PlusButtonStatus } from './plus-button.component';
+import { NavigationPath } from '../../components/resources/view/state/navigation-path';
+import { ViewFacade } from '../../components/resources/view/view-facade';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
+import { scrollTo } from '../../angular/scrolling';
 
 
 @Component({
@@ -66,26 +67,11 @@ export class BaseList {
 
     protected scrollTo(doc: FieldDocument|undefined) {
 
-        setTimeout(() => {
-            if (doc && !this.isVisible(doc)) {
-                const index = this.viewFacade.getDocuments()
-                    .findIndex(document => document.resource.id === doc.resource.id);
-                this.scrollViewport.scrollToIndex(index, 'auto');
-            }
-        }, 0);
-    }
+        if (!doc) return;
 
+        const index = this.viewFacade.getDocuments()
+            .findIndex(document => document.resource.id === doc.resource.id);
 
-    private isVisible(doc: FieldDocument|undefined): boolean {
-
-        const element: HTMLElement|undefined = document.getElementById(
-            'resource-' + doc.resource.identifier
-        );
-        if (!element) return false;
-
-        const elementRect: ClientRect = element.getBoundingClientRect();
-        const sidebarRect: ClientRect = this.scrollViewport.getElementRef().nativeElement.getBoundingClientRect();
-
-        return elementRect.top > sidebarRect.top && elementRect.bottom <= sidebarRect.bottom;
+        scrollTo(index, 'resource-' + doc.resource.identifier, this.scrollViewport);   
     }
 }

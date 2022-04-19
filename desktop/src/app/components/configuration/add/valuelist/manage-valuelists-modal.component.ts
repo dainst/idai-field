@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
@@ -31,7 +31,7 @@ import { Naming } from '../naming';
 /**
  * @author Thomas Kleinke
  */
-export class ManageValuelistsModalComponent implements AfterViewChecked {
+export class ManageValuelistsModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
@@ -43,7 +43,6 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
     public valuelists: Array<Valuelist> = [];
     public filteredValuelists: Array<Valuelist> = [];
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
-    public scrollTarget?: string;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -52,15 +51,6 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 private menus: Menus,
                 private messages: Messages,
                 private settingsProvider: SettingsProvider) {}
-
-
-    ngAfterViewChecked() {
-        
-        if (this.scrollTarget) {
-            this.scrollValuelistElementIntoView(this.scrollTarget);
-            delete this.scrollTarget;
-        }
-    }
 
 
     public initialize() {
@@ -283,7 +273,6 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 editedValuelist = this.filteredValuelists.find(valuelist => valuelist.id === editedValuelistId);
             }
             this.select(editedValuelist);
-            this.scrollTarget = editedValuelistId;
         }
     }
 
@@ -298,12 +287,5 @@ export class ManageValuelistsModalComponent implements AfterViewChecked {
                 this.settingsProvider.getSettings().selectedProject
             )
         } as Valuelist;
-    }
-
-
-    private scrollValuelistElementIntoView(valuelistId: string) {
-
-        const element: HTMLElement|null = document.getElementById('valuelist-' + valuelistId.replace(':', '-'));
-        if (element) element.scrollIntoView(true);
     }
 }

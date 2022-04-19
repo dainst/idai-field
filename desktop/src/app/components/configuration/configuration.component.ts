@@ -207,10 +207,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
-    public onMenuItemClicked(menuItem: string) {
+    public async onMenuItemClicked(menuItem: string) {
 
         switch (menuItem) {
             case 'valuelists':
+                await AngularUtility.refresh();
                 this.openValuelistsManagementModal();
                 break;
             case 'importConfiguration':

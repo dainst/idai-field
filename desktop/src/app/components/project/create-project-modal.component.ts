@@ -28,6 +28,7 @@ export class CreateProjectModalComponent implements OnInit {
 
     public projectName: string;
     public selectedTemplate: Template;
+    public creating: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -68,17 +69,28 @@ export class CreateProjectModalComponent implements OnInit {
 
     public async createProject() {
 
+        if (this.creating) return;
+        
+        this.creating = true;
+
         const validationErrorMessage: string[]|undefined = ProjectNameValidatorMsgConversion.convert(
             ProjectNameValidation.validate(this.projectName, this.settingsProvider.getSettings().dbs)
         );
-        if (validationErrorMessage) return this.messages.add(validationErrorMessage as any /* TODO any */);
+        if (validationErrorMessage) {
+            this.creating = false;
+            return this.messages.add(validationErrorMessage as any /* TODO any */);
+        }
 
-        await this.settingsService.createProject(
-            this.projectName,
-            this.selectedTemplate,
-            remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
-        );
-
-        reloadAndSwitchToHomeRoute();
+        try {
+            await this.settingsService.createProject(
+                this.projectName,
+                this.selectedTemplate,
+                remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
+            );
+            reloadAndSwitchToHomeRoute();
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+            this.creating = false;
+        }
     }
 }

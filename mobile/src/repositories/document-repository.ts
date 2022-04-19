@@ -91,7 +91,7 @@ const buildDatastore = async (
         projectConfiguration: ProjectConfiguration
     ): Promise<[Datastore, ChangesStream]> => {
 
-    const indexFacade = buildIndexFacade(Tree.flatten(categories));
+    const indexFacade = buildIndexFacade(projectConfiguration);
     const documentCache = new DocumentCache();
     const converter = new CategoryConverter(projectConfiguration);
 
@@ -104,7 +104,9 @@ const buildDatastore = async (
 };
 
 
-const buildIndexFacade = (categories: CategoryForm[]): IndexFacade => {
+const buildIndexFacade = (projectConfiguration: ProjectConfiguration): IndexFacade => {
+
+    const categories = Tree.flatten(projectConfiguration.getCategories());
 
     const createdConstraintIndex = ConstraintIndex.make({
         /* eslint-disable max-len */
@@ -122,7 +124,7 @@ const buildIndexFacade = (categories: CategoryForm[]): IndexFacade => {
     return new IndexFacade(
         createdConstraintIndex,
         {},
-        categories,
+        projectConfiguration,
         false
     );
 };

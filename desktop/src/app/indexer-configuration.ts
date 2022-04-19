@@ -30,7 +30,7 @@ export module IndexerConfiguration {
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            Tree.flatten(projectConfiguration.getCategories()),
+            projectConfiguration,
             showWarnings
         );
 

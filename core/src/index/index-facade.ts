@@ -1,10 +1,11 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
-import { CategoryForm } from '../model/configuration/category-form';
+import { filter, flow, forEach, is, isDefined, lookup, on, separate, values } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
 import { Resource } from '../model/resource';
+import { ProjectConfiguration } from '../services';
+import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
 import { adjustIsChildOf } from './adjust-is-child-of';
@@ -15,10 +16,12 @@ import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
 
+
 const TYPE = 'Type';
 const CONFIGURATION = 'Configuration';
 const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
+
 
 /**
  * @author Thomas Kleinke
@@ -27,19 +30,13 @@ const INSTANCE_OF = 'isInstanceOf';
 export class IndexFacade {
 
     private observers: Array<Observer<Document>> = [];
-
     private indexItems: { [resourceId: string]: IndexItem } = {};
 
-    private categoriesMap: Map<CategoryForm>;
 
-    constructor(
-        private constraintIndex: ConstraintIndex,
-        private fulltextIndex: FulltextIndex,
-        categories: Array<CategoryForm>,
-        private showWarnings: boolean
-    ) {
-        this.categoriesMap = Named.arrayToMap(categories);
-    }
+    constructor(private constraintIndex: ConstraintIndex,
+                private fulltextIndex: FulltextIndex,
+                private projectConfiguration: ProjectConfiguration,
+                private showWarnings: boolean) {}
 
 
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
@@ -154,7 +151,10 @@ export class IndexFacade {
         ConstraintIndex.put(this.constraintIndex, doc, skipRemoval);
         FulltextIndex.put(
             this.fulltextIndex, doc,
-            getFieldsToIndex(this.categoriesMap, doc.resource.category),
+            getFieldsToIndex(
+                Named.arrayToMap(Tree.flatten(this.projectConfiguration.getCategories())),
+                doc.resource.category
+            ),
             skipRemoval
         );
 

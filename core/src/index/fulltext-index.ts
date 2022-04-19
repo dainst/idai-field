@@ -96,7 +96,7 @@ export module FulltextIndex {
     }
 
 
-    function indexToken(index: FulltextIndex, document: Document,) {
+    function indexToken(index: FulltextIndex, document: Document) {
 
         return (tokenAsCharArray: string[]) => {
 

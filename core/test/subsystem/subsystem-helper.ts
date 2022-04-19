@@ -91,7 +91,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
     const createdIndexFacade = new IndexFacade(
         createdConstraintIndex,
         createdFulltextIndex,
-        Tree.flatten(projectConfiguration.getCategories()),
+        projectConfiguration,
         false
     );
 

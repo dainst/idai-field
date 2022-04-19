@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -192,6 +192,33 @@ describe('configuration --', () => {
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
         expect((await CategoryPickerPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
+
+        done();
+    });
+
+
+    it('index resources of newly created custom category', async done => {
+
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
+        await AddCategoryFormModalPage.clickCreateNewCategory();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('Feature1', 'feature-test-newcategory');
+        await ResourcesPage.performCreateResource('Find1', 'find');
+
+        await ResourcesPage.clickOpenContextMenu('Find1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('Feature');
+        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        expect(await getText(labels[0])).toEqual('Feature1');
+
+        await ResourcesPage.clickCancelInMoveModal();
 
         done();
     });

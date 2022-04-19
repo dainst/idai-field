@@ -1,9 +1,21 @@
 # FieldHub
 
+FieldHub serves as a central synchronisation server for [Field Desktop](../desktop) clients.
+
+There are two aspects to syncing Field data:
+1. Image data
+2. Database data
+
+Image data is held directly in filesystem, while the database syncing is handled by [CouchDB](https://couchdb.apache.org/) (FieldHub) or [PouchDB](https://pouchdb.com/) (Field Desktop). FieldHub serves as a simple reverse proxy to a CouchDB installation and implements the image data syncing. 
+
+If you are already running your own CouchDB, you can install FieldHub alongside by setting its environment variables accordingly (see below).
+
 ## Prerequisites
 
-* Elixir >= 1.12 (Development)
-* Docker & docker-compose
+* [Docker](https://www.docker.com/)
+* CouchDB installation (Deployment)
+* [Elixir](https://elixir-lang.org/) >= 1.12 (Development)
+* [docker-compose](https://docs.docker.com/compose/) (Development)
 
 ## CLI
 
@@ -11,10 +23,7 @@ FieldHub provides its own command line interface, which is documented separately
 
 ## Deployment
 
-The Docker images are currently hosted in the Github Container Registry: [FieldHub](https://github.com/dainst/idai-field/pkgs/container/field_hub).
-
-For an example deployment configuration using docker-compose (including CouchDB and Traefik) see: [docker-compose.deploy.yml](docker-compose.deploy.yml)
-
+The Docker images are currently hosted in the Github Container Registry: https://github.com/dainst/idai-field/pkgs/container/field_hub.
 
 ### Environment variables
 * HOST, the host domain you will run the application from, for example "server.field.idai.world". (required)
@@ -26,6 +35,7 @@ For an example deployment configuration using docker-compose (including CouchDB 
 ### Volumes
 The application will save images at `/files` within the container. If you want to make the images persistent, you should therefore mount a host volume accordingly.
 
+For an example deployment configuration using docker-compose (including a CouchDB and Traefik) see: [docker-compose.deploy.yml](docker-compose.deploy.yml)
 
 ## Development
 Create an `.env` file:
@@ -34,7 +44,7 @@ Create an `.env` file:
 cp .env_template .env
 ```
 
-If you change the default CouchDB credentials in your `.env` file, make sure to also adjust [config/dev.exs](config/dev.exs) and [config/test.exs](config/test.exs).
+If you change the default CouchDB credentials in your `.env` file, make sure to also adjust [config/config.exs](config/config.exs).
 
 ### CouchDB
 Start a dockerized CouchDB:

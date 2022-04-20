@@ -184,6 +184,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public deleteValue(valueId: string) {
 
         delete this.getClonedValuelistDefinition().values[valueId];
+        this.getClonedValuelistDefinition().order = this.getOrder();
+        this.order = this.getOrder();
     }
 
 

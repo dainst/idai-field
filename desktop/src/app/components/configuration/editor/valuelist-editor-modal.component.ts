@@ -63,9 +63,6 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public getClonedValuelistDefinition = () =>
         this.clonedConfigurationDocument.resource.valuelists?.[this.valuelist.id];
 
-    public getValueLabel = (valueId: string) =>
-        this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId);
-
     public getValueIds = () => this.sortAlphanumerically ? this.getSortedValueIds() : this.order;
 
     public isInherited = (valueId: string) => this.extendedValuelist?.values[valueId] !== undefined;
@@ -147,6 +144,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         return originalHidden === undefined && clonedHidden !== undefined
             || originalHidden !== undefined && clonedHidden === undefined
             || !equal(this.getCustomValuelistDefinition().hidden)(this.getClonedValuelistDefinition().hidden);
+    }
+
+
+    public getValueLabel(valueId: string): string {
+        
+        return this.getClonedValuelistDefinition().values[valueId] || !this.extendedValuelist
+            ? this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId)
+            : this.labels.getValueLabel(this.extendedValuelist, valueId)
     }
 
 

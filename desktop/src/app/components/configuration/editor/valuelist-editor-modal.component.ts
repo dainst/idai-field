@@ -63,9 +63,6 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public getClonedValuelistDefinition = () =>
         this.clonedConfigurationDocument.resource.valuelists?.[this.valuelist.id];
 
-    public getValueLabel = (valueId: string) =>
-        this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId);
-
     public getValueIds = () => this.sortAlphanumerically ? this.getSortedValueIds() : this.order;
 
     public isInherited = (valueId: string) => this.extendedValuelist?.values[valueId] !== undefined;
@@ -97,7 +94,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         if (!this.getClonedValuelistDefinition().references) this.getClonedValuelistDefinition().references = [];
         this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
-        this.order = this.getClonedValuelistDefinition().order ?? this.getSortedValueIds();
+        this.order = this.getOrder() ?? this.getSortedValueIds();
     }
 
 
@@ -150,6 +147,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     }
 
 
+    public getValueLabel(valueId: string): string {
+        
+        return this.getClonedValuelistDefinition().values[valueId] || !this.extendedValuelist
+            ? this.labels.getValueLabel(this.getClonedValuelistDefinition(), valueId)
+            : this.labels.getValueLabel(this.extendedValuelist, valueId)
+    }
+
+
     public async editValue(valueId: string, isNewValue: boolean = false) {
 
         const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
@@ -184,6 +189,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public deleteValue(valueId: string) {
 
         delete this.getClonedValuelistDefinition().values[valueId];
+        this.getClonedValuelistDefinition().order = this.getOrder();
+        this.order = this.getOrder();
     }
 
 
@@ -217,6 +224,19 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public onDrop(event: CdkDragDrop<any>) {
 
         InPlace.moveInArray(this.order, event.previousIndex, event.currentIndex);
+    }
+
+
+    private getOrder(): string[]|undefined {
+
+        const clonedValuelistDefinition: Valuelist = this.getClonedValuelistDefinition();
+
+        if (!clonedValuelistDefinition.order) return undefined;
+
+        return clonedValuelistDefinition.order.filter(valuelistId => {
+            return clonedValuelistDefinition.values[valuelistId] !== undefined
+                || this.extendedValuelist.values[valuelistId] !== undefined;
+        });
     }
 
 

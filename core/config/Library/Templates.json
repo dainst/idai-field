@@ -3,7 +3,8 @@
     "author": "DAI",
     "label": {
       "de": "Standard",
-      "en": "Default"
+      "en": "Default",
+      "it": "Standard"
     },
     "description": {
       "de": "Standard-Konfiguration",
@@ -225,7 +226,8 @@
     "author": "DAI",
     "label": {
       "de": "Basis (Grabung)",
-      "en": "Basic (Excavation)"
+      "en": "Basic (Excavation)",
+      "it": "Configurazione di base (scavo)"
     },
     "description": {
       "de": "Basis-Konfiguration für Grabungen",
@@ -287,7 +289,8 @@
     "author": "DAI",
     "label": {
       "de": "Basis (Bauaufnahme)",
-      "en": "Basic (Building survey)"
+      "en": "Basic (Building survey)",
+      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)"
     },
     "description": {
       "de": "Basis-Konfiguration für die Bauaufnahme",
@@ -369,7 +372,8 @@
     "author": "DAI",
     "label": {
       "de": "Basis (Survey)",
-      "en": "Basic (Survey)"
+      "en": "Basic (Survey)",
+      "it": "Configurazione di base (prospezione)"
     },
     "description": {
       "de": "Basis-Konfiguration für Surveys",

@@ -290,8 +290,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isValuelistChanged(): boolean {
 
-        return !equal(this.getCustomFormDefinition().valuelists ?? {})
-            (this.getClonedFormDefinition().valuelists ?? {});
+        return !equal(this.getCustomFormDefinition().valuelists ?? {})(this.getClonedFormDefinition().valuelists ?? {})
+            && this.field.valuelist.id !== this.getClonedFormDefinition().valuelists[this.field.name];
     }
 
 

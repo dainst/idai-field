@@ -17,7 +17,7 @@ For more details please refer to the Docker/docker-compose documentation.
 Alongside this README, you will find a simple [docker-compose.yml](docker-compose.yml). You may copy that file to your server (or desktop PC/laptop if you just want to try it out locally).
 
 The docker-compose file describes 2 services: 
-1. [CouchDB](https://couchdb.apache.org/), the database software FieldHub uses and provides its own Docker images: https://hub.docker.com/_/couchdb
+1. [CouchDB](https://couchdb.apache.org/), the database software FieldHub uses. CouchDB provides its own Docker images: https://hub.docker.com/_/couchdb
 2. FieldHub, the application itself.
 
 For each service it is defined which image should be used to create containers.

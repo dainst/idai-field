@@ -8,7 +8,7 @@ We will use [Docker](https://docs.docker.com/get-started/overview/) with [docker
 1. images
 2. containers
 
-For the time being, you can think of a Docker image as the bundled blueprint for running an application, and of a Docker container as a running instance.
+You can think of a Docker image as the bundled blueprint for running an application, and of a Docker container as a running instance.
 
 For more details please refer to the Docker/docker-compose documentation.
 

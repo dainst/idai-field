@@ -33,17 +33,17 @@ FIELD_HUB_VERSION=3.0.0
 FILE_DIRECTORY=./files
 ```
 
-Having Docker and docker-compose installed, you should be able to run start the application with these two files.
+Having Docker and docker-compose installed, you should be able to run the application with only these two files.
 
 ## Test run the application
 
-You should be able to run the application from the directory containing both files with:
+Run the application from the directory containing both files with:
 
 ```
 docker-compose up
 ```
 
-This should run the application in the foreground and display logs for both services. Both can also be viewed in the browser at Port 80 (FieldHub) and port 5984 (CouchDB), for CouchDBs webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
+This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser browser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDBs webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
 
 You can now run [CLI](../CLI.md) scripts in a second terminal, for example to finalize the CouchDB setup.
 
@@ -100,23 +100,15 @@ You should now be able to sync a Field Client with the server giving the above c
 
 ## Run the application in production
 
-To run the application in production, you should to (atleast) 3 things:
+To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file
-2. Setup docker as a system service on your service (so that it starts after each restart)
+2. Setup docker daemon as a system service on your server (so that it starts after each server restart)
 3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [README](../README.md).
 
-Afterwards stop and delete all test containers.
+Afterwards stop and delete all previously created test containers.
 
 ```
 docker-compose down -v
-```
-
-The result (if there were any containers running) should look like this:
-```
-[+] Running 3/3
- ⠿ Container field-hub-db            Removed                                                                                                                           1.6s
- ⠿ Container field-hub-app           Removed                                                                                                                           1.2s
- ⠿ Network deployment_guide_default  Removed                                                                                                                           0.2s
 ```
 
 Finally, we want to start everything in the background, using the detached `-d` option.
@@ -125,7 +117,7 @@ Finally, we want to start everything in the background, using the detached `-d` 
 docker-compose up -d
 ```
 
-If you want to see which containers are now running there are several commands. Please refer to the Docker documentation.
+If you want to see which containers are now running there are several commands.
 
 To view resource usage:
 ```
@@ -141,3 +133,5 @@ To view a container's logs:
 ```
 docker logs <container name>
 ```
+
+For more, please refer to the Docker documentation.

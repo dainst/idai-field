@@ -42,7 +42,7 @@ For an example deployment configuration using docker-compose (including a CouchD
 If you have an existing project in your Field Client, you also have to create an empty project with the same name as described below. When you first sync your Field Client to the server, the server database and images will get updated to the Field Client project state.
 
 - If your CouchDB is a new installation and not initialized yet, you should run the corresponding [CLI](CLI.md) script `setup_couchdb_single_node()`.
-- Create one or more projects. It is expected that projects and its user have the same name. The easiest way to create an empty project is running one of the [CLI](CLI.md) `create_project_with_default_user(..)` scripts. This will achieve 4 things:
+- Create one or more projects. It is expected that each project and its user have the same name. The easiest way to create an empty project is running one of the [CLI](CLI.md) `create_project_with_default_user(..)` scripts. This will achieve 4 things:
   - Create an empty database with the given name
   - Create a user with the same name and a password
   - Add the user as a member of the newly created database

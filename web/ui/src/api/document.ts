@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { isObject } from 'tsfun';
+import { isObject, to } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
@@ -97,14 +97,19 @@ export function isLabeledValue(labeledValue: unknown): labeledValue is LabeledVa
 }
 
 
+export function getFieldValue(document: Document, fieldName: string): FieldValue|undefined {
+    
+    const group: FieldGroup = document.resource.groups.find(g => g.fields.map(to('name')).includes(fieldName));
+
+    return group
+        ? group.fields.find((field: Field) => field.name === fieldName)?.value
+        : undefined;
+}
+
+
 export type I18nString = { [languageCode: string]: string };
+
 
 export const getDocumentImages = (document: Document): ResultDocument[] =>
     document.resource.groups.find((group: FieldGroup) => group.name === 'stem')
         .fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets;
-
-export const getDocumentDescription = (doc: Document): FieldValue => getFieldValue(doc, 'parent', 'description');
-
-export const getFieldValue = (document: Document, groupName: string, fieldName: string): FieldValue =>
-    document.resource.groups.find((group: FieldGroup) => group.name === groupName)
-        .fields.find((field: Field) => field.name === fieldName)?.value;

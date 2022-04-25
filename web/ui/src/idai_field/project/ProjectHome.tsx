@@ -8,7 +8,7 @@ import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { Document, FieldValue, getDocumentDescription, getDocumentImages, getFieldValue } from '../../api/document';
+import { Document, FieldValue, getDocumentImages, getFieldValue } from '../../api/document';
 import { get, search } from '../../api/documents';
 import { buildProjectQueryTemplate, parseFrontendGetParams } from '../../api/query';
 import { Result, ResultDocument, ResultFilter } from '../../api/result';
@@ -114,7 +114,7 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
 const renderContent = (projectId: string, projectDoc: Document, images: ResultDocument[], location: Location,
         highlightedCategories: string[], predecessors: ResultDocument[], t: TFunction) => {
 
-    const description = getDocumentDescription(projectDoc);
+    const description = getFieldValue(projectDoc, 'description');
 
     return <div className="flex-fill" style={ contentStyle }>
         <div className="px-2 my-1 clearfix">
@@ -156,23 +156,23 @@ const renderDescription = (description: string) =>
 const renderProjectDetails = (projectDoc: Document, t: TFunction) =>
     <dl>
         <dt>{ t('projectHome.institution') }</dt>
-        <dd>{ getFieldValue(projectDoc, 'parent', 'institution')?.toString() }</dd>
+        <dd>{ getFieldValue(projectDoc, 'institution')?.toString() }</dd>
         <dt>{ t('projectHome.projectSupervisor') }</dt>
-        <dd>{ getFieldValue(projectDoc, 'parent', 'projectSupervisor')?.toString() }</dd>
+        <dd>{ getFieldValue(projectDoc, 'projectSupervisor')?.toString() }</dd>
         <dt>{ t('projectHome.contactPerson') }</dt>
         <dd>
-            <a href={ `mailto:${getFieldValue(projectDoc, 'parent', 'contactMail')?.toString()}` }>
+            <a href={ `mailto:${getFieldValue(projectDoc, 'contactMail')?.toString()}` }>
                 <Icon path={ mdiEmail } size={ 0.8 } className="mr-1" />
-                { getFieldValue(projectDoc, 'parent', 'contactPerson')?.toString() }
+                { getFieldValue(projectDoc, 'contactPerson')?.toString() }
             </a>
         </dd>
         <dt>{ t('projectHome.staff') }</dt>
-        <dd>{ (getFieldValue(projectDoc, 'parent', 'staff') as FieldValue[])?.join(', ') }</dd>
+        <dd>{ (getFieldValue(projectDoc, 'staff') as FieldValue[])?.join(', ') }</dd>
         <dt>{ t('projectHome.links') }</dt>
         <dd>
             <ul className="list-unstyled" style={ listStyle }>
                 <li>
-                    <a href={ `${getFieldValue(projectDoc, 'parent', 'externalReference')?.toString()}` }
+                    <a href={ `${getFieldValue(projectDoc, 'externalReference')?.toString()}` }
                             target="_blank" rel="noreferrer">
                         <Icon path={ mdiWeb } size={ 0.8 } className="mr-1" />
                         { t('projectHome.externalReference') }
@@ -180,7 +180,7 @@ const renderProjectDetails = (projectDoc: Document, t: TFunction) =>
                 </li>
                 <li>
                     <a href={ 'https://gazetteer.dainst.org/place/'
-                            + getFieldValue(projectDoc, 'parent', 'gazId')?.toString() }
+                            + getFieldValue(projectDoc, 'gazId')?.toString() }
                             target="_blank" rel="noreferrer">
                         <Icon path={ mdiMapMarker } size={ 0.8 } className="mr-1" />
                         { t('projectHome.gazId') }
@@ -195,7 +195,7 @@ const renderProjectDetails = (projectDoc: Document, t: TFunction) =>
 const renderBibliographicReferences = (projectDocument: Document, t: TFunction) => {
     
     const bibliographicReferences: Literature[]
-        = getFieldValue(projectDocument, 'parent', 'bibliographicReferences') as Literature[];
+        = getFieldValue(projectDocument, 'bibliographicReferences') as Literature[];
     if (!bibliographicReferences) return <></>;
 
     return <>

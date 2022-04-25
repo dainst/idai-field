@@ -40,7 +40,7 @@ services:
       LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
 
   api:
-    image: "dainst/idai-field-web-api"
+    image: "ghcr.io/dainst/idai-field-web-api:latest"
     build: "./api"
     ports:
       - "4000:4000"
@@ -56,7 +56,7 @@ services:
       - "../core:/opt/src/api/assets/js/node_modules/idai-field-core"
 
   ui:
-    image: "dainst/idai-field-web-ui"
+    image: "ghcr.io/dainst/idai-field-web-ui:latest"
     build: "./ui"
     ports:
       - "3002:80"

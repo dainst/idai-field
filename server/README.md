@@ -35,7 +35,7 @@ The Docker images are currently hosted in the Github Container Registry: https:/
 ### Volumes
 The application will save images at `/files` within the container. If you want to make the images persistent, you should therefore mount a host volume accordingly.
 
-For an example deployment configuration using docker-compose (including a CouchDB and Traefik) see: [docker-compose.deploy.yml](docker-compose.deploy.yml)
+See also the [deployment example](./deployment_example/).
 
 ### First steps
 

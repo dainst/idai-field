@@ -1,0 +1,30 @@
+version: '3.5'
+
+services:
+  couchdb:
+    image: couchdb:3.2.1
+    container_name: field-hub-db
+    environment:
+      - COUCHDB_USER
+      - COUCHDB_PASSWORD
+    ports:
+      - 5984:5984
+    volumes:
+      - ${DB_DATA_DIRECTORY}:/opt/couchdb/data
+#    restart: always # uncomment when running on server
+
+  app:
+    image: "ghcr.io/dainst/field_hub:${FIELD_HUB_VERSION}"
+    container_name: field-hub-app
+    environment:
+      - HOST
+      - SECRET_KEY_BASE
+      - COUCHDB_URL=http://couchdb:5984
+      - COUCHDB_ADMIN_NAME=${COUCHDB_USER}
+      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_PASSWORD}
+    ports:
+      - 80:4000
+    volumes:
+      - ${FILE_DIRECTORY}:/files
+#    restart: always # uncomment when running on server
+

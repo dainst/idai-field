@@ -43,7 +43,7 @@ Run the application from the directory containing both files with:
 docker-compose up
 ```
 
-This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser browser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDBs webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
+This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser browser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
 
 You can now run [CLI](../CLI.md) scripts in a second terminal, for example to finalize the CouchDB setup.
 

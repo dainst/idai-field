@@ -4,7 +4,7 @@ This is a tutorial guide for deploying FieldHub. __This describes a very basic i
 
 ## Prerequisites
 
-We will use [Docker](https://docs.docker.com/get-started/overview/) with [docker-compose](https://docs.docker.com/compose/) For this guide there are two main concepts to be aware of:
+We will use [Docker](https://docs.docker.com/get-started/overview/) with [docker-compose](https://docs.docker.com/compose/). For this guide there are two Docker concepts to be aware of:
 1. images
 2. containers
 

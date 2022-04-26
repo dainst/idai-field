@@ -116,6 +116,6 @@ export function getDocumentImages(document: Document): ResultDocument[]|undefine
         .find(group => group.fields.map(to('name')).includes('isDepictedIn'));
 
     return group
-        ? group.fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets   
+        ? group.fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets
         : undefined;
 }

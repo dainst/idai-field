@@ -17,10 +17,10 @@ defmodule Api.Core.ProjectConfigLoader do
   def start_link(_), do: start_link({nil, nil})
 
   def update(project) do
-    Agent.update(__MODULE__, fn configs -> Map.put(configs, project, load(project)) end)
+    Agent.update(__MODULE__, fn configs -> Map.put(configs, project, load(project)) end, 600000)
   end
 
-  def get(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end)
+  def get(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end, 600000)
 
   defp load(project_name) do
     if Mix.env() != :test do create_config_file project_name end

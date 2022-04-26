@@ -111,5 +111,5 @@ export type I18nString = { [languageCode: string]: string };
 
 
 export const getDocumentImages = (document: Document): ResultDocument[] =>
-    document.resource.groups.find((group: FieldGroup) => group.name === 'stem')
+    document.resource.groups.find(group => group.fields.map(to('name')).includes('isDepictedIn'))
         .fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets;

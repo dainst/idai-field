@@ -74,6 +74,9 @@ export interface Field {
 }
 
 
+export type I18nString = { [languageCode: string]: string };
+
+
 export interface Labeled { // TODO review duplication with idai-field (Labelled)
     label: string;
 }
@@ -107,9 +110,12 @@ export function getFieldValue(document: Document, fieldName: string): FieldValue
 }
 
 
-export type I18nString = { [languageCode: string]: string };
+export function getDocumentImages(document: Document): ResultDocument[]|undefined {
+    
+    const group: FieldGroup = document.resource.groups
+        .find(group => group.fields.map(to('name')).includes('isDepictedIn'));
 
-
-export const getDocumentImages = (document: Document): ResultDocument[] =>
-    document.resource.groups.find(group => group.fields.map(to('name')).includes('isDepictedIn'))
-        .fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets;
+    return group
+        ? group.fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets   
+        : undefined;
+}

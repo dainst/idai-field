@@ -312,6 +312,13 @@
         "PlasterFragment": {
             "label": "Fragmento de enfoscado"
         },
+        "Image": {
+            "fields": {
+                "imageRights": {
+                    "label": "Derechos de autor de la imagen"
+                }
+            }
+        },
         "Photo": {
             "label": "Fotografía"
         },

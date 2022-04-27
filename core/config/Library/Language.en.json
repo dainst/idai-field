@@ -668,6 +668,9 @@
         "processor": {
           "label": "Processor",
           "description": "Processor of the image in case of changes after the creation of the image"
+        },
+        "imageRights": {
+          "label": "Image rights"
         }
       }
     },

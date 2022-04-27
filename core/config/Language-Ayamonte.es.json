@@ -43,9 +43,6 @@
         },
         "Drawing": {
             "fields": {
-                "imageRights": {
-                    "label": "Derechos de autor de la imagen"
-                },
                 "representedObject": {
                     "label": "Objeto representado"
                 }
@@ -238,9 +235,6 @@
             "fields": {
                 "imageObject": {
                     "label": "Objeto representado"
-                },
-                "imageRights": {
-                    "label": "Derechos de autor de la imagen"
                 },
                 "imageContent": {
                     "label": "Contenido de la imagen"

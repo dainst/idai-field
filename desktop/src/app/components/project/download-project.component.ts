@@ -77,17 +77,19 @@ export class DownloadProjectComponent {
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
         try {
-            const databaseSteps = await this.getUpdateSequence();
+            const databaseSteps: number = await this.getUpdateSequence();
+            const variants: Array<ImageVariant> = this.getSelectedFileSync();
 
-            const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                this.url,
-                this.password,
-                this.projectName,
-                this.getSelectedFileSync()
-            );
+            const fileList = variants.length > 0
+                ? await this.remoteImageStore.getFileInfosUsingCredentials(
+                    this.url,
+                    this.password,
+                    this.projectName,
+                    variants
+                ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
-            await this.syncFiles(progressModalRef, fileList);
+            if (fileList) await this.syncFiles(progressModalRef, fileList);
 
             this.settingsService.addProject(
                 this.projectName,
@@ -95,7 +97,7 @@ export class DownloadProjectComponent {
                     isSyncActive: true,
                     address: this.url,
                     password: this.password,
-                    activeFileSync: this.getSelectedFileSync()
+                    activeFileSync: variants
                 }
             ).then(() => {
                 reloadAndSwitchToHomeRoute();

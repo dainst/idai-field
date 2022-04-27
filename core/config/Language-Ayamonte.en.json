@@ -35,9 +35,6 @@
         },
         "Drawing": {
             "fields": {
-                "imageRights": {
-                    "label": "Image Rights"
-                },
                 "representedObject": {
                     "label": "Represented object"
                 }
@@ -236,9 +233,6 @@
             "fields": {
                 "imageObject": {
                     "label": "Depicted object"
-                },
-                "imageRights": {
-                    "label": "Image rights"
                 },
                 "imageContent": {
                     "label": "Content of the image"

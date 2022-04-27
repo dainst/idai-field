@@ -1796,9 +1796,6 @@
         "imageObject": {
           "inputType": "input"
         },
-        "imageRights": {
-          "inputType": "input"
-        },
         "imageContent": {
           "inputType": "input"
         }
@@ -1833,9 +1830,6 @@
     "Drawing:default": {
       "hidden": [],
       "fields": {
-        "imageRights": {
-          "inputType": "input"
-        },
         "representedObject": {
           "inputType": "input"
         }

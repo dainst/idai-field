@@ -385,7 +385,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "height", "width", "literature"]
+          "fields": ["description", "height", "width", "literature", "imageRights"]
         }
       ]
     },

@@ -751,6 +751,9 @@
         },
         "processor": {
           "label": "Bearbeiterin/Bearbeiter"
+        },
+        "imageRights": {
+          "label": "Bildrechte"
         }
       }
     },

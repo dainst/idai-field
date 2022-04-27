@@ -539,6 +539,9 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.CHECKBOXES,
                     valuelistFromProjectField: 'staff',
                     constraintIndexed: true
+                },
+                imageRights: {
+                    inputType: Field.InputType.INPUT
                 }
             },
             minimalForm: {

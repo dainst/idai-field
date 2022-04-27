@@ -323,5 +323,10 @@ export namespace ConfigurationDocument {
         if (groupDefinition.fields.length === 0) {
             formDefinition.groups.splice(formDefinition.groups.indexOf(groupDefinition), 1);
         }
+
+        if (formDefinition.valuelists?.[fieldName]) {
+            delete formDefinition.valuelists[fieldName];
+            if (isEmpty(formDefinition.valuelists)) delete formDefinition.valuelists;
+        }
     }
 }

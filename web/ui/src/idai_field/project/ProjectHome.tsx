@@ -194,7 +194,7 @@ const renderProjectDetails = (projectDoc: Document, t: TFunction) => {
             </ul>
         </dd>
         { renderBibliographicReferences(projectDoc, t) }
-    </dl>
+    </dl>;
 };
 
 

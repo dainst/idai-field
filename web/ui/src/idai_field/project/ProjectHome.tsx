@@ -153,43 +153,49 @@ const renderDescription = (description: string) =>
         .map((paragraph, i) => <ReactMarkdown key={ i } linkTarget={ '_blank' }>{ paragraph }</ReactMarkdown>);
 
 
-const renderProjectDetails = (projectDoc: Document, t: TFunction) =>
-    <dl>
+const renderProjectDetails = (projectDoc: Document, t: TFunction) => {
+    
+    const contactMail: FieldValue = getFieldValue(projectDoc, 'contactMail');
+    const homepage: FieldValue = getFieldValue(projectDoc, 'externalReference');
+    const gazetteerId: FieldValue = getFieldValue(projectDoc, 'gazId');
+
+    
+    return <dl>
         <dt>{ t('projectHome.institution') }</dt>
         <dd>{ getFieldValue(projectDoc, 'institution')?.toString() }</dd>
         <dt>{ t('projectHome.projectSupervisor') }</dt>
         <dd>{ getFieldValue(projectDoc, 'projectSupervisor')?.toString() }</dd>
         <dt>{ t('projectHome.contactPerson') }</dt>
-        <dd>
-            <a href={ `mailto:${getFieldValue(projectDoc, 'contactMail')?.toString()}` }>
+        { contactMail && <dd>
+            <a href={ `mailto:${contactMail.toString()}` }>
                 <Icon path={ mdiEmail } size={ 0.8 } className="mr-1" />
                 { getFieldValue(projectDoc, 'contactPerson')?.toString() }
             </a>
-        </dd>
+        </dd> }
         <dt>{ t('projectHome.staff') }</dt>
         <dd>{ (getFieldValue(projectDoc, 'staff') as FieldValue[])?.join(', ') }</dd>
-        <dt>{ t('projectHome.links') }</dt>
+        { (homepage || gazetteerId) && <dt>{ t('projectHome.links') }</dt> }
         <dd>
             <ul className="list-unstyled" style={ listStyle }>
-                <li>
-                    <a href={ `${getFieldValue(projectDoc, 'externalReference')?.toString()}` }
+                { homepage && <li>
+                    <a href={ `${homepage.toString()}` }
                             target="_blank" rel="noreferrer">
                         <Icon path={ mdiWeb } size={ 0.8 } className="mr-1" />
                         { t('projectHome.externalReference') }
                     </a>
-                </li>
-                <li>
-                    <a href={ 'https://gazetteer.dainst.org/place/'
-                            + getFieldValue(projectDoc, 'gazId')?.toString() }
+                </li> }
+                { gazetteerId && <li>
+                    <a href={ 'https://gazetteer.dainst.org/place/' + gazetteerId.toString() }
                             target="_blank" rel="noreferrer">
                         <Icon path={ mdiMapMarker } size={ 0.8 } className="mr-1" />
                         { t('projectHome.gazId') }
                     </a>
-                </li>
+                </li> }
             </ul>
         </dd>
         { renderBibliographicReferences(projectDoc, t) }
-    </dl>;
+    </dl>
+};
 
 
 const renderBibliographicReferences = (projectDocument: Document, t: TFunction) => {

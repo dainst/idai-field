@@ -751,6 +751,9 @@
         },
         "processor": {
           "label": "Responsabile"
+        },
+        "imageRights": {
+          "label": "Diritti inerenti all'immagine"
         }
       }
     },

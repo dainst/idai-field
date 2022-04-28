@@ -998,7 +998,7 @@
         <target state="final">Create new valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
@@ -1362,7 +1362,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
@@ -1490,7 +1490,7 @@
         <target state="final">Values</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createdBy" datatype="html">
@@ -1738,7 +1738,7 @@
         <target state="final"> Create new project </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.projectName" datatype="html">
@@ -1746,7 +1746,7 @@
         <target state="final">Project name:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
@@ -1754,7 +1754,7 @@
         <target state="final">Configuration:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.create" datatype="html">
@@ -1762,7 +1762,7 @@
         <target state="final">Create</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
@@ -1842,7 +1842,7 @@
         <target state="final"> The URL of a Field server as well as the network address of another Field Desktop installation can be entered as the address. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.projectName" datatype="html">
@@ -1850,7 +1850,7 @@
         <target state="final">Project name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
@@ -1858,7 +1858,7 @@
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
@@ -1866,7 +1866,7 @@
         <target state="final">Download thumbnails</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
@@ -1874,7 +1874,7 @@
         <target state="final">Download original images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
@@ -2336,7 +2336,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
@@ -4360,7 +4360,7 @@
         <target state="final">Automatic sorting</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
@@ -4377,6 +4377,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editValuelistInfo" datatype="html">
+        <source> Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste einsetzen. </source>
+        <target state="final"> Please note that after clicking the OK button, the changes made will be applied for all the fields that use this valuelist. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.html</context>
+          <context context-type="linenumber">24,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.close" datatype="html">

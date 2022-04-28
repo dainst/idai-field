@@ -34,6 +34,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public order: string[];
     public sortAlphanumerically: boolean;
     public dragging: boolean;
+    public openedFromFieldEditor: boolean;
 
     public inputPlaceholder: string = this.i18n({
         id: 'configuration.newValue', value: 'Neuer Wert'
@@ -82,7 +83,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 values: {},
                 createdBy: this.settingsProvider.getSettings().username,
                 creationDate: new Date().toISOString().split('T')[0]
-            }
+            };
 
             if (this.extendedValuelist) {
                 this.getClonedValuelistDefinition().extendedValuelist = this.extendedValuelist.id;

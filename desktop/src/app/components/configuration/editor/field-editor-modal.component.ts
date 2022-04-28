@@ -191,6 +191,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             componentInstance.extendedValuelist
                 = this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist);
         }
+        componentInstance.openedFromFieldEditor = true;
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 

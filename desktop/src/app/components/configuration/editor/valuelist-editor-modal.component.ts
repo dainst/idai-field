@@ -124,7 +124,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
 
     public isChanged(): boolean {
-        
+
         return this.new
             || !equal(this.getCustomValuelistDefinition().values)(this.getClonedValuelistDefinition().values)
             || this.isHiddenChanged()
@@ -191,7 +191,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         delete this.getClonedValuelistDefinition().values[valueId];
         this.getClonedValuelistDefinition().order = this.getOrder();
-        this.order = this.getOrder();
+        this.order = this.getOrder() ?? this.getSortedValueIds();
     }
 
 
@@ -236,7 +236,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         return clonedValuelistDefinition.order.filter(valuelistId => {
             return clonedValuelistDefinition.values[valuelistId] !== undefined
-                || this.extendedValuelist.values[valuelistId] !== undefined;
+                || this.extendedValuelist?.values[valuelistId] !== undefined;
         });
     }
 

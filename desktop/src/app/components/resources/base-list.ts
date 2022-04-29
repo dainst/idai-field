@@ -72,6 +72,10 @@ export class BaseList {
         const index = this.viewFacade.getDocuments()
             .findIndex(document => document.resource.id === doc.resource.id);
 
-        scrollTo(index, 'resource-' + doc.resource.identifier, this.scrollViewport);   
+        if (!this.scrollViewport) {
+            setTimeout(() => this.scrollTo(doc), 100);
+        } else {
+            scrollTo(index, 'resource-' + doc.resource.identifier, this.scrollViewport);   
+        }
     }
 }

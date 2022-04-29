@@ -21,10 +21,13 @@ field-view {
       color: black;
     }
 
-    .field-value.relation-value:hover {
+    .field-value.relation-value {
       cursor: default;
-      background-color: $list-item-hover-color;
-      transition: background-color .5s ease;
+    
+      &:hover {
+        background-color: $list-item-hover-color;
+        transition: background-color .5s ease;
+      }
     }
 
     ul {

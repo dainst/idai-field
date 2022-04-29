@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {FieldResource} from 'idai-field-core';
-import {ImageStore, ImageVariant} from 'idai-field-core';
-import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Datastore, FieldResource, ImageVariant } from 'idai-field-core';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 
 @Component({
@@ -20,16 +19,15 @@ export class ThumbnailComponent implements OnChanges {
     @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
     public thumbnailUrl: SafeResourceUrl|undefined;
+    public thumbnailPlaceholderCategory: string|undefined;
 
 
-    constructor(
-        private imageUrlMaker: ImageUrlMaker,
-        private i18n: I18n
-    ) {}
+    constructor(private imageUrlMaker: ImageUrlMaker,
+                private datastore: Datastore,
+                private i18n: I18n) {}
 
 
-    public isThumbnailFound = (): boolean => this.thumbnailUrl !== ImageUrlMaker.blackImg;
-
+    public isThumbnailFound = (): boolean => !this.thumbnailPlaceholderCategory;
 
     public onImageClicked = () => this.onClick.emit();
 
@@ -64,18 +62,23 @@ export class ThumbnailComponent implements OnChanges {
 
     private async updateThumbnailUrl() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.resource.relations.isDepictedIn);
+        const relationTargets: string[] = this.resource.relations.isDepictedIn;
+
+        if (!relationTargets || relationTargets.length === 0) return undefined;
+
+        try {
+            this.thumbnailUrl = await this.imageUrlMaker.getUrl(relationTargets[0], ImageVariant.THUMBNAIL);
+            this.thumbnailPlaceholderCategory = undefined;
+        } catch (err) {
+            this.updateThumbnailPlaceholder(relationTargets);
+        }
+
+        if (this.thumbnailUrl === ImageUrlMaker.blackImg) this.updateThumbnailPlaceholder(relationTargets);
     }
 
 
-    private async getThumbnailUrl(relations: string[]|undefined): Promise<SafeResourceUrl|undefined> {
+    private async updateThumbnailPlaceholder(relationTargets: string[]) {
 
-        if (!relations || relations.length === 0) return undefined;
-
-        try {
-            return this.imageUrlMaker.getUrl(relations[0], ImageVariant.THUMBNAIL);
-        } catch (e) {
-            return ImageUrlMaker.blackImg;
-        }
+        this.thumbnailPlaceholderCategory = (await this.datastore.get(relationTargets[0])).resource.category;
     }
 }

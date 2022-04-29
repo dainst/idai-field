@@ -10,6 +10,7 @@ import configCastiglione from '../../../config/Config-Castiglione.json';
 import configDefault from '../../../config/Config-Default.json';
 import configElephantine from '../../../config/Config-Elephantine.json';
 import configGadara from '../../../config/Config-Gadara.json';
+import configGoebekliTepe from '../../../config/Config-GoebekliTepe.json';
 import configHeliopolis from '../../../config/Config-Heliopolis.json';
 import configKalapodi from '../../../config/Config-Kalapodi.json';
 import configKarthagoCircus from '../../../config/Config-KarthagoCircus.json';
@@ -49,6 +50,7 @@ import languageElephantine_de from '../../../config/Language-Elephantine.de.json
 import languageElephantine_en from '../../../config/Language-Elephantine.en.json';
 import languageGadara_de from '../../../config/Language-Gadara.de.json';
 import languageGadara_en from '../../../config/Language-Gadara.en.json';
+import languageGoebekliTepe_en from '../../../config/Language-GoebekliTepe.en.json';
 import languageHeliopolis_en from '../../../config/Language-Heliopolis.en.json';
 import languageKalapodi_de from '../../../config/Language-Kalapodi.de.json';
 import languageKarthagoCircus_en from '../../../config/Language-KarthagoCircus.en.json';
@@ -113,6 +115,7 @@ const PATH_MAP: Record<string, any> = {
     '/Config-Castiglione.json': configCastiglione,
     '/Config-Elephantine.json': configElephantine,
     '/Config-Gadara.json': configGadara,
+    '/Config-GoebekliTepe.json': configGoebekliTepe,
     '/Config-Heliopolis.json': configHeliopolis,
     '/Config-Kalapodi.json': configKalapodi,
     '/Config-KarthagoCircus.json': configKarthagoCircus,
@@ -143,6 +146,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'Default': { de: languageDefault_de, en: languageDefault_en },
     'Elephantine': { de: languageElephantine_de, en: languageElephantine_en },
     'Gadara': { de: languageGadara_de, en: languageGadara_en },
+    'GoebekliTepe': { en: languageGoebekliTepe_en },
     'Heliopolis': { en: languageHeliopolis_en },
     'Kalapodi': { de: languageKalapodi_de },
     'KarthagoCircus': { en: languageKarthagoCircus_en, fr: languageKarthagoCircus_fr },

@@ -41494,72 +41494,72 @@
     "description": {},
     "values": {
       "Arbeitsfoto": {
-        "labels": {
+        "label": {
           "de": "Arbeitsfoto"
         }
       },
       "Fund": {
-        "labels": {
+        "label": {
           "de": "Fund"
         }
       },
       "Fauna": {
-        "labels": {
+        "label": {
           "de": "Fauna"
         }
       },
       "Flora": {
-        "labels": {
+        "label": {
           "de": "Flora"
         }
       },
       "Multifund": {
-        "labels": {
+        "label": {
           "de": "Multifund"
         }
       },
       "Personen": {
-        "labels": {
+        "label": {
           "de": "Personen"
         }
       },
       "Planum": {
-        "labels": {
+        "label": {
           "de": "Planum"
         }
       },
       "Probe": {
-        "labels": {
+        "label": {
           "de": "Probe"
         }
       },
       "Profil": {
-        "labels": {
+        "label": {
           "de": "Profil"
         }
       },
       "Schnitt": {
-        "labels": {
+        "label": {
           "de": "Schnitt"
         }
       },
       "Schnitt mit Fund": {
-        "labels": {
+        "label": {
           "de": "Schnitt mit Fund"
         }
       },
       "Übersicht": {
-        "labels": {
+        "label": {
           "de": "Übersicht"
         }
       },
       "Unklar": {
-        "labels": {
+        "label": {
           "de": "Unklar"
         }
       },
       "WrongPhoto": {
-        "labels": {
+        "label": {
           "de": "WrongPhoto"
         }
       }
@@ -41571,19 +41571,19 @@
     "description": {},
     "values": {
       "Skizze": {
-        "labels": {
+        "label": {
           "de": "Skizze",
           "en": "Sketch"
         }
       },
       "Vektorzeichnung": {
-        "labels": {
+        "label": {
           "de": "Vector drawing",
           "en": "xxx"
         }
       },
       "Originalzeichnung": {
-        "labels": {
+        "label": {
           "de": "Originalzeichnung",
           "en": "Original drawing"
         }
@@ -41596,49 +41596,57 @@
     "description": {},
     "values": {
       "Blei": {
-        "labels": {
+        "label": {
           "de": "Blei"
         }
       },
       "Bronze": {
-        "labels": {
+        "label": {
           "de": "Bronze"
         }
       },
       "Eisen": {
-        "labels": {
+        "label": {
           "de": "Eisen"
         }
       },
       "Gold": {
-        "labels": {
+        "label": {
           "de": "Aureum"
         }
       },
       "Kupfer": {
-        "labels": {
+        "label": {
           "de": "Kupfer"
         }
       },
       "Silber": {
-        "labels": {
+        "label": {
           "de": "Argentum"
         }
       },
       "Unkenntlich": {
-        "labels": {
+        "label": {
           "de": "Unkenntlich"
         }
       },
       "Aes": {
-        "labels": {
+        "label": {
           "de": "Aes",
           "en": "Aes"
         }
       }
     },
-    "order": ["Aes", "Silber",   "Bronze", "Kupfer", "Gold",
-               "Blei", "Eisen", "Unkenntlich"]
+    "order": [
+      "Aes",
+      "Silber",
+      "Bronze",
+      "Kupfer",
+      "Gold",
+      "Blei",
+      "Eisen",
+      "Unkenntlich"
+    ]
   },
   "Coin-manufacturingMethod-olympia": {
     "createdBy": "",
@@ -41646,27 +41654,27 @@
     "description": {},
     "values": {
       "Gegossen": {
-        "labels": {
+        "label": {
           "de": "Gegossen"
         }
       },
       "Geprägt": {
-        "labels": {
+        "label": {
           "de": "Geprägt"
         }
       },
       "Plattiert": {
-        "labels": {
+        "label": {
           "de": "Plattiert"
         }
       },
       "Versilbert": {
-        "labels": {
+        "label": {
           "de": "Versilbert"
         }
       },
       "Unsicher bzw. unbestimmbar": {
-        "labels": {
+        "label": {
           "de": "Unsicher bzw. unbestimmbar"
         }
       }
@@ -41681,49 +41689,49 @@
     },
     "values": {
       "Assyrischer Helm": {
-        "labels": {
-            "de": "Assyrischer Helm"
-              }
+        "label": {
+          "de": "Assyrischer Helm"
+        }
       },
       "Chalkidischer Helm": {
-        "labels": {
-            "de": "Chalkidischer Helm"
-              }
+        "label": {
+          "de": "Chalkidischer Helm"
+        }
       },
       "Illyrischer Helm": {
-        "labels": {
-            "de": "Illyrischer Helm"
-              }
+        "label": {
+          "de": "Illyrischer Helm"
+        }
       },
       "Korinthischer Helm": {
-        "labels": {
-            "de": "Korinthischer Helm"
-              }
+        "label": {
+          "de": "Korinthischer Helm"
+        }
       },
       "Kretischer Helm": {
-        "labels": {
-            "de": "Kretischer Helm"
-              }
+        "label": {
+          "de": "Kretischer Helm"
+        }
       },
       "Negauer Helm": {
-        "labels": {
-            "de": "Negauer Helm"
-              }
+        "label": {
+          "de": "Negauer Helm"
+        }
       },
       "Kammhelm": {
-        "labels": {
-            "de": "Kammhelm"
-              }
+        "label": {
+          "de": "Kammhelm"
+        }
       },
       "Kegelhelm": {
-        "labels": {
-            "de": "Kegelhelm"
-              }
+        "label": {
+          "de": "Kegelhelm"
+        }
       },
       "Mehrteiliger Helm": {
-        "labels": {
-            "de": "Mehrteiliger Helm"
-              }
+        "label": {
+          "de": "Mehrteiliger Helm"
+        }
       }
     }
   },
@@ -41733,37 +41741,37 @@
     "description": {},
     "values": {
       "Olympia, Museum": {
-        "labels": {
+        "label": {
           "de": "Olympia, Museum"
         }
       },
       "Olympia, Fundmagazin": {
-        "labels": {
+        "label": {
           "de": "Olympia, Fundmagazin"
         }
       },
       "Olympia, Bronzemagazin": {
-        "labels": {
+        "label": {
           "de": "Olympia, Bronzemagazin"
         }
       },
       "Olympia, Magazin 5": {
-        "labels": {
+        "label": {
           "de": "Olympia, Magazin 5"
         }
       },
       "Athen, Nationalmuseum": {
-        "labels": {
+        "label": {
           "de": "Athen, Nationalmuseum"
         }
       },
       "Berlin, Staatliche Museen": {
-        "labels": {
+        "label": {
           "de": "Berlin, Staatliche Museen"
         }
       },
       "Fund verloren": {
-        "labels": {
+        "label": {
           "de": "Fund verloren"
         }
       }
@@ -41784,42 +41792,42 @@
     "description": {},
     "values": {
       "Konstantinos Demetriades": {
-        "labels": {
+        "label": {
           "de": "Olympia, at Konstantinos Demetriades"
         }
       },
       "Olympia, Magazin": {
-        "labels": {
+        "label": {
           "de": "Olympia, Magazin"
         }
       },
       "Olympia, Pyrostiá": {
-        "labels": {
+        "label": {
           "de": "Olympia, Pyrostiá"
         }
       },
       "Olympia, Pyrostiá II": {
-        "labels": {
+        "label": {
           "de": "Olympia, Pyrostiá II"
         }
       },
       "Olympia, Siderostiá": {
-        "labels": {
+        "label": {
           "de": "Olympia, Siderostiá"
         }
       },
       "Olympia, Siderostiá II": {
-        "labels": {
+        "label": {
           "de": "Olympia, Siderostiá II"
         }
       },
       "Olympia, Siderostiá III": {
-        "labels": {
+        "label": {
           "de": "Olympia, Siderostiá III"
         }
       },
       "am Fundort": {
-        "labels": {
+        "label": {
           "de": "am Fundort"
         }
       }
@@ -41831,21 +41839,21 @@
     "description": {},
     "values": {
       "Ton": {
-        "labels": {
-            "de": "Ton",
-            "en": "Clay"
+        "label": {
+          "de": "Ton",
+          "en": "Clay"
         }
       },
       "Stein": {
-        "labels": {
-            "de": "Stein",
-            "en": "Stone"
+        "label": {
+          "de": "Stein",
+          "en": "Stone"
         }
       },
       "Marmor": {
-        "labels": {
-            "de": "Marmor",
-            "en": "Marble"
+        "label": {
+          "de": "Marmor",
+          "en": "Marble"
         }
       }
     },
@@ -41861,45 +41869,45 @@
     "description": {},
     "values": {
       "Akroterion": {
-        "labels": {
-            "de": "Akroter",
-            "en": "Akroterion"
+        "label": {
+          "de": "Akroter",
+          "en": "Akroterion"
         }
       },
       "Overtile": {
-        "labels": {
-            "de": "Deckziegel",
-            "en": "Cover tile"
+        "label": {
+          "de": "Deckziegel",
+          "en": "Cover tile"
         }
       },
       "Undertile": {
-        "labels": {
-            "de": "Flachziegel",
-            "en": "Pan tile"
+        "label": {
+          "de": "Flachziegel",
+          "en": "Pan tile"
         }
       },
       "OverAndUndertile": {
-        "labels": {
-            "de": "Ober- und Unterziegel",
-            "en": "Cover and pan tile"
+        "label": {
+          "de": "Ober- und Unterziegel",
+          "en": "Cover and pan tile"
         }
       },
       "Revetment": {
-        "labels": {
-            "de": "Verkleidungsplatte",
-            "en": "Revetment"
+        "label": {
+          "de": "Verkleidungsplatte",
+          "en": "Revetment"
         }
       },
       "GeisonRevetment": {
-        "labels": {
-            "de": "Geisonverkleidung",
-            "en": "Geison Revetment"
+        "label": {
+          "de": "Geisonverkleidung",
+          "en": "Geison Revetment"
         }
       },
       "Sima": {
-        "labels": {
-            "de": "Sima",
-            "en": "Sima"
+        "label": {
+          "de": "Sima",
+          "en": "Sima"
         }
       }
     }
@@ -41910,15 +41918,15 @@
     "description": {},
     "values": {
       "value 01": {
-        "labels": {
-            "de": "missing",
-            "en": "missing"
+        "label": {
+          "de": "missing",
+          "en": "missing"
         }
       },
       "value 02": {
-        "labels": {
-            "de": "missing",
-            "en": "missing"
+        "label": {
+          "de": "missing",
+          "en": "missing"
         }
       }
     }
@@ -41929,87 +41937,87 @@
     "description": {},
     "values": {
       "Eave": {
-        "labels": {
-            "de": "Traufe",
-            "en": "Eave"
+        "label": {
+          "de": "Traufe",
+          "en": "Eave"
         }
       },
       "Hip": {
-        "labels": {
-            "de": "Grat",
-            "en": "Hip"
+        "label": {
+          "de": "Grat",
+          "en": "Hip"
         }
       },
       "Ridge": {
-        "labels": {
-            "de": "First",
-            "en": "Ridge"
+        "label": {
+          "de": "First",
+          "en": "Ridge"
         }
       },
       "Slope": {
-        "labels": {
-            "de": "Schräge",
-            "en": "Slope"
+        "label": {
+          "de": "Schräge",
+          "en": "Slope"
         }
       },
       "Valley": {
-        "labels": {
-            "de": "Kehle",
-            "en": "Valley"
+        "label": {
+          "de": "Kehle",
+          "en": "Valley"
         }
       },
       "Gable": {
-        "labels": {
-            "de": "Giebel",
-            "en": "Gable"
+        "label": {
+          "de": "Giebel",
+          "en": "Gable"
         }
       },
       "Gable-Horizontal": {
-        "labels": {
-            "de": "Giebel-Horizontal",
-            "en": "Horizontal"
+        "label": {
+          "de": "Giebel-Horizontal",
+          "en": "Horizontal"
         }
       },
       "Gable-Rake": {
-        "labels": {
-            "de": "Giebel-Aufsteigende ????",
-            "en": "Rake"
+        "label": {
+          "de": "Giebel-Aufsteigende ????",
+          "en": "Rake"
         }
       },
       "Gable-Tympanum": {
-        "labels": {
-            "de": "Tympanon",
-            "en": "Tympanum"
+        "label": {
+          "de": "Tympanon",
+          "en": "Tympanum"
         }
       },
       "EaveAndHip": {
-        "labels": {
-            "de": "Traufe und Grat",
-            "en": "Eave and Hip"
+        "label": {
+          "de": "Traufe und Grat",
+          "en": "Eave and Hip"
         }
       },
       "EaveAndGable": {
-        "labels": {
-            "de": "Traufe und Giebel",
-            "en": "Eave and Hip"
+        "label": {
+          "de": "Traufe und Giebel",
+          "en": "Eave and Hip"
         }
       },
       "EaveAndValley": {
-        "labels": {
-            "de": "Traufe und Kehle",
-            "en": "Eave and Valley"
+        "label": {
+          "de": "Traufe und Kehle",
+          "en": "Eave and Valley"
         }
       },
       "RidgeAndGable": {
-        "labels": {
-            "de": "First und Giebel",
-            "en": "Ridge and Gable"
+        "label": {
+          "de": "First und Giebel",
+          "en": "Ridge and Gable"
         }
       },
       "RidgeAndHip": {
-        "labels": {
-            "de": "First und Grat",
-            "en": "Ridge and Hip"
+        "label": {
+          "de": "First und Grat",
+          "en": "Ridge and Hip"
         }
       }
     }
@@ -42020,38 +42028,38 @@
     "description": {},
     "values": {
       "Burial": {
-        "labels": {
-            "de": "Burial"
+        "label": {
+          "de": "Burial"
         }
       },
       "BuildingNoRoof": {
-        "labels": {
-            "de": "BuildingNoRoof"
+        "label": {
+          "de": "BuildingNoRoof"
         }
       },
       "RoofCollapse": {
-        "labels": {
-            "de": "RoofCollapse"
+        "label": {
+          "de": "RoofCollapse"
         }
       },
       "ProductionWaste": {
-        "labels": {
-            "de": "ProductionWaste"
+        "label": {
+          "de": "ProductionWaste"
         }
       },
       "IsolatedFind": {
-        "labels": {
-            "de": "IsolatedFind"
+        "label": {
+          "de": "IsolatedFind"
         }
       },
       "Other": {
-        "labels": {
-            "de": "Other"
+        "label": {
+          "de": "Other"
         }
       },
       "Undefined": {
-        "labels": {
-            "de": "Undefined"
+        "label": {
+          "de": "Undefined"
         }
       }
     }
@@ -42062,58 +42070,58 @@
     "description": {},
     "values": {
       "hasCornerTopLeft": {
-        "labels": {
-            "de": "hasCornerTopLeft"
+        "label": {
+          "de": "hasCornerTopLeft"
         }
       },
       "hasCornerTopRight": {
-        "labels": {
-            "de": "hasCornerTopRight"
+        "label": {
+          "de": "hasCornerTopRight"
         }
       },
       "hasCornerBottomLeft": {
-        "labels": {
-            "de": "hasCornerBottomLeft"
+        "label": {
+          "de": "hasCornerBottomLeft"
         }
       },
       "hasCornerBottomRight": {
-        "labels": {
-            "de": "hasCornerBottomRight"
+        "label": {
+          "de": "hasCornerBottomRight"
         }
       },
       "hasEdgeTop": {
-        "labels": {
-            "de": "hasEdgeTop"
+        "label": {
+          "de": "hasEdgeTop"
         }
       },
       "hasEdgeBottom": {
-        "labels": {
-            "de": "hasEdgeBottom"
+        "label": {
+          "de": "hasEdgeBottom"
         }
       },
       "hasEdgeLeft": {
-        "labels": {
-            "de": "hasEdgeLeft"
+        "label": {
+          "de": "hasEdgeLeft"
         }
       },
       "hasEdgeRight": {
-        "labels": {
-            "de": "hasEdgeRight"
+        "label": {
+          "de": "hasEdgeRight"
         }
       },
       "hasBody": {
-        "labels": {
-            "de": "hasBody"
+        "label": {
+          "de": "hasBody"
         }
       },
       "hasSupportiveFeatures": {
-        "labels": {
-            "de": "hasSupportiveFeatures"
+        "label": {
+          "de": "hasSupportiveFeatures"
         }
       },
       "hasSpecialFeatures": {
-        "labels": {
-            "de": "hasSpecialFeatures"
+        "label": {
+          "de": "hasSpecialFeatures"
         }
       }
     }
@@ -42124,37 +42132,37 @@
     "description": {},
     "values": {
       "Korinthisches Dach": {
-        "labels": {
+        "label": {
           "de": "Korinthisch"
         }
       },
       "Lakonisches Dach": {
-        "labels": {
+        "label": {
           "de": "Lakonisch"
         }
       },
       "Rankendach": {
-        "labels": {
+        "label": {
           "de": "Rankendach"
         }
       },
       "Westgriechisches Dach": {
-        "labels": {
+        "label": {
           "de": "Westgriechisch"
         }
       },
       "Spätes Dach": {
-        "labels": {
+        "label": {
           "de": "Spätes Dach"
         }
       },
       "Besonderes Dach": {
-        "labels": {
+        "label": {
           "de": "Besonderes Dach"
         }
       },
       "unklar": {
-        "labels": {
+        "label": {
           "de": "unklar"
         }
       }
@@ -42166,39 +42174,39 @@
     "description": {},
     "values": {
       "0 well documented": {
-        "labels": {
-            "de": "0 gut dokumentiert",
-            "en": "0 well documented"
+        "label": {
+          "de": "0 gut dokumentiert",
+          "en": "0 well documented"
         }
       },
       "1 documented": {
-        "labels": {
-            "de": "1 dokumentiert",
-            "en": "1 documented"
+        "label": {
+          "de": "1 dokumentiert",
+          "en": "1 documented"
         }
       },
       "2 sketched": {
-        "labels": {
-            "de": "2 skizziert",
-            "en": "2 sketched"
+        "label": {
+          "de": "2 skizziert",
+          "en": "2 sketched"
         }
       },
       "3 educated guess": {
-        "labels": {
-            "de": "3 fundierte Vermutung",
-            "en": "3 educated guess"
+        "label": {
+          "de": "3 fundierte Vermutung",
+          "en": "3 educated guess"
         }
       },
       "4 guess": {
-        "labels": {
-            "de": "4 Vermutung",
-            "en": "4 guess"
+        "label": {
+          "de": "4 Vermutung",
+          "en": "4 guess"
         }
       },
       "5 speculation": {
-        "labels": {
-            "de": "5 Spekulation",
-            "en": "5 speculation"
+        "label": {
+          "de": "5 Spekulation",
+          "en": "5 speculation"
         }
       }
     },
@@ -42217,33 +42225,33 @@
     "description": {},
     "values": {
       "step01": {
-        "labels": {
-            "de": "Ersterfassung",
-            "en": "Initial data capture"
+        "label": {
+          "de": "Ersterfassung",
+          "en": "Initial data capture"
         }
       },
       "step02": {
-        "labels": {
-            "de": "Sortiert und gezählt",
-            "en": "Sorted and counted"
+        "label": {
+          "de": "Sortiert und gezählt",
+          "en": "Sorted and counted"
         }
       },
       "step03": {
-        "labels": {
-            "de": "Grob kategorisiert",
-            "en": "Coarsely categorized"
+        "label": {
+          "de": "Grob kategorisiert",
+          "en": "Coarsely categorized"
         }
       },
       "step04": {
-        "labels": {
-            "de": "Validiert",
-            "en": "Validated"
+        "label": {
+          "de": "Validiert",
+          "en": "Validated"
         }
       },
       "step05": {
-        "labels": {
-            "de": "Fein kategorisiert",
-            "en": "Finely categorized"
+        "label": {
+          "de": "Fein kategorisiert",
+          "en": "Finely categorized"
         }
       }
     },
@@ -42263,82 +42271,82 @@
     "description": {},
     "values": {
       "I.1": {
-        "labels": {
+        "label": {
           "de": "I.1 Archaische Urkunden in Schrift und Dialekt von Elis"
         }
       },
       "I.2": {
-        "labels": {
+        "label": {
           "de": "I.2 Archaische Urkunden in anderen Schriftarten und Dialekten"
         }
       },
       "I.3": {
-        "labels": {
+        "label": {
           "de": "I.3 Jüngere Urkunden in ionischer Schrift"
         }
       },
       "II": {
-        "labels": {
+        "label": {
           "de": "II. Urkunden auf Stein"
         }
       },
       "III": {
-        "labels": {
+        "label": {
           "de": "III. Verzeichnisse des Kultuspersonals"
         }
       },
       "IV": {
-        "labels": {
+        "label": {
           "de": "IV. Siegerinschriften"
         }
       },
       "V": {
-        "labels": {
+        "label": {
           "de": "V. Weihinschriften"
         }
       },
       "VI": {
-        "labels": {
+        "label": {
           "de": "VI. Inschriften von Ehrendenkmälern"
         }
       },
       "VII": {
-        "labels": {
+        "label": {
           "de": "VII. Inschriften aus der Exedra des Herodes Atticus"
         }
       },
       "VIII": {
-        "labels": {
+        "label": {
           "de": "VIII. Künstlersignaturen"
         }
       },
       "IX": {
-        "labels": {
+        "label": {
           "de": "IX. Bauinschriften, Steinmetzzeichen und Verwandtes"
         }
       },
       "X": {
-        "labels": {
+        "label": {
           "de": "X. Erklärende Beischriften und Aufschriften"
         }
       },
       "XI": {
-        "labels": {
+        "label": {
           "de": "XI. Grabinschriften"
         }
       },
       "XII": {
-        "labels": {
+        "label": {
           "de": "XII. Fragmente von zweifelhafter Bedeutung"
         }
       },
       "XIII": {
-        "labels": {
+        "label": {
           "de": "XIII. Lateinische Inschriften"
         }
       },
       "Nachträge": {
-        "labels": {
+        "label": {
           "de": "Nachträge und Berichtigungen"
         }
       }
@@ -42368,82 +42376,82 @@
     "description": {},
     "values": {
       "Alltäglicher Gebrauch": {
-        "labels": {
+        "label": {
           "de": "Alltäglicher Gebrauch"
         }
       },
       "Bauinschrift": {
-        "labels": {
+        "label": {
           "de": "Bauinschrift"
         }
       },
       "Ehreninschrift": {
-        "labels": {
+        "label": {
           "de": "Ehreninschrift"
         }
       },
       "Grabinschrift": {
-        "labels": {
+        "label": {
           "de": "Grabinschrift"
         }
       },
       "Graffito": {
-        "labels": {
+        "label": {
           "de": "Graffito"
         }
       },
       "Künstlersignatur": {
-        "labels": {
+        "label": {
           "de": "Künstlersignatur"
         }
       },
       "Private Ausstattung": {
-        "labels": {
+        "label": {
           "de": "Private Ausstattung"
         }
       },
       "Sakrale Ausstattung": {
-        "labels": {
+        "label": {
           "de": "Sakrale Ausstattung"
         }
       },
       "Sakralinschrift": {
-        "labels": {
+        "label": {
           "de": "Sakralinschrift"
         }
       },
       "Siegerinschrift": {
-        "labels": {
+        "label": {
           "de": "Siegerinschrift"
         }
       },
       "Unsicher bzw. unbestimmbar": {
-        "labels": {
+        "label": {
           "de": "Unsicher bzw. unbestimmbar"
         }
       },
       "Urkunde": {
-        "labels": {
+        "label": {
           "de": "Urkunde"
         }
       },
       "Versatzmarke": {
-        "labels": {
+        "label": {
           "de": "Versatzmarke"
         }
       },
       "Wasserversorgung": {
-        "labels": {
+        "label": {
           "de": "Wasserversorgung"
         }
       },
       "Weihinschrift": {
-        "labels": {
+        "label": {
           "de": "Weihinschrift"
         }
       },
       "Ziegelstempel": {
-        "labels": {
+        "label": {
           "de": "Ziegelstempel"
         }
       }
@@ -42455,32 +42463,32 @@
     "description": {},
     "values": {
       "Schmuck": {
-        "labels": {
+        "label": {
           "de": "Schmuck"
         }
       },
       "Gerät": {
-        "labels": {
+        "label": {
           "de": "Gerät"
         }
       },
       "Produktionsabfall": {
-        "labels": {
+        "label": {
           "de": "Produktionsabfall"
         }
       },
       "Skulptur": {
-        "labels": {
+        "label": {
           "de": "Skulptur"
         }
       },
       "Waffe/Rüstung": {
-        "labels": {
+        "label": {
           "de": "Waffe/Rüstung"
         }
       },
       "unbestimmbar": {
-        "labels": {
+        "label": {
           "de": "unbestimmbar"
         }
       }
@@ -42492,307 +42500,307 @@
     "description": {},
     "values": {
       "Anhänger": {
-        "labels": {
+        "label": {
           "de": "Anhänger"
         }
       },
       "Armreif": {
-        "labels": {
+        "label": {
           "de": "Armreif"
         }
       },
       "Band": {
-        "labels": {
+        "label": {
           "de": "Band"
         }
       },
       "Barren": {
-        "labels": {
+        "label": {
           "de": "Barren"
         }
       },
       "Beschlag": {
-        "labels": {
+        "label": {
           "de": "Beschlag"
         }
       },
       "Blech": {
-        "labels": {
+        "label": {
           "de": "Blech"
         }
       },
       "Einlage": {
-        "labels": {
+        "label": {
           "de": "Einlage"
         }
       },
       "Fibel": {
-        "labels": {
+        "label": {
           "de": "Fibel"
         }
       },
       "Gefäß": {
-        "labels": {
+        "label": {
           "de": "Gefäß"
         }
       },
       "Gerät": {
-        "labels": {
+        "label": {
           "de": "Gerät"
         }
       },
       "Gewicht": {
-        "labels": {
+        "label": {
           "de": "Gewicht"
         }
       },
       "Glocke": {
-        "labels": {
+        "label": {
           "de": "Glocke"
         }
       },
       "Gussform": {
-        "labels": {
+        "label": {
           "de": "Gussform"
         }
       },
       "Gusszapfen": {
-        "labels": {
+        "label": {
           "de": "Gusszapfen"
         }
       },
       "Halbfabrikat": {
-        "labels": {
+        "label": {
           "de": "Halbfabrikat"
         }
       },
       "Helm": {
-        "labels": {
+        "label": {
           "de": "Helm"
         }
       },
       "Kandelaber": {
-        "labels": {
+        "label": {
           "de": "Kandelaber"
         }
       },
       "Kette": {
-        "labels": {
+        "label": {
           "de": "Kette"
         }
       },
       "Klinge": {
-        "labels": {
+        "label": {
           "de": "Klinge"
         }
       },
       "Knopf": {
-        "labels": {
+        "label": {
           "de": "Knopf"
         }
       },
       "Lampe": {
-        "labels": {
+        "label": {
           "de": "Lampe"
         }
       },
       "Lanzenspitze": {
-        "labels": {
+        "label": {
           "de": "Lanzenspitze"
         }
       },
       "Löffel": {
-        "labels": {
+        "label": {
           "de": "Löffel"
         }
       },
       "Meissel": {
-        "labels": {
+        "label": {
           "de": "Meissel"
         }
       },
       "Messer": {
-        "labels": {
+        "label": {
           "de": "Messer"
         }
       },
       "Mobiliar": {
-        "labels": {
+        "label": {
           "de": "Mobiliar"
         }
       },
       "Nadel": {
-        "labels": {
+        "label": {
           "de": "Nadel"
         }
       },
       "Nagel": {
-        "labels": {
+        "label": {
           "de": "Nagel"
         }
       },
       "Obelos": {
-        "labels": {
+        "label": {
           "de": "Obelos"
         }
       },
       "Perle": {
-        "labels": {
+        "label": {
           "de": "Perle"
         }
       },
       "Pfeilspitze": {
-        "labels": {
+        "label": {
           "de": "Pfeilspitze"
         }
       },
       "Plastik/Skulptur": {
-        "labels": {
+        "label": {
           "de": "Plastik/Skulptur"
         }
       },
       "Produktionsfragment": {
-        "labels": {
+        "label": {
           "de": "Produktionsfragment"
         }
       },
       "Projektil": {
-        "labels": {
+        "label": {
           "de": "Projektil"
         }
       },
       "Reibe": {
-        "labels": {
+        "label": {
           "de": "Reibe"
         }
       },
       "Ring": {
-        "labels": {
+        "label": {
           "de": "Ring"
         }
       },
       "Ringbarren": {
-        "labels": {
+        "label": {
           "de": "Ringbarren"
         }
       },
       "Rührstab": {
-        "labels": {
+        "label": {
           "de": "Rührstab"
         }
       },
       "Sarkophag": {
-        "labels": {
+        "label": {
           "de": "Sarkophag"
         }
       },
       "Schild": {
-        "labels": {
+        "label": {
           "de": "Schild"
         }
       },
       "Schlacke": {
-        "labels": {
+        "label": {
           "de": "Schlacke"
         }
       },
       "Schlüssel": {
-        "labels": {
+        "label": {
           "de": "Schlüssel"
         }
       },
       "Schmiedeabfall": {
-        "labels": {
+        "label": {
           "de": "Schmiedeabfall"
         }
       },
       "Schmuck": {
-        "labels": {
+        "label": {
           "de": "Schmuck"
         }
       },
       "Schnalle": {
-        "labels": {
+        "label": {
           "de": "Schnalle"
         }
       },
       "Schreibgerät": {
-        "labels": {
+        "label": {
           "de": "Schreibgerät"
         }
       },
       "Sichel": {
-        "labels": {
+        "label": {
           "de": "Sichel"
         }
       },
       "Siegel": {
-        "labels": {
+        "label": {
           "de": "Siegel"
         }
       },
       "Speerspitze": {
-        "labels": {
+        "label": {
           "de": "Speerspitze"
         }
       },
       "Spiegel": {
-        "labels": {
+        "label": {
           "de": "Spiegel"
         }
       },
       "Spielstein": {
-        "labels": {
+        "label": {
           "de": "Spielstein"
         }
       },
       "Spinnwirtel": {
-        "labels": {
+        "label": {
           "de": "Spinnwirtel"
         }
       },
       "Stabbarren": {
-        "labels": {
+        "label": {
           "de": "Stabbarren"
         }
       },
       "Strigilis": {
-        "labels": {
+        "label": {
           "de": "Strigilis"
         }
       },
       "Türschloss": {
-        "labels": {
+        "label": {
           "de": "Türschloss"
         }
       },
       "unbestimmbar": {
-        "labels": {
+        "label": {
           "de": "unbestimmbar"
         }
       },
       "Waffe": {
-        "labels": {
+        "label": {
           "de": "Waffe"
         }
       },
       "Wasserleitung": {
-        "labels": {
+        "label": {
           "de": "Wasserleitung"
         }
       },
       "Weinheber": {
-        "labels": {
+        "label": {
           "de": "Weinheber"
         }
       },
       "Werkzeug": {
-        "labels": {
+        "label": {
           "de": "Werkzeug"
         }
       },
       "Zierbeschlag": {
-        "labels": {
+        "label": {
           "de": "Zierbeschlag"
         }
       }
@@ -42804,62 +42812,62 @@
     "description": {},
     "values": {
       "Bronze": {
-        "labels": {
+        "label": {
           "de": "Bronze"
         }
       },
       "Eisen": {
-        "labels": {
+        "label": {
           "de": "Eisen"
         }
       },
       "Blei": {
-        "labels": {
+        "label": {
           "de": "Blei"
         }
       },
       "Silber": {
-        "labels": {
+        "label": {
           "de": "Silber"
         }
       },
       "Unklar": {
-        "labels": {
+        "label": {
           "de": "Unklar"
         }
       },
       "Gold": {
-        "labels": {
+        "label": {
           "de": "Gold"
         }
       },
       "Aluminium": {
-        "labels": {
+        "label": {
           "de": "Aluminium"
         }
       },
       "Kupfer": {
-        "labels": {
+        "label": {
           "de": "Kupfer"
         }
       },
       "Messing": {
-        "labels": {
+        "label": {
           "de": "Messing"
         }
       },
       "Stahl": {
-        "labels": {
+        "label": {
           "de": "Stahl"
         }
       },
       "Zink": {
-        "labels": {
+        "label": {
           "de": "Zink"
         }
       },
       "Zinn": {
-        "labels": {
+        "label": {
           "de": "Zinn"
         }
       }
@@ -42871,32 +42879,32 @@
     "description": {},
     "values": {
       "Kalkstein": {
-        "labels": {
+        "label": {
           "de": "Kalkstein"
         }
       },
       "Konglomerat": {
-        "labels": {
+        "label": {
           "de": "Konglomerat"
         }
       },
       "Marmor": {
-        "labels": {
+        "label": {
           "de": "Marmor"
         }
       },
       "Muschelkalk": {
-        "labels": {
+        "label": {
           "de": "Muschelkalk"
         }
       },
       "Poros": {
-        "labels": {
+        "label": {
           "de": "Poros"
         }
       },
       "Sandstein": {
-        "labels": {
+        "label": {
           "de": "Sandstein"
         }
       }
@@ -64347,6 +64355,3633 @@
       "5-SehrSchwer": {
         "label": {
           "de": "5 Sehr Schwer"
+        }
+      }
+    }
+  },
+  "Feature-locusRecordingType-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-03",
+    "description": {
+      "en": "Valuelist defining the different Types of Loci"
+    },
+    "values": {
+      "Verfüllung": {
+        "label": {
+          "en": "Deposit",
+          "tr": "Dolgu"
+        }
+      },
+      "Struktur": {
+        "label": {
+          "en": "Structural element",
+          "tr": "Mimari eleman"
+        }
+      },
+      "Negativbefund": {
+        "label": {
+          "en": "Cut",
+          "tr": "Kesme"
+        }
+      }
+    },
+    "order": [
+      "Deposit",
+      "Structural element",
+      "Cut"
+    ]
+  },
+  "Layer-locusDepositType-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-04",
+    "description": {
+      "en": "Valuelist defining the different Types of deposits"
+    },
+    "values": {
+      "topsoil": {
+        "label": {
+          "en": "Topsoil",
+          "tr": "Yüzey toprağı"
+        }
+      },
+      "arbitrarySpit": {
+        "label": {
+          "en": "Arbitrary spit",
+          "tr": "Keyfi oluşturulmuş"
+        }
+      },
+      "packingDeposit": {
+        "label": {
+          "en": "Packing deposit",
+          "tr": "Sıkıştırma dolgusu"
+        }
+      },
+      "tumbledStones": {
+        "label": {
+          "en": "Tumbled stones",
+          "tr": "Devrilmiş taşlar"
+        }
+      },
+      "collapse": {
+        "label": {
+          "en": "Collapse",
+          "tr": "Çöküntü"
+        }
+      },
+      "ashyDeposit": {
+        "label": {
+          "en": "Ashy deposit",
+          "tr": "Küllü dolgu"
+        }
+      },
+      "erosionalDepositsOrCleaning": {
+        "label": {
+          "en": "Erosional deposits/Cleaning",
+          "tr": "Erozyon dolgusu / Temizleme"
+        }
+      },
+      "depositOther": {
+        "label": {
+          "en": "Other (specify below)",
+          "tr": "Diğer (aşağıda belirtin)"
+        }
+      }
+    },
+    "order": [
+      "Topsoil",
+      "Arbitary Spit",
+      "Packing deposit",
+      "Tumbled stones",
+      "Collapse",
+      "Ashy Deposit",
+      "Erosional deposits/Cleaning",
+      "Other"
+    ]
+  },
+  "Layer-locusCompaction-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining different levels of compaction"
+    },
+    "values": {
+      "compact": {
+        "label": {
+          "en": "Compact",
+          "tr": "Sert"
+        }
+      },
+      "mediumCompact": {
+        "label": {
+          "en": "Medium Compact",
+          "tr": "Orta sertlikte"
+        }
+      },
+      "friable": {
+        "label": {
+          "en": "Friable",
+          "tr": "Ufalanabilir"
+        }
+      },
+      "crumbly": {
+        "label": {
+          "en": "Crumbly"
+        }
+      },
+      "loose": {
+        "label": {
+          "en": "Loose",
+          "tr": "Dağılan"
+        }
+      }
+    },
+    "order": [
+      "compact",
+      "mediumCompact",
+      "friable",
+      "crumbly",
+      "loose"
+    ]
+  },
+  "Layer-locusComposition-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {},
+    "values": {
+      "sand": {
+        "label": {
+          "en": "Sand",
+          "tr": ""
+        }
+      },
+      "sandySilt": {
+        "label": {
+          "en": "Sandy silt",
+          "tr": ""
+        }
+      },
+      "sandyClay": {
+        "label": {
+          "en": "Sandy clay",
+          "tr": ""
+        }
+      },
+      "silt": {
+        "label": {
+          "en": "Silt",
+          "tr": ""
+        }
+      },
+      "siltySand": {
+        "label": {
+          "en": "Silty sand",
+          "tr": ""
+        }
+      },
+      "siltyClay": {
+        "label": {
+          "en": "Silty clay",
+          "tr": ""
+        }
+      },
+      "Clay": {
+        "label": {
+          "en": "Clay",
+          "tr": ""
+        }
+      },
+      "clayeySand": {
+        "label": {
+          "en": "Clayey sand",
+          "tr": ""
+        }
+      },
+      "clayeySilt": {
+        "label": {
+          "en": "Clayey silt",
+          "tr": ""
+        }
+      },
+      "loam": {
+        "label": {
+          "en": "Loam",
+          "tr": ""
+        }
+      }
+    },
+    "order": [
+      "sand",
+      "siltySand",
+      "clayeySand",
+      "silt",
+      "sandySilt",
+      "clayeySilt",
+      "clay",
+      "sandyClay",
+      "siltyClay",
+      "loam"
+    ]
+  },
+  "Feature-locusDepositCollectionMethod-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the different methods of find collection"
+    },
+    "values": {
+      "drySieved": {
+        "label": {
+          "en": "Dry sieved",
+          "tr": "Kuru elendi"
+        }
+      },
+      "wetSieved": {
+        "label": {
+          "en": "Wet Sieved",
+          "tr": "Sulu elendi"
+        }
+      },
+      "flotation": {
+        "label": {
+          "en": "Flotation",
+          "tr": "Yüzdürüldü"
+        }
+      },
+      "hand-picked": {
+        "label": {
+          "en": "Not sieved; Hand-picked only",
+          "tr": "Elenmedi; buluntular yalnızca elle toplandı"
+        }
+      }
+    },
+    "order": [
+      "drySieved",
+      "wetSieved",
+      "flotation",
+      "hand-picked"
+    ]
+  },
+  "Layer-locusDepositColourModifier-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-09-27",
+    "description": {
+      "en": "Valuelist defining the modifier of colour for deposits"
+    },
+    "values": {
+      "light": {
+        "label": {
+          "en": "Light",
+          "tr": "Açık"
+        }
+      },
+      "mid": {
+        "label": {
+          "en": "Mid",
+          "tr": "Orta"
+        }
+      },
+      "dark": {
+        "label": {
+          "en": "Dark",
+          "tr": "Koyu"
+        }
+      }
+    },
+    "order": []
+  },
+  "Layer-locusDepositColourHue-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-09-27",
+    "description": {
+      "en": "Valuelist defining the hue of colour for deposits"
+    },
+    "values": {
+      "pinkish": {
+        "label": {
+          "en": "Pinkish",
+          "tr": ""
+        }
+      },
+      "reddish": {
+        "label": {
+          "en": "Reddish",
+          "tr": ""
+        }
+      },
+      "yellowish": {
+        "label": {
+          "en": "Yellowish",
+          "tr": ""
+        }
+      },
+      "brownish": {
+        "label": {
+          "en": "Brownish",
+          "tr": ""
+        }
+      },
+      "greenish": {
+        "label": {
+          "en": "Greenish",
+          "tr": ""
+        }
+      },
+      "blueish": {
+        "label": {
+          "en": "Blueish",
+          "tr": ""
+        }
+      },
+      "greyish": {
+        "label": {
+          "en": "Greyish",
+          "tr": ""
+        }
+      },
+      "whitish": {
+        "label": {
+          "en": "Whitish",
+          "tr": ""
+        }
+      },
+      "blakish": {
+        "label": {
+          "en": "Blackish",
+          "tr": ""
+        }
+      }
+    },
+    "order": [
+      "pinkish",
+      "reddish",
+      "yellowish",
+      "brownish",
+      "greenish",
+      "bluish",
+      "greyish",
+      "Whitish",
+      "blakish"
+    ]
+  },
+  "Layer-locusDepositColour-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-09-27",
+    "description": {
+      "en": "Valuelist defining the colour for deposits"
+    },
+    "values": {
+      "pink": {
+        "label": {
+          "en": "Pink",
+          "tr": ""
+        }
+      },
+      "red": {
+        "label": {
+          "en": "Red",
+          "tr": ""
+        }
+      },
+      "yellow": {
+        "label": {
+          "en": "Yellow",
+          "tr": ""
+        }
+      },
+      "brown": {
+        "label": {
+          "en": "Brown",
+          "tr": ""
+        }
+      },
+      "green": {
+        "label": {
+          "en": "Green",
+          "tr": ""
+        }
+      },
+      "blue": {
+        "label": {
+          "en": "Blue",
+          "tr": ""
+        }
+      },
+      "grey": {
+        "label": {
+          "en": "Grey",
+          "tr": ""
+        }
+      },
+      "white": {
+        "label": {
+          "en": "White",
+          "tr": ""
+        }
+      },
+      "black": {
+        "label": {
+          "en": "Black",
+          "tr": ""
+        }
+      }
+    },
+    "order": []
+  },
+  "Feature-locusDepositInclusions-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining possible inclusions in deposit"
+    },
+    "values": {
+      "stones": {
+        "label": {
+          "en": "Stones",
+          "tr": "Taş"
+        }
+      },
+      "chippedStones": {
+        "label": {
+          "en": "Chipped Stones",
+          "tr": "Yontmataş"
+        }
+      },
+      "bones": {
+        "label": {
+          "en": "Bones",
+          "tr": "Kemik"
+        }
+      },
+      "plasterFragments": {
+        "label": {
+          "en": "Plaster fragments",
+          "tr": "Sıva parçası"
+        }
+      },
+      "gravel": {
+        "label": {
+          "en": "Gravel",
+          "tr": "Çakıl"
+        }
+      },
+      "charcoal": {
+        "label": {
+          "en": "Charcoal",
+          "tr": "Odun kömürü"
+        }
+      },
+      "molluscs": {
+        "label": {
+          "en": "Molluscs",
+          "tr": "Yumuşakça kabuğu"
+        }
+      },
+      "mortar": {
+        "label": {
+          "en": "Mortar",
+          "tr": "Harç"
+        }
+      },
+      "grit": {
+        "label": {
+          "en": "Grit",
+          "tr": "Kum tanesi"
+        }
+      },
+      "groundStone": {
+        "label": {
+          "en": "Ground Stone",
+          "tr": "Sürtmetaş"
+        }
+      },
+      "limeInclusions": {
+        "label": {
+          "en": "Lime inclusions",
+          "tr": "Kireç kalıntısı"
+        }
+      },
+      "ash": {
+        "label": {
+          "en": "Ash",
+          "tr": "Kül"
+        }
+      }
+    },
+    "order": [
+      "stones",
+      "chippedStones",
+      "bones",
+      "plasterFragments",
+      "gravel",
+      "charcoal",
+      "molluscs",
+      "mortar",
+      "grit",
+      "groundStone",
+      "limeInclusions",
+      "ash"
+    ]
+  },
+  "Feature-locusDepositInclusionsStone-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the size of stone inclusions in deposit"
+    },
+    "values": {
+      "smallerThanFist": {
+        "label": {
+          "en": "Small (smaller than fist)",
+          "tr": "küçük (yumruktan küçük)"
+        }
+      },
+      "fist-sized": {
+        "label": {
+          "en": "Fist-sized",
+          "tr": "yumruk-boyu"
+        }
+      },
+      "medium-sized": {
+        "label": {
+          "en": "Medium-sized (20 cm)",
+          "tr": "orta boy (yumruktan büyük–20 cm)"
+        }
+      },
+      "large": {
+        "label": {
+          "en": "Large (over 20 cm)",
+          "tr": "büyük (20 üstü)"
+        }
+      }
+    },
+    "order": [
+      "small",
+      "fist-sized",
+      "medium-sized",
+      "large"
+    ]
+  },
+  "Feature-locusDepositStoneShape-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the shape of stone inclusions in deposit"
+    },
+    "values": {
+      "angular": {
+        "label": {
+          "en": "angular",
+          "tr": "köşeli"
+        }
+      },
+      "rounded": {
+        "label": {
+          "en": "rounded",
+          "tr": "yuvarlak"
+        }
+      }
+    },
+    "order": []
+  },
+  "Architecture-structuralElementType-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the different structural elements constituting the Locus"
+    },
+    "values": {
+      "wall": {
+        "label": {
+          "en": "Wall",
+          "tr": "Duvar"
+        }
+      },
+      "bench": {
+        "label": {
+          "en": "Bench",
+          "tr": "Seki"
+        }
+      },
+      "wallOpeningOrDoor": {
+        "label": {
+          "en": "Wall opening/Door",
+          "tr": "Duvar açıklığı/Kapı"
+        }
+      },
+      "floor": {
+        "label": {
+          "en": "Floor",
+          "tr": "Taban"
+        }
+      },
+      "niche": {
+        "label": {
+          "en": "Niche",
+          "tr": "Niş"
+        }
+      },
+      "roofOrCeiling": {
+        "label": {
+          "en": "Roof/Ceiling",
+          "tr": "Çatı/Tavan"
+        }
+      },
+      "pillar": {
+        "label": {
+          "en": "Pillar",
+          "tr": "Dikilitaş"
+        }
+      },
+      "portalStone": {
+        "label": {
+          "en": "'Portal' stone",
+          "tr": "“Kapı” taşı (portal stone)"
+        }
+      },
+      "buttress": {
+        "label": {
+          "en": "Buttress",
+          "tr": "Payanda"
+        }
+      },
+      "fireInstallationOrhearth": {
+        "label": {
+          "en": "Hearth",
+          "tr": "Ateş yeri"
+        }
+      },
+      "stepsOrStairs": {
+        "label": {
+          "en": "Steps/Stairs",
+          "tr": "Basamak/Merdiven"
+        }
+      },
+      "other": {
+        "label": {
+          "en": "Other",
+          "tr": "Diğer"
+        }
+      }
+    },
+    "order": [
+      "wall",
+      "bench",
+      "wallOpeningOrDoor",
+      "floor",
+      "niche",
+      "roofOrCeiling",
+      "pillar",
+      "portalStone",
+      "buttress",
+      "fireInstallationOrhearth",
+      "stepsOrStairs",
+      "other"
+    ]
+  },
+  "FeatureInterface-locusCutType-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the different cut types constituting the Locus"
+    },
+    "values": {
+      "pit": {
+        "label": {
+          "en": "Pit",
+          "tr": "Çukur"
+        }
+      },
+      "rockCut": {
+        "label": {
+          "en": "Rock Cut",
+          "tr": "Kaya çukuru"
+        }
+      },
+      "constructionOrFoundationPit": {
+        "label": {
+          "en": "Construction/Foundation pit",
+          "tr": "İnşa/Temel çukuru"
+        }
+      },
+      "postOrStakeHole": {
+        "label": {
+          "en": "Post/Stake hole",
+          "tr": "Direk/Kazık deliği"
+        }
+      },
+      "other": {
+        "label": {
+          "en": "Other",
+          "tr": "Diğer"
+        }
+      }
+    },
+    "order": [
+      "pit",
+      "rockCut",
+      "constructionOrFoundationPit",
+      "postOrStakeHole",
+      "other"
+    ]
+  },
+  "FeatureInterface-locusCutShape-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the possible shapes of cut types"
+    },
+    "values": {
+      "circular": {
+        "label": {
+          "en": "Circular",
+          "tr": "Yuvarlak"
+        }
+      },
+      "square": {
+        "label": {
+          "en": "Square",
+          "tr": "Kare"
+        }
+      },
+      "oval": {
+        "label": {
+          "en": "Oval",
+          "tr": "Oval"
+        }
+      },
+      "linear": {
+        "label": {
+          "en": "Linear",
+          "tr": "Çizgisel"
+        }
+      },
+      "rectangular": {
+        "label": {
+          "en": "Rectangular",
+          "tr": "Dörtgen"
+        }
+      },
+      "irregular": {
+        "label": {
+          "en": "Irregular",
+          "tr": "Düzensiz"
+        }
+      },
+      "rectangularWithRoundedCorners": {
+        "label": {
+          "en": "Rectangular with rounded corners",
+          "tr": "Köşeleri yuvarlatılmış dörtgen"
+        }
+      },
+      "other": {
+        "label": {
+          "en": "Other",
+          "tr": "Diğer"
+        }
+      }
+    },
+    "order": [
+      "circular",
+      "square",
+      "oval",
+      "linear",
+      "rectangular",
+      "irregular",
+      "rectangularWithRoundedCorners",
+      "other"
+    ]
+  },
+  "FeatureInterface-locusCutSlope-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining the different slopes of cuts"
+    },
+    "values": {
+      "breakOfSlope-top-sharp": {
+        "label": {
+          "en": "Top: sharp",
+          "tr": "Üst kısım: keskin"
+        }
+      },
+      "breakOfSlope-top-gradual": {
+        "label": {
+          "en": "Top: gradual",
+          "tr": "Üst kısım: kademeli"
+        }
+      },
+      "breakOfSlope-bottom-sharp": {
+        "label": {
+          "en": "Bottom: sharp",
+          "tr": "Zemin: keskin"
+        }
+      },
+      "breakOfSlope-bottom-gradual": {
+        "label": {
+          "en": "Bottom: gradual",
+          "tr": "Zemin: kademeli"
+        }
+      },
+      "breakOfSlope-sides-sharp": {
+        "label": {
+          "en": "Sides: sharp",
+          "tr": "Yan yüzler: keskin"
+        }
+      },
+      "breakOfSlope-sides-gradual": {
+        "label": {
+          "en": "Sides: gradual",
+          "tr": "Yan yüzler: kademeli"
+        }
+      },
+      "breakOfSlope-base-sharp": {
+        "label": {
+          "en": "Base: sharp",
+          "tr": "Dip: keskin"
+        }
+      },
+      "breakOfSlope-base-gradual": {
+        "label": {
+          "en": "Base: gradual",
+          "tr": "Dip: kademeli"
+        }
+      }
+    },
+    "order": []
+  },
+  "Feature-locusStratigraphyRemarks-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-06",
+    "description": {
+      "en": "Valuelist defining remarks regarding the stratigraphy of the Locus"
+    },
+    "values": {
+      "primary": {
+        "label": {
+          "en": "Primary",
+          "tr": "Birincil"
+        }
+      },
+      "secondary": {
+        "label": {
+          "en": "Secondary",
+          "tr": "İkincil"
+        }
+      },
+      "tertiary": {
+        "label": {
+          "en": "Tertiary",
+          "tr": "Üçüncül"
+        }
+      }
+    },
+    "order": [
+      "primary",
+      "secondary",
+      "tertiary"
+    ]
+  },
+  "Find-smallFindsCategory-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-10",
+    "description": {
+      "en": "Valuelist defining the different smallfind categories"
+    },
+    "values": {
+      "chippedStone": {
+        "label": {
+          "en": "Chipped Stone",
+          "tr": "Yontmataş"
+        }
+      },
+      "stoneObject": {
+        "label": {
+          "en": "Stone object",
+          "tr": "needsReview! İşlenmiş Taş"
+        }
+      },
+      "bone": {
+        "label": {
+          "en": "Bone",
+          "tr": "Kemik"
+        }
+      },
+      "mollusc": {
+        "label": {
+          "en": "Mollusc",
+          "tr": "Yumuşakça kabuğu"
+        }
+      },
+      "clayObject": {
+        "label": {
+          "en": "Clay object",
+          "tr": "Kil Nesnesi"
+        }
+      },
+      "pottery": {
+        "label": {
+          "en": "Pottery",
+          "tr": "çanak çömlek"
+        }
+      },
+      "pigmentAndMinerals": {
+        "label": {
+          "en": "Pigment and minerals",
+          "tr": "Pigment ve mineraller"
+        }
+      },
+      "glass": {
+        "label": {
+          "en": "Glass",
+          "tr": "needsReview! Cam"
+        }
+      },
+      "metal": {
+        "label": {
+          "en": "Metal",
+          "tr": "needsReview! Metal"
+        }
+      },
+      "undefined": {
+        "label": {
+          "en": "Undefined",
+          "tr": "needsReview! Tanımsız"
+        }
+      }
+    },
+    "order": [
+      "chippedStone",
+      "stoneObject",
+      "bone",
+      "mollusc",
+      "clayObject",
+      "pigmentAndMinerals",
+      "pottery",
+      "glass",
+      "metal",
+      "undefined"
+    ]
+  },
+  "Find-smallFindsCollectionMethod-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-10",
+    "description": {
+      "en": "Valuelist defining the different collection methods of smallfinds"
+    },
+    "values": {
+      "singleFind": {
+        "label": {
+          "en": "Single Find",
+          "tr": "Tek Bul"
+        }
+      },
+      "collection": {
+        "label": {
+          "en": "Collection",
+          "tr": "Toplamak"
+        }
+      }
+    },
+    "order": [
+      "single",
+      "collection"
+    ]
+  },
+  "Find-smallFindsStorage-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-09; Review 2021-09-27",
+    "description": {
+      "en": "Valuelist defining the different places where a smallfind is stored"
+    },
+    "values": {
+      "stonegarden": {
+        "label": {
+          "en": "Stonegarden",
+          "tr": "'Taş Bahçe'"
+        }
+      },
+      "museumUrfa": {
+        "label": {
+          "en": "Urfa Museum",
+          "tr": "Urfa Müzesi"
+        }
+      },
+      "depot1ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 1",
+          "tr": "Depo 1"
+        }
+      },
+      "depot2ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 2",
+          "tr": "Depo 2"
+        }
+      },
+      "depot3ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 3",
+          "tr": "Depo 3"
+        }
+      },
+      "depot4ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 4",
+          "tr": "Depo 4"
+        }
+      },
+      "noStorageData": {
+        "label": {
+          "en": "no Data available on storage",
+          "tr": "bilgi yok"
+        }
+      },
+      "missing": {
+        "label": {
+          "en": "missing",
+          "tr": "kayıp"
+        }
+      }
+    },
+    "order": [
+      "museumUrfa",
+      "stonegarden",
+      "depot1ExcavationHouseGT",
+      "depot2ExcavationHouseGT",
+      "depot3ExcavationHouseGT",
+      "depot4ExcavationHouseGT",
+      "noStorageData",
+      "missing"
+    ]
+  },
+  "Stone-stoneFindCategory-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-10",
+    "description": {
+      "en": "Valuelist defining the different stonefind categories"
+    },
+    "values": {
+      "chippedStone": {
+        "label": {
+          "en": "Chipped Stone"
+        }
+      },
+      "workedStone": {
+        "label": {
+          "en": "Worked Stone"
+        }
+      }
+    },
+    "order": [
+      "chippedStone",
+      "workedStone"
+    ]
+  },
+  "Stone-lithicRawMaterial-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining raw material for lithic"
+    },
+    "values": {
+      "flint": {
+        "label": {
+          "en": "Flint"
+        }
+      },
+      "obsidian": {
+        "label": {
+          "en": "Obsidian"
+        }
+      },
+      "quartzit": {
+        "label": {
+          "en": "Quartzit"
+        }
+      },
+      "chert": {
+        "label": {
+          "en": "Chert"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicColor-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining color for lithic"
+    },
+    "values": {
+      "lightgreen": {
+        "label": {
+          "en": "lightgreen"
+        }
+      },
+      "mediumgreen": {
+        "label": {
+          "en": "mediumgreen"
+        }
+      },
+      "darkgreen": {
+        "label": {
+          "en": "darkgreen"
+        }
+      },
+      "lightbrown": {
+        "label": {
+          "en": "lightbrown"
+        }
+      },
+      "mediumbrown": {
+        "label": {
+          "en": "mediumbrown"
+        }
+      },
+      "darkbrown": {
+        "label": {
+          "en": "darkbrown"
+        }
+      },
+      "lightgrey (N6-N8)": {
+        "label": {
+          "en": "lightgrey (N6-N8)"
+        }
+      },
+      "mediumgrey (N5, N4)": {
+        "label": {
+          "en": "mediumgrey (N5, N4)"
+        }
+      },
+      "darkgrey (N3)": {
+        "label": {
+          "en": "darkgrey (N3)"
+        }
+      },
+      "lightyellow": {
+        "label": {
+          "en": "lightyellow"
+        }
+      },
+      "mediumyellow": {
+        "label": {
+          "en": "mediumyellow"
+        }
+      },
+      "darkyellow": {
+        "label": {
+          "en": "darkyellow"
+        }
+      },
+      "white (N9)": {
+        "label": {
+          "en": "white (N9)"
+        }
+      },
+      "black (N1)": {
+        "label": {
+          "en": "black (N1)"
+        }
+      },
+      "reddish": {
+        "label": {
+          "en": "reddish"
+        }
+      },
+      "pinkish (5RP 8/2)": {
+        "label": {
+          "en": "pinkish (5RP 8/2)"
+        }
+      },
+      "olive": {
+        "label": {
+          "en": "olive"
+        }
+      },
+      "orange": {
+        "label": {
+          "en": "orange"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicOptic-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining surface optics for lithic"
+    },
+    "values": {
+      "glossy": {
+        "label": {
+          "en": "glossy"
+        }
+      },
+      "fine": {
+        "label": {
+          "en": "fine"
+        }
+      },
+      "medium": {
+        "label": {
+          "en": "medium"
+        }
+      },
+      "coarse": {
+        "label": {
+          "en": "coarse"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicThermic-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining thermal impact on lithic artifacts"
+    },
+    "values": {
+      "noThermic": {
+        "label": {
+          "en": "no thermic"
+        }
+      },
+      "burned": {
+        "label": {
+          "en": "burned"
+        }
+      },
+      "tempered": {
+        "label": {
+          "en": "tempered"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicSurface-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining surface features for lithic artifacts"
+    },
+    "values": {
+      "knapped": {
+        "label": {
+          "en": "knapped"
+        }
+      },
+      "natural": {
+        "label": {
+          "en": "natural"
+        }
+      },
+      "patina": {
+        "label": {
+          "en": "patina"
+        }
+      },
+      "sintered": {
+        "label": {
+          "en": "sintered"
+        }
+      },
+      "thick cortex": {
+        "label": {
+          "en": "thick cortex"
+        }
+      },
+      "thin cortex": {
+        "label": {
+          "en": "thin cortex"
+        }
+      },
+      "rolled cortex": {
+        "label": {
+          "en": "rolled cortex"
+        }
+      },
+      "only thick cortex": {
+        "label": {
+          "en": "only thick cortex"
+        }
+      },
+      "only thin cortex": {
+        "label": {
+          "en": "only thin cortex"
+        }
+      },
+      "only rolled cortex": {
+        "label": {
+          "en": "only rolled cortex"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicBasicForm-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining basic form for lithic artifacts"
+    },
+    "values": {
+      "flake": {
+        "label": {
+          "en": "Flake"
+        }
+      },
+      "chip": {
+        "label": {
+          "en": "Chip"
+        }
+      },
+      "blade": {
+        "label": {
+          "en": "Blade"
+        }
+      },
+      "bladelet": {
+        "label": {
+          "en": "Bladelet"
+        }
+      },
+      "core": {
+        "label": {
+          "en": "Core"
+        }
+      },
+      "artWaste": {
+        "label": {
+          "en": "art Waste"
+        }
+      },
+      "natWaste": {
+        "label": {
+          "en": "nat Waste"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicPreservation-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining preservation for lithic artifacts"
+    },
+    "values": {
+      "proximal": {
+        "label": {
+          "en": "proximal"
+        }
+      },
+      "proximalBroken": {
+        "label": {
+          "en": "proximal broken"
+        }
+      },
+      "medial": {
+        "label": {
+          "en": "medial"
+        }
+      },
+      "medialBroken": {
+        "label": {
+          "en": "medial broken"
+        }
+      },
+      "distal": {
+        "label": {
+          "en": "distal"
+        }
+      },
+      "distalBroken": {
+        "label": {
+          "en": "distal broken"
+        }
+      },
+      "complete": {
+        "label": {
+          "en": "complete"
+        }
+      },
+      "completeBroken": {
+        "label": {
+          "en": "complete broken"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicCIM-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining core preparation techniques for lithic artifacts"
+    },
+    "values": {
+      "primaryCrested": {
+        "label": {
+          "en": "Primary crested"
+        }
+      },
+      "secondaryCrested": {
+        "label": {
+          "en": "Secondary crested"
+        }
+      },
+      "initialPlatformSpall": {
+        "label": {
+          "en": "Initial Platform Spall (IPS)"
+        }
+      },
+      "coreTablet": {
+        "label": {
+          "en": "Core tablet"
+        }
+      },
+      "partialCoreTablet": {
+        "label": {
+          "en": "Partial core tablet"
+        }
+      },
+      "primaryElement": {
+        "label": {
+          "en": "Primary Element (PE)"
+        }
+      },
+      "cleanUp": {
+        "label": {
+          "en": "Clean Up (CU)"
+        }
+      },
+      "hinge": {
+        "label": {
+          "en": "Hinge"
+        }
+      },
+      "overshot": {
+        "label": {
+          "en": "Overshot"
+        }
+      },
+      "kombewaFlake": {
+        "label": {
+          "en": "Kombewa flake"
+        }
+      },
+      "none": {
+        "label": {
+          "en": "none"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicTechnology-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining different techniques for lithic artifacts"
+    },
+    "values": {
+      "predeterminedBlade": {
+        "label": {
+          "en": "Predetermined blade (PB)"
+        }
+      },
+      "lateralBlade": {
+        "label": {
+          "en": "Lateral blade"
+        }
+      },
+      "epsilonBlade": {
+        "label": {
+          "en": "Y-blade/epsilon blade"
+        }
+      },
+      "twistedBlade": {
+        "label": {
+          "en": "Offset/Twisted blade"
+        }
+      },
+      "uShapedBlade": {
+        "label": {
+          "en": "U shaped blade"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicToolModification-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining tool modification for lithic artifacts"
+    },
+    "values": {
+      "modified": {
+        "label": {
+          "en": "modified"
+        }
+      },
+      "unmodified": {
+        "label": {
+          "en": "unmodified"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicToolPreservation-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining tool preservation for lithic artifacts"
+    },
+    "values": {
+      "complete": {
+        "label": {
+          "en": "complete"
+        }
+      },
+      "lengthWidthBroken": {
+        "label": {
+          "en": "length, width broken"
+        }
+      },
+      "widthLengthBroken": {
+        "label": {
+          "en": "width, length broken"
+        }
+      },
+      "incomplete": {
+        "label": {
+          "en": "incomplete"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicStrikingPlattform-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining striking plattform for lithic artifacts"
+    },
+    "values": {
+      "plain": {
+        "label": {
+          "en": "plain"
+        }
+      },
+      "dihedral": {
+        "label": {
+          "en": "dihedral"
+        }
+      },
+      "facetted": {
+        "label": {
+          "en": "facetted"
+        }
+      },
+      "natural": {
+        "label": {
+          "en": "natural"
+        }
+      },
+      "cortical": {
+        "label": {
+          "en": "cortical"
+        }
+      },
+      "partlyCortical": {
+        "label": {
+          "en": "partly cortical"
+        }
+      },
+      "patina": {
+        "label": {
+          "en": "patina"
+        }
+      },
+      "none": {
+        "label": {
+          "en": "none"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicBulb-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining bulb characteristic for lithic artifacts"
+    },
+    "values": {
+      "pronounced": {
+        "label": {
+          "en": "pronounced"
+        }
+      },
+      "pronouncedAndScar": {
+        "label": {
+          "en": "pronounced and scar"
+        }
+      },
+      "pronouncedAndLip": {
+        "label": {
+          "en": "pronounced and lip"
+        }
+      },
+      "pronouncedAll": {
+        "label": {
+          "en": "pronounced all"
+        }
+      },
+      "flat": {
+        "label": {
+          "en": "flat"
+        }
+      },
+      "flatAndScar": {
+        "label": {
+          "en": "flat and scar"
+        }
+      },
+      "flatAndLip": {
+        "label": {
+          "en": "flat and lip"
+        }
+      },
+      "flat all": {
+        "label": {
+          "en": "flat all"
+        }
+      },
+      "noProximal": {
+        "label": {
+          "en": "no proximal"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicStrike-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining striking characteristic for lithic artifacts"
+    },
+    "values": {
+      "hard": {
+        "label": {
+          "en": "hard"
+        }
+      },
+      "soft": {
+        "label": {
+          "en": "soft"
+        }
+      },
+      "indirect": {
+        "label": {
+          "en": "indirect"
+        }
+      },
+      "pressure": {
+        "label": {
+          "en": "pressure"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicStrikeDirection-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining striking direction for lithic artifacts"
+    },
+    "values": {
+      "unidirectional": {
+        "label": {
+          "en": "unidirectional"
+        }
+      },
+      "opposedDorsalVentral": {
+        "label": {
+          "en": "opposed dorsal-ventral"
+        }
+      },
+      "bidirectional": {
+        "label": {
+          "en": "bidirectional"
+        }
+      },
+      "unidirectionalCrossed": {
+        "label": {
+          "en": "unidirectional-crossed"
+        }
+      },
+      "opposedCrossed": {
+        "label": {
+          "en": "opposed-crossed"
+        }
+      },
+      "bidirectionalCrossed": {
+        "label": {
+          "en": "bidirectional-crossed"
+        }
+      },
+      "sintered": {
+        "label": {
+          "en": "sintered"
+        }
+      },
+      "other": {
+        "label": {
+          "en": "other"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicUsewear-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining signs of wear for lithic artifacts"
+    },
+    "values": {
+      "yes": {
+        "label": {
+          "en": "yes"
+        }
+      },
+      "no": {
+        "label": {
+          "en": "no"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "undetermined"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicMod1-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-15",
+    "description": {
+      "en": "Valuelist defining different modification properties for lithic artifacts"
+    },
+    "values": {
+      "1": {
+        "label": {
+          "de": "1) el-Khiam Point"
+        }
+      },
+      "2": {
+        "label": {
+          "de": "2) Gusir Point"
+        }
+      },
+      "3": {
+        "label": {
+          "de": "3) Salibiya Point"
+        }
+      },
+      "4": {
+        "label": {
+          "de": "4) Jordan Valley Point"
+        }
+      },
+      "5": {
+        "label": {
+          "de": "5) Qaramel Point"
+        }
+      },
+      "6": {
+        "label": {
+          "de": "6) Helwan Point"
+        }
+      },
+      "7": {
+        "label": {
+          "de": "7) Mureybet Point"
+        }
+      },
+      "8": {
+        "label": {
+          "de": "8) Jerf el-Ahmar Point"
+        }
+      },
+      "9": {
+        "label": {
+          "de": "9) Cafer Point"
+        }
+      },
+      "10": {
+        "label": {
+          "de": "10) Cemka Point"
+        }
+      },
+      "11": {
+        "label": {
+          "de": "11) Nemrik Point"
+        }
+      },
+      "12": {
+        "label": {
+          "de": "12) Demirköy Point"
+        }
+      },
+      "13": {
+        "label": {
+          "de": "13) Nevali Cori Point"
+        }
+      },
+      "14": {
+        "label": {
+          "de": "14) Aswad Point"
+        }
+      },
+      "15": {
+        "label": {
+          "de": "15) Urfa Point"
+        }
+      },
+      "16": {
+        "label": {
+          "de": "16) Byblos Point"
+        }
+      },
+      "17": {
+        "label": {
+          "de": "17) Jericho Point"
+        }
+      },
+      "18": {
+        "label": {
+          "de": "18) Amuq Point"
+        }
+      },
+      "19": {
+        "label": {
+          "de": "19) Intermediate Jericho-Byblos Point"
+        }
+      },
+      "20": {
+        "label": {
+          "de": "20) Intermediate Byblos-Amuq Point"
+        }
+      },
+      "21": {
+        "label": {
+          "de": "21) Ha-Parsa Point"
+        }
+      },
+      "22": {
+        "label": {
+          "de": "22) Herzliya Point"
+        }
+      },
+      "23": {
+        "label": {
+          "de": "23) Nizzanim Point"
+        }
+      },
+      "24": {
+        "label": {
+          "de": "24) Transverse Point"
+        }
+      },
+      "25": {
+        "label": {
+          "de": "25) Undetermined/Broken Point"
+        }
+      },
+      "26": {
+        "label": {
+          "de": "26) Foliate Microlith"
+        }
+      },
+      "27": {
+        "label": {
+          "de": "27) Isosceles Triangle"
+        }
+      },
+      "28": {
+        "label": {
+          "de": "28) Scalene Triangle"
+        }
+      },
+      "29": {
+        "label": {
+          "de": "29) Trapeze"
+        }
+      },
+      "30": {
+        "label": {
+          "de": "30) Lunate"
+        }
+      },
+      "31": {
+        "label": {
+          "de": "31) Nongeometric Microlith"
+        }
+      },
+      "32": {
+        "label": {
+          "de": "32) Geometric Microlith"
+        }
+      },
+      "33": {
+        "label": {
+          "de": "33) Perforator"
+        }
+      },
+      "34": {
+        "label": {
+          "de": "34) Microperforator"
+        }
+      },
+      "35": {
+        "label": {
+          "de": "35) Parallel Sickle Gloss"
+        }
+      },
+      "36": {
+        "label": {
+          "de": "36) Convex Sickle Gloss"
+        }
+      },
+      "37": {
+        "label": {
+          "de": "37) Diagonal Sickle Gloss"
+        }
+      },
+      "38": {
+        "label": {
+          "de": "38) Sickle Gloss Undetermined Expansion"
+        }
+      },
+      "39": {
+        "label": {
+          "de": "39) Endscraper"
+        }
+      },
+      "40": {
+        "label": {
+          "de": "40) Sidescraper"
+        }
+      },
+      "41": {
+        "label": {
+          "de": "41) Truncation"
+        }
+      },
+      "42": {
+        "label": {
+          "de": "42) Hagdud Truncation"
+        }
+      },
+      "43": {
+        "label": {
+          "de": "43) Gilgal Truncation"
+        }
+      },
+      "44": {
+        "label": {
+          "de": "44) Lateral Retouch"
+        }
+      },
+      "45": {
+        "label": {
+          "de": "45) Backed"
+        }
+      },
+      "46": {
+        "label": {
+          "de": "46) Cayönü Tool"
+        }
+      },
+      "47": {
+        "label": {
+          "de": "47) Burin"
+        }
+      },
+      "48": {
+        "label": {
+          "de": "48) Notch"
+        }
+      },
+      "49": {
+        "label": {
+          "de": "49) Microburin Technic (MBT)"
+        }
+      },
+      "50": {
+        "label": {
+          "de": "50) Krukowski Microburin Technic (MBT)"
+        }
+      },
+      "51": {
+        "label": {
+          "de": "51) Trihedral Pick Microburin Technic (MBT)"
+        }
+      },
+      "52": {
+        "label": {
+          "de": "52) Lame a ergot"
+        }
+      },
+      "53": {
+        "label": {
+          "de": "53) Denticulation"
+        }
+      },
+      "54": {
+        "label": {
+          "de": "54) Splintered Artefact"
+        }
+      },
+      "55": {
+        "label": {
+          "de": "55) Hammerstone"
+        }
+      },
+      "56": {
+        "label": {
+          "de": "56) Axe/Adze"
+        }
+      },
+      "57": {
+        "label": {
+          "de": "57) Pick"
+        }
+      },
+      "58": {
+        "label": {
+          "de": "58) Herminette"
+        }
+      }
+    },
+    "order": []
+  },
+  "Stone-lithicCore-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-12-16",
+    "description": {
+      "en": "Valuelist defining different core techniques for lithic artifacts"
+    },
+    "values": {
+      "unidirectionalSinglePlatformFlakecore": {
+        "label": {
+          "en": "Unidirectional single platform Flakecore"
+        }
+      },
+      "doublePlatformFlakecore": {
+        "label": {
+          "en": "Double platform Flakecore"
+        }
+      },
+      "multiplePlatformflakecore": {
+        "label": {
+          "en": "Multiple platform Flakecore"
+        }
+      },
+      "unidirectionalSinglePlatformBladecore": {
+        "label": {
+          "en": "Unidirectional single platform Bladecore"
+        }
+      },
+      "bidirectionalDoublePlatformBladecore": {
+        "label": {
+          "en": "Bidirectional double platform Bladecore"
+        }
+      },
+      "pyramidalBladecore": {
+        "label": {
+          "en": "Pyramidal Bladecore"
+        }
+      },
+      "technologicalUniderictionalBladecore": {
+        "label": {
+          "en": "Technological uniderictional bladecore (TUB)"
+        }
+      },
+      "frontalCrestedRidgeBladecore": {
+        "label": {
+          "en": "Frontal Crested Ridge Bladecore"
+        }
+      },
+      "posteroLateralBladecore": {
+        "label": {
+          "en": "Postero-Lateral Bladecore"
+        }
+      },
+      "naviformBladecore": {
+        "label": {
+          "en": "Naviform Bladecore"
+        }
+      },
+      "offsetBidirectionalBladecore": {
+        "label": {
+          "en": "Offset Bidirectional Bladecore"
+        }
+      },
+      "bulletShapedBladecore": {
+        "label": {
+          "en": "Bullet-shaped Bladecore"
+        }
+      },
+      "ad-hocCore": {
+        "label": {
+          "en": "ad-hoc Core"
+        }
+      },
+      "undetermined": {
+        "label": {
+          "en": "Undetermined Core"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleProcessingStatus-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-10; 2021-11-05",
+    "description": {
+      "en": "Valuelist defining the different states of sample processing"
+    },
+    "values": {
+      "initialEntry": {
+        "label": {
+          "en": "Initial Entry"
+        }
+      },
+      "unprocessed": {
+        "label": {
+          "en": "Unprocessed"
+        }
+      },
+      "readyForProcessing": {
+        "label": {
+          "en": "Ready for processing, e.g. flotation done?"
+        }
+      },
+      "complete": {
+        "label": {
+          "en": "Processing complete"
+        }
+      },
+      "error": {
+        "label": {
+          "en": "Error in Processing"
+        }
+      },
+      "incomplete": {
+        "label": {
+          "en": "No further processing needed"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleLocation-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-11.05",
+    "description": {
+      "en": "Valuelist defining location of samples during sampling and processing"
+    },
+    "values": {
+      "depot1ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 1"
+        }
+      },
+      "depot2ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 2"
+        }
+      },
+      "depot3ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 3"
+        }
+      },
+      "depot4ExcavationHouseGT": {
+        "label": {
+          "en": "Depot 4"
+        }
+      },
+      "lab": {
+        "label": {
+          "en": "Out-of-house laboratory"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-methodOfAnalysis-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-08-10",
+    "description": {
+      "en": "Valuelist defining the different types of samples"
+    },
+    "values": {
+      "C14": {
+        "label": {
+          "en": "C14 analysis"
+        }
+      },
+      "dendrochronology": {
+        "label": {
+          "en": "Sample for dendrochronology"
+        }
+      },
+      "phosphate": {
+        "label": {
+          "en": "Phosphate analysis"
+        }
+      },
+      "pollen": {
+        "label": {
+          "en": "Pollen analysis"
+        }
+      },
+      "phytolith": {
+        "label": {
+          "en": "Phytolith analysis"
+        }
+      },
+      "microbotany": {
+        "label": {
+          "en": "Microbotany analysis"
+        }
+      },
+      "mineral": {
+        "label": {
+          "en": "Mineral analysis"
+        }
+      },
+      "geo-chemical": {
+        "label": {
+          "en": "(Geo-)chemical analysis"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleType-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-11-03",
+    "description": {
+      "en": "Valuelist defining the different types of samples"
+    },
+    "values": {
+      "soil": {
+        "label": {
+          "en": "Soil sample"
+        }
+      },
+      "charcoal": {
+        "label": {
+          "en": "Charcoal Sample"
+        }
+      },
+      "material": {
+        "label": {
+          "en": "Material Sample"
+        }
+      },
+      "architectural": {
+        "label": {
+          "en": "Architectural Sample"
+        }
+      },
+      "mineral": {
+        "label": {
+          "en": "Mineral Sample"
+        }
+      },
+      "other": {
+        "label": {
+          "en": "Other (Specify below!)"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleCollectionMethod-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-11-03",
+    "description": {
+      "en": "Valuelist defining the collection method for samples"
+    },
+    "values": {
+      "bulkSample": {
+        "label": {
+          "en": "Bulk sample"
+        }
+      },
+      "blockSample": {
+        "label": {
+          "en": "Block sample"
+        }
+      },
+      "materialSample": {
+        "label": {
+          "en": "Material sampling (extracted from object)"
+        }
+      },
+      "HandSampling": {
+        "label": {
+          "en": "Hand sampling (might be contaminated by human touch during sampling)"
+        }
+      },
+      "cleanSampling": {
+        "label": {
+          "en": "Clean sampling with special devise (no contamination by human touch during sampling)"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleSize-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-11-05",
+    "description": {
+      "en": "Valuelist defining sample size"
+    },
+    "values": {
+      "smallBag": {
+        "label": {
+          "en": "Small bag (approx. 10 x 7 cm)"
+        }
+      },
+      "mediumBag": {
+        "label": {
+          "en": "Medium bag (medium approx. 20 x 30 cm)"
+        }
+      },
+      "largeBag": {
+        "label": {
+          "en": "Large bag (large 40 x 50 cm)"
+        }
+      },
+      "bulkSize": {
+        "label": {
+          "en": "Bulk size bag (100 x 50 cm)"
+        }
+      }
+    },
+    "order": []
+  },
+  "Sample-sampleRemains-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-11-05",
+    "description": {
+      "en": "Valuelist defining sample size"
+    },
+    "values": {
+      "noRemains": {
+        "label": {
+          "en": "No remains left after initial processing"
+        }
+      },
+      "leftoverRemainsUnprocessed": {
+        "label": {
+          "en": "Leftover remains (no treatment)"
+        }
+      },
+      "leftoverRamainsProcessed": {
+        "label": {
+          "en": "Leftover remains (with chemicals or other treatment; specify in remarks)"
+        }
+      }
+    },
+    "order": []
+  },
+  "Find-smallFindsMaterialCodeOld-GoebekliTepe": {
+    "createdBy": "Frederic Nitschke",
+    "creationDate": "2021-09-08",
+    "description": {
+      "en": "Valuelist defining the Materials of smallfinds in a code structure, for the meaning of the values please see the labels"
+    },
+    "values": {
+      "1": {
+        "label": {
+          "de": "schwarzer Silex (1)"
+        }
+      },
+      "2": {
+        "label": {
+          "de": "oliver Silex (2)"
+        }
+      },
+      "3": {
+        "label": {
+          "de": "hell oliv - cremefarbener Silex (3)"
+        }
+      },
+      "4": {
+        "label": {
+          "de": "ockerfarbener Silex (4)"
+        }
+      },
+      "5": {
+        "label": {
+          "de": "grauer Silex (5)"
+        }
+      },
+      "6": {
+        "label": {
+          "de": "rosagelber Silex (6)"
+        }
+      },
+      "7": {
+        "label": {
+          "de": "weinroter Silex (7)"
+        }
+      },
+      "8": {
+        "label": {
+          "de": "dunkel glaskaramel Silex (8)"
+        }
+      },
+      "9": {
+        "label": {
+          "de": "graurosakaramel Silex (9)"
+        }
+      },
+      "10": {
+        "label": {
+          "de": "kalkweißer Silex (10)"
+        }
+      },
+      "11": {
+        "label": {
+          "de": "kalkgrauer Quarzit (11)"
+        }
+      },
+      "12": {
+        "label": {
+          "de": "Buntsandstein (12)"
+        }
+      },
+      "13": {
+        "label": {
+          "de": "lila Quarzit (13)"
+        }
+      },
+      "14": {
+        "label": {
+          "de": "weißer Quarzit (14)"
+        }
+      },
+      "18": {
+        "label": {
+          "de": "verbrannter Quarzitv (18)"
+        }
+      },
+      "19": {
+        "label": {
+          "de": "verbrannter Silex (19)"
+        }
+      },
+      "20": {
+        "label": {
+          "de": "opaker Obsidian (20)"
+        }
+      },
+      "21": {
+        "label": {
+          "de": "grüner Obsidian (21)"
+        }
+      },
+      "22": {
+        "label": {
+          "de": "grauer Obsidian (22)"
+        }
+      },
+      "23": {
+        "label": {
+          "de": "brauner Obsidian (23)"
+        }
+      },
+      "24": {
+        "label": {
+          "de": "rostfarbener Obsidian (24)"
+        }
+      },
+      "25": {
+        "label": {
+          "de": "varia Obsidian (25)"
+        }
+      },
+      "26": {
+        "label": {
+          "de": "verbrannter Obsidian (26)"
+        }
+      },
+      "27": {
+        "label": {
+          "de": "Nephrit glasig (27)"
+        }
+      },
+      "28": {
+        "label": {
+          "de": "Nephrit dicht (28)"
+        }
+      },
+      "29": {
+        "label": {
+          "de": "Marmor (29)"
+        }
+      },
+      "30": {
+        "label": {
+          "de": "Felsgestein allgemein (30)"
+        }
+      },
+      "31": {
+        "label": {
+          "de": "Kalk (31)"
+        }
+      },
+      "32": {
+        "label": {
+          "de": "rotes Felsgestein (32)"
+        }
+      },
+      "33": {
+        "label": {
+          "de": "Granitoid (33)"
+        }
+      },
+      "34": {
+        "label": {
+          "de": "Porphyroid (34)"
+        }
+      },
+      "35": {
+        "label": {
+          "de": "Basaltoid (35)"
+        }
+      },
+      "36": {
+        "label": {
+          "de": "Malachit (36)"
+        }
+      },
+      "37": {
+        "label": {
+          "de": "Eisen (37)"
+        }
+      },
+      "38": {
+        "label": {
+          "de": "Ocker (38)"
+        }
+      },
+      "39": {
+        "label": {
+          "de": "Schlacke (39)"
+        }
+      },
+      "40": {
+        "label": {
+          "de": "Knochen (40)"
+        }
+      },
+      "41": {
+        "label": {
+          "de": "Muschel (41)"
+        }
+      },
+      "42": {
+        "label": {
+          "de": "Geweih (42)"
+        }
+      },
+      "43": {
+        "label": {
+          "de": "Zahn (nur bei Artefakten) (43)"
+        }
+      },
+      "44": {
+        "label": {
+          "de": "verbrannter Kalk (44)"
+        }
+      },
+      "45": {
+        "label": {
+          "de": "Amphibolit (45)"
+        }
+      },
+      "46": {
+        "label": {
+          "de": "Blasenbasalt (46)"
+        }
+      },
+      "47": {
+        "label": {
+          "de": "Gneis (47)"
+        }
+      },
+      "48": {
+        "label": {
+          "de": "verbrannter Nephrit (48)"
+        }
+      },
+      "49": {
+        "label": {
+          "de": "verbrannter Knochen (49)"
+        }
+      },
+      "50": {
+        "label": {
+          "de": "Keramik Scherben (50)"
+        }
+      },
+      "51": {
+        "label": {
+          "de": "Ton (51)"
+        }
+      },
+      "52": {
+        "label": {
+          "de": "Tonschiefer (52)"
+        }
+      },
+      "53": {
+        "label": {
+          "de": "Sandstein (53)"
+        }
+      },
+      "54": {
+        "label": {
+          "de": "Tuff (54)"
+        }
+      },
+      "55": {
+        "label": {
+          "de": "Bronze (55)"
+        }
+      },
+      "56": {
+        "label": {
+          "de": "Fritte (56)"
+        }
+      },
+      "57": {
+        "label": {
+          "de": "Glas (57)"
+        }
+      },
+      "58": {
+        "label": {
+          "de": "Serpentin (58)"
+        }
+      },
+      "60": {
+        "label": {
+          "de": "Manganit (60)"
+        }
+      },
+      "61": {
+        "label": {
+          "de": "Blei (61)"
+        }
+      },
+      "62": {
+        "label": {
+          "de": "Hämatit (62)"
+        }
+      },
+      "63": {
+        "label": {
+          "de": "Karneol (63)"
+        }
+      },
+      "64": {
+        "label": {
+          "de": "Silber (64)"
+        }
+      },
+      "80": {
+        "label": {
+          "de": "Fossil (80)"
+        }
+      },
+      "81": {
+        "label": {
+          "de": "Holzkohle (81)"
+        }
+      },
+      "82": {
+        "label": {
+          "de": "organisch unbestimmt (82)"
+        }
+      },
+      "98": {
+        "label": {
+          "de": "Erdprobe nicht gesiebt (98)"
+        }
+      },
+      "99": {
+        "label": {
+          "de": "ausgesiebte Erde (99)"
+        }
+      }
+    },
+    "order": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "80",
+      "81",
+      "82",
+      "98",
+      "99"
+    ]
+  },
+  "Find-smallFindsTypeCodeOld-GoebekliTepe": {
+    "creationDate": "2021-09-07",
+    "createdBy": "Frederic Nitschke",
+    "description": {
+      "en": "Valuelist defining the Type of smallfinds in a code structure, for the meaning of the values please see the labels"
+    },
+    "values": {
+      "0": {
+        "label": {
+          "de": "Unbekanntes Bruchstück (0)"
+        }
+      },
+      "1": {
+        "label": {
+          "de": "Knolle (1)"
+        }
+      },
+      "2": {
+        "label": {
+          "de": "Knollenbruch (2)"
+        }
+      },
+      "3": {
+        "label": {
+          "de": "Platte (3)"
+        }
+      },
+      "4": {
+        "label": {
+          "de": "Plattenbruch (4)"
+        }
+      },
+      "5": {
+        "label": {
+          "de": "Trümmerstück (5)"
+        }
+      },
+      "6": {
+        "label": {
+          "de": "dicker Abschlag (6)"
+        }
+      },
+      "7": {
+        "label": {
+          "de": "Abspliß (7)"
+        }
+      },
+      "8": {
+        "label": {
+          "de": "dünner Abschlag (8)"
+        }
+      },
+      "9": {
+        "label": {
+          "de": "retuschierter Abschlag (9)"
+        }
+      },
+      "10": {
+        "label": {
+          "de": "gekerbter Abschlag (10)"
+        }
+      },
+      "11": {
+        "label": {
+          "de": "PPNB Kernkante (11)"
+        }
+      },
+      "12": {
+        "label": {
+          "de": "PPNB Kernkante 1. Stufe(Mittelbahn) (12)"
+        }
+      },
+      "13": {
+        "label": {
+          "de": "PPNB Kernkante 2. Stufe(Seitenbahn) (13)"
+        }
+      },
+      "14": {
+        "label": {
+          "de": "Grand Pressigny Kernkante (14)"
+        }
+      },
+      "15": {
+        "label": {
+          "de": "irreguläre Kernkante (15)"
+        }
+      },
+      "16": {
+        "label": {
+          "de": "Kernscheibe, primär, Rinde (16)"
+        }
+      },
+      "17": {
+        "label": {
+          "de": "Kernscheibe, primär, präpariert (17)"
+        }
+      },
+      "18": {
+        "label": {
+          "de": "Kernscheibe, sekundär, mit Kiel (18)"
+        }
+      },
+      "19": {
+        "label": {
+          "de": "Kernscheibe, sekundär, tabular (19)"
+        }
+      },
+      "20": {
+        "label": {
+          "de": "Kernscheibe, tertiär (20)"
+        }
+      },
+      "21": {
+        "label": {
+          "de": "Kerntyp 1: BIP tabular (21)"
+        }
+      },
+      "22": {
+        "label": {
+          "de": "Kerntyp 2: BIP naviform (22)"
+        }
+      },
+      "23": {
+        "label": {
+          "de": "Kerntyp 3: MOP cafer (23)"
+        }
+      },
+      "24": {
+        "label": {
+          "de": "Kerntyp 4: MOP bullet (24)"
+        }
+      },
+      "25": {
+        "label": {
+          "de": "Kerntyp 5: MOP pyramidal, 1 ABF (25)"
+        }
+      },
+      "26": {
+        "label": {
+          "de": "Kerntyp 6: MOP pyramidal, umlaufende ABF (26)"
+        }
+      },
+      "27": {
+        "label": {
+          "de": "Rohkern (27)"
+        }
+      },
+      "29": {
+        "label": {
+          "de": "amorpher Kern, Kernbruch (29)"
+        }
+      },
+      "30": {
+        "label": {
+          "de": "Kerngerät (30)"
+        }
+      },
+      "31": {
+        "label": {
+          "de": "Lamelle, unregelmäßig (31)"
+        }
+      },
+      "32": {
+        "label": {
+          "de": "Klinge, unregelmäßig (32)"
+        }
+      },
+      "33": {
+        "label": {
+          "de": "Großklinge, unregelmäßig (33)"
+        }
+      },
+      "34": {
+        "label": {
+          "de": "Lamelle, regelmäßig (34)"
+        }
+      },
+      "35": {
+        "label": {
+          "de": "Klinge, regelmäßig (35)"
+        }
+      },
+      "36": {
+        "label": {
+          "de": "Großklinge, regelmäßig (36)"
+        }
+      },
+      "37": {
+        "label": {
+          "de": "Y-Klinge (37)"
+        }
+      },
+      "38": {
+        "label": {
+          "de": "Schwergerät (38)"
+        }
+      },
+      "39": {
+        "label": {
+          "de": "Kanaanäische Klinge (KKL) (39)"
+        }
+      },
+      "40": {
+        "label": {
+          "de": "Byblos-1 Spitze (40)"
+        }
+      },
+      "41": {
+        "label": {
+          "de": "Byblos-2 Spitze (41)"
+        }
+      },
+      "42": {
+        "label": {
+          "de": "Amuq-1 Spitze (42)"
+        }
+      },
+      "43": {
+        "label": {
+          "de": "Amuq-2 Spitze (43)"
+        }
+      },
+      "44": {
+        "label": {
+          "de": "Ugarit Spitze (44)"
+        }
+      },
+      "45": {
+        "label": {
+          "de": "Bouqras Spitze (45)"
+        }
+      },
+      "46": {
+        "label": {
+          "de": "Cafer Spitze (46)"
+        }
+      },
+      "47": {
+        "label": {
+          "de": "NC Spitze (47)"
+        }
+      },
+      "48": {
+        "label": {
+          "de": "El Khlam Spitze (48)"
+        }
+      },
+      "49": {
+        "label": {
+          "de": "Helwan Spitze (49)"
+        }
+      },
+      "50": {
+        "label": {
+          "de": "unregelmäßg dorsal retuschierte Klinge (50)"
+        }
+      },
+      "51": {
+        "label": {
+          "de": "unregelmäßg ventral retuschierte Klinge (51)"
+        }
+      },
+      "52": {
+        "label": {
+          "de": "unregelmäßg bifazial retuschierte Klinge (52)"
+        }
+      },
+      "53": {
+        "label": {
+          "de": "regelmäßg dorsal retuschierte Klinge (53)"
+        }
+      },
+      "54": {
+        "label": {
+          "de": "regelmäßg ventral retuschierte Klinge (54)"
+        }
+      },
+      "55": {
+        "label": {
+          "de": "regelmäßg bifazial retuschierte Klinge (55)"
+        }
+      },
+      "56": {
+        "label": {
+          "de": "gekerbte Klinge (56)"
+        }
+      },
+      "57": {
+        "label": {
+          "de": "Bohrer (57)"
+        }
+      },
+      "58": {
+        "label": {
+          "de": "Mikrobohrer (58)"
+        }
+      },
+      "59": {
+        "label": {
+          "de": "Pick (59)"
+        }
+      },
+      "60": {
+        "label": {
+          "de": "Eckstichel, an Bruch (60)"
+        }
+      },
+      "61": {
+        "label": {
+          "de": "Eckstichel, an Retusche (61)"
+        }
+      },
+      "62": {
+        "label": {
+          "de": "Eckstichel, an Kerbe (62)"
+        }
+      },
+      "63": {
+        "label": {
+          "de": "Noaillesstichel (63)"
+        }
+      },
+      "64": {
+        "label": {
+          "de": "Mittelstichel, an Bruch (64)"
+        }
+      },
+      "65": {
+        "label": {
+          "de": "Mittelstichel, an Retusche (65)"
+        }
+      },
+      "66": {
+        "label": {
+          "de": "doppelter Mittelstichel (66)"
+        }
+      },
+      "67": {
+        "label": {
+          "de": "Mikrostichel (67)"
+        }
+      },
+      "68": {
+        "label": {
+          "de": "Piquant trierde (68)"
+        }
+      },
+      "69": {
+        "label": {
+          "de": "Çayönü-tool (69)"
+        }
+      },
+      "70": {
+        "label": {
+          "de": "Kratzer (70)"
+        }
+      },
+      "71": {
+        "label": {
+          "de": "Mikrokratzer (71)"
+        }
+      },
+      "72": {
+        "label": {
+          "de": "Schaber (72)"
+        }
+      },
+      "73": {
+        "label": {
+          "de": "Piece esquille (73)"
+        }
+      },
+      "74": {
+        "label": {
+          "de": "Halbmond (74)"
+        }
+      },
+      "75": {
+        "label": {
+          "de": "Mikrolith (75)"
+        }
+      },
+      "76": {
+        "label": {
+          "de": "Sichel (76)"
+        }
+      },
+      "77": {
+        "label": {
+          "de": "Plattensilexabschlaggerät (PSA) (77)"
+        }
+      },
+      "78": {
+        "label": {
+          "de": "Tuwailan-PSK (78)"
+        }
+      },
+      "79": {
+        "label": {
+          "de": "Plattensilexkerngeräte (PSK) (79)"
+        }
+      },
+      "80": {
+        "label": {
+          "de": "Stößel (80)"
+        }
+      },
+      "81": {
+        "label": {
+          "de": "Paläolith (81)"
+        }
+      },
+      "82": {
+        "label": {
+          "de": "Keule (82)"
+        }
+      },
+      "83": {
+        "label": {
+          "de": "Pfeilglätter (83)"
+        }
+      },
+      "84": {
+        "label": {
+          "de": "Beil (84)"
+        }
+      },
+      "85": {
+        "label": {
+          "de": "Muldenstein (85)"
+        }
+      },
+      "86": {
+        "label": {
+          "de": "Gefaß (86)"
+        }
+      },
+      "87": {
+        "label": {
+          "de": "Platte, Scheibe (87)"
+        }
+      },
+      "88": {
+        "label": {
+          "de": "Reibplatte (88)"
+        }
+      },
+      "89": {
+        "label": {
+          "de": "Läufer (89)"
+        }
+      },
+      "90": {
+        "label": {
+          "de": "Kugel (90)"
+        }
+      },
+      "91": {
+        "label": {
+          "de": "Klopfkugel (91)"
+        }
+      },
+      "92": {
+        "label": {
+          "de": "durchlochte Scheibe (92)"
+        }
+      },
+      "93": {
+        "label": {
+          "de": "Ring (93)"
+        }
+      },
+      "94": {
+        "label": {
+          "de": "Schieberperle (94)"
+        }
+      },
+      "95": {
+        "label": {
+          "de": "Flügelperle (95)"
+        }
+      },
+      "96": {
+        "label": {
+          "de": "sonstige Perle/Änhänger (96)"
+        }
+      },
+      "97": {
+        "label": {
+          "de": "Nadel, Spitze (97)"
+        }
+      },
+      "98": {
+        "label": {
+          "de": "figürlich (98)"
+        }
+      },
+      "99": {
+        "label": {
+          "de": "varia (99)"
+        }
+      },
+      "100": {
+        "label": {
+          "de": "Teller (100)"
+        }
+      },
+      "101": {
+        "label": {
+          "de": "Feuerschlagstein (101)"
+        }
+      },
+      "102": {
+        "label": {
+          "de": "Janusabschlag (102)"
+        }
+      },
+      "103": {
+        "label": {
+          "de": "Pfeilerfassung (103)"
+        }
+      },
+      "104": {
+        "label": {
+          "de": "Pfeilerring (104)"
+        }
+      },
+      "105": {
+        "label": {
+          "de": "Opferschale (105)"
+        }
+      },
+      "106": {
+        "label": {
+          "de": "Lithophon (106)"
+        }
+      },
+      "107": {
+        "label": {
+          "de": "T-Pfeiler (107)"
+        }
+      },
+      "108": {
+        "label": {
+          "de": "Szepter (108)"
+        }
+      },
+      "109": {
+        "label": {
+          "de": "Muldenplatte (109)"
+        }
+      },
+      "110": {
+        "label": {
+          "de": "Knopf (110)"
+        }
+      },
+      "111": {
+        "label": {
+          "de": "Haken (111)"
+        }
+      },
+      "112": {
+        "label": {
+          "de": "Ahle (112)"
+        }
+      },
+      "113": {
+        "label": {
+          "de": "Spatula (113)"
+        }
+      },
+      "114": {
+        "label": {
+          "de": "unbest. Knochenartefakt mit Schnittspuren (114)"
+        }
+      }
+    },
+    "order": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66",
+      "67",
+      "68",
+      "69",
+      "70",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77",
+      "78",
+      "79",
+      "80",
+      "81",
+      "82",
+      "83",
+      "84",
+      "85",
+      "86",
+      "87",
+      "88",
+      "89",
+      "90",
+      "91",
+      "92",
+      "93",
+      "94",
+      "95",
+      "96",
+      "97",
+      "98",
+      "99",
+      "100",
+      "101",
+      "102",
+      "103",
+      "104",
+      "105",
+      "106",
+      "107",
+      "108",
+      "109",
+      "110",
+      "111",
+      "112",
+      "113",
+      "114",
+      "0"
+    ]
+  },
+  "Find-smallFindsExcavationMethodOld-GoebekliTepe": {
+    "creationDate": "2021-09-07",
+    "createdBy": "Frederic Nitschke",
+    "description": {
+      "en": "Valuelist defining the Excavation method used to gather smallfinds in a code structure, for the meaning of the values please see the labels"
+    },
+    "values": {
+      "1": {
+        "label": {
+          "de": "System 1: grobes Absammeln, hauptsächlich Artefakte, Geräte – z.B. im Pflughorizont"
+        }
+      },
+      "2": {
+        "label": {
+          "de": "System 2: genaueres Absammeln, Grundformen werden weggeworfen (wurde in frühen 2000ern geändert)"
+        }
+      },
+      "3": {
+        "label": {
+          "de": "System 3: intensiv Sammeln, nicht wegwerfen"
+        }
+      },
+      "4": {
+        "label": {
+          "de": "System 4: Sieben"
+        }
+      },
+      "5": {
+        "label": {
+          "de": "System 5: Schlämmen"
+        }
+      },
+      "6": {
+        "label": {
+          "de": "System 6: Pfeilerköcher; Komplettbergung inkl. Sediment"
+        }
+      }
+    }
+  },
+  "Find-isMigrated-GoebekliTepe": {
+    "createdBy": "Shabnam Moshfegh Nia",
+    "creationDate": "2021-09-08",
+    "description": {
+      "en": "Valuelist defining wether a smallfind is migrated from the UrfaDB or not"
+    },
+    "values": {
+      "urfaDB": {
+        "label": {
+          "en": "Urfa Database"
+        }
+      },
+      "oldDB": {
+        "label": {
+          "en": "Migrated from older database"
         }
       }
     }

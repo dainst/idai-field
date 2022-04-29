@@ -1,0 +1,2540 @@
+{
+  "forms": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Operation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Survey:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "SurveyUnit:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Place:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Area:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Building:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "BuildingPart:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Find:default": {
+      "hidden": [
+        "hasRestoration",
+        "catalogueNumber",
+        "conditionAmount",
+        "conditionPercent",
+        "conditionComment",
+        "storagePlace",
+        "comparison",
+        "bibliography",
+        "condition",
+        "description",
+        "amount"
+      ],
+      "fields": {
+        "smallFindsCategory": {
+          "inputType": "radio"
+        },
+        "smallFindsCollectionMethod": {
+          "inputType": "radio"
+        },
+        "smallFindsAmountCollection": {
+          "inputType": "input"
+        },
+        "smallFindsStorage": {
+          "inputType": "radio"
+        },
+        "depotBoxNr": {
+          "inputType": "input"
+        },
+        "depotRow": {
+          "inputType": "unsignedInt"
+        },
+        "depotShelf": {
+          "inputType": "unsignedInt"
+        },
+        "depotBoxPosition": {
+          "inputType": "input"
+        },
+        "smallFindsDate": {
+          "inputType": "date"
+        },
+        "smallFindsProcessor": {
+          "inputType": "multiInput"
+        },
+        "findNumber": {
+          "inputType": "input"
+        },
+        "storageInventoryNumber": {
+          "inputType": "input"
+        },
+        "stonegardenNumber": {
+          "inputType": "input"
+        },
+        "etüdlükNumber": {
+          "inputType": "input"
+        },
+        "smallFindsUrfaDbID": {
+          "inputType": "unsignedInt"
+        },
+        "smallFindsRemarksProcessor": {
+          "inputType": "input"
+        },
+        "smallFindsText": {
+          "inputType": "input"
+        },
+        "smallFindsMaterialCodeOld": {
+          "inputType": "dropdown"
+        },
+        "smallFindsTypeCodeOld": {
+          "inputType": "dropdown"
+        },
+        "smallFindsExcavationMethodOld": {
+          "inputType": "dropdown"
+        },
+        "smallFindsHasImage": {
+          "inputType": "boolean"
+        },
+        "smallFindsHasDrawing": {
+          "inputType": "boolean"
+        },
+        "smallFindsSeason": {
+          "inputType": "unsignedInt"
+        },
+        "smallFindsSpit": {
+          "inputType": "input"
+        },
+        "smallFindsQme": {
+          "inputType": "input"
+        },
+        "isMigrated": {
+          "inputType": "radio"
+        },
+        "migrationFromUrfaDbDate": {
+          "inputType": "input"
+        },
+        "migrationFromUrfaDbProcessor": {
+          "inputType": "input"
+        },
+        "UrfaDbRecordCreationDate": {
+          "inputType": "input"
+        },
+        "UrfaDbRecordCreationEditor": {
+          "inputType": "input"
+        },
+        "oldDbSource": {
+          "inputType": "input"
+        },
+        "oldDbEditDate": {
+          "inputType": "input"
+        },
+        "oldDbEditor": {
+          "inputType": "input"
+        },
+        "UrfaDBFindNoDuplicate": {
+          "inputType": "boolean"
+        },
+        "UrfaDBInvNoDuplicate": {
+          "inputType": "boolean"
+        },
+        "UrfaDBStgNoDuplicate": {
+          "inputType": "boolean"
+        },
+        "UrfaDBRemarks": {
+          "inputType": "input"
+        },
+        "UrfaDBDigitalDataChecked": {
+          "inputType": "boolean"
+        },
+        "UrfaDBAnalogDataChecked": {
+          "inputType": "boolean"
+        },
+        "fixMe!": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "smallFindsCategory": "Find-smallFindsCategory-GoebekliTepe",
+        "smallFindsCollectionMethod": "Find-smallFindsCollectionMethod-GoebekliTepe",
+        "smallFindsStorage": "Find-smallFindsStorage-GoebekliTepe",
+        "smallFindsMaterialCodeOld": "Find-smallFindsMaterialCodeOld-GoebekliTepe",
+        "smallFindsTypeCodeOld": "Find-smallFindsTypeCodeOld-GoebekliTepe",
+        "smallFindsExcavationMethodOld": "Find-smallFindsExcavationMethodOld-GoebekliTepe",
+        "isMigrated": "Find-isMigrated-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Feature:default": {
+      "hidden": [
+        "color",
+        "featureForm",
+        "hasDisturbance",
+        "featureBorders",
+        "comparison",
+        "description"
+      ],
+      "fields": {
+        "locusRecordingType": {
+          "inputType": "radio"
+        },
+        "locusDepositCollectionMethod": {
+          "inputType": "checkboxes"
+        },
+        "locusDepositCollectionMethodQuantity": {
+          "inputType": "multiInput"
+        },
+        "locusDepositInclusions": {
+          "inputType": "checkboxes"
+        },
+        "locusDepositInclusionsFrequency": {
+          "inputType": "text"
+        },
+        "locusDepositInclusionsStones": {
+          "inputType": "checkboxes"
+        },
+        "locusDepositStoneShape": {
+          "inputType": "checkboxes"
+        },
+        "locusStratigraphyRemarks": {
+          "inputType": "checkboxes"
+        },
+        "locusLevels": {
+          "inputType": "multiInput"
+        },
+        "locusVolume": {
+          "inputType": "unsignedInt"
+        },
+        "locusBuckets": {
+          "inputType": "unsignedInt"
+        },
+        "locusCommentsInterpretation": {
+          "inputType": "text"
+        }
+      },
+      "valuelists": {
+        "locusRecordingType": "Feature-locusRecordingType-GoebekliTepe",
+        "locusDepositCollectionMethod": "Feature-locusDepositCollectionMethod-GoebekliTepe",
+        "locusDepositInclusions": "Feature-locusDepositInclusions-GoebekliTepe",
+        "locusDepositInclusionsStones": "Feature-locusDepositInclusionsStone-GoebekliTepe",
+        "locusDepositStoneShape": "Feature-locusDepositStoneShape-GoebekliTepe",
+        "locusStratigraphyRemarks": "Feature-locusStratigraphyRemarks-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Room:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomCeiling:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomFloor:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "RoomWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Inscription:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Mollusk:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "classification"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Brick:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "temper",
+            "manufacturing",
+            "manufacturingMethod",
+            "brickForm",
+            "brickUsage",
+            "formDescription",
+            "clayColorOutside",
+            "decorationTechnique",
+            "featureText",
+            "coatColorOutside",
+            "coatColorInside",
+            "specificType",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Burial:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "conditionComment",
+            "graveFeature",
+            "amountIndividuals",
+            "positioningIndividuals",
+            "palaeopathologicalReport",
+            "burialCharacteristic",
+            "burialDocumentation",
+            "burialRite",
+            "bodyHeightAndRobustness",
+            "positionArms",
+            "positionLegs",
+            "ageDetermination",
+            "ageDeterminationBasis",
+            "sexDetermination",
+            "sexDeterminationBasis",
+            "dietReconstruction"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Wood:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "color",
+            "typeOfWood",
+            "objectType",
+            "manufacturingMethod",
+            "provenance",
+            "colorOutside",
+            "colorOutsideMunsell",
+            "colorInside",
+            "colorInsideMunsell",
+            "colorBreak",
+            "colorBreakMunsell",
+            "surfaceCondition",
+            "decorationTechnique",
+            "paintColor",
+            "paintColorMunsell",
+            "paintCondition"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Architecture:default": {
+      "hidden": [
+        "condition",
+        "conditionAmount",
+        "conditionComment",
+        "layerAmount",
+        "layerHeight",
+        "muralCrown",
+        "mortarBinder",
+        "mortarColor",
+        "mortarConsistency",
+        "materialForm",
+        "materialCharacteristic",
+        "construction",
+        "constructionDetailsDescription",
+        "descriptionOfBuildingTechnique",
+        "brickwork",
+        "blockTreatment",
+        "blockProcessing",
+        "bibliography",
+        "hasGrouting",
+        "wallClassification",
+        "wallType"
+      ],
+      "fields": {
+        "structuralElementType": {
+          "inputType": "radio"
+        },
+        "structuralElementOther": {
+          "inputType": "input"
+        },
+        "structuralElementDescription": {
+          "inputType": "text"
+        },
+        "structuralElementMaterials": {
+          "inputType": "input"
+        },
+        "structuralElementWallIntegration": {
+          "inputType": "input"
+        },
+        "structuralElementWallCourses": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "structuralElementType": "Architecture-structuralElementType-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "layerAmount",
+            "layerHeight",
+            "muralCrown",
+            "mortarBinder",
+            "mortarColor",
+            "mortarConsistency",
+            "materialForm",
+            "materialCharacteristic",
+            "construction",
+            "constructionDetailsDescription",
+            "descriptionOfBuildingTechnique",
+            "brickwork",
+            "blockTreatment",
+            "blockProcessing",
+            "bibliography",
+            "hasGrouting",
+            "wallClassification",
+            "wallType",
+            "structuralElementType",
+            "structuralElementOther",
+            "structuralElementDescription",
+            "structuralElementMaterials",
+            "structuralElementWallIntegration",
+            "structuralElementWallCourses"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation",
+            "orientation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "FeatureInterface": {
+      "parent": "Feature",
+      "fields": {
+        "locusCutType": {
+          "inputType": "radio"
+        },
+        "locusCutTypeOther": {
+          "inputType": "input"
+        },
+        "locusCutFill": {
+          "inputType": "input"
+        },
+        "locusCutShape": {
+          "inputType": "radio"
+        },
+        "locusCutSlope": {
+          "inputType": "checkboxes"
+        }
+      },
+      "valuelists": {
+        "locusCutType": "FeatureInterface-locusCutType-GoebekliTepe",
+        "locusCutShape": "FeatureInterface-locusCutShape-GoebekliTepe",
+        "locusCutSlope": "FeatureInterface-locusCutSlope-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "locusCutType",
+            "locusCutTypeOther",
+            "locusCutFill",
+            "locusCutShape",
+            "locusCutSlope"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Layer:default": {
+      "hidden": [
+        "distinguishingCriteria",
+        "layerClassification",
+        "isNatural",
+        "soilType",
+        "consistency",
+        "locusDepositColourModifier",
+        "locusDepositColourHue"
+      ],
+      "fields": {
+        "locusDepositType": {
+          "inputType": "checkboxes"
+        },
+        "locusDepositTypeOther": {
+          "inputType": "input"
+        },
+        "locusDepositCompaction": {
+          "inputType": "checkboxes"
+        },
+        "locusDepositComposition": {
+          "inputType": "input"
+        },
+        "locusDepositColourModifier": {
+          "inputType": "dropdown"
+        },
+        "locusDepositColourHue": {
+          "inputType": "dropdownRange"
+        },
+        "locusDepositColour": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "locusDepositType": "Layer-locusDepositType-GoebekliTepe",
+        "locusDepositCompaction": "Layer-locusCompaction-GoebekliTepe",
+        "locusDepositComposition": "Layer-locusComposition-GoebekliTepe",
+        "locusDepositColourModifier": "Layer-locusDepositColourModifier-GoebekliTepe",
+        "locusDepositColourHue": "Layer-locusDepositColourHue-GoebekliTepe",
+        "locusDepositColour": "Layer-locusDepositColour-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "distinguishingCriteria",
+            "layerClassification",
+            "isNatural",
+            "soilType",
+            "consistency",
+            "locusDepositType",
+            "locusDepositTypeOther",
+            "locusDepositCompaction",
+            "locusDepositComposition",
+            "locusDepositColourModifier",
+            "locusDepositColourHue",
+            "locusDepositColour"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionThickness"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Floor:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "consistency",
+            "distinguishingCriteria",
+            "floorClassification",
+            "layerClassification",
+            "mortarBinder"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Pottery:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "materialType",
+            "specificType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "typeNumber",
+            "manufacturing",
+            "manufacturingMethod",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "temperTypeClay",
+            "clayHardness",
+            "clayColorOutside",
+            "clayColorOutsideMunsell",
+            "clayColorInside",
+            "clayColorInsideMunsell",
+            "clayColorBreak",
+            "clayColorBreakMunsell",
+            "breakStructure",
+            "coatInside",
+            "coatColorInside",
+            "coatInsideType",
+            "coatOutside",
+            "coatColorOutside",
+            "coatOutsideType",
+            "formDescription",
+            "decorationTechnique",
+            "decorationDescription",
+            "objectType",
+            "purpose",
+            "provenance",
+            "sample",
+            "residueAnalysis",
+            "amountSherdsWall",
+            "amountSherdsBase",
+            "amountSherdsHandles",
+            "amountSherdsLip",
+            "amountSherdsPedestal",
+            "amountSherdsLid",
+            "amountSherdsRim",
+            "amountSherdsRimBase",
+            "amountSherdsRimShoulder",
+            "amountSherdsOther",
+            "amountSherdsShoulder",
+            "amountSherdsPercent",
+            "hasCoat"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Metal:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "metalMaterial",
+            "formDescription",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "objectType",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Grave:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "diary",
+            "beginningDate",
+            "endDate",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description",
+            "color",
+            "hasDisturbance",
+            "featureForm",
+            "featureBorders",
+            "comparison",
+            "locusRecordingType",
+            "locusDepositCollectionMethod",
+            "locusDepositCollectionMethodQuantity",
+            "locusDepositInclusions",
+            "locusDepositInclusionsFrequency",
+            "locusDepositInclusionsStones",
+            "locusDepositStoneShape",
+            "locusStratigraphyRemarks",
+            "locusLevels",
+            "locusVolume",
+            "locusBuckets",
+            "locusCommentsInterpretation",
+            "soilType",
+            "condition",
+            "conditionAmount",
+            "conditionComment",
+            "distinguishingCriteria",
+            "graveType",
+            "specificType",
+            "tombBuilding",
+            "findingPlace",
+            "bibliography",
+            "publicationDatingFinds",
+            "publicationDatingStratigraphy",
+            "publicationDatingScientific",
+            "publicationRemark"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "area",
+            "dimensionLength",
+            "dimensionWidth"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "isPresentIn",
+            "isBelow",
+            "isAbove",
+            "borders",
+            "cuts",
+            "isCutBy",
+            "fills",
+            "isFilledBy",
+            "spatialLocation"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating",
+            "isBefore",
+            "isAfter",
+            "isContemporaryWith"
+          ]
+        }
+      ]
+    },
+    "Bone:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "boneType",
+            "species",
+            "boneClassification",
+            "burningGrade",
+            "objectType",
+            "biologicalAge",
+            "sex"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Terracotta:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "temper",
+            "temperAmount",
+            "temperParticles",
+            "clayStructure",
+            "coatColorInside",
+            "coatColorOutside",
+            "surfaceCondition",
+            "manufacturingMethod",
+            "decorationTechnique",
+            "formDescription",
+            "vesselForm",
+            "vesselFormSpecific",
+            "provenance",
+            "clayColorBreak",
+            "clayColorInside",
+            "clayColorOutside"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Stone:default": {
+      "hidden": [
+        "material",
+        "temperAmount",
+        "treatment",
+        "workmanship",
+        "color",
+        "formDescription",
+        "objectType",
+        "architectureElement",
+        "purpose",
+        "origin",
+        "provenance"
+      ],
+      "fields": {
+        "stoneFindCategory": {
+          "inputType": "radio"
+        },
+        "lithicRawMaterial": {
+          "inputType": "radio"
+        },
+        "lithicRawMaterialGroup": {
+          "inputType": "input"
+        },
+        "lithicColor": {
+          "inputType": "dropdown"
+        },
+        "lithicOptic": {
+          "inputType": "radio"
+        },
+        "lithicThermic": {
+          "inputType": "radio"
+        },
+        "lithicSurface": {
+          "inputType": "dropdown"
+        },
+        "lithicBasicForm": {
+          "inputType": "radio"
+        },
+        "lithicPreservation": {
+          "inputType": "dropdown"
+        },
+        "lithicCIM": {
+          "inputType": "dropdown"
+        },
+        "lithicTechnology": {
+          "inputType": "radio"
+        },
+        "lithicToolModification": {
+          "inputType": "radio"
+        },
+        "lithicToolPreservation": {
+          "inputType": "radio"
+        },
+        "lithicStrikingPlattform": {
+          "inputType": "radio"
+        },
+        "lithicBulb": {
+          "inputType": "radio"
+        },
+        "lithicStrike": {
+          "inputType": "radio"
+        },
+        "lithicStrikeDirection": {
+          "inputType": "radio"
+        },
+        "lithicUsewear": {
+          "inputType": "radio"
+        },
+        "lithicMod1": {
+          "inputType": "dropdown"
+        },
+        "lithicMod2": {
+          "inputType": "dropdown"
+        },
+        "lithicMod3": {
+          "inputType": "dropdown"
+        },
+        "lithicMod4": {
+          "inputType": "dropdown"
+        },
+        "lithicMod5": {
+          "inputType": "dropdown"
+        },
+        "lithicMod6": {
+          "inputType": "dropdown"
+        },
+        "lithicCore": {
+          "inputType": "dropdown"
+        },
+        "lithicRemarks": {
+          "inputType": "text"
+        }
+      },
+      "valuelists": {
+        "stoneFindCategory": "Stone-stoneFindCategory-GoebekliTepe",
+        "lithicRawMaterial": "Stone-lithicRawMaterial-GoebekliTepe",
+        "lithicColor": "Stone-lithicColor-GoebekliTepe",
+        "lithicOptic": "Stone-lithicOptic-GoebekliTepe",
+        "lithicThermic": "Stone-lithicThermic-GoebekliTepe",
+        "lithicSurface": "Stone-lithicSurface-GoebekliTepe",
+        "lithicBasicForm": "Stone-lithicBasicForm-GoebekliTepe",
+        "lithicPreservation": "Stone-lithicPreservation-GoebekliTepe",
+        "lithicCIM": "Stone-lithicCIM-GoebekliTepe",
+        "lithicTechnology": "Stone-lithicTechnology-GoebekliTepe",
+        "lithicToolModification": "Stone-lithicToolModification-GoebekliTepe",
+        "lithicToolPreservation": "Stone-lithicToolPreservation-GoebekliTepe",
+        "lithicStrikingPlattform": "Stone-lithicStrikingPlattform-GoebekliTepe",
+        "lithicBulb": "Stone-lithicBulb-GoebekliTepe",
+        "lithicStrike": "Stone-lithicStrike-GoebekliTepe",
+        "lithicStrikeDirection": "Stone-lithicStrikeDirection-GoebekliTepe",
+        "lithicUsewear": "Stone-lithicUsewear-GoebekliTepe",
+        "lithicMod1": "Stone-lithicMod1-GoebekliTepe",
+        "lithicMod2": "Stone-lithicMod1-GoebekliTepe",
+        "lithicMod3": "Stone-lithicMod1-GoebekliTepe",
+        "lithicMod4": "Stone-lithicMod1-GoebekliTepe",
+        "lithicMod5": "Stone-lithicMod1-GoebekliTepe",
+        "lithicMod6": "Stone-lithicMod1-GoebekliTepe",
+        "lithicCore": "Stone-lithicCore-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "material",
+            "temperAmount",
+            "treatment",
+            "workmanship",
+            "color",
+            "formDescription",
+            "objectType",
+            "architectureElement",
+            "purpose",
+            "origin",
+            "provenance",
+            "stoneFindCategory",
+            "lithicRawMaterial",
+            "lithicRawMaterialGroup",
+            "lithicColor",
+            "lithicOptic",
+            "lithicThermic",
+            "lithicSurface",
+            "lithicBasicForm",
+            "lithicPreservation",
+            "lithicCIM",
+            "lithicTechnology",
+            "lithicToolModification",
+            "lithicToolPreservation",
+            "lithicStrikingPlattform",
+            "lithicBulb",
+            "lithicStrike",
+            "lithicStrikeDirection",
+            "lithicUsewear",
+            "lithicMod1",
+            "lithicMod2",
+            "lithicMod3",
+            "lithicMod4",
+            "lithicMod5",
+            "lithicMod6",
+            "lithicCore",
+            "lithicRemarks"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "PlasterFragment:default": {
+      "hidden": [],
+      "fields": {},
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date",
+            "isSameAs"
+          ]
+        },
+        {
+          "name": "identification",
+          "fields": [
+            "isInstanceOf"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "smallFindsCategory",
+            "isMigrated",
+            "smallFindsCollectionMethod",
+            "smallFindsAmountCollection",
+            "smallFindsStorage",
+            "depotBoxNr",
+            "depotRow",
+            "depotShelf",
+            "depotBoxPosition",
+            "findNumber",
+            "stonegardenNumber",
+            "storageInventoryNumber",
+            "etüdlükNumber",
+            "smallFindsDate",
+            "smallFindsSeason",
+            "smallFindsProcessor",
+            "smallFindsRemarksProcessor",
+            "smallFindsText",
+            "weight",
+            "smallFindsTypeCodeOld",
+            "smallFindsMaterialCodeOld",
+            "smallFindsSpit",
+            "smallFindsQme",
+            "smallFindsExcavationMethodOld",
+            "smallFindsHasImage",
+            "smallFindsHasDrawing",
+            "smallFindsUrfaDbID",
+            "migrationFromUrfaDbDate",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor",
+            "UrfaDBRemarks",
+            "UrfaDBFindNoDuplicate",
+            "UrfaDBInvNoDuplicate",
+            "UrfaDBStgNoDuplicate",
+            "UrfaDBDigitalDataChecked",
+            "UrfaDBAnalogDataChecked",
+            "hasRestoration",
+            "catalogueNumber",
+            "condition",
+            "description",
+            "conditionAmount",
+            "conditionPercent",
+            "conditionComment",
+            "storagePlace",
+            "comparison",
+            "bibliography",
+            "amount",
+            "fixMe!",
+            "plasterComponents",
+            "color",
+            "composition",
+            "hasDecoration"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight",
+            "dimensionLength",
+            "dimensionWidth",
+            "dimensionPerimeter",
+            "dimensionDiameter",
+            "dimensionThickness",
+            "dimensionOther",
+            "area"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "dimensionVerticalExtent"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": [
+            "period",
+            "dating"
+          ]
+        }
+      ]
+    },
+    "Excavation:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Sample:default": {
+      "hidden": [],
+      "fields": {
+        "sampleType": {
+          "inputType": "radio"
+        },
+        "sampleTypeOther": {
+          "inputType": "input"
+        },
+        "sampleDepth": {
+          "inputType": "float"
+        },
+        "season": {
+          "inputType": "input"
+        },
+        "sampleRemarks": {
+          "inputType": "input"
+        },
+        "sampleHasMeasurement": {
+          "inputType": "boolean"
+        },
+        "sampleDocumentation": {
+          "inputType": "input"
+        },
+        "methodOfAnalysis": {
+          "inputType": "checkboxes"
+        },
+        "sampleCollectionMethod": {
+          "inputType": "dropdown"
+        },
+        "sampleProcessingStatus": {
+          "inputType": "checkboxes"
+        },
+        "sampleSize": {
+          "inputType": "dropdown"
+        },
+        "sampleLocation": {
+          "inputType": "radio"
+        },
+        "sampleProcessingLabratory": {
+          "inputType": "text"
+        },
+        "sampleRemains": {
+          "inputType": "dropdown"
+        },
+        "sampleRemainsQuantity": {
+          "inputType": "multiInput"
+        },
+        "sampleVolume": {
+          "inputType": "float"
+        },
+        "sampleNumber": {
+          "inputType": "input"
+        },
+        "sampleQuantity": {
+          "inputType": "float"
+        },
+        "smallFindsMaterialCodeOld": {
+          "inputType": "dropdown"
+        },
+        "isMigrated": {
+          "inputType": "radio"
+        },
+        "migrationFromUrfaDbDate": {
+          "inputType": "input"
+        },
+        "sampleUrfaDbID": {
+          "inputType": "input"
+        },
+        "migrationFromUrfaDbProcessor": {
+          "inputType": "input"
+        },
+        "UrfaDbRecordCreationDate": {
+          "inputType": "input"
+        },
+        "UrfaDbRecordCreationEditor": {
+          "inputType": "input"
+        },
+        "oldDbSource": {
+          "inputType": "input"
+        },
+        "oldDbEditDate": {
+          "inputType": "input"
+        },
+        "oldDbEditor": {
+          "inputType": "input"
+        }
+      },
+      "valuelists": {
+        "sampleProcessingStatus": "Sample-sampleProcessingStatus-GoebekliTepe",
+        "methodOfAnalysis": "Sample-methodOfAnalysis-GoebekliTepe",
+        "sampleCollectionMethod": "Sample-sampleCollectionMethod-GoebekliTepe",
+        "sampleType": "Sample-sampleType-GoebekliTepe",
+        "sampleSize": "Sample-sampleSize-GoebekliTepe",
+        "sampleLocation": "Sample-sampleLocation-GoebekliTepe",
+        "sampleRemains": "Sample-sampleRemains-GoebekliTepe",
+        "smallFindsMaterialCodeOld": "Find-smallFindsMaterialCodeOld-GoebekliTepe",
+        "isMigrated": "Find-isMigrated-GoebekliTepe"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "date"
+          ]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "sampleNumber",
+            "isMigrated",
+            "sampleType",
+            "sampleTypeOther",
+            "methodOfAnalysis",
+            "season",
+            "smallFindsMaterialCodeOld",
+            "sampleCollectionMethod",
+            "sampleQuantity",
+            "sampleSize",
+            "sampleVolume",
+            "weight",
+            "sampleRemarks",
+            "sampleHasMeasurement",
+            "sampleDepth",
+            "sampleDocumentation",
+            "sampleProcessingStatus",
+            "sampleLocation",
+            "sampleProcessingLabratory",
+            "labNumber",
+            "sampleRemains",
+            "sampleRemainsQuantity",
+            "description",
+            "migrationFromUrfaDbDate",
+            "sampleUrfaDbID",
+            "migrationFromUrfaDbProcessor",
+            "UrfaDbRecordCreationDate",
+            "UrfaDbRecordCreationEditor",
+            "oldDbSource",
+            "oldDbEditDate",
+            "oldDbEditor"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": [
+            "geometry",
+            "spatialLocation"
+          ]
+        }
+      ]
+    },
+    "TypeCatalog:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Type:default": {
+      "hidden": [],
+      "fields": {}
+    }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Building",
+    "Survey",
+    "Place",
+    "Feature",
+    "Layer",
+    "Grave",
+    "Burial",
+    "Architecture",
+    "Floor",
+    "FeatureInterface",
+    "Area",
+    "SurveyUnit",
+    "Excavation",
+    "Find",
+    "Pottery",
+    "Terracotta",
+    "Brick",
+    "Bone",
+    "Metal",
+    "Stone",
+    "Wood",
+    "PlasterFragment",
+    "Mollusk",
+    "Inscription",
+    "Sample",
+    "BuildingPart",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "RoomFloor",
+    "Image",
+    "Drawing",
+    "Photo",
+    "TypeCatalog",
+    "Type"
+  ]
+}

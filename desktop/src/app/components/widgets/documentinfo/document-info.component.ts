@@ -1,4 +1,4 @@
-import { Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck } from '@angular/core';
+import { Component, Input, Output, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { Document, Named, FieldDocument, Groups, ProjectConfiguration } from 'idai-field-core';
 
 
@@ -9,7 +9,7 @@ import { Document, Named, FieldDocument, Groups, ProjectConfiguration } from 'id
 /**
  * @author Thomas Kleinke
  */
-export class DocumentInfoComponent implements DoCheck {
+export class DocumentInfoComponent {
 
     @ViewChild('documentInfo', { static: false }) documentInfoElement: ElementRef;
 
@@ -22,7 +22,6 @@ export class DocumentInfoComponent implements DoCheck {
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
     @Output() onThumbnailClicked: EventEmitter<void> = new EventEmitter<void>();
 
-    public scrollbarVisible = false;
     public openSection: string|undefined = Groups.STEM;
 
 
@@ -36,12 +35,6 @@ export class DocumentInfoComponent implements DoCheck {
     public clickThumbnail = () => this.onThumbnailClicked.emit();
 
     public isReadonly = () => this.document.project !== undefined;
-
-
-    ngDoCheck() {
-
-        this.scrollbarVisible = DocumentInfoComponent.isScrollbarVisible(this.documentInfoElement);
-    }
 
 
     public toggleExpandAllGroups() {
@@ -66,11 +59,5 @@ export class DocumentInfoComponent implements DoCheck {
     public isThumbnailShown(): boolean {
 
         return this.showThumbnail && Document.hasRelations(this.document, 'isDepictedIn');
-    }
-
-
-    private static isScrollbarVisible(element: ElementRef): boolean {
-
-        return element && element.nativeElement.scrollHeight > element.nativeElement.clientHeight;
     }
 }

@@ -29,8 +29,6 @@ export class ChildrenViewComponent implements OnChanges {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;
-
     public closePopover = () => this.resourcesComponent.closePopover();
 
 
@@ -57,10 +55,7 @@ export class ChildrenViewComponent implements OnChanges {
         this.children = [];
         this.childrenCount = document.resource.id ? this.viewFacade.getChildrenCount(document) : 0;
 
-        if (this.childrenCount === 0) {
-            this.children = [];
-            return;
-        }
+        if (this.childrenCount === 0) return;
 
         this.loading.start('sidebar-children');
         await AngularUtility.refresh();

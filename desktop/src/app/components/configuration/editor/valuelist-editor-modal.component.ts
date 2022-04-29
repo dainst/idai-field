@@ -190,8 +190,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public deleteValue(valueId: string) {
 
         delete this.getClonedValuelistDefinition().values[valueId];
-        this.getClonedValuelistDefinition().order = this.getOrder();
-        this.order = this.getOrder() ?? this.getSortedValueIds();
+        this.order = this.removeDeletedValuesFromOrder(this.order);
     }
 
 
@@ -234,8 +233,14 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         if (!clonedValuelistDefinition.order) return undefined;
 
-        return clonedValuelistDefinition.order.filter(valuelistId => {
-            return clonedValuelistDefinition.values[valuelistId] !== undefined
+        return this.removeDeletedValuesFromOrder(clonedValuelistDefinition.order);
+    }
+
+
+    private removeDeletedValuesFromOrder(order: string[]): string[] {
+
+        return order.filter(valuelistId => {
+            return this.getClonedValuelistDefinition().values[valuelistId] !== undefined
                 || this.extendedValuelist?.values[valuelistId] !== undefined;
         });
     }

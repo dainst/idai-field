@@ -64,11 +64,11 @@ describe('Dimension', () => {
     });
 
 
-    it('isValid - not valid - range order', () => {
+    it('isValid - not valid - range with identical values', () => {
 
         const dim: any = {
             inputValue: 200,
-            inputRangeEndValue: 100,
+            inputRangeEndValue: 200,
             inputUnit: 'cm',
             isImprecise: false
         };

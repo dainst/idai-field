@@ -738,6 +738,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.documentCache.reset();
 
+        Tree.flatten(this.projectConfiguration.getCategories()).forEach(category => {
+            CategoryForm.getFields(category).forEach(field => {
+                this.indexFacade.addConstraintIndexDefinitionsForField(field);
+            });
+        });
+
         await Indexer.reindex(
             this.indexFacade,
             this.pouchdbDatastore.getDb(),

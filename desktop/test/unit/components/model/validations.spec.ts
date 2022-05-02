@@ -333,8 +333,8 @@ describe('Validations', () => {
                 dimension10: [{ inputValue: -50.25, inputUnit: 'mm' }],
                 // Negative values allowed
                 dimension11: [{ inputValue: -50.25, inputUnit: 'mm' }],
-                // Range order
-                dimension12: [{ inputValue: 2, inputRangeEndValue: 1, inputUnit: 'mm' }],
+                // Identical range values
+                dimension12: [{ inputValue: 2, inputRangeEndValue: 2, inputUnit: 'mm' }],
                 relations: { isRecordedIn: ['0'] }
             }
         };

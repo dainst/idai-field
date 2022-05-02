@@ -57,6 +57,8 @@ export class ProjectConfiguration {
     public getCategory(category: Name): CategoryForm|undefined;
     public getCategory(document: Document): CategoryForm|undefined
     public getCategory(arg) {
+        
+        if (arg === undefined) return undefined;
 
         const name = isString(arg) 
             ? (arg as Name) 

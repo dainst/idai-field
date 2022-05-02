@@ -427,6 +427,26 @@ describe('resources/state --', () => {
     });
 
 
+    it('search -- remove constraints after filter category has been deselected', async done => {
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchBarPage.clickChooseCategoryFilter('feature');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        await SearchConstraintsPage.clickSelectBooleanValue(true);
+        await SearchConstraintsPage.clickAddConstraintButton();
+        await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
+
+        await SearchBarPage.clickChooseCategoryFilter('all');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await waitForNotExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
+
+        done();
+    });
+
+
     it('search -- remove constraints if invalid after filter category change', async done => {
 
         await ResourcesPage.clickSwitchHierarchyMode();

@@ -125,7 +125,7 @@ configuration-category {
   }
   
   .content {
-    height: calc(100vh - 145px);
+    height: calc(100vh - 140px);
     padding: 0;
 
     &.shortened {
@@ -159,13 +159,13 @@ configuration-category {
   }
 
   #add-field-button {
-    transform: translate(-20px, -40px);
+    transform: translate(-20px, -45px);
     padding: 2px 0 0 1px;
   }
 
   #add-group-button {
     position: absolute;
-    bottom: 1px;
+    bottom: 6px;
     padding-top: 2px;
     padding-right: 1px;
     transform: translate(-20px, 0);

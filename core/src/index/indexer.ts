@@ -1,5 +1,5 @@
 import { isUndefined, not } from 'tsfun';
-import { IndexFacade } from '.';
+import { IndexFacade } from './index-facade';
 import { CategoryConverter, DatastoreErrors, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
 
@@ -11,11 +11,9 @@ import { Document } from '../model/document';
  */
  export module Indexer {
  
-    export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database,
-            documentCache: DocumentCache, converter: CategoryConverter,
-            setIndexedDocuments?: (count: number) => Promise<void>,
-            setIndexing?: () => Promise<void>,
-            setError?: (error: string) => Promise<void>) {
+    export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
+                                  converter: CategoryConverter, setIndexedDocuments?: (count: number) => Promise<void>,
+                                  setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
 
         indexFacade.clear();
 
@@ -72,5 +70,4 @@ import { Document } from '../model/document';
 
 
     const isDesignDoc = (row: any) => row.id.indexOf('_') === 0;
-
 }

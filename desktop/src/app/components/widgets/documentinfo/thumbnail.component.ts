@@ -62,8 +62,9 @@ export class ThumbnailComponent implements OnChanges {
 
     private async updateThumbnailUrl() {
 
-        const relationTargets: string[] = this.resource.relations.isDepictedIn;
+        this.thumbnailUrl = undefined;
 
+        const relationTargets: string[] = this.resource.relations.isDepictedIn;
         if (!relationTargets || relationTargets.length === 0) return undefined;
 
         try {

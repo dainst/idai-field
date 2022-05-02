@@ -34,6 +34,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public order: string[];
     public sortAlphanumerically: boolean;
     public dragging: boolean;
+    public openedFromFieldEditor: boolean;
 
     public inputPlaceholder: string = this.i18n({
         id: 'configuration.newValue', value: 'Neuer Wert'
@@ -82,7 +83,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 values: {},
                 createdBy: this.settingsProvider.getSettings().username,
                 creationDate: new Date().toISOString().split('T')[0]
-            }
+            };
 
             if (this.extendedValuelist) {
                 this.getClonedValuelistDefinition().extendedValuelist = this.extendedValuelist.id;
@@ -123,7 +124,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
 
     public isChanged(): boolean {
-        
+
         return this.new
             || !equal(this.getCustomValuelistDefinition().values)(this.getClonedValuelistDefinition().values)
             || this.isHiddenChanged()
@@ -189,8 +190,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public deleteValue(valueId: string) {
 
         delete this.getClonedValuelistDefinition().values[valueId];
-        this.getClonedValuelistDefinition().order = this.getOrder();
-        this.order = this.getOrder();
+        this.order = this.removeDeletedValuesFromOrder(this.order);
     }
 
 
@@ -233,9 +233,15 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         if (!clonedValuelistDefinition.order) return undefined;
 
-        return clonedValuelistDefinition.order.filter(valuelistId => {
-            return clonedValuelistDefinition.values[valuelistId] !== undefined
-                || this.extendedValuelist.values[valuelistId] !== undefined;
+        return this.removeDeletedValuesFromOrder(clonedValuelistDefinition.order);
+    }
+
+
+    private removeDeletedValuesFromOrder(order: string[]): string[] {
+
+        return order.filter(valuelistId => {
+            return this.getClonedValuelistDefinition().values[valuelistId] !== undefined
+                || this.extendedValuelist?.values[valuelistId] !== undefined;
         });
     }
 

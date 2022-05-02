@@ -20,6 +20,10 @@
 
 <div class="modal-body configuration-editor-modal-body valuelist-editor-modal-body"
      [class.dragging]="dragging">
+     <div *ngIf="openedFromFieldEditor" class="alert alert-primary" i18n="@@configuration.editValuelistInfo">
+         Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder
+         angewendet werden, die diese Werteliste benutzen.
+     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.valuelistDescription">
             Beschreibung der Werteliste

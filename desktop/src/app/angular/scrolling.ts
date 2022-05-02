@@ -3,6 +3,8 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 export function scrollTo(index: number, elementId: string, scrollViewport: CdkVirtualScrollViewport) {
 
+    if (!scrollViewport) return;
+
     setTimeout(() => {
         if (!isVisible(elementId, scrollViewport)) {
             scrollViewport.scrollToIndex(index, 'auto');

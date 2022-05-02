@@ -1,0 +1,535 @@
+{
+  "categories": {
+    "Feature": {
+      "label": "Locus Recording Sheet",
+      "fields": {
+        "locusRecordingType": {
+          "label": "LOCUS TYPE",
+          "description": "Choose one type according to Locus Recording Sheet."
+        },
+        "locusDepositCollectionMethod": {
+          "label": "COLLECTION METHOD",
+          "description": "Multiple choise possible - Specify quantities for each method seperatly."
+        },
+        "locusDepositCollectionMethodQuantity": {
+          "label": "QUANTITIES (Specify choosen collection method by adding estimated amount with additional text)",
+          "description": "Multiple line input possible - Specify quantities for each method seperatly, e.g. 'Dry sieved ____%', 'Flotation ___%."
+        },
+        "locusDepositInclusions": {
+          "label": "INCLUSIONS",
+          "description": "Check multiple boxes if needed."
+        },
+        "locusDepositInclusionsFrequency": {
+          "label": "FREQUENCY OF INCLUSIONS (Specify inclusions by adding frequency to each type, e.g. 'Chipped Stones: 20 %'; 'Ash: 75 %')",
+          "description": "Multiple line input possible - Specify quantities for each box seperatly."
+        },
+        "locusDepositInclusionsStones": {
+          "label": "STONES",
+          "description": "Specify size of stones."
+        },
+        "locusDepositStoneShape": {
+          "label": "SHAPE OF STONES",
+          "description": "Specify shape of stones."
+        },                        
+        "locusStratigraphyRemarks": {
+          "label": "REMARKS ON STRATIGRAPHY",
+          "description": "Choose one according to Locus Recording Sheet."
+        },
+        "locusLevels": {
+          "label": "LEVELS",
+          "description": "Top and bottom level according to Locus Recording Sheet."
+        },
+        "locusVolume": {
+          "label": "VOLUME (liter)",
+          "description": "Volume in liter according to Locus Recording Sheet."
+        },
+        "locusBuckets": {
+          "label": "BUCKETS (extent of excavated deposit)",
+          "description": "Extent of excavated deposit in buckets according to Locus Recording Sheet."
+        },            
+        "locusCommentsInterpretation": {
+          "label": "COMMENTS & INTERPRETATION",
+          "description": "Always update with name and date after adding new comments or interpretations!"    
+        }
+      }
+    },
+    "Layer": {
+      "label": "Deposit",
+      "fields": {
+        "locusDepositType": {
+          "label": "DEPOSIT",
+          "description": "Choose one according to Locus Recording Sheet. Cross 'Other' for more options." 
+        },
+        "locusDepositTypeOther": {
+          "label": "Specify deposit type 'Other' with additional text",
+          "description": "Specify option 'Other' with additional text, e.g.'Cache of:__', 'Fill of:__', 'Accumulation of:__', 'Intentional deposition of:__'."
+        },
+        "locusDepositCompaction": {
+          "label": "COMPACTION",
+          "description": "Compaction of soil or layer."
+        },
+        "locusDepositComposition": {
+          "label": "COMPOSITION",
+          "description": "Apparent composition of soil. (Choose from drop down list)"
+        },
+        "locusDepositColourModifier": {
+          "label": "COLOUR: Modifier",
+          "description": "Enter colour modifier according to Locus Recording Sheet."
+        },
+        "locusDepositColourHue": {
+          "label": "COLOUR: Hue",
+          "description": "Enter colour hue according to Locus Recording Sheet."
+        },
+        "locusDepositColour": {
+          "label": "COLOUR",
+          "description": "Enter colour according to Locus Recording Sheet."
+        } 
+      }
+    },
+    "Architecture": {
+      "label": "Structural Element",
+      "fields": {
+        "structuralElementType": {
+          "label": "STURCTURAL ELEMENT",
+          "description": "Choose one according to Locus Recording Sheet. Select 'Other' for more options. Specify below."
+        },            
+        "structuralElementOther": {
+          "label": "Specify structural element 'Other' with additional text.",
+          "description": "Specify structural element 'Other' with additional text."
+        },            
+        "structuralElementDescription": {
+          "label": "DESCRIPTION OF STRUCTURAL ELEMENT",
+          "description": "Description according to Locus Recording Sheet."
+        },            
+        "structuralElementMaterials": {
+          "label": "MATERIALS OF STRUCTURAL ELEMENT",
+          "description": "Apparent materials of structural element according to Locus Recording Sheet."
+        },            
+        "structuralElementWallIntegration": {
+          "label": "WALL ABUTS/IS TIED WITH LOCUS: (add with +)",
+          "description": "Enter Locus Numbers that have connection to wall."
+        },            
+        "structuralElementWallCourses": {
+          "label": "NUMBER OF COURSES (WALL)",
+          "description": "Enter integral value (no commas, no decimal, only positives)"
+        } 
+      }
+    },
+    "FeatureInterface": {
+      "label": "Cut",
+      "fields": {
+        "locusCutType": {
+          "label": "TYPE OF CUT",
+          "description": "Choose one type according to Locus Recording Sheet."
+        },            
+        "locusCutTypeOther": {
+          "label": "Specify type of cut 'Other' with additional text. Choose 'Other' for more options.",
+          "description": "Specify type of cut 'Other' with additional text."
+        },            
+        "locusCutFill": {
+          "label": "FILLED WITH LOCUS/LOCI (add with +)",
+          "description": "Enter Locus Numbers seperatly. Add with +."
+        },            
+        "locusCutShape": {
+          "label": "SHAPE OF CUT IN PLAN",
+          "description": "Choose one shape only. Select 'Other' if none applicable."
+        },            
+        "locusCutSlope": {
+          "label": "BREAK OF SLOPE:",
+          "description": "needsReview!"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "smallFindsCategory": {
+          "label": "Small Finds Category",
+          "description": "Choose one category - Check migration history and old system recording for more information"
+        },
+        "smallFindsCollectionMethod": {
+          "label": "Collection Method",
+          "description": "Choose one option - Check additional form for collection"
+        },
+        "smallFindsAmountCollection": {
+          "label": "Amount of finds in collection (box, bag, container etc.)",
+          "description": "Amount of finds under this Find-Nr."
+        },
+        "smallFindsProcessor": {
+          "label": "FIND PROCESSOR",
+          "description": "Name of processer for this find or record."
+        },
+        "smallFindsDate": {
+          "label": "Find Date"
+        },    
+        "smallFindsStorage": {
+          "label": "Storage Place",
+          "description": "GT Find Depots are located inside or in the garden of the Excavation House. Depot 1: large storage in Excavation House; Depot 4: small storage room in Excavation House containing finds collected during construction of canopy roof; Depot 2 & 3: Shipping containers in the garden of the Excavation House"
+        },
+        "depotRow": {
+          "label": "Row (Sira)",
+          "description": "Corresponding row in depot to locate find"
+        },
+        "depotBoxNr": {
+          "label": "Box Nr.",
+          "description": "Number of box to locate find in depot"
+        },
+        "depotShelf": {
+          "label": "Shelf (Raf)",
+          "description": "Corresponding shelf in depot to locate find"
+        },
+        "depotBoxPosition": {
+          "label": "Box Position",
+          "description": "Corresponding position in depot to locate find"
+        },
+        "findNumber": {
+          "label": "Find Number (FNR):",
+          "description": "Find Number for Smallfinds in GT documentation. Finds can have additional identifying numbers. Check for SGN-Nr. or Inv-Nr."
+        },
+        "storageInventoryNumber": {
+          "label": "Inv-Nr.:",
+          "description": "Finds in GT can have an additional Inventory Number as an extra identifier. At the end of every season officials from Urfa Museum will visit the site, evaluate all finds and collect some for display at the museum. These finds have an additional Inv-Nr. and extra recording lists. Check 'Museumslisten' within the analog excavation archive registers."
+        },    
+        "stonegardenNumber": {
+          "label": "SGN-Nr.:",
+          "description": "Finds in GT can have an additional Stonegarden Number. The 'Stonegarden' is a walled area on site, where large, heavy or bulky finds are stored and on display, for example intact grinding stones."
+        },    
+        "etüdlükNumber": {
+          "label": "Etüd-Nr.:",
+          "description": "Finds in GT can have an additional Etüdlük Number. At the end of every season officials from Urfa Museum will visit the site, evaluate all finds and collect some for the museum study collection. These finds have an additional Etüd-Nr. and extra recording lists. Check 'Museumslisten' within the analog excavation archive registers. "
+        },
+        "condition": {
+          "label": "Preservation"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "smallFindsUrfaDbID": {
+          "label": "Smallfind ID Urfa DB",
+          "description": "ID from Urfa DB"
+        },
+        "smallFindsRemarksProcessor": {
+          "label": "Remarks on find processing"
+        },
+        "smallFindsText": {
+          "label": "Text on Small Finds Recording Card (old system)"
+        },
+        "smallFindsMaterialCodeOld": {
+          "label": "Material Code (old system)",
+          "description": "Material with Urfa DB Material code-number"
+        },
+        "smallFindsTypeCodeOld": {
+          "label": "Type Code (old system)",
+          "description": "Type with Urfa DB Type code-number"
+        },
+        "smallFindsExcavationMethodOld": {
+          "label": "Excavation Method (old System)"
+        },
+        "smallFindsHasImage": {
+          "label": "Image",
+          "description": "Is an Image available?"
+        },
+        "smallFindsHasDrawing": {
+          "label": "Drawing",
+          "description": "Is a Drawing available?"
+        },
+        "smallFindsSeason": {
+          "label": "Season"
+        },
+        "smallFindsSpit": {
+          "label": "Spit (old System)"
+        },
+        "smallFindsQme": {
+          "label": "Qme (old System)"
+        },
+        "isMigrated": {
+          "label": "Migration History",
+          "description": "Check below for more information about database legacy"
+        },
+        "migrationFromUrfaDbDate": {
+          "label": "Migration from Urfa Database - Date",
+          "description": "Date of data migration from Urfa Database to iDAI.field"
+        },
+        "migrationFromUrfaDbProcessor": {
+          "label": "Migration from Urfa Database - Processor",
+          "description": "Processor of data migration from Urfa Database to iDAI.field"
+        },
+        "UrfaDbRecordCreationDate": {
+          "label": "Urfa Database record creation date",
+          "description": "Date of creation for dataset record in Urfa Database"
+        },
+        "UrfaDbRecordCreationEditor": {
+          "label": "Urfa Database record creator",
+          "description": "Creator or Editor for dataset record in Urfa Database"
+        },
+        "oldDbSource": {
+          "label": "Old Database Source"
+        },
+        "oldDbEditDate": {
+          "label": "Old Database Edit Date"
+        },
+        "oldDbEditor": {
+          "label": "Old Database Editor"
+        },
+        "UrfaDBFindNoDuplicate": {
+          "label": "Urfa Database Find Number Duplicate",
+          "description": "Existence of a Find Number duplicate"
+        },
+        "UrfaDBInvNoDuplicate": {
+          "label": "Urfa Database Inventory Number Duplicate",
+          "description": "Existence of a Inventory Number duplicate"
+        },
+        "UrfaDBStgNoDuplicate": {
+          "label": "Urfa Database Stonegarden Number Duplicate",
+          "description": "Existence of a Stonegarden Number duplicate"
+        },
+        "UrfaDBRemarks": {
+          "label": "Urfa Database Entry Remarks"
+        },
+        "UrfaDBDigitalDataChecked": {
+          "label": "Urfa Database Digital Data Checked"
+        },
+        "UrfaDBAnalogDataChecked": {
+          "label": "Urfa Database Analog Data Checked"
+        },
+        "fixMe!": {
+          "label": "fixMe!",
+          "description": "Data dump from previous databases that need fixing, e.g. duplicate find numbers. Note that Urfa DB (by Andrè Beuger) has an extra sheet where all duplicate entrys are saved and displayed."
+        }
+      }
+    },
+    "Stone": {
+      "label": "Stone needsReview!",
+      "fields": {
+        "stoneFindCategory": {
+          "label": "STONE FIND CATEGORY",
+          "description": "Choose category for stone finds."
+        },
+        "lithicRawMaterial": {
+          "label": "RAW MATERIAL",
+          "description": "Das Rohmaterial aus dem ein Einzelfund besteht."
+        },
+        "lithicRawMaterialGroup": {
+          "label": "RAW MATERIAL GROUP",
+          "description": "Makroskopisch definierte Rohmaterialgruppen der am Fundplatz vorkommenden unterschiedlichen Silicite."
+        },
+        "lithicColor": {
+          "label": "COLOR",
+          "description": "Färbung des Einzelfundes anhand makroskopischer Aufnahme und optionaler Abgleich mit Munsell-Farbkatalog."
+        },
+        "lithicOptic": {
+          "label": "OPTIC",
+          "description": "Optische und haptische Wahrnehmung der Oberfläche."
+        },
+        "lithicThermic": {
+          "label": "THERMIC",
+          "description": "Nachweisbare thermische Einwirkungen auf Artefakt vorhanden oder nicht."
+        },
+        "lithicSurface": {
+          "label": "SURFACE",
+          "description": "Oberflächenzustand der Dorsalseite eines Artefakts."
+        },
+        "lithicBasicForm": {
+          "label": "BASIC FORM",
+          "description": "Grundform des untersuchten lithischen Artefakts."
+        },
+        "lithicPreservation": {
+          "label": "PRESERVATION",
+          "description": "Erhaltung der Grundform: Ist das Stück in Länge und Breite vollständig oder nur fragmentiert erhalten."
+        },
+        "lithicCIM": {
+          "label": "CORE INITIALISATION AND MAINTENANCE PRODUCTS (CIM)",
+          "description": "An dieser Stelle werden bestimmte Kernpräparationsprodukte sowie Schlagunfälle vermerkt. Beides lässt Aussagen über die angewendete Technik zur Kernpräparation zu."
+        },
+        "lithicTechnology": {
+          "label": "TECHNOLOGY",
+          "description": "Hier werden Technikelemente genannt, welche in direkten Zusammenhang mit dem Kernabbau stehen und eine relativchronologische Relevanz besitzen können."
+        },
+        "lithicToolModification": {
+          "label": "TOOL MODIFICATION",
+          "description": "Kurze Abfrage ob ein Artefakt als modifiziert (Gerät) oder unmodifiziert ist."
+        },
+        "lithicToolPreservation": {
+          "label": "TOOL PERSERVATION",
+          "description": "Erhaltung des modifizierten Artefakts (Gerät): Modifikationen führen zu einer unvollständigen Erhaltung einer Grundform. Um festzustellen ob ein zum Gerät zugerichtetes Artefakt in seiner Form als Gerät vollständig oder fragmentiert erhalten ist, wurde diese Abfrage hinzugefügt."
+        },
+        "lithicStrikingPlattform": {
+          "label": "STRIKING PLATFORM",
+          "description": "Sofern vorhanden, wird hier der Zustand der Schlagfläche bzw. des Schlagflächenrests (butt) aufgenommen, welcher nach dem Abbau und der möglichen Modifikation am Artefakt verblieben ist."
+        },
+        "lithicBulb": {
+          "label": "BULB",
+          "description": "Beschreibt den Zustand des Bulbus, wenn vorhanden."
+        },
+        "lithicStrike": {
+          "label": "STRIKE",
+          "description": "Interpretation der Schlagart (-technik), welche teils auf den vorigen Merkmalen wie STRIKING PLATFORM und BULB basiert."
+        },
+        "lithicStrikeDirection": {
+          "label": "STRIKE DIRECTION VENTRAL DORSAL (SDVD)",
+          "description": "Schlagrichtung der Negative auf der Dorsalseite im Vergleich zur Schlagrichtung der Ventralseite"
+        },
+        "lithicUsewear": {
+          "label": "USEWEAR",
+          "description": "Kurze Abfrage ob Gebrauchsspuren, welche keine Modifikationen sind, an dem Artefakt vorhanden sind oder nicht."
+        },
+        "lithicMod1": {
+          "label": "MODIFICATION 1",
+          "description": "Primäre Zurichtung eines Artefakts zu einem bestimmten Gerät. Diese sind hierarchiesiert (u.a. nach ihrer relativchronologischen Aussagekraft), bedeutet, dass z.B. eine Pfeilspitze als Modifikation über einem Kratzer steht."
+        },
+        "lithicMod2": {
+          "label": "MOD2",
+          "description": "Weitere Modifikationen, welche an dem Artefakt festzustellen sind."
+        },
+        "lithicMod3": {
+          "label": "MOD3",
+          "description": "Weitere Modifikationen."
+        },
+        "lithicMod4": {
+          "label": "Mod4",
+          "description": "Weitere Modifikationen."
+        },
+        "lithicMod5": {
+          "label": "Mod5",
+          "description": "Weitere Modifikationen."
+        },
+        "lithicMod6": {
+          "label": "Mod6",
+          "description": "Weitere Modifikationen."
+        },
+        "lithicCore": {
+          "label": "CORE",
+          "description": "Kernart."
+        },
+        "lithicRemarks": {
+          "label": "REMARKS",
+          "description": "Freifeld für Anmerkungen."
+        }
+      }
+    },
+    "Sample": {
+      "label": "Sample",
+      "fields": {
+        "sampleType": {
+          "label": "SAMPLE TYPE",
+          "description": "Description of initial sample material."
+        },
+        "sampleTypeOther": {
+          "label": "Specify sample type 'Other' with additional text.",
+          "description": "Specify 'Other' sample material."
+        },
+        "labNumber": {
+          "label": "LAB NUMBER",
+          "description": "If individual laboratory numbers have been assigned by the processors, please indicate here."
+        },
+        "sampleNumber": {
+          "label": "SAMPLE NUMBER",
+          "description": "Sample number in GT documentation."
+        },
+        "season": {
+          "label": "SEASON",
+          "description": "Fieldwork season or campaign accourding to GT documentation."
+        },   
+        "sampleQuantity": {
+          "label": "SAMPLE QUANTITY"
+        },
+        "sampleDepth": {
+          "label": "SAMPLE DEPTH",
+          "description": "Record depth of sampling accourding to documentation during fieldwork."
+        },
+        "sampleRemarks": {
+          "label": "REMARKS ON SAMPLING",
+          "description": "Remarks on sampling accourding to documentation during fieldwork."
+        },
+        "sampleHasMeasurement": {
+          "label": "HAS MEASURMENT",
+          "description": "Has the location from which the sample originates been recorded?"
+        },
+        "sampleDocumentation": {
+          "label": "SAMPLE DOCUMENTATION - Drawing Nr./Foto Nr.",
+          "description": "Indicate if sampling has been recorded in drawings (Planum) and images."
+        },
+        "description": {
+          "label": "REMARKS ON PROCESSING",
+          "description": "Specify sampling and processing with further information. Use full name of any involved person, [e.g. who did the flotation, who worked on the microscope] and short description of work [e.g. floted, extracted, chemical treatment]"
+        },
+        "methodOfAnalysis": {
+          "label": "METHOD OF ANALYSIS",
+          "description": "The same sample can be used for different analyses, e.g. soil sample for macrobotany, phytoliths and geochemical analyses."
+        },
+        "sampleCollectionMethod": {
+          "label": "SAMPLE COLLECTION METHOD",
+          "description": "Description of how the sample was taken during fieldwork or from an object. Is it in original condition?"
+        },
+        "sampleProcessingStatus": {
+          "label": "PROCESSING STATUS",
+          "description": "Indicate state of sample. Important: Is it processed, e.g. floted, chemicals, any other treatment?"
+        },
+        "sampleSize": {
+          "label": "SAMPLE SIZE",
+          "description": "This is important for the choice of method. If possible, specify as accurately as possible in volume (l) or weight (g)." 
+        },
+        "sampleLocation": {
+          "label": "SAMPLE LOCATION",
+          "description": "Update on location during sampling and processing."
+        },
+        "sampleProcessingLabratory": {
+          "label": "PROCESSING LABRATORY",
+          "description": "Name the lab if out-of-house processing of samples are initiated."  
+        },
+        "sampleRemains": {
+          "label": "SAMPLE REMAINS",
+          "description": "Fill out if an analysis has already been carried out with this sample and remaining material is still present. Important: Has the remaining material been treated? If so, with which chemicals and treatments?"
+        },
+        "sampleRemainsQuantity": {
+          "label": "QUANTITY OF SAMPLE LEFTOVER REMAINS",
+          "description": "Indicate weight/volume of leftover sample material"
+        },
+        "weight": {
+          "label": "WEIGHT (g)",
+          "description": "Initial weight before processing."
+        },
+        "sampleVolume": {
+          "label": "VOLUME (l)",
+          "description": "Initial volume before processing."
+        },
+        "smallFindsMaterialCodeOld": {
+          "label": "Material Code (old system)",
+          "description": "Material with Urfa DB Material code-number"
+        },
+        "isMigrated": {
+          "label": "Migration History",
+          "description": "Check below for more information about database legacy"
+        },
+        "sampleUrfaDbID": {
+          "label": "Samples ID Urfa DB",
+          "description": "Date of data migration from Urfa Database to iDAI.field"
+        },
+        "migrationFromUrfaDbDate": {
+          "label": "Migration from Urfa Database - Date",
+          "description": "ID from Urfa DB"
+        },
+        "migrationFromUrfaDbProcessor": {
+          "label": "Migration from Urfa Database - Processor",
+          "description": "Processor of data migration from Urfa Database to iDAI.field"
+        },
+        "UrfaDbRecordCreationDate": {
+          "label": "Urfa Database record creation date",
+          "description": "Date of creation for dataset record in Urfa Database"
+        },
+        "UrfaDbRecordCreationEditor": {
+          "label": "Urfa Database record creator",
+          "description": "Creator or Editor for dataset record in Urfa Database"
+        },
+        "oldDbSource": {
+          "label": "Old Database Source"
+        },
+        "oldDbEditor": {
+          "label": "Old Database Editor"
+        },
+        "oldDbEditDate": {
+          "label": "Old Database Edit Date"
+        }
+      }
+    }   
+  }
+}

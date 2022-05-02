@@ -1,5 +1,5 @@
 import { click, doubleClick, getElement, getElements, getValue, navigateTo, typeIn, uploadInFileInput,
-    waitForExist } from '../app';
+    waitForExist, waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -187,6 +187,7 @@ export module ImageOverviewPage {
         await this.clickLinkButton();
         await this.typeInIdentifierInLinkModal(identifier);
         await click(await this.getSuggestedResourcesInLinkModalByIdentifier(identifier));
+        await waitForNotExist('ngb-modal-backdrop');
         await NavbarPage.clickCloseNonResourcesTab();
         await NavbarPage.clickTab('project');
         return navigateTo('images');

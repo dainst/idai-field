@@ -12,6 +12,7 @@ export const PROJECT_MAPPING = {
     'chimtou': { prefix: 'Bourgou', label: 'Chimtou' },
     'elephantine': { prefix: 'Elephantine', label: 'Elephantine' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
+    'goebekli_tepe': { prefix: 'GoebekliTepe', label: 'Göbekli Tepe' },
     'heliopolis-project': { prefix: 'Heliopolis', label: 'Heliopolis' },
     'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },

@@ -29,12 +29,16 @@ export class DatingComponent {
     }
 
 
-    public createNewDating() {
+    public createNewDating(type: Dating.Types = 'range') {
 
-        this.newDating = {
-            type: 'range',
-            begin: { year: 0, inputYear: 0, inputType: 'bce' },
-            end: { year: 0, inputYear: 0, inputType: 'bce' }
+        this.newDating = { type: type };
+
+        if (type !== 'exact' && type !== 'before') {
+            this.newDating.begin = { year: 0, inputYear: 0, inputType: 'bce' };
+        }
+        
+        if (type !== 'after') {
+            this.newDating.end = { year: 0, inputYear: 0, inputType: 'bce' };
         };
     }
 
@@ -54,9 +58,6 @@ export class DatingComponent {
 
 
     public validate(dating: Dating): boolean {
-
-        if (dating.type === 'exact' || dating.type === 'before') delete dating.begin;
-        if (dating.type === 'after') delete dating.end;
 
         Dating.addNormalizedValues(dating);
 

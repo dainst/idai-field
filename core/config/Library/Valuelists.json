@@ -49893,6 +49893,264 @@
       "unbekannt"
     ]
   },
+  "provenance-milet": {
+    "createdBy": "",
+    "description": {},
+    "creationDate": "",
+    "values": {
+      "Anatolien": {
+        "label": {
+          "de": "Anatolien",
+          "it": "Anatolia"
+        }
+      },
+      "Antiochia (Antakya)": {
+        "label": {
+          "de": "Antiochia (Antakya)"
+        }
+      },
+      "Athen": {
+        "label": {
+          "de": "Athen",
+          "it": "Atene"
+        }
+      },
+      "Ägypten": {
+        "label": {
+          "de": "Ägypten",
+          "it": "Egitto"
+        }
+      },
+      "Attisch": {
+        "label": {
+          "de": "Attisch",
+          "it": "Attico"
+        }
+      },
+      "Britannien": {
+        "label": {
+          "de": "Britannien",
+          "it": "Britannia"
+        }
+      },
+      "Chios": {
+        "label": {
+          "de": "Chios",
+          "it": "Chio"
+        }
+      },
+      "Deutschland": {
+        "label": {
+          "de": "Deutschland",
+          "it": "Germania"
+        }
+      },
+      "Ephesos": {
+        "label": {
+          "de": "Ephesos",
+          "it": "Efeso"
+        }
+      },
+      "Etruskisch": {
+        "label": {
+          "de": "Etruskisch",
+          "it": "Etrusco"
+        }
+      },
+      "Gallien": {
+        "label": {
+          "de": "Gallien",
+          "it": "Gallia"
+        }
+      },
+      "Import": {
+        "label": {
+          "de": "Import",
+          "en": "Import"
+        }
+      },
+      "Ionien": {
+        "label": {
+          "de": "Ionien",
+          "it": "Ionia"
+        }
+      },
+      "Irland": {
+        "label": {
+          "de": "Irland",
+          "it": "Irlanda"
+        }
+      },
+      "Italien": {
+        "label": {
+          "de": "Italien",
+          "it": "Italia"
+        }
+      },
+      "Kampanisch": {
+        "label": {
+          "de": "Kampanisch",
+          "it": "Campano"
+        }
+      },
+      "Karthagisch": {
+        "label": {
+          "de": "Karthagisch",
+          "it": "Cartaginese"
+        }
+      },
+      "Kleinasien": {
+        "label": {
+          "de": "Kleinasien",
+          "it": "Asia Minore"
+        }
+      },
+      "Knidos": {
+        "label": {
+          "de": "Knidos",
+          "it": "Cnido"
+        }
+      },
+      "Korinth": {
+        "label": {
+          "de": "Korinth",
+          "it": "Corinto"
+        }
+      },
+      "Kos": {
+        "label": {
+          "de": "Kos",
+          "it": "Kos"
+        }
+      },
+      "Lesbos": {
+        "label": {
+          "de": "Lesbos",
+          "it": "Lesbo"
+        }
+      },
+      "Levante": {
+        "label": {
+          "de": "Levante",
+          "it": "Levante"
+        }
+      },
+      "Lokal": {
+        "label": {
+          "de": "Lokal",
+          "it": "Locale"
+        }
+      },
+      "Lokal/Regional": {
+        "label": {
+          "de": "Lokal/Regional",
+          "it": "Locale/Regionale"
+        }
+      },
+      "Milet": {
+        "label": {
+          "de": "Milet",
+          "it": "Mileto"
+        }
+      },
+      "Mäandertal": {
+        "label": {
+          "de": "Mäandertal",
+          "it": "Valle del Meandro"
+        }
+      },
+      "Nordafrika": {
+        "label": {
+          "de": "Nordafrika",
+          "it": "Nord Africa"
+        }
+      },
+      "Nordafrikanisch": {
+        "label": {
+          "de": "Nordafrikanisch",
+          "it": "Nordafricano"
+        }
+      },
+      "Palästina": {
+        "label": {
+          "de": "Palästina",
+          "it": "Palestina"
+        }
+      },
+      "Pannonien": {
+        "label": {
+          "de": "Pannonien",
+          "it": "Pannonia"
+        }
+      },
+      "Peloponnes": {
+        "label": {
+          "de": "Peloponnes",
+          "it": "Peloponneso"
+        }
+      },
+      "Regional": {
+        "label": {
+          "de": "Regional",
+          "it": "Regionale"
+        }
+      },
+      "Rhodos": {
+        "label": {
+          "de": "Rhodos",
+          "it": "Rodi"
+        }
+      },
+      "Samos": {
+        "label": {
+          "de": "Samos",
+          "it": "Samo"
+        }
+      },
+      "Sizilien": {
+        "label": {
+          "de": "Sizilien",
+          "it": "Sicilia"
+        }
+      },
+      "Skandinavien": {
+        "label": {
+          "de": "Skandinavien",
+          "it": "Scandinavia"
+        }
+      },
+      "Slawisch": {
+        "label": {
+          "de": "Slawisch",
+          "it": "Slavo"
+        }
+      },
+      "Spanien": {
+        "label": {
+          "de": "Spanien",
+          "it": "Spagna"
+        }
+      },
+      "Syrien": {
+        "label": {
+          "de": "Syrien",
+          "it": "Siria"
+        }
+      },
+      "Südtunesisch": {
+        "label": {
+          "de": "Südtunesisch",
+          "it": "Sud tunisino"
+        }
+      },
+      "Südägäis": {
+        "label": {
+          "de": "Südägäis",
+          "it": "Sud Egeo"
+        }
+      }
+    }
+  },
   "Building-material-milet": {
     "creationDate": "",
     "createdBy": "",
@@ -50069,8 +50327,10 @@
       "Rotfigurige Keramik",
       "Weißgrundige Keramik",
       "Kleckerware",
+      "Colour coated",
       "Stapelware",
       "Streifenkeramik",
+      "Archaische Feinkeramik",
       "Westabhang-Keramik",
       "Westabhang-Nachfolgestil",
       "Sigillata unbestimmt",
@@ -50086,6 +50346,8 @@
       "Bleiglasurkeramik",
       "Barbotine Ware",
       "Dünnwandige Keramik",
+      "Byzantinische Glasierte Keramik",
+      "Sgraffito",
       "Handgeformte Keramik",
       "andere"
     ],
@@ -50160,6 +50422,13 @@
           "fr": "Céramique à engobe"
         }
       },
+      "Colour coated": {
+        "label": {
+          "de": "(Hellenistic) Colour coated",
+          "en": "(Hellenistic) Colour coated",
+          "fr": "(Hellenistic) Colour coated"
+        }
+      },
       "Stapelware": {
         "label": {
           "de": "Stapelware",
@@ -50172,6 +50441,13 @@
           "de": "Streifenkeramik",
           "en": "Banded Pottery",
           "fr": "céramique bandes (???; banded ware)"
+        }
+      },
+      "Archaische Feinkeramik": {
+        "label": {
+          "de": "Archaische Feinkeramik (Tierfries, Fikellura, etc.)",
+          "en": "Archaic Fine Pottery (Animal frieze, Fikellura, etc.)",
+          "fr": "Archaic Fine Pottery (Animal frieze, Fikellura, etc.)"
         }
       },
       "Westabhang-Keramik": {
@@ -50277,6 +50553,20 @@
           "de": "Dünnwandige Keramik",
           "en": "Thin-walled Pottery",
           "fr": "Céramique à paroi fine"
+        }
+      },
+      "Byzantinische Glasierte Keramik": {
+        "label": {
+          "de": "Byzantinische Glasierte Keramik",
+          "en": "Byzantine Glazed Pottery",
+          "fr": "Céramique à glaçure (byzantine)"
+        }
+      },
+      "Sgraffito": {
+        "label": {
+          "de": "Sgraffito-Keramik",
+          "en": "Sgraffito-Pottery",
+          "fr": "Sgraffito"
         }
       },
       "Handgeformte Keramik": {
@@ -50655,6 +50945,13 @@
           "fr": "Céramique complète mais endommagée"
         }
       },
+      "viel erhalten": {
+        "label": {
+          "de": "großer Teil des Gefäßes erhalten",
+          "en": "large part of vessel preserved",
+          "fr": "large part of vessel preserved"
+        }
+      },
       "vollständiges Profil": {
         "label": {
           "de": "vollständige(s) Profil(e)",
@@ -50667,6 +50964,13 @@
           "de": "große Scherben",
           "en": "large sherds",
           "fr": "Gros tessons"
+        }
+      },
+      "mittelgroße Scherben": {
+        "label": {
+          "de": "mittelgroße Scherben",
+          "en": "medium sized sherds",
+          "fr": "medium sized sherds"
         }
       },
       "kleine Scherben": {
@@ -50834,6 +51138,13 @@
           "de": "Vulkanisch",
           "en": "Volcanic",
           "fr": "Volcanique"
+        }
+      },
+      "Lufteinschlüsse": {
+        "label": {
+          "de": "Lufteinschlüsse",
+          "en": "Air pockets",
+          "fr": "Air pockets"
         }
       }
     }
@@ -51010,6 +51321,18 @@
           "de": "Einkerbungen",
           "en": "Notches",
           "fr": "Encoches/entailles"
+        }
+      },
+      "Horizontalriefel": {
+        "label": {
+          "de": "Horizontalriefel",
+          "en": "Horizontal ridges"
+        }
+      },
+      "Rouletting": {
+        "label": {
+          "de": "Rouletting / \"Geratter\"",
+          "en": "Rouletting"
         }
       },
       "Applikation": {

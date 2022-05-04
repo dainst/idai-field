@@ -66,8 +66,11 @@ defmodule FieldHub.MixProject do
     [
       setup: [
         "deps.get",
-        "run --eval 'FieldHub.CLI.setup_couchdb_single_node()'",
+        "setup_couch",
         "seed"
+      ],
+      setup_couch: [
+        "run --eval 'FieldHub.CLI.setup_couchdb_single_node()'"
       ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project_with_default_user(\"#{dev_db_name}\", \"pw\"')"

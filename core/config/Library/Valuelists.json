@@ -50424,9 +50424,7 @@
       },
       "Colour coated": {
         "label": {
-          "de": "(Hellenistic) Colour coated",
-          "en": "(Hellenistic) Colour coated",
-          "fr": "(Hellenistic) Colour coated"
+          "en": "(Hellenistic) Colour coated"
         }
       },
       "Stapelware": {
@@ -50446,8 +50444,7 @@
       "Archaische Feinkeramik": {
         "label": {
           "de": "Archaische Feinkeramik (Tierfries, Fikellura, etc.)",
-          "en": "Archaic Fine Pottery (Animal frieze, Fikellura, etc.)",
-          "fr": "Archaic Fine Pottery (Animal frieze, Fikellura, etc.)"
+          "en": "Archaic Fine Pottery (Animal frieze, Fikellura, etc.)"
         }
       },
       "Westabhang-Keramik": {
@@ -50948,8 +50945,7 @@
       "viel erhalten": {
         "label": {
           "de": "großer Teil des Gefäßes erhalten",
-          "en": "large part of vessel preserved",
-          "fr": "large part of vessel preserved"
+          "en": "large part of vessel preserved"
         }
       },
       "vollständiges Profil": {
@@ -50969,8 +50965,7 @@
       "mittelgroße Scherben": {
         "label": {
           "de": "mittelgroße Scherben",
-          "en": "medium sized sherds",
-          "fr": "medium sized sherds"
+          "en": "medium sized sherds"
         }
       },
       "kleine Scherben": {
@@ -51143,8 +51138,7 @@
       "Lufteinschlüsse": {
         "label": {
           "de": "Lufteinschlüsse",
-          "en": "Air pockets",
-          "fr": "Air pockets"
+          "en": "Air pockets"
         }
       }
     }

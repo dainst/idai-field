@@ -19,11 +19,15 @@ import './overview-map.css';
 
 
 const MAPBOX_KEY = 'pk.eyJ1Ijoic2ViYXN0aWFuY3V5IiwiYSI6ImNrOTQxZjA4MzAxaGIzZnBwZzZ4c21idHIifQ._2-exYw4CZRjn9WoLx8i1A';
+
 const FIT_OPTIONS = {
     padding: [ 200, 200, 200, 200 ],
     searchPadding: [ 200, 200, 200, SIDEBAR_WIDTH + 200 ],
     duration: 500
 };
+
+const CLUSTER_DISTANCE = 120;
+
 
 export default function OverviewMap({ documents, filter, withSearchResults }
         : { documents: ResultDocument[], filter?: ResultFilter, withSearchResults: boolean }): ReactElement {
@@ -154,7 +158,7 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
     });
 
     const clusterSource = new Cluster({
-        distance: 120,
+        distance: CLUSTER_DISTANCE,
         source: vectorSource,
     });
 

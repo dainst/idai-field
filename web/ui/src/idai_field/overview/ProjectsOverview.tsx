@@ -79,7 +79,7 @@ export default function ProjectsOverview(): ReactElement {
                 && renderSidebar(total, filters, searchParams, documents, documentListRef, onScroll) }
         </div>
         <div>
-            { error ? renderError(t) : renderMap(projectDocuments, projectFilter)}
+            { error ? renderError(t) : renderMap(projectDocuments, projectFilter, documents?.length > 0) }
         </div>
     </>;
 }
@@ -108,8 +108,9 @@ const renderError = (t: TFunction): ReactElement => (
 );
 
 
-const renderMap = (projectDocuments: ResultDocument[], projectFilter: ResultFilter): ReactElement =>
-    <OverviewMap documents={ projectDocuments } filter={ projectFilter } />;
+const renderMap = (projectDocuments: ResultDocument[], projectFilter: ResultFilter,
+                   withSearchResults: boolean): ReactElement =>
+    <OverviewMap documents={ projectDocuments } filter={ projectFilter } withSearchResults={ withSearchResults } />;
 
 
 const getProjectDocuments = async (token: string): Promise<ResultDocument[]> =>

@@ -19,10 +19,14 @@ import './overview-map.css';
 
 
 const MAPBOX_KEY = 'pk.eyJ1Ijoic2ViYXN0aWFuY3V5IiwiYSI6ImNrOTQxZjA4MzAxaGIzZnBwZzZ4c21idHIifQ._2-exYw4CZRjn9WoLx8i1A';
-const FIT_OPTIONS = { padding: [ 100, 100, 100, SIDEBAR_WIDTH + 100 ], duration: 500 };
+const FIT_OPTIONS = {
+    padding: [ 200, 200, 200, 200 ],
+    searchPadding: [ 200, 200, 200, SIDEBAR_WIDTH + 200 ],
+    duration: 500
+};
 
-export default function OverviewMap({ documents, filter }
-        : { documents: ResultDocument[], filter?: ResultFilter }): ReactElement {
+export default function OverviewMap({ documents, filter, withSearchResults }
+        : { documents: ResultDocument[], filter?: ResultFilter, withSearchResults: boolean }): ReactElement {
 
     const [map, setMap] = useState<Map>(null);
     const searchParams = useSearchParams();
@@ -47,7 +51,7 @@ export default function OverviewMap({ documents, filter }
         if (!featureCollection) return;
 
         map.getView().fit(((vectorLayer.getSource() as any).getSource() as VectorSource<Geometry>).getExtent(),
-            { padding: FIT_OPTIONS.padding });
+            { padding: withSearchResults ? FIT_OPTIONS.searchPadding : FIT_OPTIONS.padding });
 
         const documentsWithCoordinates = documents.filter(document => document.resource.geometry_wgs84);
         if (documentsWithCoordinates.length === 1) map.getView().setZoom(2);
@@ -65,7 +69,7 @@ export default function OverviewMap({ documents, filter }
             map.removeLayer(vectorLayer);
             map.un('pointermove', onPointerMove);
         };
-    }, [map, documents, filter]);
+    }, [map, documents, filter, withSearchResults]);
 
     useEffect(() => {
 
@@ -94,7 +98,13 @@ export default function OverviewMap({ documents, filter }
                     const extent = boundingExtent(
                         features.map(feature => feature.getGeometry().getCoordinates())
                     );
-                    map.getView().fit(extent, { duration: FIT_OPTIONS.duration, padding: FIT_OPTIONS.padding });
+                    map.getView().fit(
+                        extent,
+                        {
+                            duration: FIT_OPTIONS.duration,
+                            padding: withSearchResults ? FIT_OPTIONS.searchPadding : FIT_OPTIONS.padding
+                        }
+                    );
                 }
             });
         };
@@ -102,7 +112,7 @@ export default function OverviewMap({ documents, filter }
         map.on('click', onClick);
 
         return () => map.un('click', onClick);
-    }, [map, searchParams]);
+    }, [map, searchParams, withSearchResults]);
 
     return <div className="overview-map" id="ol-overview-map" style={ mapStyle }>
         <div id="mapbox-logo" />

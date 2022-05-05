@@ -187,14 +187,14 @@ const getStyle = (t: TFunction) => (clusterFeature: OlFeature): Style => {
 
     return new Style({
         image: new Icon({
-            src: '/marker-icon.svg',
+            src: size === 1 ? '/marker-icon.svg' : '/cluster-icon.svg',
             scale: 1.5
         }),
         text: new Text({
             text: labelText,
             fill: new Fill({ color: 'black' }),
             stroke: new Stroke({ color: 'white', width: 3 }),
-            offsetY: 23,
+            offsetY: size !== 2 ? 23 : 33,
             font: 'normal 15px Cargan',
             backgroundFill: new Fill({ color: [255, 255, 255, 0.01] }),
         })

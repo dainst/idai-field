@@ -11,6 +11,8 @@ import { Cluster, Vector as VectorSource } from 'ol/source';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 import View from 'ol/View';
 import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
+import { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { FilterBucket, ResultDocument, ResultFilter } from '../../api/result';
 import { NAVBAR_HEIGHT, SIDEBAR_WIDTH } from '../../constants';
 import { useSearchParams } from '../../shared/location';
@@ -34,6 +36,7 @@ export default function OverviewMap({ documents, filter, withSearchResults }
 
     const [map, setMap] = useState<Map>(null);
     const searchParams = useSearchParams();
+    const { t } = useTranslation();
 
     useEffect(() => {
 
@@ -49,7 +52,7 @@ export default function OverviewMap({ documents, filter, withSearchResults }
 
         const featureCollection = createFeatureCollection(documents, filter);
 
-        const vectorLayer = getGeoJSONLayer(featureCollection);
+        const vectorLayer = getGeoJSONLayer(featureCollection, t);
         map.addLayer(vectorLayer);
 
         if (!featureCollection) return;
@@ -141,7 +144,7 @@ const createMap = (): Map => {
 };
 
 
-const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
+const getGeoJSONLayer = (featureCollection: FeatureCollection, t: TFunction): VectorLayer => {
 
     const vectorSource = new VectorSource({
         features: featureCollection
@@ -164,7 +167,7 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
 
     const vectorLayer = new VectorLayer({
         source: clusterSource,
-        style: getStyle,
+        style: getStyle(t),
         updateWhileAnimating: true,
         zIndex: Number.MAX_SAFE_INTEGER
     });
@@ -173,14 +176,14 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
 };
 
 
-const getStyle = (clusterFeature: OlFeature): Style => {
+const getStyle = (t: TFunction) => (clusterFeature: OlFeature): Style => {
 
     const size = clusterFeature.get('features').length;
     const labelText = size === 1
         ? clusterFeature.get('features')[0].get('label')
         : size === 2
             ? clusterFeature.get('features')[0].get('label') + '\n' + clusterFeature.get('features')[1].get('label')
-            : new String(size) + ' Projekte';
+            : new String(size) + ' ' + t('projectsOverview.projects');
 
     return new Style({
         image: new Icon({

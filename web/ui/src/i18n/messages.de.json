@@ -53,7 +53,8 @@
     "bibliography": "Bibliographie"
   },
   "projectsOverview": {
-    "backendNotAvailable": "Backend not available!"
+    "backendNotAvailable": "Backend not available!",
+    "projects": "Projekte"
   },
   "documentTeaser": {
     "noTargetResource": "Zielressource nicht vorhanden"

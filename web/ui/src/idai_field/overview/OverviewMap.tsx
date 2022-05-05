@@ -2,11 +2,12 @@ import { Feature, FeatureCollection } from 'geojson';
 import { Feature as OlFeature, MapBrowserEvent } from 'ol';
 import olms from 'ol-mapbox-style';
 import { Attribution, defaults as defaultControls } from 'ol/control';
+import { boundingExtent } from 'ol/extent';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Geometry } from 'ol/geom';
 import { Vector as VectorLayer } from 'ol/layer';
 import Map from 'ol/Map';
-import { Vector as VectorSource } from 'ol/source';
+import { Cluster, Vector as VectorSource } from 'ol/source';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 import View from 'ol/View';
 import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
@@ -45,7 +46,7 @@ export default function OverviewMap({ documents, filter }
 
         if (!featureCollection) return;
 
-        map.getView().fit((vectorLayer.getSource() as VectorSource<Geometry>).getExtent(),
+        map.getView().fit(((vectorLayer.getSource() as any).getSource() as VectorSource<Geometry>).getExtent(),
             { padding: FIT_OPTIONS.padding });
 
         const documentsWithCoordinates = documents.filter(document => document.resource.geometry_wgs84);
@@ -72,16 +73,28 @@ export default function OverviewMap({ documents, filter }
 
         const onClick = (e: MapBrowserEvent) => {
             e.preventDefault();
-            map.forEachFeatureAtPixel(e.pixel, feature => {
-                if (feature.getProperties().identifier) {
-                    // this causes openlayers to throw an error, presumably because
-                    // the map element does not exist when some event listener fires
-                    // history.push(`/project/${feature.getProperties().identifier}`);
+            map.forEachFeatureAtPixel(e.pixel, clusterFeature => {
+                const features = clusterFeature.get('features');
+                if (!features) return;
 
-                    // so instead reload the application when selecting a project
-                    let href = `/project/${feature.getProperties().identifier}`;
-                    if (searchParams.toString()) href += `/search/?${searchParams}`;
-                    window.location.href = href;
+                if (features.length === 1) {
+                    const feature = features[0];
+
+                    if (feature.getProperties().identifier) {
+                        // this causes openlayers to throw an error, presumably because
+                        // the map element does not exist when some event listener fires
+                        // history.push(`/project/${feature.getProperties().identifier}`);
+    
+                        // so instead reload the application when selecting a project
+                        let href = `/project/${feature.getProperties().identifier}`;
+                        if (searchParams.toString()) href += `/search/?${searchParams}`;
+                        window.location.href = href;
+                    }
+                } else {
+                    const extent = boundingExtent(
+                        features.map(feature => feature.getGeometry().getCoordinates())
+                    );
+                    map.getView().fit(extent, { duration: FIT_OPTIONS.duration, padding: FIT_OPTIONS.padding });
                 }
             });
         };
@@ -130,8 +143,13 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
         ]
     });
 
-    const vectorLayer = new VectorLayer({
+    const clusterSource = new Cluster({
+        distance: 120,
         source: vectorSource,
+    });
+
+    const vectorLayer = new VectorLayer({
+        source: clusterSource,
         style: getStyle,
         updateWhileAnimating: true,
         zIndex: Number.MAX_SAFE_INTEGER
@@ -141,7 +159,14 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
 };
 
 
-const getStyle = (feature: OlFeature): Style => {
+const getStyle = (clusterFeature: OlFeature): Style => {
+
+    const size = clusterFeature.get('features').length;
+    const labelText = size === 1
+        ? clusterFeature.get('features')[0].get('label')
+        : size === 2
+            ? clusterFeature.get('features')[0].get('label') + '\n' + clusterFeature.get('features')[1].get('label')
+            : new String(size) + ' Projekte';
 
     return new Style({
         image: new Icon({
@@ -149,7 +174,7 @@ const getStyle = (feature: OlFeature): Style => {
             scale: 1.5
         }),
         text: new Text({
-            text: feature.get('label'),
+            text: labelText,
             fill: new Fill({ color: 'black' }),
             stroke: new Stroke({ color: 'white', width: 3 }),
             offsetY: 23,
@@ -158,6 +183,7 @@ const getStyle = (feature: OlFeature): Style => {
         })
     });
 };
+
 
 const createFeatureCollection = (documents: ResultDocument[], filter: ResultFilter): FeatureCollection => {
 

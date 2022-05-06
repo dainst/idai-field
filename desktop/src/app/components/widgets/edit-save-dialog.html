@@ -1,5 +1,6 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@widgets.saveModal.header">Speichern?</h5>
+    <h5 *ngIf="!applyMode" class="modal-title" i18n="@@widgets.saveModal.header">Speichern?</h5>
+    <h5 *ngIf="applyMode" class="modal-title" i18n="@@widgets.saveModal.applyHeader">Übernehmen?</h5>
 </div>
 <div id="edit-save-dialog-modal-body" class="modal-body">
     <div *ngIf="!applyMode">

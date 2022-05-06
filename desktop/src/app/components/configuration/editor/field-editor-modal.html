@@ -89,8 +89,13 @@
     <div *ngIf="isValuelistSectionVisible()"
          id="field-editor-valuelist-section"
          class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.valuelist">
-            Werteliste
+        <div class="configuration-editor-section-title">
+            <span *ngIf="getInputType() !== 'dimension'" i18n="@@configuration.valuelist">
+                Werteliste
+            </span>
+            <span *ngIf="getInputType() === 'dimension'" i18n="@@configuration.valuelistForDimensionSubfield">
+                Werteliste (Unterfeld "Gemessen an")
+            </span>
         </div>
         <div *ngIf="clonedField.valuelist">
             <ul class="list-group list-group-flush">

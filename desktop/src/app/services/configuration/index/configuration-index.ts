@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
 import { to, Map } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
-    createContextIndependentCategories, Field, Forest, Name, ProjectConfiguration, RawProjectConfiguration,
-    Template, Tree, Valuelist } from 'idai-field-core';
+    createContextIndependentCategories, Field, Forest, getConfigurationName, Name, ProjectConfiguration,
+    RawProjectConfiguration, Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
@@ -14,7 +13,6 @@ import { GroupEntry, GroupIndex } from './group-index';
 /**
  * @author Thomas Kleinke
  */
-@Injectable()
 export class ConfigurationIndex {
 
     private categoryFormIndex: CategoryFormIndex;
@@ -29,7 +27,8 @@ export class ConfigurationIndex {
 
     constructor(private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private projectName: string) {}
 
     
     public getTemplates = (): Map<Template> => this.templates;
@@ -105,7 +104,7 @@ export class ConfigurationIndex {
     private async buildConfigurationIndex(configurationDocument: ConfigurationDocument,
                                           customProjectConfiguration?: ProjectConfiguration) {
 
-        const builtInConfiguration = new BuiltInConfiguration('');
+        const builtInConfiguration = new BuiltInConfiguration(getConfigurationName(this.projectName));
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
         const valuelists = await this.configReader.read('/Library/Valuelists.json');

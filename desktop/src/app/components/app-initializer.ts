@@ -209,7 +209,9 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
                                        configuration: ProjectConfiguration, projectName: string,
                                        username: string): Promise<ConfigurationIndex> => {
 
-    const configurationIndex: ConfigurationIndex = new ConfigurationIndex(configReader, configLoader, configuration);
+    const configurationIndex: ConfigurationIndex = new ConfigurationIndex(
+        configReader, configLoader, configuration, projectName
+    );
 
     const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
         (id: string) => db.get(id), configReader, getConfigurationName(projectName), username

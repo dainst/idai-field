@@ -22,7 +22,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ]
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices(forms as any, [], [], [], []);
 
         expect(index.findCategoryForms( '', 'A:parent')[0].name).toEqual('A:default');
@@ -60,7 +60,7 @@ describe('ConfigurationIndex', () => {
                 defaultLabel: {},
             }
         ]
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices(forms as any, [], [], [], []);
 
         const result = index.getCategoryFormChildren('ParentA:default');
@@ -92,7 +92,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices([], categories, [], [], []);
 
         expect(index.findFields('', 'A')[0].name).toEqual('field1');
@@ -131,7 +131,7 @@ describe('ConfigurationIndex', () => {
                 }
             }
         ];
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices([], [], [], valuelists, []);
 
         expect(index.findValuelists('')[0].id).toEqual('valuelist-1');
@@ -187,7 +187,7 @@ describe('ConfigurationIndex', () => {
                 ]
             }
         ]
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices([], [], [], [], forms as any);
 
         expect(index.findGroups('').length).toBe(3);
@@ -243,7 +243,7 @@ describe('ConfigurationIndex', () => {
             ]
         };
 
-        const index = new ConfigurationIndex(undefined, undefined, undefined);
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
         index.createSubIndices([], [], [], valuelists, [category1, category2]);
 
         const result1 = index.getValuelistUsage('valuelist-1');

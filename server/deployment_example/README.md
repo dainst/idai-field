@@ -1,6 +1,6 @@
 # Example deployment guide
 
-This is a tutorial guide for deploying FieldHub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments__.
+This is a tutorial guide for deploying FieldHub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments. Using SSL is not covered in this guide and is highly recommended for security reasons (Field Client uses basic auth).__
 
 ## Prerequisites
 

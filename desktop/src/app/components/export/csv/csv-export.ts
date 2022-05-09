@@ -43,6 +43,8 @@ export module CSVExport {
                                      fieldDefinitions: Array<Field>,
                                      relations: Array<string>) {
 
+        fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
+
         const headings: string[] = makeHeadings(fieldDefinitions, relations);
         const matrix = resources
             .map(CsvExportUtils.convertToResourceWithFlattenedRelations)

@@ -7,6 +7,7 @@ import IS_BEFORE = Relation.Time.BEFORE;
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
+import SAME_AS = Relation.SAME_AS;
 import {completeInverseRelations} from '../../../../../src/app/components/import/import/process/complete-inverse-relations';
 import {makeDocumentsLookup} from '../../../../../src/app/components/import/import/utils';
 
@@ -21,9 +22,13 @@ describe('completeInverseRelations', () => {
         isBefore: 'isAfter',
         isAbove: 'isBelow',
         isBelow: 'isAbove',
+        isSameAs: 'isSameAs',
         isRecordedIn: undefined,
         liesWithin: undefined
     };
+
+    const sameOperationRelations = ['isContemporaryWith', 'isEquivalentTo', 'isBefore', 'isAfter', 'isBelow',
+        'isAbove', 'liesWithin'];
 
     let isRelationProperty;
     let get;
@@ -107,7 +112,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations[IS_ABOVE] =  ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];
 
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations,
+            sameOperationRelations);
         expect(documents.length).toBe(0);
     });
 
@@ -120,7 +126,8 @@ describe('completeInverseRelations', () => {
         };
 
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations,
+            sameOperationRelations);
         expect(documents.length).toBe(0);
         expect(doc2.resource.relations[IS_ABOVE]).not.toBeUndefined();
         expect(doc2.resource.relations[IS_ABOVE].length).toBe(1);
@@ -138,7 +145,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations[IS_ABOVE] = ['3'];
         doc1.resource.relations[IS_BELOW] = ['2'];
 
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations,
+            sameOperationRelations);
         expect(documents.length).toBe(1); // three
         expect(doc2.resource.relations[IS_ABOVE]).not.toBeUndefined();
         expect(doc2.resource.relations[IS_ABOVE].length).toBe(2);
@@ -153,7 +161,8 @@ describe('completeInverseRelations', () => {
         };
 
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations,
+            sameOperationRelations);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -169,7 +178,8 @@ describe('completeInverseRelations', () => {
 
         doc2.resource.relations[IS_ABOVE] = ['3'];
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations,
+            sameOperationRelations);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -187,7 +197,8 @@ describe('completeInverseRelations', () => {
 
         doc1.resource.relations[IS_BELOW] = ['3'];
         doc2.resource.relations[IS_BELOW] = ['3'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any, doc2 as any]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any, doc2 as any]), targetsLookup,
+            inverseRelations, sameOperationRelations);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations[IS_ABOVE][0]).toBe('1');
@@ -207,7 +218,8 @@ describe('completeInverseRelations', () => {
 
         doc1.resource.relations[IS_BELOW] = ['3'];
         doc2.resource.relations[IS_BELOW] = ['3'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any, doc2 as any]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any, doc2 as any]), targetsLookup,
+            inverseRelations, sameOperationRelations);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations[IS_ABOVE][0]).toBe('4');
@@ -227,7 +239,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations[IS_BEFORE] = ['1'];
         doc2.resource.relations[IS_ABOVE] = ['1'];
 
-        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations,
+            sameOperationRelations);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations[IS_BEFORE][0]).toBe('1');
@@ -251,7 +264,10 @@ describe('completeInverseRelations', () => {
             makeDocumentsLookup([doc1New as any]),
             targetsLookup,
             inverseRelations,
-            () => {}, true);
+            sameOperationRelations,
+            () => {},
+            true
+        );
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations[IS_ABOVE]).toBeUndefined();
@@ -266,7 +282,8 @@ describe('completeInverseRelations', () => {
 
         doc2.resource.relations[LIES_WITHIN] = ['1'];
         doc2.resource.relations[RECORDED_IN] = ['1'];
-        const documents = completeInverseRelations(makeDocumentsLookup([doc2]), targetsLookup, inverseRelations);
+        const documents = completeInverseRelations(makeDocumentsLookup([doc2]), targetsLookup, inverseRelations,
+            sameOperationRelations);
 
         expect(documents.length).toBe(0);
         expect(doc2.resource.relations[LIES_WITHIN][0]).toBe('1');
@@ -289,7 +306,8 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[LIES_WITHIN] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -310,7 +328,8 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[RECORDED_IN] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -331,7 +350,8 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[IS_AFTER] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -349,7 +369,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations['bc'] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -367,7 +388,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations['bc'] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -385,7 +407,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations['bc'] = ['2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), get, inverseRelations, assertIsAllowedRelationDomainCategory);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), get, inverseRelations,
+                sameOperationRelations, assertIsAllowedRelationDomainCategory);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -401,7 +424,8 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations[IS_BEFORE] = ['1'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), undefined, inverseRelations,
+                sameOperationRelations);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
@@ -414,7 +438,7 @@ describe('completeInverseRelations', () => {
     it('illegal relation between import and db resource', () => {
 
         const targetsLookup: any = {
-            '1': [['2','t1'], [doc2,concreteOp1]]
+            '1': [['2','t1'], [doc2, concreteOp1]]
         };
 
         doc2.resource.relations[RECORDED_IN] = ['t1'];
@@ -422,12 +446,32 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[RECORDED_IN] = ['t2'];
 
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations,
+                sameOperationRelations);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
             expect(errWithParams[1]).toEqual('one');
             expect(errWithParams[2]).toEqual('two');
+        }
+    });
+
+
+    it('legal relation between import and db resource', () => {
+
+        const targetsLookup: any = {
+            '1': [['2','t1'], [doc2, concreteOp1]]
+        };
+
+        doc2.resource.relations[RECORDED_IN] = ['t1'];
+        doc1.resource.relations[SAME_AS] = ['2'];
+        doc1.resource.relations[RECORDED_IN] = ['t2'];
+
+        try {
+            completeInverseRelations(makeDocumentsLookup([doc1]), targetsLookup, inverseRelations,
+                sameOperationRelations);
+        } catch (errWithParams) {
+            fail();
         }
     });
 
@@ -537,7 +581,8 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[IS_BELOW] = ['2'];
         doc1.resource.relations[IS_ABOVE] = ['3'];
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations,
+                sameOperationRelations);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -554,7 +599,8 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         try {
-            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup([doc1, doc2]), targetsLookup, inverseRelations,
+                sameOperationRelations);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -564,7 +610,8 @@ describe('completeInverseRelations', () => {
     function expectBadInterrelation(docs, err2, targetsLookup) {
 
         try {
-            completeInverseRelations(makeDocumentsLookup(docs), targetsLookup, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup(docs), targetsLookup, inverseRelations,
+                sameOperationRelations);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);

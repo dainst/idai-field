@@ -42,6 +42,7 @@ export async function processRelations(documents: Array<Document>, validator: Im
                                        operationCategoryNames: string[],
                                        get: Get,
                                        inverseRelationsMap: Relation.InverseRelationsMap,
+                                       sameOperationRelations: string[],
                                        { mergeMode, operationId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
@@ -59,6 +60,7 @@ export async function processRelations(documents: Array<Document>, validator: Im
         documentsLookup,
         targetsLookup as any,
         inverseRelationsMap,
+        sameOperationRelations,
         assertIsAllowedRelationDomainCategory_,
         mergeMode);
 }
@@ -112,7 +114,6 @@ function makeAssertNoRecordedInMismatch(operationId: Id) {
         }
     }
 }
-
 
 
 /**

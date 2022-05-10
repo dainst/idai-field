@@ -1,7 +1,7 @@
-import {identity} from 'tsfun';
-import {ImportErrors as E, ImportErrors} from '../../../../../src/app/components/import/import/import-errors';
-import {buildImportDocuments} from '../../../../../src/app/components/import/import/import-documents';
-import {Settings} from '../../../../../src/app/services/settings/settings';
+import { identity } from 'tsfun';
+import { ImportErrors as E, ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
+import { buildImportDocuments } from '../../../../../src/app/components/import/import/import-documents';
+import { Settings } from '../../../../../src/app/services/settings/settings';
 
 
 /**
@@ -79,8 +79,9 @@ describe('importDocuments', () => {
         context = {
             operationCategories,
             inverseRelationsMap: {},
+            sameOperationRelations: [],
             settings: { username: 'user1'} as Settings
-        }
+        };
 
         helpers = {
             find,
@@ -96,7 +97,8 @@ describe('importDocuments', () => {
             services,
             context,
             helpers,
-            options);
+            options
+        );
     });
 
 

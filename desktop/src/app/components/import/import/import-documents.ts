@@ -1,12 +1,11 @@
 import { Map, Either, Array1 } from 'tsfun';
-import { Document, Resource } from 'idai-field-core';
+import { Document, Resource, Relation } from 'idai-field-core';
 import { ImportValidator } from './process/import-validator';
 import { Find, Get } from './types';
 import { complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists,
     preprocessRelations } from './preprocess-relations';
 import { preprocessFields } from './preprocess-fields';
 import { ImportErrors as E } from './import-errors';
-import { Relation } from 'idai-field-core';
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { processDocuments } from './process/process-documents';

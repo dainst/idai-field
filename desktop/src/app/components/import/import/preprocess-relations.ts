@@ -1,6 +1,5 @@
-import { RESOURCE_DOT_ID } from 'idai-field-core';
-import { Document, Relation, Resource } from 'idai-field-core';
 import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on, isObject } from 'tsfun';
+import { Document, Relation, Resource, RESOURCE_DOT_ID } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportContext, ImportHelpers, ImportOptions } from './import-documents';
 import { ImportErrors as E } from './import-errors';
@@ -8,11 +7,11 @@ import { Find, Get, Id, Identifier, IdentifierMap } from './types';
 import { iterateRelationsInImport } from './utils';
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
 
-// @author Thomas Kleinke
-// @author Daniel de Oliveira
-
 
 /**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ * 
  * When useIdentifiersInRelations
  * sets (defined) inverse relations in relation targets, when not already existent.
  *

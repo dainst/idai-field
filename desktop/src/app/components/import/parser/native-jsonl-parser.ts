@@ -1,6 +1,7 @@
-import {NewDocument} from 'idai-field-core';
-import {ParserErrors} from './parser-errors';
-import {makeLines, Parser} from './parser';
+import { NewDocument } from 'idai-field-core';
+import { ParserErrors } from './parser-errors';
+import { makeLines, Parser } from './parser';
+
 
 /**
  * @author Sebastian Cuy

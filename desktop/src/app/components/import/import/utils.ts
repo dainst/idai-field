@@ -1,5 +1,5 @@
-import { Document, Lookup, Relation, Resource } from 'idai-field-core';
 import { aMap, same, on, isUndefinedOrEmpty, union } from 'tsfun';
+import { Document, Lookup, Relation, Resource } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportErrors as E } from './import-errors';
 import { Id, Identifier } from './types';

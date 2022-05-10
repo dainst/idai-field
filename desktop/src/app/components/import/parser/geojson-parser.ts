@@ -1,6 +1,6 @@
-import {Document} from 'idai-field-core';
-import {ParserErrors} from './parser-errors';
-import {Parser} from './parser';
+import { Document } from 'idai-field-core';
+import { ParserErrors } from './parser-errors';
+import { Parser } from './parser';
 
 
 export interface Geojson {

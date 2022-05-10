@@ -1,9 +1,8 @@
-import {flow, map, update as updateD, assoc} from 'tsfun';
-import {Document, Resource} from 'idai-field-core';
-import {Parser} from './parser';
-import { CategoryForm } from 'idai-field-core';
-import {convertCsvRows} from './convert-csv-rows';
-import {convertFieldTypes} from './convert-field-types';
+import { flow, map, update as updateD, assoc } from 'tsfun';
+import { Document, Resource, CategoryForm } from 'idai-field-core';
+import { Parser } from './parser';
+import { convertCsvRows } from './convert-csv-rows';
+import { convertFieldTypes } from './convert-field-types';
 
 
 /**

@@ -1,12 +1,11 @@
 import { Map, Either, Array1 } from 'tsfun';
-import { Document, Resource } from 'idai-field-core';
+import { Document, Resource, Relation } from 'idai-field-core';
 import { ImportValidator } from './process/import-validator';
 import { Find, Get } from './types';
 import { complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists,
     preprocessRelations } from './preprocess-relations';
 import { preprocessFields } from './preprocess-fields';
 import { ImportErrors as E } from './import-errors';
-import { Relation } from 'idai-field-core';
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { processDocuments } from './process/process-documents';
@@ -43,6 +42,7 @@ export interface ImportContext {
 
     operationCategories: string[];
     inverseRelationsMap: Relation.InverseRelationsMap;
+    sameOperationRelations: string[];
     settings: Settings;
 }
 
@@ -119,6 +119,7 @@ async function importDocuments(services: ImportServices,
             context.operationCategories,
             helpers.get,
             context.inverseRelationsMap,
+            context.sameOperationRelations,
             options
         );
         const postprocessedDocuments = processedDocuments.map(helpers.postprocessDocument);

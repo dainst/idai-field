@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
@@ -101,7 +101,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(this.clonedLabel)
             || !equal(this.description)(this.clonedDescription)
-            || this.getClonedFormDefinition().color !== this.currentColor
+            || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }

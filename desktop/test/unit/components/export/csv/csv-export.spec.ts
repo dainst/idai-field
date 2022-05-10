@@ -11,6 +11,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('dating')) inputType = 'dating';
         if (fieldName.startsWith('literature')) inputType = 'literature';
         if (fieldName.startsWith('period')) inputType = 'dropdownRange';
+        if (fieldName.startsWith('relation')) inputType = 'relation';
 
         return { name: fieldName, inputType: inputType }
     }) as Array<Field>;
@@ -57,11 +58,12 @@ describe('CSVExport', () => {
 
     it('export relations', () => {
 
-        const { t, resource } = makeSimpleCategoryAndResource();
-        resource.relations = { someRelation: ["identifier2"] } as any;
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'category');
+        resource.relations = { relation1: ['identifier2'] } as any;
 
-        const result = CSVExport.createExportable([resource], t, ['someRelation', 'liesWithin']).csvData;
-        expect(result[0]).toBe('"identifier","shortDescription","relations.someRelation","relations.isChildOf"');
+        const result = CSVExport.createExportable([resource], fields, ['relation1', 'liesWithin']).csvData;
+        expect(result[0]).toBe('"identifier","shortDescription","relations.relation1","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1","identifier2",""');
     });
 
@@ -293,7 +295,7 @@ describe('CSVExport', () => {
 
     it('do not modify resource when expanding', () => {
 
-        const {t, resource} = makeSimpleCategoryAndResource();
+        const { t, resource } = makeSimpleCategoryAndResource();
         resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: 'some1', label: 'blablabla1' }];
 
         CSVExport.createExportable([resource], t, []).csvData.map(row => row.split(','));
@@ -306,12 +308,13 @@ describe('CSVExport', () => {
 
     it('do not modify resource when expanding relations', () => {
 
-        const { t, resource } = makeSimpleCategoryAndResource();
-        resource['relations']['isAbove'] = ['abc'];
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'category');
+        resource['relations']['relation1'] = ['abc'];
 
-        CSVExport.createExportable([resource], t, ['isAbove']).csvData.map(row => row.split(','));
+        CSVExport.createExportable([resource], fields, ['relation1']).csvData.map(row => row.split(','));
 
-        expect(resource['relations']['isAbove'][0]).toBe('abc');
+        expect(resource['relations']['relation1'][0]).toBe('abc');
     });
 
 

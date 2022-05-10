@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { to } from 'tsfun';
 import { ProjectConfiguration, RelationsManager, ImageStore, CategoryForm, Document, Datastore,
     Name, Relation } from 'idai-field-core';
 import { M } from '../../components/messages/m';
@@ -97,6 +98,8 @@ export module Importer {
         const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = Relation.makeInverseRelationsMap(context.projectConfiguration.getRelations());
+        const sameOperationRelations = context.projectConfiguration.getRelations()
+            .filter(relation => relation.sameMainCategoryResource).map(to('name'));
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);
@@ -107,7 +110,10 @@ export module Importer {
             case 'geojson-gazetteer':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    {
+                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        settings: context.settings
+                    },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
                 break;
@@ -115,14 +121,20 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    {
+                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        settings: context.settings
+                    },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false, useIdentifiersInRelations: true });
                 break;
             default: // native | csv
                 importFunction = buildImportDocuments(
                     { validator },
-                    { operationCategories: operationCategoryNames, inverseRelationsMap, settings: context.settings },
+                    {
+                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        settings: context.settings
+                    },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
                     {
                         mergeMode: options.mergeMode,

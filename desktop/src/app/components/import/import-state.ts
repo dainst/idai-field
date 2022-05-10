@@ -1,4 +1,4 @@
-import {ImporterOptions, ImporterFormat} from '../../components/import/importer';
+import { ImporterOptions, ImporterFormat } from '../../components/import/importer';
 import { CategoryForm } from 'idai-field-core';
 
 

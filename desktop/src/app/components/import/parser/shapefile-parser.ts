@@ -1,6 +1,6 @@
-import {NativeJsonlParser} from './native-jsonl-parser';
-import {ParserErrors} from './parser-errors';
-import {Parser} from './parser';
+import { NativeJsonlParser } from './native-jsonl-parser';
+import { ParserErrors } from './parser-errors';
+import { Parser } from './parser';
 
 
 /**

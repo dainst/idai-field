@@ -1,5 +1,5 @@
-import { Document, Datastore, NewDocument } from 'idai-field-core';
 import { separate } from 'tsfun';
+import { Document, Datastore, NewDocument } from 'idai-field-core';
 
 
 /**

@@ -1,5 +1,6 @@
-import {GazetteerProperties, Geojson} from './geojson-parser';
-import {ParserErrors} from './parser-errors';
+import { GazetteerProperties, Geojson } from './geojson-parser';
+import { ParserErrors } from './parser-errors';
+
 
 /**
  * @author Daniel de Oliveira

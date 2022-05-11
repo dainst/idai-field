@@ -83,6 +83,34 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/noValuelistProvided': 'Per il campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Il campo "[0]" della categoria "[1]" non può essere ridefinito nella sottocategoria "[2]".'
     },
+    'pt': {
+        'loading1': 'Loading project',
+        'loading2': '...',
+        'loadTestProject': 'Load test project',
+        'databaseError': 'An error has occurred: The project database could not be loaded.',
+        'configurationError': 'An error has occurred: The project configuration could not be loaded.',
+        'fetchDocumentsError': 'An error has occurred: The project resources could not be read from the database.',
+        'indexingError': 'An error has occurred: The indexing of the project resources has failed.',
+        'oneConfigurationError': 'Error in project configuration:',
+        'multipleConfigurationErrors': 'Errors in project configuration:',
+        'configuration/error/invalidJson': 'The configuration file "[0]" does not contain valid JSON.',
+        'configuration/error/missingValuelist': 'The value list for the field "[0]" of category "[1]" could not be found.',
+        'configuration/error/missingFieldName': 'A field defined in the project configuration has no name.',
+        'configuration/error/missingRelationCategory': 'The category "[0]" specified in a relation definition could not be found.',
+        'configuration/fields/custom/parentNotDefined': 'The supercategory "[0]" could not be found.',
+        'configuration/fields/custom/tryingToSubtypeANonExtendableCategory': 'No subcategories may be created for the category "[0]".',
+        'configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten': 'No value list may be set for the field "[1]" of the category "[0]" as the allowed values are taken from the project resource.',
+        'configuration/buildProjectCategories/duplicationInSelection': '',
+        'configuration/buildProjectCategories/mustHaveParent': 'More than one form was selected for the category "[0]".',
+        'configuration/buildProjectCategories/missingCategoryProperty': 'The property "[0]" must be set for the category "[1]".',
+        'configuration/buildProjectCategories/illegalCategoryProperty': 'The property "[0]" must not be set for the category "[1]".',
+        'configuration/buildProjectCategories/missingFieldProperty': 'The property "[0]" must be set for field "[2]" of category "[1]".',
+        'configuration/buildProjectCategories/mustNotSetInputType': 'The property "inputType" must not be changed for field "[1]" of category "[0]".',
+        'configuration/buildProjectCategories/illegalFieldInputType': 'The value "[0]" set as property "inputType" of field "[1]" is invalid.',
+        'configuration/buildProjectCategories/illegalFieldProperty': 'The property "[1]" is invalid.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'No value list has been specified for field "[1]" of category "[0]".',
+        'configuration/buildProjectCategories/triedToOverwriteParentField': 'The field "[0]" defined in category "[1]" must not be redefined in subcategory "[2]".'
+    }
 };
 
 

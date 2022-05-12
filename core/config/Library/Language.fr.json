@@ -83,7 +83,10 @@
     },
     "geometry": {
       "label": "Géométrie"
-    }
+    },
+    "notes": {
+      "label": "Notes"
+  }
   },
   "categories": {
     "RoomFloor": {

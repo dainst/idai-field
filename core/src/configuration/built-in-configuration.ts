@@ -110,6 +110,9 @@ export class BuiltInConfiguration {
         geometry: {
             inputType: Field.InputType.GEOMETRY,
             visible: false
+        },
+        notes: {
+            inputType: Field.InputType.TEXT
         }
     };
     
@@ -1249,20 +1252,8 @@ export class BuiltInConfiguration {
                 inputType: 'relation'
             });
 
-            (this.builtInFields as any)['datingAddenda'] = {
-                visible: true,
-                editable: true,
-                mandatory: false,
-                inputType: 'text',
-                group: Groups.TIME  // TODO Remove
-            };
-
-            (this.builtInFields as any)['notes'] = {
-                visible: true,
-                editable: true,
-                mandatory: false,
-                inputType: 'text',
-                group: Groups.STEM  // TODO Remove
+            (this.commonFields as any)['datingAddenda'] = {
+                inputType: 'text'
             };
         }
     }

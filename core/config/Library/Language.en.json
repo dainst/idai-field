@@ -88,6 +88,9 @@
     },
     "geometry": {
       "label": "Geometry"
+    },
+    "notes": {
+      "label": "Notes"
     }
   },
   "categories": {

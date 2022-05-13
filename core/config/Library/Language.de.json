@@ -99,6 +99,9 @@
     },
     "geometry": {
       "label": "Geometrie"
+    },
+    "notes": {
+      "label": "Notizen"
     }
   },
   "categories": {

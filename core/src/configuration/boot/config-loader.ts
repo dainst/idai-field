@@ -151,6 +151,18 @@ export class ConfigLoader {
     }
 
 
+    public getCompleteLanguageConfigurations(defaultLanguageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+                                             customLanguageConfiguration: { [language: string]: LanguageConfiguration })
+            : { [language: string]: Array<LanguageConfiguration> } {
+
+        return Object.keys(customLanguageConfiguration).reduce((result, language) => {
+            if (!result[language]) result[language] = [];
+            result[language].unshift(customLanguageConfiguration[language]);
+            return result;
+        }, clone(defaultLanguageConfigurations));
+    }
+
+
     public readTemplates(): Map<Template> {
      
         const templates = this.configReader.read('/Library/Templates.json');
@@ -164,17 +176,5 @@ export class ConfigLoader {
 
         if (!this.configReader.exists(path)) return undefined;
         return this.configReader.read(path);
-    }
-
-
-    private getCompleteLanguageConfigurations(defaultLanguageConfigurations: { [language: string]: Array<LanguageConfiguration> },
-                                              customLanguageConfiguration: { [language: string]: LanguageConfiguration })
-            : { [language: string]: Array<LanguageConfiguration> } {
-
-        return Object.keys(customLanguageConfiguration).reduce((result, language) => {
-            if (!result[language]) result[language] = [];
-            result[language].unshift(customLanguageConfiguration[language]);
-            return result;
-        }, clone(defaultLanguageConfigurations));
     }
 }

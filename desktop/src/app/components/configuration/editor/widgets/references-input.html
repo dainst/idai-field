@@ -1,6 +1,6 @@
 <div *ngFor="let reference of references; let i = index; trackBy: getTrackingIndex">
     <div class="input-group mb-2">
-        <div>
+        <div class="reference-input-container">
             <input type="text"
                    class="form-control reference-input"
                    [(ngModel)]="references[i]">

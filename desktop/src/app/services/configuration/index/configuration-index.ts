@@ -1,6 +1,6 @@
-import { to, Map } from 'tsfun';
+import { to, Map, clone } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
-    createContextIndependentCategories, Field, Forest, getConfigurationName, Name, ProjectConfiguration,
+    createContextIndependentCategories, Field, Forest, getConfigurationName, LanguageConfiguration, Name, ProjectConfiguration,
     RawProjectConfiguration, Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
@@ -108,7 +108,9 @@ export class ConfigurationIndex {
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
         const valuelists = await this.configReader.read('/Library/Valuelists.json');
-        const languages = await this.configLoader.readDefaultLanguageConfigurations();
+        const defaultLanguages = await this.configLoader.readDefaultLanguageConfigurations();
+        const customLanguages = this.getCustomLanguageConfigurations(configurationDocument);
+        const languages = this.configLoader.getCompleteLanguageConfigurations(defaultLanguages, customLanguages);
         const usedCategoryForms = customProjectConfiguration
             ? customProjectConfiguration.getCategories()
             : this.projectConfiguration.getCategories();
@@ -136,6 +138,20 @@ export class ConfigurationIndex {
             Object.values(rawConfiguration.valuelists),
             Tree.flatten(usedCategoryForms)
         );
+    }
+
+
+    private getCustomLanguageConfigurations(configurationDocument: ConfigurationDocument)
+            : { [language: string]: LanguageConfiguration } {
+
+        const languages = clone(configurationDocument.resource.languages);
+        Object.keys(languages).forEach(language => {
+            delete languages[language].categories;
+            delete languages[language].groups;
+            delete languages[language].relations;
+        })
+
+        return languages;
     }
 
 

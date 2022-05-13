@@ -1,6 +1,10 @@
 references-input {
-  .reference-input {
-    border-right: none;
+  .reference-input-container {
+    width: calc(100% - 42px);
+
+    .reference-input {
+      border-right: none;
+    }
   }
 
   .btn-danger {

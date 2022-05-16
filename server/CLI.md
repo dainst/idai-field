@@ -18,7 +18,7 @@ For example add a user by running:
 /app/bin/field_hub eval 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
 ```
 
-For details see the documentation of [mix release](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc) which is used to build the [Elixir](https://elixir-lang.org) application.
+For some background see the documentation of [mix release](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc) which is used to build the [Elixir](https://elixir-lang.org) application.
 
 ### Development
 

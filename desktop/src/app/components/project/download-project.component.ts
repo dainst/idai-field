@@ -69,10 +69,7 @@ export class DownloadProjectComponent {
 
         progressModalRef.componentInstance.databaseProgressPercent = 0;
         progressModalRef.componentInstance.filesProgressPercent = 0;
-
-        progressModalRef.result.catch(async (canceled) => {
-            this.cancel(progressModalRef);
-        });
+        progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
         const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
@@ -120,7 +117,7 @@ export class DownloadProjectComponent {
                 console.error('Error while downloading project', e);
             }
 
-            this.closeModal(progressModalRef);
+            if (e !== 'canceled') this.closeModal(progressModalRef);
         }
     }
 
@@ -215,7 +212,7 @@ export class DownloadProjectComponent {
         try {
             this.cancelling = true;
             this.syncService.stopReplication();
-            this.pouchdbDatastore.destroyDb(this.projectName);
+            await this.pouchdbDatastore.destroyDb(this.projectName);
             await Promise.all(this.fileDownloadPromises);
         } catch (err) {
         } finally {

@@ -4,21 +4,26 @@
         <div class="spinner"></div>
         <div class="progress replication-progress">
             <div class="progress-bar"
+                 [class.bg-secondary]="cancelling"
                  [style.width]="databaseProgressPercent + '%'"></div>
         </div>
-        <div *ngIf="databaseProgressPercent === 0" class="process-info" i18n="@@project.download.connecting">Verbindung wird hergestellt...</div>
-        <div *ngIf="databaseProgressPercent > 0 && filesProgressPercent === 0" class="process-info" i18n="@@project.download.progressInfo.database">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
+        <div *ngIf="databaseProgressPercent === 0 && !cancelling" class="process-info" i18n="@@project.download.connecting">Verbindung wird hergestellt...</div>
+        <div *ngIf="databaseProgressPercent > 0 && filesProgressPercent === 0 && !cancelling" class="process-info" i18n="@@project.download.progressInfo.database">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
         <div *ngIf="filesProgressPercent > 0" class="process-info" i18n="@@project.download.progressInfo.databaseFinished">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen. </div>
+        <div *ngIf="filesProgressPercent <= 0 && cancelling" class="process-info" i18n="@@project.download.progressInfo.cancelling">Download wird abgebrochen... </div>
 
         <div id="files-progress-bar" class="progress replication-progress">
-            <div class="progress-bar bg-success"
+            <div class="progress-bar"
+                 [class.bg-success]="!cancelling"
+                 [class.bg-secondary]="cancelling"
                  [class.disabled]="filesProgressPercent === 0"
                  [style.width]="filesProgressPercent + '%'"></div>
         </div>
-        <div id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.files">{{getRoundedProgress(filesProgressPercent)}}% der Bilder geladen... </div>
+        <div *ngIf="!cancelling" id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.files">{{getRoundedProgress(filesProgressPercent)}}% der Bilder geladen... </div>
+        <div *ngIf="cancelling" id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.cancelling">Download wird abgebrochen... </div>
 
         <button id="download-project-cancel-button" type="button" class="btn btn-secondary"
-                (click)="cancel()">
+                [disabled]="cancelling" (click)="cancel()">
             <span i18n="@@project.download.abort">Abbrechen</span>
         </button>
     </div>

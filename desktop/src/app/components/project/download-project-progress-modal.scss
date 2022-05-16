@@ -25,6 +25,11 @@
     position: relative;
     top: 9px;
     transition: top 0.5s ease-in-out;
+
+    &.disabled:active,
+    &.disabled:focus {
+      background-color: #5a6268
+    }
   }
 
   &.loading-files {

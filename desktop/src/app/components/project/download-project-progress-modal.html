@@ -23,7 +23,7 @@
         <div *ngIf="cancelling" id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.cancelling">Download wird abgebrochen... </div>
 
         <button id="download-project-cancel-button" type="button" class="btn btn-secondary"
-                [disabled]="cancelling" (click)="cancel()">
+                [class.disabled]="cancelling" [disabled]="cancelling" (click)="cancel()">
             <span i18n="@@project.download.abort">Abbrechen</span>
         </button>
     </div>

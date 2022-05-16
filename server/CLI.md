@@ -6,7 +6,7 @@ The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functi
 
 ### Production
 
-To call the CLI (from within your FieldHub docker container) functions use the pattern:
+To call the CLI functions (from within your FieldHub docker container) use the pattern:
 
 ```
 /app/bin/field_hub eval 'FieldHub.CLI.<function_name>("<string parameter>")'.

@@ -33,7 +33,7 @@ export module SortUtil {
             } else {
                 // both elements are strings
                 if (typeof arrayB[i] === 'string') {
-                    let cmp =  arrayA[i].localeCompare(arrayB[i]);
+                    let cmp = arrayA[i].localeCompare(arrayB[i]);
                     if (cmp > 0) return 1;
                     if (cmp < 0) return -1;
                 // a is string b is number

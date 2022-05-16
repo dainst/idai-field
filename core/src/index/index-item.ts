@@ -1,4 +1,5 @@
-import {Document} from '../model/document';
+import { Document } from '../model/document';
+
 
 export type TypeName = string;
 
@@ -11,7 +12,7 @@ export interface IndexItem {
 
 export interface TypeResourceIndexItem extends IndexItem {
 
-    instances: { [resourceId: string]: TypeName}
+    instances: { [resourceId: string]: TypeName }
 }
 
 

@@ -139,6 +139,8 @@ export class IndexFacade {
         const item = this.getIndexItem(doc);
         if (!item || doc.resource.category === CONFIGURATION) return;
 
+        item.identifier = document.resource.identifier;
+
         if (doc.resource.category === TYPE) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {

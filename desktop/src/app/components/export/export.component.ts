@@ -44,7 +44,7 @@ export class ExportComponent implements OnInit {
 
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: CategoryForm|undefined = undefined;
-    public selectedOperationOrPlaceId: string = 'project';
+    public selectedContext: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema'|'complete' = 'complete';
     
@@ -130,7 +130,7 @@ export class ExportComponent implements OnInit {
 
     private getExportContext(): ExportRunner.ExportContext {
 
-        return this.csvExportMode === 'complete' ? this.selectedOperationOrPlaceId : undefined;
+        return this.csvExportMode === 'complete' ? this.selectedContext : undefined;
     }
 
 
@@ -191,7 +191,7 @@ export class ExportComponent implements OnInit {
         await GeoJsonExporter.performExport(
             this.datastore,
             filePath,
-            this.selectedOperationOrPlaceId
+            this.selectedContext
         );
     }
 
@@ -202,7 +202,7 @@ export class ExportComponent implements OnInit {
             this.settingsProvider.getSettings(),
             await this.datastore.get('project'),
             filePath,
-            this.selectedOperationOrPlaceId
+            this.selectedContext
         );
     }
 

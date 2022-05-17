@@ -2,10 +2,11 @@
  * @author Thomas Kleinke
  */
  #export {
+  user-select: none;
+  
   .export-info {
     font-size: 14px;
     margin-bottom: 12px;
-    user-select: none;
     cursor: default;
   }
 

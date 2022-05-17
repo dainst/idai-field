@@ -4,6 +4,8 @@
  */
 
 .import {
+  user-select: none;
+
   .disabled {
     transition: none !important;
   }
@@ -11,7 +13,6 @@
   .import-info {
     font-size: 14px;
     margin-bottom: 12px;
-    user-select: none;
     cursor: default;
   }
 
@@ -21,7 +22,6 @@
     .form-check-label {
       position: relative;
       top: 1px;
-      user-select: none;
     }
   }
 

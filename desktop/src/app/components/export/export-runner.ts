@@ -37,7 +37,7 @@ export module ExportRunner {
 
         const documents = [];
         if (context !== undefined) {
-            documents.push(...(await fetchDocuments(find, PROJECT_CONTEXT, selectedCategory)));
+            documents.push(...(await fetchDocuments(find, context, selectedCategory)));
         }
 
         return await aFlow(

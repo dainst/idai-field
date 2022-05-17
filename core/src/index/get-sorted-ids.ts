@@ -76,7 +76,7 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
     if (size(itemA.instances) < size(itemB.instances)) return 1;
     if (size(itemA.instances) > size(itemB.instances)) return -1;
 
-    return SortUtil.alnumCompare(itemA.identifier, itemB. identifier);
+    return SortUtil.alnumCompare(itemA.identifier, itemB.identifier);
 }
 
 

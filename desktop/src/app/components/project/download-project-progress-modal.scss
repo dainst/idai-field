@@ -4,7 +4,7 @@
 
   .spinner {
     position: relative;
-    left: 7px;
+    left: 6px;
   }
   
   .replication-progress {
@@ -15,17 +15,21 @@
 
   #files-progress-bar,
   #files-progress-info {
-    display: inline;
+    display: none;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     transition-delay: 0.5s;
   }
 
   #download-project-cancel-button {
-    position: absolute;
-    left: 198px;
-    top: 139px;
+    position: relative;
+    top: 9px;
     transition: top 0.5s ease-in-out;
+
+    &.disabled:active,
+    &.disabled:focus {
+      background-color: #5a6268
+    }
   }
 
   &.loading-files {
@@ -39,10 +43,6 @@
     #files-progress-info {
       display: block;
       opacity: 1;
-    }
-
-    #download-project-cancel-button {
-      top: 200px;
     }
   }
 }

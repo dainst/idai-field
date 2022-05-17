@@ -161,15 +161,15 @@ describe('IndexFacade', () => {
 
     it('should sort by identifier ascending', () => {
 
-        const doc1 = doc('bla1', 'blub1', 'category1','id1');
-        const doc3 = doc('bla3', 'blub3', 'category3','id3');
+        const doc1 = doc('description1', 'identifier1', 'category1', 'id1');
+        const doc3 = doc('description3', 'identifier3', 'category3', 'id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
 
-        const doc2 = doc('bla2', 'blub2', 'category2','id2');
+        const doc2 = doc('description2', 'identifier2', 'category2', 'id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
 
         const q: Query = {
-            q: 'blub',
+            q: 'identifier',
             constraints: {
                 'isChildOf:contain': 'id1'
             }
@@ -181,6 +181,32 @@ describe('IndexFacade', () => {
 
         const result = indexFacade.find(q);
         expect(result).toEqual(['id2', 'id3']);
+    });
+
+
+    it('should sort correctly after changing identifier', () => {
+
+        const doc1 = doc('description1', 'identifier1', 'category1', 'id1');
+        const doc2 = doc('description2', 'identifier2', 'category2', 'id2');
+        const doc3 = doc('description3', 'identifier3', 'category3', 'id3');
+
+        const q: Query = {
+            q: '',
+            constraints: {}
+        };
+
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+        indexFacade.put(doc3);
+
+        let result = indexFacade.find(q);
+        expect(result).toEqual(['id1', 'id2', 'id3']);
+
+        doc1.resource.identifier = 'identifier4';
+        indexFacade.put(doc1);
+
+        result = indexFacade.find(q);
+        expect(result).toEqual(['id2', 'id3', 'id1']);
     });
 
 

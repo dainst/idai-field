@@ -14,6 +14,9 @@ export class DownloadProjectProgressModalComponent {
 
     public databaseProgressPercent: number;
     public filesProgressPercent: number;
+    public cancelFunction: () => Promise<void>;
+    
+    public cancelling: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -35,7 +38,8 @@ export class DownloadProjectProgressModalComponent {
         
         try {
             await modalRef.result;
-            this.activeModal.dismiss('cancel');
+            this.cancelling = true;
+            await this.cancelFunction();
         } catch (_) {
             // Do not cancel
         }

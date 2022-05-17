@@ -53,7 +53,6 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
     protected submitQuery(): Array<Valuelist> {
         
         return this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .filter(valuelist => !this.clonedField.valuelist || valuelist.id !== this.clonedField.valuelist.id)
             .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
     }
 

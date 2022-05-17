@@ -21,7 +21,9 @@ export module CsvExporter {
 
             return async (resources: Array<FieldResource>) => {
 
-                const result: CSVExportResult = CSVExport.createExportable(resources, CategoryForm.getFields(category), relations);
+                const result: CSVExportResult = CSVExport.createExportable(
+                    resources, CategoryForm.getFields(category), relations
+                );
                 await writeFile(outputFilePath, result.csvData);
 
                 return result.invalidFields;

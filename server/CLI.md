@@ -6,17 +6,19 @@ The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functi
 
 ### Production
 
-To call the CLI functions use the pattern:
+To call the CLI functions (from within your FieldHub docker container) use the pattern:
 
 ```
-docker exec -it <app container name> /app/bin/field_hub eval 'FieldHub.CLI.<function_name>("<string parameter>")'.
+/app/bin/field_hub eval 'FieldHub.CLI.<function_name>("<string parameter>")'.
 ```
 
 For example add a user by running:
 
 ```
-docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
+/app/bin/field_hub eval 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
 ```
+
+For some background see the documentation of [mix release](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc) which is used to build the [Elixir](https://elixir-lang.org) application.
 
 ### Development
 

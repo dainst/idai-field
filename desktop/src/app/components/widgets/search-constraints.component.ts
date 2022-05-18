@@ -38,7 +38,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected defaultFields: Array<Field>;
 
-    private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
+    private static textFieldInputTypes: string[] = ['input', 'multiInput', 'text', 'unsignedInt', 'float',
+        'unsignedFloat'];
     private static dropdownInputTypes: string[] = ['dropdown', 'dropdownRange', 'checkboxes', 'radio'];
 
 

@@ -89,7 +89,6 @@ image-overview-search-constraints {
       }
 
       select {
-        padding-top: 7px;
         width: calc(50% - 31px);
       }
 
@@ -110,35 +109,33 @@ image-overview-search-constraints {
       }
 
       #constraint-search-search-term-input-dropdown {
-        left: -1px;
-
         button {
           height: 39px;
           color: #6c757d;
           border-color: #ced4da;
+          border-radius: 0;
+          border-left: none;
           font-size: 14px;
           cursor: default;
-
-          &:focus {
-            z-index: 1;
-            border-color: #7998cb !important;
-          }
         }
 
-        .dropdown-menu {
-          .dropdown-item {
-            height: 30px;
-            color: black;
-          }
+        &.show button,
+        button:focus, button:active {
+          position: relative;
+          left: -1px;
+          border-left: 1px solid;
+          margin-right: -1px;
+          border-color: #7998cb !important;
         }
       }
+      
 
       #add-constraint-button {
         height: 39px;
 
         span {
           position: relative;
-          top: 1px;
+          top: 6px;
         }
       }
     }
@@ -147,9 +144,17 @@ image-overview-search-constraints {
 
 image-overview-search-constraints {
   #constraints-menu-button {
-   .mdi {
-     position: relative;
-     left: 1px;
-   }
- }
+    .mdi {
+      position: relative;
+      left: 1px;
+     }
+  }
+}
+
+#constraints-menu-input-dropdown-menu {
+  .dropdown-item {
+    height: 30px;
+    font-size: 14px;
+    color: black;
+  }
 }

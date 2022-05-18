@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AngularUtility } from '../../angular/angular-utility';
 import { CancelModalComponent } from './cancel-modal.component';
 
 
@@ -42,6 +43,7 @@ export class DownloadProjectProgressModalComponent {
             await this.cancelFunction();
         } catch (_) {
             // Do not cancel
+            AngularUtility.blurActiveElement();
         }
     }
 }

@@ -11,6 +11,7 @@ import { MenuContext } from '../../services/menu-context';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -247,6 +248,7 @@ export class DownloadProjectComponent {
 
         modalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);
+        AngularUtility.blurActiveElement();
     }
 
 

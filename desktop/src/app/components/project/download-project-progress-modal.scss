@@ -13,17 +13,7 @@
     margin-bottom: 10px;
   }
 
-  #files-progress-bar,
-  #files-progress-info {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    transition-delay: 0.5s;
-  }
-
   #download-project-cancel-button {
-    position: relative;
-    top: 9px;
     transition: top 0.5s ease-in-out;
 
     &.disabled:active,
@@ -32,17 +22,35 @@
     }
   }
 
+  #files-progress {
+    height: 0;
+    width: 0;
+    transition: height 0.5s ease-in-out;
+
+    #files-progress-bar,
+    #files-progress-info {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      transition-delay: 0.5s;
+    }
+  }
+
   &.loading-files {
     height: 254px;
 
-    #files-progress-bar {
-      display: flex;
-      opacity: 1;
-    }
+    #files-progress {
+      height: 60px;
+      width: 100%;
 
-    #files-progress-info {
-      display: block;
-      opacity: 1;
+      #files-progress-bar {
+        display: flex;
+        opacity: 1;
+      }
+
+      #files-progress-info {
+        display: block;
+        opacity: 1;
+      }
     }
   }
 }

@@ -16,15 +16,15 @@
     <div *ngIf="isEditingAllowed()" id="image-view-modal-buttons" class="bg-light">
         <span *ngIf="selected.length && mode === 'edit'" id="image-view-modal-selection-buttons">
             <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
-                class="btn btn-primary mr-2" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
+                class="btn btn-primary btn-square mr-2" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
                 i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="right" container="body">
                 <span class="mdi mdi-star"></span>
             </button>
-            <button id="delete-images" type="button" class="btn btn-danger mr-2" (click)="removeLinks()"
+            <button id="delete-images" type="button" class="btn btn-danger btn-square mr-2" (click)="removeLinks()"
                 ngbTooltip="{{getRemoveLinksTooltip()}}" placement="right" container="body">
                 <span class="mdi mdi-link-off"></span>
             </button>
-            <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()"
+            <button id="deselect-images" type="button" class="btn btn-secondary btn-square" (click)="clearSelection()"
                 ngbTooltip="Auswahl aufheben" i18n-ngbTooltip="@@docedit.tabs.images.tooltips.deselect" placement="right"
                 container="body">
                 <span class="mdi mdi-selection-off"></span>

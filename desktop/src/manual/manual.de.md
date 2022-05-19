@@ -96,10 +96,95 @@ dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* 
 
 <hr>
 
+## Bilder
+
+Bilder können in ein Field-Projekt importiert werden, um sie anschließend mit Ressourcen zu verknüpfen oder als Kartenhintergründe zu verwenden. Für jedes importierte Bild wird automatisch eine Bildressource angelegt, in der Metadaten des Bildes eingetragen werden können.
+
+Bilddateien können über eine Synchronisationsverbindung optional mit anderen Rechnern geteilt werden (siehe Kapitel *Synchronisation*). Ist eine Bilddatei nicht auf dem Rechner vorhanden, wird stattdessen eine Platzhaltergrafik angezeigt.
+
+
+### Bilder importieren
+
+Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: über das Menü  "Werkzeuge" ➝ "Bilderverwaltung" sowie über die Option "Bilder verknüpfen" im Kontextmenü einer Ressource (erreichbar per Rechtsklick auf die gewünschte Ressource). In letzterem Fall wird das Bild nach dem Import automatisch mit der entsprechenden Ressource verknüpft (siehe Abschnitt *Bilder mit Ressourcen verknüpfen*).
+
+<p align="center"><img src="images/de/images/droparea.png" alt="Import-Button"/></p>
+
+Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
+
+Unterstützte Bildformate sind *jpg/jpeg* und *png*. Bitte beachten Sie, dass sehr große Bilder unter Umständen zu Verzögerungen bei der Benutzung der Anwendung führen können. Empfohlen wird, große Bilddateien vor dem Import gegebenenfalls mithilfe eines Bildvearbeitungsprogramms auf eine Maximalgröße von ca. 10 MB zu reduzieren. Darüber hinaus können Bilder mit sehr hoher Auflösung in manchen Fällen nicht importiert werden. Verringern Sie in diesen Fällen die Auflösung der entsprechenden Bilder und starten den Import anschließend erneut.
+
+
+### Bilder verwalten
+
+Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
+
+Öffnen Sie zur Verwaltung der Bilder das Menü "Werkzeuge" ➝ "Bilderverwaltung". Hier können Sie sämtliche Bilder des Projekts einsehen und durchsuchen (siehe dazu auch das Kapitel *Suche*).
+
+
+#### Metadaten bearbeiten
+
+Sie können die Metadaten eines Bildes einsehen, indem Sie per Doppelklick auf das gewünschte Bild die Bildansicht öffnen. Klicken Sie den Bearbeiten-Button, um den Editor aufzurufen und die Metadaten zu editieren. Zur Verfügung stehen hier die Felder, die im Konfigurationsedtior für das Formular der entsprechenden Bildkategorie konfiguriert wurden.
+
+
+#### Bilder löschen
+
+Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die entsprechenden Bilder in der Bilderverwaltung. Über den Button "Löschen" können sie anschließend entfernt werden. Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden. Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
+
+
+### Bilder mit Ressourcen verknüpfen
+
+Um Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder verknüpfen" im Kontextmenü der entsprechenden Ressource und klicken anschließend auf den Plus-Button. Sie haben nun die Wahl zwischen zwei Optionen:
+
+* *Neue Bilder hinzufügen*: Neue Bilder werden in das Projekt importiert und mit der Ressource verknüpft.
+* *Existierende Bilder verknüpfen*: Wählen Sie aus bereits im Projekt vorhandenen Bildern eines oder mehrere aus, die mit der Ressource verknüpft werden sollen.
+
+Selektieren Sie Bilder in der Liste und wählen die Option "Verknüpfung entfernen", um verknüpfte Bilder wieder von der Ressource zu lösen. Die Bilder selbst bleiben weiterhin im Projekt erhalten.
+
+Verknüpfungen können auch über die Bilderverwaltung hinzugefügt oder entfernt werden. Selektieren Sie dazu die gewünschten Bilder und klicken den Button "Verknüpfen" bzw. "Verknüpfungen entfernen".
+
+
+#### Hauptbild festlegen
+
+Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **Hauptbild** mit einem Stern-Symbol markiert. Dieses Hauptbild wird bei der Ressource als Vorschaubild angezeigt. Sie können das Hauptbild wechseln, indem Sie die Option "Bilder verknüpfen" im Kontextmenü der Ressource auswählen und das gewünschte Bild in der Liste verknüpfter Bilder selektieren. Klicken Sie anschließend den Button "Als Hauptbild festlegen". 
+
+<p align="center"><img src="images/de/images/main_image.png" alt="Button 'Als Hauptbild festlegen'"/></p>
+
+
+### Kartenhintergründe
+
+#### Georeferenzierung
+
+Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung aus einem Worldfile eingelesen werden. Unterstützt werden Worldfiles mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* und *pgw*.
+
+Worldfiles können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des Worldfiles vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein Worldfile auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "Worldfile hinzufügen", um anschließend die gewünschte Datei auszuwählen.
+
+<p align="center"><img src="images/de/images/worldfile_import.png" alt="Georeferenzierung hinzufügen"/></p>
+
+
+#### Kartenhintergründe konfigurieren
+
+Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert werden oder für das gesamte Projekt. Wechseln Sie in den Übersichts-Tab (Haussymbol), wenn der Kartenhintergrund im gesamten Projekt zur Verfügung stehen soll, oder in den Tab der gewünschten Maßnahme. Öffnen Sie dort das Kartenhintergründe-Menü über den Button rechts oben auf der Karte und klicken den Bearbeiten-Button. Über den Plus-Button können Sie nun neue Kartenhintergünde hinzufügen, wobei alle Bilder zur Auswahl stehen, für die über den Import eines Worldfiles Georeferenzierungsdaten hinzugefügt wurden.
+
+<p align="center"><img src="images/de/images/layer_menu.png" alt="Kartenhintergründe konfigurieren"/></p>
+
+Ändern Sie die Reihenfolge von Kartenhintergründen, indem Sie sie per Drag & Drop in der Liste nach oben oder unten schieben. Überlappen sich auf der Karte mehrere Hintergrundbilder, entscheidet die Reihenfolge darüber, welches Bild angezeigt wird: Ein Kartenhintergrund, der in der Liste weiter oben steht, wird auch auf der Karte über einem weiter unten stehenden Kartenhintergund angezeigt und kann diesen dabei ganz oder teilweise überdecken.
+
+Über den Button "Kartenhintergrund entfernen" rechts neben jedem Eintrag in der Liste können Sie das Bild wieder aus der Liste der Kartenhintergründe entfernen. Das Bild selbst wird dabei nicht aus dem Projekt gelöscht und kann später erneut als Kartenhintergrund hinzugefügt werden.
+
+Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speichern.
+
+
+#### Kartenhintergründe anzeigen
+
+Über das Kartenhintergründe-Menü können konfigurierte Kartenhintergründe jederzeit ein- und ausgeblendet werden. Klicken Sie dazu den Augen-Button links neben dem entsprechenden Eintrag in der Liste. Die hier vorgenommenen Einstellungen werden (anders als die Liste der grundsätzlich für den Tab zur Verfügung stehenden Kartenhintergründe) nicht in der Datenbank gespeichert und somit auch nicht über eine Synchronisationsverbindung geteilt, sodass auf unterschiedlichen Rechnern unterschiedliche Kartenhintergründe ein- und ausgeblendet sein können.
+
+
+
+<hr>
+
 ## Suche
 
-In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** (erreichbar über das Menü
-"Werkzeuge") stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
+In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
 angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Kategorie)
 einzuschränken.
 

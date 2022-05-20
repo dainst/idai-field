@@ -161,16 +161,16 @@ Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **
 
 #### Georeferenzierung
 
-Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung aus einem Worldfile eingelesen werden. Unterstützt werden Worldfiles mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* und *pgw*.
+Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung aus einem World-File eingelesen werden. Unterstützt werden World-Files mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* und *pgw*.
 
-Worldfiles können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des Worldfiles vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein Worldfile auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "Worldfile laden", um anschließend die gewünschte Datei auszuwählen.
+World-Files können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des World-Files vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein World-File auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "World-File laden", um anschließend die gewünschte Datei auszuwählen.
 
 <p align="center"><img src="images/de/images/worldfile_import.png" alt="Georeferenzierung hinzufügen"/></p>
 
 
 #### Kartenhintergründe konfigurieren
 
-Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert werden oder für das gesamte Projekt. Wechseln Sie in den Übersichts-Tab (Haussymbol), wenn der Kartenhintergrund im gesamten Projekt zur Verfügung stehen soll, oder in den Tab der gewünschten Maßnahme. Öffnen Sie dort das Kartenhintergründe-Menü über den Button rechts oben auf der Karte und klicken den Bearbeiten-Button. Über den Plus-Button können Sie nun neue Kartenhintergünde hinzufügen, wobei alle Bilder zur Auswahl stehen, für die über den Import eines Worldfiles Georeferenzierungsdaten hinzugefügt wurden.
+Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert werden oder für das gesamte Projekt. Wechseln Sie in den Übersichts-Tab (Haussymbol), wenn der Kartenhintergrund im gesamten Projekt zur Verfügung stehen soll, oder in den Tab der gewünschten Maßnahme. Öffnen Sie dort das Kartenhintergründe-Menü über den Button rechts oben auf der Karte und klicken den Bearbeiten-Button. Über den Plus-Button können Sie nun neue Kartenhintergünde hinzufügen, wobei alle Bilder zur Auswahl stehen, für die über den Import eines World-Files Georeferenzierungsdaten hinzugefügt wurden.
 
 <p align="center"><img src="images/de/images/layer_menu.png" alt="Kartenhintergründe konfigurieren"/></p>
 

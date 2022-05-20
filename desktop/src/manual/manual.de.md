@@ -96,6 +96,7 @@ dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* 
 
 <hr>
 
+
 ## Bilder
 
 Bilder können in ein Field-Projekt importiert werden, um sie anschließend mit Ressourcen zu verknüpfen oder als Kartenhintergründe zu verwenden. Für jedes importierte Bild wird automatisch eine Bildressource angelegt, in der Metadaten des Bildes eingetragen werden können.
@@ -111,7 +112,7 @@ Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: �
 
 Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
 
-Unterstützte Bildformate sind *jpg/jpeg* und *png*. Bitte beachten Sie, dass sehr große Bilder unter Umständen zu Verzögerungen bei der Benutzung der Anwendung führen können. Empfohlen wird, große Bilddateien vor dem Import gegebenenfalls mithilfe eines Bildvearbeitungsprogramms auf eine Maximalgröße von ca. 10 MB zu reduzieren. Darüber hinaus können Bilder mit sehr hoher Auflösung in manchen Fällen nicht importiert werden. Verringern Sie in diesen Fällen die Auflösung der entsprechenden Bilder und starten den Import anschließend erneut.
+Unterstützte Bildformate sind *jpg/jpeg* und *png*. Bitte beachten Sie, dass sehr große Bilder unter Umständen zu Verzögerungen bei der Benutzung der Anwendung führen können. Empfohlen wird, große Bilddateien vor dem Import gegebenenfalls mithilfe eines Bildbearbeitungsprogramms auf eine Maximalgröße von ca. 10 MB zu reduzieren. Darüber hinaus können Bilder mit sehr hoher Auflösung in manchen Fällen nicht importiert werden. Verringern Sie in diesen Fällen die Auflösung der entsprechenden Bilder und starten den Import anschließend erneut.
 
 
 ### Bilder verwalten
@@ -137,7 +138,7 @@ Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis de
 
 ### Bilder mit Ressourcen verknüpfen
 
-Um Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder verknüpfen" im Kontextmenü der entsprechenden Ressource und klicken anschließend auf den Plus-Button. Sie haben nun die Wahl zwischen zwei Optionen:
+Um eines oder mehrere Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder verknüpfen" im Kontextmenü der entsprechenden Ressource und klicken anschließend auf den Plus-Button. Sie haben nun die Wahl zwischen zwei Optionen:
 
 * *Neue Bilder hinzufügen*: Neue Bilder werden in das Projekt importiert und mit der Ressource verknüpft.
 * *Existierende Bilder verknüpfen*: Wählen Sie aus bereits im Projekt vorhandenen Bildern eines oder mehrere aus, die mit der Ressource verknüpft werden sollen.
@@ -162,7 +163,7 @@ Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **
 
 Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung aus einem Worldfile eingelesen werden. Unterstützt werden Worldfiles mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* und *pgw*.
 
-Worldfiles können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des Worldfiles vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein Worldfile auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "Worldfile hinzufügen", um anschließend die gewünschte Datei auszuwählen.
+Worldfiles können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des Worldfiles vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein Worldfile auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "Worldfile laden", um anschließend die gewünschte Datei auszuwählen.
 
 <p align="center"><img src="images/de/images/worldfile_import.png" alt="Georeferenzierung hinzufügen"/></p>
 
@@ -185,8 +186,8 @@ Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speic
 Über das Kartenhintergründe-Menü können konfigurierte Kartenhintergründe jederzeit ein- und ausgeblendet werden. Klicken Sie dazu den Augen-Button links neben dem entsprechenden Eintrag in der Liste. Die hier vorgenommenen Einstellungen werden (anders als die Liste der grundsätzlich für den Tab zur Verfügung stehenden Kartenhintergründe) nicht in der Datenbank gespeichert und somit auch nicht über eine Synchronisationsverbindung geteilt, sodass auf unterschiedlichen Rechnern unterschiedliche Kartenhintergründe ein- und ausgeblendet sein können.
 
 
-
 <hr>
+
 
 ## Suche
 

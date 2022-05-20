@@ -1,93 +1,93 @@
 {
   "groups": {
     "stem": "Core",
-    "properties": "Properties",
-    "time": "Time",
-    "position": "Position / Context",
-    "dimension": "Dimensions",
-    "identification": "Identification",
-    "other": "Other"
+    "properties": "Propriedades",
+    "time": "Tempo",
+    "position": "Posição / Contexto",
+    "dimension": "Dimensões",
+    "identification": "Identificação",
+    "other": "Outro"
   },
   "commons": {
     "dimensionLength": {
-      "label": "Length"
+      "label": "Comprimento"
     },
     "dimensionWidth": {
-      "label": "Width"
+      "label": "Largura"
     },
     "dimensionHeight": {
-      "label": "Height"
+      "label": "Altura"
     },
     "dimensionDepth": {
-      "label": "Depth"
+      "label": "Profundiade"
     },
     "dimensionThickness": {
-      "label": "Thickness"
+      "label": "Espessura"
     },
     "dimensionVerticalExtent": {
-      "label": "Vertical extent"
+      "label": "Extensão vertical"
     },
     "dimensionPerimeter": {
-      "label": "Perimeter"
+      "label": "Perímetro"
     },
     "dimensionDiameter": {
-      "label": "Diameter"
+      "label": "Diâmetro"
     },
     "dimensionOther": {
-      "label": "Other dimensions",
-      "description": "Other dimensions can be entered here; please comment"
+      "label": "Outras dimensões",
+      "description": "Outras dimensões podem ser registadas aqui; explique sff"
     },
     "area": {
-      "label": "Area in m2"
+      "label": "Área em m2"
     },
     "processor": {
       "label": "Processor",
-      "description": "The name of the person(s) who is/are responsible for the resource or the object during the campaign. Please note: The names of the persons editing the database entry are saved automatically and are therefore not required here."
+      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. NOTA: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessários aqui."
     },
     "campaign": {
-      "label": "Campaign"
+      "label": "Campanha"
     },
     "description": {
-      "label": "Description"
+      "label": "Descrição"
     },
     "period": {
-      "label": "Period"
+      "label": "Período"
     },
     "dating": {
-      "label": "Dating"
+      "label": "Datação"
     },
     "diary": {
-      "label": "Diary",
-      "description": "Reference to excavation diary"
+      "label": "Diário",
+      "description": "Referência ao diário de escavação"
     },
     "beginningDate": {
-      "label": "Beginning date",
-      "description": "Date on which the recording of the resource was started"
+      "label": "Data de início",
+      "description": "Data em que iniciou o registo do recurso"
     },
     "endDate": {
-      "label": "End date",
-      "description": "Date on which the recording of the resource was finished"
+      "label": "Data de final",
+      "description": "Data em que terminou o registo do recurso"
     },
     "date": {
-      "label": "Date"
+      "label": "Data"
     },
     "orientation": {
-      "label": "Orientation"
+      "label": "Orientação"
     },
     "spatialLocation": {
-      "label": "Spatial location"
+      "label": "Localização espacial"
     },
     "staff": {
-      "label": "Staff"
+      "label": "Equipa"
     },
     "provenance": {
-      "label": "Provenance"
+      "label": "Proveniência"
     },
     "literature": {
-      "label": "Literature reference"
+      "label": "Referências da literatura"
     },
     "geometry": {
-      "label": "Geometry"
+      "label": "Geometria"
     }
   },
   "categories": {
@@ -112,13 +112,13 @@
       }
     },
     "Glass": {
-      "label": "Glass",
+      "label": "Vidro",
       "fields": {
         "decorationDescription": {
-          "label": "Decoration description"
+          "label": "Descrição da decoração"
         },
         "color": {
-          "label": "Color and intensity"
+          "label": "Cor e intensidade"
         },
         "decorationTechnique": {
           "label": "Surface treatment or decoration technique"
@@ -144,10 +144,10 @@
       }
     },
     "Mollusk": {
-      "label": "Mollusk",
+      "label": "Molusco",
       "fields": {
         "classification": {
-          "label": "Mollusk classification"
+          "label": "Classificação do molusco"
         }
       }
     },
@@ -200,26 +200,26 @@
     "Project": {
       "fields": {
         "contactMail": {
-          "label": "Mail address of the contact person",
-          "description": "Mail address of the project or a contact person"
+          "label": "Endereço de correio de contacto",
+          "description": "Endereço de correio do projeto ou da pessoa de contacto"
         },
         "contactPerson": {
-          "label": "Contact person"
+          "label": "Pessoa de contacto"
         },
         "epsgId": {
-          "label": "EPSG Code",
-          "description": "Specification of the EPSG code (see http://spatialreference.org/, e. g. 3004)"
+          "label": "Código EPSG",
+          "description": "Especificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
-          "label": "Project homepage",
-          "description": "External reference(s) of the project"
+          "label": "Página do projeto",
+          "description": "Referência(s) externa(s) do projeto"
         },
         "gazId": {
           "label": "Gazetteer ID"
         },
         "institution": {
-          "label": "Institution",
-          "description": "Institution responsible for the project"
+          "label": "Instituição",
+          "description": "Instituição responsável pelo projeto"
         },
         "latitude": {
           "label": "Latitude"
@@ -231,20 +231,20 @@
           "label": "License information"
         },
         "projectURI": {
-          "label": "Project URL"
+          "label": "URL do projeto"
         },
         "staff": {
-          "label": "Staff"
+          "label": "Equipa"
         },
         "campaigns": {
-          "label": "Campaigns"
+          "label": "Campanhas"
         },
         "projectSupervisor": {
           "label": "Supervisor",
-          "description": "Person in charge of the project"
+          "description": "Pessoa responsável pelo projeto"
         },
         "bibliographicReferences": {
-          "label": "Bibliography"
+          "label": "Bibliografia"
         }
       }
     },
@@ -417,10 +417,10 @@
       }
     },
     "Architecture": {
-      "label": "Architecture",
+      "label": "Arquitetura",
       "fields": {
         "bibliography": {
-          "label": "Bibliography"
+          "label": "Bibliografia"
         },
         "conditionComment": {
           "label": "Condition comment"
@@ -520,25 +520,25 @@
       }
     },
     "Place": {
-      "label": "Place",
+      "label": "Sítio",
       "fields": {
         "gazId": {
           "label": "Gazetteer ID"
         },
         "placeName": {
-          "label": "Place name"
+          "label": "Nome do sítio"
         },
         "buildingHistory": {
-          "label": "Building research history"
+          "label": "História do sítio"
         },
         "buildingResearchHistory": {
-          "label": "Research history"
+          "label": "Histórico da investigação"
         },
         "description": {
-          "label": "Description"
+          "label": "Descrição"
         },
         "excavationHistory": {
-          "label": "Excavation history"
+          "label": "Histórico da escavação"
         },
         "findSituation": {
           "label": "Find situation",
@@ -551,7 +551,7 @@
           "label": "Findspot classification"
         },
         "siteClassification": {
-          "label": "Site classification"
+          "label": "Classificação do sítio"
         }
       }
     },
@@ -580,7 +580,7 @@
       }
     },
     "Feature": {
-      "label": "Stratigraphical unit",
+      "label": "Unidade etratigráfica",
       "fields": {
         "hasDisturbance": {
           "label": "Disturbance"
@@ -642,7 +642,7 @@
           "label": "Condition comment"
         },
         "content": {
-          "label": "Transcription"
+          "label": "Transcrição"
         },
         "language": {
           "label": "Language"
@@ -655,22 +655,22 @@
           "description": "Preserved amount in comparison to the original"
         },
         "objectType": {
-          "label": "Designation or type of inscription"
+          "label": "Designação ou tipo de inscrição"
         }
       }
     },
     "Image": {
       "fields": {
         "draughtsmen": {
-          "label": "Creator",
-          "description": "Creator of the image, photographer respectively draughtsman"
+          "label": "Autor",
+          "description": "Autor da imagem, fotografia, desenho, ilustração"
         },
         "processor": {
           "label": "Processor",
           "description": "Processor of the image in case of changes after the creation of the image"
         },
         "imageRights": {
-          "label": "Image rights"
+          "label": "Direitos da imagem"
         }
       }
     },
@@ -965,7 +965,7 @@
       }
     },
     "Other": {
-      "label": "Other",
+      "label": "Outro",
       "fields": {
         "isNatural": {
           "label": "Natural"
@@ -985,34 +985,34 @@
       }
     },
     "Sample": {
-      "label": "Sample",
+      "label": "Amostra",
       "fields": {
         "labNumber": {
           "label": "Laboratory number"
         },
         "weight": {
-          "label": "Weight (g)"
+          "label": "Peso (g)"
         },
         "sampleType": {
-          "label": "Sample type"
+          "label": "Tipo de amostra"
         }
       }
     },
     "Drawing": {
-      "label": "Drawing",
+      "label": "Desenho",
       "fields": {
         "drawingMaterial": {
-          "label": "Drawing material",
-          "description": "Material/application used for creating the drawing"
+          "label": "Material de desenho",
+          "description": "Material/programa utilizado na criação do desenho"
         },
         "drawingTool": {
-          "label": "Drawing tool"
+          "label": "Ferramenta de desenho"
         },
         "drawingType": {
-          "label": "Drawing type"
+          "label": "Tipo de desenho"
         },
         "scale": {
-          "label": "Scale"
+          "label": "Escala"
         }
       }
     },
@@ -1060,7 +1060,7 @@
       }
     },
     "Coin": {
-      "label": "Coin",
+      "label": "Moeda",
       "fields": {
         "frontSideDescription": {
           "label": "Front side description"
@@ -1164,11 +1164,11 @@
       }
     },
     "Photo": {
-      "label": "Photo",
+      "label": "Fotografia",
       "fields": {
         "originalType": {
-          "label": "Original type",
-          "description": "Original format of the image; in case of digitalized images the original analogous format"
+          "label": "Formato original",
+          "description": "Formato original da imagem; no caso de imagens digitalizadas, indicar o formato analógico do original"
         }
       }
     },
@@ -1222,14 +1222,14 @@
       }
     },
     "Type": {
-      "label": "Type",
+      "label": "Tipo",
       "fields": {}
     },
     "TypeCatalog": {
-      "label": "Type catalog",
+      "label": "Tipo de catálogo",
       "fields": {
         "criterion": {
-          "label": "Criterion"
+          "label": "Critério"
         }
       }
     }

@@ -1,103 +1,103 @@
 {
   "fields": {
     "category": {
-      "label": "Category"
+      "label": "Categoria"
     },
     "identifier": {
-      "label": "Identifier",
-      "description": "Unique identifier of this resource"
+      "label": "Identificador",
+      "description": "Identificador único deste recurso"
     },
     "shortDescription": {
-      "label": "Short description"
+      "label": "Descrição breve"
     }
   },
   "categories": {
     "Project": {
-      "label": "Project",
+      "label": "Projeto",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": "Coordinate reference system"
+          "label": "Sistema de referência de coordenadas"
         },
         "shortName": {
-          "label": "Short name"
+          "label": "Nome curto"
         }
       }
     },
     "Image": {
-      "label": "Image",
+      "label": "Imagem",
       "fields": {
         "height": {
-          "label": "Height"
+          "label": "Altura"
         },
         "width": {
-          "label": "Width"
+          "label": "Largura"
         }
       }
     }
   },
   "relations": {
     "isRecordedIn": {
-      "label": "Recorded in operation"
+      "label": "Registado durante intervenção"
     },
     "liesWithin": {
-      "label": "Lies within"
+      "label": "Dentro de"
     },
     "includes": {
-      "label": "Includes"
+      "label": "Inclui"
     },
     "isPresentIn": {
-      "label": "Is present in profile/planum"
+      "label": "Está presente no perfil/plano"
     },
     "isAbove": {
-      "label": "Above"
+      "label": "Sobre"
     },
     "isBelow": {
-      "label": "Below"
+      "label": "Sob"
     },
     "isSameAs": {
-      "label": "Same as"
+      "label": "O mesmo que"
     },
     "cuts": {
-      "label": "Cuts"
+      "label": "Corta"
     },
     "isCutBy": {
-      "label": "Cut by"
+      "label": "Cortada por"
     },
     "fills": {
-      "label": "Fills"
+      "label": "Preenche"
     },
     "isFilledBy": {
-      "label": "Filled by"
+      "label": "Preenchida por"
     },
     "borders": {
-      "label": "Borders"
+      "label": "Adjacente a"
     },
     "isAfter": {
-      "label": "After"
+      "label": "Depois de"
     },
     "isBefore": {
-      "label": "Before"
+      "label": "Antes de"
     },
     "isContemporaryWith": {
-      "label": "Contemporary with"
+      "label": "Contemporâneo com"
     },
     "depicts": {
-      "label": "Depicts"
+      "label": "Representa"
     },
     "isDepictedIn": {
-      "label": "Depicted in"
+      "label": "Representado em"
     },
     "isMapLayerOf": {
-      "label": "Map layer of"
+      "label": "Camada de mapa de"
     },
     "hasMapLayer": {
-      "label": "Has map layer"
+      "label": "Tem camada de mapa"
     },
     "isInstanceOf": {
-      "label": "Typological classification"
+      "label": "Classificação tipológica"
     },
     "hasInstance": {
-      "label": "Associated finds"
+      "label": "Espólio associado"
     }
   }
 }

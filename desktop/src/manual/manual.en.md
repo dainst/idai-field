@@ -22,7 +22,9 @@ these lists at any time.
 Use the menu option **Create backup...**, which is accessible via the menu "Project", to create backup files of
 your project data regularly.
 
+
 <hr>
+
 
 ## Resources
 
@@ -90,10 +92,102 @@ multiple resources are selected, only the *Move* and *Delete* options are availa
 
 <hr>
 
+
+## Images
+
+Images can be imported into a Field project to be subsequently linked to resources or used as map layers. For each imported image, an image resource is automatically created where metadata of the image can be entered.
+
+Image files can optionally be shared with other computers via a synchronization connection (see chapter *Synchronization*). If an image file is not available on the computer, a placeholder graphic is displayed instead.
+
+
+### Import images
+
+Images can be imported into the application in two different ways: via the menu "Tools" ➝ "Image management" and via the "Link images" option in the context menu of a resource (accessible by right-clicking on the desired resource). In the latter case, the image will be automatically linked to the corresponding resource after import (see section *Link images to resources*).
+
+<p align="center"><img src="images/en/images/droparea.png" alt="Import button"/></p>
+
+To start the import, click the plus button and select the files you want to add to the project. Alternatively, you can drag the files directly from a file manager application to the highlighted area surrounding the plus button. If multiple image categories (i.e. subcategories of the category "Image") are defined for the project, you can then select the desired category from a dropdown menu.
+
+Supported image formats are *jpg/jpeg* and *png*. Please note that very large images may cause performance issues while using the application. It is recommended to reduce large image files to a maximum size of about 10 MB using an image editing software before importing. Furthermore, images with very high resolution may not be imported in some cases. If this happens, reduce the resolution of the corresponding images and then restart the import.
+
+
+### Manage images
+
+For each imported image, the application creates a copy as well as a smaller version as a preview image and stores it in the **Images directory**, whose path you can see in the settings under "Advanced settings". The files in this folder are managed by the application and must not be edited, renamed or deleted manually, otherwise errors may occur when viewing or synchronizing images.
+
+To manage images, open the menu "Tools" ➝ "Image management". Here you can view and search through all the images in the project (see also chapter *Search*).
+
+
+#### Edit metadata
+
+You can view the metadata of an image by double-clicking on the desired image to open the image view. Click the edit button to open the editor and extend or alter the metadata. Available here are the fields configured in the configuration editor for the form of the corresponding image category.
+
+
+#### Delete images
+
+To remove imported images from the project, select the corresponding images in the image management. They can then be removed via the "Delete" button:
+
+<p align="center"><img src="images/en/images/delete_button.png" alt="Button 'Delete'"/></p>
+
+Please note that this will also delete the corresponding files in the project's images directory (and on other computers if a synchronization connection is established). Links to resources will be lost when deleting an image.
+
+
+### Link images to resources
+
+To link one or more images to a resource, select the "Link images" option in the context menu of the corresponding resource and click the plus button. You now have the choice between two options:
+
+* *Add new images*: New images will be imported into the project and linked to the resource.
+* *Link existing images*: Select one or more images from those already present in the project to be linked to the resource.
+
+Select images in the list and choose the "Remove link" option to unlink images from the resource. The images themselves remain in the project.
+
+Links can also be added or removed via the image management. To do this, select the desired images and click the button "Link" (blue button) or "Remove links" (red button) in the top bar:
+
+<p align="center"><img src="images/en/images/link_buttons.png" alt="Buttons 'Remove links' and 'Link'"/></p>
+
+
+#### Set main image
+
+If a resource is linked to multiple images, one of the images is marked with a star icon as the **main image**. This main image is displayed as a preview image for the resource. You can change the main image by selecting the "Link images" option in the context menu of the resource and selecting the desired image in the list of linked images. Then click the button "Set as main image":
+
+<p align="center"><img src="images/en/images/main_image.png" alt="Button 'Set as main image'"/></p>
+
+
+### Map layers
+
+#### Georeferencing
+
+Before an image can be used as a map layer, georeferencing information must first be provided by importing a world file. World files with the file extensions *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* and *pgw* are supported.
+
+World files can be imported in two different ways: If the file name of the world file before the extension is identical to the name of the corresponding image file, the file can be added via image import (plus button). The assignment to the image takes place automatically. Alternatively, a world file can also be imported via the image view, which you can reach by double-clicking on the corresponding image in the image management. Open the section "Georeference data" and click the "Load world file" button to select the desired file.
+
+<p align="center"><img src="images/en/images/worldfile_import.png" alt="Add georeference"/></p>
+
+
+#### Configure map layers
+
+A map layer can be configured either for a specific operation or for the entire project. Switch to the overview tab (house icon) if you want the map layer to be available in the entire project, or to the tab of the desired operation. There, open the map layer menu via the button at the top right of the map and click the edit button. You can now add new map layers via the plus button. All images for which georeference data has been added are available for selection.
+
+<p align="center"><img src="images/en/images/layer_menu.png" alt="Configure map layers"/></p>
+
+Change the order of map layers by moving them up or down the list via drag & drop. If multiple images overlap on the map, the order determines which image is displayed: A layer that is higher in the list will also be displayed on the map above a layer that is further down, and may hide it completely or partially.
+
+You can remove a layer from the list by clicking the red button "Remove map layer" to the right of each list entry. The image itself will not be deleted from the project and can be added as a map layer again.
+
+Click the "Save" button to save the changes to the database.
+
+
+#### Display map layers
+
+Configured map layers can be shown or hidden at any time via the map layer menu. To do this, click the eye button to the left of the corresponding entry in the list. The settings made here are not saved in the database (unlike the list of map layers available for the tab) and are therefore not shared via a synchronization connection, so that different map layers can be shown and hidden on different computers.
+
+
+<hr>
+
+
 ## Search
 
-In the **overview**, in the **operation tabs** as well as in the **image management** (accessible via the menu
-"Tools"), a **search filter** is available. You can use it to restrict the currently displayed resources by
+In the **overview**, in the **operation tabs** as well as in the **image management**, a **search filter** is available. You can use it to restrict the currently displayed resources by
 the means of some basic search criteria (identifier, short description, category).
 
 If you want to express more complex search queries, you can furthermore switch into the **extended search

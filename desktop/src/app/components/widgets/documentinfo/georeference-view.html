@@ -24,14 +24,16 @@
                 <span class="field-value" i18n="@@imageView.georeferenceView.present">Vorhanden</span>
                 <span *ngIf="document.resource.georeference">
                     <div id="export-georeference-button" class="btn btn-link"
-                        ngbTooltip="Georeferenzdaten als Worldfile exportieren"
+                        ngbTooltip="Georeferenzdaten als World-File exportieren"
                         i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.exportGeoreferenceData"
+                        container="body"
                         (click)="exportWldFile()">
                         <span class="mdi mdi-file-export"></span>
                     </div>
                     <div *ngIf="!readonly" id="delete-georeference-button" class="btn btn-link"
                         ngbTooltip="Georeferenzdaten löschen"
                         i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.deleteGeoreferenceData"
+                        container="body"
                         (click)="openDeleteModal(deleteModal)">
                         <span class="mdi mdi-delete"></span>
                     </div>
@@ -39,9 +41,10 @@
             </div>
             <div *ngIf="!document.resource.georeference" class="field">
                 <span class="field-value" i18n="@@imageView.georeferenceView.notPresent">Nicht vorhanden</span>
-                <div id="worldfile-upload" class="btn btn-link"  ngbTooltip="Worldfile laden"
-                     data-toggle="tooltip" title=" "
-                     i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.loadWorldfile">
+                <div id="worldfile-upload" class="btn btn-link"  ngbTooltip="World-File laden"
+                     data-toggle="tooltip" title=""
+                     i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.loadWorldfile"
+                     container="body">
                     <span class="mdi mdi-file-import"></span>
                     <input #worldfileInput type="file"
                            name="files[]"

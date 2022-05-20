@@ -1,4 +1,4 @@
-$add-georeference-color: #657faa;
+$add-georeference-color: #5572a1;
 $delete-georeference-color: #d9534f;
 
 georeference-view {
@@ -52,6 +52,7 @@ georeference-view {
 
   #export-georeference-button {
     padding: 0;
-    font-size: 20px;
+    font-size: 23px;
+    color: $add-georeference-color;
   }
 }

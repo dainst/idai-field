@@ -184,6 +184,8 @@ $layer-menu-remove-button-color: #c82333;
 }
 
 div.cdk-drag-preview {
+  z-index: 2000 !important;
+
   .mdi {
     display: none;
   }

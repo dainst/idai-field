@@ -128,7 +128,11 @@ Sie können die Metadaten eines Bildes einsehen, indem Sie per Doppelklick auf d
 
 #### Bilder löschen
 
-Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die entsprechenden Bilder in der Bilderverwaltung. Über den Button "Löschen" können sie anschließend entfernt werden. Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
+Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die entsprechenden Bilder in der Bilderverwaltung. Über den Button "Löschen" können sie anschließend entfernt werden:
+
+<p align="center"><img src="images/de/images/delete_button.png" alt="Button 'Löschen'"/></p>
+
+Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
 
 
 ### Bilder mit Ressourcen verknüpfen
@@ -140,12 +144,14 @@ Um Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder ver
 
 Selektieren Sie Bilder in der Liste und wählen die Option "Verknüpfung entfernen", um verknüpfte Bilder wieder von der Ressource zu lösen. Die Bilder selbst bleiben weiterhin im Projekt erhalten.
 
-Verknüpfungen können auch über die Bilderverwaltung hinzugefügt oder entfernt werden. Selektieren Sie dazu die gewünschten Bilder und klicken den Button "Verknüpfen" bzw. "Verknüpfungen entfernen".
+Verknüpfungen können auch über die Bilderverwaltung hinzugefügt oder entfernt werden. Selektieren Sie dazu die gewünschten Bilder und klicken den Button "Verknüpfen" (blauer Button) bzw. "Verknüpfungen entfernen" (roter Button) in der oberen Leiste:
+
+<p align="center"><img src="images/de/images/link_buttons.png" alt="Buttons 'Verknüpfungen entfernen' und 'Verknüpfen'"/></p>
 
 
 #### Hauptbild festlegen
 
-Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **Hauptbild** mit einem Stern-Symbol markiert. Dieses Hauptbild wird bei der Ressource als Vorschaubild angezeigt. Sie können das Hauptbild wechseln, indem Sie die Option "Bilder verknüpfen" im Kontextmenü der Ressource auswählen und das gewünschte Bild in der Liste verknüpfter Bilder selektieren. Klicken Sie anschließend den Button "Als Hauptbild festlegen". 
+Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **Hauptbild** mit einem Stern-Symbol markiert. Dieses Hauptbild wird bei der Ressource als Vorschaubild angezeigt. Sie können das Hauptbild wechseln, indem Sie die Option "Bilder verknüpfen" im Kontextmenü der Ressource auswählen und das gewünschte Bild in der Liste verknüpfter Bilder selektieren. Klicken Sie anschließend den Button "Als Hauptbild festlegen":
 
 <p align="center"><img src="images/de/images/main_image.png" alt="Button 'Als Hauptbild festlegen'"/></p>
 

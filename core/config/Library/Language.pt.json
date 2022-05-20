@@ -1,0 +1,279 @@
+{
+  "groups": {
+    "stem": "Core",
+    "properties": "Propriedades",
+    "time": "Tempo",
+    "position": "Posição / Contexto",
+    "dimension": "Dimensões",
+    "identification": "Identificação",
+    "other": "Outro"
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "Comprimento"
+    },
+    "dimensionWidth": {
+      "label": "Largura"
+    },
+    "dimensionHeight": {
+      "label": "Altura"
+    },
+    "dimensionDepth": {
+      "label": "Profundiade"
+    },
+    "dimensionThickness": {
+      "label": "Espessura"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Extensão vertical"
+    },
+    "dimensionPerimeter": {
+      "label": "Perímetro"
+    },
+    "dimensionDiameter": {
+      "label": "Diâmetro"
+    },
+    "dimensionOther": {
+      "label": "Outras dimensões",
+      "description": "Outras dimensões podem ser registadas aqui; explique sff"
+    },
+    "area": {
+      "label": "Área em m2"
+    },
+    "processor": {
+      "label": "Processor",
+      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. NOTA: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessários aqui."
+    },
+    "campaign": {
+      "label": "Campanha"
+    },
+    "description": {
+      "label": "Descrição"
+    },
+    "period": {
+      "label": "Período"
+    },
+    "dating": {
+      "label": "Datação"
+    },
+    "diary": {
+      "label": "Diário",
+      "description": "Referência ao diário de escavação"
+    },
+    "beginningDate": {
+      "label": "Data de início",
+      "description": "Data em que iniciou o registo do recurso"
+    },
+    "endDate": {
+      "label": "Data de final",
+      "description": "Data em que terminou o registo do recurso"
+    },
+    "date": {
+      "label": "Data"
+    },
+    "orientation": {
+      "label": "Orientação"
+    },
+    "spatialLocation": {
+      "label": "Localização espacial"
+    },
+    "staff": {
+      "label": "Equipa"
+    },
+    "provenance": {
+      "label": "Proveniência"
+    },
+    "literature": {
+      "label": "Referências da literatura"
+    },
+    "geometry": {
+      "label": "Geometria"
+    }
+  },
+  "categories": {
+    "Glass": {
+      "label": "Vidro",
+      "fields": {
+        "decorationDescription": {
+          "label": "Descrição da decoração"
+        },
+        "color": {
+          "label": "Cor e intensidade"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Molusco",
+      "fields": {
+        "classification": {
+          "label": "Classificação do molusco"
+        }
+      }
+    },
+    "Project": {
+      "fields": {
+        "contactMail": {
+          "label": "Endereço de correio de contacto",
+          "description": "Endereço de correio do projeto ou da pessoa de contacto"
+        },
+        "contactPerson": {
+          "label": "Pessoa de contacto"
+        },
+        "epsgId": {
+          "label": "Código EPSG",
+          "description": "Especificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
+        },
+        "externalReference": {
+          "label": "Página do projeto",
+          "description": "Referência(s) externa(s) do projeto"
+        },
+        "gazId": {
+          "label": "Gazetteer ID"
+        },
+        "institution": {
+          "label": "Instituição",
+          "description": "Instituição responsável pelo projeto"
+        },
+        "latitude": {
+          "label": "Latitude"
+        },
+        "longitude": {
+          "label": "Longitude"
+        },
+        "license": {
+          "label": "License information"
+        },
+        "projectURI": {
+          "label": "URL do projeto"
+        },
+        "staff": {
+          "label": "Equipa"
+        },
+        "campaigns": {
+          "label": "Campanhas"
+        },
+        "projectSupervisor": {
+          "label": "Supervisor",
+          "description": "Pessoa responsável pelo projeto"
+        },
+        "bibliographicReferences": {
+          "label": "Bibliografia"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Arquitetura",
+      "fields": {
+        "bibliography": {
+          "label": "Bibliografia"
+        }
+      }
+    },
+    "Place": {
+      "label": "Sítio",
+      "fields": {
+        "placeName": {
+          "label": "Nome do sítio"
+        },
+        "buildingHistory": {
+          "label": "História do sítio"
+        },
+        "buildingResearchHistory": {
+          "label": "Histórico da investigação"
+        },
+        "description": {
+          "label": "Descrição"
+        },
+        "excavationHistory": {
+          "label": "Histórico da escavação"
+        },
+        "siteClassification": {
+          "label": "Classificação do sítio"
+        }
+      }
+    },
+    "Feature": {
+      "label": "Unidade etratigráfica"
+    },
+    "Inscription": {
+      "fields": {
+        "content": {
+          "label": "Transcrição"
+        },
+        "objectType": {
+          "label": "Designação ou tipo de inscrição"
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "Autor",
+          "description": "Autor da imagem, fotografia, desenho, ilustração"
+        },
+        "imageRights": {
+          "label": "Direitos da imagem"
+        }
+      }
+    },
+    "Other": {
+      "label": "Outro"
+    },
+    "Sample": {
+      "label": "Amostra",
+      "fields": {
+        "labNumber": {
+          "label": "Laboratory number"
+        },
+        "weight": {
+          "label": "Peso (g)"
+        },
+        "sampleType": {
+          "label": "Tipo de amostra"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Desenho",
+      "fields": {
+        "drawingMaterial": {
+          "label": "Material de desenho",
+          "description": "Material/programa utilizado na criação do desenho"
+        },
+        "drawingTool": {
+          "label": "Ferramenta de desenho"
+        },
+        "drawingType": {
+          "label": "Tipo de desenho"
+        },
+        "scale": {
+          "label": "Escala"
+        }
+      }
+    },
+    "Coin": {
+      "label": "Moeda"
+    },
+    "Photo": {
+      "label": "Fotografia",
+      "fields": {
+        "originalType": {
+          "label": "Formato original",
+          "description": "Formato original da imagem; no caso de imagens digitalizadas, indicar o formato analógico do original"
+        }
+      }
+    },
+    "Type": {
+      "label": "Tipo",
+      "fields": {}
+    },
+    "TypeCatalog": {
+      "label": "Tipo de catálogo",
+      "fields": {
+        "criterion": {
+          "label": "Critério"
+        }
+      }
+    }
+  }
+}

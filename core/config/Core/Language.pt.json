@@ -1,0 +1,103 @@
+{
+  "fields": {
+    "category": {
+      "label": "Categoria"
+    },
+    "identifier": {
+      "label": "Identificador",
+      "description": "Identificador único deste recurso"
+    },
+    "shortDescription": {
+      "label": "Descrição breve"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Projeto",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Sistema de referência de coordenadas"
+        },
+        "shortName": {
+          "label": "Nome curto"
+        }
+      }
+    },
+    "Image": {
+      "label": "Imagem",
+      "fields": {
+        "height": {
+          "label": "Altura"
+        },
+        "width": {
+          "label": "Largura"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Registado durante intervenção"
+    },
+    "liesWithin": {
+      "label": "Dentro de"
+    },
+    "includes": {
+      "label": "Inclui"
+    },
+    "isPresentIn": {
+      "label": "Está presente no perfil/plano"
+    },
+    "isAbove": {
+      "label": "Sobre"
+    },
+    "isBelow": {
+      "label": "Sob"
+    },
+    "isSameAs": {
+      "label": "O mesmo que"
+    },
+    "cuts": {
+      "label": "Corta"
+    },
+    "isCutBy": {
+      "label": "Cortada por"
+    },
+    "fills": {
+      "label": "Preenche"
+    },
+    "isFilledBy": {
+      "label": "Preenchida por"
+    },
+    "borders": {
+      "label": "Adjacente a"
+    },
+    "isAfter": {
+      "label": "Depois de"
+    },
+    "isBefore": {
+      "label": "Antes de"
+    },
+    "isContemporaryWith": {
+      "label": "Contemporâneo com"
+    },
+    "depicts": {
+      "label": "Representa"
+    },
+    "isDepictedIn": {
+      "label": "Representado em"
+    },
+    "isMapLayerOf": {
+      "label": "Camada de mapa de"
+    },
+    "hasMapLayer": {
+      "label": "Tem camada de mapa"
+    },
+    "isInstanceOf": {
+      "label": "Classificação tipológica"
+    },
+    "hasInstance": {
+      "label": "Espólio associado"
+    }
+  }
+}

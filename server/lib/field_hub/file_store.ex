@@ -69,7 +69,7 @@ defmodule FieldHub.FileStore do
   def get_file_path(%{uuid: uuid, project: project, type: type}) do
     path = "#{get_type_directory(project, type)}/#{uuid}"
 
-    case File.lstat(path) do
+    case File.stat(path) do
       {:error, _} = error ->
         error
       _ ->

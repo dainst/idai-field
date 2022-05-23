@@ -62,6 +62,8 @@ export module FieldsViewUtil {
                 : isString(fieldContent)
                     ? fieldContent
                         .replace(/^\s+|\s+$/g, '')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
                         .replace(/\n/g, '<br>')
                     : fieldContent;
     }

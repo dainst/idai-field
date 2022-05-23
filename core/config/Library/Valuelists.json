@@ -6,7 +6,8 @@
     "values": {
       "Eigenes Koordinatenbezugssystem": {
         "label": {
-          "de": "Eigenes Koordinatenbezugssystem"
+          "de": "Eigenes Koordinatenbezugssystem",
+          "en": "Custom coordinate reference system"
         }
       },
       "EPSG4326 (WGS 84)": {

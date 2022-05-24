@@ -6,26 +6,37 @@
       .row {
         height: 100%;
 
-        #table-of-contents {
+        #edit-form-groups-container {
+          height: 100%;
           padding-left: 15px;
           padding-top: 15px;
-          user-select: none;
+          padding-bottom: 15px;
 
-          .conflicted {
-            color: #dc3545;
+          #edit-form-groups {
+            height: 100%;
+            padding: 0;
+            overflow-y: auto;
+            user-select: none;
 
-            &.active {
-              color: white;
-              background-color: #dc3545 !important;
-            }
-          }
-
-          .nav {
-            .nav-link {
-              margin: 5px 12px;
+            .conflicted {
+              color: #dc3545;
 
               &.active {
-                background-color: $primary-button-color;
+                color: white;
+                background-color: #dc3545 !important;
+              }
+            }
+
+            .nav {
+              width: 100%;
+
+              .nav-link {
+                width: 100%;
+                margin: 5px 12px;
+
+                &.active {
+                  background-color: $primary-button-color;
+                }
               }
             }
           }

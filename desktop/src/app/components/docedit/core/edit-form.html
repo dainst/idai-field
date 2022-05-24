@@ -1,20 +1,22 @@
 <div class="container-fluid">
     <div #editor class="row">
-        <ul id="table-of-contents" class="col-md-3">
-            <li *ngFor="let group of groups" class="nav nav-pills"
-                (click)="activateGroup(group.name)">
-                <a *ngIf="shouldShow(group.name)"
-                        class="nav-link" [id]="getGroupId(group)"
-                        [class.active]="group.name === activeGroup"
-                        [class.conflicted]="group.name === 'conflicts' && document._conflicts"
-                        href="javascript: void(0);">
-                    <span *ngIf="group.name === 'conflicts' && document._conflicts"
-                          class="mdi mdi-alert">
-                    </span>
-                    {{getLabel(group)}}
-                </a>
-            </li>
-        </ul>
+        <div id="edit-form-groups-container" class="col-md-3">
+            <ul id="edit-form-groups">
+                <li *ngFor="let group of groups" class="nav nav-pills"
+                    (click)="activateGroup(group.name)">
+                    <a *ngIf="shouldShow(group.name)"
+                            class="nav-link" [id]="getGroupId(group)"
+                            [class.active]="group.name === activeGroup"
+                            [class.conflicted]="group.name === 'conflicts' && document._conflicts"
+                            href="javascript: void(0);">
+                        <span *ngIf="group.name === 'conflicts' && document._conflicts"
+                            class="mdi mdi-alert">
+                        </span>
+                        {{getLabel(group)}}
+                    </a>
+                </li>
+            </ul>
+        </div>
 
         <div class="col-md-9 forms-container">
             <div id="{{activeGroup}}-group" class="scrollable-group"

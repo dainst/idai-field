@@ -9,6 +9,8 @@
         #table-of-contents {
           padding-left: 15px;
           padding-top: 15px;
+          height: 100%;
+          overflow-y: auto;
           user-select: none;
 
           .conflicted {
@@ -21,7 +23,10 @@
           }
 
           .nav {
+            width: 100%;
+
             .nav-link {
+              width: 100%;
               margin: 5px 12px;
 
               &.active {

@@ -23,9 +23,7 @@ defmodule FieldHub.FileStore do
 
   def get_file_list(project, variants \\ @variant_types) do
       variants
-      |> Stream.map(&get_type_directory(project, &1))
-      |> Stream.map(&File.ls!(&1))
-      |> Stream.map(&filter_with_existing_tombstone(&1))
+      |> Stream.map(&get_file_list_for_variant(project, &1))
       |> Stream.zip(variants)
       |> Stream.map(fn({file_list, variant_type}) ->
         file_list
@@ -45,7 +43,7 @@ defmodule FieldHub.FileStore do
             end
           end)
         end)
-      |> Enum.map(fn({uuid, info}) ->
+      |> Stream.map(fn({uuid, info}) ->
         case String.ends_with?(uuid, @tombstoneSuffix) do
           true ->
             {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}
@@ -53,17 +51,29 @@ defmodule FieldHub.FileStore do
             {uuid, Map.put_new(info, :deleted, false)}
         end
       end)
-      |> Enum.reject(fn({uuid, _}) ->
-        case String.contains?(uuid, ".") do
-          false ->
-            false
-          true ->
-            Logger.warning("Encountered file name (uuid) containing '.', omitting from file list:")
-            Logger.warning("#{uuid} in project #{project}.")
-            true
+      |> Enum.into(%{}) # tuple to map, because tuple can't be encoded as JSON
+  end
+
+  defp get_file_list_for_variant(project, variant) do
+    type_directory =
+      get_type_directory(project, variant)
+
+    type_directory
+    |> File.ls!()
+    |> Stream.reject(fn filename ->
+      case File.stat!("#{type_directory}/#{filename}") do
+        %{type: :directory} ->
+          true
+        _ ->
+          false
         end
       end)
-      |> Enum.into(%{}) # tuple to map, because tuple can't be encoded as JSON
+      |> Stream.reject(fn filename ->
+        filename
+        |> String.trim_trailing(@tombstoneSuffix)
+        |> String.contains?(".")
+      end)
+      |> ignore_filenames_with_existing_tombstones()
   end
 
   def get_file_path(%{uuid: uuid, project: project, type: type}) do
@@ -124,13 +134,13 @@ defmodule FieldHub.FileStore do
     "#{get_project_directory(project)}/thumbnail_images"
   end
 
-  defp filter_with_existing_tombstone(files) do
+  defp ignore_filenames_with_existing_tombstones(filenames) do
     deleted =
-      files
+      filenames
       |> Enum.filter(fn(filename) ->
         String.ends_with?(filename, @tombstoneSuffix)
       end)
 
-    Enum.filter(files, fn(filename) -> "#{filename}#{@tombstoneSuffix}" not in deleted end)
+    Enum.filter(filenames, fn(filename) -> "#{filename}#{@tombstoneSuffix}" not in deleted end)
   end
 end

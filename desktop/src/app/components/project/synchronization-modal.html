@@ -33,22 +33,40 @@
         </div>
     </div>
 
-    <div id="originals-synchronization-slider" class="row">
+    <div id="originals-upload-synchronization-slider" class="row">
         <div class="col-auto mr-auto">
-            <span i18n="@@settings.synchronization.originalImageFiles"
+            <span i18n="@@settings.synchronization.originalImageFilesUpload"
                   class="image-syncing-option-label"
-                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder synchronisieren</span>
+                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder hochladen</span>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
                 <input type="checkbox"
-                    [checked]="isOriginalImageSyncActive()"
-                    (change)="toggleOriginalImageSync()"
+                    [checked]="isOriginalImageUploadSyncActive()"
+                    (change)="toggleOriginalImageUpload()"
                     [disabled]="!syncTarget.isSyncActive">
                 <span class="slider round"></span>
             </label>
         </div>
     </div>
+
+    <div id="originals-download-synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.originalImageFilesDownload"
+                  class="image-syncing-option-label"
+                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder herunterladen</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
+                <input type="checkbox"
+                    [checked]="isOriginalImageDownloadSyncActive()"
+                    (change)="toggleOriginalImageDownload()"
+                    [disabled]="!syncTarget.isSyncActive">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
 
     <div class="form-group">
         <label for="sync-target-address-input"

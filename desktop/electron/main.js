@@ -50,10 +50,35 @@ global.setConfigDefaults = config => {
 
 const setFileSync = config => {
 
-    // migration for version 3 image sync rework 
     Object.values(config.syncTargets).map((target) => {
+        if (typeof target.activeFileSync !== 'undefined' && target.activeFileSync.every(i => typeof i === "string")) {
+            let updatedConfig = []
+            // Migration for version 3.1 image sync rework: Set upload and download active for all active variants.
+
+            updatedConfig = target.activeFileSync.map((variant) => {
+                return {
+                    upload: true,
+                    download: true,
+                    variant: variant
+                }
+            })
+
+            target.activeFileSync = updatedConfig;
+            return;
+        }
+
         if (typeof target.activeFileSync === 'undefined') {
-            target.activeFileSync = ['thumbnail_image']; // see ImageVariant enum
+            // Migration for version 3 image sync rework: activating thumbnail sync by default.
+            updatedConfig.push(
+                {
+                    upload: true,
+                    download: true,
+                    variant: 'thumbnail_image' // see ImageVariant enum
+                }
+            )
+
+            target.activeFileSync = updatedConfig;
+            return;
         }
     })
 }

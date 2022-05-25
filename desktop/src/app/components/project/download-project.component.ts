@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { FileInfo, ImageStore, ImageVariant, PouchdbDatastore, SyncService } from 'idai-field-core';
+import { FileInfo, ImageStore, ImageVariant, FileSyncPreferences, PouchdbDatastore, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
@@ -38,7 +38,7 @@ export class DownloadProjectComponent {
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
 
-    
+
     constructor(private messages: Messages,
                 private syncService: SyncService,
                 private settingsService: SettingsService,
@@ -76,14 +76,14 @@ export class DownloadProjectComponent {
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
-            const variants: Array<ImageVariant> = this.getSelectedFileSync();
+            const preferences: Array<FileSyncPreferences> = this.getSelectedFileSyncPreferences();
 
-            const fileList = variants.length > 0
+            const fileList = preferences.length > 0
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
                     this.url,
                     this.password,
                     this.projectName,
-                    variants
+                    preferences.map(preference => preference.variant)
                 ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
@@ -95,7 +95,7 @@ export class DownloadProjectComponent {
                     isSyncActive: true,
                     address: this.url,
                     password: this.password,
-                    activeFileSync: variants
+                    activeFileSync: preferences
                 }
             ).then(() => {
                 reloadAndSwitchToHomeRoute();
@@ -123,12 +123,25 @@ export class DownloadProjectComponent {
     }
 
 
-    private getSelectedFileSync(): ImageVariant[] {
+    private getSelectedFileSyncPreferences(): FileSyncPreferences[] {
 
         const result = [];
 
-        if (this.syncThumbnailImages) result.push(ImageVariant.THUMBNAIL);
-        if (this.syncOriginalImages) result.push(ImageVariant.ORIGINAL);
+        if (this.syncThumbnailImages){
+            result.push({
+                upload: true,
+                download: true,
+                variant: ImageVariant.THUMBNAIL
+            });
+        }
+
+        if (this.syncOriginalImages){
+            result.push({
+                upload: true,
+                download: true,
+                variant: ImageVariant.ORIGINAL
+            });
+        }
 
         return result;
     }
@@ -157,7 +170,7 @@ export class DownloadProjectComponent {
         });
     }
 
-    
+
     private async syncFiles(progressModalRef: NgbModalRef, files: { [uuid: string]: FileInfo }): Promise<void> {
 
         let counter: number = 0;
@@ -225,7 +238,7 @@ export class DownloadProjectComponent {
 
 
     private async getUpdateSequence(): Promise<number> {
-        
+
         const info = await new PouchDB(
             SyncService.generateUrl(this.url, this.projectName),
             {

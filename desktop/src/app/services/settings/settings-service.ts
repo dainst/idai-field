@@ -138,8 +138,8 @@ export class SettingsService {
             syncTarget?.password
         );
 
-        for (const variant of syncTarget.activeFileSync) {
-            this.imageSyncService.startSync(variant);
+        for (const preferences of syncTarget.activeFileSync) {
+            this.imageSyncService.startSync(preferences);
         }
 
         return this.synchronizationService.startSync();

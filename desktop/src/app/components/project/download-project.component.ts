@@ -95,7 +95,7 @@ export class DownloadProjectComponent {
                     isSyncActive: true,
                     address: this.url,
                     password: this.password,
-                    activeFileSync: preferences
+                    fileSyncPreferences: preferences
                 }
             ).then(() => {
                 reloadAndSwitchToHomeRoute();

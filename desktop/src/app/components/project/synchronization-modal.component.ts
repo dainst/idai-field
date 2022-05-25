@@ -37,7 +37,7 @@ export class SynchronizationModalComponent implements OnInit {
                 address: '',
                 password: '',
                 isSyncActive: false,
-                activeFileSync: [
+                fileSyncPreferences: [
                     {
                         upload: true,
                         download: true,
@@ -66,16 +66,16 @@ export class SynchronizationModalComponent implements OnInit {
 
     public async toggleThumbnailImageSync() {
 
-        if (!this.syncTarget.activeFileSync
+        if (!this.syncTarget.fileSyncPreferences
             .map(preference => preference.variant)
             .includes(ImageVariant.THUMBNAIL)) {
-            this.syncTarget.activeFileSync.push({
+            this.syncTarget.fileSyncPreferences.push({
                 upload: true,
                 download: true,
                 variant: ImageVariant.THUMBNAIL
             });
         } else {
-            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
+            this.syncTarget.fileSyncPreferences = this.syncTarget.fileSyncPreferences
             .filter(
                 (preference: FileSyncPreference) => preference.variant !== ImageVariant.THUMBNAIL
             );
@@ -85,7 +85,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     public isThumbnailImageSyncActive() {
 
-        return this.syncTarget.activeFileSync
+        return this.syncTarget.fileSyncPreferences
             .map(preference => preference.variant)
             .includes(ImageVariant.THUMBNAIL);
     }
@@ -93,18 +93,18 @@ export class SynchronizationModalComponent implements OnInit {
 
     public async toggleOriginalImageUpload() {
 
-        if (!this.syncTarget.activeFileSync
+        if (!this.syncTarget.fileSyncPreferences
             .map(preference => preference.variant)
             .includes(ImageVariant.ORIGINAL)) {
 
-            this.syncTarget.activeFileSync.push({
+            this.syncTarget.fileSyncPreferences.push({
                 upload: true,
                 download: false,
                 variant: ImageVariant.ORIGINAL
             });
         } else {
 
-            const previousPreference = this.syncTarget.activeFileSync.find(
+            const previousPreference = this.syncTarget.fileSyncPreferences.find(
                 preference => preference.variant === ImageVariant.ORIGINAL
             );
 
@@ -114,13 +114,13 @@ export class SynchronizationModalComponent implements OnInit {
                 variant: ImageVariant.ORIGINAL
             };
 
-            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
+            this.syncTarget.fileSyncPreferences = this.syncTarget.fileSyncPreferences
                 .filter(
                     (preference: FileSyncPreference) => preference.variant !== ImageVariant.ORIGINAL
                 );
 
             if (updatedPreferences.upload === true || updatedPreferences.download === true) {
-                this.syncTarget.activeFileSync.push(updatedPreferences);
+                this.syncTarget.fileSyncPreferences.push(updatedPreferences);
             }
         }
     }
@@ -128,7 +128,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     public isOriginalImageUploadSyncActive() {
 
-        const current = this.syncTarget.activeFileSync.find(preference => preference.variant === ImageVariant.ORIGINAL);
+        const current = this.syncTarget.fileSyncPreferences.find(preference => preference.variant === ImageVariant.ORIGINAL);
         if (current !== undefined) {
             return current.upload;
         }
@@ -139,18 +139,18 @@ export class SynchronizationModalComponent implements OnInit {
 
     public async toggleOriginalImageDownload() {
 
-        if (!this.syncTarget.activeFileSync
+        if (!this.syncTarget.fileSyncPreferences
             .map(preference => preference.variant)
             .includes(ImageVariant.ORIGINAL)) {
 
-            this.syncTarget.activeFileSync.push({
+            this.syncTarget.fileSyncPreferences.push({
                 upload: false,
                 download: true,
                 variant: ImageVariant.ORIGINAL
             });
         } else {
 
-            const previousPreference = this.syncTarget.activeFileSync.find(
+            const previousPreference = this.syncTarget.fileSyncPreferences.find(
                 preference => preference.variant === ImageVariant.ORIGINAL
             );
 
@@ -160,13 +160,13 @@ export class SynchronizationModalComponent implements OnInit {
                 variant: ImageVariant.ORIGINAL
             };
 
-            this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
+            this.syncTarget.fileSyncPreferences = this.syncTarget.fileSyncPreferences
                 .filter(
                     (preference: FileSyncPreference) => preference.variant !== ImageVariant.ORIGINAL
                 );
 
             if (updatedPreferences.upload === true || updatedPreferences.download === true) {
-                this.syncTarget.activeFileSync.push(updatedPreferences);
+                this.syncTarget.fileSyncPreferences.push(updatedPreferences);
             }
         }
     }
@@ -174,7 +174,7 @@ export class SynchronizationModalComponent implements OnInit {
 
     public isOriginalImageDownloadSyncActive() {
 
-        const current = this.syncTarget.activeFileSync.find(preference => preference.variant === ImageVariant.ORIGINAL);
+        const current = this.syncTarget.fileSyncPreferences.find(preference => preference.variant === ImageVariant.ORIGINAL);
         if (current !== undefined) {
             return current.download;
         }

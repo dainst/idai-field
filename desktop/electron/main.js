@@ -63,21 +63,18 @@ const setFileSync = config => {
                 }
             })
 
-            target.activeFileSync = updatedConfig;
+            target.fileSyncPreferences = updatedConfig;
             return;
         }
 
-        if (typeof target.activeFileSync === 'undefined') {
+        if (typeof target.fileSyncPreferences === 'undefined') {
             // Migration for version 3 image sync rework: activating thumbnail sync by default.
-            updatedConfig.push(
-                {
-                    upload: true,
-                    download: true,
-                    variant: 'thumbnail_image' // see ImageVariant enum
-                }
-            )
 
-            target.activeFileSync = updatedConfig;
+            target.fileSyncPreferences = [{
+                upload: true,
+                download: true,
+                variant: 'thumbnail_image' // see ImageVariant enum
+            }];
             return;
         }
     })

@@ -131,7 +131,7 @@ const documentListContainerStyle: CSSProperties = {
 
 
 const leftSidebarStyle: CSSProperties = {
-    height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+    maxHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
     width: `${SIDEBAR_WIDTH}px`,
     position: 'absolute',
     top: NAVBAR_HEIGHT,

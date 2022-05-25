@@ -19,7 +19,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * @param type (optional) image's type. By convention, a missing `type` parameter will be
      * interpreted as {@link ImageVariant.ORIGINAL} by the syncing target.
      */
-    public async store(uuid: string, data: Buffer, project: string, type?: ImageVariant) {
+    public async store(uuid: string, data: Buffer, project: string, type: ImageVariant): Promise<number> {
 
         const settings = this.settingsProvider.getSettings();
 
@@ -38,7 +38,18 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 'Content-Type': 'image/x-www-form-urlencoded',
                 Authorization: `Basic ${btoa(project + ':' + password)}`
             }
+        })
+        .then((response) => {
+            return response.status;
+        })
+        .catch((error) => {
+            if (error.response.status === 409) {
+                return 409;
+            } else {
+                throw error;
+            }
         });
+
     }
 
     /**
@@ -71,7 +82,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * are returned, otherwise only images with the requested variants are returned.
      * @returns Dictionary where each key represents an image UUID and each value is a list of the image's known variants.
      */
-    public async getFileInfos(project: string,types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo }> {
+    public async getFileInfos(project: string, types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo }> {
 
         const settings = this.settingsProvider.getSettings();
 
@@ -113,7 +124,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      * @param project the project's name
      */
     public async getData(uuid: string, type: ImageVariant, project: string): Promise<Buffer> {
-        
+
         const settings = this.settingsProvider.getSettings();
 
         const syncSource = settings.syncTargets[project];

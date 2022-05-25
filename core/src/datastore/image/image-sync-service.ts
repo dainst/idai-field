@@ -165,7 +165,13 @@ export class ImageSyncService {
                     this.status[preference.variant] = SyncStatus.Pushing;
     
                     const data = await this.imageStore.getData(uuid, preference.variant, activeProject);
-                    await this.remoteImagestore.store(uuid, data, activeProject, preference.variant);
+                    const status = await this.remoteImagestore.store(uuid, data, activeProject, preference.variant);
+
+                    if (status === 409) {
+                        console.log(`Got status code 409. Syncing target currently does not accept large files:`);
+                        console.log(`Stopping further upload attempts for ${preference.variant} files for ${this.longIntervalDuration} ms.`)
+                        break;
+                    }
                 }
             }
         

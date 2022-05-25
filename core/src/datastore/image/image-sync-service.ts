@@ -129,9 +129,9 @@ export class ImageSyncService {
 
             console.log(`Image syncing differences for ${preference.variant}`)
             console.log(` missing locally ${downloadInfo}: ${differences.missingLocally.length}`);
-            console.log(` not yet deleted locally ${downloadInfo}: ${differences.deleteLocally.length}`);
+            console.log(` not yet deleted locally: ${differences.deleteLocally.length}`);
             console.log(` missing remotely ${uploadInfo}: ${differences.missingRemotely.length}`);
-            console.log(` not yet deleted remotely ${uploadInfo}: ${differences.deleteRemotely.length}`);
+            console.log(` not yet deleted remotely: ${differences.deleteRemotely.length}`);
 
             if (preference.download) {
 
@@ -147,14 +147,14 @@ export class ImageSyncService {
                         throw Error(`Expected remote image ${uuid}, ${preference.variant} for project ${activeProject}, received null.`);
                     }
                 }
+            }
 
-                for (const uuid of differences.deleteLocally) {
+            for (const uuid of differences.deleteLocally) {
 
-                    if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
-                    this.status[preference.variant] = SyncStatus.Pulling;
+                if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
+                this.status[preference.variant] = SyncStatus.Pulling;
 
-                    await this.imageStore.remove(uuid, activeProject)
-                }
+                await this.imageStore.remove(uuid, activeProject)
             }
 
             if (preference.upload) {
@@ -167,14 +167,14 @@ export class ImageSyncService {
                     const data = await this.imageStore.getData(uuid, preference.variant, activeProject);
                     await this.remoteImagestore.store(uuid, data, activeProject, preference.variant);
                 }
+            }
+        
+            for (const uuid of differences.deleteRemotely) {
 
-                for (const uuid of differences.deleteRemotely) {
+                if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
+                this.status[preference.variant] = SyncStatus.Pushing;
 
-                    if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
-                    this.status[preference.variant] = SyncStatus.Pushing;
-
-                    await this.remoteImagestore.remove(uuid, activeProject)
-                }
+                await this.remoteImagestore.remove(uuid, activeProject)
             }
 
             // Set SyncStatus.Offline if sync was disabled while running sync, otherwise set SyncStatus.InSync

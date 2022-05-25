@@ -124,13 +124,17 @@ export class ImageSyncService {
             const activeProject = this.imageStore.getActiveProject();
             const differences = await this.evaluateDifference(activeProject, preference.variant);
 
+            const downloadInfo = `(sync ${preference.download ? 'active' : 'inactive'})`;
+            const uploadInfo =  `(sync ${preference.upload ? 'active' : 'inactive'})`;
+
             console.log(`Image syncing differences for ${preference.variant}`)
-            console.log(`   missing locally: ${differences.missingLocally.length}`);
-            console.log(`   not yet deleted locally: ${differences.deleteLocally.length}`);
-            console.log(`   missing remotely: ${differences.missingRemotely.length}`);
-            console.log(`   not yet deleted remotely: ${differences.deleteRemotely.length}`);
+            console.log(` missing locally ${downloadInfo}: ${differences.missingLocally.length}`);
+            console.log(` not yet deleted locally ${downloadInfo}: ${differences.deleteLocally.length}`);
+            console.log(` missing remotely ${uploadInfo}: ${differences.missingRemotely.length}`);
+            console.log(` not yet deleted remotely ${uploadInfo}: ${differences.deleteRemotely.length}`);
 
             if (preference.download) {
+
                 for (const uuid of differences.missingLocally) {
 
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
@@ -154,6 +158,7 @@ export class ImageSyncService {
             }
 
             if (preference.upload) {
+
                 for (const uuid of differences.missingRemotely) {
 
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating

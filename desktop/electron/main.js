@@ -64,6 +64,7 @@ const setFileSync = config => {
             })
 
             target.fileSyncPreferences = updatedConfig;
+            delete target.activeFileSync;
             return;
         }
 

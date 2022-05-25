@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { FileInfo, ImageStore, ImageVariant, FileSyncPreferences, PouchdbDatastore, SyncService } from 'idai-field-core';
+import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
@@ -76,7 +76,7 @@ export class DownloadProjectComponent {
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
-            const preferences: Array<FileSyncPreferences> = this.getSelectedFileSyncPreferences();
+            const preferences: Array<FileSyncPreference> = this.getSelectedFileSyncPreferences();
 
             const fileList = preferences.length > 0
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
@@ -123,7 +123,7 @@ export class DownloadProjectComponent {
     }
 
 
-    private getSelectedFileSyncPreferences(): FileSyncPreferences[] {
+    private getSelectedFileSyncPreferences(): FileSyncPreference[] {
 
         const result = [];
 

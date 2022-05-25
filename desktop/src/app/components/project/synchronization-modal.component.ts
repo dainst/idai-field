@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileSyncPreferences, ImageVariant } from 'idai-field-core';
+import { FileSyncPreference, ImageVariant } from 'idai-field-core';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
@@ -77,7 +77,7 @@ export class SynchronizationModalComponent implements OnInit {
         } else {
             this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
             .filter(
-                (preference: FileSyncPreferences) => preference.variant !== ImageVariant.THUMBNAIL
+                (preference: FileSyncPreference) => preference.variant !== ImageVariant.THUMBNAIL
             );
         }
     }
@@ -116,7 +116,7 @@ export class SynchronizationModalComponent implements OnInit {
 
             this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
                 .filter(
-                    (preference: FileSyncPreferences) => preference.variant !== ImageVariant.ORIGINAL
+                    (preference: FileSyncPreference) => preference.variant !== ImageVariant.ORIGINAL
                 );
 
             if (updatedPreferences.upload === true || updatedPreferences.download === true) {
@@ -162,7 +162,7 @@ export class SynchronizationModalComponent implements OnInit {
 
             this.syncTarget.activeFileSync = this.syncTarget.activeFileSync
                 .filter(
-                    (preference: FileSyncPreferences) => preference.variant !== ImageVariant.ORIGINAL
+                    (preference: FileSyncPreference) => preference.variant !== ImageVariant.ORIGINAL
                 );
 
             if (updatedPreferences.upload === true || updatedPreferences.download === true) {

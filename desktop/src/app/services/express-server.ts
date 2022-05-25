@@ -118,6 +118,7 @@ export class ExpressServer {
                 if (Object.values(ImageVariant).includes(req.query.type)) {
                     if (req.query.type === ImageVariant.ORIGINAL && !this.allowLargeFileUploads) {
                         res.status(409).send({ reason: 'Currently no large file uploads accepted.' });
+                        return;
                     }
 
                     await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);

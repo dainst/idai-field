@@ -24,6 +24,7 @@ export interface Settings {
     imagestorePath: string;
     hideHiddenFieldsInConfigurationEditor?: boolean;
     highlightCustomElements?: boolean;
+    allowLargeFileUploads?: boolean;
 }
 
 

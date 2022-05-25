@@ -76,7 +76,7 @@ export default function OverviewMap({ documents, filter, withSearchResults }
             map.removeLayer(vectorLayer);
             map.un('pointermove', onPointerMove);
         };
-    }, [map, documents, filter, withSearchResults]);
+    }, [map, documents, filter, withSearchResults, t]);
 
     useEffect(() => {
 

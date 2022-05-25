@@ -183,7 +183,7 @@ const getStyle = (t: TFunction) => (clusterFeature: OlFeature): Style => {
         ? clusterFeature.get('features')[0].get('label')
         : size === 2
             ? clusterFeature.get('features')[0].get('label') + '\n' + clusterFeature.get('features')[1].get('label')
-            : new String(size) + ' ' + t('projectsOverview.projects');
+            : size.toString() + ' ' + t('projectsOverview.projects');
 
     return new Style({
         image: new Icon({

@@ -57,7 +57,7 @@ export default function OverviewMap({ documents, filter, withSearchResults }
 
         if (!featureCollection) return;
 
-        map.getView().fit(((vectorLayer.getSource() as any).getSource() as VectorSource<Geometry>).getExtent(),
+        map.getView().fit(((vectorLayer.getSource() as Cluster).getSource() as VectorSource<Geometry>).getExtent(),
             { padding: withSearchResults ? FIT_OPTIONS.searchPadding : FIT_OPTIONS.padding });
 
         const documentsWithCoordinates = documents.filter(document => document.resource.geometry_wgs84);

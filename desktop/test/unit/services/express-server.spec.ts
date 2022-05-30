@@ -62,7 +62,7 @@ describe('ExpressServer', () => {
         done();
     });
 
-    
+
     afterAll(async (done) => {
 
         await pouchdbDatastore.destroyDb(testProjectName);
@@ -120,7 +120,7 @@ describe('ExpressServer', () => {
 
             for (const uuid of uuids) {
                 await request(expressMainApp)
-                    .put(`/files/test_tmp_project/${uuid}`)
+                    .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
                     .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
@@ -146,9 +146,9 @@ describe('ExpressServer', () => {
 
         try {
             const uuids = ['1', '2', '3'];
-            for (const uuid of ['1', '2', '3']) {
+            for (const uuid of uuids) {
                 await request(expressMainApp)
-                    .put(`/files/test_tmp_project/${uuid}?type:original_image`)
+                    .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
                     .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)

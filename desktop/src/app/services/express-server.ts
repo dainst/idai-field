@@ -86,11 +86,8 @@ export class ExpressServer {
         app.get('/files/:project/:uuid', async (req: any, res: any) => {
 
             try {
-                if (!req.query.type) {
-                    const data = await self.imagestore.getData(req.params.uuid, ImageVariant.ORIGINAL, req.params.project);
-                    res.header('Content-Type', 'image/*').status(200).send(
-                        data
-                    );
+                if (req.query.type === undefined) {
+                    res.status(400).send({ reason: `Please provide a 'type', possible values: ${ImageVariant}`});
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
                     const data = await self.imagestore.getData(req.params.uuid, req.query.type, req.params.project);
                     res.header('Content-Type', 'image/*').status(200).send(
@@ -115,14 +112,16 @@ export class ExpressServer {
         app.put('/files/:project/:uuid', this.binaryBodyParser, async (req: any, res: any) => {
 
             try {
-                if (Object.values(ImageVariant).includes(req.query.type)) {
+                if (req.query.type === undefined) {
+                    res.status(400).send({ reason: `Please provide a type, possible values: ${ImageVariant}`});
+                }
+                else if (Object.values(ImageVariant).includes(req.query.type)) {
                     if (req.query.type === ImageVariant.ORIGINAL && !this.allowLargeFileUploads) {
                         res.status(409).send({ reason: 'Currently no large file uploads accepted.' });
-                        return;
+                    } else {
+                        await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
+                        res.status(200).send({});
                     }
-
-                    await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
-                    res.status(200).send({});
                 }
             } catch (e) {
                 if (e.code === 'ENOENT') {

@@ -14,11 +14,17 @@ export class ExpressServer {
 
     private password: string;
 
+    private allowLargeFileUploads: boolean;
+
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
 
     public getPassword = () => this.password;
 
     public setPassword = (password: string) => this.password = password;
+
+    public getAllowLargeFileUploads = () => this.allowLargeFileUploads;
+
+    public setAllowLargeFileUploads = (allow: boolean) => this.allowLargeFileUploads = allow;
 
     constructor(private imagestore: ImageStore) {}
 
@@ -109,10 +115,12 @@ export class ExpressServer {
         app.put('/files/:project/:uuid', this.binaryBodyParser, async (req: any, res: any) => {
 
             try {
-                if (!req.query.type) {
-                    await this.imagestore.store(req.params.uuid, req.body, req.params.project);
-                    res.status(200).send({});
-                } else if (Object.values(ImageVariant).includes(req.query.type)) {
+                if (Object.values(ImageVariant).includes(req.query.type)) {
+                    if (req.query.type === ImageVariant.ORIGINAL && !this.allowLargeFileUploads) {
+                        res.status(409).send({ reason: 'Currently no large file uploads accepted.' });
+                        return;
+                    }
+
                     await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
                     res.status(200).send({});
                 }

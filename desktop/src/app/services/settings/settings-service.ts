@@ -30,7 +30,7 @@ export class SettingsService {
 
     constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
-                private pouchdbServer: ExpressServer,
+                private expressServer: ExpressServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private synchronizationService: SyncService,
@@ -83,7 +83,8 @@ export class SettingsService {
             this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
         }
 
-        this.pouchdbServer.setPassword(settings.hostPassword);
+        this.expressServer.setPassword(settings.hostPassword);
+        this.expressServer.setAllowLargeFileUploads(settings.allowLargeFileUploads);
 
         await this.settingsProvider.setSettingsAndSerialize(settings);
 

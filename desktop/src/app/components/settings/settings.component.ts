@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
                 private messages: Messages,
                 private tabManager: TabManager,
                 private menuService: Menus) {
-     
+
         this.settingsProvider.settingsChangesNotifications().subscribe(settings => this.settings = settings);
     }
 
@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
         this.settings = this.settingsProvider.getSettings();
     }
 
-    
+
     ngAfterViewChecked() {
 
         if (this.scrollToBottom) {
@@ -74,6 +74,11 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public toggleAutoUpdate() {
 
         this.settings.isAutoUpdateActive = !this.settings.isAutoUpdateActive;
+    }
+
+
+    public toggleAllowUploads() {
+        this.settings.allowLargeFileUploads = !this.settings.allowLargeFileUploads;
     }
 
 

@@ -69,6 +69,16 @@
                         <input id="sync-target-host-password-input" [ngModel]="settings.hostPassword"
                                (ngModelChange)="settings.hostPassword = $event"
                                class="form-control">
+                        
+                        <label i18n="@@settings.synchronization.allowUploads">Erlaube anderen Bilder zu schicken</label>
+
+                        <div class="col-auto">
+                            <label class="switch" style="margin-bottom: 0;">
+                                <input type="checkbox" [checked]="settings.allowLargeFileUploads"
+                                    (change)="toggleAllowUploads()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
 
                         <div class="small-info-text" i18n="@@settings.synchronization.info">
                             Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen

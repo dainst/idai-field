@@ -22,6 +22,7 @@ describe('ExpressServer', () => {
 
     let expressMainApp: any;
     let expressFauxtonApp: any;
+    let expressServer: ExpressServer;
     let pouchdbDatastore: PouchdbDatastore;
     let imageStore: ImageStore;
 
@@ -32,8 +33,9 @@ describe('ExpressServer', () => {
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
 
-        const expressServer = new ExpressServer(imageStore);
+        expressServer = new ExpressServer(imageStore);
         expressServer.setPassword(password);
+        expressServer.setAllowLargeFileUploads(true);
 
         [expressMainApp, expressFauxtonApp] = await expressServer.setupServer(testFilePath);
 
@@ -112,6 +114,51 @@ describe('ExpressServer', () => {
         }
     });
 
+
+    it('/files/:project/:uuid is able to store thumbnail images', async done => {
+        try {
+            await request(expressMainApp)
+                .put(`/files/test_tmp_project/1?type=thumbnail_image`)
+                .send(mockImage)
+                .set('Content-Type', 'image/x-www-form-urlencoded')
+                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .expect(200);
+            done();
+        } catch (e) {
+            fail(e);
+        }
+    });
+
+
+    it('/files/:project/:uuid is able to store original images', async done => {
+        try {
+            await request(expressMainApp)
+                .put(`/files/test_tmp_project/1?type=original_image`)
+                .send(mockImage)
+                .set('Content-Type', 'image/x-www-form-urlencoded')
+                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .expect(200);
+            done();
+        } catch (e) {
+            fail(e);
+        }
+    });
+
+
+    it('/files/:project/:uuid is able to block original images (large files)', async done => {
+        try {
+            expressServer.setAllowLargeFileUploads(false);
+            await request(expressMainApp)
+                .put(`/files/test_tmp_project/1?type=original_image`)
+                .send(mockImage)
+                .set('Content-Type', 'image/x-www-form-urlencoded')
+                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .expect(409);
+            done();
+        } catch (e) {
+            fail(e);
+        }
+    });
 
     it('/files/:project returns an index of previously stored images', async done => {
 

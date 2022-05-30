@@ -6542,7 +6542,7 @@
       </trans-unit>
       <trans-unit id="remoteimagestore.warning.largeFileUploadBlockedByPeer" datatype="html">
         <source>Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</source>
-        <target state="final">Your current synchronisation target blocks your upload attempts for original images. You can either deactivate original image uploads in your synchronisation options, or make sure your synchronsation target changes its policy concerning original image uploads.</target>
+        <target state="final">Your current synchronisation target blocks your upload attempts for original images. You can either deactivate original image uploads in your synchronisation options, or make sure your synchronsation target changes its setting concerning original image uploads.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

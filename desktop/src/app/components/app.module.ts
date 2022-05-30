@@ -172,7 +172,7 @@ registerLocaleData(localeIt, 'it');
             useFactory: (settingsProvider: SettingsProvider, messages: Messages) => {
                 return new RemoteImageStore(settingsProvider, messages);
             },
-            deps: [SettingsProvider]
+            deps: [SettingsProvider, Messages]
         },
         {
             provide: ImageSyncService,

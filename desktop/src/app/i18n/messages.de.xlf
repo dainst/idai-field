@@ -3903,8 +3903,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads" datatype="html">
-        <source>Erlaube anderen mir Originalbilder zu schicken</source>
-        <target state="final">Erlaube anderen mir Originalbilder zu schicken</target>
+        <source>Anderen erlauben, mir Originalbilder zu schicken</source>
+        <target state="final">Anderen erlauben, mir Originalbilder zu schicken</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">95,101</context>

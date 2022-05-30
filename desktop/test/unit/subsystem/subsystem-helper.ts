@@ -24,6 +24,7 @@ import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-im
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 
 import PouchDB = require('pouchdb-node');
+import { Messages } from '../../../src/app/components/messages/messages';
 
 const fs = require('fs');
 
@@ -43,12 +44,13 @@ export async function setupSettingsService(pouchdbDatastore, projectName = 'test
     const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
+    const mockMessages = new Messages(undefined, 0);
     const imageStore = new ImageStore(
         fileSystemAdapter,
         new ThumbnailGenerator()
     ) as ImageStore;
 
-    const remoteImageStore = new RemoteImageStore(settingsProvider);
+    const remoteImageStore = new RemoteImageStore(settingsProvider, mockMessages);
 
     const imageSync = new ImageSyncService(imageStore, remoteImageStore, pouchdbDatastore);
     const configReader = new ConfigReader();

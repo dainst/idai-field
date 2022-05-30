@@ -1622,6 +1622,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.REMOTEIMAGESTORE_WARNING_LARGE_FILE_UPLOAD_BLOCKED_BY_PEER] = {
+            content: i18n({
+                id: 'remoteimagestore.warning.largeFileUploadBlockedByPeer',
+                value: 'Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.RESOURCES_SUCCESS_IMAGES_UPLOADED] = {
             content: i18n({
                 id: 'messages.resources.success.imagesUploaded',

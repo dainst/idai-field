@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ImageVariant, RemoteImageStoreInterface, FileInfo } from 'idai-field-core';
+import { M } from '../../components/messages/m';
+import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
@@ -8,7 +10,10 @@ const axios = typeof window !== 'undefined' ? window.require('axios') : require(
 @Injectable()
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
-    constructor(private settingsProvider: SettingsProvider) { }
+    constructor(
+        private settingsProvider: SettingsProvider,
+        private messages: Messages
+    ) { }
 
 
     /**
@@ -44,6 +49,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         })
         .catch((error) => {
             if (error.response.status === 409) {
+                this.messages.add([M.REMOTEIMAGESTORE_WARNING_LARGE_FILE_UPLOAD_BLOCKED_BY_PEER]);
                 return 409;
             } else {
                 throw error;

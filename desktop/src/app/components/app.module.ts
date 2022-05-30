@@ -169,8 +169,8 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: RemoteImageStore,
-            useFactory: (settingsProvider: SettingsProvider) => {
-                return new RemoteImageStore(settingsProvider);
+            useFactory: (settingsProvider: SettingsProvider, messages: Messages) => {
+                return new RemoteImageStore(settingsProvider, messages);
             },
             deps: [SettingsProvider]
         },

@@ -64,6 +64,7 @@
         </header>
         <main>
             <edit-form *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
+                       [originalDocument]="documentHolder.oldVersion"
                        [document]="documentHolder.clonedDocument"
                        [inspectedRevisions]="documentHolder.inspectedRevisions"
                        [fieldDefinitions]="fieldDefinitions"

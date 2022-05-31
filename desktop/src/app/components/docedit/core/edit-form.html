@@ -22,6 +22,7 @@
             <div id="{{activeGroup}}-group" class="scrollable-group"
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <edit-form-group [document]="document"
+                                 [originalDocument]="originalDocument"
                                  [fieldDefinitions]="getFields(activeGroup)">
                 </edit-form-group>
             </div>

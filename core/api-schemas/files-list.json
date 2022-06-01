@@ -3,9 +3,14 @@
   "title": "Field 3 API file listing",
   "type": "object",
   "patternProperties": {
-    ".+": { 
+    ".+": {
       "type": "object",
-      "required": ["deleted", "types"],
+      "required": [
+        "deleted",
+        "types",
+        "file_info"
+      ],
+      "additionalProperties": false,
       "properties": {
         "deleted": {
           "type": "boolean"
@@ -15,10 +20,37 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "enum": ["original_image", "thumbnail_image"]
+            "enum": [
+              "original_image",
+              "thumbnail_image"
+            ]
+          }
+        },
+        "file_info": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "size",
+              "variant"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "size": {
+                "type": "number"
+              },
+              "variant": {
+                "type": "string",
+                "enum": [
+                  "original_image",
+                  "thumbnail_image"
+                ]
+              }
+            }
           }
         }
-      } 
+      }
     }
   }
 }

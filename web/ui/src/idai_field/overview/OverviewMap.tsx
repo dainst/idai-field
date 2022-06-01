@@ -151,18 +151,18 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection, t: TFunction): Ve
             ? new GeoJSON().readFeatures(featureCollection, {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
-            }) : [],
-        attributions: [
-        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © '
-            + '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '
-            + '<strong><a href="https://www.mapbox.com/map-feedback/"'
-            + 'target="_blank">Improve this map</a></strong>'
-        ]
+            }) : []
     });
 
     const clusterSource = new Cluster({
         distance: CLUSTER_DISTANCE,
         source: vectorSource,
+        attributions: [
+            '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © '
+                + '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '
+                + '<strong><a href="https://www.mapbox.com/map-feedback/"'
+                + 'target="_blank">Improve this map</a></strong>'
+        ]
     });
 
     const vectorLayer = new VectorLayer({

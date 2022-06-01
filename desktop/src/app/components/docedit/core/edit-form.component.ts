@@ -16,7 +16,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     @ViewChild('editor', { static: false }) rootElement: ElementRef;
 
-    @Input() document: any;
+    @Input() document: Document;
+    @Input() originalDocument: Document;
     @Input() fieldDefinitions: Array<Field>;
     @Input() originalGroups: Array<Group>;
     @Input() inspectedRevisions: Document[];

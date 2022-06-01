@@ -106,6 +106,7 @@ export module Field {
         export const DEFAULT = 'default';
 
         export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
+        export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, FLOAT];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, TEXT, DROPDOWN, RADIO],

@@ -27,15 +27,13 @@ export class DocumentHolder {
      */
     public clonedDocument: Document;
 
-    private oldVersion: Document;
+    public oldVersion: Document;
 
 
-    constructor(
-        private projectConfiguration: ProjectConfiguration,
-        private relationsManager: RelationsManager,
-        private validator: Validator,
-        private datastore: Datastore) {
-    }
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private relationsManager: RelationsManager,
+                private validator: Validator,
+                private datastore: Datastore) {}
 
 
     public isChanged(): boolean {

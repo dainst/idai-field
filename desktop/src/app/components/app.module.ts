@@ -121,7 +121,7 @@ registerLocaleData(localeIt, 'it');
         },
         {
             provide: ConfigLoader,
-            useFactory: function(configReader: ConfigReader) { return new ConfigLoader(configReader); },
+            useFactory: (configReader: ConfigReader) => new ConfigLoader(configReader),
             deps: [ConfigReader, PouchdbDatastore]
         },
         {

@@ -14,6 +14,7 @@ export class EditFormGroup implements OnChanges {
 
     @Input() fieldDefinitions: Array<Field>;
     @Input() document: Document;
+    @Input() originalDocument: Document;
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
@@ -40,10 +41,21 @@ export class EditFormGroup implements OnChanges {
     public isValidFieldData(field: Field): boolean {
 
         const fieldData: any = this.document.resource[field.name];
+        const originalFieldData: any = this.originalDocument.resource[field.name];
+
+        const isFieldDataValid: boolean = this.validateFieldData(fieldData, field.inputType);
+        
+        return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType)
+            ? isFieldDataValid || fieldData !== originalFieldData
+            : isFieldDataValid;
+    }
+
+
+    private validateFieldData(fieldData: any, inputType: Field.InputType): boolean {
 
         return fieldData === undefined
             ? true
-            : Field.InputType.isValidFieldData(fieldData, field.inputType);
+            : Field.InputType.isValidFieldData(fieldData, inputType);
     }
 
 

@@ -22,7 +22,7 @@ defmodule FieldHub.FileStore do
 
   def get_file_list(project, variants \\ @variant_types) do
     variants
-    |> Enum.map(&get_file_map_for_variant(project, &1))
+    |> Stream.map(&get_file_map_for_variant(project, &1))
     |> Enum.reduce(%{}, fn variant_map, acc ->
       variant_map
       |> Enum.into(%{}, fn ({filename, %{size: size, variant: variant}}) ->
@@ -45,7 +45,7 @@ defmodule FieldHub.FileStore do
           end
         end)
     end)
-    |> Enum.map(fn {uuid, info} ->
+    |> Stream.map(fn {uuid, info} ->
       case String.ends_with?(uuid, @tombstoneSuffix) do
         true ->
           {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}

@@ -2035,7 +2035,6 @@ describe('buildRawProjectConfiguration', () => {
             domain: ['P:inherit'],
             range: ['P:inherit'],
             inputType: 'relation',
-            sameMainCategoryResource: true
         }];
 
         const result = buildRaw(

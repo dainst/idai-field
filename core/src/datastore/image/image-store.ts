@@ -14,7 +14,6 @@ export interface FileVariantInformation {
 
 export interface FileInfo {
     deleted: boolean;
-    types: ImageVariant[]; // TODO: Deprecate in 4.x
     variants: FileVariantInformation[];
 }
 
@@ -191,13 +190,11 @@ export class ImageStore {
             }
     
             if (uuid in aggregated) {
-                aggregated[uuid].types.push(variant);
                 aggregated[uuid].variants.push({
                     size: stat.size, variant
                 })
             } else {
                 aggregated[uuid] = {
-                    types: [variant],
                     variants: [{
                         size: stat.size,
                         variant

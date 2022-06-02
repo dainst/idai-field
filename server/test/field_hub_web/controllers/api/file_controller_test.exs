@@ -8,7 +8,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   @project "test_project"
   @user_name "test_user"
   @user_password "test_password"
-  @exampleFile File.read!("test/fixtures/logo.png")
+  @exampleFilePath "test/fixtures/logo.png"
+  @exampleFile File.read!(@exampleFilePath)
   @schema File.read!("../core/api-schemas/files-list.json")
     |> Jason.decode!()
     |> ExJsonSchema.Schema.resolve()
@@ -97,6 +98,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put_req_header("content-type", "image/png")
       |> put("/files/test_project/1234?type=original_image", @exampleFile)
 
+    %{size: input_size} = File.stat!(@exampleFilePath)
+
     assert conn.status == 201
 
     conn =
@@ -109,7 +112,16 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
+    assert %{
+      "1234" => %{
+        "deleted" => false,
+        "variants" => [%{
+          "size" => ^input_size,
+          "variant" => "original_image"
+        }]
+       }
+    } = json_response
+
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
@@ -135,7 +147,14 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
+    %{size: input_size} = File.stat!(@exampleFilePath)
+
+    assert %{
+      "1234" => %{
+        "deleted" => false,
+        "variants" => [%{"size" => ^input_size, "variant" => "original_image"}]
+      }
+    } = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
 
     conn =
@@ -157,7 +176,16 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["thumbnail_image", "original_image"]}} = json_response
+    assert %{
+      "1234" => %{
+        "deleted" => false,
+        "variants" => [
+          %{"size" => ^input_size, "variant" => "thumbnail_image"},
+          %{"size" => ^input_size, "variant" => "original_image"}
+        ]
+      }
+    } = json_response
+
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
@@ -182,7 +210,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
+    assert %{"1234" => %{"deleted" => false}} = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
 
     conn =
@@ -203,7 +231,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => true, "types" => ["original_image"]}} = json_response
+    assert %{"1234" => %{"deleted" => true}} = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
@@ -240,8 +268,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> Jason.decode!()
 
     assert %{
-      "1234" => %{"deleted" => false, "types" => ["original_image"]},
-      "5678" => %{"deleted" => false, "types" => ["original_image"]}
+      "1234" => %{"deleted" => false},
+      "5678" => %{"deleted" => false}
     } = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
 
@@ -264,8 +292,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> Jason.decode!()
 
     assert %{
-      "1234" => %{"deleted" => true, "types" => ["original_image"]},
-      "5678" => %{"deleted" => false, "types" => ["original_image"]}
+      "1234" => %{"deleted" => true},
+      "5678" => %{"deleted" => false}
     } = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end

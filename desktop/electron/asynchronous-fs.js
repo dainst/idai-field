@@ -3,6 +3,16 @@ const fs = require('original-fs');
 const extract = require('extract-zip');
 const archiver = require('archiver');
 
+electron.ipcMain.handle('getFileInfo', async (_, path) => {
+    try {
+        const stat = await fs.promises.stat(path);
+        const size = stat.size;
+        const isDirectory = stat.isDirectory();
+        return { result: {...{size}, ...{isDirectory}} };
+    } catch (error) {
+        return { result: error };
+    }
+});
 
 electron.ipcMain.handle('isFile', async (_, path) => {
     try {

@@ -1,3 +1,8 @@
+export interface FileStat {
+    path: string,
+    size: number
+}
+
 export interface FilesystemAdapterInterface {
 
     /**
@@ -52,5 +57,5 @@ export interface FilesystemAdapterInterface {
      * @param path
      * @param recursive (optional) also list files in subdirectories
      */
-    listFiles(path: string, recursive?: boolean): Promise<string[]>;
+    listFiles(path: string, recursive?: boolean): Promise<FileStat[]>;
 }

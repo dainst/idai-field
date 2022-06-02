@@ -630,6 +630,7 @@ export class BuiltInConfiguration {
             inverse: 'isBefore',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -639,6 +640,7 @@ export class BuiltInConfiguration {
             inverse: 'isAfter',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -666,6 +668,7 @@ export class BuiltInConfiguration {
             inverse: 'isContemporaryWith',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -675,6 +678,7 @@ export class BuiltInConfiguration {
             inverse: 'isBelow',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -684,6 +688,7 @@ export class BuiltInConfiguration {
             inverse: 'isAbove',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -693,6 +698,7 @@ export class BuiltInConfiguration {
             inverse: 'isCutBy',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -702,6 +708,7 @@ export class BuiltInConfiguration {
             inverse: 'cuts',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -711,6 +718,7 @@ export class BuiltInConfiguration {
             inverse: 'isFilledBy',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -720,6 +728,7 @@ export class BuiltInConfiguration {
             inverse: 'fills',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -729,6 +738,7 @@ export class BuiltInConfiguration {
             inverse: 'borders',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -738,6 +748,7 @@ export class BuiltInConfiguration {
             inverse: 'borders',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit'],
+            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1079,6 +1090,7 @@ export class BuiltInConfiguration {
                 inverse: 'borders',
                 domain: ['BuildingFloor'],
                 range: ['BuildingPart:inherit'],
+                sameMainCategoryResource: true,
                 editable: true,
                 inputType: 'relation'
             });
@@ -1088,6 +1100,7 @@ export class BuiltInConfiguration {
                 inverse: 'borders',
                 domain: ['BuildingPart:inherit'],
                 range: ['BuildingPart:inherit', 'BuildingFloor'],
+                sameMainCategoryResource: true,
                 editable: true,
                 inputType: 'relation'
             });

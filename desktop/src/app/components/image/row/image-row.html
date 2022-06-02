@@ -7,7 +7,7 @@
          [class.animated]="!initializing">
         <div *ngFor="let image of images"
              class="image-container"
-             [class.selected-image]="image.imageId === selectedImage.imageId"
+             [class.selected-image]="selectedImage && image.imageId === selectedImage.imageId"
              (click)="onThumbnailClicked(image)">
             <img *ngIf="hasImageUrl(image)"
                 class="imageRowImage"

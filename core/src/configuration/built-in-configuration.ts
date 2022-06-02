@@ -630,7 +630,6 @@ export class BuiltInConfiguration {
             inverse: 'isBefore',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -640,7 +639,6 @@ export class BuiltInConfiguration {
             inverse: 'isAfter',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -668,7 +666,6 @@ export class BuiltInConfiguration {
             inverse: 'isContemporaryWith',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'

@@ -30,16 +30,16 @@ defmodule FieldHub.FileStore do
           false ->
             {
               filename, %{
-                types: [variant],
-                file_info: [%{variant: variant, size: size}]
+                types: [variant], # TODO: Deprecate in 4.0
+                variants: [%{variant: variant, size: size}]
               }
             }
           true ->
             existing_value = Map.get(acc, filename)
             {
               filename, %{
-                types: Map.get(existing_value, :types) ++ [variant],
-                file_info: Map.get(existing_value,:file_info) ++ [%{variant: variant, size: size}]
+                types: Map.get(existing_value, :types) ++ [variant], # TODO: Deprecate in 4.0
+                variants: Map.get(existing_value,:variants) ++ [%{variant: variant, size: size}]
               }
             }
           end

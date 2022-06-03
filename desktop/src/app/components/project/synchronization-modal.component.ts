@@ -211,9 +211,6 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
         this.activeModal.close();
     }
 
-    private rescheduleFileSizesEvaluation() {
-        this.sizeDiffChecker = setTimeout(this.getFileSizes.bind(this), this.sizeDiffCheckInterval);
-    }
 
     private async getFileSizes() {
         try {
@@ -251,7 +248,7 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
             this.originalImageUploadSizeMsg = '';
         }
 
-        this.rescheduleFileSizesEvaluation();
+        this.sizeDiffChecker = setTimeout(this.getFileSizes.bind(this), this.sizeDiffCheckInterval);
     }
 
     private getFileSizeSums(files: { [uuid: string]: FileInfo}): {[variantName in ImageVariant]: number} {

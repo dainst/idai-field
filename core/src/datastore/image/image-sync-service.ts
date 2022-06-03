@@ -1,12 +1,12 @@
 import { PouchdbDatastore } from '../pouchdb';
 import { SyncStatus } from '../sync-status';
-import { ImageVariant, ImageStore } from './image-store';
+import { ImageVariant, ImageStore, FileInfo } from './image-store';
 import { RemoteImageStoreInterface } from './remote-image-store-interface';
 
 
 interface SyncDifference {
-    missingLocally: string[],
-    missingRemotely: string[],
+    missingLocally: { [uuid: string]: FileInfo},
+    missingRemotely: { [uuid: string]: FileInfo},
     deleteLocally: string[],
     deleteRemotely: string[]
 }
@@ -135,7 +135,7 @@ export class ImageSyncService {
 
             if (preference.download) {
 
-                for (const uuid of differences.missingLocally) {
+                for (const uuid of Object.keys(differences.missingLocally)) {
 
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pulling;
@@ -159,7 +159,7 @@ export class ImageSyncService {
 
             if (preference.upload) {
 
-                for (const uuid of differences.missingRemotely) {
+                for (const uuid of Object.keys(differences.missingRemotely)) {
 
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pushing;
@@ -195,7 +195,7 @@ export class ImageSyncService {
     }
 
 
-    private async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
+    public async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
 
         const localData = await this.imageStore.getFileInfos(activeProject, [variant])
         const remoteData = await this.remoteImagestore.getFileInfos(activeProject, [variant])
@@ -203,27 +203,37 @@ export class ImageSyncService {
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);
 
-        const missingLocally = remoteUUIDs.filter(
+        let uuidsMissingLocally = remoteUUIDs.filter(
             (remoteUUID: string) => !localUUIDs.includes(remoteUUID)
         ).filter(
             // We do not want to download files marked as deleted remotely.
             (remoteUUID: string) => !remoteData[remoteUUID].deleted
         );
 
-        const deleteLocally = remoteUUIDs.filter(
+        let deleteLocally = remoteUUIDs.filter(
             (remoteUUID: string) => remoteData[remoteUUID].deleted && localData[remoteUUID] && !localData[remoteUUID].deleted
         );
 
-        const missingRemotely = localUUIDs.filter(
+        let uuidsMissingRemotely = localUUIDs.filter(
             (localUUID: string) => !remoteUUIDs.includes(localUUID)
         ).filter(
             // We do not want to upload files marked as deleted locally.
             (localUUID: string) => !localData[localUUID].deleted
         );
 
-        const deleteRemotely = localUUIDs.filter(
+        let deleteRemotely = localUUIDs.filter(
             (localUUID: string) => localData[localUUID].deleted && remoteData[localUUID] && !remoteData[localUUID].deleted
         );
+
+        const missingLocally: { [uuid: string]: FileInfo} = {};
+        for (const uuid of uuidsMissingLocally) {
+            missingLocally[uuid] = remoteData[uuid];
+        }
+
+        const missingRemotely: { [uuid: string]: FileInfo} = {};
+        for (const uuid of uuidsMissingRemotely) {
+            missingRemotely[uuid] = localData[uuid];
+        }
 
         return {
             missingLocally: missingLocally,

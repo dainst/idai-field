@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileSyncPreference, ImageVariant } from 'idai-field-core';
+import { FileInfo, FileSyncPreference, ImageSyncService, ImageVariant } from 'idai-field-core';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
@@ -17,13 +17,20 @@ import { SettingsService } from '../../services/settings/settings-service';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class SynchronizationModalComponent implements OnInit {
+export class SynchronizationModalComponent implements OnInit, OnDestroy  {
 
     public settings: Settings;
     public syncTarget: SyncTarget;
 
+    public thumbnailImageSizesMsg = '';
+    public originalImageDownloadSizeMsg = '';
+    public originalImageUploadSizeMsg = '';
+
+    private sizeDiffChecker: ReturnType<typeof setTimeout>;
+    private sizeDiffCheckInterval = 10000;
 
     constructor(public activeModal: NgbActiveModal,
+                private imageSync: ImageSyncService,
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService) { }
 
@@ -31,6 +38,8 @@ export class SynchronizationModalComponent implements OnInit {
     async ngOnInit() {
 
         this.settings = this.settingsProvider.getSettings();
+
+        this.getFileSizes();
 
         if (!this.settings.syncTargets[this.settings.selectedProject]) {
             this.settings.syncTargets[this.settings.selectedProject] = {
@@ -47,6 +56,11 @@ export class SynchronizationModalComponent implements OnInit {
             };
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
+
+    }
+
+    async ngOnDestroy() {
+        clearTimeout(this.sizeDiffChecker);
     }
 
 
@@ -195,5 +209,73 @@ export class SynchronizationModalComponent implements OnInit {
         await this.settingsService.setupSync();
 
         this.activeModal.close();
+    }
+
+    private rescheduleFileSizesEvaluation() {
+        this.sizeDiffChecker = setTimeout(this.getFileSizes.bind(this), this.sizeDiffCheckInterval);
+    }
+
+    private async getFileSizes() {
+        try {
+
+            if (this.thumbnailImageSizesMsg === '') {
+                this.thumbnailImageSizesMsg = `(⏲)`;
+            }
+            if (this.originalImageDownloadSizeMsg === '') {
+                this.originalImageDownloadSizeMsg = `(⏲)`;
+            }
+            if (this.originalImageUploadSizeMsg === '') {
+                this.originalImageUploadSizeMsg = `(⏲)`;
+            }
+
+            const diffThumbnailImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.THUMBNAIL);
+            const diffOriginalImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.ORIGINAL);
+
+
+            const thumbnailDownloadSize = this.getFileSizeSums(diffThumbnailImages.missingLocally);
+            const thumbnailUploadSize = this.getFileSizeSums(diffThumbnailImages.missingRemotely);
+            const thumbnailDownloadSizeMsg = this.byteCountToDescription(thumbnailDownloadSize.thumbnail_image);
+            const thumbnailUploadSizeMsg = this.byteCountToDescription(thumbnailUploadSize.thumbnail_image)
+            this.thumbnailImageSizesMsg = `(⬇${thumbnailDownloadSizeMsg} / ⬆${thumbnailUploadSizeMsg})`;
+
+            const originalDownloadSize = this.getFileSizeSums(diffOriginalImages.missingLocally);
+            const originalUploadSize = this.getFileSizeSums(diffOriginalImages.missingRemotely);
+            this.originalImageDownloadSizeMsg = `(⬇${this.byteCountToDescription(originalDownloadSize.original_image)})`
+            this.originalImageUploadSizeMsg = `(⬆${this.byteCountToDescription(originalUploadSize.original_image)})`
+
+        } catch {
+
+            console.log('Credentials for syncing still seem to be invalid.');
+            this.thumbnailImageSizesMsg = '';
+            this.originalImageDownloadSizeMsg = '';
+            this.originalImageUploadSizeMsg = '';
+        }
+
+        this.rescheduleFileSizesEvaluation();
+    }
+
+    private getFileSizeSums(files: { [uuid: string]: FileInfo}): {[variantName in ImageVariant]: number} {
+        const sums: {[variantName in ImageVariant]: number} = {
+            thumbnail_image: 0,
+            original_image: 0
+        };
+        for (const fileInfo of Object.values(files)) {
+            for (const variant of fileInfo.variants) {
+                sums[variant.name] += variant.size;
+            }
+        }
+        return sums;
+    }
+
+    private byteCountToDescription(byteCount: number) {
+        byteCount = byteCount * 0.00000095367;
+        let unitTypeOriginal = 'mb';
+
+        if (byteCount > 1000) {
+            byteCount = byteCount * 0.00097656;
+            unitTypeOriginal = 'gb';
+        }
+
+        return `${byteCount.toFixed(2)} ${unitTypeOriginal}`;
     }
 }

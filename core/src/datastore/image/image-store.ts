@@ -9,7 +9,7 @@ export enum ImageVariant {
 
 export interface FileVariantInformation {
     size: number;
-    variant: ImageVariant;
+    name: ImageVariant;
 }
 
 export interface FileInfo {
@@ -193,14 +193,14 @@ export class ImageStore {
             if (uuid in aggregated) {
                 aggregated[uuid].types.push(variant);
                 aggregated[uuid].variants.push({
-                    size: stat.size, variant
+                    size: stat.size, name: variant
                 })
             } else {
                 aggregated[uuid] = {
                     types: [variant],
                     variants: [{
                         size: stat.size,
-                        variant
+                        name: variant
                     }],
                     deleted
                 };

@@ -33,14 +33,14 @@
             "type": "object",
             "required": [
               "size",
-              "variant"
+              "name"
             ],
             "additionalProperties": false,
             "properties": {
               "size": {
                 "type": "number"
               },
-              "variant": {
+              "name": {
                 "type": "string",
                 "enum": [
                   "original_image",

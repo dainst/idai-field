@@ -31,7 +31,7 @@ defmodule FieldHub.FileStore do
             {
               filename, %{
                 types: [variant], # TODO: Deprecate in 4.0
-                variants: [%{variant: variant, size: size}]
+                variants: [%{name: variant, size: size}]
               }
             }
           true ->
@@ -39,7 +39,7 @@ defmodule FieldHub.FileStore do
             {
               filename, %{
                 types: Map.get(existing_value, :types) ++ [variant], # TODO: Deprecate in 4.0
-                variants: Map.get(existing_value,:variants) ++ [%{variant: variant, size: size}]
+                variants: Map.get(existing_value,:variants) ++ [%{name: variant, size: size}]
               }
             }
           end

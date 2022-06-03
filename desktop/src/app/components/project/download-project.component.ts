@@ -192,13 +192,13 @@ export class DownloadProjectComponent {
                 this.fileDownloadPromises = [];
 
                 for (const uuid of batch) {
-                    for (const type of files[uuid].types) {
-                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
+                    for (const variant of files[uuid].variants) {
+                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(
                                 this.remoteImageStore.getDataUsingCredentials(
-                                    this.url, this.password, uuid, type, this.projectName
+                                    this.url, this.password, uuid, variant.name, this.projectName
                                 ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.projectName, type);
+                                    return this.imageStore.store(uuid, data, this.projectName, variant.name);
                                 })
                             );
                         }

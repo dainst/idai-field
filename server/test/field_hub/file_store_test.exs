@@ -50,9 +50,9 @@ defmodule FieldHub.FileStoreTest do
 
     list = FileStore.get_file_list(@project)
     assert %{
-      "anothervalidfilename" => %{deleted: false},
-      "deleted_file" => %{deleted: true},
-      "validfilename" => %{deleted: false}
+      "anothervalidfilename" => %{deleted: false, types: [:original_image]},
+      "deleted_file" => %{deleted: true, types: [:original_image]},
+      "validfilename" => %{deleted: false, types: [:original_image]}
     } = list
 
     assert Enum.count(Map.keys(list)) == 3
@@ -60,6 +60,7 @@ defmodule FieldHub.FileStoreTest do
 
   test "subdirectories and their content are being ignored when generating file list" do
     FileStore.create_directories(@project)
+
 
     content = File.read!("test/fixtures/logo.png")
 
@@ -72,9 +73,9 @@ defmodule FieldHub.FileStoreTest do
 
     list = FileStore.get_file_list(@project)
     assert %{
-      "anothervalidfilename" => %{deleted: false},
-      "deleted_file" => %{deleted: true},
-      "validfilename" => %{deleted: false}
+      "anothervalidfilename" => %{deleted: false, types: [:original_image]},
+      "deleted_file" => %{deleted: true, types: [:original_image]},
+      "validfilename" => %{deleted: false, types: [:original_image]}
     } = list
 
     assert Enum.count(Map.keys(list)) == 3

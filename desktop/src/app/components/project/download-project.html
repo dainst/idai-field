@@ -20,6 +20,7 @@
                         <input class="form-control"
                             id="urlInput"
                             type="text"
+                            (ngModelChange)="credentialsChanged()"
                             [(ngModel)]="url">
                         <div class="small-info-text" i18n="@@project.download.address.info">
                             Als Adresse kann sowohl die URL eines Field-Servers als auch die
@@ -31,17 +32,19 @@
                         <input class="form-control"
                             id="projectInput"
                             type="text"
+                            (ngModelChange)="credentialsChanged()"
                             [(ngModel)]="projectName">
                         <label id="password-label" class="control-label col-form-label"
                                i18n="@@project.download.password">Passwort</label>
                             <input class="form-control"
                                 id="passwordInput"
                                 type="password"
+                                (ngModelChange)="credentialsChanged()"
                                 [(ngModel)]="password">
                     </div>
                     <div id="thumbs-synchronization-slider" class="row" >
                         <div class="col-auto mr-auto">
-                            <span i18n="@@project.download.thumbnailImageFiles">Vorschaubilder herunterladen</span>
+                            <span i18n="@@project.download.thumbnailImageFiles">Vorschaubilder herunterladen</span> {{ thumbnailImagesSize }}
                         </div>
                         <div class="col-auto">
                             <label class="switch"  >
@@ -53,7 +56,7 @@
                     </div>
                     <div id="original-synchronization-slider" class="row" >
                         <div class="col-auto mr-auto">
-                            <span i18n="@@project.download.originalImageFiles">Originalbilder herunterladen</span>
+                            <span i18n="@@project.download.originalImageFiles">Originalbilder herunterladen</span> {{ originalImagesSize }}
                         </div>
                         <div class="col-auto">
                             <label class="switch"  >

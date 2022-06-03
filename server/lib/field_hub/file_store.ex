@@ -1,5 +1,4 @@
 defmodule FieldHub.FileStore do
-
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstoneSuffix ".deleted"
   @variant_types Application.get_env(:field_hub, :file_variant_types)
@@ -8,7 +7,7 @@ defmodule FieldHub.FileStore do
 
   def create_directories(project) do
     @variant_types
-    |> Enum.map(fn(type) ->
+    |> Enum.map(fn type ->
       get_type_directory(project, type)
       |> File.mkdir_p()
     end)
@@ -22,58 +21,85 @@ defmodule FieldHub.FileStore do
   end
 
   def get_file_list(project, variants \\ @variant_types) do
-      variants
-      |> Stream.map(&get_file_list_for_variant(project, &1))
-      |> Stream.zip(variants)
-      |> Stream.map(fn({file_list, variant_type}) ->
-        file_list
-        |> Enum.map(fn(uuid) ->
-          {uuid, [variant_type]}
-        end)
-      end)
-      |> Enum.reduce(%{}, fn(file_list, acc) ->
-        file_list
-        |> Map.new(fn({uuid, [variant_type]}) ->
-          case uuid in Map.keys(acc) do
-            true ->
-              %{types: types} = Map.get(acc, uuid)
-              {uuid, %{types: types ++ [variant_type]}}
-            _ ->
-              {uuid, %{types: [variant_type]}}
-            end
-          end)
-        end)
-      |> Stream.map(fn({uuid, info}) ->
-        case String.ends_with?(uuid, @tombstoneSuffix) do
+    variants
+    |> Stream.map(&get_file_map_for_variant(project, &1))
+    |> Enum.reduce(%{}, fn variant_map, acc ->
+      variant_map
+      |> Enum.into(%{}, fn ({filename, %{size: size, variant: variant}}) ->
+        case Map.has_key?(acc, filename) do
+          false ->
+            {
+              filename, %{
+                types: [variant], # TODO: Deprecate in 4.0
+                variants: [%{name: variant, size: size}]
+              }
+            }
           true ->
-            {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}
-          _ ->
-            {uuid, Map.put_new(info, :deleted, false)}
-        end
-      end)
-      |> Enum.into(%{}) # tuple to map, because tuple can't be encoded as JSON
+            existing_value = Map.get(acc, filename)
+            {
+              filename, %{
+                types: Map.get(existing_value, :types) ++ [variant], # TODO: Deprecate in 4.0
+                variants: Map.get(existing_value,:variants) ++ [%{name: variant, size: size}]
+              }
+            }
+          end
+        end)
+    end)
+    |> Stream.map(fn {uuid, info} ->
+      case String.ends_with?(uuid, @tombstoneSuffix) do
+        true ->
+          {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}
+
+        _ ->
+          {uuid, Map.put_new(info, :deleted, false)}
+      end
+    end)
+    # tuple to map, because tuple can't be encoded as JSON
+    |> Enum.into(%{})
   end
 
-  defp get_file_list_for_variant(project, variant) do
-    type_directory =
-      get_type_directory(project, variant)
+  defp get_file_map_for_variant(project, variant) do
+    type_directory = get_type_directory(project, variant)
 
     type_directory
     |> File.ls!()
-    |> Stream.reject(fn filename ->
-      case File.stat!("#{type_directory}/#{filename}") do
+    |> Stream.map(fn filename ->
+      %{
+        size: size,
+        type: type
+      } = File.stat!("#{type_directory}/#{filename}")
+
+      %{
+        name: filename,
+        variant: variant,
+        size: size,
+        type: type
+      }
+    end)
+    |> Stream.reject(fn file_info ->
+      # Rejecting directories
+      case file_info do
         %{type: :directory} ->
           true
         _ ->
           false
-        end
-      end)
-      |> Stream.reject(fn filename ->
-        filename
-        |> String.trim_trailing(@tombstoneSuffix)
-        |> String.contains?(".")
-      end)
-      |> ignore_filenames_with_existing_tombstones()
+      end
+    end)
+    |> Stream.map(fn file_info ->
+      # After rejecting directories we do not need the type field anymore
+      Map.delete(file_info, :type)
+    end)
+    |> Stream.reject(fn %{name: filename} ->
+      # Reject all files containing dots (beside tombstone files)
+      filename
+      |> String.trim_trailing(@tombstoneSuffix)
+      |> String.contains?(".")
+    end)
+    |> ignore_files_with_existing_tombstones()
+    |> Enum.reduce(%{}, fn (%{name: filename, size: size, variant: variant}, acc) ->
+      acc
+      |> Map.put(filename, %{size: size, variant: variant})
+    end)
   end
 
   def get_file_path(%{uuid: uuid, project: project, type: type}) do
@@ -100,19 +126,21 @@ defmodule FieldHub.FileStore do
   end
 
   def delete(%{uuid: uuid, project: project}) do
-
     @variant_types
-    |> Stream.filter(fn(variant) ->
+    |> Stream.filter(fn variant ->
       directory = get_type_directory(project, variant)
       File.exists?("#{directory}/#{uuid}")
     end)
-    |> Stream.map(&store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: &1, content: []}))
-    |> Enum.filter(fn(val) ->
+    |> Stream.map(
+      &store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: &1, content: []})
+    )
+    |> Enum.filter(fn val ->
       val != :ok
     end)
     |> case do
       [] ->
         :ok
+
       errors ->
         errors
     end
@@ -134,13 +162,18 @@ defmodule FieldHub.FileStore do
     "#{get_project_directory(project)}/thumbnail_images"
   end
 
-  defp ignore_filenames_with_existing_tombstones(filenames) do
+  defp ignore_files_with_existing_tombstones(file_infos) do
     deleted =
-      filenames
-      |> Enum.filter(fn(filename) ->
+      file_infos
+      |> Enum.map(fn %{name: filename} ->
+        filename
+      end)
+      |> Enum.filter(fn filename ->
         String.ends_with?(filename, @tombstoneSuffix)
       end)
 
-    Enum.filter(filenames, fn(filename) -> "#{filename}#{@tombstoneSuffix}" not in deleted end)
+    Enum.filter(file_infos, fn %{name: filename} ->
+      "#{filename}#{@tombstoneSuffix}" not in deleted
+    end)
   end
 end

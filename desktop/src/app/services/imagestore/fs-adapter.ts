@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FilesystemAdapterInterface } from 'idai-field-core';
+import { FileStat, FilesystemAdapterInterface } from 'idai-field-core';
 import { getAsynchronousFs } from '../getAsynchronousFs';
 
 
@@ -79,26 +79,31 @@ export class FsAdapter implements FilesystemAdapterInterface {
     }
 
 
-    public async listFiles(folderPath: string, recursive: boolean = false): Promise<string[]> {
+    public async listFiles(folderPath: string, recursive: boolean = false): Promise<FileStat[]> {
 
         // see https://stackoverflow.com/a/16684530
         let results = [];
         if (!(await this.isDirectory(folderPath))) return results;
 
         const list: string[] = (await getAsynchronousFs().readdir(folderPath))
-            .filter(name => !name.includes('.') || name.includes('.deleted'));
+            .filter(name => !name.includes('.') || name.includes('.deleted'));
 
         for (const file of list) {
+
             const currentFile = folderPath + file;
-            if (await this.isDirectory(currentFile)) {
+            const stats = await getAsynchronousFs().getFileInfo(folderPath + file);
+
+            if (stats.isDirectory) {
                 /* Recurse into a subdirectory, otherwise do not add directory to results. */
                 if (recursive) results = results.concat(await this.listFiles(currentFile, recursive));
             } else {
                 /* Is a file */
-                results.push(currentFile);
+                results.push({
+                    path: currentFile,
+                    size: stats.size
+                } as FileStat);
             }
         }
-        
         return results;
     }
 }

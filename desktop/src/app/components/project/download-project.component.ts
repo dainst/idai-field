@@ -34,10 +34,13 @@ export class DownloadProjectComponent {
     public password: string = '';
     public syncThumbnailImages: boolean = true;
     public syncOriginalImages: boolean = false;
+    public originalImagesSize = '';
+    public thumbnailImagesSize = '';
 
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
-
+    private credentialsTimer: ReturnType<typeof setTimeout>;
+    private credentialsTimerInterval = 2000;
 
     constructor(private messages: Messages,
                 private syncService: SyncService,
@@ -123,6 +126,64 @@ export class DownloadProjectComponent {
     }
 
 
+    public credentialsChanged() {
+
+        if (this.credentialsTimer) {
+            clearTimeout(this.credentialsTimer);
+        }
+
+        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), this.credentialsTimerInterval);
+    }
+
+    private async getFileSizes() {
+        try {
+
+            let originalSize = 0;
+            let thumbnailSize = 0;
+            const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
+                this.url,
+                this.password,
+                this.projectName,
+                [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
+            );
+
+            for (const fileInfo of Object.values(fileList)) {
+                for (const variant of fileInfo.variants) {
+                    if (variant.name === ImageVariant.ORIGINAL) {
+                        originalSize += variant.size;
+                    } else if (variant.name === ImageVariant.THUMBNAIL) {
+                        thumbnailSize += variant.size;
+                    }
+                }
+            }
+
+            originalSize = originalSize * 0.00000095367;
+            let unitTypeOriginal = 'mb';
+
+            if (originalSize > 1000) {
+                originalSize = originalSize * 0.00097656;
+                unitTypeOriginal = 'gb';
+            }
+
+            thumbnailSize = thumbnailSize * 0.00000095367;
+            let unitTypeThumbnail = 'mb';
+
+            if (thumbnailSize > 1000) {
+                thumbnailSize = thumbnailSize * 0.00097656;
+                unitTypeThumbnail = 'gb';
+            }
+
+            this.originalImagesSize = `(${originalSize.toFixed(2)} ${unitTypeOriginal})`;
+            this.thumbnailImagesSize = `(${thumbnailSize.toFixed(2)} ${unitTypeThumbnail})`;
+        } catch {
+
+            console.log('Credentials for dowload still seem to be invalid. Unable to evaluate file download size.');
+            this.originalImagesSize = '';
+            this.thumbnailImagesSize = '';
+        }
+    }
+
+
     private getSelectedFileSyncPreferences(): FileSyncPreference[] {
 
         const result = [];
@@ -192,13 +253,13 @@ export class DownloadProjectComponent {
                 this.fileDownloadPromises = [];
 
                 for (const uuid of batch) {
-                    for (const type of files[uuid].types) {
-                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(type)) {
+                    for (const variant of files[uuid].variants) {
+                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(
                                 this.remoteImageStore.getDataUsingCredentials(
-                                    this.url, this.password, uuid, type, this.projectName
+                                    this.url, this.password, uuid, variant.name, this.projectName
                                 ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.projectName, type);
+                                    return this.imageStore.store(uuid, data, this.projectName, variant.name);
                                 })
                             );
                         }

@@ -3,12 +3,16 @@ const fs = require('original-fs');
 const extract = require('extract-zip');
 const archiver = require('archiver');
 
-electron.ipcMain.handle('getFileInfo', async (_, path) => {
+electron.ipcMain.handle('getFileInfos', async (_, paths) => {
     try {
-        const stat = await fs.promises.stat(path);
-        const size = stat.size;
-        const isDirectory = stat.isDirectory();
-        return { result: {...{size}, ...{isDirectory}} };
+        const fileInfos = await Promise.all(paths.map(async (path) => {
+            const stat = await fs.promises.stat(path);
+            return {
+                size: stat.size,
+                isDirectory: stat.isDirectory()
+            };
+        }));
+        return { result: fileInfos };
     } catch (error) {
         return { result: error };
     }
@@ -87,7 +91,7 @@ electron.ipcMain.handle('extractZip', async (_, source, destination) => {
 });
 
 electron.ipcMain.handle('createCatalogZip', async (_, outputFilePath, filePath, fileName,
-        imageDirPath, imageDirName) => {
+    imageDirPath, imageDirName) => {
     try {
         return { result: await createCatalogZip(outputFilePath, filePath, fileName, imageDirPath, imageDirName) };
     } catch (error) {

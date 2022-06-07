@@ -14,7 +14,7 @@ export function getAsynchronousFs() {
 
 const filesystem = {
     isFile: (path: string) => callFsFunction('isFile', path),
-    getFileInfo: (path: string) => callFsFunction('getFileInfo', path),
+    getFileInfos: (paths: string[]) => callFsFunction('getFileInfos', paths),
     isDirectory: (path: string) => callFsFunction('isDirectory', path),
     writeFile: (path: string, contents: any) => callFsFunction('writeFile', path, contents),
     readFile: (path: string, encoding?: string) => callFsFunction('readFile', path, encoding),
@@ -30,7 +30,7 @@ const filesystem = {
 
 const fsPromisesWrapper = {
     isFile: (path: string) => isFile(path),
-    getFileInfo: (path: string) => getFileInfo(path),
+    getFileInfos: (paths: string[]) => getFileInfos(paths),
     isDirectory: (path: string) => isDirectory(path),
     writeFile: (path: string, contents: any) => fsPromises.writeFile(path, contents),
     readFile: (path: string, encoding?: string) => fsPromises.readFile(path, encoding),
@@ -76,12 +76,14 @@ async function isDirectory(path: string): Promise<boolean> {
     }
 }
 
-async function getFileInfo(path: string): Promise<any> {
+async function getFileInfos(paths: string[]): Promise<any> {
 
-    const stat = await fsPromises.stat(path);
-    const size = stat.size;
-    const isDirectory = stat.isDirectory();
-    return {...{size}, ...{isDirectory}};
+    return await Promise.all(paths.map(async (path) => {
+        const stat = await fsPromises.stat(path);
+        const size = stat.size;
+        const dirCheck = stat.isDirectory();
+        return {...{size}, ...{isDirectory: dirCheck}};
+    }));
 }
 
 

@@ -17,7 +17,7 @@ import { SettingsService } from '../../services/settings/settings-service';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class SynchronizationModalComponent implements OnInit, OnDestroy  {
+export class SynchronizationModalComponent implements OnInit  {
 
     public settings: Settings;
     public syncTarget: SyncTarget;
@@ -25,9 +25,6 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
     public thumbnailImageSizesMsg = '';
     public originalImageDownloadSizeMsg = '';
     public originalImageUploadSizeMsg = '';
-
-    private sizeDiffChecker: ReturnType<typeof setTimeout>;
-    private sizeDiffCheckInterval = 10000;
 
     constructor(public activeModal: NgbActiveModal,
                 private imageSync: ImageSyncService,
@@ -57,10 +54,6 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
 
-    }
-
-    async ngOnDestroy() {
-        clearTimeout(this.sizeDiffChecker);
     }
 
 
@@ -214,31 +207,8 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
 
     private async getFileSizes() {
         try {
-
-            if (this.thumbnailImageSizesMsg === '') {
-                this.thumbnailImageSizesMsg = `(⏲)`;
-            }
-            if (this.originalImageDownloadSizeMsg === '') {
-                this.originalImageDownloadSizeMsg = `(⏲)`;
-            }
-            if (this.originalImageUploadSizeMsg === '') {
-                this.originalImageUploadSizeMsg = `(⏲)`;
-            }
-
-            const diffThumbnailImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.THUMBNAIL);
-            const diffOriginalImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.ORIGINAL);
-
-
-            const thumbnailDownloadSize = this.getFileSizeSums(diffThumbnailImages.missingLocally);
-            const thumbnailUploadSize = this.getFileSizeSums(diffThumbnailImages.missingRemotely);
-            const thumbnailDownloadSizeMsg = this.byteCountToDescription(thumbnailDownloadSize.thumbnail_image);
-            const thumbnailUploadSizeMsg = this.byteCountToDescription(thumbnailUploadSize.thumbnail_image)
-            this.thumbnailImageSizesMsg = `(⬇${thumbnailDownloadSizeMsg} / ⬆${thumbnailUploadSizeMsg})`;
-
-            const originalDownloadSize = this.getFileSizeSums(diffOriginalImages.missingLocally);
-            const originalUploadSize = this.getFileSizeSums(diffOriginalImages.missingRemotely);
-            this.originalImageDownloadSizeMsg = `(⬇${this.byteCountToDescription(originalDownloadSize.original_image)})`
-            this.originalImageUploadSizeMsg = `(⬆${this.byteCountToDescription(originalUploadSize.original_image)})`
+            this.updateThumbnailSizesInfo();
+            this.updateOriginalImageSizesInfo();
 
         } catch {
 
@@ -247,8 +217,37 @@ export class SynchronizationModalComponent implements OnInit, OnDestroy  {
             this.originalImageDownloadSizeMsg = '';
             this.originalImageUploadSizeMsg = '';
         }
+    }
 
-        this.sizeDiffChecker = setTimeout(this.getFileSizes.bind(this), this.sizeDiffCheckInterval);
+    private async updateThumbnailSizesInfo() {
+        if (this.thumbnailImageSizesMsg === '') {
+            this.thumbnailImageSizesMsg = `(⏲)`;
+        }
+
+        const diffThumbnailImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.THUMBNAIL);
+
+        const thumbnailDownloadSize = this.getFileSizeSums(diffThumbnailImages.missingLocally);
+        const thumbnailUploadSize = this.getFileSizeSums(diffThumbnailImages.missingRemotely);
+        const thumbnailDownloadSizeMsg = this.byteCountToDescription(thumbnailDownloadSize.thumbnail_image);
+        const thumbnailUploadSizeMsg = this.byteCountToDescription(thumbnailUploadSize.thumbnail_image)
+        this.thumbnailImageSizesMsg = `(⬇${thumbnailDownloadSizeMsg} / ⬆${thumbnailUploadSizeMsg})`;
+    }
+
+    private async updateOriginalImageSizesInfo() {
+        if (this.originalImageDownloadSizeMsg === '') {
+            this.originalImageDownloadSizeMsg = `(⏲)`;
+        }
+        if (this.originalImageUploadSizeMsg === '') {
+            this.originalImageUploadSizeMsg = `(⏲)`;
+        }
+
+        const diffOriginalImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.ORIGINAL);
+
+        const originalDownloadSize = this.getFileSizeSums(diffOriginalImages.missingLocally);
+        const originalUploadSize = this.getFileSizeSums(diffOriginalImages.missingRemotely);
+        this.originalImageDownloadSizeMsg = `(⬇${this.byteCountToDescription(originalDownloadSize.original_image)})`
+        this.originalImageUploadSizeMsg = `(⬆${this.byteCountToDescription(originalUploadSize.original_image)})`
+
     }
 
     private getFileSizeSums(files: { [uuid: string]: FileInfo}): {[variantName in ImageVariant]: number} {

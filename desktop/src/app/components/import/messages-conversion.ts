@@ -113,6 +113,11 @@ export module MessagesConversion {
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE
         }
+        if (msg === ValidationErrors.INVALID_DATES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_DATES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_DATE
+        }
         if (msg === ValidationErrors.INVALID_DATING_VALUES) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES

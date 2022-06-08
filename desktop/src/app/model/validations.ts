@@ -30,6 +30,24 @@ export module Validations {
     }
 
 
+    export function assertCorrectnessOfDates(document: Document|NewDocument,
+                                             projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateDates(
+            document.resource,
+            projectConfiguration,
+            (value: string) => !isNaN(parseDate(value)?.getTime())
+        );
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_DATES,
+                document.resource.category,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
     /**
      * @throws [INVALID_DECIMAL_SEPARATORS]
      */
@@ -137,7 +155,7 @@ export module Validations {
         const beginningDate: Date = parseDate(document.resource.beginningDate);
         const endDate: Date = parseDate(document.resource.endDate);
 
-        if (beginningDate > endDate) {
+        if (beginningDate && endDate && beginningDate > endDate) {
             throw [
                 ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE,
                 document.resource.category
@@ -329,6 +347,26 @@ export module Validations {
 
         return invalidFields;
     }
+
+
+    export function validateDates(resource: Resource|NewResource,
+                                  projectConfiguration: ProjectConfiguration,
+                                  validationFunction: (value: string) => boolean): string[] {
+
+        const projectFields: Array<Field> =
+            CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+        const invalidFields: string[] = [];
+
+        projectFields.filter(fieldDefinition => {
+            return fieldDefinition.inputType === Field.InputType.DATE;
+        }).forEach(fieldDefinition => {
+            const value = resource[fieldDefinition.name];
+            if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);
+        });
+
+        return invalidFields;
+    }
+
 
 
     function validateNumberAsString(value: string|number, inputType: string): boolean {

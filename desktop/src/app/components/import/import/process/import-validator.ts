@@ -177,6 +177,7 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(document);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);

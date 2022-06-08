@@ -32,7 +32,7 @@ export class ImageSyncService {
     private inProcess: { [variant in ImageVariant]?: boolean } = {};
 
     constructor(private imageStore: ImageStore,
-                private remoteImagestore: RemoteImageStoreInterface,
+                private remoteImageStore: RemoteImageStoreInterface,
                 datastore: PouchdbDatastore) {
 
         datastore.changesNotifications().subscribe(async _ => this.triggerUpdate());
@@ -122,15 +122,25 @@ export class ImageSyncService {
 
         try {
             const activeProject = this.imageStore.getActiveProject();
-            const differences = await this.evaluateDifference(activeProject, preference.variant);
+            
+            const [remoteData, localData] = await Promise.all([
+                this.remoteImageStore.getFileInfos(activeProject, [preference.variant]),
+                this.imageStore.getFileInfos(activeProject, [preference.variant])
+            ]);
+            
+            const differences = await ImageSyncService.evaluateDifference(
+                localData,
+                remoteData,
+                preference.variant
+            );
 
             const downloadInfo = `(sync ${preference.download ? 'active' : 'inactive'})`;
             const uploadInfo =  `(sync ${preference.upload ? 'active' : 'inactive'})`;
 
             console.log(`Image syncing differences for ${preference.variant}`)
-            console.log(` missing locally ${downloadInfo}: ${differences.missingLocally.length}`);
+            console.log(` missing locally ${downloadInfo}: ${Object.keys(differences.missingLocally).length}`);
             console.log(` not yet deleted locally: ${differences.deleteLocally.length}`);
-            console.log(` missing remotely ${uploadInfo}: ${differences.missingRemotely.length}`);
+            console.log(` missing remotely ${uploadInfo}: ${Object.keys(differences.missingRemotely).length}`);
             console.log(` not yet deleted remotely: ${differences.deleteRemotely.length}`);
 
             if (preference.download) {
@@ -140,7 +150,7 @@ export class ImageSyncService {
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pulling;
     
-                    const data = await this.remoteImagestore.getData(uuid, preference.variant, activeProject);
+                    const data = await this.remoteImageStore.getData(uuid, preference.variant, activeProject);
                     if (data !== null) {
                         await this.imageStore.store(uuid, data, activeProject, preference.variant);
                     } else {
@@ -165,7 +175,7 @@ export class ImageSyncService {
                     this.status[preference.variant] = SyncStatus.Pushing;
     
                     const data = await this.imageStore.getData(uuid, preference.variant, activeProject);
-                    const status = await this.remoteImagestore.store(uuid, data, activeProject, preference.variant);
+                    const status = await this.remoteImageStore.store(uuid, data, activeProject, preference.variant);
 
                     if (status === 409) {
                         console.log(`Got status code 409. Syncing target currently does not accept large files:`);
@@ -180,7 +190,7 @@ export class ImageSyncService {
                 if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                 this.status[preference.variant] = SyncStatus.Pushing;
 
-                await this.remoteImagestore.remove(uuid, activeProject)
+                await this.remoteImageStore.remove(uuid, activeProject)
             }
 
             // Set SyncStatus.Offline if sync was disabled while running sync, otherwise set SyncStatus.InSync
@@ -195,18 +205,17 @@ export class ImageSyncService {
     }
 
 
-    public async evaluateDifference(activeProject: string, variant: ImageVariant): Promise<SyncDifference> {
-
-        const [remoteData, localData] = await Promise.all([
-            this.remoteImagestore.getFileInfos(activeProject, [variant]),
-            this.imageStore.getFileInfos(activeProject, [variant])
-        ]);
+    public static async evaluateDifference(
+        localData: { [uuid: string]: FileInfo},
+        remoteData: { [uuid: string]: FileInfo},
+        variant: ImageVariant
+    ): Promise<SyncDifference> {
 
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);
 
         let uuidsMissingLocally = remoteUUIDs.filter(
-            (remoteUUID: string) => !localUUIDs.includes(remoteUUID)
+            (remoteUUID: string) => !localUUIDs.includes(remoteUUID) || !(localData[remoteUUID].variants.map(variant => variant.name).includes(variant))
         ).filter(
             // We do not want to download files marked as deleted remotely.
             (remoteUUID: string) => !remoteData[remoteUUID].deleted
@@ -217,7 +226,7 @@ export class ImageSyncService {
         );
 
         let uuidsMissingRemotely = localUUIDs.filter(
-            (localUUID: string) => !remoteUUIDs.includes(localUUID)
+            (localUUID: string) => !remoteUUIDs.includes(localUUID) || !remoteData[localUUID].variants.map(variant => variant.name).includes(variant)
         ).filter(
             // We do not want to upload files marked as deleted locally.
             (localUUID: string) => !localData[localUUID].deleted

@@ -85,22 +85,28 @@ export class FsAdapter implements FilesystemAdapterInterface {
         let results = [];
         if (!(await this.isDirectory(folderPath))) return results;
 
-        const list: string[] = (await getAsynchronousFs().readdir(folderPath))
-            .filter(name => !name.includes('.') || name.includes('.deleted'));
+        const fullPaths = (await getAsynchronousFs().readdir(folderPath))
+            .filter((name: string) => !name.includes('.') || name.includes('.deleted'))
+            .map((filename: string) => {
+            return folderPath + filename;
+        });
 
-        for (const file of list) {
+        const fileInfos = await getAsynchronousFs().getFileInfos(fullPaths);
 
-            const currentFile = folderPath + file;
-            const stats = await getAsynchronousFs().getFileInfo(folderPath + file);
+        const zipped = fullPaths.map((path, index) => {
+            return {...{path}, ...fileInfos[index]};
+        });
 
-            if (stats.isDirectory) {
+        for (const entry of zipped) {
+
+            if (entry.isDirectory) {
                 /* Recurse into a subdirectory, otherwise do not add directory to results. */
-                if (recursive) results = results.concat(await this.listFiles(currentFile, recursive));
+                if (recursive) results = results.concat(await this.listFiles(entry.path, recursive));
             } else {
                 /* Is a file */
                 results.push({
-                    path: currentFile,
-                    size: stats.size
+                    path: entry.path,
+                    size: entry.size
                 } as FileStat);
             }
         }

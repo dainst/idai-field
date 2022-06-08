@@ -265,4 +265,31 @@ export class ImageStore {
 
         return this.getDirectoryPath(project, type) + uuid;
     }
+
+
+    
+    public static getFileSizeSums(files: { [uuid: string]: FileInfo }): { [variantName in ImageVariant]: number } {
+        const sums: { [variantName in ImageVariant]: number } = {
+            thumbnail_image: 0,
+            original_image: 0
+        };
+        for (const fileInfo of Object.values(files)) {
+            for (const variant of fileInfo.variants) {
+                sums[variant.name] += variant.size;
+            }
+        }
+        return sums;
+    }
+
+    public static byteCountToDescription(byteCount: number) {
+        byteCount = byteCount * 0.00000095367;
+        let unitTypeOriginal = 'mb';
+
+        if (byteCount > 1000) {
+            byteCount = byteCount * 0.00097656;
+            unitTypeOriginal = 'gb';
+        }
+
+        return `${byteCount.toFixed(2)} ${unitTypeOriginal}`;
+    }
 }

@@ -37,7 +37,7 @@ export class DateComponent {
 
         const formattedDate: string = this.dateFormatter.format(newValue);
 
-        if (formattedDate !== '') {
+        if (formattedDate !== '' && formattedDate !== 'undefined') {
             this.resource[this._field.name] = formattedDate;
         } else {
             delete this.resource[this._field.name];

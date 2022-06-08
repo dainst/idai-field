@@ -40,7 +40,7 @@ export class DownloadProjectComponent {
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
-    private credentialsTimerInterval = 2000;
+    private credentialsTimerInterval = 500;
 
     constructor(private messages: Messages,
                 private syncService: SyncService,

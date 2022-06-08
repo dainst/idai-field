@@ -136,10 +136,8 @@ export class DownloadProjectComponent {
     }
 
     private async getFileSizes() {
-        try {
 
-            let originalSize = 0;
-            let thumbnailSize = 0;
+        try {
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
                 this.url,
                 this.password,
@@ -147,34 +145,10 @@ export class DownloadProjectComponent {
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
-            for (const fileInfo of Object.values(fileList)) {
-                for (const variant of fileInfo.variants) {
-                    if (variant.name === ImageVariant.ORIGINAL) {
-                        originalSize += variant.size;
-                    } else if (variant.name === ImageVariant.THUMBNAIL) {
-                        thumbnailSize += variant.size;
-                    }
-                }
-            }
+            const sizes = ImageStore.getFileSizeSums(fileList);
 
-            originalSize = originalSize * 0.00000095367;
-            let unitTypeOriginal = 'mb';
-
-            if (originalSize > 1000) {
-                originalSize = originalSize * 0.00097656;
-                unitTypeOriginal = 'gb';
-            }
-
-            thumbnailSize = thumbnailSize * 0.00000095367;
-            let unitTypeThumbnail = 'mb';
-
-            if (thumbnailSize > 1000) {
-                thumbnailSize = thumbnailSize * 0.00097656;
-                unitTypeThumbnail = 'gb';
-            }
-
-            this.originalImagesSize = `(${originalSize.toFixed(2)} ${unitTypeOriginal})`;
-            this.thumbnailImagesSize = `(${thumbnailSize.toFixed(2)} ${unitTypeThumbnail})`;
+            this.originalImagesSize = `(${ImageStore.byteCountToDescription(sizes.original_image)})`;
+            this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(sizes.thumbnail_image)})`;
         } catch {
 
             console.log('Credentials for dowload still seem to be invalid. Unable to evaluate file download size.');

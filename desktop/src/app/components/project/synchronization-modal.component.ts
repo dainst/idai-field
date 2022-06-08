@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileInfo, FileSyncPreference, ImageSyncService, ImageVariant } from 'idai-field-core';
+import { FileInfo, FileSyncPreference, ImageStore, ImageSyncService, ImageVariant } from 'idai-field-core';
+import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
@@ -17,7 +18,7 @@ import { SettingsService } from '../../services/settings/settings-service';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class SynchronizationModalComponent implements OnInit  {
+export class SynchronizationModalComponent implements OnInit {
 
     public settings: Settings;
     public syncTarget: SyncTarget;
@@ -27,7 +28,8 @@ export class SynchronizationModalComponent implements OnInit  {
     public originalImageUploadSizeMsg = '';
 
     constructor(public activeModal: NgbActiveModal,
-                private imageSync: ImageSyncService,
+                private imageStore: ImageStore,
+                private remoteImageStore: RemoteImageStore,
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService) { }
 
@@ -35,8 +37,6 @@ export class SynchronizationModalComponent implements OnInit  {
     async ngOnInit() {
 
         this.settings = this.settingsProvider.getSettings();
-
-        this.getFileSizes();
 
         if (!this.settings.syncTargets[this.settings.selectedProject]) {
             this.settings.syncTargets[this.settings.selectedProject] = {
@@ -54,6 +54,7 @@ export class SynchronizationModalComponent implements OnInit  {
         }
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
 
+        this.getFileSizes();
     }
 
 
@@ -206,6 +207,7 @@ export class SynchronizationModalComponent implements OnInit  {
 
 
     private async getFileSizes() {
+
         try {
             this.updateThumbnailSizesInfo();
             this.updateOriginalImageSizesInfo();
@@ -219,17 +221,17 @@ export class SynchronizationModalComponent implements OnInit  {
         }
     }
 
+
     private async updateThumbnailSizesInfo() {
+
         if (this.thumbnailImageSizesMsg === '') {
             this.thumbnailImageSizesMsg = `(⏲)`;
         }
 
-        const diffThumbnailImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.THUMBNAIL);
+        const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.THUMBNAIL);
 
-        const thumbnailDownloadSize = this.getFileSizeSums(diffThumbnailImages.missingLocally);
-        const thumbnailUploadSize = this.getFileSizeSums(diffThumbnailImages.missingRemotely);
-        const thumbnailDownloadSizeMsg = this.byteCountToDescription(thumbnailDownloadSize.thumbnail_image);
-        const thumbnailUploadSizeMsg = this.byteCountToDescription(thumbnailUploadSize.thumbnail_image)
+        const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(downloadSize);
+        const thumbnailUploadSizeMsg = ImageStore.byteCountToDescription(uploadSize);
         this.thumbnailImageSizesMsg = `(⬇${thumbnailDownloadSizeMsg} / ⬆${thumbnailUploadSizeMsg})`;
     }
 
@@ -241,37 +243,37 @@ export class SynchronizationModalComponent implements OnInit  {
             this.originalImageUploadSizeMsg = `(⏲)`;
         }
 
-        const diffOriginalImages = await this.imageSync.evaluateDifference(this.settings.selectedProject, ImageVariant.ORIGINAL);
+        const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.ORIGINAL);
 
-        const originalDownloadSize = this.getFileSizeSums(diffOriginalImages.missingLocally);
-        const originalUploadSize = this.getFileSizeSums(diffOriginalImages.missingRemotely);
-        this.originalImageDownloadSizeMsg = `(⬇${this.byteCountToDescription(originalDownloadSize.original_image)})`
-        this.originalImageUploadSizeMsg = `(⬆${this.byteCountToDescription(originalUploadSize.original_image)})`
-
+        this.originalImageDownloadSizeMsg = `(⬇${ImageStore.byteCountToDescription(downloadSize)})`;
+        this.originalImageUploadSizeMsg = `(⬆${ImageStore.byteCountToDescription(uploadSize)})`;
     }
 
-    private getFileSizeSums(files: { [uuid: string]: FileInfo}): {[variantName in ImageVariant]: number} {
-        const sums: {[variantName in ImageVariant]: number} = {
-            thumbnail_image: 0,
-            original_image: 0
-        };
-        for (const fileInfo of Object.values(files)) {
-            for (const variant of fileInfo.variants) {
-                sums[variant.name] += variant.size;
-            }
-        }
-        return sums;
-    }
 
-    private byteCountToDescription(byteCount: number) {
-        byteCount = byteCount * 0.00000095367;
-        let unitTypeOriginal = 'mb';
+    private async getDiff(variant: ImageVariant): Promise<[number, number]> {
 
-        if (byteCount > 1000) {
-            byteCount = byteCount * 0.00097656;
-            unitTypeOriginal = 'gb';
-        }
+        const [localData, remoteData] = await Promise.all([
+            this.imageStore.getFileInfos(
+                this.settings.selectedProject,
+                [variant]
+            ),
+            this.remoteImageStore.getFileInfosUsingCredentials(
+                this.syncTarget.address,
+                this.syncTarget.password,
+                this.settings.selectedProject,
+                [variant]
+            )
+        ]);
 
-        return `${byteCount.toFixed(2)} ${unitTypeOriginal}`;
+        const diff = await ImageSyncService.evaluateDifference(
+            localData,
+            remoteData,
+            variant
+        );
+
+        const downloadSize = ImageStore.getFileSizeSums(diff.missingLocally)[variant];
+        const uploadSize = ImageStore.getFileSizeSums(diff.missingRemotely)[variant];
+
+        return [downloadSize, uploadSize];
     }
 }

@@ -1,6 +1,6 @@
-import {VirtualScrollStrategy, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {distinctUntilChanged} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { VirtualScrollStrategy, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 const ROW_HEIGHT: number = 233;

@@ -42,7 +42,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;
-                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration ,labels);
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;

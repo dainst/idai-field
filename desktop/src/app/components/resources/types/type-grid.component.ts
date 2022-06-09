@@ -1,8 +1,8 @@
-import {VIRTUAL_SCROLL_STRATEGY} from '@angular/cdk/scrolling';
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {FieldDocument} from 'idai-field-core';
-import {TypeGridVirtualScrollStrategy} from './type-grid-virtual-scroll-strategy';
-import {TypesComponent} from './types.component';
+import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FieldDocument } from 'idai-field-core';
+import { TypeGridVirtualScrollStrategy } from './type-grid-virtual-scroll-strategy';
+import { TypesComponent } from './types.component';
 
 
 @Component({

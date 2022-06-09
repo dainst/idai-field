@@ -71,11 +71,11 @@ export class DocumentHolder {
         await this.performAssertions();
         this.convertStringsToNumbers();
 
-        const savedDocument: Document =
-                await this.relationsManager.update(
-                    this.cleanup(this.clonedDocument),
-                    this.oldVersion,
-                    this.inspectedRevisions)
+        const savedDocument: Document = await this.relationsManager.update(
+            this.cleanup(this.clonedDocument),
+            this.oldVersion,
+            this.inspectedRevisions
+        );
 
         return this.fetchLatestRevision(savedDocument.resource.id);
     }

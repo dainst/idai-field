@@ -21,6 +21,8 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.InputType.isValidFieldData(true, Field.InputType.BOOLEAN)).toBe(true);
         expect(Field.InputType.isValidFieldData(false, Field.InputType.BOOLEAN)).toBe(true);
         expect(Field.InputType.isValidFieldData('31.01.2010', Field.InputType.DATE)).toBe(true);
+        expect(Field.InputType.isValidFieldData('01.2010', Field.InputType.DATE)).toBe(true);
+        expect(Field.InputType.isValidFieldData('2010', Field.InputType.DATE)).toBe(true);
 
         expect(Field.InputType.isValidFieldData(
             { value: 'A', endValue: 'B' },
@@ -76,6 +78,8 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.BOOLEAN)).toBe(false);
         expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.DATE)).toBe(false);
         expect(Field.InputType.isValidFieldData('31-01-2010', Field.InputType.DATE)).toBe(false);
+        expect(Field.InputType.isValidFieldData('31.01.2010.01', Field.InputType.DATE)).toBe(false);
+        expect(Field.InputType.isValidFieldData('ABC', Field.InputType.DATE)).toBe(false);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.DROPDOWNRANGE)).toBe(false);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.DATING)).toBe(false);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.DIMENSION)).toBe(false);

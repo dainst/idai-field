@@ -153,7 +153,7 @@ export module Validations {
         if (!document.resource.beginningDate || !document.resource.endDate) return;
 
         const beginningDate: Date = parseDate(document.resource.beginningDate);
-        const endDate: Date = parseDate(document.resource.endDate);
+        const endDate: Date = parseDate(document.resource.endDate, true);
 
         if (beginningDate && endDate && beginningDate > endDate) {
             throw [

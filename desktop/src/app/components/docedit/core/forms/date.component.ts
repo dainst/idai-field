@@ -1,48 +1,52 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Resource } from 'idai-field-core';
+import { isString } from 'tsfun';
+import { Field, parseDate, Resource } from 'idai-field-core';
 
 
 @Component({
     selector: 'dai-date',
     templateUrl: './date.html'
 })
-export class DateComponent {
+export class DateComponent implements OnChanges {
 
     @Input() resource: Resource;
-
-    @Input('field')
-    set field(value: any) {
-
-        this._field = value;
-        this.dateStruct = this.dateFormatter.parse(this.resource[this._field.name]);
-
-        if (!this.dateStruct) {
-            if (this.resource[this._field.name]) this.dateNotParsed = true;
-        } else {
-            if (!this.dateStruct.month) this.dateStruct.month = 1;
-            if (!this.dateStruct.day) this.dateStruct.day = 1;
-        }
-    }
+    @Input() field: Field;
 
     public dateStruct: NgbDateStruct;
-    public dateNotParsed = false;
-    public _field : any;
 
 
     constructor(public dateFormatter: NgbDateParserFormatter) {}
 
 
+    public isDatePickerVisible = () => (this.dateStruct.day && this.dateStruct.month) || !this.dateStruct.year;
+
+    public getFieldData = () => this.resource[this.field.name];
+
+
+    ngOnChanges() {
+        
+        this.dateStruct = this.dateFormatter.parse(this.getFieldData()) ?? {} as NgbDateStruct;
+    }
+
+
     public update(newValue: any) {
 
-        const formattedDate: string = this.dateFormatter.format(newValue);
+        const formattedDate: string = isString(newValue) ? newValue : this.dateFormatter.format(newValue);
 
-        if (formattedDate !== '') {
-            this.resource[this._field.name] = formattedDate;
+        if (!isNaN(parseDate(formattedDate)?.getTime())) {
+            this.resource[this.field.name] = formattedDate;
         } else {
-            delete this.resource[this._field.name];
+            delete this.resource[this.field.name];
         }
 
-        this.dateNotParsed = false;
+        this.dateStruct = this.dateFormatter.parse(formattedDate);
+    }
+
+
+    public removeFieldData() {
+
+        delete this.resource[this.field.name];
+        this.dateStruct = {} as NgbDateStruct;
     }
 }

@@ -1,6 +1,7 @@
-import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
+import { Input, Component } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { FieldDocument } from 'idai-field-core';
+
 
 @Component({
     selector: 'type-grid-element',

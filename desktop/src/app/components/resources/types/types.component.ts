@@ -1,19 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
-import {
-    Document,
-    Datastore,
-    FieldDocument,
-    Relation,
-    SyncService,
-    SyncStatus,
-    Resource,
-    ProjectConfiguration,
-    ImageVariant,
-    Named,
-    Hierarchy,
-    SortUtil
-} from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
+    Resource, ProjectConfiguration, ImageVariant, Named, Hierarchy, SortUtil } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { PLACEHOLDER } from '../../image/row/image-row';

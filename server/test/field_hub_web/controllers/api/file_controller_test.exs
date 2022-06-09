@@ -57,7 +57,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert conn.status == 401
   end
 
-  test "GET /files/:project with valid credentials yields 200", %{conn: conn} do
+  test "GET /files/:project without images yields valid json", %{conn: conn} do
 
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
@@ -67,17 +67,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> get("/files/test_project")
 
     assert conn.status == 200
-  end
-
-
-  test "GET /files/:project without images yields valid json", %{conn: conn} do
-
-    credentials = Base.encode64("#{@user_name}:#{@user_password}")
-
-    conn =
-      conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
 
     json_response =
       conn.resp_body

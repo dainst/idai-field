@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileInfo, FileSyncPreference, ImageStore, ImageSyncService, ImageVariant } from 'idai-field-core';
+import { FileSyncPreference, ImageStore, ImageSyncService, ImageVariant } from 'idai-field-core';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';

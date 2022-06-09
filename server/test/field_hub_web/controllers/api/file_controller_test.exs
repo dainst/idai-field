@@ -8,10 +8,12 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   @project "test_project"
   @user_name "test_user"
   @user_password "test_password"
-  @exampleFile File.read!("test/fixtures/logo.png")
+  @exampleFilePath "test/fixtures/logo.png"
+  @exampleFile File.read!(@exampleFilePath)
+  @exampleFileStats File.stat!("test/fixtures/logo.png")
   @schema File.read!("../core/api-schemas/files-list.json")
-    |> Jason.decode!()
-    |> ExJsonSchema.Schema.resolve()
+          |> Jason.decode!()
+          |> ExJsonSchema.Schema.resolve()
 
   setup do
     # Run before each test
@@ -22,6 +24,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       TestHelper.remove_test_db_and_user(@project, @user_name)
       File.rm_rf!(@file_directory_root)
     end)
+
     :ok
   end
 
@@ -46,7 +49,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   end
 
   test "GET /files/:project without valid credentials yields 401", %{conn: conn} do
-
     credentials = Base.encode64("non_existant_user:made_up_password")
 
     conn =
@@ -58,7 +60,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   end
 
   test "GET /files/:project without images yields valid json", %{conn: conn} do
-
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
@@ -77,7 +78,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   end
 
   test "GET /files/:project with image yields valid json", %{conn: conn} do
-
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
@@ -98,12 +98,20 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
+    file_size = @exampleFileStats.size
+
+    assert %{
+             "1234" => %{
+               "deleted" => false,
+               "types" => ["original_image"],
+               "variants" => [%{"name" => "original_image", "size" => ^file_size}]
+             }
+           } = json_response
+
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
   test "GET /files/:project different file variants get added to the response", %{conn: conn} do
-
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
@@ -124,7 +132,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
 
     conn =
@@ -146,56 +153,21 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    assert %{"1234" => %{"deleted" => false, "types" => ["thumbnail_image", "original_image"]}} = json_response
+    file_size = @exampleFileStats.size
+
+    assert %{
+             "1234" => %{
+               "deleted" => false,
+               "types" => ["thumbnail_image", "original_image"],
+               "variants" => [
+                 %{"name" => "thumbnail_image", "size" => ^file_size},
+                 %{"name" => "original_image", "size" => ^file_size}
+               ]
+             }
+           } = json_response
+
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
-
-  test "GET /files/:project yields deleted fiels flagged as deleted", %{conn: conn} do
-    credentials = Base.encode64("#{@user_name}:#{@user_password}")
-
-    conn =
-      conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
-
-    assert conn.status == 201
-
-    conn =
-      conn
-      |> recycle()
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
-
-    json_response =
-      conn.resp_body
-      |> Jason.decode!()
-
-    assert %{"1234" => %{"deleted" => false, "types" => ["original_image"]}} = json_response
-    assert ExJsonSchema.Validator.valid?(@schema, json_response)
-
-    conn =
-      conn
-      |> recycle()
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> delete("/files/test_project/1234")
-
-    assert conn.status == 200
-
-    conn =
-      conn
-      |> recycle()
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
-
-    json_response =
-      conn.resp_body
-      |> Jason.decode!()
-
-    assert %{"1234" => %{"deleted" => true, "types" => ["original_image"]}} = json_response
-    assert ExJsonSchema.Validator.valid?(@schema, json_response)
-  end
-
 
   test "DELETE /files/:project/:uuid deletes file with specified uuid", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
@@ -207,7 +179,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put("/files/test_project/1234?type=original_image", @exampleFile)
 
     assert conn.status == 201
-
 
     conn =
       conn
@@ -229,9 +200,10 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> Jason.decode!()
 
     assert %{
-      "1234" => %{"deleted" => false, "types" => ["original_image"]},
-      "5678" => %{"deleted" => false, "types" => ["original_image"]}
-    } = json_response
+             "1234" => %{"deleted" => false},
+             "5678" => %{"deleted" => false}
+           } = json_response
+
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
 
     conn =
@@ -253,9 +225,56 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> Jason.decode!()
 
     assert %{
-      "1234" => %{"deleted" => true, "types" => ["original_image"]},
-      "5678" => %{"deleted" => false, "types" => ["original_image"]}
-    } = json_response
+             "1234" => %{"deleted" => true},
+             "5678" => %{"deleted" => false}
+           } = json_response
+
+    assert ExJsonSchema.Validator.valid?(@schema, json_response)
+  end
+
+  test "GET /files/:project yields deleted fields flagged as deleted", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+
+    assert conn.status == 201
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> get("/files/test_project")
+
+    json_response =
+      conn.resp_body
+      |> Jason.decode!()
+
+    assert %{"1234" => %{"deleted" => false}} = json_response
+    assert ExJsonSchema.Validator.valid?(@schema, json_response)
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> delete("/files/test_project/1234")
+
+    assert conn.status == 200
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> get("/files/test_project")
+
+    json_response =
+      conn.resp_body
+      |> Jason.decode!()
+
+    assert %{"1234" => %{"deleted" => true}} = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 end

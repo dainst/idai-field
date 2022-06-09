@@ -225,7 +225,7 @@ export class SynchronizationModalComponent implements OnInit {
     private async updateThumbnailSizesInfo() {
 
         if (this.thumbnailImageSizesMsg === '') {
-            this.thumbnailImageSizesMsg = `(⏲)`;
+            this.thumbnailImageSizesMsg = `⏳`;
         }
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.THUMBNAIL);
@@ -237,10 +237,10 @@ export class SynchronizationModalComponent implements OnInit {
 
     private async updateOriginalImageSizesInfo() {
         if (this.originalImageDownloadSizeMsg === '') {
-            this.originalImageDownloadSizeMsg = `(⏲)`;
+            this.originalImageDownloadSizeMsg = `⏳`;
         }
         if (this.originalImageUploadSizeMsg === '') {
-            this.originalImageUploadSizeMsg = `(⏲)`;
+            this.originalImageUploadSizeMsg = `⏳`;
         }
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.ORIGINAL);

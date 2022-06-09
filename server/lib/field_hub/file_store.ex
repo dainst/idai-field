@@ -1,6 +1,6 @@
 defmodule FieldHub.FileStore do
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
-  @tombstoneSuffix ".deleted"
+  @tombstone_suffix ".deleted"
   @variant_types Application.get_env(:field_hub, :file_variant_types)
 
   require Logger
@@ -46,9 +46,9 @@ defmodule FieldHub.FileStore do
         end)
     end)
     |> Stream.map(fn {uuid, info} ->
-      case String.ends_with?(uuid, @tombstoneSuffix) do
+      case String.ends_with?(uuid, @tombstone_suffix) do
         true ->
-          {String.replace(uuid, @tombstoneSuffix, ""), Map.put_new(info, :deleted, true)}
+          {String.replace(uuid, @tombstone_suffix, ""), Map.put_new(info, :deleted, true)}
 
         _ ->
           {uuid, Map.put_new(info, :deleted, false)}
@@ -92,7 +92,7 @@ defmodule FieldHub.FileStore do
     |> Stream.reject(fn %{name: filename} ->
       # Reject all files containing dots (beside tombstone files)
       filename
-      |> String.trim_trailing(@tombstoneSuffix)
+      |> String.trim_trailing(@tombstone_suffix)
       |> String.contains?(".")
     end)
     |> ignore_files_with_existing_tombstones()
@@ -132,7 +132,7 @@ defmodule FieldHub.FileStore do
       File.exists?("#{directory}/#{uuid}")
     end)
     |> Stream.map(
-      &store_file(%{uuid: "#{uuid}#{@tombstoneSuffix}", project: project, type: &1, content: []})
+      &store_file(%{uuid: "#{uuid}#{@tombstone_suffix}", project: project, type: &1, content: []})
     )
     |> Enum.filter(fn val ->
       val != :ok
@@ -169,11 +169,11 @@ defmodule FieldHub.FileStore do
         filename
       end)
       |> Enum.filter(fn filename ->
-        String.ends_with?(filename, @tombstoneSuffix)
+        String.ends_with?(filename, @tombstone_suffix)
       end)
 
     Enum.filter(file_infos, fn %{name: filename} ->
-      "#{filename}#{@tombstoneSuffix}" not in deleted
+      "#{filename}#{@tombstone_suffix}" not in deleted
     end)
   end
 end

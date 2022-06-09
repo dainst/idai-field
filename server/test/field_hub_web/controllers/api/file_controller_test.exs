@@ -8,9 +8,9 @@ defmodule FieldHubWeb.Api.FileControllerTest do
   @project "test_project"
   @user_name "test_user"
   @user_password "test_password"
-  @exampleFilePath "test/fixtures/logo.png"
-  @exampleFile File.read!(@exampleFilePath)
-  @exampleFileStats File.stat!("test/fixtures/logo.png")
+  @example_file_path "test/fixtures/logo.png"
+  @example_file File.read!(@example_file_path)
+  @example_file_stats File.stat!("test/fixtures/logo.png")
   @schema File.read!("../core/api-schemas/files-list.json")
           |> Jason.decode!()
           |> ExJsonSchema.Schema.resolve()
@@ -35,7 +35,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+      |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -45,7 +45,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put_req_header("authorization", "Basic #{credentials}")
       |> get("/files/test_project/1234?type=original_image")
 
-    assert conn.resp_body == @exampleFile
+    assert conn.resp_body == @example_file
   end
 
   test "GET /files/:project without valid credentials yields 401", %{conn: conn} do
@@ -84,7 +84,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+      |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -98,7 +98,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    file_size = @exampleFileStats.size
+    file_size = @example_file_stats.size
 
     assert %{
              "1234" => %{
@@ -118,7 +118,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+      |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -139,7 +139,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=thumbnail_image", @exampleFile)
+      |> put("/files/test_project/1234?type=thumbnail_image", @example_file)
 
     assert conn.status == 201
 
@@ -153,7 +153,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn.resp_body
       |> Jason.decode!()
 
-    file_size = @exampleFileStats.size
+    file_size = @example_file_stats.size
 
     assert %{
              "1234" => %{
@@ -176,7 +176,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+      |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -185,7 +185,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/5678?type=original_image", @exampleFile)
+      |> put("/files/test_project/5678?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -239,7 +239,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @exampleFile)
+      |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 

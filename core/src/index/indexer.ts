@@ -40,6 +40,15 @@ import { Document } from '../model/document';
     }
 
 
+    export async function reindexFromCache(indexFacade: IndexFacade, documentCache: DocumentCache) {
+        
+        indexFacade.clear();
+
+        const documents: Array<Document> = documentCache.getAll();
+        await indexFacade.putMultiple(documents);
+    }
+
+
     async function fetchAll(db: PouchDB.Database) {
 
         return (await db

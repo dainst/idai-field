@@ -21,6 +21,12 @@ export class DocumentCache {
     }
 
 
+    public getAll(): Array<Document> {
+
+        return Object.values(this._);
+    }
+
+
     public remove(resourceId: any) {
 
         delete this._[resourceId];

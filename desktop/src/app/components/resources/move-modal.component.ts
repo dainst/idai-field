@@ -74,7 +74,8 @@ export class MoveModalComponent {
                     document,
                     newParent,
                     this.relationsManager,
-                    MoveUtility.getIsRecordedInTargetCategories(this.documents, this.projectConfiguration)
+                    MoveUtility.getIsRecordedInTargetCategories(this.documents, this.projectConfiguration),
+                    this.projectConfiguration
                 );
             } catch (msgWithParams) {
                 console.error(msgWithParams);

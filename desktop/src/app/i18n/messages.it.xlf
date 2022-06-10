@@ -3060,7 +3060,7 @@
         <target state="final">Tipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.subtypes" datatype="html">
@@ -3068,7 +3068,7 @@
         <target state="final">Sottotipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
@@ -3076,7 +3076,7 @@
         <target state="final"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> Reperti associati </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
@@ -3744,19 +3744,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">67</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.date.notParsedInfo" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Das Datum liegt in einem veralteten Format vor und konnte nicht eingelesen werden. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/> Gespeicherter Wert: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/> Bitte tragen Sie das Datum erneut ein und es wird beim nächsten Speichern ersetzt.
-</source>
-        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Attenzione:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> la data è in un formato obsoleto e non può essere letta.
-    <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/>
-    Valore salvato: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/>
-    Inserire nuovamente la data e attendere il salvataggio successivo per memorizzarla permanentemente.
-</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date.component.ts</context>
-          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
@@ -5978,6 +5965,14 @@
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</source>
         <target state="final">La risorsa non è accessibile. Per favore aspettare che la sincronizzazione sia completa e poi riprovare.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
+        <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
+        <target state="new">Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

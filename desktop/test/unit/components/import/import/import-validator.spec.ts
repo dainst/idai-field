@@ -22,6 +22,8 @@ describe('ImportValidator', () => {
                     { name: 'mandatory', mandatory: true },
                     { name: 'number1', label: 'number1', inputType: 'float' },
                     { name: 'number2', label: 'number2', inputType: 'float' },
+                    { name: 'date1', label: 'date1', inputType: 'date' },
+                    { name: 'date2', label: 'date2', inputType: 'date' },
                     { name: 'ddr', label: 'DropdownRange', inputType: Field.InputType.DROPDOWNRANGE },
                     { name: 'ddr2', label: 'DropdownRange2', inputType: Field.InputType.DROPDOWNRANGE }
                 ]}]
@@ -290,6 +292,51 @@ describe('ImportValidator', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+        }
+        done();
+    });
+
+
+    it('invalid date field', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date1: 'ABC',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1'])
+        }
+        done();
+    });
+
+
+    it('invalid date fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date1: 'ABC',
+                date2: '19/3/1977',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1, date2'])
         }
         done();
     });

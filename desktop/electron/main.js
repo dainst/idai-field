@@ -91,7 +91,7 @@ const setLanguages = config => {
             const locale = getLocale();
             config.languages = mainLanguages.includes(locale)
                 ? [locale]
-                : ['de'];
+                : ['en'];
         }
     }
 

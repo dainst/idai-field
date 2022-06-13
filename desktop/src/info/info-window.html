@@ -9,7 +9,7 @@
             <p id="brand">Field Desktop</p>
             <p id="about-version"></p>
             <p>
-                <button id="close-button"></button>
+                <button id="close-button" style="display: none;"></button>
             </p>
         </div>
         <script>
@@ -17,13 +17,26 @@
 
             document.getElementById('about-version').textContent = 'Version ' + remote.app.getVersion();
 
-            document.getElementById('close-button').textContent = remote.getGlobal('config')['locale'] === 'de'
-                ? 'Schließen'
-                : 'Close';
+            const buttonLabelTranslations = {
+                de: 'Schließen',
+                en: 'Close',
+                it: 'Chiudi'
+            };
 
-            document.getElementById('close-button').addEventListener('click', function() {
+            let buttonLabel;
+            for (let language of remote.getGlobal('config')['languages']) {
+               if (buttonLabelTranslations[language]) {
+                   buttonLabel = buttonLabelTranslations[language];
+                   break;
+               }
+            }
+            
+            const closeButton = document.getElementById('close-button');
+            closeButton.textContent = buttonLabel;
+            closeButton.addEventListener('click', function() {
                 remote.getCurrentWindow().close();
             });
+            closeButton.style = '';
         </script>
     </body>
 </html>

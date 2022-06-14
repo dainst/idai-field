@@ -55,10 +55,11 @@ export class DateComponent implements OnChanges {
     }
 
 
-    public removeFieldData() {
+    public async removeFieldData() {
 
         delete this.resource[this.field.name];
         this.dateStruct = {} as NgbDateStruct;
+        await this.focusInputField();
     }
 
 

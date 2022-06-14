@@ -22,14 +22,14 @@ export class DateComponent implements OnChanges {
     constructor(public dateFormatter: NgbDateParserFormatter) {}
 
 
-    public isDatePickerVisible = () => (this.dateStruct.day && this.dateStruct.month) || !this.dateStruct.year;
+    public isDatePickerVisible = () => (this.dateStruct?.day && this.dateStruct?.month) || !this.dateStruct?.year;
 
     public getFieldData = () => this.resource[this.field.name];
 
 
     ngOnChanges() {
         
-        this.dateStruct = this.dateFormatter.parse(this.getFieldData()) ?? {} as NgbDateStruct;
+        this.updateDateStruct(this.getFieldData());
     }
 
 
@@ -43,7 +43,7 @@ export class DateComponent implements OnChanges {
             delete this.resource[this.field.name];
         }
 
-        this.dateStruct = this.dateFormatter.parse(formattedDate);
+        this.updateDateStruct(formattedDate);
     }
 
 
@@ -61,5 +61,11 @@ export class DateComponent implements OnChanges {
         if (this.dateInputElement) {
             this.dateInputElement.nativeElement.focus();
         };
+    }
+
+
+    private updateDateStruct(date: string) {
+
+        this.dateStruct = this.dateFormatter.parse(date) ?? {} as NgbDateStruct;
     }
 }

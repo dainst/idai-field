@@ -22,9 +22,9 @@ export class DateComponent implements OnChanges {
     constructor(public dateFormatter: NgbDateParserFormatter) {}
 
 
-    public isDatePickerVisible = () => (this.dateStruct?.day && this.dateStruct?.month) || !this.dateStruct?.year;
-
     public getFieldData = () => this.resource[this.field.name];
+
+    public isDatePickerVisible = () => this.getFieldData() === undefined;
 
 
     ngOnChanges() {
@@ -33,9 +33,11 @@ export class DateComponent implements OnChanges {
     }
 
 
-    public update(newValue: any) {
+    public update() {
 
-        const formattedDate: string = isString(newValue) ? newValue : this.dateFormatter.format(newValue);
+        const formattedDate: string = isString(this.dateStruct)
+            ? this.dateStruct
+            : this.dateFormatter.format(this.dateStruct);
 
         if (!isNaN(parseDate(formattedDate)?.getTime())) {
             this.resource[this.field.name] = formattedDate;

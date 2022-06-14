@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { isString } from 'tsfun';
 import { Field, parseDate, Resource } from 'idai-field-core';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -12,6 +13,8 @@ export class DateComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() field: Field;
+
+    @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
 
     public dateStruct: NgbDateStruct;
 
@@ -48,5 +51,15 @@ export class DateComponent implements OnChanges {
 
         delete this.resource[this.field.name];
         this.dateStruct = {} as NgbDateStruct;
+    }
+
+
+    public async focusInputField() {
+
+        await AngularUtility.refresh();
+
+        if (this.dateInputElement) {
+            this.dateInputElement.nativeElement.focus();
+        };
     }
 }

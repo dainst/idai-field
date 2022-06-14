@@ -5260,7 +5260,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="new">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</target>
+        <target state="final">Data non valida nel campo '[1]' di una risorsa della categoria '[0]'. Formato per le date: "Giorno.Mese.Anno", ad esempio: 01.01.2010</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5268,7 +5268,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDates" datatype="html">
         <source>Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="new">Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</target>
+        <target state="final">Date non valide nei seguenti campi di una risorsa della categoria '[0]': [1]. Formato per le date: "Giorno.Mese.Anno", ad esempio: 01.01.2010</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5948,7 +5948,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
         <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
-        <target state="new">Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</target>
+        <target state="final">La risorsa [0] non può essere spostata in un'altra operazione perché sono state impostate relazioni che possono essere impostate solo tra risorse appartenenti della stessa operazione. Rimuovere le relazioni e riprovare.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

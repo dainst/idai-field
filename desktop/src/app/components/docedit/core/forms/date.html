@@ -3,6 +3,10 @@
     <span class="mdi mdi-close"></span>
 </div>
 
-<input *ngIf="isDatePickerVisible()" class="form-control" [firstDayOfWeek]="1" placeholder="dd.mm.yyyy"
-    (click)="d.toggle()" (ngModelChange)="update($event)" [(ngModel)]="dateStruct"
+<input *ngIf="isDatePickerVisible()" #dateInput class="form-control"
+    [firstDayOfWeek]="1" placeholder="dd.mm.yyyy"
+    (click)="d.toggle(); focusInputField();"
+    (blur)="update()" (dateSelect)="update()"
+    (keydown)="onKeyDown($event)"
+    [(ngModel)]="dateStruct"
     ngbDatepicker #d="ngbDatepicker">

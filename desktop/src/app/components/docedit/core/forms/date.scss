@@ -10,3 +10,11 @@ dai-date {
     }
   }
 }
+
+ngb-datepicker {
+  user-select: none;
+
+  select {
+    box-shadow: none !important;
+  }
+}

@@ -5,6 +5,8 @@
 
 <input *ngIf="isDatePickerVisible()" #dateInput class="form-control"
     [firstDayOfWeek]="1" placeholder="dd.mm.yyyy"
-    (click)="d.toggle(); focusInputField();" (blur)="update()" (dateSelect)="update()"
+    (click)="d.toggle(); focusInputField();"
+    (blur)="update()" (dateSelect)="update()"
+    (keydown)="onKeyDown($event)"
     [(ngModel)]="dateStruct"
     ngbDatepicker #d="ngbDatepicker">

@@ -33,6 +33,12 @@ export class DateComponent implements OnChanges {
     }
 
 
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Enter') this.update();
+    }
+
+
     public update() {
 
         const formattedDate: string = isString(this.dateStruct)

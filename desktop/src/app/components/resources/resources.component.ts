@@ -183,10 +183,15 @@ export class ResourcesComponent implements OnDestroy {
         modalRef.componentInstance.initialize(documents);
 
         try {
-            await modalRef.result;
+            const errors: boolean = await modalRef.result;
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
-            await this.routingService.jumpToResource(documents[0]);
+            if (errors) {
+                await this.viewFacade.populateDocumentList();
+            } else {
+                await this.routingService.jumpToResource(documents[0]);
+            }
+            
         } catch (msgWithParams) {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the move modal has been canceled

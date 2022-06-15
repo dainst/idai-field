@@ -198,6 +198,7 @@ const loadDocuments = async (
 
     await Indexer.reindex(serviceLocator.indexFacade, db, documentCache,
         new CategoryConverter(serviceLocator.projectConfiguration),
+        false,
         (count) => progress.setIndexedDocuments(count),
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)

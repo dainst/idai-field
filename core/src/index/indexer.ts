@@ -12,7 +12,8 @@ import { Document } from '../model/document';
  export module Indexer {
  
     export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
-                                  converter: CategoryConverter, setIndexedDocuments?: (count: number) => Promise<void>,
+                                  converter: CategoryConverter, keepCachedInstances: boolean,
+                                  setIndexedDocuments?: (count: number) => Promise<void>,
                                   setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
 
         indexFacade.clear();
@@ -29,23 +30,22 @@ import { Document } from '../model/document';
         setIndexing && await setIndexing();
 
         try {
+            if (keepCachedInstances) {
+                documents = documents.filter(document => !documentCache.get(document.resource.id));
+            }
             documents = convertDocuments(documents, converter);
             documents.forEach(doc => documentCache.set(doc));
+
+            if (keepCachedInstances) {
+                documents = documents.concat(documentCache.getAll());
+            }
+
             await indexFacade.putMultiple(documents, setIndexedDocuments);
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
             throw err;
         }
-    }
-
-
-    export async function reindexFromCache(indexFacade: IndexFacade, documentCache: DocumentCache) {
-        
-        indexFacade.clear();
-
-        const documents: Array<Document> = documentCache.getAll();
-        await indexFacade.putMultiple(documents);
     }
 
 

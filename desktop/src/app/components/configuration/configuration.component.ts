@@ -742,6 +742,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             });
         });
 
-        await Indexer.reindexFromCache(this.indexFacade, this.documentCache);
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            this.categoryConverter,
+            true
+        );
     }
 }

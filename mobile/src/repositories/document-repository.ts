@@ -95,7 +95,7 @@ const buildDatastore = async (
     const documentCache = new DocumentCache();
     const converter = new CategoryConverter(projectConfiguration);
 
-    await Indexer.reindex(indexFacade, db, documentCache, converter);
+    await Indexer.reindex(indexFacade, db, documentCache, converter, false);
 
     return [
         new Datastore(pouchdbDatastore, indexFacade, documentCache, converter, () => username),

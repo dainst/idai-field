@@ -68,6 +68,8 @@ export class MoveModalComponent {
         if (this.isLoading()) return;
         this.loading.start('moveModal');
 
+        let errors: boolean = false;
+
         for (let document of this.documents) {
             try {
                 await MoveUtility.moveDocument(
@@ -80,10 +82,11 @@ export class MoveModalComponent {
             } catch (msgWithParams) {
                 console.error(msgWithParams);
                 this.messages.add(msgWithParams);
+                errors = true;
             }
         }
 
         this.loading.stop('moveModal');
-        this.activeModal.close();
+        this.activeModal.close(errors);
     }
 }

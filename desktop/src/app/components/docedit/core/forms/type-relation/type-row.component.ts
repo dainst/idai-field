@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
-import {FieldDocument} from 'idai-field-core';
-import {ModelUtil} from '../../../../../model/model-util';
-import {ImageRowItem} from '../../../../image/row/image-row';
-import {ImageVariant} from 'idai-field-core';
-import {ImageUrlMaker} from '../../../../../services/imagestore/image-url-maker';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { FieldDocument, ImageVariant } from 'idai-field-core';
+import { ModelUtil } from '../../../../../model/model-util';
+import { ImageRowItem } from '../../../../image/row/image-row';
+import { ImageUrlMaker } from '../../../../../services/imagestore/image-url-maker';
 
 
 @Component({

@@ -14,7 +14,7 @@
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover"
                  [style.width]="getImageWidth(image) + 'px'">
-            <div *ngIf="!hasImageUrl(image) && !initializing"
+            <div *ngIf="!hasImageUrl(image) && !initializing && image.document"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">
                 <category-icon [category]="image.document.resource.category" [size]="60"></category-icon>

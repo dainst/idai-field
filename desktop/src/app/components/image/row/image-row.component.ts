@@ -2,12 +2,11 @@ import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Outpu
     SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { to, aReduce } from 'tsfun';
-import { Datastore, ImageDocument } from 'idai-field-core';
+import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
-import { ImageVariant } from 'idai-field-core';
 
 
 const MAX_IMAGE_WIDTH = 600;

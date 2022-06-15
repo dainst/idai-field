@@ -736,6 +736,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private async reindex() {
 
+        this.updateDocumentCache();
+
         Tree.flatten(this.projectConfiguration.getCategories()).forEach(category => {
             CategoryForm.getFields(category).forEach(field => {
                 this.indexFacade.addConstraintIndexDefinitionsForField(field);
@@ -749,5 +751,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.categoryConverter,
             true
         );
+    }
+
+
+    private updateDocumentCache() {
+
+        this.documentCache.getAll().filter(document => {
+            return !this.projectConfiguration.getCategory(document.resource.category);
+        }).forEach(document => this.documentCache.remove(document.resource.id));
     }
 }

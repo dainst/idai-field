@@ -151,7 +151,7 @@
     "chromedriver": "^96.0.0",
     "codelyzer": "^5.1.2",
     "cross-var": "^1.1.0",
-    "electron": "16.0.8",
+    "electron": "16.2.6",
     "electron-builder": "23.0.2",
     "electron-chromedriver": "16.0.0",
     "electron-notarize": "1.1.1",

@@ -751,9 +751,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </source>
+        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich. </source>
         <target state="final">
-                        The installation of Java 8 or higher is required in order to perform a shapefile
+                        The installation of Java JDK 8 or higher is required in order to perform a shapefile
                         export.
                     </target>
         <context-group purpose="location">

@@ -122,12 +122,12 @@ export class BuiltInConfiguration {
             required: true,
             fields: {
                 identifier: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     editable: false,
                     visible: false
                 },
                 shortName: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     fixedInputType: true
                 },
                 coordinateReferenceSystem: {
@@ -524,7 +524,7 @@ export class BuiltInConfiguration {
                 // when the image gets uploaded. However, users can change the identifier,
                 // which is why we store the originalFilename separately
                 originalFilename: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     visible: false,
                     editable: false
                 },
@@ -571,14 +571,14 @@ export class BuiltInConfiguration {
             fixedInputType: true
         },
         shortDescription: {
-            inputType: Field.InputType.INPUT,
+            inputType: Field.InputType.SIMPLE_INPUT, // TODO Change to Input
             visible: true,
             editable: true,
             fulltextIndexed: true,
             fixedInputType: true
         },
         identifier: {
-            inputType: Field.InputType.INPUT,
+            inputType: Field.InputType.SIMPLE_INPUT,
             visible: false,
             editable: true,
             mandatory: true,

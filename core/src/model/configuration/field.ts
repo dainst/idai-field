@@ -61,6 +61,7 @@ export module Field {
     }
 
     export type InputType = 'input'
+        |'simpleInput'
         |'unsignedInt'
         |'unsignedFloat'
         |'float'
@@ -84,6 +85,7 @@ export module Field {
     export module InputType {
 
         export const INPUT = 'input';
+        export const SIMPLE_INPUT = 'simpleInput';
         export const UNSIGNEDINT = 'unsignedInt';
         export const UNSIGNEDFLOAT = 'unsignedFloat';
         export const FLOAT = 'float';
@@ -126,8 +128,11 @@ export module Field {
 
         export function isValidFieldData(fieldData: any, inputType: InputType): boolean {
 
-            if ([INPUT, TEXT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
+            if ([SIMPLE_INPUT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
                 return isString(fieldData);
+            } else if ([INPUT, TEXT].includes(inputType)) {
+                // TODO Improve validation for i18n strings
+                return isString(fieldData) || isObject(fieldData);
             } else if ([MULTIINPUT, CHECKBOXES].includes(inputType)) {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
             } else if (inputType === UNSIGNEDINT) {

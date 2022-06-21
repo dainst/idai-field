@@ -83,6 +83,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
+        { name: 'simpleInput', label: this.i18n({ id: 'config.inputType.simpleInput', value: 'Einzeiliger Text ohne Mehrsprachigkeit' }), searchable: true, customFields: true },
         { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
         { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }), searchable: true, customFields: true },
         { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },

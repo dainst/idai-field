@@ -45,6 +45,8 @@ import { ImagePickerComponent } from './widgets/image-picker.component';
 import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
 import { RelationPickerComponent } from './widgets/relationpicker/relation-picker.component';
 import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
+import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
+import { SimpleInputComponent } from './core/forms/simple-input.component';
 
 
 @NgModule({
@@ -93,6 +95,7 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
         BooleanComponent,
         DropdownComponent,
         InputComponent,
+        SimpleInputComponent,
         MultiInputComponent,
         RadioComponent,
         TextComponent,
@@ -107,7 +110,8 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
         OutliersComponent,
         EmptyValuelistInfoComponent,
         LiteratureComponent,
-        InvalidFieldDataComponent
+        InvalidFieldDataComponent,
+        MultiLanguageTextFieldComponent
     ],
     exports: [
         DoceditComponent,

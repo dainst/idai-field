@@ -4,13 +4,10 @@ import { Resource } from 'idai-field-core';
 
 @Component({
     selector: 'dai-input',
-    template: `<input [(ngModel)]="resource[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
-                      class="form-control">`
+    templateUrl: './input.html'
 })
 
 /**
- * @author Fabian Zav.
- * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
 export class InputComponent {
@@ -19,8 +16,12 @@ export class InputComponent {
     @Input() fieldName: string;
 
 
-    public deleteIfEmpty(value: string) {
+    public update(fieldData: any) {
 
-        if (value === '') delete this.resource[this.fieldName];
+        if (fieldData) {
+            this.resource[this.fieldName] = fieldData;
+        } else {
+            delete this.resource[this.fieldName];
+        }
     }
 }

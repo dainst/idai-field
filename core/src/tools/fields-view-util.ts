@@ -13,6 +13,7 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { Field } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
+import { I18N } from './i18n';
 
 
 type FieldContent = any;
@@ -48,26 +49,6 @@ export module FieldsViewGroup {
  * @author Daniel de Oliveira
  */
 export module FieldsViewUtil {
-
-    export function getValue(fieldContent: any,
-                             fieldName: string, 
-                             projectConfiguration: ProjectConfiguration,
-                             labels: Labels,
-                             valuelist?: Valuelist): any {
-
-        return fieldName === Resource.CATEGORY
-            ? labels.get(projectConfiguration.getCategory(fieldContent))
-            : valuelist
-                ? labels.getValueLabel(valuelist, fieldContent)
-                : isString(fieldContent)
-                    ? fieldContent
-                        .replace(/^\s+|\s+$/g, '')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;')
-                        .replace(/\n/g, '<br>')
-                    : fieldContent;
-    }
-
 
     export const isVisibleField: Predicate<Field> = on(Field.VISIBLE, is(true));
 
@@ -128,7 +109,7 @@ export module FieldsViewUtil {
                 (value: string) => labels.getValueLabel(field.valuelist, value)
             );
         } else {
-            return object;
+            return labels.get({ label: object } as I18N.LabeledValue) ?? object;
         }
     }
 
@@ -152,11 +133,11 @@ export module FieldsViewUtil {
                     label: labels.get(field),
                     value: isArray(fieldContent)
                         ? fieldContent.map((fieldContent: any) =>
-                            FieldsViewUtil.getValue(
+                            getValue(
                                 fieldContent, field.name, projectConfiguration, labels, field.valuelist
                             )
                         )
-                        : FieldsViewUtil.getValue(
+                        : getValue(
                             fieldContent, field.name, projectConfiguration, labels, field.valuelist
                         ),
                     type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
@@ -164,6 +145,26 @@ export module FieldsViewUtil {
                 };
         }
     } 
+}
+
+
+function getValue(fieldContent: any,
+                  fieldName: string, 
+                  projectConfiguration: ProjectConfiguration,
+                  labels: Labels,
+                  valuelist?: Valuelist): any {
+
+    return fieldName === Resource.CATEGORY
+        ? labels.get(projectConfiguration.getCategory(fieldContent))
+        : valuelist
+            ? labels.getValueLabel(valuelist, fieldContent)
+            : isString(fieldContent)
+                ? fieldContent
+                    .replace(/^\s+|\s+$/g, '')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/\n/g, '<br>')
+                : fieldContent;
 }
 
 

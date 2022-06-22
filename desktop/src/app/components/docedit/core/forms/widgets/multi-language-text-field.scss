@@ -9,6 +9,10 @@ multi-language-text-field {
     border-top-left-radius: 14px !important;
     border-top-right-radius: 14px !important;
     padding: 6px !important;
+
+    &:not(.filled-in) {
+      color: grey;
+    }
   }
 
   .nav-tabs.focused {

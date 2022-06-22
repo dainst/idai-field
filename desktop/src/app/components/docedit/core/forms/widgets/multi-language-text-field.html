@@ -2,6 +2,7 @@
     <li *ngFor="let language of configuredLanguages" class="nav-item" (click)="selectLanguage(language)">
         <a class="nav-link" 
            [class.active]="language === selectedLanguage"
+           [class.filled-in]="isFilledIn(language)"
            href="#">{{getLanguageLabel(language)}}</a>
     </li>
 </ul>

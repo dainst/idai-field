@@ -30,7 +30,9 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
 
+    public isFilledIn = (languageCode: string) => this.multiLanguageText?.[languageCode] !== undefined;
 
+    
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();

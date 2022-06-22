@@ -1,9 +1,10 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" [class.focused]="focused">
     <li *ngFor="let language of configuredLanguages" class="nav-item" (click)="selectLanguage(language)">
         <a class="nav-link" 
            [class.active]="language === selectedLanguage"
            href="#">{{getLanguageLabel(language)}}</a>
     </li>
 </ul>
-<input [(ngModel)]="selectedText" (keyup)="onChanges($event.target.value)"
+<input #inputField [(ngModel)]="selectedText" (keyup)="onChanges($event.target.value)"
+       (focus)="focused = true" (blur)="focused = false"
        class="form-control">

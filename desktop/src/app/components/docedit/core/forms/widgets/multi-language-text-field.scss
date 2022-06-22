@@ -1,0 +1,24 @@
+multi-language-text-field {
+  input {
+    border-top: 0 !important;
+  }
+
+  a {
+    height: 35px;
+    font-size: 13px;
+  }
+
+  .nav-tabs.focused {
+    border-color: #7998cb;
+
+    a.active {
+      border-top-color: #7998cb;
+      border-left-color: #7998cb;
+      border-right-color: #7998cb;
+    }
+
+    a:hover:not(.active) {
+      border-bottom-color: #7998cb !important;
+    }
+  }
+}

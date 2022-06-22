@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { clone, isEmpty, isString } from 'tsfun';
 import { I18N } from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
@@ -19,10 +19,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @Output() onFieldDataChanged: EventEmitter<I18N.String|undefined> = new EventEmitter<I18N.String|undefined>();
 
+    @ViewChild('inputField') inputFieldElement: ElementRef;
+
     public multiLanguageText: I18N.String|undefined;
     public configuredLanguages: string[] = ['de', 'en', 'it'];
     public selectedLanguage: string;
     public selectedText: string;
+    public focused: boolean = false;
 
 
     public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
@@ -49,6 +52,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
         this.selectedLanguage = language;
         this.updateSelectedText();
+        this.inputFieldElement.nativeElement.focus();
     }
 
 

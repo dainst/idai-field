@@ -1,10 +1,12 @@
 <ul class="nav nav-tabs" [class.focused]="focused">
-    <li *ngFor="let language of configuredLanguages" class="nav-item" (click)="selectLanguage(language)">
+    <li *ngFor="let language of languages"
+        class="nav-item"
+        (click)="selectLanguage(language.code)">
         <a class="nav-link" 
-           [class.active]="language === selectedLanguage"
-           [class.filled-in]="isFilledIn(language)"
+           [class.active]="language.code === selectedLanguage"
+           [class.filled-in]="isFilledIn(language.code)"
            (focus)="focused = true"
-           href="#">{{getLanguageLabel(language)}}</a>
+           href="#">{{language.label}}</a>
     </li>
 </ul>
 <input #inputField [(ngModel)]="selectedText"

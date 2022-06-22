@@ -1,5 +1,5 @@
 import { clone } from 'tsfun';
-import {Settings} from './settings/settings';
+import { Settings } from './settings/settings';
 
 const CONFIGURED_LANGUAGES: string[] = typeof window !== 'undefined' && window.require
     ? window.require('@electron/remote').getGlobal('config').languages
@@ -22,6 +22,7 @@ export class Languages {
 
 
 export type Language = {
+    code: string,
     label: string;
     info?: string;
     isMainLanguage: boolean;
@@ -40,6 +41,7 @@ export type Language = {
         return Object.keys(languages).reduce((result, languageCode) => {
             if (languageCode.length === 2 ) {
                 result[languageCode] = {
+                    code: languageCode,
                     label: languages[languageCode][0].toUpperCase() + languages[languageCode].slice(1),
                     isMainLanguage: mainLanguages.includes(languageCode)
                 };

@@ -15,5 +15,5 @@ export class EditFormFieldComponent {
 
     @Input() resource: Resource;
     @Input() field: Field;
-    @Input() languages: { [languageCode: string]: Language };
+    @Input() languages:  Array<Language>;
 }

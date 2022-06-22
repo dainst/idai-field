@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { isUndefinedOrEmpty, clone } from 'tsfun';
+import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
 import { Document, Field, Group, Labels } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 @Component({
@@ -27,14 +28,15 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public categories: string[];
     public extraGroups: Array<Group> = [{ name: 'conflicts', fields: [] }];
     public groups: Array<Group> = [];
-    public languages: { [languageCode: string]: Language };
+    public languages: Array<Language>;
 
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private labels: Labels) {
+                private labels: Labels,
+                private settingsProvider: SettingsProvider) {
 
-        this.languages = Languages.getAvailableLanguages();
+        this.languages = this.getConfiguredLanguages();
     }
 
 
@@ -80,6 +82,19 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public getFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
+    }
+
+
+    private getConfiguredLanguages(): Array<Language> {
+
+        const configuredLanguages: string[] = ['de', 'en', 'it'];
+        const settingsLanguages: string[] = this.settingsProvider.getSettings().languages;
+
+        const languages: Map<Language> = Languages.getAvailableLanguages();
+
+        return configuredLanguages.sort((language1, language2) => {
+            return settingsLanguages.indexOf(language1) - settingsLanguages.indexOf(language2);
+        }).map(languageCode => languages[languageCode]);
     }
 
 

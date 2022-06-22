@@ -16,7 +16,7 @@ export class EditFormGroup implements OnChanges {
     @Input() fieldDefinitions: Array<Field>;
     @Input() document: Document;
     @Input() originalDocument: Document;
-    @Input() languages: { [languageCode: string]: Language };
+    @Input() languages: Array<Language>;
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };

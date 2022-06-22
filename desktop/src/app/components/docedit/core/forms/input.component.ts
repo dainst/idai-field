@@ -15,7 +15,7 @@ export class InputComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
-    @Input() languages: { [languageCode: string]: Language };
+    @Input() languages: Array<Language>;
 
 
     public update(fieldData: any) {

@@ -15,20 +15,17 @@ import { Language } from '../../../../../services/languages';
 export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @Input() fieldData: I18N.String|undefined;
-    @Input() languages: { [languageCode: string]: Language };
+    @Input() languages: Array<Language>;
 
     @Output() onFieldDataChanged: EventEmitter<I18N.String|undefined> = new EventEmitter<I18N.String|undefined>();
 
     @ViewChild('inputField') inputFieldElement: ElementRef;
 
     public multiLanguageText: I18N.String|undefined;
-    public configuredLanguages: string[] = ['de', 'en', 'it'];
     public selectedLanguage: string;
     public selectedText: string;
     public focused: boolean = false;
 
-
-    public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
 
     public isFilledIn = (languageCode: string) => this.multiLanguageText?.[languageCode] !== undefined;
 
@@ -36,7 +33,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();
-        if (!this.selectedLanguage) this.selectedLanguage = this.configuredLanguages[0];
+        if (!this.selectedLanguage) this.selectedLanguage = this.languages[0].code;
         this.updateSelectedText();
     }
 

@@ -3,9 +3,13 @@
         <a class="nav-link" 
            [class.active]="language === selectedLanguage"
            [class.filled-in]="isFilledIn(language)"
+           (focus)="focused = true"
            href="#">{{getLanguageLabel(language)}}</a>
     </li>
 </ul>
-<input #inputField [(ngModel)]="selectedText" (keyup)="onChanges($event.target.value)"
-       (focus)="focused = true" (blur)="focused = false"
+<input #inputField [(ngModel)]="selectedText"
+       [class.focused]="focused"
+       (keyup)="onChanges($event.target.value)"
+       (focus)="focused = true"
+       (blur)="focused = false"
        class="form-control">

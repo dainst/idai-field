@@ -32,7 +32,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     public isFilledIn = (languageCode: string) => this.multiLanguageText?.[languageCode] !== undefined;
 
-    
+
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();

@@ -4,8 +4,11 @@ multi-language-text-field {
   }
 
   a {
-    height: 35px;
-    font-size: 13px;
+    height: 34px;
+    font-size: 14px;
+    border-top-left-radius: 14px !important;
+    border-top-right-radius: 14px !important;
+    padding: 6px !important;
   }
 
   .nav-tabs.focused {

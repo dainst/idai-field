@@ -9,9 +9,14 @@ multi-language-text-field {
     border-top-left-radius: 14px !important;
     border-top-right-radius: 14px !important;
     padding: 6px !important;
+    color: grey !important;
 
-    &:not(.filled-in) {
-      color: grey;
+    &.filled-in {
+      color: #37588e !important;
+    }
+
+    &:hover {
+      background-color: #fff;
     }
   }
 

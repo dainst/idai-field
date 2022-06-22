@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { clone, isEmpty, isString } from 'tsfun';
 import { I18N } from 'idai-field-core';
+import { Language } from '../../../../../services/languages';
 
 
 @Component({
@@ -14,12 +15,17 @@ import { I18N } from 'idai-field-core';
 export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @Input() fieldData: I18N.String|undefined;
+    @Input() languages: { [languageCode: string]: Language };
 
     @Output() onFieldDataChanged: EventEmitter<I18N.String|undefined> = new EventEmitter<I18N.String|undefined>();
 
     public multiLanguageText: I18N.String|undefined;
+    public configuredLanguages: string[] = ['de', 'en', 'it'];
     public selectedLanguage: string;
     public selectedText: string;
+
+
+    public getLanguageLabel = (languageCode: string) => this.languages[languageCode].label;
 
 
     ngOnChanges() {
@@ -28,9 +34,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         this.selectedLanguage = this.multiLanguageText
             ? Object.keys(this.multiLanguageText)[0] ?? I18N.NO_LANGUAGE
             : I18N.NO_LANGUAGE;
-        this.selectedText = this.multiLanguageText
-            ? this.multiLanguageText[this.selectedLanguage] ?? ''
-            : '';
+        this.updateSelectedText();
     }
 
 
@@ -38,6 +42,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
         this.updateMultiLanguageText(value);
         this.onFieldDataChanged.emit(this.multiLanguageText);
+    }
+
+
+    public selectLanguage(language: string) {
+
+        this.selectedLanguage = language;
+        this.updateSelectedText();
     }
 
 
@@ -52,6 +63,14 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         } else {
             return undefined;
         }
+    }
+
+
+    private updateSelectedText() {
+
+        this.selectedText = this.multiLanguageText
+            ? this.multiLanguageText[this.selectedLanguage] ?? ''
+            : '';
     }
 
 

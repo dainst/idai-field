@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Document, Field, Labels } from 'idai-field-core';
+import { Language } from '../../../services/languages';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class EditFormGroup implements OnChanges {
     @Input() fieldDefinitions: Array<Field>;
     @Input() document: Document;
     @Input() originalDocument: Document;
+    @Input() languages: { [languageCode: string]: Language };
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };

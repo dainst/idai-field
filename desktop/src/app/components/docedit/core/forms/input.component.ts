@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Resource } from 'idai-field-core';
+import { Language } from '../../../../services/languages';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class InputComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
+    @Input() languages: { [languageCode: string]: Language };
 
 
     public update(fieldData: any) {

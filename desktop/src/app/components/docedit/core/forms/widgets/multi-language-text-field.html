@@ -1,2 +1,9 @@
+<ul class="nav nav-tabs">
+    <li *ngFor="let language of configuredLanguages" class="nav-item" (click)="selectLanguage(language)">
+        <a class="nav-link" 
+           [class.active]="language === selectedLanguage"
+           href="#">{{getLanguageLabel(language)}}</a>
+    </li>
+</ul>
 <input [(ngModel)]="selectedText" (keyup)="onChanges($event.target.value)"
-        class="form-control">
+       class="form-control">

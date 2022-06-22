@@ -34,9 +34,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();
-        this.selectedLanguage = this.multiLanguageText
-            ? Object.keys(this.multiLanguageText)[0] ?? I18N.NO_LANGUAGE
-            : I18N.NO_LANGUAGE;
+        if (!this.selectedLanguage) this.selectedLanguage = this.configuredLanguages[0];
         this.updateSelectedText();
     }
 

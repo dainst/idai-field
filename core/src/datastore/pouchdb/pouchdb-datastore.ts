@@ -189,9 +189,12 @@ export class PouchdbDatastore {
         try {
             return await this.performPut(clonedDocument);
         } catch (err) {
-            throw err.name && err.name === 'conflict'
-                ? [DatastoreErrors.SAVE_CONFLICT]
-                : [DatastoreErrors.GENERIC_ERROR, err];
+            if (err.name && err.name === 'conflict') {
+                throw [DatastoreErrors.SAVE_CONFLICT];
+            } else {
+                console.error('Error while updating resource:', err);
+                throw [DatastoreErrors.GENERIC_ERROR, err];
+            }
         }
     }
 

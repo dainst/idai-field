@@ -52,7 +52,9 @@
       "target": "zip",
       "icon": "img/logo.ico",
       "artifactName": "Field-Desktop-${version}-Windows.${ext}",
-      "publish": "github",
+      "publish": "github"
+    },
+    "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },

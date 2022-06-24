@@ -54,6 +54,10 @@
       "artifactName": "Field-Desktop-${version}-Windows.${ext}",
       "publish": "github"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "linux": {
       "target": "AppImage",
       "icon": "img/logo.png",

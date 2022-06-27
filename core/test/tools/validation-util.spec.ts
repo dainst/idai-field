@@ -1,4 +1,5 @@
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../src/tools/validation-util';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt,
+    validateUrl } from '../../src/tools/validation-util';
 
 
 /**
@@ -48,5 +49,14 @@ describe('ValidationUril', () => {
         expect(validateUnsignedInt('ABC')).toBe(false);
         expect(validateUnsignedInt('123.')).toBe(false);
         expect(validateUnsignedInt('')).toBe(false);
+    });
+    
+
+    it('validate URL', () => {
+        
+        expect(validateUrl('http://www.example.de')).toBe(true);
+        expect(validateUrl('https://www.example.de')).toBe(true);
+        expect(validateUrl('www.example.de')).toBe(false);
+        expect(validateUrl('abc')).toBe(false);
     });
 });

@@ -1,14 +1,14 @@
 /**
  * @author Thomas Kleinke
  */
-export const validateUnsignedInt = (value: string): boolean => {
+export function validateUnsignedInt(value: string): boolean {
 
     const regex = new RegExp(/^\d+$/);
     return regex.test(value);
 };
 
 
-export const validateFloat = (value: string): boolean => {
+export function validateFloat(value: string): boolean {
 
     // Commas as decimal separators are detected in a separate function and are therefore allowed here
     const regex = new RegExp(/^-?\d*[.,]?\d+$/);
@@ -16,9 +16,19 @@ export const validateFloat = (value: string): boolean => {
 };
 
 
-export const validateUnsignedFloat = (value: string): boolean => {
+export function validateUnsignedFloat(value: string): boolean {
 
     // Commas as decimal separators are detected in a separate function and are therefore allowed here
     const regex = new RegExp(/^\d*[.,]?\d+$/);
     return regex.test(value);
 };
+
+
+export function validateUrl(url: string): boolean {
+
+    const urlRegex =
+        /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+
+    const result = url.match(urlRegex);
+    return result !== null && result[0] === url;
+}

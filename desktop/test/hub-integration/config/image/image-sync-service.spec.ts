@@ -71,7 +71,7 @@ describe('ImageSyncService', () => {
         done();
     });
 
-    it('live sync emits the correct status', async done => {
+    it('deleted images are evaluated correctly by diff function', async done => {
 
         try {
 

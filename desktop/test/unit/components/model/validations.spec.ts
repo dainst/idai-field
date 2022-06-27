@@ -24,8 +24,10 @@ describe('Validations', () => {
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
                         { name: 'number2', label: 'number2', inputType: 'float' },
+                        { name: 'number3', label: 'number3', inputType: 'float' },
                         { name: 'url1', label: 'url1', inputType: 'url' },
                         { name: 'url2', label: 'url2', inputType: 'url' },
+                        { name: 'url3', label: 'url3', inputType: 'url' },
                         { name: 'dating1', label: 'dating1', inputType: 'dating' },
                         { name: 'dating2', label: 'dating2', inputType: 'dating' },
                         { name: 'dating3', label: 'dating3', inputType: 'dating' },
@@ -258,6 +260,42 @@ describe('Validations', () => {
     });
 
 
+    it('should report only newly entered invalid numeric fields', () => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                number1: 'ABC',
+                number2: 'DEF',
+                number3: 123,
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                number1: 'ABC',
+                number2: 'GHI',
+                number3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfNumericalValues(currentVersion, projectConfiguration, true,
+                previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number2, number3']);
+        }
+    });
+
+
     it('should report invalid URL field', () => {
 
         const doc = {
@@ -297,6 +335,41 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
+        }
+    });
+
+
+    it('should only report newly entered invalid URL fields', () => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                url2: 'DEF',
+                url3: 'https://example.com/',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                url2: 'GHI',
+                url3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfUrls(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url2, url3']);
         }
     });
 
@@ -349,6 +422,48 @@ describe('Validations', () => {
     });
 
 
+    it('should only report newly entered invalid dating fields', () => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                dating1: 'ABC',
+                dating2: 'DEF',
+                dating3: [{ type: 'range', begin: { inputYear: 30, inputType: 'bce' },
+                    end: { inputYear: 20, inputType: 'ce'} }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                dating1: 'ABC',
+                dating2: 'GHI',
+                dating3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDatingValues(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATING_VALUES,
+                    'T',
+                    'dating2, dating3'
+                ]
+            );
+        }
+    });
+
+
     it('should report invalid dimension fields', async done => {
 
         const doc = {
@@ -393,6 +508,48 @@ describe('Validations', () => {
                     ValidationErrors.INVALID_DIMENSION_VALUES,
                     'T',
                     'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, dimension10, dimension12'
+                ]
+            );
+        }
+        done();
+    });
+
+
+    it('should only report newly entered invalid dimension fields', async done => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                dimension1: 'ABC',
+                dimension2: 'DEF',
+                dimension3: [{ inputValue: 50.25, inputUnit: 'mm' }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                dimension1: 'ABC',
+                dimension2: 'GHI',
+                dimension3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDimensionValues(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DIMENSION_VALUES,
+                    'T',
+                    'dimension2, dimension3'
                 ]
             );
         }
@@ -460,6 +617,44 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
+            );
+        }
+        done();
+    });
+
+
+    it('should only report newly entered invalid literature fields', async done => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                literature1: 'ABC',
+                literature2: 'DEF',
+                literature3: [{ quotation: 'Quotation', zenonId: '1234567' }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                literature1: 'ABC',
+                literature2: 'GHI',
+                literature3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfLiteratureValues(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature2, literature3']
             );
         }
         done();

@@ -268,6 +268,11 @@ const createWindow = () => {
         mainWindow = null;
     });
 
+    mainWindow.webContents.on('new-window', (event, url) => {
+        event.preventDefault();
+        electron.shell.openExternal(url);
+    });
+
     return mainWindow;
 };
 

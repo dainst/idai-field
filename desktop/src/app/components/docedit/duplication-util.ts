@@ -1,6 +1,6 @@
-import {clone} from 'tsfun';
-import {NewDocument, Document} from 'idai-field-core';
-import {Validator} from '../../model/validator';
+import { clone}  from 'tsfun';
+import { NewDocument, Document } from 'idai-field-core';
+import { Validator } from '../../model/validator';
 
 
 /**

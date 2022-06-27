@@ -1,7 +1,7 @@
 import { is, isArray, Predicate, isString, and } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -30,13 +30,33 @@ export module Validations {
     }
 
 
+    export function assertCorrectnessOfUrls(document: Document|NewDocument,
+                                            projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateDatesOrUrls(
+            document.resource,
+            projectConfiguration,
+            validateUrl,
+            Field.InputType.URL
+        );
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_URLS,
+                document.resource.category,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
     export function assertCorrectnessOfDates(document: Document|NewDocument,
                                              projectConfiguration: ProjectConfiguration) {
 
-        const invalidFields: string[] = Validations.validateDates(
+        const invalidFields: string[] = Validations.validateDatesOrUrls(
             document.resource,
             projectConfiguration,
-            (value: string) => !isNaN(parseDate(value)?.getTime())
+            (value: string) => !isNaN(parseDate(value)?.getTime()),
+            Field.InputType.DATE
         );
         if (invalidFields.length > 0) {
             throw [
@@ -349,16 +369,17 @@ export module Validations {
     }
 
 
-    export function validateDates(resource: Resource|NewResource,
-                                  projectConfiguration: ProjectConfiguration,
-                                  validationFunction: (value: string) => boolean): string[] {
+    export function validateDatesOrUrls(resource: Resource|NewResource,
+                                        projectConfiguration: ProjectConfiguration,
+                                        validationFunction: (value: string) => boolean,
+                                        inputType: string): string[] {
 
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType === Field.InputType.DATE;
+            return fieldDefinition.inputType === inputType;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
             if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);

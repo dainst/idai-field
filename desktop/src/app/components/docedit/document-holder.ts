@@ -123,6 +123,7 @@ export class DocumentHolder {
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration);

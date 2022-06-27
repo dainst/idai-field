@@ -22,6 +22,8 @@ describe('ImportValidator', () => {
                     { name: 'mandatory', mandatory: true },
                     { name: 'number1', label: 'number1', inputType: 'float' },
                     { name: 'number2', label: 'number2', inputType: 'float' },
+                    { name: 'url1', label: 'url1', inputType: 'url' },
+                    { name: 'url2', label: 'url2', inputType: 'url' },
                     { name: 'date1', label: 'date1', inputType: 'date' },
                     { name: 'date2', label: 'date2', inputType: 'date' },
                     { name: 'ddr', label: 'DropdownRange', inputType: Field.InputType.DROPDOWNRANGE },
@@ -292,6 +294,51 @@ describe('ImportValidator', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+        }
+        done();
+    });
+
+    
+    it('invalid URL field', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1'])
+        }
+        done();
+    });
+
+
+    it('invalid URL fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                url2: '123',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2'])
         }
         done();
     });

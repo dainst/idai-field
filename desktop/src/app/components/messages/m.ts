@@ -91,6 +91,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'M.Import.ValidationErrors.invalidRelationFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'M.Import.ValidationErrors.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_URL = 'M.Import.ValidationErrors.invalidUrl';
+    public static IMPORT_VALIDATION_ERROR_INVALID_URLS = 'M.Import.ValidationErrors.invalidUrls';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE = 'M.Import.ValidationErrors.invalidDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATES = 'M.Import.ValidationErrors.invalidDates';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
@@ -965,6 +967,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValues',
                 value: 'Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URL] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidUrl',
+                value: 'Ungültige URL im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URLS] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidUrls',
+                value: 'Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],

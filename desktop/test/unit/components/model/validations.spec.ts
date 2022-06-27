@@ -24,6 +24,8 @@ describe('Validations', () => {
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
                         { name: 'number2', label: 'number2', inputType: 'float' },
+                        { name: 'url1', label: 'url1', inputType: 'url' },
+                        { name: 'url2', label: 'url2', inputType: 'url' },
                         { name: 'dating1', label: 'dating1', inputType: 'dating' },
                         { name: 'dating2', label: 'dating2', inputType: 'dating' },
                         { name: 'dating3', label: 'dating3', inputType: 'dating' },
@@ -122,7 +124,7 @@ describe('Validations', () => {
                 category: 'T',
                 mandatory: 'm',
                 undef: 'abc',
-                relations: {isRecordedIn: ['0']},
+                relations: { isRecordedIn: ['0'] },
             }
         };
 
@@ -252,6 +254,49 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
+        }
+    });
+
+
+    it('should report invalid URL field', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1']);
+        }
+    });
+
+
+    it('should report invalid URL fields', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                url1: 'ABC',
+                url2: 'DEF',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
         }
     });
 

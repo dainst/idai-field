@@ -6,6 +6,8 @@ services:
     environment:
       - COUCHDB_USER=client_integration_test
       - COUCHDB_PASSWORD=pw
+    ports:
+      - "5985:5984"
   app:
     image: "ghcr.io/dainst/field_hub:3.1.0"
     container_name: field-hub-client-integration-test

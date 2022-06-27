@@ -71,6 +71,13 @@ To execute **e2e tests**, run
 $ npm run e2e
 ```
 
+To execute **integration test with FieldHub**, run
+
+```
+$ npm run test:hub-integration --prefix desktop
+```
+
+The FieldHub integration tests require installed Docker and docker-compose.
 
 ## Packaging
 

@@ -122,11 +122,13 @@ export class DocumentHolder {
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
-        Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
-        Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration, true,
+            this.oldVersion);
+        Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
-        Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration);
-        Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
+        Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration,
+            this.oldVersion);
         Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);
     }

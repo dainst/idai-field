@@ -1,6 +1,6 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/number-util';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../dating';
 import { Dimension } from '../dimension';

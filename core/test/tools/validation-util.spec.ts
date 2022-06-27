@@ -1,10 +1,10 @@
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../src/tools/number-util';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../src/tools/validation-util';
 
 
 /**
  * @author Thomas Kleinke
  */
-describe('NumberUtil', () => {
+describe('ValidationUril', () => {
 
     it('validate unsigned float', () => {
 

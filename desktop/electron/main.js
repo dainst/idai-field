@@ -268,9 +268,9 @@ const createWindow = () => {
         mainWindow = null;
     });
 
-    mainWindow.webContents.on('new-window', (event, url) => {
-        event.preventDefault();
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         electron.shell.openExternal(url);
+        return { action: 'deny' };
     });
 
     return mainWindow;

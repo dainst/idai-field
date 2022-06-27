@@ -88,6 +88,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },
         { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true, customFields: true },
         { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true, customFields: true },
+        { name: 'url', label: this.i18n({ id: 'config.inputType.url', value: 'URL' }), searchable: true, customFields: true },
         { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true, customFields: true },
         { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true, customFields: true },
         { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true, customFields: true },

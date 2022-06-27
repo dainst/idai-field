@@ -8,7 +8,7 @@ import { ConfigurationErrors } from '../../boot/configuration-errors';
 
 const VALID_INPUT_TYPES = [
     'input', 'multiInput', 'text', 'dropdown', 'dropdownRange', 'radio', 'checkboxes', 'unsignedInt', 'float',
-    'unsignedFloat', 'dating', 'dimension', 'literature', 'boolean', 'date'
+    'unsignedFloat', 'dating', 'dimension', 'literature', 'boolean', 'date', 'url'
 ];
 
 

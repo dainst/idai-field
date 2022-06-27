@@ -1,6 +1,6 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/validation-util';
+import { validateFloat, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../dating';
 import { Dimension } from '../dimension';
@@ -65,6 +65,7 @@ export module Field {
         |'unsignedFloat'
         |'float'
         |'text'
+        |'url'
         |'multiInput'
         |'dropdown'
         |'dropdownRange'
@@ -89,6 +90,7 @@ export module Field {
         export const FLOAT = 'float';
         export const TEXT = 'text';
         export const MULTIINPUT = 'multiInput';
+        export const URL = 'url';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';
         export const RADIO = 'radio';
@@ -136,6 +138,8 @@ export module Field {
                 return validateUnsignedFloat(fieldData);
             } else if (inputType === FLOAT) {
                 return validateFloat(fieldData);
+            } else if (inputType === URL) {
+                return validateUrl(fieldData);
             } else if (inputType === BOOLEAN) {
                 return fieldData === true || fieldData === false;
             } else if (inputType === DATE) {

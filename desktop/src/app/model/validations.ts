@@ -1,7 +1,7 @@
 import { is, isArray, Predicate, isString, and } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -20,14 +20,14 @@ export module Validations {
                 previousDocumentVersion.resource,
                 projectConfiguration,
                 allowStrings ? validateNumberAsString : validateNumber,
-                ['unsignedInt', 'float', 'unsignedFloat']
+                Field.InputType.NUMBER_INPUT_TYPES
             ) : [];
 
         const invalidFields: string[] = Validations.validateNumericValues(
             document.resource,
             projectConfiguration,
             allowStrings ? validateNumberAsString : validateNumber,
-            ['unsignedInt', 'float', 'unsignedFloat']
+            Field.InputType.NUMBER_INPUT_TYPES
         );
         
         const newInvalidFields: string[] = getNewInvalidFields(
@@ -121,7 +121,7 @@ export module Validations {
             document.resource,
             projectConfiguration,
             validateDecimalSeparator,
-            ['float', 'unsignedFloat']
+            [Field.InputType.FLOAT, Field.InputType.UNSIGNEDFLOAT]
         );
 
         if (invalidFields.length > 0) {
@@ -459,11 +459,13 @@ export module Validations {
         if (typeof value === 'number') value = value.toString();
 
         switch(inputType) {
-            case 'unsignedInt':
+            case Field.InputType.INT:
+                return validateInt(value);
+            case Field.InputType.UNSIGNEDINT:
                 return validateUnsignedInt(value);
-            case 'float':
+            case Field.InputType.FLOAT:
                 return validateFloat(value);
-            case 'unsignedFloat':
+            case Field.InputType.UNSIGNEDFLOAT:
                 return validateUnsignedFloat(value);
             default:
                 return false;

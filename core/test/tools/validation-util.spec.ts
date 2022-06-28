@@ -1,4 +1,4 @@
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt,
+import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt,
     validateUrl } from '../../src/tools/validation-util';
 
 
@@ -7,18 +7,33 @@ import { validateFloat, validateUnsignedFloat, validateUnsignedInt,
  */
 describe('ValidationUril', () => {
 
-    it('validate unsigned float', () => {
+    it('validate int', () => {
 
-        expect(validateUnsignedFloat('1234')).toBe(true);
-        expect(validateUnsignedFloat('-1234')).toBe(false);
-        expect(validateUnsignedFloat('1.234')).toBe(true);
-        expect(validateUnsignedFloat('.234')).toBe(true);
-        expect(validateUnsignedFloat('-1.234')).toBe(false);
-        expect(validateUnsignedFloat('ABC1.234')).toBe(false);
-        expect(validateUnsignedFloat('1.234ABC')).toBe(false);
-        expect(validateUnsignedFloat('ABC')).toBe(false);
-        expect(validateUnsignedFloat('123.')).toBe(false);
-        expect(validateUnsignedFloat('')).toBe(false);
+        expect(validateInt('1234')).toBe(true);
+        expect(validateInt('-1234')).toBe(true);
+        expect(validateInt('1.234')).toBe(false);
+        expect(validateInt('.234')).toBe(false);
+        expect(validateInt('-1.234')).toBe(false);
+        expect(validateInt('ABC1.234')).toBe(false);
+        expect(validateInt('1.234ABC')).toBe(false);
+        expect(validateInt('ABC')).toBe(false);
+        expect(validateInt('123.')).toBe(false);
+        expect(validateInt('')).toBe(false);
+    });
+
+
+    it('validate unsigned int', () => {
+
+        expect(validateUnsignedInt('1234')).toBe(true);
+        expect(validateUnsignedInt('-1234')).toBe(false);
+        expect(validateUnsignedInt('1.234')).toBe(false);
+        expect(validateUnsignedInt('.234')).toBe(false);
+        expect(validateUnsignedInt('-1.234')).toBe(false);
+        expect(validateUnsignedInt('ABC1.234')).toBe(false);
+        expect(validateUnsignedInt('1.234ABC')).toBe(false);
+        expect(validateUnsignedInt('ABC')).toBe(false);
+        expect(validateUnsignedInt('123.')).toBe(false);
+        expect(validateUnsignedInt('')).toBe(false);
     });
 
 
@@ -37,20 +52,20 @@ describe('ValidationUril', () => {
     });
 
 
-    it('validate unsigned int', () => {
+    it('validate unsigned float', () => {
 
-        expect(validateUnsignedInt('1234')).toBe(true);
-        expect(validateUnsignedInt('-1234')).toBe(false);
-        expect(validateUnsignedInt('1.234')).toBe(false);
-        expect(validateUnsignedInt('.234')).toBe(false);
-        expect(validateUnsignedInt('-1.234')).toBe(false);
-        expect(validateUnsignedInt('ABC1.234')).toBe(false);
-        expect(validateUnsignedInt('1.234ABC')).toBe(false);
-        expect(validateUnsignedInt('ABC')).toBe(false);
-        expect(validateUnsignedInt('123.')).toBe(false);
-        expect(validateUnsignedInt('')).toBe(false);
+        expect(validateUnsignedFloat('1234')).toBe(true);
+        expect(validateUnsignedFloat('-1234')).toBe(false);
+        expect(validateUnsignedFloat('1.234')).toBe(true);
+        expect(validateUnsignedFloat('.234')).toBe(true);
+        expect(validateUnsignedFloat('-1.234')).toBe(false);
+        expect(validateUnsignedFloat('ABC1.234')).toBe(false);
+        expect(validateUnsignedFloat('1.234ABC')).toBe(false);
+        expect(validateUnsignedFloat('ABC')).toBe(false);
+        expect(validateUnsignedFloat('123.')).toBe(false);
+        expect(validateUnsignedFloat('')).toBe(false);
     });
-    
+
 
     it('validate URL', () => {
         

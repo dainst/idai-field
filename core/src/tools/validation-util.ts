@@ -1,6 +1,13 @@
 /**
  * @author Thomas Kleinke
  */
+ export function validateInt(value: string): boolean {
+
+    const regex = new RegExp(/^-?\d+$/);
+    return regex.test(value);
+};
+
+
 export function validateUnsignedInt(value: string): boolean {
 
     const regex = new RegExp(/^\d+$/);

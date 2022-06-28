@@ -42,26 +42,38 @@
                                 (ngModelChange)="credentialsChanged()"
                                 [(ngModel)]="password">
                     </div>
-                    <div id="thumbs-synchronization-slider" class="row" >
+                    <div id="thumbs-synchronization-slider" class="row">
                         <div class="col-auto mr-auto">
                             <span i18n="@@project.download.thumbnailImageFiles">Vorschaubilder herunterladen</span> {{ thumbnailImagesSize }}
                         </div>
                         <div class="col-auto">
-                            <label class="switch"  >
+                            <label class="switch">
                                 <input type="checkbox" [checked]="syncThumbnailImages"
                                     (change)="syncThumbnailImages = !syncThumbnailImages">
                                 <span class="slider round"></span>
                             </label>
                         </div>
                     </div>
-                    <div id="original-synchronization-slider" class="row" >
+                    <div id="original-synchronization-slider" class="row">
                         <div class="col-auto mr-auto">
                             <span i18n="@@project.download.originalImageFiles">Originalbilder herunterladen</span> {{ originalImagesSize }}
                         </div>
                         <div class="col-auto">
-                            <label class="switch"  >
+                            <label class="switch">
                                 <input type="checkbox" [checked]="syncOriginalImages"
                                     (change)="syncOriginalImages = !syncOriginalImages">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="overwrite-project-slider" class="row">
+                        <div class="col-auto mr-auto">
+                            <span i18n="@@project.download.overwriteProject">Existierendes Projekt gleichen Namens überschreiben</span>
+                        </div>
+                        <div class="col-auto">
+                            <label class="switch">
+                                <input type="checkbox" [checked]="overwriteProject"
+                                    (change)="overwriteProject = !overwriteProject">
                                 <span class="slider round"></span>
                             </label>
                         </div>

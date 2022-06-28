@@ -34,6 +34,7 @@ export class DownloadProjectComponent {
     public password: string = '';
     public syncThumbnailImages: boolean = true;
     public syncOriginalImages: boolean = false;
+    public overwriteProject: boolean = false;
     public originalImagesSize = '';
     public thumbnailImagesSize = '';
 
@@ -75,7 +76,8 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.filesProgressPercent = 0;
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
-        const destroyExisting: boolean = !this.settingsProvider.getSettings().dbs.includes(this.projectName);
+        const destroyExisting: boolean = this.overwriteProject
+            || !this.settingsProvider.getSettings().dbs.includes(this.projectName);
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();

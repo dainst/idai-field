@@ -63,6 +63,7 @@ describe('ImageSyncService', () => {
     const settingsProviderMock = new SettingsProvider();
 
     beforeAll(async done => {
+
         settingsProviderMock.setSettings(settingsMock);
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
@@ -78,6 +79,7 @@ describe('ImageSyncService', () => {
 
     // Re-initialize image store data for each test.
     beforeEach(async (done) => {
+
         await imageStore.init(`${testFilePath}imagestore/`, testProjectName);
 
         const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.create_project_with_default_user("${testProjectName}", "${syncTarget.password}")'`;
@@ -87,6 +89,7 @@ describe('ImageSyncService', () => {
 
 
     afterEach(async (done) => {
+
         await imageStore.deleteData(testProjectName);
 
         const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.delete_project("${testProjectName}")'`;

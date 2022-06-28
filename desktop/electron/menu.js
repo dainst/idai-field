@@ -232,8 +232,12 @@ const getTemplate = (mainWindow, context, config) => {
 
                 remoteMain.enable(infoWindow.webContents);
 
-                infoWindow.once('ready-to-show', function() {
+                infoWindow.once('ready-to-show', () => {
                     infoWindow.show();
+                });
+
+                infoWindow.on('close', () => {
+                    parentWindow.focus();
                 });
 
                 infoWindow.loadURL(global.distUrl + '/info/info-window.html');

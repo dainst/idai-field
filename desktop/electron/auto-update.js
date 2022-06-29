@@ -18,15 +18,12 @@ const setUp = async (mainWindow) => {
 
     autoUpdater.on('update-available', async updateInfo => {
         updateVersion = updateInfo.version;
-        const infoText = messages.get('autoUpdate.available.message.1')
-            + updateInfo.version
-            + messages.get('autoUpdate.available.message.2');
 
         const modal = new BrowserWindow({
             parent: mainWindow,
             modal: true,
-            width: 400,
-            height: 500,
+            width: 450,
+            height: 510,
             frame: false,
             resizable: false,
             show: false,
@@ -40,13 +37,13 @@ const setUp = async (mainWindow) => {
         modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update-modal.html'));
         modal.webContents.on('did-finish-load', () => {
             modal.webContents.executeJavaScript(
-                'document.getElementById("info-text").textContent = "' + infoText + '"; ' +
-                'document.getElementById("release-notes").innerHTML = "' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
+                'document.getElementById("info-text").textContent = "' + messages.get('autoUpdate.available.info') + '"; ' +
+                'document.getElementById("release-notes").innerHTML = "' + '<h2>Field Desktop ' + updateVersion + '</h2>' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
                 'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
                 'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
-                'document.getElementById("question").textContent = "' + messages.get('autoUpdate.available.message.3') + '";'
+                'document.getElementById("question").textContent = "' + messages.get('autoUpdate.available.question') + '";'
             );
-            modal.show();
+            setTimeout(() => modal.show(), 200);
         });
 
         modal.on('close', () => {

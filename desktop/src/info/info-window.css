@@ -30,13 +30,22 @@ p#about-version {
 #close-button {
   position: relative;
   top: 15px;
-  background-color: rgb(114, 123, 132);
+  background-color: #727b84;
   border: none;
-  border-radius: 0.3rem;
+  border-radius: 2rem;
   color: white;
   font-weight: 400;
   font-size: 16px;
   padding: 6px 12px;
   height: 38px;
   outline: none;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#close-button:hover {
+  background-color: #8d959c;
+}
+
+#close-button:active {
+  background-color: #545b62;
 }

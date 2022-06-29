@@ -49,6 +49,10 @@ const setUp = async (mainWindow) => {
             modal.show();
         });
 
+        modal.on('close', () => {
+            parentWindow.focus();
+        });
+
         ipcMain.on('confirm-auto-update', () => {
             modal.close();
             mainWindow.webContents.send('downloadProgress', {

@@ -18,15 +18,15 @@ const setUp = async (mainWindow) => {
 
     autoUpdater.on('update-available', async updateInfo => {
         updateVersion = updateInfo.version;
-        const message = messages.get('autoUpdate.available.message.1')
+        const infoText = messages.get('autoUpdate.available.message.1')
             + updateInfo.version
             + messages.get('autoUpdate.available.message.2');
 
         const modal = new BrowserWindow({
             parent: mainWindow,
             modal: true,
-            width: 300,
-            height: 350,
+            width: 400,
+            height: 500,
             frame: false,
             resizable: false,
             show: false,
@@ -40,10 +40,11 @@ const setUp = async (mainWindow) => {
         modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update-modal.html'));
         modal.webContents.on('did-finish-load', () => {
             modal.webContents.executeJavaScript(
-                'document.getElementById("auto-update-info-text").textContent = "' + message + '"; ' +
+                'document.getElementById("info-text").textContent = "' + infoText + '"; ' +
                 'document.getElementById("release-notes").innerHTML = "' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
                 'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
-                'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '";'
+                'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
+                'document.getElementById("question").textContent = "' + messages.get('autoUpdate.available.message.3') + '";'
             );
             modal.show();
         });

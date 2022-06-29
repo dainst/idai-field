@@ -2,7 +2,8 @@ const messageDictionary = {
     de: {
         'autoUpdate.available.title': 'Update verfügbar',
         'autoUpdate.available.message.1': 'Eine neue Version von Field Desktop (',
-        'autoUpdate.available.message.2': ') ist verfügbar. Möchten Sie sie herunterladen und installieren?',
+        'autoUpdate.available.message.2': ') ist verfügbar.',
+        'autoUpdate.available.message.3': 'Möchten Sie die neue Version herunterladen und installieren?',
         'autoUpdate.available.yes': 'Ja',
         'autoUpdate.available.no': 'Nein',
         'autoUpdate.downloaded.title': 'Update installieren',
@@ -51,7 +52,8 @@ const messageDictionary = {
     en: {
         'autoUpdate.available.title': 'Update available',
         'autoUpdate.available.message.1': 'A new version of Field Desktop (',
-        'autoUpdate.available.message.2': ') is available. Do you want to download and install it?',
+        'autoUpdate.available.message.2': ') is available.',
+        'autoUpdate.available.message.3': 'Do you want to download and install the new version?',
         'autoUpdate.available.yes': ' Yes ',
         'autoUpdate.available.no': ' No ',
         'autoUpdate.downloaded.title': 'Install update',
@@ -100,7 +102,8 @@ const messageDictionary = {
     it: {
         'autoUpdate.available.title': 'Update disponibile',
         'autoUpdate.available.message.1': 'Una nuova versione di Field Desktop (',
-        'autoUpdate.available.message.2': ') è disponibile. Si desidera scaricarla e installarla?',
+        'autoUpdate.available.message.2': ') è disponibile.',
+        'autoUpdate.available.message.3': 'TRANSLATE Si desidera scaricarla e installarla?',
         'autoUpdate.available.yes': 'Sì',
         'autoUpdate.available.no': 'No',
         'autoUpdate.downloaded.title': 'Installa aggiornamento',

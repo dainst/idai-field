@@ -1,0 +1,64 @@
+body {
+  font-family: Helvetica;
+  padding: 5px;
+  user-select: none;
+}
+
+#info-text {
+  font-size: 16px;
+}
+
+#release-notes {
+  height: 300px;
+  padding: 4px 10px;
+  border-radius: 7px;
+  background-color: #e9e9e9;
+  font-size: 14px;
+  overflow-y: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+ul {
+  margin-top: 7px;
+}
+
+#question {
+  margin-bottom: 10px;
+}
+
+#buttons {
+  text-align: right;
+}
+
+#yes-button {
+  background-color: #28a745;
+}
+
+#yes-button:hover {
+  background-color: #21884b;
+}
+
+#no-button {
+  background-color: #727b84;
+}
+
+#no-button:hover {
+  background-color: #8d959c;
+}
+
+.modal-button {
+  border: none;
+  border-radius: 2rem;
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 6px 12px;
+  height: 38px;
+  outline: none;
+  transition: background-color 0.15s ease-in-out;
+}

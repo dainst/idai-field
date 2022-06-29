@@ -43,12 +43,20 @@ ul {
   background-color: #21884b;
 }
 
+#yes-button:active {
+  background-color: #1e7e34;
+}
+
 #no-button {
   background-color: #727b84;
 }
 
 #no-button:hover {
   background-color: #8d959c;
+}
+
+#no-button:active {
+  background-color: #545b62;
 }
 
 .modal-button {

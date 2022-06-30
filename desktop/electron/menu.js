@@ -214,7 +214,7 @@ const getTemplate = (mainWindow, context, config) => {
             click: function createInfoWindow() {
                 const modal = new BrowserWindow({
                     width: 300,
-                    height: 350,
+                    height: 370,
                     frame: false,
                     resizable: false,
                     parent: BrowserWindow.getFocusedWindow(),
@@ -254,7 +254,7 @@ const getTemplate = (mainWindow, context, config) => {
         template[3].submenu.splice(8, 2);
 
         // Remove 'about' option from 'Help' menu
-        template[6].submenu.splice(0, 1);
+        //template[6].submenu.splice(0, 1);
     } else {
         // Remove 'Field' menu
         template.splice(0, 1);

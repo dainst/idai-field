@@ -4,13 +4,13 @@ const execSync = require('child_process').execSync;
 import Ajv from 'ajv';
 
 import { ImageStore, ImageVariant, ImageSyncService } from 'idai-field-core';
-import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
-import { RemoteImageStore } from '../../../../src/app/services/imagestore/remote-image-store';
-import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
-import { Settings, SyncTarget } from '../../../../src/app/services/settings/settings';
-import { SettingsProvider } from '../../../../src/app/services/settings/settings-provider';
+import { FsAdapter } from '../../src/app/services/imagestore/fs-adapter';
+import { RemoteImageStore } from '../../src/app/services/imagestore/remote-image-store';
+import { ThumbnailGenerator } from '../../src/app/services/imagestore/thumbnail-generator';
+import { Settings, SyncTarget } from '../../src/app/services/settings/settings';
+import { SettingsProvider } from '../../src/app/services/settings/settings-provider';
 
-import schema from '../../../../../core/api-schemas/files-list.json';
+import schema from 'idai-field-core/api-schemas/files-list.json';
 
 /**
  * Test the interactions of desktop class implementations required by {@link ImageStore}.

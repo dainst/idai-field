@@ -2,7 +2,7 @@
 
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
-const { ipcMain, BrowserWindow, dialog, app } = require('electron');
+const { ipcMain, BrowserWindow, app } = require('electron');
 const messages = require('../messages');
 
 autoUpdater.logger = log;
@@ -29,8 +29,7 @@ const setUp = async (mainWindow) => {
             show: false,
             webPreferences: {
                 nodeIntegration: true,
-                contextIsolation: false,
-                enableRemoteModule: true
+                contextIsolation: false
             }
         });
 
@@ -87,8 +86,7 @@ const setUp = async (mainWindow) => {
             show: false,
             webPreferences: {
                 nodeIntegration: true,
-                contextIsolation: false,
-                enableRemoteModule: true
+                contextIsolation: false
             }
         });
 

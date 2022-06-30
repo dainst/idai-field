@@ -9,7 +9,7 @@
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 h3 {
@@ -18,9 +18,4 @@ h3 {
 
 ul {
   margin-top: 7px;
-}
-
-#question {
-  height: 36px;
-  margin-bottom: 10px;
 }

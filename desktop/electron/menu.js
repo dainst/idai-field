@@ -1,7 +1,4 @@
-const electron = require('electron');
-const remoteMain = require('@electron/remote/main');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { ipcMain, BrowserWindow, app } = require('electron');
 const messages = require('./messages');
 
 
@@ -215,7 +212,7 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [{
             label: messages.get('menu.about'),
             click: function createInfoWindow() {
-                var infoWindow = new BrowserWindow({
+                const modal = new BrowserWindow({
                     width: 300,
                     height: 350,
                     frame: false,
@@ -225,22 +222,24 @@ const getTemplate = (mainWindow, context, config) => {
                     show: false,
                     webPreferences: {
                         nodeIntegration: true,
-                        contextIsolation: false,
-                        enableRemoteModule: true
+                        contextIsolation: false
                     }
                 });
-
-                remoteMain.enable(infoWindow.webContents);
-
-                infoWindow.once('ready-to-show', () => {
-                    infoWindow.show();
+                modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/info-modal.html'));
+                modal.webContents.on('did-finish-load', () => {
+                    modal.webContents.executeJavaScript(
+                        'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
+                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";'
+                    );
+                    setTimeout(() => modal.show(), 100);
                 });
-
-                infoWindow.on('close', () => {
+                modal.on('close', () => {
                     parentWindow.focus();
                 });
 
-                infoWindow.loadURL(global.distUrl + '/info/info-window.html');
+                ipcMain.once('close-info-modal', () => {
+                    modal.close();
+                });
             }
         }, {
             label: messages.get('menu.help'),

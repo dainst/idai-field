@@ -12,7 +12,7 @@ body {
   text-align: center;
 }
 
-p#brand {
+#brand {
   text-align: center;
   margin-top: 25px;
   font-family: Helvetica;
@@ -20,7 +20,7 @@ p#brand {
   user-select: none;
 }
 
-p#about-version {
+#about-version {
   text-align: center;
   font-family: Helvetica;
   font-size: 14px;

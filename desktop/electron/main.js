@@ -5,7 +5,7 @@ const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
-const autoUpdate = require('./auto-update/auto-update.js');
+const autoUpdate = require('./auto-update.js');
 require('./asynchronous-fs.js');
 
 remoteMain.initialize();

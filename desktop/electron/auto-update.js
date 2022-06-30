@@ -3,7 +3,7 @@
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const { ipcMain, BrowserWindow, app } = require('electron');
-const messages = require('../messages');
+const messages = require('./messages');
 
 autoUpdater.logger = log;
 
@@ -33,7 +33,7 @@ const setUp = async (mainWindow) => {
             }
         });
 
-        modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update/modal/auto-update-modal.html'));
+        modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/auto-update-modal.html'));
         modal.webContents.on('did-finish-load', () => {
             modal.webContents.executeJavaScript(
                 'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.available.info') + '"; ' +
@@ -48,7 +48,7 @@ const setUp = async (mainWindow) => {
             parentWindow.focus();
         });
 
-        ipcMain.on('confirm-auto-update', () => {
+        ipcMain.once('confirm-auto-update', () => {
             mainWindow.webContents.send('downloadProgress', {
                 progressPercent: 0,
                 version: updateVersion
@@ -57,7 +57,7 @@ const setUp = async (mainWindow) => {
             modal.close();
         });
 
-        ipcMain.on('decline-auto-update', () => {
+        ipcMain.once('decline-auto-update', () => {
             modal.close();
         });
     });
@@ -90,7 +90,7 @@ const setUp = async (mainWindow) => {
             }
         });
 
-        modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update/modal/download-finished-modal.html'));
+        modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/download-finished-modal.html'));
         modal.webContents.on('did-finish-load', () => {
             modal.webContents.executeJavaScript(
                 'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.downloaded.title') + '"; ' +
@@ -103,7 +103,7 @@ const setUp = async (mainWindow) => {
             parentWindow.focus();
         });
 
-        ipcMain.on('close-download-finished-modal', () => {
+        ipcMain.once('close-download-finished-modal', () => {
             modal.close();
         });
     });

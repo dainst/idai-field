@@ -47,7 +47,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Entwicklertools an/aus',
         'menu.window': 'Fenster',
         'menu.window.minimize': 'Minimieren',
-        'menu.help': 'Hilfe'
+        'menu.help': 'Hilfe',
+        'info.close': 'Schließen'
     },
     en: {
         'autoUpdate.available.title': 'Update available',
@@ -97,7 +98,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Developer tools on/off',
         'menu.window': 'Window',
         'menu.window.minimize': 'Minimize',
-        'menu.help': 'Help'
+        'menu.help': 'Help',
+        'info.close': 'Close'
     },
     it: {
         'autoUpdate.available.title': 'Update disponibile',
@@ -147,7 +149,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Strumenti per sviluppatori on/off',
         'menu.window': 'Finestra',
         'menu.window.minimize': 'Riduci',
-        'menu.help': 'Aiuto'
+        'menu.help': 'Aiuto',
+        'info.close': 'Chiudi'
     }
 };
 

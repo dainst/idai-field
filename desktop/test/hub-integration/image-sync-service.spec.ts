@@ -110,8 +110,8 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
 
             const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
@@ -130,7 +130,7 @@ describe('ImageSyncService', () => {
 
             const diff = await ImageSyncService.evaluateDifference(localData, remoteData, ImageVariant.THUMBNAIL);
 
-            expect (Object.keys(diff.missingRemotely).includes('0')).toBe(true);
+            expect (Object.keys(diff.missingRemotely).includes('some_uuid')).toBe(true);
             done();
         } catch (err) {
             fail(err);
@@ -142,8 +142,8 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
 
             const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
@@ -162,7 +162,7 @@ describe('ImageSyncService', () => {
 
             const diff = await ImageSyncService.evaluateDifference(localData, remoteData, ImageVariant.THUMBNAIL);
 
-            expect (Object.keys(diff.missingLocally).includes('0')).toBe(true);
+            expect (Object.keys(diff.missingLocally).includes('some_uuid')).toBe(true);
             done();
         } catch (err) {
             fail(err);
@@ -175,12 +175,12 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
-            await imageStore.remove('0', testProjectName);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await imageStore.remove('some_uuid', testProjectName);
 
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
 
             const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
@@ -199,7 +199,7 @@ describe('ImageSyncService', () => {
 
             const diff = await ImageSyncService.evaluateDifference(localData, remoteData, ImageVariant.THUMBNAIL);
 
-            expect (diff.deleteRemotely[0]).toBe('0');
+            expect (diff.deleteRemotely[0]).toBe('some_uuid');
             done();
         } catch (err) {
             fail(err);
@@ -210,12 +210,12 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
 
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('0', mockImage, testProjectName, ImageVariant.THUMBNAIL);
-            await remoteImageStore.remove('0', testProjectName);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await remoteImageStore.remove('some_uuid', testProjectName);
 
             const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
@@ -234,7 +234,7 @@ describe('ImageSyncService', () => {
 
             const diff = await ImageSyncService.evaluateDifference(localData, remoteData, ImageVariant.THUMBNAIL);
 
-            expect (diff.deleteLocally[0]).toBe('0');
+            expect (diff.deleteLocally[0]).toBe('some_uuid');
             done();
         } catch (err) {
             fail(err);

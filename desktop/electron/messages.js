@@ -9,6 +9,7 @@ const messageDictionary = {
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' von Field Desktop wurde geladen. Starten Sie die Anwendung neu, ' +
             'um sie zu installieren.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'Über Field Desktop',
         'menu.settings': 'Einstellungen',
         'menu.project': 'Projekt',
@@ -58,6 +59,7 @@ const messageDictionary = {
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' of Field Desktop has been downloaded. Please restart the ' +
             'application to install it.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'About Field Desktop',
         'menu.settings': 'Settings',
         'menu.project': 'Project',
@@ -107,6 +109,7 @@ const messageDictionary = {
         'autoUpdate.downloaded.message.1': 'La versione ',
         'autoUpdate.downloaded.message.2': ' di Field Desktop è stata scaricata. Riavviare l’applicazione, '
             + 'per installarla.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'Informazioni su Field Desktop',
         'menu.settings': 'Impostazioni',
         'menu.project': 'Progetto',

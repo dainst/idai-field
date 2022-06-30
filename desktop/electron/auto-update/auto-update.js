@@ -37,15 +37,14 @@ const setUp = async (mainWindow) => {
         modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update/modal/auto-update-modal.html'));
         modal.webContents.on('did-finish-load', () => {
             modal.webContents.executeJavaScript(
-                'document.getElementById("info-text").textContent = "' + messages.get('autoUpdate.available.info') + '"; ' +
+                'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.available.info') + '"; ' +
                 'document.getElementById("release-notes").innerHTML = "' + '<h2>Field Desktop ' + updateVersion + '</h2>' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
                 'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
                 'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
-                'document.getElementById("question").textContent = "' + messages.get('autoUpdate.available.question') + '";'
+                'document.getElementById("info-message").textContent = "' + messages.get('autoUpdate.available.question') + '";'
             );
             setTimeout(() => modal.show(), 200);
         });
-
         modal.on('close', () => {
             parentWindow.focus();
         });
@@ -74,12 +73,40 @@ const setUp = async (mainWindow) => {
     autoUpdater.on('update-downloaded', async updateInfo => {
         mainWindow.webContents.send('updateDownloaded', updateInfo);
 
-        await dialog.showMessageBox({
-            title: messages.get('autoUpdate.downloaded.title'),
-            message: messages.get('autoUpdate.downloaded.message.1')
-                + updateInfo.version
-                + messages.get('autoUpdate.downloaded.message.2'),
-            noLink: true
+        const infoMessage = messages.get('autoUpdate.downloaded.message.1')
+            + updateInfo.version
+            + messages.get('autoUpdate.downloaded.message.2');
+
+        const modal = new BrowserWindow({
+            parent: mainWindow,
+            modal: true,
+            width: 450,
+            height: 175,
+            frame: false,
+            resizable: false,
+            show: false,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false,
+                enableRemoteModule: true
+            }
+        });
+
+        modal.loadFile(require('path').join(app.getAppPath(), '/electron/auto-update/modal/download-finished-modal.html'));
+        modal.webContents.on('did-finish-load', () => {
+            modal.webContents.executeJavaScript(
+                'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.downloaded.title') + '"; ' +
+                'document.getElementById("info-message").textContent = "' + infoMessage + '"; ' +
+                'document.getElementById("ok-button").textContent = "' + messages.get('autoUpdate.downloaded.ok') + '";'
+            );
+            setTimeout(() => modal.show(), 200);
+        });
+        modal.on('close', () => {
+            parentWindow.focus();
+        });
+
+        ipcMain.on('close-download-finished-modal', () => {
+            modal.close();
         });
     });
 

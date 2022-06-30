@@ -26,7 +26,7 @@ const copyConfigFile = (destPath, appDataPath) => {
 };
 
 
-const writeConfigFile = (path) => {
+const writeConfigFile = path => {
 
     console.log('Create config.json at ' + path);
     fs.writeFileSync(path, JSON.stringify({ 'dbs': ['test'] }));

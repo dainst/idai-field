@@ -45,7 +45,8 @@
                     </div>
                     <div id="thumbs-synchronization-slider" class="row">
                         <div class="col-auto mr-auto">
-                            <span i18n="@@project.download.thumbnailImageFiles">Vorschaubilder herunterladen</span> {{ thumbnailImagesSize }}
+                            <span i18n="@@project.download.thumbnailImageFiles">Vorschaubilder herunterladen</span> 
+                            <span> {{ thumbnailImagesSize }}</span>
                             <div *ngIf="loadingImagesSize" class="spinner image-size-spinner"></div>
                         </div>
                         <div class="col-auto">
@@ -58,7 +59,8 @@
                     </div>
                     <div id="original-synchronization-slider" class="row">
                         <div class="col-auto mr-auto">
-                            <span i18n="@@project.download.originalImageFiles">Originalbilder herunterladen</span> {{ originalImagesSize }}
+                            <span i18n="@@project.download.originalImageFiles">Originalbilder herunterladen</span> 
+                            <span> {{ originalImagesSize }}</span>
                             <div *ngIf="loadingImagesSize" class="spinner image-size-spinner"></div>
                         </div>
                         <div class="col-auto">

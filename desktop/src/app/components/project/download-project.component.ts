@@ -59,6 +59,9 @@ export class DownloadProjectComponent {
                 private pouchdbDatastore: PouchdbDatastore,
                 private decimalPipe: DecimalPipe) {}
 
+    
+    public checkCredentialsCompleteness = () => this.url && this.password && this.projectName;
+
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -145,7 +148,7 @@ export class DownloadProjectComponent {
         this.originalImagesSize = '';
         this.thumbnailImagesSize = '';
 
-        if (!this.url || !this.password || !this.projectName) return;
+        if (!this.checkCredentialsCompleteness()) return;
 
         this.loadingImagesSize = true;
 

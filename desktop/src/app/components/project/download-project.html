@@ -4,7 +4,8 @@
             <div class="col default-nav bg-light text-right">
                 <button id="importStartButton"
                         class="btn btn-primary"
-                        (click)="onStartClicked()">
+                        [class.disabled]="!checkCredentialsCompleteness()"
+                        (click)="checkCredentialsCompleteness() && onStartClicked()">
                     <span class="mdi mdi-file-import"></span>
                     <span class="button-label" i18n="@@project.download.connect">Download starten</span>
                 </button>

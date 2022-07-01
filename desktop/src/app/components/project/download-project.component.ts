@@ -124,8 +124,7 @@ export class DownloadProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
-            }
-            else {
+            } else {
                 await this.cancel(progressModalRef);
                 this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
                 console.error('Error while downloading project', e);
@@ -293,16 +292,22 @@ export class DownloadProjectComponent {
 
     private async getUpdateSequence(): Promise<number> {
 
-        const info = await new PouchDB(
-            SyncService.generateUrl(this.url, this.projectName),
-            {
-                skip_setup: true,
-                auth: {
-                    username: this.projectName,
-                    password: this.password
+        let info;
+
+        try {
+            info = await new PouchDB(
+                SyncService.generateUrl(this.url, this.projectName),
+                {
+                    skip_setup: true,
+                    auth: {
+                        username: this.projectName,
+                        password: this.password
+                    }
                 }
-            }
-        ).info();
+            ).info();
+        } catch (err) {
+            throw 'invalidCredentials';
+        }
 
         // tslint:disable-next-line: no-string-throw
         if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';

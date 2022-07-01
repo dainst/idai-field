@@ -3,4 +3,9 @@
   #password-label {
     margin-top: 10px;
   }
+
+  span,
+  label {
+    user-select: none;
+  }
 }

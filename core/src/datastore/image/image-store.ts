@@ -173,11 +173,9 @@ export class ImageStore {
         await this.filesystem.writeFile(thumbnailPath, buffer);
     }
 
-    private aggregateFileMap(
-        aggregated: { [uuid:string]: FileInfo; },
-        fileStatList: FileStat[],
-        variant: ImageVariant
-    ): { [uuid:string]: FileInfo; } {
+
+    private aggregateFileMap(aggregated: { [uuid:string]: FileInfo; }, fileStatList: FileStat[],
+                             variant: ImageVariant): { [uuid:string]: FileInfo; } {
 
         for (const stat of fileStatList) {
             let uuid = stat.path;
@@ -206,6 +204,7 @@ export class ImageStore {
                 };
             };
         }
+
         return aggregated;
     }
 
@@ -266,30 +265,34 @@ export class ImageStore {
         return this.getDirectoryPath(project, type) + uuid;
     }
 
-
     
     public static getFileSizeSums(files: { [uuid: string]: FileInfo }): { [variantName in ImageVariant]: number } {
+        
         const sums: { [variantName in ImageVariant]: number } = {
             thumbnail_image: 0,
             original_image: 0
         };
+
         for (const fileInfo of Object.values(files)) {
             for (const variant of fileInfo.variants) {
                 sums[variant.name] += variant.size;
             }
         }
+
         return sums;
     }
 
-    public static byteCountToDescription(byteCount: number) {
+
+    public static byteCountToDescription(byteCount: number, transform: (value: any) => string|null) {
+
         byteCount = byteCount * 0.00000095367;
-        let unitTypeOriginal = 'mb';
+        let unitTypeOriginal = 'MB';
 
         if (byteCount > 1000) {
             byteCount = byteCount * 0.00097656;
-            unitTypeOriginal = 'gb';
+            unitTypeOriginal = 'GB';
         }
 
-        return `${byteCount.toFixed(2)} ${unitTypeOriginal}`;
+        return `${transform(byteCount.toFixed(2))} ${unitTypeOriginal}`;
     }
 }

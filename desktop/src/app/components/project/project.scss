@@ -4,3 +4,13 @@
 @import 'download-project';
 @import 'download-project-progress-modal';
 @import 'cancel-modal';
+
+
+.image-size-spinner {
+  position: relative;
+  left: 10px;
+  top: 5px;
+  width: 15px;
+  height: 15px;
+  float: right;
+}

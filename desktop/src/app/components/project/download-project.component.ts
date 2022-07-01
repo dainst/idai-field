@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
 import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, SyncService } from 'idai-field-core';
@@ -14,6 +15,8 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+
+const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
 
 @Component({
@@ -35,13 +38,14 @@ export class DownloadProjectComponent {
     public syncThumbnailImages: boolean = true;
     public syncOriginalImages: boolean = false;
     public overwriteProject: boolean = false;
+    public loadingImagesSize: boolean = false;
     public originalImagesSize = '';
     public thumbnailImagesSize = '';
 
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
-    private credentialsTimerInterval = 500;
+
 
     constructor(private messages: Messages,
                 private syncService: SyncService,
@@ -52,7 +56,8 @@ export class DownloadProjectComponent {
                 private tabManager: TabManager,
                 private imageStore: ImageStore,
                 private remoteImageStore: RemoteImageStore,
-                private pouchdbDatastore: PouchdbDatastore) {}
+                private pouchdbDatastore: PouchdbDatastore,
+                private decimalPipe: DecimalPipe) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -128,16 +133,21 @@ export class DownloadProjectComponent {
     }
 
 
-    public credentialsChanged() {
+    public onCredentialsChanged() {
 
-        if (this.credentialsTimer) {
-            clearTimeout(this.credentialsTimer);
-        }
-
-        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), this.credentialsTimerInterval);
+        if (this.credentialsTimer) clearTimeout(this.credentialsTimer);
+        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), CREDENTIALS_TIMER_INTERVAL);
     }
 
+
     private async getFileSizes() {
+
+        this.originalImagesSize = '';
+        this.thumbnailImagesSize = '';
+
+        if (!this.url || !this.password || !this.projectName) return;
+
+        this.loadingImagesSize = true;
 
         try {
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
@@ -149,13 +159,17 @@ export class DownloadProjectComponent {
 
             const sizes = ImageStore.getFileSizeSums(fileList);
 
-            this.originalImagesSize = `(${ImageStore.byteCountToDescription(sizes.original_image)})`;
-            this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(sizes.thumbnail_image)})`;
+            this.originalImagesSize = `(${ImageStore.byteCountToDescription(
+                sizes.original_image, (value) => this.decimalPipe.transform(value)
+            )})`;
+            this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
+                sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
+            )})`;
         } catch {
-
-            console.log('Credentials for dowload still seem to be invalid. Unable to evaluate file download size.');
             this.originalImagesSize = '';
             this.thumbnailImagesSize = '';
+        } finally {
+            this.loadingImagesSize = false;
         }
     }
 

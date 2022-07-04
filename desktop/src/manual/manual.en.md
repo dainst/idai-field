@@ -358,19 +358,25 @@ To work with an existing project that is available on another Field Desktop inst
 * *Download preview images*: This option is enabled by default. If you have a weak internet connection and want to download as little data as possible, you may want to disable it.
 * *Download original images*: Enable this option if you want to download the images in their original image resolution. Depending on the number and size of images managed in the project, this may involve downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
 
+As soon as you have entered a valid address, project name and password, the amount of image data to be downloaded will be shown besides the respective options after a short computation time.
+
 Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
 
 
-### Configuration
+### Configure synchronization
 
 Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
 
 * *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Desktop database server of the DAI). 
 * *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
+* *Enable synchronization*: Use this switch to start or interrupt the connection.
 * *Synchronize preview images*: This option is enabled by default. If you have a weak internet connection and want to upload/download as little data as possible, you may want to disable it.
-* *Synchronize original images*: Enable this option if you want to synchronize the images in their original image resolution. Depending on the number and size of images managed in the project, this may involve uploading/downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
+* *Upload original images*: Enable this option if you want to upload images in their original image resolution.
+* *Download original images*: Enable this option if you want to download images in their original image resolution. Depending on the number and size of images managed in the project, this may involve downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
+ 
+As soon as you have entered a valid address and the correct password, the amount of image data to upload/download will be shown besides the respective options after a short computation time. Please note that the amount of data may increase if additional images are imported into the project at a later time.
 
-Use the switch **Enable synchronization** to start or interrupt the connection. Finally, confirm your settings by clicking the **Apply settings** button.
+Finally, confirm your settings by clicking the **Apply settings** button.
 
 ### Synchronization state
 

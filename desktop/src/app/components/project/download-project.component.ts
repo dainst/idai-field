@@ -45,6 +45,7 @@ export class DownloadProjectComponent {
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
+    private getFileSizesStart: Date;
 
 
     constructor(private messages: Messages,
@@ -144,6 +145,9 @@ export class DownloadProjectComponent {
 
     private async getFileSizes() {
 
+        const startDate = new Date();
+        this.getFileSizesStart = startDate;
+
         this.originalImagesSize = '';
         this.thumbnailImagesSize = '';
 
@@ -161,12 +165,14 @@ export class DownloadProjectComponent {
 
             const sizes = ImageStore.getFileSizeSums(fileList);
 
-            this.originalImagesSize = `(${ImageStore.byteCountToDescription(
-                sizes.original_image, (value) => this.decimalPipe.transform(value)
-            )})`;
-            this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
-                sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
-            )})`;
+            if (this.getFileSizesStart === startDate) {
+                this.originalImagesSize = `(${ImageStore.byteCountToDescription(
+                    sizes.original_image, (value) => this.decimalPipe.transform(value)
+                )})`;
+                this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
+                    sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
+                )})`;
+            }
         } catch {
             this.originalImagesSize = '';
             this.thumbnailImagesSize = '';

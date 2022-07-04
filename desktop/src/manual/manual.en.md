@@ -404,6 +404,7 @@ You can allow others to establish a synchronization connection with your project
 
 * *Your address*: Your network address, which others can use to connect to your database from their own Field Desktop installation. You can share this address along with your password to allow others to synchronize their project data with you.
 * *Your password*: By default, the database is protected from unauthorized access with a randomly generated password. At this point you can change the password.
+* *Receive original images*: If this option is enabled, image files sent by others are accepted in their original image resolution and stored in the image directory. Since the image files may contain several gigabytes of data, you should ensure that there is sufficient storage space in the image directory. By default, the option is disabled, so no original images are accepted. The option only affects synchronization connections that have been set up on other computers; a self-configured synchronization connection is not affected by this setting.
 
 
 <hr>

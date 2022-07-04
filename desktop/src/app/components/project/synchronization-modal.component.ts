@@ -35,6 +35,7 @@ export class SynchronizationModalComponent implements OnInit {
     public loadingImagesSize: boolean = false;
 
     private credentialsTimer: ReturnType<typeof setTimeout>;
+    private getFileSizesStart: Date;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -227,6 +228,9 @@ export class SynchronizationModalComponent implements OnInit {
 
     public async getFileSizes() {
 
+        const startDate = new Date();
+        this.getFileSizesStart = startDate;
+
         this.resetImageSizeMessages();
 
         if (!this.syncTarget.address || !this.syncTarget.password) return;
@@ -234,8 +238,8 @@ export class SynchronizationModalComponent implements OnInit {
         this.loadingImagesSize = true;
 
         try {
-            await this.updateThumbnailSizesInfo();
-            await this.updateOriginalImageSizesInfo();
+            await this.updateThumbnailSizesInfo(startDate);
+            await this.updateOriginalImageSizesInfo(startDate);
         } catch {
             // Ignore errors
         } finally {
@@ -252,9 +256,11 @@ export class SynchronizationModalComponent implements OnInit {
     }
 
 
-    private async updateThumbnailSizesInfo() {
+    private async updateThumbnailSizesInfo(startDate: Date) {
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.THUMBNAIL);
+
+        if (this.getFileSizesStart !== startDate) return;
 
         const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(
             downloadSize, (value) => this.decimalPipe.transform(value)
@@ -266,9 +272,11 @@ export class SynchronizationModalComponent implements OnInit {
     }
 
 
-    private async updateOriginalImageSizesInfo() {
+    private async updateOriginalImageSizesInfo(startDate: Date) {
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.ORIGINAL);
+
+        if (this.getFileSizesStart !== startDate) return;
 
         this.originalImageDownloadSizeMsg = `(⬇ ${ImageStore.byteCountToDescription(
             downloadSize, (value) => this.decimalPipe.transform(value)

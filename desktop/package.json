@@ -112,7 +112,7 @@
     "camelcase": "6.3.0",
     "cldr": "^5.7.0",
     "electron-log": "4.4.4",
-    "electron-updater": "4.6.1",
+    "electron-updater": "5.1.0",
     "es6-shim": "0.35.4",
     "exif": "^0.6.0",
     "express": "4.17.1",

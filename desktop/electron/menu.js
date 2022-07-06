@@ -232,7 +232,7 @@ const getTemplate = (mainWindow, context, config) => {
                         'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
                         'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";'
                     );
-                    setTimeout(() => modal.show(), 100);
+                    setTimeout(() => modal.show(), 200);
                 });
                 modal.on('close', () => {
                     parentWindow.focus();

@@ -25,6 +25,7 @@ const setUp = async (mainWindow) => {
             width: 450,
             height: 510,
             frame: false,
+            transparent: true,
             resizable: false,
             show: false,
             webPreferences: {
@@ -82,6 +83,7 @@ const setUp = async (mainWindow) => {
             width: 450,
             height: 175,
             frame: false,
+            transparent: true,
             resizable: false,
             show: false,
             webPreferences: {

@@ -1,7 +1,13 @@
 body {
   font-family: 'Open SansVariable';
-  padding: 10px 10px 0 10px;
   user-select: none;
+  overflow: hidden;
+}
+
+#modal-container {
+  background-color: white;
+  border-radius: 9px;
+  padding: 10px;
   overflow: hidden;
 }
 

@@ -216,6 +216,7 @@ const getTemplate = (mainWindow, context, config) => {
                     width: 300,
                     height: 370,
                     frame: false,
+                    transparent: true,
                     resizable: false,
                     parent: BrowserWindow.getFocusedWindow(),
                     modal: true,
@@ -226,12 +227,17 @@ const getTemplate = (mainWindow, context, config) => {
                     }
                 });
                 modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/info-modal.html'));
-                modal.webContents.on('did-finish-load', () => {
-                    modal.webContents.executeJavaScript(
+
+                modal.webContents.on('did-finish-load', async () => {
+                    await modal.webContents.executeJavaScript(
                         'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
-                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";'
+                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";' +
+                        (process.platform !== 'darwin'
+                            ? 'document.getElementById("modal-container").classList.add("with-border");'
+                            : ''
+                        )
                     );
-                    setTimeout(() => modal.show(), 100);
+                    modal.show();
                 });
                 modal.on('close', () => {
                     parentWindow.focus();

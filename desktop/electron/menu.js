@@ -230,7 +230,11 @@ const getTemplate = (mainWindow, context, config) => {
                 modal.webContents.on('did-finish-load', () => {
                     modal.webContents.executeJavaScript(
                         'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
-                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";'
+                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";' +
+                        (process.platform !== 'darwin'
+                            ? 'document.getElementById("modal-container").classList.add("with-border");'
+                            : ''
+                        )
                     );
                     setTimeout(() => modal.show(), 200);
                 });

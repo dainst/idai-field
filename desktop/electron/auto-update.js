@@ -41,7 +41,11 @@ const setUp = async (mainWindow) => {
                 'document.getElementById("release-notes").innerHTML = "' + '<h2>Field Desktop ' + updateVersion + '</h2>' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
                 'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
                 'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
-                'document.getElementById("info-message").textContent = "' + messages.get('autoUpdate.available.question') + '";'
+                'document.getElementById("info-message").textContent = "' + messages.get('autoUpdate.available.question') + '";' +
+                (process.platform !== 'darwin'
+                    ? 'document.getElementById("modal-container").classList.add("with-border");'
+                    : ''
+                )
             );
             setTimeout(() => modal.show(), 200);
         });
@@ -97,7 +101,11 @@ const setUp = async (mainWindow) => {
             modal.webContents.executeJavaScript(
                 'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.downloaded.title') + '"; ' +
                 'document.getElementById("info-message").textContent = "' + infoMessage + '"; ' +
-                'document.getElementById("ok-button").textContent = "' + messages.get('autoUpdate.downloaded.ok') + '";'
+                'document.getElementById("ok-button").textContent = "' + messages.get('autoUpdate.downloaded.ok') + '";' +
+                (process.platform !== 'darwin'
+                    ? 'document.getElementById("modal-container").classList.add("with-border");'
+                    : ''
+                )
             );
             setTimeout(() => modal.show(), 200);
         });

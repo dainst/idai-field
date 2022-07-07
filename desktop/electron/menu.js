@@ -227,8 +227,8 @@ const getTemplate = (mainWindow, context, config) => {
                     }
                 });
                 modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/info-modal.html'));
-                modal.webContents.on('did-finish-load', () => {
-                    modal.webContents.executeJavaScript(
+                modal.webContents.on('did-finish-load', async () => {
+                    await modal.webContents.executeJavaScript(
                         'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
                         'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";' +
                         (process.platform !== 'darwin'
@@ -236,7 +236,7 @@ const getTemplate = (mainWindow, context, config) => {
                             : ''
                         )
                     );
-                    setTimeout(() => modal.show(), 200);
+                    modal.show();
                 });
                 modal.on('close', () => {
                     parentWindow.focus();

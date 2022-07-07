@@ -14,6 +14,7 @@ body {
 #modal-container.with-border {
   border: 1px solid;
   border-color: #eaeaea;
+  margin: 0 10px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 }
 

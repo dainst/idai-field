@@ -574,8 +574,7 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.INPUT,
             visible: true,
             editable: true,
-            fulltextIndexed: true,
-            fixedInputType: true
+            fulltextIndexed: true
         },
         identifier: {
             inputType: Field.InputType.INPUT,

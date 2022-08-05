@@ -2,17 +2,17 @@
 
 This is a monorepo containing five packages:
 
-* [Field Desktop](desktop): The Field Desktop client based on AngularJS and Electron
-* [Field Mobile](mobile): The Field Mobile client based on React Native
+* [Field Desktop](desktop): The Field Desktop application based on AngularJS and Electron
+* [Field Mobile](mobile): The Field Mobile application based on React Native
 * [Field Server](server): The FieldHub server application
 * [Field Core](core): Shared TypeScript modules
 * [iDAI.field Web](web): The iDAI.field Web publication platform
 
 ## Collaborative work
 
-Field supports automatic database- and filesyncing between different Field Desktop Clients and FieldHub. Here are some network topologies currently in use.
+Field supports automatic database and file syncing between different Field Desktop installations and FieldHub. Here are some network topologies currently in use.
 
-### Syncing between <span style="color: #008B00;">desktop</span> clients only
+### Syncing between <span style="color: #008B00;">Field Desktop</span> installations only
 
 This setup does not require a FieldHub server installation. All researchers sync between their machines (laptops or desktop PCs) directly.
 
@@ -32,7 +32,7 @@ flowchart LR;
     style E fill:#008B00
 ```
 
-### Syncing between <span style="color: #008B00;">desktop</span> clients and institution's <span style="color: #00008B;">FieldHub</span> server
+### Syncing between <span style="color: #008B00;">Field Desktop</span> installations and institution's <span style="color: #00008B;">FieldHub</span> server
 
 If your institution wants to collect all research data centrally, you may setup a FieldHub server instance and let all your researchers sync to it.
 
@@ -51,9 +51,9 @@ flowchart LR;
     style D fill:#008B00
 ```
 
-### Using a <span style="color: #008B00;">Desktop</span> client as a pseudo proxy server
+### Using a <span style="color: #008B00;">Field Desktop</span> installation as a pseudo proxy server
 
-If bandwidth is a concern on excavation, you may also use a Desktop PC/Laptop on site running the desktop client as a local 'pseudo server' to collect data and facilitate syncing to your institution's FieldHub server. This will reduce redundant upload/download bandwith usage compared to the topology variant above.
+If bandwidth is a concern on excavation, you may also use a desktop PC or laptop on site running Field Desktop as a local 'pseudo server' to collect data and facilitate syncing to your institution's FieldHub server. This will reduce redundant upload/download bandwith usage compared to the topology variant above.
 
 ```mermaid
 flowchart LR;

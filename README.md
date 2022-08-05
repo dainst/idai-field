@@ -14,7 +14,7 @@ Field supports automatic database- and filesyncing between different Field Deskt
 
 ### Syncing between <span style="color: #008B00;">desktop</span> clients only
 
-This setup does not require a FieldHub server installation. All researchers sync between their machines (Laptops or Deksktop PCs) directly.
+This setup does not require a FieldHub server installation. All researchers sync between their machines (laptops or desktop PCs) directly.
 
 ```mermaid
 flowchart LR;
@@ -33,7 +33,7 @@ flowchart LR;
 
 ### Syncing between <span style="color: #008B00;">desktop</span> clients and institution's <span style="color: #00008B;">FieldHub</span> server
 
-If your institution wants to collect all research data centrally, you may setup a FieldHub server instance and let all your colleagues to it.
+If your institution wants to collect all research data centrally, you may setup a FieldHub server instance and let all your researchers sync to it.
 
 ```mermaid
 flowchart LR;
@@ -49,9 +49,9 @@ flowchart LR;
     style D fill:#008B00
 ```
 
-### <span style="color: #008B00;">Desktop</span> client as pseudo proxy server
+### Using a <span style="color: #008B00;">Desktop</span> client as a pseudo proxy server
 
-If bandwidth is a concern on excavation, you could also use a Desktop PC/Laptop on side running the desktop client as a local 'pseudo server' to collect data and syncing to your institution's FieldHub server.
+If bandwidth is a concern on excavation, you may also use a Desktop PC/Laptop on site running the desktop client as a local 'pseudo server' to collect data and facilitate syncing to your institution's FieldHub server. This will reduce redundant upload/download bandwith usage compared to the topology variant above.
 
 ```mermaid
 flowchart LR;

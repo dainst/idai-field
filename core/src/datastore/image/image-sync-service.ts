@@ -223,7 +223,8 @@ export class ImageSyncService {
         let uuidsMissingRemotely = localUUIDs.filter((localUUID: string) => {
             return !remoteUUIDs.includes(localUUID)
                 || (remoteData[localUUID].variants
-                    && !remoteData[localUUID].variants.map(variant => variant.name).includes(variant));
+                    ? !remoteData[localUUID].variants.map(variant => variant.name).includes(variant)
+                    : !remoteData[localUUID].types.includes(variant));
         }).filter(
             // We do not want to upload files marked as deleted locally.
             (localUUID: string) => !localData[localUUID].deleted

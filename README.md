@@ -71,7 +71,7 @@ flowchart LR;
 
 ### Mix and match
 
-All topologies can be combined
+The topologies above can also be combined.
 
 ```mermaid
 flowchart LR;

@@ -78,9 +78,9 @@ The topologies above can also be combined.
 
 ```mermaid
 flowchart LR;
-    Pseudo[Pseudo Server] <-->  Hub[FieldHub Server];
-    Pseudo[Pseudo Server] <--> A[Researcher A, Project A];
-    Pseudo[Pseudo Server] <--> B[Researcher B, Project A];
+    Pseudo[Pseudo Server, Project A] <-->  Hub[FieldHub Server];
+    Pseudo[Pseudo Server, Project A] <--> A[Researcher A, Project A];
+    Pseudo[Pseudo Server, Project A] <--> B[Researcher B, Project A];
     Hub[FieldHub Server] <--> C[Researcher C, Project B];
     Hub[FieldHub Server] <--> D[Researcher D, Project B];
     A[Researcher A, Project A] <--> E[Researcher E, Project A];

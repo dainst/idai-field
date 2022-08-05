@@ -1,8 +1,21 @@
 body {
   font-family: 'Open SansVariable';
-  padding: 10px 10px 0 10px;
   user-select: none;
   overflow: hidden;
+}
+
+#modal-container {
+  background-color: white;
+  border-radius: 9px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+#modal-container.with-border {
+  border: 1px solid;
+  border-color: #eaeaea;
+  margin: 10px;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 }
 
 #heading {

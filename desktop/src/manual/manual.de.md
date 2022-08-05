@@ -368,6 +368,8 @@ Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Deskto
 * *Vorschaubilder herunterladen*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten herunterladen möchten, können Sie sie deaktivieren.
 * *Originalbilder herunterladen*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung herunterladen möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
 
+Sobald Sie gültige Angaben für die Adresse, den Projektnamen und das Passwort eingegeben haben, wird die Menge der jeweils herunterzuladenden Bilddaten nach kurzer Berechnungszeit neben den entsprechenden Optionen angezeigt.
+
 Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
 
 
@@ -378,7 +380,11 @@ Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit an
 * *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
 * *Vorschaubilder synchronisieren*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten hoch- bzw. herunterladen möchten, können Sie sie deaktivieren.
-* *Originalbilder synchronisieren*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung synchronisieren möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten hoch- bzw. heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+* *Synchronisation aktivieren*: Über diesen Schalter können Sie die Verbindung starten bzw. unterbrechen.
+* *Originalbilder hochladen*: Aktivieren Sie diese Option, wenn Sie Originalbilder in ihrer ursprünglichen Bildauflösung hochladen möchten.
+* *Originalbilder herunterladen*: Aktivieren Sie diese Option, wenn Sie Originalbilder in ihrer ursprünglichen Bildauflösung herunterladen möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+
+Sobald Sie eine gültige Adresse und das korrekte Passwort eingegeben haben, wird die Menge der jeweils aktuell hoch- bzw. herunterzuladenden Bilddaten nach kurzer Berechnungszeit neben den entsprechenden Optionen angezeigt. Beachten Sie, dass die Datenmenge ansteigen kann, wenn zu einem späteren Zeitpunkt zusätzliche Bilder in das Projekt importiert werden.
 
 Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
 
@@ -411,6 +417,7 @@ Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt 
 
 * *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer Field-Desktop-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
 * *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.
+* *Originalbilder empfangen*: Ist diese Option aktiviert, werden von anderen gesendete Bilddateien in ihrer ursprünglichen Bildauflösung angenommen und im Bilderverzeichnis gespeichert. Da die Bilddateien unter Umständen mehrere Gigabyte an Daten umfassen können, sollten Sie sicherstellen, dass ausreichend Speicherplatz im Bilderverzeichnis vorhanden ist. Standardmäßig ist die Option deaktiviert, sodass keine Originalbilder angenommen werden. Die Option betrifft ausschließlich Synchronisationsverbindungen, die auf anderen Rechnern eingerichtet wurden; eine selbst konfigurierte Synchronisationsverbindung ist von dieser Einstellung nicht betroffen.
 
 
 <hr>

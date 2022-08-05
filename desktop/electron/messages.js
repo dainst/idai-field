@@ -104,7 +104,7 @@ const messageDictionary = {
     it: {
         'autoUpdate.available.title': 'Update disponibile',
         'autoUpdate.available.info': 'Una nuova versione di Field Desktop è disponibile.',
-        'autoUpdate.available.question': 'TRANSLATE Si desidera scaricarla e installarla?',
+        'autoUpdate.available.question': 'Volete scaricare e installare la nuova versione?',
         'autoUpdate.available.yes': 'Sì',
         'autoUpdate.available.no': 'No',
         'autoUpdate.downloaded.title': 'Installa aggiornamento',

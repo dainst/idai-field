@@ -9,6 +9,7 @@ import { SynchronizationModalComponent } from './synchronization-modal.component
 import { DownloadProjectComponent } from './download-project.component';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
 import { CancelModalComponent } from './cancel-modal.component';
+import { WidgetsModule } from '../widgets/widgets.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { CancelModalComponent } from './cancel-modal.component';
         NgbModule,
         FormsModule,
         RouterModule,
+        WidgetsModule
     ],
     declarations: [
         CreateProjectModalComponent,

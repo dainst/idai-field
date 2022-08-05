@@ -3,49 +3,56 @@
 </div>
 
 <div *ngIf="settings && syncTarget" id="synchronization-modal" class="modal-body">
-    <div id="synchronization-slider" class="row">
-        <div class="col-auto mr-auto">
-            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
-        </div>
-        <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="syncTarget.isSyncActive"
-                       (change)="toggleSync()">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-
     <div class="form-group">
         <label for="sync-target-address-input"
                 class="control-label col-form-label"
                 i18n="@@settings.synchronization.address">Adresse</label>
-        <input id="sync-target-address-input" [ngModel]="syncTarget.address"
-                (ngModelChange)="syncTarget.address = $event"
-                class="form-control">
+        <input id="sync-target-address-input"
+               [(ngModel)]="syncTarget.address"
+               (ngModelChange)="onCredentialsChanged()"
+               class="form-control">
 
         <label for="sync-target-password-input"
                 class="control-label col-form-label"
                 i18n="@@settings.synchronization.password">Passwort</label>
         <input id="sync-target-password-input"
                 type="password"
-                [ngModel]="syncTarget.password"
-                (ngModelChange)="syncTarget.password = $event"
+                [(ngModel)]="syncTarget.password"
+                (ngModelChange)="onCredentialsChanged()"
                 class="form-control">
+    </div>
+
+    <div id="synchronization-slider" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@settings.synchronization.activate">
+                    Synchronisation aktivieren
+            </span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox"
+                        [checked]="syncTarget.isSyncActive"
+                        (change)="toggleSync()">
+                <span class="slider round"></span>
+            </label>
+        </div>
     </div>
 
     <div id="thumbs-synchronization-slider" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@settings.synchronization.thumbnailImageFiles"
-                  class="image-syncing-option-label"
-                  [class.disabled]="!syncTarget.isSyncActive">Vorschaubilder synchronisieren {{thumbnailImageSizesMsg}}</span>
+                    class="image-syncing-option-label"
+                    [class.disabled]="!syncTarget.isSyncActive">
+                Vorschaubilder synchronisieren {{thumbnailImageSizesMsg}}
+        </span>
+        <div *ngIf="loadingImagesSize && !thumbnailImageSizesMsg" class="spinner image-size-spinner"></div>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
                 <input type="checkbox"
-                    [checked]="isThumbnailImageSyncActive()"
-                    (change)="toggleThumbnailImageSync()"
-                    [disabled]="!syncTarget.isSyncActive">
+                        [checked]="isThumbnailImageSyncActive()"
+                        (change)="toggleThumbnailImageSync()"
+                        [disabled]="!syncTarget.isSyncActive">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -54,8 +61,11 @@
     <div id="originals-upload-synchronization-slider" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@settings.synchronization.originalImageFilesUpload"
-                  class="image-syncing-option-label"
-                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder hochladen {{originalImageUploadSizeMsg}}</span>
+                    class="image-syncing-option-label"
+                    [class.disabled]="!syncTarget.isSyncActive">
+                Originalbilder hochladen {{originalImageUploadSizeMsg}}
+            </span>
+            <div *ngIf="loadingImagesSize && !originalImageUploadSizeMsg" class="spinner image-size-spinner"></div>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="!syncTarget.isSyncActive">
@@ -71,8 +81,11 @@
     <div id="originals-download-synchronization-slider" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@settings.synchronization.originalImageFilesDownload"
-                  class="image-syncing-option-label"
-                  [class.disabled]="!syncTarget.isSyncActive">Originalbilder herunterladen {{originalImageDownloadSizeMsg}}</span>
+                    class="image-syncing-option-label"
+                    [class.disabled]="!syncTarget.isSyncActive">
+                Originalbilder herunterladen {{originalImageDownloadSizeMsg}}
+            </span>
+            <div *ngIf="loadingImagesSize && !originalImageDownloadSizeMsg" class="spinner image-size-spinner"></div>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="!syncTarget.isSyncActive">

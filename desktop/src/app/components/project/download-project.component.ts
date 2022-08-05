@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
 import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, SyncService } from 'idai-field-core';
@@ -14,6 +15,8 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+
+const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
 
 @Component({
@@ -35,13 +38,15 @@ export class DownloadProjectComponent {
     public syncThumbnailImages: boolean = true;
     public syncOriginalImages: boolean = false;
     public overwriteProject: boolean = false;
+    public loadingImagesSize: boolean = false;
     public originalImagesSize = '';
     public thumbnailImagesSize = '';
 
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
-    private credentialsTimerInterval = 500;
+    private getFileSizesStart: Date;
+
 
     constructor(private messages: Messages,
                 private syncService: SyncService,
@@ -52,7 +57,11 @@ export class DownloadProjectComponent {
                 private tabManager: TabManager,
                 private imageStore: ImageStore,
                 private remoteImageStore: RemoteImageStore,
-                private pouchdbDatastore: PouchdbDatastore) {}
+                private pouchdbDatastore: PouchdbDatastore,
+                private decimalPipe: DecimalPipe) {}
+
+    
+    public checkCredentialsCompleteness = () => this.url && this.password && this.projectName;
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -116,8 +125,7 @@ export class DownloadProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
-            }
-            else {
+            } else {
                 await this.cancel(progressModalRef);
                 this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
                 console.error('Error while downloading project', e);
@@ -128,16 +136,24 @@ export class DownloadProjectComponent {
     }
 
 
-    public credentialsChanged() {
+    public onCredentialsChanged() {
 
-        if (this.credentialsTimer) {
-            clearTimeout(this.credentialsTimer);
-        }
-
-        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), this.credentialsTimerInterval);
+        if (this.credentialsTimer) clearTimeout(this.credentialsTimer);
+        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), CREDENTIALS_TIMER_INTERVAL);
     }
 
+
     private async getFileSizes() {
+
+        const startDate = new Date();
+        this.getFileSizesStart = startDate;
+
+        this.originalImagesSize = '';
+        this.thumbnailImagesSize = '';
+
+        if (!this.checkCredentialsCompleteness()) return;
+
+        this.loadingImagesSize = true;
 
         try {
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
@@ -149,13 +165,19 @@ export class DownloadProjectComponent {
 
             const sizes = ImageStore.getFileSizeSums(fileList);
 
-            this.originalImagesSize = `(${ImageStore.byteCountToDescription(sizes.original_image)})`;
-            this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(sizes.thumbnail_image)})`;
+            if (this.getFileSizesStart === startDate) {
+                this.originalImagesSize = `(${ImageStore.byteCountToDescription(
+                    sizes.original_image, (value) => this.decimalPipe.transform(value)
+                )})`;
+                this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
+                    sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
+                )})`;
+            }
         } catch {
-
-            console.log('Credentials for dowload still seem to be invalid. Unable to evaluate file download size.');
             this.originalImagesSize = '';
             this.thumbnailImagesSize = '';
+        } finally {
+            this.loadingImagesSize = false;
         }
     }
 
@@ -276,16 +298,22 @@ export class DownloadProjectComponent {
 
     private async getUpdateSequence(): Promise<number> {
 
-        const info = await new PouchDB(
-            SyncService.generateUrl(this.url, this.projectName),
-            {
-                skip_setup: true,
-                auth: {
-                    username: this.projectName,
-                    password: this.password
+        let info;
+
+        try {
+            info = await new PouchDB(
+                SyncService.generateUrl(this.url, this.projectName),
+                {
+                    skip_setup: true,
+                    auth: {
+                        username: this.projectName,
+                        password: this.password
+                    }
                 }
-            }
-        ).info();
+            ).info();
+        } catch (err) {
+            throw 'invalidCredentials';
+        }
 
         // tslint:disable-next-line: no-string-throw
         if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';

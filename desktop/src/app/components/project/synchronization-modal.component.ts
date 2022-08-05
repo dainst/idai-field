@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileSyncPreference, ImageStore, ImageSyncService, ImageVariant } from 'idai-field-core';
@@ -5,6 +6,9 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
+
+
+const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
 
 @Component({
@@ -17,6 +21,7 @@ import { SettingsService } from '../../services/settings/settings-service';
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
+ * @author Simon Hohl
  */
 export class SynchronizationModalComponent implements OnInit {
 
@@ -27,11 +32,18 @@ export class SynchronizationModalComponent implements OnInit {
     public originalImageDownloadSizeMsg = '';
     public originalImageUploadSizeMsg = '';
 
+    public loadingImagesSize: boolean = false;
+
+    private credentialsTimer: ReturnType<typeof setTimeout>;
+    private getFileSizesStart: Date;
+
+
     constructor(public activeModal: NgbActiveModal,
                 private imageStore: ImageStore,
                 private remoteImageStore: RemoteImageStore,
                 private settingsProvider: SettingsProvider,
-                private settingsService: SettingsService) { }
+                private settingsService: SettingsService,
+                private decimalPipe: DecimalPipe) {}
 
 
     async ngOnInit() {
@@ -157,7 +169,6 @@ export class SynchronizationModalComponent implements OnInit {
                 variant: ImageVariant.ORIGINAL
             });
         } else {
-
             const previousPreference = this.syncTarget.fileSyncPreferences.find(
                 preference => preference.variant === ImageVariant.ORIGINAL
             );
@@ -182,7 +193,9 @@ export class SynchronizationModalComponent implements OnInit {
 
     public isOriginalImageDownloadSyncActive() {
 
-        const current = this.syncTarget.fileSyncPreferences.find(preference => preference.variant === ImageVariant.ORIGINAL);
+        const current = this.syncTarget.fileSyncPreferences
+            .find(preference => preference.variant === ImageVariant.ORIGINAL);
+
         if (current !== undefined) {
             return current.download;
         }
@@ -206,47 +219,71 @@ export class SynchronizationModalComponent implements OnInit {
     }
 
 
-    private async getFileSizes() {
+    public onCredentialsChanged() {
+
+        if (this.credentialsTimer) clearTimeout(this.credentialsTimer);
+        this.credentialsTimer = setTimeout(this.getFileSizes.bind(this), CREDENTIALS_TIMER_INTERVAL);
+    }
+
+
+    public async getFileSizes() {
+
+        const startDate = new Date();
+        this.getFileSizesStart = startDate;
+
+        this.resetImageSizeMessages();
+
+        if (!this.syncTarget.address || !this.syncTarget.password) return;
+
+        this.loadingImagesSize = true;
 
         try {
-            this.updateThumbnailSizesInfo();
-            this.updateOriginalImageSizesInfo();
-
+            await this.updateThumbnailSizesInfo(startDate);
+            await this.updateOriginalImageSizesInfo(startDate);
         } catch {
-
-            console.log('Credentials for syncing still seem to be invalid.');
-            this.thumbnailImageSizesMsg = '';
-            this.originalImageDownloadSizeMsg = '';
-            this.originalImageUploadSizeMsg = '';
+            // Ignore errors
+        } finally {
+            this.loadingImagesSize = false;
         }
     }
 
 
-    private async updateThumbnailSizesInfo() {
+    private resetImageSizeMessages() {
 
-        if (this.thumbnailImageSizesMsg === '') {
-            this.thumbnailImageSizesMsg = `⏳`;
-        }
+        this.thumbnailImageSizesMsg = '';
+        this.originalImageDownloadSizeMsg = '';
+        this.originalImageUploadSizeMsg = '';
+    }
+
+
+    private async updateThumbnailSizesInfo(startDate: Date) {
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.THUMBNAIL);
 
-        const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(downloadSize);
-        const thumbnailUploadSizeMsg = ImageStore.byteCountToDescription(uploadSize);
-        this.thumbnailImageSizesMsg = `(⬇${thumbnailDownloadSizeMsg} / ⬆${thumbnailUploadSizeMsg})`;
+        if (this.getFileSizesStart !== startDate) return;
+
+        const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(
+            downloadSize, (value) => this.decimalPipe.transform(value)
+        );
+        const thumbnailUploadSizeMsg = ImageStore.byteCountToDescription(
+            uploadSize, (value) => this.decimalPipe.transform(value)
+        );
+        this.thumbnailImageSizesMsg = `(⬇ ${thumbnailDownloadSizeMsg} / ⬆ ${thumbnailUploadSizeMsg})`;
     }
 
-    private async updateOriginalImageSizesInfo() {
-        if (this.originalImageDownloadSizeMsg === '') {
-            this.originalImageDownloadSizeMsg = `⏳`;
-        }
-        if (this.originalImageUploadSizeMsg === '') {
-            this.originalImageUploadSizeMsg = `⏳`;
-        }
+
+    private async updateOriginalImageSizesInfo(startDate: Date) {
 
         const [downloadSize, uploadSize] = await this.getDiff(ImageVariant.ORIGINAL);
 
-        this.originalImageDownloadSizeMsg = `(⬇${ImageStore.byteCountToDescription(downloadSize)})`;
-        this.originalImageUploadSizeMsg = `(⬆${ImageStore.byteCountToDescription(uploadSize)})`;
+        if (this.getFileSizesStart !== startDate) return;
+
+        this.originalImageDownloadSizeMsg = `(⬇ ${ImageStore.byteCountToDescription(
+            downloadSize, (value) => this.decimalPipe.transform(value)
+        )})`;
+        this.originalImageUploadSizeMsg = `(⬆ ${ImageStore.byteCountToDescription(
+            uploadSize, (value) => this.decimalPipe.transform(value)
+        )})`;
     }
 
 

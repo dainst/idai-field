@@ -8,9 +8,13 @@ This is a monorepo containing five packages:
 * [Field Core](core): Shared TypeScript modules
 * [iDAI.field Web](web): The iDAI.field Web publication platform
 
-## Collaborative work
+Field is the German Archaeological Institute’s ([DAI](https://www.dainst.org)) take on a field research documentation system. The main application is currently Field Desktop, with Field Mobile as an upcoming alternative still in early development. For the time beeing, if you are a researcher interested in using Field, please have a look at the [Field Desktop README](desktop) for more information about its features.
 
-Field supports automatic database and file syncing between different Field Desktop installations and FieldHub. Here are some network topologies currently in use.
+## Field infrastructure capabilities
+
+While it is possible to run just a single Field application for your project on one machine, the strength of Field is its capability for automatic database- and filesyncing between different Field Desktop installations and FieldHub.
+
+Here are some network topologies currently in use.
 
 ### Syncing between <span style="color: #008B00;">Field Desktop</span> installations only
 
@@ -104,6 +108,7 @@ flowchart LR;
 After field research documentation has been created using [Field Desktop](desktop), there are several ways to process or publish your data.
 * Export CSV/GeoJSON/Shapefiles from within the Field Desktop client.
 * Import your data in [R](https://www.r-project.org) using [sofa](https://github.com/ropensci/sofa), an example implementation by [Lisa Steinmann](https://orcid.org/0000-0002-2215-1243) can be found [here](https://github.com/lsteinmann/idaifieldR).
+
 
 ## Development
 

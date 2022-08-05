@@ -12,7 +12,7 @@ Field is the German Archaeological Institute’s ([DAI](https://www.dainst.org))
 
 ## Field infrastructure capabilities
 
-While it is possible to run just a single Field application for your project on one machine, the strength of Field is its capability for automatic database- and filesyncing between different Field Desktop installations and FieldHub.
+While it is possible to run just one Field Desktop installation for your project on a single machine, the strength of Field is its capability for automatic database- and filesyncing between different Field Desktop installations and FieldHub.
 
 Here are some network topologies currently in use.
 

@@ -106,7 +106,7 @@ flowchart LR;
 ## Post-project data usage
 
 After field research documentation has been created using [Field Desktop](desktop), there are several ways to process or publish your data.
-* Export CSV/GeoJSON/Shapefiles from within the Field Desktop client.
+* Export CSV/GeoJSON/Shapefiles from within the Field Desktop application.
 * Import your data in [R](https://www.r-project.org) using [sofa](https://github.com/ropensci/sofa), an example implementation by [Lisa Steinmann](https://orcid.org/0000-0002-2215-1243) can be found [here](https://github.com/lsteinmann/idaifieldR).
 
 

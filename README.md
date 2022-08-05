@@ -24,6 +24,7 @@ flowchart LR;
     C[Researcher C] <--> E[Researcher E];
     A[Researcher A] <--> E[Researcher E];
     
+    classDef default color:#fff
     style A fill:#008B00
     style B fill:#008B00
     style C fill:#008B00
@@ -42,6 +43,7 @@ flowchart LR;
     Hub[FieldHub Server] <--> C[Researcher C, Project B];
     Hub[FieldHub Server] <--> D[Researcher D, Project B];
 
+    classDef default color:#fff
     style Hub fill:#00008B
     style A fill:#008B00
     style B fill:#008B00
@@ -61,6 +63,7 @@ flowchart LR;
     Pseudo[Pseudo Server] <--> C[Researcher C];
     Pseudo[Pseudo Server] <--> D[Researcher D];
 
+    classDef default color:#fff
     style Hub fill:#00008B
     style Pseudo fill:#008B00
     style A fill:#008B00
@@ -84,6 +87,7 @@ flowchart LR;
     A[Researcher A, Project A] <--> F[Researcher F, Project A];
     G[Researcher G, Project A] <--> Hub[FieldHub Server];
 
+    classDef default color:#fff
     style Hub fill:#00008B
     style Pseudo fill:#008B00
     style A fill:#008B00

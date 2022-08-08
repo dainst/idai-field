@@ -1,8 +1,9 @@
-import { flatMap, flow, filter, isEmpty, map, forEach, lookup, not } from 'tsfun';
+import { flatMap, flow, filter, isEmpty, map, forEach, lookup, not, isObject, flatten } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { ResultSets } from './result-sets';
 import { StringUtils } from '../tools/string-utils';
+import { I18N } from '../tools';
 
 
 export interface FulltextIndex {
@@ -39,10 +40,11 @@ export module FulltextIndex {
             filter(lookup(document.resource)),
             filter((field: any) => document.resource[field] !== ''),
             map(lookup(document.resource)),
-            flatMap(StringUtils.split(tokenizationPattern)),
+            flatMap(getTokens),
             map(StringUtils.toLowerCase),
             map(StringUtils.toArray),
-            forEach(indexToken(index, document)));
+            forEach(indexToken(index, document))
+        );
     }
 
 
@@ -161,5 +163,13 @@ export module FulltextIndex {
 
         ResultSets.combine(resultSets, Object.keys(index[category][s]));
         return resultSets;
+    }
+
+
+    function getTokens(value: string|I18N.String): string[] {
+
+        return isObject(value)
+            ? flatten(Object.values(value).map(text => StringUtils.split(tokenizationPattern)(text)))
+            : StringUtils.split(tokenizationPattern)(value as string);
     }
 }

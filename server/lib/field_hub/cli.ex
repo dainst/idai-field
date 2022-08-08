@@ -95,10 +95,13 @@ defmodule FieldHub.CLI do
     HTTPoison.start()
 
     %{status_code: status_code} = CouchService.create_user(name, password, get_admin_credentials())
-    if status_code == 409 do
-      Logger.warning("User '#{name}' already exists.")
-    else
-      Logger.info("Created user '#{name}' with password '#{password}'.")
+    case status_code do
+      201 ->
+        Logger.info("Created user '#{name}' with password '#{password}'.")
+      404 ->
+        Logger.error("CouchDB setup seems to be incomplete, unable to add user.")
+      409 ->
+        Logger.warning("User '#{name}' already exists.")
     end
   end
 

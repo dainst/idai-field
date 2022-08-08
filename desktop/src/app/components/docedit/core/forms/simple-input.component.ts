@@ -3,7 +3,7 @@ import { Resource } from 'idai-field-core';
 
 
 @Component({
-    selector: 'dai-simple-input',
+    selector: 'form-field-simple-input',
     template: `<input [(ngModel)]="resource[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
                       class="form-control">`
 })

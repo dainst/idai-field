@@ -7,7 +7,7 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 
 
 @Component({
-    selector: 'dai-geometry',
+    selector: 'form-field-geometry',
     templateUrl: './geometry.html'
 })
 /**

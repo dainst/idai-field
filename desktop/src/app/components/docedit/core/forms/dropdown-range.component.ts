@@ -5,7 +5,7 @@ import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, H
 const PROJECT = 'project';
 
 @Component({
-    selector: 'dai-dropdown-range',
+    selector: 'form-field-dropdown-range',
     templateUrl: './dropdown-range.html'
 })
 /**

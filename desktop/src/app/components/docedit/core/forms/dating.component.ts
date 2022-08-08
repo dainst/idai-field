@@ -4,7 +4,7 @@ import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
-    selector: 'dai-dating',
+    selector: 'form-field-dating',
     templateUrl: './dating.html'
 })
 /**

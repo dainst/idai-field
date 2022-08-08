@@ -3,7 +3,7 @@ import { Resource } from 'idai-field-core';
 
 
 @Component({
-    selector: 'dai-multi-input',
+    selector: 'form-field-multi-input',
     templateUrl: './multi-input.html'
 })
 

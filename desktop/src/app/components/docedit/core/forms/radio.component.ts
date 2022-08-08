@@ -3,7 +3,7 @@ import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from
 
 
 @Component({
-    selector: 'dai-radio',
+    selector: 'form-field-radio',
     templateUrl: `./radio.html`
 })
 

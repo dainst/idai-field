@@ -4,7 +4,7 @@ import { Language } from '../../../../services/languages';
 
 
 @Component({
-    selector: 'dai-input',
+    selector: 'form-field-input',
     templateUrl: './input.html'
 })
 

@@ -9,7 +9,7 @@ type DimensionInEditing = { original: Dimension, clone: Dimension };
 
 
 @Component({
-    selector: 'dai-dimension',
+    selector: 'form-field-dimension',
     templateUrl: './dimension.html'
 })
 /**

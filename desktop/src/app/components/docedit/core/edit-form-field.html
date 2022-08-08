@@ -1,15 +1,15 @@
 <dai-input *ngIf="field.inputType === 'input' || field.inputType === undefined"
            [resource]="resource" [fieldName]="field.name" [languages]="languages"></dai-input>
 
+<dai-input *ngIf="field.inputType === 'text'" [resource]="resource" [fieldName]="field.name"
+           [languages]="languages" [multiLine]="true" ></dai-input>
+
 <dai-simple-input *ngIf="field.inputType === 'simpleInput' || field.inputType === 'unsignedInt'
                 || field.inputType === 'float' || field.inputType == 'unsignedFloat'"
             [resource]="resource" [fieldName]="field.name"></dai-simple-input>
 
 <dai-multi-input *ngIf="field.inputType === 'multiInput'" [resource]="resource"
                  [fieldName]="field.name"></dai-multi-input>
-
-<dai-text *ngIf="field.inputType === 'text'" [resource]="resource"
-          [fieldName]="field.name"></dai-text>
 
 <dai-dropdown *ngIf="field.inputType === 'dropdown'" [resource]="resource"
               [field]="field"></dai-dropdown>

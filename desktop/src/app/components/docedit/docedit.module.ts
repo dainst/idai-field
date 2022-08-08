@@ -28,7 +28,6 @@ import { InputComponent } from './core/forms/input.component';
 import { LiteratureComponent } from './core/forms/literature.component';
 import { MultiInputComponent } from './core/forms/multi-input.component';
 import { RadioComponent } from './core/forms/radio.component';
-import { TextComponent } from './core/forms/text.component';
 import { TypeRelationPickerComponent } from './core/forms/type-relation/type-relation-picker.component';
 import { TypeRelationComponent } from './core/forms/type-relation/type-relation.component';
 import { TypeRowComponent } from './core/forms/type-relation/type-row.component';
@@ -98,7 +97,6 @@ import { SimpleInputComponent } from './core/forms/simple-input.component';
         SimpleInputComponent,
         MultiInputComponent,
         RadioComponent,
-        TextComponent,
         DatingComponent,
         DateComponent,
         TypeRelationComponent,

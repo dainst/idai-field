@@ -9,9 +9,15 @@
            href="#">{{language.label}}</a>
     </li>
 </ul>
-<input #inputField [(ngModel)]="selectedText"
+<input *ngIf="!multiLine" #inputField [(ngModel)]="selectedText"
        [class.focused]="focused"
        (keyup)="onChanges($event.target.value)"
        (focus)="focused = true"
        (blur)="focused = false"
        class="form-control">
+<textarea *ngIf="multiLine" #inputField [(ngModel)]="selectedText"
+       [class.focused]="focused"
+       (keyup)="onChanges($event.target.value)"
+       (focus)="focused = true"
+       (blur)="focused = false"
+       class="form-control"></textarea>

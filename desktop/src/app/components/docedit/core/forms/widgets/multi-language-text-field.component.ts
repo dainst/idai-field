@@ -16,6 +16,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @Input() fieldData: I18N.String|undefined;
     @Input() languages: Array<Language>;
+    @Input() multiLine: boolean = false;
 
     @Output() onFieldDataChanged: EventEmitter<I18N.String|undefined> = new EventEmitter<I18N.String|undefined>();
 

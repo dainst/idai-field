@@ -16,6 +16,7 @@ export class InputComponent {
     @Input() resource: Resource;
     @Input() fieldName: string;
     @Input() languages: Array<Language>;
+    @Input() multiLine: boolean;
 
 
     public update(fieldData: any) {

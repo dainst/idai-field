@@ -222,7 +222,10 @@ export class ImageSyncService {
 
         let uuidsMissingRemotely = localUUIDs.filter((localUUID: string) => {
             return !remoteUUIDs.includes(localUUID)
-                || !remoteData[localUUID].variants.map(variant => variant.name).includes(variant);
+                || (remoteData[localUUID].variants
+                    ? !remoteData[localUUID].variants.map(variant => variant.name).includes(variant)
+                    : !remoteData[localUUID].types.includes(variant));
+                    // TODO Remove fallback check for types in a future version; types array is deprecated
         }).filter(
             // We do not want to upload files marked as deleted locally.
             (localUUID: string) => !localData[localUUID].deleted

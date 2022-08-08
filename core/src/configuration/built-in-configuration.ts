@@ -571,7 +571,7 @@ export class BuiltInConfiguration {
             fixedInputType: true
         },
         shortDescription: {
-            inputType: Field.InputType.SIMPLE_INPUT, // TODO Change to Input
+            inputType: Field.InputType.INPUT,
             visible: true,
             editable: true,
             fulltextIndexed: true,

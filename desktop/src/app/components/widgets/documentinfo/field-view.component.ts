@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { isBoolean } from 'tsfun';
-import { FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Labels } from 'idai-field-core';
+import { FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Labels, validateUrl } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
 
 
@@ -23,6 +23,8 @@ export class FieldViewComponent {
 
 
     public isBoolean = (value: any) => isBoolean(value);
+
+    public isUrl = (value: any) => validateUrl(value);
 
 
     constructor(private decimalPipe: DecimalPipe,

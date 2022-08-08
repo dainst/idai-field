@@ -91,6 +91,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'M.Import.ValidationErrors.invalidRelationFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'M.Import.ValidationErrors.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_URL = 'M.Import.ValidationErrors.invalidUrl';
+    public static IMPORT_VALIDATION_ERROR_INVALID_URLS = 'M.Import.ValidationErrors.invalidUrls';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE = 'M.Import.ValidationErrors.invalidDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATES = 'M.Import.ValidationErrors.invalidDates';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
@@ -171,6 +173,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_URL = 'docedit.validation.error.invalidUrl';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_URLS = 'docedit.validation.error.invalidUrls';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
@@ -968,6 +972,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URL] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidUrl',
+                value: 'Ungültige URL im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URLS] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidUrls',
+                value: 'Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDate',
@@ -1404,6 +1426,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidNumericValues',
                 value: 'Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_URL] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidUrl',
+                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige URL ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_URLS] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidUrls',
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].'
             }),
             level: 'danger',
             params: [],

@@ -1,0 +1,26 @@
+img {
+  width: 120px;
+  height: 120px;
+  -webkit-user-drag: none;
+  margin-top: 31px;
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+#brand {
+  text-align: center;
+  margin-top: 25px;
+  font-weight: bold;
+  user-select: none;
+}
+
+#about-version {
+  text-align: center;
+  font-size: 14px;
+  user-select: none;
+  margin-bottom: 20px;
+}

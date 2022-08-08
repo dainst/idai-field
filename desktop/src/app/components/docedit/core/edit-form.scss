@@ -90,6 +90,10 @@
               width: 34px;
               padding: 0;
             }
+
+            .card-footer:last-child {
+              border-radius: 0 0 7px 7px;
+            }
           }
         }
 

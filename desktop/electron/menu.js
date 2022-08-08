@@ -1,7 +1,4 @@
-const electron = require('electron');
-const remoteMain = require('@electron/remote/main');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { ipcMain, BrowserWindow, app } = require('electron');
 const messages = require('./messages');
 
 
@@ -215,28 +212,40 @@ const getTemplate = (mainWindow, context, config) => {
         submenu: [{
             label: messages.get('menu.about'),
             click: function createInfoWindow() {
-                var infoWindow = new BrowserWindow({
+                const modal = new BrowserWindow({
                     width: 300,
-                    height: 350,
+                    height: 370,
                     frame: false,
+                    transparent: true,
                     resizable: false,
                     parent: BrowserWindow.getFocusedWindow(),
                     modal: true,
                     show: false,
                     webPreferences: {
                         nodeIntegration: true,
-                        contextIsolation: false,
-                        enableRemoteModule: true
+                        contextIsolation: false
                     }
                 });
+                modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/info-modal.html'));
 
-                remoteMain.enable(infoWindow.webContents);
-
-                infoWindow.once('ready-to-show', function() {
-                    infoWindow.show();
+                modal.webContents.on('did-finish-load', async () => {
+                    await modal.webContents.executeJavaScript(
+                        'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
+                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";' +
+                        (process.platform !== 'darwin'
+                            ? 'document.getElementById("modal-container").classList.add("with-border");'
+                            : ''
+                        )
+                    );
+                    modal.show();
+                });
+                modal.on('close', () => {
+                    parentWindow.focus();
                 });
 
-                infoWindow.loadURL(global.distUrl + '/info/info-window.html');
+                ipcMain.once('close-info-modal', () => {
+                    modal.close();
+                });
             }
         }, {
             label: messages.get('menu.help'),

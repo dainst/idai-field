@@ -1,6 +1,6 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
-import { validateFloat, validateUnsignedFloat, validateUnsignedInt } from '../../tools/number-util';
+import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../dating';
 import { Dimension } from '../dimension';
@@ -64,8 +64,10 @@ export module Field {
         |'simpleInput'
         |'unsignedInt'
         |'unsignedFloat'
+        |'int'
         |'float'
         |'text'
+        |'url'
         |'multiInput'
         |'dropdown'
         |'dropdownRange'
@@ -88,9 +90,11 @@ export module Field {
         export const SIMPLE_INPUT = 'simpleInput';
         export const UNSIGNEDINT = 'unsignedInt';
         export const UNSIGNEDFLOAT = 'unsignedFloat';
+        export const INT = 'int';
         export const FLOAT = 'float';
         export const TEXT = 'text';
         export const MULTIINPUT = 'multiInput';
+        export const URL = 'url';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';
         export const RADIO = 'radio';
@@ -108,7 +112,7 @@ export module Field {
         export const DEFAULT = 'default';
 
         export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
-        export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, FLOAT];
+        export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, TEXT, DROPDOWN, RADIO],
@@ -135,12 +139,16 @@ export module Field {
                 return isString(fieldData) || isObject(fieldData);
             } else if ([MULTIINPUT, CHECKBOXES].includes(inputType)) {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
-            } else if (inputType === UNSIGNEDINT) {
+            } else if (inputType === UNSIGNEDINT) {
                 return validateUnsignedInt(fieldData);
             } else if (inputType === UNSIGNEDFLOAT) {
                 return validateUnsignedFloat(fieldData);
+            } else if (inputType === INT) {
+                return validateInt(fieldData);
             } else if (inputType === FLOAT) {
                 return validateFloat(fieldData);
+            } else if (inputType === URL) {
+                return validateUrl(fieldData);
             } else if (inputType === BOOLEAN) {
                 return fieldData === true || fieldData === false;
             } else if (inputType === DATE) {

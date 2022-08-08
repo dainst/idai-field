@@ -4,8 +4,9 @@
 <form-field-input *ngIf="field.inputType === 'text'" [resource]="resource" [fieldName]="field.name"
            [languages]="languages" [multiLine]="true" ></form-field-input>
 
-<form-field-simple-input *ngIf="field.inputType === 'simpleInput' || field.inputType === 'unsignedInt'
-                || field.inputType === 'float' || field.inputType == 'unsignedFloat'"
+<form-field-simple-input *ngIf="field.inputType === 'simpleInput' || field.inputType === 'int'
+                || field.inputType === 'unsignedInt' || field.inputType === 'float'
+                || field.inputType === 'unsignedFloat' || field.inputType === 'url'"
             [resource]="resource" [fieldName]="field.name"></form-field-simple-input>
 
 <form-field-multi-input *ngIf="field.inputType === 'multiInput'" [resource]="resource"

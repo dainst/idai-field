@@ -173,6 +173,7 @@ export class ImportValidator extends Validator {
 
         Validations.assertNoFieldsMissing(document, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);
+        Validations.assertCorrectnessOfUrls(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);

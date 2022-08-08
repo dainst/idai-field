@@ -18,7 +18,21 @@
         <span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>
         <span *ngIf="field.value === false" i18n="@@boolean.no">Nein</span>
     </div>
-    <div class="field-value" *ngIf="!isBoolean(field.value)" [innerHTML]="field.value"></div>
+    <div *ngIf="!isBoolean(field.value)"
+         class="field-value" 
+         [innerHTML]="field.value"></div>
+</div>
+
+<div *ngIf="field.type === 'url'" class="field">
+    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
+    <div *ngIf="!isUrl(field.value)"
+         class="field-value" 
+         [innerHTML]="field.value"></div>
+    <a *ngIf="isUrl(field.value)"
+         class="field-value" 
+         [href]="field.value"
+         [innerHTML]="field.value"
+         target="_blank"></a>
 </div>
 
 <div *ngIf="field.type === 'relation'" class="field">

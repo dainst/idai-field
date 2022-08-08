@@ -1,14 +1,15 @@
 const messageDictionary = {
     de: {
         'autoUpdate.available.title': 'Update verfügbar',
-        'autoUpdate.available.message.1': 'Eine neue Version von Field Desktop (',
-        'autoUpdate.available.message.2': ') ist verfügbar. Möchten Sie sie herunterladen und installieren?',
+        'autoUpdate.available.info': 'Eine neue Version von Field Desktop ist verfügbar.',
+        'autoUpdate.available.question': 'Möchten Sie die neue Version herunterladen und installieren?',
         'autoUpdate.available.yes': 'Ja',
         'autoUpdate.available.no': 'Nein',
         'autoUpdate.downloaded.title': 'Update installieren',
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' von Field Desktop wurde geladen. Starten Sie die Anwendung neu, ' +
             'um sie zu installieren.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'Über Field Desktop',
         'menu.settings': 'Einstellungen',
         'menu.project': 'Projekt',
@@ -46,18 +47,20 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Entwicklertools an/aus',
         'menu.window': 'Fenster',
         'menu.window.minimize': 'Minimieren',
-        'menu.help': 'Hilfe'
+        'menu.help': 'Hilfe',
+        'info.close': 'Schließen'
     },
     en: {
         'autoUpdate.available.title': 'Update available',
-        'autoUpdate.available.message.1': 'A new version of Field Desktop (',
-        'autoUpdate.available.message.2': ') is available. Do you want to download and install it?',
+        'autoUpdate.available.info': 'A new version of Field Desktop is available.',
+        'autoUpdate.available.question': 'Do you want to download and install the new version?',
         'autoUpdate.available.yes': ' Yes ',
         'autoUpdate.available.no': ' No ',
         'autoUpdate.downloaded.title': 'Install update',
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' of Field Desktop has been downloaded. Please restart the ' +
             'application to install it.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'About Field Desktop',
         'menu.settings': 'Settings',
         'menu.project': 'Project',
@@ -95,18 +98,20 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Developer tools on/off',
         'menu.window': 'Window',
         'menu.window.minimize': 'Minimize',
-        'menu.help': 'Help'
+        'menu.help': 'Help',
+        'info.close': 'Close'
     },
     it: {
         'autoUpdate.available.title': 'Update disponibile',
-        'autoUpdate.available.message.1': 'Una nuova versione di Field Desktop (',
-        'autoUpdate.available.message.2': ') è disponibile. Si desidera scaricarla e installarla?',
+        'autoUpdate.available.info': 'Una nuova versione di Field Desktop è disponibile.',
+        'autoUpdate.available.question': 'Volete scaricare e installare la nuova versione?',
         'autoUpdate.available.yes': 'Sì',
         'autoUpdate.available.no': 'No',
         'autoUpdate.downloaded.title': 'Installa aggiornamento',
         'autoUpdate.downloaded.message.1': 'La versione ',
         'autoUpdate.downloaded.message.2': ' di Field Desktop è stata scaricata. Riavviare l’applicazione, '
             + 'per installarla.',
+        'autoUpdate.downloaded.ok': 'OK',
         'menu.about': 'Informazioni su Field Desktop',
         'menu.settings': 'Impostazioni',
         'menu.project': 'Progetto',
@@ -144,7 +149,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Strumenti per sviluppatori on/off',
         'menu.window': 'Finestra',
         'menu.window.minimize': 'Riduci',
-        'menu.help': 'Aiuto'
+        'menu.help': 'Aiuto',
+        'info.close': 'Chiudi'
     }
 };
 

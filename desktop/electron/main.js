@@ -26,7 +26,7 @@ const copyConfigFile = (destPath, appDataPath) => {
 };
 
 
-const writeConfigFile = (path) => {
+const writeConfigFile = path => {
 
     console.log('Create config.json at ' + path);
     fs.writeFileSync(path, JSON.stringify({ 'dbs': ['test'] }));
@@ -266,6 +266,11 @@ const createWindow = () => {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null;
+    });
+
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        electron.shell.openExternal(url);
+        return { action: 'deny' };
     });
 
     return mainWindow;

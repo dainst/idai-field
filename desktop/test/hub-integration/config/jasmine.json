@@ -1,0 +1,11 @@
+{
+  "spec_dir": "test/dist/desktop",
+  "spec_files": [
+    "test/hub-integration/**/*.spec.js"
+  ],
+  "helpers": [
+    "test/unit/helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}

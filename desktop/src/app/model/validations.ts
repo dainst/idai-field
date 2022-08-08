@@ -1,7 +1,7 @@
 import { is, isArray, Predicate, isString, and } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -12,37 +12,100 @@ export module Validations {
      */
     export function assertCorrectnessOfNumericalValues(document: Document|NewDocument,
                                                        projectConfiguration: ProjectConfiguration,
-                                                       allowStrings: boolean = true) {
+                                                       allowStrings: boolean = true,
+                                                       previousDocumentVersion?: Document) {
+
+         const previousInvalidFields: string[] = previousDocumentVersion
+            ?  Validations.validateNumericValues(
+                previousDocumentVersion.resource,
+                projectConfiguration,
+                allowStrings ? validateNumberAsString : validateNumber,
+                Field.InputType.NUMBER_INPUT_TYPES
+            ) : [];
 
         const invalidFields: string[] = Validations.validateNumericValues(
             document.resource,
             projectConfiguration,
             allowStrings ? validateNumberAsString : validateNumber,
-            ['unsignedInt', 'float', 'unsignedFloat']
+            Field.InputType.NUMBER_INPUT_TYPES
         );
-        if (invalidFields.length > 0) {
+        
+        const newInvalidFields: string[] = getNewInvalidFields(
+            invalidFields, previousInvalidFields, document, previousDocumentVersion
+        );
+
+        if (newInvalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
                 document.resource.category,
-                invalidFields.join(', ')
+                newInvalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    export function assertCorrectnessOfUrls(document: Document|NewDocument,
+                                            projectConfiguration: ProjectConfiguration,
+                                            previousDocumentVersion?: Document) {
+
+        const previousInvalidFields: string[] = previousDocumentVersion
+            ?  Validations.validateDatesOrUrls(
+                previousDocumentVersion.resource,
+                projectConfiguration,
+                validateUrl,
+                Field.InputType.URL
+            ) : [];
+
+        const invalidFields: string[] = Validations.validateDatesOrUrls(
+            document.resource,
+            projectConfiguration,
+            validateUrl,
+            Field.InputType.URL
+        );
+
+        const newInvalidFields: string[] = getNewInvalidFields(
+            invalidFields, previousInvalidFields, document, previousDocumentVersion
+        );
+
+        if (newInvalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_URLS,
+                document.resource.category,
+                newInvalidFields.join(', ')
             ];
         }
     }
 
 
     export function assertCorrectnessOfDates(document: Document|NewDocument,
-                                             projectConfiguration: ProjectConfiguration) {
+                                             projectConfiguration: ProjectConfiguration,
+                                             previousDocumentVersion?: Document) {
 
-        const invalidFields: string[] = Validations.validateDates(
+        const previousInvalidFields: string[] = previousDocumentVersion
+            ?  Validations.validateDatesOrUrls(
+                previousDocumentVersion.resource,
+                projectConfiguration,
+                (value: string) => !isNaN(parseDate(value)?.getTime()),
+                Field.InputType.DATE
+            )
+            : [];
+
+        const invalidFields: string[] = Validations.validateDatesOrUrls(
             document.resource,
             projectConfiguration,
-            (value: string) => !isNaN(parseDate(value)?.getTime())
+            (value: string) => !isNaN(parseDate(value)?.getTime()),
+            Field.InputType.DATE
         );
-        if (invalidFields.length > 0) {
+
+        const newInvalidFields: string[] = getNewInvalidFields(
+            invalidFields, previousInvalidFields, document, previousDocumentVersion
+        );
+
+        if (newInvalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DATES,
                 document.resource.category,
-                invalidFields.join(', ')
+                newInvalidFields.join(', ')
             ];
         }
     }
@@ -58,8 +121,9 @@ export module Validations {
             document.resource,
             projectConfiguration,
             validateDecimalSeparator,
-            ['float', 'unsignedFloat']
+            [Field.InputType.FLOAT, Field.InputType.UNSIGNEDFLOAT]
         );
+
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DECIMAL_SEPARATORS,
@@ -74,7 +138,8 @@ export module Validations {
                                                            projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateDropdownRangeFields(
-            document.resource, projectConfiguration);
+            document.resource, projectConfiguration
+        );
 
         if (invalidFields.length > 0) {
             throw [
@@ -87,7 +152,8 @@ export module Validations {
 
 
     export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
-                                                    projectConfiguration: ProjectConfiguration) {
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    previousDocumentVersion?: Document) {
 
         assertValidityOfObjectArrays(
             document,
@@ -96,13 +162,15 @@ export module Validations {
             ValidationErrors.INVALID_DATING_VALUES,
             (dating: any) =>
                 Dating.isValid_deprecated(dating)
-                || (Dating.isDating(dating) && Dating.isValid(dating))
-            );
+                || (Dating.isDating(dating) && Dating.isValid(dating)),
+            previousDocumentVersion
+        );
     }
 
 
     export function assertCorrectnessOfDimensionValues(document: Document|NewDocument,
-                                                       projectConfiguration: ProjectConfiguration) {
+                                                       projectConfiguration: ProjectConfiguration,
+                                                       previousDocumentVersion?: Document) {
 
         assertValidityOfObjectArrays(
             document,
@@ -111,20 +179,24 @@ export module Validations {
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) =>
                 Dimension.isValid_deprecated(dimension)
-                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options))
-            );
+                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)),
+            previousDocumentVersion
+        );
     }
 
 
     export function assertCorrectnessOfLiteratureValues(document: Document|NewDocument,
-                                                        projectConfiguration: ProjectConfiguration) {
+                                                        projectConfiguration: ProjectConfiguration,
+                                                        previousDocumentVersion?: Document) {
 
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
             Field.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
-            and(Literature.isLiterature, Literature.isValid));
+            and(Literature.isLiterature, Literature.isValid),
+            previousDocumentVersion
+        );
     }
 
 
@@ -132,17 +204,29 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration,
                                           inputType: 'dating'|'dimension'|'literature',
                                           error: string,
-                                          isValid: Predicate) {
+                                          isValid: Predicate,
+                                          previousDocumentVersion?: Document) {
+
+        const previousInvalidFields: string[] = previousDocumentVersion
+            ?  Validations.validateObjectArrayFields(
+                previousDocumentVersion.resource, projectConfiguration, inputType, isValid
+            )
+            : [];
+
 
         const invalidFields: string[] = Validations.validateObjectArrayFields(
             document.resource, projectConfiguration, inputType, isValid
         );
 
-        if (invalidFields.length > 0) {
+        const newInvalidFields: string[] = getNewInvalidFields(
+            invalidFields, previousInvalidFields, document, previousDocumentVersion
+        );
+
+        if (newInvalidFields.length > 0) {
             throw [
                 error,
                 document.resource.category,
-                invalidFields.join(', ')
+                newInvalidFields.join(', ')
             ];
         }
     }
@@ -349,16 +433,17 @@ export module Validations {
     }
 
 
-    export function validateDates(resource: Resource|NewResource,
-                                  projectConfiguration: ProjectConfiguration,
-                                  validationFunction: (value: string) => boolean): string[] {
+    export function validateDatesOrUrls(resource: Resource|NewResource,
+                                        projectConfiguration: ProjectConfiguration,
+                                        validationFunction: (value: string) => boolean,
+                                        inputType: string): string[] {
 
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType === Field.InputType.DATE;
+            return fieldDefinition.inputType === inputType;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
             if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);
@@ -374,11 +459,13 @@ export module Validations {
         if (typeof value === 'number') value = value.toString();
 
         switch(inputType) {
-            case 'unsignedInt':
+            case Field.InputType.INT:
+                return validateInt(value);
+            case Field.InputType.UNSIGNEDINT:
                 return validateUnsignedInt(value);
-            case 'float':
+            case Field.InputType.FLOAT:
                 return validateFloat(value);
-            case 'unsignedFloat':
+            case Field.InputType.UNSIGNEDFLOAT:
                 return validateUnsignedFloat(value);
             default:
                 return false;
@@ -480,5 +567,15 @@ export module Validations {
             .filter(field => resource[field.name] !== undefined)
             .filter(field => !isValid(resource[field.name], field.inputTypeOptions?.validation))
             .map(field => field.name);
+    }
+
+
+    function getNewInvalidFields(invalidFields: string[], previousInvalidFields: string[],
+                                 document: Document|NewDocument, previousDocumentVersion?: Document): string[] {
+
+        return invalidFields.filter(field => {
+            return !previousInvalidFields.includes(field)
+                || document.resource[field] !== previousDocumentVersion?.resource[field];
+        });
     }
 }

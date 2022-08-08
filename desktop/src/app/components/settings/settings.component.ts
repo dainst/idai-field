@@ -78,6 +78,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
 
     public toggleAllowUploads() {
+
         this.settings.allowLargeFileUploads = !this.settings.allowLargeFileUploads;
     }
 

@@ -26,6 +26,10 @@
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
     "e2e:run": "wait-on http-get://localhost:4200/dist/ && jasmine JASMINE_CONFIG_PATH=test/e2e/jasmine.json",
+    "test:hub-setup": "docker-compose -f test/hub-integration/docker-compose.yml up -d",
+    "test:hub-run": "wait-on http-get://localhost:4003/ && jasmine JASMINE_CONFIG_PATH=test/hub-integration/config/jasmine.json",
+    "test:hub-teardown": "docker-compose -f test/hub-integration/docker-compose.yml down -v",
+    "test:hub-integration": "npm-run-all -s -c test:hub-setup test:hub-run test:hub-teardown",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",
@@ -53,6 +57,10 @@
       "icon": "img/logo.ico",
       "artifactName": "Field-Desktop-${version}-Windows.${ext}",
       "publish": "github"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "linux": {
       "target": "AppImage",
@@ -108,7 +116,7 @@
     "camelcase": "6.3.0",
     "cldr": "^5.7.0",
     "electron-log": "4.4.4",
-    "electron-updater": "4.6.1",
+    "electron-updater": "5.1.0",
     "es6-shim": "0.35.4",
     "exif": "^0.6.0",
     "express": "4.17.1",
@@ -152,7 +160,7 @@
     "codelyzer": "^5.1.2",
     "cross-var": "^1.1.0",
     "electron": "16.2.8",
-    "electron-builder": "23.0.2",
+    "electron-builder": "23.3.0",
     "electron-chromedriver": "16.0.0",
     "electron-notarize": "1.1.1",
     "file-api": "0.10.4",

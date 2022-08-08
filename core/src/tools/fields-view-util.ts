@@ -29,7 +29,7 @@ export interface FieldsViewField {
 
     name: string;
     label: string;
-    type: 'default'|'array'|'object'|'relation';
+    type: 'default'|'array'|'object'|'relation'|'url';
     value?: any;
     valuelist?: Valuelist;
     targets?: Array<Document>;
@@ -141,7 +141,10 @@ export module FieldsViewUtil {
                         : getValue(
                             fieldContent, field.name, projectConfiguration, labels, field.valuelist
                         ),
-                    type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
+                    type: field.inputType === Field.InputType.URL ? 'url' :
+                        isArray(fieldContent) ? 'array' :
+                        isObject(fieldContent) ? 'object' :
+                        'default',
                     valuelist: field.valuelist
                 };
         }

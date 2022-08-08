@@ -144,9 +144,7 @@ export class ImageSyncService {
             console.log(` not yet deleted remotely: ${differences.deleteRemotely.length}`);
 
             if (preference.download) {
-
                 for (const uuid of Object.keys(differences.missingLocally)) {
-
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pulling;
     
@@ -160,7 +158,6 @@ export class ImageSyncService {
             }
 
             for (const uuid of differences.deleteLocally) {
-
                 if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                 this.status[preference.variant] = SyncStatus.Pulling;
 
@@ -168,9 +165,7 @@ export class ImageSyncService {
             }
 
             if (preference.upload) {
-
                 for (const uuid of Object.keys(differences.missingRemotely)) {
-
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pushing;
     
@@ -186,7 +181,6 @@ export class ImageSyncService {
             }
         
             for (const uuid of differences.deleteRemotely) {
-
                 if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                 this.status[preference.variant] = SyncStatus.Pushing;
 
@@ -205,36 +199,43 @@ export class ImageSyncService {
     }
 
 
-    public static async evaluateDifference(
-        localData: { [uuid: string]: FileInfo},
-        remoteData: { [uuid: string]: FileInfo},
-        variant: ImageVariant
-    ): Promise<SyncDifference> {
+    public static async evaluateDifference(localData: { [uuid: string]: FileInfo },
+                                           remoteData: { [uuid: string]: FileInfo },
+                                           variant: ImageVariant): Promise<SyncDifference> {
 
         const localUUIDs = Object.keys(localData);
         const remoteUUIDs = Object.keys(remoteData);
 
-        let uuidsMissingLocally = remoteUUIDs.filter(
-            (remoteUUID: string) => !localUUIDs.includes(remoteUUID) || !(localData[remoteUUID].variants.map(variant => variant.name).includes(variant))
-        ).filter(
+        let uuidsMissingLocally = remoteUUIDs.filter((remoteUUID: string) => {
+            return !localUUIDs.includes(remoteUUID)
+                || !(localData[remoteUUID].variants.map(variant => variant.name).includes(variant));
+        }).filter(
             // We do not want to download files marked as deleted remotely.
             (remoteUUID: string) => !remoteData[remoteUUID].deleted
         );
 
-        let deleteLocally = remoteUUIDs.filter(
-            (remoteUUID: string) => remoteData[remoteUUID].deleted && localData[remoteUUID] && !localData[remoteUUID].deleted
-        );
+        let deleteLocally = remoteUUIDs.filter((remoteUUID: string) => {
+            return remoteData[remoteUUID].deleted
+                && localData[remoteUUID]
+                && !localData[remoteUUID].deleted;
+        });
 
-        let uuidsMissingRemotely = localUUIDs.filter(
-            (localUUID: string) => !remoteUUIDs.includes(localUUID) || !remoteData[localUUID].variants.map(variant => variant.name).includes(variant)
-        ).filter(
+        let uuidsMissingRemotely = localUUIDs.filter((localUUID: string) => {
+            return !remoteUUIDs.includes(localUUID)
+                || (remoteData[localUUID].variants
+                    ? !remoteData[localUUID].variants.map(variant => variant.name).includes(variant)
+                    : !remoteData[localUUID].types.includes(variant));
+                    // TODO Remove fallback check for types in a future version; types array is deprecated
+        }).filter(
             // We do not want to upload files marked as deleted locally.
             (localUUID: string) => !localData[localUUID].deleted
         );
 
-        let deleteRemotely = localUUIDs.filter(
-            (localUUID: string) => localData[localUUID].deleted && remoteData[localUUID] && !remoteData[localUUID].deleted
-        );
+        let deleteRemotely = localUUIDs.filter((localUUID: string) => {
+            return localData[localUUID].deleted
+                && remoteData[localUUID]
+                && !remoteData[localUUID].deleted;
+        });
 
         const missingLocally: { [uuid: string]: FileInfo} = {};
         for (const uuid of uuidsMissingLocally) {
@@ -254,7 +255,9 @@ export class ImageSyncService {
         } as SyncDifference;
     }
 
+
     private isVariantSyncActive(variant: ImageVariant) {
+
         return this.active.find(val => val.variant === variant)
     }
 }

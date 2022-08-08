@@ -109,7 +109,8 @@ export module FieldsViewUtil {
                 (value: string) => labels.getValueLabel(field.valuelist, value)
             );
         } else {
-            return labels.get({ label: object } as I18N.LabeledValue) ?? object;
+            const result = labels.get({ label: object } as I18N.LabeledValue);
+            return result ? prepareString(result) : object;
         }
     }
 
@@ -159,12 +160,18 @@ function getValue(fieldContent: any,
         : valuelist
             ? labels.getValueLabel(valuelist, fieldContent)
             : isString(fieldContent)
-                ? fieldContent
-                    .replace(/^\s+|\s+$/g, '')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/\n/g, '<br>')
+                ? prepareString(fieldContent)
                 : fieldContent;
+}
+
+
+function prepareString(stringValue: string): string {
+
+    return stringValue
+        .replace(/^\s+|\s+$/g, '')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
 }
 
 

@@ -94,8 +94,16 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         const languages: Map<Language> = Languages.getAvailableLanguages();
 
         return configuredLanguages.sort((language1, language2) => {
-            return settingsLanguages.indexOf(language1) - settingsLanguages.indexOf(language2);
+            return this.getIndexForSorting(settingsLanguages, language1)
+                - this.getIndexForSorting(settingsLanguages, language2);
         }).map(languageCode => languages[languageCode]);
+    }
+
+
+    private getIndexForSorting(settingsLanguages: string[], language: string): number {
+
+        const index: number = settingsLanguages.indexOf(language);
+        return index === -1 ? 10000000 : index; 
     }
 
 

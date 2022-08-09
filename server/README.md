@@ -30,7 +30,7 @@ docker-compose up
 ```
 
 ### Phoenix Server
-Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined as `aliases` in [mix.exs](mix.exs).
+Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
 
 ```bash
 mix setup

@@ -4,11 +4,9 @@ FieldHub serves as a central synchronisation server for [Field Desktop](../deskt
 
 ## Usage
 
-FieldHub provides its own command line interface, which is documented separately in [CLI.md](CLI.md). Also check out the [wiki](https://github.com/dainst/idai-field/wiki).
-
+Check out the [wiki](https://github.com/dainst/idai-field/wiki).
 
 ## Development
-
 
 ### Prerequisites
 

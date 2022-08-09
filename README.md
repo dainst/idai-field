@@ -8,7 +8,7 @@ This is a monorepo containing five packages:
 * [Field Core](core): Shared TypeScript modules
 * [iDAI.field Web](web): The iDAI.field Web publication platform
 
-## Wiki
+## About
 
 See https://github.com/dainst/idai-field/wiki.
 

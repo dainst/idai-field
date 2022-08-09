@@ -16,6 +16,7 @@ describe('CreateProjectModalComponent', () => {
 
 
     beforeEach(() => {
+        
         settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings'])
         settingsService = jasmine.createSpyObj('settingsService', ['deleteProject']);
         messages = jasmine.createSpyObj('messages', ['add']);
@@ -25,6 +26,8 @@ describe('CreateProjectModalComponent', () => {
             settingsService,
             settingsProvider,
             messages,
+            undefined,
+            undefined,
             undefined,
             undefined
         );

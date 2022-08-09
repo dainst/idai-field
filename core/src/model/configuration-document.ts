@@ -272,7 +272,8 @@ export namespace ConfigurationDocument {
                 forms: customConfiguration.forms,
                 order: customConfiguration.order,
                 languages: languageConfigurations,
-                valuelists: {}
+                valuelists: {},
+                projectLanguages: []
             }
         };
 

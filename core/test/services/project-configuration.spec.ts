@@ -92,7 +92,8 @@ describe('ProjectConfiguration', () => {
         categories: {},
         relations: [],
         commonFields: {},
-        valuelists: {}
+        valuelists: {},
+        projectLanguages: []
     });
 
 

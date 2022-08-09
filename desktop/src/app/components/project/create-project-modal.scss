@@ -1,9 +1,53 @@
 #create-project-modal-body {
-  #create-project-input {
+  #create-project-input,
+  select,
+  ul {
     margin-bottom: 12px;
   }
 
   div {
     user-select: none;
+  }
+
+  .list-group {
+    height: 210px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .list-group-item {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0 0 10px;
+    border: none !important;
+
+    .language-item {
+      display: inline-block;
+      width: calc(100% - 40px);
+    }
+  }
+
+  #add-language {
+    left: 50%;
+    bottom: -10px;
+    transform: translate(-20px, -21px);
+  }
+
+  .remove-language {
+    float: right;
+    height: 40px;
+    margin: 0;
+    color: #dc3545 !important;
+    border: none !important;
+
+    &:not(:hover) {
+      background-color: white;
+    }
+
+    .mdi {
+      position: relative;
+      top: 2px;
+    }
   }
 }

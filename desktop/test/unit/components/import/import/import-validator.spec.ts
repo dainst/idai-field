@@ -91,7 +91,8 @@ describe('ImportValidator', () => {
             }
         ],
         commonFields: {},
-        valuelists: {}
+        valuelists: {},
+        projectLanguages: []
     });
 
 

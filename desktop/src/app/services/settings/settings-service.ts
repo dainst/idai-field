@@ -188,7 +188,8 @@ export class SettingsService {
     }
 
 
-    public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
+    public async createProject(project: Name, template: Template, selectedLanguages: string[],
+                               destroyBeforeCreate: boolean) {
 
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
@@ -198,7 +199,7 @@ export class SettingsService {
         await this.pouchdbDatastore.createDb(
             project,
             SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
-            SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template),
+            SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template, selectedLanguages),
             destroyBeforeCreate
         );
     }
@@ -221,7 +222,8 @@ export class SettingsService {
     }
 
 
-    public static createConfigurationDocument(settings: Settings, template: Template): ConfigurationDocument {
+    public static createConfigurationDocument(settings: Settings, template: Template,
+                                              selectedLanguages: string[]): ConfigurationDocument {
 
         return {
             _id: 'configuration',
@@ -233,6 +235,7 @@ export class SettingsService {
                 order: template.configuration.order,
                 valuelists: {},
                 languages: {},
+                projectLanguages: selectedLanguages,
                 relations: {}
             },
             created: { user: settings.username, date: new Date() },

@@ -13,6 +13,7 @@ export interface ConfigurationResource extends Resource {
     languages: { [language: string]: LanguageConfiguration };
     order: string[];
     valuelists: Map<Valuelist>;
+    projectLanguages: string[];
 }
 
 

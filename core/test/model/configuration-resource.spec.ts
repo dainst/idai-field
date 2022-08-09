@@ -25,6 +25,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
                 }
             },
             languages: {},
+            projectLanguages: [],
             valuelists: {},
             order: [],
             relations: {}
@@ -50,6 +51,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
                 }
             },
             languages: {},
+            projectLanguages: [],
             valuelists: {},
             order: [],
             relations: {}
@@ -83,6 +85,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
                     }
                 }
             },
+            projectLanguages: [],
             valuelists: {},
             order: [],
             relations: {}
@@ -116,6 +119,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
                     }
                 }
             },
+            projectLanguages: [],
             valuelists: {},
             order: [],
             relations: {}
@@ -134,6 +138,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
             category: 'Configuration',
             forms: {},
             languages: {},
+            projectLanguages: [],
             valuelists: {
                 'valuelist-1': {
                     values: { value1: {} }
@@ -152,6 +157,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
             category: 'Configuration',
             forms: {},
             languages: {},
+            projectLanguages: [],
             valuelists: {
                 'valuelist-1': {
                     values: { value1: {}, value2: {} }

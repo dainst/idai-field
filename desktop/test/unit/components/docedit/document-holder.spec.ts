@@ -73,7 +73,8 @@ describe('DocumentHolder', () => {
                 }
             ],
             commonFields: {},
-            valuelists: {}
+            valuelists: {},
+            projectLanguages: []
         });
 
         defaultDocument = {

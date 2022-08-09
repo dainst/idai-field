@@ -38,7 +38,8 @@ describe('RelationsManager', () => {
             }
         ],
         commonFields: {},
-        valuelists: {}
+        valuelists: {},
+        projectLanguages: []
     });
 
     let mockDatastore;

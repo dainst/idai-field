@@ -111,7 +111,8 @@ describe('Validations', () => {
             }
         ],
         commonFields: {},
-        valuelists: {}
+        valuelists: {},
+        projectLanguages: []
     });
 
 

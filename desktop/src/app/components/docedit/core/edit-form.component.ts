@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Document, Field, Group, Labels } from 'idai-field-core';
+import { Document, Field, Group, Labels, ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 
@@ -34,7 +34,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
                 private labels: Labels,
-                private settingsProvider: SettingsProvider) {
+                private settingsProvider: SettingsProvider,
+                private projectConfiguration: ProjectConfiguration) {
 
         this.languages = this.getConfiguredLanguages();
     }
@@ -87,7 +88,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private getConfiguredLanguages(): Array<Language> {
 
-        const configuredLanguages: string[] = ['de', 'en', 'it'];
+        const configuredLanguages: string[] = clone(this.projectConfiguration.getProjectLanguages());
         const settingsLanguages: string[] = this.settingsProvider.getSettings().languages;
 
         const languages: Map<Language> = Languages.getAvailableLanguages();

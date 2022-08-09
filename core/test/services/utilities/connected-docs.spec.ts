@@ -40,7 +40,8 @@ describe('ConnectedDocs', () => {
             }
         ],
         commonFields: {},
-        valuelists: {}
+        valuelists: {},
+        projectLanguages: []
     });
 
     let mockDatastore;

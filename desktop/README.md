@@ -4,7 +4,7 @@ The German Archaeological Institute’s ([DAI](https://www.dainst.org)) new take
 
 ## Usage
 
-Check out the [wiki](https://github.com/dainst/idai-field/wiki).
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
    
 ## Development
 

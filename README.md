@@ -10,7 +10,7 @@ This is a monorepo containing five packages:
 
 ## Usage
 
-Check out the [wiki](https://github.com/dainst/idai-field/wiki).
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
 
 ## Development
 

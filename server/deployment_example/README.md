@@ -20,8 +20,6 @@ The docker-compose file describes 2 services:
 1. [CouchDB](https://couchdb.apache.org/), the database software FieldHub uses. CouchDB provides its own Docker images: https://hub.docker.com/_/couchdb
 2. FieldHub, the application itself.
 
-For each service it is defined which image should be used to create containers.
-
 Additionally, an [.env](.env) file sets up some environment variables for docker-compose:
 
 ```
@@ -66,7 +64,7 @@ The result should look something like this:
 
 Next you can add a first project.
 
-First, make sure the FieldHub application (within the container) owns the `FILE_DIRECTORY` on your host machine (see .env file). __This is only necessary after the first startup, not each time you add a new project.__
+First, make sure the FieldHub user (within the container) owns the `FILE_DIRECTORY` on your host machine (see .env file). __This is only necessary after the first startup, not each time you add a new project.__
 
 ```
 docker exec field-hub-app id

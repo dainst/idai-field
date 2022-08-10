@@ -51,7 +51,8 @@ export class MenuNavigator {
             await this.zone.run(() => this.projectModalLauncher.deleteProject());
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
-        } else if (menuItem === 'valuelists' || menuItem === 'importConfiguration') {
+        } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'
+                || menuItem === 'importConfiguration') {
             await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
         } else {
             await this.zone.run(async () => await this.router.navigate([menuItem]));

@@ -1,0 +1,23 @@
+<ul class="list-group list-group-flush">
+    <li *ngFor="let language of selectedLanguages; let i = index"
+        class="list-group-item">
+        <div class="language-item">
+            <span class="language-label">{{languages[language].label}}
+                <code>{{language}}</code>
+            </span>
+        </div>
+        <div class="btn btn-light remove-language"
+            (click)="removeLanguage(language)"
+            ngbTooltip="Sprache entfernen"
+            i18n-ngbTooltip="@@settings.removeLanguage"
+            container="body">
+            <span class="mdi mdi-delete"></span>
+        </div>
+    </li>
+</ul>
+<div id="add-language" class="circular-button green-button"
+     (click)="addLanguage()"
+     ngbTooltip="Sprache hinzufügen"
+     i18n-ngbTooltip="@@settings.addLanguage">
+    <span class="mdi mdi-plus"></span>
+</div>

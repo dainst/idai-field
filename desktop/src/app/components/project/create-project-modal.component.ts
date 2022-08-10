@@ -4,14 +4,11 @@ import { Labels, Template } from 'idai-field-core';
 import { ProjectNameValidation } from '../../model/project-name-validation';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 import { Language, Languages } from '../../services/languages';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
 import { Messages } from '../messages/messages';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
-import { LanguagePickerModalComponent } from '../widgets/language-picker-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -43,9 +40,7 @@ export class CreateProjectModalComponent implements OnInit {
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
                 private configurationIndex: ConfigurationIndex,
-                private labels: Labels,
-                private menuService: Menus,
-                private modalService: NgbModal) {}
+                private labels: Labels) {}
 
     
     public getTemplateNames = () => Object.keys(this.configurationIndex.getTemplates());
@@ -75,27 +70,6 @@ export class CreateProjectModalComponent implements OnInit {
     public selectTemplate(templateName: string) {
 
         this.selectedTemplate = this.getTemplate(templateName);
-    }
-
-
-    public async addLanguage() {
-
-        const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent);
-        modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
-            this.languages, this.selectedLanguages
-        );
-
-        try {
-            this.selectedLanguages.push(await modalReference.result);
-        } catch (err) {
-            // Modal has been canceled
-        }
-    }
-
-
-    public removeLanguage(languageToRemove: string) {
-
-        this.selectedLanguages = this.selectedLanguages.filter(language => language !== languageToRemove);
     }
 
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Language, Languages } from '../../services/languages';
+import { Language, Languages } from '../../../services/languages';
 
 
 @Component({

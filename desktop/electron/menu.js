@@ -271,6 +271,11 @@ const getTemplate = (mainWindow, context, config) => {
         template.splice(index + 1, 0, {
             label: messages.get('menu.tools.configuration'),
             submenu: [{
+                label: messages.get('menu.configuration.projectLanguages'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectLanguages'),
+                enabled: isDefaultContext(context)
+            },
+            {
                 label: messages.get('menu.configuration.valuelistManagement'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)

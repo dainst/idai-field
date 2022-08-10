@@ -34,6 +34,7 @@ import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
+import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
 
 
 export type ApplyChangesResult = {
@@ -213,6 +214,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public async onMenuItemClicked(menuItem: string) {
 
         switch (menuItem) {
+            case 'projectLanguages':
+                this.openProjectLanguagesModal();
+                break;
             case 'valuelists':
                 await AngularUtility.refresh();
                 this.openValuelistsManagementModal();
@@ -590,6 +594,29 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             console.error(errWithParams);
             this.messages.add(errWithParams);
         }
+    }
+
+
+    private async openProjectLanguagesModal() {
+
+        const [result, componentInstance] = this.modals.make<ProjectLanguagesModalComponent>(
+            ProjectLanguagesModalComponent,
+            MenuContext.CONFIGURATION_MANAGEMENT
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
+            },
+            nop
+        );
     }
 
 

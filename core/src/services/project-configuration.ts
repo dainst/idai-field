@@ -50,6 +50,7 @@ export class ProjectConfiguration {
 
         this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
+        this.projectLanguages = newProjectConfiguration.projectLanguages;
     }
 
 

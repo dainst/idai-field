@@ -1,0 +1,103 @@
+{
+  "fields": {
+    "category": {
+      "label": "Kategorie"
+    },
+    "identifier": {
+      "label": "Bezeichner",
+      "description": "Eindeutiger Bezeichner dieser Ressource"
+    },
+    "shortDescription": {
+      "label": "Kurzbeschreibung"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Projekt",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Koordinatenbezugssystem"
+        },
+        "shortName": {
+          "label": "Kurzbezeichnung"
+        }
+      }
+    },
+    "Image": {
+      "label": "Abbildung",
+      "fields": {
+        "height": {
+          "label": "Höhe"
+        },
+        "width": {
+          "label": "Breite"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Aufgenommen in Maßnahme"
+    },
+    "liesWithin": {
+      "label": "Liegt in"
+    },
+    "includes": {
+      "label": "Enthält"
+    },
+    "isPresentIn": {
+      "label": "Ist enthalten in Profil/Planum"
+    },
+    "isAbove": {
+      "label": "Liegt über"
+    },
+    "isBelow": {
+      "label": "Liegt unter"
+    },
+    "isSameAs": {
+      "label": "Identisch mit"
+    },
+    "cuts": {
+      "label": "Schneidet"
+    },
+    "isCutBy": {
+      "label": "Wird geschnitten von"
+    },
+    "fills": {
+      "label": "Verfüllt"
+    },
+    "isFilledBy": {
+      "label": "Verfüllt von"
+    },
+    "borders": {
+      "label": "Grenzt an"
+    },
+    "isAfter": {
+      "label": "Zeitlich nach"
+    },
+    "isBefore": {
+      "label": "Zeitlich vor"
+    },
+    "isContemporaryWith": {
+      "label": "Zeitgleich mit"
+    },
+    "depicts": {
+      "label": "Zeigt"
+    },
+    "isDepictedIn": {
+      "label": "Wird gezeigt in"
+    },
+    "isMapLayerOf": {
+      "label": "Kartenhintergrund von"
+    },
+    "hasMapLayer": {
+      "label": "Hat Kartenhintergrund"
+    },
+    "isInstanceOf": {
+      "label": "Typologische Einordnung"
+    },
+    "hasInstance": {
+      "label": "Zugeordnete Funde"
+    }
+  }
+}

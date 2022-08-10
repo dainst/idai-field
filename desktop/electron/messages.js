@@ -152,7 +152,7 @@ const messageDictionary = {
         'menu.help': 'Aiuto',
         'info.close': 'Chiudi'
     },
-    de: {
+    uk: {
         'autoUpdate.available.title': 'Update verfügbar',
         'autoUpdate.available.info': 'Eine neue Version von Field Desktop ist verfügbar.',
         'autoUpdate.available.question': 'Möchten Sie die neue Version herunterladen und installieren?',

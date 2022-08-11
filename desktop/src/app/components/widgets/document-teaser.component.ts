@@ -22,7 +22,7 @@ export class DocumentTeaserComponent {
         return shortDescription
             ? isString(shortDescription)
                 ? shortDescription
-                : this.labels.get({ label: shortDescription } as I18N.LabeledValue)
+                : this.labels.getFromI18NString(shortDescription)
             : undefined;
     }
 }

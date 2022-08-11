@@ -109,7 +109,7 @@ export module FieldsViewUtil {
                 (value: string) => labels.getValueLabel(field.valuelist, value)
             );
         } else {
-            const result = labels.get({ label: object } as I18N.LabeledValue);
+            const result = labels.getFromI18NString(object);
             return result ? prepareString(result) : object;
         }
     }

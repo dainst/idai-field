@@ -17,6 +17,12 @@ export class Labels {
         return I18N.getLabel(labeledValue, this.getLanguages());
     }
 
+
+    public getFromI18NString(i18nString: I18N.String): string {
+
+        return this.get({ label: i18nString, name: i18nString?.[I18N.NO_LANGUAGE] });
+    }
+
     
     public getValueLabel(valuelist: Valuelist, valueId: string): string {
 

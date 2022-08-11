@@ -20,6 +20,9 @@ export class LanguagesListComponent {
     constructor(private modalService: NgbModal) {}
 
 
+    public showNoLanguagesSelectedMessage = () => this.selectedLanguages && this.selectedLanguages.length === 0;
+
+
     public async addLanguage() {
 
         console.log('l2:', this.languages);

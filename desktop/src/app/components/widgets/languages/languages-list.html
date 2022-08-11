@@ -14,6 +14,9 @@
             <span class="mdi mdi-delete"></span>
         </div>
     </li>
+    <li *ngIf="showNoLanguagesSelectedMessage()" class="list-group-item no-languages-selected-message">
+        <span i18n="@@widgets.languagesList.noLanguagesSelected">Keine Sprachen ausgewählt</span>
+    </li>
 </ul>
 <div id="add-language" class="circular-button green-button"
      (click)="addLanguage()"

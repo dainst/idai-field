@@ -14,7 +14,7 @@ import { Language } from '../../../../../services/languages';
  */
 export class MultiLanguageTextFieldComponent implements OnChanges {
 
-    @Input() fieldData: I18N.String|undefined;
+    @Input() fieldData: I18N.String|string|undefined;
     @Input() languages: Array<Language>;
     @Input() multiLine: boolean = false;
 
@@ -34,7 +34,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();
-        if (!this.selectedLanguage) this.selectedLanguage = this.languages[0].code;
+        if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.NO_LANGUAGE;
         this.updateSelectedText();
     }
 

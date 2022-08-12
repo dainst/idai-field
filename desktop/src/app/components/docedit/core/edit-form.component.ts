@@ -28,16 +28,14 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public categories: string[];
     public extraGroups: Array<Group> = [{ name: 'conflicts', fields: [] }];
     public groups: Array<Group> = [];
-    public languages: Array<Language>;
+    public languages: Map<Language>;
 
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private labels: Labels,
-                private settingsProvider: SettingsProvider,
-                private projectConfiguration: ProjectConfiguration) {
+                private labels: Labels) {
 
-        this.languages = this.getConfiguredLanguages();
+        this.languages = Languages.getAvailableLanguages();
     }
 
 
@@ -83,27 +81,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public getFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
-    }
-
-
-    private getConfiguredLanguages(): Array<Language> {
-
-        const configuredLanguages: string[] = clone(this.projectConfiguration.getProjectLanguages());
-        const settingsLanguages: string[] = this.settingsProvider.getSettings().languages;
-
-        const languages: Map<Language> = Languages.getAvailableLanguages();
-
-        return configuredLanguages.sort((language1, language2) => {
-            return this.getIndexForSorting(settingsLanguages, language1)
-                - this.getIndexForSorting(settingsLanguages, language2);
-        }).map(languageCode => languages[languageCode]);
-    }
-
-
-    private getIndexForSorting(settingsLanguages: string[], language: string): number {
-
-        const index: number = settingsLanguages.indexOf(language);
-        return index === -1 ? 10000000 : index; 
     }
 
 

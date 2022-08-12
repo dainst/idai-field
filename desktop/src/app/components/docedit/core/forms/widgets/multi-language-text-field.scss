@@ -1,7 +1,9 @@
 multi-language-text-field {
   input,
   textarea {
-    border-top: 0 !important;
+    &.with-tabs {
+      border-top: 0 !important;
+    }
 
     &.focused {
       border-color: #7998cb;

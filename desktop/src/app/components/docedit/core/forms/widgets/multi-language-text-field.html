@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" [class.focused]="focused">
+<ul *ngIf="hasTabs()" class="nav nav-tabs" [class.focused]="focused">
     <li *ngFor="let language of languages"
         class="nav-item"
         (click)="selectLanguage(language.code)">
@@ -11,12 +11,14 @@
 </ul>
 <input *ngIf="!multiLine" #inputField [(ngModel)]="selectedText"
        [class.focused]="focused"
+       [class.with-tabs]="hasTabs()"
        (keyup)="onChanges($event.target.value)"
        (focus)="focused = true"
        (blur)="focused = false"
        class="form-control">
 <textarea *ngIf="multiLine" #inputField [(ngModel)]="selectedText"
        [class.focused]="focused"
+       [class.with-tabs]="hasTabs()"
        (keyup)="onChanges($event.target.value)"
        (focus)="focused = true"
        (blur)="focused = false"

@@ -1,103 +1,103 @@
 {
   "fields": {
     "category": {
-      "label": "Kategorie"
+      "label": "Категорія"
     },
     "identifier": {
-      "label": "Bezeichner",
-      "description": "Eindeutiger Bezeichner dieser Ressource"
+      "label": "Індентифікатор",
+      "description": "Однозначний ідентифікатор цього ресурсу"
     },
     "shortDescription": {
-      "label": "Kurzbeschreibung"
+      "label": "Коротка назва"
     }
   },
   "categories": {
     "Project": {
-      "label": "Projekt",
+      "label": "Проект",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": "Koordinatenbezugssystem"
+          "label": "Система координат"
         },
         "shortName": {
-          "label": "Kurzbezeichnung"
+          "label": "Короткий назва"
         }
       }
     },
     "Image": {
-      "label": "Abbildung",
+      "label": "Ілюстрація",
       "fields": {
         "height": {
-          "label": "Höhe"
+          "label": "Висота"
         },
         "width": {
-          "label": "Breite"
+          "label": "Ширина"
         }
       }
     }
   },
   "relations": {
     "isRecordedIn": {
-      "label": "Aufgenommen in Maßnahme"
+      "label": "Записано до заходу"
     },
     "liesWithin": {
-      "label": "Liegt in"
+      "label": "Розташоване в"
     },
     "includes": {
-      "label": "Enthält"
+      "label": "Містить"
     },
     "isPresentIn": {
-      "label": "Ist enthalten in Profil/Planum"
+      "label": "Входить до профілю/плану"
     },
     "isAbove": {
-      "label": "Liegt über"
+      "label": "Розташоване над"
     },
     "isBelow": {
-      "label": "Liegt unter"
+      "label": "Розташоване під"
     },
     "isSameAs": {
-      "label": "Identisch mit"
+      "label": "Ідентичний з"
     },
     "cuts": {
-      "label": "Schneidet"
+      "label": "Розтинає"
     },
     "isCutBy": {
-      "label": "Wird geschnitten von"
+      "label": "Перетинється/ Буде розрізаний"
     },
     "fills": {
-      "label": "Verfüllt"
+      "label": "Заповнений"
     },
     "isFilledBy": {
-      "label": "Verfüllt von"
+      "label": "Заповнено з"
     },
     "borders": {
-      "label": "Grenzt an"
+      "label": "Примикає до/ межує з"
     },
     "isAfter": {
-      "label": "Zeitlich nach"
+      "label": "По віку після"
     },
     "isBefore": {
-      "label": "Zeitlich vor"
+      "label": "По віку до"
     },
     "isContemporaryWith": {
-      "label": "Zeitgleich mit"
+      "label": "По віку одночасно з"
     },
     "depicts": {
-      "label": "Zeigt"
+      "label": "Показує"
     },
     "isDepictedIn": {
-      "label": "Wird gezeigt in"
+      "label": "Буде показано в"
     },
     "isMapLayerOf": {
-      "label": "Kartenhintergrund von"
+      "label": "Підоснова карти з"
     },
     "hasMapLayer": {
-      "label": "Hat Kartenhintergrund"
+      "label": "Підоснова карти має"
     },
     "isInstanceOf": {
-      "label": "Typologische Einordnung"
+      "label": "Типологічна класифікація"
     },
     "hasInstance": {
-      "label": "Zugeordnete Funde"
+      "label": "Пов'язані знахідки"
     }
   }
 }

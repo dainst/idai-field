@@ -31,6 +31,7 @@ export class CreateProjectModalComponent implements OnInit {
     public selectedTemplate: Template;
     public selectedLanguages: string[];
     public creating: boolean = false;
+    public modalOpened: boolean = false;
 
     public languages: { [languageCode: string]: Language };
 
@@ -63,7 +64,7 @@ export class CreateProjectModalComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
     }
 
 

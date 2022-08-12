@@ -4,7 +4,8 @@
 </div>
 
 <div class="modal-body project-languages-modal-body bg-light">
-    <languages-list [languages]="languages" [selectedLanguages]="clonedSelectedLanguages"></languages-list>
+    <languages-list [languages]="languages" [selectedLanguages]="clonedSelectedLanguages"
+                    (onModalToggled)="modalOpened = $event"></languages-list>
 </div>
 
 <div class="modal-footer bg-light">

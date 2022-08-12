@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Language, Languages } from '../../../services/languages';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
@@ -16,6 +16,8 @@ export class LanguagesListComponent {
     @Input() languages: { [languageCode: string]: Language };
     @Input() selectedLanguages: string[];
 
+    @Output() onModalToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 
     constructor(private modalService: NgbModal) {}
 
@@ -25,7 +27,7 @@ export class LanguagesListComponent {
 
     public async addLanguage() {
 
-        console.log('l2:', this.languages);
+        this.onModalToggled.emit(true);
 
         const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent);
         modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
@@ -37,6 +39,8 @@ export class LanguagesListComponent {
         } catch (err) {
             // Modal has been canceled
         }
+
+        this.onModalToggled.emit(false);
     }
 
 

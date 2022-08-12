@@ -23,7 +23,8 @@
         </option>
     </select>
     <div i18n="@@project.createModal.languages">Projektsprachen:</div>
-    <languages-list [languages]="languages" [selectedLanguages]="selectedLanguages"></languages-list>
+    <languages-list [languages]="languages" [selectedLanguages]="selectedLanguages"
+                    (onModalToggled)="modalOpened = $event"></languages-list>
 </div>
 
 <div class="modal-footer">

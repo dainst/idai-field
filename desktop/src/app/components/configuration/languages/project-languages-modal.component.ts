@@ -25,6 +25,7 @@ export class ProjectLanguagesModalComponent {
     public languages: { [languageCode: string]: Language };
     public selectedLanguages: string[];
     public clonedSelectedLanguages: string[];
+    public modalOpened: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -32,7 +33,7 @@ export class ProjectLanguagesModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
     }
 
 
@@ -41,8 +42,6 @@ export class ProjectLanguagesModalComponent {
         this.languages = Languages.getAvailableLanguages();
         this.selectedLanguages = this.configurationDocument.resource.projectLanguages ?? [];
         this.clonedSelectedLanguages = clone(this.selectedLanguages);
-
-        console.log('l:', this.languages);
     }
 
 

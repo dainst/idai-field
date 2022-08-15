@@ -268,7 +268,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         const result: Map<ValuelistValue> = clone(values);
 
-        Object.values(result).forEach(value => {
+        Object.keys(result).forEach(key => {
+            const value = result[key];
+
             if (value.label) {
                 value.label = I18N.removeEmpty(value.label);
                 if (isEmpty(value.label)) delete value.label;
@@ -276,6 +278,11 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             if (value.description) {
                 value.description = I18N.removeEmpty(value.description);
                 if (isEmpty(value.description)) delete value.description;
+            }
+
+            if (this.extendedValuelist && (isEmpty(value)
+                    || equal(this.extendedValuelist.values[key] as any)(value as any))) {
+                delete result[key];
             }
         });
 

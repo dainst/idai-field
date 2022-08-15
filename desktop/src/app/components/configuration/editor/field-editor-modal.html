@@ -71,14 +71,18 @@
             Feldbezeichnung
         </div>
         <multi-language-input [translations]="clonedLabel"
-            [defaultTranslations]="field.defaultLabel" [disabled]="hidden"></multi-language-input>
+            [defaultTranslations]="field.defaultLabel"
+            [projectLanguages]="getClonedProjectLanguages()"
+            [disabled]="hidden"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
-            [defaultTranslations]="field.defaultDescription || {}" [disabled]="hidden"></multi-language-input>
+            [defaultTranslations]="field.defaultDescription || {}"
+            [projectLanguages]="getClonedProjectLanguages()"
+            [disabled]="hidden"></multi-language-input>
     </div>
     <div *ngIf="isCustomField()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">

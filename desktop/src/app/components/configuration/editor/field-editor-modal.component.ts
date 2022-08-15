@@ -282,8 +282,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
-            || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description ?? {})(this.clonedDescription)
+            || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
+            || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
                     this.getClonedFieldDefinition()));
     }

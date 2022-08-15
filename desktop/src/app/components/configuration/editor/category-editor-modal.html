@@ -25,14 +25,16 @@
             Kategoriebezeichnung
         </div>
         <multi-language-input [translations]="clonedLabel"
-            [defaultTranslations]="category.defaultLabel"></multi-language-input>
+            [defaultTranslations]="category.defaultLabel"
+            [projectLanguages]="getClonedProjectLanguages()"></multi-language-input>
     </div>
     <div *ngIf="isCustomCategory()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
-            [defaultTranslations]="category.defaultDescription"></multi-language-input>
+            [defaultTranslations]="category.defaultDescription"
+            [projectLanguages]="getClonedProjectLanguages()"></multi-language-input>
     </div>
     <div *ngIf="isCustomCategory()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">

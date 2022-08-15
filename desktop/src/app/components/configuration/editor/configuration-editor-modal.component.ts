@@ -43,6 +43,8 @@ export abstract class ConfigurationEditorModalComponent {
 
     public getClonedLanguageConfigurations = () => this.clonedConfigurationDocument.resource.languages;
 
+    public getClonedProjectLanguages = () => this.clonedConfigurationDocument.resource.projectLanguages;
+
 
     public getClonedFormDefinition(): CustomFormDefinition {
 

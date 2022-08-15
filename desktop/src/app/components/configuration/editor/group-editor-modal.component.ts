@@ -65,7 +65,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isChanged(): boolean {
 
-        return this.new || !equal(this.label)(this.clonedLabel);
+        return this.new || !equal(this.label)(I18N.removeEmpty(this.clonedLabel));
     }
 
 

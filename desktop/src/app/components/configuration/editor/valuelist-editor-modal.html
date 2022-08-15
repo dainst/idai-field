@@ -29,7 +29,8 @@
             Beschreibung der Werteliste
         </div>
         <multi-language-input [translations]="clonedDescription"
-                              [defaultTranslations]="{}"></multi-language-input>
+                              [defaultTranslations]="{}"
+                              [projectLanguages]="getClonedProjectLanguages()"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">

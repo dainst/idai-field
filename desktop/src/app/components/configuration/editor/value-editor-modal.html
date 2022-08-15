@@ -10,7 +10,8 @@
             Anzeigetext
         </div>
         <multi-language-input [translations]="clonedValue.label"
-                              [defaultTranslations]="{}"></multi-language-input>
+                              [defaultTranslations]="{}"
+                              [projectLanguages]="projectLanguages"></multi-language-input>
     </div>
 
     <div class="configuration-editor-section">
@@ -18,7 +19,8 @@
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedValue.description"
-                              [defaultTranslations]="{}"></multi-language-input>
+                              [defaultTranslations]="{}"
+                              [projectLanguages]="projectLanguages"></multi-language-input>
     </div>
 
     <div class="configuration-editor-section">

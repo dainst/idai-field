@@ -81,6 +81,17 @@ export namespace I18N {
     }
 
 
+    export function removeEmpty(i18nString: I18N.String): I18N.String {
+
+        const result: I18N.String = clone(i18nString);
+
+        Object.keys(result).filter(key => result[key].length === 0)
+            .forEach(key => delete result[key]);
+
+        return result;
+    }
+
+
     function getLanguage(labels: String, languages: string[]): string|undefined {
 
         return languages.find(languageCode => labels[languageCode] !== undefined);

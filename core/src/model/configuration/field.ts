@@ -115,7 +115,7 @@ export module Field {
         export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
-            [INPUT, TEXT, DROPDOWN, RADIO],
+            [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],
             [MULTIINPUT, CHECKBOXES]
         ];
 

@@ -20,7 +20,11 @@ export class Labels {
 
     public getFromI18NString(i18nString: I18N.String): string {
 
-        return this.get({ label: i18nString, name: i18nString?.[I18N.NO_LANGUAGE] });
+        const fallbackValue: string|undefined = i18nString && Object.keys(i18nString).length > 0
+            ? i18nString[I18N.NO_LANGUAGE] ?? i18nString[Object.keys(i18nString)[0]]
+            : undefined;
+
+        return this.get({ label: i18nString, name: fallbackValue });
     }
 
     

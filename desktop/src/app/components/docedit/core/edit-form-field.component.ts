@@ -85,7 +85,7 @@ export class EditFormFieldComponent implements OnChanges {
         const index: number = settingsLanguages.indexOf(language);
         return index === -1
             ? language === I18N.NO_LANGUAGE
-                ? 10000000
+                ? -1
                 : 1000000
             : index;
     }

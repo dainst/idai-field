@@ -29,7 +29,7 @@
 
 <div class="modal-footer">
     <button id="create-project-confirm" class="btn btn-success" type="button"
-            [ngClass]="{ 'disabled': !projectName || creating }"
+            [ngClass]="{ 'disabled': !isConfirmButtonEnabled() }"
             (click)="createProject()">
         <span i18n="@@buttons.create">Erstellen</span>
     </button>

@@ -4,6 +4,8 @@ import { clone, sameset } from 'tsfun';
 import { ConfigurationDocument } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { ApplyChangesResult } from '../configuration.component';
+import { Messages } from '../../messages/messages';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -27,8 +29,13 @@ export class ProjectLanguagesModalComponent {
     public clonedSelectedLanguages: string[];
     public modalOpened: boolean = false;
 
+    
+    public isConfirmButtonEnabled = () => this.hasChanged() && this.clonedSelectedLanguages
+        && this.clonedSelectedLanguages.length > 0;
 
-    constructor(public activeModal: NgbActiveModal) {}
+
+    constructor(public activeModal: NgbActiveModal,
+                private messages: Messages) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -48,6 +55,10 @@ export class ProjectLanguagesModalComponent {
     public async apply() {
 
         if (!this.hasChanged()) return;
+
+        if (this.clonedSelectedLanguages.length === 0) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES]);
+        }
 
         this.configurationDocument.resource.projectLanguages = this.clonedSelectedLanguages;
         await this.applyChanges(this.configurationDocument);

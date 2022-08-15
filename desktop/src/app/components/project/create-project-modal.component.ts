@@ -7,6 +7,7 @@ import { Language, Languages } from '../../services/languages';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
+import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
 
@@ -53,6 +54,9 @@ export class CreateProjectModalComponent implements OnInit {
     public getTemplateDescription = (templateName: string) =>
         this.labels.getDescription(this.getTemplate(templateName));
 
+    public isConfirmButtonEnabled = () => this.projectName && this.selectedLanguages
+        && this.selectedLanguages.length > 0 && !this.creating;
+
 
     ngOnInit() {
 
@@ -86,6 +90,11 @@ export class CreateProjectModalComponent implements OnInit {
         if (validationErrorMessage) {
             this.creating = false;
             return this.messages.add(validationErrorMessage as any /* TODO any */);
+        }
+
+        if (this.selectedLanguages.length === 0) {
+            this.creating = false;
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES]);
         }
 
         try {

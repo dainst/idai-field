@@ -143,16 +143,16 @@
         "inputType": "literature"
       },
       "contactMail": {
-        "inputType": "input"
+        "inputType": "simpleInput"
       },
       "contactPerson": {
-        "inputType": "input"
+        "inputType": "simpleInput"
       },
       "epsgId": {
         "inputType": "unsignedInt"
       },
       "externalReference": {
-        "inputType": "input"
+        "inputType": "url"
       },
       "gazId": {
         "inputType": "unsignedInt"
@@ -170,10 +170,10 @@
         "inputType": "text"
       },
       "projectURI": {
-        "inputType": "input"
+        "inputType": "url"
       },
       "projectSupervisor": {
-        "inputType": "input"
+        "inputType": "simpleInput"
       }
     }
   },

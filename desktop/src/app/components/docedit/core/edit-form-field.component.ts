@@ -60,7 +60,7 @@ export class EditFormFieldComponent implements OnChanges {
 
         const fieldContent: any = this.resource[this.field.name];
 
-        if (!isObject(fieldContent)) return [];
+        if (!isObject(fieldContent)) return [I18N.NO_LANGUAGE];
 
         return Object.keys(fieldContent).filter(languageCode => {
             return this.languages[languageCode] || languageCode === I18N.NO_LANGUAGE;

@@ -59,7 +59,8 @@ export class EditFormFieldComponent implements OnChanges {
     private getUsedLanguages(): string[] {
 
         const fieldContent: any = this.resource[this.field.name];
-
+        
+        if (!fieldContent) return [];
         if (!isObject(fieldContent)) return [I18N.NO_LANGUAGE];
 
         return Object.keys(fieldContent).filter(languageCode => {

@@ -4,6 +4,9 @@
   h6 {
     margin-bottom: 0;
     font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

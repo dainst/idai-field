@@ -1,24 +1,10 @@
 # Field Desktop
- 
-![idai-field](img/README-1.png) 
-    
    
-The German Archaeological Institute’s ([DAI](https://www.dainst.org)) 
-new take on a field research 
-documentation system. Combining [features](README-FEATURES.md) of GIS, photo management, and 
-database management systems in a unique and integrating manner, 
-it aims at facilitating archaeological workflows by reducing the overhead 
-of using multiple systems. Developed in-house by the DAI’s information 
-technology department, it targets primarily the needs of the institute’s 
-excavations, older ones as well as those to come. Yet, due to the nature 
-of its adjustable data model and the fact it is open source software, any 
-interested third party is free to reuse and adjust it to their needs.
-   
+The German Archaeological Institute’s ([DAI](https://www.dainst.org)) new take on a field research documentation system. 
 
-## Installation
+## Usage
 
-You can install the latest version of Field Desktop by downloading it from the [GitHub releases page](https://github.com/dainst/idai-field/releases/latest) or the [iDAI.field homepage](https://field.idai.world/download). Choose the installer for your operating system (**MacOS**, **Windows** or **Linux**).
-
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
    
 ## Development
 
@@ -47,8 +33,6 @@ Shapefile import/export is handled by a Java command line tool which is called b
 ```
 $ npm run build:java
 ```
-
-See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
 ## Tests
 
@@ -94,4 +78,3 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-

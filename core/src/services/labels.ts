@@ -1,3 +1,4 @@
+import { isString } from 'tsfun';
 import { CategoryForm } from '../model';
 import { Valuelist } from '../model';
 import { SortUtil } from '../tools';
@@ -18,7 +19,9 @@ export class Labels {
     }
 
 
-    public getFromI18NString(i18nString: I18N.String): string {
+    public getFromI18NString(i18nString: I18N.String|string): string {
+
+        if (isString(i18nString)) return i18nString;
 
         const fallbackValue: string|undefined = i18nString && Object.keys(i18nString).length > 0
             ? i18nString[I18N.NO_LANGUAGE] ?? i18nString[Object.keys(i18nString)[0]]

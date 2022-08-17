@@ -67,7 +67,7 @@ export class ExportComponent implements OnInit {
                 private labels: Labels) {}
 
 
-    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
+    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation, this.labels);
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 

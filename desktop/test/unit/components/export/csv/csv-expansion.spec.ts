@@ -58,4 +58,28 @@ describe('CSVExpansion', () => {
 
         expect(result).toEqual(['A', 'B', 1, 2, 3, 4, 'E']);
     });
+
+
+    it('expand i18n string', () => {
+
+        const result = CSVExpansion.i18nStringExpand(
+            [
+                ['l', 'field1', 'field2'],
+                [
+                    ['l1', { de: 'A', en: 'B' }, 'a'],
+                    ['l2', { de: 'C', it: 'D' }, 'b'],
+                    ['l3', { en: 'E', unspecifiedLanguage: 'F' }, 'c']
+                ]
+            ] as any,
+            ['de', 'en'],
+            (languages: string[]) => { return (fieldName) => languages.map(language => fieldName + '.' + language) },
+            (languages: string[]) => expandHomogeneousItems(content =>
+                languages.map(language => content[language] ?? ''), languages.length)
+            )([1]);
+
+        expect(result[0]).toEqual(['l', 'field1.de', 'field1.en', 'field1.it', 'field1.unspecifiedLanguage', 'field2']);
+        expect(result[1][0]).toEqual(['l1', 'A', 'B', '', '', 'a']);
+        expect(result[1][1]).toEqual(['l2', 'C', '', 'D', '', 'b']);
+        expect(result[1][2]).toEqual(['l3', '', 'E', '', 'F', 'c']);
+    });
 });

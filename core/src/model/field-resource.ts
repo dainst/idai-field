@@ -1,5 +1,6 @@
 import { Resource } from './resource';
 import { FieldGeometry } from './field-geometry';
+import { I18N } from '../tools';
 
 
 export module FieldRelations {
@@ -10,7 +11,7 @@ export module FieldRelations {
 
 export interface FieldResource extends Resource {
 
-    shortDescription: string;
+    shortDescription: I18N.String|string;
     geometry?: FieldGeometry;
     relations: FieldResource.Relations;
 }

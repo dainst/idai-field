@@ -31,13 +31,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     public isFilledIn = (languageCode: string) => this.multiLanguageText?.[languageCode] !== undefined;
 
     public hasTabs = () => this.languages.length > 1
-        || (this.languages.length === 1 && this.languages[0].code !== I18N.NO_LANGUAGE);
+        || (this.languages.length === 1 && this.languages[0].code !== I18N.UNSPECIFIED_LANGUAGE);
 
 
     ngOnChanges() {
 
         this.multiLanguageText = this.readFieldData();
-        if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.NO_LANGUAGE;
+        if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.UNSPECIFIED_LANGUAGE;
         this.updateSelectedText();
     }
 
@@ -61,7 +61,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
         if (isString(this.fieldData)) {
             const result: I18N.String = {};
-            result[I18N.NO_LANGUAGE] = this.fieldData;
+            result[I18N.UNSPECIFIED_LANGUAGE] = this.fieldData;
             return result;
         } else if (this.fieldData) {
             return clone(this.fieldData);

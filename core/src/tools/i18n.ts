@@ -16,7 +16,7 @@ export namespace I18N {
 
     export interface LabeledValue extends Named, Labeled {};
 
-    export const NO_LANGUAGE = 'noLanguage';
+    export const UNSPECIFIED_LANGUAGE = 'unspecifiedLanguage';
 
 
     export function mergeI18nStrings(original: String|undefined, toAdd: String): String {

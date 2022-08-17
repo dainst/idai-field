@@ -52,7 +52,7 @@ export class EditFormFieldComponent implements OnChanges {
 
         return configuredLanguages.length > 0
             ? configuredLanguages
-            : [I18N.NO_LANGUAGE];
+            : [I18N.UNSPECIFIED_LANGUAGE];
     }
 
 
@@ -61,17 +61,17 @@ export class EditFormFieldComponent implements OnChanges {
         const fieldContent: any = this.resource[this.field.name];
         
         if (!fieldContent) return [];
-        if (!isObject(fieldContent)) return [I18N.NO_LANGUAGE];
+        if (!isObject(fieldContent)) return [I18N.UNSPECIFIED_LANGUAGE];
 
         return Object.keys(fieldContent).filter(languageCode => {
-            return this.languages[languageCode] || languageCode === I18N.NO_LANGUAGE;
+            return this.languages[languageCode] || languageCode === I18N.UNSPECIFIED_LANGUAGE;
         });
     }
 
 
     private getLanguage(languageCode: string): Language {
 
-        return languageCode === I18N.NO_LANGUAGE
+        return languageCode === I18N.UNSPECIFIED_LANGUAGE
             ? {
                 code: languageCode,
                 label: this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' }),
@@ -85,7 +85,7 @@ export class EditFormFieldComponent implements OnChanges {
 
         const index: number = settingsLanguages.indexOf(language);
         return index === -1
-            ? language === I18N.NO_LANGUAGE
+            ? language === I18N.UNSPECIFIED_LANGUAGE
                 ? -1
                 : 1000000
             : index;

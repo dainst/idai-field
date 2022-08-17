@@ -1,5 +1,5 @@
 import { flow, left, reverse } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field } from 'idai-field-core';
+import { Dating, Dimension, Literature, OptionalRange, Field, I18N } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -11,10 +11,33 @@ import { CSVHeadingsExpansion } from './csv-headings-expansion';
  */
 export module CSVMatrixExpansion {
 
+    const expandI18nStrings = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithI18nStringExpanded(languages), languages.length
+    );
     const expandDimensionItems = CSVExpansion.expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
     const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
     const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 5);
+
+
+    export function expandI18nString(fieldDefinitions: Array<Field>, projectLanguages: string[], inputType: Field.InputType) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, inputType),
+                reverse,
+                CSVExpansion.i18nStringExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    CSVHeadingsExpansion.expandI18nStrings,
+                    expandI18nStrings
+                )
+            );
+        }
+    }
 
 
     export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
@@ -90,6 +113,14 @@ export module CSVMatrixExpansion {
                 )
             );
         }
+    }
+
+
+    function rowsWithI18nStringExpanded(languages: string[]) {
+
+        return (i18nString: I18N.String): string[] => {
+            return languages.map(language => i18nString[language] ?? '');
+        };
     }
 
 

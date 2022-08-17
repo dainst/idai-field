@@ -220,7 +220,7 @@ export class ExportComponent implements OnInit {
                 this.projectConfiguration
                     .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
-                CsvExporter.performExport(filePath)
+                CsvExporter.performExport(filePath, this.projectConfiguration.getProjectLanguages())
             );
 
             this.showInvalidFieldsWarning();

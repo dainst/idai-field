@@ -1,6 +1,6 @@
-import { compose, cond, flatMap, identity, isDefined, reduce } from 'tsfun';
+import { compose, cond, flatMap, identity, isDefined, reduce, isObject, flow, map, flatten, set } from 'tsfun';
 import { CsvExportUtils } from './csv-export-utils';
-import { HeadingsAndMatrix } from './csv-export-consts';
+import { HeadingsAndMatrix, Matrix } from './csv-export-consts';
 
 const EMPTY = '';
 
@@ -58,6 +58,7 @@ export module CSVExpansion {
                                       expandObject: (where: number, nrOfNewItems: number) => (items: any[]) => any[])
             : (columnIndices: number[]) => HeadingsAndMatrix {
 
+
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
             const max = Math.max(1, CsvExportUtils.getMax(columnIndex)(matrix));
@@ -86,6 +87,37 @@ export module CSVExpansion {
             return [expandedHeader, expandedRows];
 
         }, headingsAndMatrix);
+    }
+
+
+    export function i18nStringExpand(headingsAndMatrix: HeadingsAndMatrix,
+                                     projectLanguages: string[],
+                                     expandHeadings: (languages: string[]) => (fieldName: string) => string[],
+                                     expandObject: (languages: string[]) => (where: number, nrOfNewItems: number) =>
+                                        (items: any[]) => any[])
+            : (columnIndices: number[]) => HeadingsAndMatrix {
+
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
+
+            const languages: string[] = getLanguages(matrix, projectLanguages, columnIndex);
+            const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings(languages))(headings);
+            const expandedRows = matrix.map(expandObject(languages)(columnIndex, 1));
+
+            return [expandedHeader, expandedRows];
+
+        }, headingsAndMatrix);
+    }
+
+
+    function getLanguages(matrix: Matrix, projectLanguages: string[], columnIndex: number): string[] {
+
+        const languages = flow(
+            matrix,
+            map(row => row[columnIndex]),
+            map(field => isObject(field) ? Object.keys(field) : [])
+        );
+
+        return set(projectLanguages.concat(flatten(languages)));
     }
 
 

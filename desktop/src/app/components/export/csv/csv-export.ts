@@ -41,7 +41,8 @@ export module CSVExport {
      */
     export function createExportable(resources: Array<FieldResource>,
                                      fieldDefinitions: Array<Field>,
-                                     relations: Array<string>) {
+                                     relations: Array<string>,
+                                     projectLanguages: string[]) {
 
         fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
 
@@ -56,6 +57,8 @@ export module CSVExport {
 
         const csvData: string[] = flow(
             [headings, matrix],
+            CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.INPUT),
+            CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.TEXT),
             CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
             CSVMatrixExpansion.expandDating(fieldDefinitions),
             CSVMatrixExpansion.expandDimension(fieldDefinitions),

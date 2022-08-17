@@ -10,6 +10,18 @@ export module CSVHeadingsExpansion {
 
     import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 
+
+    export function expandI18nStrings(languages: string[]) {
+        
+        return (fieldName: string) => {
+
+            return languages.map(language => {
+                return fieldName + OBJECT_SEPARATOR + language
+            });
+        }
+    }
+
+
     export function expandOptionalRangeHeadings(fieldName: string) {
 
         return [

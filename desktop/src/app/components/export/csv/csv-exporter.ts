@@ -15,14 +15,14 @@ export module CsvExporter {
     /**
      * @param outputFilePath
      */
-    export function performExport(outputFilePath: string): PerformExport {
+    export function performExport(outputFilePath: string, projectLanguages: string[]): PerformExport {
 
         return (category: CategoryForm, relations: string[]) => {
 
             return async (resources: Array<FieldResource>) => {
 
                 const result: CSVExportResult = CSVExport.createExportable(
-                    resources, CategoryForm.getFields(category), relations
+                    resources, CategoryForm.getFields(category), relations, projectLanguages
                 );
                 await writeFile(outputFilePath, result.csvData);
 

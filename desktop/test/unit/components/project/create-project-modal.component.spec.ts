@@ -27,8 +27,6 @@ describe('CreateProjectModalComponent', () => {
             settingsProvider,
             messages,
             undefined,
-            undefined,
-            undefined,
             undefined
         );
     });

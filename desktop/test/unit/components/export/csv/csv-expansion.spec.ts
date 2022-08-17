@@ -1,5 +1,5 @@
-import {val} from 'tsfun';
-import {CSVExpansion} from '../../../../../src/app/components/export/csv/csv-expansion';
+import { val } from 'tsfun';
+import { CSVExpansion } from '../../../../../src/app/components/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
 
 
@@ -14,12 +14,12 @@ describe('CSVExpansion', () => {
             [
                 ['l', 'abc', 'r'],
                 [
-                    ['l1', {a: 'A', b: 'B'}, null],
-                    ['l2', {a: 'A'}, null]
+                    ['l1', { a: 'A', b: 'B' }, null],
+                    ['l2', { a: 'A' }, null]
                 ]
             ] as any,
             val(['abc.a', 'abc.b']),
-            expandHomogeneousItems(({a, b}: any) => [a, b ? b : ''], 2)
+            expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
             )([1]);
 
         expect(result[0]).toEqual(['l', 'abc.a', 'abc.b', 'r']);
@@ -34,12 +34,12 @@ describe('CSVExpansion', () => {
             [
                 ['l', 'abc', 'r'],
                 [
-                    ['l1', [{a: 'A', b: 'B'}], null],
-                    ['l2', [{a: 'A'}], null]
+                    ['l1', [{ a: 'A', b: 'B' }], null],
+                    ['l2', [{ a: 'A' }], null]
                 ]
             ] as any,
             val(val(['abc.0.a', 'abc.0.b'])),
-            expandHomogeneousItems(({a, b}: any) => [a, b ? b : ''], 2)
+            expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
         )([1]);
 
         expect(result[0]).toEqual(['l', 'abc.0.a', 'abc.0.b', 'r']);
@@ -52,9 +52,9 @@ describe('CSVExpansion', () => {
 
         const result =
             expandHomogeneousItems
-            (({a, b}: any) => [a, b], 2)
+            (({ a, b }: any) => [a, b], 2)
             (2, 2)
-            (['A', 'B', {a: 1, b: 2}, {a: 3, b: 4}, 'E']);
+            (['A', 'B', { a: 1, b: 2 }, { a: 3, b: 4 }, 'E']);
 
         expect(result).toEqual(['A', 'B', 1, 2, 3, 4, 'E']);
     });

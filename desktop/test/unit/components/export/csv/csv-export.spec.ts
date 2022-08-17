@@ -13,7 +13,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('period')) inputType = 'dropdownRange';
         if (fieldName.startsWith('relation')) inputType = 'relation';
 
-        return { name: fieldName, inputType: inputType }
+        return { name: fieldName, inputType: inputType };
     }) as Array<Field>;
 }
 
@@ -137,7 +137,7 @@ describe('CSVExport', () => {
             value: 'A'
         };
 
-        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','))
+        const result = CSVExport.createExportable(resources, t, []).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"period.value"');
         expect(result[0][2]).toBe('"period.endValue"');

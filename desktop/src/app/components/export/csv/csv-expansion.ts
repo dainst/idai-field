@@ -30,7 +30,9 @@ export module CSVExpansion {
                 nrOfNewItems,
                 flatMap(compose(
                     cond(isDefined, computeReplacement, []),
-                    CsvExportUtils.fillUpToSize(widthOfEachNewItem, EMPTY))));
+                    CsvExportUtils.fillUpToSize(widthOfEachNewItem, EMPTY)
+                ))
+            );
         }
     }
 
@@ -53,7 +55,7 @@ export module CSVExpansion {
      */
     export function objectArrayExpand(headingsAndMatrix: HeadingsAndMatrix,
                                       expandHeadings: (numItems: number) => (fieldName: string) => string[],
-                                      expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[])
+                                      expandObject: (where: number, nrOfNewItems: number) => (items: any[]) => any[])
             : (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
@@ -61,7 +63,7 @@ export module CSVExpansion {
             const max = Math.max(1, CsvExportUtils.getMax(columnIndex)(matrix));
 
             const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings(max))(headings);
-            const expandedRows   = matrix
+            const expandedRows = matrix
                 .map(expandArray(columnIndex, max))
                 .map(expandObject(columnIndex, max));
 
@@ -73,13 +75,13 @@ export module CSVExpansion {
 
     export function objectExpand(headingsAndMatrix: HeadingsAndMatrix,
                                  expandHeadings: (fieldName: string) => string[],
-                                 expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[])
+                                 expandObject: (where: number, nrOfNewItems: number) => (items: any[]) => any[])
             : (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
             const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings)(headings);
-            const expandedRows   = matrix.map(expandObject(columnIndex, 1));
+            const expandedRows = matrix.map(expandObject(columnIndex, 1));
 
             return [expandedHeader, expandedRows];
 

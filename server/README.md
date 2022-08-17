@@ -2,56 +2,18 @@
 
 FieldHub serves as a central synchronisation server for [Field Desktop](../desktop) clients.
 
-There are two aspects to syncing Field data:
-1. Image data
-2. Database data
+## Usage
 
-Image data is held directly in filesystem, while the database syncing is handled by [CouchDB](https://couchdb.apache.org/) (FieldHub) or [PouchDB](https://pouchdb.com/) (Field Desktop). FieldHub serves as a simple reverse proxy to a CouchDB installation and implements the image data syncing. 
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
 
-If you are already running your own CouchDB, you can install FieldHub alongside by setting its environment variables accordingly (see below).
+## Development
 
-## Prerequisites
+### Prerequisites
 
 * [Docker](https://www.docker.com/)
-* CouchDB installation (Deployment)
-* [Elixir](https://elixir-lang.org/) >= 1.12 (Development)
-* [docker-compose](https://docs.docker.com/compose/) (Development)
+* [docker-compose](https://docs.docker.com/compose/)
+* [Elixir](https://elixir-lang.org/) >= 1.12
 
-## CLI
-
-FieldHub provides its own command line interface, which is documented separately in [CLI.md](CLI.md).
-
-## Deployment
-
-The Docker images are currently hosted in the Github Container Registry: https://github.com/dainst/idai-field/pkgs/container/field_hub.
-
-### Environment variables
-* HOST, the host domain you will run the application from, for example "server.field.idai.world". (required)
-* SECRET_KEY_BASE, see https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets (required)
-* COUCHDB_URL, base url to your CouchDB installation, for example "http://example.com:5984". (required)
-* COUCHDB_ADMIN_NAME, admin username for the CouchDB (optional, required for FieldHub CLI scripts)
-* COUCHDB_ADMIN_PASSWORD, admin password for the CouchDB (optional, required for FieldHub CLI scripts)
-
-### Volumes
-The application will save images at `/files` within the container. If you want to make the images persistent, you should therefore mount a host volume accordingly.
-
-See also the [deployment example](./deployment_example/).
-
-### First steps
-
-If you have an existing project in your Field Client, you also have to create an empty project with the same name as described below. When you first sync your Field Client to the server, the server database and images will get updated to the Field Client project state.
-
-- If your CouchDB is a new installation and not initialized yet, you should run the corresponding [CLI](CLI.md) script `setup_couchdb_single_node()`.
-- Create one or more projects. It is expected that each project and its user have the same name. The easiest way to create an empty project is running one of the [CLI](CLI.md) `create_project_with_default_user(..)` scripts. This will achieve 4 things:
-  - Create an empty database with the given name
-  - Create a user with the same name and a password
-  - Add the user as a member of the newly created database
-  - Create the image file directories in the filesystem
-
-Afterwards you should be able to use the credentials to sync your Field Client with the server.
-
- 
-## Development
 Create an `.env` file:
 
 ```
@@ -68,7 +30,7 @@ docker-compose up
 ```
 
 ### Phoenix Server
-Install dependencies, finish the CouchDB setup as single node and seed a project and user:
+Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
 
 ```bash
 mix setup
@@ -82,6 +44,20 @@ mix phx.server
 
 FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
+### CLI Interface
+
+The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functions.
+
+To call the CLI functions using `mix` use the pattern:
+
+```
+mix run -e 'FieldHub.CLI.<function_name>("<string parameter>")'
+```
+
+For example add a user by running:
+```
+mix run -e 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
+```
 
 ## Building a new docker image version
 
@@ -104,3 +80,4 @@ docker push ghcr.io/dainst/field_hub:<version>
 ```
 
 In order to push images, you have to authenticate your local machine with the registry, see: [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
+

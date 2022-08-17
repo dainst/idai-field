@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels } from 'idai-field-core';
+    Labels, I18N } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -26,7 +26,7 @@ export class RowComponent implements AfterViewInit {
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
-    private initialValueOfCurrentlyEditedField: string|undefined;
+    private initialValueOfCurrentlyEditedField: string|I18N.String|undefined;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -45,7 +45,7 @@ export class RowComponent implements AfterViewInit {
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
-    public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
+    public startEditing = (fieldValue: string|I18N.String) => this.initialValueOfCurrentlyEditedField = fieldValue;
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
@@ -74,7 +74,7 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldValue: string) {
+    public async onKeyUp(event: KeyboardEvent, fieldValue: string|I18N.String) {
 
         if (event.key === 'Enter') await this.stopEditing(fieldValue);
     }
@@ -93,7 +93,7 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async stopEditing(fieldValue: string) {
+    public async stopEditing(fieldValue: string|I18N.String) {
 
         if (this.initialValueOfCurrentlyEditedField != fieldValue) await this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;

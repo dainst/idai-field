@@ -1,3 +1,4 @@
+import { I18N } from 'idai-field-core';
 import { val } from 'tsfun';
 import { CSVExpansion } from '../../../../../src/app/components/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
@@ -68,13 +69,18 @@ describe('CSVExpansion', () => {
                 [
                     ['l1', { de: 'A', en: 'B' }, 'a'],
                     ['l2', { de: 'C', it: 'D' }, 'b'],
-                    ['l3', { en: 'E', unspecifiedLanguage: 'F' }, 'c']
+                    ['l3', { en: 'E', unspecifiedLanguage: 'F' }, 'c'],
+                    ['l4', 'G', 'd']
                 ]
             ] as any,
             ['de', 'en', 'es'],
             (languages: string[]) => { return (fieldName) => languages.map(language => fieldName + '.' + language) },
             (languages: string[]) => expandHomogeneousItems(content =>
-                languages.map(language => content[language] ?? ''), languages.length)
+                languages.map(language => {
+                    return content === 'G' && language === I18N.UNSPECIFIED_LANGUAGE
+                        ? 'G'
+                        : content[language] ?? ''
+                }), languages.length)
             )([1]);
 
         expect(result[0]).toEqual(['l', 'field1.de', 'field1.en', 'field1.es', 'field1.it',
@@ -82,5 +88,6 @@ describe('CSVExpansion', () => {
         expect(result[1][0]).toEqual(['l1', 'A', 'B', '', '', '', 'a']);
         expect(result[1][1]).toEqual(['l2', 'C', '', '', 'D', '', 'b']);
         expect(result[1][2]).toEqual(['l3', '', 'E', '', '', 'F', 'c']);
+        expect(result[1][3]).toEqual(['l4', '', '', '', '', 'G', 'd']);
     });
 });

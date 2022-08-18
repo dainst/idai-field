@@ -18,11 +18,12 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     @Input() languages: Array<Language>;
     @Input() multiLine: boolean = false;
 
-    @Output() onFieldDataChanged: EventEmitter<I18N.String|undefined> = new EventEmitter<I18N.String|undefined>();
+    @Output() onFieldDataChanged: EventEmitter<I18N.String|string|undefined>
+        = new EventEmitter<I18N.String|string|undefined>();
 
     @ViewChild('inputField') inputFieldElement: ElementRef;
 
-    public multiLanguageText: I18N.String|undefined;
+    public multiLanguageText: I18N.String|string|undefined;
     public selectedLanguage: string;
     public selectedText: string;
     public focused: boolean = false;
@@ -57,12 +58,16 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     }
 
 
-    private readFieldData(): I18N.String|undefined {
+    private readFieldData(): I18N.String|string|undefined {
 
         if (isString(this.fieldData)) {
-            const result: I18N.String = {};
-            result[I18N.UNSPECIFIED_LANGUAGE] = this.fieldData;
-            return result;
+            if (this.hasNoConfiguredLanguages()) {
+                return this.fieldData;
+            } else {
+                const result: I18N.String = {};
+                result[I18N.UNSPECIFIED_LANGUAGE] = this.fieldData;
+                return result;
+            }
         } else if (this.fieldData) {
             return clone(this.fieldData);
         } else {
@@ -74,19 +79,29 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     private updateSelectedText() {
 
         this.selectedText = this.multiLanguageText
-            ? this.multiLanguageText[this.selectedLanguage] ?? ''
+            ? isString(this.multiLanguageText)
+                ? this.multiLanguageText
+                : this.multiLanguageText[this.selectedLanguage] ?? ''
             : '';
     }
 
 
     private updateMultiLanguageText(value: string) {
 
-        if (value === '') {
+        if ((this.multiLanguageText && isString(this.multiLanguageText)) || this.hasNoConfiguredLanguages()) {
+            this.multiLanguageText = value;
+        } else if (value === '') {
             delete this.multiLanguageText[this.selectedLanguage];
             if (isEmpty(this.multiLanguageText)) this.multiLanguageText = undefined;
         } else {
             if (!this.multiLanguageText) this.multiLanguageText = {};
             this.multiLanguageText[this.selectedLanguage] = value;
         }
+    }
+
+
+    private hasNoConfiguredLanguages(): boolean {
+
+        return this.languages.length === 1 && this.languages[0].code === I18N.UNSPECIFIED_LANGUAGE;
     }
 }

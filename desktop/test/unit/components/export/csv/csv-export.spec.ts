@@ -7,7 +7,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
     return fieldNames.map(fieldName => {
 
         let inputType = 'simpleInput';
-        if (fieldName.startsWith('shortDescription')) inputType = 'input';
+        if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) inputType = 'input';
         if (fieldName.startsWith('dimension')) inputType = 'dimension';
         if (fieldName.startsWith('dating')) inputType = 'dating';
         if (fieldName.startsWith('literature')) inputType = 'literature';
@@ -476,5 +476,44 @@ describe('CSVExport', () => {
         expect(result[2][3]).toBe('"https://www.example.de"');
         expect(result[2][4]).toBe('"12"');
         expect(result[2][5]).toBe('"1"');
+    });
+
+
+    it('expand i18n strings', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'input1', 'input2']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category')
+        ];
+        resources[0].input1 = { de: 'A', en: 'B' };
+        resources[0].input2 = { de: 'C' };
+        resources[1].input1 = { it: 'D' };
+        resources[1].input2 = 'E';
+        
+
+        const result = CSVExport.createExportable(resources, t, [], ['de', 'en']).csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"input1.de"');
+        expect(result[0][2]).toBe('"input1.en"');
+        expect(result[0][3]).toBe('"input1.it"');
+        expect(result[0][4]).toBe('"input2.de"');
+        expect(result[0][5]).toBe('"input2.en"');
+        expect(result[0][6]).toBe('"input2.unspecifiedLanguage"');
+
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('""');
+        expect(result[1][4]).toBe('"C"');
+        expect(result[1][5]).toBe('""');
+        expect(result[1][6]).toBe('""');
+
+        expect(result[2][1]).toBe('""');
+        expect(result[2][2]).toBe('""');
+        expect(result[2][3]).toBe('"D"');
+        expect(result[2][4]).toBe('""');
+        expect(result[2][5]).toBe('""');
+        expect(result[2][6]).toBe('"E"');
     });
 });

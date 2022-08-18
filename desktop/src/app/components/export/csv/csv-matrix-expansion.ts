@@ -1,4 +1,4 @@
-import { flow, left, reverse } from 'tsfun';
+import { flow, left, reverse, isString } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, Field, I18N } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { HeadingsAndMatrix } from './csv-export-consts';
@@ -118,8 +118,13 @@ export module CSVMatrixExpansion {
 
     function rowsWithI18nStringExpanded(languages: string[]) {
 
-        return (i18nString: I18N.String): string[] => {
-            return languages.map(language => i18nString[language] ?? '');
+        return (i18nString: I18N.String|string): string[] => {
+
+            return languages.map(language => {
+                return isString(i18nString)
+                    ? (language === I18N.UNSPECIFIED_LANGUAGE ? i18nString : '')
+                    : (i18nString[language] ?? '');
+            });
         };
     }
 

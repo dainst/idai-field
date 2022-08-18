@@ -1,6 +1,7 @@
 import { compose, cond, flatMap, identity, isDefined, reduce, isObject, flow, map, flatten, set } from 'tsfun';
 import { CsvExportUtils } from './csv-export-utils';
 import { HeadingsAndMatrix, Matrix } from './csv-export-consts';
+import { I18N } from 'idai-field-core';
 
 const EMPTY = '';
 
@@ -114,7 +115,7 @@ export module CSVExpansion {
         const languages = flow(
             matrix,
             map(row => row[columnIndex]),
-            map(field => isObject(field) ? Object.keys(field) : [])
+            map(field => isObject(field) ? Object.keys(field) : [I18N.UNSPECIFIED_LANGUAGE])
         );
 
         return set(projectLanguages.concat(flatten(languages)));

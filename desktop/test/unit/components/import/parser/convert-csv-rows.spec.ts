@@ -1,5 +1,5 @@
-import {convertCsvRows} from '../../../../../src/app/components/import/parser/convert-csv-rows';
-import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
+import { convertCsvRows } from '../../../../../src/app/components/import/parser/convert-csv-rows';
+import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_INVALID_HEADING = ParserErrors.CSV_INVALID_HEADING;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 

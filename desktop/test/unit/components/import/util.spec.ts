@@ -1,4 +1,4 @@
-import {hasEmptyAssociatives} from '../../../../src/app/components/import/util';
+import { hasEmptyAssociatives } from '../../../../src/app/components/import/util';
 
 
 describe('util', () => {

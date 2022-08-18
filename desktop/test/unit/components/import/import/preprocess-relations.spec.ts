@@ -1,4 +1,4 @@
-import { complementInverseRelationsBetweenImportDocs } from "../../../../../src/app/components/import/import/preprocess-relations";
+import { complementInverseRelationsBetweenImportDocs } from '../../../../../src/app/components/import/import/preprocess-relations';
 
 
 describe('preprocessRelations', () => {

@@ -4,7 +4,7 @@ import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field
 const nativeImage = typeof window !== 'undefined'
     ? window.require('electron').nativeImage : require('electron').nativeImage;
 const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
-const ExifImage = typeof window !== 'undefined' ? window.require('exif').ExifImage : require('exif').ExifImage;
+const ExifReader = typeof window !== 'undefined' ? window.require('exifreader') : require('exifreader');
 
 const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
 
@@ -24,7 +24,10 @@ export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
     public async generate(buffer: Buffer): Promise<Buffer> {
 
-        const image = await this.isRotatedJpeg(buffer) ? undefined : this.convertWithElectron(buffer, THUMBNAIL_TARGET_HEIGHT);
+        const image = this.isRotatedJpeg(buffer)
+            ? undefined
+            : this.convertWithElectron(buffer, THUMBNAIL_TARGET_HEIGHT);
+
         if (image && !image.isEmpty()) {
             return image.toJPEG(THUMBNAIL_TARGET_JPEG_QUALITY);
         } else {
@@ -38,21 +41,14 @@ export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
     }
 
 
-    private async isRotatedJpeg(buffer: Buffer): Promise<boolean> {
+    private isRotatedJpeg(buffer: Buffer): boolean {
 
-        return new Promise(resolve => {
-            try {
-                return new ExifImage(
-                    { image : buffer },
-                    (error: any, exifData: any) => {
-                        if (error) return resolve(false);
-                        return resolve(exifData?.image?.Orientation > 1);
-                    }
-                );
-            } catch (error) {
-                return resolve(false);
-            }
-        });
+        try {
+            const exifData = ExifReader.load(buffer);
+            return exifData?.Orientation?.value > 1;
+        } catch (err) {
+            return false;
+        }
     }
 
 

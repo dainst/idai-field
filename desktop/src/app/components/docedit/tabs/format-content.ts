@@ -79,7 +79,8 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 labels.getValueLabel(field.valuelist, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
-            return Dating.generateLabel(element, getTranslation);
+            return Dating.generateLabel(element, getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value));
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, getTranslation)
         } else if (isString(element)) {

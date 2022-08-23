@@ -89,7 +89,8 @@ export module FieldsViewUtil {
         } else if (object.begin || object.end) {
             return Dating.generateLabel(
                 object,
-                getTranslation
+                getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value)
             );
         } else if (object.inputUnit) {
             return Dimension.generateLabel(

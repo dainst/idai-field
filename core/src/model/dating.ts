@@ -1,4 +1,5 @@
 import { flow, cond, on, isUndefinedOrEmpty, detach, isObject } from 'tsfun';
+import { I18N } from '../tools/i18n';
 
 
 /**
@@ -14,7 +15,7 @@ export interface Dating {
     end?: DatingElement,
 
     margin?: number,
-    source?: string,
+    source?: I18N.String|string,
     isImprecise?: boolean,
     isUncertain?: boolean,
 
@@ -146,7 +147,8 @@ export module Dating {
 
 
     export function generateLabel(dating: Dating,
-                                  getTranslation: (term: Dating.Translations) => string): string {
+                                  getTranslation: (term: Dating.Translations) => string,
+                                  getFromI18NString: (i18nString: I18N.String|string) => string): string {
 
         if (isValid(dating)) {
             let prefix = '';
@@ -166,13 +168,13 @@ export module Dating {
                 if (dating.margin && dating.margin > 0) year += ' ± ' + dating.margin;
             }
 
-            if (dating['isImprecise']) prefix = 'ca. ';
-            if (dating['isUncertain']) postfix = ' (?)';
+            if (dating.isImprecise) prefix = 'ca. ';
+            if (dating.isUncertain) postfix = ' (?)';
 
             if (dating.type === 'before') prefix = getTranslation('before')  + ' ' + prefix;
             if (dating.type === 'after') prefix = getTranslation('after') + ' ' + prefix;
 
-            if (dating['source']) postfix += ' [' + dating['source'] + ']';
+            if (dating.source) postfix += ' [' + getFromI18NString(dating.source) + ']';
 
             return prefix + year + postfix;
         } else {

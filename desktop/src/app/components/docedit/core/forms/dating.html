@@ -103,8 +103,9 @@
 
             <div class="form-group">
                 <label i18n="@@docedit.forms.dating.source">Grundlage:</label>
-                <input type="text" [(ngModel)]="dating.source" name="source"
-                    class="form-control">
+                <multi-language-text-field [fieldData]="dating.source" [languages]="fieldLanguages"
+                                           (onFieldDataChanged)="updateSource(dating, $event)">
+                </multi-language-text-field>
             </div>
 
         </div>

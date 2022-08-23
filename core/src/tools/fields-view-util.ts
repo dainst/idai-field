@@ -96,6 +96,7 @@ export module FieldsViewUtil {
                 object,
                 formatDecimal,
                 getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value),
                 labels.getValueLabel(field.valuelist, object.measurementPosition)
             );
         } else if (object.quotation) {

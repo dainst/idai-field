@@ -34,7 +34,7 @@
           [field]="field"></form-field-date>
 
 <form-field-dimension *ngIf="field.inputType === 'dimension'" [resource]="resource"
-               [field]="field"></form-field-dimension>
+               [field]="field" [languages]="languages"></form-field-dimension>
 
 <form-field-literature *ngIf="field.inputType === 'literature'" [resource]="resource"
                 [field]="field"></form-field-literature>

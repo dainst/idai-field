@@ -1,8 +1,12 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { clone } from 'tsfun';
-import { Dimension, Labels, Field, Resource } from 'idai-field-core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { clone, Map } from 'tsfun';
+import { Dimension, Labels, Field, Resource, I18N, ProjectConfiguration } from 'idai-field-core';
+import { getFieldLanguages } from '../../get-field-languages';
 import { UtilTranslations } from '../../../../util/util-translations';
+import { Language } from '../../../../services/languages';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
 
 type DimensionInEditing = { original: Dimension, clone: Dimension };
@@ -20,14 +24,19 @@ export class DimensionComponent {
 
     @Input() resource: Resource;
     @Input() field: Field;
+    @Input() languages: Map<Language>;
 
     public newDimension: Dimension|undefined = undefined;
     public dimensionsInEditing: Array<DimensionInEditing> = [];
+    public fieldLanguages: Array<Language>;
 
 
     constructor(private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private labels: Labels) {}
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration,
+                private settingsProvider: SettingsProvider,
+                private i18n: I18n) {}
 
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
@@ -43,12 +52,13 @@ export class DimensionComponent {
     		value: 0,
             inputValue: 0,
 			measurementPosition: '',
-			measurementComment: '',
 			inputUnit: 'cm',
 			isImprecise: false
     	};
 
         (this.newDimension as any)['isRange'] = false;
+
+        this.updateFieldLanguages(this.newDimension);
     }
 
 
@@ -60,6 +70,7 @@ export class DimensionComponent {
             dimension,
             (value: any) => this.decimalPipe.transform(value),
             (key: string) => this.utilTranslations.getTranslation(key),
+            (value: I18N.String|string) => this.labels.getFromI18NString(value),
             this.getPositionValueLabel(dimension.measurementPosition)
         );
     }
@@ -84,6 +95,8 @@ export class DimensionComponent {
 
 
     public startEditing(dimension: Dimension) {
+
+        this.updateFieldLanguages(dimension);
 
         const clonedDimension = clone(dimension);
         clonedDimension.isRange = clonedDimension.inputRangeEndValue ? true : false;
@@ -132,6 +145,16 @@ export class DimensionComponent {
     }
 
 
+    public updateMeasurementComment(dimension: Dimension, measurementComment: any) {
+
+        if (measurementComment) {
+            dimension.measurementComment = measurementComment;
+        } else {
+            delete dimension.measurementComment;
+        }
+    }
+
+
     public saveDimension(dimension: Dimension) {
 
         delete dimension.isRange;
@@ -146,5 +169,17 @@ export class DimensionComponent {
             this.resource[this.field.name].splice(index, 1, dimension);
             this.stopEditing(dimension);
         }
+    }
+
+
+    private updateFieldLanguages(dimension: Dimension) {
+
+        this.fieldLanguages = getFieldLanguages(
+            dimension.measurementComment,
+            this.languages,
+            this.projectConfiguration.getProjectLanguages(),
+            this.settingsProvider.getSettings().languages,
+            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+        );
     }
 }

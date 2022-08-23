@@ -1,5 +1,5 @@
 import { flow, isArray, isObject, isString } from 'tsfun';
-import { Dating, Dimension, Labels, Literature, OptionalRange, Resource } from 'idai-field-core';
+import { Dating, Dimension, I18N, Labels, Literature, OptionalRange, Resource } from 'idai-field-core';
 
 export type InnerHTML = string;
 
@@ -76,6 +76,7 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value),
                 labels.getValueLabel(field.valuelist, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation);

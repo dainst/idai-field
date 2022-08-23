@@ -28,7 +28,7 @@ export interface Dimension {
     inputUnit: Dimension.InputUnits;
 
     measurementPosition?: string;
-    measurementComment?: string;
+    measurementComment?: I18N.String|string;
     isImprecise: boolean;
 
     isRange?: boolean; // Deprecated

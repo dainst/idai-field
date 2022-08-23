@@ -125,13 +125,13 @@ export module FieldsViewUtil {
                     || field.inputType === Field.InputType.INSTANCE_OF)
                 ? {
                     name: field.name,
-                    label: labels.get(field),
+                    label: labels.getFromLabeledValue(field),
                     type: 'relation',
                     targets: relationTargets[field.name]
                 }
                 : {
                     name: field.name,
-                    label: labels.get(field),
+                    label: labels.getFromLabeledValue(field),
                     value: isArray(fieldContent)
                         ? fieldContent.map((fieldContent: any) =>
                             getValue(
@@ -159,7 +159,7 @@ function getValue(fieldContent: any,
                   valuelist?: Valuelist): any {
 
     return fieldName === Resource.CATEGORY
-        ? labels.get(projectConfiguration.getCategory(fieldContent))
+        ? labels.getFromLabeledValue(projectConfiguration.getCategory(fieldContent))
         : valuelist
             ? labels.getValueLabel(valuelist, fieldContent)
             : isString(fieldContent)

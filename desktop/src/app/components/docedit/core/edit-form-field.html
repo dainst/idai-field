@@ -1,8 +1,8 @@
 <form-field-input *ngIf="field.inputType === 'input' || field.inputType === undefined"
-           [resource]="resource" [fieldName]="field.name" [languages]="fieldLanguages"></form-field-input>
+           [resource]="resource" [fieldName]="field.name" [languages]="languages"></form-field-input>
 
 <form-field-input *ngIf="field.inputType === 'text'" [resource]="resource" [fieldName]="field.name"
-           [languages]="fieldLanguages" [multiLine]="true" ></form-field-input>
+           [languages]="languages" [multiLine]="true" ></form-field-input>
 
 <form-field-simple-input *ngIf="field.inputType === 'simpleInput' || field.inputType === 'int'
                 || field.inputType === 'unsignedInt' || field.inputType === 'float'

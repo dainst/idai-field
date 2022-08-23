@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Document, Field, Group, Labels, ProjectConfiguration } from 'idai-field-core';
+import { Document, Field, Group, Labels } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
-import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 @Component({

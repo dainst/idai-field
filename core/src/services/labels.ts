@@ -13,7 +13,7 @@ export class Labels {
     constructor(private getLanguages: () => string[]) {}
 
 
-    public getFromLabeledValue(labeledValue: I18N.LabeledValue): string {
+    public get(labeledValue: I18N.LabeledValue): string {
 
         return I18N.getLabel(labeledValue, this.getLanguages());
     }
@@ -27,7 +27,7 @@ export class Labels {
             ? i18nString[I18N.UNSPECIFIED_LANGUAGE] ?? i18nString[Object.keys(i18nString)[0]]
             : undefined;
 
-        return this.getFromLabeledValue({ label: i18nString, name: fallbackValue });
+        return this.get({ label: i18nString, name: fallbackValue });
     }
 
     

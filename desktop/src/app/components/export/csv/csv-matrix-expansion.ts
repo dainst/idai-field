@@ -146,7 +146,7 @@ export module CSVMatrixExpansion {
         if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
         if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
 
-        return expandedDating;
+        return expandedDating as string[]; // TODO
     }
 
 
@@ -172,7 +172,7 @@ export module CSVMatrixExpansion {
 
         if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 
-        return expandedDimension;
+        return expandedDimension as string[]; // TODO
     }
 
 

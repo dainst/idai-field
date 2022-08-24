@@ -1,13 +1,11 @@
-import { ImageDocument } from 'idai-field-core';
+import { ImageDocument, Labels } from 'idai-field-core';
 
 
 export module LayerUtility {
 
-    export const getLayerLabel = (layer: ImageDocument): string => {
+    export const getLayerLabel = (layer: ImageDocument, labels: Labels): string => {
 
-        let label = layer.resource.shortDescription && layer.resource.shortDescription != '' ?
-            layer.resource.shortDescription :
-            layer.resource.identifier;
+        let label = labels.getFromI18NString(layer.resource.shortDescription) ?? layer.resource.identifier;
 
         if (label.length > 55) label = label.substring(0, 52) + '...';
 

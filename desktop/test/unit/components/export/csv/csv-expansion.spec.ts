@@ -35,17 +35,21 @@ describe('CSVExpansion', () => {
             [
                 ['l', 'abc', 'r'],
                 [
-                    ['l1', [{ a: 'A', b: 'B' }], null],
+                    ['l1', [{ a: 'A', b: { de: 'B1', en: 'B2' } }], null],
                     ['l2', [{ a: 'A' }], null]
                 ]
             ] as any,
-            val(val(['abc.0.a', 'abc.0.b'])),
-            expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
+            ['de'],
+            'b',
+            (languages: string[]) => val(val(['abc.0.a'].concat(languages.map(language => 'abc.0.b.' + language)))),
+            (languages: string[]) => expandHomogeneousItems(({ a, b }: any) => {
+                return [a].concat(b ? languages.map(language => b[language]) : []);
+            }, 1 + languages.length)
         )([1]);
 
-        expect(result[0]).toEqual(['l', 'abc.0.a', 'abc.0.b', 'r']);
-        expect(result[1][0]).toEqual(['l1', 'A', 'B', null]);
-        expect(result[1][1]).toEqual(['l2', 'A', '', null]);
+        expect(result[0]).toEqual(['l', 'abc.0.a', 'abc.0.b.de', 'abc.0.b.en', 'r']);
+        expect(result[1][0]).toEqual(['l1', 'A', 'B1', 'B2', null]);
+        expect(result[1][1]).toEqual(['l2', 'A', '', '', null]);
     });
 
 

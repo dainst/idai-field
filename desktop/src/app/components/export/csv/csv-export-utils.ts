@@ -25,8 +25,7 @@ export module CsvExportUtils {
      * ->
      * [1, 2]
      */
-    export function getIndices(fields: Array<Field>, inputType: string)
-        : (headings: string[]) => number[] {
+    export function getIndices(fields: Array<Field>, inputType: string): (headings: string[]) => number[] {
 
         return indices((heading: string) => {
 
@@ -49,18 +48,15 @@ export module CsvExportUtils {
      * ->
      * 3
      */
-    export function getMax(columnIndex: number)
-        : <A>(matrix: any) => number {
+    export function getMax(columnIndex: number): <A>(matrix: any) => number {
 
         return reduce((max: number, row: any) =>
-
-                Math.max(
-                    max,
-                    row[columnIndex]
-                        ? row[columnIndex].length
-                        : 0)
-
-            , 0);
+            Math.max(
+                max,
+                row[columnIndex]
+                    ? row[columnIndex].length
+                    : 0)
+        , 0);
     }
 
 
@@ -84,7 +80,8 @@ export module CsvExportUtils {
                 take(nrOfNewItems),
                 replace,
                 prepend(...take(where, as)),
-                append(...drop(where + nrOfNewItems, as)));
+                append(...drop(where + nrOfNewItems, as))
+            );
         }
     }
 
@@ -103,7 +100,8 @@ export module CsvExportUtils {
         return replaceItems(
             where,
             1,
-            compose(cond(isEmpty, [], compose(first, replace))));
+            compose(cond(isEmpty, [], compose(first, replace)))
+        );
     }
 
 

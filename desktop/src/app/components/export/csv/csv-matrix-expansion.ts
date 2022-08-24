@@ -154,7 +154,10 @@ export module CSVMatrixExpansion {
                 end?.inputType ?? '',
                 end?.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
                 margin ? margin.toString() : ''
-            ].concat(source ? rowsWithI18nStringExpanded(languages)(source) : ['']);
+            ].concat(source
+                ? rowsWithI18nStringExpanded(languages)(source)
+                : languages.map(_ => '')
+            );
 
             if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
             if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
@@ -182,8 +185,10 @@ export module CSVMatrixExpansion {
                 (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
                 (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
                 measurementPosition ?? ''
-            ].concat(measurementComment ? rowsWithI18nStringExpanded(languages)(measurementComment) : [''])
-            .concat([
+            ].concat(measurementComment
+                ? rowsWithI18nStringExpanded(languages)(measurementComment)
+                : languages.map(_ => '')
+            ).concat([
                 inputUnit ?? ''
             ]);
 

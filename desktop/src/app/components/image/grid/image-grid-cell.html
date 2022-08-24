@@ -35,6 +35,6 @@
         </span>
     </div>
     <div *ngIf="showShortDescription && cell['document'].resource.shortDescription" class="p-1">
-        {{cell['document'].resource.shortDescription}}
+        {{getLabelFromI18NString(cell['document'].resource.shortDescription)}}
     </div>
 </div>

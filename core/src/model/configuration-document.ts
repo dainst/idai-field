@@ -55,7 +55,7 @@ export namespace ConfigurationDocument {
                                          category: CategoryForm, checkChildren: boolean = false): boolean {
 
         const customDefinition: CustomFormDefinition = configurationDocument.resource
-        .forms[category.libraryId ?? category.name];
+            .forms[category.libraryId ?? category.name];
 
         const result: boolean = customDefinition.color !== undefined
             || customDefinition.groups !== undefined

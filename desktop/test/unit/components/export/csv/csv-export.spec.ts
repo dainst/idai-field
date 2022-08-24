@@ -196,11 +196,12 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
         resources[0].dating = [
-            { begin: { inputYear: 10 }, end: { inputYear: 20 }, type: 'range', source: 'some1' },
-            { begin: { inputYear: 20 }, end: { inputYear: 30 }, type: 'range', source: 'some2' }
+            { begin: { inputYear: 10 }, end: { inputYear: 20 }, type: 'range',
+                source: { en: 'Source 1', de: 'Quelle 1' } },
+            { begin: { inputYear: 20 }, end: { inputYear: 30 }, type: 'range', source: { en: 'Source 2' } }
         ];
         resources[1].dating = [
-            { begin: { inputYear: 40 }, end: { inputYear: 50 }, type: 'range', source: 'some3' }
+            { begin: { inputYear: 40 }, end: { inputYear: 50 }, type: 'range' }
         ];
         resources[1].custom = 'custom';
 
@@ -212,43 +213,51 @@ describe('CSVExport', () => {
         expect(result[0][4]).toBe('"dating.0.end.inputType"');
         expect(result[0][5]).toBe('"dating.0.end.inputYear"');
         expect(result[0][6]).toBe('"dating.0.margin"');
-        expect(result[0][7]).toBe('"dating.0.source"');
-        expect(result[0][8]).toBe('"dating.0.isImprecise"');
-        expect(result[0][9]).toBe('"dating.0.isUncertain"');
-        expect(result[0][10]).toBe('"dating.1.type"');
-        expect(result[0][11]).toBe('"dating.1.begin.inputType"');
-        expect(result[0][12]).toBe('"dating.1.begin.inputYear"');
-        expect(result[0][13]).toBe('"dating.1.end.inputType"');
-        expect(result[0][14]).toBe('"dating.1.end.inputYear"');
-        expect(result[0][15]).toBe('"dating.1.margin"');
-        expect(result[0][16]).toBe('"dating.1.source"');
-        expect(result[0][17]).toBe('"dating.1.isImprecise"');
-        expect(result[0][18]).toBe('"dating.1.isUncertain"');
-        expect(result[0][19]).toBe('"custom"');
+        expect(result[0][7]).toBe('"dating.0.source.en"');
+        expect(result[0][8]).toBe('"dating.0.source.de"');
+        expect(result[0][9]).toBe('"dating.0.isImprecise"');
+        expect(result[0][10]).toBe('"dating.0.isUncertain"');
+        expect(result[0][11]).toBe('"dating.1.type"');
+        expect(result[0][12]).toBe('"dating.1.begin.inputType"');
+        expect(result[0][13]).toBe('"dating.1.begin.inputYear"');
+        expect(result[0][14]).toBe('"dating.1.end.inputType"');
+        expect(result[0][15]).toBe('"dating.1.end.inputYear"');
+        expect(result[0][16]).toBe('"dating.1.margin"');
+        expect(result[0][17]).toBe('"dating.1.source.en"');
+        expect(result[0][18]).toBe('"dating.1.source.de"');
+        expect(result[0][19]).toBe('"dating.1.isImprecise"');
+        expect(result[0][20]).toBe('"dating.1.isUncertain"');
+        expect(result[0][21]).toBe('"custom"');
 
         expect(result[1][3]).toBe('"10"');
         expect(result[1][5]).toBe('"20"');
-        expect(result[1][7]).toBe('"some1"');
-        expect(result[1][12]).toBe('"20"');
-        expect(result[1][14]).toBe('"30"');
-        expect(result[1][16]).toBe('"some2"');
-        expect(result[1][19]).toBe('""');
+        expect(result[1][7]).toBe('"Source 1"');
+        expect(result[1][8]).toBe('"Quelle 1"');
+        expect(result[1][13]).toBe('"20"');
+        expect(result[1][15]).toBe('"30"');
+        expect(result[1][17]).toBe('"Source 2"');
+        expect(result[1][18]).toBe('""');
+        expect(result[1][21]).toBe('""');
 
         expect(result[2][3]).toBe('"40"');
         expect(result[2][5]).toBe('"50"');
-        expect(result[2][7]).toBe('"some3"');
-        expect(result[2][12]).toBe('""');
-        expect(result[2][14]).toBe('""');
-        expect(result[2][16]).toBe('""');
-        expect(result[2][19]).toBe('"custom"');
+        expect(result[2][7]).toBe('""');
+        expect(result[2][8]).toBe('""');
+        expect(result[2][13]).toBe('""');
+        expect(result[2][15]).toBe('""');
+        expect(result[2][17]).toBe('""');
+        expect(result[2][18]).toBe('""');
+        expect(result[2][21]).toBe('"custom"');
 
         expect(result[3][3]).toBe('""');
         expect(result[3][5]).toBe('""');
         expect(result[3][7]).toBe('""');
-        expect(result[3][12]).toBe('""');
-        expect(result[3][14]).toBe('""');
-        expect(result[3][16]).toBe('""');
-        expect(result[3][19]).toBe('""');
+        expect(result[3][8]).toBe('""');
+        expect(result[3][13]).toBe('""');
+        expect(result[3][15]).toBe('""');
+        expect(result[3][17]).toBe('""');
+        expect(result[3][18]).toBe('""');
+        expect(result[3][21]).toBe('""');
     });
 
 
@@ -268,7 +277,7 @@ describe('CSVExport', () => {
         expect(result[0][4]).toBe('"dating.0.end.inputType"');
         expect(result[0][5]).toBe('"dating.0.end.inputYear"');
         expect(result[0][6]).toBe('"dating.0.margin"');
-        expect(result[0][7]).toBe('"dating.0.source"');
+        expect(result[0][7]).toBe('"dating.0.source.en"');
         expect(result[0][8]).toBe('"dating.0.isImprecise"');
         expect(result[0][9]).toBe('"dating.0.isUncertain"');
 
@@ -288,7 +297,7 @@ describe('CSVExport', () => {
         expect(result[0][4]).toBe('"dating.0.end.inputType"');
         expect(result[0][5]).toBe('"dating.0.end.inputYear"');
         expect(result[0][6]).toBe('"dating.0.margin"');
-        expect(result[0][7]).toBe('"dating.0.source"');
+        expect(result[0][7]).toBe('"dating.0.source.en"');
         expect(result[0][8]).toBe('"dating.0.isImprecise"');
         expect(result[0][9]).toBe('"dating.0.isUncertain"');
     });
@@ -297,13 +306,13 @@ describe('CSVExport', () => {
     it('do not modify resource when expanding', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
-        resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: 'some1', label: 'blablabla1' }];
+        resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: { en: 'some1' }, label: 'blablabla1' }];
 
         CSVExport.createExportable([resource], t, [], ['en']).csvData.map(row => row.split(','));
 
         expect(resource['dating'][0]['begin']['year']).toBe(10);
         expect(resource['dating'][0]['end']['year']).toBe(20);
-        expect(resource['dating'][0]['source']).toBe('some1');
+        expect(resource['dating'][0]['source']['en']).toBe('some1');
     });
 
 
@@ -329,8 +338,8 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
         ];
         resources[0]['dimensionX'] = [
-            { inputValue: 100, inputUnit: 'cm', measurementComment: 'abc' },
-            { inputValue: 200, inputUnit: 'cm', measurementPosition: 'def' }];
+            { inputValue: 100, inputUnit: 'cm', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
+            { inputValue: 200, inputUnit: 'cm', measurementComment: { en: 'Comment 2' }, measurementPosition: 'def' }];
         resources[1]['dimensionX'] = [
             { inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc' }];
         resources[1]['custom'] = 'custom';
@@ -340,26 +349,40 @@ describe('CSVExport', () => {
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment"');
-        expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
-        expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
-        expect(result[0][7]).toBe('"dimensionX.1.inputValue"');
-        expect(result[0][8]).toBe('"dimensionX.1.inputRangeEndValue"');
-        expect(result[0][9]).toBe('"dimensionX.1.measurementPosition"');
-        expect(result[0][10]).toBe('"dimensionX.1.measurementComment"');
-        expect(result[0][11]).toBe('"dimensionX.1.inputUnit"');
-        expect(result[0][12]).toBe('"dimensionX.1.isImprecise"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.de"');
+        expect(result[0][6]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][7]).toBe('"dimensionX.0.isImprecise"');
+        expect(result[0][8]).toBe('"dimensionX.1.inputValue"');
+        expect(result[0][9]).toBe('"dimensionX.1.inputRangeEndValue"');
+        expect(result[0][10]).toBe('"dimensionX.1.measurementPosition"');
+        expect(result[0][11]).toBe('"dimensionX.1.measurementComment.en"');
+        expect(result[0][12]).toBe('"dimensionX.1.measurementComment.de"');
+        expect(result[0][13]).toBe('"dimensionX.1.inputUnit"');
+        expect(result[0][14]).toBe('"dimensionX.1.isImprecise"');
+        expect(result[0][15]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"100"');
-        expect(result[1][4]).toBe('"abc"');
-        expect(result[1][7]).toBe('"200"');
-        expect(result[1][9]).toBe('"def"');
+        expect(result[1][4]).toBe('"Comment 1"');
+        expect(result[1][5]).toBe('"Kommentar 1"');
+        expect(result[1][8]).toBe('"200"');
+        expect(result[1][10]).toBe('"def"');
+        expect(result[1][11]).toBe('"Comment 2"');
+        expect(result[1][12]).toBe('""');
 
         expect(result[2][1]).toBe('"300"');
         expect(result[2][2]).toBe('"ghc"');
-        expect(result[2][13]).toBe('"custom"');
+        expect(result[2][4]).toBe('""');
+        expect(result[2][5]).toBe('""');
+        expect(result[2][11]).toBe('""');
+        expect(result[2][12]).toBe('""');
+        expect(result[2][15]).toBe('"custom"');
 
         expect(result[3][1]).toBe('""');
+        expect(result[3][4]).toBe('""');
+        expect(result[3][5]).toBe('""');
+        expect(result[3][11]).toBe('""');
+        expect(result[3][12]).toBe('""');
     });
 
 
@@ -376,7 +399,7 @@ describe('CSVExport', () => {
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
         expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
         expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
 
@@ -393,7 +416,7 @@ describe('CSVExport', () => {
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
         expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
         expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
     });
@@ -407,28 +430,35 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
             ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
         ];
-        resources[0]['dimensionX'] = [{ inputValue: 100, inputUnit: 'cm', measurementComment: 'abc' }];
-        resources[1]['dimensionY'] = [{ inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc' }];
+        resources[0]['dimensionX'] = [{ inputValue: 100, inputUnit: 'cm',
+            measurementComment: { en: 'A1', de: 'A2' } }];
+        resources[1]['dimensionY'] = [{ inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc',
+            measurementComment: 'B' }];
 
         const result = CSVExport.createExportable(resources, t, [], ['en']).csvData.map(row => row.split(','));
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment"');
-        expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
-        expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
-        expect(result[0][7]).toBe('"dimensionY.0.inputValue"');
-        expect(result[0][8]).toBe('"dimensionY.0.inputRangeEndValue"');
-        expect(result[0][9]).toBe('"dimensionY.0.measurementPosition"');
-        expect(result[0][10]).toBe('"dimensionY.0.measurementComment"');
-        expect(result[0][11]).toBe('"dimensionY.0.inputUnit"');
-        expect(result[0][12]).toBe('"dimensionY.0.isImprecise"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.de"');
+        expect(result[0][6]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][7]).toBe('"dimensionX.0.isImprecise"');
+        expect(result[0][8]).toBe('"dimensionY.0.inputValue"');
+        expect(result[0][9]).toBe('"dimensionY.0.inputRangeEndValue"');
+        expect(result[0][10]).toBe('"dimensionY.0.measurementPosition"');
+        expect(result[0][11]).toBe('"dimensionY.0.measurementComment.en"');
+        expect(result[0][12]).toBe('"dimensionY.0.measurementComment.unspecifiedLanguage"');
+        expect(result[0][13]).toBe('"dimensionY.0.inputUnit"');
+        expect(result[0][14]).toBe('"dimensionY.0.isImprecise"');
 
         expect(result[1][1]).toBe('"100"');
-        expect(result[1][4]).toBe('"abc"');
-        expect(result[2][7]).toBe('"300"');
-        expect(result[2][8]).toBe('"ghc"');
+        expect(result[1][4]).toBe('"A1"');
+        expect(result[1][5]).toBe('"A2"');
+        expect(result[2][8]).toBe('"300"');
+        expect(result[2][9]).toBe('"ghc"');
+        expect(result[2][11]).toBe('""');
+        expect(result[2][12]).toBe('"B"');
     });
 
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfigReader, ConfigurationDocument, getConfigurationName, Document } from 'idai-field-core';
+import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
@@ -77,7 +77,7 @@ export class ImportConfigurationModalComponent {
         return ConfigurationDocument.getConfigurationDocument(
             id => db.get(id),
             this.configReader,
-            getConfigurationName(project),
+            project,
             this.settingsProvider.getSettings().username
         );
     }

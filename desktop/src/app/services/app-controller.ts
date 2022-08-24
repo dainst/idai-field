@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, getConfigurationName, ImageStore,
-    Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, ImageStore, Indexer, IndexFacade,
+    PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
@@ -81,8 +81,8 @@ export class AppController {
         await new SampleDataLoader(
             this.thumbnailGenerator,
             this.settingsProvider.getSettings().imagestorePath,
-            Settings.getLocale())
-            .go(db,this.settingsProvider.getSettings().selectedProject);
+            Settings.getLocale()
+        ).go(db,this.settingsProvider.getSettings().selectedProject);
 
         await Indexer.reindex(
             this.indexFacade,
@@ -93,7 +93,7 @@ export class AppController {
         );
 
         const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
-            (id: string) => db.get(id), this.configReader, getConfigurationName('test'), 'test-user'
+            (id: string) => db.get(id), this.configReader, 'test', 'test-user'
         );
 
         await this.configurationIndex.rebuild(configurationDocument);

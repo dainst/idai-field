@@ -94,12 +94,13 @@ export class SettingsService {
 
     public async loadConfiguration(): Promise<ProjectConfiguration> {
 
-        const configurationName: string = getConfigurationName(this.settingsProvider.getSettings().selectedProject);
+        const projectName: string = this.settingsProvider.getSettings().selectedProject;
+        const configurationName: string = getConfigurationName(projectName);
 
         const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
             (id: string) => this.pouchdbDatastore.getDb().get(id),
             this.configReader,
-            configurationName,
+            projectName,
             this.settingsProvider.getSettings().username
         );
 

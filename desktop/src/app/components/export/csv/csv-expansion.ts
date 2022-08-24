@@ -140,7 +140,12 @@ export module CSVExpansion {
             map(row => row[columnIndex]),
             map(field => isArray(field)
                 ? field.map(object => object[i18nStringFieldName])
-                    .map(i18nString => isObject(i18nString) ? Object.keys(i18nString) : [I18N.UNSPECIFIED_LANGUAGE])
+                    .map(i18nString => i18nString ?
+                            isObject(i18nString)
+                                ? Object.keys(i18nString)
+                                : [I18N.UNSPECIFIED_LANGUAGE]
+                            : []
+                    )
                 : [])
         ));
 

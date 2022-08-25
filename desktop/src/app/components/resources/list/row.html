@@ -56,16 +56,16 @@
     </div>
     <div class="input-field">
         <input #identifierInput [(ngModel)]="document.resource.identifier"
-               (focus)="startEditing(document.resource.identifier)"
-               (blur)="stopEditing(document.resource.identifier)"
-               (keyup)="onKeyUp($event, document.resource.identifier)"
+               (focus)="startEditing('identifier', document.resource.identifier)"
+               (blur)="stopEditing('identifier', document.resource.identifier)"
+               (keyup)="onKeyUp($event, 'identifier', document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
     <div class="input-field">
         <input [(ngModel)]="document.resource.shortDescription"
-               (focus)="startEditing(document.resource.shortDescription)"
-               (blur)="stopEditing(document.resource.shortDescription)"
-               (keyup)="onKeyUp($event, document.resource.shortDescription)"
+               (focus)="startEditing('shortDescription', document.resource.shortDescription)"
+               (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
+               (keyup)="onKeyUp($event, 'shortDescription', document.resource.shortDescription)"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>

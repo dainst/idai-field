@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Map } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -26,7 +27,7 @@ export class RowComponent implements AfterViewInit {
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
-    private initialValueOfCurrentlyEditedField: string|undefined;
+    private initialValues: Map<string|undefined> = {};
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -45,7 +46,7 @@ export class RowComponent implements AfterViewInit {
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
-    public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
+    public startEditing = (fieldName: string, fieldValue: string) => this.initialValues[fieldName] = fieldValue;
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
@@ -74,9 +75,9 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldValue: string) {
+    public async onKeyUp(event: KeyboardEvent, fieldName: string, fieldValue: string) {
 
-        if (event.key === 'Enter') await this.stopEditing(fieldValue);
+        if (event.key === 'Enter') await this.stopEditing(fieldName, fieldValue);
     }
 
 
@@ -93,10 +94,10 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async stopEditing(fieldValue: string) {
+    public async stopEditing(fieldName: string, fieldValue: string) {
 
-        if (this.initialValueOfCurrentlyEditedField != fieldValue) await this.save();
-        this.initialValueOfCurrentlyEditedField = fieldValue;
+        if (this.initialValues[fieldName] != fieldValue) await this.save();
+        this.initialValues[fieldName] = fieldValue;
     }
 
 

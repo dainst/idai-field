@@ -1,4 +1,4 @@
-import { mapToArray } from "../../src/tools/transformers";
+import { mapToArray } from '../../src/tools/transformers';
 
 
 describe('mapToArray', () => {

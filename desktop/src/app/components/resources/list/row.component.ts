@@ -29,6 +29,8 @@ export class RowComponent implements AfterViewInit {
 
     private initialValues: Map<string|undefined> = {};
 
+    private saving: Promise<void>;
+
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
@@ -83,6 +85,8 @@ export class RowComponent implements AfterViewInit {
 
     public async editDocument() {
 
+        if (this.saving) await this.saving;
+
         await this.resourcesComponent.editDocument(this.document);
         this.changeDetectorRef.detectChanges();
     }
@@ -96,7 +100,10 @@ export class RowComponent implements AfterViewInit {
 
     public async stopEditing(fieldName: string, fieldValue: string) {
 
-        if (this.initialValues[fieldName] != fieldValue) await this.save();
+        if (this.initialValues[fieldName] != fieldValue) {
+            this.saving = this.save();
+            await this.saving;
+        }
         this.initialValues[fieldName] = fieldValue;
     }
 

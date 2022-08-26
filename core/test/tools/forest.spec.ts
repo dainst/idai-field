@@ -1,7 +1,5 @@
-import {equal, is, on, reverse} from 'tsfun';
-import {
-    Tree, Forest
-} from '../../src/tools/forest';
+import { equal, is, on, reverse } from 'tsfun';
+import { Tree, Forest } from '../../src/tools/forest';
 
 
 describe('Forest|Tree', () => {

@@ -1,8 +1,6 @@
-import { same, sameset } from 'tsfun';
-import { ObjectUtils } from './object-utils';
+import { equal, same, sameset } from 'tsfun';
 
 
-// TODO review; tests; maybe test getDifferingFields instead
 export function compare(value1: any, value2: any): boolean {
 
     if (value1 === undefined && value2 === undefined) return true;
@@ -14,10 +12,10 @@ export function compare(value1: any, value2: any): boolean {
     if (type1 !== type2) return false;
 
     if (type1 === 'array' && type2 === 'array') {
-        return sameset(ObjectUtils.jsonEqual, value1, value2)
+        return sameset(equal, value1, value2);
     }
 
-    return ObjectUtils.jsonEqual(value1)(value2);
+    return equal(value1)(value2);
 }
 
 

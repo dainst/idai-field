@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Map } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -26,7 +27,9 @@ export class RowComponent implements AfterViewInit {
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
-    private initialValueOfCurrentlyEditedField: string|I18N.String|undefined;
+    private initialValues: Map<string|I18N.String|undefined> = {};
+
+    private saving: Promise<void>;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -45,7 +48,7 @@ export class RowComponent implements AfterViewInit {
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
-    public startEditing = (fieldValue: string|I18N.String) => this.initialValueOfCurrentlyEditedField = fieldValue;
+    public startEditing = (fieldName: string, fieldValue: string|I18N.String) => this.initialValues[fieldName] = fieldValue;
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
@@ -74,13 +77,15 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldValue: string|I18N.String) {
+    public async onKeyUp(event: KeyboardEvent, fieldName: string, fieldValue: string|I18N.String) {
 
-        if (event.key === 'Enter') await this.stopEditing(fieldValue);
+        if (event.key === 'Enter') await this.stopEditing(fieldName, fieldValue);
     }
 
 
     public async editDocument() {
+
+        if (this.saving) await this.saving;
 
         await this.resourcesComponent.editDocument(this.document);
         this.changeDetectorRef.detectChanges();
@@ -93,10 +98,13 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async stopEditing(fieldValue: string|I18N.String) {
+    public async stopEditing(fieldName: string, fieldValue: string|I18N.String) {
 
-        if (this.initialValueOfCurrentlyEditedField != fieldValue) await this.save();
-        this.initialValueOfCurrentlyEditedField = fieldValue;
+        if (this.initialValues[fieldName] != fieldValue) {
+            this.saving = this.save();
+            await this.saving;
+        }
+        this.initialValues[fieldName] = fieldValue;
     }
 
 

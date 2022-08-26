@@ -51,13 +51,13 @@ describe('Import/Subsystem', () => {
         spyOn(console, 'debug');
 
         const pouchdbDatastore = new PouchdbDatastore((name: string) => new PouchDB(name), undefined);
-        const {projectConfiguration} = await setupSettingsService(pouchdbDatastore);
+        const { projectConfiguration } = await setupSettingsService(pouchdbDatastore);
         _projectConfiguration = projectConfiguration;
         const app = await createApp();
-        const {datastore: d} = app;
+        const { datastore: d } = app;
         helpers = createHelpers(app);
         datastore = d;
-        services = {datastore, relationsManager, imageRelationsManager, imagestore};
+        services = { datastore, relationsManager, imageRelationsManager, imagestore };
         done();
     });
 
@@ -661,6 +661,35 @@ describe('Import/Subsystem', () => {
             '101']  // this is ok
             );
         expect(feature2.relations['isBefore']).toEqual(['99']);
+        done();
+    });
+
+
+    it('do not update resources that have not changed', async done => {
+
+        await create(
+            { id: 'tr1', identifier: 'trench1', category: 'Trench', shortDescription: 'original', relations: {} },
+            { id: 'tr2', identifier: 'trench2', category: 'Trench', shortDescription: 'original', relations: {} }
+        );
+
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: ''
+            },
+            '{ "category": "Trench", "identifier": "trench1", "shortDescription": "original" }\n' +
+            '{ "category": "Trench", "identifier": "trench2", "shortDescription": "changed" }'
+        );
+
+        const trench1 = (await helpers.getDocument('tr1'));
+        expect(trench1.modified.length).toBe(0);
+
+        const trench2 = (await helpers.getDocument('tr2'));
+        expect(trench2.modified.length).toBe(1);
         done();
     });
 });

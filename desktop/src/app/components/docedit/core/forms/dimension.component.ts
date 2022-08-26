@@ -3,9 +3,8 @@ import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, Map } from 'tsfun';
 import { Dimension, Labels, Field, Resource, I18N, ProjectConfiguration } from 'idai-field-core';
-import { getFieldLanguages } from '../../get-field-languages';
 import { UtilTranslations } from '../../../../util/util-translations';
-import { Language } from '../../../../services/languages';
+import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
 
@@ -174,7 +173,7 @@ export class DimensionComponent {
 
     private updateFieldLanguages(dimension: Dimension) {
 
-        this.fieldLanguages = getFieldLanguages(
+        this.fieldLanguages = Languages.getFieldLanguages(
             dimension.measurementComment,
             this.languages,
             this.projectConfiguration.getProjectLanguages(),

@@ -3,14 +3,18 @@
         <div id="list-header">
             <div i18n="@@resources.list.headers.category">Kategorie</div>
             <div i18n="@@resources.list.headers.identifier">Bezeichner</div>
-            <div i18n="@@resources.list.headers.shortDescription">Kurzbeschreibung</div>
+            <div>
+                <span i18n="@@resources.list.headers.shortDescription">Kurzbeschreibung</span>
+                <span *ngIf="selectedLanguage" class="list-header-language-label">{{selectedLanguage.label}}</span>
+            </div>
             <div></div>
             <div id="header-placeholder"></div>
         </div>
         <div id="list-body">
             <cdk-virtual-scroll-viewport itemSize="41">
                 <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
-                    <row [document]="document" [categoriesMap]="categoriesMap"></row>
+                    <row [document]="document" [categoriesMap]="categoriesMap"
+                         [selectedLanguage]="selectedLanguage"></row>
                 </div>
             </cdk-virtual-scroll-viewport>
         </div>

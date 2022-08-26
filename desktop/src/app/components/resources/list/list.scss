@@ -26,6 +26,12 @@ list {
       div {
         padding: 5px 5px 5px 10px;
         background: white;
+
+        .list-header-language-label {
+          float: right;
+          font-weight: normal;
+          color: #565656;
+        }
       }
 
       #header-placeholder {

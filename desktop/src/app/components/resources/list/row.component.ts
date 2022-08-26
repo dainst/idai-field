@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Map } from 'tsfun';
+import { isObject, Map, equal } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -9,6 +9,7 @@ import { MessagesConversion } from '../../docedit/messages-conversion';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
+import { Language } from '../../../services/languages';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
     @Input() categoriesMap: { [category: string]: CategoryForm };
+    @Input() selectedLanguage: Language|undefined;
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
@@ -77,9 +79,19 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldName: string, fieldValue: string|I18N.String) {
+    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
-        if (event.key === 'Enter') await this.stopEditing(fieldName, fieldValue);
+        const value = event.target['value'];
+
+        if (!isObject(this.document.resource[fieldName]) || !this.selectedLanguage) {
+            this.document.resource[fieldName] = value;
+        } else if (value.length > 0) {
+            this.document.resource[fieldName][this.selectedLanguage.code] = value;
+        } else {
+            delete this.document.resource[fieldName][this.selectedLanguage.code];
+        }
+
+        if (event.key === 'Enter') await this.stopEditing(fieldName, this.document.resource[fieldName]);
     }
 
 
@@ -100,11 +112,21 @@ export class RowComponent implements AfterViewInit {
 
     public async stopEditing(fieldName: string, fieldValue: string|I18N.String) {
 
-        if (this.initialValues[fieldName] != fieldValue) {
+        if (this.hasChanged(fieldName, fieldValue)) {
             this.saving = this.save();
             await this.saving;
         }
         this.initialValues[fieldName] = fieldValue;
+    }
+
+
+    public getShortDescription(): string {
+
+        const shortDescription = this.document.resource.shortDescription;
+
+        return isObject(shortDescription)
+            ? (shortDescription[this.selectedLanguage.code] ?? '')
+            : (shortDescription ?? '');
     }
 
 
@@ -156,5 +178,13 @@ export class RowComponent implements AfterViewInit {
     private focusIdentifierInputIfDocumentIsNew() {
 
         if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
+    }
+
+
+    private hasChanged(fieldName: string, fieldValue: any): boolean {
+
+        return isObject(fieldValue)
+            ? equal(this.initialValues[fieldName] as any)(fieldValue)
+            : this.initialValues[fieldName] != fieldValue;
     }
 }

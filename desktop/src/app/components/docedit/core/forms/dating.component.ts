@@ -2,10 +2,9 @@ import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { Resource, Dating, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
-import { Language } from '../../../../services/languages';
+import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { UtilTranslations } from '../../../../util/util-translations';
-import { getFieldLanguages } from '../../get-field-languages';
 
 
 @Component({
@@ -42,7 +41,7 @@ export class DatingComponent {
 
     public createNewDating(type: Dating.Types = 'range') {
 
-        this.fieldLanguages = getFieldLanguages(
+        this.fieldLanguages = Languages.getFieldLanguages(
             undefined,
             this.languages,
             this.projectConfiguration.getProjectLanguages(),

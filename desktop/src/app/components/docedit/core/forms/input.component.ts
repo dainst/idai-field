@@ -2,8 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { ProjectConfiguration, Resource } from 'idai-field-core';
-import { Language } from '../../../../services/languages';
-import { getFieldLanguages } from '../../get-field-languages';
+import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
 
@@ -31,7 +30,7 @@ export class InputComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.fieldLanguages = getFieldLanguages(
+        this.fieldLanguages = Languages.getFieldLanguages(
             this.resource[this.fieldName],
             this.languages,
             this.projectConfiguration.getProjectLanguages(),

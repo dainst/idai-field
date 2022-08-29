@@ -7062,7 +7062,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
-        <source><x id="ІНТЕРПОЛЯЦІЮ" equiv-text="{{getCategoryLabel()}}" />
+        <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}" />
           bearbeiten
         </source>
         <target state="final">

@@ -7051,7 +7051,7 @@
           anlegen
         </source>
         <target state="final">
-          <x id="ІНТЕРПОЛЯЦІЮ" equiv-text="{{getCategoryLabel()}}" />
+          <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}" />
           в
           <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}" />
           створити

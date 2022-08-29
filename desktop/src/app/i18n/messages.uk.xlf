@@ -7625,7 +7625,11 @@
           <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}" />
           markierten Bilder wirklich löschen?
         </source>
-        <target state="final"> Ви бажаєте видалити  x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> позначені зображення? </target>
+        <target state="final">
+          Ви бажаєте видалити
+          <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}" />
+          позначені зображення?
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>

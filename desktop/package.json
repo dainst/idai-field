@@ -58,7 +58,8 @@
       "target": "zip",
       "icon": "img/logo.ico",
       "artifactName": "Field-Desktop-${version}-Windows.${ext}",
-      "publish": "github"
+      "publish": "github",
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,

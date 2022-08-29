@@ -1,4 +1,4 @@
-import { SortUtil } from "../../src/tools/sort-util";
+import { SortUtil } from '../../src/tools/sort-util';
 
 
 /**

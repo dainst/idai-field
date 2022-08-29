@@ -1,4 +1,4 @@
-import { separate } from 'tsfun';
+import { separate, equal } from 'tsfun';
 import { Document, Datastore, NewDocument } from 'idai-field-core';
 
 
@@ -54,8 +54,29 @@ export module Updater {
             const docs = documents.slice(i*chunkSize,i*chunkSize+chunkSize);
             console.debug(`Bulk-importing part ${i+1}/${partsInTotal}`);
 
-            if (updateMode) await datastore.bulkUpdate(docs as Array<Document>);
-            else await datastore.bulkCreate(docs);    // throws exception if an id already exists
+            if (updateMode) {
+                await datastore.bulkUpdate(
+                    await getChangedDocuments(docs as Array<Document>, datastore)
+                );
+            } else {
+                await datastore.bulkCreate(docs);    // throws exception if an id already exists
+            }
         }
+    }
+
+
+    async function getChangedDocuments(documents: Array<Document>, datastore: Datastore): Promise<Array<Document>> {
+
+        const currentRevisions: Array<Document> = await datastore.getMultiple(documents.map(document => {
+            return document.resource.id;
+        }));
+
+        return documents.filter(document => {
+            const currentRevision: Document = currentRevisions.find(revision => {
+                return revision.resource.id === document.resource.id;
+            });
+            
+            return !equal(document.resource, currentRevision.resource);
+        });
     }
 }

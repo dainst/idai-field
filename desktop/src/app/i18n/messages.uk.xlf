@@ -251,24 +251,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
-        <source>
-          <x id="INTERPOLATION" />
-        </source>
-        <target state="final">
-          <x id="INTERPOLATION" />
-        </target>
+        <source><x id="INTERPOLATION"/></source>
+        <target state="final"><x id="INTERPOLATION"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
           <context context-type="linenumber">296</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
-        <source>
-          <x id="INTERPOLATION" />
-        </source>
-        <target state="final">
-          <x id="INTERPOLATION" />
-        </target>
+        <source><x id="INTERPOLATION"/></source>
+        <target state="final"><x id="INTERPOLATION"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
           <context context-type="linenumber">296</context>
@@ -529,7 +521,7 @@
           <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>" />
           importiert werden.
         </source>
-        <target state="final">
+        <target state="new">
           Підтримувані формати файлів:
           <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}" />
           <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>" />
@@ -948,7 +940,7 @@
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>" />
           .
         </source>
-        <target state="final">
+        <target state="new">
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>" />
           Achtung:
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>" />
@@ -1201,7 +1193,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html">
         <source> Werteliste (Unterfeld "Gemessen an") </source>
-        <target state="final"> Список даних/значень (Unterfeld "Gemessen an") </target>
+        <target state="new"> Список даних/значень (Unterfeld "Gemessen an") </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">96</context>
@@ -1817,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
         <source>Synchronisation ist deaktiviert.</source>
-        <target state="final">Synchronisation ist deaktiviert.</target>
+        <target state="new">Synchronisation ist deaktiviert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1825,7 +1817,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
         <source>Synchronisation abgeschlossen.</source>
-        <target state="final">Synchronisation abgeschlossen.</target>
+        <target state="new">Synchronisation abgeschlossen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1833,7 +1825,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
         <source>Synchronisation fehlgeschlagen</source>
-        <target state="final">Synchronisation fehlgeschlagen</target>
+        <target state="new">Synchronisation fehlgeschlagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1929,7 +1921,7 @@
           <x id="INTERPOLATION" equiv-text="{{version}}" />
           ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.
         </source>
-        <target state="final">
+        <target state="new">
           При завантаженні версії
           <x id="INTERPOLATION" equiv-text="{{version}}" />
           ist ein Fehler aufgetreten. cталася помилка. Будь ласка, запишіть/завантажте останню версію з https://field.idai.world/download.
@@ -2047,7 +2039,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}" />
           % der Bilder geladen...
         </source>
-        <target state="final">
+        <target state="new">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}" />
           % der Bilder geladen...
         </target>
@@ -2060,7 +2052,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}" />
           % der Projektdaten geladen.
         </source>
-        <target state="final">
+        <target state="new">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}" />
           % der Projektdaten geladen.
         </target>
@@ -2093,7 +2085,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}" />
           % der Projektdaten geladen...
         </source>
-        <target state="final">
+        <target state="new">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}" />
           % der Projektdaten geladen...
         </target>
@@ -2943,7 +2935,7 @@
           <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}" />
           löschen?
         </source>
-        <target state="final">
+        <target state="new">
           Ресурс/дані
           <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}" />
           löschen?
@@ -3129,7 +3121,7 @@
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}" />
           Ressourcen
         </source>
-        <target state="final">
+        <target state="new">
           Обмежується на
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}" />
           Ressourcen
@@ -3145,7 +3137,7 @@
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}" />
           Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.
         </source>
-        <target state="final"> Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на  x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>  ресурси. Натисніть тут, щоб завантажити весь результат. </target>
+        <target state="final"> Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>  ресурси. Натисніть тут, щоб завантажити весь результат. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">33</context>
@@ -3606,7 +3598,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{childrenCount}}" />
           Ressourcen
         </source>
-        <target state="final">
+        <target state="new">
           <x id="INTERPOLATION" equiv-text="{{childrenCount}}" />
           Ressourcen
         </target>
@@ -3722,7 +3714,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="viewModal.noImages" datatype="html">
-        <source> Немає ілюстрацій, пов'язаних з цим ресурсом. </source>
+        <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
         <target state="final"> З цим ресурсом/даними жодні ілюстрації не з'єднані. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
@@ -3958,7 +3950,7 @@
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>" />
           ) ein.
         </source>
-        <target state="final">
+        <target state="new">
           Будь ласка, введіть дозволені значення в даних проекту для цього поля (Поле
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>" />
           <x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}" />
@@ -4346,7 +4338,7 @@
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>" />
           bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen.
         </source>
-        <target state="final">
+        <target state="new">
           Це ім’я зберігається в історії редагування, щоб зміни в записах можна було приписати окремій особі. Цей параметр дуже важливий
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>" />
           wichtig
@@ -4524,12 +4516,12 @@
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
         <source>
-          Створіть ресурс категорії «розріз» в  x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht
+          Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht
           <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>" />
           an, um hier mit ihr arbeiten zu können.
         </source>
         <target state="final">
-          Legen Sie eine Ressource der Kategorie 'Schnitt' in der
+          Створіть ресурс категорії «розріз» в 
           <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>" />
           огляді
           <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>" />
@@ -4882,7 +4874,7 @@
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.liesWithin" datatype="html">
         <source> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </source>
-        <target state="final"> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </target>
+        <target state="new"> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -4898,7 +4890,7 @@
       </trans-unit>
       <trans-unit id="configuration.hierarchicalRelationsInfo.noLiesWithin" datatype="html">
         <source> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </source>
-        <target state="final"> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </target>
+        <target state="new"> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -4954,7 +4946,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometry" datatype="html">
         <source>Geometrie</source>
-        <target state="final">Geometrie</target>
+        <target state="new">Geometrie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5105,8 +5097,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
-        <source>Під час резервного копіювання бази даних сталася помилка.</source>
-        <target state="final">Beim Sichern der Datenbank ist ein Fehler aufgetreten.</target>
+        <source>Beim Sichern der Datenbank ist ein Fehler aufgetreten.</source>
+        <target state="final">Під час резервного копіювання бази даних сталася помилка.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5658,7 +5650,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationField" datatype="html">
         <source>Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="final">Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="new">Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5842,7 +5834,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
-        <target state="final">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
+        <target state="new">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6018,8 +6010,7 @@
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.multiple" datatype="html">
         <source>Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</source>
-        <target state="final">Декілька полів було проігноровано під час експорту, оскільки введені дані поля не відповідали налаштованому типу введення
-(повний список нижче).</target>
+        <target state="final">Декілька полів було проігноровано під час експорту, оскільки введені дані поля не відповідали налаштованому типу введення (повний список нижче).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6483,7 +6474,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.images" datatype="html">
         <source>Bilder</source>
-        <target state="final">Bilder</target>
+        <target state="new">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6619,7 +6610,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.hasInstance" datatype="html">
         <source>Verknüpfte Funde</source>
-        <target state="final">Verknüpfte Funde</target>
+        <target state="new">Verknüpfte Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6821,7 +6812,7 @@
           <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>" />
           ersetzen?
         </source>
-        <target state="final">
+        <target state="new">
           Ви хочете формуляр
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>" />
           <x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}" />
@@ -6911,7 +6902,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.new" datatype="html">
         <source>(neu)</source>
-        <target state="final">(neu)</target>
+        <target state="new">(neu)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">174</context>
@@ -6939,7 +6930,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.notSet" datatype="html">
         <source>(nicht gesetzt)</source>
-        <target state="final">(nicht gesetzt)</target>
+        <target state="new">(nicht gesetzt)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">207</context>
@@ -7269,7 +7260,7 @@
           <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}" />
           Bilder eingelesen...
         </source>
-        <target state="final">
+        <target state="new">
           <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}" />
           /
           <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}" />

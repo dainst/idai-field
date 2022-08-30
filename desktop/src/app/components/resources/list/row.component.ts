@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { isObject, Map, equal } from 'tsfun';
+import { isObject, isString, Map, equal } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -25,6 +25,7 @@ export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
     @Input() categoriesMap: { [category: string]: CategoryForm };
+    @Input() availableLanguages: Array<Language>;
     @Input() selectedLanguage: Language|undefined;
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
@@ -84,10 +85,19 @@ export class RowComponent implements AfterViewInit {
         const currentValue: any = this.document.resource[fieldName];
         const newValue: any = event.target['value'];
 
-        if ((currentValue && !isObject(currentValue)) || !this.selectedLanguage) {
-            this.document.resource[fieldName] = newValue;
+        if (this.isInStringInputMode()) {
+            if (newValue) {
+                this.document.resource[fieldName] = newValue;
+            } else {
+                delete this.document.resource[fieldName];
+            }
         } else if (newValue.length > 0) {
-            if (!currentValue) this.document.resource[fieldName] = {};
+            if (!isObject(currentValue)) {
+                this.document.resource[fieldName] = {};
+                if (isString(currentValue)) {
+                    this.document.resource[fieldName][I18N.UNSPECIFIED_LANGUAGE] = currentValue;
+                }
+            }
             this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
         } else {
             delete this.document.resource[fieldName][this.selectedLanguage.code];
@@ -128,7 +138,9 @@ export class RowComponent implements AfterViewInit {
 
         return isObject(shortDescription)
             ? (shortDescription[this.selectedLanguage.code] ?? '')
-            : (shortDescription ?? '');
+            : !this.selectedLanguage || this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE
+                ? (shortDescription ?? '')
+                : '';
     }
 
 
@@ -188,5 +200,12 @@ export class RowComponent implements AfterViewInit {
         return isObject(fieldValue) && isObject(this.initialValues[fieldName])
             ? equal(this.initialValues[fieldName] as any)(fieldValue)
             : this.initialValues[fieldName] != fieldValue;
+    }
+
+
+    private isInStringInputMode(): boolean {
+
+        return !this.selectedLanguage
+            || (this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE && this.availableLanguages.length === 1);
     }
 }

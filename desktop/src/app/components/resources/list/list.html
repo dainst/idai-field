@@ -31,6 +31,7 @@
             <cdk-virtual-scroll-viewport itemSize="41">
                 <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
                     <row [document]="document" [categoriesMap]="categoriesMap"
+                         [availableLanguages]="availableLanguages"
                          [selectedLanguage]="selectedLanguage"></row>
                 </div>
             </cdk-virtual-scroll-viewport>

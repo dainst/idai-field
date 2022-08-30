@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { isObject, isString, Map, equal, isEmpty } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels, I18N } from 'idai-field-core';
+    Labels, I18N, FieldResource } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -137,7 +137,7 @@ export class RowComponent implements AfterViewInit {
 
         const currentValue: any = this.document.resource[fieldName];
 
-        if (this.isInStringInputMode()) {
+        if (fieldName !== FieldResource.SHORTDESCRIPTION || this.isInStringInputMode()) {
             this.setValueAsString(fieldName, newValue);
         } else {
             this.setValueAsI18NString(fieldName, newValue, currentValue);

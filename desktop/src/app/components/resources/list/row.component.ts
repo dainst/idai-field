@@ -81,12 +81,14 @@ export class RowComponent implements AfterViewInit {
 
     public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
-        const value = event.target['value'];
+        const currentValue: any = this.document.resource[fieldName];
+        const newValue: any = event.target['value'];
 
-        if (!isObject(this.document.resource[fieldName]) || !this.selectedLanguage) {
-            this.document.resource[fieldName] = value;
-        } else if (value.length > 0) {
-            this.document.resource[fieldName][this.selectedLanguage.code] = value;
+        if ((currentValue && !isObject(currentValue)) || !this.selectedLanguage) {
+            this.document.resource[fieldName] = newValue;
+        } else if (newValue.length > 0) {
+            if (!currentValue) this.document.resource[fieldName] = {};
+            this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
         } else {
             delete this.document.resource[fieldName][this.selectedLanguage.code];
         }
@@ -183,7 +185,7 @@ export class RowComponent implements AfterViewInit {
 
     private hasChanged(fieldName: string, fieldValue: any): boolean {
 
-        return isObject(fieldValue)
+        return isObject(fieldValue) && isObject(this.initialValues[fieldName])
             ? equal(this.initialValues[fieldName] as any)(fieldValue)
             : this.initialValues[fieldName] != fieldValue;
     }

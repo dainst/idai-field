@@ -88,9 +88,9 @@ export type Language = {
                                         noLanguageLabel: string) {
 
         const configuredLanguages: string[] = getConfiguredLanguages(projectLanguages);
-        const documentsLanguages: string[] = flatten(documents.map(document => {
+        const documentsLanguages: string[] = set(flatten(documents.map(document => {
             return getUsedLanguages(document.resource[fieldName], languages);
-        })).concat(configuredLanguages);
+        })).concat(configuredLanguages));
 
         return getSortedLanguages(documentsLanguages, settingsLanguages, languages, noLanguageLabel);
     }

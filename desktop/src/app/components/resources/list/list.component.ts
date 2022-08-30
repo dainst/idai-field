@@ -44,14 +44,20 @@ export class ListComponent extends BaseList implements OnChanges {
     }
 
 
+    public getUnselectedLanguages = () => this.availableLanguages.filter(language => {
+        return language !== this.selectedLanguage;
+    });
+
+    public selectLanguage = (language: Language) => this.selectedLanguage = language;
+
+    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
     public ngOnChanges(changes: SimpleChanges) {
 
         if (changes['selectedDocument']) this.scrollTo(this.selectedDocument);
         if (changes['documents']) this.updateAvailableLanguages();
     }
-
-
-    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
 
     public async createNewDocument(doc: FieldDocument) {

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { isObject, isString, Map, equal } from 'tsfun';
+import { isObject, isString, Map, equal, isEmpty } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -167,6 +167,9 @@ export class RowComponent implements AfterViewInit {
             this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
         } else {
             delete this.document.resource[fieldName][this.selectedLanguage.code];
+            if (isEmpty(this.document.resource[fieldName])) {
+                delete this.document.resource[fieldName];
+            }
         }
     }
 

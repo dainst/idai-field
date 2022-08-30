@@ -82,28 +82,11 @@ export class RowComponent implements AfterViewInit {
 
     public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
-        const currentValue: any = this.document.resource[fieldName];
-        const newValue: any = event.target['value'];
+        this.setValue(fieldName, event.target['value']);
 
-        if (this.isInStringInputMode()) {
-            if (newValue) {
-                this.document.resource[fieldName] = newValue;
-            } else {
-                delete this.document.resource[fieldName];
-            }
-        } else if (newValue.length > 0) {
-            if (!isObject(currentValue)) {
-                this.document.resource[fieldName] = {};
-                if (isString(currentValue)) {
-                    this.document.resource[fieldName][I18N.UNSPECIFIED_LANGUAGE] = currentValue;
-                }
-            }
-            this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
-        } else {
-            delete this.document.resource[fieldName][this.selectedLanguage.code];
+        if (event.key === 'Enter') {
+            await this.stopEditing(fieldName, this.document.resource[fieldName]);
         }
-
-        if (event.key === 'Enter') await this.stopEditing(fieldName, this.document.resource[fieldName]);
     }
 
 
@@ -147,6 +130,44 @@ export class RowComponent implements AfterViewInit {
     public isMoveOptionAvailable(): boolean {
 
         return this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
+    }
+
+
+    private setValue(fieldName: string, newValue: string) {
+
+        const currentValue: any = this.document.resource[fieldName];
+
+        if (this.isInStringInputMode()) {
+            this.setValueAsString(fieldName, newValue);
+        } else {
+            this.setValueAsI18NString(fieldName, newValue, currentValue);
+        }
+    }
+
+
+    private setValueAsString(fieldName: string, newValue: string) {
+
+        if (newValue) {
+            this.document.resource[fieldName] = newValue;
+        } else {
+            delete this.document.resource[fieldName];
+        }
+    }
+
+    
+    private setValueAsI18NString(fieldName: string, newValue: string, currentValue: string) {
+
+        if (newValue.length > 0) {
+            if (!isObject(currentValue)) {
+                this.document.resource[fieldName] = {};
+                if (isString(currentValue)) {
+                    this.document.resource[fieldName][I18N.UNSPECIFIED_LANGUAGE] = currentValue;
+                }
+            }
+            this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
+        } else {
+            delete this.document.resource[fieldName][this.selectedLanguage.code];
+        }
     }
 
 

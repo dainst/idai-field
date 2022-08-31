@@ -45,6 +45,8 @@ export class MenuNavigator {
             await this.zone.run(() => this.projectModalLauncher.createProject());
         } else if (menuItem === 'editProject') {
             await this.zone.run(() => this.projectModalLauncher.editProject());
+        }  else if (menuItem === 'projectInformation') {
+            await this.zone.run(() => this.projectModalLauncher.openInformationModal());
         } else if (menuItem === 'projectImages') {
             await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
         } else if (menuItem === 'deleteProject') {

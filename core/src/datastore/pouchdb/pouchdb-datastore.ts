@@ -322,6 +322,12 @@ export class PouchdbDatastore {
     }
 
 
+    public async getLatestChange(): Promise<string|undefined> {
+
+        return (await this.db.changes({ descending: true, limit: 1 }))?.results?.[0]?.id;
+    }
+
+
     private async performPut(document: Document) {
 
         const cleanedDocument = PouchdbDatastore.cleanUp(document);

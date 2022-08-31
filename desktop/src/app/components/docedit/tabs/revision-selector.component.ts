@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Document } from 'idai-field-core';
-
-const moment = typeof window !== 'undefined' ? window.require('moment') : require('moment');
-
+import { RevisionLabels } from '../../../services/revision-labels';
+import { Document } from 'idai-field-core'
 
 
 export type WinningSide = 'left'|'right'|'mixed';
@@ -32,11 +30,5 @@ export class RevisionSelectorComponent {
     public setSelectedRevision = (revision: Document) => this.onSelectRevision.emit(revision);
 
 
-    public getRevisionLabel(revision: Document): string {
-
-        moment.locale('de');
-        return Document.getLastModified(revision).user
-            + ' - '
-            + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
-    }
+    public getRevisionLabel = (revision: Document) => RevisionLabels.getRevisionLabel(revision);
 }

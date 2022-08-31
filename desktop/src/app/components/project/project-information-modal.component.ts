@@ -8,6 +8,7 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RevisionLabels } from '../../services/revision-labels';
 import { Loading } from '../widgets/loading';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -52,6 +53,8 @@ export class ProjectInformationModalComponent implements OnInit {
 
   
     async ngOnInit() {
+
+        AngularUtility.blurActiveElement();
 
         try {
             this.loading.start('project-information-modal');

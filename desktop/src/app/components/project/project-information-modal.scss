@@ -21,4 +21,13 @@ project-information-modal {
       }
     }
   }
+
+  #project-information-modal-loading-icon-container {
+    height: 100px;
+
+    loading-icon {
+      position: relative;
+      top: 52px;
+    }
+  }
 }

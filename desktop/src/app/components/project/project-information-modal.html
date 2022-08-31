@@ -5,8 +5,11 @@
 </div>
 
 <div id="project-information-modal-body" class="modal-body">
-    <div class="card bg-light">
-        <div *ngIf="ready" class="card-body">
+    <div *ngIf="isLoading()" id="project-information-modal-loading-icon-container">
+        <loading-icon [context]="'project-information-modal'"></loading-icon>
+    </div>
+    <div *ngIf="!isLoading()" class="card bg-light">
+        <div class="card-body">
             <div i18n="@@project.informationModal.resourceCount">
                 Ressourcen:
             </div>

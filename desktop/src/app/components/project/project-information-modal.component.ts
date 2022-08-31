@@ -7,6 +7,7 @@ import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVaria
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RevisionLabels } from '../../services/revision-labels';
+import { Loading } from '../widgets/loading';
 
 
 @Component({
@@ -35,8 +36,6 @@ export class ProjectInformationModalComponent implements OnInit {
     public thumbnailFileSize: string;
     public originalFileSize: string;
 
-    public ready: boolean = false;
-
 
     constructor(public activeModal: NgbActiveModal,
                 private pouchdbDatastore: PouchdbDatastore,
@@ -45,16 +44,22 @@ export class ProjectInformationModalComponent implements OnInit {
                 private settings: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
+                private loading: Loading,
                 private decimalPipe: DecimalPipe) {}
+
+    
+    public isLoading = () => this.loading.isLoading('project-information-modal');
 
   
     async ngOnInit() {
 
         try {
+            this.loading.start('project-information-modal');
             await this.updateInformation();
-            this.ready = true;
         } catch (errWithParams) {
             this.messages.add(errWithParams);
+        } finally {
+            this.loading.stop('project-information-modal');
         }
     }
 

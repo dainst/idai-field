@@ -142,7 +142,7 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileInfos(project: string, types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo}> {
+    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
 
         let originalFileStats = [];
         let thumbnailFileStats = [];
@@ -174,8 +174,8 @@ export class ImageStore {
     }
 
 
-    private aggregateFileMap(aggregated: { [uuid:string]: FileInfo; }, fileStatList: FileStat[],
-                             variant: ImageVariant): { [uuid:string]: FileInfo; } {
+    private aggregateFileMap(aggregated: { [uuid: string]: FileInfo; }, fileStatList: FileStat[],
+                             variant: ImageVariant): { [uuid: string]: FileInfo; } {
 
         for (const stat of fileStatList) {
             let uuid = stat.path;

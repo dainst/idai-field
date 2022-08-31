@@ -8,7 +8,16 @@
     <div class="card bg-light">
         <div *ngIf="ready" class="card-body">
             <div i18n="@@project.informationModal.resourceCount">
-                Ressourcenanzahl: {{documentCount}}
+                Ressourcen:
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.total" class="indented">
+                Gesamtanzahl: {{totalDocumentCount}}
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.images" class="indented">
+                Davon Bilder: {{imageDocumentCount}}
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.types" class="indented">
+                Davon Typen und Kataloge: {{typeDocumentCount}}
             </div>
             <div i18n="@@project.informationModal.lastChangedResource">
                 Letzte bearbeitete Ressource:

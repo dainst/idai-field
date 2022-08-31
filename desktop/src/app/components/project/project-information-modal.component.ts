@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
-import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVariant } from 'idai-field-core';
+import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVariant,
+    ProjectConfiguration } from 'idai-field-core';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RevisionLabels } from '../../services/revision-labels';
@@ -21,14 +22,19 @@ import { RevisionLabels } from '../../services/revision-labels';
  */
 export class ProjectInformationModalComponent implements OnInit {
 
-    public documentCount: number;
+    public totalDocumentCount: number;
+    public imageDocumentCount: number;
+    public typeDocumentCount: number;
+
     public lastChangedDocument: Document;
     public lastChangedDocumentUser: string;
     public lastChangedDocumentDate: string;
+
     public thumbnailFileCount: number;
     public originalFileCount: number;
     public thumbnailFileSize: string;
     public originalFileSize: string;
+
     public ready: boolean = false;
 
 
@@ -37,6 +43,7 @@ export class ProjectInformationModalComponent implements OnInit {
                 private datastore: Datastore,
                 private imagestore: ImageStore,
                 private settings: SettingsProvider,
+                private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private decimalPipe: DecimalPipe) {}
 
@@ -60,7 +67,10 @@ export class ProjectInformationModalComponent implements OnInit {
 
     private async updateInformation() {
 
-        this.documentCount = await this.getDocumentCount();
+        this.totalDocumentCount = await this.getDocumentCount();
+        this.imageDocumentCount = await this.getImageDocumentCount();
+        this.typeDocumentCount = await this.getTypeDocumentCount();
+
         this.lastChangedDocument = await this.getLastChangedDocument();
         this.lastChangedDocumentUser = Document.getLastModified(this.lastChangedDocument).user;
         this.lastChangedDocumentDate = RevisionLabels.getLastModifiedDateLabel(this.lastChangedDocument);
@@ -84,6 +94,28 @@ export class ProjectInformationModalComponent implements OnInit {
     private async getDocumentCount(): Promise<number> {
 
         return (await this.pouchdbDatastore.getDb().info()).doc_count;
+    }
+
+
+    private async getImageDocumentCount(): Promise<number> {
+
+        return await this.getDocumentCountForCategories(
+            this.projectConfiguration.getImageCategories().map(category => category.name)
+        );
+    }
+
+
+    private async getTypeDocumentCount(): Promise<number> {
+
+        return await this.getDocumentCountForCategories(
+            this.projectConfiguration.getTypeCategories().map(category => category.name)
+        );
+    }
+
+
+    private async getDocumentCountForCategories(categories: string[]): Promise<number> {
+
+        return (await this.datastore.findIds({ categories })).totalCount;
     }
 
     

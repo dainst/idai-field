@@ -11,7 +11,7 @@ export module RevisionLabels {
     export function getRevisionLabel(revision: Document): string {
 
         return Document.getLastModified(revision).user
-            + ' - '
+            + ' – '
             + getLastModifiedDateLabel(revision)
     }
 

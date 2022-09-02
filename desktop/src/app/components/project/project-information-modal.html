@@ -27,9 +27,7 @@
             </div>
             <div id="last-changed-resource-identifier" class="indented" (click)="goToLastChangedResource()">
                 <span *ngIf="getLastChangedId() === 'configuration'"
-                      i18n="@@navbar.tabs.configuration">
-                    Projektkonfiguration
-                </span>
+                      i18n="@@navbar.tabs.configuration">Projektkonfiguration</span>
                 <span *ngIf="getLastChangedId() === 'project'"
                       i18n="@@project.informationModal.projectProperties">
                     Projekteigenschaften

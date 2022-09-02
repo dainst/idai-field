@@ -155,7 +155,8 @@ export class ProjectInformationModalComponent implements OnInit {
     private static async getFileCount(fileInfos: Map<FileInfo>, variant: ImageVariant): Promise<number> {
 
         return Object.values(fileInfos).filter(fileInfo => {
-            return fileInfo.variants.filter(v => v.name === variant).length === 1;
+            return !fileInfo.deleted
+                && fileInfo.variants.filter(v => v.name === variant).length === 1;
         }).length;
     }
 }

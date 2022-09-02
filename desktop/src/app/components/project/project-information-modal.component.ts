@@ -9,6 +9,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RevisionLabels } from '../../services/revision-labels';
 import { Loading } from '../widgets/loading';
 import { AngularUtility } from '../../angular/angular-utility';
+import { Routing } from '../../services/routing';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class ProjectInformationModalComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private loading: Loading,
+                private routing: Routing,
                 private decimalPipe: DecimalPipe) {}
 
     
@@ -70,6 +72,13 @@ export class ProjectInformationModalComponent implements OnInit {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.close();
+    }
+
+
+    public goToLastChangedResource() {
+
+        this.activeModal.close();
+        this.routing.jumpToResource(this.lastChangedDocument, true);
     }
 
 

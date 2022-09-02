@@ -26,7 +26,9 @@
                 Letzte bearbeitete Ressource:
             </div>
             <div i18n="@@project.informationModal.identifier" class="indented">
-                Bezeichner: {{lastChangedDocument.resource.identifier}} 
+                Bezeichner: <span id="last-changed-resource-identifier" (click)="goToLastChangedResource()">
+                    {{lastChangedDocument.resource.identifier}}
+                </span>
             </div>
             <div i18n="@@project.informationModal.editedBy" class="indented">
                 Bearbeitet von: {{lastChangedDocumentUser}}

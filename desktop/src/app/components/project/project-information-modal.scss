@@ -18,13 +18,13 @@ project-information-modal {
         &:not(.indented):not(:first-of-type) {
           margin-top: 15px;
         }
+      }
 
-        #last-changed-resource-identifier {
-          color: #37588e;
+      #last-changed-resource-identifier {
+        color: #37588e;
 
-          &:hover {
-            color: #223657;
-          }
+        &:hover {
+          color: #223657;
         }
       }
     }

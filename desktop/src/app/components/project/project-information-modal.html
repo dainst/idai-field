@@ -25,8 +25,16 @@
             <div i18n="@@project.informationModal.lastChangedResource">
                 Letzte bearbeitete Ressource:
             </div>
-            <div i18n="@@project.informationModal.identifier" class="indented">
-                Bezeichner: <span id="last-changed-resource-identifier" (click)="goToLastChangedResource()">
+            <div id="last-changed-resource-identifier" class="indented" (click)="goToLastChangedResource()">
+                <span *ngIf="getLastChangedId() === 'configuration'"
+                      i18n="@@navbar.tabs.configuration">
+                    Projektkonfiguration
+                </span>
+                <span *ngIf="getLastChangedId() === 'project'"
+                      i18n="@@project.informationModal.projectProperties">
+                    Projekteigenschaften
+                </span>
+                <span *ngIf="getLastChangedId() !== 'configuration' && getLastChangedId() !== 'project'">
                     {{lastChangedDocument.resource.identifier}}
                 </span>
             </div>

@@ -9,15 +9,15 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  */
 export module RevisionLabels {
 
-    export function getRevisionLabel(revision: Document): string {
+    export function getRevisionLabel(revision: Document, timeSuffix: string): string {
 
         return Document.getLastModified(revision).user
             + ' – '
-            + getLastModifiedDateLabel(revision)
+            + getLastModifiedDateLabel(revision, timeSuffix)
     }
 
 
-    export function getLastModifiedDateLabel(revision: Document): string {
+    export function getLastModifiedDateLabel(revision: Document, timeSuffix: string): string {
 
         const locale: string = remote.getGlobal('getLocale')();
         moment.locale(locale);
@@ -25,7 +25,7 @@ export module RevisionLabels {
         const lastModifiedDate: Date = Document.getLastModified(revision).date;
 
         return moment(lastModifiedDate).format('LL') + ' '
-            + moment(lastModifiedDate).format('LTS')
-            + (locale === 'de' ? ' Uhr' : '');
+            + moment(lastModifiedDate).format('LTS') + ' '
+            + timeSuffix;
     }
 }

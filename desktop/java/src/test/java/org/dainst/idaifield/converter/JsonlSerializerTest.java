@@ -6,6 +6,7 @@ import org.dainst.idaifield.model.GeometryType;
 import org.dainst.idaifield.model.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,9 +26,13 @@ public class JsonlSerializerTest extends TestCase {
         geometry.setCoordinates(new double[][][][]{{{{ 1.0, 1.0 }}}});
         geometry.setType(GeometryType.MULTIPOINT);
 
+        HashMap<String, String> shortDescription = new HashMap<String, String>();
+        shortDescription.put("de", "Kurzbeschreibung");
+        shortDescription.put("en", "Short description");
+
         Resource resource = new Resource();
         resource.setIdentifier("identifier");
-        resource.setShortDescription("short description");
+        resource.setShortDescription(shortDescription);
         resource.setCategory("category");
         resource.setGeometry(geometry);
 
@@ -35,7 +40,8 @@ public class JsonlSerializerTest extends TestCase {
         resources.add(resource);
 
         assertEquals("{ \"identifier\": \"identifier\", "
-                        + "\"shortDescription\": \"short description\", \"category\": \"category\", "
+                        + "\"shortDescription\": { \"de\": \"Kurzbeschreibung\", \"en\": \"Short description\" }, "
+                        + "\"category\": \"category\", "
                         + "\"geometry\": { \"coordinates\": [1.0, 1.0], "
                         + "\"type\": \"Point\" } }\n",
                 JsonlSerializer.getJsonl(resources)

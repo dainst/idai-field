@@ -72,18 +72,43 @@ class ShapefileReader {
     private static void setResourceFields(Resource resource, SimpleFeature feature) {
 
         for (Property attribute : feature.getProperties()) {
-            switch(attribute.getName().toString()) {
+            String attributeName = attribute.getName().toString();
+            switch(attributeName) {
                 case "identifier":
                     resource.setIdentifier(attribute.getValue().toString());
-                    break;
-                case "shortdesc":
-                    resource.setShortDescription(attribute.getValue().toString());
                     break;
                 case "category":
                 case "type":
                     resource.setCategory(attribute.getValue().toString());
+                    break;
+                case "sdesc":
+                case "shortdesc":
+                    updateShortDescription(
+                        resource,
+                        "unspecifiedLanguage",
+                        attribute.getValue().toString()
+                    );
+                    break;
+                default:
+                    if (attributeName.startsWith("sdesc_")) {
+                        updateShortDescription(
+                            resource,
+                            attributeName.replace("sdesc_", ""),
+                            attribute.getValue().toString()
+                        );
+                    }
             }
         }
+    }
+
+
+    private static void updateShortDescription(Resource resource, String language, String content) {
+
+        if (resource.getShortDescription() == null) {
+            resource.setShortDescription(new HashMap<String, String>());
+        }
+        
+        resource.getShortDescription().put(language, content);
     }
 
 

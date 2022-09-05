@@ -87,7 +87,7 @@ public class Datastore {
         resource.setIdentifier(jsonResource.getString("identifier"));
         resource.setCategory(jsonResource.getString("type"));
         if (jsonResource.has("shortDescription")) {
-            resource.setShortDescription(jsonResource.getString("shortDescription"));
+            resource.setShortDescription(createShortDescription(jsonResource.get("shortDescription")));
         }
 
 
@@ -95,6 +95,22 @@ public class Datastore {
         resource.setGeometry(createGeometry(jsonGeometry));
 
         return resource;
+    }
+
+
+    private static HashMap<String, String> createShortDescription(Object jsonShortDescription) throws Exception {
+
+        HashMap<String, String> shortDescription = new HashMap<String, String>();
+
+        if (jsonShortDescription instanceof String) {
+            shortDescription.put("unspecifiedLanguage", (String) jsonShortDescription);
+        } else {
+            for (String language : ((JSONObject) jsonShortDescription).keySet()) {
+                shortDescription.put(language, ((JSONObject) jsonShortDescription).getString(language));
+            }
+        }
+
+        return shortDescription;
     }
 
 

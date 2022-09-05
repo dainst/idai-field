@@ -1,0 +1,41 @@
+project-information-modal {
+  .card {
+    border-radius: 0.3rem !important;
+    max-height: calc(100vh - 250px);
+    overflow: auto;
+    user-select: none;
+
+    .card-body {
+      div {
+        &.indented {
+          margin-left: 20px;
+        }
+
+        &:not(.indented) {
+          font-weight: 600;
+        }
+
+        &:not(.indented):not(:first-of-type) {
+          margin-top: 15px;
+        }
+      }
+
+      #last-changed-resource-identifier {
+        color: #37588e;
+
+        &:hover {
+          color: #223657;
+        }
+      }
+    }
+  }
+
+  #project-information-modal-loading-icon-container {
+    height: 100px;
+
+    loading-icon {
+      position: relative;
+      top: 52px;
+    }
+  }
+}

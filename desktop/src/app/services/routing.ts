@@ -60,6 +60,8 @@ export class Routing {
 
         if (documentToSelect.resource.category === 'Project') {
             await this.editProject();
+        } else if (documentToSelect.resource.category === 'Configuration') {
+            await this.router.navigate(['configuration']);
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {

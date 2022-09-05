@@ -73,6 +73,7 @@ export class SettingsService {
                     throw Error('malformed_address');
                 }
             }
+            if (syncTarget.password) syncTarget.password = syncTarget.password.trim();
         });
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);

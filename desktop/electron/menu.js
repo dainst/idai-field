@@ -45,6 +45,10 @@ const getTemplate = (mainWindow, context, config) => {
             }, {
                 type: 'separator'
             }, {
+                label: messages.get('menu.project.projectInfo'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectInformation'),
+                enabled: isDefaultContext(context)
+            }, {
                 label: messages.get('menu.project.projectProperties'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: isDefaultContext(context)

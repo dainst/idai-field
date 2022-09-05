@@ -51,6 +51,11 @@ class JsonlSerializer {
 
     private static String getJsonlForShortDescription(HashMap<String, String> shortDescription) {
 
+        if (shortDescription.keySet().size() == 1
+                && shortDescription.keySet().toArray()[0].equals("unspecifiedLanguage")) {
+            return "\"" + shortDescription.get("unspecifiedLanguage") + "\"";
+        }
+
         StringBuilder jsonl = new StringBuilder("{ ");
         boolean firstLanguage = true;
 

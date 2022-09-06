@@ -23,9 +23,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @ViewChild('inputField') inputFieldElement: ElementRef;
 
+    public tabLanguages: Array<Language>;
+    public additionalLanguages: Array<Language>;
+
     public multiLanguageText: I18N.String|string|undefined;
     public selectedLanguage: string;
     public selectedText: string;
+    public shownAdditionalLanguage: Language|undefined;
     public focused: boolean = false;
 
 
@@ -36,6 +40,10 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
 
     ngOnChanges() {
+
+        this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;
+        this.additionalLanguages = this.languages.length > 5 ? this.languages.slice(4) : [];
+        if (this.additionalLanguages.length > 0) this.shownAdditionalLanguage = this.additionalLanguages[0];
 
         this.multiLanguageText = this.readFieldData();
         if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.UNSPECIFIED_LANGUAGE;
@@ -50,9 +58,10 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     }
 
 
-    public selectLanguage(language: string) {
+    public selectLanguage(language: Language) {
 
-        this.selectedLanguage = language;
+        if (this.additionalLanguages.includes(language)) this.shownAdditionalLanguage = language;
+        this.selectedLanguage = language.code;
         this.updateSelectedText();
         this.inputFieldElement.nativeElement.focus();
     }

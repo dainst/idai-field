@@ -10,7 +10,10 @@
             [resource]="resource" [fieldName]="field.name"></form-field-simple-input>
 
 <form-field-multi-input *ngIf="field.inputType === 'multiInput'" [resource]="resource"
-                 [fieldName]="field.name"></form-field-multi-input>
+                 [fieldName]="field.name" [languages]="languages"></form-field-multi-input>
+
+<form-field-simple-multi-input *ngIf="field.inputType === 'simpleMultiInput'" [resource]="resource"
+                        [fieldName]="field.name"></form-field-simple-multi-input>
 
 <form-field-dropdown *ngIf="field.inputType === 'dropdown'" [resource]="resource"
               [field]="field"></form-field-dropdown>

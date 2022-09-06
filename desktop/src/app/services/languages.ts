@@ -1,4 +1,4 @@
-import { clone, flatten, isObject, Map, set } from 'tsfun';
+import { clone, flatten, isObject, isArray, Map, set } from 'tsfun';
 import { I18N, Document } from 'idai-field-core';
 import { Settings } from './settings/settings';
 
@@ -74,7 +74,7 @@ export type Language = {
 
 
     export function getFieldLanguages(fieldContent: any, languages: Map<Language>, projectLanguages: string[],
-                                    settingsLanguages: string[], noLanguageLabel: string): Array<Language> {
+                                      settingsLanguages: string[], noLanguageLabel: string): Array<Language> {
 
         const configuredLanguages: string[] = getConfiguredLanguages(projectLanguages);
         const fieldLanguages: string[] = set(getUsedLanguages(fieldContent, languages).concat(configuredLanguages));
@@ -84,8 +84,8 @@ export type Language = {
 
 
     export function getDocumentsLanguages(documents: Array<Document>, fieldName: string, languages: Map<Language>,
-                                        projectLanguages: string[], settingsLanguages: string[],
-                                        noLanguageLabel: string) {
+                                          projectLanguages: string[], settingsLanguages: string[],
+                                          noLanguageLabel: string) {
 
         const configuredLanguages: string[] = getConfiguredLanguages(projectLanguages);
         const documentsLanguages: string[] = set(flatten(documents.map(document => {
@@ -107,6 +107,7 @@ export type Language = {
     function getUsedLanguages(fieldContent: any, languages: Map<Language>): string[] {
         
         if (!fieldContent) return [];
+        if (isArray(fieldContent)) return set(flatten(fieldContent.map(entry => getUsedLanguages(entry, languages))));
         if (!isObject(fieldContent)) return [I18N.UNSPECIFIED_LANGUAGE];
 
         return Object.keys(fieldContent).filter(languageCode => {

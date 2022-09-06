@@ -46,6 +46,7 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
 import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
 import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
 import { SimpleInputComponent } from './core/forms/simple-input.component';
+import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { SimpleInputComponent } from './core/forms/simple-input.component';
         InputComponent,
         SimpleInputComponent,
         MultiInputComponent,
+        SimpleMultiInputComponent,
         RadioComponent,
         DatingComponent,
         DateComponent,

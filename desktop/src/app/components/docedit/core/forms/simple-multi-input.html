@@ -1,0 +1,20 @@
+<div *ngFor="let entry of getEntries()">
+    <div class="input-group mb-2">
+        <input [value]="entry" type="text" disabled class="form-control">
+        <div class="input-group-append">
+            <button class="btn btn-danger" type="button" (click)="deleteEntry(entry)">
+                <span class="mdi mdi-delete"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="input-group mb-2">
+    <input [(ngModel)]="newEntry" type="text" class="form-control">
+    <div class="input-group-append">
+        <button class="btn btn-success" [disabled]="!isValidEntry(newEntry)" type="button"
+                (click)="addNewEntry()">
+            <span class="mdi mdi-plus"></span>
+        </button>
+    </div>
+</div>

@@ -69,6 +69,7 @@ export module Field {
         |'text'
         |'url'
         |'multiInput'
+        |'simpleMultiInput'
         |'dropdown'
         |'dropdownRange'
         |'radio'
@@ -94,6 +95,7 @@ export module Field {
         export const FLOAT = 'float';
         export const TEXT = 'text';
         export const MULTIINPUT = 'multiInput';
+        export const SIMPLE_MULTIINPUT = 'simpleMultiInput';
         export const URL = 'url';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';
@@ -117,7 +119,7 @@ export module Field {
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],
-            [MULTIINPUT, CHECKBOXES]
+            [MULTIINPUT, SIMPLE_MULTIINPUT, CHECKBOXES]
         ];
 
         
@@ -138,8 +140,10 @@ export module Field {
             } else if ([INPUT, TEXT].includes(inputType)) {
                 // TODO Improve validation for i18n strings
                 return isString(fieldData) || isObject(fieldData);
-            } else if ([MULTIINPUT, CHECKBOXES].includes(inputType)) {
+            } else if ([SIMPLE_MULTIINPUT, CHECKBOXES].includes(inputType)) {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
+            } else if (inputType === MULTIINPUT) {
+                return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
             } else if (inputType === UNSIGNEDINT) {
                 return validateUnsignedInt(fieldData);
             } else if (inputType === UNSIGNEDFLOAT) {

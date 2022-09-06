@@ -40,6 +40,18 @@ multi-language-text-field {
     .additional-languages-dropdown {
       height: 34px !important;
     }
+
+    .additional-languages-dropdown-menu {
+      top: 1px !important;
+      border-top: none;
+
+      .additional-languages-dropdown-list {
+        button {
+          font-size: 14px;
+          cursor: default;
+        }
+      }
+    }
   }
 
   .nav-tabs.focused {

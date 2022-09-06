@@ -6,4 +6,8 @@ form-field-multi-input {
       height: 34px !important;
     }
   }
+
+  multi-language-text-field {
+    width: calc(100% - 33px);
+  }
 }

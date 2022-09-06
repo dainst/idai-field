@@ -133,13 +133,13 @@ export module CSVExpansion {
 
 
     function getLanguagesFromObjectArray(matrix: Matrix, projectLanguages: string[], columnIndex: number,
-                                         i18nStringFieldName: string): string[] {
+                                         i18nStringSubfieldName?: string): string[] {
 
         const languages: string[][] = flatten(flow(
             matrix,
             map(row => row[columnIndex]),
             map(field => isArray(field)
-                ? field.map(object => object[i18nStringFieldName])
+                ? field.map(object => i18nStringSubfieldName ? object[i18nStringSubfieldName] : object)
                     .map(i18nString => i18nString ?
                             isObject(i18nString)
                                 ? Object.keys(i18nString)

@@ -8,6 +8,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
 
         let inputType = 'simpleInput';
         if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) inputType = 'input';
+        if (fieldName.startsWith('multiInput')) inputType = 'multiInput';
         if (fieldName.startsWith('dimension')) inputType = 'dimension';
         if (fieldName.startsWith('dating')) inputType = 'dating';
         if (fieldName.startsWith('literature')) inputType = 'literature';
@@ -521,7 +522,6 @@ describe('CSVExport', () => {
         resources[0].input2 = { de: 'C' };
         resources[1].input1 = { it: 'D' };
         resources[1].input2 = 'E';
-        
 
         const result = CSVExport.createExportable(resources, t, [], ['de', 'en']).csvData.map(row => row.split(','));
 
@@ -545,5 +545,61 @@ describe('CSVExport', () => {
         expect(result[2][4]).toBe('""');
         expect(result[2][5]).toBe('""');
         expect(result[2][6]).toBe('"E"');
+    });
+
+
+    it('expand i18n string arrays', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'multiInput1', 'multiInput2']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+        ];
+        resources[0].multiInput1 = [{ de: 'A', en: 'B' }, { de: 'C', en: 'D' }];
+        resources[0].multiInput2 = [{ de: 'E', en: 'F' }];
+        resources[1].multiInput1 = [{ it: 'G' }, { de: 'H', en: 'I' }, { de: 'J' }];
+        resources[1].multiInput2 = ['K'];
+
+        const result = CSVExport.createExportable(resources, t, [], ['de', 'en']).csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"multiInput1.0.de"');
+        expect(result[0][2]).toBe('"multiInput1.0.en"');
+        expect(result[0][3]).toBe('"multiInput1.0.it"');
+        expect(result[0][4]).toBe('"multiInput1.1.de"');
+        expect(result[0][5]).toBe('"multiInput1.1.en"');
+        expect(result[0][6]).toBe('"multiInput1.1.it"');
+        expect(result[0][7]).toBe('"multiInput1.2.de"');
+        expect(result[0][8]).toBe('"multiInput1.2.en"');
+        expect(result[0][9]).toBe('"multiInput1.2.it"');
+        expect(result[0][10]).toBe('"multiInput2.0.de"');
+        expect(result[0][11]).toBe('"multiInput2.0.en"');
+        expect(result[0][12]).toBe('"multiInput2.0.unspecifiedLanguage"');
+
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('""');
+        expect(result[1][4]).toBe('"C"');
+        expect(result[1][5]).toBe('"D"');
+        expect(result[1][6]).toBe('""');
+        expect(result[1][7]).toBe('""');
+        expect(result[1][8]).toBe('""');
+        expect(result[1][9]).toBe('""');
+        expect(result[1][10]).toBe('"E"');
+        expect(result[1][11]).toBe('"F"');
+        expect(result[1][12]).toBe('""');
+
+        expect(result[2][1]).toBe('""');
+        expect(result[2][2]).toBe('""');
+        expect(result[2][3]).toBe('"G"');
+        expect(result[2][4]).toBe('"H"');
+        expect(result[2][5]).toBe('"I"');
+        expect(result[2][6]).toBe('""');
+        expect(result[2][7]).toBe('"J"');
+        expect(result[2][8]).toBe('""');
+        expect(result[2][9]).toBe('""');
+        expect(result[2][10]).toBe('""');
+        expect(result[2][11]).toBe('""');
+        expect(result[2][12]).toBe('"K"');
     });
 });

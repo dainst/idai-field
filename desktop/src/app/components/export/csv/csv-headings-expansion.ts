@@ -11,14 +11,28 @@ export module CSVHeadingsExpansion {
     import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 
 
-    export function expandI18nStrings(languages: string[]) {
+    export function expandI18nStringHeadings(languages: string[]) {
         
         return (fieldName: string) => {
 
             return languages.map(language => {
                 return fieldName + OBJECT_SEPARATOR + language
             });
-        }
+        };
+    }
+
+
+    export function expandI18nStringArrayHeadings(languages: string[]) {
+
+        return (n: number) => {
+        
+            return (fieldName: string) => {
+
+                return flatMap(i => languages.map(language => {
+                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + language
+                }))(range(n));
+            };
+        };
     }
 
 

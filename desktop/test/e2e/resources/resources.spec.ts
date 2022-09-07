@@ -300,6 +300,27 @@ describe('resources --', () => {
     });
 
 
+    it('edit i18n field values', async done => {
+
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.typeInInputField('identifier', '1');
+        await DoceditPage.clickLanguageTab('shortDescription', 'en');
+        await DoceditPage.typeInInputField('shortDescription', 'English text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('English text');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickLanguageTab('shortDescription', 'de');
+        await DoceditPage.typeInInputField('shortDescription', 'Deutscher Text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Deutscher Text');
+
+        done();
+    });
+
+
     it('show geometry edit widget for suitable categories', async done => {
 
         await ResourcesPage.performCreateResource('1', 'feature');

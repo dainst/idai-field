@@ -171,6 +171,12 @@ export class ResourcesPage {
     }
 
 
+    public static getSelectedListItemShortDescriptionText() {
+
+        return getText('#sidebar .resources-listing-item.selected .subtitle');
+    }
+
+
     public static async getListModeInputFieldValue(identifier, index) {
 
         const inputField = await ResourcesPage.getListModeInputField(identifier, index);

@@ -1,6 +1,6 @@
 <ul *ngIf="hasTabs()" class="nav nav-tabs" [class.focused]="focused">
     <li *ngFor="let language of tabLanguages"
-        class="nav-item"
+        [class]="'nav-item language-tab-' + language.code"
         (click)="selectLanguage(language)">
         <a class="nav-link" 
            [class.active]="language.code === selectedLanguage"

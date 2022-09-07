@@ -153,6 +153,12 @@ export class DoceditPage {
     }
 
 
+    public static clickLanguageTab(fieldName: string, language: string) {
+
+        return click('#edit-form-element-' + fieldName + ' .language-tab-' + language);
+    };
+
+
     // get text
 
     public static async getInputFieldValue(index) {

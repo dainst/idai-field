@@ -219,6 +219,12 @@ export class DoceditPage {
     }
 
 
+    public static getLanguageTabs(fieldName: string) {
+
+        return getElements('#edit-form-element-' + fieldName + ' .language-tab');
+    }
+
+
     // type in
 
     public static typeInInputField(fieldName: string, text: string) {

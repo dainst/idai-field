@@ -66,6 +66,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickInputTypeSelectOption(optionValue: string) {
+
+        return selectOption('#input-type-select', optionValue);
+    }
+
+
     // get text
 
     public static getSelectedValuelist() {

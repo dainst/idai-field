@@ -16,6 +16,7 @@ describe('languages', () => {
         uk: { code: 'uk', label: 'UK', isMainLanguage: false },
         es: { code: 'es', label: 'ES', isMainLanguage: false },
     };
+    
 
     it('get field languages for i18n string', () => {
 

@@ -89,52 +89,52 @@ export class DoceditPage {
                     
         if (clickMsgAway) await NavbarPage.clickCloseAllMessages();
         if (waitForModalToClose) await waitForNotExist('#document-edit-wrapper');
-    };
+    }
 
 
     public static async clickDuplicateDocument() {
 
         await click('#document-edit-button-dropdown');
         return click('#document-edit-button-duplicate-document');
-    };
+    }
 
 
     public static async clickConfirmDuplicateInModal() {
 
         await click('#duplicate-confirm');
         return waitForNotExist('#document-edit-wrapper');
-    };
+    }
 
 
     public static async clickChooseRightRevision() {
 
         const radioButton = (await getElements('input[type=radio]'))[1];
         return click(radioButton);
-    };
+    }
 
 
     public static clickSolveConflictButton() {
 
         return click('#solve-conflict-button');
-    };
+    }
 
 
     public static clickCategorySwitcherButton() {
 
         return click('#category-switcher-button');
-    };
+    }
 
 
     public static clickCategorySwitcherOption(categoryName: string) {
     
         return click('#choose-category-option-' + categoryName);
-    };
+    }
 
 
-    public static async clickSelectOption(fieldName: string, optionValue: string) {
+    public static clickSelectOption(fieldName: string, optionValue: string) {
 
         return selectOption('#edit-form-element-' + fieldName + ' select', optionValue);
-    };
+    }
 
 
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
@@ -142,7 +142,7 @@ export class DoceditPage {
         await waitForExist('#edit-form-element-' + fieldName);
         const element = (await getElements('#edit-form-element-' + fieldName + ' .checkbox'))[checkboxIndex];
         return click(element);
-    };
+    }
 
 
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
@@ -156,7 +156,7 @@ export class DoceditPage {
     public static clickLanguageTab(fieldName: string, language: string) {
 
         return click('#edit-form-element-' + fieldName + ' .language-tab-' + language);
-    };
+    }
 
 
     // get text
@@ -165,7 +165,7 @@ export class DoceditPage {
 
         const element = (await getElements('dai-input input'))[index];
         return getValue(element);
-    };
+    }
 
 
     public static async getFieldLabel(fieldName: string) {
@@ -224,7 +224,7 @@ export class DoceditPage {
     public static typeInInputField(fieldName: string, text: string) {
 
         return typeIn('#edit-form-element-' + fieldName + ' input', text);
-    };
+    }
 
 
     public static async typeInNumberOfDuplicates(numberOfDuplicates: string) {

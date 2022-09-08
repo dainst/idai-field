@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue,
-    getText } from '../app';
+    getText, clearText } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -230,6 +230,12 @@ export class DoceditPage {
     public static typeInInputField(fieldName: string, text: string) {
 
         return typeIn('#edit-form-element-' + fieldName + ' input', text);
+    }
+
+
+    public static removeTextFromInputField(fieldName: string) {
+
+        return clearText('#edit-form-element-' + fieldName + ' input');
     }
 
 

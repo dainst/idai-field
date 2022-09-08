@@ -354,9 +354,19 @@ describe('resources --', () => {
         expect(await getText(languageTabs[1])).toEqual('Deutsch');
         expect(await getText(languageTabs[2])).toEqual('Englisch');
         expect(await getText(languageTabs[3])).toEqual('Italienisch');
+        
+        await DoceditPage.removeTextFromInputField('shortDescription');
+        await DoceditPage.clickLanguageTab('shortDescription', 'de');
+        await DoceditPage.typeInInputField('shortDescription', 'Deutscher Text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Deutscher Text');
 
-        await DoceditPage.clickCloseEdit();
-        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Simple string text');
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
+        expect(languageTabs.length).toBe(3);
+        expect(await getText(languageTabs[0])).toEqual('Deutsch');
+        expect(await getText(languageTabs[1])).toEqual('Englisch');
+        expect(await getText(languageTabs[2])).toEqual('Italienisch');
 
         done();
     });

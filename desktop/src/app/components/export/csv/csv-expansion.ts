@@ -125,7 +125,12 @@ export module CSVExpansion {
         const languages = flow(
             matrix,
             map(row => row[columnIndex]),
-            map(field => isObject(field) ? Object.keys(field) : [I18N.UNSPECIFIED_LANGUAGE])
+            map(field => field ?
+                    isObject(field)
+                        ? Object.keys(field)
+                        : [I18N.UNSPECIFIED_LANGUAGE]
+                    : []
+            )
         );
 
         return set(projectLanguages.concat(flatten(languages)));

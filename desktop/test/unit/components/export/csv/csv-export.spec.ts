@@ -512,7 +512,7 @@ describe('CSVExport', () => {
 
     it('expand i18n strings', () => {
 
-        const t = makeFieldDefinitions(['identifier', 'input1', 'input2']);
+        const t = makeFieldDefinitions(['identifier', 'input1', 'input2', 'input3']);
 
         const resources = [
             ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
@@ -525,26 +525,35 @@ describe('CSVExport', () => {
 
         const result = CSVExport.createExportable(resources, t, [], ['de', 'en']).csvData.map(row => row.split(','));
 
+        expect(result[0].length).toBe(9);
         expect(result[0][1]).toBe('"input1.de"');
         expect(result[0][2]).toBe('"input1.en"');
         expect(result[0][3]).toBe('"input1.it"');
         expect(result[0][4]).toBe('"input2.de"');
         expect(result[0][5]).toBe('"input2.en"');
         expect(result[0][6]).toBe('"input2.unspecifiedLanguage"');
+        expect(result[0][7]).toBe('"input3.de"');
+        expect(result[0][8]).toBe('"input3.en"');
 
+        expect(result[1].length).toBe(9);
         expect(result[1][1]).toBe('"A"');
         expect(result[1][2]).toBe('"B"');
         expect(result[1][3]).toBe('""');
         expect(result[1][4]).toBe('"C"');
         expect(result[1][5]).toBe('""');
         expect(result[1][6]).toBe('""');
+        expect(result[1][7]).toBe('""');
+        expect(result[1][8]).toBe('""');
 
+        expect(result[2].length).toBe(9);
         expect(result[2][1]).toBe('""');
         expect(result[2][2]).toBe('""');
         expect(result[2][3]).toBe('"D"');
         expect(result[2][4]).toBe('""');
         expect(result[2][5]).toBe('""');
         expect(result[2][6]).toBe('"E"');
+        expect(result[2][7]).toBe('""');
+        expect(result[2][8]).toBe('""');
     });
 
 

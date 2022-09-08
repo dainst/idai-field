@@ -327,12 +327,7 @@ describe('resources --', () => {
     it('show string value in unspecifiedLanguage tab after changing input type from simpleInput to input', async done => {
 
         await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await CategoryPickerPage.clickSelectCategory('Feature');
-        await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
-        await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('simpleInput');
-        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.changeInputType('shortDescription', 'simpleInput', 'Feature');
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
@@ -348,11 +343,7 @@ describe('resources --', () => {
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Simple string text');
         
         await navigateTo('configuration');
-        await CategoryPickerPage.clickSelectCategory('Feature');
-        await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
-        await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('input');
-        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.changeInputType('shortDescription', 'input', 'Feature');
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();

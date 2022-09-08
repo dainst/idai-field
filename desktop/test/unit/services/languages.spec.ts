@@ -46,6 +46,19 @@ describe('languages', () => {
     });
 
 
+    it('get field languages for undefined value', () => {
+
+        const projectLanguages: string[] = ['de', 'en', 'fr'];
+        const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
+
+        const result: Array<Language> = Languages.getFieldLanguages(
+            undefined, languages, projectLanguages, settingsLanguages, 'Unspecified language'
+        );
+
+        expect(result.map(to('code'))).toEqual(['en', 'de', 'fr']);
+    });
+
+
     it('get field languages for multiple documents', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];

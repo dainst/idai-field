@@ -7,17 +7,22 @@
       "Eigenes Koordinatenbezugssystem": {
         "label": {
           "de": "Eigenes Koordinatenbezugssystem",
-          "en": "Custom coordinate reference system"
+          "en": "Custom coordinate reference system",
+          "uk": "Власна система координат"
         }
       },
       "EPSG4326 (WGS 84)": {
         "label": {
-          "de": "EPSG4326 (WGS 84)"
+          "de": "EPSG4326 (WGS 84)",
+          "en": "EPSG4326 (WGS 84)",
+          "uk": "EPSG4326 (WGS 84)"
         }
       },
       "EPSG3857 (WGS 84 Web Mercator)": {
         "label": {
-          "de": "EPSG3857 (WGS 84 Web Mercator)"
+          "de": "EPSG3857 (WGS 84 Web Mercator)",
+          "en": "EPSG3857 (WGS 84 Web Mercator)",
+          "uk": "EPSG3857 (WGS 84 Web Mercator)"
         }
       }
     },
@@ -35,13 +40,15 @@
       "Maximale Ausdehnung": {
         "label": {
           "de": "Maximale Ausdehnung",
-          "en": "Maximum expansion"
+          "en": "Maximum expansion",
+          "uk": "Максимальне розширення"
         }
       },
       "Minimale Ausdehnung": {
         "label": {
           "de": "Minimale Ausdehnung",
-          "en": "Minimum expansion"
+          "en": "Minimum expansion",
+          "uk": "Мінімальне розширення"
         }
       }
     }
@@ -54,13 +61,15 @@
       "Oberkante": {
         "label": {
           "de": "Oberkante",
-          "en": "Top edge"
+          "en": "Top edge",
+          "uk": "Верхній край"
         }
       },
       "Unterkante": {
         "label": {
           "de": "Unterkante",
-          "en": "Lower edge"
+          "en": "Lower edge",
+          "uk": "Нижній край"
         }
       }
     }
@@ -105,42 +114,50 @@
     "values": {
       "N-S": {
         "label": {
-          "de": "N-S"
+          "de": "N-S",
+          "uk": "Пн.- Пд."
         }
       },
       "NNO - SSW": {
         "label": {
-          "de": "NNO - SSW"
+          "de": "NNO - SSW",
+          "uk": "Пн.Пн.Сх. - Пд.Пд.Зх."
         }
       },
       "NNW-SSO": {
         "label": {
-          "de": "NNW-SSO"
+          "de": "NNW-SSO",
+          "uk": "Пн.Пн.Зх. - Пд.Пд.Сх."
         }
       },
       "NO-SW": {
         "label": {
-          "de": "NO-SW"
+          "de": "NO-SW",
+          "uk": "Пн.Сх. - Пд.Зх."
         }
       },
       "NW-SO": {
         "label": {
-          "de": "NW-SO"
+          "de": "NW-SO",
+          "uk": "Пн.Зх. - Пд.Сх."
         }
       },
       "W-O": {
         "label": {
-          "de": "W-O"
+          "de": "W-O",
+          "uk": "Зх. - Сх."
         }
       },
       "WNW-OSO": {
         "label": {
-          "de": "WNW-OSO"
+          "de": "WNW-OSO",
+          "uk": "Зх.Пн.Зх - Сх.Пд.Сх."
         }
       },
       "WSW-ONO": {
         "label": {
-          "de": "WSW-ONO"
+          "de": "WSW-ONO",
+          "uk": "Зх.Пд.Зх. - Сх.Пн.Сх."
         }
       }
     }
@@ -153,24 +170,28 @@
       "Anatolien": {
         "label": {
           "de": "Anatolien",
-          "it": "Anatolia"
+          "it": "Anatolia",
+          "uk": "Анатолія"
         }
       },
       "Antiochia (Antakya)": {
         "label": {
-          "de": "Antiochia (Antakya)"
+          "de": "Antiochia (Antakya)",
+          "uk": "Антіохія (Антак'я)"
         }
       },
       "Athen": {
         "label": {
           "de": "Athen",
-          "it": "Atene"
+          "it": "Atene",
+          "uk": "Афіни"
         }
       },
       "Ägypten": {
         "label": {
           "de": "Ägypten",
-          "it": "Egitto"
+          "it": "Egitto",
+          "uk": "Єгипет"
         }
       },
       "Attisch": {
@@ -182,7 +203,8 @@
       "Britannien": {
         "label": {
           "de": "Britannien",
-          "it": "Britannia"
+          "it": "Britannia",
+          "uk": "Великобританія"
         }
       },
       "Chios": {
@@ -194,25 +216,29 @@
       "Deutschland": {
         "label": {
           "de": "Deutschland",
-          "it": "Germania"
+          "it": "Germania",
+          "uk": "Німеччина"
         }
       },
       "Ephesos": {
         "label": {
           "de": "Ephesos",
-          "it": "Efeso"
+          "it": "Efeso",
+          "uk": "Ефес"
         }
       },
       "Etruskisch": {
         "label": {
           "de": "Etruskisch",
-          "it": "Etrusco"
+          "it": "Etrusco",
+          "uk": "Етруська"
         }
       },
       "Gallien": {
         "label": {
           "de": "Gallien",
-          "it": "Gallia"
+          "it": "Gallia",
+          "uk": "Галлія"
         }
       },
       "Ionien": {
@@ -224,175 +250,204 @@
       "Irland": {
         "label": {
           "de": "Irland",
-          "it": "Irlanda"
+          "it": "Irlanda",
+          "uk": "Іонія"
         }
       },
       "Italien": {
         "label": {
           "de": "Italien",
-          "it": "Italia"
+          "it": "Italia",
+          "uk": "Італія"
         }
       },
       "Kampanisch": {
         "label": {
           "de": "Kampanisch",
-          "it": "Campano"
+          "it": "Campano",
+          "uk": "Кампанський"
         }
       },
       "Karthagisch": {
         "label": {
           "de": "Karthagisch",
-          "it": "Cartaginese"
+          "it": "Cartaginese",
+          "uk": "Карфагенський"
         }
       },
       "Kleinasien": {
         "label": {
           "de": "Kleinasien",
-          "it": "Asia Minore"
+          "it": "Asia Minore",
+          "uk": "Мала Азія"
         }
       },
       "Knidos": {
         "label": {
           "de": "Knidos",
-          "it": "Cnido"
+          "it": "Cnido",
+          "uk": "Кнід"
         }
       },
       "Korinth": {
         "label": {
           "de": "Korinth",
-          "it": "Corinto"
+          "it": "Corinto",
+          "uk": "Коринф"
         }
       },
       "Kos": {
         "label": {
           "de": "Kos",
-          "it": "Kos"
+          "it": "Kos",
+          "uk": "Кос"
         }
       },
       "Lesbos": {
         "label": {
           "de": "Lesbos",
-          "it": "Lesbo"
+          "it": "Lesbo",
+          "uk": "Лесбос"
         }
       },
       "Levante": {
         "label": {
           "de": "Levante",
-          "it": "Levante"
+          "it": "Levante",
+          "uk": "Левант"
         }
       },
       "Lokal": {
         "label": {
           "de": "Lokal",
-          "it": "Locale"
+          "it": "Locale",
+          "uk": "Місцевий"
         }
       },
       "Lokal/Regional": {
         "label": {
           "de": "Lokal/Regional",
-          "it": "Locale/Regionale"
+          "it": "Locale/Regionale",
+          "uk": "Місцевий/регіональний"
         }
       },
       "Milet": {
         "label": {
           "de": "Milet",
-          "it": "Mileto"
+          "it": "Mileto",
+          "uk": "Мілет"
         }
       },
       "Mäandertal": {
         "label": {
           "de": "Mäandertal",
-          "it": "Valle del Meandro"
+          "it": "Valle del Meandro",
+          "uk": "Звивиста долина"
         }
       },
       "Nordafrika": {
         "label": {
           "de": "Nordafrika",
-          "it": "Nord Africa"
+          "it": "Nord Africa",
+          "uk": "Північна Африка"
         }
       },
       "Nordafrikanisch": {
         "label": {
           "de": "Nordafrikanisch",
-          "it": "Nordafricano"
+          "it": "Nordafricano",
+          "uk": "Північноафриканський"
         }
       },
       "Palästina": {
         "label": {
           "de": "Palästina",
-          "it": "Palestina"
+          "it": "Palestina",
+          "uk": "Палестина"
         }
       },
       "Pannonien": {
         "label": {
           "de": "Pannonien",
-          "it": "Pannonia"
+          "it": "Pannonia",
+          "uk": "Паннонія"
         }
       },
       "Peloponnes": {
         "label": {
           "de": "Peloponnes",
-          "it": "Peloponneso"
+          "it": "Peloponneso",
+          "uk": "Пелопоннес"
         }
       },
       "Regional": {
         "label": {
           "de": "Regional",
-          "it": "Regionale"
+          "it": "Regionale",
+          "uk": "Регіональний"
         }
       },
       "Rhodos": {
         "label": {
           "de": "Rhodos",
-          "it": "Rodi"
+          "it": "Rodi",
+          "uk": "Родос"
         }
       },
       "Samos": {
         "label": {
           "de": "Samos",
-          "it": "Samo"
+          "it": "Samo",
+          "uk": "Замос"
         }
       },
       "Sizilien": {
         "label": {
           "de": "Sizilien",
-          "it": "Sicilia"
+          "it": "Sicilia",
+          "uk": "Сицилія"
         }
       },
       "Skandinavien": {
         "label": {
           "de": "Skandinavien",
-          "it": "Scandinavia"
+          "it": "Scandinavia",
+          "uk": "Скандинавія"
         }
       },
       "Slawisch": {
         "label": {
           "de": "Slawisch",
-          "it": "Slavo"
+          "it": "Slavo",
+          "uk": "Слов'янський"
         }
       },
       "Spanien": {
         "label": {
           "de": "Spanien",
-          "it": "Spagna"
+          "it": "Spagna",
+          "uk": "Іспанія"
         }
       },
       "Syrien": {
         "label": {
           "de": "Syrien",
-          "it": "Siria"
+          "it": "Siria",
+          "uk": "Сирія"
         }
       },
       "Südtunesisch": {
         "label": {
           "de": "Südtunesisch",
-          "it": "Sud tunisino"
+          "it": "Sud tunisino",
+          "uk": "Південно-туніський"
         }
       },
       "Südägäis": {
         "label": {
           "de": "Südägäis",
-          "it": "Sud Egeo"
+          "it": "Sud Egeo",
+          "uk": "Південно-егейський"
         }
       }
     }
@@ -405,103 +460,120 @@
       "Archaisch": {
         "label": {
           "de": "Archaisch",
-          "it": "Arcaico"
+          "it": "Arcaico",
+          "uk": "Архаїчний"
         }
       },
       "Bronzezeitlich": {
         "label": {
           "de": "Bronzezeitlich",
-          "it": "Età del bronzo"
+          "it": "Età del bronzo",
+          "uk": "Бронзовий вік"
         }
       },
       "Byzantinisch": {
         "label": {
           "de": "Byzantinisch",
-          "it": "Bizantino"
+          "it": "Bizantino",
+          "uk": "Візантійський"
         }
       },
       "Eisenzeitlich": {
         "label": {
           "de": "Eisenzeitlich",
-          "it": "Età del ferro"
+          "it": "Età del ferro",
+          "uk": "Залізний вік"
         }
       },
       "Frühbronzezeitlich": {
         "label": {
           "de": "Frühbronzezeitlich",
-          "it": "Antica età del bronzo"
+          "it": "Antica età del bronzo",
+          "uk": "Рання бронзова доба"
         }
       },
       "Frühbyzantinisch": {
         "label": {
           "de": "Frühbyzantinisch",
-          "it": "Primo periodo Bizantino"
+          "it": "Primo periodo Bizantino",
+          "uk": "Ранньовізантійський"
         }
       },
       "Frühhellenistisch": {
         "label": {
           "de": "Frühhellenistisch",
-          "it": "Antica età ellenistica"
+          "it": "Antica età ellenistica",
+          "uk": "Ранньоелліністичний"
         }
       },
       "Frühkaiserzeitlich": {
         "label": {
           "de": "Frühkaiserzeitlich",
-          "it": "Prima età imperiale"
+          "it": "Prima età imperiale",
+          "uk": "Ранньоімперський"
         }
       },
       "Frühklassisch": {
         "label": {
           "de": "Frühklassisch",
-          "it": "Antica età classica"
+          "it": "Antica età classica",
+          "uk": "Рання класика"
         }
       },
       "Geometrisch": {
         "label": {
           "de": "Geometrisch",
-          "it": "Geometrico"
+          "it": "Geometrico",
+          "uk": "Геометричний"
         }
       },
       "Hellenistisch": {
         "label": {
           "de": "Hellenistisch",
-          "it": "Ellenistico"
+          "it": "Ellenistico",
+          "uk": "Елліністичний"
         }
       },
       "Kaiserzeitlich": {
         "label": {
           "de": "Kaiserzeitlich",
-          "it": "Periodo imperiale"
+          "it": "Periodo imperiale",
+          "uk": "Імператорський"
         }
       },
       "Klassisch": {
         "label": {
           "de": "Klassisch",
-          "it": "Classico"
+          "it": "Classico",
+          "uk": "Класичний"
         }
       },
       "Neolithisch": {
         "label": {
           "de": "Neolithisch",
-          "it": "Neolitico"
+          "it": "Neolitico",
+          "uk": "Неоліт"
         }
       },
       "Neuzeitlich": {
         "label": {
           "de": "Neuzeitlich",
-          "it": "Età moderna"
+          "it": "Età moderna",
+          "uk": "Новочасний"
         }
       },
       "Osmanisch": {
         "label": {
           "de": "Osmanisch",
-          "it": "Ottomano"
+          "it": "Ottomano",
+          "uk": "Османський"
         }
       },
       "Pleistozän": {
         "label": {
           "de": "Pleistozän",
-          "it": "Pleistocene"
+          "it": "Pleistocene",
+          "uk": "Плейстоцен"
         }
       },
       "Rezent": {
@@ -513,43 +585,50 @@
       "Römisch": {
         "label": {
           "de": "Römisch",
-          "it": "Romano"
+          "it": "Romano",
+          "uk": "Римський"
         }
       },
       "Spätantik": {
         "label": {
           "de": "Spätantik",
-          "it": "Tardo-antico"
+          "it": "Tardo-antico",
+          "uk": "Пізньо античний"
         }
       },
       "Spätbronzezeitlich": {
         "label": {
           "de": "Spätbronzezeitlich",
-          "it": "Tarda età del bronzo"
+          "it": "Tarda età del bronzo",
+          "uk": "Доба пізньої бронзи"
         }
       },
       "Spätbyzantinisch": {
         "label": {
           "de": "Spätbyzantinisch",
-          "it": "Tardo-bizantino"
+          "it": "Tardo-bizantino",
+          "uk": "Пізньовізантійський"
         }
       },
       "Späthellenistisch": {
         "label": {
           "de": "Späthellenistisch",
-          "it": "Tardo-ellenistico"
+          "it": "Tardo-ellenistico",
+          "uk": "Пізньоелліністичний"
         }
       },
       "Spätkaiserzeitlich": {
         "label": {
           "de": "Spätkaiserzeitlich",
-          "it": "Tardo-imperiale"
+          "it": "Tardo-imperiale",
+          "uk": "Пізньоімперський"
         }
       },
       "Spätklassisch": {
         "label": {
           "de": "Spätklassisch",
-          "it": "Tardo-classico"
+          "it": "Tardo-classico",
+          "uk": "Пізньокласичний"
         }
       }
     }
@@ -1491,115 +1570,134 @@
       "beige": {
         "label": {
           "de": "beige",
-          "it": "beige"
+          "it": "beige",
+          "uk": "бежевий"
         }
       },
       "blass-": {
         "label": {
           "de": "blass-",
-          "it": "pallido"
+          "it": "pallido",
+          "uk": "блідно-"
         }
       },
       "blau": {
         "label": {
           "de": "blau",
-          "it": "blu"
+          "it": "blu",
+          "uk": "синій"
         }
       },
       "braun": {
         "label": {
           "de": "braun",
-          "it": "marrone"
+          "it": "marrone",
+          "uk": "коричневий"
         }
       },
       "cremefarben": {
         "label": {
           "de": "cremefarben",
-          "it": "bianco sporco"
+          "it": "bianco sporco",
+          "uk": "кремовий"
         }
       },
       "dunkel-": {
         "label": {
           "de": "dunkel-",
-          "it": "scuro"
+          "it": "scuro",
+          "uk": "темно-"
         }
       },
       "gelb": {
         "label": {
           "de": "gelb",
-          "it": "giallo"
+          "it": "giallo",
+          "uk": "жовтий"
         }
       },
       "grau": {
         "label": {
           "de": "grau",
-          "it": "grigio"
+          "it": "grigio",
+          "uk": "сірий"
         }
       },
       "grün": {
         "label": {
           "de": "grün",
-          "it": "verde"
+          "it": "verde",
+          "uk": "зелений"
         }
       },
       "hell-": {
         "label": {
           "de": "hell-",
-          "it": "chiaro"
+          "it": "chiaro",
+          "uk": "світло-"
         }
       },
       "leuchtend-": {
         "label": {
           "de": "leuchtend-",
-          "it": "brillante"
+          "it": "brillante",
+          "uk": "яскраво-"
         }
       },
       "ocker": {
         "label": {
           "de": "ocker",
-          "it": "ocra"
+          "it": "ocra",
+          "uk": "охра"
         }
       },
       "orange": {
         "label": {
           "de": "orange",
-          "it": "arancione"
+          "it": "arancione",
+          "uk": "помаранчевий"
         }
       },
       "rosa": {
         "label": {
           "de": "rosa",
-          "it": "rosa"
+          "it": "rosa",
+          "uk": "рожевий"
         }
       },
       "rot": {
         "label": {
           "de": "rot",
-          "it": "rosso"
+          "it": "rosso",
+          "uk": "червоний"
         }
       },
       "schwarz": {
         "label": {
           "de": "schwarz",
-          "it": "nero"
+          "it": "nero",
+          "uk": "чорний"
         }
       },
       "türkis": {
         "label": {
           "de": "türkis",
-          "it": "turchese"
+          "it": "turchese",
+          "uk": "бірюзовий"
         }
       },
       "violett": {
         "label": {
           "de": "violett",
-          "it": "viola"
+          "it": "viola",
+          "uk": "фіолетовий"
         }
       },
       "weiß": {
         "label": {
           "de": "weiß",
-          "it": "bianco"
+          "it": "bianco",
+          "uk": "білий"
         }
       }
     }
@@ -1614,91 +1712,106 @@
       "beige": {
         "label": {
           "de": "beige",
-          "it": "beige"
+          "it": "beige",
+          "uk": "бежевий"
         }
       },
       "dunkelbraun": {
         "label": {
           "de": "dunkelbraun",
-          "it": "marrone scuro"
+          "it": "marrone scuro",
+          "uk": "темно-коричневий"
         }
       },
       "dunkelrot": {
         "label": {
           "de": "dunkelrot",
-          "it": "rosso scuro"
+          "it": "rosso scuro",
+          "uk": "темно-червоний"
         }
       },
       "gelb": {
         "label": {
           "de": "gelb",
-          "it": "giallo"
+          "it": "giallo",
+          "uk": "жовтий"
         }
       },
       "hellbraun": {
         "label": {
           "de": "hellbraun",
-          "it": "marrone chiaro"
+          "it": "marrone chiaro",
+          "uk": "світло-коричневий"
         }
       },
       "hellgrau": {
         "label": {
           "de": "hellgrau",
-          "it": "grigio chiaro"
+          "it": "grigio chiaro",
+          "uk": "світло-сірий"
         }
       },
       "mittelbraun": {
         "label": {
           "de": "mittelbraun",
-          "it": "marrone medio"
+          "it": "marrone medio",
+          "uk": "середньо-коричневий"
         }
       },
       "ocker": {
         "label": {
           "de": "ocker",
-          "it": "ocra"
+          "it": "ocra",
+          "uk": "охра"
         }
       },
       "orange": {
         "label": {
           "de": "orange",
-          "it": "arancione"
+          "it": "arancione",
+          "uk": "помаранчевий"
         }
       },
       "orangerot": {
         "label": {
           "de": "orangerot",
-          "it": "rosso-arancio"
+          "it": "rosso-arancio",
+          "uk": "оранжево-червоний"
         }
       },
       "rosa": {
         "label": {
           "de": "rosa",
-          "it": "rosa"
+          "it": "rosa",
+          "uk": "рожевий"
         }
       },
       "rot": {
         "label": {
           "de": "rot",
-          "it": "rosso"
+          "it": "rosso",
+          "uk": "червоний"
         }
       },
       "rotbraun": {
         "label": {
           "de": "rotbraun",
-          "it": "rosso-bruno"
+          "it": "rosso-bruno",
+          "uk": "червонувато-коричневий"
         }
       },
       "schwarz": {
         "label": {
           "de": "schwarz",
-          "it": "nero"
+          "it": "nero",
+          "uk": "чорний"
         }
       },
       "weiß": {
         "label": {
           "de": "weiß",
-          "it": "bianco"
+          "it": "bianco",
+          "uk": "білий"
         }
       }
     }
@@ -2029,7 +2142,7 @@
         "label": {
           "de": "7.5YR 6/4"
         }
-      }  
+      }
     }
   },
   "glass-decorationTechnique-default": {
@@ -2040,49 +2153,57 @@
       "Bemalung": {
         "label": {
           "de": "Bemalung",
-          "it": "Pittura"
+          "it": "Pittura",
+          "uk": "Розпис/живопис"
         }
       },
       "Diatretdekor": {
         "label": {
           "de": "Diatretdekor",
-          "it": "Decorazione diatreta"
+          "it": "Decorazione diatreta",
+          "uk": "Діатретний декор"
         }
       },
       "Emaille": {
         "label": {
           "de": "Emaille",
-          "it": "Smalto"
+          "it": "Smalto",
+          "uk": "емаль"
         }
       },
       "Facettschliffdekor": {
         "label": {
           "de": "Facettschliffdekor",
-          "it": "Decorazione a sfaccettature"
+          "it": "Decorazione a sfaccettature",
+          "uk": "Фаcетно-полірований декор"
         }
       },
       "Fadendekor (aufgelegt)": {
         "label": {
           "de": "Fadendekor (aufgelegt)",
-          "it": "Decorazione filata (applicata)"
+          "it": "Decorazione filata (applicata)",
+          "uk": "Нитковий декор (накладкою)"
         }
       },
       "Fadendekor (verschmolzen)": {
         "label": {
           "de": "Fadendekor (verschmolzen)",
-          "it": "Decorazione filata (fusa)"
+          "it": "Decorazione filata (fusa)",
+          "uk": "Нитковий декор (об’єднано)"
         }
       },
       "Mosaikdekor": {
         "label": {
           "de": "Mosaikdekor",
-          "it": "Decorazione a mosaico"
+          "it": "Decorazione a mosaico",
+          "uk": "мозаїчний декор"
         }
       },
       "Reliefdekor": {
         "label": {
           "de": "Reliefdekor",
-          "it": "Decorazione a rilievo"
+          "it": "Decorazione a rilievo",
+          "uk": "Рельєфний декор"
         }
       },
       "Reticelladekor": {
@@ -2094,55 +2215,64 @@
       "Riefeldekor": {
         "label": {
           "de": "Riefeldekor",
-          "it": "Decorazione scanalata"
+          "it": "Decorazione scanalata",
+          "uk": "Рифельний декор"
         }
       },
       "Ritzungen": {
         "label": {
           "de": "Ritzungen",
-          "it": "Decorazione incisa"
+          "it": "Decorazione incisa",
+          "uk": "Подряпини"
         }
       },
       "Schlangenfadendekor": {
         "label": {
           "de": "Schlangenfadendekor",
-          "it": "Decorazione a fili di serpente"
+          "it": "Decorazione a fili di serpente",
+          "uk": "декор змійкою"
         }
       },
       "Schliffrillendekor": {
         "label": {
           "de": "Schliffrillendekor",
-          "it": "Decorazione a intaglio"
+          "it": "Decorazione a intaglio",
+          "uk": "Шліфувальний декор"
         }
       },
       "Stempeldekor": {
         "label": {
           "de": "Stempeldekor",
-          "it": "Decorazione a stampo"
+          "it": "Decorazione a stampo",
+          "uk": "Штамповий декор"
         }
       },
       "Tupfendekor": {
         "label": {
           "de": "Tupfendekor",
-          "it": "Decorazione maculata"
+          "it": "Decorazione maculata",
+          "uk": "Губковий декор"
         }
       },
       "Warzendekor": {
         "label": {
           "de": "Warzendekor",
-          "it": "Decorazione a verruche"
+          "it": "Decorazione a verruche",
+          "uk": "Бородавковий декор"
         }
       },
       "Zwischengoldglas": {
         "label": {
           "de": "Zwischengoldglas",
-          "it": "Decorazione in foglia d'oro"
+          "it": "Decorazione in foglia d'oro",
+          "uk": "Проміжне золоте скло"
         }
       },
       "figürlicher Schliffdekor": {
         "label": {
           "de": "figürlicher Schliffdekor",
-          "it": "Decorazione figurata a intaglio"
+          "it": "Decorazione figurata a intaglio",
+          "uk": "фігурне шліфувальне оздоблення"
         }
       }
     }
@@ -2155,97 +2285,113 @@
       "ausladend": {
         "label": {
           "de": "ausladend",
-          "it": "ampio"
+          "it": "ampio",
+          "uk": "достатній"
         }
       },
       "bauchig": {
         "label": {
           "de": "bauchig",
-          "it": "panciuto"
+          "it": "panciuto",
+          "uk": "випуклий"
         }
       },
       "breitoval": {
         "label": {
           "de": "breitoval",
-          "it": "largo-ovale"
+          "it": "largo-ovale",
+          "uk": "широкий овал"
         }
       },
       "doppelkonisch": {
         "label": {
           "de": "doppelkonisch",
-          "it": "a doppio cono"
+          "it": "a doppio cono",
+          "uk": "біконічний"
         }
       },
       "halbkugelig": {
         "label": {
           "de": "halbkugelig",
-          "it": "emisferico"
+          "it": "emisferico",
+          "uk": "напівсферичний"
         }
       },
       "hochoval": {
         "label": {
           "de": "hochoval",
-          "it": "alto-ovale"
+          "it": "alto-ovale",
+          "uk": "високий овал"
         }
       },
       "konisch": {
         "label": {
           "de": "konisch",
-          "it": "conico"
+          "it": "conico",
+          "uk": "конусний"
         }
       },
       "kugelförmig": {
         "label": {
           "de": "kugelförmig",
-          "it": "sferico"
+          "it": "sferico",
+          "uk": "сферичний"
         }
       },
       "quadratisch": {
         "label": {
           "de": "quadratisch",
-          "it": "quadrato"
+          "it": "quadrato",
+          "uk": "квадратний"
         }
       },
       "rechteckig": {
         "label": {
           "de": "rechteckig",
-          "it": "rettangolare"
+          "it": "rettangolare",
+          "uk": "прямокутний"
         }
       },
       "rund": {
         "label": {
           "de": "rund",
-          "it": "rotondo"
+          "it": "rotondo",
+          "uk": "круглий"
         }
       },
       "schlank": {
         "label": {
           "de": "schlank",
-          "it": "sottile"
+          "it": "sottile",
+          "uk": "тонкий"
         }
       },
       "schmal": {
         "label": {
           "de": "schmal",
-          "it": "affusolato"
+          "it": "affusolato",
+          "uk": "вузький"
         }
       },
       "spindelförmig": {
         "label": {
           "de": "spindelförmig",
-          "it": "fusiforme"
+          "it": "fusiforme",
+          "uk": "веретеноподібний"
         }
       },
       "tonnenförmig": {
         "label": {
           "de": "tonnenförmig",
-          "it": "bombato"
+          "it": "bombato",
+          "uk": "у формі бочки"
         }
       },
       "zylinderförmig": {
         "label": {
           "de": "zylinderförmig",
-          "it": "cilindrico"
+          "it": "cilindrico",
+          "uk": "циліндричний"
         }
       }
     }
@@ -2258,49 +2404,57 @@
       "Formgeblasen (mit Reliefdekor)": {
         "label": {
           "de": "Formgeblasen (mit Reliefdekor)",
-          "it": "soffiaggio in stampo (con decorazione a rilievo)"
+          "it": "soffiaggio in stampo (con decorazione a rilievo)",
+          "uk": "Видувний (з рельєфним декором)"
         }
       },
       "Formgeschmolzen": {
         "label": {
           "de": "Formgeschmolzen",
-          "it": "fusione in stampo"
+          "it": "fusione in stampo",
+          "uk": "Розплавлена ​​форма"
         }
       },
       "Freigeblasen": {
         "label": {
           "de": "Freigeblasen",
-          "it": "soffiaggio libero"
+          "it": "soffiaggio libero",
+          "uk": "Вільно-видутий"
         }
       },
       "In Vorformen geblasen": {
         "label": {
           "de": "In Vorformen geblasen",
-          "it": "soffiaggio in preforme"
+          "it": "soffiaggio in preforme",
+          "uk": "В попередніх формах видуті"
         }
       },
       "In offene Halbformen geblasen": {
         "label": {
           "de": "In offene Halbformen geblasen",
-          "it": "soffiaggio in semistampi aperti"
+          "it": "soffiaggio in semistampi aperti",
+          "uk": "Роздуnий у відкриті напівформи"
         }
       },
       "Kerngeformt": {
         "label": {
           "de": "Kerngeformt",
-          "it": "formatura su nucleo"
+          "it": "formatura su nucleo",
+          "uk": "Серцевинна форма"
         }
       },
       "Sandkerngeschmolzen": {
         "label": {
           "de": "Sandkerngeschmolzen",
-          "it": "nucleo friabile di sabbia"
+          "it": "nucleo friabile di sabbia",
+          "uk": "​​Розплавлене піщане ядро"
         }
       },
       "gedreht (auf Drehscheibe)": {
         "label": {
           "de": "gedreht (auf Drehscheibe)",
-          "it": "tornito (su tornio)"
+          "it": "tornito (su tornio)",
+          "uk": "Кручений (на обертовій платформі)"
         }
       }
     }
@@ -2313,67 +2467,78 @@
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Armreif": {
         "label": {
           "de": "Armreif",
-          "it": "Bracciale"
+          "it": "Bracciale",
+          "uk": "Браслет"
         }
       },
       "Einlage": {
         "label": {
           "de": "Einlage",
-          "it": "Inserto"
+          "it": "Inserto",
+          "uk": "Вставка"
         }
       },
       "Fensterglas": {
         "label": {
           "de": "Fensterglas",
-          "it": "Vetro per finestre"
+          "it": "Vetro per finestre",
+          "uk": "Віконне скло"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Ваза/посудина"
         }
       },
       "Gemme": {
         "label": {
           "de": "Gemme",
-          "it": "Gemma"
+          "it": "Gemma",
+          "uk": "Різьблений камінь \"Ґем\""
         }
       },
       "Gerät": {
         "label": {
           "de": "Gerät",
-          "it": "Strumento"
+          "it": "Strumento",
+          "uk": "Інструмент"
         }
       },
       "Glasschlacke": {
         "label": {
           "de": "Glasschlacke",
-          "it": "Scorie di vetro"
+          "it": "Scorie di vetro",
+          "uk": "Склошлак"
         }
       },
       "Lampe": {
         "label": {
           "de": "Lampe",
-          "it": "Lucerna"
+          "it": "Lucerna",
+          "uk": "Лампа"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cucchiaio"
+          "it": "Cucchiaio",
+          "uk": "Ложка"
         }
       },
       "Perle": {
         "label": {
           "de": "Perle",
-          "it": "Perla"
+          "it": "Perla",
+          "uk": "Перлина"
         }
       },
       "Produktionsfragment": {
@@ -2385,7 +2550,8 @@
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень/Кільце"
         }
       },
       "Rohglas": {
@@ -2427,7 +2593,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Weinheber": {
@@ -2780,37 +2947,43 @@
       "Bodenziegel": {
         "label": {
           "de": "Bodenziegel",
-          "it": "Mattone da pavimento"
+          "it": "Mattone da pavimento",
+          "uk": "Цегла для підлоги"
         }
       },
       "Dachziegel": {
         "label": {
           "de": "Dachziegel",
-          "it": "Tegola"
+          "it": "Tegola",
+          "uk": "Дахівка"
         }
       },
       "Flachziegel": {
         "label": {
           "de": "Flachziegel",
-          "it": "Tegola piana"
+          "it": "Tegola piana",
+          "uk": "Плоска цегла"
         }
       },
       "Formziegel": {
         "label": {
           "de": "Formziegel",
-          "it": "Tegola sagomata"
+          "it": "Tegola sagomata",
+          "uk": "Формована цегла"
         }
       },
       "Hypokaustziegel": {
         "label": {
           "de": "Hypokaustziegel",
-          "it": "Pilastrino"
+          "it": "Pilastrino",
+          "uk": "Гіпокаусна цегла"
         }
       },
       "Imbrex": {
         "label": {
           "de": "Imbrex",
-          "it": "Embrice"
+          "it": "Embrice",
+          "uk": "імбрекс"
         }
       },
       "Kalyptere": {
@@ -2828,13 +3001,15 @@
       "Leistenziegel": {
         "label": {
           "de": "Leistenziegel",
-          "it": "Tegola modanata"
+          "it": "Tegola modanata",
+          "uk": "Рейкова цегла"
         }
       },
       "Lochziegel/Hohlziegel": {
         "label": {
           "de": "Lochziegel/Hohlziegel",
-          "it": "Mattone forato"
+          "it": "Mattone forato",
+          "uk": "Дірчаста цегла/порожниста цегла"
         }
       },
       "Stroter": {
@@ -2846,19 +3021,22 @@
       "Tegula": {
         "label": {
           "de": "Tegula",
-          "it": "Tegula"
+          "it": "Tegula",
+          "uk": "Плитка"
         }
       },
       "Tonrohr": {
         "label": {
           "de": "Tonrohr",
-          "it": "Tubo fittile"
+          "it": "Tubo fittile",
+          "uk": "Глиняна труба"
         }
       },
       "Wandziegel": {
         "label": {
           "de": "Wandziegel",
-          "it": "Mattone da parete"
+          "it": "Mattone da parete",
+          "uk": "Стінова цегла"
         }
       }
     }
@@ -2871,31 +3049,36 @@
       "Dach": {
         "label": {
           "de": "Dach",
-          "it": "Tetto"
+          "it": "Tetto",
+          "uk": "Дах"
         }
       },
       "Decke": {
         "label": {
           "de": "Decke",
-          "it": "Soffitto"
+          "it": "Soffitto",
+          "uk": "Стеля"
         }
       },
       "Fenster": {
         "label": {
           "de": "Fenster",
-          "it": "Finestra"
+          "it": "Finestra",
+          "uk": "Вікно"
         }
       },
       "Fussboden": {
         "label": {
           "de": "Fussboden",
-          "it": "Pavimento"
+          "it": "Pavimento",
+          "uk": "Підлога"
         }
       },
       "Gewölbedecke": {
         "label": {
           "de": "Gewölbedecke",
-          "it": "Soffitto a volta"
+          "it": "Soffitto a volta",
+          "uk": "Перекриття склепінням"
         }
       },
       "Klosterformat": {
@@ -2907,19 +3090,22 @@
       "Türrahmen": {
         "label": {
           "de": "Türrahmen",
-          "it": "Cornice della porta"
+          "it": "Cornice della porta",
+          "uk": "Дверна рама"
         }
       },
       "Türsturz": {
         "label": {
           "de": "Türsturz",
-          "it": "Architrave"
+          "it": "Architrave",
+          "uk": "Дверна балка"
         }
       },
       "Wandverkleidung": {
         "label": {
           "de": "Wandverkleidung",
-          "it": "Rivestimento parietale"
+          "it": "Rivestimento parietale",
+          "uk": "Стінна обшивка"
         }
       }
     }
@@ -2932,73 +3118,85 @@
       "Bemalung": {
         "label": {
           "de": "Bemalung",
-          "it": "Pittura"
+          "it": "Pittura",
+          "uk": "Розписи"
         }
       },
       "Fingerabdruck": {
         "label": {
           "de": "Fingerabdruck",
-          "it": "Impronta digitale"
+          "it": "Impronta digitale",
+          "uk": "Відбиток пальців"
         }
       },
       "Kammritzung": {
         "label": {
           "de": "Kammritzung",
-          "it": "Incisione a pettine"
+          "it": "Incisione a pettine",
+          "uk": "Відбиток гребіньця"
         }
       },
       "Reliefdekor": {
         "label": {
           "de": "Reliefdekor",
-          "it": "Decorazione a rilievo"
+          "it": "Decorazione a rilievo",
+          "uk": "Рельєфний декор"
         }
       },
       "Riefeldekor": {
         "label": {
           "de": "Riefeldekor",
-          "it": "Decorazione a scanalature"
+          "it": "Decorazione a scanalature",
+          "uk": "Рифельний декор"
         }
       },
       "Ritzungen": {
         "label": {
           "de": "Ritzungen",
-          "it": "Incisioni"
+          "it": "Incisioni",
+          "uk": "Подряпини"
         }
       },
       "Sonstige Abdrücke": {
         "label": {
           "de": "Sonstige Abdrücke",
-          "it": "Altre impronte"
+          "it": "Altre impronte",
+          "uk": "Інші відбитки"
         }
       },
       "Stempel": {
         "label": {
           "de": "Stempel",
-          "it": "Bollo"
+          "it": "Bollo",
+          "uk": "Відбиток/Штамп"
         }
       },
       "Stempeldekor": {
         "label": {
           "de": "Stempeldekor",
-          "it": "Decorazione a stampo"
+          "it": "Decorazione a stampo",
+          "uk": "Штамповий декор"
         }
       },
       "Tupfendekor": {
         "label": {
           "de": "Tupfendekor",
-          "it": "Decorazione maculata"
+          "it": "Decorazione maculata",
+          "uk": "Декор відбитком губки"
         }
       },
       "Wischzeichen": {
         "label": {
           "de": "Wischzeichen",
-          "it": "Strofinata"
+          "it": "Strofinata",
+          "uk": "Декор мазком"
         }
       },
       "Überzug/Glasur": {
         "label": {
           "de": "Überzug/Glasur",
-          "it": "Ingobbio/invetriatura"
+          "it": "Ingobbio/invetriatura",
+          "uk": "Покриття/глазур"
         }
       }
     }
@@ -3011,55 +3209,64 @@
       "Dickwandig": {
         "label": {
           "de": "Dickwandig",
-          "it": "Parete spessa"
+          "it": "Parete spessa",
+          "uk": "товстостінний"
         }
       },
       "Dünnwandig": {
         "label": {
           "de": "Dünnwandig",
-          "it": "Parete sottile"
+          "it": "Parete sottile",
+          "uk": "тонкостінний"
         }
       },
       "Gebrannt": {
         "label": {
           "de": "Gebrannt",
-          "it": "Cotto"
+          "it": "Cotto",
+          "uk": "Випечений"
         }
       },
       "Hart gebrannt": {
         "label": {
           "de": "Hart gebrannt",
-          "it": "Cotto ad alte temperature"
+          "it": "Cotto ad alte temperature",
+          "uk": "Силь випечений"
         }
       },
       "Luftgetrocknet": {
         "label": {
           "de": "Luftgetrocknet",
-          "it": "Seccato all'aria"
+          "it": "Seccato all'aria",
+          "uk": "висушений на повітрі"
         }
       },
       "Oberfläche glatt": {
         "label": {
           "de": "Oberfläche glatt",
-          "it": "Superficie liscia"
+          "it": "Superficie liscia",
+          "uk": "Гладка поверхня"
         }
       },
       "Oberfläche rau": {
         "label": {
           "de": "Oberfläche rau",
-          "it": "Superficie ruvida"
+          "it": "Superficie ruvida",
+          "uk": "Поверхня шорстка"
         }
       },
       "Sekundär gebrannt": {
         "label": {
           "de": "Sekundär gebrannt",
-          "it": "Cottura secondaria"
+          "it": "Cottura secondaria",
+          "uk": "Вториннр випечено"
         }
       },
       "Weich gebrannt": {
         "label": {
           "de": "Weich gebrannt",
-          "it": "Cottura leggera"
+          "it": "Cottura leggera",
+          "uk": "М'яко випечено"
         }
       }
     }
@@ -3319,7 +3526,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Wiedergängerbestattung": {
@@ -3350,7 +3558,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       }
     }
@@ -3363,19 +3572,22 @@
       "Endoskopie": {
         "label": {
           "de": "Endoskopie",
-          "it": "Endoscopia"
+          "it": "Endoscopia",
+          "uk": "Ендоскопія"
         }
       },
       "Foto": {
         "label": {
           "de": "Foto",
-          "it": "Foto"
+          "it": "Foto",
+          "uk": "Фотографія"
         }
       },
       "Histologie": {
         "label": {
           "de": "Histologie",
-          "it": "Istologia"
+          "it": "Istologia",
+          "uk": "Гістологія"
         }
       },
       "LM": {
@@ -3393,7 +3605,8 @@
       "Röntgen": {
         "label": {
           "de": "Röntgen",
-          "it": "Radiografia"
+          "it": "Radiografia",
+          "uk": "Рентген"
         }
       }
     }
@@ -3443,7 +3656,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "am Kinn": {
@@ -3516,7 +3730,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "gestreckt": {
@@ -3559,7 +3774,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       }
     }
@@ -3578,25 +3794,29 @@
       "Ionische Ordnung": {
         "label": {
           "de": "Ionische Ordnung",
-          "it": "Ordine ionico"
+          "it": "Ordine ionico",
+          "uk": "Доричний ордер"
         }
       },
       "Komposite Ordnung": {
         "label": {
           "de": "Komposite Ordnung",
-          "it": "Ordine composito"
+          "it": "Ordine composito",
+          "uk": "Композитний ордер"
         }
       },
       "Korinthische Ordnung": {
         "label": {
           "de": "Korinthische Ordnung",
-          "it": "Ordine corinzio"
+          "it": "Ordine corinzio",
+          "uk": "Коринфський ордер"
         }
       },
       "Toskanische Ordnung": {
         "label": {
           "de": "Toskanische Ordnung",
-          "it": "Ordine tuscanico"
+          "it": "Ordine tuscanico",
+          "uk": "Тосканський ордер"
         }
       }
     }
@@ -3609,54 +3829,63 @@
       "Altar": {
         "label": {
           "de": "Altar",
-          "it": "Altare"
+          "it": "Altare",
+          "uk": "Вівтар"
         }
       },
       "Amphitheater": {
         "label": {
           "de": "Amphitheater",
-          "it": "Anfiteatro"
+          "it": "Anfiteatro",
+          "uk": "Амфітеатр"
         }
       },
       "Basilika": {
         "label": {
           "de": "Basilika",
-          "it": "Basilica"
+          "it": "Basilica",
+          "uk": "Базиліка"
         }
       },
       "Bogen": {
         "label": {
           "de": "Bogen",
-          "it": "Arco"
+          "it": "Arco",
+          "uk": "Арка"
         }
       },
       "Brücke": {
         "label": {
           "de": "Brücke",
-          "it": "Ponte"
+          "it": "Ponte",
+          "uk": "Міст"
         }
       },
       "Circus": {
         "label": {
           "de": "Circus",
-          "it": "Circo"
+          "it": "Circo",
+          "uk": "Цирк"
         }
       },
       "Grabbau": {
         "label": {
-          "de": "Grabbau"
+          "de": "Grabbau",
+          "uk": "Гробниця"
         }
       },
       "Gymnasium": {
         "label": {
           "de": "Gymnasium",
-          "it": "Ginnasio"
+          "it": "Ginnasio",
+          "uk": "Гімназія"
         }
       },
       "Mauerkurtine": {
         "label": {
           "de": "Mauerkurtine",
-          "it": "Muro di cortina"
+          "it": "Muro di cortina",
+          "uk": "Стінна завіса"
         }
       },
       "Nymphäum": {
@@ -3674,54 +3903,63 @@
       "Strasse": {
         "label": {
           "de": "Strasse",
-          "it": "Strada"
+          "it": "Strada",
+          "uk": "Вулиця"
         }
       },
       "Stützmauer": {
         "label": {
           "de": "Stützmauer",
-          "it": "Muro di sostegno"
+          "it": "Muro di sostegno",
+          "uk": "Підпірна стіна"
         }
       },
       "Säulenhalle": {
         "label": {
           "de": "Säulenhalle",
-          "it": "Portico"
+          "it": "Portico",
+          "uk": "Портик"
         }
       },
       "Tempel": {
         "label": {
           "de": "Tempel",
-          "it": "Tempio"
+          "it": "Tempio",
+          "uk": "Храм"
         }
       },
       "Theater": {
         "label": {
           "de": "Theater",
-          "it": "Teatro"
+          "it": "Teatro",
+          "uk": "Театер"
         }
       },
       "Therme": {
         "label": {
           "de": "Therme",
-          "it": "Terme"
+          "it": "Terme",
+          "uk": "Термальні ванни"
         }
       },
       "Toranlage": {
         "label": {
-          "de": "Toranlage"
+          "de": "Toranlage",
+          "uk": "Оборонні ворота"
         }
       },
       "Turm": {
         "label": {
           "de": "Turm",
-          "it": "Torre"
+          "it": "Torre",
+          "uk": "Вежа"
         }
       },
       "Wohnbau": {
         "label": {
           "de": "Wohnbau",
-          "it": "Abitazione"
+          "it": "Abitazione",
+          "uk": "Житлова споруда"
         }
       }
     }
@@ -3734,49 +3972,57 @@
       "Aediculabau": {
         "label": {
           "de": "Aediculabau",
-          "it": "Edicola"
+          "it": "Edicola",
+          "uk": "Будівля едикули"
         }
       },
       "Atriumhaus": {
         "label": {
           "de": "Atriumhaus",
-          "it": "Atrio"
+          "it": "Atrio",
+          "uk": "Атріумна споруда"
         }
       },
       "Bogen": {
         "label": {
           "de": "Bogen",
-          "it": "Arco"
+          "it": "Arco",
+          "uk": "Арка"
         }
       },
       "Dipteros": {
         "label": {
           "de": "Dipteros",
-          "it": "Diptero"
+          "it": "Diptero",
+          "uk": "Диптерос"
         }
       },
       "Ehrenbogen": {
         "label": {
           "de": "Ehrenbogen",
-          "it": "Arco onorario"
+          "it": "Arco onorario",
+          "uk": "Арка пошани"
         }
       },
       "Ehrensäule": {
         "label": {
           "de": "Ehrensäule",
-          "it": "Colonna onoraria"
+          "it": "Colonna onoraria",
+          "uk": "Колона пошани"
         }
       },
       "Hoftempel": {
         "label": {
           "de": "Hoftempel",
-          "it": "Tempio con cortile"
+          "it": "Tempio con cortile",
+          "uk": "Придворний храм"
         }
       },
       "Palast": {
         "label": {
           "de": "Palast",
-          "it": "Palazzo"
+          "it": "Palazzo",
+          "uk": "Палац"
         }
       },
       "Palästra": {
@@ -3824,19 +4070,22 @@
       "Rundbau": {
         "label": {
           "de": "Rundbau",
-          "it": "Edificio circolare"
+          "it": "Edificio circolare",
+          "uk": "Кругла споруда"
         }
       },
       "Schatzhaus": {
         "label": {
           "de": "Schatzhaus",
-          "it": "Thesauros"
+          "it": "Thesauros",
+          "uk": "Будинок скарбниця"
         }
       },
       "Terassenheiligtum": {
         "label": {
           "de": "Terassenheiligtum",
-          "it": "Santuario a terrazza"
+          "it": "Santuario a terrazza",
+          "uk": "Терасне святилище"
         }
       },
       "Tholos": {
@@ -3848,13 +4097,15 @@
       "Torbogen": {
         "label": {
           "de": "Torbogen",
-          "it": "Arcale"
+          "it": "Arcale",
+          "uk": "В'їздна арка/ Арка воріт"
         }
       },
       "Triumphbogen": {
         "label": {
           "de": "Triumphbogen",
-          "it": "Arco trionfale"
+          "it": "Arco trionfale",
+          "uk": "Тріумфальна арка"
         }
       },
       "Tumulus": {
@@ -3872,37 +4123,43 @@
       "dreischiffig": {
         "label": {
           "de": "dreischiffig",
-          "it": "a tre navate"
+          "it": "a tre navate",
+          "uk": "Тринавовий"
         }
       },
       "fünfschiffig": {
         "label": {
           "de": "fünfschiffig",
-          "it": "a cinque navate"
+          "it": "a cinque navate",
+          "uk": "П'ятинавовий"
         }
       },
       "griechisches Theater": {
         "label": {
           "de": "griechisches Theater",
-          "it": "Teatro greco"
+          "it": "Teatro greco",
+          "uk": "Грецький театр"
         }
       },
       "römisches Theater": {
         "label": {
           "de": "römisches Theater",
-          "it": "Teatro romano"
+          "it": "Teatro romano",
+          "uk": "Римський театр"
         }
       },
       "vierschiffig": {
         "label": {
           "de": "vierschiffig",
-          "it": "a quattro navate"
+          "it": "a quattro navate",
+          "uk": "чотирьохнавовий"
         }
       },
       "zweischiffig": {
         "label": {
           "de": "zweischiffig",
-          "it": "a due navate"
+          "it": "a due navate",
+          "uk": "двонавовий"
         }
       }
     },
@@ -3946,120 +4203,140 @@
       "Blockverbandmauerwerk": {
         "label": {
           "de": "Blockverbandmauerwerk",
-          "it": "Muratura a blocchi"
+          "it": "Muratura a blocchi",
+          "uk": "Блокована кладка"
         }
       },
       "Bruchsteinmauerwerk": {
         "label": {
           "de": "Bruchsteinmauerwerk",
-          "it": "Muratura con conci di pietra"
+          "it": "Muratura con conci di pietra",
+          "uk": "Бутова кладка"
         }
       },
       "Feldsteinmauerwerk": {
         "label": {
           "de": "Feldsteinmauerwerk",
-          "it": "Muratura in pietrame"
+          "it": "Muratura in pietrame",
+          "uk": "Кам'яна кладка (напр. з річкового каменю)"
         }
       },
       "Kyklopenmauerwerk": {
         "label": {
           "de": "Kyklopenmauerwerk",
-          "it": "Muratura ciclopica"
+          "it": "Muratura ciclopica",
+          "uk": "Циклопічна кладка"
         }
       },
       "Lehmziegelmauerwerk": {
         "label": {
           "de": "Lehmziegelmauerwerk",
-          "it": "Muratura in mattoni crudi"
+          "it": "Muratura in mattoni crudi",
+          "uk": "Глиняна кладка"
         }
       },
       "Mischform Polygonal-/Quadermauerwerk": {
         "label": {
           "de": "Mischform Polygonal-/Quadermauerwerk",
-          "it": "Mista: opera poligonale/quadrata"
+          "it": "Mista: opera poligonale/quadrata",
+          "uk": "Змішана форма багатокутної/блокової кладки"
         }
       },
       "Opus Caementitium": {
         "label": {
           "de": "Opus Caementitium",
-          "it": "Opera cementizia"
+          "it": "Opera cementizia",
+          "uk": "Opus Caementitium (римський бетон)"
         }
       },
       "Polygonalmauerwerk": {
         "label": {
           "de": "Polygonalmauerwerk",
-          "it": "Opera poligonale"
+          "it": "Opera poligonale",
+          "uk": "Полігональна кладка"
         }
       },
       "Quadermauerwerk": {
         "label": {
           "de": "Quadermauerwerk",
-          "it": "Opera quadrata"
+          "it": "Opera quadrata",
+          "uk": "Кладка з тесаного каменю"
         }
       },
       "Spolienmauerwerk": {
         "label": {
           "de": "Spolienmauerwerk",
-          "it": "Muratura di spoglio"
+          "it": "Muratura di spoglio",
+          "uk": "Сполієва кладка (вторинного використання)"
         }
       },
       "Unregelmäßiges Polygonalmauerwerk": {
         "label": {
           "de": "Unregelmäßiges Polygonalmauerwerk",
-          "it": "Opera poligonale irregolare"
+          "it": "Opera poligonale irregolare",
+          "uk": "Нерегулярна полігональна кладка"
         }
       },
       "Würfel-/Handquadermauerwerk": {
         "label": {
-          "de": "Würfel-/Handquadermauerwerk"
+          "de": "Würfel-/Handquadermauerwerk",
+          "uk": "Кладка з куба/вручну обрізного каменю"
         }
       },
       "Ziegelmauerwerk": {
         "label": {
           "de": "Ziegelmauerwerk",
-          "it": "Opera laterizia"
+          "it": "Opera laterizia",
+          "uk": "Цегляна кладка"
         }
       },
       "irreguläres Mauerwerk": {
         "label": {
           "de": "irreguläres Mauerwerk",
-          "it": "Opera incerta"
+          "it": "Opera incerta",
+          "uk": "Нерегулярна кладка"
         }
       },
       "regelmäßiges Polygonalmauerwerk": {
         "label": {
           "de": "regelmäßiges Polygonalmauerwerk",
-          "it": "Opera poligonale regolare"
+          "it": "Opera poligonale regolare",
+          "uk": "Регулярна полігональна кладка"
         }
       },
       "regelmäßiges Quadermauerwerk": {
         "label": {
           "de": "regelmäßiges Quadermauerwerk",
-          "it": "Opera quadrata regolare"
+          "it": "Opera quadrata regolare",
+          "uk": "Звичайна кладка з обрізного каменю"
         }
       },
       "regelmäßiges Trapezoidalmauerwerk": {
         "label": {
           "de": "regelmäßiges Trapezoidalmauerwerk",
-          "it": "Opera trapezoidale regolare"
+          "it": "Opera trapezoidale regolare",
+          "uk": "Регулярна трапецеподібна кладка"
         }
       },
       "unregelmäßiges Quadermauerwerk": {
         "label": {
           "de": "unregelmäßiges Quadermauerwerk",
-          "it": "Opera quadrata irregolare"
+          "it": "Opera quadrata irregolare",
+          "uk": "Нерегулярна кладка з обрізного каменю"
         }
       },
       "unregelmäßiges Trapezoidalmauerwerk": {
         "label": {
           "de": "unregelmäßiges Trapezoidalmauerwerk",
-          "it": "Opera trapezoidale irregolare"
+          "it": "Opera trapezoidale irregolare",
+          "uk": "Нерегулярна трапецеподібна кладка"
         }
       },
       "unspezifisches Mauerwerk": {
         "label": {
           "de": "unspezifisches Mauerwerk",
-          "it": "Opera non specifica"
+          "it": "Opera non specifica",
+          "uk": "Неуточнена кладка"
         }
       }
     }
@@ -4072,25 +4349,29 @@
       "Befestigung": {
         "label": {
           "de": "Befestigung",
-          "it": "Fortificazione"
+          "it": "Fortificazione",
+          "uk": "Фортифікація"
         }
       },
       "Haus": {
         "label": {
           "de": "Haus",
-          "it": "Casa"
+          "it": "Casa",
+          "uk": "Будинок"
         }
       },
       "Lager": {
         "label": {
           "de": "Lager",
-          "it": "Magazzino"
+          "it": "Magazzino",
+          "uk": "Склад"
         }
       },
       "Werkstatt": {
         "label": {
           "de": "Werkstatt",
-          "it": "Officina"
+          "it": "Officina",
+          "uk": "Майстерня"
         }
       }
     }
@@ -4104,35 +4385,40 @@
         "label": {
           "de": "sehr gut",
           "it": "molto buono",
-          "en": "very good"
+          "en": "very good",
+          "uk": "дуже добрий"
         }
       },
       "gut": {
         "label": {
           "de": "gut",
           "it": "buono",
-          "en": "good"
+          "en": "good",
+          "uk": "добрий"
         }
       },
       "mittel": {
         "label": {
           "de": "mittel",
           "it": "medio",
-          "en": "medium"
+          "en": "medium",
+          "uk": "середній"
         }
       },
       "schlecht": {
         "label": {
           "de": "schlecht",
           "it": "cattivo",
-          "en": "bad"
+          "en": "bad",
+          "uk": "незадовільний"
         }
       },
       "sehr schlecht": {
         "label": {
           "de": "sehr schlecht",
           "it": "pessimo",
-          "en": "very bad"
+          "en": "very bad",
+          "uk": "дуже незадовільний"
         }
       }
     },
@@ -4153,21 +4439,24 @@
         "label": {
           "de": "Fragmentarisch",
           "it": "frammentario",
-          "en": "fragmentary"
+          "en": "fragmentary",
+          "uk": "Фрагментарний"
         }
       },
       "Vollständig": {
         "label": {
           "de": "Vollständig",
           "it": "intero",
-          "en": "complete"
+          "en": "complete",
+          "uk": "Повністю"
         }
       },
       "Vollständig zerstört": {
         "label": {
           "de": "Vollständig zerstört",
           "it": "completamente distrutto",
-          "en": "completely destroyed"
+          "en": "completely destroyed",
+          "uk": "Повністю зруйновано"
         }
       }
     },
@@ -4185,37 +4474,43 @@
       "Akropolis": {
         "label": {
           "de": "Akropolis",
-          "it": "Acropoli"
+          "it": "Acropoli",
+          "uk": "Акрополь"
         }
       },
       "Forum": {
         "label": {
           "de": "Forum",
-          "it": "Foro"
+          "it": "Foro",
+          "uk": "Форум"
         }
       },
       "Handwerksviertel": {
         "label": {
           "de": "Handwerksviertel",
-          "it": "Quartiere artigianale"
+          "it": "Quartiere artigianale",
+          "uk": "Ремісничий квартал"
         }
       },
       "Heiligtum": {
         "label": {
           "de": "Heiligtum",
-          "it": "Santuario"
+          "it": "Santuario",
+          "uk": "Святиня"
         }
       },
       "Nekropole": {
         "label": {
           "de": "Nekropole",
-          "it": "Necropoli"
+          "it": "Necropoli",
+          "uk": "Некрополь"
         }
       },
       "Wohnviertel": {
         "label": {
           "de": "Wohnviertel",
-          "it": "Quartiere abitativo"
+          "it": "Quartiere abitativo",
+          "uk": "Житловий квартал"
         }
       }
     }
@@ -4228,67 +4523,78 @@
       "Granit": {
         "label": {
           "de": "Granit",
-          "it": "Granito"
+          "it": "Granito",
+          "uk": "Граніт"
         }
       },
       "Kalk": {
         "label": {
           "de": "Kalk",
-          "it": "Calce"
+          "it": "Calce",
+          "uk": "Вапно"
         }
       },
       "Kalkmörtel": {
         "label": {
           "de": "Kalkmörtel",
-          "it": "Malta di calce"
+          "it": "Malta di calce",
+          "uk": "Вапняний розчин"
         }
       },
       "Kalkstein": {
         "label": {
           "de": "Kalkstein",
-          "it": "Pietra calcarea"
+          "it": "Pietra calcarea",
+          "uk": "Вапняк"
         }
       },
       "Kalzit": {
         "label": {
           "de": "Kalzit",
-          "it": "Calcite"
+          "it": "Calcite",
+          "uk": "Кальцит"
         }
       },
       "Kreide": {
         "label": {
           "de": "Kreide",
-          "it": "Gesso"
+          "it": "Gesso",
+          "uk": "Крейда"
         }
       },
       "Marmor": {
         "label": {
           "de": "Marmor",
-          "it": "Marmo"
+          "it": "Marmo",
+          "uk": "Мармур"
         }
       },
       "Pophyr": {
         "label": {
           "de": "Pophyr",
-          "it": "Porfido"
+          "it": "Porfido",
+          "uk": "Порфір"
         }
       },
       "Quarz": {
         "label": {
           "de": "Quarz",
-          "it": "Quarzo"
+          "it": "Quarzo",
+          "uk": "Кварц"
         }
       },
       "Sandstein": {
         "label": {
           "de": "Sandstein",
-          "it": "Arenaria"
+          "it": "Arenaria",
+          "uk": "Пісковик"
         }
       },
       "Ziegel": {
         "label": {
           "de": "Ziegel",
-          "it": "Laterizio"
+          "it": "Laterizio",
+          "uk": "Цегла"
         }
       }
     }
@@ -4301,19 +4607,22 @@
       "braun": {
         "label": {
           "de": "braun",
-          "it": "Marrone"
+          "it": "Marrone",
+          "uk": "коричневий"
         }
       },
       "haselnuss": {
         "label": {
           "de": "haselnuss",
-          "it": "Nocciola"
+          "it": "Nocciola",
+          "uk": "Лісового горіха"
         }
       },
       "schwarz": {
         "label": {
           "de": "schwarz",
-          "it": "Nero"
+          "it": "Nero",
+          "uk": "Чорний"
         }
       }
     }
@@ -4326,115 +4635,134 @@
       "Architektur": {
         "label": {
           "de": "Architektur",
-          "it": "Architettura"
+          "it": "Architettura",
+          "uk": "Архітектура"
         }
       },
       "Altar": {
         "label": {
           "de": "Altar",
-          "it": "Altare"
+          "it": "Altare",
+          "uk": "Вівтар"
         }
       },
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Ваза/посудина"
         }
       },
       "Gerät": {
         "label": {
           "de": "Gerät",
-          "it": "Strumento"
+          "it": "Strumento",
+          "uk": "Прилад"
         }
       },
       "Grabbehältnis": {
         "label": {
           "de": "Grabbehältnis",
-          "it": "Contenitore per tomba"
+          "it": "Contenitore per tomba",
+          "uk": "Ємкість для могили"
         }
       },
       "Grabmarkierung": {
         "label": {
           "de": "Grabmarkierung",
-          "it": "Segnacolo funerario"
+          "it": "Segnacolo funerario",
+          "uk": "Могильна позначка"
         }
       },
       "Grabplatte": {
         "label": {
           "de": "Grabplatte",
-          "it": "Lapide"
+          "it": "Lapide",
+          "uk": "Надгробок/плита"
         }
       },
       "Gussform": {
         "label": {
           "de": "Gussform",
-          "it": "Matrice"
+          "it": "Matrice",
+          "uk": "Лита форма"
         }
       },
       "Kasten/Kiste": {
         "label": {
           "de": "Kasten/Kiste",
-          "it": "Scatola/cassa"
+          "it": "Scatola/cassa",
+          "uk": "Ящик/коробка"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cucchiaio"
+          "it": "Cucchiaio",
+          "uk": "Ложка"
         }
       },
       "Mobiliar": {
         "label": {
           "de": "Mobiliar",
-          "it": "Mobilio"
+          "it": "Mobilio",
+          "uk": "Меблі"
         }
       },
       "Plastik/Skulptur": {
         "label": {
           "de": "Plastik/Skulptur",
-          "it": "Plastica/scultura"
+          "it": "Plastica/scultura",
+          "uk": "Пластика/скульптура"
         }
       },
       "Produktionsrest": {
         "label": {
           "de": "Produktionsrest",
-          "it": "Residui di produzione"
+          "it": "Residui di produzione",
+          "uk": "Залишок від виробництва "
         }
       },
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень/Кільце"
         }
       },
       "Sarkophag": {
         "label": {
           "de": "Sarkophag",
-          "it": "Sarcofago"
+          "it": "Sarcofago",
+          "uk": "Саркофаг"
         }
       },
       "Schmuck": {
         "label": {
           "de": "Schmuck",
-          "it": "Gioiello"
+          "it": "Gioiello",
+          "uk": "Саркофаг"
         }
       },
       "Spielzeug": {
         "label": {
           "de": "Spielzeug",
-          "it": "Giocattolo"
+          "it": "Giocattolo",
+          "uk": "Іграшка"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       }
     }
@@ -4447,127 +4775,148 @@
       "Ahorn": {
         "label": {
           "de": "Ahorn",
-          "it": "Acero"
+          "it": "Acero",
+          "uk": "Клен"
         }
       },
       "Apfel": {
         "label": {
           "de": "Apfel",
-          "it": "Melo"
+          "it": "Melo",
+          "uk": "Яблуня"
         }
       },
       "Birke": {
         "label": {
           "de": "Birke",
-          "it": "Betulla"
+          "it": "Betulla",
+          "uk": "Береза"
         }
       },
       "Birne": {
         "label": {
           "de": "Birne",
-          "it": "Pero"
+          "it": "Pero",
+          "uk": "Груша"
         }
       },
       "Buche": {
         "label": {
           "de": "Buche",
-          "it": "Faggio"
+          "it": "Faggio",
+          "uk": "Бук"
         }
       },
       "Eibe": {
         "label": {
           "de": "Eibe",
-          "it": "Tasso"
+          "it": "Tasso",
+          "uk": "Тиса"
         }
       },
       "Eiche": {
         "label": {
           "de": "Eiche",
-          "it": "Rovere"
+          "it": "Rovere",
+          "uk": "Дуб"
         }
       },
       "Erle": {
         "label": {
           "de": "Erle",
-          "it": "Alno"
+          "it": "Alno",
+          "uk": "Вільха"
         }
       },
       "Esche": {
         "label": {
           "de": "Esche",
-          "it": "Frassino"
+          "it": "Frassino",
+          "uk": "Ясен"
         }
       },
       "Fichte": {
         "label": {
           "de": "Fichte",
-          "it": "Abete"
+          "it": "Abete",
+          "uk": "Ялина"
         }
       },
       "Kastanie": {
         "label": {
           "de": "Kastanie",
-          "it": "Castagno"
+          "it": "Castagno",
+          "uk": "Каштан"
         }
       },
       "Kiefer": {
         "label": {
           "de": "Kiefer",
-          "it": "Pino"
+          "it": "Pino",
+          "uk": "Сосна"
         }
       },
       "Kirsche": {
         "label": {
           "de": "Kirsche",
-          "it": "Ciliegio"
+          "it": "Ciliegio",
+          "uk": "Вишня"
         }
       },
       "Lerche": {
         "label": {
           "de": "Lerche",
-          "it": "Allodola"
+          "it": "Allodola",
+          "uk": "Модрина"
         }
       },
       "Linde": {
         "label": {
           "de": "Linde",
-          "it": "Tiglio"
+          "it": "Tiglio",
+          "uk": "Липа"
         }
       },
       "Nußbaum": {
         "label": {
           "de": "Nußbaum",
-          "it": "Noce"
+          "it": "Noce",
+          "uk": "Горіх"
         }
       },
       "Pappel": {
         "label": {
           "de": "Pappel",
-          "it": "Pioppo"
+          "it": "Pioppo",
+          "uk": "Тополя"
         }
       },
       "Tanne": {
         "label": {
           "de": "Tanne",
-          "it": "Abete"
+          "it": "Abete",
+          "uk": "Ялиця"
         }
       },
       "Ulme": {
         "label": {
           "de": "Ulme",
-          "it": "Olmo"
+          "it": "Olmo",
+          "uk": "В'яз"
         }
       },
       "Weide": {
         "label": {
           "de": "Weide",
-          "it": "Salice"
+          "it": "Salice",
+          "uk": "Верба"
         }
       },
       "Zeder": {
         "label": {
           "de": "Zeder",
-          "it": "Cedro"
+          "it": "Cedro",
+          "uk": "Кедр"
         }
       }
     }
@@ -4580,61 +4929,71 @@
       "Gebohrt": {
         "label": {
           "de": "Gebohrt",
-          "it": "Forato"
+          "it": "Forato",
+          "uk": "Висверлено"
         }
       },
       "Gedämpft": {
         "label": {
           "de": "Gedämpft",
-          "it": "Vaporizzato"
+          "it": "Vaporizzato",
+          "uk": "Випаровано"
         }
       },
       "Gedreht": {
         "label": {
           "de": "Gedreht",
-          "it": "Tornito"
+          "it": "Tornito",
+          "uk": "Викручено"
         }
       },
       "Gefräst": {
         "label": {
           "de": "Gefräst",
-          "it": "Fresato"
+          "it": "Fresato",
+          "uk": "Фрезерований"
         }
       },
       "Gehobelt": {
         "label": {
           "de": "Gehobelt",
-          "it": "Piallato"
+          "it": "Piallato",
+          "uk": "Струганий"
         }
       },
       "Gesägt": {
         "label": {
           "de": "Gesägt",
-          "it": "Segato"
+          "it": "Segato",
+          "uk": "Розпиляний"
         }
       },
       "Geschabt": {
         "label": {
           "de": "Geschabt",
-          "it": "Rasato"
+          "it": "Rasato",
+          "uk": "Зіскоблений"
         }
       },
       "Geschliffen": {
         "label": {
           "de": "Geschliffen",
-          "it": "Levigato"
+          "it": "Levigato",
+          "uk": "Полірований"
         }
       },
       "Geschnitzt": {
         "label": {
           "de": "Geschnitzt",
-          "it": "Intagliato"
+          "it": "Intagliato",
+          "uk": "Різблений"
         }
       },
       "Gespalten": {
         "label": {
           "de": "Gespalten",
-          "it": "Spaccato"
+          "it": "Spaccato",
+          "uk": "Розколений"
         }
       }
     }
@@ -4647,19 +5006,22 @@
       "Brandspuren": {
         "label": {
           "de": "Brandspuren",
-          "it": "Tracce di bruciato"
+          "it": "Tracce di bruciato",
+          "uk": "Сліди обгорання"
         }
       },
       "Keine Brandspuren": {
         "label": {
           "de": "Keine Brandspuren",
-          "it": "Nessuna traccia di bruciato"
+          "it": "Nessuna traccia di bruciato",
+          "uk": "Жодних слідів обгорання"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "Incerto o indeterminabile"
+          "it": "Incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       }
     }
@@ -4672,55 +5034,64 @@
       "Applik": {
         "label": {
           "de": "Applik",
-          "it": "Applique"
+          "it": "Applique",
+          "uk": "Аплікація"
         }
       },
       "Bemalung (Enkaustik)": {
         "label": {
           "de": "Bemalung (Enkaustik)",
-          "it": "Pittura (encausto)"
+          "it": "Pittura (encausto)",
+          "uk": "Живопис (енкаустика)"
         }
       },
       "Bemalung (Eitemperatechnik)": {
         "label": {
           "de": "Bemalung (Eitemperatechnik)",
-          "it": "Pittura (tempera all'uovo)"
+          "it": "Pittura (tempera all'uovo)",
+          "uk": "Розпис (техніка яєчна темпера)"
         }
       },
       "Intarsie": {
         "label": {
           "de": "Intarsie",
-          "it": "Intarsio"
+          "it": "Intarsio",
+          "uk": "Інтарзія"
         }
       },
       "Relief": {
         "label": {
           "de": "Relief",
-          "it": "Rilievo"
+          "it": "Rilievo",
+          "uk": "Рельєф"
         }
       },
       "Ritzung": {
         "label": {
           "de": "Ritzung",
-          "it": "Incisione"
+          "it": "Incisione",
+          "uk": "Скребок"
         }
       },
       "Schnitzung": {
         "label": {
           "de": "Schnitzung",
-          "it": "Intaglio"
+          "it": "Intaglio",
+          "uk": "Різблення"
         }
       },
       "Sgraffito": {
         "label": {
           "de": "Sgraffito",
-          "it": "Sgraffito"
+          "it": "Sgraffito",
+          "uk": "Сграфіто"
         }
       },
       "Vergoldung/metallischer Überzug": {
         "label": {
           "de": "Vergoldung/metallischer Überzug",
-          "it": "Doratura/ingobbio metallico"
+          "it": "Doratura/ingobbio metallico",
+          "uk": "Позолота/металізація"
         }
       }
     }
@@ -4733,37 +5104,43 @@
       "gut erhalten": {
         "label": {
           "de": "gut erhalten",
-          "it": "ben conservato"
+          "it": "ben conservato",
+          "uk": "добре збереглося"
         }
       },
       "abblätternd": {
         "label": {
           "de": "abblätternd",
-          "it": "sfaldato"
+          "it": "sfaldato",
+          "uk": "Лущення"
         }
       },
       "verrieben": {
         "label": {
           "de": "verrieben",
-          "it": "sfregato"
+          "it": "sfregato",
+          "uk": "зтертий"
         }
       },
       "verwaschen": {
         "label": {
           "de": "verwaschen",
-          "it": "slavato"
+          "it": "slavato",
+          "uk": "Розмито"
         }
       },
       "stark abgerieben": {
         "label": {
           "de": "stark abgerieben",
-          "it": "molto logorato"
+          "it": "molto logorato",
+          "uk": "сильно затерто"
         }
       },
       "nicht erhalten": {
         "label": {
           "de": "nicht erhalten",
-          "it": "non conservato"
+          "it": "non conservato",
+          "uk": "не збережено"
         }
       }
     }
@@ -4776,25 +5153,29 @@
       "Bruchsteine": {
         "label": {
           "de": "Bruchsteine",
-          "it": "Conci"
+          "it": "Conci",
+          "uk": "Бутове каміння"
         }
       },
       "Hausteine": {
         "label": {
           "de": "Hausteine",
-          "it": "Pietre battute"
+          "it": "Pietre battute",
+          "uk": "Тесаний камень"
         }
       },
       "Lesesteine": {
         "label": {
           "de": "Lesesteine",
-          "it": "Scapoli"
+          "it": "Scapoli",
+          "uk": "Зібране каміння/Холостяки"
         }
       },
       "Werksteine": {
         "label": {
           "de": "Werksteine",
-          "it": "Pietre da taglio"
+          "it": "Pietre da taglio",
+          "uk": "Оброблені камені"
         }
       }
     }
@@ -4813,19 +5194,22 @@
       "bruchbau": {
         "label": {
           "de": "bruchbau",
-          "it": "crepato"
+          "it": "crepato",
+          "uk": "кар'єр"
         }
       },
       "fein geglättet": {
         "label": {
           "de": "fein geglättet",
-          "it": "finemente levigato"
+          "it": "finemente levigato",
+          "uk": "дрібно згладжений"
         }
       },
       "gespitzt": {
         "label": {
           "de": "gespitzt",
-          "it": "appuntito"
+          "it": "appuntito",
+          "uk": "загостреним інструментом оброблено"
         }
       },
       "gestockt": {
@@ -4837,25 +5221,29 @@
       "grob behauen": {
         "label": {
           "de": "grob behauen",
-          "it": "sgrossato"
+          "it": "sgrossato",
+          "uk": "грубо обтесаний"
         }
       },
       "grob geglättet": {
         "label": {
           "de": "grob geglättet",
-          "it": "grossolanamente lisciato"
+          "it": "grossolanamente lisciato",
+          "uk": "грубо згладжений"
         }
       },
       "scharriert": {
         "label": {
           "de": "scharriert",
-          "it": "bocciardato"
+          "it": "bocciardato",
+          "uk": "рифлений"
         }
       },
       "unbehauen": {
         "label": {
           "de": "unbehauen",
-          "it": "grezzo"
+          "it": "grezzo",
+          "uk": "необтесаний"
         }
       }
     }
@@ -4868,43 +5256,50 @@
       "Binderverband": {
         "label": {
           "de": "Binderverband",
-          "it": "tessitura di testa"
+          "it": "tessitura di testa",
+          "uk": "Тичкова перевязка"
         }
       },
       "Blockverband": {
         "label": {
           "de": "Blockverband",
-          "it": "tessitura a blocco"
+          "it": "tessitura a blocco",
+          "uk": "Ланцюгова перевязка"
         }
       },
       "Flämischer Verband": {
         "label": {
           "de": "Flämischer Verband",
-          "it": "tessitura fiamminga"
+          "it": "tessitura fiamminga",
+          "uk": "Фламандська перевязка"
         }
       },
       "Holländischer Verband": {
         "label": {
           "de": "Holländischer Verband",
-          "it": "tessitura olandese"
+          "it": "tessitura olandese",
+          "uk": "Голандська перевязка"
         }
       },
       "Kreuzverband": {
         "label": {
           "de": "Kreuzverband",
-          "it": "tessitura a croce"
+          "it": "tessitura a croce",
+          "uk": "Хрестова перевязка"
         }
       },
       "Läuferverband": {
         "label": {
           "de": "Läuferverband",
-          "it": "tessitura a cortina"
+          "it": "tessitura a cortina",
+          "uk": "Ложкова перевязка"
         }
       },
       "Märkischer Verband": {
         "label": {
           "de": "Märkischer Verband",
-          "it": "tessitura marca"
+          "it": "tessitura marca",
+          "uk": "Меркішерська перевязка"
         }
       }
     }
@@ -4917,49 +5312,57 @@
       "Fundament: Geschüttet": {
         "label": {
           "de": "Fundament: Geschüttet",
-          "it": "Fondamenta: gettate"
+          "it": "Fondamenta: gettate",
+          "uk": "Фундамент: насипний/наливний"
         }
       },
       "Fundament: gesetzt": {
         "label": {
           "de": "Fundament: gesetzt",
-          "it": "Fondamenta: poste"
+          "it": "Fondamenta: poste",
+          "uk": "Фундамент: вставками"
         }
       },
       "Mauerkern: Lesesteine": {
         "label": {
           "de": "Mauerkern: Lesesteine",
-          "it": "Nucleo del muro: pietre raccolte"
+          "it": "Nucleo del muro: pietre raccolte",
+          "uk": "Ядро стіни: зібране каміння"
         }
       },
       "einschalig vor Feld/Hang": {
         "label": {
           "de": "einschalig vor Feld/Hang",
-          "it": "con paramento davanti il campo/pendio"
+          "it": "con paramento davanti il campo/pendio",
+          "uk": "одношаровий перед полем/схилом"
         }
       },
       "ohne Schalen/keine durchgehenden Lagen": {
         "label": {
           "de": "ohne Schalen/keine durchgehenden Lagen",
-          "it": "senza paramento/senza filari continui"
+          "it": "senza paramento/senza filari continui",
+          "uk": "без оболонок/без суцільних шарів"
         }
       },
       "ohne Schalen/nur durchgehende Lagen": {
         "label": {
           "de": "ohne Schalen/nur durchgehende Lagen",
-          "it": "senza paramento/solo filari continui"
+          "it": "senza paramento/solo filari continui",
+          "uk": "без оболонок/лише суцільні шари"
         }
       },
       "zweischalig": {
         "label": {
           "de": "zweischalig",
-          "it": "a due paramenti"
+          "it": "a due paramenti",
+          "uk": "двошаровий"
         }
       },
       "zweischalig mit Binderlagen": {
         "label": {
           "de": "zweischalig mit Binderlagen",
-          "it": "a due paramenti con blocchi di testa "
+          "it": "a due paramenti con blocchi di testa ",
+          "uk": "двошаровий з перевязкою"
         }
       }
     }
@@ -4989,25 +5392,29 @@
       "dominant": {
         "label": {
           "de": "dominant",
-          "it": "dominante"
+          "it": "dominante",
+          "uk": "домінуючий"
         }
       },
       "gering": {
         "label": {
           "de": "gering",
-          "it": "esiguo"
+          "it": "esiguo",
+          "uk": "мала ймовірність/кількість"
         }
       },
       "hoch": {
         "label": {
           "de": "hoch",
-          "it": "elevato"
+          "it": "elevato",
+          "uk": "велика/висока"
         }
       },
       "mittel": {
         "label": {
           "de": "mittel",
-          "it": "medio"
+          "it": "medio",
+          "uk": "середня"
         }
       }
     }
@@ -5020,49 +5427,57 @@
       "brüchig": {
         "label": {
           "de": "brüchig",
-          "it": "friabile"
+          "it": "friabile",
+          "uk": "крихкий"
         }
       },
       "erdig/lehmig": {
         "label": {
           "de": "erdig/lehmig",
-          "it": "terrosa/argillosa"
+          "it": "terrosa/argillosa",
+          "uk": "земляний/суглинистий"
         }
       },
       "fest": {
         "label": {
           "de": "fest",
-          "it": "coesa"
+          "it": "coesa",
+          "uk": "міцний"
         }
       },
       "hart": {
         "label": {
           "de": "hart",
-          "it": "dura"
+          "it": "dura",
+          "uk": "твердий"
         }
       },
       "locker": {
         "label": {
           "de": "locker",
-          "it": "sciolta"
+          "it": "sciolta",
+          "uk": "розхитаний/розслаблений"
         }
       },
       "mittelfein": {
         "label": {
           "de": "mittelfein",
-          "it": "medio-fine"
+          "it": "medio-fine",
+          "uk": "середньї дрібності"
         }
       },
       "pulverig": {
         "label": {
           "de": "pulverig",
-          "it": "polverosa"
+          "it": "polverosa",
+          "uk": "порошкоподібний"
         }
       },
       "sandig": {
         "label": {
           "de": "sandig",
-          "it": "sabbiosa"
+          "it": "sabbiosa",
+          "uk": "піщаний/піскоподібний"
         }
       }
     }
@@ -5075,55 +5490,64 @@
       "Aufgehendes": {
         "label": {
           "de": "Aufgehendes",
-          "it": "Emergente"
+          "it": "Emergente",
+          "uk": "Поверхневе"
         }
       },
       "Fensterzusetzung": {
         "label": {
           "de": "Fensterzusetzung",
-          "it": "Inserimento finestra"
+          "it": "Inserimento finestra",
+          "uk": "Замуроване вікно"
         }
       },
       "Flickung": {
         "label": {
           "de": "Flickung",
-          "it": "Riparazione"
+          "it": "Riparazione",
+          "uk": "Залатане"
         }
       },
       "Fundament": {
         "label": {
           "de": "Fundament",
-          "it": "Fondazione"
+          "it": "Fondazione",
+          "uk": "Фундамент/основа"
         }
       },
       "Gewölbe": {
         "label": {
           "de": "Gewölbe",
-          "it": "Volta"
+          "it": "Volta",
+          "uk": "Склепіння"
         }
       },
       "Mauer": {
         "label": {
           "de": "Mauer",
-          "it": "Muro"
+          "it": "Muro",
+          "uk": "Стіна"
         }
       },
       "Mauerbettung": {
         "label": {
           "de": "Mauerbettung",
-          "it": "Massicciata del muro"
+          "it": "Massicciata del muro",
+          "uk": "Вбудовування стіни"
         }
       },
       "Mauerdurchbruch": {
         "label": {
           "de": "Mauerdurchbruch",
-          "it": "Breccia del muro"
+          "it": "Breccia del muro",
+          "uk": "Пролом стіни"
         }
       },
       "Mosaik": {
         "label": {
           "de": "Mosaik",
-          "it": "Mosaico"
+          "it": "Mosaico",
+          "uk": "Мозаїка"
         }
       },
       "Opus sectile": {
@@ -5135,13 +5559,15 @@
       "Türzusetzung": {
         "label": {
           "de": "Türzusetzung",
-          "it": "Inserimento porta"
+          "it": "Inserimento porta",
+          "uk": "Просідання дверей"
         }
       },
       "Wandgestaltung": {
         "label": {
           "de": "Wandgestaltung",
-          "it": "Conformazione parete"
+          "it": "Conformazione parete",
+          "uk": "Дизайн/декорування стін"
         }
       }
     }
@@ -5154,49 +5580,57 @@
       "Außenmauer": {
         "label": {
           "de": "Außenmauer",
-          "it": "Muro perimetrale"
+          "it": "Muro perimetrale",
+          "uk": "Зовнішня стіна"
         }
       },
       "Befestigugsmauer": {
         "label": {
           "de": "Befestigugsmauer",
-          "it": "Mura urbiche"
+          "it": "Mura urbiche",
+          "uk": "Фортифікаційна стіна"
         }
       },
       "Blockmauerwerk": {
         "label": {
           "de": "Blockmauerwerk",
-          "it": "Muratura a blocchi"
+          "it": "Muratura a blocchi",
+          "uk": "Блокова кладка"
         }
       },
       "Bruchsteinmauer": {
         "label": {
           "de": "Bruchsteinmauer",
-          "it": "Muro a conci"
+          "it": "Muro a conci",
+          "uk": "Стіна з бутового каменю"
         }
       },
       "Fachwerk": {
         "label": {
           "de": "Fachwerk",
-          "it": "Costruzione a traliccio"
+          "it": "Costruzione a traliccio",
+          "uk": "Фахверк"
         }
       },
       "Feldsteinmauer": {
         "label": {
           "de": "Feldsteinmauer",
-          "it": "Muro in pietrame"
+          "it": "Muro in pietrame",
+          "uk": "Стіна з річкового/польвого каменю"
         }
       },
       "Grenzmauer": {
         "label": {
           "de": "Grenzmauer",
-          "it": "Muro di confine"
+          "it": "Muro di confine",
+          "uk": "Стіна огордження"
         }
       },
       "Ziegelmauer": {
         "label": {
           "de": "Ziegelmauer",
-          "it": "Muro di mattoni"
+          "it": "Muro di mattoni",
+          "uk": "Цегляна стіна"
         }
       }
     }
@@ -5215,73 +5649,85 @@
       "Felsabarbeitung": {
         "label": {
           "de": "Felsabarbeitung",
-          "it": "Lavorazione della roccia"
+          "it": "Lavorazione della roccia",
+          "uk": "Обробка скальної породи"
         }
       },
       "Funderfassung": {
         "label": {
           "de": "Funderfassung",
-          "it": "Registrazione dei reperti"
+          "it": "Registrazione dei reperti",
+          "uk": "Документація знахідки"
         }
       },
       "Fundsammlung": {
         "label": {
           "de": "Fundsammlung",
-          "it": "Raccolta dei reperti"
+          "it": "Raccolta dei reperti",
+          "uk": "Колекція знахідок"
         }
       },
       "Grab": {
         "label": {
           "de": "Grab",
-          "it": "Tomba"
+          "it": "Tomba",
+          "uk": "Гробниця"
         }
       },
       "Nekropole": {
         "label": {
           "de": "Nekropole",
-          "it": "Necropoli"
+          "it": "Necropoli",
+          "uk": "Некрополь"
         }
       },
       "Spolie in rezenter Mauer": {
         "label": {
           "de": "Spolie in rezenter Mauer",
-          "it": "Spoglie nel muro recente"
+          "it": "Spoglie nel muro recente",
+          "uk": "Сполія в недавній стіні"
         }
       },
       "Steinbruch": {
         "label": {
           "de": "Steinbruch",
-          "it": "Cava di pietra"
+          "it": "Cava di pietra",
+          "uk": "Камяноломня"
         }
       },
       "Straße/Platz": {
         "label": {
           "de": "Straße/Platz",
-          "it": "Strada/piazza"
+          "it": "Strada/piazza",
+          "uk": "Вулиця площа"
         }
       },
       "Wein- bzw. Ölpresse": {
         "label": {
           "de": "Wein- bzw. Ölpresse",
-          "it": "Torchio per vino o olio"
+          "it": "Torchio per vino o olio",
+          "uk": "Винний або олійний прес"
         }
       },
       "einzelnes Steindenkmal": {
         "label": {
           "de": "einzelnes Steindenkmal",
-          "it": "Monumento in pietra singolo"
+          "it": "Monumento in pietra singolo",
+          "uk": "Єдиний кам'яний пам'ятник"
         }
       },
       "ländliches Gebäude": {
         "label": {
           "de": "ländliches Gebäude",
-          "it": "Edificio rurale"
+          "it": "Edificio rurale",
+          "uk": "Сільська споруда"
         }
       },
       "urbanes Gebäude": {
         "label": {
           "de": "urbanes Gebäude",
-          "it": "Edificio urbano"
+          "it": "Edificio urbano",
+          "uk": "Міська споруда"
         }
       }
     }
@@ -5294,13 +5740,15 @@
       "Bestattungsplatz": {
         "label": {
           "de": "Bestattungsplatz",
-          "it": "Luogo di sepoltura"
+          "it": "Luogo di sepoltura",
+          "uk": "Місце поховання"
         }
       },
       "Siedlung": {
         "label": {
           "de": "Siedlung",
-          "it": "Insediamento"
+          "it": "Insediamento",
+          "uk": "Поселення"
         }
       }
     }
@@ -5435,31 +5883,36 @@
       "Durch Brand versiegelt": {
         "label": {
           "de": "Durch Brand versiegelt",
-          "it": "sigillato dal fuoco"
+          "it": "sigillato dal fuoco",
+          "uk": "Запечатаний вогнем"
         }
       },
       "Oberfläche abgewaschen": {
         "label": {
           "de": "Oberfläche abgewaschen",
-          "it": "superficie slavata"
+          "it": "superficie slavata",
+          "uk": "Поверхня розмита"
         }
       },
       "Oberfläche verhärtet": {
         "label": {
           "de": "Oberfläche verhärtet",
-          "it": "superficie indurita"
+          "it": "superficie indurita",
+          "uk": "Поверхня загартована"
         }
       },
       "fest": {
         "label": {
           "de": "fest",
-          "it": "solido"
+          "it": "solido",
+          "uk": "міцне"
         }
       },
       "flüssig": {
         "label": {
           "de": "flüssig",
-          "it": "liquido"
+          "it": "liquido",
+          "uk": "рідке"
         }
       },
       "gut formbar": {
@@ -5471,109 +5924,127 @@
       "hart": {
         "label": {
           "de": "hart",
-          "it": "duro"
+          "it": "duro",
+          "uk": "тверде"
         }
       },
       "lehmig": {
         "label": {
           "de": "lehmig",
-          "it": "argilloso"
+          "it": "argilloso",
+          "uk": "глиняне"
         }
       },
       "locker": {
         "label": {
           "de": "locker",
-          "it": "sciolto"
+          "it": "sciolto",
+          "uk": "вільне"
         }
       },
       "mittel bindend": {
         "label": {
           "de": "mittel bindend",
-          "it": "mediamente compatto"
+          "it": "mediamente compatto",
+          "uk": "зередньо зв'язуючий"
         }
       },
       "mittel formbar": {
         "label": {
           "de": "mittel formbar",
-          "it": "mediamente malleabile"
+          "it": "mediamente malleabile",
+          "uk": "середньо формується"
         }
       },
       "nicht bindend": {
         "label": {
           "de": "nicht bindend",
-          "it": "non compatto"
+          "it": "non compatto",
+          "uk": "не зв'язуючи"
         }
       },
       "nicht formbar": {
         "label": {
           "de": "nicht formbar",
-          "it": "non malleabile"
+          "it": "non malleabile",
+          "uk": "не формується"
         }
       },
       "porös": {
         "label": {
           "de": "porös",
-          "it": "poroso"
+          "it": "poroso",
+          "uk": "пористий"
         }
       },
       "sandig": {
         "label": {
           "de": "sandig",
-          "it": "sabbioso"
+          "it": "sabbioso",
+          "uk": "пісочний"
         }
       },
       "schwach bindend": {
         "label": {
           "de": "schwach bindend",
-          "it": "poco compatto"
+          "it": "poco compatto",
+          "uk": "слабо зв'язуючий"
         }
       },
       "schwach formbar": {
         "label": {
           "de": "schwach formbar",
-          "it": "poco malleabile"
+          "it": "poco malleabile",
+          "uk": "слабо формується"
         }
       },
       "sehr gut formbar": {
         "label": {
           "de": "sehr gut formbar",
-          "it": "ottima malleabilità"
+          "it": "ottima malleabilità",
+          "uk": "добре формується"
         }
       },
       "sehr hart": {
         "label": {
           "de": "sehr hart",
-          "it": "molto duro"
+          "it": "molto duro",
+          "uk": "дуже тверде"
         }
       },
       "sehr schwach formbar": {
         "label": {
           "de": "sehr schwach formbar",
-          "it": "molto poco malleabile"
+          "it": "molto poco malleabile",
+          "uk": "дуже слабо формується"
         }
       },
       "sehr weich": {
         "label": {
           "de": "sehr weich",
-          "it": "molto morbido"
+          "it": "molto morbido",
+          "uk": "дуже м'ягке"
         }
       },
       "stark bindend": {
         "label": {
           "de": "stark bindend",
-          "it": "estremamente compatto"
+          "it": "estremamente compatto",
+          "uk": "сильно зв'язуючи"
         }
       },
       "steif": {
         "label": {
           "de": "steif",
-          "it": "rigido"
+          "it": "rigido",
+          "uk": "пругий"
         }
       },
       "weich": {
         "label": {
           "de": "weich",
-          "it": "morbido"
+          "it": "morbido",
+          "uk": "м'ягкий"
         }
       }
     }
@@ -5586,31 +6057,36 @@
       "Farbe": {
         "label": {
           "de": "Farbe",
-          "it": "Colore"
+          "it": "Colore",
+          "uk": "Колір"
         }
       },
       "Form": {
         "label": {
           "de": "Form",
-          "it": "Forma"
+          "it": "Forma",
+          "uk": "Форма"
         }
       },
       "Grenzen": {
         "label": {
           "de": "Grenzen",
-          "it": "Limiti"
+          "it": "Limiti",
+          "uk": "Межі/Границі"
         }
       },
       "Konsistenz": {
         "label": {
           "de": "Konsistenz",
-          "it": "Consistenza"
+          "it": "Consistenza",
+          "uk": "Консистенція"
         }
       },
       "Komposition": {
         "label": {
           "de": "Komposition",
-          "it": "Composizione"
+          "it": "Composizione",
+          "uk": "Композиція"
         }
       }
     }
@@ -5623,25 +6099,29 @@
       "Brandschicht": {
         "label": {
           "de": "Brandschicht",
-          "it": "Strato di incendio"
+          "it": "Strato di incendio",
+          "uk": "Згорілий шар"
         }
       },
       "Kulturschicht": {
         "label": {
           "de": "Kulturschicht",
-          "it": "Strato di insediamento"
+          "it": "Strato di insediamento",
+          "uk": "Культурний шар"
         }
       },
       "Laufhorizont": {
         "label": {
           "de": "Laufhorizont",
-          "it": "Piano di calpestio"
+          "it": "Piano di calpestio",
+          "uk": "Рівень стежки/підлоги"
         }
       },
       "Planierschicht": {
         "label": {
           "de": "Planierschicht",
-          "it": "Strato di livellamento"
+          "it": "Strato di livellamento",
+          "uk": "Вирівнюючий шар"
         }
       }
     }
@@ -5654,127 +6134,148 @@
       "Feinsand": {
         "label": {
           "de": "Feinsand",
-          "it": "Sabbia fine"
+          "it": "Sabbia fine",
+          "uk": "Дрібний пісок"
         }
       },
       "Feinstsand": {
         "label": {
           "de": "Feinstsand",
-          "it": "Sabbia finissima"
+          "it": "Sabbia finissima",
+          "uk": "Дрібнісінький пісок"
         }
       },
       "Grobsand": {
         "label": {
           "de": "Grobsand",
-          "it": "Sabbia grossolana"
+          "it": "Sabbia grossolana",
+          "uk": "Грубший пісок"
         }
       },
       "Lehm": {
         "label": {
           "de": "Lehm",
-          "it": "Argilla"
+          "it": "Argilla",
+          "uk": "Глина"
         }
       },
       "Lehmiger Sand": {
         "label": {
           "de": "Lehmiger Sand",
-          "it": "Sabbia argillosa"
+          "it": "Sabbia argillosa",
+          "uk": "Суглинистий пісок "
         }
       },
       "Lehmiger Schluff": {
         "label": {
           "de": "Lehmiger Schluff",
-          "it": "Limo argilloso"
+          "it": "Limo argilloso",
+          "uk": "Суглинистий мул"
         }
       },
       "Lehmiger Ton": {
         "label": {
           "de": "Lehmiger Ton",
-          "it": "Argilla argillosa"
+          "it": "Argilla argillosa",
+          "uk": "Глина суглиниста"
         }
       },
       "Mergel": {
         "label": {
           "de": "Mergel",
-          "it": "Marna"
+          "it": "Marna",
+          "uk": "Мергель"
         }
       },
       "Mittlerer Sand": {
         "label": {
           "de": "Mittlerer Sand",
-          "it": "Sabbia media"
+          "it": "Sabbia media",
+          "uk": "Cередній пісок"
         }
       },
       "Sand": {
         "label": {
           "de": "Sand",
-          "it": "Sabbia"
+          "it": "Sabbia",
+          "uk": "Пісок"
         }
       },
       "Sandiger Lehm": {
         "label": {
           "de": "Sandiger Lehm",
-          "it": "Argilla sabbiosa"
+          "it": "Argilla sabbiosa",
+          "uk": "Піщана глина/супісок"
         }
       },
       "Sandiger Schluff": {
         "label": {
           "de": "Sandiger Schluff",
-          "it": "Limo sabbioso"
+          "it": "Limo sabbioso",
+          "uk": "Піщаний мул"
         }
       },
       "Sandiger Ton": {
         "label": {
           "de": "Sandiger Ton",
-          "it": "Argilla sabbiosa"
+          "it": "Argilla sabbiosa",
+          "uk": "Піщана глина"
         }
       },
       "Schluff": {
         "label": {
           "de": "Schluff",
-          "it": "Limo"
+          "it": "Limo",
+          "uk": "Мул"
         }
       },
       "Schluffiger Lehm": {
         "label": {
           "de": "Schluffiger Lehm",
-          "it": "Argilla limosa"
+          "it": "Argilla limosa",
+          "uk": "Мулиста глина"
         }
       },
       "Schluffiger Sand": {
         "label": {
           "de": "Schluffiger Sand",
-          "it": "Sabbia limosa"
+          "it": "Sabbia limosa",
+          "uk": "Мулистий пісок"
         }
       },
       "Schluffiger Ton": {
         "label": {
           "de": "Schluffiger Ton",
-          "it": "Argilla limosa"
+          "it": "Argilla limosa",
+          "uk": "Мулиста глина"
         }
       },
       "Ton": {
         "label": {
           "de": "Ton",
-          "it": "Argilla"
+          "it": "Argilla",
+          "uk": "Глина"
         }
       },
       "Toniger Lehm": {
         "label": {
           "de": "Toniger Lehm",
-          "it": "Terriccio argilloso"
+          "it": "Terriccio argilloso",
+          "uk": "Глинистий суглинок"
         }
       },
       "Toniger Sand": {
         "label": {
           "de": "Toniger Sand",
-          "it": "Sabbia argillosa"
+          "it": "Sabbia argillosa",
+          "uk": "Глинистий пісок"
         }
       },
       "Toniger Schluff": {
         "label": {
           "de": "Toniger Schluff",
-          "it": "Limo argilloso"
+          "it": "Limo argilloso",
+          "uk": "Глинистий мул"
         }
       }
     }
@@ -5787,55 +6288,64 @@
       "deutlich": {
         "label": {
           "de": "deutlich",
-          "it": "chiari"
+          "it": "chiari",
+          "uk": "ясно"
         }
       },
       "diffus": {
         "label": {
           "de": "diffus",
-          "it": "diffusi"
+          "it": "diffusi",
+          "uk": "дифузний"
         }
       },
       "eben": {
         "label": {
           "de": "eben",
-          "it": "piani"
+          "it": "piani",
+          "uk": "рівний"
         }
       },
       "erahnbar": {
         "label": {
           "de": "erahnbar",
-          "it": "intuibili"
+          "it": "intuibili",
+          "uk": "передбачуваний"
         }
       },
       "erkennbar": {
         "label": {
           "de": "erkennbar",
-          "it": "riconoscibili"
+          "it": "riconoscibili",
+          "uk": "впізнаваний"
         }
       },
       "etwas verwaschen": {
         "label": {
           "de": "etwas verwaschen",
-          "it": "leggermente slavati"
+          "it": "leggermente slavati",
+          "uk": "дещо розмитий"
         }
       },
       "fließend": {
         "label": {
           "de": "fließend",
-          "it": "fluidi"
+          "it": "fluidi",
+          "uk": "пливуче"
         }
       },
       "geneigt": {
         "label": {
           "de": "geneigt",
-          "it": "inclinati"
+          "it": "inclinati",
+          "uk": "похилений"
         }
       },
       "gezackt": {
         "label": {
           "de": "gezackt",
-          "it": "frastagliati"
+          "it": "frastagliati",
+          "uk": "зубчатий"
         }
       },
       "regelmäßig": {
@@ -5847,49 +6357,57 @@
       "scharf": {
         "label": {
           "de": "scharf",
-          "it": "netti"
+          "it": "netti",
+          "uk": "доброї чіткості/різкості"
         }
       },
       "sehr deutlich": {
         "label": {
           "de": "sehr deutlich",
-          "it": "molto chiari"
+          "it": "molto chiari",
+          "uk": "дуже чітко"
         }
       },
       "undeutlich": {
         "label": {
           "de": "undeutlich",
-          "it": "indistinti"
+          "it": "indistinti",
+          "uk": "невиразний"
         }
       },
       "uneben": {
         "label": {
           "de": "uneben",
-          "it": "non piani"
+          "it": "non piani",
+          "uk": "нерівний"
         }
       },
       "unklar": {
         "label": {
           "de": "unklar",
-          "it": "non chiari"
+          "it": "non chiari",
+          "uk": "не ясно"
         }
       },
       "unregelmäßig": {
         "label": {
           "de": "unregelmäßig",
-          "it": "irregolari"
+          "it": "irregolari",
+          "uk": "нерегулярний"
         }
       },
       "verwaschen": {
         "label": {
           "de": "verwaschen",
-          "it": "slavati"
+          "it": "slavati",
+          "uk": "розмитий"
         }
       },
       "wellig": {
         "label": {
           "de": "wellig",
-          "it": "ondulati"
+          "it": "ondulati",
+          "uk": "хвилястий"
         }
       }
     }
@@ -5902,103 +6420,120 @@
       "Befundrest": {
         "label": {
           "de": "Befundrest",
-          "it": "resto di Unità Stratigrafica"
+          "it": "resto di Unità Stratigrafica",
+          "uk": "Залишок знахідки"
         }
       },
       "U-förmig": {
         "label": {
           "de": "U-förmig",
-          "it": "a forma di U"
+          "it": "a forma di U",
+          "uk": "П/подібний"
         }
       },
       "V-förmig": {
         "label": {
           "de": "V-förmig",
-          "it": "a forma di V"
+          "it": "a forma di V",
+          "uk": "V-подібний"
         }
       },
       "annähernd": {
         "label": {
           "de": "annähernd",
-          "it": "approssimativo"
+          "it": "approssimativo",
+          "uk": "майже"
         }
       },
       "formlos": {
         "label": {
           "de": "formlos",
-          "it": "informe"
+          "it": "informe",
+          "uk": "безформний"
         }
       },
       "halbmondförmig": {
         "label": {
           "de": "halbmondförmig",
-          "it": "a forma di mezzaluna"
+          "it": "a forma di mezzaluna",
+          "uk": "у формі півмісяця"
         }
       },
       "kesselförmig": {
         "label": {
           "de": "kesselförmig",
-          "it": "a forma di conca"
+          "it": "a forma di conca",
+          "uk": "посудиноподібний"
         }
       },
       "langgezogen": {
         "label": {
           "de": "langgezogen",
-          "it": "esteso"
+          "it": "esteso",
+          "uk": "видовжений"
         }
       },
       "oval": {
         "label": {
           "de": "oval",
-          "it": "ovale"
+          "it": "ovale",
+          "uk": "овальний"
         }
       },
       "rechteckig": {
         "label": {
           "de": "rechteckig",
-          "it": "rettangolare"
+          "it": "rettangolare",
+          "uk": "прямокутний"
         }
       },
       "regelmäßig": {
         "label": {
           "de": "regelmäßig",
-          "it": "regolare"
+          "it": "regolare",
+          "uk": "регулярний"
         }
       },
       "rund": {
         "label": {
           "de": "rund",
-          "it": "rotondo"
+          "it": "rotondo",
+          "uk": "круглий"
         }
       },
       "sanduhrförmig": {
         "label": {
           "de": "sanduhrförmig",
-          "it": "a forma di clessidra"
+          "it": "a forma di clessidra",
+          "uk": "у формі пісочного годинника"
         }
       },
       "trapezförmig": {
         "label": {
           "de": "trapezförmig",
-          "it": "trapezoidale"
+          "it": "trapezoidale",
+          "uk": "трапецієподібний"
         }
       },
       "trichterförmig": {
         "label": {
           "de": "trichterförmig",
-          "it": "a forma di imbuto"
+          "it": "a forma di imbuto",
+          "uk": "воронко-/ лійкоподібний"
         }
       },
       "unregelmäßig": {
         "label": {
           "de": "unregelmäßig",
-          "it": "irregolare"
+          "it": "irregolare",
+          "uk": "нерегулярний"
         }
       },
       "wannenförmig": {
         "label": {
           "de": "wannenförmig",
-          "it": "a forma di vasca"
+          "it": "a forma di vasca",
+          "uk": "діжкоподібний"
         }
       }
     }
@@ -6011,19 +6546,22 @@
       "Bastmatten": {
         "label": {
           "de": "Bastmatten",
-          "it": "stuoia"
+          "it": "stuoia",
+          "uk": "Луб'яні циновки"
         }
       },
       "Korkboden": {
         "label": {
           "de": "Korkboden",
-          "it": "pavimento in sughero"
+          "it": "pavimento in sughero",
+          "uk": "Коркова підлога"
         }
       },
       "Mosaik": {
         "label": {
           "de": "Mosaik",
-          "it": "mosaico"
+          "it": "mosaico",
+          "uk": "Мозаїка"
         }
       },
       "Opus sectile": {
@@ -6041,31 +6579,36 @@
       "Pflaster": {
         "label": {
           "de": "Pflaster",
-          "it": "lastricato"
+          "it": "lastricato",
+          "uk": "Вимощення"
         }
       },
       "Stampflehm": {
         "label": {
           "de": "Stampflehm",
-          "it": "terra battuta"
+          "it": "terra battuta",
+          "uk": "Утрамбована глина"
         }
       },
       "Terrazzo": {
         "label": {
           "de": "Terrazzo",
-          "it": "terrazzo"
+          "it": "terrazzo",
+          "uk": "Тераццо"
         }
       },
       "Webmatten": {
         "label": {
           "de": "Webmatten",
-          "it": "stuoia di tessuto"
+          "it": "stuoia di tessuto",
+          "uk": "Плетені циновки"
         }
       },
       "Ziegel": {
         "label": {
           "de": "Ziegel",
-          "it": "mattone"
+          "it": "mattone",
+          "uk": "Цегла"
         }
       }
     }
@@ -6078,67 +6621,78 @@
       "Alltäglicher Gebrauch": {
         "label": {
           "de": "Alltäglicher Gebrauch",
-          "it": "uso quotidiano"
+          "it": "uso quotidiano",
+          "uk": "Щоденне використання"
         }
       },
       "Bauinschrift": {
         "label": {
           "de": "Bauinschrift",
-          "it": "iscrizione edificio"
+          "it": "iscrizione edificio",
+          "uk": "Будівельний напис"
         }
       },
       "Ehreninschrift": {
         "label": {
           "de": "Ehreninschrift",
-          "it": "iscrizione onoraria"
+          "it": "iscrizione onoraria",
+          "uk": "Почесний напис"
         }
       },
       "Grabinschrift (Inschrift im Grabkontext)": {
         "label": {
           "de": "Grabinschrift (Inschrift im Grabkontext)",
-          "it": "iscrizione tomba (iscrizione nel contesto della tomba)"
+          "it": "iscrizione tomba (iscrizione nel contesto della tomba)",
+          "uk": "Надгробний напис (напис у надгробному контексті)"
         }
       },
       "Private Ausstattung": {
         "label": {
           "de": "Private Ausstattung",
-          "it": "allestimento privato"
+          "it": "allestimento privato",
+          "uk": "Приватне інвентар/меблі"
         }
       },
       "Sakrale Ausstattung": {
         "label": {
           "de": "Sakrale Ausstattung",
-          "it": "allestimento sacrale"
+          "it": "allestimento sacrale",
+          "uk": "Сакральний інвентар"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Urkunde": {
         "label": {
           "de": "Urkunde",
-          "it": "documento"
+          "it": "documento",
+          "uk": "Сертифікат/документ"
         }
       },
       "Wasserversorgung": {
         "label": {
           "de": "Wasserversorgung",
-          "it": "approvvigionamento idrico"
+          "it": "approvvigionamento idrico",
+          "uk": "постачання води"
         }
       },
       "Weihinschrift": {
         "label": {
           "de": "Weihinschrift",
-          "it": "iscrizione votiva"
+          "it": "iscrizione votiva",
+          "uk": "Напис посвяти"
         }
       },
       "Öffentliche Ausstattung": {
         "label": {
           "de": "Öffentliche Ausstattung",
-          "it": "allestimento pubblico"
+          "it": "allestimento pubblico",
+          "uk": "громадського користування"
         }
       }
     }
@@ -6151,31 +6705,36 @@
       "1 (Fingernagel schabt, ritzt leicht)": {
         "label": {
           "de": "1 (Fingernagel schabt, ritzt leicht)",
-          "it": "1 (Tenero, scalfibile con l'unghia)"
+          "it": "1 (Tenero, scalfibile con l'unghia)",
+          "uk": "1 (подряпини нігтями, легкі подряпини)"
         }
       },
       "2 (Fingernagel ritzt)": {
         "label": {
           "de": "2 (Fingernagel ritzt)",
-          "it": "2 (scalfibile con l'unghia)"
+          "it": "2 (scalfibile con l'unghia)",
+          "uk": "2 (подряпини нігтями)"
         }
       },
       "3 (Messerspitze ritzt leicht)": {
         "label": {
           "de": "3 (Messerspitze ritzt leicht)",
-          "it": "3 (Facilmente scalfibile con punta di coltello)"
+          "it": "3 (Facilmente scalfibile con punta di coltello)",
+          "uk": "легкі подряпини кінчиком ножа"
         }
       },
       "4 (Messerspitze ritzt)": {
         "label": {
           "de": "4 (Messerspitze ritzt)",
-          "it": "4 (Scalfibile con punta di coltello)"
+          "it": "4 (Scalfibile con punta di coltello)",
+          "uk": "подряпини кінчиком ножа"
         }
       },
       "5 (Messerspitze ritzt schwer)": {
         "label": {
           "de": "5 (Messerspitze ritzt schwer)",
-          "it": "5 (Difficilmente scalfibile con punta di coltello)"
+          "it": "5 (Difficilmente scalfibile con punta di coltello)",
+          "uk": "глибокі подряпини кінчиком ножа"
         }
       },
       "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": {
@@ -6198,7 +6757,8 @@
       "Glasur": {
         "label": {
           "de": "Glasur",
-          "it": "invetriatura"
+          "it": "invetriatura",
+          "uk": "Глазур/інвертріатура"
         }
       },
       "Redslip": {
@@ -6210,7 +6770,8 @@
       "Schwarzfirnis": {
         "label": {
           "de": "Schwarzfirnis",
-          "it": "vernice nera"
+          "it": "vernice nera",
+          "uk": "Чорний лак "
         }
       },
       "Tongrundig": {
@@ -6229,31 +6790,36 @@
       "Andere": {
         "label": {
           "de": "Andere",
-          "it": "altro"
+          "it": "altro",
+          "uk": "Інші"
         }
       },
       "Bemalung": {
         "label": {
           "de": "Bemalung",
-          "it": "pittura"
+          "it": "pittura",
+          "uk": "Розпис"
         }
       },
       "Geglättet": {
         "label": {
           "de": "Geglättet",
-          "it": "lisciato"
+          "it": "lisciato",
+          "uk": "Розрівняний"
         }
       },
       "Glasur": {
         "label": {
           "de": "Glasur",
-          "it": "invetriatura"
+          "it": "invetriatura",
+          "uk": "Глазур"
         }
       },
       "Poliert": {
         "label": {
           "de": "Poliert",
-          "it": "lucidato"
+          "it": "lucidato",
+          "uk": "Полірований"
         }
       },
       "Verstrichen": {
@@ -6265,7 +6831,8 @@
       "Überzug": {
         "label": {
           "de": "Überzug",
-          "it": "ingobbio"
+          "it": "ingobbio",
+          "uk": "покриття"
         }
       }
     }
@@ -6278,49 +6845,57 @@
       "Bemalung": {
         "label": {
           "de": "Bemalung",
-          "it": "pittura"
+          "it": "pittura",
+          "uk": "Розпис"
         }
       },
       "Fadendekor (aufgelegt)": {
         "label": {
           "de": "Fadendekor (aufgelegt)",
-          "it": "decorazione filata (applicata)"
+          "it": "decorazione filata (applicata)",
+          "uk": "Нитковий/павутинний декор (накладкою)"
         }
       },
       "Reliefdekor": {
         "label": {
           "de": "Reliefdekor",
-          "it": "decorazione a rilievo"
+          "it": "decorazione a rilievo",
+          "uk": "рельєфний декор"
         }
       },
       "Riefeldekor": {
         "label": {
           "de": "Riefeldekor",
-          "it": "decorazione a scanalature"
+          "it": "decorazione a scanalature",
+          "uk": "рифельний декор"
         }
       },
       "Ritzungen": {
         "label": {
           "de": "Ritzungen",
-          "it": "incisioni"
+          "it": "incisioni",
+          "uk": "Подряпини"
         }
       },
       "Stempel": {
         "label": {
           "de": "Stempel",
-          "it": "bollo"
+          "it": "bollo",
+          "uk": "Відбиток"
         }
       },
       "Stempeldekor": {
         "label": {
           "de": "Stempeldekor",
-          "it": "decorazione a stampo"
+          "it": "decorazione a stampo",
+          "uk": "штамповий декор"
         }
       },
       "Tupfendekor": {
         "label": {
           "de": "Tupfendekor",
-          "it": "decorazione maculata"
+          "it": "decorazione maculata",
+          "uk": "Губковий декор"
         }
       },
       "Warzendekor": {
@@ -6428,13 +7003,15 @@
       "Altar": {
         "label": {
           "de": "Altar",
-          "it": "Altare"
+          "it": "Altare",
+          "uk": "Вівтар"
         }
       },
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Antefix": {
@@ -6452,97 +7029,113 @@
       "Einlage": {
         "label": {
           "de": "Einlage",
-          "it": "Inserto"
+          "it": "Inserto",
+          "uk": "Вставка"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Ваза посудина"
         }
       },
       "Gerät": {
         "label": {
           "de": "Gerät",
-          "it": "Strumento"
+          "it": "Strumento",
+          "uk": "Інструмент"
         }
       },
       "Gussform": {
         "label": {
           "de": "Gussform",
-          "it": "Matrice"
+          "it": "Matrice",
+          "uk": "Форма лиття"
         }
       },
       "Kette": {
         "label": {
           "de": "Kette",
-          "it": "Catena"
+          "it": "Catena",
+          "uk": "Ланцюг"
         }
       },
       "Kohlebecken": {
         "label": {
           "de": "Kohlebecken",
-          "it": "Braciere"
+          "it": "Braciere",
+          "uk": "Місце вогнища/мангал"
         }
       },
       "Lampe": {
         "label": {
           "de": "Lampe",
-          "it": "Lucerna"
+          "it": "Lucerna",
+          "uk": "лампа"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cucchiaio"
+          "it": "Cucchiaio",
+          "uk": "ложка"
         }
       },
       "Perle": {
         "label": {
           "de": "Perle",
-          "it": "Perla"
+          "it": "Perla",
+          "uk": "перлина"
         }
       },
       "Plastik/Skulptur": {
         "label": {
           "de": "Plastik/Skulptur",
-          "it": "Plastica/scultura"
+          "it": "Plastica/scultura",
+          "uk": "пластика/скульптура"
         }
       },
       "Produktionsfragment": {
         "label": {
           "de": "Produktionsfragment",
-          "it": "Frammento di produzione"
+          "it": "Frammento di produzione",
+          "uk": "фрагмент виробництва"
         }
       },
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень"
         }
       },
       "Sarkophag": {
         "label": {
           "de": "Sarkophag",
-          "it": "Sarcofago"
+          "it": "Sarcofago",
+          "uk": "Саркофаг"
         }
       },
       "Schmuck": {
         "label": {
           "de": "Schmuck",
-          "it": "Gioiello"
+          "it": "Gioiello",
+          "uk": "Ювелірна прикраса"
         }
       },
       "Siegel": {
         "label": {
           "de": "Siegel",
-          "it": "Sigillo"
+          "it": "Sigillo",
+          "uk": "Печатка"
         }
       },
       "Spielstein": {
         "label": {
           "de": "Spielstein",
-          "it": "Pedina da gioco"
+          "it": "Pedina da gioco",
+          "uk": "Іграшковий жетон/фігура"
         }
       },
       "Spinnwirtel": {
@@ -6554,19 +7147,22 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Webgewicht": {
         "label": {
           "de": "Webgewicht",
-          "it": "Peso da telaio"
+          "it": "Peso da telaio",
+          "uk": "вага плетіння"
         }
       },
       "Werkzeug": {
         "label": {
           "de": "Werkzeug",
-          "it": "Attrezzo"
+          "it": "Attrezzo",
+          "uk": "Інструмент"
         }
       }
     }
@@ -6884,49 +7480,57 @@
       "Amphore": {
         "label": {
           "de": "Amphore",
-          "it": "Anfora"
+          "it": "Anfora",
+          "uk": "Амфора"
         }
       },
       "Aschenurne": {
         "label": {
           "de": "Aschenurne",
-          "it": "Urna cineraria"
+          "it": "Urna cineraria",
+          "uk": "Урна для попелу"
         }
       },
       "Becher": {
         "label": {
           "de": "Becher",
-          "it": "Bicchiere"
+          "it": "Bicchiere",
+          "uk": "Кухоль"
         }
       },
       "Deckel": {
         "label": {
           "de": "Deckel",
-          "it": "Coperchio"
+          "it": "Coperchio",
+          "uk": "Кришка"
         }
       },
       "Deckelgefäß": {
         "label": {
           "de": "Deckelgefäß",
-          "it": "Vaso con coperchio"
+          "it": "Vaso con coperchio",
+          "uk": "посудина з кришкою"
         }
       },
       "Flasche": {
         "label": {
           "de": "Flasche",
-          "it": "Bottiglia"
+          "it": "Bottiglia",
+          "uk": "Пляшка"
         }
       },
       "Geschlossenes Gefäß": {
         "label": {
           "de": "Geschlossenes Gefäß",
-          "it": "Vaso chiuso"
+          "it": "Vaso chiuso",
+          "uk": "закрита посудина"
         }
       },
       "Kanne": {
         "label": {
           "de": "Kanne",
-          "it": "Brocca"
+          "it": "Brocca",
+          "uk": "Лійка"
         }
       },
       "Kasserole": {
@@ -6938,37 +7542,43 @@
       "Kochschüssel": {
         "label": {
           "de": "Kochschüssel",
-          "it": "Ciotola da cucina"
+          "it": "Ciotola da cucina",
+          "uk": "Посудина для варіння"
         }
       },
       "Krug": {
         "label": {
           "de": "Krug",
-          "it": "Boccale"
+          "it": "Boccale",
+          "uk": "Глечик"
         }
       },
       "Napf": {
         "label": {
           "de": "Napf",
-          "it": "Ciotola"
+          "it": "Ciotola",
+          "uk": "Чаша"
         }
       },
       "Offenes Gefäß": {
         "label": {
           "de": "Offenes Gefäß",
-          "it": "Vaso aperto"
+          "it": "Vaso aperto",
+          "uk": "Відкрита посудина"
         }
       },
       "Pfanne": {
         "label": {
           "de": "Pfanne",
-          "it": "Padella"
+          "it": "Padella",
+          "uk": "Cковорода"
         }
       },
       "Räuchergefäß": {
         "label": {
           "de": "Räuchergefäß",
-          "it": "Incensiere"
+          "it": "Incensiere",
+          "uk": "Кадильниця"
         }
       },
       "Schale": {
@@ -6980,43 +7590,50 @@
       "Schüssel": {
         "label": {
           "de": "Schüssel",
-          "it": "Scodella"
+          "it": "Scodella",
+          "uk": "миска"
         }
       },
       "Tasse": {
         "label": {
           "de": "Tasse",
-          "it": "Tazza"
+          "it": "Tazza",
+          "uk": "Кубок/горнятко"
         }
       },
       "Teller": {
         "label": {
           "de": "Teller",
-          "it": "Piatto"
+          "it": "Piatto",
+          "uk": "Тарілка"
         }
       },
       "Teller/Untersatz": {
         "label": {
           "de": "Teller/Untersatz",
-          "it": "Piatto/piattino"
+          "it": "Piatto/piattino",
+          "uk": "Тарілка/підставка"
         }
       },
       "Topf": {
         "label": {
           "de": "Topf",
-          "it": "Pentola"
+          "it": "Pentola",
+          "uk": "Горщик"
         }
       },
       "Unbestimmt": {
         "label": {
           "de": "Unbestimmt",
-          "it": "Indeterminato"
+          "it": "Indeterminato",
+          "uk": "невизначений"
         }
       },
       "Vorratsgefäß": {
         "label": {
           "de": "Vorratsgefäß",
-          "it": "Vaso da stoccaggio"
+          "it": "Vaso da stoccaggio",
+          "uk": "Посуд для зберігання"
         }
       }
     }
@@ -7053,31 +7670,36 @@
       "Dattelflasche": {
         "label": {
           "de": "Dattelflasche",
-          "it": "Bottiglia per datteri"
+          "it": "Bottiglia per datteri",
+          "uk": "фінікова пляшка"
         }
       },
       "Faltenbecher": {
         "label": {
           "de": "Faltenbecher",
-          "it": "Bicchiere a pareti rugose"
+          "it": "Bicchiere a pareti rugose",
+          "uk": "Складна чашка"
         }
       },
       "Fischteller": {
         "label": {
           "de": "Fischteller",
-          "it": "Piatto da pesce"
+          "it": "Piatto da pesce",
+          "uk": "рибна тарілка"
         }
       },
       "Glockenbecher": {
         "label": {
           "de": "Glockenbecher",
-          "it": "Bicchiere a campana"
+          "it": "Bicchiere a campana",
+          "uk": "дзвін чашка"
         }
       },
       "Handelsamphore": {
         "label": {
           "de": "Handelsamphore",
-          "it": "Anfora commerciale"
+          "it": "Anfora commerciale",
+          "uk": "торгівельна амфора"
         }
       },
       "Hydria": {
@@ -7173,7 +7795,8 @@
       "Salznapf": {
         "label": {
           "de": "Salznapf",
-          "it": "Saliera"
+          "it": "Saliera",
+          "uk": "Сільниця"
         }
       },
       "Skyphos": {
@@ -7185,13 +7808,15 @@
       "Spitzamphora": {
         "label": {
           "de": "Spitzamphora",
-          "it": "Anfora a punta"
+          "it": "Anfora a punta",
+          "uk": "Завужена амфора"
         }
       },
       "Sprenkler": {
         "label": {
           "de": "Sprenkler",
-          "it": "Annaffiatoio"
+          "it": "Annaffiatoio",
+          "uk": "Розпилювач/спринклер"
         }
       },
       "Stamnos": {
@@ -7215,25 +7840,29 @@
       "Tränenfläschchen": {
         "label": {
           "de": "Tränenfläschchen",
-          "it": "Lacrimatoio"
+          "it": "Lacrimatoio",
+          "uk": "Слізна пляшечка"
         }
       },
       "Vierkantflasche": {
         "label": {
           "de": "Vierkantflasche",
-          "it": "Bottiglia quadrata"
+          "it": "Bottiglia quadrata",
+          "uk": "прямокутна пляшка"
         }
       },
       "hexagonale Flasche": {
         "label": {
           "de": "hexagonale Flasche",
-          "it": "Bottiglia esagonale"
+          "it": "Bottiglia esagonale",
+          "uk": "шестигранна пляшка"
         }
       },
       "zylindrische Flasche": {
         "label": {
           "de": "zylindrische Flasche",
-          "it": "Bottiglia cilindrica"
+          "it": "Bottiglia cilindrica",
+          "uk": "циліндрична пляшка"
         }
       }
     }
@@ -7246,7 +7875,8 @@
       "Baumsargbestattung": {
         "label": {
           "de": "Baumsargbestattung",
-          "it": "Tomba in tronco d'albero"
+          "it": "Tomba in tronco d'albero",
+          "uk": "Поховання деревною труною "
         }
       },
       "Brandgrubengrab": {
@@ -7276,13 +7906,15 @@
       "Erdgrab": {
         "label": {
           "de": "Erdgrab",
-          "it": "Tomba a fossa"
+          "it": "Tomba a fossa",
+          "uk": "Земляна могила"
         }
       },
       "Felsgrab": {
         "label": {
           "de": "Felsgrab",
-          "it": "Tomba rupestre"
+          "it": "Tomba rupestre",
+          "uk": "скельна могила"
         }
       },
       "Felsnischengrab": {
@@ -7294,31 +7926,36 @@
       "Flachgrab": {
         "label": {
           "de": "Flachgrab",
-          "it": "Tomba piatta"
+          "it": "Tomba piatta",
+          "uk": "неглибока могила"
         }
       },
       "Ganggrab": {
         "label": {
           "de": "Ganggrab",
-          "it": "Tomba a corridoio"
+          "it": "Tomba a corridoio",
+          "uk": "Прохідна могила"
         }
       },
       "Gefäßbestattung": {
         "label": {
           "de": "Gefäßbestattung",
-          "it": "Enchytrismòs"
+          "it": "Enchytrismòs",
+          "uk": "Поховання в посудині"
         }
       },
       "Gemauertes Grab": {
         "label": {
           "de": "Gemauertes Grab",
-          "it": "Tomba a mattoni"
+          "it": "Tomba a mattoni",
+          "uk": "Мурована могила"
         }
       },
       "Glockengrab": {
         "label": {
           "de": "Glockengrab",
-          "it": "Tomba a campana"
+          "it": "Tomba a campana",
+          "uk": "дзвін могила"
         }
       },
       "Gruft": {
@@ -7330,7 +7967,8 @@
       "Hügelgrab": {
         "label": {
           "de": "Hügelgrab",
-          "it": "Tomba a tumulo"
+          "it": "Tomba a tumulo",
+          "uk": "Курган"
         }
       },
       "Kistengrab": {
@@ -7342,19 +7980,22 @@
       "Mausoleum": {
         "label": {
           "de": "Mausoleum",
-          "it": "Mausoleo"
+          "it": "Mausoleo",
+          "uk": "Мавзолей"
         }
       },
       "Megalithgrab": {
         "label": {
           "de": "Megalithgrab",
-          "it": "Tomba megalitica"
+          "it": "Tomba megalitica",
+          "uk": "мегалітична гробниця"
         }
       },
       "Schachthöhlengrab": {
         "label": {
           "de": "Schachthöhlengrab",
-          "it": "Tomba a grotticella"
+          "it": "Tomba a grotticella",
+          "uk": "Шахтова печерна гробниця"
         }
       },
       "Steineinfassung": {
@@ -7449,19 +8090,22 @@
       "Bruchsteingemauert": {
         "label": {
           "de": "Bruchsteingemauert",
-          "it": "Costruzione con pietre di cava"
+          "it": "Costruzione con pietre di cava",
+          "uk": "Стіни з бутового каменю"
         }
       },
       "Quadergemauert": {
         "label": {
           "de": "Quadergemauert",
-          "it": "Costruzione con conci"
+          "it": "Costruzione con conci",
+          "uk": "Стіни з тесаного каменю"
         }
       },
       "Ziegelgemauert": {
         "label": {
           "de": "Ziegelgemauert",
-          "it": "Costruzione con tegole"
+          "it": "Costruzione con tegole",
+          "uk": "Стіни з цегли"
         }
       }
     }
@@ -7532,133 +8176,155 @@
       "Becken (Pelvis)": {
         "label": {
           "de": "Becken (Pelvis)",
-          "it": "Bacino (Pelvis)"
+          "it": "Bacino (Pelvis)",
+          "uk": "Таз (Pelvis)"
         }
       },
       "Brustbein (Sternum)": {
         "label": {
           "de": "Brustbein (Sternum)",
-          "it": "Sterno (Sternum)"
+          "it": "Sterno (Sternum)",
+          "uk": "Грудина (Sternum)"
         }
       },
       "Elle (Ulna)": {
         "label": {
           "de": "Elle (Ulna)",
-          "it": "Ulna"
+          "it": "Ulna",
+          "uk": "Ліктьова кістка (Ulna)"
         }
       },
       "Fingerknochen (Phalanges)": {
         "label": {
           "de": "Fingerknochen (Phalanges)",
-          "it": "Ossa delle dita (Phalanges)"
+          "it": "Ossa delle dita (Phalanges)",
+          "uk": "Кістки пальців (Phalanges)"
         }
       },
       "Fußknochen": {
         "label": {
           "de": "Fußknochen",
-          "it": "Ossa dei piedi"
+          "it": "Ossa dei piedi",
+          "uk": "Кістка ноги"
         }
       },
       "Handknochen": {
         "label": {
           "de": "Handknochen",
-          "it": "Ossa della mano"
+          "it": "Ossa della mano",
+          "uk": "Кістка руки"
         }
       },
       "Kniescheibe (Patella)": {
         "label": {
           "de": "Kniescheibe (Patella)",
-          "it": "Rotula (Patella)"
+          "it": "Rotula (Patella)",
+          "uk": "Колінна чашечка (Patella)"
         }
       },
       "Langknochen": {
         "label": {
           "de": "Langknochen",
-          "it": "Ossa lunghe"
+          "it": "Ossa lunghe",
+          "uk": "Довга кістка"
         }
       },
       "Oberarm (Humerus)": {
         "label": {
           "de": "Oberarm (Humerus)",
-          "it": "Parte superiore del braccio (Humerus)"
+          "it": "Parte superiore del braccio (Humerus)",
+          "uk": "Плече (Humerus)"
         }
       },
       "Oberschenkel (Femur)": {
         "label": {
           "de": "Oberschenkel (Femur)",
-          "it": "Femore"
+          "it": "Femore",
+          "uk": "Стегно (Femur)"
         }
       },
       "Rippen": {
         "label": {
           "de": "Rippen",
-          "it": "Costole"
+          "it": "Costole",
+          "uk": "Ребра"
         }
       },
       "Schienenbein (Tibia)": {
         "label": {
           "de": "Schienenbein (Tibia)",
-          "it": "Tibia"
+          "it": "Tibia",
+          "uk": "Гомілка(Tibia)"
         }
       },
       "Schlüsselbein (Clavicula)": {
         "label": {
           "de": "Schlüsselbein (Clavicula)",
-          "it": "Clavicola"
+          "it": "Clavicola",
+          "uk": "Ключиця (Clavicula)"
         }
       },
       "Schulterblatt (Scapula)": {
         "label": {
           "de": "Schulterblatt (Scapula)",
-          "it": "Scapola"
+          "it": "Scapola",
+          "uk": "Лопатка (Scapula)"
         }
       },
       "Schädel (Cranium)": {
         "label": {
           "de": "Schädel (Cranium)",
-          "it": "Cranio"
+          "it": "Cranio",
+          "uk": "Череп (Cranium)"
         }
       },
       "Speiche (Radius)": {
         "label": {
           "de": "Speiche (Radius)",
-          "it": "Radio"
+          "it": "Radio",
+          "uk": "Спиця (Radius)"
         }
       },
       "Steißbein": {
         "label": {
           "de": "Steißbein",
-          "it": "Coccige"
+          "it": "Coccige",
+          "uk": "Куприк"
         }
       },
       "Undefinierbar": {
         "label": {
           "de": "Undefinierbar",
-          "it": "indefinibile"
+          "it": "indefinibile",
+          "uk": "Невизначено"
         }
       },
       "Unterkiefer (Mandibula)": {
         "label": {
           "de": "Unterkiefer (Mandibula)",
-          "it": "Mandibola"
+          "it": "Mandibola",
+          "uk": "Нижня щелепа (Mandibula)"
         }
       },
       "Wadenbein (Fibula)": {
         "label": {
           "de": "Wadenbein (Fibula)",
-          "it": "Perone (Fibula)"
+          "it": "Perone (Fibula)",
+          "uk": "Малогомілкова кістка (Fibula)"
         }
       },
       "Wirbel": {
         "label": {
           "de": "Wirbel",
-          "it": "Vertebra"
+          "it": "Vertebra",
+          "uk": "Кістка хребта"
         }
       },
       "Zahn": {
         "label": {
           "de": "Zahn",
-          "it": "Dente"
+          "it": "Dente",
+          "uk": "Зуб"
         }
       }
     }
@@ -7671,25 +8337,29 @@
       "Elfenbein": {
         "label": {
           "de": "Elfenbein",
-          "it": "Avorio"
+          "it": "Avorio",
+          "uk": "Слонова кістка"
         }
       },
       "Horn": {
         "label": {
           "de": "Horn",
-          "it": "Corno"
+          "it": "Corno",
+          "uk": "Ріг"
         }
       },
       "Menschenknochen": {
         "label": {
           "de": "Menschenknochen",
-          "it": "Ossa umane"
+          "it": "Ossa umane",
+          "uk": "Людські кістки"
         }
       },
       "Tierknochen": {
         "label": {
           "de": "Tierknochen",
-          "it": "Ossa animali"
+          "it": "Ossa animali",
+          "uk": "Кістки тварин"
         }
       }
     }
@@ -7702,31 +8372,36 @@
       "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": {
         "label": {
           "de": "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig",
-          "it": "I - 200°-300°C - viraggio all'incirca bianco-giallastro-avorio vetroso"
+          "it": "I - 200°-300°C - viraggio all'incirca bianco-giallastro-avorio vetroso",
+          "uk": "I - 200°-300°C - зміна кольору приблизно жовтувато-біло-слонова кістка"
         }
       },
       "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": {
         "label": {
           "de": "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz",
-          "it": "II - 300°-400°C - viraggio all'incirca marrone-marrone scuro/nero"
+          "it": "II - 300°-400°C - viraggio all'incirca marrone-marrone scuro/nero",
+          "uk": "II - 300°-400°C - зміна кольору приблизно коричнево-темно-коричневий/чорний"
         }
       },
       "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": {
         "label": {
           "de": "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau",
-          "it": "III - um 550°C - viraggio all'incirca grigio/grgio-blu-grigio latte grigio chiaro"
+          "it": "III - um 550°C - viraggio all'incirca grigio/grgio-blu-grigio latte grigio chiaro",
+          "uk": "III - близько 550°C - знебарвлення приблизно сіре/синьо-сіро-молочно-сіре"
         }
       },
       "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": {
         "label": {
           "de": "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig",
-          "it": "IV - 650°-750°C - viraggio all'incirca bianco-latte-bianco opaco/bianco gesso"
+          "it": "IV - 650°-750°C - viraggio all'incirca bianco-latte-bianco opaco/bianco gesso",
+          "uk": "IV - 650°-750°C - знебарвлення приблизно молочно-біле-матово-біле/крейдоподібне"
         }
       },
       "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": {
         "label": {
           "de": "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß",
-          "it": "V - da 800°C - viraggio all'incirca bianco antico/bianco sporco"
+          "it": "V - da 800°C - viraggio all'incirca bianco antico/bianco sporco",
+          "uk": "V - від 800°C - зміна кольору майже білого/брудно-білого"
         }
       }
     },
@@ -7746,13 +8421,15 @@
       "Männlich": {
         "label": {
           "de": "Männlich",
-          "it": "maschile"
+          "it": "maschile",
+          "uk": "Чоловічий"
         }
       },
       "Weiblich": {
         "label": {
           "de": "Weiblich",
-          "it": "femminile"
+          "it": "femminile",
+          "uk": "Жіночий"
         }
       }
     }
@@ -7765,103 +8442,120 @@
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Armreif": {
         "label": {
           "de": "Armreif",
-          "it": "Bracciale"
+          "it": "Bracciale",
+          "uk": "Браслет"
         }
       },
       "Astragal": {
         "label": {
           "de": "Astragal",
-          "it": "Astragalo"
+          "it": "Astragalo",
+          "uk": "Астрагал"
         }
       },
       "Bearbeitet (allgemein)": {
         "label": {
           "de": "Bearbeitet (allgemein)",
-          "it": "lavorato (generale)"
+          "it": "lavorato (generale)",
+          "uk": "Відредаговано (загальне)"
         }
       },
       "Einlage": {
         "label": {
           "de": "Einlage",
-          "it": "Inserto"
+          "it": "Inserto",
+          "uk": "Вставка"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Ваза/Посудина"
         }
       },
       "Gerät": {
         "label": {
           "de": "Gerät",
-          "it": "Strumento"
+          "it": "Strumento",
+          "uk": "Інструмент"
         }
       },
       "Kette": {
         "label": {
           "de": "Kette",
-          "it": "Catena"
+          "it": "Catena",
+          "uk": "Ланцюг"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cucchiaio"
+          "it": "Cucchiaio",
+          "uk": "Ложка"
         }
       },
       "Perle": {
         "label": {
           "de": "Perle",
-          "it": "Perla"
+          "it": "Perla",
+          "uk": "Перлина"
         }
       },
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень/Кільце"
         }
       },
       "Schmuck": {
         "label": {
           "de": "Schmuck",
-          "it": "Gioiello"
+          "it": "Gioiello",
+          "uk": "Ювелірний виріб"
         }
       },
       "Spielstein": {
         "label": {
           "de": "Spielstein",
-          "it": "Pedina da gioco"
+          "it": "Pedina da gioco",
+          "uk": "Ігрова фішка/фігура"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Waffe": {
         "label": {
           "de": "Waffe",
-          "it": "Arma"
+          "it": "Arma",
+          "uk": "Зброя"
         }
       },
       "Weinheber": {
         "label": {
           "de": "Weinheber",
-          "it": "Alzavino"
+          "it": "Alzavino",
+          "uk": "Винопідйомник"
         }
       },
       "Werkzeug": {
         "label": {
           "de": "Werkzeug",
-          "it": "Attrezzo"
+          "it": "Attrezzo",
+          "uk": "Інструмент"
         }
       }
     }
@@ -7874,61 +8568,71 @@
       "Biber": {
         "label": {
           "de": "Biber",
-          "it": "Castoro"
+          "it": "Castoro",
+          "uk": "Бобер"
         }
       },
       "Fisch": {
         "label": {
           "de": "Fisch",
-          "it": "Pesce"
+          "it": "Pesce",
+          "uk": "Риби"
         }
       },
       "Gänsevogel (z. B. Gans, Schwan oder Ente)": {
         "label": {
           "de": "Gänsevogel (z. B. Gans, Schwan oder Ente)",
-          "it": "Uccello (per es. oca, cigno o anatra"
+          "it": "Uccello (per es. oca, cigno o anatra",
+          "uk": "Гуски (наприклад гусак, лебідь або качка)"
         }
       },
       "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)": {
         "label": {
           "de": "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)",
-          "it": "Lagomorfi (ad es. lepre, pika o coniglio)"
+          "it": "Lagomorfi (ad es. lepre, pika o coniglio)",
+          "uk": "Зайцеподібні Lagomorpha (наприклад заєць, піка або кролик)"
         }
       },
       "Hirsch": {
         "label": {
           "de": "Hirsch",
-          "it": "Cervo"
+          "it": "Cervo",
+          "uk": "Олень"
         }
       },
       "Nagetier (z.B. Maus, Ratte etc.)": {
         "label": {
           "de": "Nagetier (z.B. Maus, Ratte etc.)",
-          "it": "Roditore (ad es. topo, ratto etc.)"
+          "it": "Roditore (ad es. topo, ratto etc.)",
+          "uk": "Гризун (наприклад, миша, щур тощо)"
         }
       },
       "Rind": {
         "label": {
           "de": "Rind",
-          "it": "Bovino"
+          "it": "Bovino",
+          "uk": "Яловичина"
         }
       },
       "Schwein": {
         "label": {
           "de": "Schwein",
-          "it": "Maiale"
+          "it": "Maiale",
+          "uk": "Свиня"
         }
       },
       "Vogel": {
         "label": {
           "de": "Vogel",
-          "it": "Uccello"
+          "it": "Uccello",
+          "uk": "Птах"
         }
       },
       "Ziegenartige (z. B. Schaf, Ziege)": {
         "label": {
           "de": "Ziegenartige (z. B. Schaf, Ziege)",
-          "it": "Caprini (per es. pecora, capra)"
+          "it": "Caprini (per es. pecora, capra)",
+          "uk": "Гомініди (наприклад вівці, кози)"
         }
       }
     }
@@ -7941,25 +8645,29 @@
       "hart": {
         "label": {
           "de": "hart",
-          "it": "dura"
+          "it": "dura",
+          "uk": "твердий"
         }
       },
       "klingend hart": {
         "label": {
           "de": "klingend hart",
-          "it": "molto dura"
+          "it": "molto dura",
+          "uk": "сильно дзвонить"
         }
       },
       "mittel": {
         "label": {
           "de": "mittel",
-          "it": "media"
+          "it": "media",
+          "uk": "середньо"
         }
       },
       "weich": {
         "label": {
           "de": "weich",
-          "it": "morbida"
+          "it": "morbida",
+          "uk": "м'який"
         }
       }
     }
@@ -7972,43 +8680,50 @@
       "Brandspuren": {
         "label": {
           "de": "Brandspuren",
-          "it": "Tracce di bruciato"
+          "it": "Tracce di bruciato",
+          "uk": "Сліди пожежі"
         }
       },
       "Sekundärbrand": {
         "label": {
           "de": "Sekundärbrand",
-          "it": "Cottura secondaria"
+          "it": "Cottura secondaria",
+          "uk": "Вторинна пожежа"
         }
       },
       "abblätternd": {
         "label": {
           "de": "abblätternd",
-          "it": "sfaldata"
+          "it": "sfaldata",
+          "uk": "Лущення"
         }
       },
       "gut erhalten": {
         "label": {
           "de": "gut erhalten",
-          "it": "ben conservata"
+          "it": "ben conservata",
+          "uk": "Добре збережено"
         }
       },
       "stark abgerieben": {
         "label": {
           "de": "stark abgerieben",
-          "it": "molto logorata"
+          "it": "molto logorata",
+          "uk": "Сильно обтерто"
         }
       },
       "starke Sinter- oder Mörtelablagerungen": {
         "label": {
           "de": "starke Sinter- oder Mörtelablagerungen",
-          "it": "pesantemente incrostata o concrezionata"
+          "it": "pesantemente incrostata o concrezionata",
+          "uk": "Важкі відкладення агломерату або розчину"
         }
       },
       "verrieben": {
         "label": {
           "de": "verrieben",
-          "it": "sfregata"
+          "it": "sfregata",
+          "uk": "зтертий"
         }
       },
       "versintert": {
@@ -8020,7 +8735,8 @@
       "verwaschen": {
         "label": {
           "de": "verwaschen",
-          "it": "slavata"
+          "it": "slavata",
+          "uk": "розмито"
         }
       }
     }
@@ -8033,91 +8749,106 @@
       "Amphore": {
         "label": {
           "de": "Amphore",
-          "it": "Anfora"
+          "it": "Anfora",
+          "uk": "Амфора"
         }
       },
       "Aschenurne": {
         "label": {
           "de": "Aschenurne",
-          "it": "Urna cineraria"
+          "it": "Urna cineraria",
+          "uk": "Урна попелу"
         }
       },
       "Becher": {
         "label": {
           "de": "Becher",
-          "it": "Bicchiere"
+          "it": "Bicchiere",
+          "uk": "Кубок"
         }
       },
       "Deckel": {
         "label": {
           "de": "Deckel",
-          "it": "Coperchio"
+          "it": "Coperchio",
+          "uk": "Кришка"
         }
       },
       "Deckelgefäß": {
         "label": {
           "de": "Deckelgefäß",
-          "it": "Vaso con coperchio"
+          "it": "Vaso con coperchio",
+          "uk": "Посудина з кришкою"
         }
       },
       "Flasche": {
         "label": {
           "de": "Flasche",
-          "it": "Bottiglia"
+          "it": "Bottiglia",
+          "uk": "Пляшка"
         }
       },
       "Krug": {
         "label": {
           "de": "Krug",
-          "it": "Boccale"
+          "it": "Boccale",
+          "uk": "Глечик"
         }
       },
       "Napf": {
         "label": {
           "de": "Napf",
-          "it": "Ciotola"
+          "it": "Ciotola",
+          "uk": "Чаша"
         }
       },
       "Schale": {
         "label": {
           "de": "Schale",
-          "it": "Coppa"
+          "it": "Coppa",
+          "uk": "Миска"
         }
       },
       "Schüssel": {
         "label": {
           "de": "Schüssel",
-          "it": "Scodella"
+          "it": "Scodella",
+          "uk": "Ключ"
         }
       },
       "Tasse": {
         "label": {
           "de": "Tasse",
-          "it": "Tazza"
+          "it": "Tazza",
+          "uk": "Горнятко/Кубок"
         }
       },
       "Teller": {
         "label": {
           "de": "Teller",
-          "it": "Piatto"
+          "it": "Piatto",
+          "uk": "Тарілка"
         }
       },
       "Topf": {
         "label": {
           "de": "Topf",
-          "it": "Pentola"
+          "it": "Pentola",
+          "uk": "Горщик"
         }
       },
       "Unbestimmt": {
         "label": {
           "de": "Unbestimmt",
-          "it": "Indeterminato"
+          "it": "Indeterminato",
+          "uk": "Невизначено"
         }
       },
       "Vorratsgefäß": {
         "label": {
           "de": "Vorratsgefäß",
-          "it": "Vaso da stoccaggio"
+          "it": "Vaso da stoccaggio",
+          "uk": "Посудина для зберігання"
         }
       }
     }
@@ -8281,61 +9012,71 @@
       "Digitale Datei": {
         "label": {
           "de": "Digitale Datei",
-          "it": "File digitale"
+          "it": "File digitale",
+          "uk": "Цифровий файл"
         }
       },
       "Folie": {
         "label": {
           "de": "Folie",
-          "it": "Diapositiva"
+          "it": "Diapositiva",
+          "uk": "Плівка"
         }
       },
       "Karton": {
         "label": {
           "de": "Karton",
-          "it": "Cartone"
+          "it": "Cartone",
+          "uk": "Картон"
         }
       },
       "Lichtpause": {
         "label": {
           "de": "Lichtpause",
-          "it": "Cianografia"
+          "it": "Cianografia",
+          "uk": "Синька/Ксерокс"
         }
       },
       "Mikrofilm": {
         "label": {
           "de": "Mikrofilm",
-          "it": "Microfilm"
+          "it": "Microfilm",
+          "uk": "Мікрофільм"
         }
       },
       "Millimeterpapier": {
         "label": {
           "de": "Millimeterpapier",
-          "it": "Carta millimetrica"
+          "it": "Carta millimetrica",
+          "uk": "Міліметровий папір"
         }
       },
       "Papier": {
         "label": {
           "de": "Papier",
-          "it": "Carta"
+          "it": "Carta",
+          "uk": "Папір"
         }
       },
       "Photoabzüge": {
         "label": {
           "de": "Photoabzüge",
-          "it": "Stampa fotografica"
+          "it": "Stampa fotografica",
+          "uk": "Відбитки фотографій"
         }
       },
       "Transparentfilm": {
         "label": {
           "de": "Transparentfilm",
-          "it": "Pellicola trasparente"
+          "it": "Pellicola trasparente",
+          "uk": "Прозора плівка"
         }
       },
       "Transparentpapier": {
         "label": {
           "de": "Transparentpapier",
-          "it": "Carta lucida"
+          "it": "Carta lucida",
+          "uk": "Калька/Прозорий папір"
         }
       }
     }
@@ -8348,25 +9089,29 @@
       "Bleistift": {
         "label": {
           "de": "Bleistift",
-          "it": "Matita"
+          "it": "Matita",
+          "uk": "Олівець"
         }
       },
       "Buntstift": {
         "label": {
           "de": "Buntstift",
-          "it": "Pastelli"
+          "it": "Pastelli",
+          "uk": "Кольоровий олівець"
         }
       },
       "Tusche": {
         "label": {
           "de": "Tusche",
-          "it": "China"
+          "it": "China",
+          "uk": "Чорнило"
         }
       },
       "digital erstellt": {
         "label": {
           "de": "digital erstellt",
-          "it": "Creato digitalmente"
+          "it": "Creato digitalmente",
+          "uk": "Створено цифровим способом"
         }
       }
     }
@@ -8379,19 +9124,22 @@
       "AutoCAD Zeichnung (auch TachyCAD)": {
         "label": {
           "de": "AutoCAD Zeichnung (auch TachyCAD)",
-          "it": "Disegno AutoCAD (anche TachyCAD)"
+          "it": "Disegno AutoCAD (anche TachyCAD)",
+          "uk": "Комп‘ютерне CAD-креслення"
         }
       },
       "Handzeichnung": {
         "label": {
           "de": "Handzeichnung",
-          "it": "Disegno a mano"
+          "it": "Disegno a mano",
+          "uk": "Кресленння вручну"
         }
       },
       "Pantograf": {
         "label": {
           "de": "Pantograf",
-          "it": "Pantografo"
+          "it": "Pantografo",
+          "uk": "Пантограф"
         }
       }
     }
@@ -8421,55 +9169,64 @@
       "1:1": {
         "label": {
           "de": "1:1",
-          "it": "1:1"
+          "it": "1:1",
+          "uk": "1:1"
         }
       },
       "1:10": {
         "label": {
           "de": "1:10",
-          "it": "1:10"
+          "it": "1:10",
+          "uk": "1:10"
         }
       },
       "1:100": {
         "label": {
           "de": "1:100",
-          "it": "1:100"
+          "it": "1:100",
+          "uk": "1:100"
         }
       },
       "1:1000": {
         "label": {
           "de": "1:1000",
-          "it": "1:1000"
+          "it": "1:1000",
+          "uk": "1:1000"
         }
       },
       "1:10000": {
         "label": {
           "de": "1:10000",
-          "it": "1:10000"
+          "it": "1:10000",
+          "uk": "1:10000"
         }
       },
       "1:20": {
         "label": {
           "de": "1:20",
-          "it": "1:20"
+          "it": "1:20",
+          "uk": "1:20"
         }
       },
       "1:50": {
         "label": {
           "de": "1:50",
-          "it": "1:50"
+          "it": "1:50",
+          "uk": "1:50"
         }
       },
       "1:500": {
         "label": {
           "de": "1:500",
-          "it": "1:500"
+          "it": "1:500",
+          "uk": "1:500"
         }
       },
       "1:5000": {
         "label": {
           "de": "1:5000",
-          "it": "1:5000"
+          "it": "1:5000",
+          "uk": "1:5000"
         }
       }
     }
@@ -8482,61 +9239,71 @@
       "Befliegung": {
         "label": {
           "de": "Befliegung",
-          "it": "Volo"
+          "it": "Volo",
+          "uk": "Обліт"
         }
       },
       "Begehung": {
         "label": {
           "de": "Begehung",
-          "it": "Ricognizione"
+          "it": "Ricognizione",
+          "uk": "Обхід"
         }
       },
       "Geoelektrik": {
         "label": {
           "de": "Geoelektrik",
-          "it": "Geoelettrica"
+          "it": "Geoelettrica",
+          "uk": "Геоелектрика"
         }
       },
       "Geomagnetik": {
         "label": {
           "de": "Geomagnetik",
-          "it": "Geomagnetica"
+          "it": "Geomagnetica",
+          "uk": "Геомагнетика"
         }
       },
       "Georadar": {
         "label": {
           "de": "Georadar",
-          "it": "Georadar"
+          "it": "Georadar",
+          "uk": "Георадар"
         }
       },
       "LIDAR": {
         "label": {
           "de": "LIDAR",
-          "it": "LIDAR"
+          "it": "LIDAR",
+          "uk": "ЛІДАР"
         }
       },
       "Luft- oder Satellitenbilder": {
         "label": {
           "de": "Luft- oder Satellitenbilder",
-          "it": "Immagini aeree o satellitari"
+          "it": "Immagini aeree o satellitari",
+          "uk": "Повітряні або супутникові знімки"
         }
       },
       "Quadratisch": {
         "label": {
           "de": "Quadratisch",
-          "it": "Quadrato"
+          "it": "Quadrato",
+          "uk": "Квадратне"
         }
       },
       "Regelmäßig": {
         "label": {
           "de": "Regelmäßig",
-          "it": "Regolare"
+          "it": "Regolare",
+          "uk": "Регулярне"
         }
       },
       "Seismik": {
         "label": {
           "de": "Seismik",
-          "it": "Sismologia"
+          "it": "Sismologia",
+          "uk": "Сейсмічне"
         }
       }
     }
@@ -8549,85 +9316,99 @@
       "Akroter": {
         "label": {
           "de": "Akroter",
-          "it": "Acroterio"
+          "it": "Acroterio",
+          "uk": "Акротер"
         }
       },
       "Architrav": {
         "label": {
           "de": "Architrav",
-          "it": "Architrave"
+          "it": "Architrave",
+          "uk": "Архітрав"
         }
       },
       "Archtitravfriesblock": {
         "label": {
           "de": "Archtitravfriesblock",
-          "it": "Fregio architettonico"
+          "it": "Fregio architettonico",
+          "uk": "Архітектурний фризовий блок"
         }
       },
       "Basis": {
         "label": {
           "de": "Basis",
-          "it": "Base"
+          "it": "Base",
+          "uk": "База"
         }
       },
       "Bauplastik": {
         "label": {
           "de": "Bauplastik",
-          "it": "Scultura architettonica"
+          "it": "Scultura architettonica",
+          "uk": "архітектурні скульптури"
         }
       },
       "Fries": {
         "label": {
           "de": "Fries",
-          "it": "Fregio"
+          "it": "Fregio",
+          "uk": "Фриз"
         }
       },
       "Gesims": {
         "label": {
           "de": "Gesims",
-          "it": "Cornice"
+          "it": "Cornice",
+          "uk": "Карниз"
         }
       },
       "Kapitell": {
         "label": {
           "de": "Kapitell",
-          "it": "Capitello"
+          "it": "Capitello",
+          "uk": "Капітель"
         }
       },
       "Konsole": {
         "label": {
           "de": "Konsole",
-          "it": "Mensola"
+          "it": "Mensola",
+          "uk": "Консоль"
         }
       },
       "Profilstück": {
         "label": {
           "de": "Profilstück",
-          "it": "Profilo"
+          "it": "Profilo",
+          "uk": "Частина профілю"
         }
       },
       "Quaderblock": {
         "label": {
           "de": "Quaderblock",
-          "it": "Blocco squadrato"
+          "it": "Blocco squadrato",
+          "uk": "Тесаний блок"
         }
       },
       "Rinne": {
         "label": {
           "de": "Rinne",
-          "it": "Canaletta"
+          "it": "Canaletta",
+          "uk": "Жолоб"
         }
       },
       "Schrankenplatte": {
         "label": {
           "de": "Schrankenplatte",
-          "it": "Pannello"
+          "it": "Pannello",
+          "uk": "Бар'єрна плита"
         }
       },
       "Schwellenblock": {
         "label": {
           "de": "Schwellenblock",
-          "it": "Blocco della soglia"
+          "it": "Blocco della soglia",
+          "uk": "Фундаментний/пороговий блок"
         }
       },
       "Sima": {
@@ -8639,13 +9420,15 @@
       "Säule": {
         "label": {
           "de": "Säule",
-          "it": "Colonna"
+          "it": "Colonna",
+          "uk": "Колона"
         }
       },
       "Wandverkleidung": {
         "label": {
           "de": "Wandverkleidung",
-          "it": "Rivestimento murale"
+          "it": "Rivestimento murale",
+          "uk": "Стінна обшивка"
         }
       }
     }
@@ -8658,73 +9441,85 @@
       "Andesit": {
         "label": {
           "de": "Andesit",
-          "it": "Andesite"
+          "it": "Andesite",
+          "uk": "Андезит"
         }
       },
       "Basalt": {
         "label": {
           "de": "Basalt",
-          "it": "Basalto"
+          "it": "Basalto",
+          "uk": "Базальт"
         }
       },
       "Feldspat": {
         "label": {
           "de": "Feldspat",
-          "it": "Feldspato"
+          "it": "Feldspato",
+          "uk": "Польовий шпат"
         }
       },
       "Flint": {
         "label": {
           "de": "Flint",
-          "it": "Selce"
+          "it": "Selce",
+          "uk": "Кремінь"
         }
       },
       "Glimmer": {
         "label": {
           "de": "Glimmer",
-          "it": "Mica"
+          "it": "Mica",
+          "uk": "Слюда"
         }
       },
       "Granit": {
         "label": {
           "de": "Granit",
-          "it": "Granito"
+          "it": "Granito",
+          "uk": "Граніт"
         }
       },
       "Kalk": {
         "label": {
           "de": "Kalk",
-          "it": "Calce"
+          "it": "Calce",
+          "uk": "Вапно"
         }
       },
       "Kalkmörtel": {
         "label": {
           "de": "Kalkmörtel",
-          "it": "Malta di calce"
+          "it": "Malta di calce",
+          "uk": "Вапняний розчин"
         }
       },
       "Kalkstein": {
         "label": {
           "de": "Kalkstein",
-          "it": "Pietra calcarea"
+          "it": "Pietra calcarea",
+          "uk": "Вапняк"
         }
       },
       "Kalzit": {
         "label": {
           "de": "Kalzit",
-          "it": "Calcite"
+          "it": "Calcite",
+          "uk": "Кальцит"
         }
       },
       "Kreide": {
         "label": {
           "de": "Kreide",
-          "it": "gesso"
+          "it": "gesso",
+          "uk": "Крейда"
         }
       },
       "Marmor": {
         "label": {
           "de": "Marmor",
-          "it": "Marmo"
+          "it": "Marmo",
+          "uk": "Мармор"
         }
       },
       "Pophyr": {
@@ -8736,31 +9531,36 @@
       "Quarz": {
         "label": {
           "de": "Quarz",
-          "it": "Quarzo"
+          "it": "Quarzo",
+          "uk": "Кварц"
         }
       },
       "Sandstein": {
         "label": {
           "de": "Sandstein",
-          "it": "Arenaria"
+          "it": "Arenaria",
+          "uk": "Пісковик"
         }
       },
       "Sinter": {
         "label": {
           "de": "Sinter",
-          "it": "Concrezione"
+          "it": "Concrezione",
+          "uk": "Конкремент"
         }
       },
       "Trachyt": {
         "label": {
           "de": "Trachyt",
-          "it": "Trachite"
+          "it": "Trachite",
+          "uk": "Трахіт"
         }
       },
       "Tuff": {
         "label": {
           "de": "Tuff",
-          "it": "Tufo"
+          "it": "Tufo",
+          "uk": "Туф"
         }
       }
     }
@@ -8779,37 +9579,43 @@
       "Altar": {
         "label": {
           "de": "Altar",
-          "it": "Altare"
+          "it": "Altare",
+          "uk": "Вівтар"
         }
       },
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Architekturdekor": {
         "label": {
           "de": "Architekturdekor",
-          "it": "Decorazione architettonica"
+          "it": "Decorazione architettonica",
+          "uk": "Архітектурний декор"
         }
       },
       "Bauglied": {
         "label": {
           "de": "Bauglied",
-          "it": "Membratura"
+          "it": "Membratura",
+          "uk": "Будівельна частина"
         }
       },
       "Becken": {
         "label": {
           "de": "Becken",
-          "it": "Bacino"
+          "it": "Bacino",
+          "uk": "Басейн"
         }
       },
       "Einlage": {
         "label": {
           "de": "Einlage",
-          "it": "Inserto"
+          "it": "Inserto",
+          "uk": "Вставка"
         }
       },
       "Einsatzkopf": {
@@ -8821,37 +9627,43 @@
       "Fußbodenfragment": {
         "label": {
           "de": "Fußbodenfragment",
-          "it": "Frammento di pavimento"
+          "it": "Frammento di pavimento",
+          "uk": "Фрагмент підлоги"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Посудина"
         }
       },
       "Gerät": {
         "label": {
           "de": "Gerät",
-          "it": "Strumento"
+          "it": "Strumento",
+          "uk": "Інструмент"
         }
       },
       "Grabmarkierung": {
         "label": {
           "de": "Grabmarkierung",
-          "it": "Segnacolo funerario"
+          "it": "Segnacolo funerario",
+          "uk": "Могильний знак/позначка"
         }
       },
       "Grabplatte": {
         "label": {
           "de": "Grabplatte",
-          "it": "Lapide"
+          "it": "Lapide",
+          "uk": "Надгробок/плита"
         }
       },
       "Gussform": {
         "label": {
           "de": "Gussform",
-          "it": "Matrice"
+          "it": "Matrice",
+          "uk": "Форма для лиття"
         }
       },
       "Herme": {
@@ -8863,103 +9675,120 @@
       "Inkrustation": {
         "label": {
           "de": "Inkrustation",
-          "it": "Incrostazione"
+          "it": "Incrostazione",
+          "uk": "Інкрустація"
         }
       },
       "Lampe": {
         "label": {
           "de": "Lampe",
-          "it": "Lucerna"
+          "it": "Lucerna",
+          "uk": "Лампа"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cicchiaio"
+          "it": "Cicchiaio",
+          "uk": "Ложка"
         }
       },
       "Mahlstein": {
         "label": {
           "de": "Mahlstein",
-          "it": "Macina"
+          "it": "Macina",
+          "uk": "Жорна"
         }
       },
       "Mobiliar": {
         "label": {
           "de": "Mobiliar",
-          "it": "Mobilio"
+          "it": "Mobilio",
+          "uk": "Меблі"
         }
       },
       "Mörser": {
         "label": {
           "de": "Mörser",
-          "it": "Mortaio"
+          "it": "Mortaio",
+          "uk": "Cтупка"
         }
       },
       "Perle": {
         "label": {
           "de": "Perle",
-          "it": "Perla"
+          "it": "Perla",
+          "uk": "Перлина"
         }
       },
       "Plastik/Skulptur": {
         "label": {
           "de": "Plastik/Skulptur",
-          "it": "Plastica/scultura"
+          "it": "Plastica/scultura",
+          "uk": "Пластика/скульптура"
         }
       },
       "Produktionsfragment": {
         "label": {
           "de": "Produktionsfragment",
-          "it": "Frammento di produzione"
+          "it": "Frammento di produzione",
+          "uk": "Фрагмент продукції"
         }
       },
       "Reibstein": {
         "label": {
           "de": "Reibstein",
-          "it": "Pestello"
+          "it": "Pestello",
+          "uk": "Камінь для тертя"
         }
       },
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень/Кільце"
         }
       },
       "Rührstab": {
         "label": {
           "de": "Rührstab",
-          "it": "Asta di mescolamento"
+          "it": "Asta di mescolamento",
+          "uk": "Палиця для перемішування"
         }
       },
       "Sarkophag": {
         "label": {
           "de": "Sarkophag",
-          "it": "Sarcofago"
+          "it": "Sarcofago",
+          "uk": "Саркофаг"
         }
       },
       "Schmuck": {
         "label": {
           "de": "Schmuck",
-          "it": "Gioiello"
+          "it": "Gioiello",
+          "uk": "Ювелірний виріб"
         }
       },
       "Siegel": {
         "label": {
           "de": "Siegel",
-          "it": "Sigillo"
+          "it": "Sigillo",
+          "uk": "Печатка"
         }
       },
       "Spielbrett": {
         "label": {
           "de": "Spielbrett",
-          "it": "Scacchiera"
+          "it": "Scacchiera",
+          "uk": "Ігрова дошка"
         }
       },
       "Spielstein": {
         "label": {
           "de": "Spielstein",
-          "it": "Pedina da gioco"
+          "it": "Pedina da gioco",
+          "uk": "Ігрова фішка/фігура"
         }
       },
       "Spinnwirtel": {
@@ -8971,13 +9800,15 @@
       "Spolie": {
         "label": {
           "de": "Spolie",
-          "it": "Spoglie"
+          "it": "Spoglie",
+          "uk": "Сполія"
         }
       },
       "Statuenbasis": {
         "label": {
           "de": "Statuenbasis",
-          "it": "Base di statua"
+          "it": "Base di statua",
+          "uk": "База статуї"
         }
       },
       "Stele": {
@@ -8995,7 +9826,8 @@
       "Tischfuß": {
         "label": {
           "de": "Tischfuß",
-          "it": "Piede del tavolo"
+          "it": "Piede del tavolo",
+          "uk": "Ніжка стола"
         }
       },
       "Unsicher bzw. unbestimmbar": {
@@ -9013,19 +9845,22 @@
       "Webgewicht": {
         "label": {
           "de": "Webgewicht",
-          "it": "Peso da telaio"
+          "it": "Peso da telaio",
+          "uk": "Вага плетіння"
         }
       },
       "Werkzeug": {
         "label": {
           "de": "Werkzeug",
-          "it": "Attrezzo"
+          "it": "Attrezzo",
+          "uk": "Інструмент"
         }
       },
       "Ölpresse": {
         "label": {
           "de": "Ölpresse",
-          "it": "Frantoio"
+          "it": "Frantoio",
+          "uk": "Олійний прес"
         }
       }
     }
@@ -9038,19 +9873,22 @@
       "Alpen": {
         "label": {
           "de": "Alpen",
-          "it": "Alpi"
+          "it": "Alpi",
+          "uk": "Альпи"
         }
       },
       "Anatolien": {
         "label": {
           "de": "Anatolien",
-          "it": "Anatolia"
+          "it": "Anatolia",
+          "uk": "Анатолія"
         }
       },
       "Chimtou": {
         "label": {
           "de": "Chimtou",
-          "it": "Chimtou"
+          "it": "Chimtou",
+          "uk": "Чімтоу"
         }
       },
       "Harz": {
@@ -9062,13 +9900,15 @@
       "Kreta": {
         "label": {
           "de": "Kreta",
-          "it": "Creta"
+          "it": "Creta",
+          "uk": "Крит"
         }
       },
       "Sizilien": {
         "label": {
           "de": "Sizilien",
-          "it": "Sicilia"
+          "it": "Sicilia",
+          "uk": "Сицилія"
         }
       }
     }
@@ -9489,7 +10329,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Victoriatus": {
@@ -9508,25 +10349,29 @@
       "Gegossen": {
         "label": {
           "de": "Gegossen",
-          "it": "fusa"
+          "it": "fusa",
+          "uk": "Литий"
         }
       },
       "Geprägt": {
         "label": {
           "de": "Geprägt",
-          "it": "coniata"
+          "it": "coniata",
+          "uk": "Викарбований"
         }
       },
       "Plattiert": {
         "label": {
           "de": "Plattiert",
-          "it": "placcata"
+          "it": "placcata",
+          "uk": "Пластинчастий"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       }
     }
@@ -9539,7 +10384,8 @@
       "Aluminium": {
         "label": {
           "de": "Aluminium",
-          "it": "Alluminio"
+          "it": "Alluminio",
+          "uk": "Алюміній"
         }
       },
       "Billon": {
@@ -9551,67 +10397,78 @@
       "Blei": {
         "label": {
           "de": "Blei",
-          "it": "Piombo"
+          "it": "Piombo",
+          "uk": "Свинець"
         }
       },
       "Bronze": {
         "label": {
           "de": "Bronze",
-          "it": "Bronzo"
+          "it": "Bronzo",
+          "uk": "Бронза"
         }
       },
       "Eisen": {
         "label": {
           "de": "Eisen",
-          "it": "Ferro"
+          "it": "Ferro",
+          "uk": "Залізо"
         }
       },
       "Gold": {
         "label": {
           "de": "Gold",
-          "it": "Oro"
+          "it": "Oro",
+          "uk": "Золото"
         }
       },
       "Kupfer": {
         "label": {
           "de": "Kupfer",
-          "it": "Rame"
+          "it": "Rame",
+          "uk": "Мідь"
         }
       },
       "Messing": {
         "label": {
           "de": "Messing",
-          "it": "Ottone"
+          "it": "Ottone",
+          "uk": "Латунь"
         }
       },
       "Silber": {
         "label": {
           "de": "Silber",
-          "it": "Argento"
+          "it": "Argento",
+          "uk": "Срібло"
         }
       },
       "Stahl": {
         "label": {
           "de": "Stahl",
-          "it": "Acciaio"
+          "it": "Acciaio",
+          "uk": "Сталь"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Zink": {
         "label": {
           "de": "Zink",
-          "it": "Zinco"
+          "it": "Zinco",
+          "uk": "Цинк"
         }
       },
       "Zinn": {
         "label": {
           "de": "Zinn",
-          "it": "Stagno"
+          "it": "Stagno",
+          "uk": "Олово"
         }
       }
     }
@@ -9636,7 +10493,8 @@
       "Afrika": {
         "label": {
           "de": "Afrika",
-          "it": "Africa"
+          "it": "Africa",
+          "uk": "Африка"
         }
       },
       "Agrigent": {
@@ -9852,7 +10710,8 @@
       "Asien": {
         "label": {
           "de": "Asien",
-          "it": "Asia"
+          "it": "Asia",
+          "uk": "Азія"
         }
       },
       "Aspendos": {
@@ -9876,7 +10735,8 @@
       "Athen": {
         "label": {
           "de": "Athen",
-          "it": "Atene"
+          "it": "Atene",
+          "uk": "Афіни"
         }
       },
       "Aydın": {
@@ -9888,7 +10748,8 @@
       "Babylon": {
         "label": {
           "de": "Babylon",
-          "it": "Babilonia"
+          "it": "Babilonia",
+          "uk": "Вавилон"
         }
       },
       "Barcino (Barcelona)": {
@@ -10002,7 +10863,8 @@
       "Chersones": {
         "label": {
           "de": "Chersones",
-          "it": "Chersoneso"
+          "it": "Chersoneso",
+          "uk": "Херсонес"
         }
       },
       "Chios": {
@@ -10038,7 +10900,8 @@
       "Constantinopolis (Istanbul)": {
         "label": {
           "de": "Constantinopolis (Istanbul)",
-          "it": "Costantinopoli (Istanbul)"
+          "it": "Costantinopoli (Istanbul)",
+          "uk": "Константинополь (Стамбул)"
         }
       },
       "Crotone": {
@@ -10056,7 +10919,8 @@
       "Damaskus": {
         "label": {
           "de": "Damaskus",
-          "it": "Damasco"
+          "it": "Damasco",
+          "uk": "Дамаск"
         }
       },
       "Diesseitiges Gallian / Norditalien": {
@@ -10242,7 +11106,8 @@
       "Italien": {
         "label": {
           "de": "Italien",
-          "it": "Italia"
+          "it": "Italia",
+          "uk": "Італія"
         }
       },
       "Italien (Südosten)": {
@@ -10290,7 +11155,8 @@
       "Kertsch": {
         "label": {
           "de": "Kertsch",
-          "it": "Cherc"
+          "it": "Cherc",
+          "uk": "Керч"
         }
       },
       "Klazomenai": {
@@ -10308,7 +11174,8 @@
       "Kolchis": {
         "label": {
           "de": "Kolchis",
-          "it": "Colchide"
+          "it": "Colchide",
+          "uk": "Колхіда"
         }
       },
       "Kolophon": {
@@ -10320,7 +11187,8 @@
       "Konstantinopel": {
         "label": {
           "de": "Konstantinopel",
-          "it": "Costantinopoli"
+          "it": "Costantinopoli",
+          "uk": "Константинопіль"
         }
       },
       "Korfu": {
@@ -10500,7 +11368,8 @@
       "Makedonien": {
         "label": {
           "de": "Makedonien",
-          "it": "Macedonia"
+          "it": "Macedonia",
+          "uk": "Македонія"
         }
       },
       "Makedonien (1. Region)": {
@@ -11088,7 +11957,8 @@
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Viminatium": {
@@ -11204,73 +12074,85 @@
       "- 1 Uhr": {
         "label": {
           "de": "- 1 Uhr",
-          "it": "- ore 1"
+          "it": "- ore 1",
+          "uk": "- 1 годин/a"
         }
       },
       "- 2 Uhr": {
         "label": {
           "de": "- 2 Uhr",
-          "it": "- ore 2"
+          "it": "- ore 2",
+          "uk": "- 2 годин/a"
         }
       },
       "- 3 Uhr": {
         "label": {
           "de": "- 3 Uhr",
-          "it": "- ore 3"
+          "it": "- ore 3",
+          "uk": "- 3 годин/a"
         }
       },
       "- 4 Uhr": {
         "label": {
           "de": "- 4 Uhr",
-          "it": "- ore 4"
+          "it": "- ore 4",
+          "uk": "- 4 годин/a"
         }
       },
       "- 5 Uhr": {
         "label": {
           "de": "- 5 Uhr",
-          "it": "- ore 5"
+          "it": "- ore 5",
+          "uk": "- 5 годин/a"
         }
       },
       "- 6 Uhr": {
         "label": {
           "de": "- 6 Uhr",
-          "it": "- ore 6"
+          "it": "- ore 6",
+          "uk": "- 6 годин/a"
         }
       },
       "- 7 Uhr": {
         "label": {
           "de": "- 7 Uhr",
-          "it": "- ore 7"
+          "it": "- ore 7",
+          "uk": "- 7 годин/a"
         }
       },
       "- 8 Uhr": {
         "label": {
           "de": "- 8 Uhr",
-          "it": "- ore 8"
+          "it": "- ore 8",
+          "uk": "- 8 годин/a"
         }
       },
       "- 9 Uhr": {
         "label": {
           "de": "- 9 Uhr",
-          "it": "- ore 9"
+          "it": "- ore 9",
+          "uk": "- 9 годин/a"
         }
       },
       "- 10 Uhr": {
         "label": {
           "de": "- 10 Uhr",
-          "it": "- ore 10"
+          "it": "- ore 10",
+          "uk": "- 10 годин/a"
         }
       },
       "- 11 Uhr": {
         "label": {
           "de": "- 11 Uhr",
-          "it": "- ore 11"
+          "it": "- ore 11",
+          "uk": "- 11 годин/a"
         }
       },
       "- 12 Uhr": {
         "label": {
           "de": "- 12 Uhr",
-          "it": "- ore 12"
+          "it": "- ore 12",
+          "uk": "- 12 годин/a"
         }
       }
     }
@@ -11283,13 +12165,15 @@
       "Landesamt": {
         "label": {
           "de": "Landesamt",
-          "it": "Ufficio statale"
+          "it": "Ufficio statale",
+          "uk": "Державне Управління"
         }
       },
       "Museum": {
         "label": {
           "de": "Museum",
-          "it": "Museo"
+          "it": "Museo",
+          "uk": "Музей"
         }
       },
       "Museum Bergama": {
@@ -11307,25 +12191,29 @@
       "Privatbesitz": {
         "label": {
           "de": "Privatbesitz",
-          "it": "Proprietà privata"
+          "it": "Proprietà privata",
+          "uk": "Приватна власність"
         }
       },
       "Regionalverwaltung": {
         "label": {
           "de": "Regionalverwaltung",
-          "it": "Amministrazione regionale"
+          "it": "Amministrazione regionale",
+          "uk": "Обласна адміністрація"
         }
       },
       "Restaurierungswerkstatt": {
         "label": {
           "de": "Restaurierungswerkstatt",
-          "it": "Laboratorio di restauro"
+          "it": "Laboratorio di restauro",
+          "uk": "Реставраційна майстерня"
         }
       },
       "Staatsbesitz": {
         "label": {
           "de": "Staatsbesitz",
-          "it": "Proprietà dello Stato"
+          "it": "Proprietà dello Stato",
+          "uk": "Державна власність"
         }
       }
     }
@@ -11338,19 +12226,22 @@
       "Feinsand": {
         "label": {
           "de": "Feinsand",
-          "it": "Sabbia fine"
+          "it": "Sabbia fine",
+          "uk": "Дрібний пісок"
         }
       },
       "Grus": {
         "label": {
           "de": "Grus",
-          "it": "frantumi di roccia"
+          "it": "frantumi di roccia",
+          "uk": "Подріблена скельна порода"
         }
       },
       "Sand": {
         "label": {
           "de": "Sand",
-          "it": "Sabbia"
+          "it": "Sabbia",
+          "uk": "Пісок"
         }
       }
     }
@@ -11363,49 +12254,57 @@
       "Dia bunt": {
         "label": {
           "de": "Dia bunt",
-          "it": "Diapositiva colorata"
+          "it": "Diapositiva colorata",
+          "uk": "Слайд/діапозитив кольоровий"
         }
       },
       "Digitalfoto": {
         "label": {
           "de": "Digitalfoto",
-          "it": "Foto digitale"
+          "it": "Foto digitale",
+          "uk": "Цифрове фото"
         }
       },
       "Glasnegativ": {
         "label": {
           "de": "Glasnegativ",
-          "it": "Negativo in vetro"
+          "it": "Negativo in vetro",
+          "uk": "Негатив"
         }
       },
       "Kleinbild bunt": {
         "label": {
           "de": "Kleinbild bunt",
-          "it": "35 mm colorato"
+          "it": "35 mm colorato",
+          "uk": "35 mm кольорова"
         }
       },
       "Kleinbild s/w": {
         "label": {
           "de": "Kleinbild s/w",
-          "it": "35 mm b/n"
+          "it": "35 mm b/n",
+          "uk": "35 mm ч/б"
         }
       },
       "Messbild": {
         "label": {
           "de": "Messbild",
-          "it": "Fotogramma"
+          "it": "Fotogramma",
+          "uk": "Вимірюванльна фотографія"
         }
       },
       "Mittelformat": {
         "label": {
           "de": "Mittelformat",
-          "it": "Formato medio"
+          "it": "Formato medio",
+          "uk": "Середній формат"
         }
       },
       "Scan": {
         "label": {
           "de": "Scan",
-          "it": "Scansione"
+          "it": "Scansione",
+          "uk": "Сканування"
         }
       }
     }
@@ -11418,61 +12317,71 @@
       "Bemalung": {
         "label": {
           "de": "Bemalung",
-          "it": "Pittura"
+          "it": "Pittura",
+          "uk": "Розпис/живопис"
         }
       },
       "Beschläge": {
         "label": {
           "de": "Beschläge",
-          "it": "Borchie"
+          "it": "Borchie",
+          "uk": "Кріплення/завіси"
         }
       },
       "Emaille": {
         "label": {
           "de": "Emaille",
-          "it": "Smalto"
+          "it": "Smalto",
+          "uk": "Емаль"
         }
       },
       "Nielloverzierung": {
         "label": {
           "de": "Nielloverzierung",
-          "it": "Decorazione a niello"
+          "it": "Decorazione a niello",
+          "uk": "Прикраса чернінням"
         }
       },
       "Reliefdekor": {
         "label": {
           "de": "Reliefdekor",
-          "it": "Decorazione a rilievo"
+          "it": "Decorazione a rilievo",
+          "uk": "Рельєфний декор"
         }
       },
       "Riefeldekor": {
         "label": {
           "de": "Riefeldekor",
-          "it": "Decorazione a scanalature"
+          "it": "Decorazione a scanalature",
+          "uk": "Рифельний декор"
         }
       },
       "Ritzungen": {
         "label": {
           "de": "Ritzungen",
-          "it": "incisioni"
+          "it": "incisioni",
+          "uk": "Подряпини"
         }
       },
       "Stempel": {
         "label": {
           "de": "Stempel",
-          "it": "Bollo"
+          "it": "Bollo",
+          "uk": "Штамп"
         }
       },
       "Stempeldekor": {
         "label": {
           "de": "Stempeldekor",
-          "it": "Decorazione a stampo"
+          "it": "Decorazione a stampo",
+          "uk": "Штамповий декор"
         }
       },
       "Vergoldung": {
         "label": {
           "de": "Vergoldung",
-          "it": "Doratura"
+          "it": "Doratura",
+          "uk": "Позолота"
         }
       }
     }
@@ -11491,25 +12400,29 @@
       "Gußtechnik": {
         "label": {
           "de": "Gußtechnik",
-          "it": "fusione"
+          "it": "fusione",
+          "uk": "Техніка лиття"
         }
       },
       "Prägearbeit": {
         "label": {
           "de": "Prägearbeit",
-          "it": "goffratura"
+          "it": "goffratura",
+          "uk": "Техніка тиснення"
         }
       },
       "Schmiedetechnik": {
         "label": {
           "de": "Schmiedetechnik",
-          "it": "forgiatura"
+          "it": "forgiatura",
+          "uk": "Техніка кування"
         }
       },
       "Ziehtechnik": {
         "label": {
           "de": "Ziehtechnik",
-          "it": "trafilatura"
+          "it": "trafilatura",
+          "uk": "Техніка малювання за допомогою розтягування"
         }
       }
     }
@@ -11522,49 +12435,57 @@
       "Anhänger": {
         "label": {
           "de": "Anhänger",
-          "it": "Pendente"
+          "it": "Pendente",
+          "uk": "Підвіска"
         }
       },
       "Armreif": {
         "label": {
           "de": "Armreif",
-          "it": "Bracciale"
+          "it": "Bracciale",
+          "uk": "Браслет"
         }
       },
       "Barren": {
         "label": {
           "de": "Barren",
-          "it": "Barra"
+          "it": "Barra",
+          "uk": "Злиток"
         }
       },
       "Beschlag": {
         "label": {
           "de": "Beschlag",
-          "it": "Borchia"
+          "it": "Borchia",
+          "uk": "Завіса/кріплення"
         }
       },
       "Blech": {
         "label": {
           "de": "Blech",
-          "it": "Lamiera"
+          "it": "Lamiera",
+          "uk": "Лист бляхи"
         }
       },
       "Einlage": {
         "label": {
           "de": "Einlage",
-          "it": "Inserto"
+          "it": "Inserto",
+          "uk": "Інкрустація"
         }
       },
       "Fibel": {
         "label": {
           "de": "Fibel",
-          "it": "Fibula"
+          "it": "Fibula",
+          "uk": "Фібула/Булавка"
         }
       },
       "Gefäß": {
         "label": {
           "de": "Gefäß",
-          "it": "Vaso"
+          "it": "Vaso",
+          "uk": "Інструмент"
         }
       },
       "Gerät": {
@@ -11576,73 +12497,85 @@
       "Gewicht": {
         "label": {
           "de": "Gewicht",
-          "it": "Peso"
+          "it": "Peso",
+          "uk": "Вага"
         }
       },
       "Glocke": {
         "label": {
           "de": "Glocke",
-          "it": "Campana"
+          "it": "Campana",
+          "uk": "Дзвін"
         }
       },
       "Gussform": {
         "label": {
           "de": "Gussform",
-          "it": "Matrice"
+          "it": "Matrice",
+          "uk": "Чавунна форма"
         }
       },
       "Gusszapfen": {
         "label": {
           "de": "Gusszapfen",
-          "it": "Perno"
+          "it": "Perno",
+          "uk": "Чавунний тримак"
         }
       },
       "Halbfabrikat": {
         "label": {
           "de": "Halbfabrikat",
-          "it": "Semilavorato"
+          "it": "Semilavorato",
+          "uk": "Напівфабрикат"
         }
       },
       "Kandelaber": {
         "label": {
           "de": "Kandelaber",
-          "it": "Candelabro"
+          "it": "Candelabro",
+          "uk": "Підсвічник/Канделябр"
         }
       },
       "Kette": {
         "label": {
           "de": "Kette",
-          "it": "Catena"
+          "it": "Catena",
+          "uk": "Ланцюг"
         }
       },
       "Klinge": {
         "label": {
           "de": "Klinge",
-          "it": "Lama"
+          "it": "Lama",
+          "uk": "Лезо"
         }
       },
       "Knopf": {
         "label": {
           "de": "Knopf",
-          "it": "Pomello"
+          "it": "Pomello",
+          "uk": "Гудзик"
         }
       },
       "Lampe": {
         "label": {
           "de": "Lampe",
-          "it": "Lucerna"
+          "it": "Lucerna",
+          "uk": "Лампа"
         }
       },
       "Löffel": {
         "label": {
           "de": "Löffel",
-          "it": "Cucchiaio"
+          "it": "Cucchiaio",
+          "uk": "Ложка"
         }
       },
       "Mobiliar": {
         "label": {
           "de": "Mobiliar",
-          "it": "Mobilio"
+          "it": "Mobilio",
+          "uk": "Меблі"
         }
       },
       "Nadel": {
@@ -11654,79 +12587,92 @@
       "Nagel": {
         "label": {
           "de": "Nagel",
-          "it": "Chiodo"
+          "it": "Chiodo",
+          "uk": "Цвях"
         }
       },
       "Perle": {
         "label": {
           "de": "Perle",
-          "it": "Perla"
+          "it": "Perla",
+          "uk": "Перлина"
         }
       },
       "Pfeilspitze": {
         "label": {
           "de": "Pfeilspitze",
-          "it": "Punta di freccia"
+          "it": "Punta di freccia",
+          "uk": "Наконечник стріли"
         }
       },
       "Plastik/Skulptur": {
         "label": {
           "de": "Plastik/Skulptur",
-          "it": "Plastica/scultura"
+          "it": "Plastica/scultura",
+          "uk": "Пластика/скульптура"
         }
       },
       "Produktionsfragment": {
         "label": {
           "de": "Produktionsfragment",
-          "it": "Frammento di produzione"
+          "it": "Frammento di produzione",
+          "uk": "Виробничий фрагмент "
         }
       },
       "Projektil": {
         "label": {
           "de": "Projektil",
-          "it": "Proiettile"
+          "it": "Proiettile",
+          "uk": "Cнаряд"
         }
       },
       "Reibe": {
         "label": {
           "de": "Reibe",
-          "it": "Grattugia"
+          "it": "Grattugia",
+          "uk": "Терка"
         }
       },
       "Ring": {
         "label": {
           "de": "Ring",
-          "it": "Anello"
+          "it": "Anello",
+          "uk": "Перстень/Кільце"
         }
       },
       "Ringbarren": {
         "label": {
           "de": "Ringbarren",
-          "it": "Barre ad anello"
+          "it": "Barre ad anello",
+          "uk": "Злиток для перстня"
         }
       },
       "Rührstab": {
         "label": {
           "de": "Rührstab",
-          "it": "Asta di mescolamento"
+          "it": "Asta di mescolamento",
+          "uk": "Паличка для перемішування"
         }
       },
       "Sarkophag": {
         "label": {
           "de": "Sarkophag",
-          "it": "Sarcofago"
+          "it": "Sarcofago",
+          "uk": "Саркофаг"
         }
       },
       "Schild": {
         "label": {
           "de": "Schild",
-          "it": "Scudo"
+          "it": "Scudo",
+          "uk": "Табличка"
         }
       },
       "Schlacke": {
         "label": {
           "de": "Schlacke",
-          "it": "Scoria"
+          "it": "Scoria",
+          "uk": "Ключ"
         }
       },
       "Schlüssel": {
@@ -11738,43 +12684,50 @@
       "Schmiedeabfall": {
         "label": {
           "de": "Schmiedeabfall",
-          "it": "Scarti di forgiatura"
+          "it": "Scarti di forgiatura",
+          "uk": "Відходи кування"
         }
       },
       "Schmuck": {
         "label": {
           "de": "Schmuck",
-          "it": "Gioiello"
+          "it": "Gioiello",
+          "uk": "Ювелірний виріб"
         }
       },
       "Schnalle": {
         "label": {
           "de": "Schnalle",
-          "it": "Fibbia"
+          "it": "Fibbia",
+          "uk": "Пряжка"
         }
       },
       "Schreibgerät": {
         "label": {
           "de": "Schreibgerät",
-          "it": "Strumento per scrivere"
+          "it": "Strumento per scrivere",
+          "uk": "Інструмент для письма"
         }
       },
       "Siegel": {
         "label": {
           "de": "Siegel",
-          "it": "Sigillo"
+          "it": "Sigillo",
+          "uk": "Печатка"
         }
       },
       "Spiegel": {
         "label": {
           "de": "Spiegel",
-          "it": "Specchio"
+          "it": "Specchio",
+          "uk": "Дзеркало"
         }
       },
       "Spielstein": {
         "label": {
           "de": "Spielstein",
-          "it": "Pedina da gioco"
+          "it": "Pedina da gioco",
+          "uk": "Ігрова фішка/фігура"
         }
       },
       "Spinnwirtel": {
@@ -11792,49 +12745,57 @@
       "Strigilis": {
         "label": {
           "de": "Strigilis",
-          "it": "Strigile"
+          "it": "Strigile",
+          "uk": "Стрігіл"
         }
       },
       "Türschloss": {
         "label": {
           "de": "Türschloss",
-          "it": "Serratura"
+          "it": "Serratura",
+          "uk": "Дверний замок"
         }
       },
       "Unsicher bzw. unbestimmbar": {
         "label": {
           "de": "Unsicher bzw. unbestimmbar",
-          "it": "incerto o indeterminabile"
+          "it": "incerto o indeterminabile",
+          "uk": "Негарантовано або невизначено"
         }
       },
       "Waffe": {
         "label": {
           "de": "Waffe",
-          "it": "Arma"
+          "it": "Arma",
+          "uk": "Зброя"
         }
       },
       "Wasserleitung": {
         "label": {
           "de": "Wasserleitung",
-          "it": "Tubo dell'acqua"
+          "it": "Tubo dell'acqua",
+          "uk": "Водопровід"
         }
       },
       "Weinheber": {
         "label": {
           "de": "Weinheber",
-          "it": "Alzavino"
+          "it": "Alzavino",
+          "uk": "Винопідйомник"
         }
       },
       "Werkzeug": {
         "label": {
           "de": "Werkzeug",
-          "it": "Attrezzo"
+          "it": "Attrezzo",
+          "uk": "Інструмент"
         }
       },
       "Zierbeschlag": {
         "label": {
           "de": "Zierbeschlag",
-          "it": "Accessorio ornamentale"
+          "it": "Accessorio ornamentale",
+          "uk": "Декоративна завіса/фурнітура"
         }
       }
     }
@@ -11847,13 +12808,15 @@
       "Alabastron": {
         "label": {
           "de": "Alabastron",
-          "it": "Alabastron"
+          "it": "Alabastron",
+          "uk": "Алебастрон"
         }
       },
       "Amphoriskos": {
         "label": {
           "de": "Amphoriskos",
-          "it": "Anforisco"
+          "it": "Anforisco",
+          "uk": "Амфорискос"
         }
       },
       "Aryballos": {
@@ -11967,13 +12930,15 @@
       "Spitzamphora": {
         "label": {
           "de": "Spitzamphora",
-          "it": "Anfora a punta"
+          "it": "Anfora a punta",
+          "uk": "Завужена амфора"
         }
       },
       "Sprenkler": {
         "label": {
           "de": "Sprenkler",
-          "it": "Annaffiatoio"
+          "it": "Annaffiatoio",
+          "uk": "Шринклер"
         }
       },
       "Stamnos": {
@@ -11985,19 +12950,22 @@
       "Vierkantflasche": {
         "label": {
           "de": "Vierkantflasche",
-          "it": "Bottiglia quadrata"
+          "it": "Bottiglia quadrata",
+          "uk": "Чотирикутна пляшка"
         }
       },
       "hexagonale Flasche": {
         "label": {
           "de": "hexagonale Flasche",
-          "it": "Bottiglia esagonale"
+          "it": "Bottiglia esagonale",
+          "uk": "Шестигранна пляшка"
         }
       },
       "zylindrische Flasche": {
         "label": {
           "de": "zylindrische Flasche",
-          "it": "Bottiglia cilindrica"
+          "it": "Bottiglia cilindrica",
+          "uk": "Циліндрична пляшка"
         }
       }
     }
@@ -12010,37 +12978,43 @@
       "Bodenprobe": {
         "label": {
           "de": "Bodenprobe",
-          "it": "Campione di terra"
+          "it": "Campione di terra",
+          "uk": "Проба грунту"
         }
       },
       "C14-Analyse": {
         "label": {
           "de": "C14-Analyse",
-          "it": "Analisi C14"
+          "it": "Analisi C14",
+          "uk": "Радіокарбонний аналіз С14"
         }
       },
       "Dendroprobe": {
         "label": {
           "de": "Dendroprobe",
-          "it": "Campione dendrologico"
+          "it": "Campione dendrologico",
+          "uk": "Дендрохронологічна проба"
         }
       },
       "Hammerschlagsprobe": {
         "label": {
           "de": "Hammerschlagsprobe",
-          "it": "Prova del martello"
+          "it": "Prova del martello",
+          "uk": "Випробування ударом/молотком"
         }
       },
       "Phosphatanalyse": {
         "label": {
           "de": "Phosphatanalyse",
-          "it": "Analisi dei fosfati"
+          "it": "Analisi dei fosfati",
+          "uk": "Фосфатний аналіз"
         }
       },
       "Pollenanalyse": {
         "label": {
           "de": "Pollenanalyse",
-          "it": "Analsii dei pollini"
+          "it": "Analsii dei pollini",
+          "uk": "Пилковий аналіз"
         }
       }
     }
@@ -12054,28 +13028,32 @@
         "label": {
           "de": "Form",
           "en": "Shape",
-          "it": "Forma"
+          "it": "Forma",
+          "uk": "Форма"
         }
       },
       "Material": {
         "label": {
           "de": "Material",
           "en": "Material",
-          "it": "Materiale"
+          "it": "Materiale",
+          "uk": "Матеріал"
         }
       },
       "Dekoration": {
         "label": {
           "de": "Dekoration",
           "en": "Decoration",
-          "it": "Decorazione"
+          "it": "Decorazione",
+          "uk": "Декорація/прикраса"
         }
       },
       "Spuren": {
         "label": {
           "de": "Spuren",
           "en": "Traces",
-          "it": "Tracce"
+          "it": "Tracce",
+          "uk": "Відбитки/залишки"
         }
       }
     }

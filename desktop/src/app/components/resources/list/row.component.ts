@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { isObject, isString, Map, equal, isEmpty } from 'tsfun';
+import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N, FieldResource } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -51,11 +51,13 @@ export class RowComponent implements AfterViewInit {
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
-    public startEditing = (fieldName: string, fieldValue: string|I18N.String) => this.initialValues[fieldName] = fieldValue;
+    public startEditing = (fieldName: string, fieldValue: string|I18N.String) =>
+        this.initialValues[fieldName] = clone(fieldValue);
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
-    public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
+    public shouldShowArrowTopRightForSearchMode = () =>
+        this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
@@ -111,7 +113,7 @@ export class RowComponent implements AfterViewInit {
             this.saving = this.save();
             await this.saving;
         }
-        this.initialValues[fieldName] = fieldValue;
+        this.initialValues[fieldName] = clone(fieldValue);
     }
 
 
@@ -221,8 +223,8 @@ export class RowComponent implements AfterViewInit {
 
     private hasChanged(fieldName: string, fieldValue: any): boolean {
 
-        return isObject(fieldValue) && isObject(this.initialValues[fieldName])
-            ? equal(this.initialValues[fieldName] as any)(fieldValue)
+        return (isObject(fieldValue) && isObject(this.initialValues[fieldName]))
+            ? !equal(this.initialValues[fieldName] as any)(fieldValue)
             : this.initialValues[fieldName] != fieldValue;
     }
 

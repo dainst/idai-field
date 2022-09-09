@@ -1,4 +1,4 @@
-import { clone } from 'tsfun';
+import { Map, clone } from 'tsfun';
 import { Named } from './named';
 
 
@@ -89,6 +89,16 @@ export namespace I18N {
             .forEach(key => delete result[key]);
 
         return result;
+    }
+
+
+    export function getFormattedContent(i18nString: I18N.String, languageLabels: Map<string>): string {
+
+        return Object.keys(i18nString).reduce((result, language) => {
+            if (result) result += ', ';
+            result += languageLabels[language] + ': ' + i18nString[language];
+            return result;
+        }, '')
     }
 
 

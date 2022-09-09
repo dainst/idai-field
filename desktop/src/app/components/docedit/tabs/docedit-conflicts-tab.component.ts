@@ -8,6 +8,7 @@ import { Loading } from '../../widgets/loading';
 import { WinningSide } from './revision-selector.component';
 import { formatContent } from './format-content';
 import { ConflictResolving } from './conflict-resolving';
+import { Languages } from '../../../services/languages';
 
 
 /**
@@ -49,7 +50,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
         field,
         (key: string) => this.utilTranslations.getTranslation(key),
         (value: string) => this.decimalPipe.transform(value),
-        this.labels
+        this.labels,
+        Languages.getAvailableLanguages()
     );
 
 

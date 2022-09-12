@@ -146,14 +146,14 @@ export class ConfigurationPage {
     }
 
 
-    public static async changeInputType(fieldName: string, newInputType: string,
-                                        categoryName: string, supercategoryName?: string) {
+    public static async changeMultiLanguageSetting(fieldName: string, categoryName: string,
+                                                   supercategoryName?: string) {
 
         await ConfigurationPage.clickSelectCategoriesFilter('all');
         await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
         await ConfigurationPage.clickOpenContextMenuForField(fieldName);
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption(newInputType);
+        await EditConfigurationPage.clickToggleMultiLanguageSlider();
         await EditConfigurationPage.clickConfirm();
     }
 }

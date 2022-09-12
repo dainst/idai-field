@@ -36,6 +36,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleMultiLanguageSlider() {
+
+        return click('#toggle-multi-language-slider');
+    }
+
+
     public static clickSwapValuelist() {
 
         return click('#swap-valuelist-button');

@@ -48,6 +48,20 @@
                 </label>
             </div>
         </div>
+        <div *ngIf="isI18nCompatible()">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.allowMultiLanguage">Eingabe in mehreren Sprachen erlauben</span>
+            </div>
+            <div>
+                <label id="allow-multi-language-slider" class="switch">
+                    <input
+                        type="checkbox"
+                        [checked]="isI18nInputType()"
+                        (change)="toggleI18nInput()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
         <div id="constraint-indexed-switch"
              ngbTooltip="{{getConstraintIndexedTooltip()}}"
              container="body">
@@ -61,20 +75,6 @@
                         [checked]="isConstraintIndexed()"
                         [disabled]="!isConstraintIndexOptionEnabled()"
                         (change)="toggleConstraintIndexed()">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-        <div *ngIf="isI18nCompatible()">
-            <div class="basic-settings-label">
-                <span i18n="@@configuration.allowMultiLanguage">Eingabe in mehreren Sprachen erlauben</span>
-            </div>
-            <div>
-                <label id="allow-multi-language-slider" class="switch">
-                    <input
-                        type="checkbox"
-                        [checked]="isI18nInputType()"
-                        (change)="toggleI18nInput()">
                     <span class="slider round"></span>
                 </label>
             </div>

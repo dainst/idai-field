@@ -73,6 +73,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isI18nInputType = () => Field.InputType.I18N_INPUT_TYPES.includes(this.getInputType());
 
+    public isI18nOptionEnabled = () => this.getInputType() !== Field.InputType.TEXT;
+
 
     public initialize() {
 
@@ -276,6 +278,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.i18n({
                 id: 'configuration.fieldSpecificSearch.changingNotAllowed',
                 value: 'Die Einstellung kann für dieses Feld nicht geändert werden.'
+            });
+        } else {
+            return '';
+        }
+    }
+
+    public getI18nOptionTooltip(): string {
+
+        if (this.getInputType() === Field.InputType.TEXT) {
+            return this.i18n({
+                id: 'configuration.i18nOption.changingNotAllowed',
+                value: 'Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.'
             });
         } else {
             return '';

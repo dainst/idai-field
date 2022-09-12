@@ -178,8 +178,6 @@ describe('configuration --', () => {
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
         await AddCategoryFormModalPage.clickCreateNewCategory();
 
-        await EditConfigurationPage.clickSelectLanguage(0, 'de');
-        await EditConfigurationPage.clickAddLanguage(0);
         await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie');
         await EditConfigurationPage.clickConfirm();
 
@@ -322,8 +320,6 @@ describe('configuration --', () => {
         await AddFieldModalPage.typeInSearchFilterInput('newField');
         await AddFieldModalPage.clickCreateNewField();
 
-        await EditConfigurationPage.clickSelectLanguage(0, 'de');
-        await EditConfigurationPage.clickAddLanguage(0);
         await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(ConfigurationPage.getField('test:newField'));
@@ -453,8 +449,6 @@ describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickCreateNewGroup();
 
-        await EditConfigurationPage.clickSelectLanguage(0, 'de');
-        await EditConfigurationPage.clickAddLanguage(0);
         await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));

@@ -51,7 +51,7 @@ export default function Field(): ReactElement {
 
                     <Route path="/image/:project/:id" component={ ImageView } />
 
-                    <Route path="/type/:project/:documentId" component={ TypeView } />
+                    <Route path="/type/:project/:documentId?" component={ TypeView } />
 
                     <Route path="/" component={ ProjectsOverview } />
                 </Switch>

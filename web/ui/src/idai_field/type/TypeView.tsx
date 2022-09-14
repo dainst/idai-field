@@ -47,10 +47,7 @@ export default function TypeView(): ReactElement {
             get(documentId, loginData.token)
                 .then(doc => {
                     setDocument(doc);
-                    setTabKey(
-                        (project === 'idaishapes' || !(doc.resource.category.name === 'Type')) ?
-                        'children' : 'linkedFinds'
-                    );
+                    setTabKey('children');
                 });
             getChildren(documentId, 0, loginData.token, project)
                 .then(result => setDocuments(result.documents));
@@ -84,7 +81,12 @@ export default function TypeView(): ReactElement {
                                 bodyStyle={ cardBodyStyle } />
                         </Col>
                         <Col style={ documentGridStyle } onScroll={ onScroll }>
+                            
                             <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
+                                <Tab eventKey="children" title={ t('shapes.browse.subtypes') }>
+                                    <DocumentGrid documents={ documents }
+                                        getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
+                                </Tab>
                                 { document && document.resource.category.name === 'Type' &&
                                     <Tab eventKey="linkedFinds" title={ t('shapes.browse.linkedFinds.header') }>
                                         <DocumentGrid documents={ finds }
@@ -95,11 +97,6 @@ export default function TypeView(): ReactElement {
                                             } />
                                     </Tab>
                                 }
-
-                                <Tab eventKey="children" title={ t('shapes.browse.subtypes') }>
-                                    <DocumentGrid documents={ documents }
-                                        getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
-                                </Tab>
                             </Tabs>
                         </Col>
                     </>

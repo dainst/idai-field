@@ -15,6 +15,7 @@ import { useGetChunkOnScroll } from '../../shared/scroll';
 import './typeView.css';
 import CONFIGURATION from '../../configuration.json';
 import DocumentCard from '../../shared/document/DocumentCard';
+import { TFunction } from 'i18next';
 
 
 const CHUNK_SIZE = 50;
@@ -52,7 +53,7 @@ export default function TypeView(): ReactElement {
             getChildren(documentId, 0, loginData.token, project)
                 .then(result => setDocuments(result.documents));
             getPredecessors(documentId, loginData.token)
-                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results)));
+                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results, t)));
 
             getLinkedFinds(documentId, 0, loginData.token, project)
                 .then(result => setFinds(result.documents));
@@ -145,11 +146,15 @@ const getCatalogsForProject = async (
 };
 
 
-const predecessorsToBreadcrumbItems = (project: string, predecessors: ResultDocument[]): BreadcrumbItem[] => {
+const predecessorsToBreadcrumbItems = (
+    project: string,
+    predecessors: ResultDocument[],
+    t: TFunction
+): BreadcrumbItem[] => {
 
     return [
         {
-            identifier: 'Catalogs',
+            identifier: t('type.catalogs'),
             url: `/type/${project}`,
         },
         ...predecessors.map(predec => {

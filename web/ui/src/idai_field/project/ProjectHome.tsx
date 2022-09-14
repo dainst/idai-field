@@ -6,7 +6,7 @@ import { Literature } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, useContext, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Document, FieldValue, getDocumentImages, getFieldValue } from '../../api/document';
 import { get, search } from '../../api/documents';
@@ -97,6 +97,11 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
         <Card className="mb-2 mt-0 p-2">
             <ProjectHierarchyButton projectDocument={ projectDoc }
                 label={ t('projectHome.toHierarchicalView') } />
+        </Card>
+        <Card className="mb-2 mt-0 p-2">
+            <Link to={ `/type/${projectId}` }>
+                <h5>Catalogs</h5>
+            </Link>
         </Card>
         <Card className="my-0 flex-fill" style={ { height: 0 } }>
             <div className="py-1 card-header">
@@ -307,4 +312,9 @@ const homeIconStyle: CSSProperties = {
     height: '1.5rem',
     width: '1.5rem',
     marginTop: '-0.3rem'
+};
+
+const homeHeadingStyle: CSSProperties = {
+    fontSize: '18px',
+    color: 'black'
 };

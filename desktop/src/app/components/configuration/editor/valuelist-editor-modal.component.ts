@@ -280,8 +280,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 if (isEmpty(value.description)) delete value.description;
             }
 
-            if (this.extendedValuelist && (isEmpty(value)
-                    || equal(this.extendedValuelist.values[key] as any)(value as any))) {
+            if (this.extendedValuelist && this.extendedValuelist.values?.[key]
+                    && (isEmpty(value) || equal(this.extendedValuelist.values[key] as any)(value as any))) {
                 delete result[key];
             }
         });

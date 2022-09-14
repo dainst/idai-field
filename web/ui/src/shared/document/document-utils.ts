@@ -32,20 +32,13 @@ export const getHierarchyLink = (doc: ResultDocument): string =>
     `/project/${doc.project}/hierarchy?parent=${doc.resource.id}`;
 
 
-export const isImage = (document: ResultDocument): boolean =>
-    IMAGE_CATEGORIES.includes(document.resource.category.name);
-
-
-export const isCategory = (document: ResultDocument, category: string): boolean =>
-    document.resource.category.name === category;
-
-
 const getLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
-    return window.location.href.includes(CONFIGURATION.shapesUrl) ?
-        getShapesLink(doc, projectId) :
-        getFieldLink(doc, projectId);
+    return window.location.href.includes(CONFIGURATION.shapesUrl)
+        ? getShapesLink(doc, projectId)
+        : getFieldLink(doc, projectId);
 };
+
 
 const getFieldLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
@@ -60,6 +53,7 @@ const getFieldLink = (doc: ResultDocument, projectId: string): [string, string] 
     }
     return [CONFIGURATION.fieldUrl, `/document/${projectId}/${doc.resource.id}`];
 };
+
 
 const getShapesLink = (doc: ResultDocument, projectId: string): [string, string] => {
 

@@ -103,7 +103,7 @@ export default function TypeView(): ReactElement {
                     : <Col>
                         <h1>Catalogs for { project }</h1>
                         <DocumentGrid documents={ documents }
-                            getLinkUrl={ (doc: ResultDocument): string => `${project}/${doc.resource.id}`} />
+                            getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
                     </Col>
                 }
             </Row>
@@ -139,7 +139,7 @@ const getCatalogsForProject = async (
             { field: 'project', value: project },
             { field: 'resource.category.name', value: 'TypeCatalog' }
         ]
-    }
+    };
     query = parseFrontendGetParams(searchParams, query);
     return search(query, token);
 };

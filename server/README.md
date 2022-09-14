@@ -44,6 +44,12 @@ mix phx.server
 
 FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
+Run tests unit tests with:
+
+```bash
+mix test
+``` 
+
 ### CLI Interface
 
 The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functions.

@@ -161,9 +161,9 @@ export class DoceditPage {
 
     // get text
 
-    public static async getInputFieldValue(index) {
+    public static async getSimpleInputFieldValue(index) {
 
-        const element = (await getElements('dai-input input'))[index];
+        const element = (await getElements('form-field-simple-input input'))[index];
         return getValue(element);
     }
 
@@ -197,7 +197,7 @@ export class DoceditPage {
 
     public static getGeometryEditWidget() {
 
-        return getElement('dai-geometry');
+        return getElement('form-field-geometry');
     }
 
 

@@ -100,7 +100,7 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
         </Card>
         <Card className="mb-2 mt-0 p-2">
             <Link to={ `/type/${projectId}` }>
-                <h5>Catalogs</h5>
+                <h5>{ t('projectHome.showAllCatalogs') }</h5>
             </Link>
         </Card>
         <Card className="my-0 flex-fill" style={ { height: 0 } }>
@@ -312,9 +312,4 @@ const homeIconStyle: CSSProperties = {
     height: '1.5rem',
     width: '1.5rem',
     marginTop: '-0.3rem'
-};
-
-const homeHeadingStyle: CSSProperties = {
-    fontSize: '18px',
-    color: 'black'
 };

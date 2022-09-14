@@ -83,12 +83,12 @@ export default function TypeView(): ReactElement {
                         <Col style={ documentGridStyle } onScroll={ onScroll }>
                             
                             <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
-                                <Tab eventKey="children" title={ t('shapes.browse.subtypes') }>
+                                <Tab eventKey="children" title={ t('type.subtypes') }>
                                     <DocumentGrid documents={ documents }
                                         getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                                 </Tab>
                                 { document && document.resource.category.name === 'Type' &&
-                                    <Tab eventKey="linkedFinds" title={ t('shapes.browse.linkedFinds.header') }>
+                                    <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
                                         <DocumentGrid documents={ finds }
                                             getLinkUrl={
                                                 (doc: ResultDocument): string => {
@@ -101,7 +101,7 @@ export default function TypeView(): ReactElement {
                         </Col>
                     </>
                     : <Col>
-                        <h1>Catalogs for { project }</h1>
+                        <h1>{ t('type.catalogs') }</h1>
                         <DocumentGrid documents={ documents }
                             getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
                     </Col>

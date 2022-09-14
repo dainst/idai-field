@@ -27,7 +27,8 @@ defmodule Api.Core.Layout do
   defp scan_field(resource) do
     fn config_item -> scan_field(resource, config_item) end
   end
-  defp scan_field(resource, config_item = %{ inputType: "relation" }) do
+  defp scan_field(resource, config_item = %{ inputType: inputType })
+      when inputType in ["relation", "instanceOf"] do
     targets = resource.relations[String.to_atom(config_item.name)]
 
     unless targets && length(targets) > 0, do: [], else:

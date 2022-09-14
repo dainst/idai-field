@@ -78,7 +78,7 @@ export default function TypeView(): ReactElement {
                     ? <>
                         <Col className="col-4 sidebar">
                             <DocumentCard document={ document }
-                                baseUrl={ CONFIGURATION.shapesUrl }
+                                baseUrl={ CONFIGURATION.fieldUrl }
                                 cardStyle={ cardStyle }
                                 headerStyle={ cardHeaderStyle }
                                 bodyStyle={ cardBodyStyle } />

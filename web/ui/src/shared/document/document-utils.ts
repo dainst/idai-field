@@ -3,6 +3,7 @@ import CONFIGURATION from '../../configuration.json';
 
 
 const IMAGE_CATEGORIES = ['Image', 'Photo', 'Drawing'];
+const TYPE_CATEGORIES = ['Type', 'TypeCatalog'];
 
 
 export const getDocumentPermalink = (doc: ResultDocument): string => {
@@ -15,7 +16,7 @@ export const getDocumentPermalink = (doc: ResultDocument): string => {
 export const getDocumentLink = (doc: ResultDocument, projectId: string, currentBaseUrl?: string): string => {
 
     // TODO Implement type catalog view for project specific types
-    if (isCategory(doc, 'Type') || isCategory(doc, 'TypeCatalog')) return undefined;
+    //if (isCategory(doc, 'Type') || isCategory(doc, 'TypeCatalog')) return undefined;
 
     const [baseUrl, path] = getLink(doc, projectId);
 
@@ -41,15 +42,36 @@ export const isCategory = (document: ResultDocument, category: string): boolean 
 
 const getLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
-    return isImage(doc)
-        ? [window.location.href.includes(CONFIGURATION.fieldUrl)
-            ? CONFIGURATION.fieldUrl
-            : CONFIGURATION.shapesUrl, `/image/${projectId}/${doc.resource.id}`]
-        : isCategory(doc, 'Type') || isCategory(doc, 'TypeCatalog')
-            ? [CONFIGURATION.shapesUrl, `/document/${doc.resource.id}`]
-            : [CONFIGURATION.fieldUrl,
-                isCategory(doc, 'Project')
-                    ? `/project/${projectId}`
-                    : `/document/${projectId}/${doc.resource.id}`
-            ];
+    if (window.location.href.includes(CONFIGURATION.shapesUrl)) {
+        return getShapesLink(doc, projectId);
+    } else {
+        return getFieldLink(doc, projectId);
+    }
+};
+
+const getFieldLink = (doc: ResultDocument, projectId: string): [string, string] => {
+
+    if (IMAGE_CATEGORIES.includes(doc.resource.category.name))
+        return [CONFIGURATION.fieldUrl, `/image/${projectId}/${doc.resource.id}`];
+
+    if (TYPE_CATEGORIES.includes(doc.resource.category.name))
+        return [CONFIGURATION.fieldUrl, `/type/${projectId}/${doc.resource.id}`];
+
+    if ('Project' === doc.resource.category.name)
+        return [CONFIGURATION.fieldUrl, `/project/${projectId}`];
+
+    return [CONFIGURATION.fieldUrl, `/document/${projectId}/${doc.resource.id}`];
+};
+
+const getShapesLink = (doc: ResultDocument, projectId: string): [string, string] => {
+    if (IMAGE_CATEGORIES.includes(doc.resource.category.name))
+        return [CONFIGURATION.shapesUrl, `/image/${projectId}/${doc.resource.id}`];
+
+    if (TYPE_CATEGORIES.includes(doc.resource.category.name))
+        return [CONFIGURATION.shapesUrl, `/document/${doc.resource.id}`];
+
+    if ('Project' === doc.resource.category.name)
+        return [CONFIGURATION.fieldUrl, `/project/${projectId}`];
+
+    return [CONFIGURATION.fieldUrl, `/document/${projectId}/${doc.resource.id}`];
 };

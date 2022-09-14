@@ -104,6 +104,6 @@ export namespace I18N {
 
     function getLanguage(labels: String, languages: string[]): string|undefined {
 
-        return languages.find(languageCode => labels[languageCode] !== undefined);
+        return languages.find(languageCode => labels[languageCode]);
     }
 }

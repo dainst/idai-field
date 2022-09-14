@@ -37,7 +37,7 @@ export default function TypeView(): ReactElement {
 
         const promise = documentId
             ? getChildren(documentId, newOffset, loginData.token, project)
-            : searchDocuments(searchParams, newOffset, loginData.token, project);
+            : getCatalogsForProject(searchParams, newOffset, loginData.token, project);
         promise.then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)));
     });
 
@@ -52,14 +52,14 @@ export default function TypeView(): ReactElement {
             getChildren(documentId, 0, loginData.token, project)
                 .then(result => setDocuments(result.documents));
             getPredecessors(documentId, loginData.token)
-                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(result.results)));
+                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results)));
 
             getLinkedFinds(documentId, 0, loginData.token, project)
                 .then(result => setFinds(result.documents));
         } else {
             setDocument(null);
             setBreadcrumb([]);
-            searchDocuments(searchParams, 0, loginData.token, project).then(res => {
+            getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
                 setDocuments(res.documents);
                 resetScrollOffset();
             });
@@ -101,8 +101,9 @@ export default function TypeView(): ReactElement {
                         </Col>
                     </>
                     : <Col>
+                        <h1>Catalogs for { project }</h1>
                         <DocumentGrid documents={ documents }
-                            getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
+                            getLinkUrl={ (doc: ResultDocument): string => `${project}/${doc.resource.id}`} />
                     </Col>
                 }
             </Row>
@@ -113,40 +114,54 @@ export default function TypeView(): ReactElement {
 
 const getChildren = async (parentId: string, from: number, token: string, project: string) => {
 
-    const query: Query = getQueryTemplate(from, project);
+    const query: Query = {
+        size: CHUNK_SIZE,
+        from,
+        filters: [
+            { field: 'project', value: project },
+            { field: 'resource.category.name', value: 'Type' }
+        ]
+    };
     query.parent = parentId;
     query.sort = 'sort';
     return search(query, token);
 };
 
 
-const searchDocuments = async (
+const getCatalogsForProject = async (
     searchParams: URLSearchParams, from: number, token: string, project: string
 ): Promise<Result> => {
     
-    let query: Query = getQueryTemplate(from, project);
+    let query: Query = {
+        size: CHUNK_SIZE,
+        from,
+        filters: [
+            { field: 'project', value: project },
+            { field: 'resource.category.name', value: 'TypeCatalog' }
+        ]
+    }
     query = parseFrontendGetParams(searchParams, query);
     return search(query, token);
 };
 
 
-const getQueryTemplate = (from: number, project: string): Query => ({
-    size: CHUNK_SIZE,
-    from,
-    filters: [
-        { field: 'project', value: project },
-        { field: 'resource.category.name', value: 'Type' }
-    ]
-});
-  
+const predecessorsToBreadcrumbItems = (project: string, predecessors: ResultDocument[]): BreadcrumbItem[] => {
 
-const predecessorsToBreadcrumbItems = (predecessors: ResultDocument[]): BreadcrumbItem[] => predecessors.map(predec => {
-    return {
-        identifier: predec.resource.identifier,
-        id: predec.resource.id,
-        url: predec.resource.id,
-    };
-});
+    return [
+        {
+            identifier: 'Catalogs',
+            url: `/type/${project}`,
+        },
+        ...predecessors.map(predec => {
+            return {
+                identifier: predec.resource.identifier,
+                id: predec.resource.id,
+                url: predec.resource.id,
+            };
+        })
+    ];
+};
+
 
 const getLinkedFinds = async (typeId: string, from: number, token: string, project: string): Promise<Result> =>
     search(getQuery(typeId, from, project), token);

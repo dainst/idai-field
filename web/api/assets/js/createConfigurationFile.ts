@@ -44,7 +44,7 @@ async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string,
             return fetchConfigurationDocumentFromCouchdb(couchdbUrl, couchdbUser, couchdbPassword, projectName);
         },
         new ConfigReader(),
-        getConfigurationName(projectName),
+        projectName,
         'user'
     );
 }

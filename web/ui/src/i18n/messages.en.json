@@ -43,7 +43,7 @@
   "projectHome": {
     "categories": "Kategorien",
     "toHierarchicalView": "To hierarchical view",
-    "showAllCatalogs": "Show all type catalogs...",
+    "showAllCatalogs": "Show all type catalogs ({{count}})",
     "institution": "Institution",
     "projectSupervisor": "Supervisor",
     "contactPerson": "Contact",
@@ -83,7 +83,7 @@
     "back": "Back"
   },
   "type": {
-    "catalogs": "Catalogs",
+    "catalogs": "Type catalogs",
     "subtypes": "Subtypes",
     "similarTypes": "Similar types",
     "linkedFinds": {

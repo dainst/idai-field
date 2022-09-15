@@ -10,7 +10,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Document, FieldValue, getDocumentImages, getFieldValue } from '../../api/document';
 import { get, search } from '../../api/documents';
-import { buildProjectQueryTemplate, parseFrontendGetParams } from '../../api/query';
+import { buildProjectQueryTemplate, parseFrontendGetParams, Query } from '../../api/query';
 import { Result, ResultDocument, ResultFilter } from '../../api/result';
 import { NAVBAR_HEIGHT, SIDEBAR_WIDTH } from '../../constants';
 import { getDocumentPermalink } from '../../shared/document/document-utils';
@@ -38,6 +38,8 @@ export default function ProjectHome ():ReactElement {
     const { t } = useTranslation();
 
     const [categoryFilter, setCategoryFilter] = useState<ResultFilter>();
+    const [typeCatalogCount, setTypeCatalogCount] = useState<number>(0);
+    
     const [projectDoc, setProjectDoc] = useState<Document>();
     const [title, setTitle] = useState<string>('');
     const [images, setImages] = useState<ResultDocument[]>();
@@ -49,6 +51,9 @@ export default function ProjectHome ():ReactElement {
         initFilters(projectId, searchParams, loginData.token)
             .then(result => result.filters.find(filter => filter.name === 'resource.category.name'))
             .then(setCategoryFilter);
+
+        checkTypeCatalogs(projectId, searchParams, loginData.token)
+            .then(result => setTypeCatalogCount(result.size));
 
         get(projectId, loginData.token)
             .then(setProjectDoc);
@@ -68,7 +73,7 @@ export default function ProjectHome ():ReactElement {
         <div className="d-flex flex-column p-2" style={ containerStyle }>
             { renderTitle(title, projectDoc) }
             <div className="d-flex flex-fill pt-2" style={ { height: 0 } }>
-                { renderSidebar(projectId, projectDoc, categoryFilter, setHighlightedCategories, t) }
+                { renderSidebar(projectId, projectDoc, categoryFilter, setHighlightedCategories, t, typeCatalogCount) }
                 { renderContent(projectId, projectDoc, images, location, highlightedCategories, predecessors, t) }
             </div>
         </div>
@@ -89,7 +94,7 @@ const renderTitle = (title: string, projectDoc: Document) =>
 
 
 const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: ResultFilter,
-        setHighlightedCategories: (categories: string[]) => void, t: TFunction) =>
+        setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number) =>
     <div className="mx-2 d-flex flex-column" style={ sidebarStyles }>
         <Card className="mb-2 mt-0">
             <SearchBar basepath={ `/project/${projectId}/search` } />
@@ -98,11 +103,17 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
             <ProjectHierarchyButton projectDocument={ projectDoc }
                 label={ t('projectHome.toHierarchicalView') } />
         </Card>
+        { typeCatalogCount > 0 &&
+
         <Card className="mb-2 mt-0 p-2">
-            <Link to={ `/type/${projectId}` }>
-                <h5>{ t('projectHome.showAllCatalogs') }</h5>
+            <Link to={ `/type/${projectId}` } className="document-teaser">
+                <div className="d-flex teaser-container teaser-small link">
+                    { t('projectHome.showAllCatalogs', {count: typeCatalogCount}) }
+                </div>
             </Link>
         </Card>
+        }
+        
         <Card className="my-0 flex-fill" style={ { height: 0 } }>
             <div className="py-1 card-header">
                 <h5>{ t('projectHome.categories') }</h5>
@@ -235,6 +246,20 @@ const renderBibliographicReference = (bibliographicReference: Literature, index:
 const initFilters = async (id: string, searchParams: URLSearchParams, token: string): Promise<Result> => {
 
     let query = buildProjectQueryTemplate(id, 0, 0, EXCLUDED_CATEGORIES);
+    query = parseFrontendGetParams(searchParams, query);
+    return search(query, token);
+};
+
+const checkTypeCatalogs = async (id: string, searchParams: URLSearchParams, token: string): Promise<Result> => {
+
+    let query = {
+        size: 0,
+        from: 0,
+        filters: [
+            { field: 'project', value: id },
+            { field: 'resource.category.name', value: 'TypeCatalog' }
+        ]
+    } as Query;
     query = parseFrontendGetParams(searchParams, query);
     return search(query, token);
 };

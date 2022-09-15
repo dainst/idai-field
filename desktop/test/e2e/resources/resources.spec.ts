@@ -11,9 +11,7 @@ import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
 import { ImageViewModalPage } from '../image-view-modal.page';
-import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { ConfigurationPage } from '../configuration/configuration.page';
-import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 
 
 /**
@@ -367,6 +365,7 @@ describe('resources --', () => {
         expect(await getText(languageTabs[0])).toEqual('Deutsch');
         expect(await getText(languageTabs[1])).toEqual('Englisch');
         expect(await getText(languageTabs[2])).toEqual('Italienisch');
+        await DoceditPage.clickCloseEdit();
 
         done();
     });

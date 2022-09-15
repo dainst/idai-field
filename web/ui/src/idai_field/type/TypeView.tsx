@@ -2,6 +2,7 @@ import React, { CSSProperties, ReactElement, useContext, useEffect, useState } f
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { TFunction } from 'i18next';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search } from '../../api/documents';
 import { parseFrontendGetParams, Query } from '../../api/query';
@@ -12,10 +13,9 @@ import DocumentGrid from '../../shared/documents/DocumentGrid';
 import { useSearchParams } from '../../shared/location';
 import { LoginContext } from '../../shared/login';
 import { useGetChunkOnScroll } from '../../shared/scroll';
-import './typeView.css';
 import CONFIGURATION from '../../configuration.json';
 import DocumentCard from '../../shared/document/DocumentCard';
-import { TFunction } from 'i18next';
+import './typeView.css';
 
 
 const CHUNK_SIZE = 50;
@@ -54,7 +54,6 @@ export default function TypeView(): ReactElement {
                 .then(result => setDocuments(result.documents));
             getPredecessors(documentId, loginData.token)
                 .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results, t)));
-
             getLinkedFinds(documentId, 0, loginData.token, project)
                 .then(result => setFinds(result.documents));
         } else {
@@ -128,9 +127,8 @@ const getChildren = async (parentId: string, from: number, token: string, projec
 };
 
 
-const getCatalogsForProject = async (
-    searchParams: URLSearchParams, from: number, token: string, project: string
-): Promise<Result> => {
+const getCatalogsForProject = async (searchParams: URLSearchParams, from: number, token: string,
+        project: string): Promise<Result> => {
     
     let query: Query = {
         size: CHUNK_SIZE,
@@ -145,11 +143,8 @@ const getCatalogsForProject = async (
 };
 
 
-const predecessorsToBreadcrumbItems = (
-    project: string,
-    predecessors: ResultDocument[],
-    t: TFunction
-): BreadcrumbItem[] => {
+const predecessorsToBreadcrumbItems = (project: string, predecessors: ResultDocument[],
+        t: TFunction): BreadcrumbItem[] => {
 
     return [
         {

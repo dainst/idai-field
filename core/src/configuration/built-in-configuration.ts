@@ -113,6 +113,9 @@ export class BuiltInConfiguration {
         },
         notes: {
             inputType: Field.InputType.TEXT
+        },
+        damage: {
+            inputType: Field.InputType.FLOAT
         }
     };
     

@@ -29,8 +29,8 @@ export default function TypeView(): ReactElement {
     const { t } = useTranslation();
 
     const [document, setDocument] = useState<Document>(null);
-    const [documents, setDocuments] = useState<ResultDocument[]>(null);
-    const [finds, setFinds] = useState<ResultDocument[]>(null);
+    const [documents, setDocuments] = useState<ResultDocument[]>([]);
+    const [finds, setFinds] = useState<ResultDocument[]>([]);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
 
@@ -59,7 +59,7 @@ export default function TypeView(): ReactElement {
                 .then(result => setFinds(result.documents));
         } else {
             setDocument(null);
-            setBreadcrumb([]);
+            setBreadcrumb(predecessorsToBreadcrumbItems(project, [], t));
             getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
                 setDocuments(res.documents);
                 resetScrollOffset();
@@ -102,7 +102,6 @@ export default function TypeView(): ReactElement {
                         </Col>
                     </>
                     : <Col>
-                        <h1>{ t('type.catalogs') }</h1>
                         <DocumentGrid documents={ documents }
                             getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
                     </Col>

@@ -15,9 +15,6 @@ export const getDocumentPermalink = (doc: ResultDocument): string => {
 
 export const getDocumentLink = (doc: ResultDocument, projectId: string, currentBaseUrl?: string): string => {
 
-    // TODO Implement type catalog view for project specific types
-    //if (isCategory(doc, 'Type') || isCategory(doc, 'TypeCatalog')) return undefined;
-
     const [baseUrl, path] = getLink(doc, projectId);
 
     if (currentBaseUrl && baseUrl) {

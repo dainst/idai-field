@@ -91,6 +91,9 @@
     },
     "notes": {
       "label": "Notes"
+    },
+    "damage": {
+      "label": "Damage in percent"
     }
   },
   "categories": {

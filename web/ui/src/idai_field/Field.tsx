@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import ImageView from '../shared/image/ImageView';
+import TypeView from './type/TypeView';
 import { doLogout, getLoginData, LoginContext } from '../shared/login';
 import LoginForm from '../shared/loginform/LoginForm';
 import Contact from './contact/Contact';
@@ -49,6 +50,8 @@ export default function Field(): ReactElement {
                     </Route>
 
                     <Route path="/image/:project/:id" component={ ImageView } />
+
+                    <Route path="/type/:project/:documentId?" component={ TypeView } />
 
                     <Route path="/" component={ ProjectsOverview } />
                 </Switch>

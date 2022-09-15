@@ -43,6 +43,7 @@
   "projectHome": {
     "categories": "Kategorien",
     "toHierarchicalView": "To hierarchical view",
+    "showAllCatalogs": "Show all type catalogs ({{count}})",
     "institution": "Institution",
     "projectSupervisor": "Supervisor",
     "contactPerson": "Contact",
@@ -80,6 +81,15 @@
   },
   "image": {
     "back": "Back"
+  },
+  "type": {
+    "catalogs": "Type catalogs",
+    "subtypes": "Subtypes",
+    "similarTypes": "Similar types",
+    "linkedFinds": {
+      "header": "Linked finds",
+      "showOnMap": "Show linked finds on map"
+    }
   },
   "download": {
     "download": "Download Field Desktop",

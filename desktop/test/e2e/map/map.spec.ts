@@ -482,8 +482,8 @@ describe('map --', function() {
 
         let labels = await MapPage.getLayerLabels(0);
         expect(labels.length).toBe(2);
-        expect(await getText(labels[0])).toEqual('Test Layer 1');
-        expect(await getText(labels[1])).toEqual('Test Layer 2');
+        expect(await getText(labels[0])).toEqual('Kartenhintergrund 1');
+        expect(await getText(labels[1])).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickEditLayersButton();
         await MapPage.clickRemoveLayerButton(0);
@@ -491,7 +491,7 @@ describe('map --', function() {
 
         labels = await MapPage.getLayerLabels(0);
         expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Test Layer 2');
+        expect(await getText(labels[0])).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickLayerButton();
         await ResourcesPage.clickHierarchyButton('S1');
@@ -501,7 +501,7 @@ describe('map --', function() {
         expect(labels.length).toBe(0);
         labels = await MapPage.getLayerLabels(1);
         expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Test Layer 2');
+        expect(await getText(labels[0])).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickEditLayersButton();
         await MapPage.clickAddLayersButton();
@@ -512,10 +512,10 @@ describe('map --', function() {
 
         labels = await MapPage.getLayerLabels(0);
         expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Test Layer 1');
+        expect(await getText(labels[0])).toEqual('Kartenhintergrund 1');
         labels = await MapPage.getLayerLabels(1);
         expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Test Layer 2');
+        expect(await getText(labels[0])).toEqual('Kartenhintergrund 2');
         await MapPage.clickLayerButton();
 
         done();

@@ -301,6 +301,23 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        Level: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         // Room is an idealized (non material) entity
         Room: {
             supercategory: true,
@@ -778,6 +795,14 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
+            domain: ['Level:inherit'],
+            range: ['Building'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'isRecordedIn',
             domain: ['Room:inherit'],
             range: ['Building'],
             editable: false,
@@ -894,6 +919,15 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
+            domain: ['Level:inherit'],
+            range: ['BuildingPart:inherit'],
+            sameMainCategoryResource: true,
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
             sameMainCategoryResource: true,
@@ -904,7 +938,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Room:inherit'],
-            range: ['BuildingPart:inherit'],
+            range: ['BuildingPart:inherit', 'Level:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

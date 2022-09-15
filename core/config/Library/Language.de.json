@@ -108,6 +108,9 @@
     }
   },
   "categories": {
+    "Level": {
+      "label": "Stockwerk"
+    },
     "RoomFloor": {
       "label": "Boden"
     },

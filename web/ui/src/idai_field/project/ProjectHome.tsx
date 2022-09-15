@@ -108,7 +108,7 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
         <Card className="mb-2 mt-0 p-2">
             <Link to={ `/type/${projectId}` } className="document-teaser">
                 <div className="d-flex teaser-container teaser-small link">
-                    { t('projectHome.showAllCatalogs', {count: typeCatalogCount}) }
+                    { t('projectHome.showAllCatalogs', { count: typeCatalogCount }) }
                 </div>
             </Link>
         </Card>

@@ -1,6 +1,6 @@
-import * as tsfun from 'tsfun';
-import {Datastore, ImageDocument} from 'idai-field-core';
-import {ImagesState} from './images-state';
+import { clone } from 'tsfun';
+import { Datastore, ImageDocument } from 'idai-field-core';
+import { ImagesState } from './images-state';
 
 
 /**
@@ -95,7 +95,7 @@ export class ImageDocumentsManager {
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
 
-        const query = tsfun.clone(this.imagesState.getQuery());
+        const query = clone(this.imagesState.getQuery());
         if (offset) query.offset = offset;
         query.limit = limit;
         query.constraints['project:exist'] = 'UNKNOWN';

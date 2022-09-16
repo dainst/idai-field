@@ -102,9 +102,15 @@
     },
     "notes": {
       "label": "Примітки"
+    },
+    "damage": {
+      "label": "Пошкодження в процентах"
     }
   },
   "categories": {
+    "Level": {
+      "label": "Поверх"
+    },
     "RoomFloor": {
       "label": "Поверхня / підлога"
     },

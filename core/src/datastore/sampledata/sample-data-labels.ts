@@ -105,6 +105,6 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'С',
         'room': 'Приміщення',
         'roomShort': 'П',
-        'mapLayer': 'TRANSLATE'
+        'mapLayer': 'Підоснова'
     }
 };

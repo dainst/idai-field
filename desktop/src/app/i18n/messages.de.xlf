@@ -2041,27 +2041,35 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
-        <source> Datenbankinformationen </source>
-        <target state="final"> Datenbankinformationen </target>
+        <source> Projektdatenübersicht </source>
+        <target state="final"> Projektdatenübersicht </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">47,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.info" datatype="html">
+        <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
+        <target state="final"> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
         <source> Ressourcen: </source>
         <target state="final"> Ressourcen: </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
-          <context context-type="linenumber">98,108</context>
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.total" datatype="html">
         <source> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </source>
         <target state="final"> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.images" datatype="html">
@@ -2069,7 +2077,7 @@
         <target state="final"> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">30,20</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.types" datatype="html">
@@ -2077,7 +2085,7 @@
         <target state="final"> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.lastChangedResource" datatype="html">
@@ -2085,7 +2093,7 @@
         <target state="final"> Letzte bearbeitete Ressource: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">35,42</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.date" datatype="html">
@@ -2093,7 +2101,15 @@
         <target state="final"> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.deletedResource" datatype="html">
+        <source> Gelöschte Ressource </source>
+        <target state="final"> Gelöschte Ressource </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">61,68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.editedBy" datatype="html">
@@ -2101,7 +2117,7 @@
         <target state="final"> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
@@ -2109,7 +2125,7 @@
         <target state="final"> Vorschau-Bilddateien: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
@@ -2117,11 +2133,11 @@
         <target state="final"> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
@@ -2129,7 +2145,7 @@
         <target state="final"> Original-Bilddateien: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
@@ -6221,7 +6237,7 @@
         <target state="final">Projektkonfiguration</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
@@ -6229,11 +6245,11 @@
         <target state="final"> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">80</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
@@ -6241,7 +6257,7 @@
         <target state="final"> Projekteigenschaften </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
@@ -6809,7 +6825,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>

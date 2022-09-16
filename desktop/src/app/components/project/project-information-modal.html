@@ -25,7 +25,8 @@
             <div i18n="@@project.informationModal.lastChangedResource">
                 Letzte bearbeitete Ressource:
             </div>
-            <div id="last-changed-resource-identifier" class="indented" (click)="goToLastChangedResource()">
+            <div *ngIf="lastChangedDocument" id="last-changed-resource-identifier" class="indented"
+                 (click)="goToLastChangedResource()">
                 <span *ngIf="getLastChangedId() === 'configuration'"
                       i18n="@@navbar.tabs.configuration">Projektkonfiguration</span>
                 <span *ngIf="getLastChangedId() === 'project'"
@@ -36,11 +37,14 @@
                     {{lastChangedDocument.resource.identifier}}
                 </span>
             </div>
-            <div i18n="@@project.informationModal.editedBy" class="indented">
+            <div *ngIf="lastChangedDocument" i18n="@@project.informationModal.editedBy" class="indented">
                 Bearbeitet von: {{lastChangedDocumentUser}}
             </div>
-            <div i18n="@@project.informationModal.date" class="indented">
+            <div *ngIf="lastChangedDocument" i18n="@@project.informationModal.date" class="indented">
                 Zeitpunkt: {{lastChangedDocumentDate}}
+            </div>
+            <div *ngIf="!lastChangedDocument" i18n="@@project.informationModal.deletedResource" class="indented">
+                Gelöschte Ressource
             </div>
             <div i18n="@@project.informationModal.thumbnails">
                 Vorschau-Bilddateien:

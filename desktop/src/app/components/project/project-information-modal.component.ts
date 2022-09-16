@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map } from 'tsfun';
+import { Map, isArray } from 'tsfun';
 import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVariant,
-    ProjectConfiguration } from 'idai-field-core';
+    ProjectConfiguration, DatastoreErrors} from 'idai-field-core';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RevisionLabels } from '../../services/revision-labels';
@@ -30,7 +30,7 @@ export class ProjectInformationModalComponent implements OnInit {
     public imageDocumentCount: number;
     public typeDocumentCount: number;
 
-    public lastChangedDocument: Document;
+    public lastChangedDocument: Document|undefined;
     public lastChangedDocumentUser: string;
     public lastChangedDocumentDate: string;
 
@@ -44,7 +44,7 @@ export class ProjectInformationModalComponent implements OnInit {
                 private pouchdbDatastore: PouchdbDatastore,
                 private datastore: Datastore,
                 private imagestore: ImageStore,
-                private settings: SettingsProvider,
+                private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private loading: Loading,
@@ -57,6 +57,7 @@ export class ProjectInformationModalComponent implements OnInit {
 
     public getLastChangedId = () => this.lastChangedDocument.resource.id;
   
+
     async ngOnInit() {
 
         AngularUtility.blurActiveElement();
@@ -92,14 +93,16 @@ export class ProjectInformationModalComponent implements OnInit {
         this.typeDocumentCount = await this.getTypeDocumentCount();
 
         this.lastChangedDocument = await this.getLastChangedDocument();
-        this.lastChangedDocumentUser = Document.getLastModified(this.lastChangedDocument).user;
-        this.lastChangedDocumentDate = RevisionLabels.getLastModifiedDateLabel(
-            this.lastChangedDocument,
-            this.i18n({ id: 'revisionLabel.timeSuffix', value: 'Uhr' })
-        );
+        if (this.lastChangedDocument) {
+            this.lastChangedDocumentUser = Document.getLastModified(this.lastChangedDocument).user;
+            this.lastChangedDocumentDate = RevisionLabels.getLastModifiedDateLabel(
+                this.lastChangedDocument,
+                this.i18n({ id: 'revisionLabel.timeSuffix', value: 'Uhr' })
+            );
+        }
         
         const fileInfos: Map<FileInfo> = await this.imagestore.getFileInfos(
-            this.settings.getSettings().selectedProject
+            this.settingsProvider.getSettings().selectedProject
         );
 
         this.thumbnailFileCount = await ProjectInformationModalComponent.getFileCount(
@@ -145,17 +148,24 @@ export class ProjectInformationModalComponent implements OnInit {
     private async getLastChangedDocument(): Promise<Document|undefined> {
 
         const lastChangedDocumentId: string|undefined = await this.pouchdbDatastore.getLatestChange();
+        if (!lastChangedDocumentId) return undefined;
 
-        return lastChangedDocumentId
-            ? this.datastore.get(lastChangedDocumentId)
-            : undefined;
+        try {
+            return await this.datastore.get(lastChangedDocumentId);
+        } catch (err) {
+            if (isArray(err) && err[0] === DatastoreErrors.DOCUMENT_NOT_FOUND) {
+                return undefined;
+            } else {
+                throw err;
+            }
+        }
     }
 
 
     private async getFileSize(variant: ImageVariant): Promise<string> {
 
         const fileList = await this.imagestore.getFileInfos(
-            this.settings.getSettings().selectedProject,
+            this.settingsProvider.getSettings().selectedProject,
             [variant]
         );
 

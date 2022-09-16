@@ -121,7 +121,8 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async showImage(document: ImageDocument, openConflictResolver: boolean = false) {
+    public async showImage(document: ImageDocument, fromRoute: boolean = false,
+                           openConflictResolver: boolean = false) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
@@ -131,7 +132,7 @@ export class ImageOverviewComponent implements OnInit {
         );
         await modalRef.componentInstance.initializeWithoutLinkedDocument(
             document,
-            openConflictResolver
+            fromRoute
                 ? [document]
                 : this.getDocuments().filter(_ => _.id !== 'droparea')
         );
@@ -169,6 +170,6 @@ export class ImageOverviewComponent implements OnInit {
     private async openImageRoute(id: string) {
 
         const image = (await this.datastore.get(id)) as ImageDocument;
-        this.showImage(image, this.router.url.includes('conflicts'));
+        this.showImage(image, true, this.router.url.includes('conflicts'));
     }
 }

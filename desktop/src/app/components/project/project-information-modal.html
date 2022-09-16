@@ -1,12 +1,15 @@
 <div class="modal-header">
     <h5 class="modal-title" i18n="@@project.informationModal.header">
-        Datenbankinformationen
+        Projektdatenübersicht
     </h5>
 </div>
 
 <div id="project-information-modal-body" class="modal-body">
     <div *ngIf="isLoading()" id="project-information-modal-loading-icon-container">
         <loading-icon [context]="'project-information-modal'"></loading-icon>
+    </div>
+    <div *ngIf="!isLoading()" id="project-information-modal-info" i18n="@@project.informationModal.info">
+        Auf diesem Computer gespeicherte Daten für das Projekt <b>{{getProjectName()}}</b>:
     </div>
     <div *ngIf="!isLoading()" class="card bg-light">
         <div class="card-body">

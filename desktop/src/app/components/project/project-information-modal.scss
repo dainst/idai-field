@@ -1,4 +1,13 @@
 project-information-modal {
+  #project-information-modal-info {
+    user-select: none;
+    margin-bottom: 10px;
+
+    b {
+      font-weight: 600;
+    }
+  }
+
   .card {
     border-radius: 0.3rem !important;
     max-height: calc(100vh - 250px);

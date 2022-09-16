@@ -1,6 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Named, Query} from 'idai-field-core';
-import {ProjectConfiguration} from 'idai-field-core';
+import { Injectable } from '@angular/core';
+import { Named, Query, ProjectConfiguration } from 'idai-field-core';
 
 
 @Injectable()

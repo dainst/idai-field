@@ -4,6 +4,7 @@ import { Datastore, Document } from 'idai-field-core';
 import { DoceditComponent } from '../components/docedit/docedit.component';
 import { CreateProjectModalComponent } from '../components/project/create-project-modal.component';
 import { DeleteProjectModalComponent } from '../components/project/delete-project-modal.component';
+import { ProjectInformationModalComponent } from '../components/project/project-information-modal.component';
 import { SynchronizationModalComponent } from '../components/project/synchronization-modal.component';
 import { ViewModalLauncher } from '../components/viewmodal/view-modal-launcher';
 import { MenuContext } from './menu-context';
@@ -104,6 +105,26 @@ export class ProjectModalLauncher {
             await modalRef.result;
         } catch(err) {
             // Synchronization project modal has been canceled
+        }
+
+        this.menuService.setContext(menuContext);
+    }
+
+
+    public async openInformationModal() {
+
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.setModalContext(menuContext);
+
+        const modalRef = this.modalService.open(
+            ProjectInformationModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // Information modal has been canceled
         }
 
         this.menuService.setContext(menuContext);

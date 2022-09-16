@@ -22,6 +22,7 @@ import { PagingButtonsComponent } from './paging-buttons.component';
 import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
 import { FieldViewComponent } from './documentinfo/field-view.component';
+import { LanguagesListComponent } from './languages/languages-list.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { FieldViewComponent } from './documentinfo/field-view.component';
         CategoryIconComponent,
         PagingButtonsComponent,
         EditSaveDialogComponent,
+        LanguagesListComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
@@ -67,7 +69,8 @@ import { FieldViewComponent } from './documentinfo/field-view.component';
         ZoomButtonsComponent,
         CategoryIconComponent,
         PagingButtonsComponent,
-        EditSaveDialogComponent
+        EditSaveDialogComponent,
+        LanguagesListComponent
     ],
     entryComponents: []
 })

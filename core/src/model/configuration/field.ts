@@ -61,6 +61,7 @@ export module Field {
     }
 
     export type InputType = 'input'
+        |'simpleInput'
         |'unsignedInt'
         |'unsignedFloat'
         |'int'
@@ -68,6 +69,7 @@ export module Field {
         |'text'
         |'url'
         |'multiInput'
+        |'simpleMultiInput'
         |'dropdown'
         |'dropdownRange'
         |'radio'
@@ -86,12 +88,14 @@ export module Field {
     export module InputType {
 
         export const INPUT = 'input';
+        export const SIMPLE_INPUT = 'simpleInput';
         export const UNSIGNEDINT = 'unsignedInt';
         export const UNSIGNEDFLOAT = 'unsignedFloat';
         export const INT = 'int';
         export const FLOAT = 'float';
         export const TEXT = 'text';
         export const MULTIINPUT = 'multiInput';
+        export const SIMPLE_MULTIINPUT = 'simpleMultiInput';
         export const URL = 'url';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';
@@ -111,10 +115,13 @@ export module Field {
 
         export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
         export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
+        export const I18N_COMPATIBLE_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT, SIMPLE_MULTIINPUT];
+        export const I18N_INPUT_TYPES = [INPUT, TEXT, MULTIINPUT];
+        export const SIMPLE_INPUT_TYPES = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
-            [INPUT, TEXT, DROPDOWN, RADIO],
-            [MULTIINPUT, CHECKBOXES]
+            [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],
+            [MULTIINPUT, SIMPLE_MULTIINPUT, CHECKBOXES]
         ];
 
         
@@ -130,10 +137,15 @@ export module Field {
 
         export function isValidFieldData(fieldData: any, inputType: InputType): boolean {
 
-            if ([INPUT, TEXT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
+            if ([SIMPLE_INPUT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
                 return isString(fieldData);
-            } else if ([MULTIINPUT, CHECKBOXES].includes(inputType)) {
+            } else if ([INPUT, TEXT].includes(inputType)) {
+                // TODO Improve validation for i18n strings
+                return isString(fieldData) || isObject(fieldData);
+            } else if ([SIMPLE_MULTIINPUT, CHECKBOXES].includes(inputType)) {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
+            } else if (inputType === MULTIINPUT) {
+                return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
             } else if (inputType === UNSIGNEDINT) {
                 return validateUnsignedInt(fieldData);
             } else if (inputType === UNSIGNEDFLOAT) {

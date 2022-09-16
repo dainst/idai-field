@@ -1,5 +1,5 @@
-import { processRelations } from '../../../../../../src/app/components/import/import/process/process-relations';
 import { Relation } from 'idai-field-core';
+import { processRelations } from '../../../../../../src/app/components/import/import/process/process-relations';
 import { createMockValidator, d } from '../helper';
 import { ImportErrors, ImportErrors as E } from '../../../../../../src/app/components/import/import/import-errors';
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;

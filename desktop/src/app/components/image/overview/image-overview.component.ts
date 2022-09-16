@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageDocument, Document, CategoryForm, Datastore, ProjectConfiguration } from 'idai-field-core';
@@ -43,15 +43,10 @@ export class ImageOverviewComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
                 private modalService: NgbModal,
-                private menuService: Menus) {
+                private menuService: Menus,
+                private router: Router) {
 
-        this.imageOverviewFacade.initialize();
-        route.params.subscribe(async (params) => {
-            if (params['id']) {
-                location.replaceState('images/');
-                await this.openConflictResolver(params['id']);
-            }
-        });
+        this.imageOverviewFacade.initialize().then(() => this.setUpRouting(route, location));
     }
 
 
@@ -126,7 +121,8 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async showImage(document: ImageDocument, openConflictResolver: boolean = false) {
+    public async showImage(document: ImageDocument, fromRoute: boolean = false,
+                           openConflictResolver: boolean = false) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
@@ -136,7 +132,7 @@ export class ImageOverviewComponent implements OnInit {
         );
         await modalRef.componentInstance.initializeWithoutLinkedDocument(
             document,
-            openConflictResolver
+            fromRoute
                 ? [document]
                 : this.getDocuments().filter(_ => _.id !== 'droparea')
         );
@@ -160,9 +156,20 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    private async openConflictResolver(id: string) {
+    private async setUpRouting(route: ActivatedRoute, location: Location) {
+
+        route.params.subscribe(async (params) => {
+            if (params['id']) {
+                location.replaceState('images/');
+                await this.openImageRoute(params['id']);
+            }
+        });
+    }
+
+
+    private async openImageRoute(id: string) {
 
         const image = (await this.datastore.get(id)) as ImageDocument;
-        this.showImage(image, true);
+        this.showImage(image, true, this.router.url.includes('conflicts'));
     }
 }

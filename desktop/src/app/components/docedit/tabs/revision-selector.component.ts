@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Document } from 'idai-field-core';
-
-const moment = typeof window !== 'undefined' ? window.require('moment') : require('moment');
-
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Document } from 'idai-field-core'
+import { RevisionLabels } from '../../../services/revision-labels';
 
 
 export type WinningSide = 'left'|'right'|'mixed';
@@ -26,17 +25,16 @@ export class RevisionSelectorComponent {
     @Output() onSelectWinningSide: EventEmitter<WinningSide> = new EventEmitter<WinningSide>();
     @Output() onSelectRevision: EventEmitter<Document> = new EventEmitter<Document>();
 
+
+    constructor(private i18n: I18n) {}
+
    
     public setWinningSide = (winningSide: WinningSide) => this.onSelectWinningSide.emit(winningSide);
 
     public setSelectedRevision = (revision: Document) => this.onSelectRevision.emit(revision);
 
-
-    public getRevisionLabel(revision: Document): string {
-
-        moment.locale('de');
-        return Document.getLastModified(revision).user
-            + ' - '
-            + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
-    }
+    public getRevisionLabel = (revision: Document) => RevisionLabels.getRevisionLabel(
+        revision,
+        this.i18n({ id: 'revisionLabel.timeSuffix', value: 'Uhr' })
+    );
 }

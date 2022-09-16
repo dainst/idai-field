@@ -1,0 +1,13 @@
+form-field-multi-input {
+  .input-group-append.with-language-tabs {
+    button {
+      position: relative;
+      top: 33px;
+      height: 34px !important;
+    }
+  }
+
+  multi-language-text-field {
+    width: calc(100% - 33px);
+  }
+}

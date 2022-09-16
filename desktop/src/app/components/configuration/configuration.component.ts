@@ -34,6 +34,7 @@ import { SaveModalComponent } from './save/save-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
+import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
 
 
 export type ApplyChangesResult = {
@@ -83,7 +84,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public availableInputTypes: Array<InputType> = [
         { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
+        { name: 'simpleInput', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
         { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
+        { name: 'simpleMultiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
         { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }), searchable: true, customFields: true },
         { name: 'int', label: this.i18n({ id: 'config.inputType.int', value: 'Ganzzahl' }), searchable: true, customFields: true },
         { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },
@@ -212,6 +215,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public async onMenuItemClicked(menuItem: string) {
 
         switch (menuItem) {
+            case 'projectLanguages':
+                this.openProjectLanguagesModal();
+                break;
             case 'valuelists':
                 await AngularUtility.refresh();
                 this.openValuelistsManagementModal();
@@ -592,6 +598,29 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     }
 
 
+    private async openProjectLanguagesModal() {
+
+        const [result, componentInstance] = this.modals.make<ProjectLanguagesModalComponent>(
+            ProjectLanguagesModalComponent,
+            MenuContext.CONFIGURATION_MANAGEMENT
+        );
+
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            (applyChangesResult?: ApplyChangesResult) => {
+                if (!applyChangesResult) return;
+                this.configurationDocument = applyChangesResult.configurationDocument;
+                this.configurationIndex = applyChangesResult.configurationIndex;
+            },
+            nop
+        );
+    }
+
+
     private async openValuelistsManagementModal() {
 
         const [result, componentInstance] = this.modals.make<ManageValuelistsModalComponent>(
@@ -730,7 +759,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         return await ConfigurationDocument.getConfigurationDocument(
             (id: string) => this.datastore.get(id, { skipCache: true }),
             this.configReader,
-            getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+            this.settingsProvider.getSettings().selectedProject,
             this.settingsProvider.getSettings().username
         ) as ConfigurationDocument;
     }

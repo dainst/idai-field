@@ -54,7 +54,7 @@ export class LayerMenuComponent extends MenuComponent {
 
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
 
-    public getLayerLabel = (layer: ImageDocument) => LayerUtility.getLayerLabel(layer);
+    public getLayerLabel = (layer: ImageDocument) => LayerUtility.getLayerLabel(layer, this.labels);
 
     public isInEditing = (layerGroup: LayerGroup) => this.layerManager.isInEditing(layerGroup);
 

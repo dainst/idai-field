@@ -91,9 +91,15 @@
     },
     "notes": {
       "label": "Notes"
+    },
+    "damage": {
+      "label": "Damage in percent"
     }
   },
   "categories": {
+    "Level": {
+      "label": "Level"
+    },
     "RoomFloor": {
       "label": "Floor"
     },

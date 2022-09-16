@@ -1,4 +1,5 @@
 package org.dainst.idaifield.model;
+import java.util.HashMap;
 
 
 /**
@@ -7,7 +8,7 @@ package org.dainst.idaifield.model;
 public class Resource {
 
     private String identifier;
-    private String shortDescription;
+    private HashMap<String, String> shortDescription;
     private String category;
     private Geometry geometry;
 
@@ -24,13 +25,13 @@ public class Resource {
     }
 
 
-    public String getShortDescription() {
+    public HashMap<String, String> getShortDescription() {
 
         return shortDescription;
     }
 
 
-    public void setShortDescription(String shortDescription) {
+    public void setShortDescription(HashMap<String, String> shortDescription) {
 
         this.shortDescription = shortDescription;
     }

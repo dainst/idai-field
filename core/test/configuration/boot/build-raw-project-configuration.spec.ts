@@ -138,7 +138,7 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories,
             libraryCategories,
             libraryForms,
-            undefined, {}, {}, {}, {}, [], undefined, [], undefined,
+            undefined, {}, {}, {}, {}, [], undefined, [], [], undefined,
             ['B']
         );
 
@@ -1939,6 +1939,7 @@ describe('buildRawProjectConfiguration', () => {
             customForms,
             {}, {}, {}, {}, [],
             { default: {}, complete: {} },
+            [],
             orderConfiguration
         ).map(Named.toName);
 
@@ -1994,6 +1995,7 @@ describe('buildRawProjectConfiguration', () => {
             customForms,
             {}, {}, {}, {}, [],
             { default: {}, complete: {} },
+            [],
             orderConfiguration
         )['D'].children.map(to(Named.NAME));
 

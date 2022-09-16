@@ -1,0 +1,40 @@
+<ul *ngIf="hasTabs()" class="nav nav-tabs" [class.focused]="focused">
+    <li *ngFor="let language of tabLanguages"
+        [class]="'nav-item language-tab language-tab-' + language.code"
+        (click)="selectLanguage(language)">
+        <a class="nav-link" 
+           [class.active]="language.code === selectedLanguage"
+           [class.filled-in]="isFilledIn(language.code)"
+           (focus)="focused = true">{{language.label}}</a>
+    </li>
+    <li *ngIf="additionalLanguages?.length > 0" class="nav-item additional-languages-dropdown"
+        ngbDropdown placement="bottom-right" role="group">
+       <a class="nav-link" [class.active]="shownAdditionalLanguage.code === selectedLanguage"
+          [class.filled-in]="isFilledIn(shownAdditionalLanguage.code)" ngbDropdownToggle>
+            {{shownAdditionalLanguage.label}}
+       </a>
+       <div class="additional-languages-dropdown-menu dropdown-menu" ngbDropdownMenu>
+            <div class="additional-languages-dropdown-list">
+                <button *ngFor="let language of additionalLanguages"
+                        class="dropdown-item"
+                        (click)="selectLanguage(language)">
+                        {{language.label}}
+                </button>
+            </div>
+       </div>
+    </li>
+</ul>
+<input *ngIf="!multiLine" #inputField [(ngModel)]="selectedText"
+       [class.focused]="focused"
+       [class.with-tabs]="hasTabs()"
+       (keyup)="onChanges($event.target.value)"
+       (focus)="focused = true"
+       (blur)="focused = false"
+       class="form-control">
+<textarea *ngIf="multiLine" #inputField [(ngModel)]="selectedText"
+       [class.focused]="focused"
+       [class.with-tabs]="hasTabs()"
+       (keyup)="onChanges($event.target.value)"
+       (focus)="focused = true"
+       (blur)="focused = false"
+       class="form-control"></textarea>

@@ -68,6 +68,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
             order: template.configuration.order,
             valuelists: {},
             languages: {},
+            projectLanguages: [],
             relations: {}
         },
         created: { user: db, date: new Date() },

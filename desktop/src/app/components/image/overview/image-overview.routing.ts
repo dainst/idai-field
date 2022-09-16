@@ -8,6 +8,10 @@ const routes: Routes = [
         component: ImageOverviewComponent
     },
     {
+        path: 'images/show/:id',
+        component: ImageOverviewComponent
+    },
+    {
         path: 'images/conflicts/:id',
         component: ImageOverviewComponent
     }

@@ -1,5 +1,5 @@
-import { flow, left, reverse } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field } from 'idai-field-core';
+import { flow, left, reverse, isString } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange, Field, I18N } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -11,10 +11,60 @@ import { CSVHeadingsExpansion } from './csv-headings-expansion';
  */
 export module CSVMatrixExpansion {
 
-    const expandDimensionItems = CSVExpansion.expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
+    const expandI18nStrings = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithI18nStringExpanded(languages), languages.length
+    );
+    const expandDimensionItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithDimensionElementsExpanded(languages), 5 + languages.length
+    );
+    const expandDatingItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithDatingElementsExpanded(languages), 8 + languages.length
+    );
+    const expandLiteratureItems = (_: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithLiteratureElementsExpanded, 5
+    );
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
-    const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
-    const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 5);
+
+
+    export function expandI18nString(fieldDefinitions: Array<Field>, projectLanguages: string[], inputType: Field.InputType) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, inputType),
+                reverse,
+                CSVExpansion.i18nStringExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    CSVHeadingsExpansion.expandI18nStringHeadings,
+                    expandI18nStrings
+                )
+            );
+        }
+    }
+
+
+    export function expandI18nStringArray(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.MULTIINPUT),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    undefined,
+                    CSVHeadingsExpansion.expandI18nStringArrayHeadings,
+                    expandI18nStrings
+                )
+            );
+        }
+    }
 
 
     export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
@@ -36,7 +86,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandDating(fieldDefinitions: Array<Field>) {
+    export function expandDating(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
@@ -47,6 +97,8 @@ export module CSVMatrixExpansion {
                 reverse,
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
+                    projectLanguages,
+                    Dating.SOURCE,
                     CSVHeadingsExpansion.expandDatingHeadings,
                     expandDatingItems
                 )
@@ -55,7 +107,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandDimension(fieldDefinitions: Array<Field>) {
+    export function expandDimension(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
@@ -66,6 +118,8 @@ export module CSVMatrixExpansion {
                 reverse,
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
+                    projectLanguages,
+                    Dimension.MEASUREMENTCOMMENT,
                     CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems
                 )
@@ -85,6 +139,8 @@ export module CSVMatrixExpansion {
                 reverse,
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
+                    undefined,
+                    undefined,
                     CSVHeadingsExpansion.expandLiteratureHeadings,
                     expandLiteratureItems
                 )
@@ -93,24 +149,42 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithDatingElementsExpanded(dating: Dating): string[] {
+    function rowsWithI18nStringExpanded(languages: string[]) {
 
-        const { type, begin, end, margin, source, isImprecise, isUncertain } = dating;
+        return (i18nString: I18N.String|string): string[] => {
 
-        const expandedDating = [
-            type ? type : '',
-            begin?.inputType ?? '',
-            begin?.inputYear ? begin.inputYear.toString() : '',
-            end?.inputType ?? '',
-            end?.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
-            margin ? margin.toString() : '',
-            source ? source : ''
-        ];
+            return languages.map(language => {
+                return isString(i18nString)
+                    ? (language === I18N.UNSPECIFIED_LANGUAGE ? i18nString : '')
+                    : (i18nString[language] ?? '');
+            });
+        };
+    }
 
-        if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
-        if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
 
-        return expandedDating;
+    function rowsWithDatingElementsExpanded(languages: string[]) {
+        
+        return (dating: Dating): string[] => {
+
+            const { type, begin, end, margin, source, isImprecise, isUncertain } = dating;
+
+            const expandedDating = [
+                type ? type : '',
+                begin?.inputType ?? '',
+                begin?.inputYear ? begin.inputYear.toString() : '',
+                end?.inputType ?? '',
+                end?.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
+                margin ? margin.toString() : ''
+            ].concat(source
+                ? rowsWithI18nStringExpanded(languages)(source)
+                : languages.map(_ => '')
+            );
+
+            if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
+            if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
+
+            return expandedDating;
+        }
     }
 
 
@@ -121,22 +195,28 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
+    function rowsWithDimensionElementsExpanded(languages: string[]) {
+        
+        return (dimension: Dimension): string[] => {
 
-        const { inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-            inputUnit, isImprecise } = dimension;
+            const { inputValue, inputRangeEndValue, measurementPosition, measurementComment,
+                inputUnit, isImprecise } = dimension;
 
-        const expandedDimension = [
-            (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
-            (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
-            measurementPosition ?? '',
-            measurementComment ?? '',
-            inputUnit ?? ''
-        ];
+            const expandedDimension = [
+                (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
+                (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
+                measurementPosition ?? ''
+            ].concat(measurementComment
+                ? rowsWithI18nStringExpanded(languages)(measurementComment)
+                : languages.map(_ => '')
+            ).concat([
+                inputUnit ?? ''
+            ]);
 
-        if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
+            if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 
-        return expandedDimension;
+            return expandedDimension as string[];
+        }
     }
 
 

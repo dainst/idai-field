@@ -13,7 +13,7 @@ const toResourceIdentifier = to(['resource','identifier']);
 
 
 @Component({
-    selector: 'dai-type-relation',
+    selector: 'form-field-type-relation',
     templateUrl: './type-relation.html'
 })
 /**

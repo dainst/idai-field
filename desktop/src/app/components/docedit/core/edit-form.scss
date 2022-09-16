@@ -52,6 +52,7 @@
             overflow-y: auto;
             margin-top: 15px;
 
+            input:not([type]),
             input[type="text"],
             input[type="number"],
             select {

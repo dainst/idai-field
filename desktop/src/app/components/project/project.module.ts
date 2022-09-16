@@ -10,6 +10,7 @@ import { DownloadProjectComponent } from './download-project.component';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
 import { CancelModalComponent } from './cancel-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
+import { ProjectInformationModalComponent } from './project-information-modal.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
+        ProjectInformationModalComponent,
         DownloadProjectComponent,
         DownloadProjectProgressModalComponent,
         CancelModalComponent
@@ -32,6 +34,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
+        ProjectInformationModalComponent,
         DownloadProjectComponent,
         DownloadProjectProgressModalComponent,
         CancelModalComponent
@@ -40,6 +43,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
         CreateProjectModalComponent,
         DeleteProjectModalComponent,
         SynchronizationModalComponent,
+        ProjectInformationModalComponent,
         DownloadProjectProgressModalComponent,
         CancelModalComponent
     ]

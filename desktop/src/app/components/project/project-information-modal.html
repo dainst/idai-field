@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@project.informationModal.header">
+        Projektdatenübersicht
+    </h5>
+</div>
+
+<div id="project-information-modal-body" class="modal-body">
+    <div *ngIf="isLoading()" id="project-information-modal-loading-icon-container">
+        <loading-icon [context]="'project-information-modal'"></loading-icon>
+    </div>
+    <div *ngIf="!isLoading()" id="project-information-modal-info" i18n="@@project.informationModal.info">
+        Auf diesem Computer gespeicherte Daten für das Projekt <b>{{getProjectName()}}</b>:
+    </div>
+    <div *ngIf="!isLoading()" class="card bg-light">
+        <div class="card-body">
+            <div i18n="@@project.informationModal.resourceCount">
+                Ressourcen:
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.total" class="indented">
+                Gesamtanzahl: {{totalDocumentCount}}
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.images" class="indented">
+                Davon Bilder: {{imageDocumentCount}}
+            </div>
+            <div i18n="@@project.informationModal.resourceCount.types" class="indented">
+                Davon Typen und Kataloge: {{typeDocumentCount}}
+            </div>
+            <div i18n="@@project.informationModal.lastChangedResource">
+                Letzte bearbeitete Ressource:
+            </div>
+            <div *ngIf="lastChangedDocument" id="last-changed-resource-identifier" class="indented"
+                 (click)="goToLastChangedResource()">
+                <span *ngIf="getLastChangedId() === 'configuration'"
+                      i18n="@@navbar.tabs.configuration">Projektkonfiguration</span>
+                <span *ngIf="getLastChangedId() === 'project'"
+                      i18n="@@project.informationModal.projectProperties">
+                    Projekteigenschaften
+                </span>
+                <span *ngIf="getLastChangedId() !== 'configuration' && getLastChangedId() !== 'project'">
+                    {{lastChangedDocument.resource.identifier}}
+                </span>
+            </div>
+            <div *ngIf="lastChangedDocument" i18n="@@project.informationModal.editedBy" class="indented">
+                Bearbeitet von: {{lastChangedDocumentUser}}
+            </div>
+            <div *ngIf="lastChangedDocument" i18n="@@project.informationModal.date" class="indented">
+                Zeitpunkt: {{lastChangedDocumentDate}}
+            </div>
+            <div *ngIf="!lastChangedDocument" i18n="@@project.informationModal.deletedResource" class="indented">
+                Gelöschte Ressource
+            </div>
+            <div i18n="@@project.informationModal.thumbnails">
+                Vorschau-Bilddateien:
+            </div>
+            <div i18n="@@project.informationModal.fileCount" class="indented">
+                Anzahl: {{thumbnailFileCount}}
+            </div>
+            <div i18n="@@project.informationModal.fileSize" class="indented">
+                Belegter Festplattenspeicher: {{thumbnailFileSize}}
+            </div>
+            <div i18n="@@project.informationModal.originals">
+                Original-Bilddateien:
+            </div>
+            <div i18n="@@project.informationModal.fileCount" class="indented">
+                Anzahl: {{originalFileCount}}
+            </div>
+            <div i18n="@@project.informationModal.fileSize" class="indented">
+                Belegter Festplattenspeicher: {{originalFileSize}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" id="close-information-modal-button" class="btn btn-primary"
+            (click)="activeModal.close()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+</div>

@@ -9,7 +9,10 @@ import { Field } from '../../src/model/configuration/field';
     it('validate correct field data', () => {
 
         expect(Field.InputType.isValidFieldData('text', Field.InputType.INPUT)).toBe(true);
+        expect(Field.InputType.isValidFieldData({ de: 'text1', en: 'text2' }, Field.InputType.INPUT)).toBe(true);
+        expect(Field.InputType.isValidFieldData('text', Field.InputType.SIMPLE_INPUT)).toBe(true);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.TEXT)).toBe(true);
+        expect(Field.InputType.isValidFieldData({ de: 'text1', en: 'text2' }, Field.InputType.TEXT)).toBe(true);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.DROPDOWN)).toBe(true);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.RADIO)).toBe(true);
         expect(Field.InputType.isValidFieldData('text', Field.InputType.CATEGORY)).toBe(true);
@@ -63,8 +66,9 @@ import { Field } from '../../src/model/configuration/field';
 
     it('validate incorrect field data', () => {
 
-        expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.INPUT)).toBe(false);
-        expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.TEXT)).toBe(false);
+        expect(Field.InputType.isValidFieldData(700, Field.InputType.INPUT)).toBe(false);
+        expect(Field.InputType.isValidFieldData({ de: 'text1', en: 'text2' }, Field.InputType.SIMPLE_INPUT)).toBe(false);
+        expect(Field.InputType.isValidFieldData(700, Field.InputType.TEXT)).toBe(false);
         expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.DROPDOWN)).toBe(false);
         expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.RADIO)).toBe(false);
         expect(Field.InputType.isValidFieldData({ quotation: 'text' }, Field.InputType.CATEGORY)).toBe(false);

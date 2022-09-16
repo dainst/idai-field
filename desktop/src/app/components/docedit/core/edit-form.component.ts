@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { isUndefinedOrEmpty, clone } from 'tsfun';
+import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
 import { Document, Field, Group, Labels } from 'idai-field-core';
+import { Language, Languages } from '../../../services/languages';
 
 
 @Component({
@@ -24,17 +25,17 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() activeGroup: string;
 
     public categories: string[];
-
-    public extraGroups: Array<Group> = [
-        { name: 'conflicts', fields: [] }
-    ];
-
+    public extraGroups: Array<Group> = [{ name: 'conflicts', fields: [] }];
     public groups: Array<Group> = [];
+    public languages: Map<Language>;
 
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private labels: Labels) {}
+                private labels: Labels) {
+
+        this.languages = Languages.getAvailableLanguages();
+    }
 
 
     public activateGroup = (name: string) => this.activeGroup = name;

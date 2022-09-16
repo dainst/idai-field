@@ -1,4 +1,5 @@
-import {preprocessFields} from '../../../../../src/app/components/import/import/preprocess-fields';
+import { preprocessFields } from '../../../../../src/app/components/import/import/preprocess-fields';
+
 
 describe('preprocessFields', () => {
 

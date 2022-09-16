@@ -102,9 +102,15 @@
     },
     "notes": {
       "label": "Notizen"
+    },
+    "damage": {
+      "label": "Schaden in Prozent"
     }
   },
   "categories": {
+    "Level": {
+      "label": "Stockwerk"
+    },
     "RoomFloor": {
       "label": "Boden"
     },

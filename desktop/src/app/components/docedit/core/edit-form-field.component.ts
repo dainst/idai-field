@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {Resource} from 'idai-field-core';
-import {Field} from 'idai-field-core';
+import { Component, Input } from '@angular/core';
+import { Map } from 'tsfun';
+import { Resource, Field } from 'idai-field-core';
+import { Language } from '../../../services/languages';
 
 
 @Component({
@@ -15,4 +16,5 @@ export class EditFormFieldComponent {
 
     @Input() resource: Resource;
     @Input() field: Field;
+    @Input() languages: Map<Language>;    
 }

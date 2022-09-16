@@ -8,7 +8,7 @@ type LiteratureInEditing = { original: Literature, clone: Literature };
 
 
 @Component({
-    selector: 'dai-literature',
+    selector: 'form-field-literature',
     templateUrl: './literature.html'
 })
 /**

@@ -15,6 +15,7 @@ export class MultiLanguageInputComponent implements OnChanges {
 
     @Input() translations: I18N.String;
     @Input() defaultTranslations: I18N.String;
+    @Input() projectLanguages: string[];
     @Input() disabled: boolean = false;
 
     public languages: { [languageCode: string]: Language };
@@ -24,7 +25,8 @@ export class MultiLanguageInputComponent implements OnChanges {
     public newTranslationLanguage: string = '';
 
 
-    public isDeleteButtonVisible = (languageCode: string) => !this.defaultTranslations[languageCode];
+    public isDeleteButtonVisible = (languageCode: string) => !this.defaultTranslations[languageCode]
+        && !this.projectLanguages.includes(languageCode);
 
     public isRestoreButtonVisible = (languageCode: string) => this.defaultTranslations[languageCode]
         && this.translations[languageCode] !== this.defaultTranslations[languageCode];
@@ -33,6 +35,7 @@ export class MultiLanguageInputComponent implements OnChanges {
     ngOnChanges() {
 
         this.languages = Languages.getAvailableLanguages();
+        if (this.projectLanguages) this.addEmptyValuesForProjectLanguages();
         this.reset();
     }
 
@@ -70,6 +73,16 @@ export class MultiLanguageInputComponent implements OnChanges {
         this.newTranslationLanguage = '';
         this.usedLanguages = Object.keys(this.translations);
         this.unusedLanguages = this.getUnusedLanguages();
+    }
+
+
+    private addEmptyValuesForProjectLanguages() {
+
+        this.projectLanguages.forEach(projectLanguage => {
+            if (!this.translations[projectLanguage]) {
+                this.translations[projectLanguage] = '';
+            }
+        });
     }
 
 

@@ -1,9 +1,8 @@
-import {Document} from 'idai-field-core';
-import {Relation} from 'idai-field-core';
+import { Document, Relation } from 'idai-field-core';
+import { ImportErrors as E } from '../../../../../../src/app/components/import/import/import-errors';
+import { createMockValidator, d } from '../helper';
+import { processDocuments } from '../../../../../../src/app/components/import/import/process/process-documents';
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
-import {ImportErrors as E} from '../../../../../../src/app/components/import/import/import-errors';
-import {createMockValidator, d} from '../helper';
-import {processDocuments} from '../../../../../../src/app/components/import/import/process/process-documents';
 
 
 describe('processDocuments', () => {

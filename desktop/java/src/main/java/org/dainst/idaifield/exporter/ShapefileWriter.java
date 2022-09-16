@@ -32,12 +32,6 @@ import java.util.*;
  */
 class ShapefileWriter {
 
-    private static final String dataSchema =
-            "identifier:String,"
-            + "shortdesc:String,"
-            + "category:String";
-
-
     static void write(File shapefileFolder, Map<GeometryType, List<Resource>> resources,
                       String epsg) throws Exception {
 
@@ -68,7 +62,8 @@ class ShapefileWriter {
     private static MemoryDataStore createMemoryDataStore(List<Resource> resources, GeometryType geometryType,
                                                          String epsg) throws Exception {
 
-        SimpleFeatureType featureType = createFeatureType(geometryType, epsg);
+        List<String> languages = getUsedLanguages(resources);
+        SimpleFeatureType featureType = createFeatureType(geometryType, languages, epsg);
 
         MemoryDataStore memoryDataStore = new MemoryDataStore();
         memoryDataStore.createSchema(featureType);
@@ -80,7 +75,8 @@ class ShapefileWriter {
         boolean dataStoreEmpty = true;
 
         for (Resource resource : resources) {
-            if (addFeature(resource, featureType, geometryType, geometryBuilder, memoryDataStore, transaction)) {
+            if (addFeature(resource, languages, featureType, geometryType, geometryBuilder, memoryDataStore,
+                    transaction)) {
                 dataStoreEmpty = false;
             }
         }
@@ -91,7 +87,7 @@ class ShapefileWriter {
     }
 
 
-    private static SimpleFeatureType createFeatureType(GeometryType geometryType,
+    private static SimpleFeatureType createFeatureType(GeometryType geometryType, List<String> languages,
                                                        String epsg) throws Exception {
 
         String geometryName = null;
@@ -110,16 +106,28 @@ class ShapefileWriter {
 
         String schema = "the_geom:" + geometryName;
         if (epsg != null) schema += ":srid=" + epsg;
-        schema += "," + dataSchema;
+        schema += "," + getDataSchema(languages);
 
         return DataUtilities.createType(geometryType.name().toLowerCase(), schema);
     }
 
 
-    private static boolean addFeature(Resource resource, SimpleFeatureType featureType,
+    private static String getDataSchema(List<String> languages) {
+
+        String dataSchema = "identifier:String,";
+
+        if (languages.contains("unspecifiedLanguage")) dataSchema += "sdesc:String,";
+        for (String language : languages) {
+            if (!language.equals("unspecifiedLanguage")) dataSchema += "sdesc_" + language + ":String,";
+        }
+
+        return dataSchema + "category:String";
+    }
+
+
+    private static boolean addFeature(Resource resource, List<String> languages, SimpleFeatureType featureType,
                                       GeometryType geometryType, GeometryBuilder geometryBuilder,
-                                      MemoryDataStore memoryDataStore,
-                                      Transaction transaction) throws Exception {
+                                      MemoryDataStore memoryDataStore, Transaction transaction) throws Exception {
 
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(featureType);
 
@@ -140,7 +148,7 @@ class ShapefileWriter {
                 }
         }
 
-        fillFeatureFields(resource, featureBuilder);
+        fillFeatureFields(resource, languages, featureBuilder);
 
         SimpleFeature feature = featureBuilder.buildFeature(null);
         memoryDataStore.addFeature(feature);
@@ -158,17 +166,32 @@ class ShapefileWriter {
     }
 
 
-    private static void fillFeatureFields(Resource resource, SimpleFeatureBuilder featureBuilder) {
+    private static void fillFeatureFields(Resource resource, List<String> languages,
+                                          SimpleFeatureBuilder featureBuilder) {
 
         featureBuilder.add(resource.getIdentifier());
 
-        if (resource.getShortDescription() != null) {
-            featureBuilder.add(resource.getShortDescription());
-        } else {
-            featureBuilder.add("");
+        if (languages.contains("unspecifiedLanguage")) {
+            featureBuilder.add(getFromShortDescription(resource, "unspecifiedLanguage"));
+        }
+
+        for (String language : languages) {
+            if (!language.equals("unspecifiedLanguage")) {
+                featureBuilder.add(getFromShortDescription(resource, language));
+            }
         }
 
         featureBuilder.add(resource.getCategory());
+    }
+
+
+    private static String getFromShortDescription(Resource resource, String language) {
+
+        if (resource.getShortDescription() != null && resource.getShortDescription().containsKey(language)) {
+            return resource.getShortDescription().get(language);
+        } else {
+            return "";
+        }
     }
 
 
@@ -202,5 +225,22 @@ class ShapefileWriter {
         } finally {
             transaction.close();
         }
+    }
+
+
+    private static List<String> getUsedLanguages(List<Resource> resources) {
+
+        Set<String> languagesSet = new HashSet<String>();
+
+        for (Resource resource: resources) {
+            if (resource.getShortDescription() != null) {
+                languagesSet.addAll(resource.getShortDescription().keySet());
+            }
+        }
+        
+        List<String> languages = new ArrayList<String>(languagesSet);
+        languages.sort(Comparator.naturalOrder());
+
+        return languages;
     }
 }

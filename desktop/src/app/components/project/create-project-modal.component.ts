@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Labels, Template } from 'idai-field-core';
 import { ProjectNameValidation } from '../../model/project-name-validation';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
+import { Language, Languages } from '../../services/languages';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
+import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
 
@@ -28,7 +30,11 @@ export class CreateProjectModalComponent implements OnInit {
 
     public projectName: string;
     public selectedTemplate: Template;
+    public selectedLanguages: string[];
     public creating: boolean = false;
+    public modalOpened: boolean = false;
+
+    public languages: { [languageCode: string]: Language };
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -48,16 +54,21 @@ export class CreateProjectModalComponent implements OnInit {
     public getTemplateDescription = (templateName: string) =>
         this.labels.getDescription(this.getTemplate(templateName));
 
+    public isConfirmButtonEnabled = () => this.projectName && this.selectedLanguages
+        && this.selectedLanguages.length > 0 && !this.creating;
+
 
     ngOnInit() {
 
         this.selectedTemplate = this.getTemplate(this.getTemplateNames()[0]);
+        this.selectedLanguages = [];
+        this.languages = Languages.getAvailableLanguages();
     }
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
     }
 
 
@@ -81,10 +92,16 @@ export class CreateProjectModalComponent implements OnInit {
             return this.messages.add(validationErrorMessage as any /* TODO any */);
         }
 
+        if (this.selectedLanguages.length === 0) {
+            this.creating = false;
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES]);
+        }
+
         try {
             await this.settingsService.createProject(
                 this.projectName,
                 this.selectedTemplate,
+                this.selectedLanguages,
                 remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
             );
             reloadAndSwitchToHomeRoute();

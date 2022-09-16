@@ -106,7 +106,9 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
             }
         });
 
-        return () => mounted = false;
+        return () => {
+            mounted = false;
+        };
     }, [map, project, loginData]);
 
     useEffect(() => {
@@ -129,7 +131,9 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         setVectorLayer(newVectorLayer);
         setUpView(map, newVectorLayer, fitOptions);
 
-        return () => map.removeLayer(newVectorLayer);
+        return () => {
+            map.removeLayer(newVectorLayer);
+        };
     }, [map, documents, fitOptions]);
 
     useEffect(() => {

@@ -9,7 +9,7 @@ import { doc as helpersDoc } from '../test-helpers';
  */
 describe('FulltextIndex', () => {
 
-    let fi;
+    let fulltextIndex;
     const fieldsToIndex = ['identifier', 'shortDescription'];
 
 
@@ -23,7 +23,8 @@ describe('FulltextIndex', () => {
 
 
     beforeEach(() => {
-        fi = {};
+
+        fulltextIndex = {};
     });
 
 
@@ -31,9 +32,9 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi,'ide', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier1', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex,'ide', ['category'])).toEqual(['1']);
     });
 
 
@@ -42,9 +43,9 @@ describe('FulltextIndex', () => {
         const d1 = doc('1', 'identifier1', 'category');
         const d2 = doc('2', 'identifier2', 'category');
 
-        FulltextIndex.put(fi, d1, fieldsToIndex);
-        FulltextIndex.put(fi, d2, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual(['1', '2']);
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category'])).toEqual(['1', '2']);
     });
 
 
@@ -52,8 +53,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier', undefined)).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', undefined)).toEqual(['1']);
     });
 
 
@@ -61,8 +62,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category', 'short');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'short', undefined)).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'short', undefined)).toEqual(['1']);
     });
 
 
@@ -72,10 +73,10 @@ describe('FulltextIndex', () => {
         const d2 = doc('2', 'identifier2', 'category2');
         const d3 = doc('3', 'identifier3', 'category3');
 
-        FulltextIndex.put(fi, d1, fieldsToIndex);
-        FulltextIndex.put(fi, d2, fieldsToIndex);
-        FulltextIndex.put(fi, d3, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier', ['category1', 'category2'])).toEqual(['1', '2']);
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d3, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category1', 'category2'])).toEqual(['1', '2']);
     });
 
 
@@ -83,8 +84,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'iden', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category'])).toEqual([]);
     });
 
 
@@ -92,8 +93,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'iden', 'category1');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier', ['category2'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category2'])).toEqual([]);
     });
 
 
@@ -101,9 +102,9 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category', 'a short description');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi,'short description', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi, 'a description', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex,'short description', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'a description', ['category'])).toEqual(['1']);
     });
 
 
@@ -111,15 +112,15 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category', 'a short description');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, ' a    short  description  ', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi,'-a----short--description--', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, ' a    short  description  ', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex,'-a----short--description--', ['category'])).toEqual(['1']);
     });
 
 
     it('no categories present', () => {
 
-        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([]);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category'])).toEqual([]);
     });
 
 
@@ -127,9 +128,9 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        FulltextIndex.remove(fi, d);
-        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        FulltextIndex.remove(fulltextIndex, d);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier', ['category'])).toEqual([]);
     });
 
 
@@ -137,8 +138,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, '*', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, '*', ['category'])).toEqual(['1']);
     });
 
 
@@ -146,8 +147,8 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'short', ['category'])).toEqual(['1']);
     });
 
 
@@ -157,14 +158,14 @@ describe('FulltextIndex', () => {
         const d2 = doc('2', 'another-one', 'category');
         const d3 = doc('3', 'last_one', 'category');
 
-        FulltextIndex.put(fi, d1, fieldsToIndex);
-        FulltextIndex.put(fi, d2, fieldsToIndex);
-        FulltextIndex.put(fi, d3, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi, 'token', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi,'another', ['category'])).toEqual(['2']);
-        expect(FulltextIndex.get(fi,'one', ['category'])).toEqual(['2', '3']);
-        expect(FulltextIndex.get(fi,'last', ['category'])).toEqual(['3']);
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d3, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'hello', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'token', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex,'another', ['category'])).toEqual(['2']);
+        expect(FulltextIndex.get(fulltextIndex,'one', ['category'])).toEqual(['2', '3']);
+        expect(FulltextIndex.get(fulltextIndex,'last', ['category'])).toEqual(['3']);
     });
 
 
@@ -173,10 +174,10 @@ describe('FulltextIndex', () => {
         const d1 = doc('1', 'Hello', 'category');
         const d2 = doc('2', 'something', 'category');
 
-        FulltextIndex.put(fi, d1, fieldsToIndex);
-        FulltextIndex.put(fi, d2, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fi,'Something', ['category'])).toEqual(['2']);
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'hello', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex,'Something', ['category'])).toEqual(['2']);
     });
 
 
@@ -184,12 +185,12 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
         d['resource']['identifier'] = 'identifier2';
 
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual([]);
-        expect(FulltextIndex.get(fi, 'identifier2', ['category'])).toEqual(['1']);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier1', ['category'])).toEqual([]);
+        expect(FulltextIndex.get(fulltextIndex, 'identifier2', ['category'])).toEqual(['1']);
     });
 
 
@@ -197,14 +198,26 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
         d['resource']['shortDescription'] = '';
-        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
-        FulltextIndex.put(fi, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'short', ['category'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
         d['resource']['shortDescription'] = undefined;
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'short', ['category'])).toEqual([]);
         delete d['resource']['shortDescription'];
-        FulltextIndex.put(fi, d, fieldsToIndex);
-        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'short', ['category'])).toEqual([]);
+    });
+
+
+    it('index all language entries of shortDescription', () => {
+
+        const d = doc('1', 'identifier1', 'category');
+        d['resource']['shortDescription'] = { de: 'Deutsch', en: 'English', it: 'Italiano' };
+        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        expect(FulltextIndex.get(fulltextIndex, 'Deutsch', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'English', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'Italiano', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'other', ['category'])).toEqual([]);
     });
 
 
@@ -214,11 +227,11 @@ describe('FulltextIndex', () => {
         const d2 = doc('2', 'Hello-A-0021', 'category');
         const d3 = doc('3', 'Hello-A-0059', 'category');
 
-        FulltextIndex.put(fi, d1, fieldsToIndex);
-        FulltextIndex.put(fi, d2, fieldsToIndex);
-        FulltextIndex.put(fi, d3, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d3, fieldsToIndex);
 
-        const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category']);
+        const results = FulltextIndex.get(fulltextIndex, 'Hello-A-00[23]', ['category']);
         expect(results.length).toBe(2);
 
         expect(results).toContain('1');
@@ -231,9 +244,9 @@ describe('FulltextIndex', () => {
         const document = doc('1', 'identifier1', 'category');
         document.resource.customField = 'testValue';
         const ie = IndexItem.from(document);
-        FulltextIndex.put(fi, document, fieldsToIndex.concat(['customField']));
+        FulltextIndex.put(fulltextIndex, document, fieldsToIndex.concat(['customField']));
 
-        const results = FulltextIndex.get(fi, 'testValue', ['category']);
+        const results = FulltextIndex.get(fulltextIndex, 'testValue', ['category']);
         expect(results.length).toBe(1);
         expect(results[0]).toEqual('1');
     });

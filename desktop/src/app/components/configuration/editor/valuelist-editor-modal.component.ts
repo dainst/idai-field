@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop, set } from 'tsfun';
-import { I18N, InPlace, Labels, SortUtil, Valuelist } from 'idai-field-core';
+import { equal, isEmpty, nop, set, Map, clone } from 'tsfun';
+import { I18N, InPlace, Labels, SortUtil, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
@@ -101,22 +101,25 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public async confirm() {
 
-        if (isEmpty(this.getClonedValuelistDefinition().values) && !this.extendedValuelist) {
+        const clonedValuelistDefinition = this.getClonedValuelistDefinition();
+
+        if (isEmpty(clonedValuelistDefinition.values) && !this.extendedValuelist) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST]);
         }
 
         try {
-            ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedValuelistDefinition());
+            ConfigurationUtil.cleanUpAndValidateReferences(clonedValuelistDefinition);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
 
-        this.getClonedValuelistDefinition().description = this.clonedDescription;
+        clonedValuelistDefinition.values = this.removeEmptyStringsFromValues(clonedValuelistDefinition.values);
+        clonedValuelistDefinition.description = I18N.removeEmpty(this.clonedDescription);
         
         if (this.sortAlphanumerically) {
-            delete this.getClonedValuelistDefinition().order;
+            delete clonedValuelistDefinition.order;
         } else {
-            this.getClonedValuelistDefinition().order = this.order;
+            clonedValuelistDefinition.order = this.order;
         }
 
         await super.confirm(true);
@@ -126,9 +129,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public isChanged(): boolean {
 
         return this.new
-            || !equal(this.getCustomValuelistDefinition().values)(this.getClonedValuelistDefinition().values)
+            || !equal(this.getCustomValuelistDefinition().values)
+                    (this.removeEmptyStringsFromValues(this.getClonedValuelistDefinition().values))
             || this.isHiddenChanged()
-            || !equal(this.description)(this.clonedDescription)
+            || !equal(this.description)(I18N.removeEmpty(this.clonedDescription))
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
@@ -169,6 +173,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         componentInstance.valueId = valueId;
         componentInstance.new = isNewValue;
+        componentInstance.projectLanguages = this.getClonedProjectLanguages();
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -256,6 +261,32 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         return valueIds.sort((valueId1: string, valueId2: string) => {
             return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
         });
+    }
+
+
+    private removeEmptyStringsFromValues(values: Map<ValuelistValue>): Map<ValuelistValue> {
+
+        const result: Map<ValuelistValue> = clone(values);
+
+        Object.keys(result).forEach(key => {
+            const value = result[key];
+
+            if (value.label) {
+                value.label = I18N.removeEmpty(value.label);
+                if (isEmpty(value.label)) delete value.label;
+            }
+            if (value.description) {
+                value.description = I18N.removeEmpty(value.description);
+                if (isEmpty(value.description)) delete value.description;
+            }
+
+            if (this.extendedValuelist && this.extendedValuelist.values?.[key]
+                    && (isEmpty(value) || equal(this.extendedValuelist.values[key] as any)(value as any))) {
+                delete result[key];
+            }
+        });
+
+        return result;
     }
 
 

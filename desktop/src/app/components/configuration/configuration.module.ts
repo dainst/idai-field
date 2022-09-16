@@ -47,6 +47,7 @@ import { GroupListingComponent } from './add/group/group-listing.component';
 import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relations-info.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
+import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { ImportConfigurationModalComponent } from './import/import-configuration
         ConfigurationChangeNotificationModalComponent,
         ConfigurationConflictsModalComponent,
         HierarchicalRelationsInfoComponent,
-        ImportConfigurationModalComponent
+        ImportConfigurationModalComponent,
+        ProjectLanguagesModalComponent
     ],
     providers: [
         ConfigurationChangeNotifications,
@@ -128,7 +130,8 @@ import { ImportConfigurationModalComponent } from './import/import-configuration
         SaveProcessModalComponent,
         ConfigurationChangeNotificationModalComponent,
         ConfigurationConflictsModalComponent,
-        ImportConfigurationModalComponent
+        ImportConfigurationModalComponent,
+        ProjectLanguagesModalComponent
     ]
 })
 

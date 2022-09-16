@@ -113,6 +113,9 @@ export class BuiltInConfiguration {
         },
         notes: {
             inputType: Field.InputType.TEXT
+        },
+        damage: {
+            inputType: Field.InputType.FLOAT
         }
     };
     
@@ -122,12 +125,12 @@ export class BuiltInConfiguration {
             required: true,
             fields: {
                 identifier: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     editable: false,
                     visible: false
                 },
                 shortName: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     fixedInputType: true
                 },
                 coordinateReferenceSystem: {
@@ -136,11 +139,11 @@ export class BuiltInConfiguration {
                     fixedInputType: true
                 },
                 staff: {
-                    inputType: Field.InputType.MULTIINPUT,
+                    inputType: Field.InputType.SIMPLE_MULTIINPUT,
                     fixedInputType: true
                 },
                 campaigns: {
-                    inputType: Field.InputType.MULTIINPUT,
+                    inputType: Field.InputType.SIMPLE_MULTIINPUT,
                     fixedInputType: true
                 }
             },
@@ -294,6 +297,23 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    }
+                ]
+            }
+        },
+        Level: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -524,7 +544,7 @@ export class BuiltInConfiguration {
                 // when the image gets uploaded. However, users can change the identifier,
                 // which is why we store the originalFilename separately
                 originalFilename: {
-                    inputType: Field.InputType.INPUT,
+                    inputType: Field.InputType.SIMPLE_INPUT,
                     visible: false,
                     editable: false
                 },
@@ -577,7 +597,7 @@ export class BuiltInConfiguration {
             fulltextIndexed: true
         },
         identifier: {
-            inputType: Field.InputType.INPUT,
+            inputType: Field.InputType.SIMPLE_INPUT,
             visible: false,
             editable: true,
             mandatory: true,
@@ -775,7 +795,15 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Room'],
+            domain: ['Level:inherit'],
+            range: ['Building'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'isRecordedIn',
+            domain: ['Room:inherit'],
             range: ['Building'],
             editable: false,
             visible: false,
@@ -856,7 +884,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Room', 'Sample'],
+            range: ['Feature:inherit', 'Area:inherit', 'Room:inherit', 'Sample'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -891,8 +919,26 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
+            domain: ['Level:inherit'],
+            range: ['BuildingPart:inherit'],
+            sameMainCategoryResource: true,
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
+            sameMainCategoryResource: true,
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['Room:inherit'],
+            range: ['BuildingPart:inherit', 'Level:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -910,7 +956,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['RoomFloor'],
-            range: ['Room'],
+            range: ['Room:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -919,7 +965,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['RoomWall'],
-            range: ['Room'],
+            range: ['Room:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -928,7 +974,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['RoomCeiling'],
-            range: ['Room'],
+            range: ['Room:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

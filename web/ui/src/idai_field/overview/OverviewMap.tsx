@@ -43,7 +43,9 @@ export default function OverviewMap({ documents, filter, withSearchResults }
         const newMap = createMap();
         setMap(newMap);
 
-        return () => newMap ?? newMap.setTarget(null);
+        return () => {
+            newMap ?? newMap.setTarget(null);
+        };
     }, []);
 
     useEffect(() => {

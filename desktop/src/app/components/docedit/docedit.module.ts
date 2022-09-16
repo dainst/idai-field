@@ -28,7 +28,6 @@ import { InputComponent } from './core/forms/input.component';
 import { LiteratureComponent } from './core/forms/literature.component';
 import { MultiInputComponent } from './core/forms/multi-input.component';
 import { RadioComponent } from './core/forms/radio.component';
-import { TextComponent } from './core/forms/text.component';
 import { TypeRelationPickerComponent } from './core/forms/type-relation/type-relation-picker.component';
 import { TypeRelationComponent } from './core/forms/type-relation/type-relation.component';
 import { TypeRowComponent } from './core/forms/type-relation/type-row.component';
@@ -45,6 +44,9 @@ import { ImagePickerComponent } from './widgets/image-picker.component';
 import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
 import { RelationPickerComponent } from './widgets/relationpicker/relation-picker.component';
 import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
+import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
+import { SimpleInputComponent } from './core/forms/simple-input.component';
+import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 
 
 @NgModule({
@@ -93,9 +95,10 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
         BooleanComponent,
         DropdownComponent,
         InputComponent,
+        SimpleInputComponent,
         MultiInputComponent,
+        SimpleMultiInputComponent,
         RadioComponent,
-        TextComponent,
         DatingComponent,
         DateComponent,
         TypeRelationComponent,
@@ -107,7 +110,8 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
         OutliersComponent,
         EmptyValuelistInfoComponent,
         LiteratureComponent,
-        InvalidFieldDataComponent
+        InvalidFieldDataComponent,
+        MultiLanguageTextFieldComponent
     ],
     exports: [
         DoceditComponent,

@@ -23,9 +23,32 @@ list {
       border: solid 1px rgb(221, 221, 221);
       border-bottom: none;
 
-      div {
+      .list-header-field {
+        height: 34px;
         padding: 5px 5px 5px 10px;
         background: white;
+
+        #list-languages-dropdown {
+          position: relative;
+          bottom: 6px;
+          float: right;
+
+          button {
+            background-color: transparent !important;
+            text-decoration: none;
+            cursor: default;
+          }
+
+          .dropdown-item:hover {
+            background-color: #ededed !important;
+          }
+        }
+
+        .list-header-language-label {
+          float: right;
+          font-weight: normal;
+          color: #565656;
+        }
       }
 
       #header-placeholder {

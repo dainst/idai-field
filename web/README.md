@@ -89,7 +89,7 @@ For conversion of images and tiles run
     
 If you have images, place them under `data/cantaloupe` (or override the docker-compose configuration as described further below, to change the default location)
 
-## Usage | User-Managerment
+## Usage | User management
 
 The `Api.Auth` section of the active config file `dev.exs` has two parts, `users` and `readable_projects`. 
 

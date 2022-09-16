@@ -3,16 +3,17 @@ import { Resource } from 'idai-field-core';
 
 
 @Component({
-    selector: 'dai-text',
-    template: `<textarea [(ngModel)]="resource[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
-                         class="form-control"></textarea>`
+    selector: 'form-field-simple-input',
+    template: `<input [(ngModel)]="resource[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
+                      class="form-control">`
 })
 
 /**
- * @author Fabian Z.
+ * @author Fabian Zav.
+ * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class TextComponent {
+export class SimpleInputComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;

@@ -11,6 +11,7 @@ import { MapPage } from '../map/map.page';
 import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
 import { ImageViewModalPage } from '../image-view-modal.page';
+import { ConfigurationPage } from '../configuration/configuration.page';
 
 
 /**
@@ -150,7 +151,7 @@ describe('resources --', () => {
         await DetailSidebarPage.doubleClickEditDocument('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('cancel');
-        await expect(await DoceditPage.getInputFieldValue(0)).toEqual('2');
+        await expect(await DoceditPage.getSimpleInputFieldValue(0)).toEqual('2');
         await DoceditPage.clickCloseEdit('discard');
 
         done();
@@ -294,6 +295,76 @@ describe('resources --', () => {
         expect(checkboxes.length).toBe(1);
         expect(await getText(checkboxes[0])).toEqual('Testkampagne 1');
 
+        await DoceditPage.clickCloseEdit();
+
+        done();
+    });
+
+
+    it('edit i18n field values', async done => {
+
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.typeInInputField('identifier', '1');
+        await DoceditPage.clickLanguageTab('shortDescription', 'en');
+        await DoceditPage.typeInInputField('shortDescription', 'English text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('English text');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickLanguageTab('shortDescription', 'de');
+        await DoceditPage.typeInInputField('shortDescription', 'Deutscher Text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Deutscher Text');
+
+        done();
+    });
+
+
+    it('show string value in unspecifiedLanguage tab after changing input type from simpleInput to input', async done => {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType();
+        let languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
+        expect(languageTabs.length).toBe(0);
+
+        await DoceditPage.typeInInputField('identifier', '1');
+        await DoceditPage.typeInInputField('shortDescription', 'Simple string text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Simple string text');
+        
+        await navigateTo('configuration');
+        await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
+        expect(languageTabs.length).toBe(4);
+        expect(await getText(languageTabs[0])).toEqual('Ohne Sprachangabe');
+        expect(await getText(languageTabs[1])).toEqual('Deutsch');
+        expect(await getText(languageTabs[2])).toEqual('Englisch');
+        expect(await getText(languageTabs[3])).toEqual('Italienisch');
+        
+        await DoceditPage.removeTextFromInputField('shortDescription');
+        await DoceditPage.clickLanguageTab('shortDescription', 'de');
+        await DoceditPage.typeInInputField('shortDescription', 'Deutscher Text');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Deutscher Text');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
+        expect(languageTabs.length).toBe(3);
+        expect(await getText(languageTabs[0])).toEqual('Deutsch');
+        expect(await getText(languageTabs[1])).toEqual('Englisch');
+        expect(await getText(languageTabs[2])).toEqual('Italienisch');
         await DoceditPage.clickCloseEdit();
 
         done();

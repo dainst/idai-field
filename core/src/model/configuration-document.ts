@@ -11,6 +11,8 @@ import { FieldResource } from './field-resource';
 import { Valuelist } from './configuration/valuelist';
 import { BaseGroupDefinition } from '../configuration/model/form/base-form-definition';
 import { ConfigReader } from '../configuration/boot/config-reader';
+import { SAMPLE_DATA_LABELS } from '../datastore/sampledata/sample-data-labels';
+import { getConfigurationName } from '../configuration/project-configuration-names';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -27,13 +29,15 @@ export namespace ConfigurationDocument {
 
     export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
                                                    configReader: ConfigReader,
-                                                   customConfigurationName: string,
+                                                   projectName: string,
                                                    username: string): Promise<ConfigurationDocument> {
 
         try {
             return await getFunction('configuration') as ConfigurationDocument;
         } catch (_) {
-            return await createConfigurationDocumentFromFile(configReader, customConfigurationName, username);
+            return await createConfigurationDocumentFromFile(
+                configReader, projectName, username
+            );
         }
     }
 
@@ -51,7 +55,7 @@ export namespace ConfigurationDocument {
                                          category: CategoryForm, checkChildren: boolean = false): boolean {
 
         const customDefinition: CustomFormDefinition = configurationDocument.resource
-        .forms[category.libraryId ?? category.name];
+            .forms[category.libraryId ?? category.name];
 
         const result: boolean = customDefinition.color !== undefined
             || customDefinition.groups !== undefined
@@ -251,12 +255,13 @@ export namespace ConfigurationDocument {
 
 
     async function createConfigurationDocumentFromFile(configReader: ConfigReader,
-                                                       customConfigurationName: string,
+                                                       projectName: string,
                                                        username: string): Promise<ConfigurationDocument> {
 
+        const customConfigurationName: string = getConfigurationName(projectName);
         const customConfiguration = await configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = configReader.getCustomLanguageConfigurations(customConfigurationName);
-        
+
         const configurationDocument = {
             _id: 'configuration',
             created: {
@@ -272,7 +277,8 @@ export namespace ConfigurationDocument {
                 forms: customConfiguration.forms,
                 order: customConfiguration.order,
                 languages: languageConfigurations,
-                valuelists: {}
+                valuelists: {},
+                projectLanguages: projectName === 'test' ? Object.keys(SAMPLE_DATA_LABELS) : []
             }
         };
 

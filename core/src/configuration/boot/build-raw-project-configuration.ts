@@ -50,6 +50,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              builtInFieldDefinitions: Map<BuiltInFieldDefinition> = {},
                                              relationDefinitions: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
+                                             projectLanguages: string[] = [],
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
                                              selectedParentForms?: string[],
@@ -101,7 +102,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         categories: finalizeCategories(categories),
         relations,
         commonFields,
-        valuelists
+        valuelists,
+        projectLanguages
     };
 }
 

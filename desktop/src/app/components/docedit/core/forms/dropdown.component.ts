@@ -3,7 +3,7 @@ import { Datastore, Labels, Field, Resource, Valuelist, ValuelistUtil, Hierarchy
 
 
 @Component({
-    selector: 'dai-dropdown',
+    selector: 'form-field-dropdown',
     templateUrl: './dropdown.html'
 })
 /**

@@ -45,6 +45,10 @@ const getTemplate = (mainWindow, context, config) => {
             }, {
                 type: 'separator'
             }, {
+                label: messages.get('menu.project.projectInfo'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectInformation'),
+                enabled: isDefaultContext(context)
+            }, {
                 label: messages.get('menu.project.projectProperties'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'editProject'),
                 enabled: isDefaultContext(context)
@@ -271,6 +275,11 @@ const getTemplate = (mainWindow, context, config) => {
         template.splice(index + 1, 0, {
             label: messages.get('menu.tools.configuration'),
             submenu: [{
+                label: messages.get('menu.configuration.projectLanguages'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'projectLanguages'),
+                enabled: isDefaultContext(context)
+            },
+            {
                 label: messages.get('menu.configuration.valuelistManagement'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'valuelists'),
                 enabled: isDefaultContext(context)

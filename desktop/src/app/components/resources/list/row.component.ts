@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Map } from 'tsfun';
+import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels } from 'idai-field-core';
+    Labels, I18N, FieldResource } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -9,6 +9,7 @@ import { MessagesConversion } from '../../docedit/messages-conversion';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
+import { Language } from '../../../services/languages';
 
 
 @Component({
@@ -24,10 +25,12 @@ export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
     @Input() categoriesMap: { [category: string]: CategoryForm };
+    @Input() availableLanguages: Array<Language>;
+    @Input() selectedLanguage: Language|undefined;
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
-    private initialValues: Map<string|undefined> = {};
+    private initialValues: Map<string|I18N.String|undefined> = {};
 
     private saving: Promise<void>;
 
@@ -48,11 +51,13 @@ export class RowComponent implements AfterViewInit {
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
-    public startEditing = (fieldName: string, fieldValue: string) => this.initialValues[fieldName] = fieldValue;
+    public startEditing = (fieldName: string, fieldValue: string|I18N.String) =>
+        this.initialValues[fieldName] = clone(fieldValue);
 
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
-    public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
+    public shouldShowArrowTopRightForSearchMode = () =>
+        this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
@@ -77,9 +82,13 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldName: string, fieldValue: string) {
+    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
-        if (event.key === 'Enter') await this.stopEditing(fieldName, fieldValue);
+        this.setValue(fieldName, event.target['value']);
+
+        if (event.key === 'Enter') {
+            await this.stopEditing(fieldName, this.document.resource[fieldName]);
+        }
     }
 
 
@@ -98,19 +107,72 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async stopEditing(fieldName: string, fieldValue: string) {
+    public async stopEditing(fieldName: string, fieldValue: string|I18N.String) {
 
-        if (this.initialValues[fieldName] != fieldValue) {
+        if (this.hasChanged(fieldName, fieldValue)) {
             this.saving = this.save();
             await this.saving;
         }
-        this.initialValues[fieldName] = fieldValue;
+        this.initialValues[fieldName] = clone(fieldValue);
+    }
+
+
+    public getShortDescription(): string {
+
+        const shortDescription = this.document.resource.shortDescription;
+
+        return isObject(shortDescription)
+            ? (shortDescription[this.selectedLanguage.code] ?? '')
+            : !this.selectedLanguage || this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE
+                ? (shortDescription ?? '')
+                : '';
     }
 
 
     public isMoveOptionAvailable(): boolean {
 
         return this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
+    }
+
+
+    private setValue(fieldName: string, newValue: string) {
+
+        const currentValue: any = this.document.resource[fieldName];
+
+        if (fieldName !== FieldResource.SHORTDESCRIPTION || this.isInStringInputMode()) {
+            this.setValueAsString(fieldName, newValue);
+        } else {
+            this.setValueAsI18NString(fieldName, newValue, currentValue);
+        }
+    }
+
+
+    private setValueAsString(fieldName: string, newValue: string) {
+
+        if (newValue) {
+            this.document.resource[fieldName] = newValue;
+        } else {
+            delete this.document.resource[fieldName];
+        }
+    }
+
+    
+    private setValueAsI18NString(fieldName: string, newValue: string, currentValue: string) {
+
+        if (newValue.length > 0) {
+            if (!isObject(currentValue)) {
+                this.document.resource[fieldName] = {};
+                if (isString(currentValue)) {
+                    this.document.resource[fieldName][I18N.UNSPECIFIED_LANGUAGE] = currentValue;
+                }
+            }
+            this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
+        } else {
+            delete this.document.resource[fieldName][this.selectedLanguage.code];
+            if (isEmpty(this.document.resource[fieldName])) {
+                delete this.document.resource[fieldName];
+            }
+        }
     }
 
 
@@ -156,5 +218,20 @@ export class RowComponent implements AfterViewInit {
     private focusIdentifierInputIfDocumentIsNew() {
 
         if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
+    }
+
+
+    private hasChanged(fieldName: string, fieldValue: any): boolean {
+
+        return (isObject(fieldValue) && isObject(this.initialValues[fieldName]))
+            ? !equal(this.initialValues[fieldName] as any)(fieldValue)
+            : this.initialValues[fieldName] != fieldValue;
+    }
+
+
+    private isInStringInputMode(): boolean {
+
+        return !this.selectedLanguage
+            || (this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE && this.availableLanguages.length === 1);
     }
 }

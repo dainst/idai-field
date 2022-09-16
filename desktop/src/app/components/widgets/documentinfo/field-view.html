@@ -9,7 +9,7 @@
 
 <div *ngIf="field.type === 'object'" class="field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
-    <div class="field-value">{{getObjectLabel(field.value, field)}}</div>
+    <div class="field-value" [innerHTML]="getObjectLabel(field.value, field)"></div>
 </div>
 
 <div *ngIf="field.type === 'default'" class="field">

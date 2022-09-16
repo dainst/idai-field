@@ -23,7 +23,8 @@
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <edit-form-group [document]="document"
                                  [originalDocument]="originalDocument"
-                                 [fieldDefinitions]="getFields(activeGroup)">
+                                 [fieldDefinitions]="getFields(activeGroup)"
+                                 [languages]="languages">
                 </edit-form-group>
             </div>
 

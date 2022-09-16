@@ -15,6 +15,7 @@ export interface RawProjectConfiguration {
     relations: Array<Relation>;
     commonFields: Map<Field>;
     valuelists: Map<Valuelist>;
+    projectLanguages: string[];
 };
 
 const TYPE_CATALOG = 'TypeCatalog';
@@ -34,12 +35,14 @@ export class ProjectConfiguration {
 
     private categoryForms: Forest<CategoryForm>;
     private relations: Array<Relation>;
+    private projectLanguages: string[];
 
 
     constructor(rawConfiguration: RawProjectConfiguration) {
 
         this.categoryForms = rawConfiguration.forms;
         this.relations = rawConfiguration.relations || [];
+        this.projectLanguages = rawConfiguration.projectLanguages;
     }
 
 
@@ -47,6 +50,13 @@ export class ProjectConfiguration {
 
         this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
+        this.projectLanguages = newProjectConfiguration.projectLanguages;
+    }
+
+
+    public getProjectLanguages(): string[] {
+
+        return this.projectLanguages;
     }
 
 

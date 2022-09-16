@@ -1,5 +1,6 @@
-import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { click, getElement, getElements, getText, rightClick, typeIn, waitForNotExist } from '../app';
+import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { EditConfigurationPage } from './edit-configuration.page';
 
 
 /**
@@ -142,5 +143,17 @@ export class ConfigurationPage {
         await ConfigurationPage.clickContextMenuDeleteOption();
         if (hasConfirmationInput) await ConfigurationPage.typeInConfirmDeletionInput(categoryName);
         await ConfigurationPage.clickConfirmDeletionButton();
+    }
+
+
+    public static async changeMultiLanguageSetting(fieldName: string, categoryName: string,
+                                                   supercategoryName?: string) {
+
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickOpenContextMenuForField(fieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickToggleMultiLanguageSlider();
+        await EditConfigurationPage.clickConfirm();
     }
 }

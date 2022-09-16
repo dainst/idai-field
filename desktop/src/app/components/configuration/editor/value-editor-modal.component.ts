@@ -20,6 +20,7 @@ export class ValueEditorModalComponent {
     public value: ValuelistValue;
     public valueId: string
     public new: boolean;
+    public projectLanguages: string[];
 
     public clonedValue: ValuelistValue;
 

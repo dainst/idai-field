@@ -1,11 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FieldDocument, Named, CategoryForm, Tree } from 'idai-field-core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
-import { ProjectConfiguration } from 'idai-field-core';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { Menus } from '../../../services/menus';
+import { Language, Languages } from '../../../services/languages';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 @Component({
@@ -23,12 +25,16 @@ export class ListComponent extends BaseList implements OnChanges {
     @Input() selectedDocument: FieldDocument;
 
     public categoriesMap: { [category: string]: CategoryForm };
+    public availableLanguages: Array<Language>;
+    public selectedLanguage: Language|undefined;
 
 
-    constructor(resourcesComponent: ResourcesComponent,
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private settingsProvider: SettingsProvider,
+                private i18n: I18n,
+                resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                projectConfiguration: ProjectConfiguration,
                 menuService: Menus) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
@@ -38,13 +44,20 @@ export class ListComponent extends BaseList implements OnChanges {
     }
 
 
+    public getUnselectedLanguages = () => this.availableLanguages.filter(language => {
+        return language !== this.selectedLanguage;
+    });
+
+    public selectLanguage = (language: Language) => this.selectedLanguage = language;
+
+    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
     public ngOnChanges(changes: SimpleChanges) {
 
         if (changes['selectedDocument']) this.scrollTo(this.selectedDocument);
+        if (changes['documents']) this.updateAvailableLanguages();
     }
-
-
-    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
 
     public async createNewDocument(doc: FieldDocument) {
@@ -52,5 +65,20 @@ export class ListComponent extends BaseList implements OnChanges {
         this.documents = this.documents
             .filter(_ => _.resource.id)
             .concat([doc]);
+    }
+
+
+    private updateAvailableLanguages() {
+
+        this.availableLanguages = Languages.getDocumentsLanguages(
+            this.documents,
+            FieldResource.SHORTDESCRIPTION,
+            Languages.getAvailableLanguages(),
+            this.projectConfiguration.getProjectLanguages(),
+            this.settingsProvider.getSettings().languages,
+            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+        );
+
+        if (this.availableLanguages.length > 0) this.selectedLanguage = this.availableLanguages[0];
     }
 }

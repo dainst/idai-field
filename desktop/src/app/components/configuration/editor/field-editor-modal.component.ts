@@ -38,6 +38,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public clonedField: Field|undefined;
     public hideable: boolean;
     public hidden: boolean;
+    public i18nCompatible: boolean;
 
     protected changeMessage = this.i18n({
         id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
@@ -54,6 +55,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         super(activeModal, modals, menuService, messages);
     }
 
+
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
@@ -66,6 +68,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
 
     public isCustomField = () => this.field.source === 'custom';
+
+    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
+
+    public isI18nInputType = () => Field.InputType.I18N_INPUT_TYPES.includes(this.getInputType());
+
+    public isI18nOptionEnabled = () => this.getInputType() !== Field.InputType.TEXT;
 
 
     public initialize() {
@@ -122,7 +130,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.field.fixedInputType) return [];
 
-        const inputTypes: Array<InputType> = this.availableInputTypes.filter(inputType => inputType.customFields);
+        const inputTypes: Array<InputType> = this.availableInputTypes.filter(inputType => {
+            return inputType.customFields && !Field.InputType.SIMPLE_INPUT_TYPES.includes(inputType.name);
+        });
 
         return this.isCustomField()
             ? inputTypes
@@ -274,6 +284,52 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
     }
 
+    public getI18nOptionTooltip(): string {
+
+        if (this.getInputType() === Field.InputType.TEXT) {
+            return this.i18n({
+                id: 'configuration.i18nOption.changingNotAllowed',
+                value: 'Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.'
+            });
+        } else {
+            return '';
+        }
+    }
+
+
+    public isSelectedInputType(inputType: Field.InputType): boolean {
+
+        const selectedInputType: Field.InputType = this.getInputType();
+
+        switch (selectedInputType) {
+            case Field.InputType.SIMPLE_INPUT:
+                return inputType === Field.InputType.INPUT;
+            case Field.InputType.SIMPLE_MULTIINPUT:
+                return inputType === Field.InputType.MULTIINPUT;
+            default:
+                return inputType === selectedInputType;
+        }
+    }
+
+
+    public toggleI18nInput() {
+
+        switch (this.getInputType()) {
+            case Field.InputType.INPUT:
+                this.setInputType(Field.InputType.SIMPLE_INPUT);
+                break;
+            case Field.InputType.SIMPLE_INPUT:
+                this.setInputType(Field.InputType.INPUT);
+                break;
+            case Field.InputType.MULTIINPUT:
+                this.setInputType(Field.InputType.SIMPLE_MULTIINPUT);
+                break;
+            case Field.InputType.SIMPLE_MULTIINPUT:
+                this.setInputType(Field.InputType.MULTIINPUT);
+                break;
+        }
+    }
+
 
     public isChanged(): boolean {
 
@@ -282,8 +338,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
-            || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description ?? {})(this.clonedDescription)
+            || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
+            || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
                     this.getClonedFieldDefinition()));
     }

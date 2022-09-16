@@ -22,11 +22,14 @@
             {{getTemplateLabel(templateName)}}
         </option>
     </select>
+    <div i18n="@@project.createModal.languages">Projektsprachen:</div>
+    <languages-list [languages]="languages" [selectedLanguages]="selectedLanguages"
+                    (onModalToggled)="modalOpened = $event"></languages-list>
 </div>
 
 <div class="modal-footer">
     <button id="create-project-confirm" class="btn btn-success" type="button"
-            [ngClass]="{ 'disabled': !projectName || creating }"
+            [ngClass]="{ 'disabled': !isConfirmButtonEnabled() }"
             (click)="createProject()">
         <span i18n="@@buttons.create">Erstellen</span>
     </button>

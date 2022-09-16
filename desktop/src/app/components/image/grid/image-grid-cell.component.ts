@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { I18N, ImageDocument, Labels } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
-import { ImageDocument } from 'idai-field-core';
+
 
 @Component({
     selector: 'image-grid-cell',
@@ -23,6 +24,9 @@ export class ImageGridCellComponent {
     @Input() nrOfColumns: number = 0;
 
 
+    constructor(private labels: Labels) {}
+
+
     public getIdentifier(id: string): string|undefined {
 
         if (!this.resourceIdentifiers ||
@@ -30,6 +34,12 @@ export class ImageGridCellComponent {
             return undefined;
         }
         return this.resourceIdentifiers[id];
+    }
+
+
+    public getLabelFromI18NString(i18nString: I18N.String|string): string {
+
+        return this.labels.getFromI18NString(i18nString);
     }
 
 

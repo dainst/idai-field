@@ -190,6 +190,17 @@ export async function typeIn(element, text) {
 }
 
 
+export async function clearText(element) {
+
+    if (isString(element)) element = await getElement(element);
+    await click(element);
+    
+    const os = await getOs();
+    await pressKeys([os === 'Darwin' ? 'Command' : 'Control', 'A']);
+    return pressKeys(['Delete']);
+}
+
+
 export async function pressKeys(keys) {
 
     await app.client.keys(keys);
@@ -230,4 +241,10 @@ export async function uploadInFileInput(element, filePath) {
 export function pause(milliseconds) {
 
     return app.client.pause(milliseconds);
+}
+
+
+function getOs() {
+
+    return app.electron.remote.getGlobal('os');
 }

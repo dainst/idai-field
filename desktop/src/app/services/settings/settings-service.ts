@@ -73,6 +73,7 @@ export class SettingsService {
                     throw Error('malformed_address');
                 }
             }
+            if (syncTarget.password) syncTarget.password = syncTarget.password.trim();
         });
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
@@ -94,12 +95,13 @@ export class SettingsService {
 
     public async loadConfiguration(): Promise<ProjectConfiguration> {
 
-        const configurationName: string = getConfigurationName(this.settingsProvider.getSettings().selectedProject);
+        const projectName: string = this.settingsProvider.getSettings().selectedProject;
+        const configurationName: string = getConfigurationName(projectName);
 
         const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
             (id: string) => this.pouchdbDatastore.getDb().get(id),
             this.configReader,
-            configurationName,
+            projectName,
             this.settingsProvider.getSettings().username
         );
 
@@ -188,7 +190,8 @@ export class SettingsService {
     }
 
 
-    public async createProject(project: Name, template: Template, destroyBeforeCreate: boolean) {
+    public async createProject(project: Name, template: Template, selectedLanguages: string[],
+                               destroyBeforeCreate: boolean) {
 
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
@@ -198,7 +201,7 @@ export class SettingsService {
         await this.pouchdbDatastore.createDb(
             project,
             SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
-            SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template),
+            SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template, selectedLanguages),
             destroyBeforeCreate
         );
     }
@@ -221,7 +224,8 @@ export class SettingsService {
     }
 
 
-    public static createConfigurationDocument(settings: Settings, template: Template): ConfigurationDocument {
+    public static createConfigurationDocument(settings: Settings, template: Template,
+                                              selectedLanguages: string[]): ConfigurationDocument {
 
         return {
             _id: 'configuration',
@@ -233,6 +237,7 @@ export class SettingsService {
                 order: template.configuration.order,
                 valuelists: {},
                 languages: {},
+                projectLanguages: selectedLanguages,
                 relations: {}
             },
             created: { user: settings.username, date: new Date() },

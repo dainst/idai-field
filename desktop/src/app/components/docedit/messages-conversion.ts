@@ -1,5 +1,4 @@
-import { DatastoreErrors, Name } from 'idai-field-core';
-import { ProjectConfiguration, Labels } from 'idai-field-core';
+import { DatastoreErrors, Name, ProjectConfiguration, Labels } from 'idai-field-core';
 import { ValidationErrors } from '../../model/validation-errors';
 import { M } from '../messages/m';
 import { MsgWithParams } from '../messages/msg-with-params';
@@ -13,8 +12,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
  */
 export module MessagesConversion {
 
-    export function convertMessage(msgWithParams: MsgWithParams,
-                                   projectConfiguration: ProjectConfiguration,
+    export function convertMessage(msgWithParams: MsgWithParams, projectConfiguration: ProjectConfiguration,
                                    labels: Labels): MsgWithParams {
 
         if (msgWithParams.length === 0) return [M.APP_ERROR_GENERIC_SAVE_ERROR];
@@ -23,10 +21,9 @@ export module MessagesConversion {
 
         if (msg === DatastoreErrors.GENERIC_ERROR) msgWithParams[0] = M.APP_ERROR_GENERIC_SAVE_ERROR;
         if (msg === DatastoreErrors.REMOVE_REVISIONS_ERROR) msgWithParams[0]= M.DOCEDIT_ERROR_RESOLVE_CONFLICT;
-
         if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
-        if (msg === ValidationErrors.GENERIC_DATASTORE) msgWithParams[0] = M.IMPORT_READER_GENERIC_DATASTORE;
+        if (msg === ValidationErrors.GENERIC_DATASTORE) msgWithParams[0] = M.DOCEDIT_ERROR_SAVE;
         if (msg === ValidationErrors.INVALID_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.MISSING_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
@@ -103,9 +100,7 @@ export module MessagesConversion {
     }
 
 
-    function replaceFieldNamesWithLabels(fields: string,
-                                         category: Name,
-                                         projectConfiguration: ProjectConfiguration,
+    function replaceFieldNamesWithLabels(fields: string, category: Name, projectConfiguration: ProjectConfiguration,
                                          labels: Labels): string {
 
         return fields

@@ -1,0 +1,23 @@
+<div class="modal-header configuration-editor-modal-header">
+    <h5 class="modal-title"
+        i18n="@@configuration.projectLanguages">Projektsprachen auswählen</h5>
+</div>
+
+<div class="modal-body project-languages-modal-body bg-light">
+    <languages-list [languages]="languages" [selectedLanguages]="clonedSelectedLanguages"
+                    (onModalToggled)="modalOpened = $event"></languages-list>
+</div>
+
+<div class="modal-footer bg-light">
+    <div id="confirm-selection-button"
+         class="btn btn-primary"
+         [class.disabled]="!isConfirmButtonEnabled()"
+         (click)="apply()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div id="cancel-add-valuelist-modal-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

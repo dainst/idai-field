@@ -114,8 +114,8 @@ export class SynchronizationModalComponent implements OnInit {
     public async toggleOriginalImageUpload() {
 
         if (!this.syncTarget.fileSyncPreferences
-            .map(preference => preference.variant)
-            .includes(ImageVariant.ORIGINAL)) {
+                .map(preference => preference.variant)
+                .includes(ImageVariant.ORIGINAL)) {
 
             this.syncTarget.fileSyncPreferences.push({
                 upload: true,
@@ -123,7 +123,6 @@ export class SynchronizationModalComponent implements OnInit {
                 variant: ImageVariant.ORIGINAL
             });
         } else {
-
             const previousPreference = this.syncTarget.fileSyncPreferences.find(
                 preference => preference.variant === ImageVariant.ORIGINAL
             );
@@ -148,12 +147,15 @@ export class SynchronizationModalComponent implements OnInit {
 
     public isOriginalImageUploadSyncActive() {
 
-        const current = this.syncTarget.fileSyncPreferences.find(preference => preference.variant === ImageVariant.ORIGINAL);
+        const current = this.syncTarget.fileSyncPreferences.find(preference => {
+            return preference.variant === ImageVariant.ORIGINAL;
+        });
+
         if (current !== undefined) {
             return current.upload;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
 
@@ -233,7 +235,7 @@ export class SynchronizationModalComponent implements OnInit {
 
         this.resetImageSizeMessages();
 
-        if (!this.syncTarget.address || !this.syncTarget.password) return;
+        if (!this.syncTarget.address.trim() || !this.syncTarget.password.trim()) return;
 
         this.loadingImagesSize = true;
 
@@ -295,8 +297,8 @@ export class SynchronizationModalComponent implements OnInit {
                 [variant]
             ),
             this.remoteImageStore.getFileInfosUsingCredentials(
-                this.syncTarget.address,
-                this.syncTarget.password,
+                this.syncTarget.address.trim(),
+                this.syncTarget.password.trim(),
                 this.settings.selectedProject,
                 [variant]
             )

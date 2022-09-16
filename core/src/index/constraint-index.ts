@@ -1,5 +1,5 @@
 import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
-    subtract, clone } from 'tsfun';
+    subtract, clone, isObject } from 'tsfun';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
@@ -154,34 +154,37 @@ export module ConstraintIndex {
 
     function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
 
-        const elForPath = getOn(definition.pathArray, doc);
+        const elementForPath = getOn(definition.pathArray, doc);
+        const elements = isObject(elementForPath) ? Object.values(elementForPath) : [elementForPath];
 
-        switch(definition.type) {
-            case 'exist':
-                if (!isMissing(elForPath)) addToExistIndex(index.existIndex, doc, definition.path);
-                break;
-
-            case 'match':
-                if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
-                addToIndex(index.matchIndex, doc, definition.path, elForPath.toString());
-                break;
-
-            case 'contain':
-                if (!elForPath || !Array.isArray(elForPath)) break;
-                for (let target of elForPath) {
-                    addToIndex(index.containIndex, doc, definition.path, target);
-                }
-                break;
-
-            case 'links':
-                if (!elForPath || !Array.isArray(elForPath)) break;
-                addToLinksIndex(index.linksIndex, doc, definition.path, elForPath);
-                break;
+        for (let element of elements) {
+            switch(definition.type) {
+                case 'exist':
+                    if (!isMissing(element)) addToExistIndex(index.existIndex, doc, definition.path);
+                    break;
+    
+                case 'match':
+                    if ((!element && element !== false) || Array.isArray(element)) break;
+                    addToIndex(index.matchIndex, doc, definition.path, element.toString());
+                    break;
+    
+                case 'contain':
+                    if (!element || !Array.isArray(element)) break;
+                    for (let target of element) {
+                        addToIndex(index.containIndex, doc, definition.path, target);
+                    }
+                    break;
+    
+                case 'links':
+                    if (!element || !Array.isArray(element)) break;
+                    addToLinksIndex(index.linksIndex, doc, definition.path, element);
+                    break;
+            }
         }
     }
 
 
-    function getOn(path: string[], object: any, index: number = 0) {
+    function getOn(path: string[], object: any, index: number = 0): any {
 
         if (!object) return undefined;
 

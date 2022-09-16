@@ -3,10 +3,10 @@ import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { InPlace } from 'idai-field-core';
-import { LanguagePickerModalComponent } from './language-picker-modal.component';
+import { LanguagePickerModalComponent } from '../widgets/languages/language-picker-modal.component';
 import { Languages, Language } from '../../services/languages';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({

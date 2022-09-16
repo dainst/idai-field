@@ -1,8 +1,7 @@
-import {Dating, Dimension, Resource} from 'idai-field-core';
-import {ParserErrors} from '../../../../../src/app/components/import/parser/parser-errors';
-import { CategoryForm } from 'idai-field-core';
+import { Dating, Dimension, Resource, CategoryForm } from 'idai-field-core';
+import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
-import {convertFieldTypes} from '../../../../../src/app/components/import/parser/convert-field-types';
+import { convertFieldTypes } from '../../../../../src/app/components/import/parser/convert-field-types';
 
 
 /**

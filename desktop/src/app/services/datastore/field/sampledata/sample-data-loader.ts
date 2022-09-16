@@ -26,14 +26,11 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     public async go(db: PouchDB.Database, project: string) {
 
         try {
-            console.log('load sample documents...');
             await this.loadSampleDocuments(db);
-            console.log('load sample images...');
             await this.loadSampleImages(
                 remote.getGlobal('samplesPath'),
                 this.imagestorePath + project
             );
-            console.log('finished');
         } catch (err) {
             console.error('Failed to load sample data', err);
         }

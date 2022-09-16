@@ -13,6 +13,9 @@ import { dropdownStyle } from '../../shared/navbar/styles';
 import { getProjectLabel } from '../projects';
 
 
+const ROUTES_WITH_PROJECT = ['/project/', '/type/', '/image/'];
+
+
 export default function FieldNav({ onLogout }: BaseNavProps): ReactElement {
 
     const [projectDocument, setProjectDocument] = useState<Document>(null);
@@ -84,7 +87,7 @@ export default function FieldNav({ onLogout }: BaseNavProps): ReactElement {
 
 const getProjectId = (location: Location): string | undefined => {
 
-    return location.pathname.startsWith('/project/')
+    return (ROUTES_WITH_PROJECT.filter(route => location.pathname.startsWith(route)).length === 1)
         ? location.pathname.split('/')[2]
         : undefined;
 };
@@ -92,7 +95,7 @@ const getProjectId = (location: Location): string | undefined => {
 
 const getCurrentRoute = (location: Location, projectDocument?: Document): string => {
 
-    if (projectDocument && location.pathname.startsWith('/project/')
+    if (projectDocument && (ROUTES_WITH_PROJECT.filter(route => location.pathname.startsWith(route)).length === 1)
             && location.pathname.split('/')[2] === projectDocument.resource.id) {
         return 'project';
     } else if (location.pathname.startsWith('/download') || location.pathname.startsWith('/manual')) {

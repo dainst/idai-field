@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
 
 @Component({
-    selector: 'dai-checkboxes',
+    selector: 'form-field-checkboxes',
     templateUrl: './checkboxes.html'
 })
 

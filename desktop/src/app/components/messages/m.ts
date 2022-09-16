@@ -232,6 +232,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
+    public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -1858,6 +1859,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.importFailure',
                 value: 'Die Projektkonfiguration konnte nicht importiert werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES] = {
+            content: i18n({
+                id: 'messages.configuration.error.noProjectLanguages',
+                value: 'Bitte wählen Sie mindestens eine Projektsprache aus.'
             }),
             level: 'danger',
             params: [],

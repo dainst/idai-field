@@ -141,11 +141,8 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 };
 
 
-const loadSampleData = async (
-    settings: Settings,
-    db: PouchDB.Database,
-    thumbnailGenerator: ThumbnailGenerator,
-    progress: InitializationProgress) => {
+const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator,
+                              progress: InitializationProgress) => {
 
     if (settings.selectedProject === 'test') {
         await progress.setPhase('loadingSampleObjects');
@@ -215,7 +212,7 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
     );
 
     const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
-        (id: string) => db.get(id), configReader, getConfigurationName(projectName), username
+        (id: string) => db.get(id), configReader, projectName, username,
     );
     await configurationIndex.rebuild(configurationDocument);
 

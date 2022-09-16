@@ -64,6 +64,10 @@
           "hidden": [],
           "fields": {}
         },
+        "Level:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "Room:default": {
           "hidden": [],
           "fields": {}
@@ -319,6 +323,10 @@
           "fields": {}
         },
         "Find": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Level": {
           "hidden": [],
           "fields": {}
         },

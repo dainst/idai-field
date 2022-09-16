@@ -83,8 +83,10 @@
 
 			<div class="form-group">
 				<label i18n="@@docedit.forms.dimension.comment">Kommentar:</label>
-				<input [(ngModel)]="dimension.measurementComment" type="text" class="form-control"
-						name="measurementComment">
+				<multi-language-text-field [fieldData]="dimension.measurementComment"
+										   [languages]="fieldLanguages"
+										   (onFieldDataChanged)="updateMeasurementComment(dimension, $event)">
+				</multi-language-text-field>
 			</div>
 		</div>
 		<div class="card-footer" align="right">

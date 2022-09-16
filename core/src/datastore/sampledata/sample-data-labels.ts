@@ -24,6 +24,7 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'B',
         'room': 'Raum',
         'roomShort': 'R',
+        'mapLayer': 'Kartenhintergrund'
     },
     'en': {
         'testProject': 'Test project',
@@ -50,6 +51,7 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'B',
         'room': 'Room',
         'roomShort': 'R',
+        'mapLayer': 'Map layer'
     },
     'it': {
         'testProject': 'Progetto di prova',
@@ -76,6 +78,7 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'E',
         'room': 'Vano',
         'roomShort': 'V',
+        'mapLayer': 'TRANSLATE'
     },
     'uk': {
         'testProject': 'Тестовий проект',
@@ -102,5 +105,6 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'С',
         'room': 'Приміщення',
         'roomShort': 'П',
-    },
+        'mapLayer': 'TRANSLATE'
+    }
 };

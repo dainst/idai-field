@@ -67,7 +67,7 @@ export class ExportComponent implements OnInit {
                 private labels: Labels) {}
 
 
-    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation);
+    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation, this.labels);
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
@@ -220,7 +220,7 @@ export class ExportComponent implements OnInit {
                 this.projectConfiguration
                     .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
-                CsvExporter.performExport(filePath)
+                CsvExporter.performExport(filePath, this.projectConfiguration.getProjectLanguages())
             );
 
             this.showInvalidFieldsWarning();

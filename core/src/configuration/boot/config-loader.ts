@@ -88,6 +88,7 @@ export class ConfigLoader {
 
         let customForms;
         let languageConfigurations: LanguageConfigurations;
+        let projectLanguages: string[];
         let categoriesOrder: string[];
         let customValuelists: Map<Valuelist>;
 
@@ -102,6 +103,7 @@ export class ConfigLoader {
             };
             categoriesOrder = configurationDocument.resource.order;
             customValuelists = configurationDocument.resource.valuelists;
+            projectLanguages = configurationDocument.resource.projectLanguages;
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -119,6 +121,7 @@ export class ConfigLoader {
                     builtInFields,
                     relations,
                     languageConfigurations,
+                    projectLanguages,
                     categoriesOrder,
                     (categories: any) => {
                         const fieldValidationErrors =

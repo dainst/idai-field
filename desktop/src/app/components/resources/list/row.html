@@ -55,17 +55,18 @@
         </button>
     </div>
     <div class="input-field">
-        <input #identifierInput [(ngModel)]="document.resource.identifier"
+        <input #identifierInput
+               [value]="document.resource.identifier"
                (focus)="startEditing('identifier', document.resource.identifier)"
                (blur)="stopEditing('identifier', document.resource.identifier)"
-               (keyup)="onKeyUp($event, 'identifier', document.resource.identifier)"
+               (keyup)="onKeyUp($event, 'identifier')"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
     <div class="input-field">
-        <input [(ngModel)]="document.resource.shortDescription"
+        <input [value]="getShortDescription()"
                (focus)="startEditing('shortDescription', document.resource.shortDescription)"
                (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
-               (keyup)="onKeyUp($event, 'shortDescription', document.resource.shortDescription)"
+               (keyup)="onKeyUp($event, 'shortDescription')"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>

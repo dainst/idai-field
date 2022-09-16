@@ -77,7 +77,7 @@ defmodule FieldHubWeb.Api.FileController do
           conn
           |> put_status(:bad_request)
           |> put_view(ErrorView)
-          |> render("400.json", message: "Unknown file types: #{type}")
+          |> render("400.json", message: "Unknown file type: #{type}")
         valid ->
           FileStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
       end

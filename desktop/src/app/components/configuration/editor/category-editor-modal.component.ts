@@ -99,8 +99,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isChanged(): boolean {
 
         return this.new
-            || !equal(this.label)(this.clonedLabel)
-            || !equal(this.description)(this.clonedDescription)
+            || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
+            || !equal(this.description)(I18N.removeEmpty(this.clonedDescription))
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());

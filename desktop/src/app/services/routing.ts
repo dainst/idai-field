@@ -60,8 +60,10 @@ export class Routing {
 
         if (documentToSelect.resource.category === 'Project') {
             await this.editProject();
+        } else if (documentToSelect.resource.category === 'Configuration') {
+            await this.router.navigate(['configuration']);
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
-            await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpToImageCategoryResource(documentToSelect);
         } else {
             await this.jumpToFieldCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         }
@@ -89,19 +91,10 @@ export class Routing {
     }
 
 
-    private async jumpToImageCategoryResource(documentToSelect: Document,
-                                              comingFromOutsideResourcesComponent: boolean) {
-
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (selectedDocument) {
-            if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
-                this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
-            }
-        }
+    private async jumpToImageCategoryResource(documentToSelect: Document) {
 
         await this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show',
-                comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
+            ['images', 'show', documentToSelect.resource.id],
             { queryParams: { from: this.currentRoute } }
         );
     }

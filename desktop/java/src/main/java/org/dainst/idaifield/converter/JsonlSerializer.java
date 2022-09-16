@@ -3,6 +3,7 @@ package org.dainst.idaifield.converter;
 import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.Resource;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,7 +33,9 @@ class JsonlSerializer {
         }
 
         if (hasValue(resource.getShortDescription())) {
-            jsonl.append(" \"shortDescription\": \"").append(resource.getShortDescription()).append("\",");
+            jsonl.append(" \"shortDescription\": ")
+                .append(getJsonlForShortDescription(resource.getShortDescription()))
+                .append(",");
         }
 
         if (hasValue(resource.getCategory())) {
@@ -46,6 +49,28 @@ class JsonlSerializer {
     }
 
 
+    private static String getJsonlForShortDescription(HashMap<String, String> shortDescription) {
+
+        if (shortDescription.keySet().size() == 1
+                && shortDescription.keySet().toArray()[0].equals("unspecifiedLanguage")) {
+            return "\"" + shortDescription.get("unspecifiedLanguage") + "\"";
+        }
+
+        StringBuilder jsonl = new StringBuilder("{ ");
+        boolean firstLanguage = true;
+
+        for (String language : shortDescription.keySet()) {
+            if (!firstLanguage) jsonl.append(", ");
+            firstLanguage = false;
+            jsonl.append("\"" + language + "\": \"" + shortDescription.get(language) + "\"");
+        }
+
+        jsonl.append(" }");
+
+        return jsonl.toString();
+    }
+
+
     private static String getJsonlForGeometry(Geometry geometry) {
 
         return "{ \"coordinates\": " + geometry.getGeojsonCoordinates()
@@ -56,5 +81,11 @@ class JsonlSerializer {
     private static boolean hasValue(String fieldContent) {
 
         return fieldContent != null && !fieldContent.equals("");
+    }
+
+
+    private static boolean hasValue(HashMap<String, String> fieldContent) {
+
+        return fieldContent != null && fieldContent.size() > 0;
     }
 }

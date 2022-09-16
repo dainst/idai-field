@@ -1,4 +1,4 @@
-import { clone } from 'tsfun';
+import { Map, clone } from 'tsfun';
 import { Named } from './named';
 
 
@@ -15,6 +15,8 @@ export namespace I18N {
     export interface Described { description?: String }
 
     export interface LabeledValue extends Named, Labeled {};
+
+    export const UNSPECIFIED_LANGUAGE = 'unspecifiedLanguage';
 
 
     export function mergeI18nStrings(original: String|undefined, toAdd: String): String {
@@ -79,8 +81,29 @@ export namespace I18N {
     }
 
 
+    export function removeEmpty(i18nString: I18N.String): I18N.String {
+
+        const result: I18N.String = clone(i18nString);
+
+        Object.keys(result).filter(key => result[key].length === 0)
+            .forEach(key => delete result[key]);
+
+        return result;
+    }
+
+
+    export function getFormattedContent(i18nString: I18N.String, languageLabels: Map<string>): string {
+
+        return Object.keys(i18nString).reduce((result, language) => {
+            if (result) result += ', ';
+            result += languageLabels[language] + ': ' + i18nString[language];
+            return result;
+        }, '')
+    }
+
+
     function getLanguage(labels: String, languages: string[]): string|undefined {
 
-        return languages.find(languageCode => labels[languageCode] !== undefined);
+        return languages.find(languageCode => labels[languageCode]);
     }
 }

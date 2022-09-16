@@ -1,4 +1,5 @@
 import { flow, detach, isNumber, isObject, isString } from 'tsfun';
+import { I18N } from '../tools/i18n';
 
 
 /**
@@ -27,7 +28,7 @@ export interface Dimension {
     inputUnit: Dimension.InputUnits;
 
     measurementPosition?: string;
-    measurementComment?: string;
+    measurementComment?: I18N.String|string;
     isImprecise: boolean;
 
     isRange?: boolean; // Deprecated
@@ -77,7 +78,10 @@ export module Dimension {
             if (!VALID_FIELDS.includes(fieldName)) return false;
         }
         if (dimension.measurementPosition && !isString(dimension.measurementPosition)) return false;
-        if (dimension.measurementComment && !isString(dimension.measurementComment)) return false;
+        if (dimension.measurementComment && !isObject(dimension.measurementComment)
+            && !isString(dimension.measurementComment)) {
+                return false;
+        }
         if (!VALID_INPUT_UNITS.includes(dimension.inputUnit)) return false;
         if (!isNumber(dimension.inputValue)) return false;
         return true;
@@ -146,6 +150,7 @@ export module Dimension {
     export function generateLabel(dimension: Dimension,
                                   transform: (value: any) => string|null,
                                   translate: (term: Dimension.Translations) => string,
+                                  getFromI18NString: (i18nString: I18N.String|string) => string,
                                   measurementPositionLabel?: string): string {
 
         if (isValid(dimension)) {
@@ -166,7 +171,7 @@ export module Dimension {
                         ? measurementPositionLabel 
                         : dimension.measurementPosition);
             }
-            if (dimension.measurementComment) label += ' (' + dimension.measurementComment + ')';
+            if (dimension.measurementComment) label += ' (' + getFromI18NString(dimension.measurementComment) + ')';
             return label;
         } else {
             return JSON.stringify(dimension);

@@ -460,6 +460,34 @@
         }
       ]
     },
+    "Level:default": {
+      "categoryName": "Level",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
     "Room:default": {
       "categoryName": "Room",
       "description": {},

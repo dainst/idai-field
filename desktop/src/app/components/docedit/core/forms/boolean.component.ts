@@ -3,7 +3,7 @@ import { Resource } from 'idai-field-core';
 
 
 @Component({
-    selector: 'dai-boolean',
+    selector: 'form-field-boolean',
     templateUrl: './boolean.html'
 })
 

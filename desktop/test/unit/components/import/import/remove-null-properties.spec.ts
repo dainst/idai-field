@@ -1,5 +1,5 @@
-import {ImportErrors} from '../../../../../src/app/components/import/import/import-errors';
-import {removeNullProperties} from '../../../../../src/app/components/import/import/remove-null-properties';
+import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
+import { removeNullProperties } from '../../../../../src/app/components/import/import/remove-null-properties';
 
 
 describe('removeNullProperties', () => {

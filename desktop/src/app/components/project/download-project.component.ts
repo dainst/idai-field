@@ -61,7 +61,7 @@ export class DownloadProjectComponent {
                 private decimalPipe: DecimalPipe) {}
 
     
-    public checkCredentialsCompleteness = () => this.url && this.password && this.projectName;
+    public checkCredentialsCompleteness = () => this.getUrl() && this.getProjectName() && this.getPassword();
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -86,7 +86,7 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
         const destroyExisting: boolean = this.overwriteProject
-            || !this.settingsProvider.getSettings().dbs.includes(this.projectName);
+            || !this.settingsProvider.getSettings().dbs.includes(this.getProjectName());
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
@@ -94,9 +94,9 @@ export class DownloadProjectComponent {
 
             const fileList = preferences.length > 0
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
-                    this.url,
-                    this.password,
-                    this.projectName,
+                    this.getUrl(),
+                    this.getPassword(),
+                    this.getProjectName(),
                     preferences.map(preference => preference.variant)
                 ) : undefined;
 
@@ -104,11 +104,11 @@ export class DownloadProjectComponent {
             if (fileList) await this.syncFiles(progressModalRef, fileList);
 
             this.settingsService.addProject(
-                this.projectName,
+                this.getProjectName(),
                 {
                     isSyncActive: true,
-                    address: this.url,
-                    password: this.password,
+                    address: this.getUrl(),
+                    password: this.getPassword(),
                     fileSyncPreferences: preferences
                 }
             ).then(() => {
@@ -157,9 +157,9 @@ export class DownloadProjectComponent {
 
         try {
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
-                this.url,
-                this.password,
-                this.projectName,
+                this.getUrl(),
+                this.getPassword(),
+                this.getProjectName(),
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
@@ -212,7 +212,7 @@ export class DownloadProjectComponent {
         return new Promise(async (resolve, reject) => {
             try {
                 (await this.syncService.startReplication(
-                    this.url, this.password, this.projectName, databaseSteps, destroyExisting
+                    this.getUrl(), this.getPassword(), this.getProjectName(), databaseSteps, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
                         const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
@@ -255,9 +255,9 @@ export class DownloadProjectComponent {
                         if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(
                                 this.remoteImageStore.getDataUsingCredentials(
-                                    this.url, this.password, uuid, variant.name, this.projectName
+                                    this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectName()
                                 ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.projectName, variant.name);
+                                    return this.imageStore.store(uuid, data, this.getProjectName(), variant.name);
                                 })
                             );
                         }
@@ -285,11 +285,11 @@ export class DownloadProjectComponent {
         try {
             this.cancelling = true;
             this.syncService.stopReplication();
-            await this.pouchdbDatastore.destroyDb(this.projectName);
+            await this.pouchdbDatastore.destroyDb(this.getProjectName());
             await Promise.all(this.fileDownloadPromises);
         } catch (err) {
         } finally {
-            await this.imageStore.deleteData(this.projectName);
+            await this.imageStore.deleteData(this.getProjectName());
             this.cancelling = false;
             this.closeModal(progressModalRef);
         }
@@ -302,12 +302,12 @@ export class DownloadProjectComponent {
 
         try {
             info = await new PouchDB(
-                SyncService.generateUrl(this.url, this.projectName),
+                SyncService.generateUrl(this.getUrl(), this.getProjectName()),
                 {
                     skip_setup: true,
                     auth: {
-                        username: this.projectName,
-                        password: this.password
+                        username: this.getProjectName(),
+                        password: this.getPassword()
                     }
                 }
             ).info();
@@ -319,6 +319,24 @@ export class DownloadProjectComponent {
         if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';
 
         return DownloadProjectComponent.parseSequenceNumber(info.update_seq);
+    }
+
+
+    private getUrl(): string {
+
+        return this.url?.trim();
+    }
+
+
+    private getProjectName(): string {
+
+        return this.projectName?.trim();
+    }
+
+
+    private getPassword(): string {
+
+        return this.password?.trim();
     }
 
 

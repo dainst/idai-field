@@ -1,0 +1,52 @@
+languages-list {
+  .list-group {
+    max-height: 210px;
+    margin-bottom: 12px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .list-group-item {
+    height: 41px;
+    line-height: 40px;
+    padding: 0 0 0 10px;
+    border: none !important;
+    user-select: none;
+
+    .language-item {
+      display: inline-block;
+      width: calc(100% - 40px);
+    }
+  }
+
+  .no-languages-selected-message {
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(128, 128, 128, 0.6);
+  }
+
+  #add-language {
+    left: 50%;
+    bottom: -10px;
+    transform: translate(-20px, -21px);
+  }
+
+  .remove-language {
+    float: right;
+    height: 40px;
+    margin: 0;
+    color: #dc3545 !important;
+    border: none !important;
+
+    &:not(:hover) {
+      background-color: white;
+    }
+
+    .mdi {
+      position: relative;
+      top: 2px;
+    }
+  }
+}

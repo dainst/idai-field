@@ -77,15 +77,6 @@ describe('ConstraintIndex', () => {
     }
 
 
-    it('one doc is recorded in multiple others', () => {
-
-        docWithMultipleConstraintTargets();
-
-        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual(['1']);
-        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '3')).toEqual(['1']);
-    });
-
-
     function docWithMultipleConstraints() {
 
         const docs = [
@@ -115,6 +106,15 @@ describe('ConstraintIndex', () => {
         ConstraintIndex.put(ci, docs[0]);
         return docs;
     }
+
+
+    it('one doc is recorded in multiple others', () => {
+
+        docWithMultipleConstraintTargets();
+
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'isChildOf:contain', '3')).toEqual(['1']);
+    });
 
 
     it('works for multiple constraints', () => {
@@ -300,6 +300,31 @@ describe('ConstraintIndex', () => {
 
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'KNOWN')).toEqual(['2']);
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'UNKNOWN')).toEqual(['1']);
+    });
+
+
+    it('index i18n strings', () => {
+
+        ci = ConstraintIndex.make({
+            'shortDescription:match': {
+                path: 'resource.shortDescription',
+                pathArray: ['resource', 'shortDescription'],
+                type: 'match'
+            }
+        }, categories);
+
+        const document = doc('1');
+        document.resource.shortDescription = {
+            de: 'Deutsch',
+            en: 'English',
+            it: 'Italiano'
+        };
+        ConstraintIndex.put(ci, document);
+
+        expect(ConstraintIndex.get(ci, 'shortDescription:match', 'Deutsch')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'shortDescription:match', 'English')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'shortDescription:match', 'Italiano')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'shortDescription:match', 'other')).toEqual([]);
     });
 
 

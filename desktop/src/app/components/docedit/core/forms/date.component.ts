@@ -6,7 +6,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
-    selector: 'dai-date',
+    selector: 'form-field-date',
     templateUrl: './date.html'
 })
 export class DateComponent implements OnChanges {

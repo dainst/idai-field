@@ -1,6 +1,6 @@
-dai-dating,
-dai-dimension,
-dai-literature {
+form-field-dating,
+form-field-dimension,
+form-field-literature {
 	.btn-info {
 		margin-left: 0 !important;
 	}
@@ -8,7 +8,7 @@ dai-literature {
 	.object-array-field-widget {
 		@extend .bg-light;
 
-		.card-footer {
+    .card-footer {
 			margin-left: -10px;
 			margin-right: -10px;
 			border-top: none;

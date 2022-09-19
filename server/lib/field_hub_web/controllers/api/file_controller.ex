@@ -9,48 +9,53 @@ defmodule FieldHubWeb.Api.FileController do
       types
       |> Enum.map(&parse_type/1)
 
-    parsed_types
-      |> Enum.filter(fn(val) ->
+    parsed_types =
+      parsed_types
+      |> Enum.filter(fn val ->
         case val do
           {:error, _} ->
             true
+
           _ ->
             false
         end
       end)
       |> case do
         [] ->
+          # No errors found in parsed_types, return parsed_types list as-is
           parsed_types
+
         errors ->
+          # Reduce all errors to a single {:error, msg} tuple.
           errors
-          |> Enum.reduce({:error, "Unknown file types: "}, fn({:error, type}, {:error, acc}) ->
-              {:error, "#{acc} '#{type}'"}
-            end
-          )
-        end
-      |> case do
-        {:error, msg} ->
-          conn
-          |> put_status(:bad_request)
-          |> put_view(ErrorView)
-          |> render("400.json", message: msg)
-        [] ->
-          conn
-          |> index(project)
-        valid ->
-          valid
+          |> Enum.reduce({:error, "Unknown file types: "}, fn {:error, type}, {:error, acc} ->
+            {:error, "#{acc} '#{type}'"}
+          end)
       end
 
-    file_store_data =
-      project
-      |> Zarex.sanitize()
-      |> FileStore.get_file_list(parsed_types)
+    case parsed_types do
+      {:error, msg} ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(ErrorView)
+        |> render("400.json", message: msg)
 
-    render(conn, "list.json", %{files: file_store_data})
+      [] ->
+        # 'types' parameter was present but empty. Handle like a request without 'types' parameter (all files are returned).
+        conn
+        |> index(%{"project" => project})
+
+      valid ->
+        file_store_data =
+          project
+          |> Zarex.sanitize()
+          |> FileStore.get_file_list(valid)
+
+        render(conn, "list.json", %{files: file_store_data})
+    end
   end
 
   def index(conn, %{"project" => _project, "types" => types}) do
-
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
@@ -58,7 +63,6 @@ defmodule FieldHubWeb.Api.FileController do
   end
 
   def index(conn, %{"project" => project}) do
-
     file_store_data =
       project
       |> Zarex.sanitize()

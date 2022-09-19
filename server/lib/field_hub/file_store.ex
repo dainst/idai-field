@@ -109,7 +109,7 @@ defmodule FieldHub.FileStore do
     end)
   end
 
-  def get_file_path(%{uuid: uuid, project: project, type: type}) do
+  def get_file_path(uuid, project, type) do
     path = "#{get_type_directory(project, type)}/#{uuid}"
 
     case File.stat(path) do
@@ -121,26 +121,26 @@ defmodule FieldHub.FileStore do
     end
   end
 
-  def store_file(%{uuid: uuid, project: project, type: type, content: content}) do
+  def store_file(uuid, project, type, data) do
     directory = get_type_directory(project, type)
     File.mkdir_p!(directory)
     file_path = "#{directory}/#{uuid}"
 
     if not File.exists?(file_path) do
-      File.write(file_path, content)
+      File.write(file_path, data)
     else
       :ok
     end
   end
 
-  def delete(%{uuid: uuid, project: project}) do
+  def delete(uuid, project) do
     @variant_types
     |> Stream.filter(fn variant ->
       directory = get_type_directory(project, variant)
       File.exists?("#{directory}/#{uuid}")
     end)
     |> Stream.map(
-      &store_file(%{uuid: "#{uuid}#{@tombstone_suffix}", project: project, type: &1, content: []})
+      &store_file("#{uuid}#{@tombstone_suffix}", project, &1, [])
     )
     |> Enum.filter(fn val ->
       val != :ok

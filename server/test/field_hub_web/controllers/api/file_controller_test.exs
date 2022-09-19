@@ -38,6 +38,55 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
+  end
+
+
+  test "GET /files/:project/:uuid returns 404 for non-existent file", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> get("/files/test_project/1234?type=original_image")
+
+    assert conn.status == 404
+  end
+
+
+  test "GET /files/:project/:uuid returns 400 without type parameter", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> get("/files/test_project/1234")
+
+    assert conn.status == 400
+  end
+
+
+  test "GET /files/:project/:uuid returns 400 with invalid type parameter", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> get("/files/test_project/1234?type=unknown")
+
+    assert conn.status == 400
+  end
+
+  test "GET /files/:project/:uuid returns existing file", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=original_image", @example_file)
+
+    assert conn.status == 201
 
     conn =
       conn
@@ -45,6 +94,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put_req_header("authorization", "Basic #{credentials}")
       |> get("/files/test_project/1234?type=original_image")
 
+    assert conn.status == 200
     assert conn.resp_body == @example_file
   end
 

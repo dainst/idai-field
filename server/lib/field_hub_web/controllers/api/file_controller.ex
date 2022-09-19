@@ -68,29 +68,38 @@ defmodule FieldHubWeb.Api.FileController do
   end
 
   def show(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
-    parsed_type =
-      parse_type(type)
+    parsed_type = parse_type(type)
 
-    file_store_data =
-      case parsed_type do
-        {:error, type} ->
-          conn
-          |> put_status(:bad_request)
-          |> put_view(ErrorView)
-          |> render("400.json", message: "Unknown file type: #{type}")
-        valid ->
-          FileStore.get_file_path(%{uuid: Zarex.sanitize(uuid) , project: Zarex.sanitize(project), type: valid})
-      end
-
-    case file_store_data do
-      {:error, :enoent} ->
+    case parsed_type do
+      {:error, type} ->
         conn
-        |> put_status(:not_found)
+        |> put_status(:bad_request)
         |> put_view(ErrorView)
-        |> render("404.json")
-      {:ok, file_path} ->
-        Plug.Conn.send_file(conn, 200, file_path)
+        |> render("400.json", message: "Unknown file type: #{type}")
+
+      valid ->
+        FileStore.get_file_path(%{
+          uuid: Zarex.sanitize(uuid),
+          project: Zarex.sanitize(project),
+          type: valid
+        })
+        |> case do
+          {:error, :enoent} ->
+            conn
+            |> put_status(:not_found)
+            |> put_view(ErrorView)
+            |> render("404.json")
+
+          {:ok, file_path} ->
+            Plug.Conn.send_file(conn, 200, file_path)
+        end
     end
+  end
+
+  def show(conn, _) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do

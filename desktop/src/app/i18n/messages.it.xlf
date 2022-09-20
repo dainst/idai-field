@@ -6464,7 +6464,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.uk" datatype="html">
         <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
-        <target state="new">Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</target>
+        <target state="final">Per domande e commenti sulla traduzione in lingua ucraina, si prega di contattare: idai.field-ukrayinska@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>

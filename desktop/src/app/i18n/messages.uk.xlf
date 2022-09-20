@@ -141,7 +141,7 @@
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="*
    * Supp"/>%</source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="*
    * Supp"/>
           %
@@ -509,7 +509,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </source>
-        <target state="translated">
+        <target state="final">
           Підтримувані формати файлів:
           <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/>
           <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/>
@@ -534,7 +534,7 @@
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
         <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>) bereits vergeben ist, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
           Записи даних, ідентифікатор яких (поле
           <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>
           ідентифікатор
@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated"> Якщо цей параметр активований, наявні записи даних доповнюються даними з файлу імпорту. Поля в записі даних імпорту перезаписують однойменні поля в існуючому записі даних. Поля в існуючому записі даних, яких немає в записі даних імпорту, залишаються незмінними. Категорію змінити не можна. Записи даних присвоюються ідентифікатором (Колонка <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>ідентифікатор<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Записи у файлі імпорту, які не можуть бути зіставлені, ігноруються. </target>
+        <target state="final"> Якщо цей параметр активований, наявні записи даних доповнюються даними з файлу імпорту. Поля в записі даних імпорту перезаписують однойменні поля в існуючому записі даних. Поля в існуючому записі даних, яких немає в записі даних імпорту, залишаються незмінними. Категорію змінити не можна. Записи даних присвоюються ідентифікатором (Колонка <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>ідентифікатор<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Записи у файлі імпорту, які не можуть бути зіставлені, ігноруються. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">119</context>
@@ -856,7 +856,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
         <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="translated">
+        <target state="final">
           Створює резервну копію поточного відкритого проекту. Регулярне резервне копіювання підвищує безпеку даних і, у разі втрати даних, дозволяє відновити базу даних із останнього збереженого проміжного стану.
           <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/>
           <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/>
@@ -905,7 +905,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit dem angegebenen Namen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="translated">
+        <target state="final">
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           Увага:
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
@@ -1150,7 +1150,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowMultiLanguage" datatype="html">
         <source>Eingabe in mehreren Sprachen erlauben</source>
-        <target state="new">Eingabe in mehreren Sprachen erlauben</target>
+        <target state="final">Дозволити введення кількома мовами</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">60,66</context>
@@ -1506,7 +1506,7 @@
       </trans-unit>
       <trans-unit id="configuration.projectLanguages" datatype="html">
         <source>Projektsprachen auswählen</source>
-        <target state="new">Projektsprachen auswählen</target>
+        <target state="final">Виберіть мови проекту</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/languages/project-languages-modal.component.ts</context>
           <context context-type="linenumber">41,51</context>
@@ -1730,7 +1730,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
         <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="translated">
+        <target state="final">
           Поле
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{field.name}}"/>
@@ -1840,7 +1840,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
-        <target state="translated">
+        <target state="final">
           Версія
           <x id="INTERPOLATION" equiv-text="{{version}}"/>
           буде завантажена…
@@ -1856,7 +1856,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="translated">
+        <target state="final">
           Версія
           <x id="INTERPOLATION" equiv-text="{{version}}"/>
           була записана та буде встановлена після перезавантаження
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
         <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
-        <target state="translated">
+        <target state="final">
           Завантаження версії
           <x id="INTERPOLATION" equiv-text="{{version}}"/>
           було перервано. Перезапустіть програму, щоб повторити спробу.
@@ -1880,7 +1880,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
         <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
-        <target state="translated">
+        <target state="final">
           При завантаженні версії
           <x id="INTERPOLATION" equiv-text="{{version}}"/>
           cталася помилка. Будь ласка, запишіть/завантажте останню версію з https://field.idai.world/download.
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages" datatype="html">
         <source>Projektsprachen:</source>
-        <target state="new">Projektsprachen:</target>
+        <target state="final">Мови проекту:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">114</context>
@@ -1968,7 +1968,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
         <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="translated">
+        <target state="final">
           Проект
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{projectName}}"/>
@@ -1998,7 +1998,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.files" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>
           % завантажених зображень...
         </target>
@@ -2009,7 +2009,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.databaseFinished" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>
           % завантажених даних проекту.
         </target>
@@ -2040,7 +2040,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>
           % даних проекту завантажено...
         </target>
@@ -2115,7 +2115,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
         <source> Projektdatenübersicht </source>
-        <target state="new"> Projektdatenübersicht </target>
+        <target state="final"> Перегляд даних проекту </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">47,56</context>
@@ -2123,7 +2123,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
         <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
-        <target state="new"> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <target state="final"> Збережені, для проекту на цьому комп’ютері, дані <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -2131,7 +2131,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
         <source> Ressourcen: </source>
-        <target state="new"> Ressourcen: </target>
+        <target state="final"> Ресурси/дані: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">25,31</context>
@@ -2139,7 +2139,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.images" datatype="html">
         <source> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </source>
-        <target state="new"> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
+        <target state="final"> Серед яких ілюстрації: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">33,23</context>
@@ -2147,7 +2147,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.types" datatype="html">
         <source> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </source>
-        <target state="new"> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
+        <target state="final"> Серед яких типи/види і каталоги: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">35,26</context>
@@ -2155,7 +2155,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.lastChangedResource" datatype="html">
         <source> Letzte bearbeitete Ressource: </source>
-        <target state="new"> Letzte bearbeitete Ressource: </target>
+        <target state="final"> Останній редагований ресурс: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">37,44</context>
@@ -2163,7 +2163,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.total" datatype="html">
         <source> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </source>
-        <target state="new"> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
+        <target state="final"> Загальна кількість: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">43,20</context>
@@ -2171,7 +2171,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
         <source> Vorschau-Bilddateien: </source>
-        <target state="new"> Vorschau-Bilddateien: </target>
+        <target state="final"> Попередній перегляд файлів ілюстрацій: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">56,63</context>
@@ -2179,7 +2179,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.date" datatype="html">
         <source> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </source>
-        <target state="new"> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
+        <target state="final"> Конкретний час: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">58,47</context>
@@ -2187,7 +2187,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.deletedResource" datatype="html">
         <source> Gelöschte Ressource </source>
-        <target state="new"> Gelöschte Ressource </target>
+        <target state="final"> Видалений ресурс </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">61,68</context>
@@ -2195,7 +2195,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
         <source> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </source>
-        <target state="new"> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
+        <target state="final"> Використаний/заповнений дисковий простір: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">74,59</context>
@@ -2207,7 +2207,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
         <source> Original-Bilddateien: </source>
-        <target state="new"> Original-Bilddateien: </target>
+        <target state="final"> Оригінал файлу ілюстрації: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">76,80</context>
@@ -2215,7 +2215,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
         <source> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </source>
-        <target state="new"> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
+        <target state="final"> Кількість: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80,56</context>
@@ -2227,7 +2227,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
         <source> Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
-        <target state="translated">
+        <target state="final">
           Синхронізувати мініатюри
           <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/>
         </target>
@@ -2238,7 +2238,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesUpload" datatype="html">
         <source> Originalbilder hochladen <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/> </source>
-        <target state="translated">
+        <target state="final">
           Завантажити оригінальні зображення
           <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/>
         </target>
@@ -2249,7 +2249,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesDownload" datatype="html">
         <source> Originalbilder herunterladen <x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/> </source>
-        <target state="translated">
+        <target state="final">
           Зберігти/завантажити оригінальні зображення
           <x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/>
         </target>
@@ -2276,7 +2276,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
-        <target state="translated">
+        <target state="final">
           Зверніть увагу, що читання з
           <x id="INTERPOLATION" equiv-text="{{fileCount}}"/>
           файлів ілюстрацій може зайняти деякий час.
@@ -2288,7 +2288,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
         <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="translated">
+        <target state="final">
           Імпортована ілюстрація буде до даних/ресурсу
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/>
@@ -2302,7 +2302,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
         <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="translated">
+        <target state="final">
           Імпортовані ілюстрації будуть до даних/ресурсу
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/>
@@ -2332,7 +2332,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wird sie verworfen. </source>
-        <target state="translated">
+        <target state="final">
           Тим часом поточні дані/ресурс були видалені кимось іншим. Ви можете відтворити дані/ресурс за допомогою
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           збереження на комп'ютері
@@ -2402,7 +2402,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.multiple" datatype="html">
         <source> Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
-        <target state="translated">
+        <target state="final">
           У проекті існують
           <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/>
           ресурс/дані цієї категорії, який після видалення більше не буде видно. Якщо пізніше ви додасте категорію знову, ресурс/дані з’являться знову.
@@ -2422,7 +2422,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
         <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
-        <target state="translated">
+        <target state="final">
           Категорію
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{category.name}}"/>
@@ -2444,7 +2444,7 @@
       </trans-unit>
       <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="translated">
+        <target state="final">
           Ви хочете поле
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{field.name}}"/>
@@ -2467,7 +2467,7 @@
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
         <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
           Ви хочете групу
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{group.name}}"/>
@@ -2482,7 +2482,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
         <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
-        <target state="translated">
+        <target state="final">
           Групу
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{group.name}}"/>
@@ -2504,7 +2504,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
         <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
           Ви дійсно хочете список значень
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/>
@@ -2526,7 +2526,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
         <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
-        <target state="translated">
+        <target state="final">
           Cписок значень
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/>
@@ -2540,7 +2540,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
         <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
-        <target state="translated">
+        <target state="final">
           Cписок значень
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/>
@@ -2730,7 +2730,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
         <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll: </source>
-        <target state="translated">
+        <target state="final">
           Виберіть новий головний/батьківський ресурс, якому дані/ресурси
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>
@@ -2744,7 +2744,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
         <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </source>
-        <target state="translated">
+        <target state="final">
           Будь ласка, виберіть новий головний/батьківський ресурс, щоб
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
@@ -2767,7 +2767,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen werden verschoben... </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
           Ресурси/дані будуть переміщені…
         </target>
@@ -2902,7 +2902,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
         <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
-        <target state="translated">
+        <target state="final">
           Ресурс/дані
           <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>
           видалити?
@@ -2914,7 +2914,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
           видалити ресурси/дані?
         </target>
@@ -2949,7 +2949,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
         <source> Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
           Цей ресурс містить взагальному
           <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/>
           кількість інших ресурсів, які також видаляються після видалення.
@@ -2969,7 +2969,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
         <source> Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
           Загалом ці ресурси/дані включають
           <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/>
           інші ресурси/дані, які також видаляються, коли їх видаляють.
@@ -3021,7 +3021,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
         <source> (<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder) </source>
-        <target state="translated">
+        <target state="final">
           (
           <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/>
           Ілюстрації)
@@ -3057,7 +3057,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
           Ресурс/дані знайдено
         </target>
@@ -3068,7 +3068,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
         <source> Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen </source>
-        <target state="translated">
+        <target state="final">
           Обмежується на
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>
           Ресурси
@@ -3080,7 +3080,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemove" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated"> Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>  ресурси. Натисніть тут, щоб завантажити весь результат. </target>
+        <target state="final"> Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>  ресурси. Натисніть тут, щоб завантажити весь результат. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">33</context>
@@ -3184,7 +3184,7 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="translated">
+        <target state="final">
           Ви хочете категорію
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{category.name}}"/>
@@ -3355,7 +3355,7 @@
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> Zugeordnete Funde </source>
-        <target state="translated">
+        <target state="final">
           <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;>"/>
           <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
           призначені знахідки
@@ -3459,7 +3459,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">
+        <target state="final">
           Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє представництво спочатку було
           <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/>
           обмежене ресурсами. Натисніть тут, щоб завантажити весь результат.
@@ -3527,7 +3527,7 @@
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/>
           Ресурсами
         </target>
@@ -3554,7 +3554,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/>
           Ілюстрації приєднати
         </target>
@@ -3565,7 +3565,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/>
           Ілюстрації приєднати як фон/підоснову карти
         </target>
@@ -3676,7 +3676,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
         <source> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt. </source>
-        <target state="translated">
+        <target state="final">
           Існує
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           ein
@@ -3690,7 +3690,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
         <source> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte. </source>
-        <target state="translated">
+        <target state="final">
           Існують
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           <x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/>
@@ -3756,7 +3756,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
         <source> Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </source>
-        <target state="translated">
+        <target state="final">
           Геометрію типу
           <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/>
         </target>
@@ -3855,7 +3855,7 @@
       <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
         <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
 </source>
-        <target state="translated">
+        <target state="final">
           Будь ласка, введіть дозволені значення в даних проекту для цього поля (Поле
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>
           <x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/>
@@ -4237,7 +4237,7 @@
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
         <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
-        <target state="translated">
+        <target state="final">
           Це ім’я зберігається в історії редагування, щоб зміни в записах можна було приписати окремій особі. Цей параметр дуже важливий
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           важливо
@@ -4423,7 +4423,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
         <source> Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="translated">
+        <target state="final">
           Створіть ресурс категорії «розріз» в 
           <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>
           огляді
@@ -4733,7 +4733,7 @@
       </trans-unit>
       <trans-unit id="configuration.i18nOption.changingNotAllowed" datatype="html">
         <source>Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.</source>
-        <target state="new">Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.</target>
+        <target state="final"> Багатомовне введення є завжди ввімкнено для полів цього типу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4765,7 +4765,7 @@
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
         <source> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> der Projekteinstellungen. </source>
-        <target state="translated">
+        <target state="final">
           Список значень цього поля відповідає записам у полі
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/>
@@ -4827,7 +4827,7 @@
       </trans-unit>
       <trans-unit id="languages.noLanguage" datatype="html">
         <source>Ohne Sprachangabe</source>
-        <target state="new">Ohne Sprachangabe</target>
+        <target state="final">Без визначення мови</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4891,7 +4891,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="new">Uhr</target>
+        <target state="final"></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6415,7 +6415,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noProjectLanguages" datatype="html">
         <source>Bitte wählen Sie mindestens eine Projektsprache aus.</source>
-        <target state="new">Bitte wählen Sie mindestens eine Projektsprache aus.</target>
+        <target state="final">Виберіть принаймні одну мову проекту.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6503,7 +6503,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
         <source> Projekteigenschaften </source>
-        <target state="new"> Projekteigenschaften </target>
+        <target state="final"> Властивості/конфігурація проекту </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80</context>
@@ -6511,7 +6511,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.editedBy" datatype="html">
         <source> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </source>
-        <target state="new"> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
+        <target state="final"> Редаговано: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80,44</context>
@@ -6551,7 +6551,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.linkedImages" datatype="html">
         <source>Verknüpfte Bilder</source>
-        <target state="translated">Verknüpfte Bilder</target>
+        <target state="final">Пов'язані ілюстрації</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6743,7 +6743,7 @@
       </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">
         <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="translated">
+        <target state="final">
           Нову категорію
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/>
@@ -6765,7 +6765,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
         <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </source>
-        <target state="translated">
+        <target state="final">
           Ви хочете формуляр
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/>
@@ -6999,7 +6999,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/>
           в
           <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/>
@@ -7012,7 +7012,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/>
           редагувати
         </target>
@@ -7147,7 +7147,7 @@
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
         <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </source>
-        <target state="translated">
+        <target state="final">
           Список значень
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/>
@@ -7161,7 +7161,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificValuelist" datatype="html">
         <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="translated">
+        <target state="final">
           Список значень
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           <x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/>
@@ -7191,7 +7191,7 @@
       </trans-unit>
       <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html">
         <source>Keine Sprachen ausgewählt</source>
-        <target state="new">Keine Sprachen ausgewählt</target>
+        <target state="final">Жодна з мов вибрана</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -7207,7 +7207,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="translated">
+        <target state="final">
           <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/>
           /
           <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/>
@@ -7236,7 +7236,7 @@
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
         <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder </source>
-        <target state="translated">
+        <target state="final">
           З
           <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>
           <x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/>
@@ -7276,7 +7276,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source> Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
           Ви бажаєте видалити
           <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/>
           позначені зображення?

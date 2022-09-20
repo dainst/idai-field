@@ -922,7 +922,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.path" datatype="html">
         <source>Pfad</source>
-        <target state="final">Pfad</target>
+        <target state="final">Шлях</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">47</context>
@@ -2059,7 +2059,7 @@
       </trans-unit>
       <trans-unit id="project.download.address" datatype="html">
         <source>Adresse</source>
-        <target state="final">Adresse</target>
+        <target state="final">Адреса</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">72</context>
@@ -7228,7 +7228,7 @@
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
         <source>Bilder</source>
-        <target state="final">Bilder</target>
+        <target state="final">Ілюстрації</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">51</context>

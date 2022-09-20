@@ -52,6 +52,10 @@
       "hidden": [],
       "fields": {}
     },
+    "Level:default": {
+      "hidden": [],
+      "fields": {}
+    },
     "Room:default": {
       "hidden": [],
       "fields": {}
@@ -198,6 +202,7 @@
     "Profile",
     "Planum",
     "BuildingPart",
+    "Level",
     "Room",
     "RoomCeiling",
     "RoomWall",

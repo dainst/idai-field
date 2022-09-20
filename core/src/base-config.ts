@@ -20,6 +20,7 @@ export const UNKNOWN = 'UNKNOWN';
 export const basicIndexConfiguration = {
     'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
     'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
+    'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
     'isChildOf:contain': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'contain', recursivelySearchable: true },
     'isChildOf:exist': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'exist' }
 };

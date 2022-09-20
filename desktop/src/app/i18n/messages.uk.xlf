@@ -954,7 +954,7 @@
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
         <source>Feld hinzufügen</source>
-        <target state="final">Feld hinzufügen</target>
+        <target state="final">Додати поле</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -966,7 +966,7 @@
       </trans-unit>
       <trans-unit id="configuration.selectField" datatype="html">
         <source>Feld auswählen</source>
-        <target state="final">Feld auswählen</target>
+        <target state="final">Виберіть поле</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -1658,7 +1658,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.linkedImages" datatype="html">
         <source>verknüpfte Bilder</source>
-        <target state="final">verknüpfte Bilder</target>
+        <target state="final">Пов'язані ілюстрації</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2260,7 +2260,7 @@
       </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
         <source>Projekt synchronisieren</source>
-        <target state="final">Projekt synchronisieren</target>
+        <target state="final">Проект синхронізувати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">45</context>
@@ -2436,7 +2436,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.header" datatype="html">
         <source>Feld löschen?</source>
-        <target state="final">Feld löschen?</target>
+        <target state="final">Видалити поле?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -4363,7 +4363,7 @@
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
         <source>Update</source>
-        <target state="final">Update</target>
+        <target state="final">Оновлення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">164</context>
@@ -4485,7 +4485,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
         <source> Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
-        <target state="final"> Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </target>
+        <target state="final"> Створіть для вибраного розрізу ресурси категорії «Стратиграфічна одиниця» у загальному виді розкопок (або плані), та зв’яжіть їх за допомогою часових або просторових відносин. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">144</context>
@@ -5703,7 +5703,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
         <source>Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="final">Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="final">Недійсний діапазон у полі '[1]' ресурсу категорії '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5943,7 +5943,7 @@
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.single" datatype="html">
         <source>Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</source>
-        <target state="final">Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</target>
+        <target state="final">Поле "[0]" ресурсу [1] було проігноровано під час експорту, оскільки введені дані поля не відповідають налаштованому типу введення.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6591,7 +6591,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.uk" datatype="html">
         <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
-        <target state="new">Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</target>
+        <target state="final">У разі виникнення запитань чи коментарів щодо перекладу українською мовою звертайтесь за адресою: idai.field-ukrayinska@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6935,7 +6935,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.differingCategoriesOrder" datatype="html">
         <source>Reihenfolge der Kategorien</source>
-        <target state="final">Reihenfolge der Kategorien</target>
+        <target state="final">Порядок категорій</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
@@ -7228,7 +7228,7 @@
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
         <source> Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis. </source>
-        <target state="final"> Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis. </target>
+        <target state="final"> Початкової версії (оригіналу) ілюстрації немає в каталозі зображень. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">47</context>

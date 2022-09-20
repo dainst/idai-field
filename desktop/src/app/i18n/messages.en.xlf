@@ -7148,6 +7148,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="settings.languageInfo.uk" datatype="html">
+        <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
+        <target state="final">For questions and comments on the Ukrainian translation, please contact: idai.field-ukrayinska@dainst.de</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="widgets.documentPicker.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Project</target>

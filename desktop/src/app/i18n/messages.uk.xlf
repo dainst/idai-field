@@ -4891,7 +4891,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="final"></target>
+        <target state="final"/>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6584,6 +6584,14 @@
       <trans-unit id="settings.languageInfo.it" datatype="html">
         <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</source>
         <target state="final">Український переклад надано DAI Берлін. Якщо у вас виникли запитання чи коментарі щодо перекладу, звертайтесь: idai.field-ukrajinskoju@dainst.de</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.languageInfo.uk" datatype="html">
+        <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
+        <target state="new">Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>

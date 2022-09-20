@@ -102,9 +102,15 @@
     },
     "notes": {
       "label": "Annotazioni"
+    },
+    "damage": {
+      "label": "Danni in percentuale"
     }
   },
   "categories": {
+    "Level": {
+      "label": "Piano"
+    },
     "RoomFloor": {
       "label": "Pavimento"
     },

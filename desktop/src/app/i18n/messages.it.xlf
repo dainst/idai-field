@@ -139,8 +139,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="*
-   * Supp"/>%</source>
+        <source><x id="INTERPOLATION" equiv-text="*    * Supp"/>%</source>
         <target state="final"><x id="INTERPOLATION" equiv-text="{{getPercentValue()}}"/>%</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/progressbar/progressbar.ts</context>
@@ -1169,7 +1168,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowMultiLanguage" datatype="html">
         <source>Eingabe in mehreren Sprachen erlauben</source>
-        <target state="new">Eingabe in mehreren Sprachen erlauben</target>
+        <target state="final">Consentire l'immissione di dati in più lingue</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">60,66</context>
@@ -1297,7 +1296,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.int" datatype="html">
         <source>Ganzzahl</source>
-        <target state="new">Ganzzahl</target>
+        <target state="final">Numero intero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1525,7 +1524,7 @@
       </trans-unit>
       <trans-unit id="configuration.projectLanguages" datatype="html">
         <source>Projektsprachen auswählen</source>
-        <target state="new">Projektsprachen auswählen</target>
+        <target state="final">Selezionare le lingue del progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/languages/project-languages-modal.component.ts</context>
           <context context-type="linenumber">41,51</context>
@@ -1949,7 +1948,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages" datatype="html">
         <source>Projektsprachen:</source>
-        <target state="new">Projektsprachen:</target>
+        <target state="final">Lingue del progetto;</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">114</context>
@@ -2089,7 +2088,7 @@
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
         <source>Existierendes Projekt gleichen Namens überschreiben</source>
-        <target state="new">Existierendes Projekt gleichen Namens überschreiben</target>
+        <target state="final">Sovrascrivere il progetto esistente con lo stesso nome</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">229</context>
@@ -2097,7 +2096,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
         <source> Projektdatenübersicht </source>
-        <target state="new"> Datenbankinformationen </target>
+        <target state="final">Informazioni sulla banca dati</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">47,56</context>
@@ -2105,7 +2104,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
         <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
-        <target state="new"> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <target state="final"> Dati memorizzati su questo computer per il progetto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -2113,7 +2112,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
         <source> Ressourcen: </source>
-        <target state="new"> Ressourcen: </target>
+        <target state="final"> Risorse: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">25</context>
@@ -2121,7 +2120,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.total" datatype="html">
         <source> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </source>
-        <target state="new"> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
+        <target state="final"> Totale: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">43</context>
@@ -2129,7 +2128,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.images" datatype="html">
         <source> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </source>
-        <target state="new"> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
+        <target state="final"> Di cui immagini: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">33</context>
@@ -2137,7 +2136,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.types" datatype="html">
         <source> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </source>
-        <target state="new"> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
+        <target state="final"> Di cui tipi e cataloghi: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">35</context>
@@ -2145,7 +2144,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.lastChangedResource" datatype="html">
         <source> Letzte bearbeitete Ressource: </source>
-        <target state="new"> Letzte bearbeitete Ressource: </target>
+        <target state="final"> Ultima risorsa modificata: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">37</context>
@@ -2153,7 +2152,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.date" datatype="html">
         <source> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </source>
-        <target state="new"> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
+        <target state="final"> Ultima modifica: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">58</context>
@@ -2161,7 +2160,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.deletedResource" datatype="html">
         <source> Gelöschte Ressource </source>
-        <target state="new"> Gelöschte Ressource </target>
+        <target state="final"> Risorsa eliminata </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">61,68</context>
@@ -2169,7 +2168,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.editedBy" datatype="html">
         <source> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </source>
-        <target state="new"> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
+        <target state="final"> Modificato da: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80</context>
@@ -2177,7 +2176,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
         <source> Vorschau-Bilddateien: </source>
-        <target state="new"> Vorschau-Bilddateien: </target>
+        <target state="final"> Anteprima dei file di immagine: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2185,7 +2184,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
         <source> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </source>
-        <target state="new"> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
+        <target state="final"> Spazio occupato sul disco rigido: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">74</context>
@@ -2197,7 +2196,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
         <source> Original-Bilddateien: </source>
-        <target state="new"> Original-Bilddateien: </target>
+        <target state="final"> File di immagini originali: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">76</context>
@@ -2213,7 +2212,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesUpload" datatype="html">
         <source> Originalbilder hochladen <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/> </source>
-        <target state="new">Originalbilder hochladen</target>
+        <target state="final"> Caricare le immagini originali <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.html</context>
           <context context-type="linenumber">63</context>
@@ -2221,7 +2220,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesDownload" datatype="html">
         <source> Originalbilder herunterladen <x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/> </source>
-        <target state="new">Originalbilder herunterladen</target>
+        <target state="final"> Scaricare le immagini originali<x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.html</context>
           <context context-type="linenumber">83</context>
@@ -4164,7 +4163,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads" datatype="html">
         <source>Originalbilder empfangen</source>
-        <target state="new">Erlaube anderen mir Originalbilder zu schicken</target>
+        <target state="final">Acquisire le immagini originali</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">124</context>
@@ -4172,7 +4171,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
         <source> Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind. </source>
-        <target state="new"> Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind. </target>
+        <target state="final"> La ricezione delle immagini originali è disattivata per impostazione predefinita dato che possono occupare molto spazio sul disco rigido a causa delle loro dimensioni e non sono assolutamente necessarie per l'utilizzo dell'applicazione. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">142,151</context>
@@ -4180,7 +4179,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
         <source> Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann. </source>
-        <target state="translated">
+        <target state="final">
                             Questo indirizzo e questa password devono essere inseriti negli altri client Field
                             per poter sincronizzare i dati
                             su questo computer.
@@ -4472,7 +4471,7 @@
       </trans-unit>
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
-        <target state="final">>ID da Zenon</target>
+        <target state="final">&gt;ID da Zenon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4608,7 +4607,7 @@
       </trans-unit>
       <trans-unit id="configuration.i18nOption.changingNotAllowed" datatype="html">
         <source>Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.</source>
-        <target state="new">Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.</target>
+        <target state="final">L'inserimento in più lingue è sempre abilitato per i campi di questo tipo di input.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4696,7 +4695,7 @@
       </trans-unit>
       <trans-unit id="languages.noLanguage" datatype="html">
         <source>Ohne Sprachangabe</source>
-        <target state="new">Ohne Sprachangabe</target>
+        <target state="final">Senza indicazione della lingua</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4760,7 +4759,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="new"/>
+        <target state="final"/>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5492,7 +5491,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrl" datatype="html">
         <source>Ungültige URL im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="new">Ungültige URL im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="final">URL non valido nel campo '[1]' di una risorsa della categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5500,7 +5499,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrls" datatype="html">
         <source>Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="new">Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="final">URL non validi nei seguenti campi di una risorsa della categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5900,7 +5899,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrl" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige URL ein.</source>
-        <target state="new">Bitte tragen Sie im Feld '[1]' eine gültige URL ein.</target>
+        <target state="final">Inserire un URL valido nel campo '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5908,7 +5907,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrls" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].</source>
-        <target state="new">Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].</target>
+        <target state="final">Inserire URL validi nei seguenti campi: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6124,7 +6123,7 @@
       </trans-unit>
       <trans-unit id="remoteimagestore.warning.largeFileUploadBlockedByPeer" datatype="html">
         <source>Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</source>
-        <target state="new">Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</target>
+        <target state="final">La destinazione di sincronizzazione attualmente impostata blocca la ricezione delle immagini originali. È possibile disattivare il caricamento delle immagini originali nelle impostazioni di sincronizzazione oppure riattivare la ricezione delle immagini originali nel dispositivo impostato come destinazione di sincronizzazione. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6284,7 +6283,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noProjectLanguages" datatype="html">
         <source>Bitte wählen Sie mindestens eine Projektsprache aus.</source>
-        <target state="new">Bitte wählen Sie mindestens eine Projektsprache aus.</target>
+        <target state="final">Selezionare almeno una lingua per il progetto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6372,7 +6371,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
         <source> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </source>
-        <target state="new"> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
+        <target state="final"> Numero di files: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80</context>
@@ -6384,7 +6383,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
         <source> Projekteigenschaften </source>
-        <target state="new"> Projekteigenschaften </target>
+        <target state="final"> Proprietà del progetto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">80</context>
@@ -7039,7 +7038,7 @@
       </trans-unit>
       <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html">
         <source>Keine Sprachen ausgewählt</source>
-        <target state="new">Keine Sprachen ausgewählt</target>
+        <target state="final">Nessuna lingua selezionata</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
           <context context-type="linenumber">53</context>

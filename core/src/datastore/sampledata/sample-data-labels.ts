@@ -78,6 +78,6 @@ export const SAMPLE_DATA_LABELS = {
         'buildingShort': 'E',
         'room': 'Vano',
         'roomShort': 'V',
-        'mapLayer': 'TRANSLATE'
+        'mapLayer': 'Immagine di sfondo'
     }
 };

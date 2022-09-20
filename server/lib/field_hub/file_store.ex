@@ -24,26 +24,33 @@ defmodule FieldHub.FileStore do
     variants
     |> Stream.map(&get_file_map_for_variant(project, &1))
     |> Enum.reduce(%{}, fn variant_map, acc ->
+      # Reduce all file maps (one for each type) to a single map
       variant_map
-      |> Enum.into(%{}, fn ({filename, %{size: size, variant: variant}}) ->
+      |> Enum.into(%{}, fn {filename, %{size: size, variant: variant}} ->
         case Map.has_key?(acc, filename) do
           false ->
             {
-              filename, %{
-                types: [variant], # TODO: Deprecate in 4.0
+              filename,
+              %{
+                # TODO: Deprecate in 4.0
+                types: [variant],
                 variants: [%{name: variant, size: size}]
               }
             }
+
           true ->
             existing_value = Map.get(acc, filename)
+
             {
-              filename, %{
-                types: Map.get(existing_value, :types) ++ [variant], # TODO: Deprecate in 4.0
-                variants: Map.get(existing_value,:variants) ++ [%{name: variant, size: size}]
+              filename,
+              %{
+                # TODO: Deprecate in 4.0
+                types: Map.get(existing_value, :types) ++ [variant],
+                variants: Map.get(existing_value, :variants) ++ [%{name: variant, size: size}]
               }
             }
-          end
-        end)
+        end
+      end)
     end)
     |> Stream.map(fn {uuid, info} ->
       case String.ends_with?(uuid, @tombstone_suffix) do
@@ -96,43 +103,44 @@ defmodule FieldHub.FileStore do
       |> String.contains?(".")
     end)
     |> ignore_files_with_existing_tombstones()
-    |> Enum.reduce(%{}, fn (%{name: filename, size: size, variant: variant}, acc) ->
+    |> Enum.reduce(%{}, fn %{name: filename, size: size, variant: variant}, acc ->
       acc
       |> Map.put(filename, %{size: size, variant: variant})
     end)
   end
 
-  def get_file_path(%{uuid: uuid, project: project, type: type}) do
+  def get_file_path(uuid, project, type) do
     path = "#{get_type_directory(project, type)}/#{uuid}"
 
     case File.stat(path) do
       {:error, _} = error ->
         error
+
       _ ->
         {:ok, path}
     end
   end
 
-  def store_file(%{uuid: uuid, project: project, type: type, content: content}) do
+  def store_file(uuid, project, type, data) do
     directory = get_type_directory(project, type)
     File.mkdir_p!(directory)
     file_path = "#{directory}/#{uuid}"
 
     if not File.exists?(file_path) do
-      File.write(file_path, content)
+      File.write(file_path, data)
     else
       :ok
     end
   end
 
-  def delete(%{uuid: uuid, project: project}) do
+  def delete(uuid, project) do
     @variant_types
     |> Stream.filter(fn variant ->
       directory = get_type_directory(project, variant)
       File.exists?("#{directory}/#{uuid}")
     end)
     |> Stream.map(
-      &store_file(%{uuid: "#{uuid}#{@tombstone_suffix}", project: project, type: &1, content: []})
+      &store_file("#{uuid}#{@tombstone_suffix}", project, &1, [])
     )
     |> Enum.filter(fn val ->
       val != :ok

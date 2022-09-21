@@ -103,7 +103,7 @@ export default function Project(): ReactElement {
                     );
                 }
 
-                if (data.selected) {
+                if (data.selected && data.children.length > 0) {
                     // "Fake" field group in order to display child relations, translations are created
                     // on the fly because the data itself does not contain labels/descriptions for the relation
                     // like the regular fields of a resource.

@@ -104,19 +104,8 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
             <ProjectHierarchyButton projectDocument={ projectDoc }
                 label={ t('projectHome.toHierarchicalView') } />
         </Card>
-        <Card className="my-0 flex-fill" style={ { height: 0 } }>
-            <div className="py-1 card-header">
-                <h5>{ t('projectHome.categories') }</h5>
-            </div>
-            <div className="flex-fill py-2" style={ filterColStyle }>
-                <CategoryFilter filter={ categoryFilter } projectId={ projectId } projectView="search"
-                    onMouseEnter={ setHighlightedCategories }
-                    onMouseLeave={ setHighlightedCategories } />
-            </div>
-        </Card>
-
         { typeCatalogCount > 0 &&
-        <Card className="mb-0 mt-2 p-2">
+        <Card className="mb-2 mt-0 p-2">
             <Link to={ `/type/${projectId}` } className="document-teaser">
                 <div className="d-flex teaser-container teaser-small link">
                     <div>
@@ -129,6 +118,16 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
             </Link>
         </Card>
         }
+        <Card className="my-0 flex-fill" style={ { height: 0 } }>
+            <div className="py-1 card-header">
+                <h5>{ t('projectHome.categories') }</h5>
+            </div>
+            <div className="flex-fill py-2" style={ filterColStyle }>
+                <CategoryFilter filter={ categoryFilter } projectId={ projectId } projectView="search"
+                    onMouseEnter={ setHighlightedCategories }
+                    onMouseLeave={ setHighlightedCategories } />
+            </div>
+        </Card>
     </div>;
 
 

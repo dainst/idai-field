@@ -1,9 +1,10 @@
 import { mdiFileTree } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { CSSProperties, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Document } from '../../api/document';
 import { getProjectLabel } from '../projects';
+import { homeHeadingStyle } from './ProjectHome';
 
 
 interface ProjectHierarchyButtonProps {
@@ -30,9 +31,3 @@ export default function ProjectHierarchyButton({ projectDocument, label = undefi
         </Link>
     );
 }
-
-
-const homeHeadingStyle: CSSProperties = {
-    fontSize: '18px',
-    color: 'black'
-};

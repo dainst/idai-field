@@ -1,4 +1,5 @@
 import { mdiEmail, mdiMapMarker, mdiWeb } from '@mdi/js';
+import { mdiViewGrid } from '@mdi/js';
 import Icon from '@mdi/react';
 import { Location } from 'history';
 import { TFunction } from 'i18next';
@@ -96,15 +97,6 @@ const renderTitle = (title: string, projectDoc: Document) =>
 const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: ResultFilter,
         setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number) =>
     <div className="mx-2 d-flex flex-column" style={ sidebarStyles }>
-        { typeCatalogCount > 0 &&
-        <Card className="mb-2 mt-0 p-2">
-            <Link to={ `/type/${projectId}` } className="document-teaser">
-                <div className="d-flex teaser-container teaser-small link">
-                    { t('projectHome.showAllCatalogs', { count: typeCatalogCount }) }
-                </div>
-            </Link>
-        </Card>
-        }
         <Card className="mb-2 mt-0">
             <SearchBar basepath={ `/project/${projectId}/search` } />
         </Card>
@@ -112,6 +104,20 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
             <ProjectHierarchyButton projectDocument={ projectDoc }
                 label={ t('projectHome.toHierarchicalView') } />
         </Card>
+        { typeCatalogCount > 0 &&
+        <Card className="mb-2 mt-0 p-2">
+            <Link to={ `/type/${projectId}` } className="document-teaser">
+                <div className="d-flex teaser-container teaser-small link">
+                    <div>
+                        <Icon path={ mdiViewGrid } size={ 0.8 } color="black" />
+                    </div>
+                    <h3 className="mx-2 my-1" style={ homeHeadingStyle }>
+                        { t('projectHome.showAllCatalogs', { count: typeCatalogCount }) }
+                    </h3>
+                </div>
+            </Link>
+        </Card>
+        }
         <Card className="my-0 flex-fill" style={ { height: 0 } }>
             <div className="py-1 card-header">
                 <h5>{ t('projectHome.categories') }</h5>
@@ -335,4 +341,9 @@ const homeIconStyle: CSSProperties = {
     height: '1.5rem',
     width: '1.5rem',
     marginTop: '-0.3rem'
+};
+
+export const homeHeadingStyle: CSSProperties = {
+    fontSize: '18px',
+    color: 'black'
 };

@@ -2,7 +2,7 @@
   "name": "ui",
   "version": "0.1.0",
   "dependencies": {
-    "@mdi/js": "^5.9.55",
+    "@mdi/js": "^7.0.96",
     "@mdi/react": "^1.4.0",
     "@tensorflow/tfjs": "^2.8.5",
     "@testing-library/jest-dom": "^4.2.4",

@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactElement, useContext, useEffect, useState } from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { TFunction } from 'i18next';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search } from '../../api/documents';
@@ -34,6 +34,8 @@ export default function TypeView(): ReactElement {
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
 
+    const [redirectDocumentId, setRedirectDocId] = useState<string>(null);
+
     const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
 
         const promise = documentId
@@ -43,6 +45,7 @@ export default function TypeView(): ReactElement {
     });
 
     useEffect(() => {
+        setRedirectDocId(null);
 
         if (documentId) {
             get(documentId, loginData.token)
@@ -60,54 +63,63 @@ export default function TypeView(): ReactElement {
             setDocument(null);
             setBreadcrumb(predecessorsToBreadcrumbItems(project, [], t));
             getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
-                setDocuments(res.documents);
-                resetScrollOffset();
+                if (res.documents.length === 1) {
+                    setRedirectDocId(res.documents[0].resource.id);
+                } else {
+                    setDocuments(res.documents);
+                    resetScrollOffset();
+                }
             });
         }
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams]);
 
-    return (
-        <Container fluid className="browse-select">
-            <DocumentBreadcrumb breadcrumbs={ breadcrumbs } />
-            <Row>
-                { document
-                    ? <>
-                        <Col className="col-4 sidebar">
-                            <DocumentCard document={ document }
-                                baseUrl={ CONFIGURATION.fieldUrl }
-                                cardStyle={ cardStyle }
-                                headerStyle={ cardHeaderStyle }
-                                bodyStyle={ cardBodyStyle } />
-                        </Col>
-                        <Col style={ documentGridStyle } onScroll={ onScroll }>
-                            
-                            <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
-                                <Tab eventKey="children" title={ t('type.subtypes') }>
-                                    <DocumentGrid documents={ documents }
-                                        getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
-                                </Tab>
-                                { document && document.resource.category.name === 'Type' &&
-                                    <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
-                                        <DocumentGrid documents={ finds }
-                                            getLinkUrl={
-                                                (doc: ResultDocument): string => {
-                                                    return `/project/${project}/hierarchy/${doc.resource.id}`;
-                                                }
-                                            } />
+    if (redirectDocumentId !== null) {
+        return (<Redirect to={ `/type/${project}/${redirectDocumentId}` } />);
+    }
+    else {
+        return (
+            <Container fluid className="browse-select">
+                <DocumentBreadcrumb breadcrumbs={ breadcrumbs } />
+                <Row>
+                    { document
+                        ? <>
+                            <Col className="col-4 sidebar">
+                                <DocumentCard document={ document }
+                                    baseUrl={ CONFIGURATION.fieldUrl }
+                                    cardStyle={ cardStyle }
+                                    headerStyle={ cardHeaderStyle }
+                                    bodyStyle={ cardBodyStyle } />
+                            </Col>
+                            <Col style={ documentGridStyle } onScroll={ onScroll }>
+                                
+                                <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
+                                    <Tab eventKey="children" title={ t('type.subtypes') }>
+                                        <DocumentGrid documents={ documents }
+                                            getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                                     </Tab>
-                                }
-                            </Tabs>
+                                    { document && document.resource.category.name === 'Type' &&
+                                        <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
+                                            <DocumentGrid documents={ finds }
+                                                getLinkUrl={
+                                                    (doc: ResultDocument): string => {
+                                                        return `/project/${project}/hierarchy/${doc.resource.id}`;
+                                                    }
+                                                } />
+                                        </Tab>
+                                    }
+                                </Tabs>
+                            </Col>
+                        </>
+                        : <Col>
+                            <DocumentGrid documents={ documents }
+                                getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
                         </Col>
-                    </>
-                    : <Col>
-                        <DocumentGrid documents={ documents }
-                            getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
-                    </Col>
-                }
-            </Row>
-        </Container>
-    );
+                    }
+                </Row>
+            </Container>
+        );
+    }
 }
 
 

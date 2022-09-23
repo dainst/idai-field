@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 import { unstable_batchedUpdates } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Document } from '../../api/document';
+import { Document, Field, FieldGroup } from '../../api/document';
 import { get, search } from '../../api/documents';
 import { buildProjectQueryTemplate, parseFrontendGetParams, Query } from '../../api/query';
 import { ResultDocument, ResultFilter } from '../../api/result';
@@ -63,7 +63,7 @@ export default function Project(): ReactElement {
     );
 
     const resetScroll = () => {
-        
+
         if (documentListRef.current) documentListRef.current.scrollTo(0, 0);
         resetScrollOffset();
     };
@@ -86,7 +86,7 @@ export default function Project(): ReactElement {
 
         fetchProjectData(loginData.token, query, documentId, predecessorsId).then(data => {
             const newPredecessors = getPredecessors(data, parent, documentId);
-            
+
             unstable_batchedUpdates(() => {
 
                 if (data.searchResult) {
@@ -102,13 +102,33 @@ export default function Project(): ReactElement {
                             : []
                     );
                 }
+
+                if (data.selected && data.children.length > 0) {
+                    // "Fake" field group in order to display child relations, translations are created
+                    // on the fly because the data itself does not contain labels/descriptions for the relation
+                    // like the regular fields of a resource.
+                    data.selected.resource.groups.push({
+                        name: 'Children',
+                        fields: [
+                            {
+                                name: 'hasChildren',
+                                targets: data.children,
+                                description: { 'de': 'Kindbeziehung', 'en': 'Child relation' },
+                                label: {
+                                    'de': 'Enthält', 'en': 'Includes', 'es': 'Incluye', 'fr': 'Inclut', 'it': 'Include'
+                                }
+                            } as Field
+                        ]
+                    } as FieldGroup);
+                }
+
                 setDocument(data.selected);
                 setPredecessors(newPredecessors);
                 setHoverDocument(null);
             });
             if (documentId && !data.selected) setNotFound(true);
         });
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [projectId, documentId, view, location.search, history, loginData]);
 
     const renderSidebarContent = () => {
@@ -228,7 +248,7 @@ const buildQuery = (projectId: string, searchParams: URLSearchParams, from: numb
 
 
 const getPredecessors = (data: ProjectData, parent: string, documentId: string): ResultDocument[] => {
-    
+
     const predecessors = data.predecessors;
     if (!isResource(parent) && documentId && predecessors.length > 0) {
         predecessors.pop();

@@ -47,9 +47,6 @@ jobs:
     - name: Create Windows package
       run: npm run package:win
       if: runner.os == 'Windows'
-      env:
-        CSC_LINK: ${{ secrets.WIN_CERT }}
-        CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PW }}
       working-directory: desktop
     - name: Create Linux package
       run: npm run package:lnx

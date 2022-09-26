@@ -16,6 +16,7 @@ import DocumentTeaser from './DocumentTeaser';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
 const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer'];
+const TYPES_WITH_HIDDEN_RELATIONS = ['Type', 'TypeCatalog'];
 
 
 interface DocumentDetailsProps {
@@ -44,19 +45,25 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
 
 const renderGroups = (document: Document, t: TFunction, baseUrl: string): ReactNode => {
 
-    return document.resource.groups.map(renderGroup(t, document.project, baseUrl));
+    return document.resource.groups.map(
+        renderGroup(t, document.project,
+        baseUrl,
+        TYPES_WITH_HIDDEN_RELATIONS.includes(document.resource.category.name))
+    );
 };
 
 
-export const renderGroup = (t: TFunction, project: string, baseUrl: string, skip: string[] = []) =>
+export const renderGroup = (t: TFunction, project: string, baseUrl: string, hideRelations: boolean = false) =>
     function FieldGroupRow(group: FieldGroup): ReactNode {
 
     return (
         <div key={ `${group.name}_group` }>
             { renderFieldList(group.fields.filter(field => {
-                return field.value !== undefined && !skip.includes(field.name);
+                return field.value !== undefined;
             }), t) }
-            { renderRelationList(group.fields.filter(field => field.targets), project, t, baseUrl) }
+            { hideRelations
+                ? null
+                : renderRelationList(group.fields.filter(field => field.targets), project, t, baseUrl) }
         </div>
     );
 };

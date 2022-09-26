@@ -1,4 +1,5 @@
-import {Constraint} from './constraint';
+import { Constraint } from './constraint';
+
 
 export type Constraints = { [name: string]: Constraint|string|string[] };
 

@@ -623,6 +623,9 @@ describe('resources --', () => {
         expect(labels.length).toBe(1);
         expect(await getText(labels[0])).toEqual('Raum');
 
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+
         done();
     });
 

@@ -29,7 +29,7 @@ export class ResourcesPage {
 
     public static clickContextMenuMoveButton() {
 
-        return click('#context-menu-move-button');
+        return click(this.getContextMenuMoveButton());
     }
 
 
@@ -291,6 +291,12 @@ export class ResourcesPage {
     public static getListRows() {
 
         return getElements('.row-wrapper');
+    }
+
+
+    public static getContextMenuMoveButton() {
+
+        return getElement('#context-menu-move-button');
     }
 
 

@@ -611,6 +611,21 @@ describe('resources --', () => {
         await SearchBarPage.clickCategoryFilterButton('modal');
         await ResourcesPage.clickCancelInMoveModal();
 
+        await ResourcesPage.clickHierarchyButton('B1');
+        await ResourcesPage.clickHierarchyButton('R1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('Floor1', 'roomfloor');
+        await ResourcesPage.clickOpenContextMenu('Floor1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        
+        labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Raum');
+
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+
         done();
     });
 
@@ -662,6 +677,28 @@ describe('resources --', () => {
         }
 
         await ResourcesPage.clickCancelInMoveModal();
+
+        done();
+    });
+
+
+    it('contextMenu/moveModal - prevent moving child resources to an unallowed operation', async done => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('B1');
+        await ResourcesPage.performCreateResource('BW1', 'buildingpart');
+        await ResourcesPage.clickHierarchyButton('BW1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('R2', 'room');
+
+        await ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOpenContextMenu('BW1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('operation-survey', 'modal');
+        await ResourcesPage.clickResourceListItemInMoveModal('A1');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+
+        await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
 
         done();
     });

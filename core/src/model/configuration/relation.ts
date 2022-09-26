@@ -86,7 +86,7 @@ export namespace Relation {
 
     /**
      * @deprecated use isChildOf instead. 
-     *   Our index already works exclusively with isChildOf, while
+     *   Our index already works with isChildOf, while
      *   in the documents the legacy relations are still stored.
      */
     export namespace Hierarchy {

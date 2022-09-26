@@ -1,6 +1,6 @@
-import { flatten, intersection, set } from 'tsfun';
+import { flatten, intersection, set, to } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
-    FieldDocument, IndexFacade, Constraint, CategoryForm, Relation } from 'idai-field-core';
+    FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named, Datastore } from 'idai-field-core';
 import { M } from '../messages/m';
 
 
@@ -12,10 +12,15 @@ export module MoveUtility {
     export async function moveDocument(document: FieldDocument, newParent: FieldDocument,
                                        relationsManager: RelationsManager,
                                        isRecordedInTargetCategories: Array<CategoryForm>,
-                                       projectConfiguration: ProjectConfiguration) {
+                                       projectConfiguration: ProjectConfiguration,
+                                       datastore: Datastore) {
 
         if (!(await checkForSameOperationRelations(document, newParent, projectConfiguration))) {
             throw [M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS, document.resource.identifier];
+        }
+
+        if (!(await checkChildren(document, newParent, projectConfiguration, datastore))) {
+            throw [M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN, document.resource.identifier];
         }
 
         const oldVersion = Document.clone(document);
@@ -37,13 +42,12 @@ export module MoveUtility {
 
 
     export function getAllowedTargetCategories(documents: Array<FieldDocument>,
-                                               projectConfiguration: ProjectConfiguration,
-                                               isInOverview: boolean): Array<CategoryForm> {
+                                               projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         const result = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
             .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
 
-        return (isProjectOptionAllowed(documents, isInOverview))
+        return (isProjectOptionAllowed(documents, projectConfiguration))
             ? [projectConfiguration.getCategory('Project')]
                 .concat(result)
             : result;
@@ -51,9 +55,14 @@ export module MoveUtility {
 
 
 
-    export function isProjectOptionAllowed(documents: Array<FieldDocument>, isInOverview: boolean): boolean {
+    export function isProjectOptionAllowed(documents: Array<FieldDocument>, projectConfiguration: ProjectConfiguration): boolean {
 
-        return isInOverview && Document.hasRelations(documents[0],'liesWithin');
+        return documents.filter(document => {
+            return !projectConfiguration.getConcreteOverviewCategories()
+                    .map(to(Named.NAME))
+                    .includes(document.resource.category)
+                || !Document.hasRelations(document, Relation.Hierarchy.LIESWITHIN);
+        }).length === 0;
     }
 
 
@@ -61,10 +70,15 @@ export module MoveUtility {
                                                     projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         return intersection(
-            documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(
-                'isRecordedIn', document.resource.category
-            ))
-        );
+            documents.map(document => {
+                const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+                return category.mustLieWithin
+                    ? []
+                    : projectConfiguration.getAllowedRelationRangeCategories(
+                        'isRecordedIn', document.resource.category
+                    );
+            }
+        ));
     }
 
 
@@ -132,7 +146,7 @@ export module MoveUtility {
         const relations: Array<Relation> =
             projectConfiguration.getRelationsForDomainCategory(document.resource.category);
 
-        const targetIds: string[] = flatten(
+        const targetIds: string[] = flatten(
             Object.keys(document.resource.relations)
                 .filter(relationName => {
                     return !Relation.Hierarchy.ALL.includes(relationName) 
@@ -141,5 +155,27 @@ export module MoveUtility {
         );
 
         return targetIds.length === 0;
+    }
+
+
+    async function checkChildren(document: FieldDocument, newParent: FieldDocument,
+                                 projectConfiguration: ProjectConfiguration,
+                                 datastore: Datastore,): Promise<boolean> {
+
+        const newIsRecordedInTarget: Document = await datastore.get(
+            newParent.resource.relations.isRecordedIn?.[0] ?? newParent.resource.id
+        );
+
+        const children: Array<Document> = (await datastore.find({
+            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } }
+        })).documents;
+
+        return children.filter(child => {
+            return !projectConfiguration.isAllowedRelationDomainCategory(
+                child.resource.category,
+                newIsRecordedInTarget.resource.category,
+                Relation.Hierarchy.RECORDEDIN
+            );
+        }).length === 0;
     }
 }

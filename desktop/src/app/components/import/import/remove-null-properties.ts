@@ -15,9 +15,9 @@ export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Arra
     if (isEmpty(struct)) throw [ImportErrors.EMPTY_OBJECT_IN_RESOURCE];
     let struct_ = copy(struct) as any;
 
-    keysValues(struct_).forEach(([fieldName,originalFieldValue]) => {
+    keysValues(struct_).forEach(([fieldName, originalFieldValue]) => {
 
-        if (isObject(struct) && originalFieldValue === undefined) throw "unexpected 'undefined' value found in object parameter in removeNullProperties()";
+        if (isObject(struct) && originalFieldValue === undefined) throw 'unexpected \'undefined\' value found in object parameter in removeNullProperties()';
         if (and(isString, isEmpty)(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
 
         if (isAssociative(originalFieldValue)) {

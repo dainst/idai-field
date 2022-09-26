@@ -1,6 +1,7 @@
-import { click, clickWithControlKey, clickWithShiftKey, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { click, clickWithControlKey, clickWithShiftKey, getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
+import { SearchBarPage } from '../widgets/search-bar.page';
 
 
 describe('resources/multi-select --', () => {
@@ -127,6 +128,46 @@ describe('resources/multi-select --', () => {
         await click(await ResourcesPage.getListItemEl('1'));
         await clickWithShiftKey(await ResourcesPage.getListItemEl('3'));
         await testMovingResources();
+
+        done();
+    });
+
+
+    it('show correct target categories when moving multiple resources in overview search', async done => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('O1', 'place');
+        await ResourcesPage.clickHierarchyButton('O1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('B2', 'operation-building');
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickOpenContextMenu('B2');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        let labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(2);
+        expect(await getText(labels[0])).toEqual('Projekt');
+        expect(await getText(labels[1])).toEqual('Ort');
+
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+
+        await click(await ResourcesPage.getListItemEl('B1'));
+        await clickWithShiftKey(await ResourcesPage.getListItemEl('B2'));
+        await ResourcesPage.clickOpenContextMenu('B2');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Ort');
+
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+        
+        await clickWithShiftKey(await ResourcesPage.getListItemEl('SE0'));
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await waitForNotExist(await ResourcesPage.getContextMenuMoveButton());
 
         done();
     });

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
-import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
@@ -29,8 +28,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public orientation: ContextMenuOrientation = 'top';
 
 
-    constructor(private viewFacade: ViewFacade,
-                private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
@@ -99,7 +97,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
         if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
         return MoveUtility.getAllowedTargetCategories(
-            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration, this.viewFacade.isInOverview()
+            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration
         ).length > 0;
     }
 

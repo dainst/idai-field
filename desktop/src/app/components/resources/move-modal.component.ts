@@ -51,9 +51,8 @@ export class MoveModalComponent {
     public initialize(documents: Array<FieldDocument>) {
 
         this.documents = documents;
-        this.showProjectOption = MoveUtility.isProjectOptionAllowed(documents, this.viewFacade.isInOverview());
-        this.filterOptions = MoveUtility.getAllowedTargetCategories(documents, this.projectConfiguration,
-            this.viewFacade.isInOverview());
+        this.showProjectOption = MoveUtility.isProjectOptionAllowed(documents, this.projectConfiguration);
+        this.filterOptions = MoveUtility.getAllowedTargetCategories(documents, this.projectConfiguration);
     }
 
 

@@ -1,6 +1,6 @@
-import { flatten, intersection, set } from 'tsfun';
+import { flatten, intersection, set, to } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
-    FieldDocument, IndexFacade, Constraint, CategoryForm, Relation } from 'idai-field-core';
+    FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named } from 'idai-field-core';
 import { M } from '../messages/m';
 
 
@@ -37,13 +37,12 @@ export module MoveUtility {
 
 
     export function getAllowedTargetCategories(documents: Array<FieldDocument>,
-                                               projectConfiguration: ProjectConfiguration,
-                                               isInOverview: boolean): Array<CategoryForm> {
+                                               projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         const result = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
             .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
 
-        return (isProjectOptionAllowed(documents, isInOverview))
+        return (isProjectOptionAllowed(documents, projectConfiguration))
             ? [projectConfiguration.getCategory('Project')]
                 .concat(result)
             : result;
@@ -51,9 +50,14 @@ export module MoveUtility {
 
 
 
-    export function isProjectOptionAllowed(documents: Array<FieldDocument>, isInOverview: boolean): boolean {
+    export function isProjectOptionAllowed(documents: Array<FieldDocument>, projectConfiguration: ProjectConfiguration): boolean {
 
-        return isInOverview && Document.hasRelations(documents[0], 'liesWithin');
+        return documents.filter(document => {
+            return !projectConfiguration.getConcreteOverviewCategories()
+                    .map(to(Named.NAME))
+                    .includes(document.resource.category)
+                || !Document.hasRelations(document, Relation.Hierarchy.LIESWITHIN);
+        }).length === 0;
     }
 
 

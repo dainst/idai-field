@@ -176,7 +176,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getConreteOverviewCategories().map(Named.toName),
+                projectConfiguration.getConcreteOverviewCategories().map(Named.toName),
                 ['Trench', 'Place'])
         ).toBeTruthy();
     });

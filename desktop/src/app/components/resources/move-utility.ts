@@ -162,6 +162,12 @@ export module MoveUtility {
                                  projectConfiguration: ProjectConfiguration,
                                  datastore: Datastore,): Promise<boolean> {
 
+        if (projectConfiguration.getConcreteOverviewCategories()
+                .map(to(Named.NAME))
+                .includes(document.resource.category)) {
+            return true;
+        }
+
         const newIsRecordedInTarget: Document = await datastore.get(
             newParent.resource.relations.isRecordedIn?.[0] ?? newParent.resource.id
         );

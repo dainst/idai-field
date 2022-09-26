@@ -611,6 +611,18 @@ describe('resources --', () => {
         await SearchBarPage.clickCategoryFilterButton('modal');
         await ResourcesPage.clickCancelInMoveModal();
 
+        await ResourcesPage.clickHierarchyButton('B1');
+        await ResourcesPage.clickHierarchyButton('R1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('Floor1', 'roomfloor');
+        await ResourcesPage.clickOpenContextMenu('Floor1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        
+        labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Raum');
+
         done();
     });
 

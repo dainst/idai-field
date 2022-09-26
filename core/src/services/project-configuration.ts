@@ -145,7 +145,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getConreteOverviewCategories(): Array<CategoryForm> {
+    public getConcreteOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),

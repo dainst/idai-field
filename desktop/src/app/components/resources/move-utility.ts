@@ -53,7 +53,7 @@ export module MoveUtility {
 
     export function isProjectOptionAllowed(documents: Array<FieldDocument>, isInOverview: boolean): boolean {
 
-        return isInOverview && Document.hasRelations(documents[0],'liesWithin');
+        return isInOverview && Document.hasRelations(documents[0], 'liesWithin');
     }
 
 
@@ -61,10 +61,15 @@ export module MoveUtility {
                                                     projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
 
         return intersection(
-            documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(
-                'isRecordedIn', document.resource.category
-            ))
-        );
+            documents.map(document => {
+                const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+                return category.mustLieWithin
+                    ? []
+                    : projectConfiguration.getAllowedRelationRangeCategories(
+                        'isRecordedIn', document.resource.category
+                    );
+            }
+        ));
     }
 
 
@@ -132,7 +137,7 @@ export module MoveUtility {
         const relations: Array<Relation> =
             projectConfiguration.getRelationsForDomainCategory(document.resource.category);
 
-        const targetIds: string[] = flatten(
+        const targetIds: string[] = flatten(
             Object.keys(document.resource.relations)
                 .filter(relationName => {
                     return !Relation.Hierarchy.ALL.includes(relationName) 

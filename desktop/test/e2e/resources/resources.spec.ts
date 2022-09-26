@@ -682,6 +682,28 @@ describe('resources --', () => {
     });
 
 
+    it('contextMenu/moveModal - prevent moving child resources to an unallowed operation', async done => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('B1');
+        await ResourcesPage.performCreateResource('BW1', 'buildingpart');
+        await ResourcesPage.clickHierarchyButton('BW1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('R2', 'room');
+
+        await ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOpenContextMenu('BW1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('operation-survey', 'modal');
+        await ResourcesPage.clickResourceListItemInMoveModal('A1');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+
+        await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
+
+        done();
+    });
+
+
     it('images', async done => {
 
         // create links for images

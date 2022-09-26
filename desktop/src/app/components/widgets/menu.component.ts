@@ -1,7 +1,7 @@
-import {Renderer2} from '@angular/core';
-import {MenuContext} from '../../services/menu-context';
-import {Menus} from '../../services/menus';
-import {ComponentHelpers} from '../component-helpers';
+import { Renderer2 } from '@angular/core';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
+import { ComponentHelpers } from '../component-helpers';
 
 
 /**

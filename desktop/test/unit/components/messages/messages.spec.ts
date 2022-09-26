@@ -1,6 +1,6 @@
-import {MDInternal} from '../../../../src/app/components/messages/md-internal';
-import {Messages} from '../../../../src/app/components/messages/messages';
-import {MsgWithParams} from '../../../../src/app/components/messages/msg-with-params';
+import { MDInternal } from '../../../../src/app/components/messages/md-internal';
+import { Messages } from '../../../../src/app/components/messages/messages';
+import { MsgWithParams } from '../../../../src/app/components/messages/msg-with-params';
 
 
 /**

@@ -1,6 +1,7 @@
-import {ModuleWithProviders} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ImageOverviewComponent} from './image-overview.component';
+import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ImageOverviewComponent } from './image-overview.component';
+
 
 const routes: Routes = [
     {

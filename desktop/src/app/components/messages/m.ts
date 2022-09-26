@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {MD} from './md';
-import {Message} from './message';
+import { Injectable } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { MD } from './md';
+import { Message } from './message';
+
 
 /**
  * @author Daniel de Oliveira

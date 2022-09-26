@@ -1,13 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RelationsManager} from 'idai-field-core';
-import {M} from '../../messages/m';
-import {readWldFile, Errors} from '../../image/wld/wld-import';
-import {downloadWldFile} from '../../image/wld/wld-export';
-import {Messages} from '../../messages/messages';
-import {MsgWithParams} from '../../messages/msg-with-params';
-import {Menus} from '../../../services/menus';
-import {MenuContext} from '../../../services/menu-context';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RelationsManager } from 'idai-field-core';
+import { M } from '../../messages/m';
+import { readWldFile, Errors } from '../../image/wld/wld-import';
+import { downloadWldFile } from '../../image/wld/wld-export';
+import { Messages } from '../../messages/messages';
+import { MsgWithParams } from '../../messages/msg-with-params';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({

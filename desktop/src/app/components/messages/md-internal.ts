@@ -1,5 +1,6 @@
-import {Message} from './message'
-import {MD} from './md'
+import { Message } from './message';
+import { MD } from './md';
+
 
 /**
  * A message dictionary with messages for native library functionality.

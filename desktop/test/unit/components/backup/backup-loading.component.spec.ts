@@ -1,7 +1,7 @@
 import PouchDB = require('pouchdb-node');
-import {BackupLoadingComponent} from '../../../../src/app/components/backup/backup-loading.component';
-import {Backup} from '../../../../src/app/components/backup/backup';
-import {M} from '../../../../src/app/components/messages/m';
+import { BackupLoadingComponent } from '../../../../src/app/components/backup/backup-loading.component';
+import { Backup } from '../../../../src/app/components/backup/backup';
+import { M } from '../../../../src/app/components/messages/m';
 
 
 /**

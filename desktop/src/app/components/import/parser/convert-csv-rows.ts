@@ -144,7 +144,7 @@ function assertHeadingsConsistent(headings: string[]) {
 }
 
 
-const toNullIfEmptyString = (val: string) => val === '' ? null : val;
+const toNullIfEmptyString = (val: string) => val.replace(/\n/g, '') === '' ? null : val;
 
 
 function insertFieldIntoDocument(headings: string[]) {

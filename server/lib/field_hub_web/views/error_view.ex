@@ -1,3 +1,4 @@
+# TODO: Deprecate?
 defmodule FieldHubWeb.ErrorView do
   use FieldHubWeb, :view
 

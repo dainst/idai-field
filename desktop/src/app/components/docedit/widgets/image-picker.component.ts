@@ -1,11 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { err, isOk, ok } from 'tsfun';
-import {Datastore, FieldDocument, ImageDocument, Named} from 'idai-field-core';
-import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {M} from '../../messages/m';
-import {Messages} from '../../messages/messages';
-import {ProjectConfiguration} from 'idai-field-core';
+import { Datastore, FieldDocument, ImageDocument, Named, ProjectConfiguration } from 'idai-field-core';
+import { ImageGridComponent } from '../../image/grid/image-grid.component';
+import { M } from '../../messages/m';
+import { Messages } from '../../messages/messages';
 import { getImageSuggestions } from './get-image-suggestions';
 
 

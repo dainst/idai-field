@@ -79,5 +79,32 @@ export const SAMPLE_DATA_LABELS = {
         'room': 'Vano',
         'roomShort': 'V',
         'mapLayer': 'Immagine di sfondo'
+    },
+    'uk': {
+        'testProject': 'Тестовий проект',
+        'testCampaign': 'Тестова кампанія',
+        'person': 'Виконавець',
+        'trench': 'Розріз',
+        'trenchShort': 'Р',
+        'stratigraphicalUnit': 'Стратиграфічна одиниця',
+        'stratigraphicalUnitShort': 'СО',
+        'layer': 'Земляна знахідка',
+        'architecture': 'Архітектура',
+        'grave': 'Розкопка',
+        'findShort': 'РО',
+        'coin': 'Монета',
+        'testFind': 'Тестова знахідка',
+        'testFindShort': 'тестз',
+        'surveyArea': 'Дослідницький ареал',
+        'surveyAreaShort': 'A',
+        'surveyUnit': 'Квадрат плану',
+        'surveyUnitShort': 'КП',
+        'stone': 'Камінь',
+        'stoneShort': 'К',
+        'building': 'Споруда',
+        'buildingShort': 'С',
+        'room': 'Приміщення',
+        'roomShort': 'П',
+        'mapLayer': 'Підоснова'
     }
 };

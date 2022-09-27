@@ -140,6 +140,17 @@ describe('convertCsvRows', () => {
     });
 
 
+    it('parse field that contains only linebreak as empty field', () => {
+
+        const struct = convertCsvRows(',')(
+            'a\n' +
+            '"\n"');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['a']).toBeNull();
+    });
+
+
     it('can set array entry to null', () => {
 
         const struct = convertCsvRows(',')(

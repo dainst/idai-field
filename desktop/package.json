@@ -10,10 +10,12 @@
     "ng:serve": "ng serve --servePath=dist",
     "ng:serve:en": "ng serve --servePath=dist --configuration=en",
     "ng:serve:it": "ng serve --servePath=dist --configuration=it",
+    "ng:serve:uk": "ng serve --servePath=dist --configuration=uk",
     "ng:serve:no-reload": "ng serve --servePath=dist --watch=false --live-reload=false",
     "start": "npm-run-all -p ng:serve start:dev",
     "start:en": "npm-run-all -p ng:serve:en start:dev",
     "start:it": "npm-run-all -p ng:serve:it start:dev",
+    "start:uk": "npm-run-all -p ng:serve:uk start:dev",
     "start:dev": "wait-on http-get://localhost:4200/dist/ && electron . dev",
     "build": "node --max_old_space_size=16000 node_modules/@angular/cli/bin/ng build --base-href ./ --localize --prod",
     "build:scripts": "rimraf src/config/Scripts/dist && tsc -p src/config/Scripts/tsconfig.json",
@@ -56,7 +58,8 @@
       "target": "zip",
       "icon": "img/logo.ico",
       "artifactName": "Field-Desktop-${version}-Windows.${ext}",
-      "publish": "github"
+      "publish": "github",
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,

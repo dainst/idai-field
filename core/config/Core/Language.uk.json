@@ -1,0 +1,103 @@
+{
+  "fields": {
+    "category": {
+      "label": "Категорія"
+    },
+    "identifier": {
+      "label": "Індентифікатор",
+      "description": "Однозначний ідентифікатор цього ресурсу"
+    },
+    "shortDescription": {
+      "label": "Короткий опис"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Проект",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Система координат"
+        },
+        "shortName": {
+          "label": "Коротка назва"
+        }
+      }
+    },
+    "Image": {
+      "label": "Ілюстрація",
+      "fields": {
+        "height": {
+          "label": "Висота"
+        },
+        "width": {
+          "label": "Ширина"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Записано до заходу"
+    },
+    "liesWithin": {
+      "label": "Розташоване в"
+    },
+    "includes": {
+      "label": "Містить"
+    },
+    "isPresentIn": {
+      "label": "Входить до профілю/плану"
+    },
+    "isAbove": {
+      "label": "Розташоване над"
+    },
+    "isBelow": {
+      "label": "Розташоване під"
+    },
+    "isSameAs": {
+      "label": "Ідентичний з"
+    },
+    "cuts": {
+      "label": "Розтинає"
+    },
+    "isCutBy": {
+      "label": "Перетинється/ Буде розрізаний"
+    },
+    "fills": {
+      "label": "Заповнений"
+    },
+    "isFilledBy": {
+      "label": "Заповнено з"
+    },
+    "borders": {
+      "label": "Примикає до/ межує з"
+    },
+    "isAfter": {
+      "label": "По віку після"
+    },
+    "isBefore": {
+      "label": "По віку до"
+    },
+    "isContemporaryWith": {
+      "label": "По віку одночасно з"
+    },
+    "depicts": {
+      "label": "Показує"
+    },
+    "isDepictedIn": {
+      "label": "Буде показано в"
+    },
+    "isMapLayerOf": {
+      "label": "Підоснова карти з"
+    },
+    "hasMapLayer": {
+      "label": "Підоснова карти має"
+    },
+    "isInstanceOf": {
+      "label": "Типологічна класифікація"
+    },
+    "hasInstance": {
+      "label": "Пов'язані знахідки"
+    }
+  }
+}

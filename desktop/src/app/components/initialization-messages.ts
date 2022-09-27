@@ -82,11 +82,38 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldProperty': 'La proprietà "[1]" non è valida.',
         'configuration/buildProjectCategories/noValuelistProvided': 'Per il campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Il campo "[0]" della categoria "[1]" non può essere ridefinito nella sottocategoria "[2]".'
+    }, 'uk': {
+        'loading1': 'Проект',
+        'loading2': 'Завантаження...',
+        'loadTestProject': 'Завантаження тестового проекту',
+        'databaseError': 'Сталася помилка: не вдалося завантажити базу даних проекту.',
+        'configurationError': 'Сталася помилка: не вдалося завантажити конфігурацію проекту.',
+        'fetchDocumentsError': 'Сталася помилка: ресурси проекту не вдалося прочитати з бази даних.',
+        'indexingError': 'Сталася помилка: не вдалося виконати індексацію ресурсів проекту.',
+        'oneConfigurationError': 'Помилка в конфігурації проекту:',
+        'multipleConfigurationErrors': 'Помилка в конфігурації проекту:',
+        'configuration/error/invalidJson': 'Файл конфігурації "[0]" не містить дійсного JSON.',
+        'configuration/error/missingValuelist': 'Не вдалося знайти список значень для поля "[0]" категорії "[1]".',
+        'configuration/error/missingFieldName': 'Поле, визначене в конфігурації проекту, не має назви/імені.',
+        'configuration/error/missingRelationCategory': 'Не вдалося знайти категорію "[0]", вказану у визначенні відношення.',
+        'configuration/fields/custom/parentNotDefined': 'Не вдалося знайти основну/батьківську категорію "[0]".',
+        'configuration/fields/custom/tryingToSubtypeANonExtendableCategory': 'Для категорії "[0]" не можна створювати підкатегорії.',
+        'configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten': 'Не можна встановлювати список значень для поля "[1]" категорії "[0]", оскільки дозволені значення взяті з ресурсу проекту.',
+        'configuration/buildProjectCategories/duplicationInSelection': 'Для категорії "[0]" вибрано більше однієї форми.',
+        'configuration/buildProjectCategories/mustHaveParent': 'Для категорії "[0]" необхідно вибрати основну/батьківську категорію.',
+        'configuration/buildProjectCategories/missingCategoryProperty': 'Властивість «[0]» повинна бути встановлена ​​для категорії «[1]».',
+        'configuration/buildProjectCategories/illegalCategoryProperty': 'Властивість "[0]" не можна встановлювати для категорії "[1]".',
+        'configuration/buildProjectCategories/missingFieldProperty': 'Для поля "[2]" категорії "[1]" необхідно встановити властивість "[0]".',
+        'configuration/buildProjectCategories/mustNotSetInputType': 'Властивість "inputType" (Тип входу) не можна змінювати для поля "[1]" категорії "[0]".',
+        'configuration/buildProjectCategories/illegalFieldInputType': 'Значення "[0]", установлене як властивість "inputType" (Тип входу) поля "[1]", недійсне.',
+        'configuration/buildProjectCategories/illegalFieldProperty': 'Значення "[1]" недійсне.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'Для поля «[1]» категорії «[0]» не вказано список значень.',
+        'configuration/buildProjectCategories/triedToOverwriteParentField': 'Поле «[0]», визначене в категорії «[1]», не можна перевизначати в підкатегорії «[2]».'
     },
 };
 
 
-export const getMessage = (key: string, locale: string, parameters?: string[]): string|undefined => {
+export const getMessage = (key: string, locale: string, parameters?: string[]): string | undefined => {
 
     let message: string = INITIALIZATION_MESSAGES[locale][key];
 

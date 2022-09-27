@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager,
-    ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
+    Datastore} from 'idai-field-core';
 import { MoveUtility } from '../../components/resources/move-utility';
-import { ViewFacade } from '../../components/resources/view/view-facade';
 import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
 
@@ -30,8 +29,8 @@ export class MoveModalComponent {
                 private relationsManager: RelationsManager,
                 private indexFacade: IndexFacade,
                 private messages: Messages,
-                private viewFacade: ViewFacade,
                 private projectConfiguration: ProjectConfiguration,
+                private datastore: Datastore,
                 private loading: Loading) {}
 
 
@@ -76,7 +75,8 @@ export class MoveModalComponent {
                     newParent,
                     this.relationsManager,
                     MoveUtility.getIsRecordedInTargetCategories(this.documents, this.projectConfiguration),
-                    this.projectConfiguration
+                    this.projectConfiguration,
+                    this.datastore
                 );
             } catch (msgWithParams) {
                 console.error(msgWithParams);

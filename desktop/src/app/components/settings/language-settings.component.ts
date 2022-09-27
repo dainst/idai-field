@@ -72,6 +72,11 @@ export class LanguageSettingsComponent {
             value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de'
         });
 
+        availableLanguages['uk'].info = this.i18n({
+            id: 'settings.languageInfo.uk',
+            value: 'Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de'
+        });
+
         return availableLanguages;
     }
 }

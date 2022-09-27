@@ -1,18 +1,18 @@
-import {Component} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Backup} from './backup';
-import {SettingsService} from '../../services/settings/settings-service';
-import {BackupLoadingModalComponent} from './backup-loading-modal.component';
-import {BackupProvider} from './backup-provider';
-import {M} from '../messages/m';
-import {ProjectNameValidation} from '../../model/project-name-validation';
-import {TabManager} from '../../services/tabs/tab-manager';
-import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
-import {Messages} from '../messages/messages';
-import {SettingsProvider} from '../../services/settings/settings-provider';
-import {MsgWithParams} from '../messages/msg-with-params';
-import {Menus} from '../../services/menus';
-import {MenuContext} from '../../services/menu-context';
+import { Component } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Backup } from './backup';
+import { SettingsService } from '../../services/settings/settings-service';
+import { BackupLoadingModalComponent } from './backup-loading-modal.component';
+import { BackupProvider } from './backup-provider';
+import { M } from '../messages/m';
+import { ProjectNameValidation } from '../../model/project-name-validation';
+import { TabManager } from '../../services/tabs/tab-manager';
+import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
+import { Messages } from '../messages/messages';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { MsgWithParams } from '../messages/msg-with-params';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({

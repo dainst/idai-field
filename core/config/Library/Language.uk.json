@@ -1,0 +1,1393 @@
+{
+  "groups": {
+    "stem": "Базові дані",
+    "properties": "Характеристики",
+    "time": "Час",
+    "position": "Розташування / Контекст",
+    "dimension": "Розміри",
+    "identification": "Призначення",
+    "other": "Інші"
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "Довжина",
+      "description": "Розмір довжини"
+    },
+    "dimensionWidth": {
+      "label": "Ширина",
+      "description": "Розмір ширини максимальної/мінімальної відстані"
+    },
+    "dimensionHeight": {
+      "label": "Висота",
+      "description": "Розмір висоти максимальної/мінімальної відстані"
+    },
+    "dimensionDepth": {
+      "label": "Глибина",
+      "description": "Розмір глибини максимальної/мінімальної відстані"
+    },
+    "dimensionThickness": {
+      "label": "Товщина",
+      "description": "Товщина об'єкта"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Рівень",
+      "description": "Рівень верхній/нижній або підлоги"
+    },
+    "dimensionDiameter": {
+      "label": "Діаметр",
+      "description": "Розмір діаметру об'єкта"
+    },
+    "dimensionPerimeter": {
+      "label": "Периметр",
+      "description": "Розмір периметру об'єкта"
+    },
+    "dimensionOther": {
+      "label": "Інші розміри",
+      "description": "Тут можна ввести інші розміри; будь ласка, прокоментуйте"
+    },
+    "area": {
+      "label": "Площа в м2",
+      "description": "Площа в квадратних метрах"
+    },
+    "description": {
+      "label": "Опис",
+      "description": "Вільне місце/поле для опису"
+    },
+    "beginningDate": {
+      "label": "Дата початку",
+      "description": "Дата початку завантаження ресурсу"
+    },
+    "endDate": {
+      "label": "Кінцева дата",
+      "description": "Дата завершення запису ресурсу"
+    },
+    "processor": {
+      "label": "Виконавець",
+      "description": "Виконавець (виконавчиня), який (яка) в першу чергу відповідає за ресурс або об’єкт під час кампанії. Важливо: імена людей, які вводять або редагують запис у базі даних, зберігаються автоматично, тому їх не потрібно вводити тут."
+    },
+    "campaign": {
+      "label": "Kampagne"
+    },
+    "period": {
+      "label": "Приблизне датування"
+    },
+    "dating": {
+      "label": "Датування"
+    },
+    "diary": {
+      "label": "Робочий щоденник",
+      "description": "Посилання на щоденник розкопок"
+    },
+    "date": {
+      "label": "Дата",
+      "description": "Дата замірів/проведення"
+    },
+    "orientation": {
+      "label": "Орієнтація",
+      "description": "Орієнтування за напрямком компаса"
+    },
+    "spatialLocation": {
+      "label": "Опис просторового розташування",
+      "description": "Опис позиції в межах розрізу знахідки, чи знахідки"
+    },
+    "provenance": {
+      "label": "Походження",
+      "description": "Місце походження"
+    },
+    "literature": {
+      "label": "Бібліографії"
+    },
+    "geometry": {
+      "label": "Геометрія"
+    },
+    "notes": {
+      "label": "Примітки"
+    },
+    "damage": {
+      "label": "Пошкодження в процентах"
+    }
+  },
+  "categories": {
+    "Level": {
+      "label": "Поверх"
+    },
+    "RoomFloor": {
+      "label": "Поверхня / підлога"
+    },
+    "RoomWall": {
+      "label": "Стіна"
+    },
+    "RoomCeiling": {
+      "label": "Стеля"
+    },
+    "Trench": {
+      "label": "Розріз",
+      "fields": {
+        "researchQuestion": {
+          "label": "Питання / Завдання",
+          "description": "Запитання або на якій основі відбулось вікриття поверхні, напр. B. 'Специфікація та датування структури, виявленої на магнітограмі...'"
+        },
+        "trenchComment": {
+          "label": "Редагування коментаря",
+          "description": "Коментар до розділу для оцінки та документації, звіт для керівництва розкопками"
+        }
+      }
+    },
+    "Glass": {
+      "label": "Cкло",
+      "fields": {
+        "decorationDescription": {
+          "label": "Опис Прикраса",
+          "description": "Ще одне поле опису для детального проектування прикраси"
+        },
+        "color": {
+          "label": "Колір та інтенсивність",
+          "description": "Колір, наскільки можна впізнати/побачити"
+        },
+        "decorationTechnique": {
+          "label": "Особливості поверхні або техніки декорування",
+          "description": "Техніка нанесення декору на скло"
+        },
+        "formDescription": {
+          "label": "Опис форми",
+          "description": "Більш детальний опис загальної форми"
+        },
+        "manufacturingMethod": {
+          "label": "Техніка виготовлення",
+          "description": "Техніка, застосована для створення об’єкта; впізнавані сліди обробки"
+        },
+        "objectType": {
+          "label": "Назва або тип об'єкта"
+        },
+        "transparency": {
+          "label": "Прозорість",
+          "description": "Наскільки прозорим є предмет?"
+        },
+        "vesselForm": {
+          "label": "Посудина-основна форма",
+          "description": "Основна форма посудини"
+        },
+        "vesselFormSpecific": {
+          "label": "Форма",
+          "description": "Особлива форма посудини"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Молюск",
+      "fields": {
+        "classification": {
+          "label": "Класифікація молюску"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Земляне покриття",
+      "fields": {}
+    },
+    "Brick": {
+      "label": "Цегла",
+      "fields": {
+        "featureText": {
+          "label": "Текст(и) маркування",
+          "description": "Транскрипція або текст позначення/маркування"
+        },
+        "brickForm": {
+          "label": "Форма цегли або використання"
+        },
+        "brickUsage": {
+          "label": "Використання цегли в архітектурі"
+        },
+        "clayColorOutside": {
+          "label": "Зовні: колір глини та його інтенсивність"
+        },
+        "coatColorInside": {
+          "label": "Покриття (всередині): колір і інтенсивність"
+        },
+        "coatColorOutside": {
+          "label": "Покриття (зовні): колір та інтенсивність"
+        },
+        "decorationTechnique": {
+          "label": "Особливості поверхні або оздоблення der Oberfläche"
+        },
+        "formDescription": {
+          "label": "Опис форми",
+          "description": "Більш детальний опис загальної форми"
+        },
+        "manufacturing": {
+          "label": "Фабричне виготовлення"
+        },
+        "manufacturingMethod": {
+          "label": "Техніка виготовлення"
+        },
+        "specificType": {
+          "label": "Формат",
+          "description": "Формат каменів і цегли, якщо можнливо впізнати"
+        },
+        "temper": {
+          "label": "Тип зношення",
+          "description": "Основний тип зношення"
+        }
+      }
+    },
+    "Project": {
+      "fields": {
+        "contactMail": {
+          "label": "Адреса електронної пошти контактної особи",
+          "description": "Електронна адреса проекту або контактна особа"
+        },
+        "contactPerson": {
+          "label": "Контактна особа",
+          "description": "Контактна особа проекту"
+        },
+        "epsgId": {
+          "label": "EPSG-код",
+          "description": "Специфікація EPSG-коду (див. http://spatialreference.org/, наприклад, 3004)"
+        },
+        "externalReference": {
+          "label": "Сторінка проекту",
+          "description": "Зовнішні облікові дані проекту"
+        },
+        "gazId": {
+          "label": "Ідентифікатор",
+          "description": "Ідентифікаційний номер лексикону місцеположення"
+        },
+        "institution": {
+          "label": "Установа",
+          "description": "Установа, відповідальна за проект"
+        },
+        "latitude": {
+          "label": "Широта",
+          "description": "Запис здійснюється через кому, негативні значення/числа можливі"
+        },
+        "longitude": {
+          "label": "Довгота",
+          "description": "Запис здійснюється через кому, негативні значення/числа можливі"
+        },
+        "license": {
+          "label": "Інформація про ліцензію"
+        },
+        "projectURI": {
+          "label": "URL проекту",
+          "description": "Посилання на зовнішню сторінку проекту з додатковою інформацією"
+        },
+        "staff": {
+          "label": "Робоча група/команда"
+        },
+        "campaigns": {
+          "label": "Кампанії"
+        },
+        "projectSupervisor": {
+          "label": "Керівниця/керівник",
+          "description": "Керівник проекту"
+        },
+        "bibliographicReferences": {
+          "label": "Бібліографія"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Поховання",
+      "fields": {
+        "ageDetermination": {
+          "label": "Вікова оцінка"
+        },
+        "ageDeterminationBasis": {
+          "label": "Оцінка віку на основі"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Зріст і міцність тіла"
+        },
+        "burialRite": {
+          "label": "Обробка померлих"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "dietReconstruction": {
+          "label": "Реконструкція харчування"
+        },
+        "findingPlace": {
+          "label": "Місце знахідки",
+          "description": " Щоб ввести кілька інших даних як місцевість , наприклад (PE07 So 04.002) Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Палеопатологічна знахідка"
+        },
+        "publicationDatingFinds": {
+          "label": "Датування (знахідок)",
+          "description": "Напр.: див. пошкоджені залишки поховання: Вклади у поховання (II/III ст. н. е.)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Датування (стратиграфія)",
+          "description": "z. B.: Напр.: див. гробницю 1: перетинає гробницю 28, датовану C-14 (20 р. до н. е.-65 р. н. е.)"
+        },
+        "sexDetermination": {
+          "label": "Визначення статі"
+        },
+        "sexDeterminationBasis": {
+          "label": "Основа визначення статі"
+        },
+        "amountIndividuals": {
+          "label": "Тип поховання - кількість"
+        },
+        "burialCharacteristic": {
+          "label": "Послідовність поховання (первинне/вторинне)"
+        },
+        "burialDocumentation": {
+          "label": "Документація",
+          "description": "Які форми документації використовувалися?"
+        },
+        "graveFeature": {
+          "label": "Форма поховання"
+        },
+        "positionArms": {
+          "label": "Позиція рук"
+        },
+        "positionLegs": {
+          "label": "Позиція ніг"
+        },
+        "positioningIndividuals": {
+          "label": "Місцезнаходження померлого/лих"
+        }
+      }
+    },
+    "Building": {
+      "label": "Споруда",
+      "fields": {
+        "buildingHistory": {
+          "label": "Історія будівлі",
+          "description": "Історичний нарис про будинок Bauwerks"
+        },
+        "buildingResearchHistory": {
+          "label": "Історія дослідження",
+          "description": "Передісторія всіх досліджень, проведених на будівлі, включаючи розкопки"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "excavationHistory": {
+          "label": "Історія розкопкu",
+          "description": "Нарис про проекти розкопок на місці знахідки"
+        },
+        "history": {
+          "label": "Історія",
+          "description": "Історичне минуле будівлі"
+        },
+        "hasRestoration": {
+          "label": "Реставрація",
+          "description": "Чи було вжито реставраційно-консерваційних заходів?"
+        },
+        "architecturalOrders": {
+          "label": "Архітектурна типологія",
+          "description": "Дані архітектурного ордеру колон"
+        },
+        "buildingCategory": {
+          "label": "Категорія споруди"
+        },
+        "buildingCategorySpecific": {
+          "label": "Особливості типу споруди"
+        },
+        "buildingTechnique": {
+          "label": "Технологія будівництва",
+          "description": "Назва технології застосованої при зведенні споруди"
+        },
+        "buildingType": {
+          "label": "Тип споруди"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Частка збереження",
+          "description": "Частка збереження в порівнянні з оригіналом"
+        },
+        "context": {
+          "label": "Контекст",
+          "description": "У якому контексті знаходиться/розташована будівля?"
+        },
+        "material": {
+          "label": "Матеріал"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Квадрат плану",
+      "fields": {}
+    },
+    "Wood": {
+      "label": "Деревина",
+      "fields": {
+        "color": {
+          "label": "Колір",
+          "description": "Колір знахідки або структури деревини"
+        },
+        "objectType": {
+          "label": "Назва або тип об'єкта"
+        },
+        "typeOfWood": {
+          "label": "Вид деревини",
+          "description": "Визначення віку деревини на об'єкті"
+        },
+        "manufacturingMethod": {
+          "label": "Технологія виготовлення"
+        },
+        "colorOutside": {
+          "label": "Колір деревини колір зовні"
+        },
+        "colorInside": {
+          "label": "Колір деревини всередині"
+        },
+        "colorOutsideMunsell": {
+          "label": "Колір деревини зовні Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+          "label": "Колір деревини всередині Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Holzfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Колір ядра деревини Munsell-Nr."
+        },
+        "surfaceCondition": {
+          "label": "Сліди обгорання"
+        },
+        "decorationTechnique": {
+          "label": "Оздоблення та декор"
+        },
+        "paintColor": {
+          "label": "Колір(кольори) розпису/пофарбування"
+        },
+        "paintColorMunsell": {
+          "label": "Колір розпису Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Стан розпису/пофарбування"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Архітектура",
+      "fields": {
+        "bibliography": {
+          "label": "Бібліографія"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "constructionDetailsDescription": {
+          "label": "Опис деталей конструкції",
+          "description": "Більш детальний опис конструкції фундаментів/кутів/шарів або подібного"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Опис технології будівництва",
+          "description": "Більш детальний опис техніки будівництва (наприклад, кладка з річкового/польового каменю або цегляна стіна)"
+        },
+        "findingPlace": {
+          "label": "Місце знаходження",
+          "description": "Щоб ввести кілька інших даних як місце знаходження, наприклад (PE07 So 04.002)"
+        },
+        "hasGrouting": {
+          "label": "Заповнення",
+          "description": "Чи є розчин у кладці стіни?"
+        },
+        "layerAmount": {
+          "label": "Кількість шарів",
+          "description": "Кількість стінових шарів"
+        },
+        "layerHeight": {
+          "label": "Висота шару",
+          "description": "Кількість/розмір стінових шарів"
+        },
+        "markDescription": {
+          "label": "Позначки - опис",
+          "description": "Пояснення та уявлення про існуючі робочі символu"
+        },
+        "materialCharacteristic": {
+          "label": "Характеристика матеріалу",
+          "description": "Характерні властивості матеріалу"
+        },
+        "materialForm": {
+          "label": "Форма матеріалу",
+          "description": "Подальший опис цегли/каміння тощо."
+        },
+        "muralCrown": {
+          "label": "Верхівка/вінець стіни",
+          "description": "Коротке визначення стану вінця стіни"
+        },
+        "publicationDatingFinds": {
+          "label": "Датування (знахідки)",
+          "description": "Наприклад: дивіться залишки поховання: могила (II/III століття нашої ери)"
+        },
+        "publicationDatingScientific": {
+          "label": "Датування (науково-природознавчі)",
+          "description": "Опис видання, посилання на існуючі датування"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Датування (стратиграфія)",
+          "description": "Наприклад: дивіться могилу 1: перетинає гробницю 28, датовану C-14 (20 р. до н. е.-65 р. н. е.)"
+        },
+        "publicationRemark": {
+          "label": "Примітки",
+          "description": "Примітка до публікації/видання"
+        },
+        "blockProcessing": {
+          "label": "Тип кам'яних блоків"
+        },
+        "blockTreatment": {
+          "label": "Обробка кам'яних блоків",
+          "description": "Обробка блоку/ сліди обробки"
+        },
+        "brickwork": {
+          "label": "Кладочна зв'язка"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Частка збереження",
+          "description": "Пропорція/частка збереження порівняно з оригіналом"
+        },
+        "construction": {
+          "label": "Конструкція",
+          "description": "Який тип конструкції стіни є в наявності?"
+        },
+        "mark": {
+          "label": "Позначки каменяра",
+          "description": "Список можливих знаків каменя"
+        },
+        "mortarBinder": {
+          "label": "Розчиновий заповнювач/додаток",
+          "description": "На скільки великий додаток сторонніх матеріалів"
+        },
+        "mortarColor": {
+          "label": "Колір розчину"
+        },
+        "mortarConsistency": {
+          "label": "Консистенція розчину"
+        },
+        "wallClassification": {
+          "label": "класифікації стіна"
+        },
+        "wallType": {
+          "label": "Типологія стіни/муру",
+          "description": "Тип стін"
+        }
+      }
+    },
+    "Operation": {
+      "label": "Заходи",
+      "fields": {
+        "diaryAbstract": {
+          "label": "Проходження проекту",
+          "description": "Опис ходу проекту або розкопок, при необхідності короткий опис щоденника робіт"
+        },
+        "supervisor": {
+          "label": "Керуюча/Керівник",
+          "description": "Відповідальний за захід/міроприємство"
+        }
+      }
+    },
+    "Place": {
+      "label": "Місцезнаходження",
+      "fields": {
+        "gazId": {
+          "label": "Ідентифікатор ID",
+          "description": "Ідентифікаційний номер лексикону місцеположення"
+        },
+        "placeName": {
+          "label": "Назва місця/місцевості",
+          "description": "Назва міста чи району"
+        },
+        "buildingHistory": {
+          "label": "Історія споруди",
+          "description": "Нарис про архітектурно-науково-дослідні проекти на ділянці знахідки"
+        },
+        "buildingResearchHistory": {
+          "label": "Історія дослідження",
+          "description": "Історія всіх досліджень, проведених на будівлі, включаючи розкопки"
+        },
+        "description": {
+          "label": "Опис",
+          "description": "Вільне поле опису"
+        },
+        "excavationHistory": {
+          "label": "Історія розкопкu",
+          "description": "Нарис про проекти розкопок на місці знахідки"
+        },
+        "findSituation": {
+          "label": "Обставини знахідки",
+          "description": "Більш детальний опис, за яких умов і ким було виявлено місце"
+        },
+        "modernIntervention": {
+          "label": "Сучасні втручання",
+          "description": "Опис того, чи нещодавно була пошкоджена ділянка (наприклад: кар’єр/шахта/шахта, забудова, звалище, незаконні розкопки, сільське господарство, лісовідновлення, відвали)"
+        },
+        "findspotClassification": {
+          "label": "Класифікація місця відкриття/знахідки"
+        },
+        "siteClassification": {
+          "label": "Класифікація місцевості знахідки"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Земляна знахідка",
+      "fields": {
+        "appearance": {
+          "label": "Поява/виникнення",
+          "description": "Опис утворення шару, напр. заваленої східної глинобитної стіни'"
+        },
+        "isNatural": {
+          "label": "Природність",
+          "description": "Чи є шар натуральний? («Так», наприклад, з ерозією)"
+        },
+        "consistency": {
+          "label": "Консистенція"
+        },
+        "distinguishingCriteria": {
+          "label": "Критерій розрізнення",
+          "description": "Який критерій обрано для розмежування стратиграфічної одиниці?"
+        },
+        "layerClassification": {
+          "label": "Позначення або класифікаційний шар"
+        },
+        "soilType": {
+          "label": "Тип грунту",
+          "description": "Позначення ґрунту згідно вказівок ґрунтознавчого картографування"
+        }
+      }
+    },
+    "Feature": {
+      "label": "Стратиграфічна одиниця",
+      "fields": {
+        "comparison": {
+          "label": "Порівняння",
+          "description": "Порівняння з подібними знахідками, предметами, написами тощо із зазначенням (бібл.) посилання"
+        },
+        "hasDisturbance": {
+          "label": "Пошкодження",
+          "description": "Чи є наявним пошкодження знахідки на місці?"
+        },
+        "featureAmount": {
+          "label": "Частка знахідки",
+          "description": "Відсоток включення порівняно із загальною занхідкою; залежно від методу розкопок, класифікація у відсотках ('5-10%') або текстова ('малий‘)"
+        },
+        "color": {
+          "label": "Колір і інтенсивність",
+          "description": "Колір, наскільки можна розпізнати"
+        },
+        "featureBorders": {
+          "label": "Межі стратиграфічної одиниці",
+          "description": "Визначення меж знахідки"
+        },
+        "featureForm": {
+          "label": "Форма стратиграфічної одиниці",
+          "description": "Форма стратиграфічної одиниці в плані або профілі: яку розпізнавану форму можна ідентифікувати?"
+        }
+      }
+    },
+    "Floor": {
+      "label": "Підлога",
+      "fields": {
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Частка стану збереження",
+          "description": "Збережена частка у порівнянні з оригіналом"
+        },
+        "consistency": {
+          "label": "Консистенція"
+        },
+        "distinguishingCriteria": {
+          "label": "Критерій розрізнення",
+          "description": "Який критерій обрано для розмежування стратиграфічної одиниці?"
+        },
+        "floorClassification": {
+          "label": "Класифікація Підлога"
+        },
+        "layerClassification": {
+          "label": "Позначення або класифікація шару"
+        },
+        "mortarBinder": {
+          "label": "Розчиновий заповнювач/додаток",
+          "description": "На скільки великий додаток сторонніх матеріалів?"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "Напис",
+      "fields": {
+        "comparison": {
+          "label": "Порівняння",
+          "description": "Порівняння з подібними знахідками, предметами, написами тощо із зазначенням посилання"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "language": {
+          "label": "Мова"
+        },
+        "content": {
+          "label": "Перепис/копія напису"
+        },
+        "objectType": {
+          "label": "Вид напису"
+        },
+        "conditionAmount": {
+          "label": "Збережена частка",
+          "description": "Частка збереження у порівнянні з оригіналом"
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "Автор/авторша ілюстрації",
+          "description": "Автор зображення, фотограф або кресляр"
+        },
+        "processor": {
+          "label": "Виконавчиня/виконавець"
+        },
+        "imageRights": {
+          "label": "Авторські права на зображення"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Кераміка",
+      "fields": {
+        "amountSherdsWall": {
+          "label": "Кількість стінок черепків"
+        },
+        "amountSherdsRim": {
+          "label": "Кількість країв черепків"
+        },
+        "amountSherdsBase": {
+          "label": "Кількість денець черепків"
+        },
+        "amountSherdsHandles": {
+          "label": "Кількість ручок черепків"
+        },
+        "amountSherdsLip": {
+          "label": "Кількість виливів"
+        },
+        "amountSherdsPedestal": {
+          "label": "Кількість ніжок/стійок черепків"
+        },
+        "amountSherdsRimBase": {
+          "label": "Кількість країв дна черепків"
+        },
+        "amountSherdsRimShoulder": {
+          "label": "Кількість країв плеча черепків"
+        },
+        "amountSherdsShoulder": {
+          "label": "Кількість плеча черепків"
+        },
+        "amountSherdsOther": {
+          "label": "Кількість інакших черепків"
+        },
+        "amountSherdsPercent": {
+          "label": "Quantifizierung in Prozent",
+          "description": "Введення даних здійснюється через кому, від'ємні значення неможливі"
+        },
+        "amountSherdsLid": {
+          "label": "Кількість кришок"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Колір на зломі (Munsell)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Колір всередині (Munsell)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Колір зовні (Munsell)"
+        },
+        "hasCoat": {
+          "label": "Покриття"
+        },
+        "decorationDescription": {
+          "label": "Опис декору",
+          "description": "Ще одне поле опису для детального описування прикраси/декору "
+        },
+        "breakStructure": {
+          "label": "Записи/спостереження щодо зламу (структура, пористість тощо)",
+          "description": "Опис структури і пористості зламу"
+        },
+        "residueAnalysis": {
+          "label": "Аналіз залишків",
+          "description": "Специфікація аналізу залишків"
+        },
+        "sample": {
+          "label": "Проба",
+          "description": "Інформація про взяту пробу"
+        },
+        "purpose": {
+          "label": "Використання",
+          "description": "Призначення або використання об'єкта"
+        },
+        "typeNumber": {
+          "label": "Номер типу",
+          "description": "Номер з каталогу типології"
+        },
+        "clayColorBreak": {
+          "label": "Злам: колір та інтенсивність глини"
+        },
+        "clayColorInside": {
+          "label": "Всередині: колір і інтенсивність глини"
+        },
+        "clayColorOutside": {
+          "label": "Зовні: колір та інтенсивність глини"
+        },
+        "clayHardness": {
+          "label": "Твердість глини (за шкалою твердості Mohssche)"
+        },
+        "coatColorInside": {
+          "label": "Покриття (всередині): колір і інтенсивність"
+        },
+        "coatColorOutside": {
+          "label": "Покриття (зовні): колір та інтенсивність"
+        },
+        "coatInside": {
+          "label": "Покриття (всередині)"
+        },
+        "coatInsideType": {
+          "label": "Обробка (всередині)"
+        },
+        "coatOutside": {
+          "label": "Покриття (зовні)"
+        },
+        "coatOutsideType": {
+          "label": "Обробка (зовні)"
+        },
+        "decorationTechnique": {
+          "label": "Особливості поверхні або техніки декорування"
+        },
+        "formDescription": {
+          "label": "Опис форми",
+          "description": "Більш детальний опис загальної форми (зтистнутий овал тощо)"
+        },
+        "manufacturing": {
+          "label": "Фабрикат"
+        },
+        "manufacturingMethod": {
+          "label": "Техніка виготовлення"
+        },
+        "materialType": {
+          "label": "Клас матеріалу",
+          "description": "Як виготовлений знайдений предмет?"
+        },
+        "objectType": {
+          "label": "Тип/вид об'єкта"
+        },
+        "specificType": {
+          "label": "Тип керамічного посу"
+        },
+        "temper": {
+          "label": "Зношення",
+          "description": "Основний тип зношення, напр. органічні частинки'"
+        },
+        "temperAmount": {
+          "label": "Кількість додатків/включень"
+        },
+        "temperParticles": {
+          "label": "Magerungskörnung",
+          "description": "Größe der Magerungspartikel"
+        },
+        "temperTypeClay": {
+          "label": "Вид/група глини"
+        },
+        "vesselForm": {
+          "label": "Основна форма посудини"
+        },
+        "vesselFormSpecific": {
+          "label": "Форма",
+          "description": "Особлива форма посудини"
+        }
+      }
+    },
+    "Grave": {
+      "label": "Поховання/Гробниця",
+      "fields": {
+        "bibliography": {
+          "label": "Бібліографія"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "findingPlace": {
+          "label": "Місце знахідки",
+          "description": "Для введеня кількох інших даних як місцевості, наприклад (PE07 So 04.002)"
+        },
+        "publicationDatingFinds": {
+          "label": "Датування (знахідки)",
+          "description": "Наприклад: дивіться залишки поховання: могила (II/III століття нашої ери)"
+        },
+        "publicationDatingScientific": {
+          "label": "Датування (науково-природознавчі)",
+          "description": "Опис публікації, посилання на існуючі датування"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Датування (стратиграфія)",
+          "description": "Напр.: див. гробницю 1: перетинає гробницю 28, датовану C-14 (20 р. до н. е.-65 р. н. е.)"
+        },
+        "publicationRemark": {
+          "label": "Примітка",
+          "description": "Примітка до публікації"
+        },
+        "condition": {
+          "label": "Cтан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Збережена частка",
+          "description": "Збережена частка порівняно з оригіналомl"
+        },
+        "distinguishingCriteria": {
+          "label": "Критерій розрізнення",
+          "description": "Який критерій обрано для розмежування стратиграфічної одиниці?"
+        },
+        "graveType": {
+          "label": "Тип поховання/могили"
+        },
+        "specificType": {
+          "label": "Особливості типу поховання"
+        },
+        "soilType": {
+          "label": "Тип грунту",
+          "description": "Позначення грунту згідно вказівок грунтознавчого картографування"
+        },
+        "tombBuilding": {
+          "label": "Споруда гробниці"
+        }
+      }
+    },
+    "Bone": {
+      "label": "Кістки",
+      "fields": {
+        "biologicalAge": {
+          "label": "Вікова група",
+          "description": "Вік людини або тварини на момент смерті (наприклад, немовлята I)"
+        },
+        "boneClassification": {
+          "label": "Класифікація кісток"
+        },
+        "boneType": {
+          "label": "Орієнтовна класифікація типу кісток"
+        },
+        "burningGrade": {
+          "label": "Ступінь обгорілості кітсок (за даними Wahl 1982)"
+        },
+        "sex": {
+          "label": "Стать",
+          "description": "Стать людини чи тварини"
+        },
+        "objectType": {
+          "label": "Тип об'єкта"
+        },
+        "species": {
+          "label": "Вид тварини",
+          "description": "Наявний види тварини"
+        }
+      }
+    },
+    "Room": {
+      "label": "Приміщення",
+      "fields": {
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Частка збереження",
+          "description": "Частка збереження у порівнянні з оригіналом"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Робочий захід",
+      "fields": {
+        "operationClassification": {
+          "label": "Класифікація заходу"
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "Теракотовий",
+      "fields": {
+        "clayColorBreak": {
+          "label": "Злам: колір та інтенсивність глини"
+        },
+        "clayColorInside": {
+          "label": "Всередині: колір і інтенсивність глини"
+        },
+        "clayColorOutside": {
+          "label": "Зовні: колір та інтенсивність глини"
+        },
+        "clayStructure": {
+          "label": "Struktur",
+          "description": "До якого типу відноситься теракотова структура?"
+        },
+        "coatColorInside": {
+          "label": "Покриття (всередині): колір і інтенсивність"
+        },
+        "coatColorOutside": {
+          "label": "Покриття (зовні): колір та інтенсивність"
+        },
+        "decorationTechnique": {
+          "label": "Особливості поверхні або техніки декоруванняder Oberfläche"
+        },
+        "formDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Більш детальний опис загальної форми"
+        },
+        "manufacturingMethod": {
+          "label": "Техніка виготовлення"
+        },
+        "surfaceCondition": {
+          "label": "Стан поверхні",
+          "description": "Інформація про стан поверхні"
+        },
+        "temper": {
+          "label": "Magerungsart",
+          "description": "Grundsätzliche Art der Magerung"
+        },
+        "temperAmount": {
+          "label": "Кількість додатків/включень"
+        },
+        "temperParticles": {
+          "label": "Magerungskörnung",
+          "description": "Größe der Magerungspartikel"
+        },
+        "vesselForm": {
+          "label": "Посудина, основа форма"
+        },
+        "vesselFormSpecific": {
+          "label": "Форма",
+          "description": "Особливості форма посудини"
+        }
+      }
+    },
+    "Other": {
+      "label": "Різне",
+      "fields": {
+        "isNatural": {
+          "label": "Природність",
+          "description": "Шар натуральний? («Так», наприклад, з ерозією)"
+        },
+        "consistency": {
+          "label": "Консистенція"
+        },
+        "distinguishingCriteria": {
+          "label": "Критерій розрізнення",
+          "description": "Який критерій обрано для розмежування стратиграфічної одиниці?"
+        },
+        "otherClassification": {
+          "label": "Класифікація Різне"
+        },
+        "soilType": {
+          "label": "Тип грунту",
+          "description": "Позначення грунту згідно вказівок грунтознавчого картографування"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Проба",
+      "fields": {
+        "labNumber": {
+          "label": "Лабораторний нумерація",
+          "description": "Номер зразка/проби, присвоєний досліджувальною лабораторією"
+        },
+        "weight": {
+          "label": "Вага (гр)",
+          "description": "Вага в грамах"
+        },
+        "sampleType": {
+          "label": "Вид проби",
+          "description": "Який зразок/ яка проба береться? Які обстеження необхідно провести?"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Креслення/малюнок",
+      "fields": {
+        "drawingMaterial": {
+          "label": "Креслярський матеріал",
+          "description": "Матеріал/програма, використана для створення креслення/малюнка"
+        },
+        "drawingTool": {
+          "label": "Zeichenwerkzeug",
+          "description": "Яким інструментом малювали/креслили?"
+        },
+        "drawingType": {
+          "label": "Тип вид креслення/малюнка"
+        },
+        "scale": {
+          "label": "Масштаб"
+        }
+      }
+    },
+    "Survey": {
+      "label": "Дослідницький ареал",
+      "fields": {
+        "researchMethod": {
+          "label": "Метод дослідження",
+          "description": "Який метод досліджування використовується?"
+        }
+      }
+    },
+    "Stone": {
+      "label": "Камінь",
+      "fields": {
+        "purpose": {
+          "label": "Використання",
+          "description": "Призначення або використання об'єкта"
+        },
+        "treatment": {
+          "label": "Обробка",
+          "description": "Beschreibungsfeld Поле опису наявності античних слідів обробки (наприклад: «тавро каменяра на основі»"
+        },
+        "workmanship": {
+          "label": "Виконання",
+          "description": "Опис якості обробленого каменю, напр. використовувався як носій напису, присутній"
+        },
+        "architectureElement": {
+          "label": "Архітектурний елемент"
+        },
+        "color": {
+          "label": "Колір та інтенсивність",
+          "description": "Колір, наскільки можна впізнати"
+        },
+        "formDescription": {
+          "label": "Опис форми",
+          "description": "Більш детальний опис загальної форми"
+        },
+        "material": {
+          "label": "Матеріал"
+        },
+        "objectType": {
+          "label": "Тип об'єкта"
+        },
+        "origin": {
+          "label": "Походження матеріалу",
+          "description": "Місце походження матеріалу"
+        },
+        "temperAmount": {
+          "label": "Кількість/частка включень"
+        }
+      }
+    },
+    "Coin": {
+      "label": "Монета",
+      "fields": {
+        "frontSideDescription": {
+          "label": "Опис передньої сторони",
+          "description": "Опис передньої сторони монети"
+        },
+        "preservedDiameter": {
+          "label": "Збережений діаметр",
+          "description": "Діаметр монети в міліметрах"
+        },
+        "reverseSideDescription": {
+          "label": "Опис зворотньої сторони",
+          "description": "Опис зворотньої сторони монети"
+        },
+        "denomination": {
+          "label": "Номінальна вартість (номінал)",
+          "description": "Назва монетної одиниці"
+        },
+        "manufacturingMethod": {
+          "label": "Технологія виготовлення"
+        },
+        "metalMaterial": {
+          "label": "Матеріал"
+        },
+        "mint": {
+          "label": "Монетний двір",
+          "description": "Місце карбування монети"
+        },
+        "mintingRuler": {
+          "label": "Ініціатор карбуванняr",
+          "description": "Особа або організація, відповідальна за карбування монети"
+        },
+        "stampPositioning": {
+          "label": "Положення карбування",
+          "description": "Поворот/невідповідність карбування зворотньої сторони відносно передньої; Специфікація в 1-12 годин, аналогічна годиннику (наприклад, «12» з тим самим положенням)"
+        }
+      }
+    },
+    "Find": {
+      "label": "Знахідка",
+      "fields": {
+        "instanceOf": {
+          "label": "Типологічна класифікація"
+        },
+        "amount": {
+          "label": "Кількість (загальна )",
+          "description": "Кількість знахідок, що зберігаються чи інвентаризуються"
+        },
+        "bibliography": {
+          "label": "Бібліографія"
+        },
+        "catalogueNumber": {
+          "label": "Каталожний номер",
+          "description": "Номер включений в каталог, який присвоюється, коли знайдений об'єкт"
+        },
+        "comparison": {
+          "label": "Порівняння",
+          "description": "Порівняння з подібними знахідками, предметами, написами тощо із зазначенням посилання"
+        },
+        "conditionComment": {
+          "label": "Коментар до стану збереження"
+        },
+        "conditionPercent": {
+          "label": "Відсоток збереження",
+          "description": "Збережена кількість у ​​відсотках"
+        },
+        "publicationMaterialSummary": {
+          "label": "Матеріал",
+          "description": "Детальний опис для публікації"
+        },
+        "publicationRemark": {
+          "label": "Примітки",
+          "description": "Примітка для публікації/видання"
+        },
+        "hasRestoration": {
+          "label": "Реставрація",
+          "description": "Чи було вжито реставраційно-консерваційних заходів?"
+        },
+        "storageInventoryNumber": {
+          "label": "Інвентарний номер",
+          "description": "Номер, присвоєний під час інвентаризації в колекції чи депо"
+        },
+        "weight": {
+          "label": "Вага (г)",
+          "description": "Вага в грамах"
+        },
+        "condition": {
+          "label": "Стан збереження",
+          "description": "Опис стану збереження"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Частка збереження у порівнянні з оригіналом"
+        },
+        "storagePlace": {
+          "label": "Місце збереження",
+          "description": "Місце збереження знахідки"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "Фрагмент штукатурки",
+      "fields": {
+        "area": {
+          "label": "Площа в м2",
+          "description": "Площа в квадратних метрах"
+        },
+        "composition": {
+          "label": "Структура штукатурки",
+          "description": "Опис структури/шарів штукатурки"
+        },
+        "hasDecoration": {
+          "label": "Розписи"
+        },
+        "color": {
+          "label": "Колір і інтенсивність",
+          "description": "Колір, наскільки можна розпізнати"
+        },
+        "plasterComponents": {
+          "label": "Компоненти штукатурки"
+        }
+      }
+    },
+    "Photo": {
+      "label": "Фотографія",
+      "fields": {
+        "originalType": {
+          "label": "Тип",
+          "description": "Оригінальний формат зображення; у випадку цифрових копій, оригінальний аналоговий формат"
+        }
+      }
+    },
+    "Profile": {
+      "label": "Профіль",
+      "fields": {}
+    },
+    "Metal": {
+      "label": "Метал",
+      "fields": {
+        "materialDescription": {
+          "label": "Опис матеріалу",
+          "description": "Опис використаного матеріалу; можливо точний опис металу або сплаву "
+        },
+        "decorationTechnique": {
+          "label": "Особливості поверхні або техніки декорування"
+        },
+        "formDescription": {
+          "label": "Опис форми",
+          "description": "Більш детальний опис загальної форми"
+        },
+        "manufacturingMethod": {
+          "label": "Техніка виготовлення"
+        },
+        "metalMaterial": {
+          "label": "Матеріал"
+        },
+        "objectType": {
+          "label": "Тип об'єкта"
+        },
+        "vesselForm": {
+          "label": "Основна форма    посудини"
+        },
+        "vesselFormSpecific": {
+          "label": "Форма",
+          "description": "Особлива форма посудини"
+        }
+      }
+    },
+    "BuildingPart": {
+      "label": "Частина/компонент споруди",
+      "fields": {}
+    },
+    "Area": {
+      "label": "Частина/область",
+      "fields": {}
+    },
+    "Excavation": {
+      "label": "Розкопки",
+      "fields": {
+        "isIllegal": {
+          "label": "Незаконні розкопки"
+        }
+      }
+    },
+    "Type": {
+      "label": "Тип",
+      "fields": {}
+    },
+    "TypeCatalog": {
+      "label": "Каталог типів",
+      "fields": {
+        "criterion": {
+          "label": "Критерії"
+        }
+      }
+    }
+  }
+}

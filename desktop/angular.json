@@ -26,6 +26,10 @@
           "it": {
             "translation": "src/app/i18n/messages.it.xlf",
             "baseHref": "/"
+          },
+          "uk": {
+            "translation": "src/app/i18n/messages.uk.xlf",
+            "baseHref": "/"
           }
         }
       },
@@ -73,6 +77,9 @@
             "it": {
               "localize": ["it"]
             },
+            "uk": {
+              "localize": ["uk"]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -106,6 +113,9 @@
             },
             "it": {
               "browserTarget": "idai-field:build:it"
+            },
+            "uk": {
+              "browserTarget": "idai-field:build:uk"
             },
             "production": {
               "browserTarget": "idai-field:build:production"

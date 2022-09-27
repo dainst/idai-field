@@ -49,7 +49,7 @@ export module FieldConverter {
             const fieldDefinition = CategoryForm.getFields(projectConfiguration.getCategory(resource.category)).find(on('name', is(field)));
 
             // This could be and -End suffixed field of a dropdownRange input
-            // However, all the necessary validation validation is assumed to have taken place already
+            // However, all the necessary validation is assumed to have taken place already
             if (!fieldDefinition) continue;
 
             if (fieldDefinition.inputType === 'dating') {

@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {MD} from './md';
-import {Message} from './message';
+import { Injectable } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { MD } from './md';
+import { Message } from './message';
+
 
 /**
  * @author Daniel de Oliveira
@@ -225,6 +226,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY = 'resources.error.parentOperationUnknownCategory';
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
     public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
+    public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
 
 
     // Configuration Package
@@ -1796,6 +1798,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.cannotMoveWithSameOperationRelations',
                 value: 'Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN] = {
+            content: i18n({
+                id: 'messages.resources.error.cannotMoveChildren',
+                value: 'Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.'
             }),
             level: 'danger',
             params: [],

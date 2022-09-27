@@ -27,12 +27,12 @@ export type Language = {
     label: string;
     info?: string;
     isMainLanguage: boolean;
-}
+};
 
 /**
  * @author Thomas Kleinke
  */
- export namespace Languages {
+export namespace Languages {
 
     export function getAvailableLanguages(): { [languageCode: string]: Language } {
 

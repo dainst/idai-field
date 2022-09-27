@@ -347,11 +347,12 @@ describe('resources --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.openEditByDoubleClickResource('1');
         languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
-        expect(languageTabs.length).toBe(4);
+        expect(languageTabs.length).toBe(5);
         expect(await getText(languageTabs[0])).toEqual('Ohne Sprachangabe');
         expect(await getText(languageTabs[1])).toEqual('Deutsch');
         expect(await getText(languageTabs[2])).toEqual('Englisch');
         expect(await getText(languageTabs[3])).toEqual('Italienisch');
+        expect(await getText(languageTabs[4])).toEqual('Ukrainisch');
         
         await DoceditPage.removeTextFromInputField('shortDescription');
         await DoceditPage.clickLanguageTab('shortDescription', 'de');
@@ -361,10 +362,11 @@ describe('resources --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('1');
         languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
-        expect(languageTabs.length).toBe(3);
+        expect(languageTabs.length).toBe(4);
         expect(await getText(languageTabs[0])).toEqual('Deutsch');
         expect(await getText(languageTabs[1])).toEqual('Englisch');
         expect(await getText(languageTabs[2])).toEqual('Italienisch');
+        expect(await getText(languageTabs[3])).toEqual('Ukrainisch');
         await DoceditPage.clickCloseEdit();
 
         done();
@@ -677,6 +679,28 @@ describe('resources --', () => {
         }
 
         await ResourcesPage.clickCancelInMoveModal();
+
+        done();
+    });
+
+
+    it('contextMenu/moveModal - prevent moving child resources to an unallowed operation', async done => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('B1');
+        await ResourcesPage.performCreateResource('BW1', 'buildingpart');
+        await ResourcesPage.clickHierarchyButton('BW1');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.performCreateResource('R2', 'room');
+
+        await ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOpenContextMenu('BW1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('operation-survey', 'modal');
+        await ResourcesPage.clickResourceListItemInMoveModal('A1');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+
+        await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
 
         done();
     });

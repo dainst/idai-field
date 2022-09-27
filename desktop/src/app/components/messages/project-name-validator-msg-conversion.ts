@@ -1,6 +1,6 @@
-import {ProjectNameValidation} from '../../model/project-name-validation';
-import {M} from './m';
-import {MsgWithParams} from './msg-with-params';
+import { ProjectNameValidation } from '../../model/project-name-validation';
+import { M } from './m';
+import { MsgWithParams } from './msg-with-params';
 
 
 export module ProjectNameValidatorMsgConversion {

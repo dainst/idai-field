@@ -347,11 +347,12 @@ describe('resources --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.openEditByDoubleClickResource('1');
         languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
-        expect(languageTabs.length).toBe(4);
+        expect(languageTabs.length).toBe(5);
         expect(await getText(languageTabs[0])).toEqual('Ohne Sprachangabe');
         expect(await getText(languageTabs[1])).toEqual('Deutsch');
         expect(await getText(languageTabs[2])).toEqual('Englisch');
         expect(await getText(languageTabs[3])).toEqual('Italienisch');
+        expect(await getText(languageTabs[4])).toEqual('Ukrainisch');
         
         await DoceditPage.removeTextFromInputField('shortDescription');
         await DoceditPage.clickLanguageTab('shortDescription', 'de');
@@ -361,10 +362,11 @@ describe('resources --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('1');
         languageTabs = await DoceditPage.getLanguageTabs('shortDescription');
-        expect(languageTabs.length).toBe(3);
+        expect(languageTabs.length).toBe(4);
         expect(await getText(languageTabs[0])).toEqual('Deutsch');
         expect(await getText(languageTabs[1])).toEqual('Englisch');
         expect(await getText(languageTabs[2])).toEqual('Italienisch');
+        expect(await getText(languageTabs[3])).toEqual('Ukrainisch');
         await DoceditPage.clickCloseEdit();
 
         done();

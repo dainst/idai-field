@@ -96,7 +96,7 @@ export class SettingsProvider {
             if (path.substr(-1) != '/') path += '/';
             settings.imagestorePath = path;
         } else {
-            if (remote.app){ // jasmine unit tests
+            if (remote.app) {
                 settings.imagestorePath = remote.app.getPath('appData') + '/'
                     + remote.app.getName() + '/imagestore/';
             }

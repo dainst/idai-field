@@ -1,16 +1,19 @@
-import { mdiOpenInNew } from '@mdi/js';
+import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
 import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { convertMeasurementPosition, Document, Field, FieldGroup, FieldValue, getDocumentImages,
     isLabeled, isLabeledValue, LabeledValue } from '../../api/document';
-import { ResultDocument } from '../../api/result';
+import { search } from '../../api/documents';
+import { Query } from '../../api/query';
+import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
 import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
+import { LoginContext } from '../login';
 import { getDocumentLink } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
 
@@ -29,8 +32,110 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
 
     const location = useLocation();
     const { t } = useTranslation();
+    const loginData = useContext(LoginContext);
 
     const images: ResultDocument[] = getDocumentImages(document);
+
+    const childrenPerPage = 10;
+    const [children, setChildren] = useState<FieldGroup>(null);
+    const [childrenOffset, setChildrenOffset] = useState<number>(0);
+    const [childrenCount, setChildrenCount] = useState<number>(0);
+    const [maxChildrenOffset, setMaxChildrenOffset] = useState<number>(0);
+
+    useEffect(() => {
+
+        loadChildren(
+            document.resource.id, childrenOffset, childrenPerPage, loginData.token
+        ).then((data: Result) => {
+
+            if (data.documents.length > 0) {
+                setChildrenCount(data.size);
+                setMaxChildrenOffset(data.size - childrenPerPage);
+                // "Fake" field group in order to display child relations, translations are created
+                // on the fly because the data itself does not contain labels/descriptions for the relation
+                // like the regular fields of a resource.
+                setChildren({
+                    name: 'Children',
+                    fields: [
+                        {
+                            name: 'hasChildren',
+                            targets: data.documents,
+                            description: { 'de': 'Kindbeziehung', 'en': 'Child relation' },
+                            label: {
+                                'de': 'Enthält', 'en': 'Includes', 'es': 'Incluye', 'fr': 'Inclut', 'it': 'Include'
+                            }
+                        } as Field
+                    ]
+                } as FieldGroup);
+            }
+    });
+
+    }, [childrenOffset, document.resource.id, loginData.token]);
+
+    const increaseOffset = () => {
+        if (childrenOffset + childrenPerPage > maxChildrenOffset) {
+            setChildrenOffset(maxChildrenOffset);
+        }
+        else {
+            setChildrenOffset(childrenOffset + childrenPerPage);
+        }
+    };
+    
+    const decreaseOffset = () => {
+        if (childrenOffset - childrenPerPage < 0) {
+            setChildrenOffset(0);
+        }
+        else {
+            setChildrenOffset(childrenOffset - childrenPerPage);
+        }
+    };
+
+    const renderPaginatedRelations = (group: FieldGroup, t: TFunction, project: string, baseUrl: string): ReactNode => {
+
+        const relationElements = group.fields
+            .filter(relation => !HIDDEN_RELATIONS.includes(relation.name))
+            .map(relation => [
+                <dt key={ `${relation.name}_dt` }>
+                    { renderMultiLanguageText(relation, t) }
+                    { childrenPerPage < childrenCount &&
+                        <span>
+                            <Button
+                                disabled={ childrenOffset === 0 ? true : false }
+                                style={ childCountTextStyle }
+                                variant="link"
+                                onClick={ decreaseOffset } >
+                                <Icon path={ mdiChevronLeft } size={ 1 } />
+                            </Button>
+                            <span style={ childCountTextStyle }>
+                                { childrenOffset + 1 } - { childrenOffset + childrenPerPage } / { childrenCount }
+                            </span>
+                            <Button
+                                disabled={ childrenOffset === maxChildrenOffset ? true : false }
+                                style={ childCountTextStyle }
+                                variant="link"
+                                onClick={ increaseOffset } >
+                                <Icon path={ mdiChevronRight } size={ 1 } />
+                            </Button>
+                        </span>
+                     }
+                </dt>,
+                <dd key={ `${relation.name}_dd` }>
+                    <ul className="list-unstyled" style={ listStyle }>
+                        { relation.targets.map(doc => renderDocumentLink(project, doc, baseUrl)) }
+                    </ul>
+                </dd>
+            ]);
+
+        return (
+            <div key={ `${group.name}_group` }>
+                { renderFieldList(group.fields.filter(field => {
+                    return field.value !== undefined;
+                }), t) }
+
+                <dl style={ listStyle }>{ relationElements }</dl>
+            </div>
+        );
+    };
 
     return <>
         { images && <ImageCarousel
@@ -39,6 +144,7 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                         location={ location }
                     />}
         { renderGroups(document, t, baseUrl) }
+        { children ? renderPaginatedRelations(children, t, document.project, baseUrl) : null }
     </>;
 }
 
@@ -214,6 +320,17 @@ const renderPopover = (object: LabeledValue, t: TFunction): ReactElement => {
     );
 };
 
+const loadChildren = async (resourceId: string, from: number, size: number, token: string): Promise<Result> => {
+
+    const childQuery = {
+        q: '*',
+        parent: resourceId,
+        size,
+        from
+    } as Query;
+
+    return search(childQuery, token);
+};
 
 const getDecimalValue = (value: number): string => {
 
@@ -241,4 +358,11 @@ const linkIconContainerStyle: CSSProperties = {
 
 const valueElementsStyle: CSSProperties = {
     whiteSpace: 'pre-line'
+};
+
+const childCountTextStyle: CSSProperties = {
+    fontWeight: '400',
+    paddingLeft: '0px',
+    paddingRight: '0px',
+    display: 'contents'
 };

@@ -8,8 +8,7 @@ export type ProjectData = {
     searchResult: Result,
     mapSearchResult: Result,
     selected: Document,
-    predecessors: ResultDocument[],
-    children: ResultDocument[]
+    predecessors: ResultDocument[]
 };
 
 
@@ -22,19 +21,11 @@ export const fetchProjectData = async (token: string, query?: Query, selectedId?
     promises.push(selectedId ? get(selectedId, token) : undefined);
     promises.push(predecessorsId ? getPredecessors(predecessorsId, token) : { results: [] });
 
-    const childQuery = selectedId ? {
-        q: '*',
-        parent: selectedId
-    } as Query : undefined;
-
-    promises.push(childQuery ? search(childQuery, token) : { documents: [] });
-
     const data = await Promise.all(promises);
     return {
         searchResult: data[0],
         mapSearchResult: data[1],
         selected: data[2],
-        predecessors: data[3].results,
-        children: data[4].documents
+        predecessors: data[3].results
     };
 };

@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 import { unstable_batchedUpdates } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Document, Field, FieldGroup } from '../../api/document';
+import { Document } from '../../api/document';
 import { get, search } from '../../api/documents';
 import { buildProjectQueryTemplate, parseFrontendGetParams, Query } from '../../api/query';
 import { ResultDocument, ResultFilter } from '../../api/result';
@@ -101,25 +101,6 @@ export default function Project(): ReactElement {
                             ? data.mapSearchResult.documents.map(document => document.resource.id)
                             : []
                     );
-                }
-
-                if (data.selected && data.children.length > 0) {
-                    // "Fake" field group in order to display child relations, translations are created
-                    // on the fly because the data itself does not contain labels/descriptions for the relation
-                    // like the regular fields of a resource.
-                    data.selected.resource.groups.push({
-                        name: 'Children',
-                        fields: [
-                            {
-                                name: 'hasChildren',
-                                targets: data.children,
-                                description: { 'de': 'Kindbeziehung', 'en': 'Child relation' },
-                                label: {
-                                    'de': 'Enthält', 'en': 'Includes', 'es': 'Incluye', 'fr': 'Inclut', 'it': 'Include'
-                                }
-                            } as Field
-                        ]
-                    } as FieldGroup);
                 }
 
                 setDocument(data.selected);

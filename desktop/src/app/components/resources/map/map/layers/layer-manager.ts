@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as tsfun from 'tsfun';
+import { flatten, subtract, set, to } from 'tsfun';
 import { FieldDocument, ImageDocument, Relation, InPlace, Datastore, Document,
     RelationsManager } from 'idai-field-core';
 import { ViewFacade } from '../../../../../components/resources/view/view-facade';
@@ -49,7 +49,7 @@ export class LayerManager {
 
     public getLayerGroups = () => this.layerGroups;
 
-    public getLayers = () => tsfun.flatten(this.layerGroups.map(layerGroup => layerGroup.layers));
+    public getLayers = () => flatten(this.layerGroups.map(layerGroup => layerGroup.layers));
 
     public isInEditing = (group: LayerGroup) => group === this.layerGroupInEditing;
 
@@ -58,12 +58,6 @@ export class LayerManager {
 
         await this.removeNonExistingLayers();
 
-        const activeLayersChange = LayerManager.computeActiveLayersChange(
-            this.viewFacade.getActiveLayersIds(),
-            this.activeLayerIds);
-
-        this.activeLayerIds = this.viewFacade.getActiveLayersIds();
-
         try {
             if (reloadLayerGroups) this.layerGroups = await this.createLayerGroups();
         } catch(err) {
@@ -71,15 +65,40 @@ export class LayerManager {
             throw undefined;
         }
 
+        const activeLayersIds: string[] = this.getActiveLayerIds();
+
+        const activeLayersChange = LayerManager.computeActiveLayersChange(
+            activeLayersIds,
+            this.activeLayerIds
+        );
+
+        this.activeLayerIds = activeLayersIds;
+
         return activeLayersChange;
+    }
+
+
+    private getActiveLayerIds(): string[] {
+
+        return this.viewFacade.getActiveLayersIds()
+            ?? this.getDefaultLayers().map(layer => layer.resource.id);
+    }
+
+
+    private getDefaultLayers(): Array<Document> {
+        
+        return flatten(this.getLayerGroups().map(group => {
+            const defaultLayers: string[] = group.document.resource.relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
+            return group.layers.filter(layer => defaultLayers.includes(layer.resource.id));
+        }));
     }
 
 
     public toggleLayer(resourceId: string) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            tsfun.subtract([resourceId])(this.activeLayerIds) :
-            tsfun.set(this.activeLayerIds.concat([resourceId]));
+            subtract([resourceId])(this.activeLayerIds) :
+            set(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }
@@ -95,9 +114,9 @@ export class LayerManager {
         const layersToRemoveIds: string[] = group.layers.filter(layer => {
             return this.isActiveLayer(layer.resource.id)
                 && !document.resource.relations[Relation.Image.HASMAPLAYER]?.includes(layer.resource.id);
-        }).map(tsfun.to(['resource','id']));
+        }).map(to(['resource','id']));
 
-        this.viewFacade.setActiveLayersIds(tsfun.subtract(layersToRemoveIds)(this.activeLayerIds));
+        this.viewFacade.setActiveLayersIds(subtract(layersToRemoveIds)(this.activeLayerIds));
     }
 
 
@@ -161,7 +180,7 @@ export class LayerManager {
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
 
         if (this.isActiveLayer(layerToRemove.resource.id)) {
-            this.viewFacade.setActiveLayersIds(tsfun.subtract([layerToRemove.resource.id])(this.activeLayerIds));
+            this.viewFacade.setActiveLayersIds(subtract([layerToRemove.resource.id])(this.activeLayerIds));
         }
     }
 
@@ -207,12 +226,12 @@ export class LayerManager {
 
     private async removeNonExistingLayers() {
 
-        const newActiveLayersIds = this.viewFacade.getActiveLayersIds();
+        const newActiveLayersIds = this.viewFacade.getActiveLayersIds() ?? [];
 
         let i = newActiveLayersIds.length;
         while (i--) {
             try {
-                await this.datastore.get(newActiveLayersIds[i])
+                await this.datastore.get(newActiveLayersIds[i]);
             } catch {
                 newActiveLayersIds.splice(i, 1);
                 this.viewFacade.setActiveLayersIds(newActiveLayersIds);
@@ -256,8 +275,8 @@ export class LayerManager {
                                              oldActiveLayerIds: string[]): ListDiffResult {
 
         return {
-            removed: tsfun.subtract(newActiveLayerIds)(oldActiveLayerIds),
-            added: tsfun.subtract(oldActiveLayerIds)(newActiveLayerIds)
+            removed: subtract(newActiveLayerIds)(oldActiveLayerIds),
+            added: subtract(oldActiveLayerIds)(newActiveLayerIds)
         };
     }
 }

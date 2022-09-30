@@ -80,10 +80,9 @@ export module ResourcesState {
     }
 
 
-    export function getActiveLayersIds(state: ResourcesState): string[] {
+    export function getActiveLayersIds(state: ResourcesState): string[]|undefined {
 
-        const layersIds = viewState(state).layerIds;
-        return layersIds ? layersIds : [];
+        return viewState(state).layerIds;
     }
 
 

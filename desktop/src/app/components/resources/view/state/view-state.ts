@@ -1,7 +1,7 @@
-import {FieldDocument} from 'idai-field-core';
-import {NavigationPath} from './navigation-path';
-import {ViewContext} from './view-context';
-import {ResourcesViewMode} from '../view-facade';
+import { FieldDocument } from 'idai-field-core';
+import { NavigationPath } from './navigation-path';
+import { ViewContext } from './view-context';
+import { ResourcesViewMode } from '../view-facade';
 
 
 /**
@@ -11,7 +11,7 @@ import {ResourcesViewMode} from '../view-facade';
 export interface ViewState {
 
     operation: FieldDocument|undefined;
-    layerIds: string[];
+    layerIds?: string[];
     navigationPath: NavigationPath;
     mode: ResourcesViewMode;
 
@@ -37,7 +37,6 @@ export module ViewState {
             navigationPath: NavigationPath.empty(),
             mode: mode,
             limitSearchResults: true,
-            layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
@@ -46,9 +45,7 @@ export module ViewState {
 
     export function complete(viewState: ViewState) {
 
-        if (!viewState.layerIds || !Array.isArray(viewState.layerIds)) {
-            viewState.layerIds = [];
-        }
+        if (!Array.isArray(viewState.layerIds)) delete viewState.layerIds;
 
         if (!viewState.mode) viewState.mode = 'map';
         if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;

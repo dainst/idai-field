@@ -215,7 +215,7 @@ export class LayerMapComponent extends MapComponent {
 
         if (document.resource.id === this.viewName || document.resource.id === 'project') {
             this.layerManager.deactivateRemovedLayers(document as FieldDocument);
-            await this.updateLayers(true);
+            await this.updateLayers();
         }
     }
 

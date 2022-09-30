@@ -6272,6 +6272,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
+        <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
+        <target state="final">The relation 'hasDefaultMapLayer' of a resource of category '[0]' refers to one or more resources that are not referenced in the relation 'hasMapLayer'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.endDateBeforeBeginningDate" datatype="html">
         <source>Das Enddatum einer Ressource der Kategorie '[0]' liegt vor dem Startdatum.</source>
         <target state="final">The end date of a resource of category '[0]' is before the beginning date.</target>

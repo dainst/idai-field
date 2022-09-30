@@ -63,6 +63,24 @@ describe('ImportValidator', () => {
                 inputType: 'relation'
             },
             {
+                name: 'hasMapLayer',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'hasDefaultMapLayer',
+                domain: ['T'],
+                range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
                 name: 'isRecordedIn',
                 domain: ['T'],
                 range: ['T2'],
@@ -271,7 +289,7 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
         done();
     });
@@ -294,7 +312,7 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
         done();
     });
@@ -316,7 +334,7 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1']);
         }
         done();
     });
@@ -339,7 +357,7 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
         }
         done();
     });
@@ -361,7 +379,7 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1']);
         }
         done();
     });
@@ -384,7 +402,28 @@ describe('ImportValidator', () => {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1, date2'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1, date2']);
+        }
+        done();
+    });
+
+
+    it('invalid map layer relations', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                relations: { isRecordedIn: ['0'], hasMapLayer: ['1'], hasDefaultMapLayer: ['1', '2'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES, 'T']);
         }
         done();
     });

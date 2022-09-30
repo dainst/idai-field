@@ -166,6 +166,34 @@ export class LayerManager {
     }
 
 
+    public async toggleDefaultLayer(layer: ImageDocument) {
+
+        if (!this.layerGroupInEditing) return;
+
+        let defaultLayers: string[] = this.layerGroupInEditing.document.resource
+            .relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
+
+        if (defaultLayers.includes(layer.resource.id)) {
+            defaultLayers = defaultLayers.filter(id => id !== layer.resource.id);
+        } else {
+            defaultLayers.push(layer.resource.id);
+        }
+
+        this.layerGroupInEditing.document.resource.relations[Relation.Image.HASDEFAULTMAPLAYER] = defaultLayers;
+    }
+
+
+    public isDefaultLayer(resourceId: string) {
+
+        if (!this.layerGroupInEditing) return false;
+
+        const defaultLayers: string[] = this.layerGroupInEditing.document.resource
+            .relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
+
+        return defaultLayers.includes(resourceId);
+    }
+
+
     public async changeOrder(originalIndex: number, targetIndex: number) {
 
         if (!this.layerGroupInEditing) return;

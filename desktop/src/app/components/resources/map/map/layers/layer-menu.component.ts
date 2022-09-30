@@ -50,6 +50,8 @@ export class LayerMenuComponent extends MenuComponent {
 
     public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
 
+    public isDefaultLayer = (layer: ImageDocument) => this.layerManager.isDefaultLayer(layer.resource.id);
+
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
 
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
@@ -141,6 +143,12 @@ export class LayerMenuComponent extends MenuComponent {
         await this.layerManager.removeLayer(layer);
 
         this.onAddOrRemoveLayers.emit();
+    }
+
+
+    public toggleDefaultLayer(layer: ImageDocument) {
+
+        this.layerManager.toggleDefaultLayer(layer);
     }
 
 

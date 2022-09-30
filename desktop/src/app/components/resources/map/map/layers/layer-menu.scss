@@ -121,7 +121,7 @@ $layer-menu-remove-button-color: #c82333;
               display: inline-block;
               line-height: 1.9;
               height: 100%;
-              width: calc(100% - 74px);
+              width: calc(100% - 102px);
               margin-right: 28px;
 
               &.draggable {
@@ -130,9 +130,13 @@ $layer-menu-remove-button-color: #c82333;
               }
             }
           }
-
+          
+          .layer-menu-default-layer-button,
           .layer-menu-remove-button {
             margin-left: 5px;
+          }
+
+          .layer-menu-remove-button {
             color: $layer-menu-remove-button-color;
 
             &:hover {
@@ -142,7 +146,7 @@ $layer-menu-remove-button-color: #c82333;
 
           .drag-placeholder {
             min-height: 27px;
-            padding-left: 74px;
+            padding-left: 102px;
             border: none !important;
             cursor: grabbing;
             opacity: 0;
@@ -166,7 +170,8 @@ $layer-menu-remove-button-color: #c82333;
   cursor: default;
 }
 
-.layer-menu-button.layer-active {
+.layer-menu-button.layer-active,
+.layer-menu-default-layer-button {
   color: $layer-menu-button-color !important;
 }
 
@@ -175,7 +180,8 @@ $layer-menu-remove-button-color: #c82333;
 }
 
 .layer-menu-button:hover,
-.layer-group-edit-button:hover {
+.layer-group-edit-button:hover,
+.layer-menu-default-layer-button:hover {
   color: lighten($layer-menu-button-color, 10%) !important;
 }
 

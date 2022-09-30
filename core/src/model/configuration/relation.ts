@@ -132,7 +132,8 @@ export namespace Relation {
         export const ISDEPICTEDIN = 'isDepictedIn';
         export const HASMAPLAYER = 'hasMapLayer';
         export const ISMAPLAYEROF = 'isMapLayerOf';
-        export const ALL = [DEPICTS, ISDEPICTEDIN, HASMAPLAYER, ISMAPLAYEROF];
+        export const HASDEFAULTMAPLAYER = 'hasDefaultMapLayer';
+        export const ALL = [DEPICTS, ISDEPICTEDIN, HASMAPLAYER, ISMAPLAYEROF, HASDEFAULTMAPLAYER];
     }
 
 

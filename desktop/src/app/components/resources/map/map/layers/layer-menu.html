@@ -82,6 +82,16 @@
                                     </span>
                                 </div>
                                 <span *ngIf="isInEditing(layerGroup)"
+                                    [id]="'layer-menu-default-layer-button-' + j"
+                                    class="mdi layer-menu-button layer-menu-default-layer-button"
+                                    [class.mdi-star]="isDefaultLayer(layer)"
+                                    [class.mdi-star-outline]="!isDefaultLayer(layer)"
+                                    ngbTooltip="Als Standard-Kartenhintergrund festlegen"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.setAsDefaultMapLayer"
+                                    placement="left" container="body"
+                                    (click)="toggleDefaultLayer(layer)">
+                                </span>
+                                <span *ngIf="isInEditing(layerGroup)"
                                     [id]="'layer-menu-remove-button-' + j"
                                     class="mdi mdi-link-off layer-menu-button layer-menu-remove-button"
                                     ngbTooltip="Kartenhintergrund entfernen"

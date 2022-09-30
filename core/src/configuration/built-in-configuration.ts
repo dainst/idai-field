@@ -645,6 +645,14 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'hasDefaultMapLayer',
+            domain: ['Operation:inherit', 'Project'],
+            range: ['Image:inherit'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
             name: 'isAfter',
             inverse: 'isBefore',
             domain: ['Feature:inherit'],

@@ -112,7 +112,7 @@ export class LayerMenuComponent extends MenuComponent {
     }
 
 
-    public async onDrop(event: CdkDragDrop<string[], any>) {
+    public onDrop(event: CdkDragDrop<string[], any>) {
 
         this.layerManager.changeOrder(event.previousIndex, event.currentIndex);
         this.onChangeLayersOrder.emit();
@@ -132,15 +132,15 @@ export class LayerMenuComponent extends MenuComponent {
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
         if (newLayers.length === 0) return;
 
-        await this.layerManager.addLayers(newLayers);
+        this.layerManager.addLayers(newLayers);
 
         this.onAddOrRemoveLayers.emit();
     }
 
 
-    public async removeLayer(layer: ImageDocument) {
+    public removeLayer(layer: ImageDocument) {
 
-        await this.layerManager.removeLayer(layer);
+        this.layerManager.removeLayer(layer);
 
         this.onAddOrRemoveLayers.emit();
     }

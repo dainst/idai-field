@@ -120,7 +120,7 @@ export class LayerManager {
     }
 
 
-    public async startEditing(group: LayerGroup) {
+    public startEditing(group: LayerGroup) {
 
         this.layerGroupInEditing = Document.clone(group as any) as any;
         this.originalLayerGroupInEditing = group;
@@ -144,7 +144,7 @@ export class LayerManager {
     }
 
 
-    public async abortEditing() {
+    public abortEditing() {
 
         if (!this.layerGroupInEditing) return;
 
@@ -158,7 +158,7 @@ export class LayerManager {
     }
 
 
-    public async addLayers(newLayers: Array<ImageDocument>) {
+    public addLayers(newLayers: Array<ImageDocument>) {
 
         if (!this.layerGroupInEditing) return;
 
@@ -169,7 +169,7 @@ export class LayerManager {
     }
 
 
-    public async removeLayer(layerToRemove: ImageDocument) {
+    public removeLayer(layerToRemove: ImageDocument) {
 
         if (!this.layerGroupInEditing) return;
 
@@ -185,7 +185,7 @@ export class LayerManager {
     }
 
 
-    public async toggleDefaultLayer(layer: ImageDocument) {
+    public toggleDefaultLayer(layer: ImageDocument) {
 
         if (!this.layerGroupInEditing) return;
 
@@ -213,7 +213,7 @@ export class LayerManager {
     }
 
 
-    public async changeOrder(originalIndex: number, targetIndex: number) {
+    public changeOrder(originalIndex: number, targetIndex: number) {
 
         if (!this.layerGroupInEditing) return;
 

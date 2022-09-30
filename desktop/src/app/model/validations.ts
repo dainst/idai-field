@@ -266,6 +266,19 @@ export module Validations {
     }
 
 
+    export function assertMapLayerRelations(document: Document|NewDocument) {
+
+        const invalidRelationTargets: string[] = Validations.validateMapLayerRelations(document.resource);
+
+        if (invalidRelationTargets.length > 0) {
+            throw [
+                ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES,
+                document.resource.category
+            ];
+        }
+    }
+
+
     export function validateStructureOfGeometries(geometry: FieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
@@ -452,6 +465,14 @@ export module Validations {
         return invalidFields;
     }
 
+
+    export function validateMapLayerRelations(resource: Resource|NewResource): string[] {
+
+        const hasMapLayerTargets: string[] = resource.relations[Relation.Image.HASMAPLAYER] ?? [];
+        const hasDefaultMapLayerTargets: string[] = resource.relations[Relation.Image.HASDEFAULTMAPLAYER] ?? [];
+
+        return hasDefaultMapLayerTargets.filter(resourceId => !hasMapLayerTargets.includes(resourceId));
+    }
 
 
     function validateNumberAsString(value: string|number, inputType: string): boolean {

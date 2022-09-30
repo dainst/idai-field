@@ -168,6 +168,7 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.INVALID_DIMENSION_VALUES]
      * @throws [ValidationErrors.INVALID_LITERATURE_VALUES]
      * @throws [ValidationErrors.INVALID_OPTIONALRANGE_VALUES]
+     * @throws [ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -180,6 +181,7 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(document);
+        Validations.assertMapLayerRelations(document);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;

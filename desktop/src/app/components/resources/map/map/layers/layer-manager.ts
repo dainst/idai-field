@@ -86,11 +86,11 @@ export class LayerManager {
 
 
     private getDefaultLayers(): Array<Document> {
-        
-        return flatten(this.getLayerGroups().map(group => {
-            const defaultLayers: string[] = group.document.resource.relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
-            return group.layers.filter(layer => defaultLayers.includes(layer.resource.id));
-        }));
+
+        const group: LayerGroup = this.layerGroups[this.layerGroups.length - 1];
+        const defaultLayers: string[] = group.document.resource.relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
+            
+        return group.layers.filter(layer => defaultLayers.includes(layer.resource.id));
     }
 
 

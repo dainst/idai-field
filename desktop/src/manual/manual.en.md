@@ -367,7 +367,7 @@ Please note that the download may take a longer time for larger projects. The do
 
 Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
 
-* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a CouchDB database that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Desktop database server of the DAI). 
+* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a FieldHub server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the FieldHub server of the DAI). 
 * *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
 * *Enable synchronization*: Use this switch to start or interrupt the connection.
 * *Synchronize preview images*: This option is enabled by default. If you have a weak internet connection and want to upload/download as little data as possible, you may want to disable it.

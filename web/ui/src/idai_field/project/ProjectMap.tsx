@@ -316,9 +316,8 @@ const getTileLayers = async (project: string, loginData: LoginData, projectDocum
 
     return (await getTileLayerDocuments(project, loginData))
         .map(doc => getTileLayer(doc, loginData, isVisibleTileLayer(doc, projectDocument, isMiniMap)));
-}
+};
     
-
 
 const isVisibleTileLayer = (document: ResultDocument, projectDocument: Document, isMiniMap: boolean): boolean => {
 
@@ -327,7 +326,7 @@ const isVisibleTileLayer = (document: ResultDocument, projectDocument: Document,
             ?.map(target => target.resource.id)
             .includes(document.resource.id)
         : false;
-}
+};
 
 
 const getTileLayerDocuments = async (project: string, loginData: LoginData): Promise<ResultDocument[]> => {

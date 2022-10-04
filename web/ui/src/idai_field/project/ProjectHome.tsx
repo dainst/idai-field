@@ -74,7 +74,8 @@ export default function ProjectHome(): ReactElement {
         <div className="d-flex flex-column p-2" style={ containerStyle }>
             { renderTitle(title, projectDocument) }
             <div className="d-flex flex-fill pt-2" style={ { height: 0 } }>
-                { renderSidebar(projectId, projectDocument, categoryFilter, setHighlightedCategories, t, typeCatalogCount) }
+                { renderSidebar(projectId, projectDocument, categoryFilter, setHighlightedCategories, t,
+                    typeCatalogCount) }
                 { renderContent(projectId, projectDocument, images, location, highlightedCategories, predecessors, t) }
             </div>
         </div>

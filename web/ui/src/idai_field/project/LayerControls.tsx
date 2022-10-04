@@ -19,7 +19,8 @@ type VisibleTileLayersSetter = React.Dispatch<React.SetStateAction<string[]>>;
 type LayerGroup = { document?: ResultDocument, tileLayers: TileLayer[] };
 
 
-export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project, projectDocument }
+export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project,
+        projectDocument }
     : { map: Map, tileLayers: TileLayer[], fitOptions: FitOptions, selectedDocument: Document,
             predecessors: ResultDocument[], project: string, projectDocument: Document }): ReactElement {
 

@@ -10,7 +10,7 @@ defmodule Api.Core.Layout do
     |> put_in([:parentId], Resource.get_parent_id(resource))
     |> put_in([:grandparentId], Resource.get_grandparent_id(resource))
     |> add_license(project_resource)
-    |> Map.take(List.delete(Api.Core.CorePropertiesAtomizing.get_core_properties(), :relations))
+    |> Map.take(Api.Core.CorePropertiesAtomizing.get_core_properties())
     |> Utils.atomize # TODO why this?
   end
 

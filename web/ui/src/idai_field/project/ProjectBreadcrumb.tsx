@@ -1,4 +1,4 @@
-import { mdiDotsVertical, mdiArrowRightBottom } from '@mdi/js';
+import { mdiDotsVertical, mdiSubdirectoryArrowRight } from '@mdi/js';
 import Icon from '@mdi/react';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
@@ -64,7 +64,7 @@ const renderPredecessor = (predecessor: ResultDocument|null, i: number): ReactNo
             className="d-flex">
         <div style={ { flexGrow: 1 } }>
             <div style={ iconContainerStyle }>
-                <Icon path={ mdiArrowRightBottom } size={ 1 } color="grey" />
+                <Icon path={ mdiSubdirectoryArrowRight } size={ 0.8 } color="grey" />
             </div>
             <DocumentTeaser document={ predecessor }
                 linkUrl={ getHierarchyLink(predecessor) }
@@ -96,6 +96,6 @@ const predecessorContainerStyle = (i: number): CSSProperties => ({
 const iconContainerStyle: CSSProperties = {
     position: 'absolute',
     left: '-20px',
-    top: '3px',
+    top: '6px',
     zIndex: 10
 };

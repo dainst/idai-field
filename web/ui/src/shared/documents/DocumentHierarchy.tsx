@@ -1,4 +1,4 @@
-import { mdiArrowUpLeft, mdiArrowRightBottom } from '@mdi/js';
+import { mdiSubdirectoryArrowRight } from '@mdi/js';
 import Icon from '@mdi/react';
 import React, { CSSProperties, ReactElement, ReactNode, useRef } from 'react';
 import { Card } from 'react-bootstrap';
@@ -42,7 +42,7 @@ export default React.memo(function DocumentHierarchy({ documents, predecessors, 
                             className="previous-button"
                             style={ { color: 'var(--main-link-color)' } }
                             variant={ 'link' }>
-                            <Icon path={ mdiArrowUpLeft } size={ 1 } />
+                            <Icon path={ mdiSubdirectoryArrowRight } vertical rotate={ 90 } size={ 0.8 } />
                         </LinkButton>
                     }
                     <div className="documents" onScroll={ onScroll }
@@ -74,7 +74,7 @@ const renderDocumentRow = (document: ResultDocument, searchParams: URLSearchPara
         { document.resource.childrenCount > 0 && <div>
             <LinkButton to={ '?' + getHierarchyButtonSearchParams(searchParams, document.resource.id) }
                 style={ { height: '100%', padding: '0.375rem', color: 'var(--main-link-color)' } } variant={ 'link' }>
-                <Icon path={ mdiArrowRightBottom } size={ 1 } />
+                <Icon path={ mdiSubdirectoryArrowRight } size={ 0.8 } />
             </LinkButton>
         </div> }
     </div>;

@@ -44,6 +44,10 @@ defmodule Api.Core.LayoutTest do
       :parentId => "45",
       :grandparentId => "40",
       :license => "Test-Lizenz",
+      :relations => %{
+        liesWithin: [%{ resource: %{ id: "45", parentId: "40" } }],
+        isChildOf: [%{ resource: %{ id: "45", parentId: "40" } }]
+      },
       :groups => [%{
         name: "stem",
         fields: [

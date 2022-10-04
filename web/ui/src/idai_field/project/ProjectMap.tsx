@@ -100,12 +100,16 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         if (!map) return;
         let mounted = true;
 
-        if (tileLayers.length > 0) return;
-
         getTileLayers(project, loginData, projectDocument, isMiniMap).then((newTileLayers) => {
             if (mounted) {
-                setTileLayers(newTileLayers);
-                newTileLayers.forEach(layer => map.addLayer(layer));
+                setTileLayers(currentTileLayers => {
+                    if (currentTileLayers.length === 0) {
+                        newTileLayers.forEach(layer => map.addLayer(layer));
+                        return newTileLayers;
+                    } else {
+                        return currentTileLayers;
+                    }
+                });
             }
         });
 

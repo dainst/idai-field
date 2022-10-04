@@ -18,7 +18,7 @@ import { getDocumentLink } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
-const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer'];
+const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer', 'hasDefaultMapLayer'];
 const TYPES_WITH_HIDDEN_RELATIONS = ['Type', 'TypeCatalog'];
 
 

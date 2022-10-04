@@ -30,7 +30,7 @@ import ProjectMap from './ProjectMap';
 const MAP_FIT_OPTIONS = { padding : [ 10, 10, 10, 10 ], duration: 500 };
 
 
-export default function ProjectHome ():ReactElement {
+export default function ProjectHome(): ReactElement {
 
     const { projectId } = useParams<{ projectId: string }>();
     const loginData = useContext(LoginContext);
@@ -41,7 +41,7 @@ export default function ProjectHome ():ReactElement {
     const [categoryFilter, setCategoryFilter] = useState<ResultFilter>();
     const [typeCatalogCount, setTypeCatalogCount] = useState<number>(0);
     
-    const [projectDoc, setProjectDoc] = useState<Document>();
+    const [projectDocument, setProjectDocument] = useState<Document>();
     const [title, setTitle] = useState<string>('');
     const [images, setImages] = useState<ResultDocument[]>();
     const [highlightedCategories, setHighlightedCategories] = useState<string[]>([]);
@@ -57,51 +57,51 @@ export default function ProjectHome ():ReactElement {
             .then(result => setTypeCatalogCount(result.size));
 
         get(projectId, loginData.token)
-            .then(setProjectDoc);
+            .then(setProjectDocument);
     }, [projectId, loginData, searchParams]);
 
     useEffect(() => {
 
-        if (projectDoc) {
-            setImages(getDocumentImages(projectDoc));
-            setTitle(getProjectTitle(projectDoc));
+        if (projectDocument) {
+            setImages(getDocumentImages(projectDocument));
+            setTitle(getProjectTitle(projectDocument));
         }
-    }, [projectDoc, projectId]);
+    }, [projectDocument, projectId]);
  
-    if (!projectDoc || !categoryFilter) return null;
+    if (!projectDocument || !categoryFilter) return null;
     
     return (
         <div className="d-flex flex-column p-2" style={ containerStyle }>
-            { renderTitle(title, projectDoc) }
+            { renderTitle(title, projectDocument) }
             <div className="d-flex flex-fill pt-2" style={ { height: 0 } }>
-                { renderSidebar(projectId, projectDoc, categoryFilter, setHighlightedCategories, t, typeCatalogCount) }
-                { renderContent(projectId, projectDoc, images, location, highlightedCategories, predecessors, t) }
+                { renderSidebar(projectId, projectDocument, categoryFilter, setHighlightedCategories, t, typeCatalogCount) }
+                { renderContent(projectId, projectDocument, images, location, highlightedCategories, predecessors, t) }
             </div>
         </div>
     );
 }
 
 
-const renderTitle = (title: string, projectDoc: Document) =>
+const renderTitle = (title: string, projectDocument: Document) =>
     <div className="d-flex p-2 m-2" style={ headerStyle }>
         <div className="flex-fill">
             <h2><img src="/marker-icon.svg" alt="Home" style={ homeIconStyle } /> {title}</h2>
         </div>
         <div className="text-right" style={ buttonsStyle }>
-            <LicenseInformationButton license={ projectDoc.resource.license } />
-            <DocumentPermalinkButton url={ getDocumentPermalink(projectDoc) } />
+            <LicenseInformationButton license={ projectDocument.resource.license } />
+            <DocumentPermalinkButton url={ getDocumentPermalink(projectDocument) } />
         </div>
     </div>;
 
 
-const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: ResultFilter,
+const renderSidebar = (projectId: string, projectDocument: Document, categoryFilter: ResultFilter,
         setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number) =>
     <div className="mx-2 d-flex flex-column" style={ sidebarStyles }>
         <Card className="mb-2 mt-0">
             <SearchBar basepath={ `/project/${projectId}/search` } />
         </Card>
         <Card className="mb-2 mt-0 p-2">
-            <ProjectHierarchyButton projectDocument={ projectDoc }
+            <ProjectHierarchyButton projectDocument={ projectDocument }
                 label={ t('projectHome.toHierarchicalView') } />
         </Card>
         { typeCatalogCount > 0 &&
@@ -131,16 +131,16 @@ const renderSidebar = (projectId: string, projectDoc: Document, categoryFilter: 
     </div>;
 
 
-const renderContent = (projectId: string, projectDoc: Document, images: ResultDocument[], location: Location,
+const renderContent = (projectId: string, projectDocument: Document, images: ResultDocument[], location: Location,
         highlightedCategories: string[], predecessors: ResultDocument[], t: TFunction) => {
 
-    const description = getFieldValue(projectDoc, 'description');
+    const description = getFieldValue(projectDocument, 'description');
 
     return <div className="flex-fill" style={ contentStyle }>
         <div className="px-2 my-1 clearfix">
             { images &&
                 <div className="float-right p-2">
-                    <ImageCarousel document={ projectDoc } images={ images } style={ imageCarouselStyle }
+                    <ImageCarousel document={ projectDocument } images={ images } style={ imageCarouselStyle }
                         location={ location } maxWidth={ 600 } maxHeight={ 400 } />
                 </div>
             }
@@ -149,17 +149,18 @@ const renderContent = (projectId: string, projectDoc: Document, images: ResultDo
         <div className="d-flex">
             <div className="p-2" style={ mapContainerStyle }>
                 <ProjectMap
-                        selectedDocument={ projectDoc }
+                        selectedDocument={ projectDocument }
                         highlightedCategories={ highlightedCategories }
                         predecessors={ predecessors }
                         project={ projectId }
+                        projectDocument={ projectDocument }
                         onDeselectFeature={ undefined }
                         fitOptions={ MAP_FIT_OPTIONS }
                         spinnerContainerStyle={ mapSpinnerContainerStyle }
                         isMiniMap={ true } />
             </div>
             <div className="p-2" style={ detailsContainerStyle }>
-                { renderProjectDetails(projectDoc, t) }
+                { renderProjectDetails(projectDocument, t) }
             </div>
         </div>
     </div>;
@@ -173,27 +174,27 @@ const renderDescription = (description: string) =>
         .map((paragraph, i) => <ReactMarkdown key={ i } linkTarget={ '_blank' }>{ paragraph }</ReactMarkdown>);
 
 
-const renderProjectDetails = (projectDoc: Document, t: TFunction) => {
+const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     
-    const contactMail: FieldValue = getFieldValue(projectDoc, 'contactMail');
-    const homepage: FieldValue = getFieldValue(projectDoc, 'externalReference');
-    const gazetteerId: FieldValue = getFieldValue(projectDoc, 'gazId');
+    const contactMail: FieldValue = getFieldValue(projectDocument, 'contactMail');
+    const homepage: FieldValue = getFieldValue(projectDocument, 'externalReference');
+    const gazetteerId: FieldValue = getFieldValue(projectDocument, 'gazId');
 
     
     return <dl>
         <dt>{ t('projectHome.institution') }</dt>
-        <dd>{ getFieldValue(projectDoc, 'institution')?.toString() }</dd>
+        <dd>{ getFieldValue(projectDocument, 'institution')?.toString() }</dd>
         <dt>{ t('projectHome.projectSupervisor') }</dt>
-        <dd>{ getFieldValue(projectDoc, 'projectSupervisor')?.toString() }</dd>
+        <dd>{ getFieldValue(projectDocument, 'projectSupervisor')?.toString() }</dd>
         <dt>{ t('projectHome.contactPerson') }</dt>
         { contactMail && <dd>
             <a href={ `mailto:${contactMail.toString()}` }>
                 <Icon path={ mdiEmail } size={ 0.8 } className="mr-1" />
-                { getFieldValue(projectDoc, 'contactPerson')?.toString() }
+                { getFieldValue(projectDocument, 'contactPerson')?.toString() }
             </a>
         </dd> }
         <dt>{ t('projectHome.staff') }</dt>
-        <dd>{ (getFieldValue(projectDoc, 'staff') as FieldValue[])?.join(', ') }</dd>
+        <dd>{ (getFieldValue(projectDocument, 'staff') as FieldValue[])?.join(', ') }</dd>
         { (homepage || gazetteerId) && <dt>{ t('projectHome.links') }</dt> }
         <dd>
             <ul className="list-unstyled" style={ listStyle }>
@@ -213,7 +214,7 @@ const renderProjectDetails = (projectDoc: Document, t: TFunction) => {
                 </li> }
             </ul>
         </dd>
-        { renderBibliographicReferences(projectDoc, t) }
+        { renderBibliographicReferences(projectDocument, t) }
     </dl>;
 };
 

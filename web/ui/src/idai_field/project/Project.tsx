@@ -47,6 +47,7 @@ export default function Project(): ReactElement {
     const [document, setDocument] = useState<Document>(null);
     const [documents, setDocuments] = useState<ResultDocument[]>([]);
     const [hoverDocument, setHoverDocument] = useState<ResultDocument>(null);
+    const [projectDocument, setProjectDocument] = useState<Document>();
     const [mapHighlightedIds, setMapHighlightedIds] = useState<string[]>([]);
     const [mapHighlightedCategories, setMapHighlightedCategories] = useState<string[]>(null);
     const [predecessors, setPredecessors] = useState<ResultDocument[]>([]);
@@ -67,6 +68,11 @@ export default function Project(): ReactElement {
         if (documentListRef.current) documentListRef.current.scrollTo(0, 0);
         resetScrollOffset();
     };
+
+    useEffect(() => {
+
+        get(projectId, loginData.token).then(setProjectDocument);
+    }, [projectId]);
 
     useEffect(() => {
 
@@ -153,6 +159,7 @@ export default function Project(): ReactElement {
             highlightedCategories={ mapHighlightedCategories }
             predecessors={ predecessors }
             project={ projectId }
+            projectDocument={ projectDocument }
             onDeselectFeature={ () => deselectFeature(document, new URLSearchParams(location.search), view, history) }
             spinnerContainerStyle={ mapSpinnerContainerStyle }
             fitOptions={ MAP_FIT_OPTIONS }

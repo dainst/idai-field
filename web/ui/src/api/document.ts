@@ -31,6 +31,7 @@ export interface Resource {
     parentId: string;
     grandparentId: string;
     license?: string;
+    relations?: { [relationName: string]: ResultDocument[] };
 }
 
 

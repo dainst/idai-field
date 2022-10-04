@@ -47,6 +47,7 @@ interface ProjectMapProps {
     highlightedCategories?: string[];
     predecessors: ResultDocument[];
     project: string;
+    projectDocument: Document;
     onDeselectFeature: () => void | undefined;
     fitOptions: FitOptions;
     spinnerContainerStyle: CSSProperties;
@@ -56,7 +57,7 @@ interface ProjectMapProps {
 
 
 export default function ProjectMap({ selectedDocument, hoverDocument, highlightedIds, predecessors,
-        highlightedCategories, project, onDeselectFeature, fitOptions, spinnerContainerStyle,
+        highlightedCategories, project, projectDocument, onDeselectFeature, fitOptions, spinnerContainerStyle,
         isMiniMap, projectView = 'hierarchy' }: ProjectMapProps): ReactElement {
 
     const history = useHistory();
@@ -99,7 +100,9 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         if (!map) return;
         let mounted = true;
 
-        getTileLayers(project, loginData).then((newTileLayers) => {
+        if (tileLayers.length > 0) return;
+
+        getTileLayers(project, loginData, projectDocument, isMiniMap).then((newTileLayers) => {
             if (mounted) {
                 setTileLayers(newTileLayers);
                 newTileLayers.forEach(layer => map.addLayer(layer));
@@ -109,7 +112,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         return () => {
             mounted = false;
         };
-    }, [map, project, loginData]);
+    }, [map, loginData, project, projectDocument, isMiniMap]);
 
     useEffect(() => {
 
@@ -185,7 +188,8 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
                         fitOptions={ fitOptions }
                         selectedDocument={ selectedDocument }
                         predecessors={ predecessors }
-                        project={ project }></LayerControls>)
+                        project={ project }
+                        projectDocument={ projectDocument }></LayerControls>)
         }
     </>;
 }
@@ -303,8 +307,23 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection): VectorLayer => {
 };
 
 
-const getTileLayers = async (project: string, loginData: LoginData): Promise<TileLayer[]> =>
-    (await getTileLayerDocuments(project, loginData)).map(doc => getTileLayer(doc, loginData));
+const getTileLayers = async (project: string, loginData: LoginData, projectDocument: Document,
+                             isMiniMap: boolean): Promise<TileLayer[]> => {
+
+    return (await getTileLayerDocuments(project, loginData))
+        .map(doc => getTileLayer(doc, loginData, isVisibleTileLayer(doc, projectDocument, isMiniMap)));
+}
+    
+
+
+const isVisibleTileLayer = (document: ResultDocument, projectDocument: Document, isMiniMap: boolean): boolean => {
+
+    return isMiniMap
+        ? projectDocument.resource.relations?.hasDefaultMapLayer
+            ?.map(target => target.resource.id)
+            .includes(document.resource.id)
+        : false;
+}
 
 
 const getTileLayerDocuments = async (project: string, loginData: LoginData): Promise<ResultDocument[]> => {
@@ -319,7 +338,7 @@ const getTileLayerDocuments = async (project: string, loginData: LoginData): Pro
 };
 
 
-const getTileLayer = (document: ResultDocument, loginData: LoginData): TileLayer => {
+const getTileLayer = (document: ResultDocument, loginData: LoginData, visible: boolean): TileLayer => {
 
     const tileSize: [number, number] = [256, 256];
     const pathTemplate = `${document.resource.id}/{z}/{x}/{y}.png`;
@@ -342,7 +361,7 @@ const getTileLayer = (document: ResultDocument, loginData: LoginData): TileLayer
                 return getImageUrl(document.project, path , tileSize[0], tileSize[1], loginData.token, 'png');
             }
         }),
-        visible: false,
+        visible,
         extent
     });
 

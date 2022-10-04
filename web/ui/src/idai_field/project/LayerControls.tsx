@@ -19,9 +19,9 @@ type VisibleTileLayersSetter = React.Dispatch<React.SetStateAction<string[]>>;
 type LayerGroup = { document?: ResultDocument, tileLayers: TileLayer[] };
 
 
-export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project }
+export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project, projectDocument }
     : { map: Map, tileLayers: TileLayer[], fitOptions: FitOptions, selectedDocument: Document,
-            predecessors: ResultDocument[], project: string }): ReactElement {
+            predecessors: ResultDocument[], project: string, projectDocument: Document }): ReactElement {
 
         const [visibleTileLayers, setVisibleTileLayers] = useState<string[]|null>(null);
         const [layerControlsVisible, setLayerControlsVisible] = useState<boolean>(false);
@@ -41,14 +41,16 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
 
         useEffect(() => {
 
+            if (!projectDocument) return;
+
             const newLayerGroups: LayerGroup[] = createLayerGroups(tileLayers, selectedDocument, predecessors);
             setLayerGroups(newLayerGroups);
             updateZIndices(newLayerGroups);
             if (newLayerGroups.length > 0 && !visibleTileLayers) {
-                setVisibleTileLayers(getDefaultVisibleTileLayers(newLayerGroups));
+                setVisibleTileLayers(getDefaultVisibleTileLayers(projectDocument));
             }
             updateTileLayerVisibility(tileLayers, newLayerGroups, visibleTileLayers);
-        }, [tileLayers, selectedDocument, predecessors, visibleTileLayers]);
+        }, [tileLayers, selectedDocument, predecessors, visibleTileLayers, projectDocument]);
 
 
         return <>
@@ -148,8 +150,7 @@ const updateTileLayerVisibility = (tileLayers: TileLayer[], layerGroups: LayerGr
 
     tileLayers.forEach(tileLayer => {
         tileLayer.setVisible(groupLayers.includes(tileLayer)
-            && visibleTileLayers.includes(tileLayer.get('document').resource.id)
-        );
+            && visibleTileLayers.includes(tileLayer.get('document').resource.id));
     });
 };
 
@@ -249,13 +250,10 @@ const restoreVisibleTileLayers = (project: string): string[]|null => {
 };
 
 
-const getDefaultVisibleTileLayers = (layerGroups: LayerGroup[]): string[] => {
+const getDefaultVisibleTileLayers = (projectDocument: ResultDocument): string[] => {
 
-    const projectGroup: LayerGroup|undefined = layerGroups.find(layerGroup => !layerGroup.document);
-
-    return projectGroup
-        ? [projectGroup.tileLayers[projectGroup.tileLayers.length - 1].get('document').resource.id]
-        : [];
+    return projectDocument.resource.relations?.hasDefaultMapLayer?.map(target => target.resource.id)
+        ?? [];
 };
 
 

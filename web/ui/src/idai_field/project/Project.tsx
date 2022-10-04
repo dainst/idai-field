@@ -72,7 +72,7 @@ export default function Project(): ReactElement {
     useEffect(() => {
 
         get(projectId, loginData.token).then(setProjectDocument);
-    }, [projectId]);
+    }, [projectId, loginData]);
 
     useEffect(() => {
 

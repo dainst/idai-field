@@ -102,7 +102,7 @@ export class DownloadProjectComponent {
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
             if (fileList) {
-                if (this.overwriteProject) await this.imageStore.deleteData(this.projectName);
+                if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
                 await this.syncFiles(progressModalRef, fileList);
             }
 
@@ -189,7 +189,7 @@ export class DownloadProjectComponent {
 
         const result = [];
 
-        if (this.syncThumbnailImages){
+        if (this.syncThumbnailImages) {
             result.push({
                 upload: true,
                 download: true,
@@ -197,7 +197,7 @@ export class DownloadProjectComponent {
             });
         }
 
-        if (this.syncOriginalImages){
+        if (this.syncOriginalImages) {
             result.push({
                 upload: true,
                 download: true,

@@ -26,7 +26,7 @@ export class MultiLanguageInputComponent implements OnChanges {
 
 
     public isDeleteButtonVisible = (languageCode: string) => !this.defaultTranslations[languageCode]
-        && !this.projectLanguages.includes(languageCode);
+        && !this.projectLanguages?.includes(languageCode);
 
     public isRestoreButtonVisible = (languageCode: string) => this.defaultTranslations[languageCode]
         && this.translations[languageCode] !== this.defaultTranslations[languageCode];

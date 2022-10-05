@@ -369,6 +369,7 @@ Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Deskto
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, von der Sie das Projekt herunterladen möchten.
 * *Vorschaubilder herunterladen*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten herunterladen möchten, können Sie sie deaktivieren.
 * *Originalbilder herunterladen*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung herunterladen möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+* *Existierendes Projekt gleichen Namens überschreiben*: Ist diese Option aktiviert, wird das Projekt auch dann heruntergeladen, wenn ein gleichnamiges Projekt bereits auf dem Rechner existiert. Das bestehende Projekt wird dabei gelöscht.
 
 Sobald Sie gültige Angaben für die Adresse, den Projektnamen und das Passwort eingegeben haben, wird die Menge der jeweils herunterzuladenden Bilddaten nach kurzer Berechnungszeit neben den entsprechenden Optionen angezeigt.
 

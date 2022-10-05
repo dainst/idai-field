@@ -13,7 +13,7 @@ In order to work with Field Desktop productively and create your own project, yo
 your editor name. This name will be stored in the database along with every change you make. It is strongly
 recommended to fill in this field, especially if data is going to be synchronized.  
 
-2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You also have the choice between several presets for the project configuration. Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields.
+2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project.
 
 3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
@@ -538,6 +538,11 @@ Field data that has already been entered will continue to be displayed even afte
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
 
 
+#### Allow input in multiple languages
+
+If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
+
+
 #### Field specific search
 
 The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
@@ -602,6 +607,14 @@ The value editor allows you to customize the properties of a value:
 * *Label*: The display label of the value. You can enter labels for different languages.
 * *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
 * *References*: Specify URLs here to reference definitions in other systems.
+
+
+### Select project languages
+
+The menu "Project configuration" ➝ "Select project languages..." allows you to specify the languages for which data is to be entered in the project. For text fields for which the option "Allow input in multiple languages" is activated in the configuration editor, a separate text can be entered for each project language.
+In addition, empty input fields for the labels and descriptions of categories, fields, groups, valuelists and values are automatically displayed in the configuration editor for each project language.
+
+Please note that texts that have already been entered will no longer be displayed if the corresponding language is removed from the list of project languages. However, they will remain in the database and will be displayed again if the language is once more selected as a project language at a later time.
 
 
 ### Import configuration

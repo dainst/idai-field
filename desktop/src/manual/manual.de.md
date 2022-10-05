@@ -14,7 +14,7 @@ bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Nam
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
 Daten synchronisiert werden sollen.
 
-2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben außerdem die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration. Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten.
+2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen.
 
 3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
@@ -377,7 +377,7 @@ Der Download kann bei größeren Projekten unter Umständen eine längere Zeit d
 
 Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
-* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines FieldHub Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den FieldHub Server des DAI).
+* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines FieldHub-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den FieldHub-Server des DAI).
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
 * *Vorschaubilder synchronisieren*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten hoch- bzw. herunterladen möchten, können Sie sie deaktivieren.
 * *Synchronisation aktivieren*: Über diesen Schalter können Sie die Verbindung starten bzw. unterbrechen.
@@ -551,6 +551,11 @@ Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps we
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
 
 
+#### Eingabe in mehreren Sprachen erlauben
+
+Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
+
+
 #### Feldspezifische Suche
 
 Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
@@ -615,6 +620,14 @@ Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 * *Anzeigetext*: Der Anzeigetext des Wertes. Sie können Texte für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, in dem Sie nähere Informationen zum Wert angeben können. Dieser Text wird im Konfigurationseditor als Tooltip für den entsprechenden Wert angezeigt.
 * *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
+
+
+### Projektsprachen auswählen
+
+Über das Menü "Projektkonfiguration" ➝ "Projektsprachen auswählen..." können Sie die Sprachen festlegen, für die im Projekt Daten eingegeben werden sollen. Bei Freitextfeldern, für die im Konfigurationseditor die Option "Eingabe in mehreren Sprachen erlauben" aktiviert ist, kann für jede Projektsprache ein eigener Text eingegeben werden.
+Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automatisch leere Eingabefelder für die Anzeigetexte und Beschreibungen von Kategorien, Feldern, Gruppen, Wertelisten und Werten eingeblendet.
+
+Bitte beachten Sie, dass bereits eingegebene Texte nicht mehr angezeigt werden, wenn die entsprechende Sprache aus der Liste der Projektsprachen entfernt wird. Sie bleiben allerdings in der Datenbank erhalten und werden wieder eingeblendet, wenn die Sprache zu einem späteren Zeitpunkt erneut als Projektsprache ausgewählt wird.
 
 
 ### Konfiguration importieren

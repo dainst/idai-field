@@ -254,6 +254,11 @@ export class DownloadProjectComponent {
                 this.fileDownloadPromises = [];
 
                 for (const uuid of batch) {
+                    if (files[uuid].deleted) {
+                        this.imageStore.remove(uuid, this.getProjectName());
+                        continue;
+                    }
+
                     for (const variant of files[uuid].variants) {
                         if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(

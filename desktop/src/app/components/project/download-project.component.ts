@@ -101,7 +101,10 @@ export class DownloadProjectComponent {
                 ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
-            if (fileList) await this.syncFiles(progressModalRef, fileList);
+            if (fileList) {
+                if (this.overwriteProject) await this.imageStore.deleteData(this.projectName);
+                await this.syncFiles(progressModalRef, fileList);
+            }
 
             this.settingsService.addProject(
                 this.getProjectName(),

@@ -172,7 +172,9 @@ A map layer can be configured either for a specific operation or for the entire 
 
 Change the order of map layers by moving them up or down the list via drag & drop. If multiple images overlap on the map, the order determines which image is displayed: A layer that is higher in the list will also be displayed on the map above a layer that is further down, and may hide it completely or partially.
 
-You can remove a layer from the list by clicking the red button "Remove map layer" to the right of each list entry. The image itself will not be deleted from the project and can be added as a map layer again.
+The blue button "Set as default map layer" (star icon) to the right of each list entry allows selecting one or more images that should be displayed by default on the map when the project is opened for the first time.
+
+You can remove a layer from the list by clicking the red button "Remove map layer". The image itself will not be deleted from the project and can be added as a map layer again.
 
 Click the "Save" button to save the changes to the database.
 

@@ -176,7 +176,9 @@ Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert we
 
 Ändern Sie die Reihenfolge von Kartenhintergründen, indem Sie sie per Drag & Drop in der Liste nach oben oder unten schieben. Überlappen sich auf der Karte mehrere Hintergrundbilder, entscheidet die Reihenfolge darüber, welches Bild angezeigt wird: Ein Kartenhintergrund, der in der Liste weiter oben steht, wird auch auf der Karte über einem weiter unten stehenden Kartenhintergund angezeigt und kann diesen dabei ganz oder teilweise überdecken.
 
-Über den Button "Kartenhintergrund entfernen" rechts neben jedem Eintrag in der Liste können Sie das Bild wieder aus der Liste der Kartenhintergründe entfernen. Das Bild selbst wird dabei nicht aus dem Projekt gelöscht und kann später erneut als Kartenhintergrund hinzugefügt werden.
+Der blaue Button "Als Standard-Kartenhintergrund festlegen" (Stern-Symbol) rechts neben jedem Eintrag in der Liste erlaubt es, eines oder mehrere Bilder auszuwählen, die beim ersten Öffnen des Projekts standardmäßig auf der Karte angezeigt werden sollen.
+
+Über den roten Button "Kartenhintergrund entfernen" können Sie das entsprechende Bild wieder aus der Liste der Kartenhintergründe entfernen. Das Bild selbst wird dabei nicht aus dem Projekt gelöscht und kann später erneut als Kartenhintergrund hinzugefügt werden.
 
 Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speichern.
 

@@ -18,7 +18,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 2'
             ],
             'relations': {
-                'hasMapLayer': ['o25', 'o26']
+                'hasMapLayer': ['o25', 'o26'],
+                'hasDefaultMapLayer': ['o25']
             },
             'category': 'Project'
         }

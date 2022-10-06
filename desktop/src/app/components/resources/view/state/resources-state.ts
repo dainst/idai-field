@@ -174,7 +174,6 @@ export module ResourcesState {
         return {
             overviewState: {
                 operation: undefined,
-                layerIds: ['o25'],
                 mode: 'map',
                 bypassHierarchy: false,
                 expandAllGroups: false,
@@ -185,7 +184,6 @@ export module ResourcesState {
             },
             typesManagementState: {
                 operation: undefined,
-                layerIds: [],
                 mode: 'types',
                 bypassHierarchy: false,
                 expandAllGroups: false,
@@ -197,7 +195,6 @@ export module ResourcesState {
             operationViewStates: {
                 't1': {
                     operation: undefined,
-                    layerIds: ['o25'],
                     mode: 'map',
                     bypassHierarchy: false,
                     expandAllGroups: false,

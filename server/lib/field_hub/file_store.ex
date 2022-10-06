@@ -2,26 +2,151 @@ defmodule FieldHub.FileStore do
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstone_suffix ".deleted"
   @variant_types Application.get_env(:field_hub, :file_variant_types)
+  @cache_name :file_info
+  @cache_expiration_ms 1000 * 60 * 60 * 24
 
   require Logger
 
-  def create_directories(project) do
+  @doc """
+  Create directories for project. Returns a success/error status for each file variant subdirectory.
+  """
+  def create_directories(project_name) do
     @variant_types
     |> Enum.map(fn type ->
-      get_type_directory(project, type)
+      get_type_directory(project_name, type)
       |> File.mkdir_p()
     end)
     |> Enum.zip(@variant_types)
   end
 
-  def remove_directories(project) do
-    project
+  @doc """
+  Remove all file directories for a project, not reversable.
+  """
+  def remove_directories(project_name) do
+    clear_cache(project_name)
+
+    project_name
     |> get_project_directory()
     |> File.rm_rf()
   end
 
-  def get_file_list(project, variants \\ @variant_types) do
-    variants
+  @doc """
+  Get a map containing file information for a project. If no specific variants are requested
+  all files are returned.
+
+  ## Examples
+
+      iex> FileStore.get_file_list("development", [:original_images])
+      %{
+        "file_uuid" => %{
+          deleted: false,
+          types: [:original_image],
+          variants: [
+            %{name: :original_image, size: 275447}
+          ]
+        }
+      }
+
+  """
+  def get_file_list(project_name, requested_variants \\ @variant_types) do
+
+    get_file_map_cache(project_name)
+    |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
+      # Only keep files that have match one of the requested variants
+      cached_variants
+      |> Stream.map(fn(%{name: name}) ->
+        Enum.member?(requested_variants, name)
+      end)
+      |> Enum.any?(&(&1))
+    end)
+  end
+
+  @doc """
+  Get the absolute path of a certain file in the filesystem.
+  """
+  def get_file_path(uuid, project, variant) do
+    path = "#{get_type_directory(project, variant)}/#{uuid}"
+
+    case File.stat(path) do
+      {:error, _} = error ->
+        error
+
+      _ ->
+        {:ok, path}
+    end
+  end
+
+  def store_file(uuid, project, type, data) do
+    directory = get_type_directory(project, type)
+    File.mkdir_p!(directory)
+    file_path = "#{directory}/#{uuid}"
+
+    result =
+      if not File.exists?(file_path) do
+        File.write(file_path, data)
+      else
+        :ok
+      end
+
+    clear_cache(project)
+    result
+  end
+
+  def delete(uuid, project) do
+    result =
+      @variant_types
+      |> Stream.filter(fn variant ->
+        directory = get_type_directory(project, variant)
+        File.exists?("#{directory}/#{uuid}")
+      end)
+      |> Stream.map(
+        &store_file("#{uuid}#{@tombstone_suffix}", project, &1, [])
+      )
+      |> Enum.filter(fn val ->
+        val != :ok
+      end)
+      |> case do
+        [] ->
+          :ok
+
+        errors ->
+          errors
+      end
+
+    clear_cache(project)
+    result
+  end
+
+  def get_supported_variant_types() do
+    @variant_types
+  end
+
+  defp get_project_directory(project) do
+    "#{@file_directory_root}/#{project}"
+  end
+
+  defp get_type_directory(project, :original_image) do
+    "#{get_project_directory(project)}/original_images"
+  end
+
+  defp get_type_directory(project, :thumbnail_image) do
+    "#{get_project_directory(project)}/thumbnail_images"
+  end
+
+  defp get_file_map_cache(project) do
+    case Cachex.get(@cache_name, project) do
+      {:ok, nil} ->
+        file_map = get_file_map(project)
+        Cachex.put!(@cache_name, project, file_map, ttl: @cache_expiration_ms)
+        file_map
+      {:ok, file_map} ->
+        file_map
+    end
+  end
+
+  defp get_file_map(project) do
+
+    @variant_types
     |> Stream.map(&get_file_map_for_variant(project, &1))
     |> Enum.reduce(%{}, fn variant_map, acc ->
       # Reduce all file maps (one for each type) to a single map
@@ -109,67 +234,6 @@ defmodule FieldHub.FileStore do
     end)
   end
 
-  def get_file_path(uuid, project, type) do
-    path = "#{get_type_directory(project, type)}/#{uuid}"
-
-    case File.stat(path) do
-      {:error, _} = error ->
-        error
-
-      _ ->
-        {:ok, path}
-    end
-  end
-
-  def store_file(uuid, project, type, data) do
-    directory = get_type_directory(project, type)
-    File.mkdir_p!(directory)
-    file_path = "#{directory}/#{uuid}"
-
-    if not File.exists?(file_path) do
-      File.write(file_path, data)
-    else
-      :ok
-    end
-  end
-
-  def delete(uuid, project) do
-    @variant_types
-    |> Stream.filter(fn variant ->
-      directory = get_type_directory(project, variant)
-      File.exists?("#{directory}/#{uuid}")
-    end)
-    |> Stream.map(
-      &store_file("#{uuid}#{@tombstone_suffix}", project, &1, [])
-    )
-    |> Enum.filter(fn val ->
-      val != :ok
-    end)
-    |> case do
-      [] ->
-        :ok
-
-      errors ->
-        errors
-    end
-  end
-
-  def get_supported_variant_types() do
-    @variant_types
-  end
-
-  defp get_project_directory(project) do
-    "#{@file_directory_root}/#{project}"
-  end
-
-  defp get_type_directory(project, :original_image) do
-    "#{get_project_directory(project)}/original_images"
-  end
-
-  defp get_type_directory(project, :thumbnail_image) do
-    "#{get_project_directory(project)}/thumbnail_images"
-  end
-
   defp ignore_files_with_existing_tombstones(file_infos) do
     deleted =
       file_infos
@@ -183,5 +247,9 @@ defmodule FieldHub.FileStore do
     Enum.filter(file_infos, fn %{name: filename} ->
       "#{filename}#{@tombstone_suffix}" not in deleted
     end)
+  end
+
+  defp clear_cache(project) do
+    Cachex.del(:file_info, project)
   end
 end

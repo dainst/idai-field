@@ -23,6 +23,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       # Run after each test
       TestHelper.remove_test_db_and_user(@project, @user_name)
       File.rm_rf!(@file_directory_root)
+      Cachex.clear!(:file_info)
     end)
 
     :ok

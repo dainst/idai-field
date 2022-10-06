@@ -33,7 +33,10 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: 4000,
       protocol_options: [
-        idle_timeout: :infinity
+        # Set high idle timeout, because CouchDB uses long polling for the sync-connection
+        # otherwise Plug/Phoenix will cancel the connection prematurely, which will in turn
+        # result in a (temporary) error displayed in the desktop client.
+        idle_timeout: 1000 * 60 * 60 * 24
       ]
     ],
     secret_key_base: secret_key_base

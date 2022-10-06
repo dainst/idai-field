@@ -1,5 +1,5 @@
 <div id="download-project-progress-modal" class="modal-body process-modal"
-     [class.loading-files]="filesProgressPercent > 0">
+     [class.loading-files]="filesProgressPercent >= 0">
     <div class="process-modal-container">
         <div class="spinner"></div>
         <div class="progress replication-progress">
@@ -8,16 +8,16 @@
                  [style.width]="databaseProgressPercent + '%'"></div>
         </div>
         <div *ngIf="databaseProgressPercent === 0 && !cancelling" class="process-info" i18n="@@project.download.connecting">Verbindung wird hergestellt...</div>
-        <div *ngIf="databaseProgressPercent > 0 && filesProgressPercent === 0 && !cancelling" class="process-info" i18n="@@project.download.progressInfo.database">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
-        <div *ngIf="filesProgressPercent > 0" class="process-info" i18n="@@project.download.progressInfo.databaseFinished">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen. </div>
-        <div *ngIf="filesProgressPercent <= 0 && cancelling" class="process-info" i18n="@@project.download.progressInfo.cancelling">Download wird abgebrochen... </div>
+        <div *ngIf="databaseProgressPercent > 0 && filesProgressPercent === -1 && !cancelling" class="process-info" i18n="@@project.download.progressInfo.database">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen... </div>
+        <div *ngIf="filesProgressPercent >= 0" class="process-info" i18n="@@project.download.progressInfo.databaseFinished">{{getRoundedProgress(databaseProgressPercent)}}% der Projektdaten geladen. </div>
+        <div *ngIf="filesProgressPercent === -1 && cancelling" class="process-info" i18n="@@project.download.progressInfo.cancelling">Download wird abgebrochen... </div>
 
         <div id="files-progress">
             <div id="files-progress-bar" class="progress replication-progress">
                 <div class="progress-bar"
                     [class.bg-success]="!cancelling"
                     [class.bg-secondary]="cancelling"
-                    [class.disabled]="filesProgressPercent === 0"
+                    [class.disabled]="filesProgressPercent === -1"
                     [style.width]="filesProgressPercent + '%'"></div>
             </div>
             <div *ngIf="!cancelling" id="files-progress-info" class="process-info" i18n="@@project.download.progressInfo.files">{{getRoundedProgress(filesProgressPercent)}}% der Bilder geladen... </div>

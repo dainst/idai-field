@@ -82,7 +82,7 @@ export class DownloadProjectComponent {
         );
 
         progressModalRef.componentInstance.databaseProgressPercent = 0;
-        progressModalRef.componentInstance.filesProgressPercent = 0;
+        progressModalRef.componentInstance.filesProgressPercent = -1;
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
         const destroyExisting: boolean = this.overwriteProject
@@ -101,7 +101,18 @@ export class DownloadProjectComponent {
                 ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
-            if (fileList) await this.syncFiles(progressModalRef, fileList);
+    
+            if (fileList) {
+                progressModalRef.componentInstance.filesProgressPercent = 0;
+
+                // This ensures that the CSS transition in DownloadProjectProgressModal runs smoothly
+                await AngularUtility.refresh(2000);
+
+                if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
+                await this.syncFiles(progressModalRef, fileList);
+            }
+
+            await AngularUtility.refresh(1000);
 
             this.settingsService.addProject(
                 this.getProjectName(),
@@ -186,7 +197,7 @@ export class DownloadProjectComponent {
 
         const result = [];
 
-        if (this.syncThumbnailImages){
+        if (this.syncThumbnailImages) {
             result.push({
                 upload: true,
                 download: true,
@@ -194,7 +205,7 @@ export class DownloadProjectComponent {
             });
         }
 
-        if (this.syncOriginalImages){
+        if (this.syncOriginalImages) {
             result.push({
                 upload: true,
                 download: true,
@@ -251,6 +262,11 @@ export class DownloadProjectComponent {
                 this.fileDownloadPromises = [];
 
                 for (const uuid of batch) {
+                    if (files[uuid].deleted) {
+                        this.imageStore.remove(uuid, this.getProjectName());
+                        continue;
+                    }
+
                     for (const variant of files[uuid].variants) {
                         if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(

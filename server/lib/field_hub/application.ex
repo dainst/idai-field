@@ -16,7 +16,7 @@ defmodule FieldHub.Application do
       FieldHubWeb.Endpoint,
       # Start a worker by calling: FieldHub.Worker.start_link(arg)
       # {FieldHub.Worker, arg}
-      {Cachex, name: :file_info}
+      {Cachex, name: Application.get_env(:field_hub, :file_info_cache_name)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

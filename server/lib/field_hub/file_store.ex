@@ -8,7 +8,7 @@ defmodule FieldHub.FileStore do
   require Logger
 
   @doc """
-  Create directories for project. Returns a success/error status for each file variant subdirectory.
+  Create directories for a project. Returns a success/error status for each file variant subdirectory.
   """
   def create_directories(project_name) do
     @variant_types
@@ -52,7 +52,7 @@ defmodule FieldHub.FileStore do
 
     get_file_map_cache(project_name)
     |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
-      # Only keep files that have match one of the requested variants
+      # Only keep files that match one of the requested variants
       cached_variants
       |> Stream.map(fn(%{name: name}) ->
         Enum.member?(requested_variants, name)

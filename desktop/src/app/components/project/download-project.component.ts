@@ -82,7 +82,7 @@ export class DownloadProjectComponent {
         );
 
         progressModalRef.componentInstance.databaseProgressPercent = 0;
-        progressModalRef.componentInstance.filesProgressPercent = 0;
+        progressModalRef.componentInstance.filesProgressPercent = -1;
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
         const destroyExisting: boolean = this.overwriteProject
@@ -101,7 +101,13 @@ export class DownloadProjectComponent {
                 ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
+    
             if (fileList) {
+                progressModalRef.componentInstance.filesProgressPercent = 0;
+
+                // This is ensures that the CSS transition in DownloadProjectProgressModal runs smoothly
+                await AngularUtility.refresh(2000);
+
                 if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
                 await this.syncFiles(progressModalRef, fileList);
             }

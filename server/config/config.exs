@@ -7,10 +7,6 @@
 # General application configuration
 import Config
 
-config :field_hub,
-  file_variant_types: [:thumbnail_image, :original_image]
-
-
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
@@ -21,7 +17,9 @@ config :field_hub, FieldHubWeb.Endpoint,
 config :field_hub,
   couchdb_url: "http://localhost:5984",
   couchdb_admin_name: "admin", # see .env_template
-  couchdb_admin_password: "password" # see .env_template
+  couchdb_admin_password: "password", # see .env_template
+  file_variant_types: [:thumbnail_image, :original_image],
+  file_info_cache_name: :file_info
 
 # Configures the mailer
 #

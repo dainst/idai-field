@@ -2,13 +2,13 @@ defmodule FieldHub.FileStore do
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @tombstone_suffix ".deleted"
   @variant_types Application.get_env(:field_hub, :file_variant_types)
-  @cache_name :file_info
+  @cache_name Application.get_env(:field_hub, :file_info_cache_name)
   @cache_expiration_ms 1000 * 60 * 60 * 24
 
   require Logger
 
   @doc """
-  Create directories for project. Returns a success/error status for each file variant subdirectory.
+  Create directories for a project. Returns a success/error status for each file variant subdirectory.
   """
   def create_directories(project_name) do
     @variant_types
@@ -52,7 +52,7 @@ defmodule FieldHub.FileStore do
 
     get_file_map_cache(project_name)
     |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
-      # Only keep files that have match one of the requested variants
+      # Only keep files that match one of the requested variants
       cached_variants
       |> Stream.map(fn(%{name: name}) ->
         Enum.member?(requested_variants, name)

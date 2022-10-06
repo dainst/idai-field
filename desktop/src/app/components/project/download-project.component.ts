@@ -105,12 +105,14 @@ export class DownloadProjectComponent {
             if (fileList) {
                 progressModalRef.componentInstance.filesProgressPercent = 0;
 
-                // This is ensures that the CSS transition in DownloadProjectProgressModal runs smoothly
+                // This ensures that the CSS transition in DownloadProjectProgressModal runs smoothly
                 await AngularUtility.refresh(2000);
 
                 if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
                 await this.syncFiles(progressModalRef, fileList);
             }
+
+            await AngularUtility.refresh(1000);
 
             this.settingsService.addProject(
                 this.getProjectName(),

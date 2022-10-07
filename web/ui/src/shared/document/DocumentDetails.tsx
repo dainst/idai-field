@@ -67,6 +67,10 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                         } as Field
                     ]
                 } as FieldGroup);
+            } else {
+                setChildrenCount(0);
+                setMaxChildrenOffset(0);
+                setChildren(null);
             }
     });
 

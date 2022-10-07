@@ -45,7 +45,7 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
     useEffect(() => {
 
         loadChildren(
-            document.resource.id, childrenOffset, childrenPerPage, loginData.token
+            document.resource.id, document.project, childrenOffset, childrenPerPage, loginData.token
         ).then((data: Result) => {
 
             if (data.documents.length > 0) {
@@ -320,13 +320,17 @@ const renderPopover = (object: LabeledValue, t: TFunction): ReactElement => {
     );
 };
 
-const loadChildren = async (resourceId: string, from: number, size: number, token: string): Promise<Result> => {
+const loadChildren = async (resourceId: string, project: string, from: number, size: number,
+                            token: string): Promise<Result> => {
 
     const childQuery = {
         q: '*',
         parent: resourceId,
         size,
-        from
+        from,
+        filters: [
+            { field: 'project', value: project },
+        ]
     } as Query;
 
     return search(childQuery, token);

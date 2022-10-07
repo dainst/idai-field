@@ -44,6 +44,10 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
 
     useEffect(() => {
 
+        if (TYPES_WITH_HIDDEN_RELATIONS.includes(document.resource.category.name)) {
+            return resetChildren();
+        }
+
         loadChildren(
             document.resource.id, document.project, childrenOffset, childrenPerPage, loginData.token
         ).then((data: Result) => {
@@ -68,15 +72,14 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                     ]
                 } as FieldGroup);
             } else {
-                setChildrenCount(0);
-                setMaxChildrenOffset(0);
-                setChildren(null);
+                resetChildren();
             }
-    });
+        });
+    }, [childrenOffset, document, loginData.token]);
 
-    }, [childrenOffset, document.resource.id, loginData.token]);
 
     const increaseOffset = () => {
+        
         if (childrenOffset + childrenPerPage > maxChildrenOffset) {
             setChildrenOffset(maxChildrenOffset);
         }
@@ -85,7 +88,9 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
         }
     };
     
+
     const decreaseOffset = () => {
+
         if (childrenOffset - childrenPerPage < 0) {
             setChildrenOffset(0);
         }
@@ -93,6 +98,15 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
             setChildrenOffset(childrenOffset - childrenPerPage);
         }
     };
+
+
+    const resetChildren = () => {
+
+        setChildrenCount(0);
+        setMaxChildrenOffset(0);
+        setChildren(null);
+    };
+
 
     const renderPaginatedRelations = (group: FieldGroup, t: TFunction, project: string, baseUrl: string): ReactNode => {
 

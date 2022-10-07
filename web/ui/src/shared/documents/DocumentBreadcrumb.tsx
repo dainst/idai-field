@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Breadcrumb, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 
 export interface BreadcrumbItem {
     identifier: string;
@@ -30,6 +32,7 @@ export default function DocumentBreadcrumb({ breadcrumbs }: DocumentBreadcrumbPr
 }
 
 const renderBreadcrumbItem = (item: BreadcrumbItem): ReactElement =>
-    <Breadcrumb.Item key={ `hierar_${item.id}` } href={ item.url } active={ item.active }>
+    <Breadcrumb.Item key={ `hierar_${item.id}` } linkAs={ Link }
+                     linkProps={ { to: item.url } } active={ item.active }>
         { item.identifier }
     </Breadcrumb.Item>;

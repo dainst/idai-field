@@ -7,7 +7,7 @@ import { mdiEye, mdiEyeOff, mdiImageFilterCenterFocus, mdiLayers } from '@mdi/js
 import Map from 'ol/Map';
 import { FitOptions } from 'ol/View';
 import { Tile as TileLayer } from 'ol/layer';
-import { flatten } from 'tsfun';
+import { flatten, isDefined } from 'tsfun';
 import { NAVBAR_HEIGHT } from '../../constants';
 import { ResultDocument } from '../../api/result';
 import { Document } from '../../api/document';
@@ -44,7 +44,9 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
 
             if (!projectDocument) return;
 
-            const newLayerGroups: LayerGroup[] = createLayerGroups(tileLayers, selectedDocument, predecessors);
+            const newLayerGroups: LayerGroup[] = createLayerGroups(
+                tileLayers, selectedDocument, predecessors, projectDocument
+            );
             setLayerGroups(newLayerGroups);
             updateZIndices(newLayerGroups);
             if (newLayerGroups.length > 0 && !visibleTileLayers) {
@@ -188,19 +190,19 @@ const getLayerControlsCloseClickFunction = (setLayerControlsVisible: (visible: b
 
 
 const createLayerGroups = (tileLayers: TileLayer[], selectedDocument: ResultDocument,
-                           predecessors: ResultDocument[]): LayerGroup[] => {
+                           predecessors: ResultDocument[], projectDocument: Document): LayerGroup[] => {
 
     const documents: ResultDocument[] = (selectedDocument ? [selectedDocument] : []).concat(predecessors);
 
     const layerGroups: LayerGroup[] = documents.map(document => {
         return {
             document,
-            tileLayers: getLinkedTileLayers(document.resource.id, tileLayers)
+            tileLayers: getLinkedTileLayers(document, tileLayers)
         };
     });
 
     layerGroups.push({
-        tileLayers: getLinkedTileLayers('project', tileLayers)
+        tileLayers: getLinkedTileLayers(projectDocument, tileLayers)
     });
 
     const result = layerGroups.filter(layerGroup => layerGroup.tileLayers.length > 0);
@@ -211,12 +213,15 @@ const createLayerGroups = (tileLayers: TileLayer[], selectedDocument: ResultDocu
 };
 
 
-const getLinkedTileLayers = (resourceId: string, tileLayers: TileLayer[]): TileLayer[] => {
+const getLinkedTileLayers = (document: Document|ResultDocument, tileLayers: TileLayer[]): TileLayer[] => {
     
-    return tileLayers.filter(tileLayer => {
-        const relations: ResultDocument[] = tileLayer.get('document').resource.relations.isMapLayerOf;
-        return relations && relations.map((relation: ResultDocument) => relation.resource.id).includes(resourceId);
-    });
+    const relations: ResultDocument[] = document.resource.relations.hasMapLayer;
+
+    return relations
+        ? relations.map((relationTarget: ResultDocument) => {
+            return tileLayers.find(layer => layer.get('document').resource.id === relationTarget.resource.id);
+        }).filter(isDefined)
+        : [];
 };
 
 

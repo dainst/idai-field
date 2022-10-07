@@ -121,7 +121,7 @@ const renderLayerControl = (map: Map, visibleTileLayers: string[], fitOptions: F
                         style={ layerButtonStyle }>
                     <Icon path={ mdiImageFilterCenterFocus } size={ 0.7 } />
                 </Button>
-            { resource.identifier }
+            { resource.shortDescription ?? resource.identifier }
         </li>
     );
 };

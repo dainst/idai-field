@@ -201,7 +201,7 @@ const cardHeaderStyle: CSSProperties = {
 
 
 const cardBodyStyle: CSSProperties = {
-    height: 'calc(100% - 94px)',
+    maxHeight: 'calc(100vh - 195px)',
     overflow: 'auto'
 };
 

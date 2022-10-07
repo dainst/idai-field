@@ -328,6 +328,7 @@ const loadChildren = async (resourceId: string, project: string, from: number, s
         parent: resourceId,
         size,
         from,
+        sort: 'sort',
         filters: [
             { field: 'project', value: project },
         ]

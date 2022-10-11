@@ -16,7 +16,7 @@ import './layer-controls.css';
 
 type VisibleTileLayersSetter = React.Dispatch<React.SetStateAction<string[]>>;
 
-type LayerGroup = { document?: ResultDocument, tileLayers: TileLayer[] };
+type LayerGroup = { document: ResultDocument, tileLayers: TileLayer[] };
 
 
 export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project,
@@ -92,9 +92,11 @@ const renderLayerControls = (map: Map, layerGroups: LayerGroup[], visibleTileLay
 const renderLayerGroup = (layerGroup: LayerGroup, map: Map, visibleTileLayers: string[], fitOptions: FitOptions,
         project: string, t: TFunction, setVisibleTileLayers: VisibleTileLayersSetter) => {
 
-    return <div key={ layerGroup.document ? layerGroup.document.resource.id : 'project-layers' }>
+    return <div key={ 'layers-' + layerGroup.document.resource.id }>
         <div style={ layerGroupHeadingStyle }>
-            { layerGroup.document ? layerGroup.document.resource.identifier : t('project.map.layerControls.project') }
+            { layerGroup.document.resource.category.name === 'Project'
+                ? t('project.map.layerControls.project')
+                : layerGroup.document.resource.identifier }
         </div>
         <ul className="list-group" style={ layerGroupStyle }>
             { layerGroup.tileLayers.map(
@@ -202,13 +204,14 @@ const createLayerGroups = (tileLayers: TileLayer[], selectedDocument: ResultDocu
     });
 
     layerGroups.push({
+        document: projectDocument,
         tileLayers: getLinkedTileLayers(projectDocument, tileLayers)
     });
 
     const result = layerGroups.filter(layerGroup => layerGroup.tileLayers.length > 0);
 
     return (result.length === 0 && tileLayers.length > 0)
-        ? [{ tileLayers }]
+        ? [{ document: projectDocument, tileLayers }]
         : result;
 };
 

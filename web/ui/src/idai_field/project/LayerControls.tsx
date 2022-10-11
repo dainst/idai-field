@@ -49,12 +49,16 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
             );
             setLayerGroups(newLayerGroups);
             updateZIndices(newLayerGroups);
-            if (newLayerGroups.length > 0 && !visibleTileLayers) {
-                setVisibleTileLayers(getDefaultVisibleTileLayers(projectDocument));
+            if (newLayerGroups.length > 0 && !restoreVisibleTileLayers(projectDocument.resource.id)) {
+                setVisibleTileLayers(getDefaultVisibleTileLayers(newLayerGroups));
             }
-            updateTileLayerVisibility(tileLayers, newLayerGroups, visibleTileLayers);
-        }, [tileLayers, selectedDocument, predecessors, visibleTileLayers, projectDocument]);
+        }, [tileLayers, selectedDocument, predecessors, projectDocument]);
 
+
+        useEffect(() => {
+
+            updateTileLayerVisibility(tileLayers, layerGroups, visibleTileLayers);
+        }, [tileLayers, layerGroups, visibleTileLayers])
 
         return <>
             { layerControlsVisible && renderLayerControls(map, layerGroups, visibleTileLayers, fitOptions, project,
@@ -259,10 +263,14 @@ const restoreVisibleTileLayers = (project: string): string[]|null => {
 };
 
 
-const getDefaultVisibleTileLayers = (projectDocument: ResultDocument): string[] => {
+const getDefaultVisibleTileLayers = (layerGroups: LayerGroup[]): string[] => {
 
-    return projectDocument.resource.relations?.hasDefaultMapLayer?.map(target => target.resource.id)
-        ?? [];
+    return flatten(
+        layerGroups.map(group => {
+            console.log('group:', group);
+            return group.document.resource.relations?.hasDefaultMapLayer?.map(target => target.resource.id);
+        }).filter(isDefined)
+    );
 };
 
 

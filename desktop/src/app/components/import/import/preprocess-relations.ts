@@ -6,6 +6,7 @@ import { ImportErrors as E } from './import-errors';
 import { Find, Get, Id, Identifier, IdentifierMap } from './types';
 import { iterateRelationsInImport } from './utils';
 import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
 /**
@@ -145,7 +146,7 @@ function assignIds(documents: Array<Document>,
 
 function adjustRelations(document: Document, relations: Resource.Relations) {
 
-    assertHasNoHierarchicalRelations(document);
+    convertHierarchicalRelations(document);
     const assertIsntArrayRelation = assertIsNotArrayRelation(document);
 
     Object.keys(document.resource.relations)
@@ -159,17 +160,16 @@ function adjustRelations(document: Document, relations: Resource.Relations) {
 }
 
 
-/**
- * Hierarchical relations are not used directly but instead one uses PARENT.
- */
-function assertHasNoHierarchicalRelations(document: Document) {
+function convertHierarchicalRelations(document: Document) {
 
-    const foundForbiddenRelations = Object.keys(document.resource.relations)
-        .filter(includedIn(Relation.Hierarchy.ALL))
-        .join(', ');
-    if (foundForbiddenRelations) {
-        throw [E.INVALID_RELATIONS, document.resource.category, foundForbiddenRelations];
+    if (Resource.hasRelations(document.resource, LIES_WITHIN)) {
+        document.resource.relations[Relation.PARENT] = document.resource.relations[LIES_WITHIN][0] as any;
+    } else if (Resource.hasRelations(document.resource, RECORDED_IN)) {
+        document.resource.relations[Relation.PARENT] = document.resource.relations[RECORDED_IN][0] as any;
     }
+
+    delete document.resource.relations[LIES_WITHIN];
+    delete document.resource.relations[RECORDED_IN]
 }
 
 

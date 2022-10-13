@@ -1,4 +1,5 @@
-import {Document} from 'idai-field-core';
+import { Document } from 'idai-field-core';
+
 
 export function createMockValidator() {
 
@@ -22,7 +23,7 @@ export function createMockValidator() {
 
 export function d(id: string, category: string, identifier: string, rels?: any) {
 
-    const document = { resource: { id: id, identifier: identifier, category: category, relations: {} }};
+    const document = { resource: { id: id, identifier: identifier, category: category, relations: {} } };
     if (rels) document.resource['relations'] = rels;
     return document as unknown as Document;
 }

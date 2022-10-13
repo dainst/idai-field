@@ -23,8 +23,7 @@ import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
  *
  * // TODO nulls here should not exist, because we are not in merge mode
  */
-export function complementInverseRelationsBetweenImportDocs(context: ImportContext,
-                                                            options: ImportOptions,
+export function complementInverseRelationsBetweenImportDocs(context: ImportContext, options: ImportOptions,
                                                             documents: Array<Document> /*inplace*/) {
 
     if (!options.useIdentifiersInRelations) return;
@@ -81,8 +80,7 @@ export function makeSureRelationStructuresExists(documents: Array<Document>) {
  * @throws [INVALID_RELATIONS]
  * @throws [PARENT_MUST_NOT_BE_ARRAY]
  */
-export async function preprocessRelations(documents: Array<Document>,
-                                          helpers: ImportHelpers,
+export async function preprocessRelations(documents: Array<Document>, helpers: ImportHelpers,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
     const generateId = helpers.generateId;
@@ -104,8 +102,7 @@ export async function preprocessRelations(documents: Array<Document>,
 }
 
 
-async function rewriteIdentifiersInRelations(relations: Resource.Relations,
-                                             find: Find,
+async function rewriteIdentifiersInRelations(relations: Resource.Relations, find: Find,
                                              identifierMap: IdentifierMap) {
 
     return iterateRelationsInImport(relations, async (relation: string, identifier: Identifier, i: number) => {
@@ -130,8 +127,7 @@ async function assertNoMissingRelationTargets(relations: Resource.Relations, get
 }
 
 
-function assignIds(documents: Array<Document>,
-                   generateId: Function): IdentifierMap {
+function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
 
     return documents
         .filter(on(RESOURCE_DOT_ID, isUndefined))
@@ -169,7 +165,7 @@ function convertHierarchicalRelations(document: Document) {
     }
 
     delete document.resource.relations[LIES_WITHIN];
-    delete document.resource.relations[RECORDED_IN]
+    delete document.resource.relations[RECORDED_IN];
 }
 
 

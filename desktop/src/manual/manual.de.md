@@ -548,6 +548,75 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 
 Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps weiterhin angezeigt. Im Ressourceneditor werden mit dem aktuellen Eingabetyp inkompatible Daten allerdings entsprechend markiert und können dort nicht mehr editiert, sondern nur noch gelöscht werden.
 
+##### Einzeiliger Text
+Eingabe eines einzeiligen Textes (wahlweise einsprachig oder mehrsprachig)
+<p align="center"><img src="images/de/configuration/input_type_input.png" alt="Eingabetyp 'Einzeiliger Text'"/></p>
+  
+
+##### Einzeiliger Text mit Mehrfachauswahl
+Eingabe mehrerer einzeiliger Texte (wahlweise einsprachig oder mehrsprachig)
+<p align="center"><img src="images/de/configuration/input_type_multi_input.png" alt="Eingabetyp 'Einzeiliger Text mit Mehrfachauswahl'"/></p>
+  
+#####  Mehrzeiliger Text
+Eingabe eines mehrzeiligen, mehrsprachigen Textes
+<p align="center"><img src="images/de/configuration/input_type_text.png" alt="Eingabetyp 'Mehrzeiliger Text mit Mehrfachauswahl'"/></p>
+
+##### Ganzzahl
+Eingabe einer positiven oder negativen Ganzzahl
+<p align="center"><img src="images/de/configuration/input_type_int.png" alt="Eingabetyp 'Ganzzahl'"/></p>
+
+##### Positive Ganzzahl
+Eingabe einer positiven Ganzzahl
+<p align="center"><img src="images/de/configuration/input_type_unsigned_int.png" alt="Eingabetyp 'Positive Ganzzahl'"/></p>
+
+##### Kommazahl
+Eingabe einer positiven oder negativen Kommazahl
+<p align="center"><img src="images/de/configuration/input_type_float.png" alt="Eingabetyp 'Kommazahl'"/></p>
+
+##### Positive Kommazahl
+Eingabe einer positiven Kommazahl
+<p align="center"><img src="images/de/configuration/input_type_unsigned_float.png" alt="Eingabetyp 'Positive Kommazahl'"/></p>
+
+##### URL
+Eingabe einer URL
+<p align="center"><img src="images/de/configuration/input_type_url.png" alt="Eingabetyp 'URL'"/></p>
+
+##### Dropdown-Liste
+Auswahl eines Wertes aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_dropdown.png" alt="Eingabetyp 'Dropdown-Liste'"/></p>
+
+##### Dropdown-Liste (Bereich)
+Auswahl eines Wertes oder eines Wertebereichs (von/bis, zwei Werte) aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_dropdown_range.png" alt="Eingabetyp 'Dropdown-Liste (Bereich)'"/></p>
+
+##### Radiobutton
+Auswahl eines Werte aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_radio.png" alt="Eingabetyp 'Radiobutton'"/></p>
+
+##### Ja / Nein
+Angabe von Ja oder Nein
+<p align="center"><img src="images/de/configuration/input_type_boolean.png" alt="Eingabetyp 'Ja / Nein'"/></p>
+
+##### Checkboxen
+Auswahl eines oder mehrerer Werte aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
+
+##### Datierungsangabe
+Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
+<p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
+
+##### Datum
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- und Jahresangaben eingetragen werden.
+<p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
+
+##### Maßangabe
+Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
+<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
+
+##### Literaturangabe
+Literaturangabe nach DAI-Richtlinien. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
+
+
 
 #### Felder verstecken
 

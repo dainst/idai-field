@@ -653,7 +653,7 @@
         <target state="final">Zurück</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -665,7 +665,7 @@
         <target state="final">(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">140,126</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -681,7 +681,7 @@
         <target state="final">Export starten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
@@ -689,7 +689,7 @@
         <target state="final">Kontext</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
@@ -705,7 +705,7 @@
         <target state="final">Katalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">294</context>
+          <context context-type="linenumber">291</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
@@ -713,7 +713,15 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">326</context>
+          <context context-type="linenumber">323</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.combineHierarchicalRelations" datatype="html">
+        <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
+        <target state="final"> Hierarchische Relationen zusammenfassen (empfohlen) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">357,365</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -721,7 +729,7 @@
         <target state="final">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
@@ -729,7 +737,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -737,7 +745,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.catalog" datatype="html">
@@ -761,7 +769,7 @@
         <target state="final">Komplett</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
@@ -777,7 +785,7 @@
         <target state="final"> Keine Ressourcen gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">355</context>
+          <context context-type="linenumber">365</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
@@ -785,7 +793,7 @@
         <target state="final"> Keine Kataloge gefunden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">360</context>
+          <context context-type="linenumber">365</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -793,7 +801,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">360</context>
+          <context context-type="linenumber">365</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -801,7 +809,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -809,7 +817,7 @@
         <target state="final">Nicht exportierte Felder:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -817,7 +825,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -1441,7 +1449,7 @@
         <target state="final">Sprache auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/widgets/multi-language-input.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.header" datatype="html">
@@ -2005,7 +2013,7 @@
         <target state="final">Projektname</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
@@ -2013,7 +2021,7 @@
         <target state="final">Passwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
@@ -2021,7 +2029,7 @@
         <target state="final">Vorschaubilder herunterladen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
@@ -2029,7 +2037,7 @@
         <target state="final">Originalbilder herunterladen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
@@ -4161,11 +4169,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/language-picker-modal.component.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
@@ -4173,11 +4181,11 @@
         <target state="final">Sprache entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -6925,7 +6933,7 @@
         <target state="final">Schließen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/language-picker-modal.component.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html">
@@ -6933,7 +6941,7 @@
         <target state="final">Keine Sprachen ausgewählt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

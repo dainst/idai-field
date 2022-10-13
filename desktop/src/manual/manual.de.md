@@ -551,7 +551,6 @@ Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps we
 ##### Einzeiliger Text
 Eingabe eines einzeiligen Textes (wahlweise einsprachig oder mehrsprachig)
 <p align="center"><img src="images/de/configuration/input_type_input.png" alt="Eingabetyp 'Einzeiliger Text'"/></p>
-  
 
 ##### Einzeiliger Text mit Mehrfachauswahl
 Eingabe mehrerer einzeiliger Texte (wahlweise einsprachig oder mehrsprachig)
@@ -606,7 +605,7 @@ Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum
 <p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
 
 ##### Datum
-Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- und Jahresangaben eingetragen werden.
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
 <p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
 
 ##### Maßangabe
@@ -614,7 +613,7 @@ Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ei
 <p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
 
 ##### Literaturangabe
-Literaturangabe nach DAI-Richtlinien. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
+Angabe eines oder mehrerer bibliographischer Verweise nach DAI-Richtlinien. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
 
 
 

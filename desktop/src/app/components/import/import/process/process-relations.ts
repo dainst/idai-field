@@ -39,14 +39,15 @@ import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
  * @author Thomas Kleinke
  */
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
-                                       operationCategoryNames: string[],
-                                       get: Get,
+                                       operationCategoryNames: string[], get: Get,
                                        inverseRelationsMap: Relation.InverseRelationsMap,
                                        sameOperationRelations: string[],
                                        { mergeMode, operationId }: ImportOptions) {
 
-    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
-        validator.assertIsAllowedRelationDomainCategory(_, __, ___, ____);
+    const assertIsAllowedRelationDomainCategory = (domainCategoryName: string, rangeCategoryName: string,
+                                                   relationName: string, identifier: string) =>
+        validator.assertIsAllowedRelationDomainCategory(domainCategoryName, rangeCategoryName, relationName,
+            identifier);
 
     const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
 
@@ -61,7 +62,7 @@ export async function processRelations(documents: Array<Document>, validator: Im
         targetsLookup as any,
         inverseRelationsMap,
         sameOperationRelations,
-        assertIsAllowedRelationDomainCategory_,
+        assertIsAllowedRelationDomainCategory,
         mergeMode);
 }
 

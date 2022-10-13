@@ -82,6 +82,15 @@
                         </select>
                     </div>
 
+                    <div *ngIf="format === 'csv'" class="form-group form-check-inline">
+                        <input type="checkbox" id="hierarchical-relations-checkbox" class="form-check-input"
+                                [(ngModel)]="combineHierarchicalRelations">
+                        <label for="hierarchical-relations-checkbox" class="form-check-label"
+                               i18n="@@export.combineHierarchicalRelations">
+                            Hierarchische Relationen zusammenfassen (empfohlen)
+                        </label>
+                    </div>
+                    
                     <div *ngIf="format !== 'catalog' && noResourcesFound()"
                          class="export-info text-danger"
                          i18n="@@export.csv.noResources">

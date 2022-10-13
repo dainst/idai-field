@@ -64,8 +64,13 @@ multi-language-text-field {
     }
 
     a:hover:not(.active) {
-      height: 33px
-;
+      height: 33px;
+    }
+  }
+
+  .nav-tabs:not(.focused) {
+    a.active {
+      border-color: #ced4da !important;
     }
   }
 }

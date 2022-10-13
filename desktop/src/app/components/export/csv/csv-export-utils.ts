@@ -128,26 +128,31 @@ export module CsvExportUtils {
      * @param resource
      * @returns a new resource instance, where relations are turned into fields.
      */
-    export function convertToResourceWithFlattenedRelations(resource: FieldResource): FieldResource {
+    export function convertToResourceWithFlattenedRelations(combineHierarchicalRelations: boolean) {
+        
+        return (resource: FieldResource): FieldResource => {
 
-        const cloned = clone(resource); // so we can modify in place
+            const cloned = clone(resource); // so we can modify in place
 
-        if (!cloned.relations) return cloned;
-        for (let relation of Object.keys(cloned.relations)) {
-            cloned[Resource.RELATIONS + OBJECT_SEPARATOR + relation]
-                = cloned.relations[relation].join(ARRAY_SEPARATOR);
+            if (!cloned.relations) return cloned;
+            for (let relation of Object.keys(cloned.relations)) {
+                cloned[Resource.RELATIONS + OBJECT_SEPARATOR + relation]
+                    = cloned.relations[relation].join(ARRAY_SEPARATOR);
+            }
+            delete cloned.relations;
+
+            if (combineHierarchicalRelations) {
+                if (cloned[RELATIONS_LIES_WITHIN]) {
+                    delete cloned[RELATIONS_IS_RECORDED_IN];
+                    cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
+                }
+                else if (cloned[RELATIONS_IS_RECORDED_IN]) {
+                    cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
+                    delete cloned[RELATIONS_IS_RECORDED_IN];
+                }
+            }
+
+            return cloned;
         }
-        delete cloned.relations;
-
-        if (cloned[RELATIONS_LIES_WITHIN]) {
-            delete cloned[RELATIONS_IS_RECORDED_IN];
-            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
-        }
-        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
-            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
-            delete cloned[RELATIONS_IS_RECORDED_IN];
-        }
-
-        return cloned;
     }
 }

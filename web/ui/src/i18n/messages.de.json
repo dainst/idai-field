@@ -44,6 +44,7 @@
     "categories": "Kategorien",
     "toHierarchicalView": "Zur hierarchischen Ansicht",
     "showAllCatalogs": "Zu den Typenkatalogen ({{count}})",
+    "showCatalog": "Zum Typenkatalog",
     "institution": "Institution",
     "projectSupervisor": "Leitung",
     "contactPerson": "Kontakt",

@@ -44,8 +44,12 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
 
     useEffect(() => {
 
+        if (TYPES_WITH_HIDDEN_RELATIONS.includes(document.resource.category.name)) {
+            return resetChildren();
+        }
+
         loadChildren(
-            document.resource.id, childrenOffset, childrenPerPage, loginData.token
+            document.resource.id, document.project, childrenOffset, childrenPerPage, loginData.token
         ).then((data: Result) => {
 
             if (data.documents.length > 0) {
@@ -67,12 +71,15 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                         } as Field
                     ]
                 } as FieldGroup);
+            } else {
+                resetChildren();
             }
-    });
+        });
+    }, [childrenOffset, document, loginData.token]);
 
-    }, [childrenOffset, document.resource.id, loginData.token]);
 
     const increaseOffset = () => {
+        
         if (childrenOffset + childrenPerPage > maxChildrenOffset) {
             setChildrenOffset(maxChildrenOffset);
         }
@@ -81,7 +88,9 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
         }
     };
     
+
     const decreaseOffset = () => {
+
         if (childrenOffset - childrenPerPage < 0) {
             setChildrenOffset(0);
         }
@@ -89,6 +98,15 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
             setChildrenOffset(childrenOffset - childrenPerPage);
         }
     };
+
+
+    const resetChildren = () => {
+
+        setChildrenCount(0);
+        setMaxChildrenOffset(0);
+        setChildren(null);
+    };
+
 
     const renderPaginatedRelations = (group: FieldGroup, t: TFunction, project: string, baseUrl: string): ReactNode => {
 
@@ -320,13 +338,18 @@ const renderPopover = (object: LabeledValue, t: TFunction): ReactElement => {
     );
 };
 
-const loadChildren = async (resourceId: string, from: number, size: number, token: string): Promise<Result> => {
+const loadChildren = async (resourceId: string, project: string, from: number, size: number,
+                            token: string): Promise<Result> => {
 
     const childQuery = {
         q: '*',
         parent: resourceId,
         size,
-        from
+        from,
+        sort: 'sort',
+        filters: [
+            { field: 'project', value: project },
+        ]
     } as Query;
 
     return search(childQuery, token);

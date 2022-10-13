@@ -33,6 +33,7 @@ export class LanguagesListComponent {
         modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
             this.languages, this.selectedLanguages
         );
+        modalReference.componentInstance.initialize();
 
         try {
             this.selectedLanguages.push(await modalReference.result);

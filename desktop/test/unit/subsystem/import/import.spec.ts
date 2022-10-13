@@ -28,7 +28,8 @@ describe('Import/Subsystem', () => {
     }
 
 
-    async function parseAndImport(options: ImporterOptions, importFileContent: string) {
+    async function parseAndImport(options: ImporterOptions, importFileContent: string,
+                                  operationCategories: string[] = []) {
 
         const documents = await Importer.doParse(
             options,
@@ -39,7 +40,7 @@ describe('Import/Subsystem', () => {
 
         return await Importer.doImport(
             services,
-            { settings: {} as any,  projectConfiguration: _projectConfiguration, operationCategories: [] },
+            { settings: {} as any,  projectConfiguration: _projectConfiguration, operationCategories },
             () => { id++; return id.toString(); },
             options,
             documents);
@@ -268,7 +269,131 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('liesWithin not set', async done => {
+    it('set parent via isChildOf', async done => {
+
+        await datastore.create({
+            resource: {
+                id: 't1',
+                identifier: 'T1',
+                category: 'Trench',
+                shortDescription: 'Trench 1',
+                relations: {}
+            }
+        });
+
+        await datastore.create({
+            resource: {
+                id: 'f1',
+                identifier: 'F1',
+                category: 'Feature',
+                shortDescription: 'Feature 1',
+                relations: { isRecordedIn: ['t1'] }
+            }
+        });
+
+        const findCategory: CategoryForm = {
+            name: 'Find',
+            fields: [],
+            groups: []
+        } as any;
+
+        await parseAndImport(
+            {
+                separator: ',',
+                sourceType: '',
+                format: 'csv',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedCategory: findCategory,
+                selectedOperationId: undefined
+            },
+            '"identifier","relations.isChildOf"\n' +
+            '"Find1","T1"\n' +
+            '"Find2","F1"',
+            ['Trench']
+        );
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(4);
+        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2');
+
+        const findDocument1 = await helpers.getDocument('101');
+        expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
+        expect(findDocument1.resource.relations['liesWithin']).toBeUndefined();
+
+        const findDocument2 = await helpers.getDocument('102');
+        expect(findDocument2.resource.relations['isRecordedIn']).toEqual(['t1']);
+        expect(findDocument2.resource.relations['liesWithin']).toEqual(['f1']);
+
+        done();
+    });
+
+
+    it('set parent via isRecordedIn & liesWithin', async done => {
+
+        await datastore.create({
+            resource: {
+                id: 't1',
+                identifier: 'T1',
+                category: 'Trench',
+                shortDescription: 'Trench 1',
+                relations: {}
+            }
+        });
+
+        await datastore.create({
+            resource: {
+                id: 'f1',
+                identifier: 'F1',
+                category: 'Feature',
+                shortDescription: 'Feature 1',
+                relations: { isRecordedIn: ['t1'] }
+            }
+        });
+
+        const findCategory: CategoryForm = {
+            name: 'Find',
+            groups: []
+        } as any;
+
+        await parseAndImport(
+            {
+                separator: ',',
+                sourceType: '',
+                format: 'csv',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedCategory: findCategory,
+                selectedOperationId: undefined
+            },
+            '"identifier","relations.isRecordedIn","relations.liesWithin"\n' +
+            '"Find1","T1",""\n' +
+            '"Find2","T1","F1"\n' +
+            '"Find3","","F1"',
+            ['Trench']
+        );
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(5);
+        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2', 'Find3');
+
+        const findDocument1 = await helpers.getDocument('101');
+        expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
+        expect(findDocument1.resource.relations['liesWithin']).toBeUndefined();
+
+        const findDocument2 = await helpers.getDocument('102');
+        expect(findDocument2.resource.relations['isRecordedIn']).toEqual(['t1']);
+        expect(findDocument2.resource.relations['liesWithin']).toEqual(['f1']);
+
+        const findDocument3 = await helpers.getDocument('103');
+        expect(findDocument3.resource.relations['isRecordedIn']).toEqual(['t1']);
+        expect(findDocument3.resource.relations['liesWithin']).toEqual(['f1']);
+
+        done();
+    });
+
+
+    it('parent not set', async done => {
 
         const report = await parseAndImport(
             {
@@ -287,7 +412,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('liesWithin not set (but does not matter)', async done => {
+    it('parent not set (but does not matter)', async done => {
 
         const report = await parseAndImport(
             {

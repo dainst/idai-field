@@ -40,6 +40,7 @@ export default function ProjectHome(): ReactElement {
 
     const [categoryFilter, setCategoryFilter] = useState<ResultFilter>();
     const [typeCatalogCount, setTypeCatalogCount] = useState<number>(0);
+    const [typeCatalogId, setTypeCatalogId] = useState<string>(null);
     
     const [projectDocument, setProjectDocument] = useState<Document>();
     const [title, setTitle] = useState<string>('');
@@ -54,7 +55,10 @@ export default function ProjectHome(): ReactElement {
             .then(setCategoryFilter);
 
         checkTypeCatalogs(projectId, searchParams, loginData.token)
-            .then(result => setTypeCatalogCount(result.size));
+            .then(result => {
+                setTypeCatalogId(result.size === 1 ? result.documents[0].resource.id : null);
+                setTypeCatalogCount(result.size);
+            });
 
         get(projectId, loginData.token)
             .then(setProjectDocument);
@@ -75,7 +79,7 @@ export default function ProjectHome(): ReactElement {
             { renderTitle(title, projectDocument) }
             <div className="d-flex flex-fill pt-2" style={ { height: 0 } }>
                 { renderSidebar(projectId, projectDocument, categoryFilter, setHighlightedCategories, t,
-                    typeCatalogCount) }
+                    typeCatalogCount, typeCatalogId) }
                 { renderContent(projectId, projectDocument, images, location, highlightedCategories, predecessors, t) }
             </div>
         </div>
@@ -96,7 +100,8 @@ const renderTitle = (title: string, projectDocument: Document) =>
 
 
 const renderSidebar = (projectId: string, projectDocument: Document, categoryFilter: ResultFilter,
-        setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number) =>
+        setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number,
+        typeCatalogId: string) =>
     <div className="mx-2 d-flex flex-column" style={ sidebarStyles }>
         <Card className="mb-2 mt-0">
             <SearchBar basepath={ `/project/${projectId}/search` } />
@@ -105,7 +110,21 @@ const renderSidebar = (projectId: string, projectDocument: Document, categoryFil
             <ProjectHierarchyButton projectDocument={ projectDocument }
                 label={ t('projectHome.toHierarchicalView') } />
         </Card>
-        { typeCatalogCount > 0 &&
+        { typeCatalogCount === 1 &&
+        <Card className="mb-2 mt-0 p-2">
+            <Link to={ `/type/${projectId}/${typeCatalogId}` } className="document-teaser">
+                <div className="d-flex teaser-container teaser-small link">
+                    <div>
+                        <Icon path={ mdiViewGrid } size={ 0.8 } color="black" />
+                    </div>
+                    <h3 className="mx-2 my-1" style={ homeHeadingStyle }>
+                        { t('projectHome.showCatalog') }
+                    </h3>
+                </div>
+            </Link>
+        </Card>
+        }
+        { typeCatalogCount > 1 &&
         <Card className="mb-2 mt-0 p-2">
             <Link to={ `/type/${projectId}` } className="document-teaser">
                 <div className="d-flex teaser-container teaser-small link">

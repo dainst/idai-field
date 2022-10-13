@@ -47,6 +47,7 @@ export class ExportComponent implements OnInit {
     public selectedContext: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema'|'complete' = 'complete';
+    public combineHierarchicalRelations: boolean = true;
     
     public invalidFields: Array<InvalidField> = [];
 
@@ -220,7 +221,11 @@ export class ExportComponent implements OnInit {
                 this.projectConfiguration
                     .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
-                CsvExporter.performExport(filePath, this.projectConfiguration.getProjectLanguages())
+                CsvExporter.performExport(
+                    filePath,
+                    this.projectConfiguration.getProjectLanguages(),
+                    this.combineHierarchicalRelations
+                )
             );
 
             this.showInvalidFieldsWarning();

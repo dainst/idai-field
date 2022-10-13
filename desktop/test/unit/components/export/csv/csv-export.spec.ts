@@ -70,6 +70,23 @@ describe('CSVExport', () => {
     });
 
 
+    it('export relations without combining hierarchical relations', () => {
+
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
+        const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
+        resource.relations = {
+            relation1: ['identifier2'], liesWithin: ['identifier3'], isRecordedIn: ['identifier4']
+        } as any;
+
+        const result = CSVExport.createExportable(
+            [resource], fields, ['relation1', 'liesWithin', 'isRecordedIn'], ['en'], false
+        ).csvData;
+        expect(result[0]).toBe('"identifier","shortDescription.en","relations.relation1","relations.liesWithin",'
+            + '"relations.isRecordedIn"');
+        expect(result[1]).toBe('"identifier1","shortDescription1","identifier2","identifier3","identifier4"');
+    });
+
+
     function expectCorrectChildOfTarget(resource, t, expectation) {
 
         const result = CSVExport.createExportable([resource], t, Relation.Hierarchy.ALL, ['en']).csvData;

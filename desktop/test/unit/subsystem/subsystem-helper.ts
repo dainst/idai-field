@@ -115,9 +115,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        fileSystemAdapter,
-        imageStore,
-        remoteImageStore
+        imageStore
     } = await setupSettingsService(pouchdbDatastore, projectName);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);

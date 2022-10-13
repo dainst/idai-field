@@ -7,16 +7,16 @@ import { mdiEye, mdiEyeOff, mdiImageFilterCenterFocus, mdiLayers } from '@mdi/js
 import Map from 'ol/Map';
 import { FitOptions } from 'ol/View';
 import { Tile as TileLayer } from 'ol/layer';
-import { flatten } from 'tsfun';
+import { flatten, isDefined, clone } from 'tsfun';
 import { NAVBAR_HEIGHT } from '../../constants';
 import { ResultDocument } from '../../api/result';
 import { Document } from '../../api/document';
 import './layer-controls.css';
 
 
-type VisibleTileLayersSetter = React.Dispatch<React.SetStateAction<string[]>>;
+type SetTileLayerVisibility = React.Dispatch<React.SetStateAction<{ [id: string]: boolean }>>;
 
-type LayerGroup = { document?: ResultDocument, tileLayers: TileLayer[] };
+type LayerGroup = { document: ResultDocument, tileLayers: TileLayer[] };
 
 
 export default function LayerControls({ map, tileLayers, fitOptions, selectedDocument, predecessors, project,
@@ -24,7 +24,7 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
     : { map: Map, tileLayers: TileLayer[], fitOptions: FitOptions, selectedDocument: Document,
             predecessors: ResultDocument[], project: string, projectDocument: Document }): ReactElement {
 
-        const [visibleTileLayers, setVisibleTileLayers] = useState<string[]|null>(null);
+        const [tileLayerVisibility, setTileLayerVisibility] = useState<{ [id: string]: boolean }>({});
         const [layerControlsVisible, setLayerControlsVisible] = useState<boolean>(false);
         const [layerGroups, setLayerGroups] = useState<LayerGroup[]>([]);
         const { t } = useTranslation();
@@ -34,7 +34,7 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
             const layerControlsCloseClickFunction = getLayerControlsCloseClickFunction(setLayerControlsVisible);
             addLayerControlsCloseEventListener(layerControlsCloseClickFunction);
 
-            setVisibleTileLayers(restoreVisibleTileLayers(project));
+            setTileLayerVisibility(restoreTileLayerVisibiliy(project));
 
             return () => removeLayerControlsCloseEventListener(layerControlsCloseClickFunction);
         }, [project]);
@@ -44,19 +44,27 @@ export default function LayerControls({ map, tileLayers, fitOptions, selectedDoc
 
             if (!projectDocument) return;
 
-            const newLayerGroups: LayerGroup[] = createLayerGroups(tileLayers, selectedDocument, predecessors);
+            const newLayerGroups: LayerGroup[] = createLayerGroups(
+                tileLayers, selectedDocument, predecessors, projectDocument
+            );
             setLayerGroups(newLayerGroups);
             updateZIndices(newLayerGroups);
-            if (newLayerGroups.length > 0 && !visibleTileLayers) {
-                setVisibleTileLayers(getDefaultVisibleTileLayers(projectDocument));
+            if (newLayerGroups.length > 0) {
+                setTileLayerVisibility(visibilityMap => {
+                    return addDefaultsToTileLayerVisibility(visibilityMap, newLayerGroups);
+                });
             }
-            updateTileLayerVisibility(tileLayers, newLayerGroups, visibleTileLayers);
-        }, [tileLayers, selectedDocument, predecessors, visibleTileLayers, projectDocument]);
+        }, [tileLayers, selectedDocument, predecessors, projectDocument]);
 
+
+        useEffect(() => {
+
+            applyTileLayerVisibility(tileLayers, layerGroups, tileLayerVisibility);
+        }, [tileLayers, layerGroups, tileLayerVisibility]);
 
         return <>
-            { layerControlsVisible && renderLayerControls(map, layerGroups, visibleTileLayers, fitOptions, project,
-                t, setVisibleTileLayers) }
+            { layerControlsVisible && renderLayerControls(map, layerGroups, tileLayerVisibility, fitOptions, project,
+                t, setTileLayerVisibility) }
             { layerGroups.length > 0 && renderLayerControlsButton(layerControlsVisible, setLayerControlsVisible) }
         </>;
 }
@@ -73,38 +81,41 @@ const renderLayerControlsButton = (layerControlsVisible: boolean,
 </>;
 
 
-const renderLayerControls = (map: Map, layerGroups: LayerGroup[], visibleTileLayers: string[], fitOptions: FitOptions,
-        project: string, t: TFunction, setVisibleTileLayers: VisibleTileLayersSetter): ReactElement => {
+const renderLayerControls = (map: Map, layerGroups: LayerGroup[], tileLayerVisibility: { [id: string]: boolean },
+        fitOptions: FitOptions, project: string, t: TFunction,
+        setTileLayerVisibility: SetTileLayerVisibility): ReactElement => {
 
     return <Card id="layer-controls" style={ cardStyle } className="layer-controls">
         <Card.Body style={ cardBodyStyle }>
             { layerGroups.map(layerGroup => {
-                return renderLayerGroup(layerGroup, map, visibleTileLayers, fitOptions, project, t,
-                    setVisibleTileLayers);
+                return renderLayerGroup(layerGroup, map, tileLayerVisibility, fitOptions, project, t,
+                    setTileLayerVisibility);
             }) }
         </Card.Body>
     </Card>;
 };
 
 
-const renderLayerGroup = (layerGroup: LayerGroup, map: Map, visibleTileLayers: string[], fitOptions: FitOptions,
-        project: string, t: TFunction, setVisibleTileLayers: VisibleTileLayersSetter) => {
+const renderLayerGroup = (layerGroup: LayerGroup, map: Map, tileLayerVisibility: { [id: string]: boolean },
+        fitOptions: FitOptions, project: string, t: TFunction, setTileLayerVisibility: SetTileLayerVisibility) => {
 
-    return <div key={ layerGroup.document ? layerGroup.document.resource.id : 'project-layers' }>
+    return <div key={ 'layers-' + layerGroup.document.resource.id }>
         <div style={ layerGroupHeadingStyle }>
-            { layerGroup.document ? layerGroup.document.resource.identifier : t('project.map.layerControls.project') }
+            { layerGroup.document.resource.category.name === 'Project'
+                ? t('project.map.layerControls.project')
+                : layerGroup.document.resource.identifier }
         </div>
         <ul className="list-group" style={ layerGroupStyle }>
             { layerGroup.tileLayers.map(
-                renderLayerControl(map, visibleTileLayers, fitOptions, project, setVisibleTileLayers)
+                renderLayerControl(map, tileLayerVisibility, fitOptions, project, setTileLayerVisibility)
             ) }
         </ul>
     </div>;
 };
 
 /* eslint-disable react/display-name */
-const renderLayerControl = (map: Map, visibleTileLayers: string[], fitOptions: FitOptions, project: string,
-        setVisibleTileLayers: VisibleTileLayersSetter) => (tileLayer: TileLayer): ReactElement => {
+const renderLayerControl = (map: Map, tileLayerVisibility: { [id: string]: boolean }, fitOptions: FitOptions,
+        project: string, setTileLayerVisibility: SetTileLayerVisibility) => (tileLayer: TileLayer): ReactElement => {
 
     const resource = tileLayer.get('document').resource;
     const extent = tileLayer.getSource().getTileGrid().getExtent();
@@ -112,46 +123,43 @@ const renderLayerControl = (map: Map, visibleTileLayers: string[], fitOptions: F
     return (
         <li style={ layerControlStyle } key={ resource.id } className="list-group-item">
                 <Button variant="link"
-                        onClick={ () => toggleLayer(tileLayer, project, visibleTileLayers, setVisibleTileLayers) }
+                        onClick={ () => toggleLayer(tileLayer, project, tileLayerVisibility, setTileLayerVisibility) }
                         style={ layerButtonStyle }
-                        className={ visibleTileLayers.includes(resource.id) && 'active' }>
-                    <Icon path={ visibleTileLayers.includes(resource.id) ? mdiEye : mdiEyeOff } size={ 0.7 } />
+                        className={ tileLayerVisibility[resource.id] && 'active' }>
+                    <Icon path={ tileLayerVisibility[resource.id] ? mdiEye : mdiEyeOff } size={ 0.7 } />
                 </Button>
                 <Button variant="link" onClick={ () => map.getView().fit(extent, fitOptions) }
                         style={ layerButtonStyle }>
                     <Icon path={ mdiImageFilterCenterFocus } size={ 0.7 } />
                 </Button>
-            { resource.identifier }
+            { resource.shortDescription ?? resource.identifier }
         </li>
     );
 };
 /* eslint-enable react/display-name */
 
 
-const toggleLayer = (tileLayer: TileLayer, project: string, visibleTileLayers: string[],
-                    setVisibleTileLayers: React.Dispatch<React.SetStateAction<string[]>>): void => {
-
-    const docId = tileLayer.get('document').resource.id;
+const toggleLayer = (tileLayer: TileLayer, project: string, tileLayerVisibility: { [id: string]: boolean },
+                    setTileLayerVisibility: SetTileLayerVisibility): void => {
 
     tileLayer.setVisible(!tileLayer.getVisible());
-    if (!visibleTileLayers) visibleTileLayers = [];
-    const newVisibleTileLayers: string[] = tileLayer.getVisible()
-        ? [...visibleTileLayers, docId]
-        : visibleTileLayers.filter(id => id !== docId);
 
-    setVisibleTileLayers(newVisibleTileLayers);
-    saveVisibleTileLayers(newVisibleTileLayers, project);
+    const newTileLayerVisibility = clone(tileLayerVisibility);
+    newTileLayerVisibility[tileLayer.get('document').resource.id] = tileLayer.getVisible();
+
+    setTileLayerVisibility(newTileLayerVisibility);
+    saveTileLayerVisibiliy(newTileLayerVisibility, project);
 };
 
 
-const updateTileLayerVisibility = (tileLayers: TileLayer[], layerGroups: LayerGroup[], visibleTileLayers: string[]) => {
+const applyTileLayerVisibility = (tileLayers: TileLayer[], layerGroups: LayerGroup[],
+                                  tileLayerVisibility: { [id: string]: boolean }) => {
 
     const groupLayers: TileLayer[] = flatten(layerGroups.map(group => group.tileLayers));
-    if (!visibleTileLayers) visibleTileLayers = [];
 
     tileLayers.forEach(tileLayer => {
         tileLayer.setVisible(groupLayers.includes(tileLayer)
-            && visibleTileLayers.includes(tileLayer.get('document').resource.id));
+            && tileLayerVisibility[tileLayer.get('document').resource.id]);
     });
 };
 
@@ -188,35 +196,39 @@ const getLayerControlsCloseClickFunction = (setLayerControlsVisible: (visible: b
 
 
 const createLayerGroups = (tileLayers: TileLayer[], selectedDocument: ResultDocument,
-                           predecessors: ResultDocument[]): LayerGroup[] => {
+                           predecessors: ResultDocument[], projectDocument: Document): LayerGroup[] => {
 
     const documents: ResultDocument[] = (selectedDocument ? [selectedDocument] : []).concat(predecessors);
 
     const layerGroups: LayerGroup[] = documents.map(document => {
         return {
             document,
-            tileLayers: getLinkedTileLayers(document.resource.id, tileLayers)
+            tileLayers: getLinkedTileLayers(document, tileLayers)
         };
     });
 
     layerGroups.push({
-        tileLayers: getLinkedTileLayers('project', tileLayers)
+        document: projectDocument,
+        tileLayers: getLinkedTileLayers(projectDocument, tileLayers)
     });
 
     const result = layerGroups.filter(layerGroup => layerGroup.tileLayers.length > 0);
 
     return (result.length === 0 && tileLayers.length > 0)
-        ? [{ tileLayers }]
+        ? [{ document: projectDocument, tileLayers }]
         : result;
 };
 
 
-const getLinkedTileLayers = (resourceId: string, tileLayers: TileLayer[]): TileLayer[] => {
+const getLinkedTileLayers = (document: Document|ResultDocument, tileLayers: TileLayer[]): TileLayer[] => {
     
-    return tileLayers.filter(tileLayer => {
-        const relations: ResultDocument[] = tileLayer.get('document').resource.relations.isMapLayerOf;
-        return relations && relations.map((relation: ResultDocument) => relation.resource.id).includes(resourceId);
-    });
+    const relations: ResultDocument[] = document.resource.relations.hasMapLayer;
+
+    return relations
+        ? relations.map((relationTarget: ResultDocument) => {
+            return tileLayers.find(layer => layer.get('document').resource.id === relationTarget.resource.id);
+        }).filter(isDefined)
+        : [];
 };
 
 
@@ -230,31 +242,42 @@ const updateZIndices = (layerGroups: LayerGroup[]) => {
 };
 
 
-const saveVisibleTileLayers = (visibleTileLayers: string[], project: string) => {
+const saveTileLayerVisibiliy = (tileLayerVisibility: { [id: string]: boolean }, project: string) => {
 
     try {
-        localStorage.setItem(`visibleTileLayers_${project}`, JSON.stringify(visibleTileLayers));
+        localStorage.setItem(`tileLayerVisibility_${project}`, JSON.stringify(tileLayerVisibility));
     } catch (err) {
-        console.warn('Failed to save list of visible tile layers to local storage', err);
+        console.warn('Failed to save map of visible tile layers to local storage', err);
     }
 };
 
 
-const restoreVisibleTileLayers = (project: string): string[]|null => {
+const restoreTileLayerVisibiliy = (project: string): { [id: string]: boolean } => {
 
     try {
-        return JSON.parse(localStorage.getItem(`visibleTileLayers_${project}`));
+        return JSON.parse(localStorage.getItem(`tileLayerVisibility_${project}`)) ?? {};
     } catch (err) {
-        console.warn('Failed to restore list of visible tile layers from local storage', err);
-        return null;
+        console.warn('Failed to restore map of visible tile layers from local storage', err);
+        return {};
     }
 };
 
 
-const getDefaultVisibleTileLayers = (projectDocument: ResultDocument): string[] => {
+const addDefaultsToTileLayerVisibility = (tileLayerVisiblity: { [id: string]: boolean },
+                                          layerGroups: LayerGroup[]): { [id: string]: boolean } => {
 
-    return projectDocument.resource.relations?.hasDefaultMapLayer?.map(target => target.resource.id)
-        ?? [];
+    return layerGroups.reduce((result, group) => {
+        result = group.tileLayers.reduce((groupResult, layer) => {
+            const layerId: string = layer.get('document').resource.id;
+            if (groupResult[layerId] === undefined) {
+                groupResult[layerId] = group.document.resource.relations?.hasDefaultMapLayer
+                    ?.map(target => target.resource.id)
+                    .includes(layerId);
+            }
+            return groupResult;
+        }, tileLayerVisiblity);
+        return result;
+    }, {});
 };
 
 

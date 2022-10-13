@@ -231,18 +231,6 @@ describe('importDocuments', () => {
     });
 
 
-    it('forbidden hierarchical relation', async done => {
-
-        const [error, _] = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { isRecordedIn: ['a'] } } } as any
-        ]);
-
-        expect(error[0]).toEqual(E.INVALID_RELATIONS);
-        expect(error[2]).toEqual('isRecordedIn');
-        done();
-    });
-
-
     it('fix - don\'t throw with relations pointing to existing resource, with existing resource' , async done => {
 
         helpers.get = async resourceId => {

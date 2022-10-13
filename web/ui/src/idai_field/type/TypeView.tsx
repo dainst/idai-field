@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactElement, useContext, useEffect, useState } from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { TFunction } from 'i18next';
 import { Document } from '../../api/document';
 import { get, getPredecessors, search } from '../../api/documents';
@@ -33,8 +33,7 @@ export default function TypeView(): ReactElement {
     const [finds, setFinds] = useState<ResultDocument[]>([]);
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
-
-    const [redirectDocumentId, setRedirectDocId] = useState<string>(null);
+    const [loading, setLoading] = useState(0);
 
     const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
 
@@ -45,82 +44,84 @@ export default function TypeView(): ReactElement {
     });
 
     useEffect(() => {
-        setRedirectDocId(null);
+
+        setLoading(0);
 
         if (documentId) {
-            get(documentId, loginData.token)
-                .then(doc => {
-                    setDocument(doc);
-                    setTabKey('children');
-                });
-            getChildren(documentId, 0, loginData.token, project)
-                .then(result => setDocuments(result.documents));
-            getPredecessors(documentId, loginData.token)
-                .then(result => setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results, t)));
-            getLinkedFinds(documentId, 0, loginData.token, project)
-                .then(result => setFinds(result.documents));
+            get(documentId, loginData.token).then(doc => {
+                setDocument(doc);
+                setTabKey('children');
+                setLoading(loading => ++loading);
+            });
+            getChildren(documentId, 0, loginData.token, project).then(result => {
+                setDocuments(result.documents);
+                setLoading(loading => ++loading);
+            });
+            getPredecessors(documentId, loginData.token).then(result => {
+                setBreadcrumb(predecessorsToBreadcrumbItems(project, result.results, t));
+                setLoading(loading => ++loading);
+            });
+            getLinkedFinds(documentId, 0, loginData.token, project).then(result => {
+                setFinds(result.documents);
+                setLoading(loading => ++loading);
+            });
         } else {
             setDocument(null);
             setBreadcrumb(predecessorsToBreadcrumbItems(project, [], t));
             getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
-                if (res.documents.length === 1) {
-                    setRedirectDocId(res.documents[0].resource.id);
-                } else {
-                    setDocuments(res.documents);
-                    resetScrollOffset();
-                }
+                setDocuments(res.documents);
+                resetScrollOffset();
+                setLoading(4);
             });
         }
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams]);
-
-    if (redirectDocumentId !== null) {
-        return (<Redirect to={ `/type/${project}/${redirectDocumentId}` } />);
-    }
-    else {
-        return (
-            <Container fluid className="browse-select">
-                <DocumentBreadcrumb breadcrumbs={ breadcrumbs } />
-                <Row>
-                    { document
-                        ? <>
-                            <Col className="col-4 sidebar">
-                                <DocumentCard document={ document }
-                                    baseUrl={ CONFIGURATION.fieldUrl }
-                                    cardStyle={ cardStyle }
-                                    headerStyle={ cardHeaderStyle }
-                                    bodyStyle={ cardBodyStyle } />
-                            </Col>
-                            <Col style={ documentGridStyle } onScroll={ onScroll }>
-                                
-                                <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
-                                    <Tab eventKey="children" title={ t('type.subtypes') }>
-                                        <DocumentGrid documents={ documents }
-                                            getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
-                                    </Tab>
-                                    { document && document.resource.category.name === 'Type' &&
-                                        <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
-                                            <DocumentGrid documents={ finds }
-                                                getLinkUrl={
-                                                    (doc: ResultDocument): string => {
-                                                        return `/project/${project}/hierarchy/${doc.resource.id}`;
-                                                    }
-                                                } />
-                                        </Tab>
-                                    }
-                                </Tabs>
-                            </Col>
-                        </>
-                        : <Col>
-                            <DocumentGrid documents={ documents }
-                                getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
+        
+    return isReady(loading) && (
+        <Container fluid className="browse-select">
+            <DocumentBreadcrumb breadcrumbs={ breadcrumbs } />
+            <Row>
+                { document
+                    ? <>
+                        <Col className="col-4 sidebar">
+                            <DocumentCard document={ document }
+                                baseUrl={ CONFIGURATION.fieldUrl }
+                                cardStyle={ cardStyle }
+                                headerStyle={ cardHeaderStyle }
+                                bodyStyle={ cardBodyStyle } />
                         </Col>
-                    }
-                </Row>
-            </Container>
-        );
-    }
+                        <Col style={ documentGridStyle } onScroll={ onScroll }>
+                            
+                            <Tabs id="doc-tabs" activeKey={ tabKey } onSelect={ setTabKey }>
+                                <Tab eventKey="children" title={ t('type.subtypes') }>
+                                    <DocumentGrid documents={ documents }
+                                        getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
+                                </Tab>
+                                { document && document.resource.category.name === 'Type' &&
+                                    <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
+                                        <DocumentGrid documents={ finds }
+                                            getLinkUrl={
+                                                (doc: ResultDocument): string => {
+                                                    return `/project/${project}/hierarchy/${doc.resource.id}`;
+                                                }
+                                            } />
+                                    </Tab>
+                                }
+                            </Tabs>
+                        </Col>
+                    </>
+                    : <Col>
+                        <DocumentGrid documents={ documents }
+                            getLinkUrl={ (doc: ResultDocument): string => `${ project }/${ doc.resource.id }` } />
+                    </Col>
+                }
+            </Row>
+        </Container>
+    );
 }
+
+
+const isReady = (loading: number) => loading === 4;
 
 
 const getChildren = async (parentId: string, from: number, token: string, project: string) => {
@@ -201,7 +202,7 @@ const cardHeaderStyle: CSSProperties = {
 
 
 const cardBodyStyle: CSSProperties = {
-    height: 'calc(100% - 94px)',
+    maxHeight: 'calc(100vh - 195px)',
     overflow: 'auto'
 };
 

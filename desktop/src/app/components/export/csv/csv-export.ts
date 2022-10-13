@@ -42,13 +42,14 @@ export module CSVExport {
     export function createExportable(resources: Array<FieldResource>,
                                      fieldDefinitions: Array<Field>,
                                      relations: Array<string>,
-                                     projectLanguages: string[]) {
+                                     projectLanguages: string[],
+                                     combineHierarchicalRelations: boolean = true) {
 
         fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations);
+        const headings: string[] = makeHeadings(fieldDefinitions, relations, combineHierarchicalRelations);
         const matrix = resources
-            .map(CsvExportUtils.convertToResourceWithFlattenedRelations)
+            .map(CsvExportUtils.convertToResourceWithFlattenedRelations(combineHierarchicalRelations))
             .map(toRowsArrangedBy(headings));
 
         const invalidFields: Array<InvalidField> = removeInvalidFieldData(
@@ -77,14 +78,16 @@ export module CSVExport {
     }
 
 
-    function makeHeadings(fieldDefinitions: Array<Field>, relations: string[]) {
+    function makeHeadings(fieldDefinitions: Array<Field>, relations: string[],
+                          combineHierarchicalRelations: boolean) {
 
-        return extractExportableFields(fieldDefinitions)
-            .concat(
-                relations
-                    .filter(isNot(includedIn(Relation.Hierarchy.ALL)))
+        const exportableFields: string[] = extractExportableFields(fieldDefinitions);
+
+        return combineHierarchicalRelations
+            ? exportableFields.concat(relations.filter(isNot(includedIn(Relation.Hierarchy.ALL)))
                     .map(s => Resource.RELATIONS + OBJECT_SEPARATOR + s))
-            .concat(relations.find(includedIn(Relation.Hierarchy.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
+                .concat(relations.find(includedIn(Relation.Hierarchy.ALL)) ? [RELATIONS_IS_CHILD_OF] : [])
+            : exportableFields.concat(relations.map(s => Resource.RELATIONS + OBJECT_SEPARATOR + s));
     }
 
 

@@ -214,6 +214,18 @@ describe('convertCsvRows', () => {
     });
 
 
+    it('do not throw invalid heading error for fields that begin with the same name', () => {
+
+        try {
+            convertCsvRows(',')('abc,abcd');
+            convertCsvRows(',')('abc.x,abcd');
+            convertCsvRows(',')('abc,abcd.x');
+        } catch (err) {
+            fail(err);
+        }
+    });
+
+
     it('row entries does not match headings length', () => {
 
         try {

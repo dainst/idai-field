@@ -5,6 +5,7 @@
 <div class="modal-body language-picker-modal-body">
     <ul *ngIf="languages" class="list-group">
         <li *ngFor="let languageCode of getLanguageCodes()"
+            id="language-option-{{languageCode}}"
             class="list-group-item" (click)="select(languageCode)">
             {{getLabel(languageCode)}} <code>{{languageCode}}</code>
         </li>

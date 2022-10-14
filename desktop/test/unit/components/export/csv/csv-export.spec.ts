@@ -628,4 +628,28 @@ describe('CSVExport', () => {
         expect(result[2][11]).toBe('""');
         expect(result[2][12]).toBe('"K"');
     });
+
+
+    it('do not add language suffixes for projects without configured project languages', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'input', 'multiInput']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', undefined, 'category')
+        ];
+        resources[0].input = 'A';
+        resources[0].multiInput = ['B', 'C'];
+
+        const result = CSVExport.createExportable(resources, t, [], []).csvData.map(row => row.split(','));
+
+        expect(result[0].length).toBe(4);
+        expect(result[0][1]).toBe('"input"');
+        expect(result[0][2]).toBe('"multiInput.0"');
+        expect(result[0][3]).toBe('"multiInput.1"');
+
+        expect(result[1].length).toBe(4);
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('"C"');
+    });
 });

@@ -100,8 +100,10 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         if ((this.multiLanguageText && isString(this.multiLanguageText)) || this.hasNoConfiguredLanguages()) {
             this.multiLanguageText = value;
         } else if (value === '') {
-            delete this.multiLanguageText[this.selectedLanguage];
-            if (isEmpty(this.multiLanguageText)) this.multiLanguageText = undefined;
+            if (this.multiLanguageText) {
+                delete this.multiLanguageText[this.selectedLanguage];
+                if (isEmpty(this.multiLanguageText)) this.multiLanguageText = undefined;
+            }
         } else {
             if (!this.multiLanguageText) this.multiLanguageText = {};
             this.multiLanguageText[this.selectedLanguage] = value;

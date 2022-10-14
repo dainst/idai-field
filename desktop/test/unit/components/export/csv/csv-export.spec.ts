@@ -652,4 +652,13 @@ describe('CSVExport', () => {
         expect(result[1][2]).toBe('"B"');
         expect(result[1][3]).toBe('"C"');
     });
+
+
+    it('expand one i18n field even if no project languages are configured, in header only mode', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'input']);
+        const result = CSVExport.createExportable([], t, [], []).csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"input"');
+    });
 });

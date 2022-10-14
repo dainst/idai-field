@@ -133,7 +133,9 @@ export module CSVExpansion {
             )
         );
 
-        return set(projectLanguages.concat(flatten(languages)));
+        const result: string[] = set(projectLanguages.concat(flatten(languages)));
+        
+        return result.length > 0 ? result : [I18N.UNSPECIFIED_LANGUAGE];
     }
 
 
@@ -154,7 +156,9 @@ export module CSVExpansion {
                 : [])
         ));
 
-        return set(projectLanguages.concat(flatten(languages)));
+        const result: string[] = set(projectLanguages.concat(flatten(languages)));
+        
+        return result.length > 0 ? result : [I18N.UNSPECIFIED_LANGUAGE];
     }
 
 

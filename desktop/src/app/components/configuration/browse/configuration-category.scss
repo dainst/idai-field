@@ -97,9 +97,6 @@ configuration-category {
         border-radius: 0;
         color: #212529;
         background-color: white;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         transition: background-color .25s ease, border .25s ease;
 
         &:hover,
@@ -114,14 +111,19 @@ configuration-category {
         }
 
         .mdi-drag {
+          position: absolute;
           color: #848484;
-          margin-right: 7px;
           cursor: grab;
         }
 
         .group-label {
-          position: relative;
-          bottom: 1px;
+          position: absolute;
+          top: 9px;
+          left: 33px;
+          width: calc(100% - 35px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

@@ -536,6 +536,74 @@ The *Input type* checkbox in the field editor allows you to change the input typ
 Field data that has already been entered will continue to be displayed even after the input type has been changed. In the resource editor, however, data that is incompatible with the current input type is marked accordingly and can no longer be edited there, only deleted.
 
 
+##### Single line text
+Input of a single line text (optionally monolingual or multilingual)
+<p align="center"><img src="images/en/configuration/input_type_input.png" alt="Input type 'Single line text'"/></p>
+
+##### Single line text with multiple selection
+Input of multiple single line texts (optionally monolingual or multilingual)
+<p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Input type 'Single line text with multiple selection'"/></p>
+  
+##### Multiline text
+Input of a multiline, multilingual text
+<p align="center"><img src="images/en/configuration/input_type_text.png" alt="Input type 'Multiline text'"/></p>
+
+##### Whole number
+Input of a positive or negative whole number
+<p align="center"><img src="images/en/configuration/input_type_int.png" alt="Input type 'Whole number'"/></p>
+
+##### Positive whole number
+Input of a positive whole number
+<p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Input type 'Positive whole number'"/></p>
+
+##### Decimal number
+Input of a positive or negative decimal number
+<p align="center"><img src="images/en/configuration/input_type_float.png" alt="Input type 'Decimal number'"/></p>
+
+##### Positive decimal number
+Input of a positive decimal number
+<p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Input type 'Positive decimal number'"/></p>
+
+##### URL
+Input of an URL
+<p align="center"><img src="images/en/configuration/input_type_url.png" alt="Input type 'URL'"/></p>
+
+##### Dropdown list
+Selection of a value from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Input type 'Dropdown list'"/></p>
+
+##### Dropdown list (range)
+Selection of a value or a range of values (from/to, two values) from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Input type 'Dropdown list (range)'"/></p>
+
+##### Radiobutton
+Selection of a value from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Input type 'Radiobutton'"/></p>
+
+##### Yes / No
+Selection of Yes or No
+<p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Input type 'Yes / No'"/></p>
+
+##### Checkboxes
+Selection of one or more values from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
+
+##### Dating
+Specification of one or more datings. Possible dating types are: Period, Exact, Before, After, Scientific.
+<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
+
+##### Date
+Selection of a date from a calendar. The input field can also be used to enter only month or year information.
+<p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
+
+##### Dimension
+Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
+<p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
+
+##### Bibliographic reference
+Specification of one or more bibliographic references according to DAI guidelines. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
+
+
 #### Hide fields
 
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.

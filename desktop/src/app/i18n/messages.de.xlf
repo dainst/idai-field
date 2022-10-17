@@ -653,7 +653,7 @@
         <target state="final">Zurück</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -665,7 +665,7 @@
         <target state="final">(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -688,40 +688,40 @@
         <source>Kontext</source>
         <target state="final">Kontext</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">248</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
         <source>Keine Einschränkung</source>
         <target state="final">Keine Einschränkung</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">267</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
         <source>Katalog</source>
         <target state="final">Katalog</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">291</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
         <source>Kategorie</source>
         <target state="final">Kategorie</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">323</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
         <target state="final"> Hierarchische Relationen zusammenfassen (empfohlen) </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">357,365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -756,6 +756,14 @@
           <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
+        <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
+        <target state="final"> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">213</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
         <source>CSV</source>
         <target state="final">CSV</target>
@@ -768,40 +776,40 @@
         <source>Komplett</source>
         <target state="final">Komplett</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
         <source>Nur Schema</source>
         <target state="final">Nur Schema</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
         <source> Keine Ressourcen gefunden. </source>
         <target state="final"> Keine Ressourcen gefunden. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source> Keine Kataloge gefunden. </source>
         <target state="final"> Keine Kataloge gefunden. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -809,7 +817,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -817,7 +825,7 @@
         <target state="final">Nicht exportierte Felder:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -825,7 +833,7 @@
         <target state="final"> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -3989,7 +3997,7 @@
         <target state="final"> Sprachen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -4069,7 +4077,7 @@
         <target state="final">Originalbilder empfangen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
@@ -4077,7 +4085,7 @@
         <target state="final"> Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">142,151</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -4093,7 +4101,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -4101,7 +4109,7 @@
         <target state="final"> Pfad </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -4109,7 +4117,7 @@
         <target state="final"> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.showAdvanced" datatype="html">
@@ -4117,7 +4125,7 @@
         <target state="final">Erweiterte Optionen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.hideAdvanced" datatype="html">
@@ -4125,7 +4133,7 @@
         <target state="final">Erweiterte Optionen ausblenden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -4133,7 +4141,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -4141,7 +4149,7 @@
         <target state="final">Automatische Prüfung auf Updates aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">

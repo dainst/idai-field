@@ -118,8 +118,10 @@
                     <button id="advanced-settings-button"
                             type="button" class="btn btn-link btn-block" (click)="toggleAdvancedSettings()"
                             [attr.aria-expanded]="!advancedSettingsCollapsed" aria-controls="advanced-settings">
-                        <span *ngIf="advancedSettingsCollapsed" i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
-                        <span *ngIf="!advancedSettingsCollapsed" i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
+                        <span *ngIf="advancedSettingsCollapsed"
+                              i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
+                        <span *ngIf="!advancedSettingsCollapsed"
+                              i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
                     </button>
                     <div id="advanced-settings" [ngbCollapse]="advancedSettingsCollapsed">
                         <h5 style="margin-top: 32px;" i18n="@@settings.images">Bilder</h5>

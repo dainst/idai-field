@@ -10,6 +10,7 @@ import { SettingsProvider } from './settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
 @Injectable()
@@ -138,14 +139,15 @@ export class SettingsService {
         this.synchronizationService.init(
             syncTarget?.address,
             settings.selectedProject,
-            syncTarget?.password
+            syncTarget?.password,
+            SettingsService.checkDatabaseExistence
         );
 
-        for (const preferences of syncTarget.fileSyncPreferences) {
-            this.imageSyncService.startSync(preferences);
+        if (await this.synchronizationService.startSync()) {
+            for (const preferences of syncTarget.fileSyncPreferences) {
+                this.imageSyncService.startSync(preferences);
+            }
         }
-
-        return this.synchronizationService.startSync();
     }
 
 
@@ -243,6 +245,19 @@ export class SettingsService {
             created: { user: settings.username, date: new Date() },
             modified: [{ user: settings.username, date: new Date() }]
         };
+    }
+
+
+    private static async checkDatabaseExistence(url: string): Promise<boolean> {
+
+        try {
+            const info = await new PouchDB(url, { skip_setup: true }).info();
+            if (info.error) return false;
+        } catch (err) {
+            return false;
+        }
+
+        return true;
     }
 
 

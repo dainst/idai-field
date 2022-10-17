@@ -52,7 +52,7 @@ import { Document } from '../../../src/model/document';
 
             const status = syncService.statusNotifications();
             
-            syncService.init('http://localhost:30001/db', 'test_remote', '');
+            syncService.init('http://localhost:30001/db', 'test_remote', '', async () => true);
             syncService.startSync();
 
             let count = 0;
@@ -84,7 +84,7 @@ import { Document } from '../../../src/model/document';
 
             const status = syncService.statusNotifications();
             
-            syncService.init('http://localhost:30002/db', 'test_remote', '');
+            syncService.init('http://localhost:30002/db', 'test_remote', '', async () => true);
             syncService.startSync();
 
             let count = 0;

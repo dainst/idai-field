@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public settings: Settings;
     public ipAddress: string = address.ip();
     public saving: boolean = false;
-    public areAdvancedSettingCollapsed: boolean = true;
+    public advancedSettingsCollapsed: boolean = true;
     public scrollToBottom: boolean = false;
     public isLinux: boolean;
 
@@ -85,8 +85,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public toggleAdvancedSettings() {
 
-        this.areAdvancedSettingCollapsed = !this.areAdvancedSettingCollapsed;
-        if (!this.areAdvancedSettingCollapsed) this.scrollToBottom = true;
+        this.advancedSettingsCollapsed = !this.advancedSettingsCollapsed;
+        if (!this.advancedSettingsCollapsed) this.scrollToBottom = true;
     }
 
 

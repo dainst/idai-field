@@ -87,7 +87,9 @@ export class LayerManager {
 
     private getDefaultLayers(): Array<Document> {
 
-        const group: LayerGroup = this.layerGroups[this.layerGroups.length - 1];
+        if (this.layerGroups.length === 0) return [];
+
+        const group: LayerGroup = this.layerGroups[0];
         const defaultLayers: string[] = group.document.resource.relations[Relation.Image.HASDEFAULTMAPLAYER] || [];
             
         return group.layers.filter(layer => defaultLayers.includes(layer.resource.id));

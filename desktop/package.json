@@ -120,7 +120,7 @@
     "electron-log": "4.4.4",
     "electron-updater": "5.2.1",
     "es6-shim": "0.35.4",
-    "exifreader": "4.5.1",
+    "exifreader": "4.6.0",
     "express": "4.17.1",
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",

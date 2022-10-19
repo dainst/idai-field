@@ -736,7 +736,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
-        <target state="new"> Hierarchische Relationen zusammenfassen (empfohlen) </target>
+        <target state="final"> Поєднати ієрархічні зв’язки (рекомендовано) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -776,7 +776,10 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
         <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
-        <target state="new"> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </target>
+        <target state="final"> Якщо цей параметр активовано, ієрархічні зв’язки об’єднуються у спрощене
+          відношення <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, яке у кожному випадку визначає безпосередній
+          батьківський ресурс. Зазвичай цей параметр має залишатися активованим.
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">213</context>
@@ -3624,7 +3627,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
         <source>Als Standard-Kartenhintergrund festlegen</source>
-        <target state="new">Als Standard-Kartenhintergrund festlegen</target>
+        <target state="final">Встановити як стандартну підоснову/фон (за умовчанням)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -5735,7 +5738,9 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
         <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
-        <target state="new">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
+        <target state="final">Зв’язок 'hasDefaultMapLayer' ресурсу категорії '[0]' посилається на один
+          або більше ресурсів, на які не посилається у зв’язку 'hasMapLayer'.
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6391,7 +6396,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
         <source>Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</source>
-        <target state="new">Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</target>
+        <target state="final">Ресурс [0] не можна перемістити, оскільки один або кілька його підресурсів не повинні знаходитись в межах цільового заходу/паказника.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

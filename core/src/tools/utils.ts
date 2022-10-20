@@ -1,5 +1,4 @@
-import { Associative, detach, isArray, isDefined, Map, Pair } from 'tsfun';
-import { Named } from './named';
+import { detach, isDefined, Map, Pair } from 'tsfun';
 
 
 /**
@@ -12,48 +11,12 @@ export type Lookup<T> = { [_: string]: T};
 export function typeOf(v: any) { return typeof v }
 
 
-export function log<T>(v: T): T {
-
-    console.log(v);
-    return v;
-}
-
-
-export function logWithMessage<T>(message: string) {
-
-    return (v: T): T => {
-
-        console.log(message, v);
-        return v;
-    }
-}
-
-
-export function toMap<T extends Named>(categories: Associative<T>) {
-
-    return isArray(categories)
-        ? Named.arrayToMap(categories as Array<T>)
-        : categories as Map<T>;
-}
-
-
 /**
  * to be used with reduce
  */
 export function withDissoc(struct: any, path: string) {
 
     return detach(path)(struct);
-}
-// return map(val(undefined))(range(size));
-
-
-export function pick<T>(struct: Map<T>, targetId: string): T;
-export function pick<A>(as: Array<A>, targetId: number): A;
-export function pick<A>(struct: Map<A>|Array<A>, targetId: string|number): A  {
-
-    const result = (struct as any)[targetId];
-    if (!result) throw 'illegal argument in pick - given key/index does not exist on associative';
-    return result as A;
 }
 
 

@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef } from '@angular/core';
+import { Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { flatten, to } from 'tsfun';
@@ -21,7 +21,7 @@ import { Loading } from '../../../../widgets/loading';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class LayerMenuComponent extends MenuComponent {
+export class LayerMenuComponent extends MenuComponent implements OnChanges {
 
     @Input() layerGroups: Array<LayerGroup> = [];
 
@@ -33,6 +33,7 @@ export class LayerMenuComponent extends MenuComponent {
     public dragging: boolean = false;
 
     private modalOpened: boolean = false;
+    private editing: boolean = false;
 
 
     constructor(private layerManager: LayerManager,
@@ -67,8 +68,13 @@ export class LayerMenuComponent extends MenuComponent {
             && this.layerManager.getLayerGroups()[0] === layerGroup
             && !this.layerManager.isInEditing(layerGroup);
 
-
     public isLoading = () => this.loading.isLoading('layerMenu');
+
+
+    ngOnChanges() {
+
+        if (this.editing) this.abortEditing();
+    }
 
 
     public close() {
@@ -92,6 +98,7 @@ export class LayerMenuComponent extends MenuComponent {
 
         this.layerManager.startEditing(layerGroup);
         this.menuService.setContext(MenuContext.MAP_LAYERS_EDIT);
+        this.editing = true;
     }
 
 
@@ -101,6 +108,7 @@ export class LayerMenuComponent extends MenuComponent {
         await this.layerManager.finishEditing();
         this.loading.stop('layerMenu');
         this.menuService.setContext(MenuContext.DEFAULT);
+        this.editing = false;
     }
 
 
@@ -109,6 +117,7 @@ export class LayerMenuComponent extends MenuComponent {
         this.layerManager.abortEditing();
         this.menuService.setContext(MenuContext.DEFAULT);
         this.onAddOrRemoveLayers.emit();
+        this.editing = false;
     }
 
 

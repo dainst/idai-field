@@ -39,11 +39,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         || (this.languages.length === 1 && this.languages[0].code !== I18N.UNSPECIFIED_LANGUAGE);
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: any) {
 
-        this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;
-        this.additionalLanguages = this.languages.length > 5 ? this.languages.slice(4) : [];
-        if (this.additionalLanguages.length > 0) this.shownAdditionalLanguage = this.additionalLanguages[0];
+        if (changes['languages']) {
+            this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;
+            this.additionalLanguages = this.languages.length > 5 ? this.languages.slice(4) : [];
+            if (this.additionalLanguages.length > 0) this.shownAdditionalLanguage = this.additionalLanguages[0];
+        }
 
         this.multiLanguageText = this.readFieldData();
         if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.UNSPECIFIED_LANGUAGE;

@@ -45,7 +45,7 @@ docker-compose up
 
 This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser browser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
 
-You can now run [CLI](../CLI.md) scripts in a second terminal, for example to finalize the CouchDB setup.
+You can now run [CLI](https://github.com/dainst/idai-field/wiki/FieldHub#manual) scripts in a second terminal, for example to finalize the CouchDB setup.
 
 ```
 docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.setup_couchdb_single_node()'
@@ -94,7 +94,7 @@ The result should look something like this:
 09:52:50.572 [info] Adding 'my_first_project' as member for project 'my_first_project'.
 ```
 
-If you want to set the password yourself, just add a second parameter (also see [CLI documentation](../CLI.md)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
+If you want to set the password yourself, just add a second parameter (also see [CLI documentation](https://github.com/dainst/idai-field/wiki/FieldHub#manual)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
 
 You should now be able to sync a Field Client with the server giving the above credentials and the servers domain or IP.
 
@@ -103,7 +103,7 @@ You should now be able to sync a Field Client with the server giving the above c
 To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file
 2. Setup docker daemon as a system service on your server (so that it starts after each server restart)
-3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [README](../README.md).
+3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 
 Afterwards stop and delete all previously created test containers.
 

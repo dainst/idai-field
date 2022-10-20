@@ -1,4 +1,5 @@
-import {FieldDocument} from 'idai-field-core';
+import { FieldDocument } from 'idai-field-core';
+
 
 /**
  * @author Daniel de Oliveira

@@ -94,7 +94,7 @@ The result should look something like this:
 09:52:50.572 [info] Adding 'my_first_project' as member for project 'my_first_project'.
 ```
 
-If you want to set the password yourself, just add a second parameter (also see [CLI documentation](../CLI.md)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
+If you want to set the password yourself, just add a second parameter (also see [CLI documentation](https://github.com/dainst/idai-field/wiki/FieldHub#manual)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
 
 You should now be able to sync a Field Client with the server giving the above credentials and the servers domain or IP.
 

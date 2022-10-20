@@ -103,7 +103,7 @@ You should now be able to sync a Field Client with the server giving the above c
 To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file
 2. Setup docker daemon as a system service on your server (so that it starts after each server restart)
-3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [README](../README.md).
+3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 
 Afterwards stop and delete all previously created test containers.
 

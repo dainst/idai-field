@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges,
+    ViewChild } from '@angular/core';
 import { clone, isEmpty, isString } from 'tsfun';
 import { I18N } from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
@@ -39,7 +40,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         || (this.languages.length === 1 && this.languages[0].code !== I18N.UNSPECIFIED_LANGUAGE);
 
 
-    ngOnChanges(changes: any) {
+    ngOnChanges(changes: SimpleChanges) {
 
         if (changes['languages']) {
             this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;

@@ -20,6 +20,13 @@ export function withDissoc(struct: any, path: string) {
 }
 
 
+/**
+ * to be used with reduce
+ */
+export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+    f(val) ? acc.concat([val as string]) : acc;
+
+
 export function toPair<T>(k1: string, k2: string) {
 
     return (o: Map<T>): Pair<T, T> => [o[k1], o[k2]];
@@ -31,7 +38,3 @@ export const intoObj = <T>(keyName: string, valName: string) =>
         isDefined(item[keyName])
             ? (object[((item[keyName]) as any).toString()] = item[valName], object)
             : object;
-
-
-export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
-    f(val) ? acc.concat([val as string]) : acc;

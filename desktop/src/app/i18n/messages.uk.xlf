@@ -3598,7 +3598,7 @@
         <target state="final">Фон/підоснову карти редагувати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -3606,7 +3606,7 @@
         <target state="final"> Використовуйте кнопку редагування, щоб додати зілюстрації з геоприв’язкою як фон/підоснову карти. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -3614,7 +3614,7 @@
         <target state="final">Фон/підоснову карти показати/сховати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -3622,7 +3622,7 @@
         <target state="final">Фон/підоснову карти фокусувати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
@@ -3630,7 +3630,7 @@
         <target state="final">Встановити як стандартну підоснову/фон (за умовчанням)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -3638,7 +3638,7 @@
         <target state="final">Фон/підоснову карти видалити</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -3646,7 +3646,7 @@
         <target state="final">Фон/підоснову карти додати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
@@ -3931,11 +3931,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
-        <source>Literaturzitat nach DAI-Richtlinien:</source>
-        <target state="final">Цитування літератури згідно з рекомендаціями DAI:</target>
+        <source>Literaturzitat:</source>
+        <target state="final">Цитування літератури:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
@@ -3943,7 +3943,7 @@
         <target state="final">Zenon-ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
@@ -6767,7 +6767,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -6863,7 +6863,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>

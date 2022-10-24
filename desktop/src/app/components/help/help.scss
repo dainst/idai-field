@@ -32,6 +32,9 @@
       font-weight: 500;
     }
 
+    p[align=center] + h2,
+    p[align=center] + h3,
+    p[align=center] + h4,
     p[align=center] + h5 {
       margin-top: 35px;
     } 

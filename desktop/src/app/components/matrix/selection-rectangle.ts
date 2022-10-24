@@ -1,4 +1,4 @@
-import {GraphManipulation} from './graph-manipulation';
+import { GraphManipulation } from './graph-manipulation';
 
 
 /**

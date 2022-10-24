@@ -1,8 +1,8 @@
 defmodule FieldHub.FileStore do
-  @file_directory_root Application.get_env(:field_hub, :file_directory_root)
+  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
   @tombstone_suffix ".deleted"
-  @variant_types Application.get_env(:field_hub, :file_variant_types)
-  @cache_name Application.get_env(:field_hub, :file_info_cache_name)
+  @variant_types Application.compile_env(:field_hub, :file_variant_types)
+  @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
   @cache_expiration_ms 1000 * 60 * 60 * 24
 
   require Logger

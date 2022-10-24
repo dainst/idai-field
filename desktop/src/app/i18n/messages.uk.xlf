@@ -671,7 +671,7 @@
         <target state="final">Повернення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -683,7 +683,7 @@
         <target state="final"> (Ресурс/дані <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -706,40 +706,40 @@
         <source>Kontext</source>
         <target state="final">Контекст</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">248</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
         <source>Keine Einschränkung</source>
         <target state="final">Без обмежень</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">267</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
         <source>Katalog</source>
         <target state="final">Каталог</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">291</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
         <source>Kategorie</source>
         <target state="final">Категорія</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">323</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
-        <target state="new"> Hierarchische Relationen zusammenfassen (empfohlen) </target>
+        <target state="final"> Поєднати ієрархічні зв’язки (рекомендовано) </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">357,365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -774,6 +774,17 @@
           <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
+        <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
+        <target state="final"> Якщо цей параметр активовано, ієрархічні зв’язки об’єднуються у спрощене
+          відношення <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, яке у кожному випадку визначає безпосередній
+          батьківський ресурс. Зазвичай цей параметр має залишатися активованим.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">213</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
         <source>CSV</source>
         <target state="final">CSV</target>
@@ -786,40 +797,40 @@
         <source>Komplett</source>
         <target state="final">Повністю</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
         <source>Nur Schema</source>
         <target state="final">Тільки схема</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
         <source> Keine Ressourcen gefunden. </source>
         <target state="final"> Ресурси/дані не знайдено. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source> Keine Kataloge gefunden. </source>
         <target state="final"> Каталоги не знайдено. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
         <target state="final"> Експортуватися будуть геометрія та поля <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>ідентифікатор<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Короткий опис<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) і <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Категорія<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) відповідних ресурсів/даних. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -827,7 +838,7 @@
         <target state="final"> Щоб експортувати шейп-файл, потрібно встановити Java JDK 8 або новішої версії. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -835,7 +846,7 @@
         <target state="final">Не експортовані поля:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -843,7 +854,7 @@
         <target state="final"> Експортуватися будуть геометрія та поля  x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Ідентифікатор<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Короткий опис<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Категорія<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) відповідних ресурсів. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -3587,7 +3598,7 @@
         <target state="final">Фон/підоснову карти редагувати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -3595,7 +3606,7 @@
         <target state="final"> Використовуйте кнопку редагування, щоб додати зілюстрації з геоприв’язкою як фон/підоснову карти. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -3603,7 +3614,7 @@
         <target state="final">Фон/підоснову карти показати/сховати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -3611,15 +3622,15 @@
         <target state="final">Фон/підоснову карти фокусувати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
         <source>Als Standard-Kartenhintergrund festlegen</source>
-        <target state="new">Als Standard-Kartenhintergrund festlegen</target>
+        <target state="final">Встановити як стандартну підоснову/фон (за умовчанням)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -3627,7 +3638,7 @@
         <target state="final">Фон/підоснову карти видалити</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -3635,7 +3646,7 @@
         <target state="final">Фон/підоснову карти додати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
@@ -3920,11 +3931,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
-        <source>Literaturzitat nach DAI-Richtlinien:</source>
-        <target state="final">Цитування літератури згідно з рекомендаціями DAI:</target>
+        <source>Literaturzitat:</source>
+        <target state="final">Цитування літератури:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
@@ -3932,7 +3943,7 @@
         <target state="final">Zenon-ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
@@ -4232,7 +4243,7 @@
         <target state="final"> Мови </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -4318,7 +4329,7 @@
         <target state="final">Отримате оригінальні ілюстрації</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
@@ -4326,7 +4337,7 @@
         <target state="final"> Отримання оригінальних ілюстрацій вимкнено за замовчуванням, оскільки вони можуть займати багато місця на жорсткому диску через свій розмір і не є абсолютно необхідними для використання програми. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">142,151</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -4342,7 +4353,7 @@
         <target state="final">Ілюстрації</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -4350,7 +4361,7 @@
         <target state="final"> Шлях/зсилка </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -4358,7 +4369,7 @@
         <target state="final"> Зазвичай цей шлях можна залишити за замовчуванням. Може знадобитися змінити його, якщо каталог ілюстрацій, який використовує Field, знаходиться на мережевому пристрої (NAS), яким користуються різні користувачі. Програма створює підкаталог для кожного проекту під цим шляхом. Файлами ілюстрацій, що зберігаються в цих каталогах, повністю керує Field. Файли ілюстрацій не слід розміщувати туди вручну, а імпортувати в огляд ілюстрацій або на вкладку ілюстрацій у вікні перегляду ресурсів. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.showAdvanced" datatype="html">
@@ -4366,7 +4377,7 @@
         <target state="final">Розширені параметри</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.hideAdvanced" datatype="html">
@@ -4374,7 +4385,7 @@
         <target state="final">Приховати додаткові параметри</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -4382,7 +4393,7 @@
         <target state="final">Оновлення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -4390,7 +4401,7 @@
         <target state="final">Увімкніти автоматичну перевірку оновлень</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">
@@ -5727,7 +5738,9 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
         <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
-        <target state="new">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
+        <target state="final">Зв’язок 'hasDefaultMapLayer' ресурсу категорії '[0]' посилається на один
+          або більше ресурсів, на які не посилається у зв’язку 'hasMapLayer'.
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6383,7 +6396,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
         <source>Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</source>
-        <target state="new">Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</target>
+        <target state="final">Ресурс [0] не можна перемістити, оскільки один або кілька його підресурсів не повинні знаходитись в межах цільового заходу/паказника.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6754,7 +6767,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -6850,7 +6863,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>

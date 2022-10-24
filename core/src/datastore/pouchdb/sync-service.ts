@@ -17,12 +17,12 @@ export class SyncService {
     private project: string;
     private password: string = '';
     private currentSyncTimeout: any;
+    private checkDatabaseExistence: (url: string) => Promise<boolean>;
 
     private sync: ReplicationHandle = null;
     private replication: ReplicationHandle = null;
 
     private syncStatusSubscription: Subscription = null;
-
     private statusObservers: Array<Observer<SyncStatus>> = [];
 
 
@@ -32,11 +32,13 @@ export class SyncService {
     public getStatus = (): SyncStatus => this.status;
 
 
-    public init(syncTarget: string, project: string, password: string) {
+    public init(syncTarget: string, project: string, password: string,
+                checkDatabaseExistence: (url: string) => Promise<boolean>) {
 
         this.syncTarget = syncTarget;
         this.project = project;
         this.password = password;
+        this.checkDatabaseExistence = checkDatabaseExistence;
     }
 
 
@@ -111,13 +113,13 @@ export class SyncService {
     }
 
 
-    public async startSync(setConnectingStatus: boolean = true, filter?: (doc: any) => boolean) {
+    public async startSync(setConnectingStatus: boolean = true, filter?: (doc: any) => boolean): Promise<boolean> {
 
-        if (!this.syncTarget || !this.project) return;
+        if (!this.syncTarget || !this.project) return false;
 
         if (this.sync) {
             console.warn('sync already running, will not start sync again');
-            return;
+            return false;
         }
 
         if (setConnectingStatus) this.setStatus(SyncStatus.Connecting);
@@ -125,6 +127,11 @@ export class SyncService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
         const url = SyncService.generateUrl(this.syncTarget, this.project, this.password);
+
+        if (!(await this.checkDatabaseExistence(url))) {
+            this.setStatus(SyncStatus.AuthenticationError);
+            return false;
+        }
         
         const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, filter);
         this.syncStatusSubscription = syncStatusObserver.subscribe(
@@ -139,6 +146,8 @@ export class SyncService {
                 this.currentSyncTimeout = setTimeout(() => this.startSync(false), 5000); // retry
             }
         );
+
+        return true;
     }
 
 

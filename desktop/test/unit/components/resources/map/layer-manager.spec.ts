@@ -20,6 +20,7 @@ describe('LayerManager', () => {
             id: 'project',
             relations: {
                 hasMapLayer: ['l1', 'l2'],
+                hasDefaultMapLayer: ['l2']
             }
         }
     };
@@ -91,16 +92,30 @@ describe('LayerManager', () => {
 
 
     it('add or remove no layers if the layers are initialized with the same resources state again',
-        async done => {
+            async done => {
 
-            mockViewFacade.getActiveLayersIds.and.returnValue(['l2']);
+        mockViewFacade.getActiveLayersIds.and.returnValue(['l2']);
 
-            await layerManager.initializeLayers();
-            const activeLayersChange = await layerManager.initializeLayers();
+        await layerManager.initializeLayers();
+        const activeLayersChange = await layerManager.initializeLayers();
 
-            expect(activeLayersChange.added.length).toBe(0);
-            expect(activeLayersChange.removed.length).toBe(0);
+        expect(activeLayersChange.added.length).toBe(0);
+        expect(activeLayersChange.removed.length).toBe(0);
 
-            done();
-        });
+        done();
+    });
+
+
+    it('use default layers if no active layers ids are stored in resources state', async done => {
+
+        mockViewFacade.getActiveLayersIds.and.returnValue(undefined);
+
+        const activeLayersChange = await layerManager.initializeLayers();
+
+        expect(activeLayersChange.added.length).toBe(1);
+        expect(activeLayersChange.added[0]).toEqual('l2');
+        expect(activeLayersChange.removed.length).toBe(0);
+
+        done();
+    });
 });

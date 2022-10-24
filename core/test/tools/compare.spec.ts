@@ -8,11 +8,11 @@ describe('compare', () => {
         expect(compare('1', '1')).toBe(true);
         expect(compare(1, 1)).toBe(true);
         expect(compare(['1', '2'], ['1', '2'])).toBe(true);
-        expect(compare(['1', '2'], ['2', '1'])).toBe(true);
         expect(compare(undefined, undefined)).toBe(true);
 
         expect(compare('1', undefined)).toBe(false);
         expect(compare(1, '1')).toBe(false);
+        expect(compare(['1', '2'], ['2', '1'])).toBe(false);
         expect(compare(['1', '2'], ['1', '2', '3'])).toBe(false);
     });
 

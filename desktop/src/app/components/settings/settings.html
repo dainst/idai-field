@@ -117,15 +117,16 @@
 
                     <button id="advanced-settings-button"
                             type="button" class="btn btn-link btn-block" (click)="toggleAdvancedSettings()"
-                            [attr.aria-expanded]="!areAdvancedSettingCollapsed" aria-controls="advanced-settings">
-                        <span *ngIf="areAdvancedSettingCollapsed" i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
-                        <span *ngIf="!areAdvancedSettingCollapsed" i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
+                            [attr.aria-expanded]="!advancedSettingsCollapsed" aria-controls="advanced-settings">
+                        <span *ngIf="advancedSettingsCollapsed"
+                              i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
+                        <span *ngIf="!advancedSettingsCollapsed"
+                              i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
                     </button>
-                    <div id="advanced-settings" [ngbCollapse]="areAdvancedSettingCollapsed">
+                    <div id="advanced-settings" [ngbCollapse]="advancedSettingsCollapsed">
                         <h5 style="margin-top: 32px;" i18n="@@settings.images">Bilder</h5>
 
-                        <div id="advanced-settings"class="form-group" style="margin-bottom: 0;">
-
+                        <div id="advanced-settings" class="form-group">
                             <label class="control-label col-form-label"
                                 for="imagestorepath-input"
                                 i18n="@@settings.images.path">

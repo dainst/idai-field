@@ -15,7 +15,8 @@ export class LayerImageProvider {
     private imageContainers: { [resourceId: string]: ImageContainer } = {};
 
 
-    constructor(private imageUrlMaker: ImageUrlMaker, private sanitizer: DomSanitizer) {}
+    constructor(private imageUrlMaker: ImageUrlMaker,
+                private sanitizer: DomSanitizer) {}
 
 
     public async getImageContainer(resourceId: string): Promise<ImageContainer> {
@@ -27,7 +28,9 @@ export class LayerImageProvider {
         return this.imageContainers[resourceId];
     }
 
+
     public reset() {
+
         this.imageUrlMaker.revokeAllUrls();
         this.imageContainers = {};
     }
@@ -40,22 +43,14 @@ export class LayerImageProvider {
             url = this.sanitizer.sanitize(
                 SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.ORIGINAL)
             );
-
             return { imgSrc: url };
         } catch (err) {
-            console.error(err);
-            console.error('Error while creating image container. Original image not found in imagestore ' +
-                'for document:', document);
-
             try {
-                url =  this.sanitizer.sanitize(
+                url = this.sanitizer.sanitize(
                     SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.THUMBNAIL)
                 );
                 return { imgSrc: url };
             } catch (err) {
-
-                console.error('Error while creating fallback image container. Thumbnail image also not found in imagestore ' +
-                    'for document:', document);
                 return { imgSrc: ImageUrlMaker.blackImg };
             }
         }

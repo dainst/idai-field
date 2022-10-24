@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges,
+    ViewChild } from '@angular/core';
 import { clone, isEmpty, isString } from 'tsfun';
 import { I18N } from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
@@ -39,11 +40,13 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         || (this.languages.length === 1 && this.languages[0].code !== I18N.UNSPECIFIED_LANGUAGE);
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
 
-        this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;
-        this.additionalLanguages = this.languages.length > 5 ? this.languages.slice(4) : [];
-        if (this.additionalLanguages.length > 0) this.shownAdditionalLanguage = this.additionalLanguages[0];
+        if (changes['languages']) {
+            this.tabLanguages = this.languages.length > 5 ? this.languages.slice(0, 4) : this.languages;
+            this.additionalLanguages = this.languages.length > 5 ? this.languages.slice(4) : [];
+            if (this.additionalLanguages.length > 0) this.shownAdditionalLanguage = this.additionalLanguages[0];
+        }
 
         this.multiLanguageText = this.readFieldData();
         if (!this.selectedLanguage) this.selectedLanguage = this.languages[0]?.code ?? I18N.UNSPECIFIED_LANGUAGE;
@@ -100,8 +103,10 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         if ((this.multiLanguageText && isString(this.multiLanguageText)) || this.hasNoConfiguredLanguages()) {
             this.multiLanguageText = value;
         } else if (value === '') {
-            delete this.multiLanguageText[this.selectedLanguage];
-            if (isEmpty(this.multiLanguageText)) this.multiLanguageText = undefined;
+            if (this.multiLanguageText) {
+                delete this.multiLanguageText[this.selectedLanguage];
+                if (isEmpty(this.multiLanguageText)) this.multiLanguageText = undefined;
+            }
         } else {
             if (!this.multiLanguageText) this.multiLanguageText = {};
             this.multiLanguageText[this.selectedLanguage] = value;

@@ -599,7 +599,7 @@
         <target state="final">Back</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -611,7 +611,7 @@
         <target state="final">(Resource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -634,40 +634,40 @@
         <source>Kontext</source>
         <target state="final">Context</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">248</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
         <source>Keine Einschränkung</source>
         <target state="final">No restriction</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">267</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
         <source>Katalog</source>
         <target state="final">Catalog</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">291</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
         <source>Kategorie</source>
         <target state="final">Category</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">323</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
         <target state="final"> Combine hierarchical relations (recommended) </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">357,365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -702,6 +702,14 @@
           <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
+        <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
+        <target state="final"> If this option is enabled, the hierarchical relations are combined into the simplified relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, which specifies the direct parent resource. This option should normally remain enabled. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">213</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
         <source>CSV</source>
         <target state="final">CSV</target>
@@ -714,16 +722,16 @@
         <source>Komplett</source>
         <target state="final">Complete</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
         <source>Nur Schema</source>
         <target state="final">Schema only</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
@@ -732,8 +740,8 @@
                         No resources found.
                     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
@@ -742,8 +750,8 @@
                         No catalogs found.
                     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -754,8 +762,8 @@
                         resources.
                     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -766,7 +774,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -774,7 +782,7 @@
         <target state="final">Non-exported fields:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -786,7 +794,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -2552,7 +2560,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -2632,7 +2640,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
@@ -3961,7 +3969,7 @@
         <target state="final">Edit map layers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -3971,7 +3979,7 @@
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -3979,7 +3987,7 @@
         <target state="final">Show/hide map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -3987,7 +3995,7 @@
         <target state="final">Focus map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
@@ -3995,7 +4003,7 @@
         <target state="final">Set as default map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -4003,7 +4011,7 @@
         <target state="final">Remove map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -4011,7 +4019,7 @@
         <target state="final">Add map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
@@ -4292,11 +4300,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
-        <source>Literaturzitat nach DAI-Richtlinien:</source>
-        <target state="final">Literature quotation according to DAI guidelines:</target>
+        <source>Literaturzitat:</source>
+        <target state="final">Literature quotation:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
@@ -4304,7 +4312,7 @@
         <target state="final">Zenon ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
@@ -4768,7 +4776,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
@@ -4860,7 +4868,7 @@
         <target state="final">Receive original images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
@@ -4868,7 +4876,7 @@
         <target state="final"> Uploads of original images to this computer by others are blocked by default because their size may be problematic concerning disk space and they are not strictly necessary for using the application. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">142,151</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -4884,7 +4892,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -4894,7 +4902,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -4909,7 +4917,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.showAdvanced" datatype="html">
@@ -4917,7 +4925,7 @@
         <target state="final">Advanced settings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.hideAdvanced" datatype="html">
@@ -4925,7 +4933,7 @@
         <target state="final">Hide advanced settings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -4933,7 +4941,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -4941,7 +4949,7 @@
         <target state="final">Activate automatic check for updates</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">

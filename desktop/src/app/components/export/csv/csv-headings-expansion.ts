@@ -1,5 +1,5 @@
 import { flatMap, range } from 'tsfun';
-import { OptionalRange } from 'idai-field-core';
+import { I18N, OptionalRange } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 
 
@@ -16,7 +16,7 @@ export module CSVHeadingsExpansion {
         return (fieldName: string) => {
 
             return languages.map(language => {
-                return fieldName + OBJECT_SEPARATOR + language
+                return fieldName + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
             });
         };
     }
@@ -29,7 +29,8 @@ export module CSVHeadingsExpansion {
             return (fieldName: string) => {
 
                 return flatMap(i => languages.map(language => {
-                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + language
+                    return fieldName + OBJECT_SEPARATOR + i
+                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                 }))(range(n));
             };
         };
@@ -59,8 +60,8 @@ export module CSVHeadingsExpansion {
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
                 ].concat(languages.map(language => {
-                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source' + OBJECT_SEPARATOR
-                        + language;
+                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source'
+                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                 })).concat([
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain'
@@ -82,7 +83,7 @@ export module CSVHeadingsExpansion {
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition'
                 ].concat(languages.map(language => {
                     return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
-                        + OBJECT_SEPARATOR + language;
+                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                 })).concat([
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
@@ -108,5 +109,11 @@ export module CSVHeadingsExpansion {
                 )(range(n));
             }
         }
+    }
+
+
+    function hasNoConfiguredProjectLanguages(languages: string[]): boolean {
+
+        return languages.length === 1 && languages[0] === I18N.UNSPECIFIED_LANGUAGE;
     }
 }

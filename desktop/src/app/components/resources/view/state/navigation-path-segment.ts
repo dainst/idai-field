@@ -1,7 +1,6 @@
-import {to} from 'tsfun';
-import {Document, Resource} from 'idai-field-core';
-import {FieldDocument} from 'idai-field-core';
-import {ViewContext} from './view-context';
+import { to } from 'tsfun';
+import { Document, Resource, FieldDocument } from 'idai-field-core';
+import { ViewContext } from './view-context';
 
 
 /**

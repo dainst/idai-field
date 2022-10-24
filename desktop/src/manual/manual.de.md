@@ -613,7 +613,7 @@ Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ei
 <p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
 
 ##### Literaturangabe
-Angabe eines oder mehrerer bibliographischer Verweise nach DAI-Richtlinien. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
+Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
 <p align="center"><img src="images/de/configuration/input_type_literature.png" alt="Eingabetyp 'Literaturangabe'"/></p>
 
 

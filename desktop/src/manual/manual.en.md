@@ -601,7 +601,7 @@ Specification of one or more dimensions. Either a single value or a range can be
 <p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
 
 ##### Bibliographic reference
-Specification of one or more bibliographic references according to DAI guidelines. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
+Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
 <p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Input type 'Bibliographic reference'"/></p>
 
 

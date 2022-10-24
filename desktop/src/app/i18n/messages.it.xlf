@@ -753,7 +753,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
-        <target state="new"> Hierarchische Relationen zusammenfassen (empfohlen) </target>
+        <target state="final"> Accorpare le relazioni gerarchiche (consigliato) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -793,7 +793,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
         <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
-        <target state="new"> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </target>
+        <target state="final"> Se quest'opzione è attiva, le relazioni gerarchiche vengono indicate come relazione semplificata "isChildOf", che indica la risorsa immediatamente sovraordinata. Questa importazione deve di regola rimanere attiva. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">213</context>
@@ -3485,7 +3485,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
         <source>Als Standard-Kartenhintergrund festlegen</source>
-        <target state="new">Als Standard-Kartenhintergrund festlegen</target>
+        <target state="final">Imposta come sfondo della mappa predefinito</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -5604,7 +5604,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
         <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
-        <target state="new">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
+        <target state="final">La relazione 'hasDefaultMapLayer' di una risorsa della categoria '[0]' si riferisce a una o più risorse che non sono indicate nella relazione 'hasMapLayer'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6260,7 +6260,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
         <source>Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</source>
-        <target state="new">Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</target>
+        <target state="final">La risorsa [0] non può essere spostata perché una o più delle sue risorse subordinate non possono essere assegnate all'operazione di destinazione.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

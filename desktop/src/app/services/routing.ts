@@ -53,10 +53,9 @@ export class Routing {
     /**
      * @throws M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY
      */
-    public async jumpToResource(documentToSelect: Document,
-                                comingFromOutsideResourcesComponent: boolean = false) {
+    public async jumpToResource(documentToSelect: Document) {
 
-        if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
+        if (!this.router.url.startsWith('/resources/')) this.currentRoute = undefined;
 
         if (documentToSelect.resource.category === 'Project') {
             await this.editProject();
@@ -65,7 +64,7 @@ export class Routing {
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect);
         } else {
-            await this.jumpToFieldCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpToFieldCategoryResource(documentToSelect);
         }
     }
 
@@ -100,8 +99,7 @@ export class Routing {
     }
 
 
-    private async jumpToFieldCategoryResource(documentToSelect: Document,
-                                              comingFromOutsideResourcesComponent: boolean = false) {
+    private async jumpToFieldCategoryResource(documentToSelect: Document) {
 
         const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
 
@@ -116,8 +114,7 @@ export class Routing {
                 }
             }
         }
-
-        if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
+        if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);

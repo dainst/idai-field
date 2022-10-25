@@ -74,7 +74,7 @@ export abstract class ViewModalComponent {
 
         this.close();
         try {
-            await this.routingService.jumpToResource(documentToJumpTo, true);
+            await this.routingService.jumpToResource(documentToJumpTo);
         } catch (errWithParams) {
             this.messages.add(errWithParams);
         }

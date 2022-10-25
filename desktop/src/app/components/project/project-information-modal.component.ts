@@ -84,7 +84,7 @@ export class ProjectInformationModalComponent implements OnInit {
     public goToLastChangedResource() {
 
         this.activeModal.close();
-        this.routing.jumpToResource(this.lastChangedDocument, true);
+        this.routing.jumpToResource(this.lastChangedDocument);
     }
 
 

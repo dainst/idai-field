@@ -93,7 +93,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (!this.update) return Promise.resolve();
 
-        if (Helper.hasOnlySelectionChanged(changes)) {
+        if (Helper.hasOnlySelectionChanged(changes) && this.getNumberOfGeometriesOnMap() > 0) {
             this.updateSelectedGeometries(Helper.getPreviousSelection(changes));
         } else {
             this.resetMap();
@@ -495,5 +495,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
         result = result.concat(this.additionalSelectedDocuments);
 
         return result;
+    }
+
+
+    private getNumberOfGeometriesOnMap(): number {
+
+        return this.polygonsArray.length
+            + this.polylinesArray.length
+            + this.markersArray.length;
     }
 }

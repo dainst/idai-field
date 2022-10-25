@@ -4,7 +4,7 @@ import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from
 import { FieldPolyline } from './field-polyline';
 import { FieldPolygon } from './field-polygon';
 import { FieldMarker } from './field-marker';
-import { MapComponentHelper as H } from './map-component-helper';
+import { MapComponentHelper as Helper } from './map-component-helper';
 
 
 @Component({
@@ -93,8 +93,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (!this.update) return Promise.resolve();
 
-        if (H.hasOnlySelectionChanged(changes)) {
-            this.updateSelectedGeometries(H.getPreviousSelection(changes));
+        if (Helper.hasOnlySelectionChanged(changes)) {
+            this.updateSelectedGeometries(Helper.getPreviousSelection(changes));
         } else {
             this.resetMap();
         }
@@ -114,7 +114,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private updateSelectedGeometries(previousSelection: Array<FieldDocument>) {
 
         const selectedDocuments: Array<FieldDocument> = this.getSelection();
-        const deselectedDocuments: Array<FieldDocument> = H.getDeselectedDocuments(
+        const deselectedDocuments: Array<FieldDocument> = Helper.getDeselectedDocuments(
             selectedDocuments, previousSelection
         );
 
@@ -158,7 +158,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected setView(): Promise<any> {
 
-        if (H.hasGeometries(this.getSelection())) {
+        if (Helper.hasGeometries(this.getSelection())) {
             this.focusSelection();
         } else if (this.bounds.length > 1) {
             this.map.fitBounds(L.latLngBounds(this.bounds));
@@ -246,7 +246,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected addGeometryToMap(document: FieldDocument) {
 
-        const geometry: FieldGeometry|undefined = H.getGeometry(document);
+        const geometry: FieldGeometry|undefined = Helper.getGeometry(document);
         if (!geometry) return;
 
         switch(geometry.type) {
@@ -291,7 +291,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const marker: FieldMarker = L.circleMarker(latLng, this.getMarkerOptions(document));
         marker.document = document;
 
-        marker.bindTooltip(H.getTooltipText(document.resource), {
+        marker.bindTooltip(Helper.getTooltipText(document.resource), {
             direction: 'top',
             opacity: 1.0
         });
@@ -311,7 +311,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private addPolylineToMap(coordinates: any, document: FieldDocument): FieldPolyline {
 
-        const polyline: FieldPolyline = H.getPolylineFromCoordinates(coordinates);
+        const polyline: FieldPolyline = Helper.getPolylineFromCoordinates(coordinates);
         polyline.document = document;
 
         if (this.isParentDocument(document)) {
@@ -331,7 +331,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private addPolygonToMap(coordinates: any, document: FieldDocument): FieldPolygon {
 
-        const polygon: FieldPolygon = H.getPolygonFromCoordinates(coordinates);
+        const polygon: FieldPolygon = Helper.getPolygonFromCoordinates(coordinates);
         polygon.document = document;
 
         if (this.isParentDocument(document)) {
@@ -363,7 +363,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle(style);
 
-        path.bindTooltip(H.getTooltipText(document.resource), {
+        path.bindTooltip(Helper.getTooltipText(document.resource), {
             direction: 'center',
             opacity: 1.0
         });
@@ -391,9 +391,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private focusSelection() {
 
         const panOptions = { animate: true, easeLinearity: 0.3 };
-        const selection = this.getSelection().filter(H.getGeometry);
+        const selection = this.getSelection().filter(Helper.getGeometry);
 
-        const bounds = H.addToBounds(
+        const bounds = Helper.addToBounds(
             this.markers, this.polygons, this.polylines, selection);
 
         if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);

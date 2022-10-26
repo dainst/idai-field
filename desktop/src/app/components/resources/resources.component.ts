@@ -44,6 +44,7 @@ export class ResourcesComponent implements OnDestroy {
     private deselectionSubscription: Subscription;
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
+    private selectViaResourceLinkSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -98,9 +99,8 @@ export class ResourcesComponent implements OnDestroy {
 
         if (this.deselectionSubscription) this.deselectionSubscription.unsubscribe();
         if (this.populateDocumentsSubscription) this.populateDocumentsSubscription.unsubscribe();
-        if (this.changedDocumentFromRemoteSubscription) {
-            this.changedDocumentFromRemoteSubscription.unsubscribe();
-        }
+        if (this.changedDocumentFromRemoteSubscription) this.changedDocumentFromRemoteSubscription.unsubscribe();
+        if (this.selectViaResourceLinkSubscription) this.selectViaResourceLinkSubscription.unsubscribe();
     }
 
 
@@ -364,7 +364,8 @@ export class ResourcesComponent implements OnDestroy {
                     group
                 );
             } else {
-                await this.viewFacade.setActiveDocumentViewTab(group)
+                if (this.viewFacade.getMode() !== 'types') this.activePopoverMenu = 'info';
+                await this.viewFacade.setActiveDocumentViewTab(group);
             }
         } catch (e) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
@@ -407,6 +408,11 @@ export class ResourcesComponent implements OnDestroy {
         this.changedDocumentFromRemoteSubscription =
             this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
+            });
+
+        this.selectViaResourceLinkSubscription =
+            this.viewFacade.selectViaResourceLinkNotifications().subscribe(document => {
+                this.openPopoverMenu('info', document as FieldDocument);
             });
     }
 

@@ -30,19 +30,19 @@ export class DocumentsManager {
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
     private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
+    private selectViaResourceLinkObservers: Array<Observer<Document>> = [];
     private childrenCountMap: { [resourceId: string]: number } = {};
 
     private currentQueryId: string;
     private populateInProgress: boolean = false;
 
 
-    constructor(
-        private datastore: Datastore,
-        changesStream: ChangesStream,
-        private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading,
-        private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number
-    ) {
+    constructor(private datastore: Datastore,
+                changesStream: ChangesStream,
+                private resourcesStateManager: ResourcesStateManager,
+                private loading: Loading,
+                private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number) {
+        
         changesStream.remoteChangesNotifications()
             .subscribe(document => this.handleRemoteChange(document));
     }
@@ -62,6 +62,9 @@ export class DocumentsManager {
 
     public documentChangedFromRemoteNotifications = (): Observable<undefined> =>
         ObserverUtil.register(this.documentChangedFromRemoteObservers);
+
+    public selectViaResourceLinkNotifications = (): Observable<Document> =>
+        ObserverUtil.register(this.selectViaResourceLinkObservers);
 
     public isPopulateInProgress = () => this.populateInProgress;
 
@@ -134,7 +137,7 @@ export class DocumentsManager {
     public deselect() {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
-            this.selectAndNotify(undefined);
+            this.selectAndNotify(undefined, false);
             this.removeNewDocument();
             this.resourcesStateManager.setActiveDocumentViewTab(undefined);
         }
@@ -144,7 +147,7 @@ export class DocumentsManager {
     public addNewDocument(document: FieldDocument) {
 
         this.documents = [document].concat(this.documents);
-        this.selectAndNotify(document);
+        this.selectAndNotify(document, false);
     }
 
 
@@ -156,7 +159,8 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true): Promise<any> {
+    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true,
+                             viaResourceLink: boolean = false): Promise<any> {
 
         this.removeNewDocument();
 
@@ -169,7 +173,7 @@ export class DocumentsManager {
             await this.populateDocumentList();
         }
 
-        this.selectAndNotify(documentToSelect);
+        this.selectAndNotify(documentToSelect, viaResourceLink);
     }
 
 
@@ -273,14 +277,17 @@ export class DocumentsManager {
     }
 
 
-    private selectAndNotify(document: FieldDocument|undefined) {
+    private selectAndNotify(document: FieldDocument|undefined, viaResourceLink: boolean) {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
-            ObserverUtil.notify(this.deselectionObservers,
-                ResourcesState.getSelectedDocument(this.resourcesStateManager.get()) as Document|undefined);
+            ObserverUtil.notify(
+                this.deselectionObservers,
+                ResourcesState.getSelectedDocument(this.resourcesStateManager.get())
+            );
         }
 
         this.resourcesStateManager.setSelectedDocument(document);
+        if (viaResourceLink) ObserverUtil.notify(this.selectViaResourceLinkObservers, document);
     }
 
 

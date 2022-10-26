@@ -110,6 +110,8 @@ export class ViewFacade {
 
     public documentChangedFromRemoteNotifications = () => this.documentsManager.documentChangedFromRemoteNotifications();
 
+    public selectViaResourceLinkNotifications = () => this.documentsManager.selectViaResourceLinkNotifications();
+
     public deactivateView = (viewName: string) => this.resourcesStateManager.deactivateView(viewName);
 
     public removeView = (viewName: string) => this.resourcesStateManager.removeView(viewName);
@@ -128,10 +130,10 @@ export class ViewFacade {
     }
 
 
-    public async setSelectedDocument(resourceId: string, adjustListIfNecessary?: boolean) {
+    public async setSelectedDocument(resourceId: string, adjustListIfNecessary?: boolean, viaResourceLink?: boolean) {
 
         try {
-            await this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
+            await this.documentsManager.setSelected(resourceId, adjustListIfNecessary, viaResourceLink);
         } catch (errWithParams) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();

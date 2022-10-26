@@ -117,7 +117,7 @@ export class Routing {
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
-            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, true);
         }
     }
 

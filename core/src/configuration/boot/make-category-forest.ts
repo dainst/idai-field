@@ -137,8 +137,8 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         const category: any = {};
 
         category.name = categoryDefinition ? categoryDefinition.name : formDefinition.categoryName;
-        category.mustLieWithin = categoryDefinition
-            ? categoryDefinition.mustLieWithin : parentCategoryDefinition.mustLieWithin;
+        category.mustLieWithin = parentCategoryDefinition
+            ? parentCategoryDefinition.mustLieWithin : categoryDefinition.mustLieWithin;
         category.isAbstract = categoryDefinition?.abstract || false;
         category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
         category.required = categoryDefinition?.required || false;

@@ -84,6 +84,188 @@
         }
       ]
     },
+    "InnerWall:default": {
+      "categoryName": "InnerWall",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "OuterWall:default": {
+      "categoryName": "OuterWall",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "Roof:default": {
+      "categoryName": "Roof",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Stairs:default": {
+      "categoryName": "Stairs",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Window:default": {
+      "categoryName": "Window",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Door:default": {
+      "categoryName": "Door",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Furniture:default": {
+      "categoryName": "Furniture",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Damage:default": {
+      "categoryName": "Damage",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
     "Trench:default": {
       "categoryName": "Trench",
       "creationDate": "2019",

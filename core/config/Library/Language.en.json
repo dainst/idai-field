@@ -109,6 +109,30 @@
     "RoomCeiling": {
       "label": "Ceiling"
     },
+    "InnerWall": {
+      "label": "Inner wall"
+    },
+    "OuterWall": {
+      "label": "Outer wall"
+    },
+    "Roof": {
+      "label": "Roof"
+    },
+    "Stairs": {
+      "label": "Stairs"
+    },
+    "Window": {
+      "label": "Window"
+    },
+    "Door": {
+      "label": "Door"
+    },
+    "Damage": {
+      "label": "Damage"
+    },
+    "Furniture": {
+      "label": "Furniture"
+    },
     "Trench": {
       "label": "Trench",
       "fields": {

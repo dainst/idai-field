@@ -1350,6 +1350,16 @@
     "description": {},
     "fields": {}
   },
+  "OuterWall": {
+    "parent": "RoomWall",
+    "description": {},
+    "fields": {}
+  },
+  "InnerWall": {
+    "parent": "RoomWall",
+    "description": {},
+    "fields": {}
+  },
   "SurveyUnit": {
     "parent": "Area",
     "color": "#6baed6",

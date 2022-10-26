@@ -336,8 +336,9 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        // An idealized (non material) entity, must be created within a Room
         RoomWall: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             mustLieWithin: true,
             fields: {},
             minimalForm: {
@@ -353,7 +354,6 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        // An idealized (non material) entity, must be created within a Room
         RoomFloor: {
             mustLieWithin: true,
             fields: {
@@ -371,7 +371,6 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
             mustLieWithin: true,
             fields: {},
@@ -388,7 +387,6 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
@@ -406,9 +404,109 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        Door: {
+            mustLieWithin: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Window: {
+            mustLieWithin: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Roof: {
+            mustLieWithin: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Stairs: {
+            mustLieWithin: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         Area: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Damage: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            mustLieWithin: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        Furniture: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -803,39 +901,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Level:inherit'],
-            range: ['Building'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
-            domain: ['Room:inherit'],
-            range: ['Building'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
-            domain: ['RoomFloor'],
-            range: ['Building'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
-            domain: ['RoomWall'],
-            range: ['Building'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
-            domain: ['RoomCeiling'],
+            domain: ['Level:inherit', 'Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling',
+                'Roof', 'Stairs', 'Window', 'Door', 'Damage:inherit', 'Furniture:inherit'],
             range: ['Building'],
             editable: false,
             visible: false,
@@ -892,7 +959,9 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Room:inherit', 'Sample'],
+            range: ['Feature:inherit', 'Area:inherit', 'Sample', 'Room:inherit', 'BuildingPart:inherit',
+                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs',
+                'Window', 'Door'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -963,8 +1032,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['RoomFloor'],
-            range: ['Room:inherit'],
+            domain: ['RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
+            range: ['Room:inherit', 'Level:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -972,8 +1041,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['RoomWall'],
-            range: ['Room:inherit'],
+            domain: ['Window', 'Door'],
+            range: ['RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -981,8 +1050,9 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['RoomCeiling'],
-            range: ['Room:inherit'],
+            domain: ['Damage:inherit', 'Furniture:inherit'],
+            range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
+                'RoomCeiling', 'Roof', 'Stairs', 'Window', 'Door'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

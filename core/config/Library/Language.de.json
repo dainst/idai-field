@@ -117,8 +117,32 @@
     "RoomWall": {
       "label": "Wand"
     },
+    "InnerWall": {
+      "label": "Innenwand"
+    },
+    "OuterWall": {
+      "label": "Außenwand"
+    },
     "RoomCeiling": {
       "label": "Decke"
+    },
+    "Roof": {
+      "label": "Dach"
+    },
+    "Stairs": {
+      "label": "Treppe"
+    },
+    "Window": {
+      "label": "Fenster / Öffnung"
+    },
+    "Door": {
+      "label": "Tür"
+    },
+    "Damage": {
+      "label": "Schaden"
+    },
+    "Furniture": {
+      "label": "Ausstattung"
     },
     "Trench": {
       "label": "Schnitt",

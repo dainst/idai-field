@@ -3,9 +3,9 @@ defmodule FieldHub.FileStoreTest do
 
   use ExUnit.Case, async: true
 
-  @file_directory_root Application.get_env(:field_hub, :file_directory_root)
-  @project "test-data"
+  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
   @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
+  @project "test-data"
 
   setup %{} do
     on_exit(fn ->

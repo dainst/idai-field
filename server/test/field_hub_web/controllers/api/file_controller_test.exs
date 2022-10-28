@@ -3,7 +3,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
   alias FieldHub.TestHelper
 
-  @file_directory_root Application.get_env(:field_hub, :file_directory_root)
+  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
+  @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
 
   @project "test_project"
   @user_name "test_user"
@@ -23,7 +24,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       # Run after each test
       TestHelper.remove_test_db_and_user(@project, @user_name)
       File.rm_rf!(@file_directory_root)
-      Cachex.clear!(Application.get_env(:field_hub, :file_info_cache_name))
+      Cachex.clear!(@cache_name)
     end)
 
     :ok

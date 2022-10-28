@@ -5,10 +5,12 @@ defmodule FieldHub.FileStoreTest do
 
   @file_directory_root Application.get_env(:field_hub, :file_directory_root)
   @project "test-data"
+  @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
 
   setup %{} do
     on_exit(fn ->
       # Run after each test
+      Cachex.del(@cache_name, @project)
       File.rm_rf(@file_directory_root)
     end)
   end
@@ -123,5 +125,108 @@ defmodule FieldHub.FileStoreTest do
     File.write!(path, content)
 
     assert {:ok, ^path} = FileStore.get_file_path("validfilename", @project, :thumbnail_image)
+  end
+
+  test "file info cache gets cleared by file storing" do
+    FileStore.create_directories(@project)
+
+    content = File.read!("test/fixtures/logo.png")
+
+    FileStore.store_file("validfilename", @project, :original_image, content)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
+
+    list = FileStore.get_file_list(@project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = Cachex.get(@cache_name, @project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = {:ok, list}
+
+    FileStore.store_file("anothervalidfilename", @project, :original_image, content)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
+  end
+
+  test "file info cache gets cleared by file deletion" do
+    FileStore.create_directories(@project)
+
+    content = File.read!("test/fixtures/logo.png")
+
+    FileStore.store_file("validfilename", @project, :original_image, content)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
+
+    list = FileStore.get_file_list(@project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = Cachex.get(@cache_name, @project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = {:ok, list}
+
+    FileStore.delete("validfilename", @project)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
+  end
+
+
+  test "file info cache gets cleared after project directory is deleted" do
+    FileStore.create_directories(@project)
+
+    content = File.read!("test/fixtures/logo.png")
+
+    FileStore.store_file("validfilename", @project, :original_image, content)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
+
+    list = FileStore.get_file_list(@project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = Cachex.get(@cache_name, @project)
+
+    assert {
+      :ok,
+      %{
+        "validfilename" => %{
+          # irrelevant for test
+        }
+      }
+    } = {:ok, list}
+
+    FileStore.remove_directories(@project)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, @project)
   end
 end

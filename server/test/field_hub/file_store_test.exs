@@ -73,6 +73,66 @@ defmodule FieldHub.FileStoreTest do
     assert Enum.count(Map.keys(list)) == 3
   end
 
+  test "without variant parameter return all files in file list" do
+
+    FileStore.create_directories(@project)
+
+    content = File.read!("test/fixtures/logo.png")
+
+    File.write!("#{@file_directory_root}/#{@project}/thumbnail_images/uuid_1", content)
+    File.write!("#{@file_directory_root}/#{@project}/original_images/uuid_1", content)
+    File.write!("#{@file_directory_root}/#{@project}/original_images/uuid_2", content)
+
+    list = FileStore.get_file_list(@project)
+
+    assert %{
+      "uuid_1" => %{
+        deleted: false,
+        types: [:thumbnail_image, :original_image],
+        variants: [
+          %{name: :thumbnail_image},
+          %{name: :original_image}
+        ]
+      },
+      "uuid_2" => %{
+        deleted: false,
+        types: [:original_image],
+        variants: [%{name: :original_image}]
+      }
+    } = list
+  end
+
+  test "return files with specified variant in file list" do
+
+    FileStore.create_directories(@project)
+
+    content = File.read!("test/fixtures/logo.png")
+
+    File.write!("#{@file_directory_root}/#{@project}/thumbnail_images/uuid_1", content)
+    File.write!("#{@file_directory_root}/#{@project}/original_images/uuid_1", content)
+    File.write!("#{@file_directory_root}/#{@project}/original_images/uuid_2", content)
+    File.write!("#{@file_directory_root}/#{@project}/thumbnail_images/uuid_3", content)
+
+    list = FileStore.get_file_list(@project, [:thumbnail_image])
+
+    assert %{
+      "uuid_1" => %{
+        deleted: false,
+        types: [:thumbnail_image, :original_image],
+        variants: [
+          %{name: :thumbnail_image},
+          %{name: :original_image}
+        ]
+      },
+      "uuid_3" => %{
+        deleted: false,
+        types: [:thumbnail_image],
+        variants: [%{name: :thumbnail_image, size: 18619}]}
+    } = list
+
+    assert !Map.has_key?(list, "uuid_2")
+  end
+
   test "subdirectories and their content are being ignored when generating file list" do
     FileStore.create_directories(@project)
 
@@ -194,7 +254,6 @@ defmodule FieldHub.FileStoreTest do
 
     assert {:ok, nil} = Cachex.get(@cache_name, @project)
   end
-
 
   test "file info cache gets cleared after project directory is deleted" do
     FileStore.create_directories(@project)

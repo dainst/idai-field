@@ -56,8 +56,10 @@
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
-                    <span class="group-label">{{getGroupLabel(group)}}</span>
-                    <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
+                    <span class="group-label">
+                        {{getGroupLabel(group)}}
+                        <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
+                    </span>
                 </a>
                 <div *cdkDragPreview class="group-drag-preview">
                     {{getGroupLabel(group)}}

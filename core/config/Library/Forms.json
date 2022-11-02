@@ -15,7 +15,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -44,7 +44,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -72,7 +72,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -114,7 +114,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -142,7 +142,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -170,7 +170,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -198,7 +198,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -226,7 +226,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -254,7 +254,7 @@
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",

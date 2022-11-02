@@ -4,7 +4,8 @@
     "label": {
       "de": "Standard",
       "en": "Default",
-      "it": "Standard"
+      "it": "Standard",
+      "uk": "Стандартна"
     },
     "description": {
       "de": "Standard-Konfiguration",
@@ -272,7 +273,8 @@
     "label": {
       "de": "Basis (Grabung)",
       "en": "Basic (Excavation)",
-      "it": "Configurazione di base (scavo)"
+      "it": "Configurazione di base (scavo)",
+      "uk": "Основа (розкопки)"
     },
     "description": {
       "de": "Basis-Konfiguration für Grabungen",
@@ -335,7 +337,8 @@
     "label": {
       "de": "Basis (Bauaufnahme)",
       "en": "Basic (Building survey)",
-      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)"
+      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)",
+      "uk": "Основа (інвентаризація споруди)"
     },
     "description": {
       "de": "Basis-Konfiguration für die Bauaufnahme",
@@ -443,7 +446,8 @@
     "label": {
       "de": "Basis (Survey)",
       "en": "Basic (Survey)",
-      "it": "Configurazione di base (prospezione)"
+      "it": "Configurazione di base (prospezione)",
+      "uk": "Основа (обстеження)"
     },
     "description": {
       "de": "Basis-Konfiguration für Surveys",

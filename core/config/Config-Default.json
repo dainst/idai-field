@@ -72,6 +72,38 @@
       "hidden": [],
       "fields": {}
     },
+    "InnerWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "OuterWall:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Roof:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Door:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Window:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Stairs:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Damage:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "Furniture:default": {
+      "hidden": [],
+      "fields": {}
+    },
     "Inscription:default": {
       "hidden": [],
       "fields": {}
@@ -185,6 +217,22 @@
     "Area",
     "SurveyUnit",
     "Excavation",
+    "Profile",
+    "Planum",
+    "BuildingPart",
+    "Level",
+    "Room",
+    "RoomCeiling",
+    "RoomWall",
+    "InnerWall",
+    "OuterWall",
+    "RoomFloor",
+    "Roof",
+    "Door",
+    "Window",
+    "Stairs",
+    "Furniture",
+    "Damage",
     "Find",
     "Pottery",
     "Terracotta",
@@ -199,14 +247,6 @@
     "Mollusk",
     "Inscription",
     "Sample",
-    "Profile",
-    "Planum",
-    "BuildingPart",
-    "Level",
-    "Room",
-    "RoomCeiling",
-    "RoomWall",
-    "RoomFloor",
     "Image",
     "Drawing",
     "Photo",

@@ -13,7 +13,7 @@ In order to work with Field Desktop productively and create your own project, yo
 your editor name. This name will be stored in the database along with every change you make. It is strongly
 recommended to fill in this field, especially if data is going to be synchronized.  
 
-2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You also have the choice between several presets for the project configuration. Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields.
+2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project.
 
 3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
@@ -172,7 +172,9 @@ A map layer can be configured either for a specific operation or for the entire 
 
 Change the order of map layers by moving them up or down the list via drag & drop. If multiple images overlap on the map, the order determines which image is displayed: A layer that is higher in the list will also be displayed on the map above a layer that is further down, and may hide it completely or partially.
 
-You can remove a layer from the list by clicking the red button "Remove map layer" to the right of each list entry. The image itself will not be deleted from the project and can be added as a map layer again.
+The blue button "Set as default map layer" (star icon) to the right of each list entry allows selecting one or more images that should be displayed by default on the map when the project is opened for the first time.
+
+You can remove a layer from the list by clicking the red button "Remove map layer". The image itself will not be deleted from the project and can be added as a map layer again.
 
 Click the "Save" button to save the changes to the database.
 
@@ -357,6 +359,7 @@ To work with an existing project that is available on another Field Desktop inst
 * *Password*: The password of the project or the Field Desktop installation from which you want to download the project.
 * *Download preview images*: This option is enabled by default. If you have a weak internet connection and want to download as little data as possible, you may want to disable it.
 * *Download original images*: Enable this option if you want to download the images in their original image resolution. Depending on the number and size of images managed in the project, this may involve downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
+* *Overwrite existing project of the same name*: If this option is enabled, the project will be downloaded even if a project with the same name already exists on the computer. The existing project will be deleted in the process.
 
 As soon as you have entered a valid address, project name and password, the amount of image data to be downloaded will be shown besides the respective options after a short computation time.
 
@@ -533,9 +536,83 @@ The *Input type* checkbox in the field editor allows you to change the input typ
 Field data that has already been entered will continue to be displayed even after the input type has been changed. In the resource editor, however, data that is incompatible with the current input type is marked accordingly and can no longer be edited there, only deleted.
 
 
+##### Single line text
+Input of a single line text (optionally monolingual or multilingual)
+<p align="center"><img src="images/en/configuration/input_type_input.png" alt="Input type 'Single line text'"/></p>
+
+##### Single line text with multiple selection
+Input of multiple single line texts (optionally monolingual or multilingual)
+<p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Input type 'Single line text with multiple selection'"/></p>
+  
+##### Multiline text
+Input of a multiline, multilingual text
+<p align="center"><img src="images/en/configuration/input_type_text.png" alt="Input type 'Multiline text'"/></p>
+
+##### Whole number
+Input of a positive or negative whole number
+<p align="center"><img src="images/en/configuration/input_type_int.png" alt="Input type 'Whole number'"/></p>
+
+##### Positive whole number
+Input of a positive whole number
+<p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Input type 'Positive whole number'"/></p>
+
+##### Decimal number
+Input of a positive or negative decimal number
+<p align="center"><img src="images/en/configuration/input_type_float.png" alt="Input type 'Decimal number'"/></p>
+
+##### Positive decimal number
+Input of a positive decimal number
+<p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Input type 'Positive decimal number'"/></p>
+
+##### URL
+Input of an URL
+<p align="center"><img src="images/en/configuration/input_type_url.png" alt="Input type 'URL'"/></p>
+
+##### Dropdown list
+Selection of a value from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Input type 'Dropdown list'"/></p>
+
+##### Dropdown list (range)
+Selection of a value or a range of values (from/to, two values) from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Input type 'Dropdown list (range)'"/></p>
+
+##### Radiobutton
+Selection of a value from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Input type 'Radiobutton'"/></p>
+
+##### Yes / No
+Selection of Yes or No
+<p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Input type 'Yes / No'"/></p>
+
+##### Checkboxes
+Selection of one or more values from a valuelist
+<p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
+
+##### Dating
+Specification of one or more datings. Possible dating types are: Period, Exact, Before, After, Scientific.
+<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
+
+##### Date
+Selection of a date from a calendar. The input field can also be used to enter only month or year information.
+<p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
+
+##### Dimension
+Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
+<p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
+
+##### Bibliographic reference
+Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
+<p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Input type 'Bibliographic reference'"/></p>
+
+
 #### Hide fields
 
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
+
+
+#### Allow input in multiple languages
+
+If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
 
 
 #### Field specific search
@@ -602,6 +679,14 @@ The value editor allows you to customize the properties of a value:
 * *Label*: The display label of the value. You can enter labels for different languages.
 * *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
 * *References*: Specify URLs here to reference definitions in other systems.
+
+
+### Select project languages
+
+The menu "Project configuration" ➝ "Select project languages..." allows you to specify the languages for which data is to be entered in the project. For text fields for which the option "Allow input in multiple languages" is activated in the configuration editor, a separate text can be entered for each project language.
+In addition, empty input fields for the labels and descriptions of categories, fields, groups, valuelists and values are automatically displayed in the configuration editor for each project language.
+
+Please note that texts that have already been entered will no longer be displayed if the corresponding language is removed from the list of project languages. However, they will remain in the database and will be displayed again if the language is once more selected as a project language at a later time.
 
 
 ### Import configuration

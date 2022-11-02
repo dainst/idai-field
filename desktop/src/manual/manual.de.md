@@ -14,7 +14,7 @@ bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Nam
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
 Daten synchronisiert werden sollen.
 
-2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben außerdem die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration. Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten.
+2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen.
 
 3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
@@ -176,7 +176,9 @@ Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert we
 
 Ändern Sie die Reihenfolge von Kartenhintergründen, indem Sie sie per Drag & Drop in der Liste nach oben oder unten schieben. Überlappen sich auf der Karte mehrere Hintergrundbilder, entscheidet die Reihenfolge darüber, welches Bild angezeigt wird: Ein Kartenhintergrund, der in der Liste weiter oben steht, wird auch auf der Karte über einem weiter unten stehenden Kartenhintergund angezeigt und kann diesen dabei ganz oder teilweise überdecken.
 
-Über den Button "Kartenhintergrund entfernen" rechts neben jedem Eintrag in der Liste können Sie das Bild wieder aus der Liste der Kartenhintergründe entfernen. Das Bild selbst wird dabei nicht aus dem Projekt gelöscht und kann später erneut als Kartenhintergrund hinzugefügt werden.
+Der blaue Button "Als Standard-Kartenhintergrund festlegen" (Stern-Symbol) rechts neben jedem Eintrag in der Liste erlaubt es, eines oder mehrere Bilder auszuwählen, die beim ersten Öffnen des Projekts standardmäßig auf der Karte angezeigt werden sollen.
+
+Über den roten Button "Kartenhintergrund entfernen" können Sie das entsprechende Bild wieder aus der Liste der Kartenhintergründe entfernen. Das Bild selbst wird dabei nicht aus dem Projekt gelöscht und kann später erneut als Kartenhintergrund hinzugefügt werden.
 
 Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speichern.
 
@@ -367,6 +369,7 @@ Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Deskto
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, von der Sie das Projekt herunterladen möchten.
 * *Vorschaubilder herunterladen*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten herunterladen möchten, können Sie sie deaktivieren.
 * *Originalbilder herunterladen*: Aktivieren Sie diese Option, wenn Sie die Originalbilder in ihrer ursprünglichen Bildauflösung herunterladen möchten. Je nach Anzahl und Größe der im Projekt verwalteten Bilder können dabei unter Umständen mehrere Gigabyte an Daten heruntergeladen werden. Stellen Sie sicher, dass Sie über eine ausreichende Internetverbindung und genügend Festplattenspeicher verfügen, bevor Sie die Option aktivieren.
+* *Existierendes Projekt gleichen Namens überschreiben*: Ist diese Option aktiviert, wird das Projekt auch dann heruntergeladen, wenn ein gleichnamiges Projekt bereits auf dem Rechner existiert. Das bestehende Projekt wird dabei gelöscht.
 
 Sobald Sie gültige Angaben für die Adresse, den Projektnamen und das Passwort eingegeben haben, wird die Menge der jeweils herunterzuladenden Bilddaten nach kurzer Berechnungszeit neben den entsprechenden Optionen angezeigt.
 
@@ -377,7 +380,7 @@ Der Download kann bei größeren Projekten unter Umständen eine längere Zeit d
 
 Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
-* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines FieldHub Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den FieldHub Server des DAI).
+* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines FieldHub-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den FieldHub-Server des DAI).
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
 * *Vorschaubilder synchronisieren*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten hoch- bzw. herunterladen möchten, können Sie sie deaktivieren.
 * *Synchronisation aktivieren*: Über diesen Schalter können Sie die Verbindung starten bzw. unterbrechen.
@@ -545,10 +548,83 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 
 Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps weiterhin angezeigt. Im Ressourceneditor werden mit dem aktuellen Eingabetyp inkompatible Daten allerdings entsprechend markiert und können dort nicht mehr editiert, sondern nur noch gelöscht werden.
 
+##### Einzeiliger Text
+Eingabe eines einzeiligen Textes (wahlweise einsprachig oder mehrsprachig)
+<p align="center"><img src="images/de/configuration/input_type_input.png" alt="Eingabetyp 'Einzeiliger Text'"/></p>
+
+##### Einzeiliger Text mit Mehrfachauswahl
+Eingabe mehrerer einzeiliger Texte (wahlweise einsprachig oder mehrsprachig)
+<p align="center"><img src="images/de/configuration/input_type_multi_input.png" alt="Eingabetyp 'Einzeiliger Text mit Mehrfachauswahl'"/></p>
+  
+#####  Mehrzeiliger Text
+Eingabe eines mehrzeiligen, mehrsprachigen Textes
+<p align="center"><img src="images/de/configuration/input_type_text.png" alt="Eingabetyp 'Mehrzeiliger Text mit Mehrfachauswahl'"/></p>
+
+##### Ganzzahl
+Eingabe einer positiven oder negativen Ganzzahl
+<p align="center"><img src="images/de/configuration/input_type_int.png" alt="Eingabetyp 'Ganzzahl'"/></p>
+
+##### Positive Ganzzahl
+Eingabe einer positiven Ganzzahl
+<p align="center"><img src="images/de/configuration/input_type_unsigned_int.png" alt="Eingabetyp 'Positive Ganzzahl'"/></p>
+
+##### Kommazahl
+Eingabe einer positiven oder negativen Kommazahl
+<p align="center"><img src="images/de/configuration/input_type_float.png" alt="Eingabetyp 'Kommazahl'"/></p>
+
+##### Positive Kommazahl
+Eingabe einer positiven Kommazahl
+<p align="center"><img src="images/de/configuration/input_type_unsigned_float.png" alt="Eingabetyp 'Positive Kommazahl'"/></p>
+
+##### URL
+Eingabe einer URL
+<p align="center"><img src="images/de/configuration/input_type_url.png" alt="Eingabetyp 'URL'"/></p>
+
+##### Dropdown-Liste
+Auswahl eines Wertes aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_dropdown.png" alt="Eingabetyp 'Dropdown-Liste'"/></p>
+
+##### Dropdown-Liste (Bereich)
+Auswahl eines Wertes oder eines Wertebereichs (von/bis, zwei Werte) aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_dropdown_range.png" alt="Eingabetyp 'Dropdown-Liste (Bereich)'"/></p>
+
+##### Radiobutton
+Auswahl eines Werte aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_radio.png" alt="Eingabetyp 'Radiobutton'"/></p>
+
+##### Ja / Nein
+Angabe von Ja oder Nein
+<p align="center"><img src="images/de/configuration/input_type_boolean.png" alt="Eingabetyp 'Ja / Nein'"/></p>
+
+##### Checkboxen
+Auswahl eines oder mehrerer Werte aus einer Werteliste
+<p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
+
+##### Datierungsangabe
+Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
+<p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
+
+##### Datum
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
+<p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
+
+##### Maßangabe
+Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
+<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
+
+##### Literaturangabe
+Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
+<p align="center"><img src="images/de/configuration/input_type_literature.png" alt="Eingabetyp 'Literaturangabe'"/></p>
+
 
 #### Felder verstecken
 
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
+
+
+#### Eingabe in mehreren Sprachen erlauben
+
+Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
 
 
 #### Feldspezifische Suche
@@ -615,6 +691,14 @@ Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 * *Anzeigetext*: Der Anzeigetext des Wertes. Sie können Texte für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, in dem Sie nähere Informationen zum Wert angeben können. Dieser Text wird im Konfigurationseditor als Tooltip für den entsprechenden Wert angezeigt.
 * *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
+
+
+### Projektsprachen auswählen
+
+Über das Menü "Projektkonfiguration" ➝ "Projektsprachen auswählen..." können Sie die Sprachen festlegen, für die im Projekt Daten eingegeben werden sollen. Bei Freitextfeldern, für die im Konfigurationseditor die Option "Eingabe in mehreren Sprachen erlauben" aktiviert ist, kann für jede Projektsprache ein eigener Text eingegeben werden.
+Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automatisch leere Eingabefelder für die Anzeigetexte und Beschreibungen von Kategorien, Feldern, Gruppen, Wertelisten und Werten eingeblendet.
+
+Bitte beachten Sie, dass bereits eingegebene Texte nicht mehr angezeigt werden, wenn die entsprechende Sprache aus der Liste der Projektsprachen entfernt wird. Sie bleiben allerdings in der Datenbank erhalten und werden wieder eingeblendet, wenn die Sprache zu einem späteren Zeitpunkt erneut als Projektsprache ausgewählt wird.
 
 
 ### Konfiguration importieren

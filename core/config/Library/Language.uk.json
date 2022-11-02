@@ -120,6 +120,30 @@
     "RoomCeiling": {
       "label": "Стеля"
     },
+    "InnerWall": {
+      "label": "Внутрішня стіна"
+    },
+    "OuterWall": {
+      "label": "Зовнішня стіна"
+    },
+    "Roof": {
+      "label": "Дах"
+    },
+    "Stairs": {
+      "label": "Сходи"
+    },
+    "Window": {
+      "label": "Вікно / Отвір"
+    },
+    "Door": {
+      "label": "Двері"
+    },
+    "Damage": {
+      "label": "Пошкодження"
+    },
+    "Furniture": {
+      "label": "Меблювання/Інвентар"
+    },
     "Trench": {
       "label": "Розріз",
       "fields": {

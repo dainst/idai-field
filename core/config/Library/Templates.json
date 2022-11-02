@@ -84,6 +84,38 @@
           "hidden": [],
           "fields": {}
         },
+        "InnerWall:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "OuterWall:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Roof:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Door:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Window:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Stairs:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Damage:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Furniture:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "Inscription:default": {
           "hidden": [],
           "fields": {}
@@ -197,190 +229,8 @@
         "Area",
         "SurveyUnit",
         "Excavation",
-        "Find",
-        "Pottery",
-        "Terracotta",
-        "Brick",
-        "Bone",
-        "Glass",
-        "Metal",
-        "Stone",
-        "Wood",
-        "Coin",
-        "PlasterFragment",
-        "Mollusk",
-        "Inscription",
-        "Sample",
         "Profile",
         "Planum",
-        "BuildingPart",
-        "Level",
-        "Room",
-        "RoomCeiling",
-        "RoomWall",
-        "RoomFloor",
-        "Image",
-        "Drawing",
-        "Photo",
-        "TypeCatalog",
-        "Type"
-      ]
-    }
-  },
-  "buildingSurvey": {
-    "author": "DAI",
-    "label": {
-      "de": "Bauaufnahme",
-      "en": "Building survey"
-    },
-    "configuration": {
-      "forms": {
-        "Project:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Operation:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Place:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Building:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "BuildingPart:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Find:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Level:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Room:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "RoomCeiling:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "RoomFloor:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "RoomWall:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "InnerWall:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "OuterWall:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Roof:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Door:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Window:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Stairs:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Damage:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Furniture:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Image:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Glass:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Mollusk:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Brick:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Wood:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Pottery:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Metal:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Bone:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Terracotta:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Photo:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Drawing:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Stone:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Coin:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "PlasterFragment:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "TypeCatalog:default": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Type:default": {
-          "hidden": [],
-          "fields": {}
-        }
-      },
-      "order": [
-        "Project",
-        "Operation",
-        "Building",
-        "Place",
         "BuildingPart",
         "Level",
         "Room",
@@ -407,6 +257,8 @@
         "Coin",
         "PlasterFragment",
         "Mollusk",
+        "Inscription",
+        "Sample",
         "Image",
         "Drawing",
         "Photo",
@@ -535,6 +387,22 @@
           "hidden": [],
           "fields": {}
         },
+        "Roof": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Door": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Window": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Stairs": {
+          "hidden": [],
+          "fields": {}
+        },
         "Image": {
           "hidden": [],
           "fields": {}
@@ -553,13 +421,17 @@
         "Operation",
         "Building",
         "Place",
-        "Find",
         "BuildingPart",
         "Level",
         "Room",
         "RoomCeiling",
         "RoomWall",
         "RoomFloor",
+        "Roof",
+        "Door",
+        "Window",
+        "Stairs",
+        "Find",
         "Image",
         "TypeCatalog",
         "Type"

@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { Document, ObserverUtil } from 'idai-field-core';
+import { ObserverUtil } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';

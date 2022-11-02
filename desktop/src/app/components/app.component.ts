@@ -55,7 +55,7 @@ export class AppComponent {
         });
 
         settingsService.setupSync();
-        appController.setupServer();
+        appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
 

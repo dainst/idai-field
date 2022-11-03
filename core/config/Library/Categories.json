@@ -1401,12 +1401,12 @@
       "condition": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "Building-condition-kgr"
+        "valuelistId": "Damage-condition-default"
       },
       "damageType": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "damages-kgr"
+        "valuelistId": "damages-default"
       }
     }
   }

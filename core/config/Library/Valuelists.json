@@ -65175,6 +65175,168 @@
       }
     }
   },
+  "damages-default": {
+    "creationDate": "2022",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "totalCollapse": {
+        "label": {
+          "de": "Totalschaden / Einsturz"
+        }
+      },
+      "partialCollapse": {
+        "label": {
+          "de": "Partieller Einsturz"
+        }
+      },
+      "missingconst": {
+        "label": {
+          "de": "Fehlendes Konstruktionselement"
+        }
+      },
+      "looseconst": {
+        "label": {
+          "de": "Loses Konstruktionselement"
+        }
+      },
+      "fractures": {
+        "label": {
+          "de": "Fraktur / Bruch"
+        }
+      },
+      "riss1": {
+        "label": {
+          "de": "Riss (<1mm)"
+        }
+      },
+      "riss2": {
+        "label": {
+          "de": "Riss (1mm-5mm)"
+        }
+      },
+      "riss3": {
+        "label": {
+          "de": "Riss (>5mm)"
+        }
+      },
+      "riss4": {
+        "label": {
+          "de": "Riss (>10mm)"
+        }
+      },
+      "deformationSwelling": {
+        "label": {
+          "de": "Verformung: Wölbung / Ausbauchung"
+        }
+      },
+      "delamination": {
+        "label": {
+          "de": "Delaminierung / Ablösung der Wände"
+        }
+      },
+      "moisture": {
+        "label": {
+          "de": "Feuchte"
+        }
+      },
+      "cavities": {
+        "label": {
+          "de": "Hohllagen"
+        }
+      },
+      "exfoliation": {
+        "label": {
+          "de": "Aufblättern"
+        }
+      },
+      "spalling": {
+        "label": {
+          "de": "Abplatzung / Ausbruch"
+        }
+      },
+      "efflorescence": {
+        "label": {
+          "de": "Salzausblühung"
+        }
+      },
+      "bioSettlement": {
+        "label": {
+          "de": "Biogener Befall"
+        }
+      },
+      "fireDamage": {
+        "label": {
+          "de": "Brandschaden"
+        }
+      },
+      "erosion": {
+        "label": {
+          "de": "Erosion"
+        }
+      },
+      "corrosion": {
+        "label": {
+          "de": "Korrosion"
+        }
+      },
+      "crusting": {
+        "label": {
+          "de": "Krustenbildung"
+        }
+      },
+      "mechanicDamage": {
+        "label": {
+          "de": "Mechanischer Schaden"
+        }
+      },
+      "discoloration": {
+        "label": {
+          "de": "Verfärbung"
+        }
+      },
+      "contamination": {
+        "label": {
+          "de": "Verschmutzung"
+        }
+      },
+      "fragmentation": {
+        "label": {
+          "de": "Zerbrechen"
+        }
+      },
+      "ruin": {
+        "label": {
+          "de": "Zerfall"
+        }
+      },
+      "weathering": {
+        "label": {
+          "de": "Verwitterung"
+        }
+      },
+      "rotting": {
+        "label": {
+          "de": "Holzschäden (strukturell unbedenklich)"
+        }
+      },
+      "rottingstr": {
+        "label": {
+          "de": "Holzschäden (strukturell bedenklich)"
+        }
+      },
+      "vandalizm": {
+        "label": {
+          "de": "Vandalismus"
+        }
+      },
+      "fissure": {
+        "label": {
+          "de": "Putzrisse"
+        }
+      }
+    }
+  },
   "damages-kgr": {
     "creationDate": "",
     "createdBy": "Bernhard Fritsch",
@@ -65804,6 +65966,38 @@
       "Sonstige": {
         "label": {
           "de": "Sonstige"
+        }
+      }
+    }
+  },
+  "Damage-condition-default": {
+    "creationDate": "2022",
+    "createdBy": "Bernhard Fritsch",
+    "description": {},
+    "values": {
+      "CCO": {
+        "label": {
+          "en": "CCO - No symptoms"
+        }
+      },
+      "CC1": {
+        "label": {
+          "en": "CC1 - Minor symptoms"
+        }
+      },
+      "CC2": {
+        "label": {
+          "en": "CC2 - Moderatly strong symptoms"
+        }
+      },
+      "CC3": {
+        "label": {
+          "en": "CC3 - Major symptoms"
+        }
+      },
+      "CC4": {
+        "label": {
+          "en": "CC4 - Total loss"
         }
       }
     }

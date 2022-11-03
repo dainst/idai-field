@@ -98,16 +98,36 @@
   },
   "categories": {
     "Level": {
-      "label": "Level"
+      "label": "Level",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Floor"
+      "label": "Floor",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Wall"
+      "label": "Wall",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomCeiling": {
-      "label": "Ceiling"
+      "label": "Ceiling",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "InnerWall": {
       "label": "Inner wall"
@@ -116,16 +136,36 @@
       "label": "Outer wall"
     },
     "Roof": {
-      "label": "Roof"
+      "label": "Roof",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Stairs": {
-      "label": "Stairs"
+      "label": "Stairs",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Window": {
-      "label": "Window / Opening"
+      "label": "Window / Opening",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Door": {
-      "label": "Door"
+      "label": "Door",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Damage": {
       "label": "Damage",
@@ -139,7 +179,12 @@
       }
     },
     "Furniture": {
-      "label": "Furniture"
+      "label": "Furniture",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Trench": {
       "label": "Trench",
@@ -1272,7 +1317,11 @@
     },
     "BuildingPart": {
       "label": "Building part",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Area": {
       "label": "Area",

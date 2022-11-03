@@ -1348,7 +1348,93 @@
   "BuildingPart": {
     "color": "#707070",
     "description": {},
-    "fields": {}
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Level": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "RoomFloor": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "RoomCeiling": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "RoomWall": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Roof": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Stairs": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Window": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Door": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
+  },
+  "Furniture": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default"
+      }
+    }
   },
   "OuterWall": {
     "parent": "RoomWall",

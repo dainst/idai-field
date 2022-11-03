@@ -109,13 +109,28 @@
   },
   "categories": {
     "Level": {
-      "label": "Stockwerk"
+      "label": "Stockwerk",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Boden"
+      "label": "Boden",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Wand"
+      "label": "Wand",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "InnerWall": {
       "label": "Innenwand"
@@ -124,19 +139,44 @@
       "label": "Außenwand"
     },
     "RoomCeiling": {
-      "label": "Decke"
+      "label": "Decke",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Roof": {
-      "label": "Dach"
+      "label": "Dach",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Stairs": {
-      "label": "Treppe"
+      "label": "Treppe",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Window": {
-      "label": "Fenster / Öffnung"
+      "label": "Fenster / Öffnung",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Door": {
-      "label": "Tür"
+      "label": "Tür",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Damage": {
       "label": "Schaden",
@@ -150,7 +190,12 @@
       }
     },
     "Furniture": {
-      "label": "Ausstattung"
+      "label": "Ausstattung",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Trench": {
       "label": "Schnitt",
@@ -1395,7 +1440,11 @@
     },
     "BuildingPart": {
       "label": "Bauwerksteil",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Area": {
       "label": "Bereich",

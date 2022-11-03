@@ -1395,6 +1395,7 @@
     }
   },
   "Damage": {
+    "color": "#ff0000",
     "description": {},
     "fields": {
       "condition": {

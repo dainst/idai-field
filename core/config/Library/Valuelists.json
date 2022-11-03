@@ -65977,26 +65977,31 @@
     "values": {
       "CCO": {
         "label": {
+          "de": "CCO - Keine Symptome",
           "en": "CCO - No symptoms"
         }
       },
       "CC1": {
         "label": {
+          "de": "CC1 - Kleinere Symptome",
           "en": "CC1 - Minor symptoms"
         }
       },
       "CC2": {
         "label": {
+          "de": "CC2 - Mittelschwere Symptome",
           "en": "CC2 - Moderatly strong symptoms"
         }
       },
       "CC3": {
         "label": {
+          "de": "CC3 - Schwere Symptome",
           "en": "CC3 - Major symptoms"
         }
       },
       "CC4": {
         "label": {
+          "de": "CC4 - Totalverlust",
           "en": "CC4 - Total loss"
         }
       }

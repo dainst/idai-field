@@ -366,10 +366,6 @@
           "hidden": [],
           "fields": {}
         },
-        "Find": {
-          "hidden": [],
-          "fields": {}
-        },
         "Level": {
           "hidden": [],
           "fields": {}
@@ -434,7 +430,6 @@
         "Door",
         "Window",
         "Stairs",
-        "Find",
         "Image",
         "TypeCatalog",
         "Type"

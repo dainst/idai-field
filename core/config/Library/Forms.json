@@ -250,34 +250,6 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
-        }
-      ]
-    },
-    "Damage:kgr": {
-      "categoryName": "Damage",
-      "creationDate": "2022",
-      "description": {},
-      "createdBy": "Bernhard Fritsch",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
-        },
-        {
-          "name": "properties",
           "fields": ["description", "condition", "damageType"]
         },
         {

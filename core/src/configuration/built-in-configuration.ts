@@ -401,22 +401,9 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        Door: {
-            fields: {},
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
-                    },
-                    {
-                        name: Groups.POSITION,
-                        fields: ['geometry']
-                    }
-                ]
-            }
-        },
-        Window: {
+        Opening: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -893,7 +880,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Level:inherit', 'Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling',
-                'Roof', 'Stairs', 'Window', 'Door', 'Damage:inherit', 'Furniture:inherit'],
+                'Roof', 'Stairs', 'Opening', 'Damage:inherit', 'Furniture:inherit'],
             range: ['Building'],
             editable: false,
             visible: false,
@@ -951,8 +938,7 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit', 'Sample', 'Room:inherit', 'BuildingPart:inherit',
-                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs',
-                'Window', 'Door'],
+                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -1032,7 +1018,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Window', 'Door'],
+            domain: ['Opening'],
             range: ['RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
             sameMainCategoryResource: true,
             editable: false,
@@ -1043,7 +1029,7 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Damage:inherit', 'Furniture:inherit'],
             range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
-                'RoomCeiling', 'Roof', 'Stairs', 'Window', 'Door'],
+                'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

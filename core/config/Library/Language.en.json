@@ -151,21 +151,19 @@
         }
       }
     },
-    "Window": {
-      "label": "Window / Opening",
+    "Opening": {
+      "label": "Opening",
       "fields": {
         "material": {
           "label": "Material"
         }
       }
     },
+    "Window": {
+      "label": "Window"
+    },
     "Door": {
-      "label": "Door",
-      "fields": {
-        "material": {
-          "label": "Material"
-        }
-      }
+      "label": "Door"
     },
     "Damage": {
       "label": "Damage",

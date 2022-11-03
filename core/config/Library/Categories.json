@@ -1409,7 +1409,7 @@
       }
     }
   },
-  "Window": {
+  "Opening": {
     "description": {},
     "fields": {
       "material": {
@@ -1418,14 +1418,15 @@
       }
     }
   },
-  "Door": {
+  "Window": {
+    "parent": "Opening",
     "description": {},
-    "fields": {
-      "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
-      }
-    }
+    "fields": {}
+  },
+  "Door": {
+    "parent": "Opening",
+    "description": {},
+    "fields": {}
   },
   "Furniture": {
     "description": {},

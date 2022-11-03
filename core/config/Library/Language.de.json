@@ -162,21 +162,19 @@
         }
       }
     },
-    "Window": {
-      "label": "Fenster / Öffnung",
+    "Opening": {
+      "label": "Öffnung",
       "fields": {
         "material": {
           "label": "Material"
         }
       }
     },
+    "Window": {
+      "label": "Fenster"
+    },
     "Door": {
-      "label": "Tür",
-      "fields": {
-        "material": {
-          "label": "Material"
-        }
-      }
+      "label": "Tür"
     },
     "Damage": {
       "label": "Schaden",

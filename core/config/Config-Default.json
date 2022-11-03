@@ -84,6 +84,10 @@
       "hidden": [],
       "fields": {}
     },
+    "Opening:default": {
+      "hidden": [],
+      "fields": {}
+    },
     "Door:default": {
       "hidden": [],
       "fields": {}
@@ -228,6 +232,7 @@
     "OuterWall",
     "RoomFloor",
     "Roof",
+    "Opening",
     "Door",
     "Window",
     "Stairs",

@@ -97,6 +97,10 @@
           "hidden": [],
           "fields": {}
         },
+        "Opening:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "Door:default": {
           "hidden": [],
           "fields": {}
@@ -241,6 +245,7 @@
         "OuterWall",
         "RoomFloor",
         "Roof",
+        "Opening",
         "Door",
         "Window",
         "Stairs",
@@ -390,11 +395,7 @@
           "hidden": [],
           "fields": {}
         },
-        "Door": {
-          "hidden": [],
-          "fields": {}
-        },
-        "Window": {
+        "Opening": {
           "hidden": [],
           "fields": {}
         },
@@ -427,8 +428,7 @@
         "RoomWall",
         "RoomFloor",
         "Roof",
-        "Door",
-        "Window",
+        "Opening",
         "Stairs",
         "Image",
         "TypeCatalog",

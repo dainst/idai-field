@@ -154,8 +154,8 @@
         }
       ]
     },
-    "Window:default": {
-      "categoryName": "Window",
+    "Opening:default": {
+      "categoryName": "Opening",
       "creationDate": "2022",
       "description": {},
       "createdBy": "",
@@ -182,33 +182,19 @@
         }
       ]
     },
+    "Window:default": {
+      "categoryName": "Window",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
     "Door:default": {
       "categoryName": "Door",
       "creationDate": "2022",
       "description": {},
       "createdBy": "",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
-        },
-        {
-          "name": "properties",
-          "fields": ["description", "material"]
-        },
-        {
-          "name": "dimension",
-          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "spatialLocation"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
-        }
-      ]
+      "groups": []
     },
     "Furniture:default": {
       "categoryName": "Furniture",

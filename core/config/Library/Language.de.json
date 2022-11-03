@@ -139,7 +139,15 @@
       "label": "Tür"
     },
     "Damage": {
-      "label": "Schaden"
+      "label": "Schaden",
+      "fields": {
+        "condition": {
+          "label": "Zustand"
+        },
+        "damageType": {
+          "label": "Schadenstyp"
+        }
+      }
     },
     "Furniture": {
       "label": "Ausstattung"

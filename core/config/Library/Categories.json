@@ -1393,5 +1393,20 @@
         "valuelistId": "Sample-sampleType-default"
       }
     }
+  },
+  "Damage": {
+    "description": {},
+    "fields": {
+      "condition": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Building-condition-kgr"
+      },
+      "damageType": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "damages-kgr"
+      }
+    }
   }
 }

@@ -128,7 +128,15 @@
       "label": "Door"
     },
     "Damage": {
-      "label": "Damage"
+      "label": "Damage",
+      "fields": {
+        "condition": {
+          "label": "Condition"
+        },
+        "damageType": {
+          "label": "Damage type"
+        }
+      }
     },
     "Furniture": {
       "label": "Furniture"

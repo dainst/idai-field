@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'Cargan';
-  src: local('Cargan-Light'), url(./Cargan-Light.woff2) format('woff2'), url(./Cargan-Light.woff) format('woff');
+  src: local('Cargan-Light'), url(./fonts/Cargan-Light.woff2) format('woff2'), url(./fonts/Cargan-Light.woff) format('woff');
   font-weight: 300;
   font-style: normal;
 }

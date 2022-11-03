@@ -339,7 +339,6 @@ export class BuiltInConfiguration {
         RoomWall: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -355,7 +354,6 @@ export class BuiltInConfiguration {
             }
         },
         RoomFloor: {
-            mustLieWithin: true,
             fields: {
             },
             minimalForm: {
@@ -372,7 +370,6 @@ export class BuiltInConfiguration {
             }
         },
         RoomCeiling: {
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -405,7 +402,6 @@ export class BuiltInConfiguration {
             }
         },
         Door: {
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -421,7 +417,6 @@ export class BuiltInConfiguration {
             }
         },
         Window: {
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -437,7 +432,6 @@ export class BuiltInConfiguration {
             }
         },
         Roof: {
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -453,7 +447,6 @@ export class BuiltInConfiguration {
             }
         },
         Stairs: {
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -488,7 +481,6 @@ export class BuiltInConfiguration {
         Damage: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -506,7 +498,6 @@ export class BuiltInConfiguration {
         Furniture: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [

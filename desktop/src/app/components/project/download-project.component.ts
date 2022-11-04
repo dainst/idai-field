@@ -90,6 +90,11 @@ export class DownloadProjectComponent {
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
+            if (databaseSteps === 0) {
+                await this.cancel(progressModalRef);
+                return this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
+            }
+
             const preferences: Array<FileSyncPreference> = this.getSelectedFileSyncPreferences();
 
             const fileList = preferences.length > 0
@@ -334,7 +339,7 @@ export class DownloadProjectComponent {
         // tslint:disable-next-line: no-string-throw
         if (('error' in info && info.error === 'unauthorized') || info.status === 401) throw 'unauthorized';
 
-        return DownloadProjectComponent.parseSequenceNumber(info.update_seq);
+        return info.doc_count === 0 ? 0 : DownloadProjectComponent.parseSequenceNumber(info.update_seq);
     }
 
 

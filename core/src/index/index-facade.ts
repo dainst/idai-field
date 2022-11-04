@@ -61,7 +61,7 @@ export class IndexFacade {
 
     public async putMultiple(documents: Array<Document>, setIndexedDocuments?: (count: number) => Promise<void>) {
 
-        const [typeDocuments, nonTypeDocuments] = separate(on(['resource','category'], is(TYPE)), documents);
+        const [typeDocuments, nonTypeDocuments] = separate(on(['resource', 'category'], is(TYPE)), documents);
 
         let count: number = 0;
 

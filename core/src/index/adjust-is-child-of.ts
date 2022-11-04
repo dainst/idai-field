@@ -1,6 +1,7 @@
 import { isUndefinedOrEmpty, update } from 'tsfun';
 import { Document } from '../model/document';
 
+
 // TODO migrate everything to isChildOf, then get rid of this adjustments
 export function adjustIsChildOf(document: Document): Document {
 
@@ -10,16 +11,25 @@ export function adjustIsChildOf(document: Document): Document {
     if (!isUndefinedOrEmpty(adjusted.resource.relations['isRecordedIn'])) {
         
         if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
-            adjusted = update(['resource', 'relations', 'isChildOf'], 
-                             adjusted.resource.relations['liesWithin'], adjusted);
+            adjusted = update(
+                ['resource', 'relations', 'isChildOf'], 
+                adjusted.resource.relations['liesWithin'],
+                adjusted
+            );
         } else {
-            adjusted = update(['resource', 'relations', 'isChildOf'], 
-                              adjusted.resource.relations['isRecordedIn'], adjusted);
+            adjusted = update(
+                ['resource', 'relations', 'isChildOf'], 
+                adjusted.resource.relations['isRecordedIn'],
+                adjusted
+            );
         }
     } else {
         if (!isUndefinedOrEmpty(adjusted.resource.relations['liesWithin'])) {
-            adjusted = update(['resource', 'relations', 'isChildOf'], 
-                             adjusted.resource.relations['liesWithin'], adjusted);
+            adjusted = update(
+                ['resource', 'relations', 'isChildOf'], 
+                adjusted.resource.relations['liesWithin'],
+                adjusted
+            );
         }
     }
     return adjusted;

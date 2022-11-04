@@ -4723,6 +4723,13 @@
           "de": "Unbekannt/Unerkannt",
           "uk": "Невідомий/Невиявлений"
         }
+      },
+      "Ziegel": {
+        "label": {
+          "de": "Ziegel",
+          "it": "Laterizio",
+          "uk": "Цегла"
+        }
       }
     }
   },

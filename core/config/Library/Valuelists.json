@@ -4610,12 +4610,6 @@
           "uk": "Бетон"
         }
       },
-      "Bemalung": {
-        "label": {
-          "de": "Bemalung",
-          "uk": "Розпис"
-        }
-      },
       "Blei": {
         "label": {
           "de": "Blei",
@@ -4742,12 +4736,6 @@
         "label": {
           "de": "Beton",
           "uk": "Бетон"
-        }
-      },
-      "Bemalung": {
-        "label": {
-          "de": "Bemalung",
-          "uk": "Розпис"
         }
       },
       "Blei": {

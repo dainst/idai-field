@@ -65508,157 +65508,188 @@
     "values": {
       "totalCollapse": {
         "label": {
-          "de": "Totalschaden / Einsturz"
+          "de": "Totalschaden / Einsturz",
+          "uk": "Повністю пошкоджно / Завалення"
         }
       },
       "partialCollapse": {
         "label": {
-          "de": "Partieller Einsturz"
+          "de": "Partieller Einsturz",
+          "uk": "Частково завалено"
         }
       },
       "missingconst": {
         "label": {
-          "de": "Fehlendes Konstruktionselement"
+          "de": "Fehlendes Konstruktionselement",
+          "uk": "Бракує конструктивного елементу"
         }
       },
       "looseconst": {
         "label": {
-          "de": "Loses Konstruktionselement"
+          "de": "Loses Konstruktionselement",
+          "uk": "Конструктивний елемент від´єднався"
         }
       },
       "fractures": {
         "label": {
-          "de": "Fraktur / Bruch"
+          "de": "Fraktur / Bruch",
+          "uk": "Перелом / Розрив"
         }
       },
       "riss1": {
         "label": {
-          "de": "Riss (<1mm)"
+          "de": "Riss (<1mm)",
+          "uk": "Тріщина (<1mm)"
         }
       },
       "riss2": {
         "label": {
-          "de": "Riss (1mm-5mm)"
+          "de": "Riss (1mm-5mm)",
+          "uk": "Тріщина (1mm-5mm)"
         }
       },
       "riss3": {
         "label": {
-          "de": "Riss (>5mm)"
+          "de": "Riss (>5mm)",
+          "uk": "Тріщина (>5mm)"
         }
       },
       "riss4": {
         "label": {
-          "de": "Riss (>10mm)"
+          "de": "Riss (>10mm)",
+          "uk": "Тріщина (>10mm)"
         }
       },
       "deformationSwelling": {
         "label": {
-          "de": "Verformung: Wölbung / Ausbauchung"
+          "de": "Verformung: Wölbung / Ausbauchung",
+          "uk": "Деформація: випуклість / здуття"
         }
       },
       "delamination": {
         "label": {
-          "de": "Delaminierung / Ablösung der Wände"
+          "de": "Delaminierung / Ablösung der Wände",
+          "uk": "Розшаровування / відшарування стінок"
         }
       },
       "moisture": {
         "label": {
-          "de": "Feuchte"
+          "de": "Feuchte",
+          "uk": "Вологість"
         }
       },
       "cavities": {
         "label": {
-          "de": "Hohllagen"
+          "de": "Hohllagen",
+          "uk": "Порожнисті шари"
         }
       },
       "exfoliation": {
         "label": {
-          "de": "Aufblättern"
+          "de": "Aufblättern",
+          "uk": "Відслоювання"
         }
       },
       "spalling": {
         "label": {
-          "de": "Abplatzung / Ausbruch"
+          "de": "Abplatzung / Ausbruch",
+          "uk": "Відшарування / відломлювання"
         }
       },
       "efflorescence": {
         "label": {
-          "de": "Salzausblühung"
+          "de": "Salzausblühung",
+          "uk": "Висоли солі"
         }
       },
       "bioSettlement": {
         "label": {
-          "de": "Biogener Befall"
+          "de": "Biogener Befall",
+          "uk": "Біогенне поширення"
         }
       },
       "fireDamage": {
         "label": {
-          "de": "Brandschaden"
+          "de": "Brandschaden",
+          "uk": "Пошкодження вогнем"
         }
       },
       "erosion": {
         "label": {
-          "de": "Erosion"
+          "de": "Erosion",
+          "uk": "Ерозія"
         }
       },
       "corrosion": {
         "label": {
-          "de": "Korrosion"
+          "de": "Korrosion",
+          "uk": "Корозія"
         }
       },
       "crusting": {
         "label": {
-          "de": "Krustenbildung"
+          "de": "Krustenbildung",
+          "uk": "Утворення скоринки"
         }
       },
       "mechanicDamage": {
         "label": {
-          "de": "Mechanischer Schaden"
+          "de": "Mechanischer Schaden",
+          "uk": "Механічне пошкодження"
         }
       },
       "discoloration": {
         "label": {
-          "de": "Verfärbung"
+          "de": "Verfärbung",
+          "uk": "Зміна кольору"
         }
       },
       "contamination": {
         "label": {
-          "de": "Verschmutzung"
+          "de": "Verschmutzung",
+          "uk": "Забруднення"
         }
       },
       "fragmentation": {
         "label": {
-          "de": "Zerbrechen"
+          "de": "Zerbrechen",
+          "uk": "Розлам / розбиття"
         }
       },
       "ruin": {
         "label": {
-          "de": "Zerfall"
+          "de": "Zerfall",
+          "uk": "Розпад"
         }
       },
       "weathering": {
         "label": {
-          "de": "Verwitterung"
+          "de": "Verwitterung",
+          "uk": "Обвітрення"
         }
       },
       "rotting": {
         "label": {
-          "de": "Holzschäden (strukturell unbedenklich)"
+          "de": "Holzschäden (strukturell unbedenklich)",
+          "uk": "Пошкодження деревини (структурно нешкідливі)"
         }
       },
       "rottingstr": {
         "label": {
-          "de": "Holzschäden (strukturell bedenklich)"
+          "de": "Holzschäden (strukturell bedenklich)",
+          "uk": "Пошкодження деревини (структурно проблематичні)"
         }
       },
       "vandalizm": {
         "label": {
-          "de": "Vandalismus"
+          "de": "Vandalismus",
+          "uk": "Вандалізм"
         }
       },
       "fissure": {
         "label": {
-          "de": "Putzrisse"
+          "de": "Putzrisse",
+          "uk": "Тріщини у штукатурці"
         }
       }
     }
@@ -66304,31 +66335,36 @@
       "CCO": {
         "label": {
           "de": "CCO - Keine Symptome",
-          "en": "CCO - No symptoms"
+          "en": "CCO - No symptoms",
+          "uk": "CCO - Без пошкоджень"
         }
       },
       "CC1": {
         "label": {
           "de": "CC1 - Kleinere Symptome",
-          "en": "CC1 - Minor symptoms"
+          "en": "CC1 - Minor symptoms",
+          "uk": "CC1 - Незначні пошкодження"
         }
       },
       "CC2": {
         "label": {
           "de": "CC2 - Mittelschwere Symptome",
-          "en": "CC2 - Moderatly strong symptoms"
+          "en": "CC2 - Moderatly strong symptoms",
+          "uk": "CC2 - Пошкодження середньої важкості"
         }
       },
       "CC3": {
         "label": {
           "de": "CC3 - Schwere Symptome",
-          "en": "CC3 - Major symptoms"
+          "en": "CC3 - Major symptoms",
+          "uk": "CC3 - Важкі пошкодження"
         }
       },
       "CC4": {
         "label": {
           "de": "CC4 - Totalverlust",
-          "en": "CC4 - Total loss"
+          "en": "CC4 - Total loss",
+          "uk": "CC4 - Повна втрата"
         }
       }
     }

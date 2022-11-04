@@ -106,6 +106,7 @@ export class DownloadProjectComponent {
                 ) : undefined;
 
             await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
+            progressModalRef.componentInstance.databaseProgressPercent = 100;
     
             if (fileList) {
                 progressModalRef.componentInstance.filesProgressPercent = 0;
@@ -115,6 +116,7 @@ export class DownloadProjectComponent {
 
                 if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
                 await this.syncFiles(progressModalRef, fileList);
+                progressModalRef.componentInstance.filesProgressPercent = 100;
             }
 
             await AngularUtility.refresh(1000);

@@ -297,7 +297,7 @@
       "material": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1351,7 +1351,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1360,7 +1360,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1369,7 +1369,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1378,7 +1378,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1387,7 +1387,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1396,7 +1396,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1405,7 +1405,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1414,7 +1414,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1433,7 +1433,7 @@
     "fields": {
       "material": {
         "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },

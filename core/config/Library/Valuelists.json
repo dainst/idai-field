@@ -4599,6 +4599,337 @@
       }
     }
   },
+  "Building-material-default-2": {
+    "creationDate": "2022",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Beton": {
+        "label": {
+          "de": "Beton",
+          "uk": "Бетон"
+        }
+      },
+      "Bemalung": {
+        "label": {
+          "de": "Bemalung",
+          "uk": "Розпис"
+        }
+      },
+      "Blei": {
+        "label": {
+          "de": "Blei",
+          "uk": "Свинець"
+        }
+      },
+      "Eisen": {
+        "label": {
+          "de": "Eisen",
+          "uk": "Залізо"
+        }
+      },
+      "Erde": {
+        "label": {
+          "de": "Erde",
+          "uk": "Земля"
+        }
+      },
+      "Fliesen": {
+        "label": {
+          "de": "Fliesen",
+          "uk": "Плитка"
+        }
+      },
+      "Gips": {
+        "label": {
+          "de": "Gips",
+          "uk": "Гіпс"
+        }
+      },
+      "Glas": {
+        "label": {
+          "de": "Glas",
+          "uk": "Скляне"
+        }
+      },
+      "Holz": {
+        "label": {
+          "de": "Holz",
+          "uk": "Дерев´яне"
+        }
+      },
+      "Holzwerkstoff": {
+        "label": {
+          "de": "Holzwerkstoff",
+          "uk": "Деревний матеріал"
+        }
+      },
+      "Kunststoff": {
+        "label": {
+          "de": "Kunststoff",
+          "uk": "Пластик/штучний матеріал"
+        }
+      },
+      "Lehm": {
+        "label": {
+          "de": "Lehm",
+          "uk": "Глина"
+        }
+      },
+      "Metall": {
+        "label": {
+          "de": "Metall",
+          "uk": "Метал"
+        }
+      },
+      "Mörtel": {
+        "label": {
+          "de": "Mörtel",
+          "uk": "Розчин"
+        }
+      },
+      "Naturstein": {
+        "label": {
+          "de": "Naturstein",
+          "uk": "Натуральний камінь"
+        }
+      },
+      "Putz": {
+        "label": {
+          "de": "Putz",
+          "uk": "Тиньк"
+        }
+      },
+      "Stahl": {
+        "label": {
+          "de": "Stahl",
+          "uk": "Сталь"
+        }
+      },
+      "Stahlbeton": {
+        "label": {
+          "de": "Stahlbeton",
+          "uk": "Залізобетон"
+        }
+      },
+      "Stuck": {
+        "label": {
+          "de": "Stuck",
+          "uk": "Ліпнина"
+        }
+      },
+      "Unbekannt/Unerkannt": {
+        "label": {
+          "de": "Unbekannt/Unerkannt",
+          "uk": "Невідомий/Невиявлений"
+        }
+      }
+    }
+  },
+  "Building-material-default-3": {
+    "creationDate": "2022",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Beton": {
+        "label": {
+          "de": "Beton",
+          "uk": "Бетон"
+        }
+      },
+      "Bemalung": {
+        "label": {
+          "de": "Bemalung",
+          "uk": "Розпис"
+        }
+      },
+      "Blei": {
+        "label": {
+          "de": "Blei",
+          "uk": "Свинець"
+        }
+      },
+      "Eisen": {
+        "label": {
+          "de": "Eisen",
+          "uk": "Залізо"
+        }
+      },
+      "Erde": {
+        "label": {
+          "de": "Erde",
+          "uk": "Земля"
+        }
+      },
+      "Fliesen": {
+        "label": {
+          "de": "Fliesen",
+          "uk": "Плитка"
+        }
+      },
+      "Gips": {
+        "label": {
+          "de": "Gips",
+          "uk": "Гіпс"
+        }
+      },
+      "Glas": {
+        "label": {
+          "de": "Glas",
+          "uk": "Скляне"
+        }
+      },
+      "Holz": {
+        "label": {
+          "de": "Holz",
+          "uk": "Дерев´яне"
+        }
+      },
+      "Holzwerkstoff": {
+        "label": {
+          "de": "Holzwerkstoff",
+          "uk": "Деревний матеріал"
+        }
+      },
+      "Kunststoff": {
+        "label": {
+          "de": "Kunststoff",
+          "uk": "Пластик/штучний матеріал"
+        }
+      },
+      "Lehm": {
+        "label": {
+          "de": "Lehm",
+          "uk": "Глина"
+        }
+      },
+      "Metall": {
+        "label": {
+          "de": "Metall",
+          "uk": "Метал"
+        }
+      },
+      "Mörtel": {
+        "label": {
+          "de": "Mörtel",
+          "uk": "Розчин"
+        }
+      },
+      "Naturstein": {
+        "label": {
+          "de": "Naturstein",
+          "uk": "Натуральний камінь"
+        }
+      },
+      "Putz": {
+        "label": {
+          "de": "Putz",
+          "uk": "Тиньк"
+        }
+      },
+      "Stahl": {
+        "label": {
+          "de": "Stahl",
+          "uk": "Сталь"
+        }
+      },
+      "Stahlbeton": {
+        "label": {
+          "de": "Stahlbeton",
+          "uk": "Залізобетон"
+        }
+      },
+      "Stuck": {
+        "label": {
+          "de": "Stuck",
+          "uk": "Ліпнина"
+        }
+      },
+      "Unbekannt/Unerkannt": {
+        "label": {
+          "de": "Unbekannt/Unerkannt",
+          "uk": "Невідомий/Невиявлений"
+        }
+      },
+      "Granit": {
+        "label": {
+          "de": "Granit",
+          "it": "Granito",
+          "uk": "Граніт"
+        }
+      },
+      "Kalk": {
+        "label": {
+          "de": "Kalk",
+          "it": "Calce",
+          "uk": "Вапно"
+        }
+      },
+      "Kalkmörtel": {
+        "label": {
+          "de": "Kalkmörtel",
+          "it": "Malta di calce",
+          "uk": "Вапняний розчин"
+        }
+      },
+      "Kalkstein": {
+        "label": {
+          "de": "Kalkstein",
+          "it": "Pietra calcarea",
+          "uk": "Вапняк"
+        }
+      },
+      "Kalzit": {
+        "label": {
+          "de": "Kalzit",
+          "it": "Calcite",
+          "uk": "Кальцит"
+        }
+      },
+      "Kreide": {
+        "label": {
+          "de": "Kreide",
+          "it": "Gesso",
+          "uk": "Крейда"
+        }
+      },
+      "Marmor": {
+        "label": {
+          "de": "Marmor",
+          "it": "Marmo",
+          "uk": "Мармур"
+        }
+      },
+      "Pophyr": {
+        "label": {
+          "de": "Pophyr",
+          "it": "Porfido",
+          "uk": "Порфір"
+        }
+      },
+      "Quarz": {
+        "label": {
+          "de": "Quarz",
+          "it": "Quarzo",
+          "uk": "Кварц"
+        }
+      },
+      "Sandstein": {
+        "label": {
+          "de": "Sandstein",
+          "it": "Arenaria",
+          "uk": "Пісковик"
+        }
+      },
+      "Ziegel": {
+        "label": {
+          "de": "Ziegel",
+          "it": "Laterizio",
+          "uk": "Цегла"
+        }
+      }
+    }
+  },
   "Wood-color-default": {
     "creationDate": "",
     "createdBy": "",

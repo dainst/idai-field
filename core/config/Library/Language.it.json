@@ -109,16 +109,91 @@
   },
   "categories": {
     "Level": {
-      "label": "Piano"
+      "label": "Piano",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Pavimento"
+      "label": "Pavimento",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Parete"
+      "label": "Parete",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Innenwand"
+    },
+    "OuterWall": {
+      "label": "Außenwand"
     },
     "RoomCeiling": {
-      "label": "Tetto"
+      "label": "Tetto",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Roof": {
+      "label": "Dach",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Treppe",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Opening": {
+      "label": "Öffnung",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Window": {
+      "label": "Fenster"
+    },
+    "Door": {
+      "label": "Tür"
+    },
+    "Damage": {
+      "label": "Schaden",
+      "fields": {
+        "condition": {
+          "label": "Stato di conservazione"
+        },
+        "damageType": {
+          "label": "Schadenstyp"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "Ausstattung",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "Trench": {
       "label": "Saggio",

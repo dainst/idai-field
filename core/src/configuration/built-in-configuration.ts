@@ -482,7 +482,7 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        Furniture: {
+        DesignElement: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
             fields: {},
@@ -880,7 +880,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Level:inherit', 'Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling',
-                'Roof', 'Stairs', 'Opening', 'Damage:inherit', 'Furniture:inherit'],
+                'Roof', 'Stairs', 'Opening', 'Damage:inherit', 'DesignElement:inherit'],
             range: ['Building'],
             editable: false,
             visible: false,
@@ -1027,7 +1027,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Damage:inherit', 'Furniture:inherit'],
+            domain: ['Damage:inherit', 'DesignElement:inherit'],
             range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
                 'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
             sameMainCategoryResource: true,

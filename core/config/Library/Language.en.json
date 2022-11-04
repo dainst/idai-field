@@ -176,8 +176,8 @@
         }
       }
     },
-    "Furniture": {
-      "label": "Furniture",
+    "DesignElement": {
+      "label": "Design element",
       "fields": {
         "material": {
           "label": "Material"

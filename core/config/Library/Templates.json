@@ -117,7 +117,7 @@
           "hidden": [],
           "fields": {}
         },
-        "Furniture:default": {
+        "DesignElement:default": {
           "hidden": [],
           "fields": {}
         },
@@ -249,7 +249,7 @@
         "Door",
         "Window",
         "Stairs",
-        "Furniture",
+        "DesignElement",
         "Damage",
         "Find",
         "Pottery",

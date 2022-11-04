@@ -141,7 +141,7 @@
     "Damage": {
       "label": "Пошкодження"
     },
-    "Furniture": {
+    "DesignElement": {
       "label": "Меблювання/Інвентар"
     },
     "Trench": {

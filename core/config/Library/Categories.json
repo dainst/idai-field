@@ -1428,7 +1428,7 @@
     "description": {},
     "fields": {}
   },
-  "Furniture": {
+  "DesignElement": {
     "description": {},
     "fields": {
       "material": {

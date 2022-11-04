@@ -196,8 +196,8 @@
       "createdBy": "",
       "groups": []
     },
-    "Furniture:default": {
-      "categoryName": "Furniture",
+    "DesignElement:default": {
+      "categoryName": "DesignElement",
       "creationDate": "2022",
       "description": {},
       "createdBy": "",

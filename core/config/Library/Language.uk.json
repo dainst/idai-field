@@ -180,10 +180,10 @@
       "label": "Пошкодження",
       "fields": {
         "condition": {
-          "label": "Стан збереження"
+          "label": "Стан"
         },
         "damageType": {
-          "label": "Schadenstyp"
+          "label": "Тип пошкодження"
         }
       }
     },

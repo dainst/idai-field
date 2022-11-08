@@ -54,7 +54,7 @@ defmodule FieldHub.FileStore do
     |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
       # Only keep files that match one of the requested variants
       cached_variants
-      |> Enum.map(fn(%{name: name}) ->
+      |> Stream.map(fn(%{name: name}) ->
           name
       end)
       |> Enum.any?(fn(cached_variant) ->

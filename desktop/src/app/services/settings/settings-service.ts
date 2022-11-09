@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
@@ -41,15 +41,19 @@ export class SettingsService {
 
 
     public async bootProjectDb(selectedProject: string,
+                               projectDocument?: Document,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
             await this.pouchdbDatastore.createDb(
                 selectedProject,
-                SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
+                projectDocument,
                 null,
                 destroyBeforeCreate
             );
+            if (!await this.pouchdbDatastore.getDb().get('project')) {
+                throw Error('Project document is missing');
+            }
             this.pouchdbDatastore.setupChangesEmitter();
         } catch (msgWithParams) {
             console.error(msgWithParams);

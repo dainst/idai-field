@@ -77,8 +77,8 @@ export class PouchdbDatastore {
      * a possible existing database with the specified name will get used
      * and not overwritten.
      */
-    public async createDb(name: string, projectDocument: Document, configurationDocument: ConfigurationDocument,
-                          destroyBeforeCreate: boolean): Promise<PouchDB.Database> {
+    public async createDb(name: string, projectDocument?: Document, configurationDocument?: ConfigurationDocument,
+                          destroyBeforeCreate: boolean = false): Promise<PouchDB.Database> {
 
         let db = this.pouchDbFactory(name);
 
@@ -90,16 +90,18 @@ export class PouchdbDatastore {
         // Create project & configuration documents only if they do not exist,
         // which can happen if the db already existed
 
-        try {
-            await db.get('project');
-        } catch {
-            await db.put(projectDocument);
+        if (projectDocument) {
+            try {
+                await db.get('project');
+            } catch {
+                await db.put(projectDocument);
 
-            if (configurationDocument) {
-                try {
-                    await db.get('configuration');
-                } catch {
-                    await db.put(configurationDocument);
+                if (configurationDocument) {
+                    try {
+                        await db.get('configuration');
+                    } catch {
+                        await db.put(configurationDocument);
+                    }
                 }
             }
         }

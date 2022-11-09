@@ -18,8 +18,6 @@ export class PouchdbDatastore {
 
     private db: PouchDB.Database;
 
-    public open = true;
-
     private changesObservers = [];
     private deletedObservers = [];
 
@@ -64,7 +62,6 @@ export class PouchdbDatastore {
     public createDbForTesting(dbName: string) {
      
         this.db = this.pouchDbFactory(dbName);
-        this.open = true;
         return this.db;
     }
 
@@ -107,7 +104,6 @@ export class PouchdbDatastore {
         }
 
         this.db = db;
-        this.open = true;
 
         return db;
     }
@@ -116,7 +112,6 @@ export class PouchdbDatastore {
     public close() {
 
         if (this.db) this.db.close();
-        this.open = false;
     }
 
     

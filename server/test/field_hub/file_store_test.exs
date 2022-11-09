@@ -118,10 +118,9 @@ defmodule FieldHub.FileStoreTest do
     assert %{
       "uuid_1" => %{
         deleted: false,
-        types: [:thumbnail_image, :original_image],
+        types: [:thumbnail_image],
         variants: [
-          %{name: :thumbnail_image},
-          %{name: :original_image}
+          %{name: :thumbnail_image}
         ]
       },
       "uuid_3" => %{

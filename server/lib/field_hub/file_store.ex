@@ -54,12 +54,29 @@ defmodule FieldHub.FileStore do
     |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
       # Only keep files that match one of the requested variants
       cached_variants
-      |> Enum.map(fn(%{name: name}) ->
+      |> Stream.map(fn(%{name: name}) ->
           name
       end)
       |> Enum.any?(fn(cached_variant) ->
         Enum.member?(requested_variants, cached_variant)
       end)
+    end)
+    # TODO: Remove in Version 4
+    |> Map.new(fn({uuid, info}) ->
+      {
+        uuid,
+        info
+        |> Map.update!(:types, fn(old_values) ->
+          Enum.filter(old_values, fn(val) ->
+            Enum.member?(requested_variants, val)
+          end)
+        end)
+        |> Map.update!(:variants, fn(old_values) ->
+          Enum.filter(old_values, fn(%{name: name}) ->
+            Enum.member?(requested_variants, name)
+          end)
+        end)
+      }
     end)
   end
 

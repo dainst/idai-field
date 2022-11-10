@@ -133,10 +133,10 @@
       }
     },
     "InnerWall": {
-      "label": "Innenwand"
+      "label": "Parete interna"
     },
     "OuterWall": {
-      "label": "Außenwand"
+      "label": "Parete esterna"
     },
     "RoomCeiling": {
       "label": "Tetto",
@@ -147,7 +147,7 @@
       }
     },
     "Roof": {
-      "label": "Dach",
+      "label": "Tetto",
       "fields": {
         "material": {
           "label": "Materiale"
@@ -155,7 +155,7 @@
       }
     },
     "Stairs": {
-      "label": "Treppe",
+      "label": "Scala",
       "fields": {
         "material": {
           "label": "Materiale"
@@ -163,7 +163,7 @@
       }
     },
     "Opening": {
-      "label": "Öffnung",
+      "label": "Apertura",
       "fields": {
         "material": {
           "label": "Materiale"
@@ -171,24 +171,24 @@
       }
     },
     "Window": {
-      "label": "Fenster"
+      "label": "Finestra"
     },
     "Door": {
-      "label": "Tür"
+      "label": "Porta"
     },
     "Damage": {
-      "label": "Schaden",
+      "label": "Danno",
       "fields": {
         "condition": {
-          "label": "Stato di conservazione"
+          "label": "Stato"
         },
         "damageType": {
-          "label": "Schadenstyp"
+          "label": "Tipo di danno"
         }
       }
     },
     "DesignElement": {
-      "label": "Ausstattung",
+      "label": "Arredamento",
       "fields": {
         "material": {
           "label": "Materiale"

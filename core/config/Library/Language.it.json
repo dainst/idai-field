@@ -139,7 +139,7 @@
       "label": "Parete esterna"
     },
     "RoomCeiling": {
-      "label": "Tetto",
+      "label": "Soffitto",
       "fields": {
         "material": {
           "label": "Materiale"

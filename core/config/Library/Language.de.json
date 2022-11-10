@@ -188,7 +188,7 @@
       }
     },
     "DesignElement": {
-      "label": "Gestaltungselement",
+      "label": "Ausstattungselement",
       "fields": {
         "material": {
           "label": "Material"

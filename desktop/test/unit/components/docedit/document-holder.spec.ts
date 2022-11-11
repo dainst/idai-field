@@ -84,6 +84,7 @@ describe('DocumentHolder', () => {
                 id: '1',
                 emptyField: '',
                 onlyWhitespaceField: '   ',
+                textAndWhitespaceField: '  abc ',
                 undefinedField: 'some',
                 relations: {
                     'isFoundOn': [],
@@ -136,6 +137,16 @@ describe('DocumentHolder', () => {
         expect(savedDocument.resource.emptyField).toBeUndefined();
         expect(savedDocument.resource.onlyWhitespaceField).toBeUndefined();
         expect(savedDocument.resource.category).not.toBeUndefined();
+        done();
+    });
+
+
+    it('remove leading and trailing whitespace from strings', async done => {
+
+        docHolder.setDocument(defaultDocument);
+        const savedDocument: Document = await docHolder.save();
+
+        expect(savedDocument.resource.textAndWhitespaceField).toEqual('abc');
         done();
     });
 

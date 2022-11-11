@@ -166,6 +166,10 @@ configuration-category {
   #add-field-button {
     transform: translate(-20px, -45px);
     padding: 2px 0 0 1px;
+
+    &.with-description {
+      transform: translate(-20px, -40px);
+    }
   }
 
   #add-group-button {

@@ -15,6 +15,7 @@ hierarchical-relations-info {
   }
 
   #hierarchical-relations-info-popover {
+
     .popover-custom-title {
       font-size: 14px;
 
@@ -24,8 +25,10 @@ hierarchical-relations-info {
     }
 
     ul {
-      margin: 3px;
-      padding: 0;
+      max-height: calc(100vh - 250px);
+      margin: 0;
+      padding: 3px;
+      overflow-y: auto;
 
       li {
         display: block;

@@ -27,7 +27,7 @@ describe('DocumentHolder', () => {
                         groups: [{ name: 'stem', fields: [
                             { name: 'id' },
                             { name: 'category' },
-                            { name: 'emptyfield' }
+                            { name: 'emptyField' }
                         ]}]}
                     , []],
                     [{
@@ -82,8 +82,9 @@ describe('DocumentHolder', () => {
             resource: {
                 category: 'Trench',
                 id: '1',
-                emptyfield: '',
-                undeffield: 'some',
+                emptyField: '',
+                onlyWhitespaceField: '   ',
+                undefinedField: 'some',
                 relations: {
                     'isFoundOn': [],
                     'isFoundOn2': ['1'],
@@ -125,14 +126,15 @@ describe('DocumentHolder', () => {
     it('remove empty and undefined fields', async done => {
 
         const cloned = Document.clone(defaultDocument);
-        delete cloned.resource.undeffield;
+        delete cloned.resource.undefinedField;
         docHolder.setDocument(cloned);
 
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
-        expect(savedDocument.resource.undeffield).toBeUndefined();
-        expect(savedDocument.resource.emptyfield).toBeUndefined();
+        expect(savedDocument.resource.undefinedField).toBeUndefined();
+        expect(savedDocument.resource.emptyField).toBeUndefined();
+        expect(savedDocument.resource.onlyWhitespaceField).toBeUndefined();
         expect(savedDocument.resource.category).not.toBeUndefined();
         done();
     });
@@ -142,7 +144,7 @@ describe('DocumentHolder', () => {
 
         docHolder.setDocument(defaultDocument);
         const savedDocument: Document = await docHolder.save();
-        expect(savedDocument.resource.undeffield).toEqual('some');
+        expect(savedDocument.resource.undefinedField).toEqual('some');
         done();
     });
 

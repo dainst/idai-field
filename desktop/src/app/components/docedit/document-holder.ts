@@ -156,14 +156,15 @@ export class DocumentHolder {
 
     private cleanup(document: Document): Document {
 
+        trimFields(document.resource);
+
         document = flow(
             document,
             DocumentHolder.cleanEmptyObjects,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeFields(this.validateFields()),
-            Document.removeFields(this.getEmptyFields()));
-
-        trimFields(document.resource);
+            Document.removeFields(this.getEmptyFields())
+        );
 
         return document;
     }

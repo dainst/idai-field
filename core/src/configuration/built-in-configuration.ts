@@ -938,7 +938,8 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit', 'Sample', 'Room:inherit', 'BuildingPart:inherit',
-                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
+                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs',
+                'DesignElement:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -1027,7 +1028,17 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Damage:inherit', 'DesignElement:inherit'],
+            domain: ['Damage:inherit'],
+            range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
+                'RoomCeiling', 'Roof', 'Stairs', 'Opening', 'DesignElement:inherit'],
+            sameMainCategoryResource: true,
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['DesignElement:inherit'],
             range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
                 'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
             sameMainCategoryResource: true,

@@ -60,6 +60,7 @@ export class ImageOverviewTaskbarComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 LinkModalComponent, { keyboard: false }
             );
+            modalRef.componentInstance.imageDocuments = this.imageOverviewFacade.getSelected();
             modalRef.componentInstance.initializeFilterOptions();
 
             const targetDocument: FieldDocument = await modalRef.result;

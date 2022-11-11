@@ -1,23 +1,22 @@
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {imagesRouting} from './image-overview.routing';
-import {ImageOverviewComponent} from './image-overview.component';
-import {WidgetsModule} from '../../widgets/widgets.module';
-import {LinkModalComponent} from './link-modal.component'
-import {ImagesState} from '../../../components/image/overview/view/images-state';
-import {ImageGridModule} from '../grid/image-grid.module';
-import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ImageOverviewTaskbarComponent} from './image-overview-taskbar.component';
-import {ImageOverviewSearchBarComponent} from './searchbar/image-overview-search-bar.component';
-import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overview-search-constraints.component';
-import {DeleteModalComponent} from './deletion/delete-modal.component';
-import {ImageOverviewFacade} from '../../../components/image/overview/view/imageoverview-facade';
-import {ImageDocumentsManager} from '../../../components/image/overview/view/image-documents-manager';
-import {ProjectConfiguration} from 'idai-field-core';
-import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
-import { Datastore } from 'idai-field-core';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { imagesRouting } from './image-overview.routing';
+import { ImageOverviewComponent } from './image-overview.component';
+import { WidgetsModule } from '../../widgets/widgets.module';
+import { LinkModalComponent } from './link-modal.component'
+import { ImagesState } from '../../../components/image/overview/view/images-state';
+import { ImageGridModule } from '../grid/image-grid.module';
+import { RemoveLinkModalComponent}  from './remove-link-modal.component';
+import { ImageOverviewTaskbarComponent } from './image-overview-taskbar.component';
+import { ImageOverviewSearchBarComponent } from './searchbar/image-overview-search-bar.component';
+import { ImageOverviewSearchConstraintsComponent } from './searchbar/image-overview-search-constraints.component';
+import { DeleteModalComponent } from './deletion/delete-modal.component';
+import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
+import { ProjectConfiguration, Datastore } from 'idai-field-core';
+import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
 
 
 @NgModule({

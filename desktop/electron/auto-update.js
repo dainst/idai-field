@@ -118,7 +118,8 @@ const setUp = async (mainWindow) => {
         });
     });
 
-    autoUpdater.on('error', () => {
+    autoUpdater.on('error', (err) => {
+        console.error('error:', err);
         mainWindow.webContents.send('downloadInterrupted');
     });
 

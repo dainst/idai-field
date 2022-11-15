@@ -1,4 +1,4 @@
-#category-switcher-button {
+category-switcher-button {
   #no-category-switching-icon {
     position: absolute;
     cursor: default;
@@ -6,5 +6,14 @@
 
   .bs-popover-bottom-left {
     left: -7px !important;
+
+    .arrow {
+      left: 41px !important;
+    }
   }
+
+  .mdi-menu-down {
+    bottom: 0;
+  }
+  
 }

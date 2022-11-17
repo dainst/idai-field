@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import Modal from 'react-modal';
 import './buttons.css';
@@ -28,11 +28,11 @@ const app = (subdomain === 'shapes' || process.env.REACT_APP_MAIN === 'shapes')
             ? <Shapes />
             : <Field />;
 
-
 refreshAnonymousUserRights().finally(() => {
-  ReactDOM.render(
+  const root = createRoot(document.getElementById('root'));
+  root.render(
     <I18nextProvider i18n={ i18n }>
       { app }
-    </I18nextProvider>,
-  document.getElementById('root'));
+    </I18nextProvider>
+  );
 });

@@ -286,7 +286,15 @@ const isDefaultLayer = (layerId: string, layerGroup: LayerGroup): boolean => {
             .includes(layerId)
         || (layerGroup.document.resource.category.name === 'Project'
             && !layerGroup.document.resource.relations?.hasDefaultMapLayer
-            && layerGroup.document.resource.relations?.hasMapLayer?.[0]?.resource.id === layerId);
+            && isLastLayerInList(layerId, layerGroup.document.resource.relations?.hasMapLayer)
+        );
+};
+
+
+const isLastLayerInList = (layerId: string, layers: ResultDocument[]): boolean => {
+
+    return layers?.length > 0
+        && layers[layers.length - 1]?.resource.id === layerId;
 };
 
 

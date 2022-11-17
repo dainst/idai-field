@@ -325,6 +325,8 @@ const isVisibleTileLayer = (document: ResultDocument, projectDocument: Document,
         ? projectDocument.resource.relations?.hasDefaultMapLayer
             ?.map(target => target.resource.id)
             .includes(document.resource.id)
+                ? true
+                : false
         : false;
 };
 

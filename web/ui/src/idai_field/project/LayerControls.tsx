@@ -287,7 +287,7 @@ const isDefaultLayer = (layerId: string, layerGroup: LayerGroup): boolean => {
         || (layerGroup.document.resource.category.name === 'Project'
             && !layerGroup.document.resource.relations?.hasDefaultMapLayer
             && layerGroup.document.resource.relations?.hasMapLayer?.[0]?.resource.id === layerId);
-}
+};
 
 
 const layerControlsButtonStyle: CSSProperties = {

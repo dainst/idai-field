@@ -270,18 +270,24 @@ const addDefaultsToTileLayerVisibility = (tileLayerVisiblity: { [id: string]: bo
         result = group.tileLayers.reduce((groupResult, layer) => {
             const layerId: string = layer.get('document').resource.id;
             if (groupResult[layerId] === undefined) {
-                groupResult[layerId] = group.document.resource.relations?.hasDefaultMapLayer
-                        ?.map(target => target.resource.id)
-                        .includes(layerId)
-                    || (group.document.resource.category.name === 'Project'
-                        && !group.document.resource.relations?.hasDefaultMapLayer
-                        && group.document.resource.relations?.hasMapLayer?.[0]?.resource.id === layerId);
+                groupResult[layerId] = isDefaultLayer(layerId, group);
             }
             return groupResult;
         }, tileLayerVisiblity);
         return result;
     }, {});
 };
+
+
+const isDefaultLayer = (layerId: string, layerGroup: LayerGroup): boolean => {
+
+    return layerGroup.document.resource.relations?.hasDefaultMapLayer
+            ?.map(target => target.resource.id)
+            .includes(layerId)
+        || (layerGroup.document.resource.category.name === 'Project'
+            && !layerGroup.document.resource.relations?.hasDefaultMapLayer
+            && layerGroup.document.resource.relations?.hasMapLayer?.[0]?.resource.id === layerId);
+}
 
 
 const layerControlsButtonStyle: CSSProperties = {

@@ -53,15 +53,25 @@ async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string,
 async function fetchConfigurationDocumentFromCouchdb(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
                                                      projectName: string): Promise<ConfigurationDocument> {
 
-    const result = await axios.get(
-        couchdbUrl + '/' + projectName + '/configuration',
-        {
-            auth: {
-                username: couchdbUser,
-                password: couchdbPassword
+    let result;
+    
+    try {
+        result = await axios.get(
+            couchdbUrl + '/' + projectName + '/configuration',
+            {
+                auth: {
+                    username: couchdbUser,
+                    password: couchdbPassword
+                }
             }
+        );
+    } catch (err) {
+        if (err.response.status === 404) {
+            throw ''; // Do not log 404 errors, as they are expected for older projects without configuration document
+        } else {
+            throw err;
         }
-    );
+    }
 
     return result.data;
 }

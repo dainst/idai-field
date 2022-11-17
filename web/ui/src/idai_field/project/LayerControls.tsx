@@ -271,8 +271,11 @@ const addDefaultsToTileLayerVisibility = (tileLayerVisiblity: { [id: string]: bo
             const layerId: string = layer.get('document').resource.id;
             if (groupResult[layerId] === undefined) {
                 groupResult[layerId] = group.document.resource.relations?.hasDefaultMapLayer
-                    ?.map(target => target.resource.id)
-                    .includes(layerId);
+                        ?.map(target => target.resource.id)
+                        .includes(layerId)
+                    || group.document.resource.category.name === 'Project'
+                        && !group.document.resource.relations?.hasDefaultMapLayer
+                        && group.document.resource.relations?.hasMapLayer?.[0]?.resource.id === layerId;
             }
             return groupResult;
         }, tileLayerVisiblity);

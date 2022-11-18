@@ -337,7 +337,7 @@ const getTileLayerDocuments = async (project: string, loginData: LoginData): Pro
 
     const result = await search({
         q: '*',
-        exists: ['resource.georeference'],
+        exists: ['resource.georeference', 'resource.relations.isMapLayerOf'],
         filters: [{ field: 'project', value: project }]
     }, loginData.token);
 

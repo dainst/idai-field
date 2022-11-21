@@ -109,16 +109,91 @@
   },
   "categories": {
     "Level": {
-      "label": "Piano"
+      "label": "Piano",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Pavimento"
+      "label": "Pavimento",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Parete"
+      "label": "Parete",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Parete interna"
+    },
+    "OuterWall": {
+      "label": "Parete esterna"
     },
     "RoomCeiling": {
-      "label": "Tetto"
+      "label": "Soffitto",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Roof": {
+      "label": "Tetto",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Scala",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Opening": {
+      "label": "Apertura",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
+    },
+    "Window": {
+      "label": "Finestra"
+    },
+    "Door": {
+      "label": "Porta"
+    },
+    "Damage": {
+      "label": "Danno",
+      "fields": {
+        "condition": {
+          "label": "Stato"
+        },
+        "damageType": {
+          "label": "Tipo di danno"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "Arredamento",
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "Trench": {
       "label": "Saggio",

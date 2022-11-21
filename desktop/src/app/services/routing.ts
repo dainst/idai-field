@@ -3,7 +3,8 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, Document, Named, ProjectConfiguration, DatastoreErrors } from 'idai-field-core';
+import { Datastore, Document, Named, ProjectConfiguration, DatastoreErrors, ImageDocument,
+    ObserverUtil } from 'idai-field-core';
 import { ViewFacade } from '../components/resources/view/view-facade';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
@@ -25,6 +26,8 @@ export class Routing {
 
     private currentRoute: any;
 
+    private selectViaImageLinkObservers: Array<Observer<ImageDocument>> = [];
+
 
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
@@ -42,6 +45,10 @@ export class Routing {
             this.setRoute(route, observer);
         });
     }
+
+
+    public selectViaImageLinkNotifications = (): Observable<ImageDocument> =>
+        ObserverUtil.register(this.selectViaImageLinkObservers);
 
 
     public async jumpToOperationView(operation: Document) {
@@ -92,10 +99,14 @@ export class Routing {
 
     private async jumpToImageCategoryResource(documentToSelect: Document) {
 
-        await this.router.navigate(
-            ['images', 'show', documentToSelect.resource.id],
-            { queryParams: { from: this.currentRoute } }
-        );
+        if (!this.router.url.startsWith('/images/')) {
+            await this.router.navigate(
+                ['images', 'show', documentToSelect.resource.id],
+                { queryParams: { from: this.currentRoute } }
+            );
+        } else {
+            ObserverUtil.notify(this.selectViaImageLinkObservers, documentToSelect);
+        }
     }
 
 

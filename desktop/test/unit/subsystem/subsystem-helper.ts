@@ -78,7 +78,11 @@ export async function setupSettingsService(pouchdbDatastore, projectName = 'test
         username: 'synctestuser'
     });
 
-    await settingsService.bootProjectDb(settings.selectedProject, true);
+    await settingsService.bootProjectDb(
+        settings.selectedProject,
+        SettingsService.createProjectDocument(settings),
+        true
+    );
 
     const projectConfiguration = await settingsService.loadConfiguration();
     return { settingsService, projectConfiguration, fileSystemAdapter, imageStore, remoteImageStore, settingsProvider };

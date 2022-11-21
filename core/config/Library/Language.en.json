@@ -98,16 +98,91 @@
   },
   "categories": {
     "Level": {
-      "label": "Level"
+      "label": "Level",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Floor"
+      "label": "Floor",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Wall"
+      "label": "Wall",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomCeiling": {
-      "label": "Ceiling"
+      "label": "Ceiling",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Inner wall"
+    },
+    "OuterWall": {
+      "label": "Outer wall"
+    },
+    "Roof": {
+      "label": "Roof",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Stairs",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Opening": {
+      "label": "Opening",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Window": {
+      "label": "Window"
+    },
+    "Door": {
+      "label": "Door"
+    },
+    "Damage": {
+      "label": "Damage",
+      "fields": {
+        "condition": {
+          "label": "Condition"
+        },
+        "damageType": {
+          "label": "Damage type"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "Design element",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Trench": {
       "label": "Trench",
@@ -1240,7 +1315,11 @@
     },
     "BuildingPart": {
       "label": "Building part",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Area": {
       "label": "Area",

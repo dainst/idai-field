@@ -11,11 +11,11 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "material"]
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -40,11 +40,11 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "material"]
         },
         {
           "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -68,11 +68,179 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "material"]
         },
         {
           "name": "dimension",
-          "fields": ["dimensionLength", "dimensionWidth"]
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "InnerWall:default": {
+      "categoryName": "InnerWall",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "OuterWall:default": {
+      "categoryName": "OuterWall",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "Roof:default": {
+      "categoryName": "Roof",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "material"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Stairs:default": {
+      "categoryName": "Stairs",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "material"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Opening:default": {
+      "categoryName": "Opening",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "material"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Window:default": {
+      "categoryName": "Window",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "Door:default": {
+      "categoryName": "Door",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": []
+    },
+    "DesignElement:default": {
+      "categoryName": "DesignElement",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "material"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Damage:default": {
+      "categoryName": "Damage",
+      "creationDate": "2022",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "condition", "damageType"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionHeight", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
@@ -472,7 +640,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "material"]
         },
         {
           "name": "dimension",
@@ -670,6 +838,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "material"]
         },
         {
           "name": "position",

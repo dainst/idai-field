@@ -270,14 +270,31 @@ const addDefaultsToTileLayerVisibility = (tileLayerVisiblity: { [id: string]: bo
         result = group.tileLayers.reduce((groupResult, layer) => {
             const layerId: string = layer.get('document').resource.id;
             if (groupResult[layerId] === undefined) {
-                groupResult[layerId] = group.document.resource.relations?.hasDefaultMapLayer
-                    ?.map(target => target.resource.id)
-                    .includes(layerId);
+                groupResult[layerId] = isDefaultLayer(layerId, group);
             }
             return groupResult;
         }, tileLayerVisiblity);
         return result;
     }, {});
+};
+
+
+const isDefaultLayer = (layerId: string, layerGroup: LayerGroup): boolean => {
+
+    return layerGroup.document.resource.relations?.hasDefaultMapLayer
+            ?.map(target => target.resource.id)
+            .includes(layerId)
+        || (layerGroup.document.resource.category.name === 'Project'
+            && !layerGroup.document.resource.relations?.hasDefaultMapLayer
+            && isLastLayerInList(layerId, layerGroup.document.resource.relations?.hasMapLayer)
+        );
+};
+
+
+const isLastLayerInList = (layerId: string, layers: ResultDocument[]): boolean => {
+
+    return layers?.length > 0
+        && layers[layers.length - 1]?.resource.id === layerId;
 };
 
 

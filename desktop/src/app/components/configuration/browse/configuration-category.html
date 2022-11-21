@@ -56,8 +56,10 @@
                    (dblclick)="onEditGroup.emit(group)"
                    (contextmenu)="contextMenu.open($event, category, group)">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
-                    <span class="group-label">{{getGroupLabel(group)}}</span>
-                    <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
+                    <span class="group-label">
+                        {{getGroupLabel(group)}}
+                        <span *ngIf="highlightForCustomFields(group)" class="custom-marking"> *</span>
+                    </span>
                 </a>
                 <div *cdkDragPreview class="group-drag-preview">
                     {{getGroupLabel(group)}}
@@ -66,7 +68,9 @@
                 <div *cdkDragPlaceholder class="group-drag-placeholder"></div>
             </li>
         </ul>
-        <div id="add-group-button" class="circular-button green-button"
+        <div id="add-group-button"
+            class="circular-button green-button"
+            [class.with-description]="description"
             (click)="addGroup()"
             ngbTooltip="Gruppe hinzufügen"
             i18n-ngbTooltip="@@configuration.addGroup"
@@ -104,7 +108,9 @@
                 <div *cdkDragPlaceholder class="field-drag-placeholder"></div>
             </div>
         </div>
-        <div id="add-field-button" class="circular-button green-button"
+        <div id="add-field-button"
+             class="circular-button green-button"
+             [class.with-description]="description"
             (click)="addField()"
             ngbTooltip="Feld hinzufügen"
             i18n-ngbTooltip="@@configuration.addField">

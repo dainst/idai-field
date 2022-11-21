@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { ImageDocument, Document, CategoryForm, Datastore, ProjectConfiguration } from 'idai-field-core';
 import { ImageGridComponent } from '../grid/image-grid.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
@@ -13,6 +14,7 @@ import { M } from '../../messages/m';
 import { TabManager } from '../../../services/tabs/tab-manager';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { Messages } from '../../messages/messages';
+import { Routing } from '../../../services/routing';
 
 
 @Component({
@@ -27,11 +29,13 @@ import { Messages } from '../../messages/messages';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent implements OnInit {
+export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
     public filterOptions: Array<CategoryForm> = [];
+
+    private selectViaImageLinkSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -44,9 +48,12 @@ export class ImageOverviewComponent implements OnInit {
                 private tabManager: TabManager,
                 private modalService: NgbModal,
                 private menuService: Menus,
-                private router: Router) {
+                private router: Router,
+                private routing: Routing) {
 
         this.imageOverviewFacade.initialize().then(() => this.setUpRouting(route, location));
+        this.selectViaImageLinkSubscription =
+            this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
     }
 
 
@@ -100,6 +107,12 @@ export class ImageOverviewComponent implements OnInit {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
         this.filterOptions = [this.projectConfiguration.getCategory('Image')];
+    }
+
+
+    ngOnDestroy() {
+
+        if (this.selectViaImageLinkSubscription) this.selectViaImageLinkSubscription.unsubscribe();
     }
 
 

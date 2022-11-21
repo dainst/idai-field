@@ -134,9 +134,16 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 
     await progress.setPhase('settingUpDatabase');
     try {
-        await settingsService.bootProjectDb(settings.selectedProject, settings.selectedProject === 'test');
+        await settingsService.bootProjectDb(
+            settings.selectedProject,
+            settings.selectedProject === 'test'
+                ? SettingsService.createProjectDocument(settings)
+                : null,
+            settings.selectedProject === 'test'
+        );
     } catch (msgWithParams) {
         await progress.setError('databaseError');
+        return Promise.reject();
     }
 };
 

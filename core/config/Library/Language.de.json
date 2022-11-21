@@ -109,16 +109,91 @@
   },
   "categories": {
     "Level": {
-      "label": "Stockwerk"
+      "label": "Stockwerk",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Boden"
+      "label": "Boden",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Wand"
+      "label": "Wand",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Innenwand"
+    },
+    "OuterWall": {
+      "label": "Außenwand"
     },
     "RoomCeiling": {
-      "label": "Decke"
+      "label": "Decke",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Roof": {
+      "label": "Dach",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Treppe",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Opening": {
+      "label": "Öffnung",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Window": {
+      "label": "Fenster"
+    },
+    "Door": {
+      "label": "Tür"
+    },
+    "Damage": {
+      "label": "Schaden",
+      "fields": {
+        "condition": {
+          "label": "Zustand"
+        },
+        "damageType": {
+          "label": "Schadenstyp"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "Ausstattungselement",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Trench": {
       "label": "Schnitt",
@@ -1363,7 +1438,11 @@
     },
     "BuildingPart": {
       "label": "Bauwerksteil",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Area": {
       "label": "Bereich",

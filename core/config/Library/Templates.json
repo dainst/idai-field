@@ -4,7 +4,8 @@
     "label": {
       "de": "Standard",
       "en": "Default",
-      "it": "Standard"
+      "it": "Standard",
+      "uk": "Стандартна"
     },
     "description": {
       "de": "Standard-Konfiguration",
@@ -81,6 +82,42 @@
           "fields": {}
         },
         "RoomWall:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "InnerWall:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "OuterWall:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Roof:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Opening:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Door:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Window:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Stairs:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Damage:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "DesignElement:default": {
           "hidden": [],
           "fields": {}
         },
@@ -197,6 +234,23 @@
         "Area",
         "SurveyUnit",
         "Excavation",
+        "Profile",
+        "Planum",
+        "BuildingPart",
+        "Level",
+        "Room",
+        "RoomCeiling",
+        "RoomWall",
+        "InnerWall",
+        "OuterWall",
+        "RoomFloor",
+        "Roof",
+        "Opening",
+        "Door",
+        "Window",
+        "Stairs",
+        "DesignElement",
+        "Damage",
         "Find",
         "Pottery",
         "Terracotta",
@@ -211,14 +265,6 @@
         "Mollusk",
         "Inscription",
         "Sample",
-        "Profile",
-        "Planum",
-        "BuildingPart",
-        "Level",
-        "Room",
-        "RoomCeiling",
-        "RoomWall",
-        "RoomFloor",
         "Image",
         "Drawing",
         "Photo",
@@ -232,7 +278,8 @@
     "label": {
       "de": "Basis (Grabung)",
       "en": "Basic (Excavation)",
-      "it": "Configurazione di base (scavo)"
+      "it": "Configurazione di base (scavo)",
+      "uk": "Основа (розкопки)"
     },
     "description": {
       "de": "Basis-Konfiguration für Grabungen",
@@ -295,7 +342,8 @@
     "label": {
       "de": "Basis (Bauaufnahme)",
       "en": "Basic (Building survey)",
-      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)"
+      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)",
+      "uk": "Основа (інвентаризація споруди)"
     },
     "description": {
       "de": "Basis-Konfiguration für die Bauaufnahme",
@@ -323,10 +371,6 @@
           "hidden": [],
           "fields": {}
         },
-        "Find": {
-          "hidden": [],
-          "fields": {}
-        },
         "Level": {
           "hidden": [],
           "fields": {}
@@ -344,6 +388,18 @@
           "fields": {}
         },
         "RoomWall": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Roof": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Opening": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Stairs": {
           "hidden": [],
           "fields": {}
         },
@@ -365,13 +421,15 @@
         "Operation",
         "Building",
         "Place",
-        "Find",
         "BuildingPart",
         "Level",
         "Room",
         "RoomCeiling",
         "RoomWall",
         "RoomFloor",
+        "Roof",
+        "Opening",
+        "Stairs",
         "Image",
         "TypeCatalog",
         "Type"
@@ -383,7 +441,8 @@
     "label": {
       "de": "Basis (Survey)",
       "en": "Basic (Survey)",
-      "it": "Configurazione di base (prospezione)"
+      "it": "Configurazione di base (prospezione)",
+      "uk": "Основа (обстеження)"
     },
     "description": {
       "de": "Basis-Konfiguration für Surveys",

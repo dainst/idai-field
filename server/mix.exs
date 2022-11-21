@@ -4,7 +4,7 @@ defmodule FieldHub.MixProject do
   def project do
     [
       app: :field_hub,
-      version: "3.1.1",
+      version: "3.1.3",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),

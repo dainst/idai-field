@@ -297,7 +297,7 @@
       "material": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "Building-material-default"
+        "valuelistId": "Building-material-default-3"
       }
     }
   },
@@ -1348,6 +1348,103 @@
   "BuildingPart": {
     "color": "#707070",
     "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "Level": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "RoomFloor": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "RoomCeiling": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "RoomWall": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "Roof": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "Stairs": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "Opening": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "Window": {
+    "parent": "Opening",
+    "description": {},
+    "fields": {}
+  },
+  "Door": {
+    "parent": "Opening",
+    "description": {},
+    "fields": {}
+  },
+  "DesignElement": {
+    "description": {},
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Building-material-default-3"
+      }
+    }
+  },
+  "OuterWall": {
+    "parent": "RoomWall",
+    "description": {},
+    "fields": {}
+  },
+  "InnerWall": {
+    "parent": "RoomWall",
+    "description": {},
     "fields": {}
   },
   "SurveyUnit": {
@@ -1381,6 +1478,22 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sample-sampleType-default"
+      }
+    }
+  },
+  "Damage": {
+    "color": "#ff0000",
+    "description": {},
+    "fields": {
+      "condition": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Damage-condition-default"
+      },
+      "damageType": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "damages-default"
       }
     }
   }

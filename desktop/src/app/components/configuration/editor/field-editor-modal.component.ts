@@ -154,7 +154,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
-        this.getClonedFieldDefinition().inputType = newInputType;
+        if (newInputType === this.field.inputType && !this.getCustomFieldDefinition()?.inputType) {
+            delete this.getClonedFieldDefinition().inputType;
+            if (this.getCustomFieldDefinition()?.constraintIndexed) {
+                this.getClonedFieldDefinition().constraintIndexed = this.field.constraintIndexed;
+            }
+        } else {
+            this.getClonedFieldDefinition().inputType = newInputType;
+        }
     }
 
     

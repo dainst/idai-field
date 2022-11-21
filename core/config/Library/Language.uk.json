@@ -109,16 +109,91 @@
   },
   "categories": {
     "Level": {
-      "label": "Поверх"
+      "label": "Поверх",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
     },
     "RoomFloor": {
-      "label": "Поверхня / підлога"
+      "label": "Поверхня / підлога",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Стіна"
+      "label": "Стіна",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
     },
     "RoomCeiling": {
-      "label": "Стеля"
+      "label": "Стеля",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Внутрішня стіна"
+    },
+    "OuterWall": {
+      "label": "Зовнішня стіна"
+    },
+    "Roof": {
+      "label": "Дах",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Сходи",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
+    },
+    "Opening": {
+      "label": "Отвір",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
+    },
+    "Window": {
+      "label": "Вікно"
+    },
+    "Door": {
+      "label": "Двері"
+    },
+    "Damage": {
+      "label": "Пошкодження",
+      "fields": {
+        "condition": {
+          "label": "Стан"
+        },
+        "damageType": {
+          "label": "Тип пошкодження"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "Меблювання/Інвентар",
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
     },
     "Trench": {
       "label": "Розріз",

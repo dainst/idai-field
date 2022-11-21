@@ -4,7 +4,7 @@ import { Feature, FeatureCollection } from 'geojson';
 import { History } from 'history';
 import { Feature as OlFeature, MapBrowserEvent } from 'ol';
 import { never } from 'ol/events/condition';
-import { Extent } from 'ol/extent';
+import { Extent, createEmpty as createEmptyExtent, extend } from 'ol/extent';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Polygon } from 'ol/geom';
 import { Select } from 'ol/interaction';
@@ -136,12 +136,12 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         const newVectorLayer = getGeoJSONLayer(featureCollection);
         if (newVectorLayer) map.addLayer(newVectorLayer);
         setVectorLayer(newVectorLayer);
-        setUpView(map, newVectorLayer, fitOptions);
+        setUpView(map, newVectorLayer, tileLayers, fitOptions);
 
         return () => {
             map.removeLayer(newVectorLayer);
         };
-    }, [map, documents, fitOptions]);
+    }, [map, documents, tileLayers, fitOptions]);
 
     useEffect(() => {
 
@@ -215,11 +215,13 @@ const createMap = (): Map => {
 };
 
 
-const setUpView = (map: Map, layer: VectorLayer, fitOptions: FitOptions) => {
+const setUpView = (map: Map, layer: VectorLayer, tileLayers: TileLayer[], fitOptions: FitOptions) => {
 
-    map.getView().fit(layer.getSource().getExtent(), { padding: fitOptions.padding });
+    const extent: Extent = extend(layer.getSource().getExtent(), getExtentOfTileLayers(tileLayers));
+
+    map.getView().fit(extent, { padding: fitOptions.padding });
     map.setView(new View({ extent: map.getView().calculateExtent(map.getSize()) }));
-    map.getView().fit(layer.getSource().getExtent(), { padding: fitOptions.padding });
+    map.getView().fit(extent, { padding: fitOptions.padding });
 };
 
 
@@ -325,6 +327,8 @@ const isVisibleTileLayer = (document: ResultDocument, projectDocument: Document,
         ? projectDocument.resource.relations?.hasDefaultMapLayer
             ?.map(target => target.resource.id)
             .includes(document.resource.id)
+                ? true
+                : false
         : false;
 };
 
@@ -333,7 +337,7 @@ const getTileLayerDocuments = async (project: string, loginData: LoginData): Pro
 
     const result = await search({
         q: '*',
-        exists: ['resource.georeference'],
+        exists: ['resource.georeference', 'resource.relations.isMapLayerOf'],
         filters: [{ field: 'project', value: project }]
     }, loginData.token);
 
@@ -528,6 +532,14 @@ const getExtentOfHighlightedGeometries = (layer: VectorLayer): Extent => {
     return highlightedFeatures.length > 0
         ? new VectorSource({ features: highlightedFeatures }).getExtent()
         : layer.getSource().getExtent();
+};
+
+
+const getExtentOfTileLayers = (tileLayers: TileLayer[]): Extent => {
+
+    return tileLayers
+        .map(tileLayer => tileLayer.getExtent())
+        .reduce((result, extent) => extend(result, extent), createEmptyExtent());
 };
 
 

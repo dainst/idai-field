@@ -1,7 +1,7 @@
 {
   "name": "idai-field-client",
   "description": "Field Desktop",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "main": "electron/main.js",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
@@ -127,7 +127,7 @@
     "express-pouchdb": "4.2.0",
     "extract-zip": "2.0.1",
     "geojson-rewind": "0.3.1",
-    "idai-field-core": "^1.1.1",
+    "idai-field-core": "^1.1.6",
     "jimp": "0.9.8",
     "leaflet": "1.7.1",
     "moment": "2.29.4",

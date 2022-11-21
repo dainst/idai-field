@@ -622,8 +622,11 @@ describe('resources --', () => {
         await SearchBarPage.clickCategoryFilterButton('modal');
         
         labels = await SearchBarPage.getCategoryFilterOptionLabels();
-        expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Raum');
+        expect(labels.length).toBe(4);
+        expect(await getText(labels[0])).toEqual('Bauwerk');
+        expect(await getText(labels[1])).toEqual('Bauwerksteil');
+        expect(await getText(labels[2])).toEqual('Stockwerk');
+        expect(await getText(labels[3])).toEqual('Raum');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
         await ResourcesPage.clickCancelInMoveModal();

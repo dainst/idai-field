@@ -27,6 +27,18 @@
       font-size: 1.1em;
     }
 
+    h5 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    p[align=center] + h2,
+    p[align=center] + h3,
+    p[align=center] + h4,
+    p[align=center] + h5 {
+      margin-top: 35px;
+    } 
+
     pre {
       background-color: #e9ecef;
       padding: 10px;

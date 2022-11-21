@@ -157,10 +157,12 @@ export async function selectOption(element, optionValue) {
 }
 
 
-export async function getText(element) {
+export async function getText(element, trim = true) {
 
     if (isString(element)) element = await getLocator(element);
-    return element.textContent();
+    const text = await element.textContent();
+
+    return trim ? text.trim() : text;
 }
 
 

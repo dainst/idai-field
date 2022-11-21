@@ -425,8 +425,8 @@ test.describe('map --', () => {
 
         let labels = await MapPage.getLayerLabels(0);
         expect(await labels.count()).toBe(2);
-        expect((await getText(labels.nth(0))).trim()).toEqual('Kartenhintergrund 1');
-        expect((await getText(labels.nth(1))).trim()).toEqual('Kartenhintergrund 2');
+        expect(await getText(labels.nth(0))).toEqual('Kartenhintergrund 1');
+        expect(await getText(labels.nth(1))).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickEditLayersButton();
         await MapPage.clickRemoveLayerButton(0);
@@ -434,7 +434,7 @@ test.describe('map --', () => {
 
         labels = await MapPage.getLayerLabels(0);
         expect(await labels.count()).toBe(1);
-        expect((await getText(labels.nth(0))).trim()).toEqual('Kartenhintergrund 2');
+        expect(await getText(labels.nth(0))).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickLayerButton();
         await ResourcesPage.clickHierarchyButton('S1');
@@ -444,7 +444,7 @@ test.describe('map --', () => {
         expect(await labels.count()).toBe(0);
         labels = await MapPage.getLayerLabels(1);
         expect(await labels.count()).toBe(1);
-        expect((await getText(labels.nth(0))).trim()).toEqual('Kartenhintergrund 2');
+        expect(await getText(labels.nth(0))).toEqual('Kartenhintergrund 2');
 
         await MapPage.clickEditLayersButton();
         await MapPage.clickAddLayersButton();
@@ -455,10 +455,10 @@ test.describe('map --', () => {
 
         labels = await MapPage.getLayerLabels(0);
         expect(await labels.count()).toBe(1);
-        expect((await getText(labels.nth(0))).trim()).toEqual('Kartenhintergrund 1');
+        expect(await getText(labels.nth(0))).toEqual('Kartenhintergrund 1');
         labels = await MapPage.getLayerLabels(1);
         expect(await labels.count()).toBe(1);
-        expect((await getText(labels.nth(0))).trim()).toEqual('Kartenhintergrund 2');
+        expect(await getText(labels.nth(0))).toEqual('Kartenhintergrund 2');
         await MapPage.clickLayerButton();
     });
 

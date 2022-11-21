@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { Messages } from './messages';
 import { Message } from './message';
 
@@ -11,17 +12,30 @@ import { Message } from './message';
     templateUrl: './messages.html'
 })
 
-export class MessagesComponent {
+export class MessagesComponent implements OnDestroy {
 
     @Input() alwaysShowClose = false;
 
+    private newMessagesSubscription: Subscription;
 
-    constructor(private messages: Messages) {}
+
+    constructor(changeDetectorRef: ChangeDetectorRef,
+                private messages: Messages) {
+
+        this.newMessagesSubscription = this.messages.newMessagesNotifications()
+            .subscribe(() => changeDetectorRef.detectChanges());
+    }
 
 
     public getActiveMessages = () => this.messages.getActiveMessages();
 
     public closeAlert = (message: Message) => this.messages.hideMessage(message);
+
+
+    ngOnDestroy() {
+
+        if (this.newMessagesSubscription) this.newMessagesSubscription.unsubscribe();
+    }
 
 
     public getMessageContent(message: Message): string {

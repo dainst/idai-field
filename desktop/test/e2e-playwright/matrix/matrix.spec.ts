@@ -9,7 +9,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe.only('matrix --', () => {
+test.describe('matrix --', () => {
 
     test.beforeAll(async () => {
 

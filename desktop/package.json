@@ -28,7 +28,7 @@
     "lint": "ng lint",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
-    "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e-playwright",
+    "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e-playwright --config=test/e2e-playwright/playwright.config.ts",
     "test:hub-setup": "docker-compose -f test/hub-integration/docker-compose.yml up -d",
     "test:hub-run": "wait-on http-get://localhost:4003/ && jasmine JASMINE_CONFIG_PATH=test/hub-integration/config/jasmine.json",
     "test:hub-teardown": "docker-compose -f test/hub-integration/docker-compose.yml down -v",

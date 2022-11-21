@@ -40,7 +40,7 @@ export async function navigateTo(menu) {
 export async function resetApp() {
 
     await window.evaluate(() => require('@electron/remote').getCurrentWindow().webContents.send('resetApp'));
-    return pause(5000);
+    return waitForExist("//span[@class='message-content' and contains(text(), 'erfolgreich zurückgesetzt')]", 120000);
 }
 
 
@@ -113,10 +113,10 @@ export async function hover(element) {
 }
 
 
-export async function waitForExist(element) {
+export async function waitForExist(element, timeout = 30000) {
 
     if (isString(element)) element = await getLocator(element);
-    return element.waitFor({ state: 'attached' });
+    return element.waitFor({ state: 'attached', timeout });
 }
 
 

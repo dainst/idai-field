@@ -23,6 +23,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // App Package
     public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
+    public static APP_RESET_SUCCESS = 'app.resetAppSuccess';
 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
@@ -312,6 +313,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.APP_RESET_SUCCESS] = {
+            content: i18n({
+                id: 'messages.app.resetSuccess',
+                value: 'Die Anwendung wurde erfolgreich zurückgesetzt.'
+            }),
+            level: 'success',
             params: [],
             hidden: false
         };

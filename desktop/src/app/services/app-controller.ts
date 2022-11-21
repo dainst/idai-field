@@ -10,6 +10,8 @@ import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
 import { ConfigurationIndex } from './configuration/index/configuration-index';
 import { ConfigurationState } from '../components/configuration/configuration-state';
+import { Messages } from '../components/messages/messages';
+import { M } from '../components/messages/m';
 
 const ipcRenderer = typeof window !== 'undefined'
     ? window.require('electron').ipcRenderer
@@ -33,12 +35,16 @@ export class AppController {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private configurationIndex: ConfigurationIndex,
-                private configReader: ConfigReader) {}
+                private configReader: ConfigReader,
+                private messages: Messages) {}
 
     
     public initialize() {
 
-        ipcRenderer.on('resetApp', async () => await this.reset());
+        ipcRenderer.on('resetApp', async () => {
+            await this.reset();
+            this.messages.add([M.APP_RESET_SUCCESS]);
+        });
     }
 
 

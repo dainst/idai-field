@@ -47,10 +47,9 @@ export async function resetApp() {
 export async function resetConfigJson() {
 
     const configPath = await getGlobal('configPath');
-    const configTemplate = await getGlobal('configTemplate');
 
     return new Promise(resolve => {
-        fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
+        fs.writeFile(configPath, '', err => {
             if (err) console.error('Failure while resetting config.json', err);
             resolve(undefined);
         });

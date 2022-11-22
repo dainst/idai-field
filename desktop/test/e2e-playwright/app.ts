@@ -130,7 +130,8 @@ export async function waitForNotExist(element) {
 export async function typeIn(element, text) {
 
     if (isString(element)) element = await getLocator(element);
-    return element.fill(text);
+    await clearText(element);
+    return element.type(text);
 }
 
 

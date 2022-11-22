@@ -152,7 +152,7 @@ export class RowComponent implements AfterViewInit {
         if (newValue) {
             this.document.resource[fieldName] = newValue;
         } else {
-            delete this.document.resource[fieldName];
+            this.document.resource[fieldName] = '';
         }
     }
 

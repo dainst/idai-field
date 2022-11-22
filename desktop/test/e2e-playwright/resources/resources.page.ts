@@ -1,5 +1,5 @@
 import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
-    getValue } from '../app';
+    pause, getValue } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -311,9 +311,11 @@ export class ResourcesPage {
     public static async typeInNewResourceAndHitEnterInList(inputText: string) {
 
         const elements = await getLocator('#list .identifier-input');
-        const element = elements.nth(elements.length - 1);
+        const element = elements.nth(await elements.count() - 1);
         await typeIn(element, inputText);
-        return pressKey(element, 'Enter');
+        await pause(2000);
+        await pressKey(element, 'Enter');
+        return pause(2000);
     }
 
 

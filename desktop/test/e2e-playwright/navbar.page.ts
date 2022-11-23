@@ -39,7 +39,7 @@ export class NavbarPage {
 
     public static async clickCloseAllMessages() {
 
-        await waitForExist('.alert button');
+        await waitForExist((await getLocator('.alert button')).nth(0));
         const elements = await getLocator('.alert button');
         for (let i = 0; i < await elements.count(); i++) {
             await elements.nth(i).click();

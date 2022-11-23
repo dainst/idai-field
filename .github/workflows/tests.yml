@@ -30,9 +30,6 @@ jobs:
       - name: Run Java tools tests
         run: mvn -f java/pom.xml test
         working-directory: desktop
-      - name: Run FieldHub integration tests
-        run: npm run test:hub-integration
-        working-directory: desktop
       - name: Run e2e tests
         run: npm run e2e
         working-directory: desktop

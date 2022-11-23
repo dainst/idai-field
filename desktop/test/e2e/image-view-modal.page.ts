@@ -30,7 +30,7 @@ export namespace ImageViewModalPage {
     export async function clickDeleteImages() {
 
         await click('#delete-images');
-        return waitForNotExist('#saving-link-changes-modal');
+        return waitForNotExist('#saving-changes-modal');
     }
 
 

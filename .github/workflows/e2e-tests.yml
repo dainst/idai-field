@@ -1,4 +1,4 @@
-name: E2E-Tests
+name: Tests
 on:
   push:
     branches: [master]
@@ -15,7 +15,10 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: npm run bootstrap
-      - name: Run E2E tests (Playwright)
+      - name: Build core
+        run: npm run build
+        working-directory: core
+      - name: Run E2E tests using Playwright
         run: npm run e2e
         working-directory: desktop
   

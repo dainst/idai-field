@@ -109,34 +109,20 @@ test.describe('images --', function() {
     });
 
 
-    // TODO Rewrite test
-    /*test('deselect cells', async () => {
+    test('deselect cells', async () => {
 
         const cells = await ImageOverviewPage.getAllCells();
-        const first = 0;
-        const last = cells.length - 1;
 
-        await click(cells[first]);
-        expect(await cells[first].getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
-        await click(cells[first]);
-        expect(await cells[first].getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass);
-        if (last != first) {
-            await click(cells[last]);
-            expect(await cells[last].getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
-            await click(cells[last]);
-            expect(await cells[last].getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass);
+        await click(cells.nth(0));
+        expect(await cells.nth(0).getAttribute('class')).toMatch('selected');
+        await click(cells.nth(0));
+        expect(await cells.nth(0).getAttribute('class')).not.toMatch('selected');
 
-            if (last > 1) {
-                const middle = Math.floor(0.5 * (cells.length));
-                await click(cells[middle]);
-                expect(await cells[middle].getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
-                await click(cells[middle]);
-                expect(await cells[middle].getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass)
-            }
-        }
-
-        done();
-    });*/
+        await click(cells.nth(1));
+        expect(await cells.nth(1).getAttribute('class')).toMatch('selected');
+        await click(cells.nth(1));
+        expect(await cells.nth(1).getAttribute('class')).not.toMatch('selected');
+    });
 
 
     test('deselect images by clicking the corresponding button', async () => {

@@ -6,7 +6,7 @@ const { test } = require('@playwright/test');
 const path = require('path');
 
 
-test.describe.only('images/upload --', () => {
+test.describe('images/upload --', () => {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
     const imageFileName: string = 'logo.png';

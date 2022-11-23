@@ -69,6 +69,7 @@ test.describe('images --', function() {
         await click(await ImageOverviewPage.getCell(0));
         await ImageOverviewPage.clickUnlinkButton();
         await ImageOverviewPage.clickConfirmUnlinkButton();
+        return waitForNotExist(await ImageOverviewPage.getSavingChangesModal());
     }
 
 

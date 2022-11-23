@@ -166,6 +166,12 @@ export module ImageOverviewPage {
     }
 
 
+    export function getSavingChangesModal() {
+
+        return getLocator('#saving-changes-modal');
+    }
+
+
     // type in
 
     export async function typeInIdentifierInLinkModal(identifier) {

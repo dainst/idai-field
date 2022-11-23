@@ -1,4 +1,4 @@
-import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist, pause } from '../app';
 import { ResourcesPage } from './resources.page';
 import { ResourcesTypeGridPage } from './resources-type-grid.page';
 import { DoceditPage } from '../docedit/docedit.page';
@@ -111,6 +111,7 @@ test.describe('resources/types --', () => {
         await linkWithFind();
 
         await ResourcesPage.clickSwitchHierarchyMode();
+        await pause(2000);
         const elements = await ResourcesTypeGridPage.getGridElements();
         expect(await elements.count()).toBe(2);
 

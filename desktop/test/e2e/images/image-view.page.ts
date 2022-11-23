@@ -1,4 +1,4 @@
-import { click, getElements, getText } from '../app';
+import { click, getLocator, getText } from '../app';
 
 
 export module ImageViewPage {
@@ -17,13 +17,13 @@ export module ImageViewPage {
 
     export async function openRelationsTab() {
 
-        return click((await getElements('.card-header'))[3]);
+        return click((await getLocator('.card-header')).nth(3));
     }
 
 
     export async function clickRelation() {
 
-        return click((await getElements('.resources-listing-item'))[0]);
+        return click((await getLocator('.resources-listing-item')).nth(0));
     }
 
 

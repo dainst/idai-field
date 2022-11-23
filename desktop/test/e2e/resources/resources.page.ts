@@ -1,5 +1,5 @@
-import { click, getElement, getElements, rightClick, hover, waitForNotExist, doubleClick, getText,
-    typeIn, pressKeys, getValue } from '../app';
+import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
+    pause, getValue } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -206,97 +206,97 @@ export class ResourcesPage {
 
     public static getListItemEl(identifier) {
 
-        return getElement('#resource-' + identifier);
+        return getLocator('#resource-' + identifier);
     }
 
 
     public static getListItemEls() {
 
-        return getElements('#sidebar .resources-listing-item');
+        return getLocator('#sidebar .resources-listing-item');
     }
 
 
     public static getListItemMarkedNewEl() {
 
-        return getElement('#sidebar .resources-listing-item .new');
+        return getLocator('#sidebar .resources-listing-item .new');
     }
 
 
     public static getListItemMarkedNewEls() {
 
-        return getElements('#sidebar .resources-listing-item .new');
+        return getLocator('#sidebar .resources-listing-item .new');
     }
 
 
     public static async getListModeInputField(identifier, index) {
 
-        return (await getElements('#resource-' + identifier + ' input'))[index];
+        return (await getLocator('#resource-' + identifier + ' input')).nth(index);
     }
 
 
     public static getThumbnail() {
 
-        return getElement('.thumbnail-container');
+        return getLocator('.thumbnail-container');
     }
 
 
     public static getCategoryOption(categoryName: string) {
 
-        return getElement('#choose-category-option-' + categoryName);
+        return getLocator('#choose-category-option-' + categoryName);
     }
 
 
     public static getCreateDocumentButton() {
 
-        return getElement('#create-document-button .circular-button');
+        return getLocator('#create-document-button .circular-button');
     }
 
 
     public static getCreateDocumentButtonCategoryIcon() {
 
-        return getElement('#create-document-button .category-icon');
+        return getLocator('#create-document-button .category-icon');
     }
 
 
     public static getNavigationButtons() {
 
-        return getElements('.navigation-button');
+        return getLocator('.navigation-button');
     }
 
 
     public static getContextMenu() {
 
-        return getElement('#context-menu');
+        return getLocator('#context-menu');
     }
 
 
     public static getConfirmDeletionInputField() {
 
-        return getElement('#delete-resource-input');
+        return getLocator('#delete-resource-input');
     }
 
 
     public static getMoveModal() {
 
-        return getElement('#move-modal');
+        return getLocator('#move-modal');
     }
 
 
     public static getResourceIdentifierLabelsInMoveModal() {
 
-        return getElements('#move-modal document-teaser .title');
+        return getLocator('#move-modal document-teaser .title');
     }
 
 
     public static getListRows() {
 
-        return getElements('.row-wrapper');
+        return getLocator('.row-wrapper');
     }
 
 
     public static getContextMenuMoveButton() {
 
-        return getElement('#context-menu-move-button');
+        return getLocator('#context-menu-move-button');
     }
 
 
@@ -310,9 +310,12 @@ export class ResourcesPage {
 
     public static async typeInNewResourceAndHitEnterInList(inputText: string) {
 
-        const elements = await getElements('#list .identifier-input');
-        await typeIn(elements[elements.length - 1], inputText);
-        return pressKeys(['Enter']);
+        const elements = await getLocator('#list .identifier-input');
+        const element = elements.nth(await elements.count() - 1);
+        await typeIn(element, inputText);
+        await pause(2000);
+        await pressKey(element, 'Enter');
+        return pause(2000);
     }
 
 
@@ -386,11 +389,4 @@ export class ResourcesPage {
         await this.performCreateResource('2', 'feature-architecture');
         await this.performCreateRelation('2', '1', 'isBefore');
     }
-
-    // script
-
-    /*public static scrollUp() {
-
-        return browser.executeScript('window.scrollTo(0,0);');
-    }*/
 }

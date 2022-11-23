@@ -1,4 +1,4 @@
-import { click, getElement, getElements, getText, rightClick } from '../app';
+import { click, getLocator, getText, rightClick } from '../app';
 
 
 /**
@@ -24,13 +24,13 @@ export class CategoryPickerPage {
 
     public static getCategories() {
 
-        return getElements('.category-item');
+        return getLocator('.category-item');
     }
     
 
     public static getCategory(categoryName: string, supercategoryName?: string) {
 
-        return getElement('#choose-category-option-'
+        return getLocator('#choose-category-option-'
             + (supercategoryName ? supercategoryName.replace(':', '-').toLowerCase() + '-' : '')
             + categoryName.replace(':', '-').toLowerCase());
     }
@@ -40,7 +40,9 @@ export class CategoryPickerPage {
 
     public static async getCategoryLabel(categoryName: string, supercategoryName?: string) {
 
-        const element = await (await this.getCategory(categoryName, supercategoryName)).$('.category-label');
+        const element = await (await this.getCategory(categoryName, supercategoryName))
+            .locator('.category-label');
+
         return getText(element);
     }
 }

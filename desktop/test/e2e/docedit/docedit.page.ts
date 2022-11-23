@@ -1,5 +1,5 @@
-import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption, getValue,
-    getText, clearText } from '../app';
+import { waitForNotExist, click, waitForExist, getLocator, typeIn, selectOption, getValue, getText,
+    clearText } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -108,7 +108,7 @@ export class DoceditPage {
 
     public static async clickChooseRightRevision() {
 
-        const radioButton = (await getElements('input[type=radio]'))[1];
+        const radioButton = (await getLocator('input[type=radio]')).nth(1);
         return click(radioButton);
     }
 
@@ -140,7 +140,7 @@ export class DoceditPage {
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
         await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getElements('#edit-form-element-' + fieldName + ' .checkbox'))[checkboxIndex];
+        const element = (await getLocator('#edit-form-element-' + fieldName + ' .checkbox')).nth(checkboxIndex);
         return click(element);
     }
 
@@ -148,7 +148,7 @@ export class DoceditPage {
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
         await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getElements('#edit-form-element-' + fieldName + ' input'))[radioButtonIndex];
+        const element = (await getLocator('#edit-form-element-' + fieldName + ' input')).nth(radioButtonIndex);
         return click(element);
     }
 
@@ -163,7 +163,7 @@ export class DoceditPage {
 
     public static async getSimpleInputFieldValue(index) {
 
-        const element = (await getElements('form-field-simple-input input'))[index];
+        const element = (await getLocator('form-field-simple-input input')).nth(index);
         return getValue(element);
     }
 
@@ -171,7 +171,7 @@ export class DoceditPage {
     public static async getFieldLabel(fieldName: string) {
 
         const fieldElement = await this.getField(fieldName);
-        return getText(await fieldElement.$('.card-title'));
+        return getText(await fieldElement.locator('.card-title'));
     }
 
 
@@ -185,43 +185,43 @@ export class DoceditPage {
 
     public static getNumberOfDuplicatesInputField() {
 
-        return getElement('#duplicate-input');
+        return getLocator('#duplicate-input');
     }
 
 
     public static getCheckboxes(fieldName: string) {
 
-        return getElements('#edit-form-element-' + fieldName + ' .checkbox');
+        return getLocator('#edit-form-element-' + fieldName + ' .checkbox');
     }
 
 
     public static getGeometryEditWidget() {
 
-        return getElement('form-field-geometry');
+        return getLocator('form-field-geometry');
     }
 
 
     public static getField(fieldName: string) {
 
-        return getElement('#edit-form-element-' + fieldName.replace(':', '-'));
+        return getLocator('#edit-form-element-' + fieldName.replace(':', '-'));
     }
 
 
     public static async getFieldFormGroup(fieldName: string) {
 
-        return (await this.getField(fieldName)).$('.form-group');
+        return (await this.getField(fieldName)).locator('.form-group');
     }
 
 
     public static getGroup(groupName: string) {
 
-        return getElement('#edit-form-goto-' + groupName.replace(':', '-'));
+        return getLocator('#edit-form-goto-' + groupName.replace(':', '-'));
     }
 
 
     public static getLanguageTabs(fieldName: string) {
 
-        return getElements('#edit-form-element-' + fieldName + ' .language-tab');
+        return getLocator('#edit-form-element-' + fieldName + ' .language-tab');
     }
 
 

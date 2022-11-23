@@ -10,40 +10,39 @@ import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 
+const { test, expect } = require('@playwright/test');
+
 
 /**
  * @author Thomas Kleinke
  */
-describe('configuration --', () => {
+test.describe('configuration --', () => {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
         await navigateTo('configuration');
         await ConfigurationPage.clickSelectCategoriesFilter('all');
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
     
 
-    it('apply categories filter', async done => {
+    test('apply categories filter', async () => {
 
         await ConfigurationPage.clickSelectCategoriesFilter('project');
-        expect((await CategoryPickerPage.getCategories()).length).toBe(6);
+        expect(await (await CategoryPickerPage.getCategories()).count()).toBe(6);
         await waitForExist(await CategoryPickerPage.getCategory('Project'));
         await waitForExist(await CategoryPickerPage.getCategory('Operation'));
         await waitForExist(await CategoryPickerPage.getCategory('Trench', 'Operation'));
@@ -64,12 +63,10 @@ describe('configuration --', () => {
         await waitForNotExist(await CategoryPickerPage.getCategory('Image'));
         await waitForExist(await CategoryPickerPage.getCategory('TypeCatalog'));
         await waitForExist(await CategoryPickerPage.getCategory('Type'));
-
-        done();
     });
 
 
-    it('delete category', async done => {
+    test('delete category', async () => {
 
         await ConfigurationPage.deleteCategory('Floor', 'Feature');
         await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
@@ -80,12 +77,10 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
-
-        done();
     });
 
 
-    it('delete category with existing resources & show warning for liesWithin resources', async done => {
+    test('delete category with existing resources & show warning for liesWithin resources', async () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickSwitchHierarchyMode();
@@ -103,12 +98,10 @@ describe('configuration --', () => {
         await ResourcesPage.clickHierarchyButton('SE4-F1');
         await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht '
             + 'konfigurierten Kategorie "Grave" untergeordnet ist.', false);
-
-        done();
     });
 
 
-    it('delete operation category with existing resources & show warning for isRecordedIn resources', async done => {
+    test('delete operation category with existing resources & show warning for isRecordedIn resources', async () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickSwitchHierarchyMode();
@@ -126,12 +119,10 @@ describe('configuration --', () => {
         await ResourcesPage.clickHierarchyButton('SE0');
         await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht '
             + 'konfigurierten Kategorie "Trench" angehört.', false);
-
-        done();
     });
 
 
-    it('add category from library', async done => {
+    test('add category from library', async () => {
 
         await ConfigurationPage.clickCreateSubcategory('Feature');
         await waitForNotExist(await AddCategoryFormModalPage.getCategoryHeader('Floor'));
@@ -167,12 +158,10 @@ describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
-
-        done();
     });
 
 
-    it('add custom category', async done => {
+    test('add custom category', async () => {
 
         await ConfigurationPage.clickCreateSubcategory('Feature');
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
@@ -190,12 +179,10 @@ describe('configuration --', () => {
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
         expect((await CategoryPickerPage.getCategoryLabel('Test:NewCategory', 'Feature'))).toEqual('Neue Kategorie');
-
-        done();
     });
 
 
-    it('index resources of newly created custom category', async done => {
+    test('index resources of newly created custom category', async () => {
 
         await ConfigurationPage.clickCreateSubcategory('Feature');
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
@@ -214,21 +201,19 @@ describe('configuration --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await ResourcesPage.typeInMoveModalSearchBarInput('Feature');
         const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
-        expect(await getText(labels[0])).toEqual('Feature1');
+        expect(await getText(labels.nth(0))).toEqual('Feature1');
 
         await ResourcesPage.clickCancelInMoveModal();
-
-        done();
     });
 
 
-    it('swap category form', async done => {
+    test('swap category form', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickSelectGroup('properties');
         await waitForExist(await ConfigurationPage.getField('gazId'));
         await waitForExist(await ConfigurationPage.getField('description'));
-        expect((await ConfigurationPage.getFields()).length).toBeGreaterThan(1);
+        expect(await (await ConfigurationPage.getFields()).count()).toBeGreaterThan(1);
 
         await CategoryPickerPage.clickOpenContextMenu('Place');
         await ConfigurationPage.clickContextMenuSwapOption();
@@ -240,7 +225,7 @@ describe('configuration --', () => {
         await ConfigurationPage.clickSelectGroup('properties');
         await waitForExist(await ConfigurationPage.getField('gazId'));
         await waitForNotExist(await ConfigurationPage.getField('description'));
-        expect((await ConfigurationPage.getFields()).length).toBe(1);
+        expect(await (await ConfigurationPage.getFields()).count()).toBe(1);
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
@@ -251,12 +236,10 @@ describe('configuration --', () => {
         await waitForExist(await DoceditPage.getField('gazId'));
         await waitForNotExist(await DoceditPage.getField('description'));
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('edit category label', async done => {
+    test('edit category label', async () => {
 
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
         await CategoryPickerPage.clickOpenContextMenu('Place');
@@ -281,12 +264,10 @@ describe('configuration --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickCreateResource();
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
-
-        done();
     });
 
 
-    it('add library field as custom field', async done => {
+    test('add library field as custom field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
@@ -308,12 +289,10 @@ describe('configuration --', () => {
         await ResourcesPage.clickSelectGeometryType();
         await waitForExist(await DoceditPage.getField('area'));
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('add newly created field as custom field', async done => {
+    test('add newly created field as custom field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
@@ -332,12 +311,10 @@ describe('configuration --', () => {
         await waitForExist(await DoceditPage.getField('test:newField'));
         expect(await DoceditPage.getFieldLabel('test:newField')).toEqual('Neues Feld');
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('inherit custom field from parent form', async done => {
+    test('inherit custom field from parent form', async () => {
 
         // Create custom field
         await CategoryPickerPage.clickSelectCategory('Feature');
@@ -405,12 +382,10 @@ describe('configuration --', () => {
         await DoceditPage.clickGotoDimensionTab();
         await waitForNotExist(await DoceditPage.getField('dimensionDiameter'));
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('reset custom changes when swapping category form', async done => {
+    test('reset custom changes when swapping category form', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickAddFieldButton();        
@@ -437,12 +412,10 @@ describe('configuration --', () => {
         await waitForExist(await ConfigurationPage.getCategory('Layer'));
         await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
         await ConfigurationPage.save();
-
-        done();
     });
 
 
-    it('add custom group', async done => {
+    test('add custom group', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickAddGroupButton();
@@ -473,12 +446,10 @@ describe('configuration --', () => {
         await DoceditPage.clickSelectGroup('test:newGroup');
         await waitForExist(await DoceditPage.getField('dimensionDiameter'));
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('hide field', async done => {
+    test('hide field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickSelectGroup('properties');
@@ -497,12 +468,10 @@ describe('configuration --', () => {
         await waitForNotExist(await DoceditPage.getFieldFormGroup('description'));
         
         await DoceditPage.clickCloseEdit();
-
-        done();
     });
 
 
-    it('hide parent field', async done => {
+    test('hide parent field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Operation');
         await ConfigurationPage.clickSelectGroup('properties');
@@ -529,12 +498,10 @@ describe('configuration --', () => {
             .not.toContain('hidden');
 
         await ConfigurationPage.save();
-
-        done();
     });
 
 
-    it('swap valuelist', async done => {
+    test('swap valuelist', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickSelectGroup('time');
@@ -557,12 +524,10 @@ describe('configuration --', () => {
         await ConfigurationPage.clickSelectField('period');
         expect(await ConfigurationPage.getValue(0)).toEqual('beige');
         await ConfigurationPage.save();
-
-        done();
     });
 
 
-    it('create new valuelist via field editor', async done => {
+    test('create new valuelist via field editor', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickSelectGroup('time');
@@ -583,12 +548,10 @@ describe('configuration --', () => {
         await ConfigurationPage.clickSelectField('period');
         expect(await ConfigurationPage.getValue(0)).toEqual('newValue');
         await ConfigurationPage.save();
-
-        done();
     });
 
 
-    it('create new valuelist via valuelist management & select it in field editor', async done => {
+    test('create new valuelist via valuelist management & select it in field editor', async () => {
 
         await navigateTo('valuelists');
         await ManageValuelistsModalPage.typeInSearchFilterInput('new-valuelist');
@@ -617,11 +580,10 @@ describe('configuration --', () => {
         expect(await ConfigurationPage.getValue(0)).toEqual('newValue');
         await ConfigurationPage.save();
 
-        done();
     });
 
 
-    it('filter valuelists in valuelists management', async done => {
+    test('filter valuelists in valuelists management', async () => {
 
         await navigateTo('valuelists');
 
@@ -656,12 +618,10 @@ describe('configuration --', () => {
 
         await ManageValuelistsModalPage.clickCancel();
         await ConfigurationPage.save();
-
-        done();
     });
 
 
-    it('extend an existing valuelist', async done => {
+    test('extend an existing valuelist', async () => {
 
         await navigateTo('valuelists');
         await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
@@ -693,7 +653,5 @@ describe('configuration --', () => {
         expect(await ConfigurationPage.getValue(0)).toEqual('A-1');
         expect(await ConfigurationPage.getValue(1)).toEqual('Archaisch');
         await ConfigurationPage.save();
-
-        done();
     });
 });

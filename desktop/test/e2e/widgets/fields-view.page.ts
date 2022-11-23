@@ -1,4 +1,4 @@
-import { click, getElements, getText, waitForExist } from '../app';
+import { click, getLocator, getText, waitForExist } from '../app';
 
 
 /**
@@ -8,13 +8,10 @@ export class FieldsViewPage {
 
     public static getTabs() {
 
-        return getElements('fields-view div .card-header');
+        return getLocator('fields-view div .card-header');
     }
 
 
-    /**
-     * @param cardIndex counting from 0 for the first card
-     */
     public static clickAccordionTab(cardIndex) {
 
         return click('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-header');
@@ -24,15 +21,11 @@ export class FieldsViewPage {
     public static async clickRelation(cardIndex, relationIndex) {
 
         await waitForExist('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
-        const elements = await getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
-        return click(elements[relationIndex]);
+        const elements = await getLocator('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
+        return click(elements.nth(relationIndex));
     };
 
 
-    /**
-     * @param cardIndex counting from 0 for the first card
-     * @param index counting from 0 for the first field
-     */
     public static getFieldValue(cardIndex, index) {
 
         return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
@@ -40,10 +33,6 @@ export class FieldsViewPage {
     };
 
 
-    /**
-     * @param cardIndex counting from 0 for the first card
-     * @param index counting from 0 for the first field
-     */
     public static getFieldName(cardIndex, index) {
 
         return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
@@ -54,7 +43,7 @@ export class FieldsViewPage {
     public static async getFields(cardIndex) {
 
         await waitForExist('fields-view');
-        return getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div');
+        return getLocator('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div');
     };
 
 
@@ -64,8 +53,8 @@ export class FieldsViewPage {
      */
     public static async getRelationValue(cardIndex, index) {
 
-        const cardElement = (await getElements('.card'))[cardIndex];
-        const relationElement = (await cardElement.$$('.relation-value'))[index];
+        const cardElement = (await getLocator('.card')).nth(cardIndex);
+        const relationElement = (await cardElement.locator('.relation-value')).nth(index);
         return getText(relationElement);
     };
 
@@ -76,8 +65,8 @@ export class FieldsViewPage {
      */
     public static async getRelationName(cardIndex, index) {
 
-        const cardElement = (await getElements('.card'))[cardIndex];
-        const labelElement = (await cardElement.$$('.field-label'))[index];
+        const cardElement = (await getLocator('.card')).nth(cardIndex);
+        const labelElement = (await cardElement.locator('.field-label')).nth(index);
         return getText(labelElement);
     };
 
@@ -87,7 +76,7 @@ export class FieldsViewPage {
      */
     public static async getRelations(cardIndex) {
 
-        const cardElement = (await getElements('.card'))[cardIndex];
-        return cardElement.$$('.relation-value');
+        const cardElement = (await getLocator('.card')).nth(cardIndex);
+        return cardElement.locator('.relation-value');
     };
 }

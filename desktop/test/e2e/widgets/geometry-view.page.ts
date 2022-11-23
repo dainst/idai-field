@@ -1,14 +1,11 @@
-import { click, getElement, getText, waitForNotExist, waitForExist } from '../app';
-import {ResourcesPage} from '../resources/resources.page';
-
-type Identifier = string;
+import { click, getText, waitForNotExist, waitForExist } from '../app';
+import { ResourcesPage } from '../resources/resources.page';
 
 
 /**
  * @author Daniel de Oliveira
  */
 export class GeometryViewPage {
-
 
     public static async clickCreateGeometry(identifier, type) {
 
@@ -23,7 +20,7 @@ export class GeometryViewPage {
     };
 
 
-    public static async performReeditGeometry(identifier?: Identifier) {
+    public static async performReeditGeometry(identifier?: string) {
 
         await this.waitForLayoverToDisappear();
 
@@ -32,18 +29,16 @@ export class GeometryViewPage {
     };
 
 
-    public static async getSelectedGeometryTypeText(identifier: Identifier) {
+    public static async getSelectedGeometryTypeText(identifier: string) {
 
         await this.waitForLayoverToDisappear();
 
         if (identifier) await ResourcesPage.clickOpenContextMenu(identifier);
-        const element = await getElement('#context-menu #context-menu-edit-geo-button');
-        await waitForExist(element);
-        return getText(await element.$('.fieldvalue'));
+        return getText('#context-menu #context-menu-edit-geo-button .fieldvalue');
     };
 
 
-    public static async waitForCreateGeoButtons(identifier: Identifier) {
+    public static async waitForCreateGeoButtons(identifier: string) {
 
         await this.waitForLayoverToDisappear();
 

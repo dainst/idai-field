@@ -7,32 +7,31 @@ import { NavbarPage } from '../navbar.page';
 import { DoceditTypeRelationsPage } from '../docedit/docedit-type-relations.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 
+const { test, expect } = require('@playwright/test');
+
 
 /**
  * @author Thomas Kleinke
  */
-describe('resources/types --', () => {
+test.describe('resources/types --', () => {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
         await navigateTo('resources/types');
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
@@ -68,9 +67,9 @@ describe('resources/types --', () => {
     async function checkCriterionOptions(expectedOptions: string[]) {
 
         const options = await DoceditTypeRelationsPage.getCriterionOptions();
-        expect(options.length).toBe(expectedOptions.length);
-        for (let i = 0; i < options.length; i++) {
-            expect(await getText(options[i])).toEqual(expectedOptions[i]);
+        expect(await options.count()).toBe(expectedOptions.length);
+        for (let i = 0; i < await options.count(); i++) {
+            expect(await getText(options.nth(i))).toEqual(expectedOptions[i]);
         }
     }
 
@@ -78,14 +77,14 @@ describe('resources/types --', () => {
     async function checkCatalogOptions(expectedOptions: string[]) {
 
         const options = await DoceditTypeRelationsPage.getCatalogOptions();
-        expect(options.length).toBe(expectedOptions.length);
-        for (let i = 0; i < options.length; i++) {
-            expect(await getText(options[i])).toEqual(expectedOptions[i]);
+        expect(await options.count()).toBe(expectedOptions.length);
+        for (let i = 0; i < await options.count(); i++) {
+            expect(await getText(options.nth(i))).toEqual(expectedOptions[i]);
         }
     }
 
 
-    it('Show linked find for type', async done => {
+    test('Show linked find for type', async () => {
 
         await createTypeCatalogAndType();
 
@@ -102,12 +101,10 @@ describe('resources/types --', () => {
 
         const text = await ResourcesTypeGridPage.getTypeBadgeText('testf1');
         expect(text).toBe('T1');
-
-        done();
     });
 
 
-    it('Do not show linked finds in extended search mode', async done => {
+    test('Do not show linked finds in extended search mode', async () => {
 
         await createTypeCatalogAndType();
         await ResourcesTypeGridPage.clickGridElement('T1');
@@ -115,16 +112,14 @@ describe('resources/types --', () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
         const elements = await ResourcesTypeGridPage.getGridElements();
-        expect(elements.length).toBe(2);
+        expect(await elements.count()).toBe(2);
 
         await waitForNotExist(await ResourcesTypeGridPage.getToggleFindsSectionButton());
         await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
-
-        done();
     });
 
 
-    it('Move a type to another catalog', async done => {
+    test('Move a type to another catalog', async () => {
 
         await createTypeCatalogAndType();
 
@@ -141,14 +136,11 @@ describe('resources/types --', () => {
 
         await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
 
-        const text = await ResourcesTypeGridPage.getActiveNavigationButtonText();
-        expect(text).toEqual('TC2');
-
-        done();
+        expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
     });
 
 
-    it('Delete a type', async done => {
+    test('Delete a type', async () => {
 
         await createTypeCatalogAndType();
         await ResourcesTypeGridPage.clickGridElement('T1');
@@ -166,12 +158,10 @@ describe('resources/types --', () => {
 
         await waitForNotExist(await ResourcesTypeGridPage.getGridElement('T1'));
         await waitForNotExist(await ResourcesTypeGridPage.getGridElement('testf1'));
-
-        done();
     });
 
 
-    it('Link find with type via type relation picker', async done => {
+    test('Link find with type via type relation picker', async () => {
 
         await createTypeCatalogAndType();
 
@@ -188,18 +178,15 @@ describe('resources/types --', () => {
 
         await ResourcesPage.clickSelectResource('testf1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
-        const relationValue = await FieldsViewPage.getRelationValue(1, 0);
-        expect(relationValue).toEqual('T1');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toEqual('T1');
 
         await navigateTo('resources/types');
         await ResourcesTypeGridPage.clickToggleFindsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
-
-        done();
     });
 
 
-    it('Filter types in type relation picker by criterion & catalog', async done => {
+    test('Filter types in type relation picker by criterion & catalog', async () => {
 
         await createTypeCatalogAndType();
         await setCriterion('Dekoration');
@@ -244,7 +231,5 @@ describe('resources/types --', () => {
 
         await DoceditTypeRelationsPage.clickType('T2');
         await DoceditPage.clickCloseEdit('discard');
-
-        done();
     });
 });

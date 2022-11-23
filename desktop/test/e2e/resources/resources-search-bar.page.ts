@@ -1,4 +1,4 @@
-import { click, getElement, getElements, rightClick, getText } from '../app';
+import { click, getLocator } from '../app';
 
 
 /**
@@ -18,18 +18,18 @@ export class ResourcesSearchBarPage {
 
     public static getSuggestionsBox() {
 
-        return getElement('#search-suggestions');
+        return getLocator('#search-suggestions');
     }
 
 
     public static getSuggestions() {
 
-        return getElements('.suggestion-container .title');
+        return getLocator('.suggestion-container .title');
     }
 
 
     public static getFirstSuggestion() {
 
-        return getElement('.suggestion-container .title');
+        return getLocator('.suggestion-container .title');
     }
 }

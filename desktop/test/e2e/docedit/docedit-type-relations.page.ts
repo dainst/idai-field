@@ -1,4 +1,4 @@
-import { click, getElements, getElement, selectOption } from '../app';
+import { click, getLocator, selectOption } from '../app';
 
 
 /**
@@ -36,18 +36,18 @@ export class DoceditTypeRelationsPage {
 
     public static getCriterionOptions() {
 
-        return getElements('#criterion-select option');
+        return getLocator('#criterion-select option');
     }
 
 
     public static getCatalogOptions() {
 
-        return getElements('#catalog-select option');
+        return getLocator('#catalog-select option');
     }
 
 
     public static getTypeRow(identifier: string) {
 
-        return getElement('#type-row-' + identifier);
+        return getLocator('#type-row-' + identifier);
     }
 }

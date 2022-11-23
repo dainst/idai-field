@@ -3,35 +3,34 @@ import { ImportPage } from './import.page';
 import { ResourcesPage } from '../resources/resources.page';
 import { NavbarPage } from '../navbar.page';
 
+const { test, expect } = require('@playwright/test');
+
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('import --', () => {
+test.describe('import --', () => {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
         await NavbarPage.clickCloseNonResourcesTab();
         await NavbarPage.clickTab('project');
         await navigateTo('import');
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
@@ -41,11 +40,12 @@ describe('import --', () => {
         await ImportPage.clickSourceOption('http');
         await typeIn(await ImportPage.getImportURLInput(), url);
         await ImportPage.clickStartImportButton();
+        await waitForExist(await ImportPage.getImportModal());
         await waitForNotExist(await ImportPage.getImportModal());
     };
 
 
-    it('perform successful import', async done => {
+    test('perform successful import', async () => {
 
         await performImport('./test-data/importer-test-ok.jsonl');
 
@@ -56,12 +56,10 @@ describe('import --', () => {
         await waitForExist(await ResourcesPage.getListItemEl('obob2'));
         await waitForExist(await ResourcesPage.getListItemEl('obob3'));
         await waitForExist(await ResourcesPage.getListItemEl('obob4'));
-
-        done();
     });
 
 
-    it('warn in case of an already existing resource', async done => {
+    test('warn in case of an already existing resource', async () => {
 
         await performImport('./test-data/importer-test-constraint-violation.jsonl');
 
@@ -72,7 +70,5 @@ describe('import --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
 
         await waitForExist(await ResourcesPage.getListItemEl('SE0'));
-
-        done();
     });
 });

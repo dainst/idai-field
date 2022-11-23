@@ -1,9 +1,0 @@
-{
-    "spec_dir": "test/dist/desktop",
-    "spec_files": [
-      "test/e2e/**/*.spec.js"
-    ],
-    "stopSpecOnExpectationFailure": false,
-    "random": false
-  }
-  

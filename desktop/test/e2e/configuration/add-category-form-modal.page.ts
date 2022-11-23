@@ -1,4 +1,4 @@
-import { click, getElement, typeIn } from '../app';
+import { click, getLocator, typeIn } from '../app';
 
 
 /**
@@ -42,13 +42,13 @@ export class AddCategoryFormModalPage {
 
     public static getCategoryHeader(categoryName: string) {
 
-        return getElement('#category-header-' + categoryName);
+        return getLocator('#category-header-' + categoryName);
     }
 
 
     public static getSelectFormButton(formName: string) {
 
-        return getElement('#select-category-form-' + formName.replace(':', '-'));
+        return getLocator('#select-category-form-' + formName.replace(':', '-'));
     }
 
 

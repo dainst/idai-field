@@ -12,7 +12,7 @@ export async function start() {
 
     electronApp = await electron.launch({ args: ['.', 'test'] });
     window = await electronApp.firstWindow();
-    return waitForExist('router-outlet');
+    return waitForExist('router-outlet', 60000);
 }
 
 

@@ -12,6 +12,7 @@ import { ConfigurationIndex } from './configuration/index/configuration-index';
 import { ConfigurationState } from '../components/configuration/configuration-state';
 import { Messages } from '../components/messages/messages';
 import { M } from '../components/messages/m';
+import { ImageDocumentsManager } from '../components/image/overview/view/image-documents-manager';
 
 const ipcRenderer = typeof window !== 'undefined'
     ? window.require('electron').ipcRenderer
@@ -33,6 +34,7 @@ export class AppController {
                 private pouchdbDatastore: PouchdbDatastore,
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
+                private imageDocumentsManager: ImageDocumentsManager,
                 private projectConfiguration: ProjectConfiguration,
                 private configurationIndex: ConfigurationIndex,
                 private configReader: ConfigReader,
@@ -59,6 +61,7 @@ export class AppController {
         this.imagesState.resetForE2E();
         this.configurationState.resetForE2E();
         this.tabManager.resetForE2E();
+        this.imageDocumentsManager.clearSelection();
         this.documentCache.reset();
 
         await new SampleDataLoader(

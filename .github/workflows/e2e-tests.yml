@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm bootstrap
+        run: npm run bootstrap
       - name: Run E2E tests (Playwright)
         run: npm run e2e
         working-directory: desktop

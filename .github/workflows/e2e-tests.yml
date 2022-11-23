@@ -1,0 +1,21 @@
+name: E2E-Tests
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm bootstrap
+      - name: Run E2E tests (Playwright)
+        run: npm run e2e
+        working-directory: desktop
+  

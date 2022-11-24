@@ -162,7 +162,7 @@
     "ajv": "^6.12.6",
     "codelyzer": "^5.1.2",
     "cross-var": "^1.1.0",
-    "electron": "17.4.11",
+    "electron": "18.3.7",
     "electron-builder": "23.3.3",
     "electron-notarize": "1.1.1",
     "file-api": "0.10.4",

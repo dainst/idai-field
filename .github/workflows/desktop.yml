@@ -2,9 +2,14 @@ name: Desktop
 on:
   push:
     paths:
-    - "core/**"
-    - "desktop/**"
-    - ".github/workflows/build-desktop.yml"
+      - "core/**"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
+  pull_request:
+    paths:
+      - "core/**"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
 jobs:
   Tests:
     timeout-minutes: 60

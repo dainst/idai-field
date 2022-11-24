@@ -2,9 +2,14 @@ name: Mobile
 on:
   push:
     paths:
-    - "core/**"
-    - "mobile/**"
-    - ".github/workflows/build-mobile.yml"
+      - "core/**"
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
+  pull_request:
+    paths:
+      - "core/**"
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
 jobs:
   Build:
     runs-on: ubuntu-latest

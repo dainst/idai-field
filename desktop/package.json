@@ -36,7 +36,7 @@
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",
-    "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
+    "i18n": "ng extract-i18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
     "update-version-info": "cross-var replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },
   "build": {

@@ -12,7 +12,7 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
 
 * [Docker](https://www.docker.com/)
 * [docker-compose](https://docs.docker.com/compose/)
-* [Elixir](https://elixir-lang.org/) >= 1.12
+* [Elixir](https://elixir-lang.org/) >= 1.13
 
 Create an `.env` file:
 
@@ -44,7 +44,7 @@ mix phx.server
 
 FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
-Run tests unit tests with:
+Run unit tests with:
 
 ```bash
 mix test

@@ -19,6 +19,12 @@ jobs:
           elixir-version: 1.12.3
       - name: Install inotify-tools
         run: sudo apt-get install inotify-tools
+      - name: Copy .env file
+        run: cp .env_template .env
+        working-directory: server
+      - name: Start CouchDB
+        run: docker-compose up
+        working-directory: server
       - name: Setup server
         run: mix setup
         working-directory: server

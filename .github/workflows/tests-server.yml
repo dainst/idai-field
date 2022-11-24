@@ -1,4 +1,4 @@
-name: Server / Tests
+name: Server
 on:
   push:
     paths:
@@ -9,7 +9,7 @@ on:
       - "server/**"
       - ".github/workflows/tests-server.yml"
 jobs:
-  Main:
+  Tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

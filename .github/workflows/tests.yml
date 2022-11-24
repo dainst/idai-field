@@ -5,9 +5,9 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  Tests:
-    timeout-minutes: 90
-    runs-on: macos-latest
+  main:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -27,9 +27,25 @@ jobs:
       - name: Run desktop unit tests
         run: npm run test
         working-directory: desktop
+      - name: Run FieldHub integration tests
+        run: npm run test:hub-integration
+        working-directory: desktop
       - name: Run Java tools tests
         run: mvn -f java/pom.xml test
         working-directory: desktop
+  e2e:
+    timeout-minutes: 90
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm run bootstrap
+      - name: Build core
+        run: npm run build
+        working-directory: core
       - name: Run e2e tests
         run: npm run e2e
         working-directory: desktop

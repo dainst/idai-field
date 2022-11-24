@@ -39,7 +39,7 @@ jobs:
       - name: Run Java tools tests
         run: mvn -f java/pom.xml test
         working-directory: desktop
-  e2e:
+  E2E:
     timeout-minutes: 90
     runs-on: macos-latest
     steps:

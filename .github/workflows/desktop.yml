@@ -56,11 +56,15 @@ jobs:
         run: npm run e2e
         working-directory: desktop
   Build:
+    name: Build (${{ matrix.os.name }})
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os:
+          - { name: 'Linux', version: 'ubuntu-latest' }
+          - { name: 'MacOS', version: 'macos-latest' }
+          - { name: 'Windows', version: 'windows-latest' }
       fail-fast: false
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os.version }}
     env:
       GH_TOKEN: ${{ github.token }}
     steps:

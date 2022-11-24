@@ -22,8 +22,6 @@ jobs:
       - name: Start CouchDB
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d &
         working-directory: server
-      - name: Wait for CouchDB to start
-        run: sleep 10s
       - name: Setup server
         run: mix setup
         working-directory: server

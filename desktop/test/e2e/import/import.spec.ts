@@ -1,4 +1,4 @@
-import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, typeIn } from '../app';
+import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, typeIn, pause } from '../app';
 import { ImportPage } from './import.page';
 import { ResourcesPage } from '../resources/resources.page';
 import { NavbarPage } from '../navbar.page';
@@ -40,7 +40,7 @@ test.describe('import --', () => {
         await ImportPage.clickSourceOption('http');
         await typeIn(await ImportPage.getImportURLInput(), url);
         await ImportPage.clickStartImportButton();
-        await waitForExist(await ImportPage.getImportModal());
+        await pause(2000);
         await waitForNotExist(await ImportPage.getImportModal());
     };
 

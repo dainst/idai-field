@@ -116,14 +116,6 @@ import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.compo
     exports: [
         DoceditComponent,
         RevisionSelectorComponent
-    ],
-    entryComponents: [
-        DoceditComponent,
-        ConflictDeletedModalComponent,
-        TypeRelationPickerComponent,
-        ImagePickerComponent,
-        DuplicateModalComponent,
-        DeleteModalComponent
     ]
 })
 

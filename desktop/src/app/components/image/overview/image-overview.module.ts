@@ -38,11 +38,6 @@ import { DeletionInProgressModalComponent } from './deletion/deletion-in-progres
         DeleteModalComponent,
         DeletionInProgressModalComponent
     ],
-    entryComponents: [
-        LinkModalComponent,
-        RemoveLinkModalComponent,
-        DeleteModalComponent
-    ],
     providers: [
         ImagesState,
         {

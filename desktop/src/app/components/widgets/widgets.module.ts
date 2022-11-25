@@ -71,8 +71,7 @@ import { LanguagesListComponent } from './languages/languages-list.component';
         PagingButtonsComponent,
         EditSaveDialogComponent,
         LanguagesListComponent
-    ],
-    entryComponents: []
+    ]
 })
 
 export class WidgetsModule {}

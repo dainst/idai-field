@@ -108,30 +108,6 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
     ],
     exports: [
         ConfigurationComponent
-    ],
-    entryComponents: [
-        ConfigurationComponent,
-        AddFieldModalComponent,
-        AddGroupModalComponent,
-        AddValuelistModalComponent,
-        FieldEditorModalComponent,
-        GroupEditorModalComponent,
-        CategoryEditorModalComponent,
-        ValuelistEditorModalComponent,
-        ValueEditorModalComponent,
-        DeleteFieldModalComponent,
-        DeleteGroupModalComponent,
-        DeleteCategoryModalComponent,
-        DeleteValuelistModalComponent,
-        ValuelistSearchBarComponent,
-        SwapCategoryFormModalComponent,
-        ExtendValuelistModalComponent,
-        SaveModalComponent,
-        SaveProcessModalComponent,
-        ConfigurationChangeNotificationModalComponent,
-        ConfigurationConflictsModalComponent,
-        ImportConfigurationModalComponent,
-        ProjectLanguagesModalComponent
     ]
 })
 

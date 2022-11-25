@@ -173,10 +173,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
     ],
     exports: [
         GeometryViewComponent
-    ],
-    entryComponents: [
-        MoveModalComponent,
-        DeletionInProgressModalComponent
     ]
 })
 

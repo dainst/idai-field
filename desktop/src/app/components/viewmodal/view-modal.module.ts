@@ -25,10 +25,6 @@ import { ViewModalDropAreaComponent } from './image/view-modal-drop-area.compone
         ImageViewEditComponent,
         ResourceViewModalComponent,
         ViewModalDropAreaComponent
-    ],
-    entryComponents: [
-        ImageViewModalComponent,
-        ResourceViewModalComponent
     ]
 })
 

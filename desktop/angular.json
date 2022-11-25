@@ -42,9 +42,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "deleteOutputPath": false,
-            "sourceMap": false,
             "assets": [
               "src/favicon.png",
               "src/img",
@@ -68,7 +66,12 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "idai-field-core"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "en": {
@@ -94,13 +97,13 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

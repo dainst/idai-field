@@ -210,7 +210,7 @@ export class MatrixViewComponent implements OnInit {
         this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false });
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
         doceditRef.componentInstance.setDocument(docToEdit);
 
         const reset = async () => {

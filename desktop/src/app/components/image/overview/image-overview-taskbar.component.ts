@@ -58,7 +58,7 @@ export class ImageOverviewTaskbarComponent {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                LinkModalComponent, { keyboard: false }
+                LinkModalComponent, { keyboard: false, animation: false }
             );
             modalRef.componentInstance.imageDocuments = this.imageOverviewFacade.getSelected();
             modalRef.componentInstance.initializeFilterOptions();
@@ -81,7 +81,7 @@ export class ImageOverviewTaskbarComponent {
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(
-            DeleteModalComponent, { keyboard: false }
+            DeleteModalComponent, { keyboard: false, animation: false }
         );
         modalRef.componentInstance.numberOfSelectedImages = this.imageOverviewFacade.getSelected().length;
 
@@ -101,7 +101,7 @@ export class ImageOverviewTaskbarComponent {
         this.menuService.setContext(MenuContext.MODAL);
 
         try {
-            await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
+            await this.modalService.open(RemoveLinkModalComponent, { keyboard: false, animation: false }).result;
             await this.removeLinks();
         } catch(err) {
             // RemoveLinkModal has been canceled
@@ -115,7 +115,7 @@ export class ImageOverviewTaskbarComponent {
     private async deleteSelected() {
 
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
-            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
+            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false, animation: false }
         );
         deletionInProgressModalRef.componentInstance.multiple = this.imageOverviewFacade.getSelected().length > 1;
 
@@ -153,7 +153,7 @@ export class ImageOverviewTaskbarComponent {
     private async addLinks(targetDocument: FieldDocument) {
 
         const savingChangesModal = this.modalService.open(
-            SavingChangesModal, { backdrop: 'static', keyboard: false }
+            SavingChangesModal, { backdrop: 'static', keyboard: false, animation: false }
         );
 
         AngularUtility.blurActiveElement();
@@ -172,7 +172,7 @@ export class ImageOverviewTaskbarComponent {
     private async removeLinks() {
 
         const savingChangesModal = this.modalService.open(
-            SavingChangesModal, { backdrop: 'static', keyboard: false }
+            SavingChangesModal, { backdrop: 'static', keyboard: false, animation: false }
         );
 
         AngularUtility.blurActiveElement();

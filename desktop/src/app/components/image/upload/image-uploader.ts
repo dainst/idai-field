@@ -66,7 +66,7 @@ export class ImageUploader {
 
             this.menuService.setContext(MenuContext.MODAL);
             const uploadModalRef = this.modalService.open(
-                UploadModalComponent, { backdrop: 'static', keyboard: false }
+                UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
             uploadResult = await this.uploadImageFiles(
                 imageFiles, category, uploadResult, depictsRelationTarget
@@ -108,7 +108,7 @@ export class ImageUploader {
                 || fileCount >= 100 || depictsRelationTarget) {
             this.menuService.setContext(MenuContext.MODAL);
             const modal: NgbModalRef = this.modalService.open(
-                ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false }
+                ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
 
             modal.componentInstance.fileCount = fileCount;

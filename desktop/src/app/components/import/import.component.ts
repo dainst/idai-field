@@ -219,7 +219,7 @@ export class ImportComponent implements OnInit {
         this.menuService.setContext(MenuContext.MODAL);
         const uploadModalRef: any = this.modalService.open(
             UploadModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         await AngularUtility.refresh();

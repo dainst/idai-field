@@ -141,7 +141,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
         const modalRef: NgbModalRef = this.modalService.open(
             ImageViewModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         await modalRef.componentInstance.initializeWithoutLinkedDocument(
             document,

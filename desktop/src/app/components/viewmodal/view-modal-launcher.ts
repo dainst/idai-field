@@ -24,7 +24,7 @@ export class ViewModalLauncher {
 
         const modalRef = this.modalService.open(
             ImageViewModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         modalRef.componentInstance.setMode(mode);
         await modalRef.componentInstance.initialize(document);
@@ -44,7 +44,7 @@ export class ViewModalLauncher {
 
         const modalRef: NgbModalRef = this.modalService.open(
             ResourceViewModalComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         await modalRef.componentInstance.initialize(document);
         const edited: boolean = await modalRef.result;

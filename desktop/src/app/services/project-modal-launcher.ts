@@ -32,7 +32,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             CreateProjectModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {
@@ -54,7 +54,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         modalRef.componentInstance.setDocument(projectDocument);
         modalRef.componentInstance.activeGroup = activeGroup;
@@ -76,7 +76,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             DeleteProjectModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         modalRef.componentInstance.projectName = this.settingsProvider.getSettings().selectedProject;
@@ -98,7 +98,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             SynchronizationModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {
@@ -118,7 +118,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             ProjectInformationModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {

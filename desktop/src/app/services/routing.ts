@@ -178,7 +178,7 @@ export class Routing {
 
         const modalRef = this.modalService.open(
             DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         modalRef.componentInstance.setDocument(projectDocument);
         modalRef.componentInstance.activeGroup = 'stem';

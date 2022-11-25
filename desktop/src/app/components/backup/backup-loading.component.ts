@@ -111,7 +111,7 @@ export class BackupLoadingComponent {
         setTimeout(() => {
             if (this.running) this.modalRef = this.modalService.open(
                 BackupLoadingModalComponent,
-                { backdrop: 'static', keyboard: false });
+                { backdrop: 'static', keyboard: false, animation: false });
         }, BackupLoadingComponent.TIMEOUT);
     }
 

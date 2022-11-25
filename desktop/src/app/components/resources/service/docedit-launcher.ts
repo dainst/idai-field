@@ -26,7 +26,7 @@ export class DoceditLauncher {
         this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false });
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
         await doceditRef.componentInstance.setDocument(document);
         if (activeGroup) doceditRef.componentInstance.activeGroup = activeGroup;
 

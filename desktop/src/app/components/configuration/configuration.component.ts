@@ -506,7 +506,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                SaveModalComponent, { keyboard: false }
+                SaveModalComponent, { keyboard: false, animation: false }
             );
             
             await modalRef.result;
@@ -526,7 +526,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                EditSaveDialogComponent, { keyboard: false }
+                EditSaveDialogComponent, { keyboard: false, animation: false }
             );
             modalRef.componentInstance.changeMessage = this.i18n({
                 id: 'configuration.changes', value: 'An der Konfiguration wurden Änderungen vorgenommen.'

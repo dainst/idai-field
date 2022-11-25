@@ -53,7 +53,7 @@ export abstract class ViewModalComponent {
 
         const doceditModalRef = this.modalService.open(
             DoceditComponent,
-            { size: 'lg', backdrop: 'static' }
+            { size: 'lg', backdrop: 'static', animation: false }
         );
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.getDocument(isImageDocument), isImageDocument);

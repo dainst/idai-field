@@ -34,7 +34,7 @@ export class DownloadProjectProgressModalComponent {
 
         const modalRef: NgbModalRef = this.modalService.open(
             CancelModalComponent,
-            { backdrop: 'static' }
+            { backdrop: 'static', animation: false }
         );
         
         try {

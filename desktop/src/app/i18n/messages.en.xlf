@@ -3309,7 +3309,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -3317,7 +3317,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">183</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -3325,7 +3325,7 @@
         <target state="final">No geometry data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.types" datatype="html">

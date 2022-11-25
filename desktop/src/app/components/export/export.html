@@ -92,7 +92,7 @@
                         </label>
                     </div>
 
-                    <div id="hierarchical-relations-info" class="small-info-text"
+                    <div *ngIf="format === 'csv'" id="hierarchical-relations-info" class="small-info-text"
                          i18n="@@export.combineHierarchicalRelations.info">
                         Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation
                         <i>isChildOf</i> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt.

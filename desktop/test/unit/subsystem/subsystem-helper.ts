@@ -254,7 +254,7 @@ function makeCreateProjectDir(projectImageDir) {
     return function createProjectDir() {
         try {
             if (fs.existsSync(projectImageDir)) {
-                fs.rmdirSync(projectImageDir, { recursive: true });
+                fs.rmSync(projectImageDir, { recursive: true });
             }
         } catch (e) {
             console.log('error deleting tmp project dir', e);

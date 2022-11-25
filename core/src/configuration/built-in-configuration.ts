@@ -1020,7 +1020,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Opening'],
-            range: ['RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
+            range: ['Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

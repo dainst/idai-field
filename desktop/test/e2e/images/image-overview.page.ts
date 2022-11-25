@@ -143,7 +143,7 @@ export module ImageOverviewPage {
 
     export function getDeleteConfirmationModal() {
 
-        return getLocator('.modal-dialog');
+        return getLocator('#delete-modal-body');
     }
 
 

@@ -40,7 +40,7 @@
     user-select: none;
   }
 
-  .configuration-editor-section {
+  .configuration-editor-section:not(:last-child) {
     margin-bottom: 25px;
   }
 

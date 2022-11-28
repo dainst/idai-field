@@ -134,6 +134,7 @@
       }
     }
   },
+  "defaultProject": "idai-field",
   "cli": {
     "analytics": false
   }

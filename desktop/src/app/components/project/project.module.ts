@@ -38,6 +38,14 @@ import { ProjectInformationModalComponent } from './project-information-modal.co
         DownloadProjectComponent,
         DownloadProjectProgressModalComponent,
         CancelModalComponent
+    ],
+    entryComponents: [
+        CreateProjectModalComponent,
+        DeleteProjectModalComponent,
+        SynchronizationModalComponent,
+        ProjectInformationModalComponent,
+        DownloadProjectProgressModalComponent,
+        CancelModalComponent
     ]
 })
 

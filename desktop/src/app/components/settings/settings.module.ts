@@ -22,7 +22,10 @@ import { LanguagePickerModalComponent } from '../widgets/languages/language-pick
         LanguageSettingsComponent,
         LanguagePickerModalComponent
     ],
-    providers: []
+    providers: [],
+    entryComponents: [
+        LanguagePickerModalComponent
+    ],
 })
 
 /**

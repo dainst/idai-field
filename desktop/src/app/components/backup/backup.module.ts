@@ -29,6 +29,10 @@ import {BackupProvider} from './backup-provider';
     providers: [
         { provide: DialogProvider, useClass: ConcreteDialogProvider },
         BackupProvider
+    ],
+    entryComponents: [
+        BackupCreationModalComponent,
+        BackupLoadingModalComponent
     ]
 })
 

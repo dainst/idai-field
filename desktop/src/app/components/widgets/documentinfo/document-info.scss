@@ -77,6 +77,24 @@ document-info {
       }
     }
 
+    .document-info-parent {
+      padding: 9px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+      div {
+        width: fit-content;
+        user-select: none;
+
+        .mdi {
+          position: relative;
+          bottom: 1px;
+          margin-right: 7px;
+          color: #5c6166
+        }
+      }
+    }
+
     .info-container {
       height: calc(100% - 40px);
       overflow-y: auto;

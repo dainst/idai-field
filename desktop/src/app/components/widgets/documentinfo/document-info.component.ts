@@ -1,4 +1,4 @@
-import { Component, Input, Output, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, Output, ElementRef, ViewChild, EventEmitter, OnChanges } from '@angular/core';
 import { Document, Resource, Named, FieldDocument, Groups, ProjectConfiguration, Datastore,
     Hierarchy } from 'idai-field-core';
 
@@ -10,7 +10,7 @@ import { Document, Resource, Named, FieldDocument, Groups, ProjectConfiguration,
 /**
  * @author Thomas Kleinke
  */
-export class DocumentInfoComponent {
+export class DocumentInfoComponent implements OnChanges {
 
     @ViewChild('documentInfo', { static: false }) documentInfoElement: ElementRef;
 
@@ -18,6 +18,7 @@ export class DocumentInfoComponent {
     @Input() getExpandAllGroups: () => boolean;
     @Input() setExpandAllGroups: (expandAllGroups: boolean) => void;
     @Input() showThumbnail: boolean = false;
+    @Input() showParent: boolean = false;
     @Input() showCloseButton: boolean = false;
     @Input() transparentBackground: boolean = false;
 
@@ -27,6 +28,7 @@ export class DocumentInfoComponent {
     @Output() onCloseButtonClicked: EventEmitter<void> = new EventEmitter<void>();
 
     public openSection: string|undefined = Groups.STEM;
+    public parentIdentifier: string|undefined;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -42,6 +44,12 @@ export class DocumentInfoComponent {
     public clickThumbnail = () => this.onThumbnailClicked.emit();
 
     public isReadonly = () => this.document.project !== undefined;
+
+
+    async ngOnChanges() {
+
+        this.parentIdentifier = await this.getParentIdentifier();
+    }
 
 
     public toggleExpandAllGroups() {
@@ -67,5 +75,16 @@ export class DocumentInfoComponent {
     public isThumbnailShown(): boolean {
 
         return this.showThumbnail && Document.hasRelations(this.document, 'isDepictedIn');
+    }
+
+
+    private async getParentIdentifier(): Promise<string|undefined> {
+
+        const parentResource: Resource|undefined = await Hierarchy.getParent(
+            id => this.datastore.get(id),
+            this.document.resource
+        );
+
+        return parentResource?.identifier;
     }
 }

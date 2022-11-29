@@ -42,6 +42,8 @@ export class PopoverMenuComponent {
 
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 
+    public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
+
 
     public async jumpToResource(document: FieldDocument) {
 

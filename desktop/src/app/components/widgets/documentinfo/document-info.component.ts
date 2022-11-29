@@ -28,7 +28,7 @@ export class DocumentInfoComponent implements OnChanges {
     @Output() onCloseButtonClicked: EventEmitter<void> = new EventEmitter<void>();
 
     public openSection: string|undefined = Groups.STEM;
-    public parentIdentifier: string|undefined;
+    public parentDocument: FieldDocument|undefined;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -48,7 +48,7 @@ export class DocumentInfoComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.parentIdentifier = await this.getParentIdentifier();
+        this.parentDocument = await this.getParentDocument();
     }
 
 
@@ -78,13 +78,11 @@ export class DocumentInfoComponent implements OnChanges {
     }
 
 
-    private async getParentIdentifier(): Promise<string|undefined> {
+    private async getParentDocument(): Promise<FieldDocument|undefined> {
 
-        const parentResource: Resource|undefined = await Hierarchy.getParent(
+        return await Hierarchy.getParentDocument(
             id => this.datastore.get(id),
-            this.document.resource
-        );
-
-        return parentResource?.identifier;
+            this.document
+        ) as FieldDocument;
     }
 }

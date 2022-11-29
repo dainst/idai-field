@@ -3320,12 +3320,16 @@
         <source>Alle Gruppen ausklappen</source>
         <target state="final">Розгорнути всі групи</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/popover-menu.component.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
+          <context context-type="linenumber">51</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
+        <source>Übergeordnete Ressource</source>
+        <target state="new">Übergeordnete Ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">

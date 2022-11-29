@@ -27,11 +27,21 @@ children-view {
     }
   }
 
-  #close-popover-button {
+  #close-children-view-button {
     position: absolute;
     top: 0;
     left: 218px;
+    height: 39px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
     background-color: $popover-header-bg-color !important;
+
+    .mdi-close {
+      position: relative;
+      top: 3px;
+      color: #000;
+    }
 
     &:hover {
       background-color: $popover-header-hover-bg-color !important;

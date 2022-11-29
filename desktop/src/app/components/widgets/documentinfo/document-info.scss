@@ -12,10 +12,13 @@ document-info {
 
   .document-info {
     height: 100%;
-    background-color: #fff;
     width: $resources-listing-item-slim-width;
     overflow: hidden;
     float: left;
+
+    &:not(.transparent-background) {
+      background-color: #fff;
+    }
 
     ul {
       padding: 0;
@@ -47,7 +50,8 @@ document-info {
         border-radius: 0;
       }
 
-      .edit-button {
+      .edit-button,
+      .close-button {
         left: 109px;
         top: -71px;
         border-radius: 0;

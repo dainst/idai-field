@@ -248,6 +248,12 @@ export module ResourcesState {
     }
 
 
+    export function setExpandAllGroups(state: ResourcesState, expandAllGroups: boolean) {
+
+        viewState(state).expandAllGroups = expandAllGroups;
+    }
+
+
     export function deactivate(state: ResourcesState, viewName: string) {
 
         const deactivatedState: ViewState = ViewState.build();

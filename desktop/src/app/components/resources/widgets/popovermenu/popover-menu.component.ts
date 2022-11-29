@@ -30,6 +30,8 @@ export class PopoverMenuComponent {
 
     public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
 
+    public setExpandAllGroups = (expandAllGroups: boolean) => this.viewFacade.setExpandAllGroups(expandAllGroups);
+
     public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
 
     public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();

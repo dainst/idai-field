@@ -20,14 +20,12 @@
 
     <div *ngIf="showParent && parentDocument"
          class="document-info-parent"
-         (click)="jumpToResource(parentDocument)">
-         <div ngbTooltip="Übergeordnete Ressource"
-              i18n-ngbTooltip="@@resources.sidebarList.parentInfo"
-              #tooltip="ngbTooltip" placement="bottom" container="body">
-            <span class="mdi mdi-subdirectory-arrow-left mdi-rotate-90"></span>
-            <category-icon [category]="document.resource.category" [size]="18"></category-icon>
-            {{parentDocument.resource.identifier}}
-        </div>
+         (click)="jumpToResource(parentDocument)" ngbTooltip="Übergeordnete Ressource"
+         i18n-ngbTooltip="@@resources.sidebarList.parentInfo"
+         #tooltip="ngbTooltip" placement="bottom" container="body">
+        <span class="mdi mdi-subdirectory-arrow-left mdi-rotate-90"></span>
+        <category-icon [category]="document.resource.category" [size]="18"></category-icon>
+        {{parentDocument.resource.identifier}}
     </div>
 
     <thumbnail *ngIf="showThumbnail"

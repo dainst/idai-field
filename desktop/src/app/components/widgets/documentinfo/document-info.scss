@@ -81,22 +81,18 @@ document-info {
       padding: 9px;
       font-size: 14px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      user-select: none;
 
       &:hover {
         background-color: $list-item-hover-color;
         transition: background-color .5s ease;
       }
 
-      div {
-        width: fit-content;
-        user-select: none;
-
-        .mdi {
-          position: relative;
-          bottom: 1px;
-          margin-right: 7px;
-          color: #5c6166
-        }
+      .mdi {
+        position: relative;
+        bottom: 1px;
+        margin-right: 7px;
+        color: #5c6166
       }
     }
 

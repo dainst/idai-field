@@ -29,18 +29,7 @@ export namespace Hierarchy {
     }
 
 
-    export async function getParent(get: Datastore.Get,
-                                    resource: Resource): Promise<Resource|undefined> {
-
-        return resource.relations['liesWithin'] && resource.relations['liesWithin'].length > 0
-            ? (await get(resource.relations.liesWithin[0])).resource
-            : resource.relations['isRecordedIn'] && resource.relations['isRecordedIn'].length > 0
-                ? (await get(resource.relations.isRecordedIn[0])).resource
-                : undefined;
-    }
-
-
-    // TODO review if our datastore can do this, too, via contraintIndex
+    // TODO review if our datastore can do this, too, via constraintIndex
     export async function getAntescendents(get: Datastore.Get,
                                            id: Resource.Id): Promise<Array<Document>> {
 
@@ -51,6 +40,30 @@ export namespace Hierarchy {
             console.error('error in Hierarchy.getAntescendents()');
             return [];
         }
+    }
+
+
+    export async function getParentDocument(get: Datastore.Get,
+                                            document: Document): Promise<Document|undefined> {
+
+        return getParent(get, document.resource);
+    }
+
+
+    export async function getParentResource(get: Datastore.Get,
+                                            resource: Resource): Promise<Resource|undefined> {
+
+        return (await getParent(get, resource))?.resource;
+    }
+
+
+    async function getParent(get: Datastore.Get, resource: Resource): Promise<Document|undefined> {
+
+        return resource.relations['liesWithin'] && resource.relations['liesWithin'].length > 0
+            ? (await get(resource.relations.liesWithin[0]))
+            : resource.relations['isRecordedIn'] && resource.relations['isRecordedIn'].length > 0
+                ? (await get(resource.relations.isRecordedIn[0]))
+                : undefined;
     }
 
 

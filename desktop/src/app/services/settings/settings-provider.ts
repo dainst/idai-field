@@ -74,6 +74,7 @@ export class SettingsProvider {
         this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
         delete this.settings.syncTargets[project];
         await this.serialize();
+        if (remote) remote.getGlobal('updateConfig')(this.settings);
     }
 
 

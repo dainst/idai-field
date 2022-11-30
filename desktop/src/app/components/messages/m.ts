@@ -29,6 +29,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
 
+    // Projects Package
+    public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
+
     // Model Package
     public static MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS = 'model.validation.error.identifierExists';
     public static MODEL_VALIDATION_MISSING_COORDINATES = 'model.validation.error.missingCoordinates';
@@ -304,6 +307,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECTS_DELETE_SUCCESS] = {
+            content: i18n({
+                id: 'messages.projects.deleteSuccess',
+                value: 'Das Projekt "[0]" wurde erfolgreich gelöscht.'
+            }),
+            level: 'success',
             params: [],
             hidden: false
         };

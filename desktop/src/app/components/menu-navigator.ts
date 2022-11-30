@@ -50,7 +50,7 @@ export class MenuNavigator {
         } else if (menuItem === 'projectImages') {
             await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
         } else if (menuItem === 'deleteProject') {
-            await this.zone.run(() => this.projectModalLauncher.deleteProject());
+            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectName));
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
         } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'

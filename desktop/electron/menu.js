@@ -34,11 +34,21 @@ const getTemplate = (mainWindow, context, config) => {
                 type: 'separator'
             }, {
                 label: messages.get('menu.project.openProject'),
-                enabled: isDefaultContext(context) && getNamesOfUnopenedProjects().length > 0,
-                submenu: getNamesOfUnopenedProjects().map(projectName => {
+                enabled: isDefaultContext(context) && getProjectNames(true).length > 0,
+                submenu: getProjectNames(true).map(projectName => {
                     return {
                         label: projectName,
                         click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
+                        enabled: isDefaultContext(context)
+                    };
+                })
+            }, {
+                label: messages.get('menu.project.deleteProject'),
+                enabled: isDefaultContext(context) && getProjectNames(false).length > 0,
+                submenu: getProjectNames(false).map(projectName => {
+                    return {
+                        label: projectName,
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject', projectName),
                         enabled: isDefaultContext(context)
                     };
                 })
@@ -61,10 +71,6 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: isDefaultContext(context)
                     && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
-            }, {
-                label: messages.get('menu.project.deleteProject'),
-                click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject'),
-                enabled: isDefaultContext(context)
             }, {
                 type: 'separator'
             }, {
@@ -334,12 +340,14 @@ const isConfigurationContext = context => [
 ].includes(context);
 
 
-const getNamesOfUnopenedProjects = () => {
+const getProjectNames = (unopened) => {
 
     if (!global.config.dbs || global.config.dbs.length < 2) {
         return [];
     } else {
-        return global.config.dbs.slice(1);
+        return unopened
+            ? global.config.dbs.slice(1)
+            : global.config.dbs;
     }
 };
 

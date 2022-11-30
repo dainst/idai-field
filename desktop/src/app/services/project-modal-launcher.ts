@@ -69,7 +69,7 @@ export class ProjectModalLauncher {
     }
 
 
-    public async deleteProject() {
+    public async deleteProject(projectName: string) {
 
         const menuContext: MenuContext = this.menuService.getContext();
         this.setModalContext(menuContext);
@@ -79,7 +79,7 @@ export class ProjectModalLauncher {
             { backdrop: 'static', keyboard: false, animation: false }
         );
 
-        modalRef.componentInstance.projectName = this.settingsProvider.getSettings().selectedProject;
+        modalRef.componentInstance.projectName = projectName;
 
         try {
             await modalRef.result;

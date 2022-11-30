@@ -54,7 +54,7 @@ export class FieldsViewPage {
     public static async getRelationValue(cardIndex, index) {
 
         const cardElement = (await getLocator('.card')).nth(cardIndex);
-        const relationElement = (await cardElement.locator('.relation-value')).nth(index);
+        const relationElement = (await cardElement.locator('.relation-value .target-document-identifier')).nth(index);
         return getText(relationElement);
     };
 

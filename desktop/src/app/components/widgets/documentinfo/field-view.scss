@@ -22,6 +22,8 @@ field-view {
     }
 
     .field-value.relation-value {
+      padding-top: 3px;
+      padding-bottom: 3px;
       cursor: default;
     
       &:hover {

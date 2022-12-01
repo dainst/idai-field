@@ -52,13 +52,4 @@
       }
     }
   }
-
-  #document-info {
-    height: calc(100% - 40px);
-    overflow-y: auto;
-
-    &.short-document-info {
-      height: calc(100% - 212px);
-    }
-  }
 }

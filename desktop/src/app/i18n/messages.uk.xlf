@@ -13,8 +13,8 @@
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source> Slide <x id="INTERPOLATION" equiv-text="lse);
   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="new"> Slide <x id="INTERPOLATION" equiv-text="lse);
-  private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <target state="final"> Слайд <x id="INTERPOLATION" equiv-text="lse);
+  private"/> / <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -3326,7 +3326,7 @@
       </trans-unit>
       <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
         <source>Übergeordnete Ressource</source>
-        <target state="new">Übergeordnete Ressource</target>
+        <target state="final">Батьківський ресурс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
           <context context-type="linenumber">89</context>
@@ -5058,7 +5058,7 @@
       </trans-unit>
       <trans-unit id="messages.projects.deleteSuccess" datatype="html">
         <source>Das Projekt "[0]" wurde erfolgreich gelöscht.</source>
-        <target state="new">Das Projekt "[0]" wurde erfolgreich gelöscht.</target>
+        <target state="final">Проект "[0]" успішно видалено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5074,7 +5074,7 @@
       </trans-unit>
       <trans-unit id="messages.app.resetSuccess" datatype="html">
         <source>Die Anwendung wurde erfolgreich zurückgesetzt.</source>
-        <target state="new">Die Anwendung wurde erfolgreich zurückgesetzt.</target>
+        <target state="final">Програму було успішно повернуто до початкової.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

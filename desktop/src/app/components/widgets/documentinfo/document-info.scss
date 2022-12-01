@@ -78,6 +78,7 @@ document-info {
     }
 
     .document-info-parent {
+      height: 40px;
       padding: 9px;
       font-size: 14px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -104,8 +105,16 @@ document-info {
       height: calc(100% - 40px);
       overflow-y: auto;
 
-      &.short-document-info {
+      &.with-parent-info:not(.with-thumbnail) {
+        height: calc(100% - 80px);
+      }
+
+      &.with-thumbnail:not(.with-parent-info) {
         height: calc(100% - 212px);
+      }
+
+      &.with-thumbnail.with-parent-info {
+        height: calc(100% - 252px);
       }
     }
   }

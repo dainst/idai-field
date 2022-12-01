@@ -33,7 +33,8 @@
                (onClick)="clickThumbnail()"></thumbnail>
 
     <div #documentInfo class="info-container"
-         [class.short-document-info]="isThumbnailShown()">
+         [class.with-thumbnail]="isThumbnailShown()"
+         [class.with-parent-info]="showParent && parentDocument">
         <fields-view [resource]="document.resource"
                      [openSection]="openSection"
                      [expandAllGroups]="getExpandAllGroups()"

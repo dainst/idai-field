@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Document, FieldDocument } from 'idai-field-core';
+import { FieldDocument } from 'idai-field-core';
 import { PopoverMenu, ResourcesComponent } from '../../resources.component';
 import { ViewFacade } from '../../../../components/resources/view/view-facade';
 import { Routing } from '../../../../services/routing';
@@ -32,15 +32,9 @@ export class PopoverMenuComponent {
 
     public setExpandAllGroups = (expandAllGroups: boolean) => this.viewFacade.setExpandAllGroups(expandAllGroups);
 
-    public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
-
-    public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
-
     public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu);
 
     public closePopover = () => this.resourcesComponent.closePopover();
-
-    public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 

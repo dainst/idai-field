@@ -102,8 +102,6 @@ export class ViewFacade {
 
     public setExpandAllGroups = (expandAllGroups: boolean) => ResourcesState.setExpandAllGroups(this.resourcesStateManager.get(), expandAllGroups);
 
-    public toggleExpandAllGroups = () => this.resourcesStateManager.toggleExpandAllGroups();
-
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();

@@ -22,7 +22,7 @@ export class PouchdbDatastore {
     private deletedObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
-    // despite them beeing deleted in remove before. When they
+    // despite them being deleted in remove before. When they
     // pop up in 'change', they do not have the deleted property.
     // So in order to identify them as to remove from the indices
     // they are marked 'manually'.
@@ -35,10 +35,7 @@ export class PouchdbDatastore {
 
     public getDb = (): PouchDB.Database => this.db;
 
-    /**
-     * Destroys the db named dbName, if it is not the currently selected active database
-     * @throws if trying do delete the currently active database
-     */
+
     public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
 
     

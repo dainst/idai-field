@@ -380,8 +380,15 @@ a {
 
 .ngb-dp-day {
   cursor: default !important;
+
+  .btn-light.active {
+    background-color: initial !important;
+    border-color: initial !important;
+    color: #37588e !important;
+    box-shadow: initial !important;
+  }
 }
 
 .ngb-dp-arrow-btn:focus {
-  outline-width: 0 !important;
+  outline-width: 0 !important; 
 }

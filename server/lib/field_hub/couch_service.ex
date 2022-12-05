@@ -224,10 +224,14 @@ defmodule FieldHub.CouchService do
   end
 
   def decode_project_name(database_name) do
-    database_name
-    |> String.replace("project_", "")
-    |> String.replace("$", "%")
-    |> URI.decode()
+    if String.contains?(database_name, "$") do
+      database_name
+      |> String.replace("project_", "")
+      |> String.replace("$", "%")
+      |> URI.decode()
+    else
+      database_name
+    end
   end
 
   def url() do

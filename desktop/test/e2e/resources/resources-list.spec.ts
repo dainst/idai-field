@@ -86,6 +86,21 @@ test.describe('resources/list --', () => {
     });
 
 
+    test('restore identifier from database if an empty string is typed in as identifier', async () => {
+
+        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
+
+        await ResourcesPage.typeInListModeInputField('1', 0, '');
+        await click(await ResourcesPage.getListModeInputField('2', 0));
+        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+
+        await ResourcesPage.typeInListModeInputField('1', 0, '  ');
+        await click(await ResourcesPage.getListModeInputField('2', 0));
+        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+    });
+
+
     test('edit a resource via editor modal', async () => {
 
         await ResourcesPage.clickListEditButton('SE0');

@@ -5,10 +5,10 @@ defmodule FieldHub.CouchService do
 
   require Logger
 
-  def authenticate(database_name, %Credentials{} = credentials) do
+  def authenticate(project, %Credentials{} = credentials) do
     response =
       HTTPoison.get(
-        "#{url()}/#{database_name}",
+        "#{url()}/#{project}",
         headers(credentials)
       )
 
@@ -39,21 +39,16 @@ defmodule FieldHub.CouchService do
 
   def create_project(project_name, %Credentials{} = credentials) do
 
-    database_name = encode_project_name(project_name)
-
     HTTPoison.put!(
-      "#{url()}/#{database_name}",
+      "#{url()}/#{project_name}",
       "",
       headers(credentials)
     )
   end
 
   def delete_project(project_name, %Credentials{} = credentials) do
-
-    database_name = encode_project_name(project_name)
-
     HTTPoison.delete!(
-      "#{url()}/#{database_name}",
+      "#{url()}/#{project_name}",
       headers(credentials)
     )
   end
@@ -101,11 +96,9 @@ defmodule FieldHub.CouchService do
 
   def add_project_admin(user_name, project_name, %Credentials{} = credentials) do
 
-    database_name = encode_project_name(project_name)
-
     %{ body: body } =
       HTTPoison.get!(
-        "#{url()}/#{database_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -124,7 +117,7 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{database_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
@@ -132,12 +125,9 @@ defmodule FieldHub.CouchService do
 
 
   def add_project_member(user_name, project_name, %Credentials{} = credentials) do
-
-    database_name = encode_project_name(project_name)
-
     %{ body: body } =
       HTTPoison.get!(
-        "#{url()}/#{database_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -156,19 +146,16 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{database_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
   end
 
   def remove_user_from_project(user_name, project_name, %Credentials{} = credentials) do
-
-    database_name = encode_project_name(project_name)
-
     %{ body: body } =
       HTTPoison.get!(
-        "#{url()}/#{database_name}/_security",
+        "#{url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -192,7 +179,7 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{database_name}/_security",
+      "#{url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
@@ -207,27 +194,6 @@ defmodule FieldHub.CouchService do
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{credentials}"}
     ]
-  end
-
-  def encode_project_name(project_name) do
-    encoded =
-      project_name
-      |> URI.encode()
-      |> String.replace("%", "$")
-
-    if String.contains?(encoded, "$") do
-      "project_#{encoded}"
-      |> String.downcase()
-    else
-      encoded
-    end
-  end
-
-  def decode_project_name(database_name) do
-    database_name
-    |> String.replace("project_", "")
-    |> String.replace("$", "%")
-    |> URI.decode()
   end
 
   def url() do

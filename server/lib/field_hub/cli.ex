@@ -91,16 +91,6 @@ defmodule FieldHub.CLI do
     create_project_with_default_user(project_name, create_password(32))
   end
 
-  def get_database_name_for_project_name(project_name) do
-    encoded = CouchService.encode_project_name(project_name)
-    Logger.info("Encoded database name for project '#{project_name}' is '#{encoded}'.")
-  end
-
-  def get_project_name_for_database_name(database_name) do
-    decoded = CouchService.decode_project_name(database_name)
-    Logger.info("Decoded project name name for database '#{database_name}' is '#{decoded}'.")
-  end
-
   def create_user(name, password) do
     HTTPoison.start()
 

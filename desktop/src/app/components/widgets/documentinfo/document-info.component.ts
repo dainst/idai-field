@@ -48,7 +48,9 @@ export class DocumentInfoComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.parentDocument = await this.getParentDocument();
+        this.parentDocument = this.document
+            ? await this.getParentDocument()
+            : undefined;
     }
 
 

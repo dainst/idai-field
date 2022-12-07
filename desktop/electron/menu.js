@@ -172,7 +172,9 @@ const getTemplate = (mainWindow, context, config) => {
             label: messages.get('menu.view.reload'),
             accelerator: 'CmdOrCtrl+R',
             click: function (item, focusedWindow) {
-                if (focusedWindow) {
+                if (global.mode === 'production') {
+                    focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.getLocale() + '/index.html');
+                } else if (focusedWindow) {
                     focusedWindow.reload();
                 }
             }

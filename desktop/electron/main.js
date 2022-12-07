@@ -340,6 +340,17 @@ electron.app.on('window-all-closed', () => {
     }
 });
 
-electron.ipcMain.on('reload', () => {
-    mainWindow.reload();
+electron.ipcMain.on('reload', (event, route) => {
+    if (global.mode === 'production') {
+        mainWindow.loadURL(
+            url.format({
+                pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
+                protocol: 'file:',
+                slahes: true,
+                hash: route
+            })
+        );
+    } else {
+        mainWindow.reload();
+    }
 });

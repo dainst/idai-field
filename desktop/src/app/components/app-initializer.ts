@@ -99,14 +99,23 @@ export const appInitializerFactory = (
     configLoader: ConfigLoader
 ) => async (): Promise<void> => {
 
+    console.log('setup server');
     await expressServer.setupServer();
 
+    console.log('load settings');
     const settings = await loadSettings(settingsService, progress);
+    console.log('set up database');
     await setUpDatabase(settingsService, settings, progress);
+
+    console.log('load sample data');
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
 
+    console.log('copy thumbnails from database');
+
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
+
+    console.log('load configuration');
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
@@ -114,7 +123,11 @@ export const appInitializerFactory = (
     );
     serviceLocator.init(services);
 
+    console.log('load documents');
+
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
+
+    console.log('refresh');
 
     return await AngularUtility.refresh(700);
 };

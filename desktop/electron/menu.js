@@ -87,8 +87,8 @@ const getTemplate = (mainWindow, context, config) => {
             }, {
                 label: messages.get('menu.project.exit'),
                 accelerator: 'CmdOrCtrl+Q',
-                click: function () {
-                    app.quit()
+                click: () => {
+                    app.quit();
                 }
             }]
     }, {
@@ -173,10 +173,7 @@ const getTemplate = (mainWindow, context, config) => {
             accelerator: 'CmdOrCtrl+R',
             click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.reload();
-                  if (global.mode === 'production') {
-                    focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.getLocale() + '/index.html');
-                  }
+                    focusedWindow.reload();
                 }
             }
         }, {
@@ -190,21 +187,21 @@ const getTemplate = (mainWindow, context, config) => {
             })(),
             click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                    focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+                    focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
                 }
             }
         }, {
             label: messages.get('menu.view.toggleDeveloperTools'),
             accelerator: (function() {
                 if (process.platform === 'darwin') {
-                    return 'Alt+Command+I'
+                    return 'Alt+Command+I';
                 } else {
-                    return 'Ctrl+Shift+I'
+                    return 'Ctrl+Shift+I';
                 }
             })(),
             click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                    focusedWindow.toggleDevTools()
+                    focusedWindow.toggleDevTools();
                 }
             }
         }]

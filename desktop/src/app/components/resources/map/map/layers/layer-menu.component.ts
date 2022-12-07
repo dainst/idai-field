@@ -166,7 +166,7 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
         this.modalOpened = true;
 
         const imagePickerModal: NgbModalRef = this.modalService.open(
-            ImagePickerComponent, { size: 'lg', keyboard: false }
+            ImagePickerComponent, { size: 'lg', keyboard: false, animation: false }
         );
         imagePickerModal.componentInstance.mode = 'layers';
         imagePickerModal.componentInstance.setDocument(group.document);

@@ -1,0 +1,110 @@
+name: Desktop
+on:
+  push:
+    paths:
+      - "core/**"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
+  pull_request:
+    paths:
+      - "core/**"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
+jobs:
+  Tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm run bootstrap
+      - name: Build core
+        run: npm run build
+        working-directory: core
+      - name: Build desktop tests
+        run: npm run build:test
+        working-directory: desktop
+      - name: Run core unit tests
+        run: npm run test
+        working-directory: core
+      - name: Run desktop unit tests
+        run: npm run test
+        working-directory: desktop
+      - name: Run FieldHub integration tests
+        run: npm run test:hub-integration
+        working-directory: desktop
+      - name: Run Java tools tests
+        run: mvn -f java/pom.xml test
+        working-directory: desktop
+  E2E:
+    timeout-minutes: 90
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm run bootstrap
+      - name: Build core
+        run: npm run build
+        working-directory: core
+      - name: Run e2e tests
+        run: npm run e2e
+        working-directory: desktop
+  Build:
+    name: Build (${{ matrix.os.name }})
+    strategy:
+      matrix:
+        os:
+          - { name: 'Linux', version: 'ubuntu-latest' }
+          - { name: 'MacOS', version: 'macos-latest' }
+          - { name: 'Windows', version: 'windows-latest' }
+      fail-fast: false
+    runs-on: ${{ matrix.os.version }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Setup NPM cache
+      uses: c-hive/gha-npm-cache@v1
+    - name: Install root node modules
+      run: npm i
+    - name: Install and link package node modules 
+      run: npm run bootstrap
+    - name: Build core
+      run: npm run build
+      working-directory: core
+    - name: Build desktop
+      run: npm run build:all
+      working-directory: desktop
+    - name: Create macOS package
+      run: npm run package:mac
+      if: runner.os == 'macOS'
+      env:
+        CSC_LINK: ${{ secrets.MAC_CERT }}
+        CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}
+        MAC_NOTARIZE: ${{ contains(github.event.head_commit.message, '[notarize]') && 'true' || 'false' }}
+        MAC_NOTARIZE_AID: ${{ secrets.MAC_NOTARIZE_AID }}
+        MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
+        MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
+      working-directory: desktop
+    - name: Create Windows package
+      run: npm run package:win
+      if: runner.os == 'Windows'
+      env:
+        CSC_LINK: ${{ secrets.WIN_CERT }}
+        CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PW }}
+      working-directory: desktop
+    - name: Create Linux package
+      run: npm run package:lnx
+      if: runner.os == 'Linux'
+      working-directory: desktop

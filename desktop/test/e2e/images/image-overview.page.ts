@@ -1,16 +1,15 @@
-import { click, doubleClick, getElement, getElements, getValue, navigateTo, typeIn, uploadInFileInput,
-    waitForExist, waitForNotExist } from '../app';
+import { click, doubleClick, getLocator, getValue, navigateTo, typeIn, uploadInFileInput, waitForExist,
+    waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
+
+const { expect } = require('@playwright/test');
 
 
 export module ImageOverviewPage {
 
-    export const selectedClass = 'selected';
+    export async function waitForCells() {
 
-
-    export function waitForCells() {
-
-        return waitForExist('.cell');
+        return waitForExist((await getLocator('.cell')).nth(0));
     }
 
 
@@ -117,7 +116,7 @@ export module ImageOverviewPage {
 
     export async function getGridSizeSliderValue() {
 
-        const element = await getElement('#grid-size-slider');
+        const element = await getLocator('#grid-size-slider');
         return getValue(element);
     }
 
@@ -126,44 +125,50 @@ export module ImageOverviewPage {
 
     export function getAllCells() {
 
-        return getElements('.cell');
+        return getLocator('.cell');
     }
 
 
     export async function getCell(index) {
 
-        return (await ImageOverviewPage.getAllCells())[index];
+        return (await ImageOverviewPage.getAllCells()).nth(index);
     }
 
 
     export function getCellByIdentifier(identifier: string) {
 
-        return getElement('#resource-' + identifier.replace('.', '_'));
+        return getLocator('#resource-' + identifier.replace('.', '_'));
     }
 
 
     export function getDeleteConfirmationModal() {
 
-        return getElement('.modal-dialog');
+        return getLocator('#delete-modal-body');
     }
 
 
     export function getLinkModal() {
 
-        return getElement('#link-modal');
+        return getLocator('#link-modal');
     }
 
 
     export async function getLinkModalListEntries() {
 
         await waitForExist('#document-picker ul');
-        return getElements('#document-picker ul li');
+        return getLocator('#document-picker ul li');
     }
 
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return getElement('#document-picker-resource-' + identifier);
+        return getLocator('#document-picker-resource-' + identifier);
+    }
+
+
+    export function getSavingChangesModal() {
+
+        return getLocator('#saving-changes-modal');
     }
 
 
@@ -172,7 +177,7 @@ export module ImageOverviewPage {
     export async function typeInIdentifierInLinkModal(identifier) {
         
         const linkModalElement = await ImageOverviewPage.getLinkModal();
-        return typeIn(await linkModalElement.$('.search-bar-input'), identifier);
+        return typeIn(await linkModalElement.locator('.search-bar-input'), identifier);
     }
 
 
@@ -181,13 +186,14 @@ export module ImageOverviewPage {
     export async function createDepictsRelation(identifier) {
 
         const imageToConnect = await ImageOverviewPage.getCell(0);
-
         await click(imageToConnect);
-        expect(await imageToConnect.getAttribute('class')).toMatch(selectedClass);
+        expect(await imageToConnect.getAttribute('class')).toMatch('selected');
+
         await this.clickLinkButton();
         await this.typeInIdentifierInLinkModal(identifier);
         await click(await this.getSuggestedResourcesInLinkModalByIdentifier(identifier));
         await waitForNotExist('ngb-modal-backdrop');
+
         await NavbarPage.clickCloseNonResourcesTab();
         await NavbarPage.clickTab('project');
         return navigateTo('images');

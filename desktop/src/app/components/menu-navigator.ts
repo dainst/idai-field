@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { Document, ObserverUtil } from 'idai-field-core';
+import { ObserverUtil } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
@@ -50,7 +50,7 @@ export class MenuNavigator {
         } else if (menuItem === 'projectImages') {
             await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
         } else if (menuItem === 'deleteProject') {
-            await this.zone.run(() => this.projectModalLauncher.deleteProject());
+            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectName));
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
         } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'

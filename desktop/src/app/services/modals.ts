@@ -36,7 +36,8 @@ export class Modals {
 
         const options: NgbModalOptions = {
             backdrop: 'static',
-            keyboard: false
+            keyboard: false,
+            animation: false
         }
         if (size) options.size = size;
 

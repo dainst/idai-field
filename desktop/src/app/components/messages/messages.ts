@@ -1,3 +1,6 @@
+import { Observer } from 'rxjs/internal/types';
+import { Observable } from 'rxjs/internal/Observable';
+import { ObserverUtil } from 'idai-field-core';
 import { Message } from './message';
 import { MD } from './md';
 import { MDInternal } from './md-internal';
@@ -17,6 +20,7 @@ export class Messages {
 
     private internalMessagesDictionary = new MDInternal();
     private activeMessages: Message[] = [];
+    private newMessagesObservers: Array<Observer<Document>> = [];
 
     // Messages of these types fade away after the given timeout.
     private static TIMEOUT_TYPES: string[] = ['success', 'info'];
@@ -24,6 +28,9 @@ export class Messages {
 
     constructor(private messagesDictionary: MD,
                 private timeout: number) {}
+
+
+    public newMessagesNotifications = (): Observable<Document> => ObserverUtil.register(this.newMessagesObservers);
 
 
     /**
@@ -49,6 +56,7 @@ export class Messages {
             const message: Message = Messages.buildFromTemplate(template, msgWithParams);
             this.startTimeout(message);
             this.activeMessages.push(message);
+            ObserverUtil.notify(this.newMessagesObservers, undefined);
         }
     }
 

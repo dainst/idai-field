@@ -86,7 +86,7 @@ export class BackupCreationComponent {
             if (this.running) {
                 this.modalRef = this.modalService.open(
                     BackupCreationModalComponent,
-                    { backdrop: 'static', keyboard: false }
+                    { backdrop: 'static', keyboard: false, animation: false }
                 );
             }
         }, BackupCreationComponent.TIMEOUT);

@@ -81,7 +81,7 @@ export class GeoreferenceViewComponent {
         this.menuService.setContext(MenuContext.GEOREFERENCE_EDIT);
 
         try {
-            const result = await this.modalService.open(modal).result;
+            const result = await this.modalService.open(modal, { backdrop: 'static', animation: false }).result;
             if (result == 'delete') await this.deleteGeoreference();
         } catch (err) {
             // Modal has been canceled

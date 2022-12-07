@@ -33,7 +33,7 @@ export class DropdownComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            await Hierarchy.getParent(id => this.datastore.get(id), this.resource)
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
         );
     }
 

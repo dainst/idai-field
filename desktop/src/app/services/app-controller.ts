@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, ImageStore, Indexer, IndexFacade,
+import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
     PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
-import { MenuNavigator } from '../components/menu-navigator';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
 import { ImagesState } from '../components/image/overview/view/images-state';
@@ -11,9 +10,13 @@ import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
 import { ConfigurationIndex } from './configuration/index/configuration-index';
 import { ConfigurationState } from '../components/configuration/configuration-state';
+import { Messages } from '../components/messages/messages';
+import { M } from '../components/messages/m';
+import { ImageDocumentsManager } from '../components/image/overview/view/image-documents-manager';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const express = typeof window !== 'undefined' ? window.require('express') : require('express');
+const ipcRenderer = typeof window !== 'undefined'
+    ? window.require('electron').ipcRenderer
+    : require('electron').ipcRenderer;
 
 
 @Injectable()
@@ -29,38 +32,20 @@ export class AppController {
                 private indexFacade: IndexFacade,
                 private thumbnailGenerator: ThumbnailGenerator,
                 private pouchdbDatastore: PouchdbDatastore,
-                private imagestore: ImageStore,
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
+                private imageDocumentsManager: ImageDocumentsManager,
                 private projectConfiguration: ProjectConfiguration,
-                private menuNavigator: MenuNavigator,
                 private configurationIndex: ConfigurationIndex,
-                private configReader: ConfigReader) {}
+                private configReader: ConfigReader,
+                private messages: Messages) {}
 
+    
+    public initialize() {
 
-    public setupServer(): Promise<any> {
-
-        return new Promise(resolve => {
-
-            if (!remote.getGlobal('switches').provide_reset) return resolve(undefined);
-
-            const control = express();
-            control.use(express.json());
-
-            control.post('/reset', async (request: any, result: any) => {
-                await this.reset();
-                result.send('done');
-            });
-
-            control.post('/navigate', async (request: any, result: any) => {
-                await this.menuNavigator.onMenuItemClicked(request.body.menu);
-                result.send('done');
-            });
-
-            control.listen(3003, function() {
-                console.log('App Control listening on port 3003');
-                resolve(undefined);
-            });
+        ipcRenderer.on('resetApp', async () => {
+            await this.reset();
+            this.messages.add([M.APP_RESET_SUCCESS]);
         });
     }
 
@@ -76,6 +61,7 @@ export class AppController {
         this.imagesState.resetForE2E();
         this.configurationState.resetForE2E();
         this.tabManager.resetForE2E();
+        this.imageDocumentsManager.clearSelection();
         this.documentCache.reset();
 
         await new SampleDataLoader(

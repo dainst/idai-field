@@ -26,7 +26,7 @@ export class ResourceDeletion {
             .length - documents.length;
 
         const modalRef: NgbModalRef = this.modalService.open(
-            DeleteModalComponent, { keyboard: false }
+            DeleteModalComponent, { keyboard: false, animation: false }
         );
         modalRef.componentInstance.documents = documents;
         modalRef.componentInstance.descendantsCount = descendantsCount;
@@ -38,7 +38,7 @@ export class ResourceDeletion {
 
         const deleteRelatedImages: boolean = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
-            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
+            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false, animation: false }
         );
         deletionInProgressModalRef.componentInstance.multiple = documents.length + descendantsCount > 1;
 

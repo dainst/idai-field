@@ -39,6 +39,8 @@
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
     <div *ngFor="let target of field.targets"
          class="field-value relation-value"
-         [innerHTML]="target.resource.identifier"
-         (click)="jumpToResource(target)"></div>
+         (click)="jumpToResource(target)">
+        <category-icon [category]="target.resource.category" [size]="20"></category-icon>
+        <span class="target-document-identifier">{{target.resource.identifier}}</span>
+    </div>
 </div>

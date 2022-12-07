@@ -12,10 +12,13 @@ document-info {
 
   .document-info {
     height: 100%;
-    background-color: #fff;
     width: $resources-listing-item-slim-width;
     overflow: hidden;
     float: left;
+
+    &:not(.transparent-background) {
+      background-color: #fff;
+    }
 
     ul {
       padding: 0;
@@ -47,7 +50,8 @@ document-info {
         border-radius: 0;
       }
 
-      .edit-button {
+      .edit-button,
+      .close-button {
         left: 109px;
         top: -71px;
         border-radius: 0;
@@ -73,12 +77,44 @@ document-info {
       }
     }
 
+    .document-info-parent {
+      height: 40px;
+      padding: 9px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      user-select: none;
+
+      &:hover {
+        background-color: $list-item-hover-color;
+        transition: background-color .5s ease;
+      }
+
+      .mdi {
+        position: relative;
+        bottom: 1px;
+        margin-right: 7px;
+        color: #5c6166
+      }
+
+      category-icon {
+        margin-right: 2px;
+      }
+    }
+
     .info-container {
       height: calc(100% - 40px);
       overflow-y: auto;
 
-      &.short-document-info {
+      &.with-parent-info:not(.with-thumbnail) {
+        height: calc(100% - 80px);
+      }
+
+      &.with-thumbnail:not(.with-parent-info) {
         height: calc(100% - 212px);
+      }
+
+      &.with-thumbnail.with-parent-info {
+        height: calc(100% - 252px);
       }
     }
   }

@@ -1,43 +1,43 @@
-import { waitForExist, getElements, click, getElement, getText, selectOption } from '../app';
+import { waitForExist, getLocator, click, getText, selectOption } from '../app';
 
 
 export class ImportPage {
 
     public static getSourceOptions() {
 
-        return getElements('#importSourceSelect option');
+        return getLocator('#importSourceSelect option');
     };
 
 
     public static async clickSourceOption(value: string) {
 
-        return selectOption('#importSourceSelect', value)
+        return selectOption('#importSourceSelect', value);
     };
 
 
     public static async getSourceOptionValue(index) {
 
         const sourceOptionElements = await this.getSourceOptions();
-        return sourceOptionElements[index].getAttribute('value');
+        return sourceOptionElements.nth(index).getAttribute('value');
     };
 
 
     public static async getOperationOptions() {
 
         await waitForExist('#operationSelect');
-        return getElements('#operationSelect option');
+        return getLocator('#operationSelect option');
     };
 
 
     public static getImportURLInput() {
 
-        return getElement('#importUrlInput');
+        return getLocator('#importUrlInput');
     };
 
 
     public static getMessageEl(index) {
 
-        return getElement('#message-' + index);
+        return getLocator('#message-' + index);
     };
 
 
@@ -55,6 +55,6 @@ export class ImportPage {
 
     public static getImportModal() {
 
-        return getElement('#import-upload-modal');
+        return getLocator('#import-upload-modal');
     };
 }

@@ -1,4 +1,4 @@
-import { click, getElement, getElements, rightClick, getText } from '../app';
+import { click, getLocator, rightClick, getText } from '../app';
 
 
 /**
@@ -42,25 +42,25 @@ export class ResourcesTypeGridPage {
 
     public static getLinkedDocumentsGrid() {
 
-        return getElement('#linked-documents-grid');
+        return getLocator('#linked-documents-grid');
     }
 
 
     public static getGridElements() {
 
-        return getElements('.type-grid-element');
+        return getLocator('.type-grid-element');
     }
 
 
     public static getGridElement(identifier: string) {
 
-        return getElement('#type-grid-element-' + identifier);
+        return getLocator('#type-grid-element-' + identifier);
     }
 
 
     public static getToggleFindsSectionButton() {
 
-        return getElement('#toggle-finds-section-button');
+        return getLocator('#toggle-finds-section-button');
     }
 
 

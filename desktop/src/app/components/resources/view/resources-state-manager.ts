@@ -150,13 +150,6 @@ export class ResourcesStateManager {
     }
 
 
-    public toggleExpandAllGroups() {
-
-        ResourcesState.toggleExpandAllGroups(this.resourcesState);
-        this.serialize();
-    }
-
-
     public setMode(mode: ResourcesViewMode) {
 
         ResourcesState.setMode(this.resourcesState, mode);

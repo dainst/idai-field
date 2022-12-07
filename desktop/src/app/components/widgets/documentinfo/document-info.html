@@ -1,4 +1,4 @@
-<div *ngIf="document" class="document-info">
+<div *ngIf="document" class="document-info" [class.transparent-background]="transparentBackground">
     <div class="document-info-header">
         <button class="expand-all-groups-button btn btn-light"
                 [class.active]="getExpandAllGroups()"
@@ -10,9 +10,22 @@
             <span class="mdi mdi-unfold-more-horizontal"></span>
         </button>
         <div class="identifier-label">{{document.resource.identifier}}</div>
-        <button *ngIf="!isReadonly()" class="edit-button btn btn-light" (click)="startEdit()">
+        <button *ngIf="!isReadonly() && !showCloseButton" class="edit-button btn btn-light" (click)="startEdit()">
             <span class="mdi mdi-pencil"></span>
         </button>
+        <button *ngIf="showCloseButton" class="btn btn-light close-button" (click)="close()">
+            <span class="mdi mdi-close"></span>
+        </button>
+    </div>
+
+    <div *ngIf="showParent && parentDocument"
+         class="document-info-parent"
+         (click)="jumpToResource(parentDocument)" ngbTooltip="Übergeordnete Ressource"
+         i18n-ngbTooltip="@@resources.sidebarList.parentInfo"
+         #tooltip="ngbTooltip" placement="bottom" container="body">
+        <span class="mdi mdi-subdirectory-arrow-left mdi-rotate-90"></span>
+        <category-icon [category]="parentDocument.resource.category" [size]="20"></category-icon>
+        {{parentDocument.resource.identifier}}
     </div>
 
     <thumbnail *ngIf="showThumbnail"
@@ -20,7 +33,8 @@
                (onClick)="clickThumbnail()"></thumbnail>
 
     <div #documentInfo class="info-container"
-         [class.short-document-info]="isThumbnailShown()">
+         [class.with-thumbnail]="isThumbnailShown()"
+         [class.with-parent-info]="showParent && parentDocument">
         <fields-view [resource]="document.resource"
                      [openSection]="openSection"
                      [expandAllGroups]="getExpandAllGroups()"

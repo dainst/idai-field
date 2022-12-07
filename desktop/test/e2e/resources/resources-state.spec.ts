@@ -1,16 +1,16 @@
-import { click, getAppDataPath, getText, navigateTo, pause, resetApp, resetConfigJson, start, stop, waitForExist,
+import { click, getText, navigateTo, pause, resetApp, resetConfigJson, start, stop, waitForExist,
     waitForNotExist } from '../app';
-import {NavbarPage} from '../navbar.page';
-import {SearchBarPage} from '../widgets/search-bar.page';
-import {ResourcesPage} from './resources.page';
-import {ImageOverviewPage} from '../images/image-overview.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {ResourcesSearchBarPage} from './resources-search-bar.page';
-import {SearchConstraintsPage} from '../widgets/search-constraints.page';
-import {FieldsViewPage} from '../widgets/fields-view.page';
-import {ImageViewPage} from '../images/image-view.page';
+import { NavbarPage } from '../navbar.page';
+import { SearchBarPage } from '../widgets/search-bar.page';
+import { ResourcesPage } from './resources.page';
+import { ImageOverviewPage } from '../images/image-overview.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { ResourcesSearchBarPage } from './resources-search-bar.page';
+import { SearchConstraintsPage } from '../widgets/search-constraints.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
+import { ImageViewPage } from '../images/image-view.page';
 
-const fs = require('fs');
+const { test, expect } = require('@playwright/test');
 
 
 /**
@@ -23,45 +23,33 @@ const fs = require('fs');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', () => {
+test.describe('resources/state --', () => {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
-        await removeResourcesStateFile();
         await navigateTo('settings');
         await resetApp();
         await NavbarPage.clickCloseNonResourcesTab();
         await NavbarPage.clickTab('project');
-        done();
     });
 
 
-    afterEach(async done => {
+    test.afterEach(async () => {
 
         await resetConfigJson();
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
-
-
-    async function removeResourcesStateFile() {
-
-        const filePath = (await getAppDataPath()) + '/resources-state-' + 'abc.json';
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-    }
 
 
     async function createDepictsRelation() {
@@ -79,7 +67,7 @@ describe('resources/state --', () => {
     }
 
 
-    it('filter', async done => {
+    test('filter', async () => {
 
         // map
         await ResourcesPage.clickHierarchyButton('S1');
@@ -103,33 +91,31 @@ describe('resources/state --', () => {
         await waitForExist(await ResourcesPage.getListItemEl('SE2'));
         await SearchBarPage.clickChooseCategoryFilter('feature-architecture');
         await waitForNotExist(await ResourcesPage.getListItemEl('SE2'));
-
-        done();
     });
 
 
-    it('filter - suggestions', async done => {
+    test('filter - suggestions', async () => {
 
         // show suggestion for resource from different context
         await SearchBarPage.typeInSearchField('SE0');
         await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
         let suggestions = await ResourcesSearchBarPage.getSuggestions();
-        expect(suggestions.length).toBe(1);
-        expect(await getText(suggestions[0])).toEqual('SE0');
+        expect(await suggestions.count()).toBe(1);
+        expect(await getText(suggestions.nth(0))).toEqual('SE0');
 
         // do not show suggestions if any resources in current context are found
         await SearchBarPage.typeInSearchField('S');
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
         await waitForNotExist(await ResourcesSearchBarPage.getSuggestionsBox());
         suggestions = await ResourcesSearchBarPage.getSuggestions();
-        expect(suggestions.length).toBe(0);
+        expect(await suggestions.count()).toBe(0);
 
         // do not suggest project document
         await SearchBarPage.typeInSearchField('te');
         await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
         suggestions = await ResourcesSearchBarPage.getSuggestions();
-        expect(suggestions.length).toBe(1);
-        expect(await getText(suggestions[0])).toEqual('testf1');
+        expect(await suggestions.count()).toBe(1);
+        expect(await getText(suggestions.nth(0))).toEqual('testf1');
 
         // delete query string after following suggestion link
         await SearchBarPage.typeInSearchField('SE0');
@@ -138,12 +124,10 @@ describe('resources/state --', () => {
 
         await NavbarPage.clickTab('project');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
-
-        done();
     });
 
 
-    it('filter -- select all', async done => {
+    test('filter -- select all', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
 
@@ -155,12 +139,10 @@ describe('resources/state --', () => {
         await SearchBarPage.clickChooseCategoryFilter('all');
         await waitForExist(await ResourcesPage.getListItemEl('1'));
         await waitForExist(await ResourcesPage.getListItemEl('2'));
-
-        done();
     });
 
 
-    it('filter -- show correct categories in plus button menu after choosing category filter', async done => {
+    test('filter -- show correct categories in plus button menu after choosing category filter', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
 
@@ -191,12 +173,10 @@ describe('resources/state --', () => {
         await checkCategoryOptions();
         await ResourcesPage.clickListModeButton();
         await checkCategoryOptions();
-
-        done();
     });
 
 
-    it('filter -- set category of newly created resource to filter category if a child category is chosen as filter category', async done => {
+    test('filter -- set category of newly created resource to filter category if a child category is chosen as filter category', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
 
@@ -238,12 +218,10 @@ describe('resources/state --', () => {
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('2', 'info');
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
-
-        done();
     });
 
 
-    it('filter -- by parent category', async done => {
+    test('filter -- by parent category', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -253,12 +231,10 @@ describe('resources/state --', () => {
         await SearchBarPage.clickChooseCategoryFilter('feature');
         await waitForNotExist(await ResourcesPage.getListItemEl('2'));
         await waitForExist(await ResourcesPage.getListItemEl('1'));
-
-        done();
     });
 
 
-    it('search -- show suggestion for extended search query', async done => {
+    test('search -- show suggestion for extended search query', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -280,22 +256,19 @@ describe('resources/state --', () => {
 
         await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
         const suggestions = await ResourcesSearchBarPage.getSuggestions();
-        expect(suggestions.length).toBe(1);
-        expect(await getText(suggestions[0])).toEqual('SE2');
-
-        done();
+        expect(await suggestions.count()).toBe(1);
+        expect(await getText(suggestions.nth(0))).toEqual('SE2');
     });
 
 
-    it('filter - jump into right context', async done => {
+    test('filter - jump into right context', async () => {
 
         // map - stay in overview
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickSwitchHierarchyMode();
         await ResourcesPage.clickHierarchyButton('S1');
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
-        let text = await ResourcesPage.getSelectedListItemIdentifierText();
-        expect(text).toBe('S1');
+        expect(await ResourcesPage.getSelectedListItemIdentifierText()).toBe('S1');
 
         // list - stay in overview
         await ResourcesPage.clickListModeButton();
@@ -309,12 +282,11 @@ describe('resources/state --', () => {
         await SearchBarPage.clickChooseCategoryFilter('find');
         await ResourcesPage.clickHierarchyButton('testf1');
         await waitForExist(await ResourcesPage.getListItemEl('testf1'));
-        text = await ResourcesPage.getSelectedListItemIdentifierText();
-        expect(text).toBe('testf1');
+        expect(await ResourcesPage.getSelectedListItemIdentifierText()).toBe('testf1');
         let navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('SE0');
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('SE0');
 
         // list - goto other tab and into navpath
         await NavbarPage.clickTab('project');
@@ -322,15 +294,13 @@ describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('testf1');
         await waitForExist(await ResourcesPage.getListItemEl('testf1'));
         navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('SE0');
-
-        done();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('SE0');
     });
 
 
-    it('search -- perform constraint search for simple input field', async done => {
+    test('search -- perform constraint search for simple input field', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -346,12 +316,10 @@ describe('resources/state --', () => {
 
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
         await waitForNotExist(await ResourcesPage.getListItemEl('S2'));
-
-        done();
     });
 
 
-    it('search -- perform constraint search for dropdown field', async done => {
+    test('search -- perform constraint search for dropdown field', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -368,12 +336,10 @@ describe('resources/state --', () => {
 
         await waitForExist(await ResourcesPage.getListItemEl('SE2'));
         await waitForNotExist(await ResourcesPage.getListItemEl('SE5'));
-
-        done();
     });
 
 
-    it('search -- perform constraint search for boolean field', async done => {
+    test('search -- perform constraint search for boolean field', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -406,12 +372,10 @@ describe('resources/state --', () => {
 
         await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
         await waitForExist(await ResourcesPage.getListItemEl('SE1'));
-
-        done();
     });
 
 
-    it('search -- remove field from dropdown after adding constraint', async done => {
+    test('search -- remove field from dropdown after adding constraint', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -422,12 +386,10 @@ describe('resources/state --', () => {
         await SearchConstraintsPage.clickAddConstraintButton();
 
         await waitForNotExist(await SearchConstraintsPage.getConstraintFieldOption('diary'));
-
-        done();
     });
 
 
-    it('search -- remove constraints after filter category has been deselected', async done => {
+    test('search -- remove constraints after filter category has been deselected', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -442,12 +404,10 @@ describe('resources/state --', () => {
         await SearchBarPage.clickChooseCategoryFilter('all');
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await waitForNotExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
-
-        done();
     });
 
 
-    it('search -- remove constraints if invalid after filter category change', async done => {
+    test('search -- remove constraints if invalid after filter category change', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
@@ -473,22 +433,18 @@ describe('resources/state --', () => {
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('geometry'));
         await waitForNotExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
-
-        done();
     });
 
 
-    it('switch from image to map view after click on depicts relation link', async done => {
+    test('switch from image to map view after click on depicts relation link', async () => {
 
         await createDepictsRelation();
         await clickDepictsRelationLink();
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
-
-        done();
     });
 
 
-    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', async done => {
+    test('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', async () => {
 
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
         await SearchBarPage.clickChooseCategoryFilter('place');
@@ -497,12 +453,10 @@ describe('resources/state --', () => {
         await createDepictsRelation();
         await clickDepictsRelationLink();
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
-
-        done();
     });
 
 
-    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', async done => {
+    test('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', async () => {
 
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
         await SearchBarPage.typeInSearchField('xyz');
@@ -511,21 +465,18 @@ describe('resources/state --', () => {
         await createDepictsRelation();
         await clickDepictsRelationLink();
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
-        const value = await SearchBarPage.getSearchBarInputFieldValue();
-        expect(value).toEqual('');
-
-        done();
+        expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
     });
 
 
-    it('navpath -- show correct navigation path after click on relation link', async done => {
+    test('navpath -- show correct navigation path after click on relation link', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
 
         await ResourcesPage.performCreateResource('c2', 'feature');
         await ResourcesPage.performDescendHierarchy('c2');
         await ResourcesPage.performCreateResource('c3', 'feature');
-        await click((await ResourcesPage.getNavigationButtons())[0]);
+        await click((await ResourcesPage.getNavigationButtons()).nth(0));
 
         await ResourcesPage.performCreateResource('c4', 'feature');
         await ResourcesPage.performDescendHierarchy('c4');
@@ -537,28 +488,25 @@ describe('resources/state --', () => {
         await FieldsViewPage.clickRelation(1, 0);
 
         await waitForExist(await ResourcesPage.getListItemEl('c3'));
-        const text = await ResourcesPage.getSelectedListItemIdentifierText();
-        expect(text).toEqual('c3');
+        expect(await ResourcesPage.getSelectedListItemIdentifierText()).toEqual('c3');
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('c2');
-
-        done();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('c2');
     });
 
 
-    it('navpath -- update navigation path after editing resource', async done => {
+    test('navpath -- update navigation path after editing resource', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('SE0');
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('SE0');
 
         await ResourcesPage.clickOperationNavigationButton();
 
@@ -567,24 +515,22 @@ describe('resources/state --', () => {
         await DoceditPage.clickSaveDocument();
 
         navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('Edit');
-
-        done();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('Edit');
     });
 
 
-    it('navpath -- update navigation path after deleting resource', async done => {
+    test('navpath -- update navigation path after deleting resource', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('SE0');
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('SE0');
 
         await ResourcesPage.clickOperationNavigationButton();
 
@@ -595,14 +541,12 @@ describe('resources/state --', () => {
 
         await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
         navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(1);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-
-        done();
+        expect(await navigationButtons.count()).toBe(1);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
     });
 
 
-    it('navpath - update when moving a resource within the same operation', async done => {
+    test('navpath - update when moving a resource within the same operation', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.performCreateResource('S-New', 'feature');
@@ -615,15 +559,13 @@ describe('resources/state --', () => {
         await waitForNotExist(await ResourcesPage.getMoveModal());
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(2);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-        expect(await getText(navigationButtons[1])).toEqual('S-New');
-
-        done();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        expect(await getText(navigationButtons.nth(1))).toEqual('S-New');
     });
 
 
-    it('navpath - update when moving a resource to another operation', async done => {
+    test('navpath - update when moving a resource to another operation', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.performDescendHierarchy('SE0');
@@ -636,20 +578,18 @@ describe('resources/state --', () => {
         await waitForNotExist(await ResourcesPage.getMoveModal());
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(1);
-        expect(await getText(navigationButtons[0])).toEqual('S2');
+        expect(await navigationButtons.count()).toBe(1);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S2');
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
         navigationButtons = await ResourcesPage.getNavigationButtons();
-        expect(navigationButtons.length).toBe(1);
-        expect(await getText(navigationButtons[0])).toEqual('S1');
-
-        done();
+        expect(await navigationButtons.count()).toBe(1);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
     });
 
 
-    it('navpath/hierarchy - switch between modes', async done => {
+    test('navpath/hierarchy - switch between modes', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
 
@@ -659,7 +599,5 @@ describe('resources/state --', () => {
         await ResourcesPage.clickSwitchHierarchyMode();
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
         expect(await ResourcesPage.getListItemIdentifierText(1)).toEqual('testf1');
-
-        done();
     });
 });

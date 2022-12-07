@@ -1,4 +1,4 @@
-import { click, getElement, getElements, getText, getValue, typeIn, waitForExist } from '../app';
+import { click, getLocator, getText, getValue, typeIn, waitForExist } from '../app';
 
 
 export type SearchBarContext = 'resources'|'images'|'modal';
@@ -22,7 +22,7 @@ export class SearchBarPage {
 
         const element = await SearchBarPage.getSelectedCategoryFilterButton(context);
         await waitForExist(element);
-        return getText(await element.$('.character'));
+        return getText(await element.locator('.character'));
     }
 
 
@@ -61,26 +61,26 @@ export class SearchBarPage {
     private static getFilterButton(context: SearchBarContext) {
 
         const prefix: string = context !== 'modal' ? context + '-search-bar-' : '';
-        return getElement('#' + prefix + 'filter-button');
+        return getLocator('#' + prefix + 'filter-button');
     }
 
 
     private static async getSelectedCategoryFilterButton(context: SearchBarContext) {
 
         const filterButtonElement = await this.getFilterButton(context);
-        return filterButtonElement.$('category-icon');
+        return filterButtonElement.locator('category-icon');
     }
 
 
     private static getSearchBarInputField() {
 
-        return getElement('.search-bar-input');
+        return getLocator('.search-bar-input');
     }
 
 
     public static async getCategoryFilterOptionLabels() {
 
         await waitForExist('.category-picker');
-        return getElements('.category-label');
+        return getLocator('.category-label');
     }
 }

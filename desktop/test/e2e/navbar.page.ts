@@ -1,4 +1,4 @@
-import { click, getElements, waitForExist, getText, getElement } from './app';
+import { click, getLocator, waitForExist, getText } from './app';
 
 
 export class NavbarPage {
@@ -32,17 +32,17 @@ export class NavbarPage {
     public static async clickSelectProject(option) {
 
         await waitForExist('#projectSelectBox');
-        const element = (await getElements('#projectSelectBox option'))[option];
+        const element = (await getLocator('#projectSelectBox option')).nth(option);
         return click(element);
     }
 
 
     public static async clickCloseAllMessages() {
 
-        await waitForExist('.alert button');
-        const elements = await getElements('.alert button');
-        for (let element of elements) {
-            await click(element);
+        await waitForExist((await getLocator('.alert button')).nth(0));
+        const elements = await getLocator('.alert button');
+        for (let i = 0; i < await elements.count(); i++) {
+            await elements.nth(i).click();
         }
     }
 
@@ -52,9 +52,9 @@ export class NavbarPage {
     public static awaitAlert(text: string, matchExactly: boolean = true) {
 
         if (matchExactly) {
-            return waitForExist("//span[@class='message-content' and normalize-space(text())='"+text+"']");
+            return waitForExist("//span[@class='message-content' and normalize-space(text())='" + text + "']");
         } else {
-            return waitForExist("//span[@class='message-content' and contains(text(),'"+text+"')]");
+            return waitForExist("//span[@class='message-content' and contains(text(),'" + text + "')]");
         }
     };
 
@@ -63,7 +63,7 @@ export class NavbarPage {
 
     public static getTab(routeName: string, resourceIdentifier?: string) {
 
-        return getElement('#navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : ''));
+        return getLocator('#navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : ''));
     }
 
 

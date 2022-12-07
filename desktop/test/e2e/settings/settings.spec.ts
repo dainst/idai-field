@@ -4,6 +4,7 @@ import { SettingsPage } from './settings.page';
 import { ImageOverviewPage } from '../images/image-overview.page';
 import { ImageViewPage } from '../images/image-view.page';
 
+const { test } = require('@playwright/test');
 const path = require('path');
 
 
@@ -11,38 +12,34 @@ const path = require('path');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('settings --', function() {
+test.describe('settings --', function() {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
-        done();
     });
 
 
-    afterEach(async done => {
+    test.afterEach(async () => {
 
         await resetConfigJson();
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
-    it('show warnings if an invalid imagestore path is set', async done => {
+    test('show warnings if an invalid imagestore path is set', async () => {
 
         await SettingsPage.clickOpenAdvancedSettings();
         await typeIn(await SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
@@ -51,7 +48,7 @@ describe('settings --', function() {
         await NavbarPage.clickCloseAllMessages();
 
         await navigateTo('images');
-        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../../test-data/logo.png'));
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/logo.png'));
         await NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         await NavbarPage.clickCloseAllMessages();
 
@@ -64,7 +61,5 @@ describe('settings --', function() {
         await ImageOverviewPage.clickDeleteButton();
         await ImageOverviewPage.clickConfirmDeleteButton();
         await NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
-
-        done();
     });
 });

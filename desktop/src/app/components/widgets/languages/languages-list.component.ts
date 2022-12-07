@@ -29,7 +29,7 @@ export class LanguagesListComponent {
 
         this.onModalToggled.emit(true);
 
-        const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent);
+        const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent, { animation: false });
         modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
             this.languages, this.selectedLanguages
         );

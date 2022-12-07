@@ -4,8 +4,9 @@
 
 .language-picker-modal-body {
   .list-group {
-    max-height: 400px;
+    max-height: 406px;
     border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0;
     overflow-y: auto;
 
     .list-group-item {

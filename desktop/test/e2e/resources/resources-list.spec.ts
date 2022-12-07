@@ -4,17 +4,18 @@ import { ResourcesPage } from './resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 
+const { test, expect } = require('@playwright/test');
 
-describe('resources/list --', () => {
 
-    beforeAll(async done => {
+test.describe('resources/list --', () => {
+
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
@@ -22,33 +23,25 @@ describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickListModeButton();
-
-        done();
     });
 
 
-    afterAll(async done => {
-
-        // TODO This can be deleted if we keep stopping the application after each test suite
-        await ResourcesPage.clickMapModeButton();
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
-   it('show newly created resource in list view', async done => {
+   test('show newly created resource in list view', async () => {
 
         await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
 
         const inputValue = await ResourcesPage.getListModeInputFieldValue('1', 0);
         expect(inputValue).toEqual('1');
-
-        done();
     });
 
 
-    it('save changes on input field blur', async done => {
+    test('save changes on input field blur', async () => {
 
         await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
@@ -61,14 +54,11 @@ describe('resources/list --', () => {
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('1', 'info');
 
-        const categoryLabel = await FieldsViewPage.getFieldValue(0, 1);
-        expect(categoryLabel).toEqual('Changed resource 1');
-
-        done();
+        expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('Changed resource 1');
     });
 
 
-    it('navigate to child item view in list mode and create a new child object', async done => {
+    test('navigate to child item view in list mode and create a new child object', async () => {
 
         await ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
         await ResourcesPage.clickHierarchyButton('5');
@@ -76,14 +66,11 @@ describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
 
-        const inputValue = await ResourcesPage.getListModeInputFieldValue('child1', 0);
-        expect(inputValue).toEqual('child1');
-
-        done();
+        expect(await ResourcesPage.getListModeInputFieldValue('child1', 0)).toEqual('child1');
     });
 
 
-    it('restore identifier from database if a duplicate identifier is typed in', async done => {
+    test('restore identifier from database if a duplicate identifier is typed in', async () => {
 
         await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
@@ -93,55 +80,58 @@ describe('resources/list --', () => {
         await click(await ResourcesPage.getListModeInputField('3', 0));
 
         expect(await NavbarPage.getMessageText()).toContain('existiert bereits');
-
-        const inputValue = await ResourcesPage.getListModeInputFieldValue('2', 0);
-        expect(inputValue).toEqual('2');
+        expect(await ResourcesPage.getListModeInputFieldValue('2', 0)).toEqual('2');
 
         await NavbarPage.clickCloseAllMessages();
-
-        done();
     });
 
 
-    it('edit a resource via editor modal', async done => {
+    test('restore identifier from database if an empty string is typed in as identifier', async () => {
+
+        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
+
+        await ResourcesPage.typeInListModeInputField('1', 0, '');
+        await click(await ResourcesPage.getListModeInputField('2', 0));
+        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+
+        await ResourcesPage.typeInListModeInputField('1', 0, '  ');
+        await click(await ResourcesPage.getListModeInputField('2', 0));
+        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+    });
+
+
+    test('edit a resource via editor modal', async () => {
 
         await ResourcesPage.clickListEditButton('SE0');
         await DoceditPage.typeInInputField('shortDescription', 'Test');
         await DoceditPage.clickSaveDocument();
-        let inputValue = await ResourcesPage.getListModeInputFieldValue('SE0', 0);
-        expect(inputValue).toEqual('SE0');
-        inputValue = await ResourcesPage.getListModeInputFieldValue('SE0', 1);
-        expect(inputValue).toEqual('Test'); 
 
-        done();
+        expect(await ResourcesPage.getListModeInputFieldValue('SE0', 0)).toEqual('SE0');
+        expect(await ResourcesPage.getListModeInputFieldValue('SE0', 1)).toEqual('Test');
     });
 
 
-    it('move a resource', async done => {
+    test('move a resource', async () => {
 
         await ResourcesPage.clickListMoveButton('SE0');
         await ResourcesPage.typeInMoveModalSearchBarInput('S2');
         await ResourcesPage.clickResourceListItemInMoveModal('S2');
         await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        const label = await NavbarPage.getActiveNavLinkLabel();
-        expect(label).toContain('S2');
+        expect(await NavbarPage.getActiveNavLinkLabel()).toContain('S2');
         
         const rows = await ResourcesPage.getListRows();
-        expect(rows.length).toBe(7);
-
-        done();
+        expect(await rows.count()).toBe(7);
     });
 
 
-    it('delete a resource', async done => {
+    test('delete a resource', async () => {
 
         await waitForExist(await ResourcesPage.getListItemEl('SE0'));
         await ResourcesPage.clickListDeleteButton('SE0');
         await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
         await ResourcesPage.clickConfirmDeleteInModal();
         await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
-
-        done();
     });
 });

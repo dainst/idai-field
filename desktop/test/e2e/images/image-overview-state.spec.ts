@@ -3,45 +3,44 @@ import { ImageOverviewPage } from './image-overview.page';
 import { NavbarPage } from '../navbar.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 
+const { test, expect } = require('@playwright/test');
+
 
 /**
  * @author Thomas Kleinke
  */
-describe('images/state --', () => {
+test.describe('images/state --', () => {
 
-    beforeAll(async done => {
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
         await navigateTo('images');
         await ImageOverviewPage.waitForCells();
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
-    it('autoselect last selected category filter after returning to image overview', async done => {
+    test('autoselect last selected category filter after returning to image overview', async () => {
 
         let cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(2);
+        expect(await cells.count()).toBe(2);
 
         await SearchBarPage.clickChooseCategoryFilter('image-drawing', 'images');
         await pause(1000);
         cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(1);
+        expect(await cells.count()).toBe(1);
 
         await NavbarPage.clickCloseNonResourcesTab();
         await navigateTo('images');
@@ -51,21 +50,19 @@ describe('images/state --', () => {
         expect(value).toEqual('Z');
 
         cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(1);
-
-        done();
+        expect(await cells.count()).toBe(1);
     });
 
 
-    it('restore query string after returning to image overview', async done => {
+    test('restore query string after returning to image overview', async () => {
 
         let cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(2);
+        expect(await cells.count()).toBe(2);
 
         await SearchBarPage.typeInSearchField('Layer 1');
         await pause(1000);
         cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(1);
+        expect(await cells.count()).toBe(1);
 
         await NavbarPage.clickCloseNonResourcesTab();
         await navigateTo('images');
@@ -75,25 +72,19 @@ describe('images/state --', () => {
         expect(value).toEqual('Layer 1');
 
         cells = await ImageOverviewPage.getAllCells();
-        expect(cells.length).toBe(1);
-
-        done();
+        expect(await cells.count()).toBe(1);
     });
 
 
-    it('restore grid size after returning to image overview', async done => {
+    test('restore grid size after returning to image overview', async () => {
 
         await ImageOverviewPage.clickIncreaseGridSizeButton();
-        let value = await ImageOverviewPage.getGridSizeSliderValue();
-        expect(value).toEqual('5');
+        expect(await ImageOverviewPage.getGridSizeSliderValue()).toEqual('5');
 
         await NavbarPage.clickCloseNonResourcesTab();
         await navigateTo('images');
         await pause(1000);
 
-        value = await ImageOverviewPage.getGridSizeSliderValue();
-        expect(value).toEqual('5');
-
-        done();
+        expect(await ImageOverviewPage.getGridSizeSliderValue()).toEqual('5');
     });
 });

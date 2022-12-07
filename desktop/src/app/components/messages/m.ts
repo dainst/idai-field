@@ -23,10 +23,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // App Package
     public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
+    public static APP_RESET_SUCCESS = 'app.resetAppSuccess';
 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
+
+    // Projects Package
+    public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
 
     // Model Package
     public static MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS = 'model.validation.error.identifierExists';
@@ -306,12 +310,30 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.PROJECTS_DELETE_SUCCESS] = {
+            content: i18n({
+                id: 'messages.projects.deleteSuccess',
+                value: 'Das Projekt "[0]" wurde erfolgreich gelöscht.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.APP_ERROR_GENERIC_SAVE_ERROR] = {
             content: i18n({
                 id: 'messages.app.error.genericSaveError',
                 value: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.APP_RESET_SUCCESS] = {
+            content: i18n({
+                id: 'messages.app.resetSuccess',
+                value: 'Die Anwendung wurde erfolgreich zurückgesetzt.'
+            }),
+            level: 'success',
             params: [],
             hidden: false
         };

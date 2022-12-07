@@ -1,33 +1,33 @@
-import { click, clickWithControlKey, clickWithShiftKey, getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { click, clickWithControlKey, clickWithShiftKey, getText, navigateTo, resetApp, start, stop,
+    waitForExist, waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 
+const { test, expect } = require('@playwright/test');
 
-describe('resources/multi-select --', () => {
 
-    beforeAll(async done => {
+test.describe('resources/multi-select --', () => {
+
+    test.beforeAll(async () => {
 
         await start();
-        done();
     });
 
 
-    beforeEach(async done => {
+    test.beforeEach(async () => {
 
         await navigateTo('settings');
         await resetApp();
         await NavbarPage.clickCloseNonResourcesTab();
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
-        done();
     });
 
 
-    afterAll(async done => {
+    test.afterAll(async () => {
 
         await stop();
-        done();
     });
 
 
@@ -75,30 +75,26 @@ describe('resources/multi-select --', () => {
     };
 
 
-    it('delete multiple resources with control key selection', async done => {
+    test('delete multiple resources with control key selection', async () => {
 
         await createResources();
         await click(await ResourcesPage.getListItemEl('3'));
         await clickWithControlKey(await ResourcesPage.getListItemEl('2'));
         await clickWithControlKey(await ResourcesPage.getListItemEl('1'));
         await testDeletingResources();
-
-        done();
     });
 
 
-    it('delete multiple resources with shift key selection', async done => {
+    test('delete multiple resources with shift key selection', async () => {
 
         await createResources();
         await click(await ResourcesPage.getListItemEl('1'));
         await clickWithShiftKey(await ResourcesPage.getListItemEl('3'));
         await testDeletingResources();
-
-        done();
     });
 
 
-    it('delete multiple resources on different hierarchy levels', async done => {
+    test('delete multiple resources on different hierarchy levels', async () => {
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickSwitchHierarchyMode();
@@ -117,23 +113,19 @@ describe('resources/multi-select --', () => {
         await waitForNotExist(await ResourcesPage.getListItemEl('PQ1'));
         await waitForNotExist(await ResourcesPage.getListItemEl('PQ1-ST1'));
         await waitForNotExist(await ResourcesPage.getListItemEl('PQ2'));
-
-        done();
     });
 
 
-    it('move multiple resources', async done => {
+    test('move multiple resources', async () => {
 
         await createResources();
         await click(await ResourcesPage.getListItemEl('1'));
         await clickWithShiftKey(await ResourcesPage.getListItemEl('3'));
         await testMovingResources();
-
-        done();
     });
 
 
-    it('show correct target categories when moving multiple resources in overview search', async done => {
+    test('show correct target categories when moving multiple resources in overview search', async () => {
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.performCreateResource('O1', 'place');
@@ -146,9 +138,9 @@ describe('resources/multi-select --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickCategoryFilterButton('modal');
         let labels = await SearchBarPage.getCategoryFilterOptionLabels();
-        expect(labels.length).toBe(2);
-        expect(await getText(labels[0])).toEqual('Projekt');
-        expect(await getText(labels[1])).toEqual('Ort');
+        expect(await labels.count()).toBe(2);
+        expect(await getText(labels.nth(0))).toEqual('Projekt');
+        expect(await getText(labels.nth(1))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
         await ResourcesPage.clickCancelInMoveModal();
@@ -159,8 +151,8 @@ describe('resources/multi-select --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickCategoryFilterButton('modal');
         labels = await SearchBarPage.getCategoryFilterOptionLabels();
-        expect(labels.length).toBe(1);
-        expect(await getText(labels[0])).toEqual('Ort');
+        expect(await labels.count()).toBe(1);
+        expect(await getText(labels.nth(0))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
         await ResourcesPage.clickCancelInMoveModal();
@@ -168,7 +160,5 @@ describe('resources/multi-select --', () => {
         await clickWithShiftKey(await ResourcesPage.getListItemEl('SE0'));
         await ResourcesPage.clickOpenContextMenu('SE0');
         await waitForNotExist(await ResourcesPage.getContextMenuMoveButton());
-
-        done();
     });
 });

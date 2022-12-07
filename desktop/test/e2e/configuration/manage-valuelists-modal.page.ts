@@ -1,4 +1,4 @@
-import { click, getElement, rightClick, typeIn } from '../app';
+import { click, getLocator, rightClick, typeIn } from '../app';
 
 
 /**
@@ -72,7 +72,7 @@ export class ManageValuelistsModalPage {
 
     public static getSelectValuelistButton(valuelistId: string) {
 
-        return getElement('#valuelist-' + valuelistId.replace(':', '-'));
+        return getLocator('#valuelist-' + valuelistId.replace(':', '-'));
     }
 
 

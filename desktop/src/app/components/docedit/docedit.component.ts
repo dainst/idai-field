@@ -137,7 +137,7 @@ export class DoceditComponent {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                DuplicateModalComponent, { keyboard: false }
+                DuplicateModalComponent, { keyboard: false, animation: false }
             );
             modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
             numberOfDuplicates = await modalRef.result;
@@ -254,7 +254,7 @@ export class DoceditComponent {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                EditSaveDialogComponent, { keyboard: false }
+                EditSaveDialogComponent, { keyboard: false, animation: false }
             );
             modalRef.componentInstance.changeMessage = this.i18n({
                 id: 'docedit.saveModal.resourceChanged', value: 'Die Ressource wurde geändert.'
@@ -327,7 +327,7 @@ export class DoceditComponent {
         try {
             await this.modalService.open(
                 ConflictDeletedModalComponent,
-                { windowClass: 'conflict-deleted-modal', keyboard: false }
+                { windowClass: 'conflict-deleted-modal', keyboard: false, animation: false }
             ).result;
         } catch(err) {
             // ConflictDeletedModal has been canceled

@@ -41,6 +41,7 @@ export default function LoginForm({ onLogin }: { onLogin: (_: LoginData) => void
                                     <Form.Control
                                         type="text"
                                         placeholder={ t('login.userName') }
+                                        autoComplete="username"
                                         onChange={ e => setUser(e.target.value) } />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
@@ -48,6 +49,7 @@ export default function LoginForm({ onLogin }: { onLogin: (_: LoginData) => void
                                     <Form.Control
                                         type="password"
                                         placeholder={ t('login.password') }
+                                        autoComplete="current-password"
                                         onChange={ e => setPassword(e.target.value) } />
                                 </Form.Group>
                                 <Button variant="primary" type="submit">

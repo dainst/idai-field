@@ -1,4 +1,4 @@
-import { click, getElement, typeIn } from '../app';
+import { click, getLocator, typeIn } from '../app';
 
 
 /**
@@ -30,7 +30,7 @@ export class AddFieldModalPage {
 
     public static getSelectFieldButton(fieldName: string) {
 
-        return getElement('#select-field-' + fieldName);
+        return getLocator('#select-field-' + fieldName);
     }
 
 

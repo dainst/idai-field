@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Messages } from './messages/messages';
@@ -6,9 +6,9 @@ import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
 import { Settings } from '../services/settings/settings';
 import { MenuNavigator } from './menu-navigator';
-import {UtilTranslations} from '../util/util-translations';
-import {AppController} from '../services/app-controller';
-import {ImageUrlMaker} from '../services/imagestore/image-url-maker';
+import { UtilTranslations } from '../util/util-translations';
+import { AppController } from '../services/app-controller';
+import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -29,17 +29,16 @@ export class AppComponent {
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     constructor(router: Router,
-                private messages: Messages,
-                private renderer: Renderer2,
-                private menuNavigator: MenuNavigator,
-                private i18n: I18n,
-                private utilTranslations: UtilTranslations,
-                private settingsProvider: SettingsProvider,
-                private changeDetectorRef: ChangeDetectorRef,
+                menuNavigator: MenuNavigator,
                 appController: AppController,
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
-                settingsService: SettingsService) {
+                settingsService: SettingsService,
+                private messages: Messages,
+                private i18n: I18n,
+                private utilTranslations: UtilTranslations,
+                private settingsProvider: SettingsProvider,
+                private changeDetectorRef: ChangeDetectorRef) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -55,7 +54,7 @@ export class AppComponent {
         });
 
         settingsService.setupSync();
-        appController.setupServer();
+        appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
 

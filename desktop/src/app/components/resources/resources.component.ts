@@ -179,7 +179,7 @@ export class ResourcesComponent implements OnDestroy {
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
+        const modalRef = this.modalService.open(MoveModalComponent, { keyboard: false, animation: false });
         modalRef.componentInstance.initialize(documents);
 
         try {

@@ -1,12 +1,16 @@
 category-picker {
-  .category-picker.dragging {
-    cursor: grabbing !important;
-
-    .list-group-item {
+  .category-picker {
+    border-radius: 0;
+    
+    &.dragging {
       cursor: grabbing !important;
 
-      .mdi-drag {
+      .list-group-item {
         cursor: grabbing !important;
+
+        .mdi-drag {
+          cursor: grabbing !important;
+        }
       }
     }
   }

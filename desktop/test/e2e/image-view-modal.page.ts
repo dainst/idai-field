@@ -1,4 +1,4 @@
-import { click, getElements, waitForExist } from './app';
+import { click, getLocator, waitForExist, waitForNotExist } from './app';
 
 
 export namespace ImageViewModalPage {
@@ -21,20 +21,21 @@ export namespace ImageViewModalPage {
     }
 
 
-    export function waitForCells() {
+    export async function waitForCells() {
 
-        return waitForExist('.cell');
+        return waitForExist((await getLocator('.cell')).nth(0));
     }
 
 
-    export function clickDeleteImages() {
+    export async function clickDeleteImages() {
 
-        return click('#delete-images');
+        await click('#delete-images');
+        return waitForNotExist('#saving-changes-modal');
     }
 
 
     export function getCells() {
 
-        return getElements('.cell');
+        return getLocator('.cell');
     }
 }

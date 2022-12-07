@@ -1,4 +1,4 @@
-import { click, getElement, selectOption, typeIn } from '../app';
+import { click, getLocator, selectOption, typeIn } from '../app';
 
 
 /**
@@ -54,13 +54,13 @@ export class SearchConstraintsPage {
 
     public static getConstraintFieldOption(fieldName: string) {
 
-        return getElement('#constraint-field-select-option-' + fieldName);
+        return getLocator('#constraint-field-select-option-' + fieldName);
     }
 
 
     public static getRemoveConstraintButton(fieldName: string) {
 
-        return getElement('#remove-constraint-button-' + fieldName);
+        return getLocator('#remove-constraint-button-' + fieldName);
     }
 
 

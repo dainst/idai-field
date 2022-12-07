@@ -78,7 +78,7 @@ export class DownloadProjectComponent {
 
         const progressModalRef: NgbModalRef = this.modalService.open(
             DownloadProjectProgressModalComponent,
-            { backdrop: 'static', keyboard: false }
+            { backdrop: 'static', keyboard: false, animation: false }
         );
 
         progressModalRef.componentInstance.databaseProgressPercent = 0;

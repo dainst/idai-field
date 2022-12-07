@@ -86,7 +86,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
         if (this.selected.length !== 1) return;
 
         const savingChangesModal = this.modalService.open(
-            SavingChangesModal, { backdrop: 'static', keyboard: false }
+            SavingChangesModal, { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {
@@ -131,7 +131,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public async removeLinks() {
 
         const savingChangesModal = this.modalService.open(
-            SavingChangesModal, { backdrop: 'static', keyboard: false }
+            SavingChangesModal, { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {
@@ -162,7 +162,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public async startEditImages() {
 
         const imagePickerModal = this.modalService.open(
-            ImagePickerComponent, { size: 'lg', keyboard: false }
+            ImagePickerComponent, { size: 'lg', keyboard: false, animation: false }
         );
         imagePickerModal.componentInstance.mode = 'depicts';
         imagePickerModal.componentInstance.setDocument(this.linkedDocument);
@@ -178,7 +178,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
     private async saveChanges(selectedImages: Array<ImageDocument>) {
 
         const savingChangesModal = this.modalService.open(
-            SavingChangesModal, { backdrop: 'static', keyboard: false }
+            SavingChangesModal, { backdrop: 'static', keyboard: false, animation: false }
         );
 
         try {

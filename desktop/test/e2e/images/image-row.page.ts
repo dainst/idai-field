@@ -1,4 +1,4 @@
-import { getElements } from '../app';
+import { getLocator } from '../app';
 
 
 /**
@@ -8,6 +8,6 @@ export module ImageRowPage {
 
     export function getImages() {
 
-        return getElements('.image-container');
+        return getLocator('.image-container');
     }
 }

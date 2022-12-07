@@ -242,9 +242,9 @@ export module ResourcesState {
     }
 
 
-    export function toggleExpandAllGroups(state: ResourcesState) {
+    export function setExpandAllGroups(state: ResourcesState, expandAllGroups: boolean) {
 
-        viewState(state).expandAllGroups = !viewState(state).expandAllGroups;
+        viewState(state).expandAllGroups = expandAllGroups;
     }
 
 

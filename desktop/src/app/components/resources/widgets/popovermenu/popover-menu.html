@@ -5,35 +5,15 @@
     </div>
 
     <div *ngIf="isPopoverMenuOpened('info')" class="popover-menu-page">
-        <div class="popover-menu-header">
-            <div class="btn btn-light left popover-header-button"
-                 [class.active]="getExpandAllGroups()"
-                 (click)="tooltip.close(); toggleExpandAllGroups()"
-                 ngbTooltip="Alle Gruppen ausklappen"
-                 i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-                 #tooltip="ngbTooltip"
-                 placement="right"
-                 container="body"
-                 triggers="manual"
-                 (mouseover)="tooltip.open()"
-                 (mouseleave)="tooltip.close()">
-                <span class="mdi mdi-unfold-more-horizontal"></span>
-            </div>
-            <div id="info-header">{{document.resource.identifier}}</div>
-            <div class="btn btn-light right popover-header-button" (click)="closePopover()">
-                <span class="mdi mdi-close"></span>
-            </div>
-        </div>
-
-        <thumbnail *ngIf="showThumbnail"
-                   [resource]="document.resource"
-                   (onClick)="openImageViewModal()"></thumbnail>
-
-        <div id="document-info" [class.short-document-info]="hasThumbnail(document) && showThumbnail">
-            <fields-view [expandAllGroups]="getExpandAllGroups()"
-                         [resource]="document.resource"
-                         (onJumpToResource)="jumpToResource($event)"
-                         (onSectionToggled)="disableExpandAllGroups()"></fields-view>
-        </div>
+        <document-info [document]="document"
+                       [getExpandAllGroups]="getExpandAllGroups"
+                       [setExpandAllGroups]="setExpandAllGroups"
+                       [showThumbnail]="true"
+                       [showParent]="isInExtendedSearchMode()"
+                       [showCloseButton]="true"
+                       [transparentBackground]="true"
+                       (onJumpToResource)="jumpToResource($event)"
+                       (onThumbnailClicked)="openImageViewModal()"
+                       (onCloseButtonClicked)="closePopover()"></document-info>
     </div>
 </div>

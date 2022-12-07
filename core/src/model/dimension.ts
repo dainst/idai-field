@@ -184,11 +184,11 @@ export module Dimension {
 
         switch (inputUnit) {
             case 'mm':
-                return inputValue * 1000;
+                return Math.round(inputValue * 1000);
             case 'cm':
-                return inputValue * 10000;
+                return Math.round(inputValue * 10000);
             case 'm':
-                return inputValue * 1000000;
+                return Math.round(inputValue * 1000000);
             default:
                 return inputValue;
         }

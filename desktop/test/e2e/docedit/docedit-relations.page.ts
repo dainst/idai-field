@@ -1,4 +1,4 @@
-import { click, getElements, getElement, typeIn, pause } from '../app';
+import { click, getLocator, typeIn, pause } from '../app';
 import { DoceditPage } from './docedit.page';
 
 
@@ -12,7 +12,7 @@ export class DoceditRelationsPage {
 
     public static async clickChooseRelationSuggestion(suggestionIndex) {
 
-        const element = (await getElements('.suggestion'))[suggestionIndex];
+        const element = (await getLocator('.suggestion')).nth(suggestionIndex);
         return click(element);
     };
 
@@ -26,7 +26,7 @@ export class DoceditRelationsPage {
     public static async clickRelationDeleteButtonByIndices(relationName, pickerIndex = 0) {
 
         const element = await this.getRelationElementByName(relationName, pickerIndex);
-        return click(await element.$('.delete-relation'));
+        return click(await element.locator('.delete-relation'));
     };
 
 
@@ -36,7 +36,7 @@ export class DoceditRelationsPage {
 
         await DoceditPage.clickGotoTimeTab();
         const element = await this.getRelationElementByName(relationName, pickerIndex);
-        return (await element.$('.badge')).getText();
+        return (await element.locator('.badge')).textContent();
     };
 
 
@@ -44,8 +44,8 @@ export class DoceditRelationsPage {
 
     public static async getRelationElementByName(relationName, pickerIndex) {
 
-        const relationPickerGroupElement = await getElement('#edit-form-element-' + relationName);
-        return (await relationPickerGroupElement.$$('#relation-picker'))[pickerIndex];
+        const relationPickerGroupElement = await getLocator('#edit-form-element-' + relationName);
+        return (await relationPickerGroupElement.locator('#relation-picker')).nth(pickerIndex);
     };
 
 

@@ -43,7 +43,7 @@ export class TypeRelationComponent implements OnChanges {
         this.menuService.setContext(MenuContext.MODAL);
 
         const typeRelationPicker: NgbModalRef = this.modalService.open(
-            TypeRelationPickerComponent, { size: 'lg', keyboard: false }
+            TypeRelationPickerComponent, { size: 'lg', keyboard: false, animation: false }
         );
         await typeRelationPicker.componentInstance.setResource(this.resource);
 

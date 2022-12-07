@@ -297,7 +297,7 @@ export class ExportComponent implements OnInit {
             if (this.running) {
                 this.modalRef = this.modalService.open(
                     ExportModalComponent,
-                    { backdrop: 'static', keyboard: false }
+                    { backdrop: 'static', keyboard: false, animation: false }
                 );
             }
         }, ExportComponent.TIMEOUT);

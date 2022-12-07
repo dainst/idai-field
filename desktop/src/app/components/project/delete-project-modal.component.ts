@@ -66,6 +66,7 @@ export class DeleteProjectModalComponent {
         if (!this.canDeleteProject()) return;
 
         this.deleting = true;
+        const isCurrentProject: boolean = this.projectName === this.settingsProvider.getSettings().selectedProject;
 
         try {
             await this.stateSerializer.delete('resources-state');
@@ -78,7 +79,12 @@ export class DeleteProjectModalComponent {
 
         await this.settingsService.deleteProject(this.projectName, this.deleteFiles);
 
-        reloadAndSwitchToHomeRoute();
+        if (isCurrentProject) {
+            reloadAndSwitchToHomeRoute();
+        } else {
+            this.messages.add([M.PROJECTS_DELETE_SUCCESS, this.projectName]);
+            this.activeModal.close();
+        }
     }
 
 

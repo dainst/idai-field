@@ -1,4 +1,4 @@
-import { click, getElement, getElements, getText, rightClick, typeIn, waitForNotExist } from '../app';
+import { click, getLocator, getText, rightClick, typeIn, waitForNotExist } from '../app';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 
@@ -87,25 +87,25 @@ export class ConfigurationPage {
 
     public static getGroup(groupName: string) {
 
-        return getElement('#group-' + groupName.replace(':', '-'));
+        return getLocator('#group-' + groupName.replace(':', '-'));
     }
 
 
     public static getFields() {
 
-        return getElements('configuration-field');
+        return getLocator('configuration-field');
     }
 
     
     public static getField(fieldName: string) {
 
-        return getElement('#field-' + fieldName.replace(':', '-'));
+        return getLocator('#field-' + fieldName.replace(':', '-'));
     }
 
 
     public static getCategory(categoryName: string) {
 
-        return getElement('#category-' + categoryName.replace(':', '-'));
+        return getLocator('#category-' + categoryName.replace(':', '-'));
     }
 
 
@@ -113,8 +113,8 @@ export class ConfigurationPage {
 
     public static async getValue(index: number) {
 
-        const elements = await getElements('configuration-field valuelist-view code');
-        return getText(elements[index]);
+        const elements = await getLocator('configuration-field valuelist-view code');
+        return getText(elements.nth(index));
     }
 
 

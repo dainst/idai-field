@@ -81,6 +81,7 @@ export class PlusButtonComponent implements OnChanges {
 
         const newDocument: FieldDocument = <FieldDocument> {
             resource: {
+                identifier: '',
                 relations: this.createRelations(),
                 category: this.selectedCategory
             }

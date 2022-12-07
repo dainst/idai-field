@@ -1,4 +1,4 @@
-import { click, getElements, getText, selectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectOption, typeIn } from '../app';
 
 
 /**
@@ -10,22 +10,22 @@ export class EditConfigurationPage {
 
     public static async clickSelectLanguage(inputIndex: number, languageCode: string) {
 
-        const element = (await getElements('multi-language-input .language-select'))[inputIndex];
+        const element = (await getLocator('multi-language-input .language-select')).nth(inputIndex);
         return selectOption(element, languageCode);
     }
 
 
     public static async clickAddLanguage(inputIndex: number) {
 
-        const element = (await getElements('multi-language-input .btn-success'))[inputIndex];
+        const element = (await getLocator('multi-language-input .btn-success')).nth(inputIndex);
         return click(element);
     }
 
 
     public static async clickResetTranslation(inputIndex: number, translationIndex: number) {
 
-        const inputElement = (await getElements('multi-language-input'))[inputIndex];
-        const translationElement = (await inputElement.$$('.restore-button'))[translationIndex];
+        const inputElement = (await getLocator('multi-language-input')).nth(inputIndex);
+        const translationElement = (await inputElement.locator('.restore-button')).nth(translationIndex);
         return click(translationElement);
     }
 
@@ -88,8 +88,8 @@ export class EditConfigurationPage {
 
     public static async getValue(index: number) {
 
-        const elements = await getElements('#field-editor-valuelist-section valuelist-view code');
-        return getText(elements[index]);
+        const elements = await getLocator('#field-editor-valuelist-section valuelist-view code');
+        return getText(elements.nth(index));
     }
 
 
@@ -97,8 +97,8 @@ export class EditConfigurationPage {
 
     public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string) {
 
-        const inputElement = (await getElements('multi-language-input'))[inputIndex];
-        const translationElement = (await inputElement.$$('.language-input input'))[translationIndex];
+        const inputElement = (await getLocator('multi-language-input')).nth(inputIndex);
+        const translationElement = (await inputElement.locator('.language-input input')).nth(translationIndex);
         return typeIn(translationElement, text);
     }
 

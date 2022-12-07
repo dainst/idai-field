@@ -1,4 +1,4 @@
-import { click, waitForExist, getElement, getElements } from '../app';
+import { click, waitForExist, getLocator } from '../app';
 
 
 /**
@@ -66,49 +66,49 @@ export class MatrixPage {
 
     public static getSvgRoot() {
 
-        return getElement('<svg />');
+        return getLocator('svg');
     }
 
 
     public static getNodes() {
 
-        return getElements('.node');
+        return getLocator('.node');
     }
 
 
     public static getNode(id: string) {
 
-        return getElement('#node-' + id);
+        return getLocator('#node-' + id);
     }
 
 
     public static getEdges() {
 
-        return getElements('.edge');
+        return getLocator('.edge');
     }
 
 
     public static getAboveEdge(aboveId: string, belowId: string) {
 
-        return getElement('.edge.above-' + aboveId + '.below-' + belowId);
+        return getLocator('.edge.above-' + aboveId + '.below-' + belowId);
     }
 
 
     public static getSameRankEdge(sameRankId1: string, sameRankId2: string) {
 
-        return getElement('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2);
+        return getLocator('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2);
     }
 
 
     public static getClusters() {
 
-        return getElements('.cluster');
+        return getLocator('.cluster');
     }
 
 
     public static getSelectedNodes() {
 
-        return getElements('.node .selected');
+        return getLocator('.node .selected');
     }
 
 
@@ -117,20 +117,20 @@ export class MatrixPage {
         await waitForExist('.dropdown');
         await click('.dropdown');
         await waitForExist('.dropdown .dropdown-menu');
-        await click((await getElements('.dropdown .dropdown-menu button'))[index]);
+        await click((await getLocator('.dropdown .dropdown-menu button')).nth(index));
     }
 
 
     public static async getClearSelectionButton() {
 
         await waitForExist('#clear-selection-button');
-        return getElement('#clear-selection-button');
+        return getLocator('#clear-selection-button');
     }
 
 
     public static async getCreateGraphFromSelectionButton() {
 
         await waitForExist('#create-graph-from-selection-button');
-        return getElement('#create-graph-from-selection-button');
+        return getLocator('#create-graph-from-selection-button');
     }
 }

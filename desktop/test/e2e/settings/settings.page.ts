@@ -1,4 +1,4 @@
-import { click, getElement } from '../app';
+import { click, getLocator } from '../app';
 
 
 /**
@@ -20,6 +20,6 @@ export class SettingsPage {
 
     public static getImagestorePathInput() {
 
-        return getElement('#imagestorepath-input');
+        return getLocator('#imagestorepath-input');
     };
 }

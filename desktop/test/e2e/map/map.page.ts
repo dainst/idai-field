@@ -1,4 +1,4 @@
-import { click, getElement, getElements, waitForNotExist } from '../app';
+import { click, getLocator, waitForNotExist } from '../app';
 
 
 export class MapPage {
@@ -49,7 +49,7 @@ export class MapPage {
 
     public static getLayerLabels(groupIndex) {
 
-        return getElements('#layer-group-' + groupIndex + ' .layer-menu-drag-handle .layer-menu-label');
+        return getLocator('#layer-group-' + groupIndex + ' .layer-menu-drag-handle .layer-menu-label');
     }
 
 
@@ -61,7 +61,7 @@ export class MapPage {
 
     public static getMapOption(optionName) {
 
-        return getElement('#map-editor-button-' + optionName);
+        return getLocator('#map-editor-button-' + optionName);
     };
 
 

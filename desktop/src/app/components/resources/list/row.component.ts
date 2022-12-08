@@ -167,7 +167,7 @@ export class RowComponent implements AfterViewInit {
                 }
             }
             this.document.resource[fieldName][this.selectedLanguage.code] = newValue;
-        } else {
+        } else if (this.document.resource[fieldName]) {
             delete this.document.resource[fieldName][this.selectedLanguage.code];
             if (isEmpty(this.document.resource[fieldName])) {
                 delete this.document.resource[fieldName];

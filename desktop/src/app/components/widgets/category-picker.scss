@@ -48,7 +48,7 @@ category-picker {
       background-color: darken($list-item-hover-color, 5%) !important;
     }
 
-    &:hover {
+    &:not(.custom-category):hover {
       background-color: #fff;
     }
   }

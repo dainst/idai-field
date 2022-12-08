@@ -119,18 +119,40 @@
       overflow-x: hidden;
 
       category-picker {
+        .category-picker.dragging {
+          .list-group-item:not(.selected-category) .category-item:hover {
+            background-color: #fff !important;
+          }
+
+          .custom-category:not(.selected-category) {
+            .category-item:hover {
+              background-color: $custom-highlight-color !important;
+            }
+          }
+        }
+        .category-picker:not(.dragging) {
+          .category-item:hover {
+            background-color: $list-item-hover-color !important;
+            transition: background-color .5s ease;
+          }
+
+          .custom-category {
+            .category-item:hover {
+              background-color: darken($custom-highlight-color, 5%) !important;
+            }
+          }
+        }
+
         .category-item {
           transition: background-color .25s ease;
         }
 
-        .category-item:hover,
         .selected-category .category-item {
           background-color: $list-item-hover-color !important;
           transition: background-color .5s ease;
         }
 
         .custom-category {
-          .category-item:hover,
           &.selected-category .category-item {
             background-color: darken($custom-highlight-color, 5%) !important;
           }

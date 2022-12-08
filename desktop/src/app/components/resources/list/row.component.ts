@@ -159,7 +159,7 @@ export class RowComponent implements AfterViewInit {
     
     private setValueAsI18NString(fieldName: string, newValue: string, currentValue: string) {
 
-        if (newValue.length > 0) {
+        if (newValue.trim().length > 0) {
             if (!isObject(currentValue)) {
                 this.document.resource[fieldName] = {};
                 if (isString(currentValue)) {

@@ -168,23 +168,23 @@ defmodule FieldHub.CLI do
 
     case project_stats[:files] do
       :enoent ->
-        Logger.warning("No files directory found for #{project_stats[:db_name]}.")
+        Logger.warning("No files directory found for '#{project_stats[:db_name]}'.")
       values ->
         values
         |> Enum.each(fn ({file_type, file_info}) ->
           Logger.info("#{get_file_type_label(file_type)} files: #{file_info[:active]}, size: #{Sizeable.filesize(file_info[:active_size])} (#{file_info[:active_size]} bytes)")
         end)
 
-        difference = values[:thumbnail_image][:active] - values[:original_image][:active]
-        cond do
-          difference < 0 ->
-            Logger.warning("Found #{difference * -1} more original images than thumbnail images.")
-          difference > 0 ->
-            Logger.warning("Found #{difference} more thumbnail images than original images.")
-          true ->
-            :ok
+        missing_thumbnail_images = Enum.count(values[:thumbnail_image][:missing])
+        missing_original_images = Enum.count(values[:original_image][:missing])
+
+        if missing_thumbnail_images > 0 do
+          Logger.warning("Found #{missing_thumbnail_images} original images without corresponding thumbnail images.")
         end
 
+        if missing_original_images > 0 do
+          Logger.warning("Found #{missing_original_images} thumbnail images without corresponding original images.")
+        end
     end
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
   end

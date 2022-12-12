@@ -28,9 +28,61 @@ defmodule FieldHub.Monitoring do
           %File.Error{reason: :enoent} ->
             Map.merge(%{files: :enoent}, db_info)
           file_map ->
-            Map.merge(%{files: summarize_file_info(file_map)}, db_info)
+            summary = summarize_file_info(file_map)
+            inconsistencies = get_image_file_inconsistencies(file_map)
+
+            summary =
+              summary
+              |>Map.update!(:thumbnail_image, fn(val) ->
+                Map.put(val, :missing, inconsistencies[:thumbnail_images_missing])
+              end)
+              |> Map.update!(:original_image, fn(val) ->
+                Map.put(val, :missing, inconsistencies[:original_images_missing])
+            end)
+
+            Map.merge(%{files: summary}, db_info)
         end
     end)
+  end
+
+  defp get_image_file_inconsistencies(file_map) do
+    file_map
+    |> Enum.reduce(
+      %{
+        original_images_missing: [],
+        thumbnail_images_missing: []
+      },
+      fn({uuid, %{deleted: deleted, variants: variants }}, acc) ->
+        case deleted do
+          true ->
+            acc
+          false ->
+            present =
+              variants
+              |> Enum.map(fn(%{name: name}) ->
+                name
+              end)
+
+            acc =
+              if :thumbnail_image not in present and :original_image in present do
+                Map.update!(acc, :thumbnail_images_missing, fn(existing) ->
+                  existing ++ [uuid]
+                end)
+              else
+                acc
+            end
+
+            if :thumbnail_image in present and :original_image not in present do
+              Map.update!(acc, :original_images_missing, fn(existing) ->
+                existing ++ [uuid]
+              end)
+            else
+              acc
+            end
+        end
+      end)
+  end
+
   end
 
   defp summarize_file_info(file_info) do

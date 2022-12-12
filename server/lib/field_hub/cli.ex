@@ -1,7 +1,10 @@
 defmodule FieldHub.CLI do
 
-  alias FieldHub.CouchService
-  alias FieldHub.FileStore
+  alias FieldHub.{
+    CouchService,
+    FileStore,
+    Monitoring
+  }
 
   require Logger
 
@@ -148,6 +151,51 @@ defmodule FieldHub.CLI do
 
     Logger.info("Removing '#{user_name}' from project '#{project}'.")
     CouchService.remove_user_from_project(user_name, project, CouchService.get_admin_credentials())
+  end
+
+  def get_project_statistics() do
+    CouchService.get_admin_credentials()
+    |> Monitoring.statistics()
+    |> Enum.each(&print_statistics/1)
+  end
+
+  defp print_statistics(project_stats) do
+    header = "######### Project '#{project_stats[:db_name]}' #########"
+
+    Logger.info(header)
+    Logger.info("Database documents: #{project_stats[:db_doc_count]}")
+    Logger.info("Database size: #{Sizeable.filesize(project_stats[:db_file_size])} (#{project_stats[:db_file_size]} bytes)")
+
+    case project_stats[:files] do
+      :enoent ->
+        Logger.warning("No files directory found for #{project_stats[:db_name]}.")
+      values ->
+        values
+        |> Enum.each(fn ({file_type, file_info}) ->
+          Logger.info("#{get_file_type_label(file_type)} files: #{file_info[:active]}, size: #{Sizeable.filesize(file_info[:active_size])} (#{file_info[:active_size]} bytes)")
+        end)
+
+        difference = values[:thumbnail_image][:active] - values[:original_image][:active]
+        cond do
+          difference < 0 ->
+            Logger.warning("Found #{difference * -1} more original images than thumbnail images.")
+          difference > 0 ->
+            Logger.warning("Found #{difference} more thumbnail images than original images.")
+          true ->
+            :ok
+        end
+
+    end
+    Logger.info("#{String.duplicate("#", String.length(header))}\n")
+  end
+
+  defp get_file_type_label(type) do
+    case type do
+      :original_image ->
+        "Original image"
+      :thumbnail_image ->
+        "Thumbnail image"
+    end
   end
 
   defp create_password(length) do

@@ -159,6 +159,12 @@ defmodule FieldHub.CLI do
     |> Enum.each(&print_statistics/1)
   end
 
+  def get_project_statistics(project_name) do
+    CouchService.get_admin_credentials()
+    |> Monitoring.detailed_statistics(project_name)
+    |> print_statistics()
+  end
+
   defp print_statistics(project_stats) do
     header = "######### Project '#{project_stats[:db_name]}' #########"
 

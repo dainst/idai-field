@@ -7,42 +7,55 @@ defmodule FieldHub.Monitoring do
 
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
+  def statistics(%CouchService.Credentials{} = credentials, project_name) do
+    credentials
+    |> FieldHub.CouchService.get_db_infos(project_name)
+    |> create_statistics()
+  end
+
   def statistics(%CouchService.Credentials{} = credentials) do
     credentials
     |> FieldHub.CouchService.get_db_infos()
-    |> Enum.map(fn(%{
+    |> Enum.map(&create_statistics/1)
+  end
+
+  defp create_statistics(db_metadata) do
+    with %{
       "db_name" => db_name,
       "doc_count" => db_doc_count,
       "sizes" => %{
         "file" => db_file_size
-      }}) ->
-        %{db_name: db_name, db_doc_count: db_doc_count, db_file_size: db_file_size}
-    end)
-    |> Enum.map(fn(%{db_name: project_name} = db_info) ->
-        try do
-          FieldHub.FileStore.get_file_list(project_name)
-        rescue
-          e -> e
-        end
-        |> case do
-          %File.Error{reason: :enoent} ->
-            Map.merge(%{files: :enoent}, db_info)
-          file_map ->
-            summary = summarize_file_info(file_map)
-            inconsistencies = get_image_file_inconsistencies(file_map)
+      }
+    } <- db_metadata
+    do
+      db_info = %{db_name: db_name, db_doc_count: db_doc_count, db_file_size: db_file_size}
 
-            summary =
-              summary
-              |>Map.update!(:thumbnail_image, fn(val) ->
-                Map.put(val, :missing, inconsistencies[:thumbnail_images_missing])
-              end)
-              |> Map.update!(:original_image, fn(val) ->
-                Map.put(val, :missing, inconsistencies[:original_images_missing])
+      try do
+        FieldHub.FileStore.get_file_list(db_name)
+      rescue
+        e -> e
+      end
+      |> case do
+        %File.Error{reason: :enoent} ->
+          Map.merge(%{files: :enoent}, db_info)
+        file_map ->
+          summary = summarize_file_info(file_map)
+          inconsistencies = get_image_file_inconsistencies(file_map)
+
+          summary =
+            summary
+            |>Map.update!(:thumbnail_image, fn(val) ->
+              Map.put(val, :missing, inconsistencies[:thumbnail_images_missing])
             end)
+            |> Map.update!(:original_image, fn(val) ->
+              Map.put(val, :missing, inconsistencies[:original_images_missing])
+          end)
 
-            Map.merge(%{files: summary}, db_info)
-        end
-    end)
+          Map.merge(%{files: summary}, db_info)
+      end
+    else
+      err -> err
+    end
   end
 
   defp get_image_file_inconsistencies(file_map) do
@@ -83,6 +96,51 @@ defmodule FieldHub.Monitoring do
       end)
   end
 
+  def detailed_statistics(%CouchService.Credentials{} = credentials, project_name) do
+    base_statistics =
+      statistics(credentials, project_name)
+
+    # base_statistics
+    # |> Map.update!(:files, fn({variant_name, %{missing: missing_uuids} = base_stats}) ->
+    #   details =
+    #     CouchService.get_docs(credentials, project_name, missing_uuids)
+    #     |> Enum.map(fn(%{"id" => uuid, "docs" => docs}) ->
+    #       case docs do
+    #         [
+    #           %{
+    #             "ok" => %{
+    #               "created" => %{"date" => created, "user" => user},
+    #               "resource" => %{"identifier" => file_name, "type" => file_type}
+    #             }
+    #           }
+    #         ] ->
+    #           %{
+    #             uuid: uuid,
+    #             created: created,
+    #             user: user,
+    #             file_name: file_name,
+    #             file_type: file_type
+    #           }
+    #         multiple_values ->
+    #           multiple_values
+    #           |> Enum.filter(fn val ->
+    #             case val do
+    #               %{"ok" => %{
+    #                 "_deleted" => true
+    #               }} ->
+    #                 true
+    #               _ ->
+    #                 false
+    #             end
+    #           end)
+    #           |> Enum.count()
+    #         end
+    #       end)
+
+    #   {variant_name, Map.put(base_stats, :missing, details)}
+    #   end)
+
+    base_statistics
   end
 
   defp summarize_file_info(file_info) do

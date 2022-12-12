@@ -228,6 +228,26 @@ defmodule FieldHub.CouchService do
     end
   end
 
+  def get_docs(%Credentials{} = credentials, project_name, uuids) do
+    body =
+      %{
+        docs:
+          uuids
+          |> Enum.map(fn(uuid) ->
+            %{id: uuid}
+          end)
+      }
+      |> Jason.encode!()
+
+    %{ body: body } =
+      HTTPoison.post!(
+        "#{url()}/#{project_name}/_bulk_get",
+        body,
+        headers(credentials)
+      )
+
+    Jason.decode!(body)["results"]
+  end
 
   def get_admin_credentials() do
 

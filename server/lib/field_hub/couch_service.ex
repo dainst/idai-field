@@ -193,6 +193,35 @@ defmodule FieldHub.CouchService do
     }
   end
 
+  def get_db_infos(%Credentials{} = credentials) do
+
+    with %{body: body } <- HTTPoison.get!(
+      "#{url()}/_all_dbs",
+      get_admin_credentials()
+      |> headers()
+    )
+    do
+      body
+      |> Jason.decode!()
+      |> Enum.reject(fn(val) ->
+        val in ["_replicator", "_users"]
+      end)
+      |> Enum.map(&HTTPoison.get!(
+        "#{url()}/#{&1}",
+        headers(credentials)
+      ))
+      |> Enum.filter(fn(%{status_code: status_code}) ->
+        status_code == 200
+      end)
+      |> Enum.map(fn(%{body: body}) ->
+        body
+        |> Jason.decode!()
+      end)
+    else
+      err -> err
+    end
+  end
+
   defp headers(%Credentials{name: user_name, password: user_password}) do
     credentials =
       "#{user_name}:#{user_password}"

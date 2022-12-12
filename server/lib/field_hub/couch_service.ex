@@ -185,6 +185,14 @@ defmodule FieldHub.CouchService do
     )
   end
 
+  def get_admin_credentials() do
+
+    %Credentials{
+      name: Application.get_env(:field_hub, :couchdb_admin_name),
+      password: Application.get_env(:field_hub, :couchdb_admin_password)
+    }
+  end
+
   defp headers(%Credentials{name: user_name, password: user_password}) do
     credentials =
       "#{user_name}:#{user_password}"

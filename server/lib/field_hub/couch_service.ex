@@ -185,12 +185,20 @@ defmodule FieldHub.CouchService do
     )
   end
 
-  def get_admin_credentials() do
-
-    %Credentials{
-      name: Application.get_env(:field_hub, :couchdb_admin_name),
-      password: Application.get_env(:field_hub, :couchdb_admin_password)
-    }
+  def get_db_infos(%Credentials{} = credentials, project_name) do
+      response =
+        HTTPoison.get!(
+          "#{url()}/#{project_name}",
+          headers(credentials)
+        )
+      case response do
+        %{status_code: 200, body: body} ->
+          Jason.decode!(body)
+        %{status_code: 401} ->
+          {:error, 401}
+        %{status_code: 403} ->
+          {:error, 403}
+      end
   end
 
   def get_db_infos(%Credentials{} = credentials) do
@@ -206,20 +214,27 @@ defmodule FieldHub.CouchService do
       |> Enum.reject(fn(val) ->
         val in ["_replicator", "_users"]
       end)
-      |> Enum.map(&HTTPoison.get!(
-        "#{url()}/#{&1}",
-        headers(credentials)
-      ))
-      |> Enum.filter(fn(%{status_code: status_code}) ->
-        status_code == 200
-      end)
-      |> Enum.map(fn(%{body: body}) ->
-        body
-        |> Jason.decode!()
+      |> Enum.map(&get_db_infos(credentials, &1))
+      |> Enum.reject(fn(val) ->
+        case val do
+          {:error, _} ->
+            true
+          _ ->
+            false
+        end
       end)
     else
       err -> err
     end
+  end
+
+
+  def get_admin_credentials() do
+
+    %Credentials{
+      name: Application.get_env(:field_hub, :couchdb_admin_name),
+      password: Application.get_env(:field_hub, :couchdb_admin_password)
+    }
   end
 
   defp headers(%Credentials{name: user_name, password: user_password}) do

@@ -211,10 +211,10 @@ defmodule FieldHub.CLI do
     msg = info[:uuid]
 
     msg =
-    with {:ok, created} <- Map.fetch(info, :created),
-         {:ok, created_by} <- Map.fetch(info, :created_by),
-         {:ok, file_name} <- Map.fetch(info, :file_name),
-         {:ok, file_type} <- Map.fetch(info, :file_type)
+      with {:ok, created} <- Map.fetch(info, :created),
+        {:ok, created_by} <- Map.fetch(info, :created_by),
+        {:ok, file_name} <- Map.fetch(info, :file_name),
+        {:ok, file_type} <- Map.fetch(info, :file_type)
       do
         "#{msg} (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
       else

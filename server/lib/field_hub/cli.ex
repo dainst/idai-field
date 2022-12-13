@@ -186,10 +186,12 @@ defmodule FieldHub.CLI do
 
         if missing_thumbnail_images > 0 do
           Logger.warning("Found #{missing_thumbnail_images} original images without corresponding thumbnail images.")
+          Enum.each(values[:thumbnail_image][:missing], &print_missing_file_info/1)
         end
 
         if missing_original_images > 0 do
           Logger.warning("Found #{missing_original_images} thumbnail images without corresponding original images.")
+          Enum.each(values[:original_image][:missing], &print_missing_file_info/1)
         end
     end
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
@@ -202,6 +204,31 @@ defmodule FieldHub.CLI do
       :thumbnail_image ->
         "Thumbnail image"
     end
+  end
+
+  defp print_missing_file_info(info) do
+
+    msg = info[:uuid]
+
+    msg =
+    with {:ok, created} <- Map.fetch(info, :created),
+         {:ok, created_by} <- Map.fetch(info, :created_by),
+         {:ok, file_name} <- Map.fetch(info, :file_name),
+         {:ok, file_type} <- Map.fetch(info, :file_type)
+      do
+        "#{msg} (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+      else
+        _err ->
+          with {:ok, error} <- Map.fetch(info, :error)
+          do
+            "#{msg}, error: #{error}"
+          else
+            _err ->
+              "#{msg}, no details provided"
+          end
+      end
+
+    Logger.warning(msg)
   end
 
   defp create_password(length) do

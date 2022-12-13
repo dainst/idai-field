@@ -79,7 +79,7 @@ defmodule FieldHub.Monitoring do
             acc =
               if :thumbnail_image not in present and :original_image in present do
                 Map.update!(acc, :thumbnail_images_missing, fn(existing) ->
-                  existing ++ [uuid]
+                  existing ++ [%{uuid: uuid}]
                 end)
               else
                 acc
@@ -87,7 +87,7 @@ defmodule FieldHub.Monitoring do
 
             if :thumbnail_image in present and :original_image not in present do
               Map.update!(acc, :original_images_missing, fn(existing) ->
-                existing ++ [uuid]
+                existing ++ [%{uuid: uuid}]
               end)
             else
               acc
@@ -97,50 +97,23 @@ defmodule FieldHub.Monitoring do
   end
 
   def detailed_statistics(%CouchService.Credentials{} = credentials, project_name) do
-    base_statistics =
-      statistics(credentials, project_name)
+    statistics(credentials, project_name)
+    |> Map.update!(:files, fn(variants) ->
+      Enum.map(variants, fn({name, %{missing: missing} = values}) ->
+        case missing do
+          [] ->
+            {name, values}
+          entries ->
+            detailed_missing =
+              CouchService.get_docs(credentials, project_name, Enum.map(entries, fn(entry) ->
+                entry[:uuid]
+              end))
+              |> Enum.map(&parse_file_documents(&1))
 
-    # base_statistics
-    # |> Map.update!(:files, fn({variant_name, %{missing: missing_uuids} = base_stats}) ->
-    #   details =
-    #     CouchService.get_docs(credentials, project_name, missing_uuids)
-    #     |> Enum.map(fn(%{"id" => uuid, "docs" => docs}) ->
-    #       case docs do
-    #         [
-    #           %{
-    #             "ok" => %{
-    #               "created" => %{"date" => created, "user" => user},
-    #               "resource" => %{"identifier" => file_name, "type" => file_type}
-    #             }
-    #           }
-    #         ] ->
-    #           %{
-    #             uuid: uuid,
-    #             created: created,
-    #             user: user,
-    #             file_name: file_name,
-    #             file_type: file_type
-    #           }
-    #         multiple_values ->
-    #           multiple_values
-    #           |> Enum.filter(fn val ->
-    #             case val do
-    #               %{"ok" => %{
-    #                 "_deleted" => true
-    #               }} ->
-    #                 true
-    #               _ ->
-    #                 false
-    #             end
-    #           end)
-    #           |> Enum.count()
-    #         end
-    #       end)
-
-    #   {variant_name, Map.put(base_stats, :missing, details)}
-    #   end)
-
-    base_statistics
+            {name, Map.put(values, :missing, detailed_missing)}
+        end
+      end)
+    end)
   end
 
   defp summarize_file_info(file_info) do
@@ -181,5 +154,37 @@ defmodule FieldHub.Monitoring do
             end)
           end)
       end)
+  end
+
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "ok" => %{
+      "created" => %{
+        "date" => date,
+        "user" => user
+      },
+      "resource" => %{
+        "identifier" => file_name,
+        "type" => file_type
+      }
+    }
+    }]}) do
+      %{
+        uuid: uuid,
+        created: date,
+        created_by: user,
+        file_name: file_name,
+        file_type: file_type
+      }
+  end
+
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "error" => %{
+      "error" => "not_found"
+    }
+  }]}) do
+    %{
+      uuid: uuid,
+      error: :not_found
+    }
   end
 end

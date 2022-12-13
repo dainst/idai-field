@@ -208,27 +208,36 @@ defmodule FieldHub.CLI do
 
   defp print_missing_file_info(info) do
 
-    msg = info[:uuid]
+    uuid = info[:uuid]
 
-    msg =
-      with {:ok, created} <- Map.fetch(info, :created),
-        {:ok, created_by} <- Map.fetch(info, :created_by),
-        {:ok, file_name} <- Map.fetch(info, :file_name),
-        {:ok, file_type} <- Map.fetch(info, :file_type)
-      do
-        "#{msg} (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
-      else
-        _err ->
-          with {:ok, error} <- Map.fetch(info, :error)
-          do
-            "#{msg}, error: #{error}"
-          else
-            _err ->
-              "#{msg}, no details provided"
+    with {:ok, created} <- Map.fetch(info, :created),
+      {:ok, created_by} <- Map.fetch(info, :created_by),
+      {:ok, file_name} <- Map.fetch(info, :file_name),
+      {:ok, file_type} <- Map.fetch(info, :file_type)
+    do
+      "#{uuid} is missing (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+      |> Logger.info()
+    else
+      _err ->
+        with {:ok, error} <- Map.fetch(info, :error)
+        do
+          case error do
+            :deleted ->
+              "#{uuid} has been deleted in the database, but the corresponding image file is still present."
+              |> Logger.warning()
+            :not_found ->
+              "#{uuid} could not be found in the database, but there is a image file present."
+              |> Logger.warning()
+            :unknown ->
+              "#{uuid} unknown error when trying to evaluate details."
+              |> Logger.error()
           end
-      end
-
-    Logger.warning(msg)
+        else
+          _err ->
+            "#{uuid} no details provided"
+            |> Logger.debug()
+        end
+    end
   end
 
   defp create_password(length) do

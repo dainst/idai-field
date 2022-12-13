@@ -156,6 +156,7 @@ defmodule FieldHub.Monitoring do
       end)
   end
 
+  # Only one document
   defp parse_file_documents(%{"id" => uuid, "docs" => [%{
     "ok" => %{
       "created" => %{
@@ -177,6 +178,7 @@ defmodule FieldHub.Monitoring do
       }
   end
 
+  # Only one error document
   defp parse_file_documents(%{"id" => uuid, "docs" => [%{
     "error" => %{
       "error" => "not_found"
@@ -186,5 +188,43 @@ defmodule FieldHub.Monitoring do
       uuid: uuid,
       error: :not_found
     }
+  end
+
+  # Only one error document
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "ok" => %{"_deleted" => true}
+  }]}) do
+    %{
+      uuid: uuid,
+      error: :deleted
+    }
+  end
+
+  # Evaluate handle all other cases
+  defp parse_file_documents(%{"id" => uuid, "docs" => doc_list}) do
+
+    deleted_doc =
+      doc_list
+      |> Enum.filter(fn val ->
+        case val do
+          %{"ok" => %{"_deleted" => true}} ->
+            true
+          _ ->
+            false
+        end
+      end)
+
+    case Enum.count(deleted_doc) do
+      val when val > 0 ->
+        %{
+          uuid: uuid,
+          error: :deleted
+        }
+      _ ->
+        %{
+          uuid: uuid,
+          error: :unknown
+        }
+    end
   end
 end

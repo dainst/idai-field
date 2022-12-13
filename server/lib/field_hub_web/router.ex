@@ -4,6 +4,7 @@ defmodule FieldHubWeb.Router do
 
   alias FieldHub.CouchService
   import FieldHubWeb.Plugs
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug Plug.Parsers,
@@ -35,6 +36,9 @@ defmodule FieldHubWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    pipe_through :api_auth
+    live "/monitoring/:project", MonitoringLive
   end
 
   scope "/files/:project", FieldHubWeb do

@@ -1,0 +1,27 @@
+<div class="container">
+    <table>
+        <caption><%= @project %></caption>
+        <tbody>
+            <tr>
+                <td>Documents in database</td>
+                <td><%= @stats[:db_doc_count] %></td>
+            </tr>
+            <tr>
+                <td>Database size</td>
+                <td><%= Sizeable.filesize(@stats[:db_file_size]) %></td>
+            </tr>
+
+            <%= Enum.map(@stats[:files], fn({variant_name, info}) -> %>
+                <tr>
+                    <td><%= variant_name %></td>
+                    <td><%= info[:active] %> (<%= Sizeable.filesize(info[:active_size]) %>)</td>
+                </tr>
+            <% end) %>
+        </tbody>
+    </table>
+
+    <pre>
+        <%= @stats |> Jason.encode!(pretty: true) %>
+    </pre>
+
+</div>

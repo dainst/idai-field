@@ -7,7 +7,10 @@ defmodule FieldHubWeb.Plugs do
 
     with {name, password} <- Plug.BasicAuth.parse_basic_auth(conn),
       :ok <- FieldHub.CouchService.authenticate(project, %Credentials{name: name, password: password}) do
-        assign(conn, :current_user, name)
+        conn
+        |> fetch_session()
+        |> put_session(:user, name)
+        |> put_session(:password, password)
       else
         _ ->
           conn

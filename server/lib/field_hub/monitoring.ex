@@ -113,6 +113,7 @@ defmodule FieldHub.Monitoring do
             {name, Map.put(values, :missing, detailed_missing)}
         end
       end)
+      |> Enum.into(%{})
     end)
   end
 

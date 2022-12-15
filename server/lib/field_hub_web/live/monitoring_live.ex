@@ -11,16 +11,12 @@ defmodule FieldHubWeb.MonitoringLive do
         password: password
       }
 
-    stats =
-      credentials
-      |> Monitoring.detailed_statistics(project)
-
-   Process.send_after(self(), :update, 10000)
+   Process.send(self(), :update, [])
 
     {
       :ok,
       socket
-      |> assign(:stats, stats)
+      |> assign(:stats, :loading)
       |> assign(:project, project)
       |> assign(:credentials, credentials)
     }
@@ -30,9 +26,9 @@ defmodule FieldHubWeb.MonitoringLive do
 
     stats =
       credentials
-      |> Monitoring.detailed_statistics(project)
+      |> Monitoring.statistics(project)
 
-    Process.send_after(self(), :update, 10000)
+    Process.send_after(self(), :update, 1000)
 
     {:noreply, assign(socket, :stats, stats)}
   end

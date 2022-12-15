@@ -8,53 +8,44 @@ defmodule FieldHub.Monitoring do
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
   def statistics(%CouchService.Credentials{} = credentials, project_name) do
-    credentials
-    |> FieldHub.CouchService.get_db_infos(project_name)
-    |> create_statistics()
+    db_statistics =
+      credentials
+      |> FieldHub.CouchService.get_db_infos(project_name)
+      |> parse_db_metadata()
+
+    file_statistics =
+      project_name
+      |> get_file_info()
+
+    %{
+      name: project_name,
+      database: db_statistics,
+      files: file_statistics
+    }
   end
 
   def statistics(%CouchService.Credentials{} = credentials) do
     credentials
-    |> FieldHub.CouchService.get_db_infos()
-    |> Enum.map(&create_statistics/1)
+    |> FieldHub.CouchService.get_databases_for_user()
+    |> Enum.map(&statistics(credentials, &1))
   end
 
-  defp create_statistics(db_metadata) do
-    with %{
-      "db_name" => db_name,
-      "doc_count" => db_doc_count,
-      "sizes" => %{
-        "file" => db_file_size
-      }
-    } <- db_metadata
-    do
-      db_info = %{db_name: db_name, db_doc_count: db_doc_count, db_file_size: db_file_size}
+  defp parse_db_metadata(%{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}}) do
+    %{doc_count: db_doc_count, file_size: db_file_size}
+  end
 
-      try do
-        FieldHub.FileStore.get_file_list(db_name)
-      rescue
-        e -> e
-      end
-      |> case do
-        %File.Error{reason: :enoent} ->
-          Map.merge(%{files: :enoent}, db_info)
-        file_map ->
-          summary = summarize_file_info(file_map)
-          inconsistencies = get_image_file_inconsistencies(file_map)
-
-          summary =
-            summary
-            |>Map.update!(:thumbnail_image, fn(val) ->
-              Map.put(val, :missing, inconsistencies[:thumbnail_images_missing])
-            end)
-            |> Map.update!(:original_image, fn(val) ->
-              Map.put(val, :missing, inconsistencies[:original_images_missing])
-          end)
-
-          Map.merge(%{files: summary}, db_info)
-      end
-    else
-      err -> err
+  defp get_file_info(project_name) do
+    try do
+      FieldHub.FileStore.get_file_list(project_name)
+    rescue
+      e -> e
+    end
+    |> case do
+      %File.Error{reason: :enoent} ->
+        :enoent
+      file_info ->
+        file_info
+        |> summarize_file_info()
     end
   end
 

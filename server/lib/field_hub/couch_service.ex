@@ -185,46 +185,56 @@ defmodule FieldHub.CouchService do
     )
   end
 
-  def get_db_infos(%Credentials{} = credentials, project_name) do
-      response =
-        HTTPoison.get!(
-          "#{url()}/#{project_name}",
-          headers(credentials)
-        )
-      case response do
-        %{status_code: 200, body: body} ->
-          Jason.decode!(body)
-        %{status_code: 401} ->
-          {:error, 401}
-        %{status_code: 403} ->
-          {:error, 403}
-      end
-  end
+  def get_databases_for_user(%Credentials{} = credentials) do
 
-  def get_db_infos(%Credentials{} = credentials) do
-
-    with %{body: body } <- HTTPoison.get!(
-      "#{url()}/_all_dbs",
-      get_admin_credentials()
+    # First check if user credentials are valid...
+    "#{url()}/"
+    |> HTTPoison.get!(
+      credentials
       |> headers()
     )
-    do
-      body
-      |> Jason.decode!()
-      |> Enum.reject(fn(val) ->
-        val in ["_replicator", "_users"]
-      end)
-      |> Enum.map(&get_db_infos(credentials, &1))
-      |> Enum.reject(fn(val) ->
-        case val do
-          {:error, _} ->
-            true
-          _ ->
-            false
-        end
-      end)
-    else
-      err -> err
+    |> case do
+      %{status_code: 401} ->
+        {:error, 401}
+      _ ->
+        # ...then get all existing database names as administrator and check if user has access.
+        "#{url()}/_all_dbs"
+        |> HTTPoison.get!(
+          get_admin_credentials()
+          |> headers()
+        )
+        |> Map.get(:body)
+        |> Jason.decode!()
+        |> Stream.reject(fn(val) ->
+          # Filter out CouchDB's internal databases.
+          val in ["_replicator", "_users"]
+        end)
+        |> Enum.filter(fn(database_name) ->
+          "#{url()}/#{database_name}"
+          |> HTTPoison.get!(headers(credentials))
+          |> case do
+            %{status_code: 200} ->
+              true
+            %{status_code: 403} ->
+              false
+          end
+        end)
+    end
+  end
+
+  def get_db_infos(%Credentials{} = credentials, project_name) do
+    response =
+      HTTPoison.get!(
+        "#{url()}/#{project_name}",
+        headers(credentials)
+      )
+    case response do
+      %{status_code: 200, body: body} ->
+        Jason.decode!(body)
+      %{status_code: 401} ->
+        {:error, 401}
+      %{status_code: 403} ->
+        {:error, 403}
     end
   end
 

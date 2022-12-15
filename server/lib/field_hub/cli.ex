@@ -161,38 +161,25 @@ defmodule FieldHub.CLI do
 
   def get_project_statistics(project_name) do
     CouchService.get_admin_credentials()
-    |> Monitoring.detailed_statistics(project_name)
+    |> Monitoring.statistics(project_name)
     |> print_statistics()
   end
 
-  defp print_statistics(project_stats) do
-    header = "######### Project '#{project_stats[:db_name]}' #########"
+  defp print_statistics(%{name: project_name, database: db, files: files}) do
+    header = "######### Project '#{project_name}' #########"
 
     Logger.info(header)
-    Logger.info("Database documents: #{project_stats[:db_doc_count]}")
-    Logger.info("Database size: #{Sizeable.filesize(project_stats[:db_file_size])} (#{project_stats[:db_file_size]} bytes)")
+    Logger.info("Database documents: #{db[:doc_count]}")
+    Logger.info("Database size: #{Sizeable.filesize(db[:file_size])} (#{db[:file_size]} bytes)")
 
-    case project_stats[:files] do
+    case files do
       :enoent ->
-        Logger.warning("No files directory found for '#{project_stats[:db_name]}'.")
+        Logger.warning("No files directory found for '#{project_name}'.")
       values ->
         values
         |> Enum.each(fn ({file_type, file_info}) ->
           Logger.info("#{get_file_type_label(file_type)} files: #{file_info[:active]}, size: #{Sizeable.filesize(file_info[:active_size])} (#{file_info[:active_size]} bytes)")
         end)
-
-        missing_thumbnail_images = Enum.count(values[:thumbnail_image][:missing])
-        missing_original_images = Enum.count(values[:original_image][:missing])
-
-        if missing_thumbnail_images > 0 do
-          Logger.warning("Found #{missing_thumbnail_images} original images without corresponding thumbnail images.")
-          Enum.each(values[:thumbnail_image][:missing], &print_missing_file_info/1)
-        end
-
-        if missing_original_images > 0 do
-          Logger.warning("Found #{missing_original_images} thumbnail images without corresponding original images.")
-          Enum.each(values[:original_image][:missing], &print_missing_file_info/1)
-        end
     end
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
   end

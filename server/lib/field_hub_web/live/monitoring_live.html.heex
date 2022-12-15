@@ -3,38 +3,21 @@
 
     <h2>Statistics</h2>
 
-    <section>Database documents: <%= @stats[:db_doc_count] %></section>
-    <section>Database size: <%= Sizeable.filesize(@stats[:db_file_size]) %> (<%= @stats[:db_file_size] %> bytes)</section>
+    <%= case @stats do %>
+        <% :loading -> %>
+            Loading...
+        <% %{
+            database: %{
+                doc_count: db_doc_count,
+                file_size: db_file_size
+            },
+            files: files
+        } -> %>
+            <section>Database documents: <%= db_doc_count %></section>
+            <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
 
-    <%= Enum.map(@stats[:files], fn({variant_name, info}) -> %>
-        <section><%= variant_name |> get_file_label() |> String.capitalize()  %> files: <%= info[:active] %>, size: <%= Sizeable.filesize(info[:active_size]) %> (<%= info[:active_size] %> bytes)</section>
-    <% end) %>
-
-    <hr>
-
-    <h2>Issues</h2>
-    <dl class="monitoring-issues">
-        <%= Enum.map(@stats[:files], fn({variant_name, info}) -> %>
-        <dt><%= variant_name |> get_file_label() |> String.capitalize() %></dt>
-        <%= case Enum.count(info[:missing]) do %>
-            <% 0 -> %>
-                <dd class="monitoring-issue-success">
-                    None
-                </dd>
-            <% _ -> %>
-                <%= Enum.map(info[:missing], fn(entry) -> %>
-                    <%= case entry do %>
-                    <% %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} -> %>
-                        <dd class="monitoring-issue-info">
-                            <%= uuid %> is missing (<%= file_name %>, <%= file_type %>), created by <%= created_by %> on <%= created %>
-                        </dd>
-                    <% %{error: msg, uuid: uuid} -> %>
-                        <dd class="monitoring-issue-error">
-                            <%= uuid %> (<%= msg %>)
-                        </dd>
-                    <% end %>
-                <% end) %>
-        <% end %>
-        <% end) %>
-    </dl>
+            <%= Enum.map(files, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
+                <section><%= variant_name |> get_file_label() |> String.capitalize()  %> files: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
+            <% end) %>
+    <% end %>
 </div>

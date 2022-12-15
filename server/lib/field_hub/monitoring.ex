@@ -8,14 +8,8 @@ defmodule FieldHub.Monitoring do
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
   def statistics(%CouchService.Credentials{} = credentials, project_name) do
-    db_statistics =
-      credentials
-      |> FieldHub.CouchService.get_db_infos(project_name)
-      |> parse_db_metadata()
-
-    file_statistics =
-      project_name
-      |> get_file_info()
+    db_statistics = get_database_statistics(credentials, project_name)
+    file_statistics = get_file_statistics(project_name)
 
     %{
       name: project_name,
@@ -30,11 +24,15 @@ defmodule FieldHub.Monitoring do
     |> Enum.map(&statistics(credentials, &1))
   end
 
-  defp parse_db_metadata(%{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}}) do
+  defp get_database_statistics(%CouchService.Credentials{} = credentials, project_name) do
+    %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} =
+      credentials
+      |> FieldHub.CouchService.get_db_infos(project_name)
+
     %{doc_count: db_doc_count, file_size: db_file_size}
   end
 
-  defp get_file_info(project_name) do
+  defp get_file_statistics(project_name) do
     try do
       FieldHub.FileStore.get_file_list(project_name)
     rescue
@@ -45,107 +43,46 @@ defmodule FieldHub.Monitoring do
         :enoent
       file_info ->
         file_info
-        |> summarize_file_info()
-    end
-  end
-
-  defp get_image_file_inconsistencies(file_map) do
-    file_map
-    |> Enum.reduce(
-      %{
-        original_images_missing: [],
-        thumbnail_images_missing: []
-      },
-      fn({uuid, %{deleted: deleted, variants: variants }}, acc) ->
-        case deleted do
-          true ->
-            acc
-          false ->
-            present =
-              variants
-              |> Enum.map(fn(%{name: name}) ->
-                name
-              end)
-
-            acc =
-              if :thumbnail_image not in present and :original_image in present do
-                Map.update!(acc, :thumbnail_images_missing, fn(existing) ->
-                  existing ++ [%{uuid: uuid}]
-                end)
-              else
-                acc
-            end
-
-            if :thumbnail_image in present and :original_image not in present do
-              Map.update!(acc, :original_images_missing, fn(existing) ->
-                existing ++ [%{uuid: uuid}]
-              end)
-            else
-              acc
-            end
-        end
-      end)
-  end
-
-  def detailed_statistics(%CouchService.Credentials{} = credentials, project_name) do
-    statistics(credentials, project_name)
-    |> Map.update!(:files, fn(variants) ->
-      Enum.map(variants, fn({name, %{missing: missing} = values}) ->
-        case missing do
-          [] ->
-            {name, values}
-          entries ->
-            detailed_missing =
-              CouchService.get_docs(credentials, project_name, Enum.map(entries, fn(entry) ->
-                entry[:uuid]
-              end))
-              |> Enum.map(&parse_file_documents(&1))
-
-            {name, Map.put(values, :missing, detailed_missing)}
-        end
-      end)
-      |> Enum.into(%{})
-    end)
-  end
-
-  defp summarize_file_info(file_info) do
-    file_info
-    |> Enum.reduce(
-        Map.new(@variant_types, fn(type) ->
-          {type, %{
-            active: 0,
-            active_size: 0,
-            deleted: 0,
-            deleted_size: 0
-          }}
-        end),
-        fn({_uuid, %{deleted: deleted, variants: variants }}, acc) ->
-          variants
-          |> Enum.map(fn(%{name: name, size: size}) ->
-            case deleted do
-              true ->
-                %{
-                    name => %{
-                    deleted: 1,
-                    deleted_size: size
+        |> Enum.reduce(
+          Map.new(@variant_types, fn(type) ->
+            {type, %{
+              active: 0,
+              active_size: 0,
+              deleted: 0,
+              deleted_size: 0
+            }}
+          end),
+          fn({_uuid, %{deleted: deleted, variants: variants }}, accumulated_stats) ->
+            variants
+            |> Stream.map(fn(%{name: name, size: size}) ->
+              case deleted do
+                true ->
+                  %{
+                      name => %{
+                      deleted: 1,
+                      deleted_size: size
+                    }
                   }
-                }
-              _ ->
-                %{
-                    name => %{
-                    active: 1,
-                    active_size: size
+                _ ->
+                  %{
+                      name => %{
+                      active: 1,
+                      active_size: size
+                    }
                   }
-                }
-            end
-          end)
-          |> Enum.reduce(&Map.merge/2)
-          |> Map.merge(acc, fn(_key, val1, val2) ->
-            Map.merge(val1, val2, fn(_key_b, val_inner_1, val_inner_2) ->
-              val_inner_1 + val_inner_2
+              end
             end)
-          end)
-      end)
+            |> Enum.reduce(&Map.merge/2)
+            |> Map.merge(accumulated_stats, fn(_key, current_uuid_variant_stats, accumulated_variant_stats) ->
+              Map.merge(
+                current_uuid_variant_stats,
+                accumulated_variant_stats,
+                fn(_key_b, counter_value_current, counter_value_accumulated) ->
+                  counter_value_current + counter_value_accumulated
+              end)
+            end)
+        end)
+    end
   end
 
   # Only one document

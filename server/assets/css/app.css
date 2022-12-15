@@ -129,3 +129,23 @@ header {
 body {
   margin: 0px;
 }
+
+.monitoring-issues dd{
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.monitoring-issue-success {
+  background-color: #2dca4f; 
+  color: white;
+}
+
+.monitoring-issue-info {
+  background-color: rgb(255, 248, 149); 
+}
+
+.monitoring-issue-error {
+  background-color: rgb(253, 53, 53); 
+  color: white;
+}

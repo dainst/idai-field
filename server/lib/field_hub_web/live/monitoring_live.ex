@@ -13,9 +13,9 @@ defmodule FieldHubWeb.MonitoringLive do
 
     stats =
       credentials
-      |> Monitoring.statistics(project)
+      |> Monitoring.detailed_statistics(project)
 
-    Process.send_after(self(), :update, 3000)
+   Process.send_after(self(), :update, 10000)
 
     {
       :ok,
@@ -30,10 +30,20 @@ defmodule FieldHubWeb.MonitoringLive do
 
     stats =
       credentials
-      |> Monitoring.statistics(project)
+      |> Monitoring.detailed_statistics(project)
 
-    Process.send_after(self(), :update, 3000)
+    Process.send_after(self(), :update, 10000)
 
     {:noreply, assign(socket, :stats, stats)}
   end
+
+  def get_file_label(key) do
+    case key do
+      :original_image ->
+        "original images"
+      :thumbnail_image ->
+        "thumbnail images"
+    end
+  end
+
 end

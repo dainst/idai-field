@@ -1,6 +1,9 @@
 defmodule FieldHubWeb.MonitoringLive do
-  alias FieldHub.Monitoring
-  alias FieldHub.CouchService
+  alias FieldHub.{
+    CouchService,
+    Statistics
+  }
+
   use Phoenix.LiveView
 
   def mount(%{"project" => project}, %{"user" => user, "password" => password}, socket) do
@@ -26,7 +29,7 @@ defmodule FieldHubWeb.MonitoringLive do
 
     stats =
       credentials
-      |> Monitoring.statistics(project)
+      |> Statistics.get_for_project(project)
 
     Process.send_after(self(), :update, 1000)
 

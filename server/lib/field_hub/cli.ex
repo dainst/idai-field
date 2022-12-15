@@ -3,7 +3,7 @@ defmodule FieldHub.CLI do
   alias FieldHub.{
     CouchService,
     FileStore,
-    Monitoring
+    Statistics
   }
 
   require Logger
@@ -155,13 +155,13 @@ defmodule FieldHub.CLI do
 
   def get_project_statistics() do
     CouchService.get_admin_credentials()
-    |> Monitoring.statistics()
+    |> Statistics.get_all()
     |> Enum.each(&print_statistics/1)
   end
 
   def get_project_statistics(project_name) do
     CouchService.get_admin_credentials()
-    |> Monitoring.statistics(project_name)
+    |> Statistics.get_for_project(project_name)
     |> print_statistics()
   end
 

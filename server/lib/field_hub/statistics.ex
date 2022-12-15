@@ -1,4 +1,4 @@
-defmodule FieldHub.Monitoring do
+defmodule FieldHub.Statistics do
   alias FieldHub.CouchService
 
   import CouchService.Credentials
@@ -7,7 +7,7 @@ defmodule FieldHub.Monitoring do
 
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
-  def statistics(%CouchService.Credentials{} = credentials, project_name) do
+  def get_for_project(%CouchService.Credentials{} = credentials, project_name) do
     db_statistics = get_database_statistics(credentials, project_name)
     file_statistics = get_file_statistics(project_name)
 
@@ -18,10 +18,10 @@ defmodule FieldHub.Monitoring do
     }
   end
 
-  def statistics(%CouchService.Credentials{} = credentials) do
+  def get_all(%CouchService.Credentials{} = credentials) do
     credentials
     |> FieldHub.CouchService.get_databases_for_user()
-    |> Enum.map(&statistics(credentials, &1))
+    |> Enum.map(&get_for_project(credentials, &1))
   end
 
   defp get_database_statistics(%CouchService.Credentials{} = credentials, project_name) do

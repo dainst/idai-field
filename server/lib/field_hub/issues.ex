@@ -132,22 +132,22 @@ defmodule FieldHub.Issues do
               Map.replace(
                 val_acc,
                 :explanation,
-                "Found original image file for #{uuid}, but missing corresponding thumbnail
-                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+                "Found original image file for #{uuid}, but missing corresponding thumbnail " <>
+                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
               )
             :missing_original_image  ->
               Map.replace(
                 val_acc,
                 :explanation,
-                "Found thumbnail image file for #{uuid}, but missing corresponding original
-                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+                "Found thumbnail image file for #{uuid}, but missing corresponding original " <>
+                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
               )
             :image_variant_sizes ->
               Map.replace(
                 val_acc,
                 :explanation,
-                "#{uuid} has a thumbnail file that is as large as (or larger than) the original
-                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+                "#{uuid} has a thumbnail file that is as large as (or larger than) the original " <>
+                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
               )
           end
           |> Map.replace(:data, updated_data)

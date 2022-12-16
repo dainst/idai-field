@@ -27,7 +27,7 @@
 
     <hr>
 
-    <h2>Issues</h2>
+    <h2>Issues <%= if @issue_count != 0, do: " (#{@issue_count})" %></h2>
     <%= case @issues do %>
         <% :loading -> %>
             Loading...

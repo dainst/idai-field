@@ -25,6 +25,7 @@ defmodule FieldHubWeb.MonitoringLive do
       socket
       |> assign(:stats, :loading)
       |> assign(:issues, :loading)
+      |> assign(:issue_count, 0)
       |> assign(:project, project)
       |> assign(:credentials, credentials)
     }
@@ -47,8 +48,10 @@ defmodule FieldHubWeb.MonitoringLive do
       credentials
       |> Issues.check_file_store(project)
 
+    issue_count = Enum.count(issues)
+
     timer =
-      case Enum.count(issues) * 10 do
+      case issue_count * 10 do
         count when count < 1000 ->
           1000
         count ->
@@ -63,7 +66,13 @@ defmodule FieldHubWeb.MonitoringLive do
 
     Process.send_after(self(), :update_issues, timer)
 
-    {:noreply, assign(socket, :issues, grouped)}
+
+    {
+      :noreply,
+      socket
+      |> assign(:issues, grouped)
+      |> assign(:issue_count, issue_count)
+    }
   end
 
   def get_file_label(key) do

@@ -135,7 +135,6 @@ defmodule FieldHub.Issues do
         %{error: :deleted, uuid: _uuid} ->
           msg = "#{Map.get(val_acc, :explanation)} The document was already marked as deleted in the database."
           val_acc
-          |> Map.replace(:severity, :warning)
           |> Map.replace(:explanation, msg)
 
         %{error: :not_found, uuid: _uuid} ->

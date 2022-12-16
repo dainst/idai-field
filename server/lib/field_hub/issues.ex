@@ -27,7 +27,7 @@ defmodule FieldHub.Issues do
           end
         end)
 
-    {database_enriched, others} =
+    {database_enriched, simple_issues} =
       Enum.split_with(simple_issues, fn (%{type: type}) ->
         Enum.member?([:missing_thumbnail_image, :missing_original_image, :image_variant_sizes], type)
       end)
@@ -36,9 +36,13 @@ defmodule FieldHub.Issues do
     # to avoid multiple CouchDB queries.
     database_enriched = add_database_details(database_enriched, credentials, project_name)
 
-    database_enriched ++ others
+    database_enriched ++ simple_issues
     |> Enum.sort(fn(%{severity: severity_a}, %{severity: severity_b}) ->
-      Enum.find_index(@severity_ranking, fn(val) -> val == severity_a end) > Enum.find_index(@severity_ranking, fn(val) -> val == severity_b end)
+      Enum.find_index(
+        @severity_ranking, fn(val) -> val == severity_a end
+      ) > Enum.find_index(
+        @severity_ranking, fn(val) -> val == severity_b end
+      )
     end)
   end
 

@@ -55,11 +55,15 @@ defmodule FieldHubWeb.MonitoringLive do
           count
       end
 
+    grouped =
+      issues
+      |> Enum.group_by(fn(%{type: type}) -> type end)
+
     Logger.debug("Running next issue update in #{timer} ms.")
 
     Process.send_after(self(), :update_issues, timer)
 
-    {:noreply, assign(socket, :issues, issues)}
+    {:noreply, assign(socket, :issues, grouped)}
   end
 
   def get_file_label(key) do
@@ -71,7 +75,13 @@ defmodule FieldHubWeb.MonitoringLive do
     end
   end
 
+  def get_issue_type_label(:image_variant_sizes), do: "Image variant file size"
+  def get_issue_type_label(:missing_original_image), do: "Missing original images"
+  def get_issue_type_label(:missing_thumbnail_image), do: "Missing thumbnail images"
+  def get_issue_type_label(type), do: type
+
   def issue_classes(:info), do: "monitoring-issue-info"
   def issue_classes(:warning), do: "monitoring-issue-warning"
   def issue_classes(:error), do: "monitoring-issue-error"
+  def issue_classes(_), do: ""
 end

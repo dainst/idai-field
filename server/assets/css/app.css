@@ -130,19 +130,19 @@ body {
   margin: 0px;
 }
 
-.monitoring-issues dd{
+.monitoring-issues {
+  margin-top: 5px;
   border-radius: 5px;
   padding: 5px;
   padding-left: 10px;
 }
 
-.monitoring-issue-success {
-  background-color: #2dca4f; 
-  color: white;
+.monitoring-issue-info {
+  background-color: #fffd82;
 }
 
-.monitoring-issue-info {
-  background-color: rgb(255, 248, 149); 
+.monitoring-issue-warning {
+  background-color: rgb(255, 133, 77); 
 }
 
 .monitoring-issue-error {

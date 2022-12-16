@@ -20,4 +20,21 @@
                 <section><%= variant_name |> get_file_label() |> String.capitalize()  %> files: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
             <% end) %>
     <% end %>
+
+    <hr>
+
+    <h2>Issues</h2>
+    <%= case @issues do %>
+        <% :loading -> %>
+            Loading...
+        <% issues -> %>
+            <%= Enum.map(issues, fn(%{
+                type: type,
+                explanation: explanation,
+                severity: severity
+            }) -> %>
+                <section class={"monitoring-issues #{issue_classes(severity)}"}><%= type %>: <%= explanation %></section>
+            <% end) %>
+    <% end %>
+    <hr>
 </div>

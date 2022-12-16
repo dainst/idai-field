@@ -68,7 +68,7 @@ defmodule FieldHub.Issues do
         acc ++ [%Issue{
           type: :missing_original_image,
           severity: :info,
-          explanation: "Found original image file for #{uuid}, but missing corresponding thumbnail file.",
+          explanation: "Found thumbnail image file for #{uuid}, but missing corresponding original file.",
           data: %{
             uuid: uuid
           }
@@ -126,30 +126,13 @@ defmodule FieldHub.Issues do
           |> Map.replace(:severity, :error)
           |> Map.replace(:explanation, msg)
 
-        %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} = updated_data ->
-          case Map.get(val_acc, :type) do
-            :missing_thumbnail_image ->
-              Map.replace(
-                val_acc,
-                :explanation,
-                "Found original image file for #{uuid}, but missing corresponding thumbnail " <>
-                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
-              )
-            :missing_original_image  ->
-              Map.replace(
-                val_acc,
-                :explanation,
-                "Found thumbnail image file for #{uuid}, but missing corresponding original " <>
-                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
-              )
-            :image_variant_sizes ->
-              Map.replace(
-                val_acc,
-                :explanation,
-                "#{uuid} has a thumbnail file that is as large as (or larger than) the original " <>
-                "file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
-              )
-          end
+        %{created: created, created_by: created_by, file_name: file_name, file_type: file_type} = updated_data ->
+          val_acc
+          |> Map.replace(
+              :explanation,
+              "#{Map.get(val_acc, :explanation)} Added as #{file_name} (#{file_type}) " <>
+              "by #{created_by} on #{created}."
+            )
           |> Map.replace(:data, updated_data)
       end
     end)

@@ -1,0 +1,239 @@
+defmodule FieldHub.Issues do
+
+  alias FieldHub.CouchService
+
+  defmodule Issue do
+    @enforce_keys [:type, :severity, :data]
+    defstruct [:type, :severity, :explanation, :data]
+  end
+
+  @severities [:info, :warning, :error]
+
+  def check_file_store(credentials, project_name) do
+
+    simple_issues =
+      project_name
+      |> FieldHub.FileStore.get_file_list()
+      |> Enum.reduce(
+        [],
+        fn({_uuid, %{deleted: deleted}} = entry, acc) ->
+          case deleted do
+            true ->
+              acc
+            false ->
+              acc
+              |> check_missing_partners(entry)
+              |> check_image_file_sizes(entry)
+          end
+        end)
+
+    {missing_partner_issues, others} =
+      Enum.split_with(simple_issues, fn (%{type: type}) ->
+        Enum.member?([:missing_thumbnail_image, :missing_original_image], type)
+      end)
+
+    {size_issues, others} =
+      Enum.split_with(others, fn (%{type: type}) ->
+        type == :image_variant_sizes
+      end)
+
+    # Details for missing partners are evaluated against the database, in order to run a single batch query
+    # we split the complete issue list above and run the detailed evaluation on all missing partner issues.
+    missing_partner_issues = add_missing_partner_details(missing_partner_issues, credentials, project_name)
+
+    # Details for size issues evaluated against the database, in order to run a single batch query
+    # we split the complete issue list above and run the detailed evaluation on all size issues.
+    size_issues = add_image_size_details(size_issues, credentials, project_name)
+
+    missing_partner_issues ++ size_issues ++ others
+    |> Enum.sort(fn(%{severity: severity_a}, %{severity: severity_b}) ->
+      Enum.find_index(@severities, fn(val) -> val == severity_a end) > Enum.find_index(@severities, fn(val) -> val == severity_b end)
+    end)
+  end
+
+  defp check_missing_partners(acc, {uuid, %{variants: variants}}) do
+    present =
+      variants
+      |> Enum.map(fn(%{name: name}) ->
+        name
+      end)
+
+    acc =
+      if :thumbnail_image not in present and :original_image in present do
+        acc ++ [%Issue{
+          type: :missing_thumbnail_image,
+          severity: :info,
+          data: %{
+            uuid: uuid
+          }
+        }]
+      else
+        acc
+    end
+
+    acc =
+      if :thumbnail_image in present and :original_image not in present do
+        acc ++ [%Issue{
+          type: :missing_original_image,
+          severity: :info,
+          data: %{
+            uuid: uuid
+          }
+        }]
+      else
+        acc
+      end
+    acc
+  end
+
+  defp check_image_file_sizes(acc, {uuid, %{variants: variants}}) do
+    case variants do
+      [
+        %{name: :thumbnail_image, size: size_thumb},
+        %{name: :original_image, size: size_original}
+      ] when size_thumb >= size_original ->
+        acc ++ [%Issue{
+          type: :image_variant_sizes,
+          severity: :warning,
+          data: %{
+            uuid: uuid,
+            size_thumb: size_thumb,
+            size_original: size_original
+          }
+        }]
+      _ ->
+        acc
+    end
+  end
+
+  defp add_missing_partner_details(acc, credentials, project_name) do
+
+    uuids =
+      acc
+      |> Enum.map(fn(%{data: %{uuid: uuid}}) ->
+        uuid
+      end)
+
+    detailed_data =
+      CouchService.get_docs(credentials, project_name, uuids)
+      |> Enum.map(&parse_file_documents/1)
+
+    Enum.zip_with(acc, detailed_data, fn(val_acc, val_data) ->
+      case val_data do
+        %{error: :deleted, uuid: uuid} ->
+          val_acc
+          |> Map.replace(:severity, :warning)
+          |> Map.replace(:explanation, "#{uuid} is already marked as deleted in the database.")
+        %{error: :not_found, uuid: uuid} ->
+          val_acc
+          |> Map.replace(:severity, :error)
+          |> Map.replace(:explanation, "#{uuid} was not found in the database.")
+        %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} = updated_data ->
+          val_acc
+          |> Map.replace(:data, updated_data)
+          |> Map.replace(:explanation, "#{uuid} is missing (#{file_name}, #{file_type}), created by #{created_by} on #{created}.")
+      end
+    end)
+  end
+
+  defp add_image_size_details(acc, credentials, project_name) do
+    uuids =
+      acc
+      |> Enum.map(fn(%{data: %{uuid: uuid}}) ->
+        uuid
+      end)
+
+    detailed_data =
+      CouchService.get_docs(credentials, project_name, uuids)
+      |> Enum.map(&parse_file_documents/1)
+
+    Enum.zip_with(acc, detailed_data, fn(val_acc, val_data) ->
+      case val_data do
+        %{error: :deleted, uuid: uuid} ->
+          val_acc
+          |> Map.replace(:severity, :warning)
+          |> Map.replace(:explanation, "#{uuid} is already marked as deleted in the database.")
+        %{error: :not_found, uuid: uuid} ->
+          val_acc
+          |> Map.replace(:severity, :error)
+          |> Map.replace(:explanation, "#{uuid} was not found in the database.")
+        %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} = updated_data ->
+          val_acc
+          |> Map.replace(:data, Map.merge(val_acc.data, updated_data))
+          |> Map.replace(:explanation, "For #{uuid} the thumbnail file is as large as (or larger than) the original file (#{file_name}, #{file_type}), created by #{created_by} on #{created}.")
+      end
+    end)
+  end
+
+  # Only one document
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "ok" => %{
+      "created" => %{
+        "date" => date,
+        "user" => user
+      },
+      "resource" => %{
+        "identifier" => file_name,
+        "type" => file_type
+      }
+    }
+    }]}) do
+      %{
+        uuid: uuid,
+        created: date,
+        created_by: user,
+        file_name: file_name,
+        file_type: file_type
+      }
+  end
+
+  # Only one error document
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "error" => %{
+      "error" => "not_found"
+    }
+  }]}) do
+    %{
+      uuid: uuid,
+      error: :not_found
+    }
+  end
+
+  # Only one error document
+  defp parse_file_documents(%{"id" => uuid, "docs" => [%{
+    "ok" => %{"_deleted" => true}
+  }]}) do
+    %{
+      uuid: uuid,
+      error: :deleted
+    }
+  end
+
+  # Evaluate handle all other cases
+  defp parse_file_documents(%{"id" => uuid, "docs" => doc_list}) do
+
+    deleted_doc =
+      doc_list
+      |> Enum.filter(fn val ->
+        case val do
+          %{"ok" => %{"_deleted" => true}} ->
+            true
+          _ ->
+            false
+        end
+      end)
+
+    case Enum.count(deleted_doc) do
+      val when val > 0 ->
+        %{
+          uuid: uuid,
+          error: :deleted
+        }
+      _ ->
+        %{
+          uuid: uuid,
+          error: :unknown
+        }
+    end
+  end
+end

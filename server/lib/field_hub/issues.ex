@@ -7,7 +7,7 @@ defmodule FieldHub.Issues do
     defstruct [:type, :severity, :explanation, :data]
   end
 
-  @severities [:info, :warning, :error]
+  @severity_ranking [:info, :warning, :error]
 
   def check_file_store(credentials, project_name) do
 
@@ -27,27 +27,18 @@ defmodule FieldHub.Issues do
           end
         end)
 
-    {missing_partner_issues, others} =
+    {database_enriched, others} =
       Enum.split_with(simple_issues, fn (%{type: type}) ->
-        Enum.member?([:missing_thumbnail_image, :missing_original_image], type)
+        Enum.member?([:missing_thumbnail_image, :missing_original_image, :image_variant_sizes], type)
       end)
 
-    {size_issues, others} =
-      Enum.split_with(others, fn (%{type: type}) ->
-        type == :image_variant_sizes
-      end)
+    # Details are retrieved from database in a single batch (instead of individually in the reduce above)
+    # to avoid multiple CouchDB queries.
+    database_enriched = add_database_details(database_enriched, credentials, project_name)
 
-    # Details for missing partners are evaluated against the database, in order to run a single batch query
-    # we split the complete issue list above and run the detailed evaluation on all missing partner issues.
-    missing_partner_issues = add_missing_partner_details(missing_partner_issues, credentials, project_name)
-
-    # Details for size issues evaluated against the database, in order to run a single batch query
-    # we split the complete issue list above and run the detailed evaluation on all size issues.
-    size_issues = add_image_size_details(size_issues, credentials, project_name)
-
-    missing_partner_issues ++ size_issues ++ others
+    database_enriched ++ others
     |> Enum.sort(fn(%{severity: severity_a}, %{severity: severity_b}) ->
-      Enum.find_index(@severities, fn(val) -> val == severity_a end) > Enum.find_index(@severities, fn(val) -> val == severity_b end)
+      Enum.find_index(@severity_ranking, fn(val) -> val == severity_a end) > Enum.find_index(@severity_ranking, fn(val) -> val == severity_b end)
     end)
   end
 
@@ -63,6 +54,7 @@ defmodule FieldHub.Issues do
         acc ++ [%Issue{
           type: :missing_thumbnail_image,
           severity: :info,
+          explanation: "Found original image file for #{uuid}, but missing corresponding thumbnail file.",
           data: %{
             uuid: uuid
           }
@@ -76,6 +68,7 @@ defmodule FieldHub.Issues do
         acc ++ [%Issue{
           type: :missing_original_image,
           severity: :info,
+          explanation: "Found original image file for #{uuid}, but missing corresponding thumbnail file.",
           data: %{
             uuid: uuid
           }
@@ -95,6 +88,7 @@ defmodule FieldHub.Issues do
         acc ++ [%Issue{
           type: :image_variant_sizes,
           severity: :warning,
+          explanation: "#{uuid} has a thumbnail file that is as large as (or larger than) the original file.",
           data: %{
             uuid: uuid,
             size_thumb: size_thumb,
@@ -106,7 +100,7 @@ defmodule FieldHub.Issues do
     end
   end
 
-  defp add_missing_partner_details(acc, credentials, project_name) do
+  defp add_database_details(acc, credentials, project_name) do
 
     uuids =
       acc
@@ -120,47 +114,43 @@ defmodule FieldHub.Issues do
 
     Enum.zip_with(acc, detailed_data, fn(val_acc, val_data) ->
       case val_data do
-        %{error: :deleted, uuid: uuid} ->
+        %{error: :deleted, uuid: _uuid} ->
+          msg = "#{Map.get(val_acc, :explanation)} The document was already marked as deleted in the database."
           val_acc
           |> Map.replace(:severity, :warning)
-          |> Map.replace(:explanation, "#{uuid} is already marked as deleted in the database.")
-        %{error: :not_found, uuid: uuid} ->
+          |> Map.replace(:explanation, msg)
+
+        %{error: :not_found, uuid: _uuid} ->
+          msg = "#{Map.get(val_acc, :explanation)} The document was not found in the database (not even marked as deleted)."
           val_acc
           |> Map.replace(:severity, :error)
-          |> Map.replace(:explanation, "#{uuid} was not found in the database.")
+          |> Map.replace(:explanation, msg)
+
         %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} = updated_data ->
-          val_acc
+          case Map.get(val_acc, :type) do
+            :missing_thumbnail_image ->
+              Map.replace(
+                val_acc,
+                :explanation,
+                "Found original image file for #{uuid}, but missing corresponding thumbnail
+                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+              )
+            :missing_original_image  ->
+              Map.replace(
+                val_acc,
+                :explanation,
+                "Found thumbnail image file for #{uuid}, but missing corresponding original
+                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+              )
+            :image_variant_sizes ->
+              Map.replace(
+                val_acc,
+                :explanation,
+                "#{uuid} has a thumbnail file that is as large as (or larger than) the original
+                file (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
+              )
+          end
           |> Map.replace(:data, updated_data)
-          |> Map.replace(:explanation, "#{uuid} is missing (#{file_name}, #{file_type}), created by #{created_by} on #{created}.")
-      end
-    end)
-  end
-
-  defp add_image_size_details(acc, credentials, project_name) do
-    uuids =
-      acc
-      |> Enum.map(fn(%{data: %{uuid: uuid}}) ->
-        uuid
-      end)
-
-    detailed_data =
-      CouchService.get_docs(credentials, project_name, uuids)
-      |> Enum.map(&parse_file_documents/1)
-
-    Enum.zip_with(acc, detailed_data, fn(val_acc, val_data) ->
-      case val_data do
-        %{error: :deleted, uuid: uuid} ->
-          val_acc
-          |> Map.replace(:severity, :warning)
-          |> Map.replace(:explanation, "#{uuid} is already marked as deleted in the database.")
-        %{error: :not_found, uuid: uuid} ->
-          val_acc
-          |> Map.replace(:severity, :error)
-          |> Map.replace(:explanation, "#{uuid} was not found in the database.")
-        %{created: created, created_by: created_by, file_name: file_name, file_type: file_type, uuid: uuid} = updated_data ->
-          val_acc
-          |> Map.replace(:data, Map.merge(val_acc.data, updated_data))
-          |> Map.replace(:explanation, "For #{uuid} the thumbnail file is as large as (or larger than) the original file (#{file_name}, #{file_type}), created by #{created_by} on #{created}.")
       end
     end)
   end

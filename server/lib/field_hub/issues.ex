@@ -10,40 +10,54 @@ defmodule FieldHub.Issues do
   @severity_ranking [:info, :warning, :error]
 
   def check_file_store(credentials, project_name) do
+      try do
+        project_name
+        |> FieldHub.FileStore.get_file_list()
+      rescue
+        e -> e
+      end
+      |> case do
+        %File.Error{reason: :enoent, path: path} ->
+          [%Issue{
+            type: :file_directory_not_found,
+            severity: :error,
+            explanation: "It seems the a file directory was not initialized properly: '#{path}'",
+            data: %{path: path}
+          }]
+        file_info ->
+          simple_issues =
+            file_info
+            |> Enum.reduce(
+              [],
+              fn({_uuid, %{deleted: deleted}} = entry, acc) ->
+                case deleted do
+                  true ->
+                    acc
+                  false ->
+                    acc
+                    |> check_missing_partners(entry)
+                    |> check_image_file_sizes(entry)
+                end
+              end)
 
-    simple_issues =
-      project_name
-      |> FieldHub.FileStore.get_file_list()
-      |> Enum.reduce(
-        [],
-        fn({_uuid, %{deleted: deleted}} = entry, acc) ->
-          case deleted do
-            true ->
-              acc
-            false ->
-              acc
-              |> check_missing_partners(entry)
-              |> check_image_file_sizes(entry)
-          end
-        end)
+          {database_enriched, simple_issues} =
+            Enum.split_with(simple_issues, fn (%{type: type}) ->
+              Enum.member?([:missing_thumbnail_image, :missing_original_image, :image_variant_sizes], type)
+            end)
 
-    {database_enriched, simple_issues} =
-      Enum.split_with(simple_issues, fn (%{type: type}) ->
-        Enum.member?([:missing_thumbnail_image, :missing_original_image, :image_variant_sizes], type)
-      end)
+          # Details are retrieved from database in a single batch (instead of individually in the reduce above)
+          # to avoid multiple CouchDB queries.
+          database_enriched = add_database_details(database_enriched, credentials, project_name)
 
-    # Details are retrieved from database in a single batch (instead of individually in the reduce above)
-    # to avoid multiple CouchDB queries.
-    database_enriched = add_database_details(database_enriched, credentials, project_name)
-
-    database_enriched ++ simple_issues
-    |> Enum.sort(fn(%{severity: severity_a}, %{severity: severity_b}) ->
-      Enum.find_index(
-        @severity_ranking, fn(val) -> val == severity_a end
-      ) > Enum.find_index(
-        @severity_ranking, fn(val) -> val == severity_b end
-      )
-    end)
+          database_enriched ++ simple_issues
+          |> Enum.sort(fn(%{severity: severity_a}, %{severity: severity_b}) ->
+            Enum.find_index(
+              @severity_ranking, fn(val) -> val == severity_a end
+            ) > Enum.find_index(
+              @severity_ranking, fn(val) -> val == severity_b end
+            )
+          end)
+      end
   end
 
   defp check_missing_partners(acc, {uuid, %{variants: variants}}) do

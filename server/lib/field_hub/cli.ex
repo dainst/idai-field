@@ -3,6 +3,7 @@ defmodule FieldHub.CLI do
   alias FieldHub.{
     CouchService,
     FileStore,
+    Issues,
     Statistics
   }
 
@@ -165,6 +166,13 @@ defmodule FieldHub.CLI do
     |> print_statistics()
   end
 
+
+  def get_project_issues(project_name) do
+    CouchService.get_admin_credentials()
+    |> Issues.check_file_store(project_name)
+    |> print_issues()
+  end
+
   defp print_statistics(%{name: project_name, database: db, files: files}) do
     header = "######### Project '#{project_name}' #########"
 
@@ -184,46 +192,30 @@ defmodule FieldHub.CLI do
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
   end
 
+
+  defp print_issues(issues) do
+    issues
+    |> Enum.each(fn(%Issues.Issue{type: type, severity: severity, explanation: explanation}) ->
+
+      msg = "[#{type}] #{explanation}"
+
+      case severity do
+        :info ->
+          Logger.info(msg)
+        :warning ->
+          Logger.warning(msg)
+        _ ->
+          Logger.error(msg)
+      end
+    end)
+  end
+
   defp get_file_type_label(type) do
     case type do
       :original_image ->
         "Original image"
       :thumbnail_image ->
         "Thumbnail image"
-    end
-  end
-
-  defp print_missing_file_info(info) do
-
-    uuid = info[:uuid]
-
-    with {:ok, created} <- Map.fetch(info, :created),
-      {:ok, created_by} <- Map.fetch(info, :created_by),
-      {:ok, file_name} <- Map.fetch(info, :file_name),
-      {:ok, file_type} <- Map.fetch(info, :file_type)
-    do
-      "#{uuid} is missing (#{file_name}, #{file_type}), created by #{created_by} on #{created}."
-      |> Logger.info()
-    else
-      _err ->
-        with {:ok, error} <- Map.fetch(info, :error)
-        do
-          case error do
-            :deleted ->
-              "#{uuid} has been deleted in the database, but the corresponding image file is still present."
-              |> Logger.warning()
-            :not_found ->
-              "#{uuid} could not be found in the database, but there is a image file present."
-              |> Logger.warning()
-            :unknown ->
-              "#{uuid} unknown error when trying to evaluate details."
-              |> Logger.error()
-          end
-        else
-          _err ->
-            "#{uuid} no details provided"
-            |> Logger.debug()
-        end
     end
   end
 

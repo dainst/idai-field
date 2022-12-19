@@ -259,6 +259,58 @@ defmodule FieldHub.CouchService do
     Jason.decode!(body)["results"]
   end
 
+  def get_docs_by_type(%Credentials{} = credentials, project_name, types) do
+    batch_size = 500
+
+    Stream.resource(
+      fn() ->
+        %{
+          selector: %{
+             "$or": Enum.map(types, fn(type) ->
+                %{
+                  resource: %{
+                    type: type
+                  }
+                }
+             end)
+          },
+          limit: batch_size,
+          skip: 0
+      }
+      end,
+      fn(payload) ->
+          HTTPoison.post!(
+            "#{url()}/#{project_name}/_find",
+            Jason.encode!(payload),
+            headers(credentials)
+          )
+          |> case do
+            %{status_code: 200, body: body} ->
+              body
+              |> Jason.decode!()
+              |> Map.get("docs")
+              |> case do
+                [] ->
+                  {:halt, :ok}
+                docs ->
+                  payload =
+                    payload
+                    |> Map.update!(:skip, fn(previous) ->
+                      previous + batch_size
+                    end)
+
+                  {docs, payload}
+              end
+            error ->
+              {:halt, error}
+          end
+      end,
+      fn(_final_payload) ->
+        :ok
+      end
+    )
+  end
+
   def get_admin_credentials() do
 
     %Credentials{

@@ -42,30 +42,29 @@ defmodule FieldHubWeb.MonitoringLive do
     {:noreply, assign(socket, :stats, stats)}
   end
 
-  def handle_info(:update_issues, %{assigns: %{credentials: credentials, project: project}} = socket) do
+  def handle_info(:update_issues, %{assigns: %{credentials: credentials, project: project, stats: stats}} = socket) do
 
     issues =
       credentials
       |> Issues.evaluate_all(project)
 
-    issue_count = Enum.count(issues)
-
-    timer =
-      case issue_count * 10 do
-        count when count < 1000 ->
-          1000
-        count ->
-          count
-      end
-
     grouped =
       issues
       |> Enum.group_by(fn(%{type: type}) -> type end)
 
-    Logger.debug("Running next issue update in #{timer} ms.")
+    issue_count = Enum.count(issues)
 
-    Process.send_after(self(), :update_issues, timer)
+    schedule_next_in =
+      case stats do
+        %{database: %{doc_count: doc_count}} ->
+          doc_count * 3
+        _ ->
+          10000
+      end
 
+    Logger.debug("Running next issue update in #{schedule_next_in} ms.")
+
+    Process.send_after(self(), :update_issues, schedule_next_in)
 
     {
       :noreply,

@@ -57,7 +57,13 @@ defmodule FieldHubWeb.MonitoringLive do
     schedule_next_in =
       case stats do
         %{database: %{doc_count: doc_count}} ->
-          doc_count * 3
+          ms = doc_count * 5
+          case ms do
+            val when val < 10000 ->
+              10000
+            val ->
+              val
+          end
         _ ->
           10000
       end

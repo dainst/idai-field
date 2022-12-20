@@ -42,13 +42,11 @@
                         <th>Details</th>
                         <%= Enum.map(issues, fn(%{
                             severity: severity,
-                            data: %{
-                                uuid: uuid
-                            }
+                            data: data
                         } = issue) -> %>
                             <tr>
                                 <td class={issue_classes(severity)}>
-                                    <%= uuid %>
+                                    <%= Map.get(data, :uuid, "No UUID specified") %>
                                 </td>
                                 <td>
                                     <%= get_issue_description(issue) %>

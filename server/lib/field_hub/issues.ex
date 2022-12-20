@@ -65,84 +65,97 @@ defmodule FieldHub.Issues do
   end
 
   def evaluate_images(%Credentials{} = credentials, project_name) do
-    file_store_data =
-      FileStore.get_file_list(project_name)
 
-    credentials
-    |> CouchService.get_docs_by_type(project_name, ["Image", "Photo", "Drawing"])
-    |> Stream.map(fn(%{
-      "created" => %{
-        "user" => created_by,
-        "date" => created
-      },
-      "resource" => %{
-        "id" => uuid,
-        "type" => type,
-        "identifier" => file_name
-       }
-      }) ->
-
-        issue_data =
-          %{
-            uuid: uuid,
-            file_type: type,
-            file_name: file_name,
-            created_by: created_by,
-            created: created
-          }
-
-        file_store_data
-        |> Map.get(uuid)
-        |> case do
-          nil ->
-            # Image data completely missing for document uuid.
-            %Issue{
-              type: :missing_original_image, severity: :info, data: issue_data
-            }
-          %{ variants: [%{name: :thumbnail_image}] } ->
-            # Only thumbnail present for document uuid.
-            %Issue{
-              type: :missing_original_image, severity: :info, data: issue_data
-            }
-          %{ variants: [_, _] = variants} ->
-            # If two variants (thumbnail and original) are present, check their sizes.
-            thumbnail_size =
-              variants
-              |> Enum.find(fn(%{name: variant_name}) ->
-                variant_name == :thumbnail_image
-              end)
-              |> Map.get(:size)
-
-            original_size =
-              variants
-              |> Enum.find(fn(%{name: variant_name}) ->
-                variant_name == :original_image
-              end)
-              |> Map.get(:size)
-
-            case thumbnail_size  do
-              val when val >= original_size ->
-                # Original image files should not be smaller than thumbnails.
-                %Issue{
-                  type: :image_variants_size, severity: :warning, data: Map.merge(
-                    issue_data, %{original_size: original_size, thumbnail_size: thumbnail_size}
-                  )
-                }
-              _ ->
-                # Otherwise :ok.
-                :ok
-            end
-          _ ->
-            # Only original image found is :ok.
-            :ok
-        end
-    end)
-    |> Enum.reject(fn(val) ->
-      case val do
-        :ok -> true
-        _ -> false
+    try do
+        project_name
+        |> FieldHub.FileStore.get_file_list()
+      rescue
+        e -> e
       end
-    end)
+      |> case do
+        %File.Error{reason: :enoent, path: path} ->
+          [%Issue{
+            type: :file_directory_not_found,
+            severity: :error,
+            data: %{path: path}
+          }]
+        file_store_data ->
+          credentials
+          |> CouchService.get_docs_by_type(project_name, ["Image", "Photo", "Drawing"])
+          |> Stream.map(fn(%{
+            "created" => %{
+              "user" => created_by,
+              "date" => created
+            },
+            "resource" => %{
+              "id" => uuid,
+              "type" => type,
+              "identifier" => file_name
+            }
+            }) ->
+
+              issue_data =
+                %{
+                  uuid: uuid,
+                  file_type: type,
+                  file_name: file_name,
+                  created_by: created_by,
+                  created: created
+                }
+
+              file_store_data
+              |> Map.get(uuid)
+              |> case do
+                nil ->
+                  # Image data completely missing for document uuid.
+                  %Issue{
+                    type: :missing_original_image, severity: :info, data: issue_data
+                  }
+                %{ variants: [%{name: :thumbnail_image}] } ->
+                  # Only thumbnail present for document uuid.
+                  %Issue{
+                    type: :missing_original_image, severity: :info, data: issue_data
+                  }
+                %{ variants: [_, _] = variants} ->
+                  # If two variants (thumbnail and original) are present, check their sizes.
+                  thumbnail_size =
+                    variants
+                    |> Enum.find(fn(%{name: variant_name}) ->
+                      variant_name == :thumbnail_image
+                    end)
+                    |> Map.get(:size)
+
+                  original_size =
+                    variants
+                    |> Enum.find(fn(%{name: variant_name}) ->
+                      variant_name == :original_image
+                    end)
+                    |> Map.get(:size)
+
+                  case thumbnail_size  do
+                    val when val >= original_size ->
+                      # Original image files should not be smaller than thumbnails.
+                      %Issue{
+                        type: :image_variants_size, severity: :warning, data: Map.merge(
+                          issue_data, %{original_size: original_size, thumbnail_size: thumbnail_size}
+                        )
+                      }
+                    _ ->
+                      # Otherwise :ok.
+                      :ok
+                  end
+                _ ->
+                  # Only original image found is :ok.
+                  :ok
+              end
+          end)
+          |> Enum.reject(fn(val) ->
+            case val do
+              :ok -> true
+              _ -> false
+            end
+          end)
+        end
   end
 
 

@@ -38,7 +38,7 @@ defmodule FieldHubWeb.MonitoringLive do
       credentials
       |> Statistics.get_for_project(project)
 
-    Process.send_after(self(), :update, 1000)
+    Process.send_after(self(), :update, 10000)
 
     {:noreply, assign(socket, :stats, stats)}
   end

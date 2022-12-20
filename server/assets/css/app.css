@@ -130,13 +130,6 @@ body {
   margin: 0px;
 }
 
-.monitoring-issues {
-  margin-top: 5px;
-  border-radius: 5px;
-  padding: 5px;
-  padding-left: 10px;
-}
-
 .monitoring-issue-info {
   background-color: #fffd82;
 }

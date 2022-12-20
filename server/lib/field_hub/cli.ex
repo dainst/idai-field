@@ -166,10 +166,9 @@ defmodule FieldHub.CLI do
     |> print_statistics()
   end
 
-
   def get_project_issues(project_name) do
     CouchService.get_admin_credentials()
-    |> Issues.check_file_store(project_name)
+    |> Issues.evaluate_all(project_name)
     |> print_issues()
   end
 
@@ -192,22 +191,31 @@ defmodule FieldHub.CLI do
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
   end
 
+  defp print_issues([]) do
+    Logger.info("No issues found.")
+  end
 
   defp print_issues(issues) do
     issues
-    |> Enum.each(fn(%Issues.Issue{type: type, severity: severity, explanation: explanation}) ->
-
-      msg = "[#{type}] #{explanation}"
-
+    |> Enum.each(fn(%Issues.Issue{type: type, severity: severity, data: data}) ->
       case severity do
         :info ->
-          Logger.info(msg)
+          print_issue(type, data, &Logger.info/1)
         :warning ->
-          Logger.warning(msg)
+          print_issue(type, data, &Logger.warning/1)
         _ ->
-          Logger.error(msg)
+          print_issue(type, data, &Logger.error/1)
       end
     end)
+  end
+
+  defp print_issue(type, data, logger_function) do
+    logger_function.("#{type}:")
+    data
+    |> Enum.each(fn{key, value} ->
+      logger_function.("- #{key}: #{value}")
+    end)
+    logger_function.("")
   end
 
   defp get_file_type_label(type) do

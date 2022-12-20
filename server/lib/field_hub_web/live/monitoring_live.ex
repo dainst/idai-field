@@ -46,7 +46,7 @@ defmodule FieldHubWeb.MonitoringLive do
 
     issues =
       credentials
-      |> Issues.check_file_store(project)
+      |> Issues.evaluate_all(project)
 
     issue_count = Enum.count(issues)
 
@@ -84,11 +84,22 @@ defmodule FieldHubWeb.MonitoringLive do
     end
   end
 
-  def get_issue_type_label(:file_directory_not_found), do: "File directory not found"
-  def get_issue_type_label(:image_variant_sizes), do: "Image variant file size"
+  def get_issue_type_label(:image_variants_size), do: "Image variants file size"
   def get_issue_type_label(:missing_original_image), do: "Missing original images"
-  def get_issue_type_label(:missing_thumbnail_image), do: "Missing thumbnail images"
   def get_issue_type_label(type), do: type
+
+  def get_issue_description(%{type: :missing_original_image, data: data}) do
+    "#{generic_file_description(data)} Original file is missing and should be uploaded."
+  end
+  def get_issue_description(%{type: :image_variants_size, data: %{original_size: original, thumbnail_size: thumbnail} = data}) do
+    extended_description =
+      "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
+    "#{generic_file_description(data)} #{extended_description}"
+  end
+
+  defp generic_file_description(%{file_name: file_name, file_type: file_type, created_by: created_by, created: created}) do
+    "'#{file_name}' (#{file_type}), created by #{created_by} on #{created}."
+  end
 
   def issue_classes(:info), do: "monitoring-issue-info"
   def issue_classes(:warning), do: "monitoring-issue-warning"

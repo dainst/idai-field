@@ -302,11 +302,16 @@ defmodule FieldHub.CouchService do
                   {docs, payload}
               end
             error ->
-              {:halt, error}
+              {:halt, {:error, error}}
           end
       end,
-      fn(_final_payload) ->
-        :ok
+      fn(final_payload) ->
+        case final_payload do
+          {:error, error} ->
+            throw(error)
+          _ ->
+            :ok
+        end
       end
     )
   end

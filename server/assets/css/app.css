@@ -119,8 +119,12 @@
   100% { opacity: 0; }
 }
 
+:root {
+  --header-height: 350px;
+}
+
 header {
-  height: 350px;
+  height: var(--header-height);
   background-image: url(/images/header_background.png);
   background-position-y: bottom;
   background-position-x: center;
@@ -128,6 +132,11 @@ header {
 
 body {
   margin: 0px;
+}
+
+#live-dashboard-link {
+  top: calc(var(--header-height) - 50px);
+  position: absolute;
 }
 
 .monitoring-issue-info {

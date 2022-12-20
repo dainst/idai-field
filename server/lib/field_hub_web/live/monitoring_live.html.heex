@@ -31,15 +31,28 @@
         <h2>Issues <%= if @issue_count != 0, do: " (#{@issue_count})" %></h2>
         <%= case @issues do %>
             <% :loading -> %>
-                Loading...
+                🔍 Evaluating...
             <% issue_groups when issue_groups == %{}  -> %>
                 None.
             <% issue_groups -> %>
                 <%= Enum.map(issue_groups, fn({type, issues}) -> %>
+                    <h3>
+                        <span phx-click="toggle_issue_type" phx-value-type={type}>
+                            <%= case Enum.member?(@active_issues, type) do %>
+                                <% false -> %>
+                                    🗀
+                                <% _ -> %>
+                                    🗁
+                            <% end %>
+                        </span>
+                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                    </h3>
+
+                    <%= if Enum.member?(@active_issues, type) do %>
                     <table>
-                        <caption><h3><%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)</h3></caption>
                         <th>UUID</th>
                         <th>Details</th>
+
                         <%= Enum.map(issues, fn(%{
                             severity: severity,
                             data: data
@@ -54,6 +67,7 @@
                             </tr>
                         <% end) %>
                     </table>
+                    <% end %>
             <% end) %>
         <% end %>
     </section>

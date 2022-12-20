@@ -25,6 +25,7 @@ defmodule FieldHubWeb.MonitoringLive do
       socket
       |> assign(:stats, :loading)
       |> assign(:issues, :loading)
+      |> assign(:active_issues, [])
       |> assign(:issue_count, 0)
       |> assign(:project, project)
       |> assign(:credentials, credentials)
@@ -78,6 +79,23 @@ defmodule FieldHubWeb.MonitoringLive do
       |> assign(:issues, grouped)
       |> assign(:issue_count, issue_count)
     }
+  end
+
+  def handle_event("toggle_issue_type", %{"type" => type}, %{assigns: %{active_issues: active_issues }} = socket) do
+
+    atomized_type = String.to_existing_atom(type)
+
+    updated_issues =
+      active_issues
+      |> Enum.member?(atomized_type)
+      |> case do
+        true ->
+          List.delete(active_issues, atomized_type)
+        false ->
+          active_issues ++ [atomized_type]
+      end
+
+    {:noreply, assign(socket, :active_issues, updated_issues)}
   end
 
   def get_file_label(key) do

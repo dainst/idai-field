@@ -7,7 +7,8 @@ defmodule FieldHubWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_field_hub_key",
-    signing_salt: "ITZadMUE"
+    signing_salt: "ITZadMUE",
+    encryption_salt: "G3TWMOqyrJACDHfH"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]

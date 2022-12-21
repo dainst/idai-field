@@ -15,8 +15,31 @@ defmodule FieldHub.Issues do
 
   def evaluate_all(%Credentials{} = credentials, project_name) do
     Enum.concat([
+      evaluate_project_document(credentials, project_name),
       evaluate_images(credentials, project_name)
     ])
+    |> sort_issues_by_decreasing_serverity()
+  end
+
+  def evaluate_project_document(credentials, project_name) do
+    credentials
+    |> CouchService.get_docs_by_type(project_name, ["Project"])
+    |> Enum.to_list()
+    |> case do
+      [] ->
+        [%Issue{type: :no_project_document, severity: :error, data: %{}}]
+      [%{"resource" => %{"relations" => relations }}] ->
+        case relations do
+          %{"hasDefaultMapLayer" => []} ->
+            %Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}
+          %{"hasDefaultMapLayer" => _values} ->
+            []
+          _ ->
+            [%Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}]
+        end
+      _ ->
+        [%Issue{type: :multiple_project_documents, severity: :error, data: %{}}]
+    end
   end
 
   def evaluate_images(%Credentials{} = credentials, project_name) do

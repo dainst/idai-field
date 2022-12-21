@@ -107,6 +107,8 @@ defmodule FieldHubWeb.MonitoringLive do
     end
   end
 
+  def get_issue_type_label(:no_project_document), do: "No project document"
+  def get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
   def get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
   def get_issue_type_label(:image_variants_size), do: "Image variants file size"
   def get_issue_type_label(:missing_original_image), do: "Missing original images"
@@ -122,6 +124,12 @@ defmodule FieldHubWeb.MonitoringLive do
     extended_description =
       "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
     "#{generic_file_description(data)} #{extended_description}"
+  end
+  def get_issue_description(%{type: :no_default_project_map_layer}) do
+    "There is no default map layer defined for the project."
+  end
+  def get_issue_description(%{type: :no_project_document}) do
+    "Could not find a project document in the database!"
   end
   def get_issue_description(%{data: data}) do
     # fallback: output key/value pairs

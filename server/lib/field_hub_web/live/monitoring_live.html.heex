@@ -59,7 +59,7 @@
                         } = issue) -> %>
                             <tr>
                                 <td class={issue_classes(severity)}>
-                                    <%= Map.get(data, :uuid, "No UUID specified") %>
+                                    <%= Map.get(data, :uuid, "No UUID") %>
                                 </td>
                                 <td>
                                     <%= get_issue_description(issue) %>

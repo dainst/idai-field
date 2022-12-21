@@ -210,12 +210,18 @@ defmodule FieldHub.CLI do
   end
 
   defp print_issue(type, data, logger_function) do
-    logger_function.("#{type}:")
+
+    case Map.values(data) do
+      [] ->
+        logger_function.("Issue: #{type}.")
+      _vals ->
+        logger_function.("Issue: #{type}:")
+    end
+
     data
     |> Enum.each(fn{key, value} ->
       logger_function.("- #{key}: #{value}")
     end)
-    logger_function.("")
   end
 
   defp get_file_type_label(type) do

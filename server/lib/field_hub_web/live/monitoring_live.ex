@@ -123,6 +123,20 @@ defmodule FieldHubWeb.MonitoringLive do
       "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
     "#{generic_file_description(data)} #{extended_description}"
   end
+  def get_issue_description(%{data: data}) do
+    # fallback: output key/value pairs
+    data
+    |> Enum.map(fn{key, value} ->
+      "#{key}: #{value}"
+    end)
+    |> Enum.join(", ")
+    |> case do
+      "" ->
+        "No description available"
+      val ->
+        val
+    end
+  end
 
   defp generic_file_description(%{file_name: file_name, file_type: file_type, created_by: created_by, created: created}) do
     "'#{file_name}' (#{file_type}), created by #{created_by} on #{created}."

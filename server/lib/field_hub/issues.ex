@@ -46,7 +46,7 @@ defmodule FieldHub.Issues do
 
     try do
         project_name
-        |> FieldHub.FileStore.get_file_list()
+        |> FileStore.get_file_list()
       rescue
         e -> e
       end

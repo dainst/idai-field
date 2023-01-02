@@ -1,9 +1,9 @@
 defmodule FieldHubWeb.MonitoringLive do
-  alias FieldHub.User
-  alias FieldHub.Issues
+  alias FieldHubWeb.UserAuth
 
   alias FieldHub.{
     CouchService,
+    Issues,
     Statistics
   }
 
@@ -20,7 +20,7 @@ defmodule FieldHubWeb.MonitoringLive do
     # See https://hexdocs.pm/phoenix_live_view/security-model.html#mounting-considerations
     user_name =
       user_token
-      |> User.get_user_by_session_token()
+      |> UserAuth.get_user_by_session_token()
 
     user_name
     |> CouchService.has_project_access?(project)

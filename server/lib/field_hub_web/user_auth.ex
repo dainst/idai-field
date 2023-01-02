@@ -3,8 +3,7 @@ defmodule FieldHubWeb.UserAuth do
   import Phoenix.Controller
 
   alias FieldHub.{
-    CouchService,
-    User
+    CouchService
   }
 
   alias FieldHubWeb.Router.Helpers, as: Routes
@@ -79,7 +78,7 @@ defmodule FieldHubWeb.UserAuth do
   if you are not using LiveView.
   """
   def log_in_user(conn, user, _params \\ %{}) do
-    token = User.generate_user_session_token(user)
+    token = generate_user_session_token(user)
     user_return_to = get_session(conn, :user_return_to)
 
     conn
@@ -117,7 +116,7 @@ defmodule FieldHubWeb.UserAuth do
   """
   def log_out_user(conn) do
     user_token = get_session(conn, :user_token)
-    user_token && User.delete_session_token(user_token)
+    user_token && delete_session_token(user_token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       FieldHubWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
@@ -134,7 +133,7 @@ defmodule FieldHubWeb.UserAuth do
   """
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
-    user = user_token && User.get_user_by_session_token(user_token)
+    user = user_token && get_user_by_session_token(user_token)
     assign(conn, :current_user, user)
   end
 

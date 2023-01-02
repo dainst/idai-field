@@ -1,9 +1,11 @@
 defmodule FieldHubWeb.MonitoringLive do
   alias FieldHub.Issues
+
   alias FieldHub.{
     CouchService,
     Statistics
   }
+
   alias Phoenix.LiveView.JS
 
   use Phoenix.LiveView
@@ -11,15 +13,13 @@ defmodule FieldHubWeb.MonitoringLive do
   require Logger
 
   def mount(%{"project" => project}, %{"user" => user, "password" => password}, socket) do
+    credentials = %CouchService.Credentials{
+      name: user,
+      password: password
+    }
 
-    credentials =
-      %CouchService.Credentials{
-        name: user,
-        password: password
-      }
-
-   Process.send(self(), :update, [])
-   Process.send(self(), :update_issues, [])
+    Process.send(self(), :update, [])
+    Process.send(self(), :update_issues, [])
 
     {
       :ok,
@@ -34,7 +34,6 @@ defmodule FieldHubWeb.MonitoringLive do
   end
 
   def handle_info(:update, %{assigns: %{credentials: credentials, project: project}} = socket) do
-
     stats =
       credentials
       |> Statistics.get_for_project(project)
@@ -44,15 +43,17 @@ defmodule FieldHubWeb.MonitoringLive do
     {:noreply, assign(socket, :stats, stats)}
   end
 
-  def handle_info(:update_issues, %{assigns: %{credentials: credentials, project: project, stats: stats}} = socket) do
-
+  def handle_info(
+        :update_issues,
+        %{assigns: %{credentials: credentials, project: project, stats: stats}} = socket
+      ) do
     issues =
       credentials
       |> Issues.evaluate_all(project)
 
     grouped =
       issues
-      |> Enum.group_by(fn(%{type: type}) -> type end)
+      |> Enum.group_by(fn %{type: type} -> type end)
 
     issue_count = Enum.count(issues)
 
@@ -60,12 +61,15 @@ defmodule FieldHubWeb.MonitoringLive do
       case stats do
         %{database: %{doc_count: doc_count}} ->
           ms = doc_count * 5
+
           case ms do
             val when val < 10000 ->
               10000
+
             val ->
               val
           end
+
         _ ->
           10000
       end
@@ -82,8 +86,11 @@ defmodule FieldHubWeb.MonitoringLive do
     }
   end
 
-  def handle_event("toggle_issue_type", %{"type" => type}, %{assigns: %{active_issues: active_issues }} = socket) do
-
+  def handle_event(
+        "toggle_issue_type",
+        %{"type" => type},
+        %{assigns: %{active_issues: active_issues}} = socket
+      ) do
     atomized_type = String.to_existing_atom(type)
 
     updated_issues =
@@ -92,6 +99,7 @@ defmodule FieldHubWeb.MonitoringLive do
       |> case do
         true ->
           List.delete(active_issues, atomized_type)
+
         false ->
           active_issues ++ [atomized_type]
       end
@@ -103,6 +111,7 @@ defmodule FieldHubWeb.MonitoringLive do
     case key do
       :original_image ->
         "original images"
+
       :thumbnail_image ->
         "thumbnail images"
     end
@@ -118,36 +127,51 @@ defmodule FieldHubWeb.MonitoringLive do
   def get_issue_description(%{type: :file_directory_not_found, data: %{path: path}}) do
     "File directory '#{path}' for the project not found!"
   end
+
   def get_issue_description(%{type: :missing_original_image, data: data}) do
     "#{generic_file_description(data)} Original file is missing and should be uploaded."
   end
-  def get_issue_description(%{type: :image_variants_size, data: %{original_size: original, thumbnail_size: thumbnail} = data}) do
+
+  def get_issue_description(%{
+        type: :image_variants_size,
+        data: %{original_size: original, thumbnail_size: thumbnail} = data
+      }) do
     extended_description =
       "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
+
     "#{generic_file_description(data)} #{extended_description}"
   end
+
   def get_issue_description(%{type: :no_default_project_map_layer}) do
     "There is no default map layer defined for the project."
   end
+
   def get_issue_description(%{type: :no_project_document}) do
     "Could not find a project document in the database!"
   end
+
   def get_issue_description(%{data: data}) do
     # fallback: output key/value pairs
     data
-    |> Enum.map(fn{key, value} ->
+    |> Enum.map(fn {key, value} ->
       "#{key}: #{value}"
     end)
     |> Enum.join(", ")
     |> case do
       "" ->
         "No description available"
+
       val ->
         val
     end
   end
 
-  defp generic_file_description(%{file_name: file_name, file_type: file_type, created_by: created_by, created: created}) do
+  defp generic_file_description(%{
+         file_name: file_name,
+         file_type: file_type,
+         created_by: created_by,
+         created: created
+       }) do
     "'#{file_name}' (#{file_type}), created by #{created_by} on #{created}."
   end
 

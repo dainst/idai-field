@@ -62,7 +62,6 @@ defmodule FieldHub.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-
     dev_db_name = "development"
 
     [

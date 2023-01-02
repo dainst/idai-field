@@ -3,7 +3,6 @@ ExUnit.start()
 alias FieldHub.CLI
 
 defmodule FieldHub.TestHelper do
-
   def create_test_db_and_user(project, user_name, user_password) do
     CLI.create_project(project)
     CLI.create_user(user_name, user_password)

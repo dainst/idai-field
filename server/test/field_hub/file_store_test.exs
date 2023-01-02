@@ -74,7 +74,6 @@ defmodule FieldHub.FileStoreTest do
   end
 
   test "without variant parameter return all files in file list" do
-
     FileStore.create_directories(@project)
 
     content = File.read!("test/fixtures/logo.png")
@@ -86,24 +85,23 @@ defmodule FieldHub.FileStoreTest do
     list = FileStore.get_file_list(@project)
 
     assert %{
-      "uuid_1" => %{
-        deleted: false,
-        types: [:thumbnail_image, :original_image],
-        variants: [
-          %{name: :thumbnail_image},
-          %{name: :original_image}
-        ]
-      },
-      "uuid_2" => %{
-        deleted: false,
-        types: [:original_image],
-        variants: [%{name: :original_image}]
-      }
-    } = list
+             "uuid_1" => %{
+               deleted: false,
+               types: [:thumbnail_image, :original_image],
+               variants: [
+                 %{name: :thumbnail_image},
+                 %{name: :original_image}
+               ]
+             },
+             "uuid_2" => %{
+               deleted: false,
+               types: [:original_image],
+               variants: [%{name: :original_image}]
+             }
+           } = list
   end
 
   test "return files with specified variant in file list" do
-
     FileStore.create_directories(@project)
 
     content = File.read!("test/fixtures/logo.png")
@@ -116,18 +114,19 @@ defmodule FieldHub.FileStoreTest do
     list = FileStore.get_file_list(@project, [:thumbnail_image])
 
     assert %{
-      "uuid_1" => %{
-        deleted: false,
-        types: [:thumbnail_image],
-        variants: [
-          %{name: :thumbnail_image}
-        ]
-      },
-      "uuid_3" => %{
-        deleted: false,
-        types: [:thumbnail_image],
-        variants: [%{name: :thumbnail_image, size: 18619}]}
-    } = list
+             "uuid_1" => %{
+               deleted: false,
+               types: [:thumbnail_image],
+               variants: [
+                 %{name: :thumbnail_image}
+               ]
+             },
+             "uuid_3" => %{
+               deleted: false,
+               types: [:thumbnail_image],
+               variants: [%{name: :thumbnail_image, size: 18619}]
+             }
+           } = list
 
     assert !Map.has_key?(list, "uuid_2")
   end
@@ -198,22 +197,24 @@ defmodule FieldHub.FileStoreTest do
     list = FileStore.get_file_list(@project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = Cachex.get(@cache_name, @project)
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = Cachex.get(@cache_name, @project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = {:ok, list}
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = {:ok, list}
 
     FileStore.store_file("anothervalidfilename", @project, :original_image, content)
 
@@ -232,22 +233,24 @@ defmodule FieldHub.FileStoreTest do
     list = FileStore.get_file_list(@project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = Cachex.get(@cache_name, @project)
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = Cachex.get(@cache_name, @project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = {:ok, list}
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = {:ok, list}
 
     FileStore.delete("validfilename", @project)
 
@@ -266,22 +269,24 @@ defmodule FieldHub.FileStoreTest do
     list = FileStore.get_file_list(@project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = Cachex.get(@cache_name, @project)
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = Cachex.get(@cache_name, @project)
 
     assert {
-      :ok,
-      %{
-        "validfilename" => %{
-          # irrelevant for test
-        }
-      }
-    } = {:ok, list}
+             :ok,
+             %{
+               "validfilename" =>
+                 %{
+                   # irrelevant for test
+                 }
+             }
+           } = {:ok, list}
 
     FileStore.remove_directories(@project)
 

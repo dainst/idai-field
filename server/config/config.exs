@@ -16,8 +16,10 @@ config :field_hub, FieldHubWeb.Endpoint,
 
 config :field_hub,
   couchdb_url: "http://localhost:5984",
-  couchdb_admin_name: "admin", # see .env_template
-  couchdb_admin_password: "password", # see .env_template
+  # see .env_template
+  couchdb_admin_name: "admin",
+  # see .env_template
+  couchdb_admin_password: "password",
   file_variant_types: [:thumbnail_image, :original_image],
   file_info_cache_name: :file_info
 
@@ -32,7 +34,6 @@ config :field_hub, FieldHub.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
-
 
 # Configure esbuild (the version is required)
 config :esbuild,

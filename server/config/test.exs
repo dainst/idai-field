@@ -8,8 +8,7 @@ config :field_hub, FieldHubWeb.Endpoint,
   server: false
 
 # In test we don't send emails.
-config :field_hub, FieldHub.Mailer,
-  adapter: Swoosh.Adapters.Test
+config :field_hub, FieldHub.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :error

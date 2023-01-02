@@ -42,7 +42,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert conn.status == 201
   end
 
-
   test "GET /files/:project/:uuid returns 404 for non-existent file", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
@@ -53,7 +52,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
     assert conn.status == 404
   end
-
 
   test "GET /files/:project/:uuid returns 400 without type parameter", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
@@ -66,7 +64,6 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
     assert conn.status == 400
   end
-
 
   test "GET /files/:project/:uuid returns 400 with invalid type parameter", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")

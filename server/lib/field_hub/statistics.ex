@@ -41,31 +41,34 @@ defmodule FieldHub.Statistics do
     |> case do
       %File.Error{reason: :enoent} ->
         :enoent
+
       file_info ->
         file_info
         |> Enum.reduce(
-          Map.new(@variant_types, fn(type) ->
-            {type, %{
-              active: 0,
-              active_size: 0,
-              deleted: 0,
-              deleted_size: 0
-            }}
+          Map.new(@variant_types, fn type ->
+            {type,
+             %{
+               active: 0,
+               active_size: 0,
+               deleted: 0,
+               deleted_size: 0
+             }}
           end),
-          fn({_uuid, %{deleted: deleted, variants: variants }}, accumulated_stats) ->
+          fn {_uuid, %{deleted: deleted, variants: variants}}, accumulated_stats ->
             variants
-            |> Stream.map(fn(%{name: name, size: size}) ->
+            |> Stream.map(fn %{name: name, size: size} ->
               case deleted do
                 true ->
                   %{
-                      name => %{
+                    name => %{
                       deleted: 1,
                       deleted_size: size
                     }
                   }
+
                 _ ->
                   %{
-                      name => %{
+                    name => %{
                       active: 1,
                       active_size: size
                     }
@@ -73,15 +76,19 @@ defmodule FieldHub.Statistics do
               end
             end)
             |> Enum.reduce(&Map.merge/2)
-            |> Map.merge(accumulated_stats, fn(_key, current_uuid_variant_stats, accumulated_variant_stats) ->
+            |> Map.merge(accumulated_stats, fn _key,
+                                               current_uuid_variant_stats,
+                                               accumulated_variant_stats ->
               Map.merge(
                 current_uuid_variant_stats,
                 accumulated_variant_stats,
-                fn(_key_b, counter_value_current, counter_value_accumulated) ->
+                fn _key_b, counter_value_current, counter_value_accumulated ->
                   counter_value_current + counter_value_accumulated
-              end)
+                end
+              )
             end)
-        end)
+          end
+        )
     end
   end
 end

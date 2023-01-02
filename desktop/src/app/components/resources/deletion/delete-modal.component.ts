@@ -31,22 +31,26 @@ export class DeleteModalComponent {
     public showDeleteDescendantWarningSingle = () =>
         this.descendantsCount === 1
         && this.documents.length === 1
-        && !this.projectConfiguration.getTypeCategories().map(Named.toName).includes(this.documents[0].resource.category);
+        && !this.projectConfiguration.getTypeManagementCategories()
+            .map(Named.toName).includes(this.documents[0].resource.category);
 
     public showDeleteDescendantsWarningSingle = () =>
         this.descendantsCount > 1
         && this.documents.length === 1
-        && !this.projectConfiguration.getTypeCategories().map(Named.toName).includes(this.documents[0].resource.category);
+        && !this.projectConfiguration.getTypeManagementCategories()
+            .map(Named.toName).includes(this.documents[0].resource.category);
 
     public showDeleteDescendantWarningMultiple = () =>
         this.descendantsCount === 1
         && this.documents.length > 1
-        && !this.projectConfiguration.getTypeCategories().map(Named.toName).includes(this.documents[0].resource.category);
+        && !this.projectConfiguration.getTypeManagementCategories()
+            .map(Named.toName).includes(this.documents[0].resource.category);
 
     public showDeleteDescendantsWarningMultiple = () =>
         this.descendantsCount > 1
         && this.documents.length > 1
-        && !this.projectConfiguration.getTypeCategories().map(Named.toName).includes(this.documents[0].resource.category);
+        && !this.projectConfiguration.getTypeManagementCategories()
+            .map(Named.toName).includes(this.documents[0].resource.category);
 
     public showImportedCatalogAssociationsMsg = () =>
         this.documents[0].resource.category === 'TypeCatalog'

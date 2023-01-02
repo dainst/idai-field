@@ -164,7 +164,8 @@ export class Routing {
 
         return this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)
             ? 'project'
-            : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
+            : this.projectConfiguration.getTypeManagementCategories()
+                    .map(Named.toName).includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

@@ -152,11 +152,11 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    it('getTypeCategories', () => {
+    it('getTypeManagementCategories', () => {
 
         expect(
             sameset(
-                projectConfiguration.getTypeCategories().map(Named.toName),
+                projectConfiguration.getTypeManagementCategories().map(Named.toName),
                 ['TypeCatalog', 'Type'])
         ).toBeTruthy();
     });

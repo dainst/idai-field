@@ -66,7 +66,8 @@ export class ResourceDeletion {
 
     private isImportedCatalog = (document: FieldDocument) => {
 
-        return this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category)
+        return this.projectConfiguration.getTypeManagementCategories().map(Named.toName)
+                .includes(document.resource.category)
             && document.project !== undefined;
     }
 

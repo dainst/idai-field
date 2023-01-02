@@ -340,6 +340,8 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private isCatalogOrType(document: FieldDocument): boolean {
 
-        return this.projectConfiguration.getTypeCategories().map(Named.toName).includes(document.resource.category);
+        return this.projectConfiguration.getTypeManagementCategories()
+            .map(Named.toName)
+            .includes(document.resource.category);
     }
 }

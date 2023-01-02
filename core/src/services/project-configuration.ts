@@ -165,7 +165,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getTypeCategories(): Array<CategoryForm> {
+    public getTypeManagementCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
             filterTrees(TYPE, TYPE_CATALOG),

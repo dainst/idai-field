@@ -198,8 +198,10 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? this.projectConfiguration.getConcreteOverviewCategories().map(Named.toName).includes(category.name)
-                    : this.projectConfiguration.getTypeCategories().map(Named.toName).includes(category.name))) {
+                    ? this.projectConfiguration.getConcreteOverviewCategories()
+                        .map(Named.toName).includes(category.name)
+                    : this.projectConfiguration.getTypeManagementCategories()
+                        .map(Named.toName).includes(category.name))) {
                 return false;
             }
         }

@@ -61,9 +61,11 @@ export class ResourcesStateManager {
     public getOverviewCategoryNames = (): string[] => this.projectConfiguration
         .getOverviewCategories().map(Named.toName);
 
-    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategories().map(Named.toName);
+    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategories()
+        .map(Named.toName);
 
-    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeCategories().map(Named.toName);
+    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeManagementCategories()
+        .map(Named.toName);
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 

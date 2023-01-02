@@ -136,7 +136,7 @@ export class ProjectInformationModalComponent implements OnInit {
     private async getTypeDocumentCount(): Promise<number> {
 
         return await this.getDocumentCountForCategories(
-            this.projectConfiguration.getTypeCategories().map(category => category.name)
+            this.projectConfiguration.getTypeManagementCategories().map(category => category.name)
         );
     }
 

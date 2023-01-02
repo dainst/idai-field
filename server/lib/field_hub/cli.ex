@@ -36,6 +36,11 @@ defmodule FieldHub.CLI do
         Logger.info("Created system database `_replicator`.")
     end
 
+    create_user(
+      Application.get_env(:field_hub, :couchdb_user_name),
+      Application.get_env(:field_hub, :couchdb_user_password)
+    )
+
     Logger.info("Single node setup done.")
   end
 
@@ -97,12 +102,13 @@ defmodule FieldHub.CLI do
     create_project(project_name)
     create_user(project_name, password)
     add_user_as_project_member(project_name, project_name)
+    add_user_as_project_member(Application.get_env(:field_hub, :couchdb_user_name), project_name)
   end
 
   def create_project_with_default_user(project_name) do
     HTTPoison.start()
 
-    create_project_with_default_user(project_name, create_password(32))
+    create_project_with_default_user(project_name, CouchService.create_password(32))
   end
 
   def create_user(name, password) do
@@ -126,7 +132,7 @@ defmodule FieldHub.CLI do
   def create_user(user_name) do
     HTTPoison.start()
 
-    create_user(user_name, create_password(32))
+    create_user(user_name, CouchService.create_password(32))
   end
 
   def delete_user(user_name) do
@@ -162,6 +168,13 @@ defmodule FieldHub.CLI do
     CouchService.add_project_member(user_name, project, CouchService.get_admin_credentials())
   end
 
+  def add_application_user_to_all_databases() do
+    CouchService.get_databases_for_user(CouchService.get_admin_credentials())
+    |> Enum.each(
+      &add_user_as_project_member(Application.get_env(:field_hub, :couchdb_user_name), &1)
+    )
+  end
+
   def remove_user_from_project(user_name, project) do
     HTTPoison.start()
 
@@ -181,14 +194,14 @@ defmodule FieldHub.CLI do
   end
 
   def get_project_statistics(project_name) do
-    CouchService.get_admin_credentials()
-    |> Statistics.get_for_project(project_name)
+    project_name
+    |> Statistics.get_for_project()
     |> print_statistics()
   end
 
   def get_project_issues(project_name) do
-    CouchService.get_admin_credentials()
-    |> Issues.evaluate_all(project_name)
+    project_name
+    |> Issues.evaluate_all()
     |> print_issues()
   end
 
@@ -258,12 +271,5 @@ defmodule FieldHub.CLI do
       :thumbnail_image ->
         "Thumbnail image"
     end
-  end
-
-  defp create_password(length) do
-    length
-    |> :crypto.strong_rand_bytes()
-    |> Base.encode64()
-    |> binary_part(0, length)
   end
 end

@@ -20,8 +20,11 @@ config :field_hub,
   couchdb_admin_name: "admin",
   # see .env_template
   couchdb_admin_password: "password",
+  couchdb_user_name: "field_hub_app",
+  couchdb_user_password: "password",
   file_variant_types: [:thumbnail_image, :original_image],
-  file_info_cache_name: :file_info
+  file_info_cache_name: :file_info,
+  user_tokens_cache_name: :user_tokens
 
 # Configures the mailer
 #

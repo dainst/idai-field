@@ -7,8 +7,8 @@ defmodule FieldHub.Statistics do
 
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
-  def get_for_project(%CouchService.Credentials{} = credentials, project_name) do
-    db_statistics = get_database_statistics(credentials, project_name)
+  def get_for_project(project_name) do
+    db_statistics = get_database_statistics(project_name)
     file_statistics = get_file_statistics(project_name)
 
     %{
@@ -18,16 +18,15 @@ defmodule FieldHub.Statistics do
     }
   end
 
-  def get_all(%CouchService.Credentials{} = credentials) do
-    credentials
+  def get_all(user_name) do
+    user_name
     |> FieldHub.CouchService.get_databases_for_user()
-    |> Enum.map(&get_for_project(credentials, &1))
+    |> Enum.map(&get_for_project(&1))
   end
 
-  defp get_database_statistics(%CouchService.Credentials{} = credentials, project_name) do
+  defp get_database_statistics(project_name) do
     %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} =
-      credentials
-      |> FieldHub.CouchService.get_db_infos(project_name)
+      FieldHub.CouchService.get_db_infos(project_name)
 
     %{doc_count: db_doc_count, file_size: db_file_size}
   end

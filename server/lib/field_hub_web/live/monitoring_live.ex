@@ -1,4 +1,5 @@
 defmodule FieldHubWeb.MonitoringLive do
+  alias FieldHub.User
   alias FieldHub.Issues
 
   alias FieldHub.{
@@ -12,31 +13,40 @@ defmodule FieldHubWeb.MonitoringLive do
 
   require Logger
 
-  def mount(%{"project" => project}, %{"user" => user, "password" => password}, socket) do
-    credentials = %CouchService.Credentials{
-      name: user,
-      password: password
-    }
+  def mount(%{"project" => project} = params, %{"user_token" => user_token} = session, socket) do
+    # TODO: In newer Phoenix version use an `on_mount` plug. This check prevents direct unauthorized
+    # access via websocket. In the normal application flow this will be unnesseary
+    # because the http plug will already have caught unauthorized access before switching protocols.
+    # See https://hexdocs.pm/phoenix_live_view/security-model.html#mounting-considerations
+    user_name =
+      user_token
+      |> User.get_user_by_session_token()
 
-    Process.send(self(), :update, [])
-    Process.send(self(), :update_issues, [])
+    user_name
+    |> CouchService.has_project_access?(project)
+    |> case do
+      true ->
+        Process.send(self(), :update, [])
+        Process.send(self(), :update_issues, [])
 
-    {
-      :ok,
-      socket
-      |> assign(:stats, :loading)
-      |> assign(:issues, :loading)
-      |> assign(:active_issues, [])
-      |> assign(:issue_count, 0)
-      |> assign(:project, project)
-      |> assign(:credentials, credentials)
-    }
+        {
+          :ok,
+          socket
+          |> assign(:stats, :loading)
+          |> assign(:issues, :loading)
+          |> assign(:active_issues, [])
+          |> assign(:issue_count, 0)
+          |> assign(:project, project)
+          |> assign(:current_user, user_name)
+        }
+
+      false ->
+        redirect(socket, to: "/login")
+    end
   end
 
-  def handle_info(:update, %{assigns: %{credentials: credentials, project: project}} = socket) do
-    stats =
-      credentials
-      |> Statistics.get_for_project(project)
+  def handle_info(:update, %{assigns: %{current_user: user_name, project: project}} = socket) do
+    stats = Statistics.get_for_project(project)
 
     Process.send_after(self(), :update, 10000)
 
@@ -45,11 +55,9 @@ defmodule FieldHubWeb.MonitoringLive do
 
   def handle_info(
         :update_issues,
-        %{assigns: %{credentials: credentials, project: project, stats: stats}} = socket
+        %{assigns: %{current_user: user_name, project: project, stats: stats}} = socket
       ) do
-    issues =
-      credentials
-      |> Issues.evaluate_all(project)
+    issues = Issues.evaluate_all(project)
 
     grouped =
       issues

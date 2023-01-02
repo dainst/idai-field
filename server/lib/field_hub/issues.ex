@@ -1,6 +1,5 @@
 defmodule FieldHub.Issues do
   alias FieldHub.FileStore
-  alias FieldHub.CouchService.Credentials
   alias FieldHub.CouchService
 
   defmodule Issue do
@@ -12,17 +11,17 @@ defmodule FieldHub.Issues do
 
   require Logger
 
-  def evaluate_all(%Credentials{} = credentials, project_name) do
+  def evaluate_all(project_name) do
     Enum.concat([
-      evaluate_project_document(credentials, project_name),
-      evaluate_images(credentials, project_name)
+      evaluate_project_document(project_name),
+      evaluate_images(project_name)
     ])
     |> sort_issues_by_decreasing_serverity()
   end
 
-  def evaluate_project_document(credentials, project_name) do
-    credentials
-    |> CouchService.get_docs_by_type(project_name, ["Project"])
+  def evaluate_project_document(project_name) do
+    project_name
+    |> CouchService.get_docs_by_type(["Project"])
     |> Enum.to_list()
     |> case do
       [] ->
@@ -45,7 +44,7 @@ defmodule FieldHub.Issues do
     end
   end
 
-  def evaluate_images(%Credentials{} = credentials, project_name) do
+  def evaluate_images(project_name) do
     try do
       project_name
       |> FileStore.get_file_list()
@@ -63,8 +62,8 @@ defmodule FieldHub.Issues do
         ]
 
       file_store_data ->
-        credentials
-        |> CouchService.get_docs_by_type(project_name, ["Image", "Photo", "Drawing"])
+        project_name
+        |> CouchService.get_docs_by_type(["Image", "Photo", "Drawing"])
         |> Stream.map(fn %{
                            "created" => %{
                              "user" => created_by,

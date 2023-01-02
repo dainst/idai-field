@@ -17,6 +17,14 @@
               <ul>
                 <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
               </ul>
+              <ul>
+              <%= if @current_user do %>
+                <li><%= @current_user %></li>
+                <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
+              <% else %>
+                <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
+              <% end %>
+              </ul>
             </nav>
           <% end %>
         </section>

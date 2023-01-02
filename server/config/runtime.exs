@@ -53,7 +53,9 @@ if config_env() == :prod do
   config :field_hub,
     couchdb_url: System.get_env("COUCHDB_URL"),
     couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"),
-    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD")
+    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD"),
+    couchdb_user_name: System.get_env("COUCHDB_USER_NAME"),
+    couchdb_user_password: System.get_env("COUCHDB_USER_PASSWORD")
 
   # ## Configuring the mailer
   #

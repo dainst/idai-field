@@ -1,9 +1,8 @@
 defmodule FieldHubWeb.Router do
-
   use FieldHubWeb, :router
 
   alias FieldHub.CouchService
-  import FieldHubWeb.Plugs
+  import FieldHubWeb.UserAuth
   import Phoenix.LiveView.Router
 
   pipeline :browser do
@@ -18,6 +17,7 @@ defmodule FieldHubWeb.Router do
     plug :put_root_layout, {FieldHubWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -37,7 +37,11 @@ defmodule FieldHubWeb.Router do
 
     get "/", PageController, :index
 
-    pipe_through :api_auth
+    get "/session/new", UserSessionController, :new
+    post "/login", UserSessionController, :create
+    post "/logout", UserSessionController, :delete
+
+    pipe_through [:require_authenticated_user, :require_project_access]
     live "/monitoring/:project", MonitoringLive
   end
 

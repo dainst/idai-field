@@ -4,6 +4,7 @@ defmodule FieldHubWeb.MonitoringLive do
     CouchService,
     Statistics
   }
+  alias Phoenix.LiveView.JS
 
   use Phoenix.LiveView
 

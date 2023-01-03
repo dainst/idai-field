@@ -5,10 +5,10 @@ defmodule FieldHub.CouchService do
 
   require Logger
 
-  def authenticate(project, %Credentials{} = credentials) do
+  def authenticate(%Credentials{} = credentials) do
     response =
       HTTPoison.get(
-        "#{url()}/#{project}",
+        "#{url()}/",
         headers(credentials)
       )
 
@@ -24,10 +24,10 @@ defmodule FieldHub.CouchService do
     end
   end
 
-  def authenticate(%Credentials{} = credentials) do
+  def authenticate_and_authorize(%Credentials{} = credentials, project) do
     response =
       HTTPoison.get(
-        "#{url()}/",
+        "#{url()}/#{project}",
         headers(credentials)
       )
 

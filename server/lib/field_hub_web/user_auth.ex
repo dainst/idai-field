@@ -51,13 +51,13 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` basic authentication for the `"project"` in `conn.params`.
   """
-  def api_auth(%{params: %{"project" => project}} = conn, _opts) do
+  def api_auth(%{params: %{"project" => project_name}} = conn, _opts) do
     with {name, password} <- Plug.BasicAuth.parse_basic_auth(conn),
          :ok <-
-           CouchService.authenticate(project, %CouchService.Credentials{
-             name: name,
-             password: password
-           }) do
+           CouchService.authenticate_and_authorize(
+             %CouchService.Credentials{name: name, password: password},
+             project_name
+           ) do
       # Just return `conn` because for the API we do not track sessions.
       conn
     else

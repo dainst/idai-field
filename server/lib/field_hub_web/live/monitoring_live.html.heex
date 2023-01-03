@@ -22,7 +22,7 @@
                     <section>No files directory found! See issues below.</section>
                 <% values -> %>
                 <%= Enum.map(values, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
-                    <section><%= variant_name |> get_file_label() |> String.capitalize()  %> files: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
+                    <section><%= variant_name |> get_file_label() |> String.capitalize()  %>: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
                 <% end) %>
             <% end %>
     <% end %>

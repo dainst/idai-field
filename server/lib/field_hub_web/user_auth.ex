@@ -180,7 +180,7 @@ defmodule FieldHubWeb.UserAuth do
 
       false ->
         conn
-        |> put_flash(:error, "You are not allowed to view the project '#{project_name}'.")
+        |> put_flash(:error, "You are not authorized for project '#{project_name}'.")
         |> redirect(to: "/")
     end
   end

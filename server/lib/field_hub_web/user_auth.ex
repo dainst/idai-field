@@ -48,7 +48,10 @@ defmodule FieldHubWeb.UserAuth do
     :ok
   end
 
-  def api_auth(%{params: %{"project" => project}} = conn, _) do
+  @doc """
+  Validates `conn` basic authentication for the `"project"` in `conn.params`.
+  """
+  def api_auth(%{params: %{"project" => project}} = conn, _opts) do
     with {name, password} <- Plug.BasicAuth.parse_basic_auth(conn),
          :ok <-
            CouchService.authenticate(project, %CouchService.Credentials{
@@ -160,6 +163,9 @@ defmodule FieldHubWeb.UserAuth do
     end
   end
 
+  @doc """
+  Used for routes that require the user to be authorized for a specified project.
+  """
   def require_project_access(%{params: %{"project" => project_name}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: current_user}} ->

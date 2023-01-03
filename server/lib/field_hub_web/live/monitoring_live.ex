@@ -13,7 +13,7 @@ defmodule FieldHubWeb.MonitoringLive do
 
   require Logger
 
-  def mount(%{"project" => project} = params, %{"user_token" => user_token} = session, socket) do
+  def mount(%{"project" => project} = _params, %{"user_token" => user_token} = _session, socket) do
     # TODO: In newer Phoenix version use an `on_mount` plug. This check prevents direct unauthorized
     # access via websocket. In the normal application flow this will be unnesseary
     # because the http plug will already have caught unauthorized access before switching protocols.
@@ -46,73 +46,68 @@ defmodule FieldHubWeb.MonitoringLive do
   end
 
   def handle_info(:update, %{assigns: %{current_user: user_name, project: project}} = socket) do
-    stats = Statistics.get_for_project(project)
+    user_name
+    |> CouchService.has_project_access?(project)
+    |> case do
+      true ->
+        stats = Statistics.get_for_project(project)
 
-    Process.send_after(self(), :update, 10000)
+        Process.send_after(self(), :update, 10000)
 
-    {:noreply, assign(socket, :stats, stats)}
+        {:noreply, assign(socket, :stats, stats)}
+
+      false ->
+        redirect(socket, to: "/login")
+    end
   end
 
   def handle_info(
         :update_issues,
         %{assigns: %{current_user: user_name, project: project, stats: stats}} = socket
       ) do
-    issues = Issues.evaluate_all(project)
+    user_name
+    |> CouchService.has_project_access?(project)
+    |> case do
+      true ->
+        issues = Issues.evaluate_all(project)
 
-    grouped =
-      issues
-      |> Enum.group_by(fn %{type: type} -> type end)
+        grouped =
+          issues
+          |> Enum.group_by(fn %{type: type} -> type end)
 
-    issue_count = Enum.count(issues)
+        issue_count = Enum.count(issues)
 
-    schedule_next_in =
-      case stats do
-        %{database: %{doc_count: doc_count}} ->
-          ms = doc_count * 5
+        schedule_next_in =
+          case stats do
+            %{database: %{doc_count: doc_count}} ->
+              ms = doc_count * 5
 
-          case ms do
-            val when val < 10000 ->
+              case ms do
+                val when val < 10000 ->
+                  10000
+
+                val ->
+                  val
+              end
+
+            _ ->
               10000
-
-            val ->
-              val
           end
 
-        _ ->
-          10000
-      end
+        Logger.debug("Running next issue update in #{schedule_next_in} ms.")
 
-    Logger.debug("Running next issue update in #{schedule_next_in} ms.")
+        Process.send_after(self(), :update_issues, schedule_next_in)
 
-    Process.send_after(self(), :update_issues, schedule_next_in)
+        {
+          :noreply,
+          socket
+          |> assign(:issues, grouped)
+          |> assign(:issue_count, issue_count)
+        }
 
-    {
-      :noreply,
-      socket
-      |> assign(:issues, grouped)
-      |> assign(:issue_count, issue_count)
-    }
-  end
-
-  def handle_event(
-        "toggle_issue_type",
-        %{"type" => type},
-        %{assigns: %{active_issues: active_issues}} = socket
-      ) do
-    atomized_type = String.to_existing_atom(type)
-
-    updated_issues =
-      active_issues
-      |> Enum.member?(atomized_type)
-      |> case do
-        true ->
-          List.delete(active_issues, atomized_type)
-
-        false ->
-          active_issues ++ [atomized_type]
-      end
-
-    {:noreply, assign(socket, :active_issues, updated_issues)}
+      false ->
+        redirect(socket, to: "/login")
+    end
   end
 
   def get_file_label(key) do

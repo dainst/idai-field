@@ -30,7 +30,7 @@ defmodule FieldHubWeb.Router do
     plug :api_auth
   end
 
-  forward "/db", ReverseProxyPlug, upstream: &CouchService.url/0
+  forward "/db", ReverseProxyPlug, upstream: &CouchService.base_url/0
 
   scope "/", FieldHubWeb do
     pipe_through :browser

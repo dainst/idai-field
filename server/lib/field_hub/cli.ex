@@ -11,7 +11,7 @@ defmodule FieldHub.CLI do
   def setup_couchdb_single_node() do
     HTTPoison.start()
 
-    Logger.info("Running initial CouchDB setup for single node at #{CouchService.url()}...")
+    Logger.info("Running initial CouchDB setup for single node at #{CouchService.base_url()}...")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
     {users, replicator} = CouchService.initial_setup(CouchService.get_admin_credentials())

@@ -5,10 +5,15 @@ defmodule FieldHub.CouchService do
 
   require Logger
 
+  @doc """
+  Authenticate with given `%Credentials{}`.
+
+  Returns `:ok` if credentials are valid, otherwise `{:error, reason}`.
+  """
   def authenticate(%Credentials{} = credentials) do
     response =
       HTTPoison.get(
-        "#{url()}/",
+        "#{base_url()}/",
         headers(credentials)
       )
 
@@ -24,10 +29,16 @@ defmodule FieldHub.CouchService do
     end
   end
 
-  def authenticate_and_authorize(%Credentials{} = credentials, project) do
+  @doc """
+  Authenticate with given `%Credentials{}` and check if authorized to access project.
+
+  Returns `:ok` if credentials are valid and user is authorized, otherwise `{:error, reason}`.
+
+  """
+  def authenticate_and_authorize(%Credentials{} = credentials, project_name) do
     response =
       HTTPoison.get(
-        "#{url()}/#{project}",
+        "#{base_url()}/#{project_name}",
         headers(credentials)
       )
 
@@ -43,79 +54,115 @@ defmodule FieldHub.CouchService do
     end
   end
 
+  @doc """
+  Creates CouchDB's internal databases `_users` and `_replicator` using the given `%Credentials{}`.
+
+  Returns a tuple with two `HTTPoison.Response` for each creation attempt.
+  """
   def initial_setup(%Credentials{} = credentials) do
     {
       HTTPoison.put!(
-        "#{url()}/_users",
+        "#{base_url()}/_users",
         "",
         headers(credentials)
       ),
       HTTPoison.put!(
-        "#{url()}/_replicator",
+        "#{base_url()}/_replicator",
         "",
         headers(credentials)
       )
     }
+    |> IO.inspect()
   end
 
+  @doc """
+  Creates a project database of the given name using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the creation attempt.
+  """
   def create_project(project_name, %Credentials{} = credentials) do
     HTTPoison.put!(
-      "#{url()}/#{project_name}",
+      "#{base_url()}/#{project_name}",
       "",
       headers(credentials)
     )
   end
 
+  @doc """
+  Deletes the project database of the given name using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the deletion attempt.
+  """
   def delete_project(project_name, %Credentials{} = credentials) do
     HTTPoison.delete!(
-      "#{url()}/#{project_name}",
+      "#{base_url()}/#{project_name}",
       headers(credentials)
     )
   end
 
+  @doc """
+  Creates a CouchDB user with the given name and password using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the creation attempt.
+  """
   def create_user(name, password, %Credentials{} = credentials) do
     HTTPoison.put!(
-      "#{url()}/_users/org.couchdb.user:#{name}",
+      "#{base_url()}/_users/org.couchdb.user:#{name}",
       Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
       headers(credentials)
     )
   end
 
+  @doc """
+  Deletes a CouchDB user with the given name using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the deletion attempt.
+  """
   def delete_user(name, %Credentials{} = credentials) do
     %{"_rev" => rev} =
       HTTPoison.get!(
-        "#{url()}/_users/org.couchdb.user:#{name}",
+        "#{base_url()}/_users/org.couchdb.user:#{name}",
         headers(credentials)
       )
       |> Map.get(:body)
       |> Jason.decode!()
 
     HTTPoison.delete!(
-      "#{url()}/_users/org.couchdb.user:#{name}",
+      "#{base_url()}/_users/org.couchdb.user:#{name}",
       headers(credentials) ++ [{"If-Match", rev}]
     )
   end
 
+  @doc """
+  Sets the password for a CouchDB user with the given name using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the update attempt.
+  """
   def set_password(user_name, new_password, %Credentials{} = credentials) do
     %{"_rev" => rev} =
       HTTPoison.get!(
-        "#{url()}/_users/org.couchdb.user:#{user_name}",
+        "#{base_url()}/_users/org.couchdb.user:#{user_name}",
         headers(credentials)
       )
       |> Map.get(:body)
       |> Jason.decode!()
 
     HTTPoison.put!(
-      "#{url()}/_users/org.couchdb.user:#{user_name}",
+      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
       Jason.encode!(%{name: user_name, password: new_password, roles: [], type: "user"}),
       headers(credentials) ++ [{"If-Match", rev}]
     )
   end
 
+  @doc """
+  Adds a CouchDB user with the given name as admin for the given project using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the update attempt.
+  """
   def add_project_admin(user_name, project_name, %Credentials{} = credentials) do
     %{body: body} =
       HTTPoison.get!(
-        "#{url()}/#{project_name}/_security",
+        "#{base_url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -134,16 +181,21 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{project_name}/_security",
+      "#{base_url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
   end
 
+  @doc """
+  Adds a CouchDB user with the given name as member for the given project using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the update attempt.
+  """
   def add_project_member(user_name, project_name, %Credentials{} = credentials) do
     %{body: body} =
       HTTPoison.get!(
-        "#{url()}/#{project_name}/_security",
+        "#{base_url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -162,16 +214,21 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{project_name}/_security",
+      "#{base_url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
   end
 
+  @doc """
+  Removes a CouchDB user with the given name from all roles in the given project using the given `%Credentials{}`.
+
+  Returns the `HTTPoison.Response` for the update attempt.
+  """
   def remove_user_from_project(user_name, project_name, %Credentials{} = credentials) do
     %{body: body} =
       HTTPoison.get!(
-        "#{url()}/#{project_name}/_security",
+        "#{base_url()}/#{project_name}/_security",
         headers(credentials)
       )
 
@@ -195,18 +252,24 @@ defmodule FieldHub.CouchService do
       |> Jason.encode!()
 
     HTTPoison.put!(
-      "#{url()}/#{project_name}/_security",
+      "#{base_url()}/#{project_name}/_security",
       update_data,
       headers(credentials)
     )
   end
 
+  @doc """
+  Checks if the given user is authorized to access the given project.
+
+  Returns `true` or `false`.
+  """
   def has_project_access?(user_name, project_name) do
     if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
       true
     else
+      # TODO: Check if user has admin role in the project.
       %{"members" => %{"names" => existing_members}} =
-        "#{url()}/#{project_name}/_security"
+        "#{base_url()}/#{project_name}/_security"
         |> HTTPoison.get!(headers())
         |> Map.get(:body)
         |> Jason.decode!()
@@ -219,8 +282,13 @@ defmodule FieldHub.CouchService do
     end
   end
 
+  @doc """
+  Gets all projects the given user has access to.
+
+  Returns a list of project names.
+  """
   def get_databases_for_user(user_name) do
-    "#{url()}/_all_dbs"
+    "#{base_url()}/_all_dbs"
     |> HTTPoison.get!(
       get_admin_credentials()
       |> headers()
@@ -232,46 +300,22 @@ defmodule FieldHub.CouchService do
       val in ["_replicator", "_users"]
     end)
     |> Enum.filter(fn database_name ->
-      case Application.get_env(:field_hub, :couchdb_admin_name) do
-        ^user_name ->
-          true
-
-        _ ->
-          %{"members" => %{"names" => existing_members}} =
-            "#{url()}/#{database_name}/_security"
-            |> HTTPoison.get!(headers())
-            |> Map.get(:body)
-            |> Jason.decode!()
-
-          if user_name in existing_members do
-            true
-          else
-            false
-          end
-      end
+      has_project_access?(user_name, database_name)
     end)
   end
 
+  @doc """
+  Get CouchDB's basic metadata for the given project.
+  """
   def get_db_infos(project_name) do
-    credentials = get_user_credentials()
-
-    response =
-      HTTPoison.get!(
-        "#{url()}/#{project_name}",
-        headers(credentials)
-      )
-
-    case response do
-      %{status_code: 200, body: body} ->
-        Jason.decode!(body)
-
-      %{status_code: 401} ->
-        {:error, 401}
-
-      %{status_code: 403} ->
-        {:error, 403}
-    end
+    HTTPoison.get!(
+      "#{base_url()}/#{project_name}",
+      headers()
+    )
+    |> Map.get(:body)
+    |> Jason.decode!()
   end
+
 
   def get_docs(project_name, uuids) do
     body =
@@ -286,7 +330,7 @@ defmodule FieldHub.CouchService do
 
     %{body: body} =
       HTTPoison.post!(
-        "#{url()}/#{project_name}/_bulk_get",
+        "#{base_url()}/#{project_name}/_bulk_get",
         body,
         headers()
       )
@@ -294,6 +338,61 @@ defmodule FieldHub.CouchService do
     Jason.decode!(body)["results"]
   end
 
+  @doc """
+  Returns `Stream` for all documents of the given resource types for the given project.any()
+
+  Returns a list of docs found using CouchDBs `_find` endpoint.
+
+  ## Example
+      iex> CouchService.get_docs_by_type("development", ["Image", "Photo", "Drawing"]) |> Enum.to_list()
+      [
+        %{
+          "_id" => "5cc25dd3-0f39-47a4-b3d8-4a74427f8c6a",
+          "_rev" => "1-c656e9c8690925daaa293fe695e608a8",
+          "created" => %{"date" => "2022-11-08T08:31:23.359Z", "user" => "anonymous"},
+          "modified" => [],
+          "resource" => %{
+            "height" => 900,
+            "id" => "5cc25dd3-0f39-47a4-b3d8-4a74427f8c6a",
+            "identifier" => "7W7z07j.jpg",
+            "originalFilename" => "7W7z07j.jpg",
+            "relations" => %{},
+            "type" => "Drawing",
+            "width" => 1600
+          }
+        },
+        %{
+          "_id" => "7677d2d3-5dcd-4d9c-bcfb-6f6a108c1039",
+          "_rev" => "1-54c34b9639e3fda7aa9005033d0a832e",
+          "created" => %{"date" => "2022-12-14T11:43:07.290Z", "user" => "anonymous"},
+          "modified" => [],
+          "resource" => %{
+            "height" => 1031,
+            "id" => "7677d2d3-5dcd-4d9c-bcfb-6f6a108c1039",
+            "identifier" => "field_ua.jpg",
+            "originalFilename" => "field_ua.jpg",
+            "relations" => %{},
+            "type" => "Drawing",
+            "width" => 1920
+          }
+        },
+        %{
+          "_id" => "880dbf25-ec76-481b-a47e-a7265b7b6164",
+          "_rev" => "1-94ef61e6300074fc0a6ee2909e9b5402",
+          "created" => %{"date" => "2022-12-14T12:52:30.122Z", "user" => "anonymous"},
+          "modified" => [],
+          "resource" => %{
+            "height" => 1080,
+            "id" => "880dbf25-ec76-481b-a47e-a7265b7b6164",
+            "identifier" => "aldrin.png",
+            "originalFilename" => "aldrin.png",
+            "relations" => %{},
+            "type" => "Photo",
+            "width" => 1920
+          }
+        }
+      ]
+  """
   def get_docs_by_type(project_name, types) do
     batch_size = 500
 
@@ -316,7 +415,7 @@ defmodule FieldHub.CouchService do
       end,
       fn payload ->
         HTTPoison.post!(
-          "#{url()}/#{project_name}/_find",
+          "#{base_url()}/#{project_name}/_find",
           Jason.encode!(payload),
           headers()
         )
@@ -355,6 +454,11 @@ defmodule FieldHub.CouchService do
     )
   end
 
+  @doc """
+  Should only used by `CouchService` internally or by the CLI module!
+
+  Returns `%Credentials{}` for the CouchDB admin as defined in `Application` environment.
+  """
   def get_admin_credentials() do
     %Credentials{
       name: Application.get_env(:field_hub, :couchdb_admin_name),
@@ -385,7 +489,7 @@ defmodule FieldHub.CouchService do
     ]
   end
 
-  def url() do
+  def base_url() do
     Application.get_env(:field_hub, :couchdb_url)
   end
 

@@ -1,5 +1,8 @@
 defmodule FieldHubWeb.MonitoringLive do
-  alias FieldHubWeb.UserAuth
+  alias FieldHubWeb.{
+    Router.Helpers,
+    UserAuth
+  }
 
   alias FieldHub.{
     CouchService,

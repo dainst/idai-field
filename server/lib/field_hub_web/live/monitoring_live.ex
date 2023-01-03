@@ -52,7 +52,7 @@ defmodule FieldHubWeb.MonitoringLive do
     |> CouchService.has_project_access?(project)
     |> case do
       true ->
-        stats = Statistics.get_for_project(project)
+        stats = Statistics.evaluate_project(project)
 
         Process.send_after(self(), :update, 10000)
 

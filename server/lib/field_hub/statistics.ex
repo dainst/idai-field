@@ -7,9 +7,9 @@ defmodule FieldHub.Statistics do
 
   @variant_types Application.compile_env(:field_hub, :file_variant_types)
 
-  def get_for_project(project_name) do
-    db_statistics = get_database_statistics(project_name)
-    file_statistics = get_file_statistics(project_name)
+  def evaluate_project(project_name) do
+    db_statistics = evaluate_database(project_name)
+    file_statistics = evaluate_file_store(project_name)
 
     %{
       name: project_name,
@@ -18,20 +18,20 @@ defmodule FieldHub.Statistics do
     }
   end
 
-  def get_all(user_name) do
+  def evaluate_all_projects_for_user(user_name) do
     user_name
     |> FieldHub.CouchService.get_databases_for_user()
-    |> Enum.map(&get_for_project(&1))
+    |> Enum.map(&evaluate_project(&1))
   end
 
-  defp get_database_statistics(project_name) do
+  defp evaluate_database(project_name) do
     %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} =
       FieldHub.CouchService.get_db_infos(project_name)
 
     %{doc_count: db_doc_count, file_size: db_file_size}
   end
 
-  defp get_file_statistics(project_name) do
+  defp evaluate_file_store(project_name) do
     try do
       FieldHub.FileStore.get_file_list(project_name)
     rescue

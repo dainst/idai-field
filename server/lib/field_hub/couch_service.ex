@@ -201,41 +201,21 @@ defmodule FieldHub.CouchService do
     )
   end
 
-  def get_databases_for_user(%Credentials{} = credentials) do
-    # First check if user credentials are valid...
-    "#{url()}/"
-    |> HTTPoison.get!(
-      credentials
-      |> headers()
-    )
-    |> case do
-      %{status_code: 401} ->
-        {:error, 401}
-
-      _ ->
-        # ...then get all existing database names as administrator and check if user has access.
-        "#{url()}/_all_dbs"
-        |> HTTPoison.get!(
-          get_admin_credentials()
-          |> headers()
-        )
+  def has_project_access?(user_name, project_name) do
+    if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
+      true
+    else
+      %{"members" => %{"names" => existing_members}} =
+        "#{url()}/#{project_name}/_security"
+        |> HTTPoison.get!(headers())
         |> Map.get(:body)
         |> Jason.decode!()
-        |> Stream.reject(fn val ->
-          # Filter out CouchDB's internal databases.
-          val in ["_replicator", "_users"]
-        end)
-        |> Enum.filter(fn database_name ->
-          "#{url()}/#{database_name}"
-          |> HTTPoison.get!(headers(credentials))
-          |> case do
-            %{status_code: 200} ->
-              true
 
-            %{status_code: 403} ->
-              false
-          end
-        end)
+      if user_name in existing_members do
+        true
+      else
+        false
+      end
     end
   end
 
@@ -259,10 +239,7 @@ defmodule FieldHub.CouchService do
         _ ->
           %{"members" => %{"names" => existing_members}} =
             "#{url()}/#{database_name}/_security"
-            |> HTTPoison.get!(
-              get_admin_credentials()
-              |> headers()
-            )
+            |> HTTPoison.get!(headers())
             |> Map.get(:body)
             |> Jason.decode!()
 
@@ -273,27 +250,6 @@ defmodule FieldHub.CouchService do
           end
       end
     end)
-  end
-
-  def has_project_access?(user_name, project_name) do
-    if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
-      true
-    else
-      %{"members" => %{"names" => existing_members}} =
-        "#{url()}/#{project_name}/_security"
-        |> HTTPoison.get!(
-          get_admin_credentials()
-          |> headers()
-        )
-        |> Map.get(:body)
-        |> Jason.decode!()
-
-      if user_name in existing_members do
-        true
-      else
-        false
-      end
-    end
   end
 
   def get_db_infos(project_name) do
@@ -318,8 +274,6 @@ defmodule FieldHub.CouchService do
   end
 
   def get_docs(project_name, uuids) do
-    credentials = get_user_credentials()
-
     body =
       %{
         docs:
@@ -334,15 +288,13 @@ defmodule FieldHub.CouchService do
       HTTPoison.post!(
         "#{url()}/#{project_name}/_bulk_get",
         body,
-        headers(credentials)
+        headers()
       )
 
     Jason.decode!(body)["results"]
   end
 
   def get_docs_by_type(project_name, types) do
-    credentials = get_user_credentials()
-
     batch_size = 500
 
     Stream.resource(
@@ -366,7 +318,7 @@ defmodule FieldHub.CouchService do
         HTTPoison.post!(
           "#{url()}/#{project_name}/_find",
           Jason.encode!(payload),
-          headers(credentials)
+          headers()
         )
         |> case do
           %{status_code: 200, body: body} ->
@@ -410,11 +362,16 @@ defmodule FieldHub.CouchService do
     }
   end
 
-  def get_user_credentials() do
+  defp get_user_credentials() do
     %Credentials{
       name: Application.get_env(:field_hub, :couchdb_user_name),
       password: Application.get_env(:field_hub, :couchdb_user_password)
     }
+  end
+
+  defp headers() do
+    get_user_credentials()
+    |> headers()
   end
 
   defp headers(%Credentials{name: user_name, password: user_password}) do

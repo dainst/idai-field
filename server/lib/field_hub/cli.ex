@@ -191,13 +191,13 @@ defmodule FieldHub.CLI do
 
   def get_project_statistics() do
     CouchService.get_admin_credentials()
-    |> Statistics.get_all()
+    |> Statistics.evaluate_all_projects_for_user()
     |> Enum.each(&print_statistics/1)
   end
 
   def get_project_statistics(project_name) do
     project_name
-    |> Statistics.get_for_project()
+    |> Statistics.evaluate_project()
     |> print_statistics()
   end
 

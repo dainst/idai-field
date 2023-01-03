@@ -6,7 +6,6 @@ defmodule FieldHubWeb.PageController do
   def index(conn, _params) do
     conn =
       case conn do
-
         %{assigns: %{current_user: nil}} ->
           conn
 

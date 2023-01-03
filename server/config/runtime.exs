@@ -22,6 +22,11 @@ if config_env() == :prod do
 
   host = System.get_env("HOST")
 
+  # Configures Elixir's Logger
+  config :logger, :console,
+    format: "$date $time $metadata[$level] $message\n",
+    metadata: [:request_id]
+
   config :field_hub, FieldHubWeb.Endpoint,
     url: [host: host, port: 443],
     http: [

@@ -37,7 +37,6 @@ defmodule FieldHubWeb.MonitoringLive do
           socket
           |> assign(:stats, :loading)
           |> assign(:issues, :loading)
-          |> assign(:active_issues, [])
           |> assign(:issue_count, 0)
           |> assign(:project, project)
           |> assign(:current_user, user_name)

@@ -38,19 +38,17 @@
                 None.
             <% issue_groups -> %>
                 <%= Enum.map(issue_groups, fn({type, issues}) -> %>
+                <section id={"#{type}-issue-group"} class="issue-group hide">
                     <h3>
-                        <span style="cursor: pointer;" phx-click={JS.toggle(to: "##{type}-table", in: "fade-in", out: "fade-out")}>
-                            <%= case Enum.member?(@active_issues, type) do %>
-                                <% false -> %>
-                                    🗀
-                                <% _ -> %>
-                                    🗁
-                            <% end %>
-                            <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                        <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                            🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                        </span>
+                        <span class="hide-toggle" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                            🗁 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                         </span>
                     </h3>
 
-                    <table id={"#{type}-table"} style="display: none;">
+                    <table class="issue-table">
                         <th>UUID</th>
                         <th>Details</th>
 
@@ -68,6 +66,7 @@
                             </tr>
                         <% end) %>
                     </table>
+                </section>
                 <% end) %>
         <% end %>
     </section>

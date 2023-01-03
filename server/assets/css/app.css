@@ -160,6 +160,18 @@ nav {
   }
 }
 
+.issue-group.hide .issue-table {
+  display: none;
+}
+
+.issue-group.hide .hide-toggle {
+  display: none;
+}
+
+.issue-group:not(.hide) .show-toggle {
+  display: none;
+}
+
 .monitoring-issue {
   text-align: center;
 }

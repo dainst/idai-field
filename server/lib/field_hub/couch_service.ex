@@ -219,7 +219,7 @@ defmodule FieldHub.CouchService do
     end
   end
 
-  def get_databases_for_user(user) do
+  def get_databases_for_user(user_name) do
     "#{url()}/_all_dbs"
     |> HTTPoison.get!(
       get_admin_credentials()
@@ -233,7 +233,7 @@ defmodule FieldHub.CouchService do
     end)
     |> Enum.filter(fn database_name ->
       case Application.get_env(:field_hub, :couchdb_admin_name) do
-        ^user ->
+        ^user_name ->
           true
 
         _ ->
@@ -243,7 +243,7 @@ defmodule FieldHub.CouchService do
             |> Map.get(:body)
             |> Jason.decode!()
 
-          if user in existing_members do
+          if user_name in existing_members do
             true
           else
             false

@@ -4,8 +4,8 @@ services:
   couchdb:
     image: couchdb:3.2.1
     environment:
-      - COUCHDB_USER
-      - COUCHDB_PASSWORD
+      - COUCHDB_USER=${COUCHDB_ADMIN_NAME}
+      - COUCHDB_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
     volumes:
       - db-data:/opt/couchdb/data
     networks:
@@ -24,8 +24,10 @@ services:
       - HOST
       - SECRET_KEY_BASE
       - COUCHDB_URL=http://couchdb:5984
-      - COUCHDB_ADMIN_NAME=${COUCHDB_USER}
-      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_PASSWORD}
+      - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_NAME}
+      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
+      - COUCHDB_USER_NAME=${COUCHDB_USER_NAME}
+      - COUCHDB_USER_PASSWORD=${COUCHDB_USER_PASSWORD}
     depends_on:
       - "couchdb"
     volumes:

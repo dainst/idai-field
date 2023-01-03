@@ -134,9 +134,30 @@ body {
   margin: 0px;
 }
 
-#live-dashboard-link {
-  top: calc(var(--header-height) - 50px);
+nav {
+  top: calc(var(--header-height));
+  right: 50px;
   position: absolute;
+}
+
+@media (max-width: 525px) {
+  header {
+    margin-bottom: 3em;
+  }
+
+  header nav {
+    right: 0px;
+  }
+
+  header nav ul {
+    display: inline-flex;
+  }
+
+  header nav ul li {
+    display: inline;
+    margin-right: 5px;
+    right: 5px;
+  }
 }
 
 .monitoring-issue {

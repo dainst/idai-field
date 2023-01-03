@@ -169,6 +169,8 @@ defmodule FieldHub.CLI do
   end
 
   def add_application_user_to_all_databases() do
+    HTTPoison.start()
+
     CouchService.get_databases_for_user(CouchService.get_admin_credentials())
     |> Enum.each(
       &add_user_as_project_member(Application.get_env(:field_hub, :couchdb_user_name), &1)

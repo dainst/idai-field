@@ -2,7 +2,7 @@ defmodule FieldHubWeb.Api.FileController do
   use FieldHubWeb, :controller
 
   alias FieldHub.FileStore
-  alias FieldHubWeb.ErrorView
+  alias FieldHubWeb.Api.StatusView
 
   def index(conn, %{"project" => project, "types" => types}) when is_list(types) do
     parsed_types =
@@ -37,8 +37,8 @@ defmodule FieldHubWeb.Api.FileController do
       {:error, msg} ->
         conn
         |> put_status(:bad_request)
-        |> put_view(ErrorView)
-        |> render("400.json", message: msg)
+        |> put_view(StatusView)
+        |> render(%{error: msg})
 
       [] ->
         # 'types' parameter was present but empty. Handle like a request without 'types' parameter (all files are returned).
@@ -58,8 +58,8 @@ defmodule FieldHubWeb.Api.FileController do
   def index(conn, %{"project" => _project, "types" => types}) do
     conn
     |> put_status(:bad_request)
-    |> put_view(ErrorView)
-    |> render("400.json", message: "Invalid 'types' parameter: '#{types}'.")
+    |> put_view(StatusView)
+    |> render(%{error: "Invalid 'types' parameter: '#{types}'."})
   end
 
   def index(conn, %{"project" => project}) do
@@ -78,8 +78,8 @@ defmodule FieldHubWeb.Api.FileController do
       {:error, type} ->
         conn
         |> put_status(:bad_request)
-        |> put_view(ErrorView)
-        |> render("400.json", message: "Unknown file type: #{type}")
+        |> put_view(StatusView)
+        |> render(%{error: "Unknown file type: #{type}"})
 
       valid ->
         FileStore.get_file_path(
@@ -91,8 +91,8 @@ defmodule FieldHubWeb.Api.FileController do
           {:error, :enoent} ->
             conn
             |> put_status(:not_found)
-            |> put_view(ErrorView)
-            |> render("404.json")
+            |> put_view(StatusView)
+            |> render(%{error: "Requested file not found"})
 
           {:ok, file_path} ->
             Plug.Conn.send_file(conn, 200, file_path)
@@ -103,7 +103,8 @@ defmodule FieldHubWeb.Api.FileController do
   def show(conn, _) do
     conn
     |> put_status(:bad_request)
-    |> put_view(ErrorView)
+    |> put_view(StatusView)
+    |> render(%{error: "Bad request"})
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
@@ -120,8 +121,8 @@ defmodule FieldHubWeb.Api.FileController do
             {:error, type} ->
               conn
               |> put_status(:bad_request)
-              |> put_view(ErrorView)
-              |> render("400.json", message: "Unknown file type: #{type}")
+              |> put_view(StatusView)
+              |> render(%{error: "Unknown file type: #{type}"})
 
             valid ->
               FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
@@ -131,23 +132,21 @@ defmodule FieldHubWeb.Api.FileController do
           :ok ->
             conn
             |> put_status(:created)
-            |> put_view(ErrorView)
-            |> render("201.json")
+            |> put_view(StatusView)
+            |> render(%{info: "File created."})
 
           {:error, _} ->
             conn
             |> put_status(:internal_server_error)
-            |> put_view(ErrorView)
-            |> render("500.json")
+            |> put_view(StatusView)
+            |> render(%{error: "Unknown"})
         end
 
       {:more, _partial_body, conn} ->
         conn
         |> put_status(:request_entity_too_large)
-        |> put_view(ErrorView)
-        |> render("413.json",
-          message: "Payload to large, maximum of #{max_payload} bytes allowed."
-        )
+        |> put_view(StatusView)
+        |> render(%{error: "Payload to large, maximum of #{max_payload} bytes allowed."})
     end
   end
 
@@ -157,14 +156,14 @@ defmodule FieldHubWeb.Api.FileController do
     case file_store_data do
       :ok ->
         conn
-        |> put_view(ErrorView)
-        |> render("200.json")
+        |> put_view(StatusView)
+        |> render(%{info: "File deleted."})
 
       _errors ->
         conn
         |> put_status(:internal_server_error)
-        |> put_view(ErrorView)
-        |> render("500.json")
+        |> put_view(StatusView)
+        |> render(%{error: "Unknown"})
     end
   end
 

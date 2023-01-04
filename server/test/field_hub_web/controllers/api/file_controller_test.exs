@@ -232,6 +232,16 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
+
+  test "GET /files/:project specified but unsupported file variant throws 400", %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("authorization", @basic_auth)
+      |> get("/files/test_project?types[]=unsupported")
+
+    assert conn.status == 400
+  end
+
   test "DELETE /files/:project/:uuid deletes files with specified uuid", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 

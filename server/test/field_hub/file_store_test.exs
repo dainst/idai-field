@@ -4,7 +4,7 @@ defmodule FieldHub.FileStoreTest do
   use ExUnit.Case, async: true
 
   @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
-  @root_directory Application.compile_env(:field_hub, :root_directory)
+  @root_directory Application.compile_env(:field_hub, :file_directory_root)
   @project "test-data"
   @project_directory "#{@root_directory}/#{@project}"
   @content File.read!("test/fixtures/logo.png")

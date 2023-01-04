@@ -316,7 +316,6 @@ defmodule FieldHub.CouchService do
     |> Jason.decode!()
   end
 
-
   def get_docs(project_name, uuids) do
     body =
       %{

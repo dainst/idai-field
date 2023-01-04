@@ -218,7 +218,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
-  test "DELETE /files/:project/:uuid deletes file with specified uuid", %{conn: conn} do
+  test "DELETE /files/:project/:uuid deletes files with specified uuid", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =

@@ -153,18 +153,9 @@ defmodule FieldHubWeb.Api.FileController do
   def delete(conn, %{"project" => project, "id" => uuid}) do
     file_store_data = FileStore.delete(Zarex.sanitize(uuid), Zarex.sanitize(project))
 
-    case file_store_data do
-      :ok ->
-        conn
-        |> put_view(StatusView)
-        |> render(%{info: "File deleted."})
-
-      _errors ->
-        conn
-        |> put_status(:internal_server_error)
-        |> put_view(StatusView)
-        |> render(%{error: "Unknown"})
-    end
+    conn
+    |> put_view(StatusView)
+    |> render(%{info: file_store_data})
   end
 
   defp parse_type(type) do

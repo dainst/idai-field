@@ -24,12 +24,12 @@ defmodule FieldHub.FileStoreTest do
     assert File.exists?("#{@project_directory}/thumbnail_images")
   end
 
-  test "File path to non-existent uuid or project returns :enoent posix" do
+  test "file path to non-existent uuid or project returns :enoent posix" do
     assert {:error, :enoent} =
              FileStore.get_file_path("1234uuid", "project1234", :thumbnail_image)
   end
 
-  describe "file operations" do
+  describe "File operations -" do
     setup %{} do
       FileStore.create_directories(@project)
     end
@@ -59,6 +59,17 @@ defmodule FieldHub.FileStoreTest do
       FileStore.delete("1234", @project)
       assert File.exists?("#{@project_directory}/original_images/1234")
       assert File.exists?("#{@project_directory}/original_images/1234.deleted")
+    end
+
+    test "file deletion returns list of all variants deleted" do
+      FileStore.store_file("1234", @project, :original_image, @content)
+      FileStore.store_file("1234", @project, :thumbnail_image, @content)
+
+      result =
+        FileStore.delete("1234", @project)
+        |> Enum.sort()
+
+      assert [:original_image, :thumbnail_image] = result
     end
 
     test "file names containing '.' (besides tombstones) are not returned in file list" do

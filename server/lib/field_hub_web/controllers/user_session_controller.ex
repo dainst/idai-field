@@ -8,10 +8,10 @@ defmodule FieldHubWeb.UserSessionController do
     render(conn, "new.html", error_message: nil)
   end
 
-  def create(conn, %{"user" => %{"name" => name, "password" => password} = user_params}) do
+  def create(conn, %{"user" => %{"name" => name, "password" => password}}) do
     case CouchService.authenticate(%CouchService.Credentials{name: name, password: password}) do
       :ok ->
-        UserAuth.log_in_user(conn, name, user_params)
+        UserAuth.log_in_user(conn, name)
 
       _ ->
         # In order to prevent user enumeration attacks, don't disclose whether the email is registered.

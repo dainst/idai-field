@@ -49,7 +49,7 @@ defmodule FieldHubWeb.UserAuth do
   end
 
   @doc """
-  Validates `conn` basic authentication for the `"project"` in `conn.params`.
+  Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
   def api_auth(%{params: %{"project" => project_name}} = conn, _opts) do
     with {name, password} <- Plug.BasicAuth.parse_basic_auth(conn),

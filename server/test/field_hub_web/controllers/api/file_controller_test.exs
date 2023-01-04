@@ -210,6 +210,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put_req_header("authorization", "Basic #{credentials}")
       |> get("/files/test_project")
 
+    assert conn.status == 200
+
     json_response =
       conn.resp_body
       |> Jason.decode!()

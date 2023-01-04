@@ -72,7 +72,6 @@ defmodule FieldHub.CouchService do
         headers(credentials)
       )
     }
-    |> IO.inspect()
   end
 
   @doc """

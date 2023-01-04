@@ -24,6 +24,7 @@ config :field_hub,
   couchdb_user_password: "password",
   file_variant_types: [:thumbnail_image, :original_image],
   file_info_cache_name: :file_info,
+  file_max_size: 1_000_000_000,
   user_tokens_cache_name: :user_tokens
 
 # Configures the mailer

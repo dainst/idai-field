@@ -4,6 +4,8 @@ defmodule FieldHubWeb.Api.FileController do
   alias FieldHub.FileStore
   alias FieldHubWeb.Api.StatusView
 
+  @max_size Application.compile_env(:field_hub, :file_max_size)
+
   def index(conn, %{"project" => project, "types" => types}) when is_list(types) do
     parsed_types =
       types
@@ -110,46 +112,33 @@ defmodule FieldHubWeb.Api.FileController do
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
     parsed_type = parse_type(type)
 
-    max_payload = 1_000_000_000
-
     conn
-    |> read_body(length: max_payload)
+    |> read_body(length: @max_size)
     |> case do
       {:ok, data, conn} ->
-        file_store_data =
-          case parsed_type do
-            {:error, type} ->
-              {:unknown, type}
-
-            valid ->
-              FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
-          end
-
-        case file_store_data do
-          :ok ->
-            conn
-            |> put_status(:created)
-            |> put_view(StatusView)
-            |> render(%{info: "File created."})
-
-          {:unknown, type} ->
+        case parsed_type do
+          {:error, type} ->
             conn
             |> put_status(:bad_request)
             |> put_view(StatusView)
             |> render(%{error: "Unknown file type: #{type}"})
 
-          {:error, _} ->
+          valid ->
+            FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
+
             conn
-            |> put_status(:internal_server_error)
+            |> put_status(:created)
             |> put_view(StatusView)
-            |> render(%{error: ""})
+            |> render(%{info: "File created."})
         end
 
       {:more, _partial_body, conn} ->
         conn
         |> put_status(:request_entity_too_large)
         |> put_view(StatusView)
-        |> render(%{error: "Payload to large, maximum of #{max_payload} bytes allowed."})
+        |> render(%{
+          error: "Payload to large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
+        })
     end
   end
 

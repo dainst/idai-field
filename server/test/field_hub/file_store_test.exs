@@ -196,6 +196,17 @@ defmodule FieldHub.FileStoreTest do
       assert {:ok, ^path} = FileStore.get_file_path("validfilename", @project, :thumbnail_image)
     end
 
+    test "file info gets cached by an initial request" do
+      FileStore.store_file("some_uuid", @project, :original_image, @content)
+
+      assert {:ok, nil} = Cachex.get(@cache_name, @project)
+      assert %{"some_uuid" => %{}} = FileStore.get_file_list(@project)
+      assert {:ok, %{"some_uuid" => %{}}} = Cachex.get(@cache_name, @project)
+      # Somewhat hacky: In order to get 100% test coverage with `mix test --cover`
+      # we call `FileStore.get_file_list/1` pnce with an existing file cache.
+      assert %{"some_uuid" => %{}} = FileStore.get_file_list(@project)
+    end
+
     test "file info cache gets cleared by file storing" do
       FileStore.store_file("validfilename", @project, :original_image, @content)
 

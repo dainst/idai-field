@@ -125,10 +125,6 @@ defmodule FieldHub.FileStore do
     variants
   end
 
-  def get_supported_variant_types() do
-    @variant_types
-  end
-
   defp get_project_directory(project) do
     "#{@file_directory_root}/#{project}"
   end

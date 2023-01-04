@@ -29,7 +29,7 @@ defmodule FieldHubWeb.MonitoringLive do
     |> CouchService.has_project_access?(project)
     |> case do
       true ->
-        Process.send(self(), :update, [])
+        Process.send(self(), :update_stats, [])
         Process.send(self(), :update_issues, [])
 
         {
@@ -47,14 +47,17 @@ defmodule FieldHubWeb.MonitoringLive do
     end
   end
 
-  def handle_info(:update, %{assigns: %{current_user: user_name, project: project}} = socket) do
+  def handle_info(
+        :update_stats,
+        %{assigns: %{current_user: user_name, project: project}} = socket
+      ) do
     user_name
     |> CouchService.has_project_access?(project)
     |> case do
       true ->
         stats = Statistics.evaluate_project(project)
 
-        Process.send_after(self(), :update, 10000)
+        Process.send_after(self(), :update_stats, 10000)
 
         {:noreply, assign(socket, :stats, stats)}
 

@@ -290,6 +290,15 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert conn.status == 400
   end
 
+  test "GET /files/:project non array types parameter throws 400", %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("authorization", @basic_auth)
+      |> get("/files/test_project?types=unsupported")
+
+    assert conn.status == 400
+  end
+
   test "DELETE /files/:project/:uuid deletes files with specified uuid", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 

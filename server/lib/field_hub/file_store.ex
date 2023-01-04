@@ -96,7 +96,7 @@ defmodule FieldHub.FileStore do
 
   def store_file(uuid, project, type, data) do
     directory = get_type_directory(project, type)
-    File.mkdir_p!(directory)
+
     file_path = "#{directory}/#{uuid}"
 
     result =

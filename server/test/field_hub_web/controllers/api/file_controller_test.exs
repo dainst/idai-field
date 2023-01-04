@@ -132,7 +132,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert conn.status == 401
   end
 
-  test "GET /files/:project without images yields valid json", %{conn: conn} do
+  test "GET /files/:project without files yields valid json", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
@@ -150,7 +150,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
-  test "GET /files/:project with image yields valid json", %{conn: conn} do
+  test "GET /files/:project with files yields valid json", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =

@@ -54,6 +54,18 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert conn.status == 400
   end
 
+  test "PUT /files/:project/:uuid with file exceeding maximum size throws 413", %{conn: conn} do
+    roughly_20_mb = String.duplicate("0123456789", 2_000_000)
+
+    conn =
+      conn
+      |> put_req_header("authorization", @basic_auth)
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=original_image", roughly_20_mb)
+
+    assert conn.status == 413
+  end
+
   test "GET /files/:project/:uuid returns 404 for non-existent file", %{conn: conn} do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 

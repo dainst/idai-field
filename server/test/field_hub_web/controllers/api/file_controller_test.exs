@@ -232,6 +232,42 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
   end
 
+  test "GET /files/:project only specified file variant gets added to the response", %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("authorization", @basic_auth)
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=original_image", @example_file)
+
+    assert conn.status == 201
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", @basic_auth)
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=thumbnail_image", @example_file)
+
+    assert conn.status == 201
+
+    conn =
+      conn
+      |> recycle()
+      |> put_req_header("authorization", @basic_auth)
+      |> get("/files/test_project?types[]=original_image")
+
+    json_response =
+      conn.resp_body
+      |> Jason.decode!()
+
+    assert conn.status == 200
+
+    assert ExJsonSchema.Validator.valid?(@schema, json_response)
+
+    variants = json_response["1234"]["variants"]
+
+    assert [%{"name" => "original_image"}] = variants
+  end
 
   test "GET /files/:project specified but unsupported file variant throws 400", %{conn: conn} do
     conn =

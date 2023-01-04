@@ -119,10 +119,7 @@ defmodule FieldHubWeb.Api.FileController do
         file_store_data =
           case parsed_type do
             {:error, type} ->
-              conn
-              |> put_status(:bad_request)
-              |> put_view(StatusView)
-              |> render(%{error: "Unknown file type: #{type}"})
+              {:unknown, type}
 
             valid ->
               FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
@@ -135,11 +132,17 @@ defmodule FieldHubWeb.Api.FileController do
             |> put_view(StatusView)
             |> render(%{info: "File created."})
 
+          {:unknown, type} ->
+            conn
+            |> put_status(:bad_request)
+            |> put_view(StatusView)
+            |> render(%{error: "Unknown file type: #{type}"})
+
           {:error, _} ->
             conn
             |> put_status(:internal_server_error)
             |> put_view(StatusView)
-            |> render(%{error: "Unknown"})
+            |> render(%{error: ""})
         end
 
       {:more, _partial_body, conn} ->

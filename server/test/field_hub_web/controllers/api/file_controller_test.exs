@@ -16,6 +16,8 @@ defmodule FieldHubWeb.Api.FileControllerTest do
           |> Jason.decode!()
           |> ExJsonSchema.Schema.resolve()
 
+  @basic_auth "Basic #{Base.encode64("#{@user_name}:#{@user_password}")}"
+
   setup do
     # Run before each test
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
@@ -40,6 +42,16 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> put("/files/test_project/1234?type=original_image", @example_file)
 
     assert conn.status == 201
+  end
+
+  test "PUT /files/:project/:uuid with unsupported type throws 400", %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("authorization", @basic_auth)
+      |> put_req_header("content-type", "image/png")
+      |> put("/files/test_project/1234?type=unsupported", @example_file)
+
+    assert conn.status == 400
   end
 
   test "GET /files/:project/:uuid returns 404 for non-existent file", %{conn: conn} do

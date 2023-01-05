@@ -42,11 +42,6 @@ defmodule FieldHubWeb.Api.FileController do
         |> put_view(StatusView)
         |> render(%{error: msg})
 
-      [] ->
-        # 'types' parameter was present but empty. Handle like a request without 'types' parameter (all files are returned).
-        conn
-        |> index(%{"project" => project})
-
       valid ->
         file_store_data =
           project

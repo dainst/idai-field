@@ -7,7 +7,7 @@ defmodule FieldHub.CouchServiceTest do
 
   use ExUnit.Case, async: true
 
-  @project "test_project"
+  @project "test"
   @user_name "test_user"
   @user_password "test_password"
 
@@ -15,11 +15,14 @@ defmodule FieldHub.CouchServiceTest do
 
   setup_all %{} do
     # Run before all tests
-    TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
+    TestHelper.create_complete_example_project(@project, @user_name, @user_password)
 
     on_exit(fn ->
       # Run after all tests
-      TestHelper.remove_test_db_and_user(@project, @user_name)
+      TestHelper.remove_complete_example_project(
+        @project,
+        @user_name
+      )
     end)
   end
 
@@ -96,5 +99,24 @@ defmodule FieldHub.CouchServiceTest do
                %{error: "not_found", reason: "missing", uuid: "unknown"}
              }
            ] = CouchService.get_docs(@project, ["o25", "unknown"])
+  end
+
+  test "get_docs_by_type/2 returns a project's documents matching the given types" do
+    assert [
+             %{
+               "_id" => "o25",
+               "resource" => %{
+                 "id" => "o25",
+                 "type" => "Drawing"
+               }
+             },
+             %{
+               "_id" => "o26",
+               "resource" => %{
+                 "id" => "o26",
+                 "type" => "Image"
+               }
+             }
+           ] = CouchService.get_docs_by_type(@project, ["Image", "Drawing"]) |> Enum.to_list()
   end
 end

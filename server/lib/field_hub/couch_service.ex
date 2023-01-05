@@ -112,18 +112,25 @@ defmodule FieldHub.CouchService do
   Returns the `HTTPoison.Response` for the deletion attempt.
   """
   def delete_user(name, %Credentials{} = credentials) do
-    %{"_rev" => rev} =
-      HTTPoison.get!(
-        "#{base_url()}/_users/org.couchdb.user:#{name}",
-        headers(credentials)
-      )
-      |> Map.get(:body)
-      |> Jason.decode!()
-
-    HTTPoison.delete!(
+    HTTPoison.get!(
       "#{base_url()}/_users/org.couchdb.user:#{name}",
-      headers(credentials) ++ [{"If-Match", rev}]
+      headers(credentials)
     )
+    |> case do
+      %{status_code: 200, body: body} ->
+        %{"_rev" => rev} =
+          body
+          |> Jason.decode!()
+
+        HTTPoison.delete!(
+          "#{base_url()}/_users/org.couchdb.user:#{name}",
+          headers(credentials) ++ [{"If-Match", rev}]
+        )
+
+      %{status_code: 404} = response ->
+        # User was not found
+        response
+    end
   end
 
   @doc """

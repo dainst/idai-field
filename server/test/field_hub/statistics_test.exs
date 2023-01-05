@@ -5,7 +5,7 @@ defmodule FieldHub.StatisticsTest do
     TestHelper
   }
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   @project "test_project"
   @project_b "test_project_b"
@@ -13,36 +13,10 @@ defmodule FieldHub.StatisticsTest do
   @user_password "test_password"
   @file_store_cache Application.compile_env(:field_hub, :file_info_cache_name)
 
-  defp setup_test_file_store() do
-    FileStore.create_directories(@project)
-
-    FileStore.store_file(
-      "file_a",
-      @project,
-      :original_image,
-      String.duplicate("0123456789", 10_000)
-    )
-
-    FileStore.store_file(
-      "file_b",
-      @project,
-      :original_image,
-      String.duplicate("0123456789", 10_000)
-    )
-
-    FileStore.store_file(
-      "file_c",
-      @project,
-      :original_image,
-      String.duplicate("0123456789", 10_000)
-    )
-
-    FileStore.delete("file_c", @project)
-  end
-
   setup_all %{} do
-
-    setup_test_file_store()
+    FileStore.create_directories(@project)
+    FileStore.create_directories(@project_b)
+    TestHelper.add_test_files_to_store(@project)
     # Run before all tests
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
     TestHelper.create_test_db_and_user(@project_b, @user_name, @user_password)
@@ -52,9 +26,9 @@ defmodule FieldHub.StatisticsTest do
       TestHelper.remove_project(@project_b)
       TestHelper.remove_test_db_and_user(@project, @user_name)
 
-      # Run after each test
       Cachex.del(@file_store_cache, @project)
       FileStore.remove_directories(@project)
+      FileStore.remove_directories(@project_b)
     end)
 
     :ok
@@ -96,12 +70,13 @@ defmodule FieldHub.StatisticsTest do
     FileStore.remove_directories(@project)
 
     assert %{
-      database: %{doc_count: 0, file_size: 33076},
-      files: :enoent,
-      name: "test_project"
-    } = Statistics.evaluate_project(@project)
+             database: %{doc_count: 0, file_size: 33076},
+             files: :enoent,
+             name: "test_project"
+           } = Statistics.evaluate_project(@project)
 
     # Run setup to get to initial state for other tests.
-    setup_test_file_store()
+    FileStore.create_directories(@project)
+    TestHelper.add_test_files_to_store(@project)
   end
 end

@@ -1,6 +1,9 @@
 ExUnit.start()
 
-alias FieldHub.CLI
+alias FieldHub.{
+  CLI,
+  FileStore
+}
 
 defmodule FieldHub.TestHelper do
   def create_test_db_and_user(project, user_name, user_password) do
@@ -17,5 +20,30 @@ defmodule FieldHub.TestHelper do
 
   def remove_project(project) do
     CLI.delete_project(project)
+  end
+
+  def add_test_files_to_store(project) do
+    FileStore.store_file(
+      "file_a",
+      project,
+      :original_image,
+      String.duplicate("0123456789", 10_000)
+    )
+
+    FileStore.store_file(
+      "file_b",
+      project,
+      :original_image,
+      String.duplicate("0123456789", 10_000)
+    )
+
+    FileStore.store_file(
+      "file_c",
+      project,
+      :original_image,
+      String.duplicate("0123456789", 10_000)
+    )
+
+    FileStore.delete("file_c", project)
   end
 end

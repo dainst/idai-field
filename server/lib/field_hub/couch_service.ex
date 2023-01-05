@@ -23,9 +23,6 @@ defmodule FieldHub.CouchService do
 
       {:ok, res} ->
         {:error, res}
-
-      error ->
-        error
     end
   end
 
@@ -48,9 +45,6 @@ defmodule FieldHub.CouchService do
 
       {:ok, res} ->
         {:error, res}
-
-      error ->
-        error
     end
   end
 

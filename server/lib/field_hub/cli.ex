@@ -111,7 +111,7 @@ defmodule FieldHub.CLI do
   def create_project_with_default_user(project_name) do
     HTTPoison.start()
 
-    create_project_with_default_user(project_name, CouchService.create_password(32))
+    create_project_with_default_user(project_name, CouchService.create_password())
   end
 
   def create_user(name, password) do
@@ -135,7 +135,7 @@ defmodule FieldHub.CLI do
   def create_user(user_name) do
     HTTPoison.start()
 
-    create_user(user_name, CouchService.create_password(32))
+    create_user(user_name, CouchService.create_password())
   end
 
   def delete_user(user_name) do

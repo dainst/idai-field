@@ -503,7 +503,7 @@ defmodule FieldHub.CouchService do
     Application.get_env(:field_hub, :couchdb_url)
   end
 
-  def create_password(length) do
+  def create_password(length \\ 32) do
     length
     |> :crypto.strong_rand_bytes()
     |> Base.encode64()

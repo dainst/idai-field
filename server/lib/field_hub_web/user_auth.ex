@@ -3,7 +3,8 @@ defmodule FieldHubWeb.UserAuth do
   import Phoenix.Controller
 
   alias FieldHub.{
-    CouchService
+    CouchService,
+    CouchService.Credentials
   }
 
   alias FieldHubWeb.Router.Helpers, as: Routes
@@ -51,20 +52,63 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
-  def api_auth(%{params: %{"project" => project_name}} = conn, _opts) do
-    with {name, password} <- Plug.BasicAuth.parse_basic_auth(conn),
-         :ok <-
-           CouchService.authenticate_and_authorize(
-             %CouchService.Credentials{name: name, password: password},
-             project_name
-           ) do
-      # Just return `conn` because for the API we do not track sessions.
-      conn
-    else
+  def api_require_authenticated_user(conn, _opts) do
+    case Plug.BasicAuth.parse_basic_auth(conn) do
+      {name, password} ->
+        case CouchService.authenticate(%Credentials{name: name, password: password}) do
+          :ok ->
+            conn
+            |> assign(:current_user, name)
+          {:error, 401} ->
+            conn
+            |> Plug.BasicAuth.request_basic_auth()
+            |> send_resp()
+        end
       _ ->
         conn
         |> Plug.BasicAuth.request_basic_auth()
-        |> halt()
+        |> send_resp()
+    end
+  end
+
+  @doc """
+  Validates `conn` with basic access authentication for the project provided in `conn.params`.
+  """
+  def api_require_project_access(%{params: %{"project" => project_name}} = conn, _opts) do
+
+    case conn do
+      %{assigns: %{current_user: user_name}} ->
+        case CouchService.has_project_access?(project_name, user_name) do
+          true ->
+            conn
+          false ->
+            conn
+            |> send_resp(403, "")
+        end
+      _ ->
+        conn
+        |> Plug.BasicAuth.request_basic_auth()
+        |> send_resp()
+    end
+  end
+
+  def api_require_admin_user(conn, _opts) do
+    case Plug.BasicAuth.parse_basic_auth(conn) do
+      {name, password} ->
+        admin_name = Application.get_env(:field_hub, :couchdb_admin_name)
+        admin_password = Application.get_env(:field_hub, :couchdb_admin_password)
+        if name == admin_name and password == admin_password do
+          conn
+          |> fetch_session()
+          |> assign(:current_user, name)
+        else
+          conn
+          |> send_resp(403, "")
+        end
+      _ ->
+        conn
+        |> Plug.BasicAuth.request_basic_auth()
+        |> send_resp()
     end
   end
 

@@ -21,8 +21,8 @@ defmodule FieldHub.CouchService do
       {:ok, %{status_code: 200}} ->
         :ok
 
-      {:ok, res} ->
-        {:error, res}
+      {:ok, %{status_code: 401}} ->
+        {:error, 401}
     end
   end
 

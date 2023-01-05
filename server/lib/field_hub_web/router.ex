@@ -27,7 +27,6 @@ defmodule FieldHubWeb.Router do
       json_decoder: Phoenix.json_library()
 
     plug :accepts, ["json"]
-    plug :api_auth
   end
 
   forward "/db", ReverseProxyPlug, upstream: &CouchService.base_url/0
@@ -38,17 +37,38 @@ defmodule FieldHubWeb.Router do
     get "/", PageController, :index
 
     get "/session/new", UserSessionController, :new
-    post "/login", UserSessionController, :create
-    post "/logout", UserSessionController, :delete
+    post "/session/login", UserSessionController, :create
+    post "/session/logout", UserSessionController, :delete
+  end
 
-    pipe_through [:require_authenticated_user, :require_project_access]
+  scope "/", FieldHubWeb do
+    pipe_through :require_authenticated_user
+    pipe_through :require_project_access
+
     live "/monitoring/:project", MonitoringLive
   end
 
-  scope "/files/:project", FieldHubWeb do
+  scope "/", FieldHubWeb.Api do
     pipe_through :api
+    pipe_through :api_require_authenticated_user
 
-    resources("/", Api.FileController, only: [:index, :update, :show, :delete])
+    get "/api/projects", ProjectController, :index
+  end
+
+  scope "/", FieldHubWeb.Api do
+    pipe_through :api
+    pipe_through :api_require_authenticated_user
+    pipe_through :api_require_project_access
+
+    get "/api/projects/:project", ProjectController, :show
+
+    resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
+  end
+
+  scope "/", FieldHubWeb.Api do
+    pipe_through :api
+    pipe_through :api_require_admin_user
+    post "/api/projects/:project", ProjectController, :create
   end
 
   # Other scopes may use custom stacks.

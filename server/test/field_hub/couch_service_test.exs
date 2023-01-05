@@ -74,4 +74,27 @@ defmodule FieldHub.CouchServiceTest do
   test "get_databases_for_user/1 for user without any membership returns empty list" do
     assert [] = CouchService.get_databases_for_user("unauthorized_user")
   end
+
+  test "get_docs/2 returns a project's documents with the given UUIDs" do
+    assert [
+             %{
+               "_id" => "o25"
+             },
+             %{
+               "_id" => "o26"
+             }
+           ] = CouchService.get_docs(@project, ["o25", "o26"])
+  end
+
+  test "get_docs/2 returns error for unknown uuids" do
+    assert [
+             %{
+               "_id" => "o25"
+             },
+             {
+               :error,
+               %{error: "not_found", reason: "missing", uuid: "unknown"}
+             }
+           ] = CouchService.get_docs(@project, ["o25", "unknown"])
+  end
 end

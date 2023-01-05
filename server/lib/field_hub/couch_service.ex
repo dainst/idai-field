@@ -333,7 +333,18 @@ defmodule FieldHub.CouchService do
         headers()
       )
 
-    Jason.decode!(body)["results"]
+    body
+    |> Jason.decode!()
+    |> Map.get("results")
+    |> Enum.map(fn %{"docs" => result} ->
+      case result do
+        [%{"ok" => doc}] ->
+          doc
+
+        [%{"error" => %{"id" => uuid, "error" => error, "reason" => reason}}] ->
+          {:error, %{uuid: uuid, error: error, reason: reason}}
+      end
+    end)
   end
 
   @doc """

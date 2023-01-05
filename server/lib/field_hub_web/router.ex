@@ -42,6 +42,7 @@ defmodule FieldHubWeb.Router do
   end
 
   scope "/", FieldHubWeb do
+    pipe_through :browser
     pipe_through :require_authenticated_user
     pipe_through :require_project_access
 

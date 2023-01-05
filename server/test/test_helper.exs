@@ -66,10 +66,6 @@ defmodule FieldHub.TestHelper do
       end)
     end)
 
-    encoded_credentials =
-      "#{Application.get_env(:field_hub, :couchdb_admin_name)}:#{Application.get_env(:field_hub, :couchdb_admin_password)}"
-      |> Base.encode64()
-
     docs =
       "#{fixtures_directory}/project_export.jsonl"
       |> File.read!()
@@ -95,15 +91,28 @@ defmodule FieldHub.TestHelper do
     "#{CouchService.base_url()}/#{project_name}/_bulk_docs"
     |> HTTPoison.post!(
       payload,
-      [
-        {"Content-Type", "application/json"},
-        {"Authorization", "Basic #{encoded_credentials}"}
-      ]
+      headers()
     )
   end
 
   def remove_complete_example_project(project_name, user_name) do
     remove_test_db_and_user(project_name, user_name)
     FileStore.remove_directories(project_name)
+  end
+
+  def database_exists?(project_name) do
+    "#{CouchService.base_url()}/#{project_name}"
+    |> HTTPoison.get!(headers())
+  end
+
+  defp headers() do
+    encoded_credentials =
+      "#{Application.get_env(:field_hub, :couchdb_admin_name)}:#{Application.get_env(:field_hub, :couchdb_admin_password)}"
+      |> Base.encode64()
+
+    [
+      {"Content-Type", "application/json"},
+      {"Authorization", "Basic #{encoded_credentials}"}
+    ]
   end
 end

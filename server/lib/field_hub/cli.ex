@@ -47,8 +47,9 @@ defmodule FieldHub.CLI do
   def create_project(project_name) do
     HTTPoison.start()
 
-    CouchService.create_project(project_name, CouchService.get_admin_credentials())
-    |> case do
+    couch_db = CouchService.create_project(project_name, CouchService.get_admin_credentials())
+
+    case couch_db do
       %{status_code: 412} ->
         Logger.warning("Project database '#{project_name}' already exists.")
 
@@ -56,25 +57,25 @@ defmodule FieldHub.CLI do
         Logger.info("Created project database '#{project_name}'.")
     end
 
-    FileStore.create_directories(project_name)
-    |> Enum.each(fn result ->
-      case result do
-        {:ok, file_variant} ->
-          Logger.info("Created directory for #{file_variant}.")
+    file_store =
+      FileStore.create_directories(project_name)
+      |> Enum.map(fn result ->
+        case result do
+          {:ok, file_variant} ->
+            Logger.info("Created directory for #{file_variant}.")
+            file_variant
+        end
+      end)
 
-        {{:error, reason}, file_variant} ->
-          Logger.error(
-            "Got posix error #{reason} while trying to create directory for #{file_variant}."
-          )
-      end
-    end)
+    %{couch: couch_db, file_store: file_store}
   end
 
   def delete_project(project_name) do
     HTTPoison.start()
 
-    CouchService.delete_project(project_name, CouchService.get_admin_credentials())
-    |> case do
+    couch_db = CouchService.delete_project(project_name, CouchService.get_admin_credentials())
+
+    case couch_db do
       %{status_code: 404} ->
         Logger.warning("Project database '#{project_name}' does not exists.")
 
@@ -94,6 +95,8 @@ defmodule FieldHub.CLI do
     #   {:error, reason, file} ->
     #     Logger.error("Got posix error #{reason} while trying to delete #{file}.")
     # end
+
+    %{couch: couch_db, file_store: []}
   end
 
   def create_project_with_default_user(project_name, password) do

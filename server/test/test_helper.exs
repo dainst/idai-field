@@ -11,7 +11,11 @@ defmodule FieldHub.TestHelper do
   end
 
   def remove_test_db_and_user(project, user_name) do
-    CLI.delete_project(project)
+    remove_project(project)
     CLI.delete_user(user_name)
+  end
+
+  def remove_project(project) do
+    CLI.delete_project(project)
   end
 end

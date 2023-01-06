@@ -17,6 +17,9 @@ defmodule FieldHub.FileStore do
       |> File.mkdir_p()
     end)
     |> Enum.zip(@variant_types)
+    |> Enum.into(%{}, fn {status, variant_name} ->
+      {variant_name, status}
+    end)
   end
 
   @doc """

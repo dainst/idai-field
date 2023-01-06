@@ -59,15 +59,19 @@ defmodule FieldHubWeb.UserAuth do
           :ok ->
             conn
             |> assign(:current_user, name)
+
           {:error, 401} ->
             conn
             |> Plug.BasicAuth.request_basic_auth()
             |> send_resp()
+            |> halt()
         end
+
       _ ->
         conn
         |> Plug.BasicAuth.request_basic_auth()
         |> send_resp()
+        |> halt()
     end
   end
 
@@ -75,20 +79,23 @@ defmodule FieldHubWeb.UserAuth do
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
   def api_require_project_access(%{params: %{"project" => project_name}} = conn, _opts) do
-
     case conn do
       %{assigns: %{current_user: user_name}} ->
-        case CouchService.has_project_access?(project_name, user_name) do
+        case CouchService.has_project_access?(user_name, project_name) do
           true ->
             conn
+
           false ->
             conn
             |> send_resp(403, "")
+            |> halt()
         end
+
       _ ->
         conn
         |> Plug.BasicAuth.request_basic_auth()
         |> send_resp()
+        |> halt()
     end
   end
 
@@ -97,6 +104,7 @@ defmodule FieldHubWeb.UserAuth do
       {name, password} ->
         admin_name = Application.get_env(:field_hub, :couchdb_admin_name)
         admin_password = Application.get_env(:field_hub, :couchdb_admin_password)
+
         if name == admin_name and password == admin_password do
           conn
           |> fetch_session()
@@ -104,11 +112,14 @@ defmodule FieldHubWeb.UserAuth do
         else
           conn
           |> send_resp(403, "")
+            |> halt()
         end
+
       _ ->
         conn
         |> Plug.BasicAuth.request_basic_auth()
         |> send_resp()
+        |> halt()
     end
   end
 

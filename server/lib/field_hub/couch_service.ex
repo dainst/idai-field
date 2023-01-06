@@ -74,11 +74,21 @@ defmodule FieldHub.CouchService do
   Returns the `HTTPoison.Response` for the creation attempt.
   """
   def create_project(project_name, %Credentials{} = credentials) do
-    HTTPoison.put!(
-      "#{base_url()}/#{project_name}",
-      "",
-      headers(credentials)
+    result =
+      HTTPoison.put!(
+        "#{base_url()}/#{project_name}",
+        "",
+        headers(credentials)
+      )
+
+    update_user_role_in_project(
+      Application.get_env(:field_hub, :couchdb_user_name),
+      project_name,
+      credentials,
+      :member
     )
+
+    result
   end
 
   @doc """
@@ -138,20 +148,34 @@ defmodule FieldHub.CouchService do
 
   Returns the `HTTPoison.Response` for the update attempt.
   """
-  def set_password(user_name, new_password, %Credentials{} = credentials) do
-    %{"_rev" => rev} =
+  def update_password(user_name, new_password, %Credentials{} = credentials) do
+    response =
       HTTPoison.get!(
         "#{base_url()}/_users/org.couchdb.user:#{user_name}",
         headers(credentials)
       )
-      |> Map.get(:body)
-      |> Jason.decode!()
 
-    HTTPoison.put!(
-      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
-      Jason.encode!(%{name: user_name, password: new_password, roles: [], type: "user"}),
-      headers(credentials) ++ [{"If-Match", rev}]
-    )
+    case response do
+      %{status_code: 200} = res ->
+        res
+        |> Map.get(:body)
+        |> Jason.decode!()
+        |> case do
+          %{"_rev" => rev} ->
+            HTTPoison.put!(
+              "#{base_url()}/_users/org.couchdb.user:#{user_name}",
+              Jason.encode!(%{name: user_name, password: new_password, roles: [], type: "user"}),
+              headers(credentials) ++ [{"If-Match", rev}]
+            )
+            |> case do
+              %{status_code: 201} = res ->
+                res
+            end
+        end
+
+      %{status_code: 404} = res ->
+        res
+    end
   end
 
   @doc """
@@ -159,103 +183,87 @@ defmodule FieldHub.CouchService do
 
   Returns the `HTTPoison.Response` for the update attempt.
   """
-  def add_project_admin(user_name, project_name, %Credentials{} = credentials) do
-    %{body: body} =
-      HTTPoison.get!(
-        "#{base_url()}/#{project_name}/_security",
-        headers(credentials)
-      )
-
-    %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-    update_data =
-      %{
-        admins: %{
-          names:
-            (Map.get(existing_admins, "names", []) ++ [user_name])
-            |> Enum.dedup(),
-          roles: existing_admins["roles"]
-        },
-        members: existing_members
-      }
-      |> Jason.encode!()
-
-    HTTPoison.put!(
-      "#{base_url()}/#{project_name}/_security",
-      update_data,
+  def update_user_role_in_project(
+        user_name,
+        project_name,
+        %Credentials{} = credentials,
+        role
+      ) do
+    HTTPoison.get!(
+      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
       headers(credentials)
     )
+    |> case do
+      %{status_code: 200} ->
+        HTTPoison.get!(
+          "#{base_url()}/#{project_name}/_security",
+          headers(credentials)
+        )
+        |> case do
+          %{status_code: 200, body: body} ->
+            %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
+
+            HTTPoison.put!(
+              "#{base_url()}/#{project_name}/_security",
+              user_update_payload(user_name, existing_admins, existing_members, role),
+              headers(credentials)
+            )
+
+          %{status_code: 404} = res ->
+            {:unknown_project, res}
+        end
+
+      %{status_code: 404} = res ->
+        {:unknown_user, res}
+    end
   end
 
-  @doc """
-  Adds a CouchDB user with the given name as member for the given project using the given `%Credentials{}`.
+  defp user_update_payload(user_name, existing_admins, existing_members, :admin) do
+    updated_names =
+      (Map.get(existing_admins, "names", []) ++ [user_name])
+      |> Enum.dedup()
 
-  Returns the `HTTPoison.Response` for the update attempt.
-  """
-  def add_project_member(user_name, project_name, %Credentials{} = credentials) do
-    %{body: body} =
-      HTTPoison.get!(
-        "#{base_url()}/#{project_name}/_security",
-        headers(credentials)
-      )
-
-    %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-    update_data =
-      %{
-        admins: existing_admins,
-        members: %{
-          names:
-            (Map.get(existing_members, "names", []) ++ [user_name])
-            |> Enum.dedup(),
-          roles: existing_members["roles"]
-        }
-      }
-      |> Jason.encode!()
-
-    HTTPoison.put!(
-      "#{base_url()}/#{project_name}/_security",
-      update_data,
-      headers(credentials)
-    )
+    %{
+      admins: %{
+        names: updated_names,
+        roles: existing_admins["roles"]
+      },
+      members: existing_members
+    }
+    |> Jason.encode!()
   end
 
-  @doc """
-  Removes a CouchDB user with the given name from all roles in the given project using the given `%Credentials{}`.
+  defp user_update_payload(user_name, existing_admins, existing_members, :member) do
+    updated_names =
+      (Map.get(existing_members, "names", []) ++ [user_name])
+      |> Enum.dedup()
 
-  Returns the `HTTPoison.Response` for the update attempt.
-  """
-  def remove_user_from_project(user_name, project_name, %Credentials{} = credentials) do
-    %{body: body} =
-      HTTPoison.get!(
-        "#{base_url()}/#{project_name}/_security",
-        headers(credentials)
-      )
-
-    %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-    update_data =
-      %{
-        admins: %{
-          names:
-            Map.get(existing_admins, "names", [])
-            |> List.delete(user_name),
-          roles: existing_admins["roles"]
-        },
-        members: %{
-          names:
-            Map.get(existing_members, "names", [])
-            |> List.delete(user_name),
-          roles: existing_members["roles"]
-        }
+    %{
+      admins: existing_admins,
+      members: %{
+        names: updated_names,
+        roles: existing_admins["roles"]
       }
-      |> Jason.encode!()
+    }
+    |> Jason.encode!()
+  end
 
-    HTTPoison.put!(
-      "#{base_url()}/#{project_name}/_security",
-      update_data,
-      headers(credentials)
-    )
+  defp user_update_payload(user_name, existing_admins, existing_members, :none) do
+    %{
+      admins: %{
+        names:
+          Map.get(existing_admins, "names", [])
+          |> List.delete(user_name),
+        roles: existing_admins["roles"]
+      },
+      members: %{
+        names:
+          Map.get(existing_members, "names", [])
+          |> List.delete(user_name),
+        roles: existing_members["roles"]
+      }
+    }
+    |> Jason.encode!()
   end
 
   @doc """

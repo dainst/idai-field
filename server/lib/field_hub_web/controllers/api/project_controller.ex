@@ -1,7 +1,13 @@
 defmodule FieldHubWeb.Api.ProjectController do
   use FieldHubWeb, :controller
 
-  alias FieldHub.Project
+  alias FieldHub.CouchService
+
+  alias FieldHub.{
+    Project,
+    User
+  }
+
   alias FieldHubWeb.Api.StatusView
 
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
@@ -12,52 +18,43 @@ defmodule FieldHubWeb.Api.ProjectController do
     render(conn, "show.json", %{project: Project.evaluate_project(project_name)})
   end
 
-  def create(conn, %{"project" => _project_name}) do
-    # STUB/TODO: Refactor CLI module to more general Administration module and provide useful
-    # return values, which the CLI module currently lacks.
+  def create(conn, %{"project" => project_name}) do
+    password =
+      conn.body_params
+      |> case do
+        %{"password" => requested_password} ->
+          requested_password
+
+        _ ->
+          :generate
+      end
+      |> case do
+        :generate ->
+          CouchService.create_password()
+
+        provided ->
+          provided
+      end
+
+    project_creation = Project.create(project_name)
+    user_creation = User.create(project_name, password)
+    role_creation = Project.update_user(project_name, project_name, :member)
+
+    response_payload = %{
+      status_project: project_creation,
+      status_user: user_creation,
+      status_role: role_creation
+    }
+
+    response_payload =
+      if user_creation == :created do
+        Map.put(response_payload, :password, password)
+      else
+        response_payload
+      end
+
     conn
-    |> put_status(:created)
     |> put_view(StatusView)
-    |> render(%{info: "Project created."})
-
-    #   result =
-    #     read_body(conn)
-    #     |> case do
-    #       {:ok, "", _conn} ->
-    #         password = CouchService.create_password()
-
-    #         {
-    #           password,
-    #           FieldHub.CLI.create_project_with_default_user(
-    #             project_name,
-    #             password
-    #           )
-    #           |> IO.inspect()
-    #         }
-
-    #       {:ok, body, _conn} ->
-    #         body
-    #         |> Jason.decode()
-    #         |> case do
-    #           {:ok, %{password: password}} ->
-    #             {password, FieldHub.CLI.create_project_with_default_user(project_name, password)}
-
-    #           _ ->
-    #             {:invalid_payload, body}
-    #         end
-    #     end
-
-    #   case result do
-    #     {password, %{status_code: 200}} ->
-    #       conn
-    #       |> put_view(StatusView)
-    #       |> render(%{info: %{password: password}})
-
-    #     {:invalid_payload, payload} ->
-    #       conn
-    #       |> put_status(:bad_request)
-    #       |> put_view(StatusView)
-    #       |> render(%{error: "Invalid payload #{payload}"})
-    #   end
+    |> render(%{info: response_payload})
   end
 end

@@ -13,7 +13,6 @@ const NOCRITERION = 'no-criterion';
 const CRITERION = 'criterion';
 const IDENTIFICATION = 'identification';
 const TYPECATALOG = 'TypeCatalog';
-const TYPE = 'Type';
 
 const DOCUMENT_LIMIT = 5;
 
@@ -57,7 +56,7 @@ export class TypeRelationPickerComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
-                projectConfiguration: ProjectConfiguration,
+                private projectConfiguration: ProjectConfiguration,
                 private labels: Labels) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));
@@ -189,7 +188,8 @@ export class TypeRelationPickerComponent {
             this.selectedCatalog
                 ? [this.selectedCatalog]
                 : this.availableCatalogs,
-            this.currentOffset
+            this.currentOffset,
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
         );
 
         const result = await this.datastore.find(query);
@@ -202,18 +202,19 @@ export class TypeRelationPickerComponent {
         = (documents: Array<FieldDocument>) => map(documents, document => {
             return [
                 document,
-                TypeImagesUtil.getLinkedImageIds(document, this.datastore)
-                    .map(id => ({ imageId: id }))
+                TypeImagesUtil.getLinkedImageIds(
+                    document, this.datastore, this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+                ).map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
         })
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>,
-                                  offset: number) {
+                                  offset: number, typeCategoryNames: string[]) {
 
         const query: Query = {
             q,
-            categories: [TYPE],
+            categories: typeCategoryNames,
             limit: DOCUMENT_LIMIT,
             offset,
             sort: {

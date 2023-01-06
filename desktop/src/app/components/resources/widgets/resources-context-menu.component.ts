@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
+import { to } from 'tsfun';
+import { FieldDocument, Named, ProjectConfiguration } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
@@ -68,7 +69,9 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public isDeleteOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length > 0 &&
-            (!this.isReadonly() || this.contextMenu.documents[0].resource.category !== 'Type');
+            (!this.isReadonly() || this.projectConfiguration.getTypeCategories()
+                .map(to(Named.NAME))
+                .includes(this.contextMenu.documents[0].resource.category));
     }
 
 

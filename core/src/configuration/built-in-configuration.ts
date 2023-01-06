@@ -588,6 +588,7 @@ export class BuiltInConfiguration {
         },
         Type: {
             supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             mustLieWithin: true,
             fields: {},
             minimalForm: {

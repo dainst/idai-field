@@ -23,7 +23,7 @@
             <span [ngClass]="isSectionVisible('types') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
             <span *ngIf="mainDocument?.resource.category === 'TypeCatalog'"
                 i18n="@@resources.typeGrid.types">Typen</span>
-            <span *ngIf="mainDocument?.resource.category === 'Type'"
+            <span *ngIf="mainDocument?.resource.category !== 'TypeCatalog'"
                 i18n="@@resources.typeGrid.subtypes">Untertypen</span>
         </div>
 
@@ -35,7 +35,7 @@
             <div id="plus-button-container" *ngIf="isSectionVisible('types')">
                 <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"
-                             [placement]="documents.length > 0 ? 'top' : 'bottom'"
+                             [placement]="'top'"
                              [preselectedGeometryType]="'none'"
                              [preselectedCategory]="getCurrentFilterCategory()"
                              [liesWithin]="getSelectedSegmentDoc()"

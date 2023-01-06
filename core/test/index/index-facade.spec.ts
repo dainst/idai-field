@@ -14,11 +14,15 @@ describe('IndexFacade', () => {
 
     beforeEach(() => {
 
-        const projectConfiguration = createMockProjectConfiguration()
+        const projectConfiguration = createMockProjectConfiguration();
 
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
-            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'links' }
+            'isDepictedIn:links': {
+                path: 'resource.relations.isDepictedIn',
+                pathArray: ['resource', 'relations', 'isDepictedIn'],
+                type: 'links'
+            }
         }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
@@ -45,12 +49,12 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocB);
         indexFacade.put(typeDocA);
 
-        const items1 = indexFacade.find(
-            { categories: ['Type'], sort: { matchCategory: 'SomeFindCategory' } /* query is designed to trigger Type-based sort */
-            });
+        const items1 = indexFacade.find({
+            categories: ['Type'],
+            sort: { matchCategory: 'SomeFindCategory' } /* query is designed to trigger Type-based sort */
+        });
         expect(items1).toEqual(['id0', 'id1']);
 
-        // ->
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
 
@@ -73,21 +77,21 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
+        const items1 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find' } });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
+        const items2 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find' } });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.remove(findDocB);
         indexFacade.remove(findDocC);
 
-        const result = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
+        const result = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find' } });
         expect(result).toEqual(['id0', 'id1']);
     });
 

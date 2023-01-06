@@ -174,6 +174,15 @@ export class ProjectConfiguration {
     }
 
 
+    public getTypeCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(TYPE),
+            Tree.flatten
+        );
+    }
+
+
     public getImageCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,

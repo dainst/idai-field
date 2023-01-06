@@ -1,5 +1,5 @@
 import { is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, size, isUndefinedOrEmpty,
-    separate, cond, pairWith, left, same } from 'tsfun';
+    separate, cond, pairWith, left, subsetOf } from 'tsfun';
 import { Resource } from '../model/resource';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { Query } from '../model/query';
@@ -14,7 +14,6 @@ import { Name } from '../tools/named';
 
 
 const INSTANCES = 'instances';
-const TYPE = 'Type';
 
 type Percentage = number;
 
@@ -25,7 +24,7 @@ type Percentage = number;
  *
  * @param indexItems
  * @param query
- *   - if query.categories === ['Type'],
+ *   - if query.categories includes only type categories,
  *     query.sort.matchType can be set
  *   . in order to perform a ranking of Type resources then.
  *     if query.sort.matchCategory is not set, a regular
@@ -34,9 +33,10 @@ type Percentage = number;
  *     puts an element which matches the query exactly, to the
  *     front of the resulting list.
  */
-export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<Resource.Id> {
+export function getSortedIds(indexItems: Array<IndexItem>, query: Query,
+                             typeCategories: string[]): Array<Resource.Id> {
 
-    const rankEntries = shouldRankCategories(query)
+    const rankEntries = shouldRankCategories(query, typeCategories)
         ? rankTypeResourceIndexItems(query.sort.matchCategory)
         : rankRegularIndexItems;
 
@@ -61,9 +61,9 @@ function shouldHandleExactMatch(query: Query) {
 }
 
 
-function shouldRankCategories(query: Query) {
+function shouldRankCategories(query: Query, typeCategories: string[]) {
 
-    return query.categories && same(query.categories, [TYPE]) && query.sort?.matchCategory;
+    return query.sort?.matchCategory && query.categories && subsetOf(typeCategories, query.categories);
 }
 
 

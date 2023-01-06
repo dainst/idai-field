@@ -37,7 +37,8 @@ export module ImportCatalogErrors {
  * @author Daniel de Oliveira
  */
 export function buildImportCatalog(services: ImportCatalogServices,
-                                   context: ImportCatalogContext) {
+                                   context: ImportCatalogContext,
+                                   typeCategoryNames: string[]) {
 
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {
@@ -48,7 +49,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
 
             if (isOwned(context, importCatalog)) {
                 await assertCatalogNotOwned(services, importCatalog);
-                await assertNoImagesOverwritten(services, importDocuments);
+                await assertNoImagesOverwritten(services, importDocuments, typeCategoryNames);
                 for (const importDocument of importDocuments) {
                     delete importDocument.project;
                 }
@@ -61,11 +62,11 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 existingCatalogAndImageDocuments
             ] = await getExistingDocuments(services, importCatalog.resource.id);
 
-            assertRelationsValid(importDocuments);
+            assertRelationsValid(importDocuments, typeCategoryNames);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
             const updateDocuments = await aMap(importDocuments,
-                importOneDocument(services, existingCatalogAndImageDocuments));
+                importOneDocument(services, existingCatalogAndImageDocuments, typeCategoryNames));
 
             await removeRelatedImages(
                 services, updateDocuments, existingDocumentsRelatedImages
@@ -75,7 +76,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
             );
             return { errors: [], successfulImports: updateDocuments.length };
         } catch (errWithParams) {
-            await cleanUpLeftOverImagesFromReader(services, importDocuments);
+            await cleanUpLeftOverImagesFromReader(services, importDocuments, typeCategoryNames);
             return { errors: [errWithParams], successfulImports: 0 };
         }
     }
@@ -108,10 +109,11 @@ async function assertNoIdentifierClashes(services: ImportCatalogServices,
 
 
 async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
-                                               importDocuments: Array<Document>) {
+                                               importDocuments: Array<Document>,
+                                               typeCategoryNames: string[]) {
 
     for (const document of importDocuments) {
-        if (document.resource.category === 'Type') continue;
+        if (typeCategoryNames.includes(document.resource.category)) continue;
         if (document.resource.category === 'TypeCatalog') continue;
         try {
             await services.datastore.get(document.resource.id);
@@ -127,10 +129,11 @@ async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
 
 
 async function assertNoImagesOverwritten(services: ImportCatalogServices,
-                                         importDocuments: Array<Document>) {
+                                         importDocuments: Array<Document>,
+                                         typeCategoryNames: string[]) {
 
     for (const document of importDocuments) {
-        if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
+        if (!typeCategoryNames.includes(document.resource.category) && document.resource.category !== 'TypeCatalog') {
             let found = false;
             try {
                 await services.datastore.get(document.resource.id);
@@ -249,7 +252,8 @@ async function fetchExistingCatalogWithTypes(services: ImportCatalogServices,
 
 
 function importOneDocument(services: ImportCatalogServices,
-                           existingDocuments: Lookup<Document>) {
+                           existingDocuments: Lookup<Document>,
+                           typeCategoryNames: string[]) {
 
     return async (document: Document) => {
 
@@ -265,7 +269,7 @@ function importOneDocument(services: ImportCatalogServices,
             return updateDocument;
         }
 
-        if (isTypeOrCatalog(existingDocument)) {
+        if (isTypeOrCatalog(existingDocument, typeCategoryNames)) {
             const oldRelations = clone(existingDocument.resource.relations[Relation.Type.HASINSTANCE]);
             updateDocument.resource = clone(document.resource);
             if (oldRelations) updateDocument.resource.relations[Relation.Type.HASINSTANCE] = oldRelations;
@@ -285,13 +289,13 @@ function isOwned(context: ImportCatalogContext, document: Document) {
 }
 
 
-function isTypeOrCatalog(document: Document) {
+function isTypeOrCatalog(document: Document, typeCategoryNames: string[]) {
 
-    return document.resource.category === 'Type' || document.resource.category === 'TypeCatalog';
+    return typeCategoryNames.includes(document.resource.category) || document.resource.category === 'TypeCatalog';
 }
 
 
-function assertRelationsValid(documents: Array<Document>) {
+function assertRelationsValid(documents: Array<Document>, typeCategoryNames: string[]) {
 
     const lookup = makeDocumentsLookup(documents);
 
@@ -302,19 +306,20 @@ function assertRelationsValid(documents: Array<Document>) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
         }
-        if (document.resource.category === 'Type' ) {
+        if (typeCategoryNames.includes(document.resource.category)) {
             if (!isArray(document.resource.relations[Relation.Hierarchy.LIESWITHIN])
                 || document.resource.relations[Relation.Hierarchy.LIESWITHIN].length !== 1) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
             const target = lookup[document.resource.relations[Relation.Hierarchy.LIESWITHIN][0]];
             if (target === undefined
-                || (target.resource.category !== 'Type' && target.resource.category !== 'TypeCatalog')) {
+                || (!typeCategoryNames.includes(target.resource.category)
+                    && target.resource.category !== 'TypeCatalog')) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
         }
 
-        if (document.resource.category === 'Type' || document.resource.category === 'TypeCatalog') {
+        if (typeCategoryNames.includes(document.resource.category) || document.resource.category === 'TypeCatalog') {
             if (!isUndefinedOrEmpty(document.resource.relations[Relation.Image.ISDEPICTEDIN])) {
                 for (const target_ of document.resource.relations[Relation.Image.ISDEPICTEDIN]) {
                     const target = lookup[target_];

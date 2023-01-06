@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
+import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
     SyncService, Tree, ImageStore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
@@ -280,7 +280,8 @@ export class ImportComponent implements OnInit {
             },
             () => this.idGenerator.generateId(),
             options,
-            documents
+            documents,
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
         );
     }
 

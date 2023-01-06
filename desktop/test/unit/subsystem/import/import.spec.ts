@@ -43,7 +43,9 @@ describe('Import/Subsystem', () => {
             { settings: {} as any,  projectConfiguration: _projectConfiguration, operationCategories },
             () => { id++; return id.toString(); },
             options,
-            documents);
+            documents,
+            ['Type']
+        );
     }
 
 

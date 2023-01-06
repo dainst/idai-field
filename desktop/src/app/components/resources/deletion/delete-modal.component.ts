@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { to } from 'tsfun';
 import { Document, Named, ProjectConfiguration } from 'idai-field-core';
 
 
@@ -61,7 +62,9 @@ export class DeleteModalComponent {
         && this.documents[0].project === undefined;
 
     public showOwnedTypeAssociationsMsg = () =>
-        this.documents[0].resource.category === 'Type'
+        this.projectConfiguration.getTypeCategories()
+            .map(to(Named.NAME))
+            .includes(this.documents[0].resource.category)
         && this.documents[0].project === undefined;
 
     public showDeleteImagesOption = () =>

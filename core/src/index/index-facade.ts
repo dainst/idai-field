@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, is, isDefined, lookup, on, separate, values } from 'tsfun';
+import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
@@ -17,7 +17,6 @@ import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
 
 
-const TYPE = 'Type';
 const CONFIGURATION = 'Configuration';
 const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
@@ -61,7 +60,13 @@ export class IndexFacade {
 
     public async putMultiple(documents: Array<Document>, setIndexedDocuments?: (count: number) => Promise<void>) {
 
-        const [typeDocuments, nonTypeDocuments] = separate(on(['resource', 'category'], is(TYPE)), documents);
+        const [typeDocuments, nonTypeDocuments] = separate(
+            on(
+                ['resource', 'category'], 
+                includedIn(this.projectConfiguration.getTypeCategories().map(to(Named.NAME)))
+            ),
+            documents
+        );
 
         let count: number = 0;
 
@@ -87,7 +92,7 @@ export class IndexFacade {
         ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
         delete this.indexItems[document.resource.id];
-        if (document.resource.category !== TYPE) {
+        if (!this.projectConfiguration.getTypeCategories().map(to(Named.NAME)).includes(document.resource.category)) {
             IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
         }
         ObserverUtil.notify(this.observers, document);
@@ -126,7 +131,7 @@ export class IndexFacade {
             return queryResult;
         } else {
             const indexItems = queryResult.map(lookup(this.indexItems));
-            return getSortedIds(indexItems, query);
+            return getSortedIds(indexItems, query, this.projectConfiguration.getTypeCategories().map(to(Named.NAME)));
         }
     }
 
@@ -141,7 +146,7 @@ export class IndexFacade {
 
         item.identifier = document.resource.identifier;
 
-        if (doc.resource.category === TYPE) {
+        if (this.projectConfiguration.getTypeCategories().map(to(Named.NAME)).includes(doc.resource.category)) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
             if (!skipRemoval) {
@@ -198,7 +203,8 @@ export class IndexFacade {
             values,
             forEach((item: TypeResourceIndexItem) => {
                 delete item[INSTANCES][document.resource.id];
-            })) ;
+            })
+        );
     }
 
 

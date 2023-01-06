@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
+import { filter, flatten, flow, is, Map, map, remove, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
     Resource, ProjectConfiguration, ImageVariant, Named, Hierarchy, SortUtil } from 'idai-field-core';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
@@ -329,7 +329,11 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const getLinkedImageIds = pipe(TypeImagesUtil.getLinkedImageIds, this.datastore);
+        const getLinkedImageIds = pipe(
+            TypeImagesUtil.getLinkedImageIds,
+            this.datastore,
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+        );
 
         return flow(document,
             getLinkedImageIds,

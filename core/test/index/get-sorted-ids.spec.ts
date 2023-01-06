@@ -1,5 +1,6 @@
 import { getSortedIds } from '../../src/index/get-sorted-ids';
 
+
 /**
  * @author Daniel de Oliveira
  */
@@ -13,14 +14,16 @@ describe('getSortedIds', () => {
             { id: 'c', identifier: 'C2' }
             ];
 
-        const result1 = getSortedIds(as as any, { q: 'C2',
+        const result1 = getSortedIds(as as any, {
+            q: 'C2',
             sort: { mode: 'default' }
-        });
+        }, ['Type']);
         expect(result1).toEqual(['a', 'b', 'c']);
 
-        const result2 = getSortedIds(as as any, { q: 'C2',
+        const result2 = getSortedIds(as as any, {
+            q: 'C2',
             sort: { mode: 'exactMatchFirst' }
-        });
+        }, ['Type']);
         expect(result2).toEqual(['c', 'a', 'b']);
     });
 
@@ -37,14 +40,18 @@ describe('getSortedIds', () => {
             {
                 categories: ['Type'],
                 sort: { matchCategory: 'Pottery' }
-            });
+            },
+            ['Type']
+        );
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(indexItems as any,
             {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
-            });
+            },
+            ['Type']
+        );
         expect(result2).toEqual(['c', 'b', 'a']);
     });
 
@@ -60,7 +67,9 @@ describe('getSortedIds', () => {
             {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
-            });
+            },
+            ['Type']
+        );
         expect(result1).toEqual(['a', 'b']);
     });
 });

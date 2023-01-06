@@ -30,7 +30,9 @@ describe('subsystem/import/importCatalog', () => {
             {
                 username: app.settingsProvider.getSettings().username,
                 selectedProject: app.settingsProvider.getSettings().selectedProject
-            });
+            },
+            ['Type']
+        );
         done();
     });
 

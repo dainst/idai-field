@@ -1,6 +1,6 @@
-import { Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
-import {PLACEHOLDER} from '../components/image/row/image-row';
+import { Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
+import { PLACEHOLDER } from '../components/image/row/image-row';
 
 
 /**
@@ -15,11 +15,11 @@ export module TypeImagesUtil {
      * Returns images of linked categories (for type catalogs) or finds (for categories). If the categories linked to a
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
-    export function getLinkedImageIds(document: FieldDocument,
-                                      datastore: Datastore): string[] {
+    export function getLinkedImageIds(document: FieldDocument, datastore: Datastore,
+                                      typeCategoryNames: string[]): string[] {
 
-        if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
-            throw 'Illegal argument: Document must be of category Type or TypeCatalog.';
+        if (!typeCategoryNames.includes(document.resource.category) && document.resource.category !== 'TypeCatalog') {
+            throw 'Illegal argument: Document must be of category Type (or subcategory) or TypeCatalog.';
         }
 
         return document.resource.category === 'TypeCatalog'

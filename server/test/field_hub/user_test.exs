@@ -1,8 +1,5 @@
 defmodule FieldHub.UserTest do
-  alias FieldHub.{
-    User,
-    TestHelper
-  }
+  alias FieldHub.User
 
   use ExUnit.Case
 

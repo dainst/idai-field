@@ -112,7 +112,7 @@ defmodule FieldHubWeb.UserAuth do
         else
           conn
           |> send_resp(403, "")
-            |> halt()
+          |> halt()
         end
 
       _ ->

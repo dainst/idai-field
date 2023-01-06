@@ -30,6 +30,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
   setup %{} do
     FileStore.create_directories(@project)
+
     on_exit(fn ->
       FileStore.remove_directories(@project)
       Cachex.clear!(@cache_name)

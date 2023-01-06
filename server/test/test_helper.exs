@@ -1,53 +1,53 @@
 ExUnit.start()
 
 alias FieldHub.{
-  CLI,
+  Project,
+  User,
   FileStore,
   CouchService
 }
 
 defmodule FieldHub.TestHelper do
-  def create_test_db_and_user(project, user_name, user_password) do
-    CLI.create_project(project)
-    CLI.create_user(user_name, user_password)
-    CLI.add_user_as_project_member(user_name, project)
-    CLI.add_user_as_project_member(Application.get_env(:field_hub, :couchdb_user_name), project)
+  def create_test_db_and_user(project_name, user_name, user_password) do
+    Project.create(project_name)
+    User.create(user_name, user_password)
+    Project.update_user(user_name, project_name, :member)
   end
 
-  def remove_test_db_and_user(project, user_name) do
-    remove_project(project)
-    CLI.delete_user(user_name)
+  def remove_test_db_and_user(project_name, user_name) do
+    remove_project(project_name)
+    User.delete(user_name)
   end
 
-  def remove_project(project) do
-    CLI.delete_project(project)
-    # Currently the CLI is not deleting file directories.
-    FileStore.remove_directories(project)
+  def remove_project(project_name) do
+    Project.delete(project_name)
+    # Currently the Project is not deleting file directories.
+    FileStore.remove_directories(project_name)
   end
 
-  def add_test_files_to_store(project) do
+  def add_dummy_files_to_store(project_name) do
     FileStore.store_file(
       "file_a",
-      project,
+      project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
     FileStore.store_file(
       "file_b",
-      project,
+      project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
     FileStore.store_file(
       "file_c",
-      project,
+      project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
-    FileStore.delete("file_c", project)
+    FileStore.delete("file_c", project_name)
   end
 
   def create_complete_example_project(project_name, user_name, user_password) do

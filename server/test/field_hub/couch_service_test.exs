@@ -33,7 +33,7 @@ defmodule FieldHub.CouchServiceTest do
 
   test "authenticate/1 with invalid credentials yields 401" do
     result = CouchService.authenticate(%Credentials{name: @user_name, password: "nope"})
-    assert {:error, %HTTPoison.Response{status_code: 401}} = result
+    assert {:error, 401} = result
   end
 
   test "authenticate_and_authorize/2 with valid and authorized credentials yields :ok" do

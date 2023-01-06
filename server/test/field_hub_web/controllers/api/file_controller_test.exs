@@ -1,9 +1,11 @@
 defmodule FieldHubWeb.Api.FileControllerTest do
   use FieldHubWeb.ConnCase
 
-  alias FieldHub.TestHelper
+  alias FieldHub.{
+    FileStore,
+    TestHelper
+  }
 
-  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
   @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
 
   @project "test_project"
@@ -18,18 +20,20 @@ defmodule FieldHubWeb.Api.FileControllerTest do
 
   @basic_auth "Basic #{Base.encode64("#{@user_name}:#{@user_password}")}"
 
-  setup do
-    # Run before each test
+  setup_all %{} do
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
 
     on_exit(fn ->
-      # Run after each test
       TestHelper.remove_test_db_and_user(@project, @user_name)
-      File.rm_rf!(@file_directory_root)
+    end)
+  end
+
+  setup %{} do
+    FileStore.create_directories(@project)
+    on_exit(fn ->
+      FileStore.remove_directories(@project)
       Cachex.clear!(@cache_name)
     end)
-
-    :ok
   end
 
   test "PUT /files/:project/:uuid creates file with specified uuid and type", %{conn: conn} do
@@ -39,7 +43,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
   end
@@ -49,7 +53,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", @basic_auth)
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=unsupported", @example_file)
+      |> put("/files/#{@project}/1234?type=unsupported", @example_file)
 
     assert conn.status == 400
   end
@@ -61,7 +65,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", @basic_auth)
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", roughly_20_mb)
+      |> put("/files/#{@project}/1234?type=original_image", roughly_20_mb)
 
     assert conn.status == 413
   end
@@ -72,7 +76,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project/1234?type=original_image")
+      |> get("/files/#{@project}/1234?type=original_image")
 
     assert conn.status == 404
   end
@@ -84,7 +88,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project/1234")
+      |> get("/files/#{@project}/1234")
 
     assert conn.status == 400
   end
@@ -95,7 +99,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project/1234?type=unknown")
+      |> get("/files/#{@project}/1234?type=unknown")
 
     assert conn.status == 400
   end
@@ -107,7 +111,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -115,7 +119,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project/1234?type=original_image")
+      |> get("/files/#{@project}/1234?type=original_image")
 
     assert conn.status == 200
     assert conn.resp_body == @example_file
@@ -127,7 +131,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     assert conn.status == 401
   end
@@ -138,7 +142,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     assert conn.status == 200
 
@@ -157,7 +161,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -165,7 +169,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body
@@ -191,7 +195,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -199,7 +203,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body
@@ -212,7 +216,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=thumbnail_image", @example_file)
+      |> put("/files/#{@project}/1234?type=thumbnail_image", @example_file)
 
     assert conn.status == 201
 
@@ -220,7 +224,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     assert conn.status == 200
 
@@ -249,7 +253,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", @basic_auth)
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -258,7 +262,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> recycle()
       |> put_req_header("authorization", @basic_auth)
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=thumbnail_image", @example_file)
+      |> put("/files/#{@project}/1234?type=thumbnail_image", @example_file)
 
     assert conn.status == 201
 
@@ -266,7 +270,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", @basic_auth)
-      |> get("/files/test_project?types[]=original_image")
+      |> get("/files/#{@project}?types[]=original_image")
 
     json_response =
       conn.resp_body
@@ -285,7 +289,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", @basic_auth)
-      |> get("/files/test_project?types[]=unsupported")
+      |> get("/files/#{@project}?types[]=unsupported")
 
     assert conn.status == 400
   end
@@ -294,7 +298,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     conn =
       conn
       |> put_req_header("authorization", @basic_auth)
-      |> get("/files/test_project?types=unsupported")
+      |> get("/files/#{@project}?types=unsupported")
 
     assert conn.status == 400
   end
@@ -306,7 +310,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -315,7 +319,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/5678?type=original_image", @example_file)
+      |> put("/files/#{@project}/5678?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -323,7 +327,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body
@@ -340,7 +344,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> delete("/files/test_project/1234")
+      |> delete("/files/#{@project}/1234")
 
     assert conn.status == 200
 
@@ -348,7 +352,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body
@@ -369,7 +373,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/test_project/1234?type=original_image", @example_file)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
 
@@ -377,7 +381,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body
@@ -390,7 +394,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> delete("/files/test_project/1234")
+      |> delete("/files/#{@project}/1234")
 
     assert conn.status == 200
 
@@ -398,7 +402,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
       conn
       |> recycle()
       |> put_req_header("authorization", "Basic #{credentials}")
-      |> get("/files/test_project")
+      |> get("/files/#{@project}")
 
     json_response =
       conn.resp_body

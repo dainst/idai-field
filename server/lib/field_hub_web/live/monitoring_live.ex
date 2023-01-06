@@ -7,7 +7,7 @@ defmodule FieldHubWeb.MonitoringLive do
   alias FieldHub.{
     CouchService,
     Issues,
-    Statistics
+    Project
   }
 
   alias Phoenix.LiveView.JS
@@ -55,7 +55,7 @@ defmodule FieldHubWeb.MonitoringLive do
     |> CouchService.has_project_access?(project)
     |> case do
       true ->
-        stats = Statistics.evaluate_project(project)
+        stats = Project.evaluate_project(project)
 
         Process.send_after(self(), :update_stats, 1000)
 

@@ -1,19 +1,15 @@
 defmodule FieldHubWeb.Api.ProjectController do
-  alias FieldHub.{
-    Statistics,
-    CouchService
-  }
-
-  alias FieldHubWeb.Api.StatusView
-
   use FieldHubWeb, :controller
 
+  alias FieldHub.Project
+  alias FieldHubWeb.Api.StatusView
+
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
-    render(conn, "list.json", %{projects: CouchService.get_databases_for_user(user_name)})
+    render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
   end
 
   def show(conn, %{"project" => project_name}) do
-    render(conn, "show.json", %{project: Statistics.evaluate_project(project_name)})
+    render(conn, "show.json", %{project: Project.evaluate_project(project_name)})
   end
 
   def create(conn, %{"project" => _project_name}) do

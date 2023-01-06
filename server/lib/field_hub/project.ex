@@ -77,6 +77,10 @@ defmodule FieldHub.Project do
     end
   end
 
+  def get_all_for_user(user_name) do
+    CouchService.get_databases_for_user(user_name)
+  end
+
   def evaluate_project(project_name) do
     db_statistics = evaluate_database(project_name)
     file_statistics = evaluate_file_store(project_name)

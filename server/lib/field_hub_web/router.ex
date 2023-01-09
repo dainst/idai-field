@@ -70,6 +70,7 @@ defmodule FieldHubWeb.Router do
     pipe_through :api
     pipe_through :api_require_admin_user
     post "/api/projects/:project", ProjectController, :create
+    delete "/api/projects/:project", ProjectController, :delete
   end
 
   # Other scopes may use custom stacks.

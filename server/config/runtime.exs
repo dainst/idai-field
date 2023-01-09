@@ -7,7 +7,6 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 
-
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -22,6 +21,11 @@ if config_env() == :prod do
       """
 
   host = System.get_env("HOST")
+
+  # Configures Elixir's Logger
+  config :logger, :console,
+    format: "$date $time $metadata[$level] $message\n",
+    metadata: [:request_id]
 
   config :field_hub, FieldHubWeb.Endpoint,
     url: [host: host, port: 443],
@@ -54,7 +58,9 @@ if config_env() == :prod do
   config :field_hub,
     couchdb_url: System.get_env("COUCHDB_URL"),
     couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"),
-    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD")
+    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD"),
+    couchdb_user_name: System.get_env("COUCHDB_USER_NAME"),
+    couchdb_user_password: System.get_env("COUCHDB_USER_PASSWORD")
 
   # ## Configuring the mailer
   #

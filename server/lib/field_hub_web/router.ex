@@ -1,9 +1,9 @@
 defmodule FieldHubWeb.Router do
-
   use FieldHubWeb, :router
 
   alias FieldHub.CouchService
-  import FieldHubWeb.Plugs
+  import FieldHubWeb.UserAuth
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug Plug.Parsers,
@@ -17,6 +17,7 @@ defmodule FieldHubWeb.Router do
     plug :put_root_layout, {FieldHubWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -26,21 +27,50 @@ defmodule FieldHubWeb.Router do
       json_decoder: Phoenix.json_library()
 
     plug :accepts, ["json"]
-    plug :api_auth
   end
 
-  forward "/db", ReverseProxyPlug, upstream: &CouchService.url/0
+  forward "/db", ReverseProxyPlug, upstream: &CouchService.base_url/0
 
   scope "/", FieldHubWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/session/new", UserSessionController, :new
+    post "/session/login", UserSessionController, :create
+    post "/session/logout", UserSessionController, :delete
   end
 
-  scope "/files/:project", FieldHubWeb do
-    pipe_through :api
+  scope "/", FieldHubWeb do
+    pipe_through :browser
+    pipe_through :require_authenticated_user
+    pipe_through :require_project_access
 
-    resources("/", Api.FileController, only: [:index, :update, :show, :delete])
+    live "/monitoring/:project", MonitoringLive
+  end
+
+  scope "/", FieldHubWeb.Api do
+    pipe_through :api
+    pipe_through :api_require_authenticated_user
+
+    get "/api/projects", ProjectController, :index
+  end
+
+  scope "/", FieldHubWeb.Api do
+    pipe_through :api
+    pipe_through :api_require_authenticated_user
+    pipe_through :api_require_project_access
+
+    get "/api/projects/:project", ProjectController, :show
+
+    resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
+  end
+
+  scope "/", FieldHubWeb.Api do
+    pipe_through :api
+    pipe_through :api_require_admin_user
+    post "/api/projects/:project", ProjectController, :create
+    delete "/api/projects/:project", ProjectController, :delete
   end
 
   # Other scopes may use custom stacks.

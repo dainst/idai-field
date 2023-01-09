@@ -47,8 +47,13 @@ FieldHub is now running at http://localhost:4000 as a sync target for Field Desk
 Run unit tests with:
 
 ```bash
-mix test
+mix test --cover
 ``` 
+
+Apply automatic formatting before committing code with:
+```
+mix format
+```
 
 ### CLI Interface
 

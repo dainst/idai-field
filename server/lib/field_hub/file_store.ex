@@ -17,6 +17,9 @@ defmodule FieldHub.FileStore do
       |> File.mkdir_p()
     end)
     |> Enum.zip(@variant_types)
+    |> Enum.into(%{}, fn {status, variant_name} ->
+      {variant_name, status}
+    end)
   end
 
   @doc """
@@ -49,30 +52,29 @@ defmodule FieldHub.FileStore do
 
   """
   def get_file_list(project_name, requested_variants \\ @variant_types) do
-
     get_file_map_cache(project_name)
-    |> Map.filter(fn({_uuid, %{variants: cached_variants}}) ->
+    |> Map.filter(fn {_uuid, %{variants: cached_variants}} ->
       # Only keep files that match one of the requested variants
       cached_variants
-      |> Stream.map(fn(%{name: name}) ->
-          name
+      |> Stream.map(fn %{name: name} ->
+        name
       end)
-      |> Enum.any?(fn(cached_variant) ->
+      |> Enum.any?(fn cached_variant ->
         Enum.member?(requested_variants, cached_variant)
       end)
     end)
     # TODO: Remove in Version 4
-    |> Map.new(fn({uuid, info}) ->
+    |> Map.new(fn {uuid, info} ->
       {
         uuid,
         info
-        |> Map.update!(:types, fn(old_values) ->
-          Enum.filter(old_values, fn(val) ->
+        |> Map.update!(:types, fn old_values ->
+          Enum.filter(old_values, fn val ->
             Enum.member?(requested_variants, val)
           end)
         end)
-        |> Map.update!(:variants, fn(old_values) ->
-          Enum.filter(old_values, fn(%{name: name}) ->
+        |> Map.update!(:variants, fn old_values ->
+          Enum.filter(old_values, fn %{name: name} ->
             Enum.member?(requested_variants, name)
           end)
         end)
@@ -97,7 +99,7 @@ defmodule FieldHub.FileStore do
 
   def store_file(uuid, project, type, data) do
     directory = get_type_directory(project, type)
-    File.mkdir_p!(directory)
+
     file_path = "#{directory}/#{uuid}"
 
     result =
@@ -112,32 +114,18 @@ defmodule FieldHub.FileStore do
   end
 
   def delete(uuid, project) do
-    result =
+    variants =
       @variant_types
-      |> Stream.filter(fn variant ->
+      |> Enum.filter(fn variant ->
         directory = get_type_directory(project, variant)
         File.exists?("#{directory}/#{uuid}")
       end)
-      |> Stream.map(
-        &store_file("#{uuid}#{@tombstone_suffix}", project, &1, [])
-      )
-      |> Enum.filter(fn val ->
-        val != :ok
-      end)
-      |> case do
-        [] ->
-          :ok
 
-        errors ->
-          errors
-      end
+    variants
+    |> Enum.map(&store_file("#{uuid}#{@tombstone_suffix}", project, &1, []))
 
     clear_cache(project)
-    result
-  end
-
-  def get_supported_variant_types() do
-    @variant_types
+    variants
   end
 
   defp get_project_directory(project) do
@@ -158,13 +146,13 @@ defmodule FieldHub.FileStore do
         file_map = get_file_map(project)
         Cachex.put!(@cache_name, project, file_map, ttl: @cache_expiration_ms)
         file_map
+
       {:ok, file_map} ->
         file_map
     end
   end
 
   defp get_file_map(project) do
-
     @variant_types
     |> Stream.map(&get_file_map_for_variant(project, &1))
     |> Enum.reduce(%{}, fn variant_map, acc ->
@@ -232,6 +220,7 @@ defmodule FieldHub.FileStore do
       case file_info do
         %{type: :directory} ->
           true
+
         _ ->
           false
       end

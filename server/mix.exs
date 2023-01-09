@@ -62,20 +62,19 @@ defmodule FieldHub.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-
     dev_db_name = "development"
 
     [
       setup: [
         "deps.get",
-        "setup_couch",
+        "setup_field_hub",
         "seed"
       ],
-      setup_couch: [
-        "run --eval 'FieldHub.CLI.setup_couchdb_single_node()'"
+      setup_field_hub: [
+        "run --eval 'FieldHub.CLI.setup()'"
       ],
       seed: [
-        "run --eval 'FieldHub.CLI.create_project_with_default_user(\"#{dev_db_name}\", \"pw\"')"
+        "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"
       ],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]

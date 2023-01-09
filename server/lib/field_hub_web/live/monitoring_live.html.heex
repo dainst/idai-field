@@ -1,0 +1,74 @@
+<div class="container">
+    <%= live_redirect "Back to overview", to: Helpers.page_path(@socket, :index) %>
+
+    <h1>Project <i><%= @project %></i></h1>
+
+    <h2>Statistics</h2>
+
+    <%= case @stats do %>
+        <% :loading -> %>
+            Loading...
+        <% %{
+            database: %{
+                doc_count: db_doc_count,
+                file_size: db_file_size
+            },
+            files: files
+        } -> %>
+            <section>Database documents: <%= db_doc_count %></section>
+            <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
+            <%= case files do %>
+                <% :enoent -> %>
+                    <section>No files directory found! See issues below.</section>
+                <% values -> %>
+                <%= Enum.map(values, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
+                    <section><%= variant_name |> get_file_label() |> String.capitalize()  %>: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
+                <% end) %>
+            <% end %>
+    <% end %>
+
+    <hr>
+
+    <section>
+        <h2>Issues <%= if @issue_count != 0, do: " (#{@issue_count})" %></h2>
+        <%= case @issues do %>
+            <% :loading -> %>
+                🔍 Evaluating...
+            <% issue_groups when issue_groups == %{}  -> %>
+                None.
+            <% issue_groups -> %>
+                <%= Enum.map(issue_groups, fn({type, issues}) -> %>
+                <section id={"#{type}-issue-group"} class="issue-group hide">
+                    <h3>
+                        <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                            🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                        </span>
+                        <span class="hide-toggle" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                            🗁 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                        </span>
+                    </h3>
+
+                    <table class="issue-table">
+                        <th>UUID</th>
+                        <th>Details</th>
+
+                        <%= Enum.map(issues, fn(%{
+                            severity: severity,
+                            data: data
+                        } = issue) -> %>
+                            <tr>
+                                <td class={issue_classes(severity)}>
+                                    <%= Map.get(data, :uuid, "No UUID") %>
+                                </td>
+                                <td>
+                                    <%= get_issue_description(issue) %>
+                                </td>
+                            </tr>
+                        <% end) %>
+                    </table>
+                </section>
+                <% end) %>
+        <% end %>
+    </section>
+    <hr>
+</div>

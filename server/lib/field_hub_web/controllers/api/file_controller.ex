@@ -4,6 +4,8 @@ defmodule FieldHubWeb.Api.FileController do
   alias FieldHub.FileStore
   alias FieldHubWeb.Api.StatusView
 
+  @max_size Application.compile_env(:field_hub, :file_max_size)
+
   def index(conn, %{"project" => project, "types" => types}) when is_list(types) do
     parsed_types =
       types
@@ -39,11 +41,6 @@ defmodule FieldHubWeb.Api.FileController do
         |> put_status(:bad_request)
         |> put_view(StatusView)
         |> render(%{error: msg})
-
-      [] ->
-        # 'types' parameter was present but empty. Handle like a request without 'types' parameter (all files are returned).
-        conn
-        |> index(%{"project" => project})
 
       valid ->
         file_store_data =
@@ -110,61 +107,42 @@ defmodule FieldHubWeb.Api.FileController do
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
     parsed_type = parse_type(type)
 
-    max_payload = 1_000_000_000
-
     conn
-    |> read_body(length: max_payload)
+    |> read_body(length: @max_size)
     |> case do
       {:ok, data, conn} ->
-        file_store_data =
-          case parsed_type do
-            {:error, type} ->
-              conn
-              |> put_status(:bad_request)
-              |> put_view(StatusView)
-              |> render(%{error: "Unknown file type: #{type}"})
+        case parsed_type do
+          {:error, type} ->
+            conn
+            |> put_status(:bad_request)
+            |> put_view(StatusView)
+            |> render(%{error: "Unknown file type: #{type}"})
 
-            valid ->
-              FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
-          end
+          valid ->
+            FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
 
-        case file_store_data do
-          :ok ->
             conn
             |> put_status(:created)
             |> put_view(StatusView)
             |> render(%{info: "File created."})
-
-          {:error, _} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> put_view(StatusView)
-            |> render(%{error: "Unknown"})
         end
 
       {:more, _partial_body, conn} ->
         conn
         |> put_status(:request_entity_too_large)
         |> put_view(StatusView)
-        |> render(%{error: "Payload to large, maximum of #{max_payload} bytes allowed."})
+        |> render(%{
+          error: "Payload to large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
+        })
     end
   end
 
   def delete(conn, %{"project" => project, "id" => uuid}) do
     file_store_data = FileStore.delete(Zarex.sanitize(uuid), Zarex.sanitize(project))
 
-    case file_store_data do
-      :ok ->
-        conn
-        |> put_view(StatusView)
-        |> render(%{info: "File deleted."})
-
-      _errors ->
-        conn
-        |> put_status(:internal_server_error)
-        |> put_view(StatusView)
-        |> render(%{error: "Unknown"})
-    end
+    conn
+    |> put_view(StatusView)
+    |> render(%{info: file_store_data})
   end
 
   defp parse_type(type) do

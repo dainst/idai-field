@@ -99,6 +99,7 @@ defmodule FieldHub.CLI do
           case result do
             {file_variant, :ok} ->
               Logger.info("Created directory for '#{file_variant}'.")
+
             {file_variant, posix} ->
               Logger.info("Unable to create directory for '#{file_variant}': #{posix}")
           end

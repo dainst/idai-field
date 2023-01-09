@@ -78,10 +78,10 @@ defmodule FieldHub.Project do
     )
     |> case do
       %{status_code: 200} when role == :none ->
-        :removed
+        :unset
 
       %{status_code: 200} ->
-        :added
+        :set
 
       {:unknown_project, _res} ->
         :unknown_project

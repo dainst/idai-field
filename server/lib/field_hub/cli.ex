@@ -62,7 +62,7 @@ defmodule FieldHub.CLI do
     |> Enum.map(fn project_name ->
       Project.update_user(app_user, project_name, :member)
       |> case do
-        :added ->
+        :set ->
           Logger.info("Set app user '#{app_user}' as member to project '#{project_name}'.")
       end
     end)
@@ -109,7 +109,7 @@ defmodule FieldHub.CLI do
 
         Project.update_user(project_name, project_name, :member)
         |> case do
-          :added ->
+          :set ->
             Logger.info("Set user '#{project_name}' as member to project '#{project_name}'.")
         end
 
@@ -192,7 +192,7 @@ defmodule FieldHub.CLI do
 
     Project.update_user(user_name, project_name, :admin)
     |> case do
-      :added ->
+      :set ->
         Logger.info("User '#{user_name}' has been added as admin to '#{project_name}'.")
 
       :unknown_project ->
@@ -208,7 +208,7 @@ defmodule FieldHub.CLI do
 
     Project.update_user(user_name, project_name, :member)
     |> case do
-      :added ->
+      :set ->
         Logger.info("User '#{user_name}' has been added as member to '#{project_name}'.")
 
       :unknown_project ->
@@ -224,7 +224,7 @@ defmodule FieldHub.CLI do
 
     Project.update_user(user_name, project_name, :none)
     |> case do
-      :removed ->
+      :unset ->
         Logger.info("User '#{user_name}' has been removed from all roles in '#{project_name}'.")
 
       :unknown_project ->

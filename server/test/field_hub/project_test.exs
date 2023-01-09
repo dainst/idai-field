@@ -31,7 +31,7 @@ defmodule FieldHub.ProjectTest do
     end
 
     test "can add user as admininstrator" do
-      assert :added = Project.update_user(@user_name, @project, :admin)
+      assert :set = Project.update_user(@user_name, @project, :admin)
     end
 
     test "trying unknown user as admininstrator is reported" do
@@ -43,7 +43,7 @@ defmodule FieldHub.ProjectTest do
     end
 
     test "can add user as member" do
-      assert :added = Project.update_user(@user_name, @project, :member)
+      assert :set = Project.update_user(@user_name, @project, :member)
     end
 
     test "trying to add unknown user as member is reported" do
@@ -55,7 +55,7 @@ defmodule FieldHub.ProjectTest do
     end
 
     test "can remove user" do
-      assert :removed = Project.update_user(@user_name, @project, :none)
+      assert :unset = Project.update_user(@user_name, @project, :none)
     end
 
     test "trying to remove unknown user is reported" do

@@ -1368,6 +1368,14 @@
         }
       }
     },
+    "FindCollection": {
+      "label": "Find collection",
+      "fields": {
+        "instanceOf": {
+          "label": "Типологічна класифікація"
+        }
+      }
+    },
     "PlasterFragment": {
       "label": "Фрагмент штукатурки",
       "fields": {

@@ -545,6 +545,27 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        FindCollection: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.IDENTIFICATION,
+                        fields: ['isInstanceOf']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         Sample: {
             mustLieWithin: true,
             fields: {},
@@ -905,7 +926,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Find:inherit'],
+            domain: ['Find:inherit', 'FindCollection:inherit'],
             range: ['Trench', 'Building', 'Survey'],
             editable: false,
             visible: false,
@@ -937,10 +958,10 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Find:inherit'],
-            range: ['Feature:inherit', 'Area:inherit', 'Sample', 'Room:inherit', 'BuildingPart:inherit',
-                'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs',
-                'DesignElement:inherit'],
+            domain: ['FindCollection:inherit', 'Find:inherit'],
+            range: ['FindCollection:inherit', 'Feature:inherit', 'Area:inherit', 'Sample', 'Room:inherit',
+                'BuildingPart:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof',
+                'Stairs', 'DesignElement:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,

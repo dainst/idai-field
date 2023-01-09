@@ -1368,6 +1368,14 @@
         }
       }
     },
+    "FindCollection": {
+      "label": "Find collection",
+      "fields": {
+        "instanceOf": {
+          "label": "Classificazione tipologica"
+        }
+      }
+    },
     "PlasterFragment": {
       "label": "Frammento di intonaco",
       "fields": {

@@ -1254,6 +1254,14 @@
         }
       }
     },
+    "FindCollection": {
+      "label": "Find collection",
+      "fields": {
+        "instanceOf": {
+          "label": "Typological classification"
+        }
+      }
+    },
     "PlasterFragment": {
       "label": "Plaster fragment",
       "fields": {

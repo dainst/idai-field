@@ -1368,6 +1368,14 @@
         }
       }
     },
+    "FindCollection": {
+      "label": "Fundkollektion",
+      "fields": {
+        "instanceOf": {
+          "label": "Typologische Einordnung"
+        }
+      }
+    },
     "PlasterFragment": {
       "label": "Putzfragment",
       "fields": {

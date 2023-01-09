@@ -81,13 +81,6 @@ defmodule FieldHub.CouchService do
         headers(credentials)
       )
 
-    update_user_role_in_project(
-      Application.get_env(:field_hub, :couchdb_user_name),
-      project_name,
-      credentials,
-      :member
-    )
-
     result
   end
 
@@ -472,11 +465,6 @@ defmodule FieldHub.CouchService do
     )
   end
 
-  @doc """
-  Should only used by `CouchService` internally or by the CLI module!
-
-  Returns `%Credentials{}` for the CouchDB admin as defined in `Application` environment.
-  """
   def get_admin_credentials() do
     %Credentials{
       name: Application.get_env(:field_hub, :couchdb_admin_name),

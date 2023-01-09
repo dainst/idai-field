@@ -30,6 +30,12 @@ defmodule FieldHub.Project do
         :invalid_name
 
       val ->
+        update_user(
+          Application.get_env(:field_hub, :couchdb_user_name),
+          project_name,
+          :member
+        )
+
         file_store_response = FileStore.create_directories(project_name)
         %{database: val, file_store: file_store_response}
     end

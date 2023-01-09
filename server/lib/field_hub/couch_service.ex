@@ -221,7 +221,7 @@ defmodule FieldHub.CouchService do
   defp user_update_payload(user_name, existing_admins, existing_members, :admin) do
     updated_names =
       (Map.get(existing_admins, "names", []) ++ [user_name])
-      |> Enum.dedup()
+      |> Enum.uniq()
 
     %{
       admins: %{
@@ -236,7 +236,7 @@ defmodule FieldHub.CouchService do
   defp user_update_payload(user_name, existing_admins, existing_members, :member) do
     updated_names =
       (Map.get(existing_members, "names", []) ++ [user_name])
-      |> Enum.dedup()
+      |> Enum.uniq()
 
     %{
       admins: existing_admins,

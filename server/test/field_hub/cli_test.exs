@@ -1,43 +1,152 @@
-# defmodule FieldHub.CLITest do
-#   alias FieldHub.{
-#     CLI,
-#     FileStore,
-#     TestHelper
-#   }
+defmodule FieldHub.CLITest do
+  alias FieldHub.{
+    CLI,
+    TestHelper
+  }
 
-#   use ExUnit.Case, async: true
+  import ExUnit.CaptureLog
 
-#   @project "test_project"
-#   @user_name "test_user"
+  use ExUnit.Case
 
-#   setup_all %{} do
-#     # Run before all tests
-#     TestHelper.remove_test_db_and_user(@project, @user_name)
+  @project_name "test_project"
+  @user_password "test_password"
 
-#     :ok
-#   end
+  setup %{} do
+    # Run before all tests
+    TestHelper.remove_test_db_and_user(@project_name, @project_name)
+    :ok
+  end
 
-#   test "can create and delete project, duplicate just result in warning" do
-#     assert %{couch: %{status_code: 201}, file_store: [:thumbnail_image, :original_image]} =
-#              CLI.create_project(@project)
+  test "setup/1 works without error" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.setup()
+      end)
 
-#     assert %{status_code: 200} = TestHelper.database_exists?(@project)
+    assert log =~ "Running initial CouchDB setup for single node"
+    assert log =~ "Setup done."
+  end
 
-#     # Another creation attempt should just warn that the database exists
-#     assert %{couch: %{status_code: 412}, file_store: [:thumbnail_image, :original_image]} =
-#              CLI.create_project(@project)
+  test "create_project/1" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name)
+      end)
 
-#     assert %{status_code: 200} = TestHelper.database_exists?(@project)
+    assert log =~ "CREATING PROJECT"
+    assert log =~ "Project creation done."
+  end
 
-#     assert %{couch: %{status_code: 200}, file_store: []} = CLI.delete_project(@project)
-#     assert %{status_code: 404} = TestHelper.database_exists?(@project)
+  test "create_project/1 twice should warn about its existence" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name)
+        assert :ok = CLI.create_project(@project_name)
+      end)
 
-#     # Hacky?: Files are currently not beeing deleted by the CLI
-#     # we need to delete them manually using the FileStore.
-#     {:ok, deleted_files} = FileStore.remove_directories(@project)
+    assert log =~ "CREATING PROJECT"
+    assert log =~ "Project creation done."
+    assert log =~ "[warning] Project database '#{@project_name}' already exists."
+  end
 
-#     Enum.each(deleted_files, fn path ->
-#       assert not File.exists?(path)
-#     end)
-#   end
-# end
+  test "create_project/2 should log the requested password" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name, @user_password)
+      end)
+
+    assert log =~ "Created user '#{@project_name}' with password '#{@user_password}'."
+  end
+
+  test "delete_project/1" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name)
+        assert :ok = CLI.delete_project(@project_name)
+      end)
+
+    assert log =~ "[info] Deleted project database '#{@project_name}'."
+    assert log =~ "[info] Deleted project's user '#{@project_name}'."
+  end
+
+  test "delete_project/1 on an unknown project should print warning" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.delete_project(@project_name)
+      end)
+
+    assert log =~ "[warning] Project database '#{@project_name}' does not exists."
+  end
+
+  test "create_user/1" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_user(@project_name)
+      end)
+
+    assert log =~ "Created user '#{@project_name}' with password"
+  end
+
+  test "create_user/1 twice should print warning" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_user(@project_name)
+        assert :ok = CLI.create_user(@project_name)
+      end)
+
+    assert log =~ "User '#{@project_name}' already exists."
+  end
+
+  test "create_user/2" do
+    assert :ok = CLI.create_user(@project_name, @user_password)
+  end
+
+  test "delete_user/1" do
+    assert :ok = CLI.create_user(@project_name)
+    assert :ok = CLI.delete_user(@project_name)
+  end
+
+  test "delete_user/1 on unknown user should not throw an error" do
+    assert :ok = CLI.delete_user(@project_name)
+  end
+
+  test "set_password/2" do
+    assert :ok = CLI.set_password(@project_name, @user_password)
+  end
+
+  test "add_user_as_project_admin/2" do
+    assert :ok = CLI.create_project(@project_name)
+    assert :ok = CLI.add_user_as_project_admin(@project_name, @project_name)
+  end
+
+  test "add_user_as_project_member/2" do
+    assert :ok = CLI.create_project(@project_name)
+    assert :ok = CLI.add_user_as_project_member(@project_name, @project_name)
+  end
+
+  test "remove_user_from_project/2" do
+    assert :ok = CLI.create_project(@project_name)
+    assert :ok = CLI.add_user_as_project_member(@project_name, @project_name)
+  end
+
+  test "get_project_statistics/1" do
+    statistics_log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name)
+        assert :ok = CLI.get_project_statistics(@project_name)
+      end)
+
+    assert statistics_log =~ "######### Project 'test_project' #########"
+    assert statistics_log =~ "##########################################"
+  end
+
+  test "get_project_issues/1" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_name)
+        assert :ok = CLI.get_project_issues(@project_name)
+      end)
+
+    assert log =~ "Issue: no_project_document."
+  end
+end

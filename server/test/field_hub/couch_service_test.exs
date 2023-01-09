@@ -5,7 +5,7 @@ defmodule FieldHub.CouchServiceTest do
     TestHelper
   }
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   @project "test"
   @user_name "test_user"

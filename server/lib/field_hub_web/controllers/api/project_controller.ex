@@ -37,25 +37,34 @@ defmodule FieldHubWeb.Api.ProjectController do
       end
 
     project_creation = Project.create(project_name)
-    user_creation = User.create(project_name, password)
-    role_creation = Project.update_user(project_name, project_name, :member)
 
-    response_payload = %{
-      status_project: project_creation,
-      status_user: user_creation,
-      status_role: role_creation
-    }
+    case project_creation do
+      :invalid_name ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(StatusView)
+        |> render(%{error: "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"})
+      other ->
+        user_creation = User.create(project_name, password)
+        role_creation = Project.update_user(project_name, project_name, :member)
 
-    response_payload =
-      if user_creation == :created do
-        Map.put(response_payload, :password, password)
-      else
-        response_payload
-      end
+        response_payload = %{
+          status_project: other,
+          status_user: user_creation,
+          status_role: role_creation
+        }
 
-    conn
-    |> put_view(StatusView)
-    |> render(%{info: response_payload})
+        response_payload =
+          if user_creation == :created do
+            Map.put(response_payload, :password, password)
+          else
+            response_payload
+          end
+
+        conn
+        |> put_view(StatusView)
+        |> render(%{info: response_payload})
+    end
   end
 
   def delete(conn, %{"project" => project_name}) do

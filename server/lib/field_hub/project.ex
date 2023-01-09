@@ -18,13 +18,21 @@ defmodule FieldHub.Project do
         %{status_code: 201} ->
           :created
 
+        %{status_code: 400} ->
+          :invalid_name
+
         %{status_code: 412} ->
           :already_exists
       end
 
-    file_store_response = FileStore.create_directories(project_name)
+    case couch_result do
+      :invalid_name ->
+        :invalid_name
 
-    %{database: couch_result, file_store: file_store_response}
+      val ->
+        file_store_response = FileStore.create_directories(project_name)
+        %{database: val, file_store: file_store_response}
+    end
   end
 
   def delete(project_name) do

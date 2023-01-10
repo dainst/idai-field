@@ -167,7 +167,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.add_user_as_project_admin(unknown_user, @project_name)
       end)
 
-    assert log =~ "[warning] Tried to set unknown user '#{unknown_user}' to project '#{@project_name}'."
+    assert log =~
+             "[warning] Tried to set unknown user '#{unknown_user}' to project '#{@project_name}'."
   end
 
   test "add_user_as_project_admin/2 with unknown project should print warning" do
@@ -202,7 +203,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.add_user_as_project_member(unknown_user, @project_name)
       end)
 
-    assert log =~ "[warning] Tried to set unknown user '#{unknown_user}' to project '#{@project_name}'."
+    assert log =~
+             "[warning] Tried to set unknown user '#{unknown_user}' to project '#{@project_name}'."
   end
 
   test "add_user_as_project_member/2 with unknown project should print warning" do
@@ -237,7 +239,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.remove_user_from_project(unknown_user, @project_name)
       end)
 
-    assert log =~ "[warning] Tried to unset unknown user '#{unknown_user}' from project '#{@project_name}'."
+    assert log =~
+             "[warning] Tried to unset unknown user '#{unknown_user}' from project '#{@project_name}'."
   end
 
   test "remove_user_from_project/2 with unknown project should print warning" do
@@ -249,7 +252,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.remove_user_from_project(@project_name, unknown_project)
       end)
 
-    assert log =~ "[warning] Tried to unset user '#{@project_name}' from unknown project '#{unknown_project}'."
+    assert log =~
+             "[warning] Tried to unset user '#{@project_name}' from unknown project '#{unknown_project}'."
   end
 
   test "get_project_statistics/1" do
@@ -286,13 +290,19 @@ defmodule FieldHub.CLITest do
   test "print_issues/1 issues of different serverity get logged accordingly" do
     issues = [
       %Issue{
-        type: :error_level_issue, severity: :error, data: %{some_error_msg: "ABORT ABORT!"},
+        type: :error_level_issue,
+        severity: :error,
+        data: %{some_error_msg: "ABORT ABORT!"}
       },
       %Issue{
-        type: :warning_level_issue, severity: :warning, data: %{some_warning_msg: "This was probably unintended."},
+        type: :warning_level_issue,
+        severity: :warning,
+        data: %{some_warning_msg: "This was probably unintended."}
       },
       %Issue{
-        type: :info_level_issue, severity: :info, data: %{some_info_msg: "Everything is fine, no need to worry."},
+        type: :info_level_issue,
+        severity: :info,
+        data: %{some_info_msg: "Everything is fine, no need to worry."}
       }
     ]
 
@@ -301,11 +311,11 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.print_issues(issues)
       end)
 
-      assert log =~ "[error] Issue: error_level_issue:"
-      assert log =~ "[error] - some_error_msg: ABORT ABORT!"
-      assert log =~ "[warning] Issue: warning_level_issue:"
-      assert log =~ "[warning] - some_warning_msg: This was probably unintended."
-      assert log =~ "[info] Issue: info_level_issue:"
-      assert log =~ "[info] - some_info_msg: Everything is fine, no need to worry."
+    assert log =~ "[error] Issue: error_level_issue:"
+    assert log =~ "[error] - some_error_msg: ABORT ABORT!"
+    assert log =~ "[warning] Issue: warning_level_issue:"
+    assert log =~ "[warning] - some_warning_msg: This was probably unintended."
+    assert log =~ "[info] Issue: info_level_issue:"
+    assert log =~ "[info] - some_info_msg: Everything is fine, no need to worry."
   end
 end

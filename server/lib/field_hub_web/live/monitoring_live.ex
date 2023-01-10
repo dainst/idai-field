@@ -24,7 +24,6 @@ defmodule FieldHubWeb.MonitoringLive do
       user_token
       |> UserAuth.get_user_by_session_token()
 
-
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->
@@ -50,7 +49,6 @@ defmodule FieldHubWeb.MonitoringLive do
         :update_stats,
         %{assigns: %{current_user: user_name, project: project}} = socket
       ) do
-
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->

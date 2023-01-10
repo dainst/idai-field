@@ -1,0 +1,13 @@
+{
+    "_id": "project",
+    "resource": {
+        "identifier": "complete_test_project",
+        "id": "project",
+        "relations": {
+            "hasDefaultMapLayer": [
+                "880c315a-f7da-5675-62ca-1305a71ccd19"
+            ]
+        },
+        "type": "Project"
+    }
+}

@@ -27,20 +27,17 @@ defmodule FieldHub.Issues do
       [] ->
         [%Issue{type: :no_project_document, severity: :error, data: %{}}]
 
-      [%{"resource" => %{"relations" => relations}}] ->
-        case relations do
-          %{"hasDefaultMapLayer" => []} ->
+      [%{"resource" => resource}] ->
+        case resource do
+          %{"relations" => %{"hasDefaultMapLayer" => []}} ->
             [%Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}]
 
-          %{"hasDefaultMapLayer" => _values} ->
+          %{"relations" => %{"hasDefaultMapLayer" => _values}} ->
             []
 
           _ ->
             [%Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}]
         end
-
-      _ ->
-        [%Issue{type: :multiple_project_documents, severity: :error, data: %{}}]
     end
   end
 

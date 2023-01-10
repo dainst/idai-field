@@ -121,6 +121,14 @@ defmodule FieldHub.TestHelper do
     "Basic #{encoded}"
   end
 
+  def post_document(project_name, doc) do
+    "#{CouchService.base_url()}/#{project_name}"
+    |> HTTPoison.post!(
+      doc,
+      headers()
+    )
+  end
+
   defp headers() do
     [
       {"Content-Type", "application/json"},

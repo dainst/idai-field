@@ -15,7 +15,16 @@ defmodule FieldHubWeb.Api.ProjectController do
   end
 
   def show(conn, %{"project" => project_name}) do
-    render(conn, "show.json", %{project: Project.evaluate_project(project_name)})
+    case Project.evaluate_project(project_name) do
+      :unknown ->
+        conn
+        |> put_status(:not_found)
+        |> put_view(StatusView)
+        |> render(%{error: "Project #{project_name} does not exist."})
+      project_info ->
+        render(conn, "show.json", %{project: project_info })
+    end
+
   end
 
   def create(conn, %{"project" => project_name}) do
@@ -44,6 +53,7 @@ defmodule FieldHubWeb.Api.ProjectController do
         |> put_status(:bad_request)
         |> put_view(StatusView)
         |> render(%{error: "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"})
+
       other ->
         user_creation = User.create(project_name, password)
         role_creation = Project.update_user(project_name, project_name, :member)

@@ -313,8 +313,6 @@ defmodule FieldHub.CouchService do
       "#{base_url()}/#{project_name}",
       headers()
     )
-    |> Map.get(:body)
-    |> Jason.decode!()
   end
 
   def get_docs(project_name, uuids) do

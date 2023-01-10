@@ -96,14 +96,20 @@ defmodule FieldHub.Project do
   end
 
   def evaluate_project(project_name) do
-    db_statistics = evaluate_database(project_name)
-    file_statistics = evaluate_file_store(project_name)
+    project_name
+    |> evaluate_database()
+    |> case do
+      :unknown ->
+        :unknown
+      db_statistics ->
+        file_statistics = evaluate_file_store(project_name)
 
-    %{
-      name: project_name,
-      database: db_statistics,
-      files: file_statistics
-    }
+        %{
+          name: project_name,
+          database: db_statistics,
+          files: file_statistics
+        }
+    end
   end
 
   def evaluate_all_projects_for_user(user_name) do
@@ -113,10 +119,15 @@ defmodule FieldHub.Project do
   end
 
   defp evaluate_database(project_name) do
-    %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} =
-      FieldHub.CouchService.get_db_infos(project_name)
+    FieldHub.CouchService.get_db_infos(project_name)
+    |> case do
+      %{status_code: 200, body: body} ->
+        %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
 
-    %{doc_count: db_doc_count, file_size: db_file_size}
+        %{doc_count: db_doc_count, file_size: db_file_size}
+      %{status_code: 404} ->
+        :unknown
+    end
   end
 
   defp evaluate_file_store(project_name) do

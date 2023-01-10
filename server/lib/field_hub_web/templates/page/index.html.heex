@@ -12,7 +12,7 @@ This server runs FieldHub (<small><%= Application.spec(:field_hub, :vsn) %></sma
     <% projects -> %>
         <ul>
         <%= Enum.map(projects, fn(project) -> %>
-            <li><%= link(project, to: "/monitoring/#{project}")  %></li>
+            <li><%= link(project, to: "/ui/monitoring/#{project}")  %></li>
         <% end) %>
         </ul>
     <% end %>

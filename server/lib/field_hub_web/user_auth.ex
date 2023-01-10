@@ -52,7 +52,7 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
-  def api_require_authenticated_user(conn, _opts) do
+  def api_require_user_authentication(conn, _opts) do
     case Plug.BasicAuth.parse_basic_auth(conn) do
       {name, password} ->
         case CouchService.authenticate(%Credentials{name: name, password: password}) do
@@ -78,7 +78,7 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
-  def api_require_project_access(%{params: %{"project" => project_name}} = conn, _opts) do
+  def api_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: user_name}} ->
         case CouchService.has_project_access?(user_name, project_name) do
@@ -99,7 +99,7 @@ defmodule FieldHubWeb.UserAuth do
     end
   end
 
-  def api_require_admin_user(conn, _opts) do
+  def api_require_admin(conn, _opts) do
     case Plug.BasicAuth.parse_basic_auth(conn) do
       {name, password} ->
         admin_name = Application.get_env(:field_hub, :couchdb_admin_name)
@@ -206,7 +206,7 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authenticated.
   """
-  def require_authenticated_user(conn, _opts) do
+  def ui_require_user_authentication(conn, _opts) do
     if conn.assigns[:current_user] do
       conn
     else
@@ -221,7 +221,7 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authorized for a specified project.
   """
-  def require_project_access(%{params: %{"project" => project_name}} = conn, _opts) do
+  def ui_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: current_user}} ->
         CouchService.has_project_access?(current_user, project_name)

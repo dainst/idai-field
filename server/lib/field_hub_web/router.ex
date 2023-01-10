@@ -35,42 +35,41 @@ defmodule FieldHubWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/ui", FieldHubWeb do
+    pipe_through :browser
 
     get "/session/new", UserSessionController, :new
     post "/session/login", UserSessionController, :create
     post "/session/logout", UserSessionController, :delete
-  end
 
-  scope "/", FieldHubWeb do
-    pipe_through :browser
-    pipe_through :require_authenticated_user
-    pipe_through :require_project_access
+    scope "/" do
+      pipe_through :ui_require_user_authentication
+      pipe_through :ui_require_project_authorization
 
-    live "/monitoring/:project", MonitoringLive
-  end
-
-  scope "/", FieldHubWeb.Api do
-    pipe_through :api
-    pipe_through :api_require_authenticated_user
-
-    get "/api/projects", ProjectController, :index
+      live "/monitoring/:project", MonitoringLive
+    end
   end
 
   scope "/", FieldHubWeb.Api do
     pipe_through :api
-    pipe_through :api_require_authenticated_user
-    pipe_through :api_require_project_access
+    pipe_through :api_require_user_authentication
 
-    get "/api/projects/:project", ProjectController, :show
+    get "/projects", ProjectController, :index
 
-    resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
-  end
+    scope "/" do
+      pipe_through :api_require_project_authorization
 
-  scope "/", FieldHubWeb.Api do
-    pipe_through :api
-    pipe_through :api_require_admin_user
-    post "/api/projects/:project", ProjectController, :create
-    delete "/api/projects/:project", ProjectController, :delete
+      get "/projects/:project", ProjectController, :show
+      resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
+    end
+
+    scope "/" do
+      pipe_through :api_require_admin
+      post "/projects/:project", ProjectController, :create
+      delete "/projects/:project", ProjectController, :delete
+    end
   end
 
   # Other scopes may use custom stacks.

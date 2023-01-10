@@ -25,6 +25,10 @@ defmodule FieldHub.TestHelper do
     FileStore.remove_directories(project_name)
   end
 
+  def create_user(user_name, user_password) do
+    User.create(user_name, user_password)
+  end
+
   def remove_user(user_name) do
     User.delete(user_name)
   end

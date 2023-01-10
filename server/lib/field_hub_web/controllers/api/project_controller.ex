@@ -21,10 +21,10 @@ defmodule FieldHubWeb.Api.ProjectController do
         |> put_status(:not_found)
         |> put_view(StatusView)
         |> render(%{error: "Project #{project_name} does not exist."})
-      project_info ->
-        render(conn, "show.json", %{project: project_info })
-    end
 
+      project_info ->
+        render(conn, "show.json", %{project: project_info})
+    end
   end
 
   def create(conn, %{"project" => project_name}) do

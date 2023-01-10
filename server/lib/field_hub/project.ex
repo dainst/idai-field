@@ -92,7 +92,10 @@ defmodule FieldHub.Project do
   end
 
   def get_all_for_user(user_name) do
-    CouchService.get_databases_for_user(user_name)
+    CouchService.get_all_databases()
+    |> Enum.filter(fn project_name ->
+      :granted == check_project_authorization(project_name, user_name)
+    end)
   end
 
   def evaluate_project(project_name) do
@@ -101,6 +104,7 @@ defmodule FieldHub.Project do
     |> case do
       :unknown ->
         :unknown
+
       db_statistics ->
         file_statistics = evaluate_file_store(project_name)
 
@@ -112,9 +116,33 @@ defmodule FieldHub.Project do
     end
   end
 
+  def check_project_authorization(project_name, user_name) do
+    if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
+      :granted
+    else
+      CouchService.get_database_security(project_name)
+      |> case do
+        %{status_code: 200, body: body} ->
+          %{"members" => members, "admins" => admins} = Jason.decode!(body)
+
+          existing_members = Map.get(members, "names", [])
+          existing_admins = Map.get(admins, "names", [])
+
+          if user_name in (existing_members ++ existing_admins) do
+            :granted
+          else
+            :denied
+          end
+
+        %{status_code: 404} ->
+          :unknown_project
+      end
+    end
+  end
+
   def evaluate_all_projects_for_user(user_name) do
     user_name
-    |> FieldHub.CouchService.get_databases_for_user()
+    |> get_all_for_user()
     |> Enum.map(&evaluate_project(&1))
   end
 
@@ -125,6 +153,7 @@ defmodule FieldHub.Project do
         %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
 
         %{doc_count: db_doc_count, file_size: db_file_size}
+
       %{status_code: 404} ->
         :unknown
     end

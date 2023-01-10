@@ -259,36 +259,12 @@ defmodule FieldHub.CouchService do
     |> Jason.encode!()
   end
 
-  @doc """
-  Checks if the given user is authorized to access the given project.
-
-  Returns `true` or `false`.
-  """
-  def has_project_access?(user_name, project_name) do
-    if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
-      true
-    else
-      # TODO: Check if user has admin role in the project.
-      %{"members" => %{"names" => existing_members}} =
-        "#{base_url()}/#{project_name}/_security"
-        |> HTTPoison.get!(headers())
-        |> Map.get(:body)
-        |> Jason.decode!()
-
-      if user_name in existing_members do
-        true
-      else
-        false
-      end
-    end
+  def get_database_security(project_name) do
+    "#{base_url()}/#{project_name}/_security"
+    |> HTTPoison.get!(headers())
   end
 
-  @doc """
-  Gets all projects the given user has access to.
-
-  Returns a list of project names.
-  """
-  def get_databases_for_user(user_name) do
+  def get_all_databases() do
     "#{base_url()}/_all_dbs"
     |> HTTPoison.get!(
       get_admin_credentials()
@@ -300,9 +276,7 @@ defmodule FieldHub.CouchService do
       # Filter out CouchDB's internal databases.
       val in ["_replicator", "_users"]
     end)
-    |> Enum.filter(fn database_name ->
-      has_project_access?(user_name, database_name)
-    end)
+    |> Enum.to_list()
   end
 
   @doc """

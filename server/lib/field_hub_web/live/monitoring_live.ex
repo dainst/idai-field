@@ -5,7 +5,6 @@ defmodule FieldHubWeb.MonitoringLive do
   }
 
   alias FieldHub.{
-    CouchService,
     Issues,
     Project
   }
@@ -25,10 +24,10 @@ defmodule FieldHubWeb.MonitoringLive do
       user_token
       |> UserAuth.get_user_by_session_token()
 
-    user_name
-    |> CouchService.has_project_access?(project)
+
+    Project.check_project_authorization(project, user_name)
     |> case do
-      true ->
+      :granted ->
         Process.send(self(), :update_stats, [])
         Process.send(self(), :update_issues, [])
 
@@ -42,7 +41,7 @@ defmodule FieldHubWeb.MonitoringLive do
           |> assign(:current_user, user_name)
         }
 
-      false ->
+      _ ->
         redirect(socket, to: "/login")
     end
   end
@@ -51,17 +50,17 @@ defmodule FieldHubWeb.MonitoringLive do
         :update_stats,
         %{assigns: %{current_user: user_name, project: project}} = socket
       ) do
-    user_name
-    |> CouchService.has_project_access?(project)
+
+    Project.check_project_authorization(project, user_name)
     |> case do
-      true ->
+      :granted ->
         stats = Project.evaluate_project(project)
 
         Process.send_after(self(), :update_stats, 1000)
 
         {:noreply, assign(socket, :stats, stats)}
 
-      false ->
+      _ ->
         redirect(socket, to: "/login")
     end
   end
@@ -70,10 +69,9 @@ defmodule FieldHubWeb.MonitoringLive do
         :update_issues,
         %{assigns: %{current_user: user_name, project: project, stats: stats}} = socket
       ) do
-    user_name
-    |> CouchService.has_project_access?(project)
+    Project.check_project_authorization(project, user_name)
     |> case do
-      true ->
+      :granted ->
         issues = Issues.evaluate_all(project)
 
         grouped =
@@ -110,7 +108,7 @@ defmodule FieldHubWeb.MonitoringLive do
           |> assign(:issue_count, issue_count)
         }
 
-      false ->
+      _ ->
         redirect(socket, to: "/login")
     end
   end

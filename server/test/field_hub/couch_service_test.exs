@@ -62,20 +62,24 @@ defmodule FieldHub.CouchServiceTest do
     TestHelper.remove_test_db_and_user(other_project, other_user)
   end
 
-  test "has_project_access/2 returns true for authorized user" do
-    assert CouchService.has_project_access?(@user_name, @project)
-  end
+  test "get_all_databases/0 returns a list of databases" do
+    # The tests use the same CouchDB instance as the development context, so development
+    # databases will show up here and we have to make a diff comparison.
 
-  test "has_project_access/2 returns false for unauthorized user" do
-    assert not CouchService.has_project_access?("unauthorized_user", @project)
-  end
+    extra_project = "couch_test_extra_project"
 
-  test "get_databases_for_user/1 returns a list of databases" do
-    assert [@project] = CouchService.get_databases_for_user(@user_name)
-  end
+    databases = CouchService.get_all_databases()
+    assert is_list(databases)
+    initial_count = Enum.count(databases)
 
-  test "get_databases_for_user/1 for user without any membership returns empty list" do
-    assert [] = CouchService.get_databases_for_user("unauthorized_user")
+    TestHelper.create_test_db_and_user(extra_project, extra_project, "pw")
+
+    databases = CouchService.get_all_databases()
+    assert is_list(databases)
+    assert initial_count + 1 == Enum.count(databases)
+    assert extra_project in databases
+
+    TestHelper.remove_test_db_and_user(extra_project, extra_project)
   end
 
   test "get_docs/2 returns a project's documents with the given UUIDs" do

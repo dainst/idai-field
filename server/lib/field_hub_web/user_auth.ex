@@ -4,7 +4,8 @@ defmodule FieldHubWeb.UserAuth do
 
   alias FieldHub.{
     CouchService,
-    CouchService.Credentials
+    CouchService.Credentials,
+    Project
   }
 
   alias FieldHubWeb.Router.Helpers, as: Routes
@@ -81,13 +82,18 @@ defmodule FieldHubWeb.UserAuth do
   def api_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: user_name}} ->
-        case CouchService.has_project_access?(user_name, project_name) do
-          true ->
+        case Project.check_project_authorization(project_name, user_name) do
+          :granted ->
             conn
 
-          false ->
+          :denied ->
             conn
             |> send_resp(403, "")
+            |> halt()
+
+          :unknown_project ->
+            conn
+            |> send_resp(404, "Unknown project #{project_name}.")
             |> halt()
         end
 
@@ -224,18 +230,23 @@ defmodule FieldHubWeb.UserAuth do
   def ui_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: current_user}} ->
-        CouchService.has_project_access?(current_user, project_name)
+        Project.check_project_authorization(project_name, current_user)
 
       _ ->
-        false
+        :denied
     end
     |> case do
-      true ->
+      :granted ->
         conn
 
-      false ->
+      :denied ->
         conn
         |> put_flash(:error, "You are not authorized for project '#{project_name}'.")
+        |> redirect(to: "/")
+
+      :unknown_project ->
+        conn
+        |> put_flash(:error, "Unknown project '#{project_name}'.")
         |> redirect(to: "/")
     end
   end

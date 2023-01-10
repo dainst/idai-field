@@ -71,7 +71,17 @@ defmodule FieldHubWeb.Api.ProjectController do
             response_payload
           end
 
+        status =
+          case response_payload[:status_project][:database] do
+            :created ->
+              :created
+
+            _ ->
+              :ok
+          end
+
         conn
+        |> put_status(status)
         |> put_view(StatusView)
         |> render(%{info: response_payload})
     end

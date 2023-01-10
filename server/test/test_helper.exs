@@ -113,14 +113,18 @@ defmodule FieldHub.TestHelper do
     |> HTTPoison.get!(headers())
   end
 
-  defp headers() do
-    encoded_credentials =
+  def get_admin_basic_auth() do
+    encoded =
       "#{Application.get_env(:field_hub, :couchdb_admin_name)}:#{Application.get_env(:field_hub, :couchdb_admin_password)}"
       |> Base.encode64()
 
+    "Basic #{encoded}"
+  end
+
+  defp headers() do
     [
       {"Content-Type", "application/json"},
-      {"Authorization", "Basic #{encoded_credentials}"}
+      {"Authorization", get_admin_basic_auth()}
     ]
   end
 end

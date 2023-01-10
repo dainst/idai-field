@@ -167,10 +167,10 @@ defmodule FieldHub.CLI do
     User.delete(user_name)
     |> case do
       :deleted ->
-        Logger.info("Deleted project's user '#{user_name}'.")
+        Logger.info("Deleted user '#{user_name}'.")
 
       :unknown ->
-        Logger.warning("Unknown  user '#{user_name}'.")
+        Logger.warning("Unknown user '#{user_name}'.")
     end
   end
 
@@ -193,13 +193,13 @@ defmodule FieldHub.CLI do
     Project.update_user(user_name, project_name, :admin)
     |> case do
       :set ->
-        Logger.info("User '#{user_name}' has been added as admin to '#{project_name}'.")
+        Logger.info("User '#{user_name}' has been set as admin to '#{project_name}'.")
 
       :unknown_project ->
-        Logger.error("Tried to add user '#{user_name}' to unknown project '#{project_name}'.")
+        Logger.warning("Tried to set user '#{user_name}' to unknown project '#{project_name}'.")
 
       :unknown_user ->
-        Logger.error("Tried to add unknown user '#{user_name}' to project '#{project_name}'.")
+        Logger.warning("Tried to set unknown user '#{user_name}' to project '#{project_name}'.")
     end
   end
 
@@ -209,13 +209,13 @@ defmodule FieldHub.CLI do
     Project.update_user(user_name, project_name, :member)
     |> case do
       :set ->
-        Logger.info("User '#{user_name}' has been added as member to '#{project_name}'.")
+        Logger.info("User '#{user_name}' has been set as member to '#{project_name}'.")
 
       :unknown_project ->
-        Logger.error("Tried to add user '#{user_name}' to unknown project '#{project_name}'.")
+        Logger.warning("Tried to set user '#{user_name}' to unknown project '#{project_name}'.")
 
       :unknown_user ->
-        Logger.error("Tried to add unknown user '#{user_name}' to project '#{project_name}'.")
+        Logger.warning("Tried to set unknown user '#{user_name}' to project '#{project_name}'.")
     end
   end
 
@@ -225,16 +225,16 @@ defmodule FieldHub.CLI do
     Project.update_user(user_name, project_name, :none)
     |> case do
       :unset ->
-        Logger.info("User '#{user_name}' has been removed from all roles in '#{project_name}'.")
+        Logger.info("User '#{user_name}' has been unset from all roles in '#{project_name}'.")
 
       :unknown_project ->
-        Logger.error(
-          "Tried to remove user '#{user_name}' from unknown project '#{project_name}'."
+        Logger.warning(
+          "Tried to unset user '#{user_name}' from unknown project '#{project_name}'."
         )
 
       :unknown_user ->
-        Logger.error(
-          "Tried to remove unknown user '#{user_name}' from project '#{project_name}'."
+        Logger.warning(
+          "Tried to unset unknown user '#{user_name}' from project '#{project_name}'."
         )
     end
   end
@@ -280,11 +280,11 @@ defmodule FieldHub.CLI do
     Logger.info("#{String.duplicate("#", String.length(header))}\n")
   end
 
-  defp print_issues([]) do
+  def print_issues([]) do
     Logger.info("No issues found.")
   end
 
-  defp print_issues(issues) do
+  def print_issues(issues) do
     issues
     |> Enum.each(fn %Issues.Issue{type: type, severity: severity, data: data} ->
       case severity do

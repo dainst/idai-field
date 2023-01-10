@@ -148,6 +148,16 @@ defmodule FieldHub.IssuesTest do
            ] = Issues.evaluate_images(@project)
   end
 
+  test "missing thumbnail raises no issue" do
+    root_path = Application.get_env(:field_hub, :file_directory_root)
+
+    File.rm!("#{root_path}/#{@project}/thumbnail_images/o25")
+
+    assert File.exists?("#{root_path}/#{@project}/original_images/o25")
+
+    assert [] = Issues.evaluate_images(@project)
+  end
+
   test "original and thumbnail image of same size raises issue" do
     root_path = Application.get_env(:field_hub, :file_directory_root)
 

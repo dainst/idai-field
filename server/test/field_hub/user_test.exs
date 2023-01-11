@@ -13,21 +13,21 @@ defmodule FieldHub.UserTest do
   end
 
   test "can create user" do
-    :created = User.create(@user_name, @user_password)
+    assert :created = User.create(@user_name, @user_password)
   end
 
   test "can delete user" do
-    :created = User.create(@user_name, @user_password)
-    :deleted = User.delete(@user_name)
+    assert :created = User.create(@user_name, @user_password)
+    assert :deleted = User.delete(@user_name)
   end
 
   test "trying to recreate user is reported" do
-    :created = User.create(@user_name, @user_password)
-    :already_exists = User.create(@user_name, @user_password)
+    assert :created = User.create(@user_name, @user_password)
+    assert :already_exists = User.create(@user_name, @user_password)
   end
 
   test "trying to delete an unknown user is reported" do
-    :unknown = User.delete(@user_name)
+    assert :unknown = User.delete(@user_name)
   end
 
   describe "Manipulating an existing user" do
@@ -37,11 +37,11 @@ defmodule FieldHub.UserTest do
     end
 
     test "can update user password" do
-      :updated = User.update_password(@user_name, "new_password")
+      assert :updated = User.update_password(@user_name, "new_password")
     end
 
     test "trying to update password of an unknown user is reported" do
-      :unknown = User.update_password("unknown_user", "new_password")
+      assert :unknown = User.update_password("unknown_user", "new_password")
     end
   end
 end

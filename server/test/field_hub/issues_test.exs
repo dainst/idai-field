@@ -186,91 +186,92 @@ defmodule FieldHub.IssuesTest do
   end
 
   test "sort_issues_by_decreasing_serverity/1" do
-    issues = [
-      %Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      },
-      %Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      },
-      %Issue{
-        type: :error_level_issue,
-        severity: :error,
-        data: %{some_error_msg: "ABORT ABORT!"}
-      },
-      %Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      },
-      %Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      },
-      %Issue{
-        type: :error_level_issue,
-        severity: :error,
-        data: %{some_error_msg: "ABORT ABORT!"}
-      },
-      %Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      },
-      %Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      }
-    ]
-    |> Issues.sort_issues_by_decreasing_serverity()
+    issues =
+      [
+        %Issue{
+          type: :info_level_issue,
+          severity: :info,
+          data: %{some_info_msg: "Everything is fine, no need to worry."}
+        },
+        %Issue{
+          type: :warning_level_issue,
+          severity: :warning,
+          data: %{some_warning_msg: "This was probably unintended."}
+        },
+        %Issue{
+          type: :error_level_issue,
+          severity: :error,
+          data: %{some_error_msg: "ABORT ABORT!"}
+        },
+        %Issue{
+          type: :warning_level_issue,
+          severity: :warning,
+          data: %{some_warning_msg: "This was probably unintended."}
+        },
+        %Issue{
+          type: :info_level_issue,
+          severity: :info,
+          data: %{some_info_msg: "Everything is fine, no need to worry."}
+        },
+        %Issue{
+          type: :error_level_issue,
+          severity: :error,
+          data: %{some_error_msg: "ABORT ABORT!"}
+        },
+        %Issue{
+          type: :info_level_issue,
+          severity: :info,
+          data: %{some_info_msg: "Everything is fine, no need to worry."}
+        },
+        %Issue{
+          type: :warning_level_issue,
+          severity: :warning,
+          data: %{some_warning_msg: "This was probably unintended."}
+        }
+      ]
+      |> Issues.sort_issues_by_decreasing_serverity()
 
     assert [
-      %FieldHub.Issues.Issue{
-        type: :error_level_issue,
-        severity: :error,
-        data: %{some_error_msg: "ABORT ABORT!"}
-      },
-      %FieldHub.Issues.Issue{
-        type: :error_level_issue,
-        severity: :error,
-        data: %{some_error_msg: "ABORT ABORT!"}
-      },
-      %FieldHub.Issues.Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      },
-      %FieldHub.Issues.Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      },
-      %FieldHub.Issues.Issue{
-        type: :warning_level_issue,
-        severity: :warning,
-        data: %{some_warning_msg: "This was probably unintended."}
-      },
-      %FieldHub.Issues.Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      },
-      %FieldHub.Issues.Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      },
-      %FieldHub.Issues.Issue{
-        type: :info_level_issue,
-        severity: :info,
-        data: %{some_info_msg: "Everything is fine, no need to worry."}
-      }
-    ] = issues
+             %FieldHub.Issues.Issue{
+               type: :error_level_issue,
+               severity: :error,
+               data: %{some_error_msg: "ABORT ABORT!"}
+             },
+             %FieldHub.Issues.Issue{
+               type: :error_level_issue,
+               severity: :error,
+               data: %{some_error_msg: "ABORT ABORT!"}
+             },
+             %FieldHub.Issues.Issue{
+               type: :warning_level_issue,
+               severity: :warning,
+               data: %{some_warning_msg: "This was probably unintended."}
+             },
+             %FieldHub.Issues.Issue{
+               type: :warning_level_issue,
+               severity: :warning,
+               data: %{some_warning_msg: "This was probably unintended."}
+             },
+             %FieldHub.Issues.Issue{
+               type: :warning_level_issue,
+               severity: :warning,
+               data: %{some_warning_msg: "This was probably unintended."}
+             },
+             %FieldHub.Issues.Issue{
+               type: :info_level_issue,
+               severity: :info,
+               data: %{some_info_msg: "Everything is fine, no need to worry."}
+             },
+             %FieldHub.Issues.Issue{
+               type: :info_level_issue,
+               severity: :info,
+               data: %{some_info_msg: "Everything is fine, no need to worry."}
+             },
+             %FieldHub.Issues.Issue{
+               type: :info_level_issue,
+               severity: :info,
+               data: %{some_info_msg: "Everything is fine, no need to worry."}
+             }
+           ] = issues
   end
 end

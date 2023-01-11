@@ -20,7 +20,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("HOST")
+  host = System.fetch_env!("HOST")
 
   # Configures Elixir's Logger
   config :logger, :console,
@@ -56,11 +56,12 @@ if config_env() == :prod do
   # See `mix help release` for more information.
 
   config :field_hub,
-    couchdb_url: System.get_env("COUCHDB_URL"),
-    couchdb_admin_name: System.get_env("COUCHDB_ADMIN_NAME"),
-    couchdb_admin_password: System.get_env("COUCHDB_ADMIN_PASSWORD"),
-    couchdb_user_name: System.get_env("COUCHDB_USER_NAME"),
-    couchdb_user_password: System.get_env("COUCHDB_USER_PASSWORD")
+    # TODO: crash
+    couchdb_url: System.fetch_env!("COUCHDB_URL"),
+    couchdb_admin_name: System.fetch_env("COUCHDB_ADMIN_NAME"),
+    couchdb_admin_password: System.fetch_env("COUCHDB_ADMIN_PASSWORD"),
+    couchdb_user_name: System.fetch_env("COUCHDB_USER_NAME"),
+    couchdb_user_password: System.fetch_env("COUCHDB_USER_PASSWORD")
 
   # ## Configuring the mailer
   #

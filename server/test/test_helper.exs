@@ -89,6 +89,7 @@ defmodule FieldHub.TestHelper do
           |> Enum.map(fn doc ->
             doc
             |> Map.delete("_rev")
+            |> Map.delete("_revisions")
           end)
       end
 
@@ -121,12 +122,40 @@ defmodule FieldHub.TestHelper do
     "Basic #{encoded}"
   end
 
-  def post_document(project_name, doc) do
+  def create_document(project_name, doc) do
     "#{CouchService.base_url()}/#{project_name}"
     |> HTTPoison.post!(
       doc,
       headers()
     )
+  end
+
+  def update_document(project_name, %{"_id" => id} = doc) do
+    rev = get_current_revision(project_name, id)
+
+    "#{CouchService.base_url()}/#{project_name}/#{id}?rev=#{rev}"
+    |> HTTPoison.put(
+      Jason.encode!(doc),
+      headers()
+    )
+  end
+
+  def delete_document(project_name, id) do
+    rev = get_current_revision(project_name, id)
+
+    "#{CouchService.base_url()}/#{project_name}/#{id}?rev=#{rev}"
+    |> HTTPoison.delete(headers())
+  end
+
+  def get_current_revision(project_name, id) do
+    "#{CouchService.base_url()}/#{project_name}/#{id}"
+    |> HTTPoison.get!(headers())
+    |> case do
+      %{body: body} ->
+        body
+        |> Jason.decode!()
+        |> Map.get("_rev")
+    end
   end
 
   defp headers() do

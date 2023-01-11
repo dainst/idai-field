@@ -27,26 +27,14 @@ defmodule FieldHub.IssuesTest do
   end
 
   test "can evaluate issues for complete project" do
-    assert [
-             %FieldHub.Issues.Issue{
-               type: :no_project_document,
-               severity: :error,
-               data: %{}
-             }
-           ] = Issues.evaluate_all(@project)
+    assert [] = Issues.evaluate_all(@project)
   end
 
-  test "adding project document removes issue" do
-    assert [
-             %FieldHub.Issues.Issue{
-               type: :no_project_document,
-               severity: :error,
-               data: %{}
-             }
-           ] = Issues.evaluate_all(@project)
+  test "missing project document creates issue" do
+    TestHelper.delete_document(@project, "project")
 
-    TestHelper.post_document(@project, @project_doc)
-    assert [] = Issues.evaluate_all(@project)
+    assert [%FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}] =
+             Issues.evaluate_all(@project)
   end
 
   test "empty list of default map layers raises issue" do
@@ -58,9 +46,8 @@ defmodule FieldHub.IssuesTest do
           Map.put(relations, "hasDefaultMapLayer", [])
         end)
       end)
-      |> Jason.encode!()
 
-    TestHelper.post_document(@project, updated_doc)
+    TestHelper.update_document(@project, updated_doc)
 
     assert [
              %FieldHub.Issues.Issue{
@@ -71,7 +58,7 @@ defmodule FieldHub.IssuesTest do
            ] = Issues.evaluate_project_document(@project)
   end
 
-  test "no default map layers raises issue" do
+  test "no default map key raises issue" do
     updated_doc =
       @project_doc
       |> Jason.decode!()
@@ -80,9 +67,8 @@ defmodule FieldHub.IssuesTest do
           Map.delete(relations, "hasDefaultMapLayer")
         end)
       end)
-      |> Jason.encode!()
 
-    TestHelper.post_document(@project, updated_doc)
+    TestHelper.update_document(@project, updated_doc)
 
     assert [
              %FieldHub.Issues.Issue{

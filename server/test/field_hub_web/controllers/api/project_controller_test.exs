@@ -65,6 +65,16 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
       end)
     end
 
+    test "POST /projects/:project returns 412 if default user already exists", %{conn: conn} do
+      conn =
+        conn
+        |> put_req_header("authorization", TestHelper.get_admin_basic_auth())
+        |> put_req_header("content-type", "application/json")
+        |> post("/projects/#{@independent_user_name}")
+
+      assert conn.status == 412
+    end
+
     test "POST /projects/:project with with valid credentials creates project", %{
       conn: conn
     } do
@@ -189,20 +199,7 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
         |> put_req_header("content-type", "application/json")
         |> post("/projects/#{@project}")
 
-      assert conn.status == 200
-
-      response = Jason.decode!(conn.resp_body)
-
-      assert %{
-               "info" => %{
-                 "status_project" => %{
-                   "database" => "already_exists",
-                   "file_store" => %{"original_image" => "ok", "thumbnail_image" => "ok"}
-                 },
-                 "status_role" => "set",
-                 "status_user" => "already_exists"
-               }
-             } = response
+      assert conn.status == 412
     end
 
     test "POST /projects/:project is forbidden for normal users", %{conn: conn} do

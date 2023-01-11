@@ -13,7 +13,7 @@ defmodule FieldHub.UserTest do
   end
 
   test "exists?/1 correctly returns false" do
-    assert false == User.user_exists?(@user_name)
+    assert false == User.exists?(@user_name)
   end
 
   test "can create user" do
@@ -41,7 +41,7 @@ defmodule FieldHub.UserTest do
     end
 
     test "exists?/1 correctly returns true" do
-      assert true == User.user_exists?(@user_name)
+      assert true == User.exists?(@user_name)
     end
 
     test "can update user password" do

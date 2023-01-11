@@ -38,7 +38,7 @@ defmodule FieldHub.User do
     end
   end
 
-  def user_exists?(user_name) do
+  def exists?(user_name) do
     CouchService.get_user(user_name, CouchService.get_admin_credentials())
     |> case do
       %{status_code: 200} ->

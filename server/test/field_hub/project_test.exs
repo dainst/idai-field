@@ -12,6 +12,10 @@ defmodule FieldHub.ProjectTest do
   @user_name "test_user"
   @user_password "test_password"
 
+  test "exists?/1 correctly returns false" do
+    assert false == Project.exists?(@project)
+  end
+
   test "can create project with a given name" do
     %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} =
       Project.create(@project)
@@ -28,6 +32,10 @@ defmodule FieldHub.ProjectTest do
         Project.delete(@project)
         User.delete(@user_name)
       end)
+    end
+
+    test "exists?/1 correctly returns true" do
+      assert true == Project.exists?(@project)
     end
 
     test "can add user as admininstrator" do

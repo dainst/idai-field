@@ -98,6 +98,17 @@ defmodule FieldHub.Project do
     end)
   end
 
+  def exists?(project_name) do
+    CouchService.get_db_infos(project_name)
+    |> case do
+      %{status_code: 200} ->
+        true
+
+      %{status_code: 404} ->
+        false
+    end
+  end
+
   def evaluate_project(project_name) do
     project_name
     |> evaluate_database()

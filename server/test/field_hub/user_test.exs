@@ -12,6 +12,10 @@ defmodule FieldHub.UserTest do
     end)
   end
 
+  test "exists?/1 correctly returns false" do
+    assert false == User.user_exists?(@user_name)
+  end
+
   test "can create user" do
     assert :created = User.create(@user_name, @user_password)
   end
@@ -34,6 +38,10 @@ defmodule FieldHub.UserTest do
     setup %{} do
       User.create(@user_name, @user_password)
       :ok
+    end
+
+    test "exists?/1 correctly returns true" do
+      assert true == User.user_exists?(@user_name)
     end
 
     test "can update user password" do

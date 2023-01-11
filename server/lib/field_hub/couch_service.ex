@@ -48,6 +48,13 @@ defmodule FieldHub.CouchService do
     end
   end
 
+  def get_user(user_name, %Credentials{} = credentials) do
+    HTTPoison.get!(
+      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
+      headers(credentials)
+    )
+  end
+
   @doc """
   Creates CouchDB's internal databases `_users` and `_replicator` using the given `%Credentials{}`.
 

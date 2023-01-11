@@ -334,7 +334,7 @@ defmodule FieldHub.CouchService do
   Returns a list of docs found using CouchDBs `_find` endpoint.
 
   ## Example
-      iex> CouchService.get_docs_by_type("development", ["Image", "Photo", "Drawing"]) |> Enum.to_list()
+      iex> CouchService.get_docs_by_category("development", ["Image", "Photo", "Drawing"]) |> Enum.to_list()
       [
         %{
           "_id" => "5cc25dd3-0f39-47a4-b3d8-4a74427f8c6a",
@@ -383,7 +383,7 @@ defmodule FieldHub.CouchService do
         }
       ]
   """
-  def get_docs_by_type(project_name, types) do
+  def get_docs_by_category(project_name, categories) do
     batch_size = 500
 
     Stream.resource(
@@ -391,13 +391,21 @@ defmodule FieldHub.CouchService do
         %{
           selector: %{
             "$or":
-              Enum.map(types, fn type ->
-                %{
-                  resource: %{
-                    type: type
+              Enum.map(categories, fn category ->
+                [
+                  %{
+                    resource: %{
+                      type: category
+                    }
+                  },
+                  %{
+                    resource: %{
+                      category: category
+                    }
                   }
-                }
+                ]
               end)
+              |> List.flatten()
           },
           limit: batch_size,
           skip: 0

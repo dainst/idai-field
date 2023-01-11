@@ -105,7 +105,7 @@ defmodule FieldHub.CouchServiceTest do
            ] = CouchService.get_docs(@project, ["o25", "unknown"])
   end
 
-  test "get_docs_by_type/2 returns a project's documents matching the given types" do
+  test "get_docs_by_category/2 returns a project's documents matching the given types" do
     assert [
              %{
                "_id" => "o25",
@@ -121,6 +121,6 @@ defmodule FieldHub.CouchServiceTest do
                  "type" => "Image"
                }
              }
-           ] = CouchService.get_docs_by_type(@project, ["Image", "Drawing"]) |> Enum.to_list()
+           ] = CouchService.get_docs_by_category(@project, ["Image", "Drawing"]) |> Enum.to_list()
   end
 end

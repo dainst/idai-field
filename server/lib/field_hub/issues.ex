@@ -21,7 +21,7 @@ defmodule FieldHub.Issues do
 
   def evaluate_project_document(project_name) do
     project_name
-    |> CouchService.get_docs_by_type(["Project"])
+    |> CouchService.get_docs_by_category(["Project"])
     |> Enum.to_list()
     |> case do
       [] ->
@@ -60,7 +60,7 @@ defmodule FieldHub.Issues do
 
       file_store_data ->
         project_name
-        |> CouchService.get_docs_by_type(["Image", "Photo", "Drawing"])
+        |> CouchService.get_docs_by_category(["Image", "Photo", "Drawing"])
         |> Stream.map(fn %{
                            "created" => %{
                              "user" => created_by,

@@ -25,4 +25,15 @@ form-field-identifier {
     padding-left: 0;
     border-left: none;
   }
+
+  .invalid-identifier-info {
+    display: block;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 9px;
+    margin-bottom: 0;
+    border-radius: 7px;
+    user-select: none;
+    cursor: default;
+  }
 }

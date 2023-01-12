@@ -10,4 +10,8 @@
            (blur)="focused = false"
            class="form-control"
            [class.with-prefix]="identifierPrefix">
-  </div>
+    <div *ngIf="invalidIdentifier" class="invalid-identifier-info alert alert-warning" i18n="@@docedit.forms.invalidIdentifier">
+        Der eingetragene Bezeichner <b>{{currentIdentifier}}</b> beginnt nicht mit dem konfigurierten Bezeichner-Präfix 
+        <b>{{identifierPrefix}}</b>. Bitte tragen Sie einen neuen Bezeichner ein.
+    </div>
+</div>

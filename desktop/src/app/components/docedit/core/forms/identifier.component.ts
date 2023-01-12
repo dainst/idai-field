@@ -19,11 +19,13 @@ export class IdentifierComponent implements OnChanges {
 
     public identifierBody: string|undefined;
     public invalidIdentifier: boolean = false;
+    public currentIdentifier: string;
     public focused: boolean = false;
 
 
     ngOnChanges() {
 
+        this.currentIdentifier = this.resource[this.fieldName];
         this.updateIdentifierBody();
     }
 

@@ -520,6 +520,40 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        FeatureGroup: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
+        FeatureSegment: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
@@ -930,7 +964,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Feature:inherit'],
+            domain: ['Feature:inherit', 'FeatureGroup:inherit', 'FeatureSegment:inherit'],
             range: ['Trench'],
             editable: false,
             visible: false,
@@ -975,6 +1009,15 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Feature:inherit'],
+            range: ['Feature:inherit', 'FeatureGroup:inherit'],
+            sameMainCategoryResource: true,
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['FeatureSegment:inherit'],
             range: ['Feature:inherit'],
             sameMainCategoryResource: true,
             editable: false,

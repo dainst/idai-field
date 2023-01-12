@@ -686,6 +686,14 @@
         }
       }
     },
+    "FeatureGroup": {
+      "label": "Feature group",
+      "fields": {}
+    },
+    "FeatureSegment": {
+      "label": "Feature segment",
+      "fields": {}
+    },
     "Floor": {
       "label": "Floor",
       "fields": {

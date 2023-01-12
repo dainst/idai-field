@@ -765,6 +765,14 @@
         }
       }
     },
+    "FeatureGroup": {
+      "label": "Befundkomplex",
+      "fields": {}
+    },
+    "FeatureSegment": {
+      "label": "Befundanschnitt",
+      "fields": {}
+    },
     "Floor": {
       "label": "Fußboden",
       "fields": {

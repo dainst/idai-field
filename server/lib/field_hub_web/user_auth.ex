@@ -243,11 +243,13 @@ defmodule FieldHubWeb.UserAuth do
         conn
         |> put_flash(:error, "You are not authorized for project '#{project_name}'.")
         |> redirect(to: "/")
+        |> halt()
 
       :unknown_project ->
         conn
         |> put_flash(:error, "Unknown project '#{project_name}'.")
         |> redirect(to: "/")
+        |> halt()
     end
   end
 

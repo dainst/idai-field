@@ -16,5 +16,6 @@ export class EditFormFieldComponent {
 
     @Input() resource: Resource;
     @Input() field: Field;
-    @Input() languages: Map<Language>;    
+    @Input() languages: Map<Language>;
+    @Input() identifierPrefix: string|undefined;
 }

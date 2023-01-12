@@ -125,7 +125,7 @@ export class BuiltInConfiguration {
             required: true,
             fields: {
                 identifier: {
-                    inputType: Field.InputType.SIMPLE_INPUT,
+                    inputType: Field.InputType.IDENTIFIER,
                     editable: false,
                     visible: false
                 },
@@ -725,7 +725,7 @@ export class BuiltInConfiguration {
             fulltextIndexed: true
         },
         identifier: {
-            inputType: Field.InputType.SIMPLE_INPUT,
+            inputType: Field.InputType.IDENTIFIER,
             visible: false,
             editable: true,
             mandatory: true,

@@ -13,7 +13,8 @@
         <div *ngIf="isValidFieldData(field)" class="card-block">
             <edit-form-field [resource]="document['resource']"
                              [field]="field"
-                             [languages]="languages"></edit-form-field>
+                             [languages]="languages"
+                             [identifierPrefix]="identifierPrefix"></edit-form-field>
         </div>
         <div *ngIf="!isValidFieldData(field)" class="card-block">
             <invalid-field-data [resource]="document['resource']"

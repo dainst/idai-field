@@ -15,6 +15,7 @@ import { Language } from '../../../services/languages';
 export class EditFormGroup implements OnChanges {
 
     @Input() fieldDefinitions: Array<Field>;
+    @Input() identifierPrefix: string|undefined;
     @Input() document: Document;
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;

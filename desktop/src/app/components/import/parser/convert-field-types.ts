@@ -7,7 +7,7 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'
     | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
-    | 'checkboxes'; // | 'geometry'
+    | 'checkboxes' | 'identifier'; // | 'geometry'
 
 
 const UNCHECKED_FIELDS = ['relation', 'geometry', 'category'];

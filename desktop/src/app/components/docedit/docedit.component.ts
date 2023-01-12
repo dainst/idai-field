@@ -40,6 +40,7 @@ export class DoceditComponent {
     public activeGroup: string;
     public fieldDefinitions: Array<Field>|undefined;
     public groups: Array<Group>|undefined;
+    public identifierPrefix: string|undefined;
 
     public parentLabel: string|undefined = undefined;
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
@@ -177,11 +178,12 @@ export class DoceditComponent {
 
     private updateFields() {
 
-        this.fieldDefinitions = CategoryForm.getFields(
-            this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)
-        );
-        this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument)).groups;
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.documentHolder.clonedDocument);
+
+        this.fieldDefinitions = CategoryForm.getFields(category);
+        this.groups = category.groups;
         if (!this.activeGroup && this.groups.length > 0) this.activeGroup = this.groups[0].name;
+        this.identifierPrefix = category.identifierPrefix;
     }
 
 

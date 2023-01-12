@@ -44,6 +44,9 @@
 
 <form-field-geometry *ngIf="field.inputType === 'geometry'" [resource]="resource"></form-field-geometry>
 
+<form-field-identifier *ngIf="field.inputType === 'identifier'" [resource]="resource"
+                       [fieldName]="field.name" [identifierPrefix]="identifierPrefix"></form-field-identifier>
+
 <form-field-type-relation *ngIf="field.inputType === 'instanceOf'" [resource]="resource"></form-field-type-relation>
 
 <relation-picker-group *ngIf="field.inputType === 'relation'" [resource]="resource"

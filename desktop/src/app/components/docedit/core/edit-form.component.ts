@@ -21,6 +21,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() originalDocument: Document;
     @Input() fieldDefinitions: Array<Field>;
     @Input() originalGroups: Array<Group>;
+    @Input() identifierPrefix: string|undefined;
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
 

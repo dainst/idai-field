@@ -1,0 +1,11 @@
+<div class="input-group">
+    <span *ngIf="identifierPrefix"
+          class="input-group-text identifier-prefix-label"
+          [class.focused]="focused">{{identifierPrefix}}</span>
+    <input [(ngModel)]="identifierBody"
+           (keyup)="update($event.target.value)"
+           (focus)="focused = true"
+           (blur)="focused = false"
+           class="form-control"
+           [class.with-prefix]="identifierPrefix">
+  </div>

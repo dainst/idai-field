@@ -83,7 +83,8 @@ export module Field {
         |'relation'
         |'instanceOf'
         |'default'
-        |'category';
+        |'category'
+        |'identifier';
 
     export module InputType {
 
@@ -110,6 +111,7 @@ export module Field {
         export const INSTANCE_OF = 'instanceOf';
         export const RELATION = 'relation';
         export const CATEGORY = 'category';
+        export const IDENTIFIER = 'identifier';
         export const NONE = 'none';
         export const DEFAULT = 'default';
 
@@ -137,7 +139,7 @@ export module Field {
 
         export function isValidFieldData(fieldData: any, inputType: InputType): boolean {
 
-            if ([SIMPLE_INPUT, DROPDOWN, RADIO, CATEGORY].includes(inputType)) {
+            if ([SIMPLE_INPUT, DROPDOWN, RADIO, CATEGORY, IDENTIFIER].includes(inputType)) {
                 return isString(fieldData);
             } else if ([INPUT, TEXT].includes(inputType)) {
                 // TODO Improve validation for i18n strings

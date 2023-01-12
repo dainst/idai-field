@@ -47,6 +47,7 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
 import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
+import { IdentifierComponent } from './core/forms/identifier.component';
 
 
 @NgModule({
@@ -110,6 +111,7 @@ import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.compo
         OutliersComponent,
         EmptyValuelistInfoComponent,
         LiteratureComponent,
+        IdentifierComponent,
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent
     ],

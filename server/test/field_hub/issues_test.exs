@@ -14,11 +14,11 @@ defmodule FieldHub.IssuesTest do
   @project_doc File.read!("test/fixtures/documents/project.json")
 
   setup %{} do
-    # Run before all tests
+    # Run before each tests
     TestHelper.create_complete_example_project(@project, @user_name, @user_password)
 
     on_exit(fn ->
-      # Run after all tests
+      # Run after each tests
       TestHelper.remove_complete_example_project(
         @project,
         @user_name

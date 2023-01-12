@@ -502,11 +502,7 @@ export class BuiltInConfiguration {
         Feature: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {
-                dating: {
-                    inputType: Field.InputType.DATING,
-                }
-            },
+            fields: {},
             minimalForm: {
                 groups: [
                     {

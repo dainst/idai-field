@@ -1419,6 +1419,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="config.inputType.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="new">Ідентифікатор</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.changes" datatype="html">
         <source>An der Konfiguration wurden Änderungen vorgenommen.</source>
         <target state="final">В конфігурацію внесено зміни.</target>

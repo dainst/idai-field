@@ -2346,4 +2346,45 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['C'].groups[0].fields[1].constraintIndexed).toBe(false);
         expect(result['C'].groups[0].fields[1].defaultConstraintIndexed).toBe(true);
     });
+
+
+    it('allow setting identifier prefix', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                identifierPrefix: 'A-'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].identifierPrefix).toBe('A-');
+    });
 });

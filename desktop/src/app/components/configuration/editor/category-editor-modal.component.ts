@@ -84,6 +84,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             delete this.getClonedFormDefinition().color;
         }
 
+        this.getClonedFormDefinition().identifierPrefix =
+            CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix);
+
         if (this.new) {
             this.clonedConfigurationDocument = ConfigurationDocument.addToCategoriesOrder(
                 this.clonedConfigurationDocument,
@@ -101,6 +104,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description)(I18N.removeEmpty(this.clonedDescription))
+            || CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix)
+                !== this.getCustomFormDefinition().identifierPrefix
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
@@ -141,6 +146,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category
         );
+    }
+
+
+    private static cleanUpIdentifierPrefix(identifierPrefix: string|undefined): string|undefined {
+
+        if (!identifierPrefix) return undefined;
+
+        const result: string|undefined = identifierPrefix.trim();
+        return result.length > 0 ? result : undefined;
     }
 
 

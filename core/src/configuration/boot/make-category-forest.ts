@@ -156,6 +156,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
             ? CategoryForm.generateColorForCategory(category.name)
             : category.color
         );
+        category.identifierPrefix = formDefinition.identifierPrefix;
         category.createdBy = formDefinition.createdBy;
         category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
         category.references = formDefinition.references;

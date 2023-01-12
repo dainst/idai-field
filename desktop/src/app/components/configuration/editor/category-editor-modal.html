@@ -43,6 +43,14 @@
         <references-input [references]="getClonedFormDefinition().references"></references-input>
     </div>
     <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
+            Bezeichner-Präfix
+        </div>
+        <input type="text" id="identifier-prefix"
+               class="form-control reference-input"
+               [(ngModel)]="getClonedFormDefinition().identifierPrefix">
+    </div>
+    <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
         </div>

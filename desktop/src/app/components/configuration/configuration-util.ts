@@ -93,11 +93,11 @@ export module ConfigurationUtil {
 
     export function isReferencesArrayChanged(object: any, editedObject: any): boolean {
 
-        const originalReferences: string[] = object.references
+        const originalReferences: string[] = object.references
             ? clone(object.references).filter(not(isEmpty))
             : [];
         
-        const editedReferences: string[] = editedObject.references
+        const editedReferences: string[] = editedObject.references
             ? clone(editedObject.references).filter(not(isEmpty))
             : [];
 

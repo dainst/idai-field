@@ -38,6 +38,8 @@ export interface CategoryForm {
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;
+
+    identifierPrefix?: string;
 }
 
 

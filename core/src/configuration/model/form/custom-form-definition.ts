@@ -16,11 +16,12 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     hidden?: string[];
     parent?: string;
     color?: string;
+    identifierPrefix?: string;
 }
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix'
 ];
 
 

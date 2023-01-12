@@ -14,6 +14,8 @@ describe('compare', () => {
         expect(compare(1, '1')).toBe(false);
         expect(compare(['1', '2'], ['2', '1'])).toBe(false);
         expect(compare(['1', '2'], ['1', '2', '3'])).toBe(false);
+        expect(compare('1', { a: '1' })).toBe(false);
+        expect(compare({ a: '1' }, '1')).toBe(false);
     });
 
 

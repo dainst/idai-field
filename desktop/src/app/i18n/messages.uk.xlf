@@ -3892,44 +3892,6 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="deb511940e193e9e5b019171fa6f20ffda230f91" datatype="html">
-        <source> Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
-</source>
-        <target state="final"> Список значень, вказаний в проектній конфігурації для поля , порожній.
-</target>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
-        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
-</source>
-        <target state="final">
-          Будь ласка, введіть дозволені значення в даних проекту для цього поля (Поле
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>
-          <x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/>
-          <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
-          ).
-        </target>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.projectDocumentField</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="175491c173cba82a8e28fc5aa08c7fcef82b7df7" datatype="html">
-        <source> Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.
-</source>
-        <target state="final"> Для цього поля немає значень, які можна вибрати, оскільки відповідне поле батьківського/основного ресурсу не заповнене.
-</target>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.parent</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.invalidFieldData.info" datatype="html">
         <source> Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp: </source>
         <target state="final"> Дані, введені в це поле, не відповідають налаштованому типу введення: </target>
@@ -4104,6 +4066,40 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.missingValuelistInfo.configuration" datatype="html">
+        <source> Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
+</source>
+        <target state="final"> Список значень, вказаний в проектній конфігурації для поля , порожній.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
+          <context context-type="linenumber">51,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.missingValuelistInfo.projectDocumentField" datatype="html">
+        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+</source>
+        <target state="final"> Будь ласка, введіть дозволені значення в даних проекту для цього поля (Поле
+          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>
+          <x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/>
+          <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
+          ).
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.missingValuelistInfo.parent" datatype="html">
+        <source> Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.
+</source>
+        <target state="final"> Для цього поля немає значень, які можна вибрати, оскільки відповідне поле батьківського/основного ресурсу не заповнене.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">

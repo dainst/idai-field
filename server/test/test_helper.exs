@@ -158,6 +158,10 @@ defmodule FieldHub.TestHelper do
     end
   end
 
+  def clear_authentication_token_cache() do
+    Cachex.clear!( Application.get_env(:field_hub, :user_tokens_cache_name))
+  end
+
   defp headers() do
     [
       {"Content-Type", "application/json"},

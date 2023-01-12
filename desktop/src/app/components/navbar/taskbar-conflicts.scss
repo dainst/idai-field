@@ -44,6 +44,7 @@
 
     .list-group {
       max-height: calc(100vh - 337px);
+      border-radius: 0;
 
       .list-group-item {
         display: block;

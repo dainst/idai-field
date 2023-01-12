@@ -1,8 +1,10 @@
 <div class="input-group">
     <span *ngIf="identifierPrefix"
           class="input-group-text identifier-prefix-label"
+          (click)="focusInputField()"
           [class.focused]="focused">{{identifierPrefix}}</span>
-    <input [(ngModel)]="identifierBody"
+    <input #inputField
+           [(ngModel)]="identifierBody"
            (keyup)="update($event.target.value)"
            (focus)="focused = true"
            (blur)="focused = false"

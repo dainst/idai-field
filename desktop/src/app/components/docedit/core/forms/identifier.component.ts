@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { Resource } from 'idai-field-core';
 
 
@@ -14,6 +14,8 @@ export class IdentifierComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() fieldName: string;
     @Input() identifierPrefix: string|undefined;
+
+    @ViewChild('inputField') inputFieldElement: ElementRef;
 
     public identifierBody: string|undefined;
     public invalidIdentifier: boolean = false;
@@ -35,6 +37,12 @@ export class IdentifierComponent implements OnChanges {
                 ? this.identifierPrefix + value
                 : value;
         }
+    }
+
+
+    public focusInputField() {
+
+        this.inputFieldElement.nativeElement.focus();
     }
 
 

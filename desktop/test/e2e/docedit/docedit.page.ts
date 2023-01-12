@@ -168,6 +168,13 @@ export class DoceditPage {
     }
 
 
+    public static async getIdentifierInputFieldValue() {
+
+        const element = (await getLocator('form-field-identifier input')).nth(0);
+        return getValue(element);
+    }
+
+
     public static async getFieldLabel(fieldName: string) {
 
         const fieldElement = await this.getField(fieldName);

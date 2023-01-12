@@ -140,7 +140,7 @@ test.describe('resources --', () => {
         await DetailSidebarPage.doubleClickEditDocument('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('cancel');
-        await expect(await DoceditPage.getSimpleInputFieldValue(0)).toEqual('2');
+        await expect(await DoceditPage.getIdentifierInputFieldValue()).toEqual('2');
         await DoceditPage.clickCloseEdit('discard');
     });
 

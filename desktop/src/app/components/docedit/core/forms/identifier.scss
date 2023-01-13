@@ -1,9 +1,7 @@
 form-field-identifier {
   .identifier-prefix-label {
-    position: relative;
-    left: 1px;
     height: 33px;
-    padding-left: 10px;
+    padding-left: 12px;
     padding-right: 0;
     padding-top: 7px;
     border-radius: 0;
@@ -11,7 +9,7 @@ form-field-identifier {
     color: $primary-button-color;
     background-color: white;
     transition: border-color 0.15s ease-in-out;
-    border-right: none;
+    border-right-color: transparent;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     user-select: none;
@@ -22,6 +20,9 @@ form-field-identifier {
   }
 
   input.with-prefix {
+    position: relative;
+    right: 1px;
+    margin-right: -1px !important;
     padding-left: 0;
     border-left: none;
   }

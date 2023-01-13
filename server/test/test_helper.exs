@@ -1,10 +1,11 @@
 ExUnit.start()
 
 alias FieldHub.{
-  Project,
-  User,
+  CouchService,
   FileStore,
-  CouchService
+  Issues.Issue,
+  Project,
+  User
 }
 
 defmodule FieldHub.TestHelper do
@@ -159,7 +160,44 @@ defmodule FieldHub.TestHelper do
   end
 
   def clear_authentication_token_cache() do
-    Cachex.clear!( Application.get_env(:field_hub, :user_tokens_cache_name))
+    Cachex.clear!(Application.get_env(:field_hub, :user_tokens_cache_name))
+  end
+
+  @doc """
+  Should always return an example for each possible issue evaluated by `FieldHub.Issues`.
+  """
+  def get_example_issues() do
+    image_metadata = %{
+      uuid: "some_uuid",
+      file_type: "Drawing",
+      file_name: "drawing.png",
+      created_by: "Simon Hohl",
+      created: "2023-01-03T10:30:00.000Z"
+    }
+
+    [
+      %Issue{type: :no_project_document, severity: :error, data: %{}},
+      %Issue{type: :no_default_project_map_layer, severity: :info, data: %{}},
+      %Issue{
+        type: :file_directory_not_found,
+        severity: :error,
+        data: %{path: "/some/file/path"}
+      },
+      %Issue{
+        type: :missing_original_image,
+        severity: :info,
+        data: image_metadata
+      },
+      %Issue{
+        type: :image_variants_size,
+        severity: :warning,
+        data:
+          Map.merge(
+            image_metadata,
+            %{original_size: 100, thumbnail_size: 100}
+          )
+      }
+    ]
   end
 
   defp headers() do

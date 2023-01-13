@@ -68,22 +68,7 @@ defmodule FieldHubWeb.MonitoringLive do
 
     issue_count = Enum.count(issues)
 
-    schedule_next_in =
-      case stats do
-        %{database: %{doc_count: doc_count}} ->
-          ms = doc_count * 5
-
-          case ms do
-            val when val < 10000 ->
-              10000
-
-            val ->
-              val
-          end
-
-        _ ->
-          10000
-      end
+    schedule_next_in = ms_for_next_issue_evaluation(stats.database.doc_count)
 
     Logger.debug("Running next issue update in #{schedule_next_in} ms.")
 
@@ -169,4 +154,16 @@ defmodule FieldHubWeb.MonitoringLive do
   def issue_classes(:warning), do: "monitoring-issue warning"
   def issue_classes(:error), do: "monitoring-issue error"
   def issue_classes(_), do: "monitoring-issue"
+
+  def ms_for_next_issue_evaluation(database_doc_count) do
+    ms = database_doc_count * 5
+
+    case ms do
+      val when val < 10000 ->
+        10000
+
+      val ->
+        val
+    end
+  end
 end

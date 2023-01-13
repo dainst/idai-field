@@ -45,6 +45,11 @@ defmodule FieldHubWeb.MonitoringLiveTest do
              |> live("/ui/monitoring/#{@project}")
   end
 
+  test "issue rescheduling gets scaled with large document count in database" do
+    assert 10000 == MonitoringLive.ms_for_next_issue_evaluation(100)
+    assert 50000 == MonitoringLive.ms_for_next_issue_evaluation(10000)
+  end
+
   describe "with logged in user" do
     setup %{conn: conn} do
       conn = log_in_user(conn, @user_name)

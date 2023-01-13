@@ -158,7 +158,7 @@ defmodule FieldHubWeb.MonitoringLive do
     # fallback: output key/value pairs
     data
     |> Enum.map(fn {key, value} ->
-      "#{key}: #{value}"
+      "#{key}: #{inspect(value)}"
     end)
     |> Enum.join(", ")
     |> case do

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
+import { AppConfigurator, CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
     PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
@@ -38,6 +38,7 @@ export class AppController {
                 private projectConfiguration: ProjectConfiguration,
                 private configurationIndex: ConfigurationIndex,
                 private configReader: ConfigReader,
+                private appConfigurator: AppConfigurator,
                 private messages: Messages) {}
 
     
@@ -64,11 +65,17 @@ export class AppController {
         this.imageDocumentsManager.clearSelection();
         this.documentCache.reset();
 
+        const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
+            (id: string) => db.get(id), this.configReader, 'test', 'test-user'
+        );
+
+        this.projectConfiguration.update(await this.appConfigurator.go('test', configurationDocument));
+
         await new SampleDataLoader(
             this.thumbnailGenerator,
             this.settingsProvider.getSettings().imagestorePath,
             Settings.getLocale()
-        ).go(db,this.settingsProvider.getSettings().selectedProject);
+        ).go(db, this.settingsProvider.getSettings().selectedProject);
 
         await Indexer.reindex(
             this.indexFacade,
@@ -76,10 +83,6 @@ export class AppController {
             this.documentCache,
             new CategoryConverter(this.projectConfiguration),
             false
-        );
-
-        const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
-            (id: string) => db.get(id), this.configReader, 'test', 'test-user'
         );
 
         await this.configurationIndex.rebuild(configurationDocument);

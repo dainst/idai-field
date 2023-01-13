@@ -153,7 +153,6 @@ defmodule FieldHubWeb.MonitoringLive do
   def issue_classes(:info), do: "monitoring-issue info"
   def issue_classes(:warning), do: "monitoring-issue warning"
   def issue_classes(:error), do: "monitoring-issue error"
-  def issue_classes(_), do: "monitoring-issue"
 
   def ms_for_next_issue_evaluation(database_doc_count) do
     ms = database_doc_count * 5

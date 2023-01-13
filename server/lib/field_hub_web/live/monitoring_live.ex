@@ -47,68 +47,54 @@ defmodule FieldHubWeb.MonitoringLive do
 
   def handle_info(
         :update_stats,
-        %{assigns: %{current_user: user_name, project: project}} = socket
+        %{assigns: %{project: project}} = socket
       ) do
-    Project.check_project_authorization(project, user_name)
-    |> case do
-      :granted ->
-        stats = Project.evaluate_project(project)
+    stats = Project.evaluate_project(project)
 
-        Process.send_after(self(), :update_stats, 1000)
+    Process.send_after(self(), :update_stats, 1000)
 
-        {:noreply, assign(socket, :stats, stats)}
-
-      _ ->
-        redirect(socket, to: "/login")
-    end
+    {:noreply, assign(socket, :stats, stats)}
   end
 
   def handle_info(
         :update_issues,
-        %{assigns: %{current_user: user_name, project: project, stats: stats}} = socket
+        %{assigns: %{project: project, stats: stats}} = socket
       ) do
-    Project.check_project_authorization(project, user_name)
-    |> case do
-      :granted ->
-        issues = Issues.evaluate_all(project)
+    issues = Issues.evaluate_all(project)
 
-        grouped =
-          issues
-          |> Enum.group_by(fn %{type: type} -> type end)
+    grouped =
+      issues
+      |> Enum.group_by(fn %{type: type} -> type end)
 
-        issue_count = Enum.count(issues)
+    issue_count = Enum.count(issues)
 
-        schedule_next_in =
-          case stats do
-            %{database: %{doc_count: doc_count}} ->
-              ms = doc_count * 5
+    schedule_next_in =
+      case stats do
+        %{database: %{doc_count: doc_count}} ->
+          ms = doc_count * 5
 
-              case ms do
-                val when val < 10000 ->
-                  10000
-
-                val ->
-                  val
-              end
-
-            _ ->
+          case ms do
+            val when val < 10000 ->
               10000
+
+            val ->
+              val
           end
 
-        Logger.debug("Running next issue update in #{schedule_next_in} ms.")
+        _ ->
+          10000
+      end
 
-        Process.send_after(self(), :update_issues, schedule_next_in)
+    Logger.debug("Running next issue update in #{schedule_next_in} ms.")
 
-        {
-          :noreply,
-          socket
-          |> assign(:issues, grouped)
-          |> assign(:issue_count, issue_count)
-        }
+    Process.send_after(self(), :update_issues, schedule_next_in)
 
-      _ ->
-        redirect(socket, to: "/login")
-    end
+    {
+      :noreply,
+      socket
+      |> assign(:issues, grouped)
+      |> assign(:issue_count, issue_count)
+    }
   end
 
   def get_file_label(key) do

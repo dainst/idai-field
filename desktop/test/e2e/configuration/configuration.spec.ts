@@ -267,6 +267,54 @@ test.describe('configuration --', () => {
     });
 
 
+    test('set identifier prefix', async () => {
+
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInIdentifierPrefix('PL-');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        expect(await DoceditPage.getIdentifierPrefix()).toEqual('PL-');
+        await DoceditPage.typeInInputField('identifier', '123');
+        await DoceditPage.clickSaveDocument();
+        await waitForExist(await ResourcesPage.getListItemEl('PL-123'));
+    });
+
+
+    test('show warning for invalid identifier after setting identifier prefix', async () => {
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.typeInInputField('identifier', '123');
+        await DoceditPage.clickSaveDocument();
+        await waitForExist(await ResourcesPage.getListItemEl('123'));
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInIdentifierPrefix('PL-');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForExist(await ResourcesPage.getListItemEl('123'));
+        await ResourcesPage.openEditByDoubleClickResource('123');
+        await waitForExist(await DoceditPage.getInvalidIdentifierInfo());
+        expect(await DoceditPage.getIdentifierPrefix()).toEqual('PL-');
+        expect(await DoceditPage.getIdentifierInputFieldValue()).toEqual('');
+        await DoceditPage.typeInInputField('identifier', '123');
+        await DoceditPage.clickSaveDocument();
+        await waitForExist(await ResourcesPage.getListItemEl('PL-123'));
+    });
+
+
     test('add library field as custom field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

@@ -188,6 +188,13 @@ export class DoceditPage {
     }
 
 
+    public static async getIdentifierPrefix() {
+
+        const element = (await getLocator('.identifier-prefix-label')).nth(0);
+        return getText(element);
+    }
+
+
     // elements
 
     public static getNumberOfDuplicatesInputField() {
@@ -229,6 +236,12 @@ export class DoceditPage {
     public static getLanguageTabs(fieldName: string) {
 
         return getLocator('#edit-form-element-' + fieldName + ' .language-tab');
+    }
+
+
+    public static async getInvalidIdentifierInfo() {
+
+        return (await getLocator('.invalid-identifier-info')).nth(0);
     }
 
 

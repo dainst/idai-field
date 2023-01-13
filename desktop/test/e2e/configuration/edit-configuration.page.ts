@@ -103,6 +103,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static async typeInIdentifierPrefix(prefix: string) {
+
+        return typeIn('#identifier-prefix', prefix);
+    }
+
+
     public static typeInNewValue(valueId: string) {
 
         return typeIn('#new-value-input', valueId);

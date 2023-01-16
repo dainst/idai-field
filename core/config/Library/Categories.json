@@ -567,11 +567,47 @@
   "FeatureGroup": {
     "color": "#ae00ff",
     "description": {},
-    "fields": {}
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "featureGroupBorders": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureBorders-default"
+      },
+      "featureGroupForm": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureForm-default"
+      }
+    }
   },
   "FeatureSegment": {
     "description": {},
-    "fields": {}
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "featureSegmentBorders": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureBorders-default"
+      },
+      "featureSegmentForm": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Feature-featureForm-default"
+      }
+    }
   },
   "Floor": {
     "parent": "Feature",
@@ -1286,7 +1322,23 @@
   "FindCollection": {
     "color": "#1ad1ff",
     "description": {},
-    "fields": {}
+    "fields": {
+      "amount": {
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
+      },
+      "weight": {
+        "inputType": "unsignedFloat"
+      },
+      "storagePlace": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Find-storagePlace-default"
+      },
+      "bibliography": {
+        "inputType": "text"
+      }
+    }
   },
   "PlasterFragment": {
     "color": "#737373",

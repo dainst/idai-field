@@ -503,6 +503,64 @@
         }
       ]
     },
+    "FeatureGroup:default": {
+      "categoryName": "FeatureGroup",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+            "endDate", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "hasDisturbance", "featureGroupForm", "featureGroupBorders", "comparison"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "FeatureSegment:default": {
+      "categoryName": "FeatureSegment",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
+            "endDate", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "hasDisturbance", "featureSegmentForm", "featureSegmentBorders", "comparison"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
     "Floor:default": {
       "categoryName": "Floor",
       "creationDate": "",
@@ -786,6 +844,30 @@
         {
           "name": "position",
           "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "FindCollection:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "FindCollection",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "amount", "weight", "storagePlace", "bibliography"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry"]
         },
         {
           "name": "time",

@@ -577,9 +577,6 @@
         "hasDisturbance": {
           "label": "Perturbations"
         },
-        "featureAmount": {
-          "label": "Composition"
-        },
         "comparison": {
           "label": "Comparaison"
         },

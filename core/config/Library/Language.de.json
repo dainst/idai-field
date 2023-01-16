@@ -747,10 +747,6 @@
           "label": "Störung",
           "description": "Liegt eine Störung des Befundes vor?"
         },
-        "featureAmount": {
-          "label": "Befundanteil",
-          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
-        },
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"

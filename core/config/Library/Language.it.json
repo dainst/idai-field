@@ -747,10 +747,6 @@
           "label": "Disturbo",
           "description": "C'è un disturbo nei reperti?"
         },
-        "featureAmount": {
-          "label": "Quantità di rinvenimenti",
-          "description": "Percentuale di inclusioni rispetto al totale dei rinvenimenti; a seconda del metodo di scavo, classificazione in percentuale ('5-10%') o testuale ('poco')"
-        },
         "color": {
           "label": "Colore ed intensità",
           "description": "Colore, se riconoscibile"

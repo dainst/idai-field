@@ -669,9 +669,6 @@
         "hasDisturbance": {
           "label": "Disturbance"
         },
-        "featureAmount": {
-          "label": "Feature amount"
-        },
         "comparison": {
           "label": "Comparison"
         },

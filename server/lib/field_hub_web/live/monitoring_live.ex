@@ -97,6 +97,10 @@ defmodule FieldHubWeb.MonitoringLive do
   def get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
   def get_issue_type_label(:image_variants_size), do: "Image variants file size"
   def get_issue_type_label(:missing_original_image), do: "Missing original images"
+
+  def get_issue_type_label(:non_unique_identifiers),
+    do: "Same identifier used for different documents"
+
   def get_issue_type_label(type), do: type
 
   def get_issue_description(%{type: :file_directory_not_found, data: %{path: path}}) do

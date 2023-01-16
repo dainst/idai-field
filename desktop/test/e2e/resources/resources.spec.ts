@@ -546,7 +546,7 @@ test.describe('resources --', () => {
         await SearchBarPage.clickCategoryFilterButton('modal');
 
         let labels = await SearchBarPage.getCategoryFilterOptionLabels();
-        expect(await labels.count()).toBe(7);
+        expect(await labels.count()).toBe(8);
         expect(await getText(labels.nth(0))).toEqual('Schnitt');
         expect(await getText(labels.nth(1))).toEqual('Stratigraphische Einheit');
 

@@ -133,7 +133,7 @@ defmodule FieldHubWeb.MonitoringLive do
     # fallback: output key/value pairs
     data
     |> Enum.map(fn {key, value} ->
-      "#{key}: #{inspect(value)}"
+      "#{key}: #{inspect(value, pretty: true)}"
     end)
     |> Enum.join(", ")
     |> case do
@@ -141,7 +141,7 @@ defmodule FieldHubWeb.MonitoringLive do
         "No description available"
 
       val ->
-        val
+        {:preformatted, val}
     end
   end
 

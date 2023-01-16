@@ -34,3 +34,5 @@ npm-debug.log
 
 # Ignore file upload directory
 /files
+
+.env

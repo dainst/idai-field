@@ -12,13 +12,13 @@ defmodule FieldHub.Issues do
   require Logger
 
   def evaluate_all(project_name) do
-    Enum.concat([
+    [
       evaluate_project_document(project_name),
       evaluate_images(project_name),
       evaluate_identifiers(project_name),
       evaluate_relations(project_name)
-    ])
-    |> sort_issues_by_decreasing_serverity()
+    ]
+    |> Enum.concat()
   end
 
   def evaluate_project_document(project_name) do
@@ -245,7 +245,7 @@ defmodule FieldHub.Issues do
         uuid
       end)
 
-    Enum.map(relations, fn {uuid, current_relations} ->
+    Stream.map(relations, fn {uuid, current_relations} ->
       case current_relations -- all_uuids do
         [] ->
           :ok

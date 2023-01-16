@@ -47,7 +47,7 @@ defmodule FieldHub.IssuesTest do
                data: %{unresolved_relations: ["project"], uuid: "o25"}
              },
              %FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}
-           ] = Issues.evaluate_all(@project)
+           ] = Issues.evaluate_all(@project) |> Issues.sort_issues_by_decreasing_serverity()
   end
 
   test "empty list of default map layers raises issue" do

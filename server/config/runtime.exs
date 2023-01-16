@@ -56,12 +56,11 @@ if config_env() == :prod do
   # See `mix help release` for more information.
 
   config :field_hub,
-    # TODO: crash
     couchdb_url: System.fetch_env!("COUCHDB_URL"),
-    couchdb_admin_name: System.fetch_env("COUCHDB_ADMIN_NAME"),
-    couchdb_admin_password: System.fetch_env("COUCHDB_ADMIN_PASSWORD"),
-    couchdb_user_name: System.fetch_env("COUCHDB_USER_NAME"),
-    couchdb_user_password: System.fetch_env("COUCHDB_USER_PASSWORD")
+    couchdb_admin_name: System.fetch_env!("COUCHDB_ADMIN_NAME"),
+    couchdb_admin_password: System.fetch_env!("COUCHDB_ADMIN_PASSWORD"),
+    couchdb_user_name: System.fetch_env!("COUCHDB_USER_NAME"),
+    couchdb_user_password: System.fetch_env!("COUCHDB_USER_PASSWORD")
 
   # ## Configuring the mailer
   #

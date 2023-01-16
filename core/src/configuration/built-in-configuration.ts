@@ -528,11 +528,11 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.IS_PRESENT_IN]
                     }
                 ]
             }
@@ -545,11 +545,11 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.IS_PRESENT_IN]
                     }
                 ]
             }
@@ -810,6 +810,24 @@ export class BuiltInConfiguration {
         {
             name: Relation.SAME_AS,
             inverse: Relation.SAME_AS,
+            domain: ['FeatureGroup:inherit'],
+            range: ['FeatureGroup:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: Relation.SAME_AS,
+            inverse: Relation.SAME_AS,
+            domain: ['FeatureSegment:inherit'],
+            range: ['FeatureSegment:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: Relation.SAME_AS,
+            inverse: Relation.SAME_AS,
             domain: ['Find:inherit'],
             range: ['Find:inherit'],
             editable: true,
@@ -907,7 +925,7 @@ export class BuiltInConfiguration {
         },
         {
             name: Relation.IS_PRESENT_IN,
-            domain: ['Feature:inherit'],
+            domain: ['Feature:inherit', 'FeatureGroup:inherit', 'FeatureSegment:inherit'],
             range: ['Profile', 'Planum'],
             editable: true,
             visible: true,

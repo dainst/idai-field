@@ -389,16 +389,8 @@ defmodule FieldHub.CouchService do
         "$or":
           Enum.map(categories, fn category ->
             [
-              %{
-                resource: %{
-                  type: category
-                }
-              },
-              %{
-                resource: %{
-                  category: category
-                }
-              }
+              %{"resource.category" => category},
+              %{"resource.type" => category}
             ]
           end)
           |> List.flatten()

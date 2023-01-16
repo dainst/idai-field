@@ -767,11 +767,45 @@
     },
     "FeatureGroup": {
       "label": "Befundkomplex",
-      "fields": {}
+      "fields": {
+        "comparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Befundkomplexes vor?"
+        },
+        "featureGroupBorders": {
+          "label": "Grenzen des Befundkomplexes",
+          "description": "Bestimmung der Grenzen des Befundkomplexes"
+        },
+        "featureGroupForm": {
+          "label": "Form des Befundkomplexes",
+          "description": "Form des Befundkomplexes im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+        }
+      }
     },
     "FeatureSegment": {
       "label": "Befundanschnitt",
-      "fields": {}
+      "fields": {
+        "comparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Befundanschnitts vor?"
+        },
+        "featureSegmentBorders": {
+          "label": "Grenzen des Befundanschnitts",
+          "description": "Bestimmung der Grenzen des Befundanschnitts"
+        },
+        "featureSegmentForm": {
+          "label": "Form des Befundanschnitts",
+          "description": "Form des Befundanschnitts im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+        }
+      }
     },
     "Floor": {
       "label": "Fußboden",
@@ -1379,8 +1413,20 @@
     "FindCollection": {
       "label": "Fundkollektion",
       "fields": {
-        "instanceOf": {
-          "label": "Typologische Einordnung"
+        "amount": {
+          "label": "Anzahl (gesamt)",
+          "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke"
+        },
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "weight": {
+          "label": "Gewicht (g)",
+          "description": "Gewicht in Gramm"
+        },
+        "storagePlace": {
+          "label": "Aufbewahrungsort",
+          "description": "Aufbewahrungsort der Fundkollektion"
         }
       }
     },

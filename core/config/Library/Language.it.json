@@ -765,6 +765,32 @@
         }
       }
     },
+    "FeatureGroup": {
+      "label": "Unità Stratigrafica",
+      "fields": {
+        "comparison": {
+          "label": "Confronto(i)",
+          "description": "Confronto con simili reperti, oggetti, iscrizioni, ecc. Con riferimenti"
+        },
+        "hasDisturbance": {
+          "label": "Disturbo",
+          "description": "C'è un disturbo nei reperti?"
+        }
+      }
+    },
+    "FeatureSegment": {
+      "label": "Unità Stratigrafica",
+      "fields": {
+        "comparison": {
+          "label": "Confronto(i)",
+          "description": "Confronto con simili reperti, oggetti, iscrizioni, ecc. Con riferimenti"
+        },
+        "hasDisturbance": {
+          "label": "Disturbo",
+          "description": "C'è un disturbo nei reperti?"
+        }
+      }
+    },
     "Floor": {
       "label": "Pavimento",
       "fields": {
@@ -1371,8 +1397,18 @@
     "FindCollection": {
       "label": "Find collection",
       "fields": {
-        "instanceOf": {
-          "label": "Classificazione tipologica"
+        "amount": {
+          "label": "Numero (totale)"
+        },
+        "bibliography": {
+          "label": "Bibliografia"
+        },
+        "weight": {
+          "label": "Peso (g)",
+          "description": "Peso in grammi"
+        },
+        "storagePlace": {
+          "label": "Luogo di conservazione"
         }
       }
     },

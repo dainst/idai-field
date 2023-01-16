@@ -688,11 +688,37 @@
     },
     "FeatureGroup": {
       "label": "Feature group",
-      "fields": {}
+      "fields": {
+        "comparison": {
+          "label": "Comparison"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureGroupBorders": {
+          "label": "Borders of the feature group"
+        },
+        "featureGroupForm": {
+          "label": "Form of the feature group"
+        }
+      }
     },
     "FeatureSegment": {
       "label": "Feature segment",
-      "fields": {}
+      "fields": {
+        "comparison": {
+          "label": "Comparison"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureGroupBorders": {
+          "label": "Borders of the feature segment"
+        },
+        "featureGroupForm": {
+          "label": "Form of the feature segment"
+        }
+      }
     },
     "Floor": {
       "label": "Floor",
@@ -1265,8 +1291,17 @@
     "FindCollection": {
       "label": "Find collection",
       "fields": {
-        "instanceOf": {
-          "label": "Typological classification"
+        "amount": {
+          "label": "Total number"
+        },
+        "bibliography": {
+          "label": "Bibliography"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "storagePlace": {
+          "label": "Storage place"
         }
       }
     },

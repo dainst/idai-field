@@ -384,32 +384,28 @@ defmodule FieldHub.CouchService do
       ]
   """
   def get_docs_by_category(project_name, categories) do
+    get_find_query_stream(project_name, %{
+      selector: %{
+        "$or":
+          Enum.map(categories, fn category ->
+            [
+              %{"resource.category" => category},
+              %{"resource.type" => category}
+            ]
+          end)
+          |> List.flatten()
+      }
+    })
+  end
+
+  def get_find_query_stream(project_name, query) do
     batch_size = 500
 
     Stream.resource(
       fn ->
-        %{
-          selector: %{
-            "$or":
-              Enum.map(categories, fn category ->
-                [
-                  %{
-                    resource: %{
-                      type: category
-                    }
-                  },
-                  %{
-                    resource: %{
-                      category: category
-                    }
-                  }
-                ]
-              end)
-              |> List.flatten()
-          },
-          limit: batch_size,
-          skip: 0
-        }
+        query
+        |> Map.put(:limit, batch_size)
+        |> Map.put(:skip, 0)
       end,
       fn payload ->
         HTTPoison.post!(

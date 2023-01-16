@@ -61,7 +61,12 @@
                                     <%= Map.get(data, :uuid, "No UUID") %>
                                 </td>
                                 <td>
-                                    <%= get_issue_description(issue) %>
+                                    <%= case get_issue_description(issue) do %>
+                                        <% {:preformatted, val} -> %>
+                                            <pre><%= val %></pre>
+                                        <% val -> %>
+                                            <%= val %>
+                                    <% end %>
                                 </td>
                             </tr>
                         <% end) %>

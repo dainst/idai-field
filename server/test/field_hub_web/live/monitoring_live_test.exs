@@ -124,7 +124,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
       html = render(view)
 
       assert not (html =~ "<h2>Issues</h2>\n\nNone.")
-      assert html =~ "<h2>Issues (1)</h2>"
+      assert html =~ "<h2>Issues (3)</h2>"
     end
   end
 end

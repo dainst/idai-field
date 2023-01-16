@@ -126,7 +126,7 @@ defmodule FieldHub.TestHelper do
   def create_document(project_name, doc) do
     "#{CouchService.base_url()}/#{project_name}"
     |> HTTPoison.post!(
-      doc,
+      Jason.encode!(doc),
       headers()
     )
   end
@@ -196,6 +196,28 @@ defmodule FieldHub.TestHelper do
             image_metadata,
             %{original_size: 100, thumbnail_size: 100}
           )
+      },
+      %Issue{
+        data: %{
+          documents: [
+            %{
+              "_id" => "st1",
+              "resource" => %{"id" => "st1", "identifier" => "PQ1-ST1"}
+            },
+            %{
+              "_id" => "st1-duplicate",
+              "resource" => %{"id" => "st1-duplicate", "identifier" => "PQ1-ST1"}
+            }
+          ],
+          identifier: "PQ1-ST1"
+        },
+        severity: :error,
+        type: :non_unique_identifiers
+      },
+      %Issue{
+        type: :unresolved_relation,
+        severity: :error,
+        data: %{unresolved_relations: ["sa1"], uuid: "syu2"}
       }
     ]
   end

@@ -1,0 +1,17 @@
+{
+    "_id": "25c6f27b-7078-449b-80c1-d765fedbfdb2",
+    "resource": {
+        "identifier": "some_image.jpg",
+        "originalFilename": "some_image.jpg",
+        "width": 1600,
+        "height": 1067,
+        "relations": {},
+        "id": "25c6f27b-7078-449b-80c1-d765fedbfdb2",
+        "type": "Test:SpecialPhoto"
+    },
+    "created": {
+        "user": "anonymous",
+        "date": "2023-01-16T12:56:33.554Z"
+    },
+    "modified": []
+}

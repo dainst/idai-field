@@ -14,7 +14,9 @@ defmodule FieldHub.Issues do
   def evaluate_all(project_name) do
     Enum.concat([
       evaluate_project_document(project_name),
-      evaluate_images(project_name)
+      evaluate_images(project_name),
+      evaluate_identifiers(project_name),
+      evaluate_relations(project_name)
     ])
     |> sort_issues_by_decreasing_serverity()
   end
@@ -60,7 +62,9 @@ defmodule FieldHub.Issues do
 
       file_store_data ->
         project_name
-        |> CouchService.get_docs_by_category(["Image", "Photo", "Drawing"])
+        |> CouchService.get_docs_by_category(
+          ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_name)
+        )
         |> Stream.map(fn %{
                            "created" => %{
                              "user" => created_by,
@@ -145,6 +149,116 @@ defmodule FieldHub.Issues do
           end
         end)
     end
+  end
+
+  defp get_custom_image_categories(project_name) do
+    project_name
+    |> CouchService.get_docs_by_category(["Configuration"])
+    |> Enum.to_list()
+    |> case do
+      [configuration] ->
+        configuration["resource"]["forms"]
+        |> Enum.map(fn {key, value} ->
+          case value do
+            %{"parent" => "Image"} ->
+              key
+
+            _ ->
+              :reject
+          end
+        end)
+        |> Enum.reject(fn val -> val == :reject end)
+
+      _ ->
+        []
+    end
+  end
+
+  def evaluate_identifiers(project_name) do
+    query = %{
+      selector: %{},
+      fields: [
+        "_id",
+        "resource.identifier"
+      ]
+    }
+
+    CouchService.get_find_query_stream(project_name, query)
+    |> Enum.group_by(fn %{"resource" => %{"identifier" => identifier}} ->
+      identifier
+    end)
+    |> Enum.filter(fn {_identifier, documents} ->
+      case documents do
+        [_single_doc] ->
+          false
+
+        _multiple_docs ->
+          true
+      end
+    end)
+    |> case do
+      [] ->
+        []
+
+      groups ->
+        Enum.map(groups, fn {identifier, docs} ->
+          ids = Enum.map(docs, fn %{"_id" => id} -> id end)
+
+          detailed_docs =
+            CouchService.get_docs(project_name, ids)
+            |> Enum.to_list()
+
+          %Issue{
+            type: :non_unique_identifiers,
+            severity: :error,
+            data: %{identifier: identifier, documents: detailed_docs}
+          }
+        end)
+    end
+  end
+
+  def evaluate_relations(project_name) do
+    query = %{
+      selector: %{},
+      fields: [
+        "_id",
+        "resource.relations"
+      ]
+    }
+
+    relations =
+      CouchService.get_find_query_stream(project_name, query)
+      |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
+        referenced_uuids =
+          relations
+          |> Enum.map(fn {_relation_type_key, uuids} ->
+            uuids
+          end)
+          |> List.flatten()
+          |> Enum.uniq()
+
+        {uuid, referenced_uuids}
+      end)
+
+    all_uuids =
+      Enum.map(relations, fn {uuid, _relations} ->
+        uuid
+      end)
+
+    Enum.map(relations, fn {uuid, current_relations} ->
+      case current_relations -- all_uuids do
+        [] ->
+          :ok
+
+        unresoved_relations ->
+          %Issue{
+            type: :unresolved_relation,
+            severity: :error,
+            data: %{uuid: uuid, unresolved_relations: unresoved_relations}
+          }
+      end
+    end)
+    |> Enum.reject(fn val -> val == :ok end)
   end
 
   def sort_issues_by_decreasing_serverity(issues) do

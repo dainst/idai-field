@@ -106,14 +106,24 @@ defmodule FieldHub.IssuesTest do
                data: %{
                  documents: [
                    %{
-                     "geometry" => %{"coordinates" => _coordiantes, "type" => "Point"},
-                     "id" => "st1",
-                     "identifier" => "PQ1-ST1",
-                     "relations" => _relations,
-                     "shortDescription" => _short_description,
-                     "type" => "SurveyUnit"
+                     "_id" => "st1",
+                     "_rev" => _,
+                     "created" => _,
+                     "modified" => _,
+                     "resource" => %{
+                       "geometry" => _,
+                       "id" => "st1",
+                       "identifier" => "PQ1-ST1",
+                       "relations" => _,
+                       "shortDescription" => _,
+                       "type" => "SurveyUnit"
+                     }
                    },
-                   %{"id" => "st1-duplicate", "identifier" => "PQ1-ST1"}
+                   %{
+                     "_id" => "st1-duplicate",
+                     "_rev" => _,
+                     "resource" => %{"id" => "st1-duplicate", "identifier" => "PQ1-ST1"}
+                   }
                  ],
                  identifier: "PQ1-ST1"
                },

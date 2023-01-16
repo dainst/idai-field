@@ -181,7 +181,7 @@ defmodule FieldHub.Issues do
 
           detailed_docs =
             CouchService.get_docs(project_name, ids)
-            |> Enum.map(fn %{"resource" => resource} -> resource end)
+            |> Enum.to_list()
 
           %Issue{
             type: :non_unique_identifiers,

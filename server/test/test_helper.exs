@@ -126,7 +126,7 @@ defmodule FieldHub.TestHelper do
   def create_document(project_name, doc) do
     "#{CouchService.base_url()}/#{project_name}"
     |> HTTPoison.post!(
-      doc,
+      Jason.encode!(doc),
       headers()
     )
   end

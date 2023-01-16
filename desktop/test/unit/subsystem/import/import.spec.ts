@@ -77,7 +77,7 @@ describe('Import/Subsystem', () => {
             sourceType: undefined,
             url: undefined,
             format: 'geojson',
-            mergeMode: false, // merge mode gets set automatically,
+            mergeMode: false, // merge mode gets set automatically
             permitDeletions: false,
             selectedOperationId: undefined,
             selectedCategory: undefined

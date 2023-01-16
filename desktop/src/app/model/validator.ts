@@ -1,6 +1,5 @@
-import { Datastore, Relation, Query, Named } from 'idai-field-core';
-import { Document, NewDocument, ProjectConfiguration} from 'idai-field-core';
 import { isnt, on } from 'tsfun';
+import { Datastore, Relation, Query, Named, Document, NewDocument, ProjectConfiguration } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 import { Validations } from './validations';
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
@@ -36,7 +35,7 @@ export class Validator {
         }
 
         if (result.totalCount > 0 && on(['resource', 'id'], isnt(result.documents[0].resource.id))(document)) {
-            throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
+            throw [ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
     }
 

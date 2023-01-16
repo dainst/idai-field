@@ -38,6 +38,7 @@ export function processDocuments(documents: Array<Document>,
 
         if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
 
+        validator.assertIdentifierPrefixIsValid(finalDocument);
         validator.assertIsWellformed(finalDocument);
     }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isnt } from 'tsfun';
-import { Document, Datastore, Relation, NewDocument, Query, Resource, Named,
-    ProjectConfiguration } from 'idai-field-core';
+import { Document, Datastore, Relation, NewDocument, Query, Resource, Named, ProjectConfiguration,
+     CategoryForm } from 'idai-field-core';
 import { Validations } from '../../../../model/validations';
 import { Validator } from '../../../../model/validator';
 import { ImportErrors as E } from '../import-errors';
@@ -194,6 +194,26 @@ export class ImportValidator extends Validator {
             && !Document.hasRelations(document as Document, LIES_WITHIN)) { // isRecordedIn gets constructed from liesWithin
 
             throw [E.NO_PARENT_ASSIGNED];
+        }
+    }
+
+
+     /**
+     * @throws [INVALID_IDENTIFIER_PREFIX]
+     */
+       public assertIdentifierPrefixIsValid(document: Document|NewDocument): void {
+
+        if (!document.resource.identifier) return;
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+
+        if (category.identifierPrefix && !document.resource.identifier.startsWith(category.identifierPrefix)) {
+            throw [
+                E.INVALID_IDENTIFIER_PREFIX,
+                document.resource.identifier,
+                document.resource.category,
+                category.identifierPrefix
+            ];
         }
     }
 

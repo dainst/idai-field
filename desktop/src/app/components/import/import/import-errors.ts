@@ -34,4 +34,5 @@ export module ImportErrors {
     export const EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'ImportErrors.emptySlotsInArraysForbidden';
     export const ARRAY_OF_HETEROGENEOUS_TYPES = 'ImportErrors.arrayOfHeterogeneousTypes';
     export const EMPTY_OBJECT_IN_RESOURCE = 'ImportErrors.emptyObjectInResource';
+    export const INVALID_IDENTIFIER_PREFIX = 'ImportErrors.invalidIdentifierPrefix';
 }

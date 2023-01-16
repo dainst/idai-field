@@ -36,12 +36,18 @@ describe('ImportValidator', () => {
                     { name: 'id' },
                     { name: 'category' }
                 ]}]
-            }, []],
-              [ {
+            }, []
+        ],
+        [ {
                 name: 'T3',
                 mustLieWithin: true
-            }, []]
-        ] as any),
+            }, []
+        ],
+        [ {
+                name: 'T4',
+                identifierPrefix: 'T4-'
+         }, []
+        ]] as any),
         categories: {},
         relations: [
             {
@@ -425,6 +431,40 @@ describe('ImportValidator', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES, 'T']);
         }
+        done();
+    });
+
+
+    it('invalid identifier prefix', async done => {
+        
+        const document1 = {
+            resource: {
+                id: '1', identifier: 'T4-1', category: 'T4', relations: { 'isRecordedIn': [] }
+            }
+        };
+
+        const document2 = {
+            resource: {
+                id: '2', identifier: 'Resource2', category: 'T4', relations: { 'isRecordedIn': [] }
+            }
+        };
+
+        const validator: ImportValidator = new ImportValidator(projectConfiguration, undefined);
+
+        try {
+            await validator.assertIdentifierPrefixIsValid(document1);
+        } catch (expected) {
+            console.error(expected);
+            fail();
+        }
+
+        try {
+            await validator.assertIdentifierPrefixIsValid(document2);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.INVALID_IDENTIFIER_PREFIX, 'Resource2', 'T4', 'T4-']);
+        }
+        
         done();
     });
 });

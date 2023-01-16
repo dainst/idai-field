@@ -17,7 +17,9 @@ export function createMockValidator() {
         'assertDropdownRangeComplete',
         'assertIsNotOverviewCategory',
         'isRecordedInTargetAllowedRelationDomainCategory',
-        'assertNoForbiddenRelations']);
+        'assertNoForbiddenRelations',
+        'assertIdentifierPrefixIsValid'
+    ]);
 }
 
 

@@ -34,6 +34,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Model Package
     public static MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS = 'model.validation.error.identifierExists';
+    public static MODEL_VALIDATION_INVALID_IDENTIFIER_PREFIX = 'model.validation.error.invalidIdentifierPrefix';
     public static MODEL_VALIDATION_MISSING_COORDINATES = 'model.validation.error.missingCoordinates';
     public static MODEL_VALIDATION_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
     public static MODEL_VALIDATION_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
@@ -416,6 +417,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: [''],
+            hidden: false
+        };
+        this.msgs[M.MODEL_VALIDATION_INVALID_IDENTIFIER_PREFIX] = {
+            content: i18n({
+                id: 'messages.model.validation.error.identifierPrefix',
+                value: 'Der Ressourcen-Bezeichner \'[0]\' beginnt nicht mit dem für die Kategorie \'[1]\' konfigurierten Bezeichner-Präfix \'[2]\'.'
+            }),
+            level: 'danger',
+            params: ['?', '?', '?'],
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_MISSING_COORDINATES] = {

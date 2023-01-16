@@ -61,7 +61,9 @@ describe('importDocuments', () => {
             'assertIsAllowedCategory',
             'assertDropdownRangeComplete',
             'assertSettingIsRecordedInIsPermissibleForCategory',
-            'assertNoForbiddenRelations']);
+            'assertNoForbiddenRelations',
+            'assertIdentifierPrefixIsValid'
+        ]);
 
         validator.assertHasLiesWithin.and.returnValue();
         validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());

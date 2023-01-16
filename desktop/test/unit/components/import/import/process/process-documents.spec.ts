@@ -13,6 +13,7 @@ describe('processDocuments', () => {
 
     let resourceIdCounter;
 
+
     beforeEach(() => {
 
         resourceIdCounter = 0;
@@ -112,6 +113,25 @@ describe('processDocuments', () => {
     });
 
 
+    it('validation error - invalid identifier prefix', async done => {
+
+        validator.assertIdentifierPrefixIsValid.and.callFake(() => { throw [E.INVALID_IDENTIFIER_PREFIX, 'one', 'Feature', 'F'] });
+
+        try {
+            await processDocuments([
+                d('nf1', 'Feature', 'one')
+            ], {}, validator);
+            fail();
+        } catch (err) {
+            expect(err[0]).toEqual(E.INVALID_IDENTIFIER_PREFIX);
+            expect(err[1]).toEqual('one');
+            expect(err[2]).toEqual('Feature');
+            expect(err[3]).toEqual('F');
+        }
+        done();
+    });
+
+
     it('duplicate identifiers in import file', async done => {
 
         try {
@@ -121,7 +141,6 @@ describe('processDocuments', () => {
             ], {}, validator);
             fail();
         } catch (err) {
-
             expect(err[0]).toEqual(E.DUPLICATE_IDENTIFIER);
             expect(err[1]).toEqual('dup');
         }
@@ -140,7 +159,6 @@ describe('processDocuments', () => {
                 validator);
             fail();
         } catch (err) {
-
             expect(err[0]).toEqual(E.INVALID_FIELDS);
         }
         done();

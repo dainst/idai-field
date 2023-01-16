@@ -51,6 +51,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
         ]
 
     count = Enum.count(issues)
+
     groups =
       issues
       |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)

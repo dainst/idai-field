@@ -399,13 +399,12 @@ defmodule FieldHub.CouchService do
   end
 
   def get_find_query_stream(project_name, query) do
-    batch_size = 10000
+    batch_size = 500
 
     Stream.resource(
       fn ->
         query
         |> Map.put(:limit, batch_size)
-        |> Map.put(:skip, 0)
       end,
       fn payload ->
         HTTPoison.post!(
@@ -417,19 +416,12 @@ defmodule FieldHub.CouchService do
           %{status_code: 200, body: body} ->
             body
             |> Jason.decode!()
-            |> Map.get("docs")
             |> case do
-              [] ->
+              %{"docs" => []} ->
                 {:halt, :ok}
 
-              docs ->
-                payload =
-                  payload
-                  |> Map.update!(:skip, fn previous ->
-                    previous + batch_size
-                  end)
-
-                {docs, payload}
+              %{"docs" => docs, "bookmark" => bookmark} ->
+                {docs, Map.put(payload, :bookmark, bookmark)}
             end
 
           error ->

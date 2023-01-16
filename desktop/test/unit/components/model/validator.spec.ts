@@ -9,10 +9,10 @@ import { Validator } from '../../../../src/app/model/validator';
  */
 describe('Validator', () => {
 
-    const projectConfiguration = new ProjectConfiguration(
-        [
-            [
-                { item: {
+    const projectConfiguration = new ProjectConfiguration({
+        forms: [
+            {
+                item: {
                     name: 'T',
                     groups: [
                         {
@@ -28,8 +28,11 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                }, trees: []},
-                { item: {
+                },
+                trees: []
+            },
+            {
+                item: {
                     name: 'T2',
                     groups: [
                         {
@@ -39,12 +42,13 @@ describe('Validator', () => {
                                 { name: 'category' }
                             ]
                         }
-                    ]
-                }, trees: []}
-            ],
-            []
-        ] as any
-    );
+                    ],
+                    identifierPrefix: 'T2-'
+                },
+                trees: []
+            }
+        ]
+    } as any);
 
 
     it('should report duplicate identifier', async done => {
@@ -54,19 +58,19 @@ describe('Validator', () => {
                 { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'eins' } }] } as unknown as Datastore.FindResult
             );
 
-        const doc = {
+        const document = {
             resource: {
                 id: '1', identifier: 'eins', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': [] }
             }
         };
 
         try {
-            await new Validator(projectConfiguration, find)
-                .assertIdentifierIsUnique(doc);
+            await new Validator(projectConfiguration, find).assertIdentifierIsUnique(document);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);
         }
+
         done();
     });
 });

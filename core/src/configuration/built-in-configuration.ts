@@ -540,6 +540,7 @@ export class BuiltInConfiguration {
         FeatureSegment: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            mustLieWithin: true,
             fields: {},
             minimalForm: {
                 groups: [

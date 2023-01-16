@@ -61,7 +61,19 @@
           "hidden": [],
           "fields": {}
         },
+        "FindCollection:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "Feature:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureGroup:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureSegment:default": {
           "hidden": [],
           "fields": {}
         },
@@ -231,6 +243,8 @@
         "Burial",
         "Architecture",
         "Floor",
+        "FeatureGroup",
+        "FeatureSegment",
         "Area",
         "SurveyUnit",
         "Excavation",
@@ -263,6 +277,7 @@
         "Coin",
         "PlasterFragment",
         "Mollusk",
+        "FindCollection",
         "Inscription",
         "Sample",
         "Image",

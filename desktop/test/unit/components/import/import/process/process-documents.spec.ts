@@ -25,7 +25,7 @@ describe('processDocuments', () => {
     });
 
 
-    it('merge, add field', async done => {
+    it('merge, add field', () => {
 
         const document: Document = {
             _id: '1',
@@ -41,7 +41,7 @@ describe('processDocuments', () => {
             }
         };
 
-        const result = await processDocuments(
+        const result = processDocuments(
             [document],
             { '1': existingFeature } as any,
             validator);
@@ -51,11 +51,10 @@ describe('processDocuments', () => {
         expect(resource.relations[RECORDED_IN][0]).toEqual('et1');
         expect(resource['field']).toEqual('new');
         expect(resource['geometry']).toEqual({ type: 'Point', coordinates: [ 27.189335972070694, 39.14122423529625] });
-        done();
     });
 
 
-    it('merge, multiple times', async done => {
+    it('merge, multiple times', () => {
 
         const document1: Document = {
             _id: '1',
@@ -84,7 +83,7 @@ describe('processDocuments', () => {
             }
         };
 
-        const result = await processDocuments(
+        const result = processDocuments(
             [document1, document2],
             { 'ef1': existingFeature } as any,
             validator);
@@ -94,18 +93,17 @@ describe('processDocuments', () => {
         expect(resource['field1']).toEqual('new1');
         expect(resource['field2']).toEqual('new2');
         expect(resource['shortDescription']).toEqual('sd2');
-        done();
     });
 
 
     // err cases /////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('validation error - not wellformed', async done => {
+    it('validation error - not wellformed', () => {
 
         validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
 
         try {
-            await processDocuments([
+            processDocuments([
                 d('nf1', 'Feature', 'one')
             ], {}, validator);
             fail();
@@ -113,16 +111,15 @@ describe('processDocuments', () => {
             expect(err[0]).toEqual(E.INVALID_FIELDS);
             expect(err[1]).toEqual('invalidField');
         }
-        done();
     });
 
 
-    it('validation error - invalid identifier prefix', async done => {
+    it('validation error - invalid identifier prefix', () => {
 
         validator.assertIdentifierPrefixIsValid.and.callFake(() => { throw [E.INVALID_IDENTIFIER_PREFIX, 'one', 'Feature', 'F'] });
 
         try {
-            await processDocuments([
+            processDocuments([
                 d('nf1', 'Feature', 'one')
             ], {}, validator);
             fail();
@@ -132,14 +129,13 @@ describe('processDocuments', () => {
             expect(err[2]).toEqual('Feature');
             expect(err[3]).toEqual('F');
         }
-        done();
     });
 
 
-    it('duplicate identifiers in import file', async done => {
+    it('duplicate identifiers in import file', () => {
 
         try {
-            await processDocuments(<any>[
+            processDocuments(<any>[
                 d('nf1', 'Feature', 'dup', {liesWithin: ['etc1']}),
                 d('nf2', 'Feature', 'dup', {liesWithin: ['etc1']}),
             ], {}, validator);
@@ -148,16 +144,15 @@ describe('processDocuments', () => {
             expect(err[0]).toEqual(E.DUPLICATE_IDENTIFIER);
             expect(err[1]).toEqual('dup');
         }
-        done();
     });
 
 
-    it('field is not defined', async done => {
+    it('field is not defined', () => {
 
         validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS]});
 
         try {
-            await processDocuments([
+            processDocuments([
                     d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
                 ], {},
                 validator);
@@ -165,6 +160,5 @@ describe('processDocuments', () => {
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_FIELDS);
         }
-        done();
     });
 });

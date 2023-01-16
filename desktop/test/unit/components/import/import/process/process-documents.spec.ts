@@ -9,14 +9,18 @@ describe('processDocuments', () => {
 
     let validator;
 
-    const existingFeature = {resource: { category: 'Feature', identifier: 'existingFeature', id: 'ef1', relations: { isRecordedIn: ['et1'] } } };
-
-    let resourceIdCounter;
+    const existingFeature = {
+        resource: {
+            category: 'Feature',
+            identifier: 'existingFeature',
+            id: 'ef1',
+            relations: { isRecordedIn: ['et1'] }
+        }
+    };
 
 
     beforeEach(() => {
 
-        resourceIdCounter = 0;
         validator = createMockValidator();
     });
 

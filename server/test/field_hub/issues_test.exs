@@ -30,11 +30,22 @@ defmodule FieldHub.IssuesTest do
     assert [] = Issues.evaluate_all(@project)
   end
 
-  test "missing project document creates issue" do
+  test "missing project document creates multiple issues" do
     TestHelper.delete_document(@project, "project")
 
-    assert [%FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}] =
-             Issues.evaluate_all(@project)
+    assert [
+             %FieldHub.Issues.Issue{
+               data: %{unresolved_relations: ["project"], uuid: "o26"},
+               severity: :error,
+               type: :unresolved_relation
+             },
+             %FieldHub.Issues.Issue{
+               type: :unresolved_relation,
+               severity: :error,
+               data: %{unresolved_relations: ["project"], uuid: "o25"}
+             },
+             %FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}
+           ] = Issues.evaluate_all(@project)
   end
 
   test "empty list of default map layers raises issue" do
@@ -110,6 +121,28 @@ defmodule FieldHub.IssuesTest do
                type: :non_unique_identifiers
              }
            ] = Issues.evaluate_identifiers(@project)
+  end
+
+  test "unresolveable issues raises issue" do
+    TestHelper.delete_document(@project, "sa1")
+
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :unresolved_relation,
+               severity: :error,
+               data: %{unresolved_relations: ["sa1"], uuid: "st1"}
+             },
+             %FieldHub.Issues.Issue{
+               type: :unresolved_relation,
+               severity: :error,
+               data: %{unresolved_relations: ["sa1"], uuid: "syu1"}
+             },
+             %FieldHub.Issues.Issue{
+               type: :unresolved_relation,
+               severity: :error,
+               data: %{unresolved_relations: ["sa1"], uuid: "syu2"}
+             }
+           ] = Issues.evaluate_relations(@project)
   end
 
   test "no access file access for project raises issue" do

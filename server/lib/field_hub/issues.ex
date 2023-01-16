@@ -15,7 +15,8 @@ defmodule FieldHub.Issues do
     Enum.concat([
       evaluate_project_document(project_name),
       evaluate_images(project_name),
-      evaluate_identifiers(project_name)
+      evaluate_identifiers(project_name),
+      evaluate_relations(project_name)
     ])
     |> sort_issues_by_decreasing_serverity()
   end
@@ -189,6 +190,50 @@ defmodule FieldHub.Issues do
           }
         end)
     end
+  end
+
+  def evaluate_relations(project_name) do
+    query = %{
+      selector: %{},
+      fields: [
+        "_id",
+        "resource.relations"
+      ]
+    }
+
+    relations =
+      CouchService.get_find_query_stream(project_name, query)
+      |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
+        referenced_uuids =
+          relations
+          |> Enum.map(fn {_relation_type_key, uuids} ->
+            uuids
+          end)
+          |> List.flatten()
+          |> Enum.uniq()
+
+        {uuid, referenced_uuids}
+      end)
+
+    all_uuids =
+      Enum.map(relations, fn {uuid, _relations} ->
+        uuid
+      end)
+
+    Enum.map(relations, fn {uuid, current_relations} ->
+      case current_relations -- all_uuids do
+        [] ->
+          :ok
+
+        unresoved_relations ->
+          %Issue{
+            type: :unresolved_relation,
+            severity: :error,
+            data: %{uuid: uuid, unresolved_relations: unresoved_relations}
+          }
+      end
+    end)
+    |> Enum.reject(fn val -> val == :ok end)
   end
 
   def sort_issues_by_decreasing_serverity(issues) do

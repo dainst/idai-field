@@ -149,7 +149,7 @@ defmodule FieldHub.Issues do
   end
 
   def evaluate_identifiers(project_name) do
-    payload = %{
+    query = %{
       selector: %{},
       fields: [
         "_id",
@@ -157,7 +157,7 @@ defmodule FieldHub.Issues do
       ]
     }
 
-    CouchService.get_find_query_stream(project_name, payload)
+    CouchService.get_find_query_stream(project_name, query)
     |> Enum.group_by(fn %{"resource" => %{"identifier" => identifier}} ->
       identifier
     end)

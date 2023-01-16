@@ -399,7 +399,7 @@ defmodule FieldHub.CouchService do
   end
 
   def get_find_query_stream(project_name, query) do
-    batch_size = 500
+    batch_size = 10000
 
     Stream.resource(
       fn ->

@@ -37,9 +37,9 @@
             <% issue_groups when issue_groups == %{} -> %>
                 <%= "None." %>
             <% issue_groups -> %>
-                <%= Enum.map(issue_groups, fn({type, issues}) -> %>
+                <%= Enum.map(issue_groups, fn({{type, severity}, issues}) -> %>
                 <section id={"#{type}-issue-group"} class="issue-group hide">
-                    <h3>
+                    <h3 class={issue_classes(severity)}>
                         <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
                             🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                         </span>
@@ -53,11 +53,10 @@
                         <th>Details</th>
 
                         <%= Enum.map(issues, fn(%{
-                            severity: severity,
                             data: data
                         } = issue) -> %>
                             <tr>
-                                <td class={issue_classes(severity)}>
+                                <td>
                                     <%= Map.get(data, :uuid, "No UUID") %>
                                 </td>
                                 <td>

@@ -14,7 +14,8 @@ defmodule FieldHub.Issues do
   def evaluate_all(project_name) do
     Enum.concat([
       evaluate_project_document(project_name),
-      evaluate_images(project_name)
+      evaluate_images(project_name),
+      evaluate_identifiers(project_name)
     ])
     |> sort_issues_by_decreasing_serverity()
   end
@@ -143,6 +144,49 @@ defmodule FieldHub.Issues do
             :ok -> true
             _ -> false
           end
+        end)
+    end
+  end
+
+  def evaluate_identifiers(project_name) do
+    payload = %{
+      selector: %{},
+      fields: [
+        "_id",
+        "resource.identifier"
+      ]
+    }
+
+    CouchService.get_find_query_stream(project_name, payload)
+    |> Enum.group_by(fn %{"resource" => %{"identifier" => identifier}} ->
+      identifier
+    end)
+    |> Enum.filter(fn {_identifier, documents} ->
+      case documents do
+        [_single_doc] ->
+          false
+
+        _multiple_docs ->
+          true
+      end
+    end)
+    |> case do
+      [] ->
+        []
+
+      groups ->
+        Enum.map(groups, fn {identifier, docs} ->
+          ids = Enum.map(docs, fn %{"_id" => id} -> id end)
+
+          detailed_docs =
+            CouchService.get_docs(project_name, ids)
+            |> Enum.map(fn %{"resource" => resource} -> resource end)
+
+          %Issue{
+            type: :non_unique_identifiers,
+            severity: :error,
+            data: %{identifier: identifier, documents: detailed_docs}
+          }
         end)
     end
   end

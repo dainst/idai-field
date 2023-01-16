@@ -79,6 +79,39 @@ defmodule FieldHub.IssuesTest do
            ] = Issues.evaluate_project_document(@project)
   end
 
+  test "adding duplicate indentifier raises issue" do
+    updated_doc = %{
+      resource: %{
+        id: "st1-duplicate",
+        identifier: "PQ1-ST1"
+      },
+      _id: "st1-duplicate"
+    }
+
+    TestHelper.create_document(@project, updated_doc)
+
+    assert [
+             %FieldHub.Issues.Issue{
+               data: %{
+                 documents: [
+                   %{
+                     "geometry" => %{"coordinates" => _coordiantes, "type" => "Point"},
+                     "id" => "st1",
+                     "identifier" => "PQ1-ST1",
+                     "relations" => _relations,
+                     "shortDescription" => _short_description,
+                     "type" => "SurveyUnit"
+                   },
+                   %{"id" => "st1-duplicate", "identifier" => "PQ1-ST1"}
+                 ],
+                 identifier: "PQ1-ST1"
+               },
+               severity: :error,
+               type: :non_unique_identifiers
+             }
+           ] = Issues.evaluate_identifiers(@project)
+  end
+
   test "no access file access for project raises issue" do
     not_existing_project = "project_that_does_not_exist"
 

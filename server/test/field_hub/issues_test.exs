@@ -12,6 +12,8 @@ defmodule FieldHub.IssuesTest do
   @user_password "test_password"
 
   @project_doc File.read!("test/fixtures/documents/project.json")
+  @configuration_doc File.read!("test/fixtures/documents/configuration.json")
+  @custom_category_image File.read!("test/fixtures/documents/custom_category_image.json")
 
   setup %{} do
     # Run before each tests
@@ -206,6 +208,25 @@ defmodule FieldHub.IssuesTest do
                },
                severity: :info,
                type: :missing_original_image
+             }
+           ] = Issues.evaluate_images(@project)
+  end
+
+  test "missing original image of custom project category raises issue" do
+    TestHelper.create_document(@project, Jason.decode!(@configuration_doc))
+    TestHelper.create_document(@project, Jason.decode!(@custom_category_image))
+
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_original_image,
+               severity: :info,
+               data: %{
+                 created: _,
+                 created_by: "anonymous",
+                 file_name: "some_image.jpg",
+                 file_type: "Test:SpecialPhoto",
+                 uuid: "25c6f27b-7078-449b-80c1-d765fedbfdb2"
+               }
              }
            ] = Issues.evaluate_images(@project)
   end

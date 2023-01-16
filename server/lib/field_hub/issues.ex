@@ -62,7 +62,9 @@ defmodule FieldHub.Issues do
 
       file_store_data ->
         project_name
-        |> CouchService.get_docs_by_category(["Image", "Photo", "Drawing"])
+        |> CouchService.get_docs_by_category(
+          ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_name)
+        )
         |> Stream.map(fn %{
                            "created" => %{
                              "user" => created_by,
@@ -146,6 +148,29 @@ defmodule FieldHub.Issues do
             _ -> false
           end
         end)
+    end
+  end
+
+  defp get_custom_image_categories(project_name) do
+    project_name
+    |> CouchService.get_docs_by_category(["Configuration"])
+    |> Enum.to_list()
+    |> case do
+      [configuration] ->
+        configuration["resource"]["forms"]
+        |> Enum.map(fn {key, value} ->
+          case value do
+            %{"parent" => "Image"} ->
+              key
+
+            _ ->
+              :reject
+          end
+        end)
+        |> Enum.reject(fn val -> val == :reject end)
+
+      _ ->
+        []
     end
   end
 

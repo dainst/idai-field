@@ -42,7 +42,7 @@
         </div>
         <references-input [references]="getClonedFormDefinition().references"></references-input>
     </div>
-    <div class="configuration-editor-section">
+    <div *ngIf="isIdentifierPrefixAvailable()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
             Bezeichner-Präfix
         </div>

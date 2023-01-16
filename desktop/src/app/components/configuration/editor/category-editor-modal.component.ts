@@ -41,6 +41,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isCustomCategory = () => this.category.source === 'custom';
 
+    public isIdentifierPrefixAvailable = () => !this.category.isAbstract && this.category.name !== 'Project';
+
 
     public initialize() {
 

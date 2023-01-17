@@ -42,14 +42,6 @@
         </div>
         <references-input [references]="getClonedFormDefinition().references"></references-input>
     </div>
-    <div *ngIf="isIdentifierPrefixAvailable()" class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
-            Bezeichner-Präfix
-        </div>
-        <input type="text" id="identifier-prefix"
-               class="form-control reference-input"
-               [(ngModel)]="getClonedFormDefinition().identifierPrefix">
-    </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.color">
             Farbe
@@ -57,6 +49,7 @@
         <input *ngIf="getClonedFormDefinition().color" id="category-color"
                type="color"
                class="form-control form-control-color"
+               [class.with-restore-default-color-button]="isRestoreColorButtonVisible()"
                [value]="getClonedFormDefinition().color"
                (change)="getClonedFormDefinition().color = $event.srcElement.value">
         <input *ngIf="!getClonedFormDefinition().color" id="category-color"
@@ -68,5 +61,27 @@
                 (click)="restoreDefaultColor()">
             <span class="mdi mdi-restore"></span>
         </button>
+    </div>
+    <div *ngIf="isIdentifierPrefixAvailable()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
+            Bezeichner-Präfix
+        </div>
+        <input type="text" id="identifier-prefix"
+               class="form-control reference-input"
+               [(ngModel)]="getClonedFormDefinition().identifierPrefix">
+        <div *ngIf="isIdentifierPrefixWarningShown() && numberOfCategoryResources === 1"
+             id="identifier-prefix-warning"
+             class="alert alert-warning"
+             i18n="@@configuration.identifierPrefix.warning.single">
+            Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix
+            <b>nicht</b> automatisch für schon existierende Bezeichner gesetzt wird.
+        </div>
+        <div *ngIf="isIdentifierPrefixWarningShown() && numberOfCategoryResources > 1"
+             id="identifier-prefix-warning"
+             class="alert alert-warning"
+             i18n="@@configuration.identifierPrefix.warning.multiple">
+            Es wurden bereits {{numberOfCategoryResources}} Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass
+            das Präfix <b>nicht</b> automatisch für schon existierende Bezeichner gesetzt wird.
+        </div>
     </div>
 </div>

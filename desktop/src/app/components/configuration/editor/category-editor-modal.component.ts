@@ -22,6 +22,8 @@ import { Modals } from '../../../services/modals';
  */
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    public numberOfCategoryResources: number;
+
     private currentColor: string;
 
     protected changeMessage = this.i18n({
@@ -42,6 +44,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isCustomCategory = () => this.category.source === 'custom';
 
     public isIdentifierPrefixAvailable = () => !this.category.isAbstract && this.category.name !== 'Project';
+
+    public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
 
 
     public initialize() {
@@ -106,8 +110,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         return this.new
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description)(I18N.removeEmpty(this.clonedDescription))
-            || CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix)
-                !== this.getCustomFormDefinition().identifierPrefix
+            || this.hasIdentifierPrefixChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
@@ -148,6 +151,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription, this.category
         );
+    }
+
+
+    private hasIdentifierPrefixChanged(): boolean {
+
+        return CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix)
+            !== this.getCustomFormDefinition().identifierPrefix;
     }
 
 

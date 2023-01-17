@@ -148,6 +148,7 @@ export class AddCategoryFormModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
         componentInstance.new = true;
+        componentInstance.numberOfCategoryResources = 0;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,

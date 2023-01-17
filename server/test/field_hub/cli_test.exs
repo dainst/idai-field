@@ -36,7 +36,7 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.create_project(@project_name)
       end)
 
-    assert log =~ "CREATING PROJECT"
+    assert log =~ "Creating project"
     assert log =~ "Project creation done."
   end
 
@@ -47,7 +47,7 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.create_project(@project_name)
       end)
 
-    assert log =~ "CREATING PROJECT"
+    assert log =~ "Creating project"
     assert log =~ "Project creation done."
     assert log =~ "[warning] Project database '#{@project_name}' already exists."
   end

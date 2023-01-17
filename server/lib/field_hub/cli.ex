@@ -77,7 +77,7 @@ defmodule FieldHub.CLI do
   def create_project(project_name, password) do
     HTTPoison.start()
 
-    Logger.info("CREATING PROJECT")
+    Logger.info("Creating project #{project_name}.")
 
     response = Project.create(project_name)
 

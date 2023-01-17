@@ -51,7 +51,7 @@ defmodule FieldHubWeb.MonitoringLive do
       ) do
     stats = Project.evaluate_project(project)
 
-    Process.send_after(self(), :update_stats, 1000)
+    Process.send_after(self(), :update_stats, 10000)
 
     {:noreply, assign(socket, :stats, stats)}
   end

@@ -157,7 +157,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     private hasIdentifierPrefixChanged(): boolean {
 
         return CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix)
-            !== this.getCustomFormDefinition().identifierPrefix;
+            !== this.getCustomFormDefinition()?.identifierPrefix;
     }
 
 

@@ -988,7 +988,7 @@
         <target state="final">Scegliere la maschera di inserimento</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addCategory" datatype="html">
@@ -996,7 +996,7 @@
         <target state="final">Aggiungere categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
@@ -1480,7 +1480,7 @@
         <target state="final"> Modificare categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
@@ -1760,15 +1760,31 @@
         <target state="final">Denominazione della categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix" datatype="html">
         <source> Bezeichner-Präfix </source>
         <target state="new"> Bezeichner-Präfix </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">99,108</context>
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.identifierPrefix.warning.single" datatype="html">
+        <source> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
+        <target state="new"> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">79,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.identifierPrefix.warning.multiple" datatype="html">
+        <source> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
+        <target state="new"> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">88,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
@@ -1788,7 +1804,7 @@
         <target state="final"> Colore </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
@@ -5037,6 +5053,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.model.validation.error.identifierPrefix" datatype="html">
+        <source>Der Ressourcen-Bezeichner '[0]' beginnt nicht mit dem für die Kategorie '[1]' konfigurierten Bezeichner-Präfix '[2]'.</source>
+        <target state="new">Der Ressourcen-Bezeichner '[0]' beginnt nicht mit dem für die Kategorie '[1]' konfigurierten Bezeichner-Präfix '[2]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.model.validation.error.missingCoordinates" datatype="html">
         <source>Die Koordinaten einer Geometrie sind nicht definiert.</source>
         <target state="final">Le coordinate di una geometria non sono definite.</target>
@@ -7021,7 +7045,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>

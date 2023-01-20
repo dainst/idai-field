@@ -20,3 +20,15 @@ export interface ImageDocument extends Document {
     id?: string;
     resource: ImageResource;
 }
+
+
+/**
+ * @author Thomas Kleinke
+ */
+export module ImageDocument {
+
+    export function getOriginalFileExtension(document: ImageDocument): string {
+        
+        return document.resource.originalFilename.split('.').pop();
+    }
+}

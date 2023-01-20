@@ -1,6 +1,8 @@
 const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
 const MAX_INPUT_PIXELS = 2500000000;
+const MAX_DISPLAY_WIDTH = 10000;
+const MAX_DISPLAY_HEIGHT = 10000;
 
 
 /**
@@ -30,13 +32,21 @@ export module ImageManipulation {
     }
 
     
-    export async function createDisplayImage(buffer: Buffer): Promise<Buffer> {
+    export async function createDisplayImage(buffer: Buffer, width: number, height: number,
+                                             fileExtension: string): Promise<Buffer> {
 
-        const image = await getImage(buffer);
-        const metadata = await image.metadata();
+        let image;
 
-        return metadata.format === 'tiff'
-            ? image.png().toBuffer()
+        if (fileExtension.includes('tif')) {
+            image = getImage(buffer).png();
+        }
+        if (width > MAX_DISPLAY_WIDTH || height > MAX_DISPLAY_HEIGHT) {
+            if (!image) image = getImage(buffer);
+            image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
+        }
+        
+        return image
+            ? image.toBuffer()
             : buffer;
     }
 

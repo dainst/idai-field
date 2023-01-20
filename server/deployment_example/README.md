@@ -1,6 +1,6 @@
 # Example deployment guide
 
-This is a tutorial guide for deploying FieldHub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments. Using SSL is not covered in this guide and is highly recommended for security reasons.__
+This is a tutorial guide for deploying FieldHub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments. Using TLS is not covered in this guide and is highly recommended for security reasons.__
 
 ## Prerequisites
 
@@ -25,9 +25,11 @@ Additionally, an [.env](.env) file sets up some environment variables for docker
 ```
 COUCHDB_USER=fieldhub_admin
 COUCHDB_PASSWORD=fieldhub_password
+COUCHDB_USER_NAME=app_user
+COUCHDB_USER_PASSWORD=app_user_password
 DB_DATA_DIRECTORY=./couch_data
 
-FIELD_HUB_VERSION=3.1.0
+FIELD_HUB_VERSION=3.2.0
 HOST=localhost
 SECRET_KEY_BASE=put_long_random_string_here_atleast_64_bytes_in_length_123456789
 FILE_DIRECTORY=./files
@@ -48,7 +50,7 @@ This should run the application in the foreground and display logs for both serv
 You can now run [CLI](https://github.com/dainst/idai-field/wiki/FieldHub#manual) scripts in a second terminal, for example to finalize the CouchDB setup.
 
 ```
-docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.setup_couchdb_single_node()'
+docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.setup()'
 ```
 
 Here `field-hub-app` is the container name, as defined in the docker-compose file.
@@ -56,10 +58,12 @@ Here `field-hub-app` is the container name, as defined in the docker-compose fil
 The result should look something like this:
 
 ```
-09:36:58.581 [info] Running initial CouchDB setup for single node at http://couchdb:5984...
-09:36:58.726 [info] Created system database `_users`.
-09:36:58.726 [info] Created system database `_replicator`.
-09:36:58.726 [info] Single node setup done.
+2023-01-18 12:44:42.897 [info] RUNNING SETUP
+2023-01-18 12:44:42.921 [info] Running initial CouchDB setup for single node at http://couchdb:5984...
+2023-01-18 12:44:43.723 [info] Created system database `_users`.
+2023-01-18 12:44:43.723 [info] Created system database `_replicator`.
+2023-01-18 12:44:44.458 [info] Created application user 'app_user'.
+2023-01-18 12:44:44.585 [info] Setup done.
 ```
 
 Next you can add a first project.
@@ -82,16 +86,18 @@ sudo chown 65534 files/
 
 Next we create a project with a random password. 
 ```
-docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_project_with_default_user("my_first_project")'
+docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_project("my_first_project")'
 ```
 
 The result should look something like this:
 ```
-09:52:50.472 [info] Created project database 'my_first_project'.
-09:52:50.479 [info] Created directory for thumbnail_image.
-09:52:50.479 [info] Created directory for original_image.
-09:52:50.572 [info] Created user 'my_first_project' with password 'Csrwe7OUzT8XCTxeP/+IlMHmXZvU9P03'.
-09:52:50.572 [info] Adding 'my_first_project' as member for project 'my_first_project'.
+2023-01-18 12:47:54.879 [info] Creating project my_first_project.
+2023-01-18 12:47:55.309 [info] Created project database 'my_first_project'.
+2023-01-18 12:47:55.317 [info] Created directory for 'original_image'.
+2023-01-18 12:47:55.317 [info] Created directory for 'thumbnail_image'.
+2023-01-18 12:47:55.381 [info] Created user 'my_first_project' with password 'U/Sk/B6xjPLHP8gY+g35UITmOci8vS8L'.
+2023-01-18 12:47:55.455 [info] Set user 'my_first_project' as member to project 'my_first_project'.
+2023-01-18 12:47:55.456 [info] Project creation done.
 ```
 
 If you want to set the password yourself, just add a second parameter (also see [CLI documentation](https://github.com/dainst/idai-field/wiki/FieldHub#manual)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
@@ -103,7 +109,7 @@ You should now be able to sync a Field Client with the server giving the above c
 To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file
 2. Setup docker daemon as a system service on your server (so that it starts after each server restart)
-3. Set the environment, especially `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
+3. Set the environment, especially `COUCHDB_USER_PASSWORD` `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 
 Afterwards stop and delete all previously created test containers.
 

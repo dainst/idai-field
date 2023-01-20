@@ -9,7 +9,7 @@ services:
     ports:
       - "5985:5984"
   app:
-    image: "ghcr.io/dainst/field_hub:3.1.2"
+    image: "ghcr.io/dainst/field_hub:3.2.0"
     container_name: field-hub-client-integration-test
     environment:
       - HOST=localhost

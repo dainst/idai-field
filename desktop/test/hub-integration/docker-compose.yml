@@ -17,5 +17,7 @@ services:
       - COUCHDB_URL=http://couchdb:5984
       - COUCHDB_ADMIN_NAME=client_integration_test
       - COUCHDB_ADMIN_PASSWORD=pw
+      - COUCHDB_USER_NAME=client_integration_test_user
+      - COUCHDB_USER_PASSWORD=pw
     ports:
       - 4003:4000

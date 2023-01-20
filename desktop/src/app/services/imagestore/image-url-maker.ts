@@ -1,6 +1,7 @@
 import { Injectable, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ImageStore, ImageVariant } from 'idai-field-core';
+import { ImageManipulation } from './image-manipulation';
 
 
 @Injectable()
@@ -43,10 +44,13 @@ export class ImageUrlMaker {
         }
 
         try {
-            const data = await this.imagestore.getData(imageId, type);
+            const data: Buffer = await this.imagestore.getData(imageId, type);
+            const displayData: Buffer = type === ImageVariant.ORIGINAL
+                ? await ImageManipulation.createDisplayImage(data)
+                : data;
 
             relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
-                URL.createObjectURL(new Blob([data]))
+                URL.createObjectURL(new Blob([displayData]))
             );
 
             return relevantList[imageId];

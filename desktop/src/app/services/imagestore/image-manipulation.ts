@@ -29,6 +29,17 @@ export module ImageManipulation {
         }
     }
 
+    
+    export async function createDisplayImage(buffer: Buffer): Promise<Buffer> {
+
+        const image = await getImage(buffer);
+        const metadata = await image.metadata();
+
+        return metadata.format === 'tiff'
+            ? image.png().toBuffer()
+            : buffer;
+    }
+
 
     function getImage(buffer: Buffer): any {
 

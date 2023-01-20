@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore} from 'idai-field-core';
+    ImageStore } from 'idai-field-core';
 import { readWldFile } from '../wld/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -10,6 +10,7 @@ import { M } from '../../messages/m';
 import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
+import { ImageManipulation } from '../../../services/imagestore/image-manipulation';
 
 
 export interface ImageUploadResult {
@@ -27,7 +28,7 @@ export interface ImageUploadResult {
  */
 export class ImageUploader {
 
-    public static readonly supportedImageFileTypes: string[] = ['jpg', 'jpeg', 'png'];
+    public static readonly supportedImageFileTypes: string[] = ['jpg', 'jpeg', 'png', 'tif', 'tiff'];
     public static readonly supportedWorldFileTypes: string[] = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
 
 
@@ -222,12 +223,13 @@ export class ImageUploader {
             const reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
-                    that.createImageDocument(file, category, depictsRelationTarget)
+                    const buffer: Buffer = Buffer.from(reader.result);
+                    that.createImageDocument(file.name, buffer, category, depictsRelationTarget)
                         .catch(error => {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.store(doc.resource.id, Buffer.from(reader.result) as any))
+                        .then(doc => that.imagestore.store(doc.resource.id, buffer))
                         .then(() =>
                             resolve(undefined)
                         )
@@ -248,37 +250,29 @@ export class ImageUploader {
     }
 
 
-    private createImageDocument(file: File, category: CategoryForm,
-                                depictsRelationTarget?: Document): Promise<any> {
+    private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
+                                      depictsRelationTarget?: Document): Promise<any> {
 
-        return new Promise((resolve, reject) => {
+        const { width, height } = await ImageManipulation.getSize(buffer);
 
-            const img = new Image();
-            img.src = URL.createObjectURL(file);
-            img.onload = () => {
-                const doc: NewImageDocument = {
-                    resource: {
-                        identifier: file.name,
-                        category: category.name,
-                        originalFilename: file.name,
-                        width: img.width,
-                        height: img.height,
-                        relations: {
-                            depicts: []
-                        }
-                    }
-                };
-
-                if (depictsRelationTarget && depictsRelationTarget.resource.id) {
-                    doc.resource.relations.depicts = [depictsRelationTarget.resource.id];
+        const doc: NewImageDocument = {
+            resource: {
+                identifier: fileName,
+                category: category.name,
+                originalFilename: fileName,
+                width,
+                height,
+                relations: {
+                    depicts: []
                 }
+            }
+        };
 
-                this.relationsManager.update(doc)
-                    .then((result: any) => resolve(result))
-                    .catch((error: any) => reject(error));
-            };
-            img.onerror = error => reject(error);
-        });
+        if (depictsRelationTarget && depictsRelationTarget.resource.id) {
+            doc.resource.relations.depicts = [depictsRelationTarget.resource.id];
+        }
+
+        return await this.relationsManager.update(doc);
     }
 
 

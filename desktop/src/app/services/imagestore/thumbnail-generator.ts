@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
 
-const nativeImage = typeof window !== 'undefined'
-    ? window.require('electron').nativeImage : require('electron').nativeImage;
-const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
-const ExifReader = typeof window !== 'undefined' ? window.require('exifreader') : require('exifreader');
+const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
+
 
 const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
 
@@ -24,48 +22,15 @@ export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
     public async generate(buffer: Buffer): Promise<Buffer> {
 
-        const image = this.isRotatedJpeg(buffer)
-            ? undefined
-            : this.convertWithElectron(buffer, THUMBNAIL_TARGET_HEIGHT);
-
-        if (image && !image.isEmpty()) {
-            return image.toJPEG(THUMBNAIL_TARGET_JPEG_QUALITY);
-        } else {
-            try {
-                return await this.convertWithJimp(buffer, THUMBNAIL_TARGET_HEIGHT);
-            } catch (err) {
-                console.error('Failed to convert image using jimp:', err);
-                return undefined;
-            }
-        }
-    }
-
-
-    private isRotatedJpeg(buffer: Buffer): boolean {
-
         try {
-            const exifData = ExifReader.load(buffer);
-            return exifData?.Orientation?.value > 1;
+            await sharp(buffer)
+                .resize(undefined, THUMBNAIL_TARGET_HEIGHT)
+                .jpeg({ quality: THUMBNAIL_TARGET_JPEG_QUALITY })
+                .toBuffer();
+            return undefined;
         } catch (err) {
-            return false;
+            console.error('Failed to generate thumbnail:', err);
+            return undefined;
         }
-    }
-
-
-    private convertWithElectron(buffer: Buffer, targetHeight: number) {
-        if (!nativeImage) return undefined;
-
-        return nativeImage.createFromBuffer(buffer)
-            .resize({ height: targetHeight });
-    }
-
-
-    private async convertWithJimp(buffer: Buffer, targetHeight: number) {
-
-        const image = await Jimp.read(buffer);
-
-        return image.resize(Jimp.AUTO, targetHeight)
-            .quality(THUMBNAIL_TARGET_JPEG_QUALITY)
-            .getBufferAsync(Jimp.MIME_JPEG);
     }
 }

@@ -1,6 +1,8 @@
 defmodule FieldHub.CLI do
+
   alias FieldHub.{
     CouchService,
+    FileStore,
     Issues,
     Project,
     User
@@ -59,12 +61,18 @@ defmodule FieldHub.CLI do
 
     admin_user
     |> Project.get_all_for_user()
-    |> Enum.map(fn project_name ->
+    |> Enum.each(fn project_name ->
+      Logger.info("Running setup for existing project #{project_name}.")
       Project.update_user(app_user, project_name, :member)
       |> case do
         :set ->
-          Logger.info("Set app user '#{app_user}' as member to project '#{project_name}'.")
+          Logger.info("- User '#{app_user}' is set as member of project '#{project_name}'.")
       end
+
+      FileStore.create_directories(project_name)
+      |> Enum.each(fn {variant_name, :ok} ->
+        Logger.info("- File directory for '#{variant_name}' is setup for project '#{project_name}'.")
+      end)
     end)
 
     Logger.info("Setup done.")

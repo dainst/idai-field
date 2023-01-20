@@ -12,6 +12,9 @@ defmodule FieldHub.FileStore do
 
   For each project the file index gets cached in memory for #{@index_cache_expiration_ms} ms
   or until a file gets stored or discarded.
+
+  To extent the list of valid file variants (currently `#{inspect(@valid_file_variants)}`), it should suffice to add an additonal
+  `get_variant_directory/2` function here and update the list in config.exs.
   """
 
   @doc """

@@ -71,7 +71,7 @@ describe('ImageSyncService', () => {
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
 
-        const command = `docker exec field-hub-client-integration-test /app/bin/field_hub eval 'FieldHub.CLI.setup_couchdb_single_node()'`;
+        const command = `docker exec field-hub-client-integration-test /app/bin/field_hub eval 'FieldHub.CLI.setup()'`;
         execSync(command);
         done();
     });
@@ -82,7 +82,7 @@ describe('ImageSyncService', () => {
 
         await imageStore.init(`${testFilePath}imagestore/`, testProjectName);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.create_project_with_default_user("${testProjectName}", "${syncTarget.password}")'`;
+        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.create_project("${testProjectName}", "${syncTarget.password}")'`;
         execSync(command);
         done();
     });

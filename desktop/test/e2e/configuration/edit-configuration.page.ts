@@ -42,6 +42,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickAddValuelist() {
+
+        return click('#add-valuelist-button');
+    }
+
+
     public static clickSwapValuelist() {
 
         return click('#swap-valuelist-button');

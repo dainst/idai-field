@@ -702,4 +702,34 @@ test.describe('configuration --', () => {
         expect(await ConfigurationPage.getValue(1)).toEqual('Archaisch');
         await ConfigurationPage.save();
     });
+
+
+    test('use valuelist for short description', async () => {
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Operation');
+        await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('test-list');
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue('testValue');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.typeInTranslation(3, 0, 'Value label');
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('operation-trench');
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.typeInInputField('identifier', 'Test trench');
+        await DoceditPage.clickSelectOption('shortDescription', 'testValue');
+        await DoceditPage.clickSaveDocument();
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value label');
+    });
 });

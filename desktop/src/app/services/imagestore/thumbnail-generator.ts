@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
-
-const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
+import { ImageManipulation } from './image-manipulation';
 
 
 const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
@@ -20,17 +19,12 @@ const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
  */
 export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
-    public async generate(buffer: Buffer): Promise<Buffer> {
+    public generate(buffer: Buffer): Promise<Buffer> {
 
-        try {
-            await sharp(buffer)
-                .resize(undefined, THUMBNAIL_TARGET_HEIGHT)
-                .jpeg({ quality: THUMBNAIL_TARGET_JPEG_QUALITY })
-                .toBuffer();
-            return undefined;
-        } catch (err) {
-            console.error('Failed to generate thumbnail:', err);
-            return undefined;
-        }
+        return ImageManipulation.createThumbnail(
+            buffer,
+            THUMBNAIL_TARGET_HEIGHT,
+            THUMBNAIL_TARGET_JPEG_QUALITY
+        );
     }
 }

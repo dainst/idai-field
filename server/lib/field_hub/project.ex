@@ -8,7 +8,7 @@ defmodule FieldHub.Project do
 
   require Logger
 
-  @variant_types Application.compile_env(:field_hub, :file_variant_types)
+  @variant_types Application.compile_env(:field_hub, :valid_file_variants)
 
   def create(project_name) do
     couch_result =
@@ -171,7 +171,7 @@ defmodule FieldHub.Project do
   end
 
   defp evaluate_file_store(project_name) do
-    FileStore.get_file_list(project_name)
+    FileStore.file_index(project_name)
     |> Enum.reduce(
       Map.new(@variant_types, fn type ->
         {type,

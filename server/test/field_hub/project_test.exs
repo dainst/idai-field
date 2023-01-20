@@ -80,7 +80,7 @@ defmodule FieldHub.ProjectTest do
     @project_b "test_project_b"
     @user_name "test_user"
     @user_password "test_password"
-    @file_store_cache Application.compile_env(:field_hub, :file_info_cache_name)
+    @file_store_cache Application.compile_env(:field_hub, :file_index_cache_name)
 
     setup %{} do
       Project.create(@project_a)

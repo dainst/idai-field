@@ -3,7 +3,7 @@ defmodule FieldHub.FileStoreTest do
 
   use ExUnit.Case, async: true
 
-  @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
+  @cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @root_directory Application.compile_env(:field_hub, :file_directory_root)
   @project "test-data"
   @project_directory "#{@root_directory}/#{@project}"
@@ -35,7 +35,7 @@ defmodule FieldHub.FileStoreTest do
     end
 
     test "file can be stored" do
-      assert :ok = FileStore.store_file("some_uuid", @project, :original_image, @content)
+      assert :ok = FileStore.store("some_uuid", @project, :original_image, @content)
 
       size_file_store = File.stat!("#{@project_directory}/original_images/some_uuid").size
 
@@ -43,8 +43,8 @@ defmodule FieldHub.FileStoreTest do
     end
 
     test "storing an existing file is `:ok` but does not overwrite the existing file" do
-      assert :ok = FileStore.store_file("1234", @project, :original_image, @content)
-      assert :ok = FileStore.store_file("1234", @project, :original_image, [])
+      assert :ok = FileStore.store("1234", @project, :original_image, @content)
+      assert :ok = FileStore.store("1234", @project, :original_image, [])
 
       size_file_store = File.stat!("#{@project_directory}/original_images/1234").size
 
@@ -52,21 +52,21 @@ defmodule FieldHub.FileStoreTest do
     end
 
     test "file deletion creates tombstone but leaves original file" do
-      FileStore.store_file("1234", @project, :original_image, @content)
+      FileStore.store("1234", @project, :original_image, @content)
       assert File.exists?("#{@project_directory}/original_images/1234")
       assert not File.exists?("#{@project_directory}/original_images/1234.deleted")
 
-      FileStore.delete("1234", @project)
+      FileStore.discard("1234", @project)
       assert File.exists?("#{@project_directory}/original_images/1234")
       assert File.exists?("#{@project_directory}/original_images/1234.deleted")
     end
 
     test "file deletion returns list of all variants deleted" do
-      FileStore.store_file("1234", @project, :original_image, @content)
-      FileStore.store_file("1234", @project, :thumbnail_image, @content)
+      FileStore.store("1234", @project, :original_image, @content)
+      FileStore.store("1234", @project, :thumbnail_image, @content)
 
       result =
-        FileStore.delete("1234", @project)
+        FileStore.discard("1234", @project)
         |> Enum.sort()
 
       assert [:original_image, :thumbnail_image] = result
@@ -94,7 +94,7 @@ defmodule FieldHub.FileStoreTest do
 
       File.write!("#{@project_directory}/original_images/.hiddenfile", @content)
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert %{
                "anothervalidfilename" => %{deleted: false, types: [:original_image]},
@@ -110,7 +110,7 @@ defmodule FieldHub.FileStoreTest do
       File.write!("#{@project_directory}/original_images/uuid_1", @content)
       File.write!("#{@project_directory}/original_images/uuid_2", @content)
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert %{
                "uuid_1" => %{
@@ -135,7 +135,7 @@ defmodule FieldHub.FileStoreTest do
       File.write!("#{@project_directory}/original_images/uuid_2", @content)
       File.write!("#{@project_directory}/thumbnail_images/uuid_3", @content)
 
-      list = FileStore.get_file_list(@project, [:thumbnail_image])
+      list = FileStore.file_index(@project, [:thumbnail_image])
 
       assert %{
                "uuid_1" => %{
@@ -177,7 +177,7 @@ defmodule FieldHub.FileStoreTest do
         @content
       )
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert %{
                "anothervalidfilename" => %{deleted: false, types: [:original_image]},
@@ -197,22 +197,22 @@ defmodule FieldHub.FileStoreTest do
     end
 
     test "file info gets cached by an initial request" do
-      FileStore.store_file("some_uuid", @project, :original_image, @content)
+      FileStore.store("some_uuid", @project, :original_image, @content)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
-      assert %{"some_uuid" => %{}} = FileStore.get_file_list(@project)
+      assert %{"some_uuid" => %{}} = FileStore.file_index(@project)
       assert {:ok, %{"some_uuid" => %{}}} = Cachex.get(@cache_name, @project)
       # Somewhat hacky: In order to get 100% test coverage with `mix test --cover`
-      # we call `FileStore.get_file_list/1` pnce with an existing file cache.
-      assert %{"some_uuid" => %{}} = FileStore.get_file_list(@project)
+      # we call `FileStore.file_index/1` pnce with an existing file cache.
+      assert %{"some_uuid" => %{}} = FileStore.file_index(@project)
     end
 
     test "file info cache gets cleared by file storing" do
-      FileStore.store_file("validfilename", @project, :original_image, @content)
+      FileStore.store("validfilename", @project, :original_image, @content)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert {
                :ok,
@@ -234,17 +234,17 @@ defmodule FieldHub.FileStoreTest do
                }
              } = {:ok, list}
 
-      FileStore.store_file("anothervalidfilename", @project, :original_image, @content)
+      FileStore.store("anothervalidfilename", @project, :original_image, @content)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
     end
 
     test "file info cache gets cleared by file deletion" do
-      FileStore.store_file("validfilename", @project, :original_image, @content)
+      FileStore.store("validfilename", @project, :original_image, @content)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert {
                :ok,
@@ -266,17 +266,17 @@ defmodule FieldHub.FileStoreTest do
                }
              } = {:ok, list}
 
-      FileStore.delete("validfilename", @project)
+      FileStore.discard("validfilename", @project)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
     end
 
     test "file info cache gets cleared after project directory is deleted" do
-      FileStore.store_file("validfilename", @project, :original_image, @content)
+      FileStore.store("validfilename", @project, :original_image, @content)
 
       assert {:ok, nil} = Cachex.get(@cache_name, @project)
 
-      list = FileStore.get_file_list(@project)
+      list = FileStore.file_index(@project)
 
       assert {
                :ok,

@@ -46,7 +46,7 @@ defmodule FieldHubWeb.Api.FileController do
         file_store_data =
           project
           |> Zarex.sanitize()
-          |> FileStore.get_file_list(valid)
+          |> FileStore.file_index(valid)
 
         render(conn, "list.json", %{files: file_store_data})
     end
@@ -63,7 +63,7 @@ defmodule FieldHubWeb.Api.FileController do
     file_store_data =
       project
       |> Zarex.sanitize()
-      |> FileStore.get_file_list()
+      |> FileStore.file_index()
 
     render(conn, "list.json", %{files: file_store_data})
   end
@@ -119,7 +119,7 @@ defmodule FieldHubWeb.Api.FileController do
             |> render(%{error: "Unknown file type: #{type}"})
 
           valid ->
-            FileStore.store_file(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
+            FileStore.store(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
 
             conn
             |> put_status(:created)
@@ -138,7 +138,7 @@ defmodule FieldHubWeb.Api.FileController do
   end
 
   def delete(conn, %{"project" => project, "id" => uuid}) do
-    file_store_data = FileStore.delete(Zarex.sanitize(uuid), Zarex.sanitize(project))
+    file_store_data = FileStore.discard(Zarex.sanitize(uuid), Zarex.sanitize(project))
 
     conn
     |> put_view(StatusView)

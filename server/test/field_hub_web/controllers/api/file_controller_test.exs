@@ -6,7 +6,7 @@ defmodule FieldHubWeb.Api.FileControllerTest do
     TestHelper
   }
 
-  @cache_name Application.compile_env(:field_hub, :file_info_cache_name)
+  @cache_name Application.compile_env(:field_hub, :file_index_cache_name)
 
   @project "test_project"
   @user_name "test_user"

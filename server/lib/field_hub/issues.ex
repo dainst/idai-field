@@ -46,7 +46,7 @@ defmodule FieldHub.Issues do
   def evaluate_images(project_name) do
     try do
       project_name
-      |> FileStore.get_file_list()
+      |> FileStore.file_index()
     rescue
       e -> e
     end

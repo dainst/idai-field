@@ -12,13 +12,30 @@ defmodule FieldHub.Issues do
   require Logger
 
   def evaluate_all(project_name) do
-    [
-      evaluate_project_document(project_name),
-      evaluate_images(project_name),
-      evaluate_identifiers(project_name),
-      evaluate_relations(project_name)
-    ]
-    |> Enum.concat()
+    try do
+      [
+        evaluate_project_document(project_name),
+        evaluate_images(project_name),
+        evaluate_identifiers(project_name),
+        evaluate_relations(project_name)
+      ]
+      |> Enum.concat()
+    rescue
+      e ->
+        stack_trace = Exception.format(:error, e, __STACKTRACE__)
+        Logger.error("Unexpected error while evaluation project '#{project_name}':")
+        Logger.error(stack_trace)
+
+        [
+          %Issue{
+            type: :unexpected_error,
+            severity: :error,
+            data: %{
+              stack_trace: String.split(stack_trace, "\n")
+            }
+          }
+        ]
+    end
   end
 
   def evaluate_project_document(project_name) do

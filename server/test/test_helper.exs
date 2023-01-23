@@ -218,6 +218,11 @@ defmodule FieldHub.TestHelper do
         type: :unresolved_relation,
         severity: :error,
         data: %{unresolved_relations: ["sa1"], uuid: "syu2"}
+      },
+      %Issue{
+        type: :unexpected_error,
+        severity: :error,
+        data: %{stack_trace: %{"some" => "error"}}
       }
     ]
   end

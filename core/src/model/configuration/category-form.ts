@@ -1,8 +1,10 @@
 import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
+import { FieldResource } from '../field-resource';
 import { Field } from './field';
 import { Group, GroupDefinition } from './group';
+import { Valuelist } from './valuelist';
 
 
 export interface CategoryForm {
@@ -154,6 +156,15 @@ export namespace CategoryForm {
                 });
                 return result;
             }, []);
+    }
+
+
+    export function getShortDescriptionValuelist(category: CategoryForm): Valuelist|undefined {
+
+        const fields: Array<Field> = CategoryForm.getFields(category);
+
+        const shortDescriptionField: Field = fields.find(field => field.name === FieldResource.SHORTDESCRIPTION);
+        return shortDescriptionField.valuelist;
     }
 
 

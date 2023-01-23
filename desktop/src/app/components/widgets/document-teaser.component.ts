@@ -40,11 +40,8 @@ export class DocumentTeaserComponent {
 
     private getValuelist(): Valuelist|undefined {
 
-        const fields: Array<Field> = CategoryForm.getFields(
+        return CategoryForm.getShortDescriptionValuelist(
             this.projectConfiguration.getCategory(this.document.resource.category)
         );
-
-        const shortDescriptionField: Field = fields.find(field => field.name === FieldResource.SHORTDESCRIPTION);
-        return shortDescriptionField.valuelist;
     }
 }

@@ -37,7 +37,7 @@ export module ImageManipulation {
 
         let image;
 
-        if (fileExtension.includes('tif')) {
+        if (fileExtension.toLowerCase().includes('tif')) {
             image = getImage(buffer).png();
         }
         if (width > MAX_DISPLAY_WIDTH || height > MAX_DISPLAY_HEIGHT) {

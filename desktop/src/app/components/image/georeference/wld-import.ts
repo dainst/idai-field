@@ -1,5 +1,4 @@
-import {ImageGeoreference} from 'idai-field-core';
-import {Document} from 'idai-field-core';
+import { ImageGeoreference, Document } from 'idai-field-core';
 
 
 export enum Errors {

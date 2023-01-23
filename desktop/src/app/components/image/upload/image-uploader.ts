@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore } from 'idai-field-core';
-import { readWldFile } from '../wld/wld-import';
+    ImageStore, ImageGeoreference } from 'idai-field-core';
+import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -11,6 +11,7 @@ import { ImageCategoryPickerModalComponent } from './image-category-picker-modal
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulation } from '../../../services/imagestore/image-manipulation';
+import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 
 
 export interface ImageUploadResult {
@@ -255,7 +256,7 @@ export class ImageUploader {
 
         const { width, height } = await ImageManipulation.getSize(buffer);
 
-        const doc: NewImageDocument = {
+        const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
                 category: category.name,
@@ -269,10 +270,15 @@ export class ImageUploader {
         };
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
-            doc.resource.relations.depicts = [depictsRelationTarget.resource.id];
+            document.resource.relations.depicts = [depictsRelationTarget.resource.id];
         }
 
-        return await this.relationsManager.update(doc);
+        const georeference: ImageGeoreference = ExtensionUtil.getExtension(fileName).includes('tif')
+            ? await getGeoreferenceFromGeotiff(buffer)
+            : undefined;
+        if (georeference) document.resource.georeference = georeference;
+
+        return await this.relationsManager.update(document);
     }
 
 

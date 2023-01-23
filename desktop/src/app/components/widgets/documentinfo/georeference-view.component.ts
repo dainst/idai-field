@@ -2,8 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RelationsManager } from 'idai-field-core';
 import { M } from '../../messages/m';
-import { readWldFile, Errors } from '../../image/wld/wld-import';
-import { downloadWldFile } from '../../image/wld/wld-export';
+import { readWldFile, Errors } from '../../image/georeference/wld-import';
+import { downloadWldFile } from '../../image/georeference/wld-export';
 import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
 import { Menus } from '../../../services/menus';

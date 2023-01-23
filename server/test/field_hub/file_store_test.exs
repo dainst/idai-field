@@ -61,15 +61,18 @@ defmodule FieldHub.FileStoreTest do
       assert File.exists?("#{@project_directory}/original_images/1234.deleted")
     end
 
-    test "file deletion returns list of all variants deleted" do
+    test "file deletion results in index with all variants deleted" do
       FileStore.store("1234", @project, :original_image, @content)
-      FileStore.store("1234", @project, :thumbnail_image, @content)
 
-      result =
-        FileStore.discard("1234", @project)
-        |> Enum.sort()
+      FileStore.discard("1234", @project)
 
-      assert [:original_image, :thumbnail_image] = result
+      assert %{
+               "1234" => %{
+                 deleted: true,
+                 types: [:thumbnail_image, :original_image],
+                 variants: [%{name: :thumbnail_image, size: 0}, %{name: :original_image, size: 0}]
+               }
+             } = FileStore.file_index(@project)
     end
 
     test "file names containing '.' (besides tombstones) are not returned in file list" do

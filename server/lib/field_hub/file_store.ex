@@ -189,22 +189,16 @@ defmodule FieldHub.FileStore do
   - `uuid` the uuid for the file (will be used as its file_name).
   - `project_name` the project's name.
 
-  Returns `:ok` on success or `{:error, posix}` on failure. If a file already exists, it will not
-  be replaced but the function will return `:ok` regardless.
+  Returns `:ok`. If a file already exists, it will not be replaced but the
+  function will return `:ok` regardless.
   """
   def discard(uuid, project_name) do
-    variants =
-      @valid_file_variants
-      |> Enum.filter(fn variant ->
-        directory = get_variant_directory(project_name, variant)
-        File.exists?("#{directory}/#{uuid}")
-      end)
-
-    variants
-    |> Enum.each(&store("#{uuid}#{@tombstone_suffix}", project_name, &1, []))
+    @valid_file_variants
+    |> Enum.map(&store("#{uuid}#{@tombstone_suffix}", project_name, &1, []))
 
     clear_cache(project_name)
-    variants
+
+    :ok
   end
 
   defp get_project_directory(project) do

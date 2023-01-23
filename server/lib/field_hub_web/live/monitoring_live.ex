@@ -124,8 +124,9 @@ defmodule FieldHubWeb.MonitoringLive do
   end
 
   def get_issue_description(%{
-    unresolved_relations: %{ uuid: uuid, unresolved_relations: list_of_uuids}
-  }) do
+        uuid: uuid,
+        unresolved_relations: list_of_uuids
+      }) do
     "Document `#{uuid}` relates to missing documents with `#{Enum.join(list_of_uuids, ", ")}`."
   end
 

@@ -30,7 +30,8 @@ export interface ImageUploadResult {
 export class ImageUploader {
 
     public static readonly supportedImageFileTypes: string[] = ['jpg', 'jpeg', 'png', 'tif', 'tiff'];
-    public static readonly supportedWorldFileTypes: string[] = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
+    public static readonly supportedWorldFileTypes: string[]
+        = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw', 'tifw', 'tiffw', 'tfw'];
 
 
     public constructor(private imagestore: ImageStore,

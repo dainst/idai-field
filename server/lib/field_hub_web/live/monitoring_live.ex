@@ -97,6 +97,8 @@ defmodule FieldHubWeb.MonitoringLive do
   def get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
   def get_issue_type_label(:image_variants_size), do: "Image variants file size"
   def get_issue_type_label(:missing_original_image), do: "Missing original images"
+  def get_issue_type_label(:unexpected_error), do: "Unexpected issue"
+  def get_issue_type_label(:unresolved_relation), do: "Unresolved relation"
 
   def get_issue_type_label(:non_unique_identifiers),
     do: "Same identifier used for different documents"
@@ -119,6 +121,16 @@ defmodule FieldHubWeb.MonitoringLive do
       "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
 
     "#{generic_file_description(data)} #{extended_description}"
+  end
+
+  def get_issue_description(%{
+        type: :unresolved_relation,
+        data: %{
+          uuid: uuid,
+          unresolved_relations: list_of_uuids
+        }
+      }) do
+    "Document `#{uuid}` relates to missing documents with `#{Enum.join(list_of_uuids, ", ")}`."
   end
 
   def get_issue_description(%{type: :no_default_project_map_layer}) do

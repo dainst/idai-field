@@ -17,7 +17,7 @@ defmodule FieldHub.Application do
       # Start a worker by calling: FieldHub.Worker.start_link(arg)
       # {FieldHub.Worker, arg}
       Supervisor.child_spec(
-        {Cachex, name: Application.get_env(:field_hub, :file_info_cache_name)},
+        {Cachex, name: Application.get_env(:field_hub, :file_index_cache_name)},
         id: :file_info_cache
       ),
       Supervisor.child_spec(

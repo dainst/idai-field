@@ -1,6 +1,7 @@
 defmodule FieldHubWeb.MonitoringLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
+  import ExUnit.CaptureLog
 
   use FieldHubWeb.ConnCase
 
@@ -72,6 +73,8 @@ defmodule FieldHubWeb.MonitoringLiveTest do
     assert html =~ "Image variants file size (1)"
     assert html =~ "No default map layer (1)"
     assert html =~ "No project document (1)"
+    assert html =~ "Unexpected issue (1)"
+    assert html =~ "Unresolved relation (1)"
     assert html =~ "unknown (1)"
     assert html =~ "unknown_without_data (1)"
   end
@@ -128,6 +131,28 @@ defmodule FieldHubWeb.MonitoringLiveTest do
 
       assert not (html =~ "<h2>Issues</h2>\n\nNone.")
       assert html =~ "<h2>Issues (3)</h2>"
+    end
+
+    test "unexpected issue gets displayed", %{conn: conn} do
+      doc_without_identifier = %{
+        _id: "4c306cbd-383d-432f-b527-33437d630815",
+        resource: %{
+          id: "4c306cbd-383d-432f-b527-33437d630815"
+        }
+      }
+
+      TestHelper.create_document(@project, doc_without_identifier)
+
+      log =
+        capture_log(fn ->
+          {:ok, view, _html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
+          html = render(view)
+
+          assert html =~ "<h2>Issues (1)</h2>"
+          assert html =~ "Unexpected issue"
+        end)
+
+      assert log =~ "[error] Unexpected error while evaluation project '#{@project}'"
     end
   end
 end

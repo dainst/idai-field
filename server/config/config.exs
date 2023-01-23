@@ -22,8 +22,8 @@ config :field_hub,
   couchdb_admin_password: "couch_admin_password",
   couchdb_user_name: "app_user",
   couchdb_user_password: "app_user_password",
-  file_variant_types: [:thumbnail_image, :original_image],
-  file_info_cache_name: :file_info,
+  valid_file_variants: [:thumbnail_image, :original_image],
+  file_index_cache_name: :file_info,
   file_max_size: 1_000_000_000,
   user_tokens_cache_name: :user_tokens
 

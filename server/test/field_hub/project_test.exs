@@ -80,7 +80,7 @@ defmodule FieldHub.ProjectTest do
     @project_b "test_project_b"
     @user_name "test_user"
     @user_password "test_password"
-    @file_store_cache Application.compile_env(:field_hub, :file_info_cache_name)
+    @file_store_cache Application.compile_env(:field_hub, :file_index_cache_name)
 
     setup %{} do
       Project.create(@project_a)
@@ -114,7 +114,7 @@ defmodule FieldHub.ProjectTest do
                database: %{doc_count: 0, file_size: 33076},
                files: %{
                  original_image: %{active: 2, active_size: 200_000, deleted: 1, deleted_size: 0},
-                 thumbnail_image: %{active: 0, active_size: 0, deleted: 0, deleted_size: 0}
+                 thumbnail_image: %{active: 0, active_size: 0, deleted: 1, deleted_size: 0}
                },
                name: @project_a
              } = Project.evaluate_project(@project_a)
@@ -126,7 +126,7 @@ defmodule FieldHub.ProjectTest do
                  database: %{doc_count: 0, file_size: 33076},
                  files: %{
                    original_image: %{active: 2, active_size: 200_000, deleted: 1, deleted_size: 0},
-                   thumbnail_image: %{active: 0, active_size: 0, deleted: 0, deleted_size: 0}
+                   thumbnail_image: %{active: 0, active_size: 0, deleted: 1, deleted_size: 0}
                  },
                  name: @project_a
                },

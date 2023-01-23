@@ -111,14 +111,14 @@ defmodule FieldHub.CouchServiceTest do
                "_id" => "o25",
                "resource" => %{
                  "id" => "o25",
-                 "type" => "Drawing"
+                 "category" => "Drawing"
                }
              },
              %{
                "_id" => "o26",
                "resource" => %{
                  "id" => "o26",
-                 "type" => "Image"
+                 "category" => "Image"
                }
              }
            ] = CouchService.get_docs_by_category(@project, ["Image", "Drawing"]) |> Enum.to_list()

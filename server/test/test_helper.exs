@@ -35,28 +35,28 @@ defmodule FieldHub.TestHelper do
   end
 
   def add_dummy_files_to_store(project_name) do
-    FileStore.store_file(
+    FileStore.store(
       "file_a",
       project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
-    FileStore.store_file(
+    FileStore.store(
       "file_b",
       project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
-    FileStore.store_file(
+    FileStore.store(
       "file_c",
       project_name,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
-    FileStore.delete("file_c", project_name)
+    FileStore.discard("file_c", project_name)
   end
 
   def create_complete_example_project(project_name, user_name, user_password) do
@@ -218,6 +218,11 @@ defmodule FieldHub.TestHelper do
         type: :unresolved_relation,
         severity: :error,
         data: %{unresolved_relations: ["sa1"], uuid: "syu2"}
+      },
+      %Issue{
+        type: :unexpected_error,
+        severity: :error,
+        data: %{stack_trace: %{"some" => "error"}}
       }
     ]
   end

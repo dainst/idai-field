@@ -410,7 +410,8 @@ defmodule FieldHub.CouchService do
         HTTPoison.post!(
           "#{base_url()}/#{project_name}/_find",
           Jason.encode!(payload),
-          headers()
+          headers(),
+          [recv_timeout: 60000]
         )
         |> case do
           %{status_code: 200, body: body} ->
@@ -421,7 +422,11 @@ defmodule FieldHub.CouchService do
                 {:halt, :ok}
 
               %{"docs" => docs, "bookmark" => bookmark} ->
-                {docs, Map.put(payload, :bookmark, bookmark)}
+                {
+                  docs
+                  |> Enum.map(&replace_resource_type_with_category/1),
+                  Map.put(payload, :bookmark, bookmark)
+                }
             end
 
           error ->
@@ -438,6 +443,27 @@ defmodule FieldHub.CouchService do
         end
       end
     )
+  end
+
+  defp replace_resource_type_with_category(doc) do
+    # Replace 'resource.type' with 'resource.category'. 'type' will become
+    # deprecated. TODO: Remove this once 'type' is not used anymore.
+    case Map.get(doc, "resource") do
+      nil ->
+        doc
+      _resource ->
+        Map.update!(doc, "resource", fn resource ->
+          case Map.get(resource, "type") do
+            nil ->
+              resource
+
+            type_value ->
+              resource
+              |> Map.put_new("category", type_value)
+              |> Map.delete("type")
+          end
+        end)
+    end
   end
 
   def get_admin_credentials() do

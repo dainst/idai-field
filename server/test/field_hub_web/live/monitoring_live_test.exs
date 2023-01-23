@@ -73,6 +73,8 @@ defmodule FieldHubWeb.MonitoringLiveTest do
     assert html =~ "Image variants file size (1)"
     assert html =~ "No default map layer (1)"
     assert html =~ "No project document (1)"
+    assert html =~ "Unexpected issue (1)"
+    assert html =~ "Unresolved relation (1)"
     assert html =~ "unknown (1)"
     assert html =~ "unknown_without_data (1)"
   end

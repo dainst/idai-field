@@ -64,6 +64,14 @@ defmodule FieldHub.FileStoreTest do
     test "file deletion results in index with all variants deleted" do
       FileStore.store("1234", @project, :original_image, @content)
 
+      assert %{
+        "1234" => %{
+          deleted: false,
+          types: [:original_image],
+          variants: [%{name: :original_image, size: 18619}]
+        }
+      } = FileStore.file_index(@project)
+
       FileStore.discard("1234", @project)
 
       assert %{

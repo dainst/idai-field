@@ -9,10 +9,8 @@ export async function getGeoreferenceFromGeotiff(buffer: Buffer): Promise<ImageG
     const GeoTIFF = await import('geotiff');
     const tiff = await GeoTIFF.fromBlob(new Blob([buffer]));
     const image = await tiff.getImage();
-    const boundingBox = image.getBoundingBox();
-
-    if (boundingBox) {
-        return createGeoreference(boundingBox);
+    if (image.getGeoKeys()) {
+        return createGeoreference(image.getBoundingBox());
     } else {
         return undefined;
     }

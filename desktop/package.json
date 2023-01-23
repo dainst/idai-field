@@ -70,7 +70,10 @@
       "icon": "img/logo.png",
       "publish": "github",
       "artifactName": "Field-Desktop-${version}-Linux.${ext}",
-      "category": "Science"
+      "category": "Science",
+      "asarUnpack": [
+        "node_modules/sharp/**"
+      ]
     },
     "npmRebuild": false,
     "afterSign": "notarize.js",

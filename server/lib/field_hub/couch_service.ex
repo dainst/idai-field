@@ -421,7 +421,25 @@ defmodule FieldHub.CouchService do
                 {:halt, :ok}
 
               %{"docs" => docs, "bookmark" => bookmark} ->
-                {docs, Map.put(payload, :bookmark, bookmark)}
+                {
+                  docs
+                  # Replace 'resource.type' with 'resource.category'. 'type' will become
+                  # deprecated. TODO: Remove this once 'type' is not used anymore.
+                  |> Enum.map(fn doc ->
+                    Map.update!(doc, "resource", fn resource ->
+                      case Map.get(resource, "type") do
+                        nil ->
+                          resource
+
+                        type_value ->
+                          resource
+                          |> Map.put_new("category", type_value)
+                          |> Map.delete("type")
+                      end
+                    end)
+                  end),
+                  Map.put(payload, :bookmark, bookmark)
+                }
             end
 
           error ->

@@ -89,13 +89,13 @@ defmodule FieldHub.Issues do
                            },
                            "resource" => %{
                              "id" => uuid,
-                             "type" => type,
+                             "category" => category,
                              "identifier" => file_name
                            }
                          } ->
           issue_data = %{
             uuid: uuid,
-            file_type: type,
+            file_type: category,
             file_name: file_name,
             created_by: created_by,
             created: created

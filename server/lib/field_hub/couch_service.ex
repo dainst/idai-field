@@ -410,7 +410,8 @@ defmodule FieldHub.CouchService do
         HTTPoison.post!(
           "#{base_url()}/#{project_name}/_find",
           Jason.encode!(payload),
-          headers()
+          headers(),
+          [recv_timeout: 60000]
         )
         |> case do
           %{status_code: 200, body: body} ->

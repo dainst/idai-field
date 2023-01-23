@@ -276,6 +276,9 @@ defmodule FieldHub.FileStore do
       |> Enum.filter(fn %{name: file_name} ->
         String.ends_with?(file_name, @tombstone_suffix)
       end)
+      |> Enum.map(fn %{name: file_name} ->
+        file_name
+      end)
 
     file_index
     |> Enum.reject(fn %{name: file_name} ->

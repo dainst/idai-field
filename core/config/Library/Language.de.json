@@ -767,18 +767,6 @@
         "comparison": {
           "label": "Vergleich(e)",
           "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
-        },
-        "hasDisturbance": {
-          "label": "Störung",
-          "description": "Liegt eine Störung des Befundkomplexes vor?"
-        },
-        "featureGroupBorders": {
-          "label": "Grenzen des Befundkomplexes",
-          "description": "Bestimmung der Grenzen des Befundkomplexes"
-        },
-        "featureGroupForm": {
-          "label": "Form des Befundkomplexes",
-          "description": "Form des Befundkomplexes im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
         }
       }
     },

@@ -570,20 +570,6 @@
     "fields": {
       "comparison": {
         "inputType": "text"
-      },
-      "hasDisturbance": {
-        "inputType": "boolean",
-        "constraintIndexed": true
-      },
-      "featureGroupBorders": {
-        "inputType": "checkboxes",
-        "constraintIndexed": true,
-        "valuelistId": "Feature-featureBorders-default"
-      },
-      "featureGroupForm": {
-        "inputType": "checkboxes",
-        "constraintIndexed": true,
-        "valuelistId": "Feature-featureForm-default"
       }
     }
   },

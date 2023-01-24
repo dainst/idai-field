@@ -767,10 +767,6 @@
         "comparison": {
           "label": "Confronto(i)",
           "description": "Confronto con simili reperti, oggetti, iscrizioni, ecc. Con riferimenti"
-        },
-        "hasDisturbance": {
-          "label": "Disturbo",
-          "description": "C'è un disturbo nei reperti?"
         }
       }
     },

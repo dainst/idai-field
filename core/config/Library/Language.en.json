@@ -688,15 +688,6 @@
       "fields": {
         "comparison": {
           "label": "Comparison"
-        },
-        "hasDisturbance": {
-          "label": "Disturbance"
-        },
-        "featureGroupBorders": {
-          "label": "Borders of the feature group"
-        },
-        "featureGroupForm": {
-          "label": "Form of the feature group"
         }
       }
     },

@@ -516,7 +516,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "hasDisturbance", "featureGroupForm", "featureGroupBorders", "comparison"]
+          "fields": ["description", "comparison"]
         },
         {
           "name": "dimension",

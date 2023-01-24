@@ -62,13 +62,21 @@
                (keyup)="onKeyUp($event, 'identifier')"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
-    <div class="input-field">
+    <div *ngIf="!shortDescriptionValuelist" class="input-field">
         <input [value]="getShortDescription()"
                (focus)="startEditing('shortDescription', document.resource.shortDescription)"
                (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
                (keyup)="onKeyUp($event, 'shortDescription')"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
+    </div>
+    <div *ngIf="shortDescriptionValuelist" class="input-field dropdown-input-field">
+        <select [(ngModel)]="document.resource.shortDescription"
+                (change)="onShortDescriptionValueChanged()"
+                (dblclick)="$event.stopPropagation();">
+            <option value="" [selected]="!document.resource.hasOwnProperty('shortDescription')"></option>
+            <option *ngFor="let value of getShortDescriptionValues()" value="{{value}}">{{getValueLabel(value)}}</option>
+        </select>
     </div>
     <div class="btn-group align-middle">
         <button class="btn btn-small btn-link float-right list-edit-button"

@@ -52,10 +52,27 @@
     }
   }
 
-  input {
+  .dropdown-input-field {
+    padding-top: 7px;
+  }
+
+  input,
+  select {
     position: relative;
     top: 1px;
     border: 0;
+  }
+
+  select {
+    width: 100%;
+    padding-left: 4px;
+    font-size: 14px;
+    color: #495057;
+    outline: none;
+
+    option {
+      padding-bottom: 5px;
+    }
   }
 
   .mdi-delete {

@@ -88,7 +88,7 @@ export namespace Languages {
                                           noLanguageLabel: string) {
 
         const configuredLanguages: string[] = getConfiguredLanguages(projectLanguages);
-        const documentsLanguages: string[] = set(flatten(documents.map(document => {
+        const documentsLanguages: string[] = set(flatten(documents.map(document => {
             return getUsedLanguages(document.resource[fieldName], languages);
         })).concat(configuredLanguages));
 

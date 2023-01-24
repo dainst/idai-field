@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels, I18N, FieldResource } from 'idai-field-core';
+    Labels, I18N, FieldResource, Valuelist } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -21,17 +21,18 @@ import { Language } from '../../../services/languages';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class RowComponent implements AfterViewInit {
+export class RowComponent implements AfterViewInit, OnChanges {
 
     @Input() document: FieldDocument;
-    @Input() categoriesMap: { [category: string]: CategoryForm };
+    @Input() category: CategoryForm;
     @Input() availableLanguages: Array<Language>;
     @Input() selectedLanguage: Language|undefined;
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
-    private initialValues: Map<string|I18N.String|undefined> = {};
+    public shortDescriptionValuelist: Valuelist|undefined;
 
+    private initialValues: Map<string|I18N.String|undefined> = {};
     private saving: Promise<void>;
 
 
@@ -69,7 +70,11 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getCategoryLabel = () => this.labels.get(this.categoriesMap[this.document.resource.category]);
+    public getCategoryLabel = () => this.labels.get(this.category);
+
+    public getShortDescriptionValues = () => this.labels.orderKeysByLabels(this.shortDescriptionValuelist);
+
+    public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.shortDescriptionValuelist, valueId);
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier
@@ -82,6 +87,12 @@ export class RowComponent implements AfterViewInit {
     }
 
 
+    ngOnChanges() {
+        
+        this.shortDescriptionValuelist = CategoryForm.getShortDescriptionValuelist(this.category);
+    }
+
+
     public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
         this.setValue(fieldName, event.target['value']);
@@ -89,6 +100,15 @@ export class RowComponent implements AfterViewInit {
         if (event.key === 'Enter') {
             await this.stopEditing(fieldName, this.document.resource[fieldName]);
         }
+    }
+
+
+    public async onShortDescriptionValueChanged() {
+
+        if (this.document.resource.shortDescription === '') delete this.document.resource.shortDescription;
+        
+        this.saving = this.save();
+        await this.saving;
     }
 
 

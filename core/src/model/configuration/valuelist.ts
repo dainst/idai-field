@@ -73,7 +73,6 @@ export module Valuelist {
     }
 
 
-    // TODO review why we return keys instead of labels
     export function orderKeysByLabels(valuelist: Valuelist, 
                                       alternativeComparator: (valuelist: Valuelist) => 
                                                              (a: string, b: string) => number): string[] {

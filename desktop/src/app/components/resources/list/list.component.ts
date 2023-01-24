@@ -52,6 +52,8 @@ export class ListComponent extends BaseList implements OnChanges {
 
     public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
+    public getCategory = (document: FieldDocument) => this.categoriesMap[document.resource.category];
+
 
     public ngOnChanges(changes: SimpleChanges) {
 
@@ -71,7 +73,7 @@ export class ListComponent extends BaseList implements OnChanges {
     private updateAvailableLanguages() {
 
         this.availableLanguages = Languages.getDocumentsLanguages(
-            this.documents,
+            this.getFreetextShortDescriptionDocuments(),
             FieldResource.SHORTDESCRIPTION,
             Languages.getAvailableLanguages(),
             this.projectConfiguration.getProjectLanguages(),
@@ -80,5 +82,14 @@ export class ListComponent extends BaseList implements OnChanges {
         );
 
         if (this.availableLanguages.length > 0) this.selectedLanguage = this.availableLanguages[0];
+    }
+
+
+    private getFreetextShortDescriptionDocuments(): Array<FieldDocument> {
+
+        return this.documents.filter(document => {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            return CategoryForm.getShortDescriptionValuelist(category) === undefined;
+        });
     }
 }

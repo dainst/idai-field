@@ -30,7 +30,8 @@
         <div id="list-body">
             <cdk-virtual-scroll-viewport itemSize="41">
                 <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
-                    <row [document]="document" [categoriesMap]="categoriesMap"
+                    <row [document]="document"
+                         [category]="getCategory(document)"
                          [availableLanguages]="availableLanguages"
                          [selectedLanguage]="selectedLanguage"></row>
                 </div>

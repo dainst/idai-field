@@ -1,5 +1,5 @@
 import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
-    pause, getValue } from '../app';
+    pause, getValue, selectOption } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -156,6 +156,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickListSelectOption(identifier: string, optionValue: string) {
+
+        return selectOption('#resource-' + identifier + ' .dropdown-input-field select', optionValue);
+    }
+
+
     // get text
 
 
@@ -199,6 +205,12 @@ export class ResourcesPage {
     public static getDocumentTeaserCategoryCharacter() {
 
         return getText('.document-teaser div.category-icon');
+    }
+
+
+    public static getListSelectValue(identifier: string) {
+
+        return getValue('#resource' + identifier + ' .dropdown-input-field select');
     }
 
 

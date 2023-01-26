@@ -3,6 +3,10 @@ import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
+import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { ConfigurationPage } from '../configuration/configuration.page';
+import { EditConfigurationPage } from '../configuration/edit-configuration.page';
+import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -133,5 +137,44 @@ test.describe('resources/list --', () => {
         await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
         await ResourcesPage.clickConfirmDeleteInModal();
         await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
+    });
+
+
+    test('select value from valuelist for short description field', async () => {
+        
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Operation');
+        await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('test-list');
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue('testValue1');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.typeInTranslation(3, 0, 'Value 1');
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.typeInNewValue('testValue2');
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.typeInTranslation(3, 0, 'Value 2');
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickListModeButton();
+        await ResourcesPage.performCreateResourceInList('Trench1', 'operation-trench');
+        await ResourcesPage.clickListSelectOption('Trench1', 'testValue1');
+        await ResourcesPage.clickMapModeButton();
+        await ResourcesPage.clickSelectResource('Trench1');
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 1');
+        
+        await ResourcesPage.clickListModeButton();
+        await ResourcesPage.clickListSelectOption('Trench1', 'testValue2');
+        await ResourcesPage.clickMapModeButton();
+        await ResourcesPage.clickSelectResource('Trench1');
+        expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 2');    
     });
 });

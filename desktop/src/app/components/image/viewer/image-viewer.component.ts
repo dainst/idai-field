@@ -26,6 +26,7 @@ export class ImageViewerComponent implements OnChanges {
                 private imagestore: ImageStore,
                 private messages: Messages) {}
 
+
     async ngOnChanges() {
 
         if (!this.imagestore.getAbsoluteRootPath()) {

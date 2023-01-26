@@ -3,6 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
 import { Document, Field, Group, Labels } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -43,8 +44,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public getGroupId = (group: Group) => 'edit-form-goto-' + group.name.replace(':', '-');
 
 
-    ngAfterViewInit() {
+    async ngAfterViewInit() {
 
+        await AngularUtility.refresh();
         this.focusFirstInputElement();
     }
 

@@ -87,8 +87,11 @@ jobs:
       run: npm run build:all
       working-directory: desktop
     - name: Create macOS package
-      run: npm run package:mac
       if: runner.os == 'macOS'
+      uses: nick-fields/retry@v2
+      retry_on: error
+      max_attempts: 3
+      command: npm run package:mac
       env:
         CSC_LINK: ${{ secrets.MAC_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}
@@ -98,13 +101,20 @@ jobs:
         MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
       working-directory: desktop
     - name: Create Windows package
-      run: npm run package:win
+    uses: nick-fields/retry@v2
       if: runner.os == 'Windows'
+      uses: nick-fields/retry@v2
+      retry_on: error
+      max_attempts: 3
+      command: npm run package:win
       env:
         CSC_LINK: ${{ secrets.WIN_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PW }}
       working-directory: desktop
     - name: Create Linux package
-      run: npm run package:lnx
       if: runner.os == 'Linux'
+      uses: nick-fields/retry@v2
+      retry_on: error
+      max_attempts: 3
+      command: npm run package:lnx
       working-directory: desktop

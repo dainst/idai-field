@@ -634,7 +634,6 @@ test.describe('configuration --', () => {
     test('filter valuelists in valuelists management', async () => {
 
         await navigateTo('valuelists');
-
         await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color-custom');
         await ManageValuelistsModalPage.clickCreateNewValuelist();
         await EditConfigurationPage.typeInNewValue('newValue');
@@ -706,7 +705,6 @@ test.describe('configuration --', () => {
 
     test('use valuelist for short description', async () => {
 
-        await navigateTo('configuration');
         await CategoryPickerPage.clickSelectCategory('Operation');
         await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
         await ConfigurationPage.clickContextMenuEditOption();

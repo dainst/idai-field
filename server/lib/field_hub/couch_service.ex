@@ -188,7 +188,8 @@ defmodule FieldHub.CouchService do
         project_name,
         %Credentials{} = credentials,
         role
-      ) do
+      )
+      when role in [:none, :member, :admin] do
     HTTPoison.get!(
       "#{base_url()}/_users/org.couchdb.user:#{user_name}",
       headers(credentials)

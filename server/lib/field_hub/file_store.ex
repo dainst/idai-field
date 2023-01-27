@@ -14,7 +14,7 @@ defmodule FieldHub.FileStore do
   or until a file gets stored or discarded.
 
   To extent the list of valid file variants (currently `#{inspect(@valid_file_variants)}`), it should suffice to add an additonal
-  `get_variant_directory/2` function here and update the list in config.exs.
+  `get_variant_directory/2` function here, an additional `parse_type/1` in FieldHubWeb.Api.FileController and update the list in config.exs.
   """
 
   @doc """

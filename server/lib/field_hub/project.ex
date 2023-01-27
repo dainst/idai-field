@@ -10,6 +10,21 @@ defmodule FieldHub.Project do
 
   @variant_types Application.compile_env(:field_hub, :valid_file_variants)
 
+  @moduledoc """
+  Bundles functions concerning Field projects in FieldHub.
+  """
+
+  @doc """
+  Create a project and a default user with the given name.
+
+  Returns `:invalid_name` if the requested project name falls outside of CouchDB's constraints for
+  database names. See https://docs.couchdb.org/en/stable/api/database/common.html#put--db. Otherwise the function
+  returns `%{database: :already_exists | :created, file_store: <file store response>}}` where the file store response
+  is the return value of FileStore.create_directories/1.
+
+  __Parameters__
+  - `project_name` the project's name
+  """
   def create(project_name) do
     couch_result =
       project_name
@@ -41,6 +56,15 @@ defmodule FieldHub.Project do
     end
   end
 
+  @doc """
+  Deletes the project by name. Currently the project's file directory (images...) will
+  be left intact in the filesystem.
+
+  Returns `%{dabase :deleted | :unknown_project, file_store: []}`.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def delete(project_name) do
     couch_result =
       project_name
@@ -69,6 +93,16 @@ defmodule FieldHub.Project do
     %{database: couch_result, file_store: []}
   end
 
+  @doc """
+  Updates a user's role within a project.
+
+  Returns `:set | :unknown_project | :unknown_user | :unset`.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `project_name` the project's name.
+  - `role` the user's intended role in the project. Valid values: `:none` (removing user from all current roles), `:member` or `:admin`.
+  """
   def update_user(user_name, project_name, role) do
     CouchService.update_user_role_in_project(
       user_name,
@@ -91,13 +125,12 @@ defmodule FieldHub.Project do
     end
   end
 
-  def get_all_for_user(user_name) do
-    CouchService.get_all_databases()
-    |> Enum.filter(fn project_name ->
-      :granted == check_project_authorization(project_name, user_name)
-    end)
-  end
+  @doc """
+  Checks if a project of the given name exists.
 
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def exists?(project_name) do
     CouchService.get_db_infos(project_name)
     |> case do
@@ -109,6 +142,50 @@ defmodule FieldHub.Project do
     end
   end
 
+  @doc """
+  Returns a list of names for all projects the given user has access to (as admin or member).
+
+  __Parameters__
+  - `user_name` the user's name.
+  """
+  def get_all_for_user(user_name) do
+    CouchService.get_all_databases()
+    |> Enum.filter(fn project_name ->
+      :granted == check_project_authorization(project_name, user_name)
+    end)
+  end
+
+  @doc """
+  Collects some basic statistics about the given project.
+
+  Returns `:unknown` if the provided project name is unknown, otherwise returns information about the
+  project's database and file store state.
+
+  __Parameters__
+  - `project_name` the project's name.
+
+  ## Example
+      iex> Project.evaluate_project("development")
+
+      %{
+        database: %{doc_count: 7, file_size: 766362},
+        files: %{
+          original_image: %{
+            active: 3,
+            active_size: 1079929,
+            deleted: 0,
+            deleted_size: 0
+          },
+          thumbnail_image: %{
+            active: 5,
+            active_size: 95624,
+            deleted: 0,
+            deleted_size: 0
+          }
+        },
+        name: "development"
+      }
+  """
   def evaluate_project(project_name) do
     project_name
     |> evaluate_database()
@@ -127,6 +204,27 @@ defmodule FieldHub.Project do
     end
   end
 
+  @doc """
+  Returns a list of evaluate_project/2 results for all projects the user has access to.
+
+  __Parameters__
+  - `user_name`: The user's name.
+  """
+  def evaluate_all_projects_for_user(user_name) do
+    user_name
+    |> get_all_for_user()
+    |> Enum.map(&evaluate_project(&1))
+  end
+
+  @doc """
+  Checks if a user is authorized to access a project.
+
+  Returns `:denied | :granted | :unknown_project`.
+
+  __Parameters__
+  - `project_name` the project's name.
+  - `user_name` the user's name.
+  """
   def check_project_authorization(project_name, user_name) do
     if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
       :granted
@@ -149,12 +247,6 @@ defmodule FieldHub.Project do
           :unknown_project
       end
     end
-  end
-
-  def evaluate_all_projects_for_user(user_name) do
-    user_name
-    |> get_all_for_user()
-    |> Enum.map(&evaluate_project(&1))
   end
 
   defp evaluate_database(project_name) do

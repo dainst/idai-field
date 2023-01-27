@@ -12,12 +12,17 @@ image-viewer {
     }
 
     .align-items-center {
+      position: relative;
       height: 100%;
     }
 
     .alert {
       position: absolute;
       top: 10px;
+    }
+
+    loading-icon {
+      position: absolute;
     }
   }
 }

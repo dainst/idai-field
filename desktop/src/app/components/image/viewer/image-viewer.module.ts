@@ -1,11 +1,13 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {ImageViewerComponent} from './image-viewer.component';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { WidgetsModule } from '../../widgets/widgets.module';
+import { ImageViewerComponent } from './image-viewer.component';
 
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        WidgetsModule
     ],
     declarations: [
         ImageViewerComponent

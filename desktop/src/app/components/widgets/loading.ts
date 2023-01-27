@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 
 @Injectable()
@@ -11,22 +11,31 @@ export class Loading {
     private loadingStatus: { [context: string]: { loading: number; start: Date } } = {};
 
 
-    public start(context: string = 'DEFAULT') {
+    public start(context: string = 'DEFAULT', multipleSteps: boolean = true) {
 
         if (!this.loadingStatus[context]) this.loadingStatus[context] = {
             loading: 0,
             start: new Date()
         };
 
-        this.loadingStatus[context].loading++;
+        if (multipleSteps) {
+            this.loadingStatus[context].loading++;
+        } else {
+            this.loadingStatus[context].loading = 1;
+        }
     }
 
 
-    public stop(context: string = 'DEFAULT') {
+    public stop(context: string = 'DEFAULT', multipleSteps: boolean = true) {
 
         if (!this.loadingStatus[context]) return;
 
-        this.loadingStatus[context].loading--;
+        if (multipleSteps) {
+            this.loadingStatus[context].loading--;
+        } else {
+            this.loadingStatus[context].loading = 0;
+        }
+        
         if (this.loadingStatus[context].loading === 0) {
             delete this.loadingStatus[context];
         }

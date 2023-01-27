@@ -1,10 +1,12 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, NgZone } from '@angular/core';
 import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageContainer } from '../../../services/imagestore/image-container';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole } from '../log-messages';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
+import { Loading } from '../../widgets/loading';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -24,7 +26,9 @@ export class ImageViewerComponent implements OnChanges {
 
     constructor(private imageUrlMaker: ImageUrlMaker,
                 private imagestore: ImageStore,
-                private messages: Messages) {}
+                private messages: Messages,
+                private loading: Loading,
+                private zone: NgZone) {}
 
 
     async ngOnChanges() {
@@ -33,7 +37,7 @@ export class ImageViewerComponent implements OnChanges {
             this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
         }
         
-        if (this.image) this.imageContainer = await this.loadImage(this.image);
+        if (this.image) await this.update();
     }
 
 
@@ -43,7 +47,31 @@ export class ImageViewerComponent implements OnChanges {
     }
 
 
+    public onLoadingFinished() {
+
+        this.loading.stop('image-viewer', false);
+    }
+
+
+    private async update() {
+
+        this.loading.stop('image-viewer', false);
+
+        this.imageContainer = { document: this.image, imgSrc: ImageUrlMaker.blackImg };
+        await AngularUtility.refresh();
+
+        this.zone.run(async () => {
+            const newImageContainer: ImageContainer = await this.loadImage(this.image);
+            if (newImageContainer.document.resource.id === this.image.resource.id) {
+                this.imageContainer = newImageContainer;
+            }
+        });
+    }
+
+
     private async loadImage(document: ImageDocument): Promise<ImageContainer> {
+
+        this.loading.start('image-viewer', false);
 
         const image: ImageContainer = { document };
 

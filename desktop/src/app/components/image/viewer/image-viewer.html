@@ -4,6 +4,8 @@
              i18n="@@image.originalNotFoundWarning">
             Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
         </div>
-        <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc">
+        <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc"
+             (load)="onLoadingFinished()">
+        <loading-icon [context]="'image-viewer'"></loading-icon>
     </div>
 </div>

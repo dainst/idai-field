@@ -1,4 +1,6 @@
 import Config
+# config/prod.exs is executed at compile time in the production environment
+# see https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html#environments
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information

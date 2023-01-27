@@ -6,6 +6,8 @@ import Config
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
+# Currently we only use runtime configuration for production, so there are no
+# :test or :dev blocks.
 
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.

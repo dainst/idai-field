@@ -30,6 +30,13 @@ docker-compose up
 ```
 
 ### Phoenix Server
+
+FieldHub is written in [Elixir](https://elixir-lang.org/) with the [Phoenix Framework](https://www.phoenixframework.org/).
+
+FieldHub tries to follow the Elixir and Phoenix conventions when it comes to naming and directory structure. For detailed guides please consult the official documentation.
+
+### Project setup
+
 Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
 
 ```bash

@@ -3,6 +3,10 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
+#
+# The other environment configurations (dev/test/prod/runtime) may override
+# the configuration done here where necessary.
+# See import_config/1 call at the bottom.
 
 # General application configuration
 import Config

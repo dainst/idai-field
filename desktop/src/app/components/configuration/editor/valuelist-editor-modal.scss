@@ -73,6 +73,9 @@
   background-color: #e9ecef;
   user-select: none;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .value-drag-placeholder {

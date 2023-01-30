@@ -68,7 +68,8 @@
             },
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "idai-field-core"
+              "idai-field-core",
+              "xml-utils"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

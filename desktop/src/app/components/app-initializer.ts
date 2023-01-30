@@ -104,6 +104,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await setUpDatabase(settingsService, settings, progress);
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
+    await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
     await setUpProgressEnvironment(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
 
@@ -112,8 +113,6 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
         settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
-
-    await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
 
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
 
@@ -134,7 +133,7 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 const setUpProgressEnvironment = async (settings: Settings, progress: InitializationProgress) => {
 
     const projectIdentifier = settings.dbs[0];
-    const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames[projectIdentifier]);
+    const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setEnvironment(projectName ?? projectIdentifier, Settings.getLocale());
 };

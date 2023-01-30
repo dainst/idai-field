@@ -61,6 +61,14 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     }
 
 
+    public onBlur() {
+
+        this.focused = false;
+        this.selectedText = this.selectedText.trim();
+        this.onChanges(this.selectedText);
+    }
+
+
     public selectLanguage(language: Language) {
 
         if (this.additionalLanguages.includes(language)) this.shownAdditionalLanguage = language;

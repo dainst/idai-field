@@ -52,13 +52,17 @@
     }
 
     .docedit-header-label {
-      font-size: 1.5em;
-      line-height: 1em;
+      font-size: 25px;
+      line-height: 24px;
       margin: 0;
       padding-right: 15px;
       flex: 1;
       min-height: 2.15em;
       color: $modal-header-font-color;
+    }
+
+    .sub-label {
+      margin-left: 10px;
     }
   }
 

@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { includedIn, isNot } from 'tsfun';
 import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, CategoryForm,
-    Name, ProjectConfiguration, Labels } from 'idai-field-core';
+    Name, ProjectConfiguration, Labels, Resource } from 'idai-field-core';
 import { DoceditErrors } from './docedit-errors';
 import { DocumentHolder } from './document-holder';
 import { MenuContext } from '../../services/menu-context';
@@ -43,6 +43,9 @@ export class DoceditComponent {
     public identifierPrefix: string|undefined;
 
     public parentLabel: string|undefined = undefined;
+    public resourceLabel: string;
+    public resourceSubLabel: string;
+
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
     private escapeKeyPressed = false;
 
@@ -97,6 +100,30 @@ export class DoceditComponent {
             && !this.projectConfiguration.isSubcategory(
                 this.documentHolder.clonedDocument.resource.category, 'Image'
             );
+    }
+
+
+    public getResourceLabel(): string {
+
+        const resource: Resource = this.documentHolder.clonedDocument.resource;
+        const identifier: string = resource.identifier;
+
+        if (this.documentHolder.clonedDocument.resource.category === 'Project') {
+            const name: string = this.labels.getFromI18NString(resource.shortName);
+            return name ?? identifier;
+        } else {
+            return identifier;
+        }
+    }
+
+
+    public getResourceSubLabel(): string {
+
+        const resourceLabel: string = this.getResourceLabel();
+
+        return !resourceLabel || resourceLabel !== this.documentHolder.clonedDocument.resource.identifier
+            ? this.documentHolder.clonedDocument.resource.identifier
+            : '';
     }
 
 
@@ -234,7 +261,7 @@ export class DoceditComponent {
     }
 
 
-    private async fetchParentLabel(document: FieldDocument|ImageDocument) {
+    private async fetchParentLabel(document: FieldDocument|ImageDocument): Promise<string|undefined> {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0

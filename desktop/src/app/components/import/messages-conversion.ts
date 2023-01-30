@@ -39,6 +39,7 @@ export module MessagesConversion {
         if (msg === ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT;
         if (msg === ParserErrors.INVALID_GEOMETRY) replacement = M.IMPORT_PARSER_INVALID_GEOMETRY;
         if (msg === ParserErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_PARSER_MISSING_IDENTIFIER;
+        if (msg === ParserErrors.MISSING_IDENTIFIER_SHAPEFILE) replacement = M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE;
         if (msg === ParserErrors.ID_MUST_NOT_BE_SET) replacement = M.IMPORT_PARSER_ID_MUST_NOT_BE_SET;
         if (msg === ParserErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_PARSER_IDENTIFIER_FORMAT;
         if (msg === ParserErrors.CSV_GENERIC) replacement = M.IMPORT_PARSER_GENERIC_CSV_ERROR;

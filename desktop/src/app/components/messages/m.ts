@@ -62,6 +62,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
     public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
+    public static IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE = 'M.Import.ParserErrors.missingIdentifierShapefile';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
     public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_CATALOG_GENERIC = 'M.Import.ParserErrors.catalog.generic';
@@ -621,6 +622,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.missingIdentifier',
                 value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE] = {
+            content: i18n({
+                id: 'messages.import.error.missingIdentifierShapefile',
+                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.'
             }),
             level: 'danger',
             params: ['?'],

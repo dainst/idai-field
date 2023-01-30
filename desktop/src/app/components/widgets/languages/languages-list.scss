@@ -1,4 +1,6 @@
 languages-list {
+  position: relative;
+
   .list-group {
     max-height: 210px;
     margin-bottom: 12px;
@@ -9,7 +11,7 @@ languages-list {
   }
 
   .list-group-item {
-    height: 41px;
+    height: 42px;
     line-height: 40px;
     padding: 0 0 0 10px;
     border: none !important;
@@ -31,7 +33,7 @@ languages-list {
   #add-language {
     left: 50%;
     bottom: -10px;
-    transform: translate(-20px, -21px);
+    transform: translate(-20px, 8px);
   }
 
   .remove-language {

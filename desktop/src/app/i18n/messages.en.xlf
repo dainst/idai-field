@@ -861,10 +861,9 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen. </source>
-        <target state="translated">
-                        Please enter the complete path to a backup file as well as the name of a target database /
-                        a target project. The name of the target project must not match the name of the currently
-                        open project.
+        <target state="final">
+                        Please enter the complete path to a backup file as well as the name of a target project. The identifier
+                        of the target project must not match the identifier of the currently open project.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
@@ -884,8 +883,8 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="translated">
-                        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> While restoring a backup file, a possibly existing target database of the specified name will
+        <target state="final">
+                        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> While restoring a backup file, a possibly existing target database of the specified identifier will
                         be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>overwritten entirely<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
                     </target>
         <context-group purpose="location">
@@ -903,7 +902,7 @@
       </trans-unit>
       <trans-unit id="project.identifier" datatype="html">
         <source>Projektkennung</source>
-        <target state="new">Projektkennung</target>
+        <target state="final">Project identifier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">60</context>
@@ -1835,7 +1834,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. </source>
-        <target state="new"> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. </target>
+        <target state="final"> Optionally, you can specify a project name for each language. The name may contain any characters and be up to <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> characters long. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">85,60</context>
@@ -1843,7 +1842,7 @@
       </trans-unit>
       <trans-unit id="buttons.next" datatype="html">
         <source>Weiter</source>
-        <target state="new">Weiter</target>
+        <target state="final">Next</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">85</context>
@@ -1859,7 +1858,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration.info" datatype="html">
         <source> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </source>
-        <target state="new"> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </target>
+        <target state="final"> The selected start configuration determines which categories, forms and fields are initially available for the new project. The configuration can then be customized as desired. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">148,170</context>
@@ -1875,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </source>
-        <target state="new"> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </target>
+        <target state="final"> Select here the languages in which data is to be entered within the project. Please select at least one language. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">194</context>
@@ -1883,7 +1882,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="new"> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie "_" und "-". Die Kennung muss stets mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </target>
+        <target state="final"> Project identifier: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">194</context>
@@ -1891,7 +1890,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </source>
-        <target state="new"> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie "_" und "-". Die Kennung muss stets mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </target>
+        <target state="final"> Enter a unique identifier for the new project here. Permitted characters are lowercase letters and digits as well as underscores and hyphens. The identifier must always start with a lowercase letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">194</context>
@@ -1907,7 +1906,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
         <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="translated"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
+        <target state="final"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -1923,7 +1922,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source> Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="translated"> Please enter the project name in order to confirm deletion. </target>
+        <target state="final"> Please enter the project identifier in order to confirm deletion. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -2023,7 +2022,7 @@
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
         <source>Existierendes Projekt gleicher Kennung überschreiben</source>
-        <target state="translated">Overwrite existing project of the same name</target>
+        <target state="final">Overwrite existing project of the same identifier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">230</context>
@@ -2039,7 +2038,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
         <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
-        <target state="translated"> Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <target state="final"> Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">106</context>
@@ -5732,7 +5731,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
         <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="new">Geben Sie eine Projektkennung an, um fortzufahren.</target>
+        <target state="final">Please enter a project identifier to proceed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5740,7 +5739,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
-        <target state="new">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
+        <target state="final">Please select a target other than the currently selected project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5748,7 +5747,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
         <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="new">Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</target>
+        <target state="final">The project identifier you entered differs strongly from the identifier of the original project. Please check if you have selected the correct backup file before synchronizing data from the restored project with other Field Desktop instances or Field servers.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6412,7 +6411,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="new">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="final">A maximum of [2] characters may be entered in the field '[1]' of category '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6788,7 +6787,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="new">Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="final">A maximum of [2] characters may be entered in the field '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6972,7 +6971,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
         <source>Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="new">Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
+        <target state="final">The project identifiers do not match. The project is not deleted.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7060,7 +7059,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.missingIdentifier" datatype="html">
         <source>Bitte geben Sie eine Kennung für das neue Projekt ein.</source>
-        <target state="new">Bitte geben Sie eine Kennung für das neue Projekt ein.</target>
+        <target state="final">Please enter an identifier for the new project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7068,7 +7067,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierExists" datatype="html">
         <source>Ein Projekt mit der Kennung '[0]' existiert bereits.</source>
-        <target state="new">Ein Projekt mit der Kennung '[0]' existiert bereits.</target>
+        <target state="final">A project with the identifier '[0]' already exists.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7076,7 +7075,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
         <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
-        <target state="new">Die angegebene Projektkennung ist um [0] Zeichen zu lang.</target>
+        <target state="final">The specified project identifier is too long by [0] characters.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7084,7 +7083,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="new">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
+        <target state="final">The specified project identifier contains characters that are not allowed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7092,7 +7091,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
         <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
-        <target state="new">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
+        <target state="final">The project identifier must start with a lowercase letter.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7100,7 +7099,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
         <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
-        <target state="new">Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</target>
+        <target state="final">The specified project name for language [0] is too long by [1] characters.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

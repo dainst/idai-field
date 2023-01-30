@@ -1,4 +1,9 @@
 #document-picker {
+  search-bar {
+    position: relative;
+    top: 1px;
+  }
+
   #document-picker-list {
     max-height: calc(100vh - 350px);
     width: calc(100% - 1px);
@@ -11,10 +16,11 @@
       display: block;
       height: 58px;
       min-height: 58px;
-      margin: 0 0 -1px 0;
       padding: 10px 5px 10px 10px;
       font-size: 1em;
       border-radius: 0;
+      border-top-width: 1px;
+      border-bottom: 0;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -24,10 +30,6 @@
       &:hover {
         background-color: $list-item-hover-color;
         transition: background-color .5s ease;
-      }
-
-      &:first-child {
-        border-top: 0;
       }
     }
 

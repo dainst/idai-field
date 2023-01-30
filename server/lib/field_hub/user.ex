@@ -3,6 +3,19 @@ defmodule FieldHub.User do
     CouchService
   }
 
+  @moduledoc """
+  Bundles (CouchDB) user related functions.
+  """
+
+  @doc """
+  Create a new user
+
+  Returns `:created` if successful or `:already_exists` a user of that name already exists.
+
+  __Parameters__
+  - `name` the user's name.
+  - `password` the user's password.
+  """
   def create(name, password) do
     %{status_code: status_code} =
       CouchService.create_user(name, password, CouchService.get_admin_credentials())
@@ -16,8 +29,16 @@ defmodule FieldHub.User do
     end
   end
 
-  def delete(user_name) do
-    CouchService.delete_user(user_name, CouchService.get_admin_credentials())
+  @doc """
+  Delete a user
+
+  Returns `:deleted` if successful or `:unknown` if user is unknown.
+
+  __Parameters__
+  - `name` the user's name.
+  """
+  def delete(name) do
+    CouchService.delete_user(name, CouchService.get_admin_credentials())
     |> case do
       %{status_code: 200} ->
         :deleted
@@ -27,8 +48,17 @@ defmodule FieldHub.User do
     end
   end
 
-  def update_password(user_name, user_password) do
-    CouchService.update_password(user_name, user_password, CouchService.get_admin_credentials())
+  @doc """
+  Update a user's password
+
+  Returns `:updated` if successful or `:unknown` if user is unknown.
+
+  __Parameters__
+  - `name` the user's name.
+  - `password` the user's name.
+  """
+  def update_password(name, password) do
+    CouchService.update_password(name, password, CouchService.get_admin_credentials())
     |> case do
       %{status_code: 201} ->
         :updated
@@ -38,8 +68,14 @@ defmodule FieldHub.User do
     end
   end
 
-  def exists?(user_name) do
-    CouchService.get_user(user_name, CouchService.get_admin_credentials())
+  @doc """
+  Check if a user exists.
+
+  __Parameters__
+  - `name` the user's name.
+  """
+  def exists?(name) do
+    CouchService.get_user(name, CouchService.get_admin_credentials())
     |> case do
       %{status_code: 200} ->
         true

@@ -145,16 +145,15 @@ defmodule FieldHubWeb.Api.FileController do
     |> render(%{info: file_store_data})
   end
 
+  defp parse_type("thumbnail_image") do
+    :thumbnail_image
+  end
+
+  defp parse_type("original_image") do
+    :original_image
+  end
+
   defp parse_type(type) do
-    case type do
-      "thumbnail_image" ->
-        :thumbnail_image
-
-      "original_image" ->
-        :original_image
-
-      _ ->
-        {:error, type}
-    end
+    {:error, type}
   end
 end

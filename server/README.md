@@ -30,6 +30,13 @@ docker-compose up
 ```
 
 ### Phoenix Server
+
+FieldHub is written in [Elixir](https://elixir-lang.org/) with the [Phoenix Framework](https://www.phoenixframework.org/).
+
+FieldHub tries to follow the Elixir and Phoenix conventions when it comes to naming and directory structure. For detailed guides please consult the official documentation.
+
+### Project setup
+
 Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
 
 ```bash
@@ -55,20 +62,22 @@ Apply automatic formatting before committing code with:
 mix format
 ```
 
-### CLI Interface
+### Running specific functions
 
-The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functions.
 
-To call the CLI functions using `mix` use the pattern:
+To call functions using `mix` use the pattern:
 
 ```
 mix run -e 'FieldHub.CLI.<function_name>("<string parameter>")'
 ```
 
-For example add a user by running:
+The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functions. For example add a user by running:
 ```
 mix run -e 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
 ```
+
+You can run any function defined in the project this way, the CLI module just has the cleaner
+interface and is also available in production.
 
 ## Building a new docker image version
 

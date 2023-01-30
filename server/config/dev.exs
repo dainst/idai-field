@@ -1,4 +1,6 @@
 import Config
+# config/dev.exs is executed at compile time in the development environment
+# see https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html#environments
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

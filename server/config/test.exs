@@ -1,4 +1,6 @@
 import Config
+# config/test.exs is executed at compile time in the test environment
+# see https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html#environments
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
@@ -22,5 +24,5 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :field_hub,
   file_directory_root: "test/tmp",
-  # ~1mb instead of the 1gb default value
+  # ~10mb instead of the 1gb default value
   file_max_size: 10_000_000

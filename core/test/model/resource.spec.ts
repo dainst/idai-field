@@ -1,4 +1,4 @@
-import { Resource } from "../../src/model/resource";
+import { Resource } from '../../src/model/resource';
 
 
 /**

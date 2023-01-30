@@ -1,4 +1,4 @@
-import { FileSyncPreference } from "idai-field-core";
+import { FileSyncPreference, I18N } from 'idai-field-core';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -17,9 +17,10 @@ export interface Settings {
     languages: string[];
     isAutoUpdateActive: boolean;
     hostPassword: string;
-    syncTargets: { [projectName: string]: SyncTarget };
+    syncTargets: { [projectIdentifier: string]: SyncTarget };
     username: string;
-    dbs: Array<string>;
+    dbs: string[];
+    projectNames?: { [projectIdentifier: string]: I18N.String };
     selectedProject: string;
     imagestorePath: string;
     hideHiddenFieldsInConfigurationEditor?: boolean;

@@ -103,10 +103,10 @@ export namespace CategoryForm {
     }
 
 
-    export function getFieldLabelValue(category: CategoryForm, field: Name): I18N.LabeledValue|undefined {
+    export function getField(category: CategoryForm, fieldName: string): Field {
 
-        return getFields(category)?.find(Named.onName(is(field)));
-    } 
+        return getFields(category)?.find(Named.onName(is(fieldName)));
+    }
 
 
     export function getNamesOfCategoryAndSubcategories(category: CategoryForm): string[] {

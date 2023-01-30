@@ -59,7 +59,8 @@ describe('Validations', () => {
                         { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
                         { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
-                        { name: 'endDate', label: 'endDate', inputType: 'date' }
+                        { name: 'endDate', label: 'endDate', inputType: 'date' },
+                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 }
                     ]
 
             }]}, []],
@@ -712,5 +713,29 @@ describe('Validations', () => {
                 [ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE, 'T']
             );
         }
+    });
+
+
+    it('should report fields with too many characters', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                shortInput: 'Input text with too many characters',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertMaxCharactersRespected(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.MAX_CHARACTERS_EXCEEDED, 'T', 'shortInput', 10]
+            );
+        }
+        done();
     });
 });

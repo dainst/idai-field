@@ -36,6 +36,12 @@ export module MessagesConversion {
             msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
         }
 
+        if (msg === ValidationErrors.MAX_CHARACTERS_EXCEEDED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+            msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+        }
+
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;

@@ -28,18 +28,18 @@ export class MenuNavigator {
 
     public initialize() {
 
-        ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string, projectName?: string) => {
-            await this.onMenuItemClicked(menuItem, projectName);
+        ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string, projectIdentifier?: string) => {
+            await this.onMenuItemClicked(menuItem, projectIdentifier);
         });
 
         this.menuService.setContext('default');
     }
 
 
-    public async onMenuItemClicked(menuItem: string, projectName?: string) {
+    public async onMenuItemClicked(menuItem: string, projectIdentifier?: string) {
 
         if (menuItem === 'openProject') {
-            await this.settingsService.selectProject(projectName);
+            await this.settingsService.selectProject(projectIdentifier);
             reloadAndSwitchToHomeRoute();
         } else if (menuItem === 'createProject') {
             await this.zone.run(() => this.projectModalLauncher.createProject());
@@ -50,7 +50,7 @@ export class MenuNavigator {
         } else if (menuItem === 'projectImages') {
             await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
         } else if (menuItem === 'deleteProject') {
-            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectName));
+            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectIdentifier));
         } else if (menuItem === 'projectSynchronization') {
             await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
         } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'

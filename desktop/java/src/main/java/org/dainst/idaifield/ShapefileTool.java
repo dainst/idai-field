@@ -61,7 +61,7 @@ public class ShapefileTool {
     private static void printUsageInformation() {
 
         System.err.println("java -jar shapefile-tool.jar convert [shapefilePath] [outputFilePath]");
-        System.err.println("java -jar shapefile-tool.jar export [projectName] [password] [outputFilePath] "
+        System.err.println("java -jar shapefile-tool.jar export [projectIdentifier] [password] [outputFilePath] "
                 + "[tempFolderPath] [operation] [epsg]");
     }
 }

@@ -30,9 +30,9 @@ export class SettingsSerializer {
         configToWrite['hostPassword'] = settings.hostPassword;
         configToWrite['hideHiddenFieldsInConfigurationEditor'] = settings.hideHiddenFieldsInConfigurationEditor;
 
-        configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectName) => {
-            const syncTarget = settings.syncTargets[projectName];
-            if (syncTarget.address || syncTarget.password) result[projectName] = syncTarget;
+        configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectIdentifier) => {
+            const syncTarget = settings.syncTargets[projectIdentifier];
+            if (syncTarget.address || syncTarget.password) result[projectIdentifier] = syncTarget;
             return result;
         }, {});
 
@@ -46,6 +46,10 @@ export class SettingsSerializer {
 
         if (settings.dbs) {
             configToWrite['dbs'] = settings.dbs;
+        }
+
+        if (settings.projectNames) {
+            configToWrite['projectNames'] = settings.projectNames;
         }
 
         return this.writeConfigFile(configToWrite);

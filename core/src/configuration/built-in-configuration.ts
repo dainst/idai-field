@@ -129,9 +129,10 @@ export class BuiltInConfiguration {
                     editable: false,
                     visible: false
                 },
-                shortName: {
-                    inputType: Field.InputType.SIMPLE_INPUT,
-                    fixedInputType: true
+                shortName: {
+                    inputType: Field.InputType.INPUT,
+                    fixedInputType: true,
+                    maxCharacters: 50
                 },
                 coordinateReferenceSystem: {
                     inputType: Field.InputType.DROPDOWN,

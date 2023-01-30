@@ -17,6 +17,7 @@ export class LanguagesListComponent {
     @Input() selectedLanguages: string[];
 
     @Output() onModalToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
 
     constructor(private modalService: NgbModal) {}
@@ -37,6 +38,7 @@ export class LanguagesListComponent {
 
         try {
             this.selectedLanguages.push(await modalReference.result);
+            this.onChanged.emit();
         } catch (err) {
             // Modal has been canceled
         }
@@ -49,5 +51,7 @@ export class LanguagesListComponent {
 
         const index = this.selectedLanguages.indexOf(languageToRemove, 0);
         if (index !== -1) this.selectedLanguages.splice(index, 1);
+        
+        this.onChanged.emit();
     }
 }

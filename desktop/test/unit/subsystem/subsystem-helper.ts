@@ -39,7 +39,7 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbDatastore, projectName = 'testdb') {
+export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
     const pouchdbServer = new ExpressServer(undefined);
     const settingsProvider = new SettingsProvider();
@@ -72,7 +72,7 @@ export async function setupSettingsService(pouchdbDatastore, projectName = 'test
         isAutoUpdateActive: false,
         hostPassword: '',
         syncTargets: {},
-        dbs: [projectName],
+        dbs: [projectIdentifier],
         selectedProject: '',
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
         username: 'synctestuser'
@@ -107,12 +107,12 @@ export interface App {
 }
 
 
-export async function createApp(projectName = 'testdb'): Promise<App> {
+export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
         new IdGenerator());
-    pouchdbDatastore.createDbForTesting(projectName);
+    pouchdbDatastore.createDbForTesting(projectIdentifier);
     pouchdbDatastore.setupChangesEmitter();
 
     const {
@@ -120,7 +120,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         projectConfiguration,
         settingsProvider,
         imageStore
-    } = await setupSettingsService(pouchdbDatastore, projectName);
+    } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
 
@@ -159,7 +159,7 @@ export async function createApp(projectName = 'testdb'): Promise<App> {
         createdIndexFacade,
         stateSerializer,
         tabManager,
-        projectName,
+        projectIdentifier,
         projectConfiguration,
         true
     );

@@ -1,5 +1,3 @@
-import { Name } from '../tools/named';
-
 // Ordered by Name
 export const PROJECT_MAPPING = {
     'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
@@ -32,10 +30,10 @@ export const PROJECT_MAPPING = {
 };
 
 
-export function getConfigurationName(projectName: Name): Name {
+export function getConfigurationName(projectIdentifier: string): string {
 
-    for (let [name, project] of Object.entries(PROJECT_MAPPING)) {
-        if (projectName === name || projectName.startsWith(name + '-')) return project.prefix;
+    for (let [identifier, project] of Object.entries(PROJECT_MAPPING)) {
+        if (projectIdentifier === identifier || projectIdentifier.startsWith(identifier + '-')) return project.prefix;
     }
 
     return 'Default';

@@ -9,7 +9,7 @@
         <loading-icon [context]="'project-information-modal'"></loading-icon>
     </div>
     <div *ngIf="!isLoading()" id="project-information-modal-info" i18n="@@project.informationModal.info">
-        Auf diesem Computer gespeicherte Daten für das Projekt <b>{{getProjectName()}}</b>:
+        Auf diesem Computer gespeicherte Daten für das Projekt <b>{{getProjectIdentifier()}}</b>:
     </div>
     <div *ngIf="!isLoading()" class="card bg-light">
         <div class="card-body">

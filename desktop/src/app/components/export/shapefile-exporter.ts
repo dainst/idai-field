@@ -29,13 +29,13 @@ export module ShapefileExporter {
     }
 
 
-    function getArguments(projectName: string, password: String, projectDocument: Document, outputFilepath: string,
+    function getArguments(projectIdentifier: string, password: String, projectDocument: Document, outputFilepath: string,
                           operationId: string): string {
 
         const epsg: string|undefined = getEPSGCode(projectDocument);
 
         return '"export" '
-            + '"' + projectName + '" '
+            + '"' + projectIdentifier + '" '
             + '"' + password + '" '
             + '"' + outputFilepath + '" '
             + '"' + remote.getGlobal('appDataPath') + '/temp" '

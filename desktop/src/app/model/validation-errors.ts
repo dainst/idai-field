@@ -16,6 +16,7 @@ export module ValidationErrors {
     export const INVALID_LITERATURE_VALUES = 'validationerror/invalidliteraturevalues';
     export const INVALID_OPTIONALRANGE_VALUES = 'validationerror/invalidoptionalrange';
     export const INVALID_MAP_LAYER_RELATION_VALUES = 'validationerror/invalidmaplayerrelationvalues';
+    export const MAX_CHARACTERS_EXCEEDED = 'validationerror/maxcharactersexceeded';
     export const END_DATE_BEFORE_BEGINNING_DATE = 'validationerror/enddatebeforebeginningdate';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
 }

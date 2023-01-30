@@ -117,7 +117,8 @@ import { IdentifierComponent } from './core/forms/identifier.component';
     ],
     exports: [
         DoceditComponent,
-        RevisionSelectorComponent
+        RevisionSelectorComponent,
+        MultiLanguageTextFieldComponent
     ],
     entryComponents: [
         DoceditComponent,

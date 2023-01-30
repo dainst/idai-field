@@ -27,19 +27,20 @@ describe('CreateProjectModalComponent', () => {
             settingsProvider,
             messages,
             undefined,
+            undefined,
             undefined
         );
     });
 
 
-    it('cannot create project with existing name', async done => {
+    it('cannot create project with existing identifier', async done => {
 
         settingsProvider.getSettings.and.returnValue({ dbs: ['existing'], selectedProject: 'existing' });
 
-        createProjectModalComponent.projectName = 'existing';
+        createProjectModalComponent.projectIdentifier = 'existing';
 
         await createProjectModalComponent.createProject();
-        expect(messages.add).toHaveBeenCalledWith([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, 'existing']);
+        expect(messages.add).toHaveBeenCalledWith([M.PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS, 'existing']);
         done();
     });
 });

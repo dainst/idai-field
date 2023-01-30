@@ -11,4 +11,5 @@ export interface BuiltInFieldDefinition extends BaseFieldDefinition {
     fixedInputType?: true;
     valuelistFromProjectField?: string;
     allowOnlyValuesOfParent?: boolean;
+    maxCharacters?: number;
 }

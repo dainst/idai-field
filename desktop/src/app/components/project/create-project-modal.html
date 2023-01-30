@@ -4,16 +4,9 @@
     </h5>
 </div>
 
-<div id="create-project-modal-body" class="modal-body">
-    <div i18n="@@project.createModal.projectName">Projektname:</div>
-    <div>
-        <input id="create-project-input"
-               type="text"
-               class="form-control"
-               [(ngModel)]="projectName"
-               (keydown)="$event.key !== 'Enter' || createProject()" />
-    </div>
-    <div i18n="@@project.createModal.configuration">Konfiguration:</div>
+<div *ngIf="page === 0" id="create-project-modal-body" class="modal-body">
+    <div i18n="@@project.createModal.configuration"
+         class="create-project-modal-heading">Konfiguration:</div>
     <select (change)="selectTemplate($event.target.value)"
             class="form-control">
         <option *ngFor="let templateName of getTemplateNames()"
@@ -22,15 +15,66 @@
             {{getTemplateLabel(templateName)}}
         </option>
     </select>
-    <div i18n="@@project.createModal.languages">Projektsprachen:</div>
-    <languages-list [languages]="languages" [selectedLanguages]="selectedLanguages"
-                    (onModalToggled)="modalOpened = $event"></languages-list>
+    <div class="small-info-text" i18n="@@project.createModal.configuration.info">
+        Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt
+        zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden.
+    </div>
+</div>
+
+<div *ngIf="page === 1" id="create-project-modal-body" class="modal-body">
+    <div i18n="@@project.createModal.languages"
+         class="create-project-modal-heading">Projektsprachen:</div>
+    <languages-list [languages]="languages" 
+                    [selectedLanguages]="selectedLanguages"
+                    (onModalToggled)="modalOpened = $event"
+                    (onChanged)="resetProjectName()"></languages-list>
+    <div id="languages-info" class="small-info-text" i18n="@@project.createModal.languages.info">
+        Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie
+        mindestens eine Sprache aus.
+    </div>
+</div>
+
+<div *ngIf="page === 2" id="create-project-modal-body" class="modal-body">
+    <div i18n="@@project.createModal.identifier"
+         class="create-project-modal-heading">Projektkennung:</div>
+    <div>
+        <input id="create-project-input"
+               type="text"
+               class="form-control"
+               [(ngModel)]="projectIdentifier"
+               (keydown)="$event.key !== 'Enter' || createProject()" />
+    </div>
+    <div class="small-info-text" i18n="@@project.createModal.identifier.info">
+        Geben Sie hier eine eindeutige Kennung des neuen Projekts ein.
+        Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss
+        mit einem Kleinbuchstaben beginnen und darf höchstens {{getIdentifierMaxLength()}} Zeichen lang sein.
+    </div>
+    <div id="project-name-heading"
+         class="create-project-modal-heading"
+         i18n="@@project.createModal.projectName">Projektname:</div>
+    <multi-language-text-field [fieldData]="projectName"
+                               [languages]="getSelectedLanguageObjects()"
+                               (onFieldDataChanged)="updateProjectName($event)"></multi-language-text-field>
+    <div class="small-info-text" i18n="@@project.createModal.projectName.info">
+        Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und
+        maximal {{getNameMaxLength()}} Zeichen lang sein.
+    </div>
 </div>
 
 <div class="modal-footer">
-    <button id="create-project-confirm" class="btn btn-success" type="button"
-            [ngClass]="{ 'disabled': !isConfirmButtonEnabled() }"
-            (click)="createProject()">
+    <button *ngIf="page > 0" id="create-project-back" class="btn btn-primary" type="button"
+            [ngClass]="{ 'disabled': creating }"
+            (click)="goBack()">
+        <span i18n="@@buttons.back">Zurück</span>
+    </button>
+    <button *ngIf="page < 2" id="create-project-next" class="btn btn-primary" type="button"
+            [ngClass]="{ 'disabled': !isFilledIn() }"
+            (click)="confirm()">
+        <span i18n="@@buttons.next">Weiter</span>
+    </button>
+    <button *ngIf="page === 2" id="create-project-confirm" class="btn btn-success" type="button"
+            [ngClass]="{ 'disabled': !isFilledIn() }"
+            (click)="confirm()">
         <span i18n="@@buttons.create">Erstellen</span>
     </button>
     <button type="button" id="create-project-cancel" class="btn btn-secondary"

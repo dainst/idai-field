@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, Document } from 'idai-field-core';
+import { Observable, Observer } from 'rxjs';
+import { Datastore, Document, ObserverUtil } from 'idai-field-core';
 import { DoceditComponent } from '../components/docedit/docedit.component';
 import { CreateProjectModalComponent } from '../components/project/create-project-modal.component';
 import { DeleteProjectModalComponent } from '../components/project/delete-project-modal.component';
@@ -9,7 +10,7 @@ import { SynchronizationModalComponent } from '../components/project/synchroniza
 import { ViewModalLauncher } from '../components/viewmodal/view-modal-launcher';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
-import { SettingsProvider } from './settings/settings-provider';
+import { SettingsService } from './settings/settings-service';
 
 
 @Injectable()
@@ -18,11 +19,18 @@ import { SettingsProvider } from './settings/settings-provider';
  */
 export class ProjectModalLauncher {
 
+    private projectPropertiesObservers: Array<Observer<void>> = [];
+
+
     constructor(private modalService: NgbModal,
                 private menuService: Menus,
                 private viewModalLauncher: ViewModalLauncher,
                 private datastore: Datastore,
-                private settingsProvider: SettingsProvider) {}
+                private settingsService: SettingsService) {}
+
+                
+    public projectPropertiesNotifications = (): Observable<Document> =>
+        ObserverUtil.register(this.projectPropertiesObservers);
 
 
    public async createProject() {
@@ -32,7 +40,7 @@ export class ProjectModalLauncher {
 
         const modalRef = this.modalService.open(
             CreateProjectModalComponent,
-            { backdrop: 'static', keyboard: false, animation: false }
+            { backdrop: 'static', keyboard: false, animation: false, modalDialogClass: 'create-project-modal' }
         );
 
         try {
@@ -61,6 +69,8 @@ export class ProjectModalLauncher {
 
         try {
             await modalRef.result;
+            await this.settingsService.updateProjectName(projectDocument);
+            ObserverUtil.notify(this.projectPropertiesObservers, undefined);
         } catch(err) {
             // Docedit modal has been canceled
         }
@@ -69,7 +79,7 @@ export class ProjectModalLauncher {
     }
 
 
-    public async deleteProject(projectName: string) {
+    public async deleteProject(projectIdentifier: string) {
 
         const menuContext: MenuContext = this.menuService.getContext();
         this.setModalContext(menuContext);
@@ -79,7 +89,7 @@ export class ProjectModalLauncher {
             { backdrop: 'static', keyboard: false, animation: false }
         );
 
-        modalRef.componentInstance.projectName = projectName;
+        modalRef.componentInstance.projectIdentifier = projectIdentifier;
 
         try {
             await modalRef.result;

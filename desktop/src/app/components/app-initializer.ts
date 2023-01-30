@@ -1,6 +1,6 @@
 import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
-    DocumentCache, FulltextIndex, getConfigurationName, ImageStore, Indexer, IndexFacade,
-    PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+    DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
+    ProjectConfiguration, Document, Labels } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -12,6 +12,7 @@ import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-
 import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
+import { Languages } from '../services/languages';
 
 
 interface Services {
@@ -86,18 +87,16 @@ export class AppInitializerServiceLocator {
 }
 
 
-export const appInitializerFactory = (
-    serviceLocator: AppInitializerServiceLocator,
-    settingsService: SettingsService,
-    pouchdbDatastore: PouchdbDatastore,
-    imageStore: ImageStore,
-    expressServer: ExpressServer,
-    documentCache: DocumentCache,
-    thumbnailGenerator: ThumbnailGenerator,
-    progress: InitializationProgress,
-    configReader: ConfigReader,
-    configLoader: ConfigLoader
-) => async (): Promise<void> => {
+export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocator,
+                                      settingsService: SettingsService,
+                                      pouchdbDatastore: PouchdbDatastore,
+                                      imageStore: ImageStore,
+                                      expressServer: ExpressServer,
+                                      documentCache: DocumentCache,
+                                      thumbnailGenerator: ThumbnailGenerator,
+                                      progress: InitializationProgress,
+                                      configReader: ConfigReader,
+                                      configLoader: ConfigLoader) => async (): Promise<void> => {
 
     await expressServer.setupServer();
 
@@ -105,7 +104,7 @@ export const appInitializerFactory = (
     await setUpDatabase(settingsService, settings, progress);
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
-
+    await setUpProgressEnvironment(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
 
     const services = await loadConfiguration(
@@ -113,6 +112,8 @@ export const appInitializerFactory = (
         settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
+
+    await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
 
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
 
@@ -123,10 +124,19 @@ export const appInitializerFactory = (
 const loadSettings = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Settings> => {
 
     await progress.setPhase('loadingSettings');
-    const settings = await settingsService.updateSettings(await (new SettingsSerializer()).load());
-    await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
+    
+    const settings = await settingsService.updateSettings(await (new SettingsSerializer()).load());    
 
     return settings;
+};
+
+
+const setUpProgressEnvironment = async (settings: Settings, progress: InitializationProgress) => {
+
+    const projectIdentifier = settings.dbs[0];
+    const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames[projectIdentifier]);
+
+    await progress.setEnvironment(projectName ?? projectIdentifier, Settings.getLocale());
 };
 
 
@@ -161,7 +171,7 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnai
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
                                  configReader: ConfigReader, configLoader: ConfigLoader,
-                                 db: PouchDB.Database, projectName: string, username: string): Promise<Services> => {
+                                 db: PouchDB.Database, projectIdentifier: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -177,7 +187,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         = IndexerConfiguration.configureIndexers(configuration);
 
     const configurationIndex = await buildConfigurationIndex(
-        configReader, configLoader, db, configuration, projectName, username
+        configReader, configLoader, db, configuration, projectIdentifier, username
     );
 
     return {
@@ -190,12 +200,10 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 };
 
 
-const loadDocuments = async (
-    serviceLocator: AppInitializerServiceLocator,
-    db: PouchDB.Database<{}>,
-    documentCache: DocumentCache,
-    progress: InitializationProgress
-) => {
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
+                             db: PouchDB.Database<{}>,
+                             documentCache: DocumentCache,
+                             progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await db.info()).doc_count);
@@ -210,16 +218,23 @@ const loadDocuments = async (
 };
 
 
+const updateProjectNameInSettings = async (settingsService: SettingsService, db: PouchDB.Database<{}>) => {
+
+    const projectDocument = await db.get('project') as Document;
+    settingsService.updateProjectName(projectDocument);
+};
+
+
 const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
-                                       configuration: ProjectConfiguration, projectName: string,
+                                       configuration: ProjectConfiguration, projectIdentifier: string,
                                        username: string): Promise<ConfigurationIndex> => {
 
     const configurationIndex: ConfigurationIndex = new ConfigurationIndex(
-        configReader, configLoader, configuration, projectName
+        configReader, configLoader, configuration, projectIdentifier
     );
 
     const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
-        (id: string) => db.get(id), configReader, projectName, username,
+        (id: string) => db.get(id), configReader, projectIdentifier, username,
     );
     await configurationIndex.rebuild(configurationDocument);
 

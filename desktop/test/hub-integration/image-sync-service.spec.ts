@@ -1,8 +1,4 @@
-const fs = require('fs');
-const execSync = require('child_process').execSync;
-
 import Ajv from 'ajv';
-
 import { ImageStore, ImageVariant, ImageSyncService } from 'idai-field-core';
 import { FsAdapter } from '../../src/app/services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../../src/app/services/imagestore/remote-image-store';
@@ -11,6 +7,10 @@ import { Settings, SyncTarget } from '../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../src/app/services/settings/settings-provider';
 
 import schema from 'idai-field-core/api-schemas/files-list.json';
+
+const fs = require('fs');
+const execSync = require('child_process').execSync;
+
 
 /**
  * Test the interactions of desktop class implementations required by {@link ImageStore}.
@@ -22,7 +22,7 @@ describe('ImageSyncService', () => {
 
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
     const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
-    const testProjectName = 'test_tmp_project';
+    const testProjectIdentifier = 'test_tmp_project';
     const hubContainer = 'field-hub-client-integration-test';
 
     const ajv = new Ajv();
@@ -51,7 +51,7 @@ describe('ImageSyncService', () => {
         languages: [],
         hostPassword: '',
         syncTargets: {
-            [testProjectName]: syncTarget
+            [testProjectIdentifier]: syncTarget
         },
         username: 'not_relevant_for_the_tests',
         dbs: [],
@@ -67,7 +67,7 @@ describe('ImageSyncService', () => {
         settingsProviderMock.setSettings(settingsMock);
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        await imageStore.init(testFilePath, testProjectName);
+        await imageStore.init(testFilePath, testProjectIdentifier);
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
 
@@ -80,9 +80,9 @@ describe('ImageSyncService', () => {
     // Re-initialize image store data for each test.
     beforeEach(async (done) => {
 
-        await imageStore.init(`${testFilePath}imagestore/`, testProjectName);
+        await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.create_project("${testProjectName}", "${syncTarget.password}")'`;
+        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.create_project("${testProjectIdentifier}", "${syncTarget.password}")'`;
         execSync(command);
         done();
     });
@@ -90,9 +90,9 @@ describe('ImageSyncService', () => {
 
     afterEach(async (done) => {
 
-        await imageStore.deleteData(testProjectName);
+        await imageStore.deleteData(testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.delete_project("${testProjectName}")'`;
+        const command = `docker exec ${hubContainer} /app/bin/field_hub eval 'FieldHub.CLI.delete_project("${testProjectIdentifier}")'`;
         execSync(command).toString();
 
         done();
@@ -110,17 +110,17 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-            const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+            const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
             if (!await validate(localData)){
                 throw new Error('Local data not valid according to schema definition.');
             }
 
             const remoteData = await remoteImageStore.getFileInfosUsingCredentials(
-                syncTarget.address, syncTarget.password, testProjectName,
+                syncTarget.address, syncTarget.password, testProjectIdentifier,
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
@@ -142,17 +142,17 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-            const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+            const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
             if (!await validate(localData)){
                 throw new Error('Local data not valid according to schema definition.');
             }
 
             const remoteData = await remoteImageStore.getFileInfosUsingCredentials(
-                syncTarget.address, syncTarget.password, testProjectName,
+                syncTarget.address, syncTarget.password, testProjectIdentifier,
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
@@ -175,21 +175,21 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
-            await imageStore.remove('some_uuid', testProjectName);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
+            await imageStore.remove('some_uuid', testProjectIdentifier);
 
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-            const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+            const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
             if (!await validate(localData)){
                 throw new Error('Local data not valid according to schema definition.');
             }
 
             const remoteData = await remoteImageStore.getFileInfosUsingCredentials(
-                syncTarget.address, syncTarget.password, testProjectName,
+                syncTarget.address, syncTarget.password, testProjectIdentifier,
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
@@ -210,21 +210,21 @@ describe('ImageSyncService', () => {
 
         try {
 
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-            await remoteImageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
-            await remoteImageStore.remove('some_uuid', testProjectName);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+            await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
+            await remoteImageStore.remove('some_uuid', testProjectIdentifier);
 
-            const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+            const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
             if (!await validate(localData)){
                 throw new Error('Local data not valid according to schema definition.');
             }
 
             const remoteData = await remoteImageStore.getFileInfosUsingCredentials(
-                syncTarget.address, syncTarget.password, testProjectName,
+                syncTarget.address, syncTarget.password, testProjectIdentifier,
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 

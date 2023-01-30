@@ -46,9 +46,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_WRITE_ERROR_GENERIC = 'backup.write.error.generic';
     public static BACKUP_READ_ERROR_GENERIC = 'backup.read.error.generic';
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
-    public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
-    public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
-    public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
+    public static BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER = 'backup.read.error.noProjectIdentifier';
+    public static BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER = 'backup.read.error.sameProjectIdentifier';
+    public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER = 'backup.read.warning.unsimilarProjectIdentifier';
 
     // Download Project Package
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
@@ -109,6 +109,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES = 'M.Import.ValidationErrors.invalidLiteratureValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
+    public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
     public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
 
     // Import Package - ImportErrors
@@ -192,6 +193,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
     public static DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.endDateBeforeBeginningDate';
+    public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
@@ -218,12 +220,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Resources Package
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
-    public static RESOURCES_WARNING_PROJECT_NAME_NOT_SAME = 'resources.error.projectNameNotSame';
+    public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
     public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
-    public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources.error.noProjectName';
-    public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources.error.projectNameLength';
-    public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources.error.projectNameSymbols';
-    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources.error.projectNameExists';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
@@ -234,6 +232,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
     public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
 
+    // Project identifier validation
+    public static PROJECT_CREATION_ERROR_MISSING_IDENTIFIER = 'projectCreation.error.missingIdentifier';
+    public static PROJECT_CREATION_ERROR_IDENTIFIER_LENGTH = 'projectCreation.error.identifierLength';
+    public static PROJECT_CREATION_ERROR_IDENTIFIER_CHARACTERS = 'projectCreation.error.identifierCharacters';
+    public static PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS = 'projectCreation.error.identifierExists';
+    public static PROJECT_CREATION_ERROR_IDENTIFIER_STARTING_CHARACTER = 'projectCreation.error.identifierStartingCharacter';
+    public static PROJECT_CREATION_ERROR_NAME_LENGTH = 'projectCreation.error.nameLength';
 
     // Configuration Package
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
@@ -383,28 +388,28 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.BACKUP_READ_ERROR_NO_PROJECT_NAME] = {
+        this.msgs[M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER] = {
             content: i18n({
-                id: 'messages.backup.read.error.noProjectName',
-                value: 'Geben Sie einen Projektnamen an, um fortzufahren.'
+                id: 'messages.backup.read.error.noProjectIdentifier',
+                value: 'Geben Sie eine Projektkennung an, um fortzufahren.'
             }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.BACKUP_READ_ERROR_SAME_PROJECT_NAME] = {
+        this.msgs[M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER] = {
             content: i18n({
-                id: 'messages.backup.read.error.sameProjectName',
+                id: 'messages.backup.read.error.sameProjectIdentifier',
                 value: 'Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.'
             }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME] = {
+        this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER] = {
             content: i18n({
-                id: 'messages.backup.read.warning.unsimilarProjectName',
-                value: 'Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.'
+                id: 'messages.backup.read.warning.unsimilarProjectIdentifier',
+                value: 'Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.'
             }),
             level: 'warning',
             params: [],
@@ -1134,6 +1139,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
+            content: i18n({
+                id: 'messages.import.validation.error.maxCharactersExceeded',
+                value: 'Im Feld \'[1]\' der Kategorie \'[0]\' dürfen maximal [2] Zeichen eingetragen werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_ERROR_CATEGORY_NOT_ALLOWED] = {
             content: i18n({
                 id: 'messages.import.error.categoryNotAllowed',
@@ -1557,6 +1571,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.maxCharactersExceeded',
+                value: 'Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {
             content: i18n({
                 id: 'messages.docedit.validation.error.noRecordedIn',
@@ -1746,10 +1769,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.RESOURCES_WARNING_PROJECT_NAME_NOT_SAME] = {
+        this.msgs[M.RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME] = {
             content: i18n({
-                id: 'messages.resources.warning.projectNameNotSame',
-                value: 'Die Namen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.'
+                id: 'messages.resources.warning.projectIdentifierNotSame',
+                value: 'Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.'
             }),
             level: 'warning',
             params: [],
@@ -1759,42 +1782,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.categoryNotFound',
                 value: 'Die Kategoriedefinition für \'[0]\' fehlt in der Datei Fields.json.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_ERROR_NO_PROJECT_NAME] = {
-            content: i18n({
-                id: 'messages.resources.error.noProjectName',
-                value: 'Bitte geben Sie einen Namen für das neue Projekt ein.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_EXISTS] = {
-            content: i18n({
-                id: 'messages.resources.error.projectNameExists',
-                value: 'Ein Projekt mit dem Namen \'[0]\' existiert bereits.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_LENGTH] = {
-            content: i18n({
-                id: 'messages.resources.error.projectNameLength',
-                value: 'Der angegebene Projektname ist um [0] Zeichen zu lang.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS] = {
-            content: i18n({
-                id: 'messages.resources.error.projectNameSymbols',
-                value: 'Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie _ und -.'
             }),
             level: 'danger',
             params: [],
@@ -1876,6 +1863,60 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.parentResourceDeleted',
                 value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_MISSING_IDENTIFIER] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.missingIdentifier',
+                value: 'Bitte geben Sie eine Kennung für das neue Projekt ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.identifierExists',
+                value: 'Ein Projekt mit der Kennung \'[0]\' existiert bereits.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_LENGTH] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.identifierLength',
+                value: 'Die angegebene Projektkennung ist um [0] Zeichen zu lang.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_CHARACTERS] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.identifierCharacters',
+                value: 'Die angegebene Projektkennung enthält nicht erlaubte Zeichen.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_STARTING_CHARACTER] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.identifierStartingCharacter',
+                value: 'Die Projektkennung muss mit einem Kleinbuchstaben beginnen.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_NAME_LENGTH] = {
+            content: i18n({
+                id: 'messages.projectCreation.error.nameLength',
+                value: 'Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.'
             }),
             level: 'danger',
             params: [],

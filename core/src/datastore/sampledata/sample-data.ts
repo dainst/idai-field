@@ -8,7 +8,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'project',
             'identifier': 'test',
-            'shortDescription': getI18nString('testProject'),
+            'shortName': getI18nString('testProject'),
             'staff': [
                 SAMPLE_DATA_LABELS[locale]['person'] + ' 1',
                 SAMPLE_DATA_LABELS[locale]['person'] + ' 2'

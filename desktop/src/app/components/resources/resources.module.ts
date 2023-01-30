@@ -121,15 +121,15 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
                          settingsProvider: SettingsProvider,
                          tabManager: TabManager) => {
 
-                const projectName = settingsProvider.getSettings().selectedProject;
-                if (!projectName) throw 'project not set';
+                const projectIdentifier: string = settingsProvider.getSettings().selectedProject;
+                if (!projectIdentifier) throw 'project not set';
 
                 return new ResourcesStateManager(
                     datastore,
                     indexFacade,
                     stateSerializer,
                     tabManager,
-                    projectName,
+                    projectIdentifier,
                     projectConfiguration,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );

@@ -4,6 +4,8 @@ const messages = require('./messages');
 
 const getTemplate = (mainWindow, context, config) => {
 
+    const projects = getProjects(config);
+
     const template = [{
         label: 'Field',
         submenu: [{
@@ -34,21 +36,21 @@ const getTemplate = (mainWindow, context, config) => {
                 type: 'separator'
             }, {
                 label: messages.get('menu.project.openProject'),
-                enabled: isDefaultContext(context) && getProjectNames(true).length > 0,
-                submenu: getProjectNames(true).map(projectName => {
+                enabled: isDefaultContext(context) && projects.slice(1).length > 0,
+                submenu: projects.slice(1).map(project => {
                     return {
-                        label: projectName,
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', projectName),
+                        label: project.label,
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'openProject', project.identifier),
                         enabled: isDefaultContext(context)
                     };
                 })
             }, {
                 label: messages.get('menu.project.deleteProject'),
-                enabled: isDefaultContext(context) && getProjectNames(false).length > 0,
-                submenu: getProjectNames(false).map(projectName => {
+                enabled: isDefaultContext(context) && projects.length > 0,
+                submenu: projects.map(project => {
                     return {
-                        label: projectName,
-                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject', projectName),
+                        label: project.label,
+                        click: () => mainWindow.webContents.send('menuItemClicked', 'deleteProject', project.identifier),
                         enabled: isDefaultContext(context)
                     };
                 })
@@ -70,7 +72,7 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.project.projectSynchronization'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'projectSynchronization'),
                 enabled: isDefaultContext(context)
-                    && global.config.dbs && global.config.dbs.length > 0 && global.config.dbs[0] !== 'test'
+                    && config.dbs && config.dbs.length > 0 && config.dbs[0] !== 'test'
             }, {
                 type: 'separator'
             }, {
@@ -339,14 +341,33 @@ const isConfigurationContext = context => [
 ].includes(context);
 
 
-const getProjectNames = (unopened) => {
+const getProjects = config => {
 
-    if (!global.config.dbs || global.config.dbs.length < 2) {
+    if (!config.dbs || config.dbs.length < 2) {
         return [];
     } else {
-        return unopened
-            ? global.config.dbs.slice(1)
-            : global.config.dbs;
+        return config.dbs.map(projectIdentifier => {
+            return {
+                identifier: projectIdentifier,
+                label: getProjectLabel(projectIdentifier, config)
+            };
+        });
+    }
+};
+
+
+const getProjectLabel = (projectIdentifier, config) => {
+
+    const labels = config.projectNames?.[projectIdentifier];
+    if (!labels) return projectIdentifier;
+
+    if (typeof labels === 'string') {
+        return labels + ' (' + projectIdentifier + ')';
+    } else {
+        const language = config.languages.find(language => labels[language]);
+        return language
+            ? labels[language] + ' (' + projectIdentifier + ')'
+            : projectIdentifier;
     }
 };
 

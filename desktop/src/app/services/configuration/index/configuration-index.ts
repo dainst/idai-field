@@ -28,7 +28,7 @@ export class ConfigurationIndex {
     constructor(private configReader: ConfigReader,
                 private configLoader: ConfigLoader,
                 private projectConfiguration: ProjectConfiguration,
-                private projectName: string) {}
+                private projectIdentifier: string) {}
 
     
     public getTemplates = (): Map<Template> => this.templates;
@@ -104,7 +104,7 @@ export class ConfigurationIndex {
     private async buildConfigurationIndex(configurationDocument: ConfigurationDocument,
                                           customProjectConfiguration?: ProjectConfiguration) {
 
-        const builtInConfiguration = new BuiltInConfiguration(getConfigurationName(this.projectName));
+        const builtInConfiguration = new BuiltInConfiguration(getConfigurationName(this.projectIdentifier));
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
         const valuelists = await this.configReader.read('/Library/Valuelists.json');

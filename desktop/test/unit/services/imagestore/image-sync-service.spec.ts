@@ -1,15 +1,15 @@
-const fs = require('fs');
-const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
-
+import Ajv from 'ajv';
 import { ImageSyncService, PouchdbDatastore } from 'idai-field-core';
 import { ImageStore, IdGenerator, ImageVariant } from 'idai-field-core';
 import { ExpressServer } from '../../../../src/app/services/express-server';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
 
-
-import Ajv from 'ajv';
 import schema from 'idai-field-core/api-schemas/files-list.json';
+
+const fs = require('fs');
+const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
+
 
 /**
  * Test the image syncing interactions between two desktop clients.
@@ -19,7 +19,7 @@ describe('ImageSyncService', () => {
   const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
   const localFilePath = process.cwd() + '/test/test-temp/';
   const expressServerFilePath = process.cwd() + '/test/test-temp-remote/';
-  const testProjectName = 'test_tmp_project';
+  const testProjectIdentifier = 'test_tmp_project';
   const password = 'pw';
 
   let imageStore: ImageStore;
@@ -53,14 +53,14 @@ describe('ImageSyncService', () => {
       new IdGenerator()
     );
 
-    await pouchdbDatastore.createEmptyDb(testProjectName);
+    await pouchdbDatastore.createEmptyDb(testProjectIdentifier);
 
     done();
   });
 
 
   afterAll(async (done) => {
-    await pouchdbDatastore.destroyDb(testProjectName);
+    await pouchdbDatastore.destroyDb(testProjectIdentifier);
 
     await new Promise<void>((resolve) => {
       expressMainApp.close(resolve);
@@ -78,15 +78,15 @@ describe('ImageSyncService', () => {
 
   // Re-initialize image store data for each test.
   beforeEach(async (done) => {
-    await imageStore.init(`${localFilePath}imagestore/`, testProjectName);
-    await imageStoreExpressServer.init(`${expressServerFilePath}imagestore/`, testProjectName);
+    await imageStore.init(`${localFilePath}imagestore/`, testProjectIdentifier);
+    await imageStoreExpressServer.init(`${expressServerFilePath}imagestore/`, testProjectIdentifier);
     done();
   });
 
 
   afterEach(async (done) => {
-    await imageStore.deleteData(testProjectName);
-    await imageStoreExpressServer.deleteData(testProjectName);
+    await imageStore.deleteData(testProjectIdentifier);
+    await imageStoreExpressServer.deleteData(testProjectIdentifier);
     done();
   });
 
@@ -95,10 +95,10 @@ describe('ImageSyncService', () => {
 
     try {
 
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-      const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+      const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
       if (!await validate(localData)) {
         throw new Error('Local data not valid according to schema definition.');
@@ -107,7 +107,7 @@ describe('ImageSyncService', () => {
       const response = await request(expressMainApp)
         .get('/files/test_tmp_project')
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -128,10 +128,10 @@ describe('ImageSyncService', () => {
 
     try {
 
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-      const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+      const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
       if (!await validate(localData)) {
         throw new Error('Local data not valid according to schema definition.');
@@ -140,7 +140,7 @@ describe('ImageSyncService', () => {
       const response = await request(expressMainApp)
         .get('/files/test_tmp_project')
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -162,14 +162,14 @@ describe('ImageSyncService', () => {
 
     try {
 
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
       await imageStore.remove('some_uuid');
 
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-      const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+      const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
       if (!await validate(localData)) {
         throw new Error('Local data not valid according to schema definition.');
@@ -178,7 +178,7 @@ describe('ImageSyncService', () => {
       const response = await request(expressMainApp)
         .get('/files/test_tmp_project')
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -199,14 +199,14 @@ describe('ImageSyncService', () => {
 
     try {
 
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStore.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.ORIGINAL);
-      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectName, ImageVariant.THUMBNAIL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
+      await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
       await imageStoreExpressServer.remove('some_uuid');
 
-      const localData = await imageStore.getFileInfos(testProjectName, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
+      const localData = await imageStore.getFileInfos(testProjectIdentifier, [ImageVariant.THUMBNAIL, ImageVariant.ORIGINAL]);
 
       if (!await validate(localData)) {
         throw new Error('Local data not valid according to schema definition.');
@@ -215,7 +215,7 @@ describe('ImageSyncService', () => {
       const response = await request(expressMainApp)
         .get('/files/test_tmp_project')
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {

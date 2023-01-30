@@ -17,12 +17,12 @@ export class TaskbarComponent implements OnInit {
 
     public isLinux: boolean;
 
-    private projectName: string;
+    private projectIdentifier: string;
 
 
     constructor(private settingsProvider: SettingsProvider) {
 
-        this.projectName = this.settingsProvider.getSettings().selectedProject;
+        this.projectIdentifier = this.settingsProvider.getSettings().selectedProject;
     }
 
 
@@ -32,5 +32,5 @@ export class TaskbarComponent implements OnInit {
     }
 
 
-    public showSyncStatus = () => this.projectName !== 'test';
+    public showSyncStatus = () => this.projectIdentifier !== 'test';
 }

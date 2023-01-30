@@ -1,4 +1,4 @@
-import { is, isArray, Predicate, isString, and } from 'tsfun';
+import { is, isArray, Predicate, isString, and, isObject } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt } from 'idai-field-core';
@@ -266,6 +266,22 @@ export module Validations {
     }
 
 
+    export function assertMaxCharactersRespected(document: Document|NewDocument,
+                                                 projectConfiguration: ProjectConfiguration): void {
+
+        const result = Validations.validateMaxCharacters(document.resource, projectConfiguration);
+
+        if (result) {
+            throw [
+                ValidationErrors.MAX_CHARACTERS_EXCEEDED,
+                document.resource.category,
+                result.fieldName,
+                result.maxCharacters
+            ];
+        }
+    }
+
+
     export function assertMapLayerRelations(document: Document|NewDocument) {
 
         const invalidRelationTargets: string[] = Validations.validateMapLayerRelations(document.resource);
@@ -342,6 +358,30 @@ export module Validations {
 
         return missingFields;
     }
+
+
+    export function validateMaxCharacters(resource: Resource|NewResource,
+                                          projectConfiguration: ProjectConfiguration)
+                                          : { fieldName: string, maxCharacters: number }|undefined {
+
+        const fieldDefinitions: Array<Field>
+            = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+
+        for (let fieldDefinition of fieldDefinitions) {
+            const fieldValue = resource[fieldDefinition.name];
+            if (fieldValue && fieldDefinition.maxCharacters) {
+                if ((isString(fieldValue) && fieldValue.length > fieldDefinition.maxCharacters)
+                    || (isObject(fieldValue) && Object.values(fieldValue).find(value => {
+                        return !isString(value) || value.length > fieldDefinition.maxCharacters;
+                    }))) {
+                    return { fieldName: fieldDefinition.name, maxCharacters: fieldDefinition.maxCharacters };
+                }
+            }
+        }
+
+        return undefined;
+    }
+
 
     /**
      *

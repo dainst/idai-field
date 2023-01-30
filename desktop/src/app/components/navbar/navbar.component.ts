@@ -5,6 +5,7 @@ import { TabManager } from '../../services/tabs/tab-manager';
 import { Tab } from '../../services/tabs/tab';
 import { TabUtil } from '../../services/tabs/tab-util';
 import { ViewFacade } from '../../components/resources/view/view-facade';
+import { ProjectModalLauncher } from '../../services/project-modal-launcher';
 
 
 @Component({
@@ -30,9 +31,11 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
+                private projectModalLauncher: ProjectModalLauncher,
                 private i18n: I18n) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
+        this.projectModalLauncher.projectPropertiesNotifications().subscribe(() => this.onResize());
     }
 
 

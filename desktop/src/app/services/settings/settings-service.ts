@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
@@ -100,13 +100,13 @@ export class SettingsService {
 
     public async loadConfiguration(): Promise<ProjectConfiguration> {
 
-        const projectName: string = this.settingsProvider.getSettings().selectedProject;
-        const configurationName: string = getConfigurationName(projectName);
+        const projectIdentifier: string = this.settingsProvider.getSettings().selectedProject;
+        const configurationName: string = getConfigurationName(projectIdentifier);
 
         const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
             (id: string) => this.pouchdbDatastore.getDb().get(id),
             this.configReader,
-            projectName,
+            projectIdentifier,
             this.settingsProvider.getSettings().username
         );
 
@@ -196,37 +196,61 @@ export class SettingsService {
     }
 
 
-    public async createProject(project: Name, template: Template, selectedLanguages: string[],
-                               destroyBeforeCreate: boolean) {
+    public async createProject(projectIdentifier: string, template: Template, selectedLanguages: string[],
+                               projectName: I18N.String|undefined, destroyBeforeCreate: boolean) {
 
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
 
-        await this.selectProject(project);
+        await this.selectProject(projectIdentifier);
+
+        const projectDocument: Document = SettingsService.createProjectDocument(
+            this.settingsProvider.getSettings(), projectName
+        );
+        await this.updateProjectName(projectDocument);
 
         await this.pouchdbDatastore.createDb(
-            project,
-            SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
+            projectIdentifier,
+            projectDocument,
             SettingsService.createConfigurationDocument(this.settingsProvider.getSettings(), template, selectedLanguages),
             destroyBeforeCreate
         );
     }
 
 
-    public static createProjectDocument(settings: Settings): any {
+    public async updateProjectName(projectDocument: Document) {
 
-        return {
+        const settings = this.settingsProvider.getSettings();
+        if (!settings.projectNames) settings.projectNames = {};
+
+        if (projectDocument.resource.shortName) {
+            settings.projectNames[projectDocument.resource.identifier] = projectDocument.resource.shortName;
+        } else {
+            delete settings.projectNames[projectDocument.resource.identifier];
+        }
+        
+        await this.settingsProvider.setSettingsAndSerialize(settings);
+    }
+
+
+    public static createProjectDocument(settings: Settings, projectName?: I18N.String): Document {
+
+        const projectDocument: Document = {
             _id: 'project',
             resource: {
+                id: 'project',
                 category: 'Project',
                 identifier: settings.selectedProject,
-                id: 'project',
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
             created: { user: settings.username, date: new Date() },
             modified: [{ user: settings.username, date: new Date() }]
         };
+
+        if (projectName) projectDocument.resource.shortName = projectName;
+
+        return projectDocument;
     }
 
 

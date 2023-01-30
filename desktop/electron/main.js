@@ -234,7 +234,7 @@ const createWindow = () => {
     mainWindow = new electron.BrowserWindow({
         width: screenWidth >= 1680 ? 1680 : 1280,
         height: screenHeight >= 1050 ? 1050 : 800,
-        minWidth: 1220, // to allow for displaying project names like 'mmmmmmmmmmmmmmmmmm'
+        minWidth: 1220,
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,

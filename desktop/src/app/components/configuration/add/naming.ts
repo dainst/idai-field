@@ -6,31 +6,31 @@ const camelCase = require('camelcase');
  */
 export module Naming {
 
-    export function getFieldOrGroupName(searchTerm: string, projectName: string): string {
+    export function getFieldOrGroupName(searchTerm: string, projectIdentifier: string): string {
 
-        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
-        return projectName + ':' + removeSpecialCharacters(camelCase(searchTerm));
+        if (searchTerm.startsWith(projectIdentifier + ':')) searchTerm = searchTerm.replace(projectIdentifier + ':', '');
+        return projectIdentifier + ':' + removeSpecialCharacters(camelCase(searchTerm));
     }
 
 
-    export function getCategoryName(searchTerm: string, projectName: string): string {
+    export function getCategoryName(searchTerm: string, projectIdentifier: string): string {
 
-        projectName = convertFirstCharacterToUpperCase(projectName);
-        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
+        projectIdentifier = convertFirstCharacterToUpperCase(projectIdentifier);
+        if (searchTerm.startsWith(projectIdentifier + ':')) searchTerm = searchTerm.replace(projectIdentifier + ':', '');
         const name: string = removeSpecialCharacters(camelCase(searchTerm));
         
-        return projectName + ':' + convertFirstCharacterToUpperCase(name);
+        return projectIdentifier + ':' + convertFirstCharacterToUpperCase(name);
     }
 
 
-    export function getValuelistId(searchTerm: string, projectName: string): string {
+    export function getValuelistId(searchTerm: string, projectIdentifier: string): string {
 
-        if (searchTerm.startsWith(projectName + ':')) searchTerm = searchTerm.replace(projectName + ':', '');
+        if (searchTerm.startsWith(projectIdentifier + ':')) searchTerm = searchTerm.replace(projectIdentifier + ':', '');
         const id: string = searchTerm.split('-')
             .map(segment => removeSpecialCharacters(segment))
             .join('-');
 
-        return projectName + ':' + id;
+        return projectIdentifier + ':' + id;
     }
 
 

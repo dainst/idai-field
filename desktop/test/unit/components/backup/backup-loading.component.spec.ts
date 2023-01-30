@@ -54,18 +54,18 @@ describe('BackupLoadingComponent', () => {
 
     it('load backup: project not specified', async done => {
 
-        c.projectName = '';
+        c.projectIdentifier = '';
         c.path = './test/store/backup_test_file.txt';
         await c.loadBackup();
 
-        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_NO_PROJECT_NAME]);
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER]);
         done();
     });
 
 
     it('load backup: filenotexists', async done => {
 
-        c.projectName = unittestdb;
+        c.projectIdentifier = unittestdb;
         c.path = './test/store/backup_test_file.txt';
 
         backupProvider.readDump.and.returnValue(Promise.reject(Backup.FILE_NOT_EXIST));
@@ -80,7 +80,7 @@ describe('BackupLoadingComponent', () => {
 
         spyOn(console, 'error');
 
-        c.projectName = unittestdb;
+        c.projectIdentifier = unittestdb;
         c.path = './package.json';
 
         backupProvider.readDump.and.returnValue(Promise.reject('reason'));
@@ -93,7 +93,7 @@ describe('BackupLoadingComponent', () => {
 
     it('readDump: show success message', async done => {
 
-        c.projectName = unittestdb;
+        c.projectIdentifier = unittestdb;
         c.path = './package.json';
         await c.loadBackup();
 
@@ -104,7 +104,7 @@ describe('BackupLoadingComponent', () => {
 
     it('readDump: create new project via settings', async done => {
 
-        c.projectName = unittestdb;
+        c.projectIdentifier = unittestdb;
         c.path = './package.json';
         await c.loadBackup();
 

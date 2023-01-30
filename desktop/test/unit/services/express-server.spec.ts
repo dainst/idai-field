@@ -13,7 +13,7 @@ const request = typeof window !== 'undefined' ? window.require('supertest') : re
 describe('ExpressServer', () => {
 
     const testFilePath = process.cwd() + '/test/test-temp/';
-    const testProjectName = 'test_tmp_project';
+    const testProjectIdentifier = 'test_tmp_project';
     const password = 'pw';
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
@@ -46,7 +46,7 @@ describe('ExpressServer', () => {
             new IdGenerator()
         );
 
-        await pouchdbDatastore.createEmptyDb(testProjectName);
+        await pouchdbDatastore.createEmptyDb(testProjectIdentifier);
 
         done();
     });
@@ -54,20 +54,20 @@ describe('ExpressServer', () => {
 
     // Re-initialize image store data for each test.
     beforeEach(async (done) => {
-        await imageStore.init(`${testFilePath}imagestore/`, testProjectName);
+        await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
         done();
     });
 
 
     afterEach(async (done) => {
-        await imageStore.deleteData(testProjectName);
+        await imageStore.deleteData(testProjectIdentifier);
         done();
     });
 
 
     afterAll(async (done) => {
 
-        await pouchdbDatastore.destroyDb(testProjectName);
+        await pouchdbDatastore.destroyDb(testProjectIdentifier);
 
         await new Promise<void>((resolve) => {
             expressMainApp.close(resolve);
@@ -101,7 +101,7 @@ describe('ExpressServer', () => {
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             // Body should be {}
@@ -121,7 +121,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=thumbnail_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
             done();
         } catch (e) {
@@ -136,7 +136,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=original_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
             done();
         } catch (e) {
@@ -152,7 +152,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=original_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(409);
             done();
         } catch (e) {
@@ -170,14 +170,14 @@ describe('ExpressServer', () => {
                     .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
-                    .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                    .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                     .expect(200);
             }
 
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             expect(Object.keys(response.body).length).toBe(2);
@@ -198,7 +198,7 @@ describe('ExpressServer', () => {
                     .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
-                    .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                    .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                     .expect(200);
             }
 
@@ -206,13 +206,13 @@ describe('ExpressServer', () => {
                 .delete(`/files/test_tmp_project/${uuids[0]}`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectName + ':' + password)}`)
+                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             expect(Object.keys(response.body).length).toBe(3);

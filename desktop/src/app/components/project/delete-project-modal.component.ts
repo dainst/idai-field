@@ -21,8 +21,8 @@ import { Messages } from '../messages/messages';
  */
 export class DeleteProjectModalComponent {
 
-    public projectName: string;
-    public confirmDeletionProjectName: string;
+    public projectIdentifier: string;
+    public confirmDeletionProjectIdentifier: string;
     public deleteFiles = false;
 
     private deleting = false;
@@ -43,15 +43,15 @@ export class DeleteProjectModalComponent {
 
     public async confirmDeletion() {
 
-        if (!this.checkConfirmDeletionProjectName()) return;
+        if (!this.checkConfirmDeletionProjectIdentifier()) return;
 
         await this.performDeletion();
     }
 
 
-    public checkConfirmDeletionProjectName(): boolean {
+    public checkConfirmDeletionProjectIdentifier(): boolean {
 
-        return this.projectName === this.confirmDeletionProjectName;
+        return this.projectIdentifier === this.confirmDeletionProjectIdentifier;
     }
 
 
@@ -66,7 +66,7 @@ export class DeleteProjectModalComponent {
         if (!this.canDeleteProject()) return;
 
         this.deleting = true;
-        const isCurrentProject: boolean = this.projectName === this.settingsProvider.getSettings().selectedProject;
+        const isCurrentProject: boolean = this.projectIdentifier === this.settingsProvider.getSettings().selectedProject;
 
         try {
             await this.stateSerializer.delete('resources-state');
@@ -77,12 +77,12 @@ export class DeleteProjectModalComponent {
             // Ignore state file deletion errors
         }
 
-        await this.settingsService.deleteProject(this.projectName, this.deleteFiles);
+        await this.settingsService.deleteProject(this.projectIdentifier, this.deleteFiles);
 
         if (isCurrentProject) {
             reloadAndSwitchToHomeRoute();
         } else {
-            this.messages.add([M.PROJECTS_DELETE_SUCCESS, this.projectName]);
+            this.messages.add([M.PROJECTS_DELETE_SUCCESS, this.projectIdentifier]);
             this.activeModal.close();
         }
     }

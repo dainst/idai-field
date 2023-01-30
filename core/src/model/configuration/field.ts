@@ -32,6 +32,7 @@ export interface Field extends I18N.LabeledValue {
     mandatory?: true;
     fixedInputType?: true;
     allowOnlyValuesOfParent?: true;
+    maxCharacters?: number;
     source?: Field.SourceType;
 }
 

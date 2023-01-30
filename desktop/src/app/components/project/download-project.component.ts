@@ -33,7 +33,7 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
 export class DownloadProjectComponent {
 
     public url: string = '';
-    public projectName: string = '';
+    public projectIdentifier: string = '';
     public password: string = '';
     public syncThumbnailImages: boolean = true;
     public syncOriginalImages: boolean = false;
@@ -61,7 +61,7 @@ export class DownloadProjectComponent {
                 private decimalPipe: DecimalPipe) {}
 
     
-    public checkCredentialsCompleteness = () => this.getUrl() && this.getProjectName() && this.getPassword();
+    public checkCredentialsCompleteness = () => this.getUrl() && this.getProjectIdentifier() && this.getPassword();
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -86,7 +86,7 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
         const destroyExisting: boolean = this.overwriteProject
-            || !this.settingsProvider.getSettings().dbs.includes(this.getProjectName());
+            || !this.settingsProvider.getSettings().dbs.includes(this.getProjectIdentifier());
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
@@ -101,7 +101,7 @@ export class DownloadProjectComponent {
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
                     this.getUrl(),
                     this.getPassword(),
-                    this.getProjectName(),
+                    this.getProjectIdentifier(),
                     preferences.map(preference => preference.variant)
                 ) : undefined;
 
@@ -114,7 +114,7 @@ export class DownloadProjectComponent {
                 // This ensures that the CSS transition in DownloadProjectProgressModal runs smoothly
                 await AngularUtility.refresh(2000);
 
-                if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectName());
+                if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectIdentifier());
                 await this.syncFiles(progressModalRef, fileList);
                 progressModalRef.componentInstance.filesProgressPercent = 100;
             }
@@ -122,7 +122,7 @@ export class DownloadProjectComponent {
             await AngularUtility.refresh(1000);
 
             this.settingsService.addProject(
-                this.getProjectName(),
+                this.getProjectIdentifier(),
                 {
                     isSyncActive: true,
                     address: this.getUrl(),
@@ -177,7 +177,7 @@ export class DownloadProjectComponent {
             const fileList = await this.remoteImageStore.getFileInfosUsingCredentials(
                 this.getUrl(),
                 this.getPassword(),
-                this.getProjectName(),
+                this.getProjectIdentifier(),
                 [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]
             );
 
@@ -230,7 +230,7 @@ export class DownloadProjectComponent {
         return new Promise(async (resolve, reject) => {
             try {
                 (await this.syncService.startReplication(
-                    this.getUrl(), this.getPassword(), this.getProjectName(), databaseSteps, destroyExisting
+                    this.getUrl(), this.getPassword(), this.getProjectIdentifier(), databaseSteps, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
                         const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
@@ -270,7 +270,7 @@ export class DownloadProjectComponent {
 
                 for (const uuid of batch) {
                     if (files[uuid].deleted) {
-                        this.imageStore.remove(uuid, this.getProjectName());
+                        this.imageStore.remove(uuid, this.getProjectIdentifier());
                         continue;
                     }
 
@@ -278,9 +278,9 @@ export class DownloadProjectComponent {
                         if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
                             this.fileDownloadPromises.push(
                                 this.remoteImageStore.getDataUsingCredentials(
-                                    this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectName()
+                                    this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
                                 ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.getProjectName(), variant.name);
+                                    return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
                                 })
                             );
                         }
@@ -308,11 +308,11 @@ export class DownloadProjectComponent {
         try {
             this.cancelling = true;
             this.syncService.stopReplication();
-            await this.pouchdbDatastore.destroyDb(this.getProjectName());
+            await this.pouchdbDatastore.destroyDb(this.getProjectIdentifier());
             await Promise.all(this.fileDownloadPromises);
         } catch (err) {
         } finally {
-            await this.imageStore.deleteData(this.getProjectName());
+            await this.imageStore.deleteData(this.getProjectIdentifier());
             this.cancelling = false;
             this.closeModal(progressModalRef);
         }
@@ -325,11 +325,11 @@ export class DownloadProjectComponent {
 
         try {
             info = await new PouchDB(
-                SyncService.generateUrl(this.getUrl(), this.getProjectName()),
+                SyncService.generateUrl(this.getUrl(), this.getProjectIdentifier()),
                 {
                     skip_setup: true,
                     auth: {
-                        username: this.getProjectName(),
+                        username: this.getProjectIdentifier(),
                         password: this.getPassword()
                     }
                 }
@@ -351,9 +351,9 @@ export class DownloadProjectComponent {
     }
 
 
-    private getProjectName(): string {
+    private getProjectIdentifier(): string {
 
-        return this.projectName?.trim();
+        return this.projectIdentifier?.trim();
     }
 
 

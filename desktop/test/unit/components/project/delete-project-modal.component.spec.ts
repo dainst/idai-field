@@ -35,8 +35,8 @@ describe('DeleteProjectModalComponent', () => {
 
         settingsProvider.getSettings.and.returnValue({ dbs: ['current'], selectedProject: 'current' });
 
-        deleteProjectModalComponent.projectName = 'current';
-        deleteProjectModalComponent.confirmDeletionProjectName = 'current';
+        deleteProjectModalComponent.projectIdentifier = 'current';
+        deleteProjectModalComponent.confirmDeletionProjectIdentifier = 'current';
 
         await deleteProjectModalComponent.confirmDeletion();
         expect(messages.add).toHaveBeenCalledWith([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);

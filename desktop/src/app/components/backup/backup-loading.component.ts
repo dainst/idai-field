@@ -5,9 +5,9 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { BackupLoadingModalComponent } from './backup-loading-modal.component';
 import { BackupProvider } from './backup-provider';
 import { M } from '../messages/m';
-import { ProjectNameValidation } from '../../model/project-name-validation';
+import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { TabManager } from '../../services/tabs/tab-manager';
-import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
+import { ProjectIdentifierValidatorMessagesConversion } from '../messages/project-identifier-validator-messages-conversion';
 import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { MsgWithParams } from '../messages/msg-with-params';
@@ -29,7 +29,7 @@ export class BackupLoadingComponent {
 
     public running: boolean = false;
     public path: string;
-    public projectName: string;
+    public projectIdentifier: string;
 
     private modalRef: NgbModalRef|undefined;
 
@@ -77,13 +77,13 @@ export class BackupLoadingComponent {
     private validateInputs(): MsgWithParams|undefined {
 
         if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
-        if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
-        if (this.projectName === this.settingsProvider.getSettings().selectedProject) {
-            return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
+        if (!this.projectIdentifier) return [M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER];
+        if (this.projectIdentifier === this.settingsProvider.getSettings().selectedProject) {
+            return [M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER];
         }
 
-        return ProjectNameValidatorMsgConversion.convert(
-            ProjectNameValidation.validate(this.projectName)
+        return ProjectIdentifierValidatorMessagesConversion.convert(
+            ProjectIdentifierValidation.validate(this.projectIdentifier)
         );
     }
 
@@ -91,8 +91,8 @@ export class BackupLoadingComponent {
     private async readBackupFile() {
 
         try {
-            const warnings: MsgWithParams[] = await this.backupProvider.readDump(this.path, this.projectName) as any;
-            await this.settingsService.addProject(this.projectName);
+            const warnings: MsgWithParams[] = await this.backupProvider.readDump(this.path, this.projectIdentifier) as any;
+            await this.settingsService.addProject(this.projectIdentifier);
             if (warnings) warnings.forEach(warning => this.messages.add(warning));
             this.messages.add([M.BACKUP_READ_SUCCESS]);
         } catch (err) {

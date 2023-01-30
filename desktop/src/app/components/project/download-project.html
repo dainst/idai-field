@@ -28,13 +28,13 @@
                             Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden.
                         </div>
 
-                        <label id="project-name-label" class="control-label col-form-label"
-                               i18n="@@project.download.projectName">Projektname</label>
+                        <label id="project-identifier-label" class="control-label col-form-label"
+                               i18n="@@project.identifier">Projektkennung</label>
                         <input class="form-control"
                             id="projectInput"
                             type="text"
                             (ngModelChange)="onCredentialsChanged()"
-                            [(ngModel)]="projectName">
+                            [(ngModel)]="projectIdentifier">
                         <label id="password-label" class="control-label col-form-label"
                                i18n="@@project.download.password">Passwort</label>
                             <input class="form-control"
@@ -73,7 +73,7 @@
                     </div>
                     <div id="overwrite-project-slider" class="row">
                         <div class="col-auto mr-auto">
-                            <span i18n="@@project.download.overwriteProject">Existierendes Projekt gleichen Namens überschreiben</span>
+                            <span i18n="@@project.download.overwriteProject">Existierendes Projekt gleicher Kennung überschreiben</span>
                         </div>
                         <div class="col-auto">
                             <label class="switch">

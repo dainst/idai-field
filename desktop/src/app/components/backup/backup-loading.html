@@ -16,9 +16,8 @@
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <span i18n="@@backup.loading.info.1">
-                        Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
-                        eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
-                        Projekt übereinstimmen.
+                        Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein.
+                        Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen.
                     </span>
 
                     <br><br>
@@ -32,7 +31,7 @@
 
                     <span i18n="@@backup.loading.info.3">
                         <b>Achtung:</b> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank
-                        mit dem angegebenen Namen <b>vollständig überschrieben</b>.
+                        mit der angegebenen Kennung <b>vollständig überschrieben</b>.
                     </span>
 
                     <br>
@@ -50,9 +49,9 @@
                         </div>
                     </div>
 
-                    <label i18n="@@backup.loading.project">Projekt</label>
-                    <input type="text" class="form-control" id="projectName"
-                           [(ngModel)]="projectName" name="projectName">
+                    <label i18n="@@project.identifier">Projektkennung</label>
+                    <input type="text" class="form-control" id="projectIdentifier"
+                           [(ngModel)]="projectIdentifier" name="projectIdentifier">
                 </div>
             </div>
         </div>

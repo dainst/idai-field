@@ -14,13 +14,13 @@ describe('Imagestore', () => {
 
     const mockImage: Buffer = fs.readFileSync( process.cwd() + '/test/test-data/logo.png');
     const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
-    const testProjectName = 'test_tmp_project';
+    const testProjectIdentifier = 'test_tmp_project';
 
     let imageStore: ImageStore;
 
     beforeAll(async done => {
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        await imageStore.init(testFilePath, testProjectName);
+        await imageStore.init(testFilePath, testProjectIdentifier);
 
         done();
     });
@@ -35,7 +35,7 @@ describe('Imagestore', () => {
     it('should be able to create a file', async (done) => {
 
         await imageStore.store('test_create', mockImage);
-        const expectedPath = testFilePath + testProjectName + '/test_create';
+        const expectedPath = testFilePath + testProjectIdentifier + '/test_create';
         fs.readFile(expectedPath, (err, data) => {
             if (err) fail(err);
             expect(data).toEqual(mockImage);
@@ -65,7 +65,7 @@ describe('Imagestore', () => {
 
         await imageStore.remove('test_remove');
 
-        const expectedPath = testFilePath + testProjectName + '/test_remove';
+        const expectedPath = testFilePath + testProjectIdentifier + '/test_remove';
 
         try {
             fs.readFileSync(expectedPath);
@@ -73,7 +73,7 @@ describe('Imagestore', () => {
         } catch (e) {
         }
 
-        const expectedThumbnailPath = testFilePath + testProjectName + '/thumbs/test_remove';
+        const expectedThumbnailPath = testFilePath + testProjectIdentifier + '/thumbs/test_remove';
 
         try {
             fs.readFileSync(expectedThumbnailPath);
@@ -81,7 +81,7 @@ describe('Imagestore', () => {
         } catch (e) {
         }
 
-        const expectTombstone = testFilePath + testProjectName + '/test_remove.deleted';
+        const expectTombstone = testFilePath + testProjectIdentifier + '/test_remove.deleted';
 
         try{
             fs.readFileSync(expectTombstone);
@@ -90,7 +90,7 @@ describe('Imagestore', () => {
             fail('Image tombstone not found.');
         }
 
-        const expectThumbnailTombstone = testFilePath + testProjectName + '/thumbs/test_remove.deleted';
+        const expectThumbnailTombstone = testFilePath + testProjectIdentifier + '/thumbs/test_remove.deleted';
 
         try{
             fs.readFileSync(expectThumbnailTombstone);

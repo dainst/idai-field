@@ -1,11 +1,27 @@
-#create-project-modal-body {
-  #create-project-input,
-  select,
-  languages-list {
-    margin-bottom: 12px;
-  }
+.create-project-modal {
+  max-width: 600px;
 
-  div {
-    user-select: none;
+  #create-project-modal-body {
+    #create-project-input,
+    select,
+    languages-list {
+      margin-bottom: 12px;
+    }
+
+    div {
+      user-select: none;
+    }
+
+    #languages-info {
+      margin-top: 25px;
+    }
+
+    #project-name-heading {
+      margin-top: 16px;
+    }
+
+    .create-project-modal-heading {
+      margin-bottom: 5px;
+    }
   }
 }

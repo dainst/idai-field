@@ -29,14 +29,14 @@ export namespace ConfigurationDocument {
 
     export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
                                                    configReader: ConfigReader,
-                                                   projectName: string,
+                                                   projectIdentifier: string,
                                                    username: string): Promise<ConfigurationDocument> {
 
         try {
             return await getFunction('configuration') as ConfigurationDocument;
         } catch (_) {
             return await createConfigurationDocumentFromFile(
-                configReader, projectName, username
+                configReader, projectIdentifier, username
             );
         }
     }
@@ -255,10 +255,10 @@ export namespace ConfigurationDocument {
 
 
     async function createConfigurationDocumentFromFile(configReader: ConfigReader,
-                                                       projectName: string,
+                                                       projectIdentifier: string,
                                                        username: string): Promise<ConfigurationDocument> {
 
-        const customConfigurationName: string = getConfigurationName(projectName);
+        const customConfigurationName: string = getConfigurationName(projectIdentifier);
         const customConfiguration = await configReader.read('/Config-' + customConfigurationName + '.json');
         const languageConfigurations = configReader.getCustomLanguageConfigurations(customConfigurationName);
 
@@ -278,7 +278,7 @@ export namespace ConfigurationDocument {
                 order: customConfiguration.order,
                 languages: languageConfigurations,
                 valuelists: {},
-                projectLanguages: projectName === 'test' ? Object.keys(SAMPLE_DATA_LABELS) : []
+                projectLanguages: projectIdentifier === 'test' ? Object.keys(SAMPLE_DATA_LABELS) : []
             }
         };
 

@@ -26,7 +26,7 @@ import java.util.Base64;
  */
 public class Datastore {
 
-    public static Map<GeometryType, List<Resource>> getResourcesWithGeometry(String projectName, String password,
+    public static Map<GeometryType, List<Resource>> getResourcesWithGeometry(String projectIdentifier, String password,
                                                                              String operationId) throws Exception {
 
         String query = "{ \"selector\": { \"resource.geometry\": { \"$gt\": null }";
@@ -40,23 +40,25 @@ public class Datastore {
         query += " } }";
 
         try {
-            return getResourcesMap(extractResources(getJsonData(projectName, password, query)));
+            return getResourcesMap(extractResources(getJsonData(projectIdentifier, password, query)));
         } catch (Exception e) {
             throw new Exception(ErrorMessage.DATASTORE_GET_RESOURCES_ERROR.name());
         }
     }
 
 
-    private static JSONArray getJsonData(String projectName, String password, String query) throws Exception {
+    private static JSONArray getJsonData(String projectIdentifier, String password, String query) throws Exception {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost("http://localhost:3001/" + projectName + "/_find");
+            HttpPost httpPost = new HttpPost("http://localhost:3001/" + projectIdentifier + "/_find");
             httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             httpPost.setHeader(HttpHeaders.ACCEPT, "application/json");
 
-            String encoding = Base64.getEncoder().encodeToString((projectName + ":" + password).getBytes("UTF-8"));
+            String encoding = Base64.getEncoder()
+                .encodeToString((projectIdentifier + ":" + password)
+                .getBytes("UTF-8"));
+                
             httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoding);
-
             httpPost.setEntity(new StringEntity(query));
 
             try (CloseableHttpResponse response = httpClient.execute(httpPost)) {

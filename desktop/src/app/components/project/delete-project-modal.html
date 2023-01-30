@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h5 class="modal-title" i18n="@@project.deleteModal.header">
-        Projekt <b>{{projectName}}</b> löschen?
+        Projekt <b>{{projectIdentifier}}</b> löschen?
     </h5>
 </div>
 
@@ -24,18 +24,18 @@
         </div>
         <div id="confirm-delete-info">
             <span i18n="@@project.deleteModal.confirmDeleteInfo">
-                Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen.
+                Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen.
             </span>
         </div>
         <div>
             <input id="delete-project-input" type="text" class="form-control"
-                [(ngModel)]="confirmDeletionProjectName" (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+                [(ngModel)]="confirmDeletionProjectIdentifier" (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
         </div>
     </div>
 
     <div class="modal-footer">
         <button id="delete-project-confirm" class="btn btn-danger" type="button"
-            [ngClass]="{ 'disabled': !this.checkConfirmDeletionProjectName() }" (click)="confirmDeletion()">
+            [ngClass]="{ 'disabled': !this.checkConfirmDeletionProjectIdentifier() }" (click)="confirmDeletion()">
             <span i18n="@@buttons.delete">Löschen</span>
         </button>
         <button type="button" id="delete-project-cancel" class="btn btn-secondary"

@@ -1,5 +1,5 @@
 import { Name } from 'idai-field-core';
-import { ProjectNameValidation } from '../../model/project-name-validation';
+import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { M } from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
@@ -60,8 +60,8 @@ export module Backup {
 
         const projectDocument = await db2.get('project');
 
-        if (!ProjectNameValidation.isSimilar(projectDocument.resource.identifier, project)) {
-            warnings.push([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME]);
+        if (!ProjectIdentifierValidation.isSimilar(projectDocument.resource.identifier, project)) {
+            warnings.push([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER]);
         }
 
         projectDocument.resource.identifier = project;

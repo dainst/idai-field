@@ -57,7 +57,7 @@ export class ProjectInformationModalComponent implements OnInit {
 
     public getLastChangedId = () => this.lastChangedDocument.resource.id;
 
-    public getProjectName = () => this.settingsProvider.getSettings().selectedProject;
+    public getProjectIdentifier = () => this.settingsProvider.getSettings().selectedProject;
   
 
     async ngOnInit() {

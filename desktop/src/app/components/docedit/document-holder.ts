@@ -122,6 +122,7 @@ export class DocumentHolder {
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
+        Validations.assertMaxCharactersRespected(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration, true,
             this.oldVersion);
         Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);

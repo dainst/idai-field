@@ -55,7 +55,7 @@ export class Labels {
 
     public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
-        const label = CategoryForm.getFieldLabelValue(category, fieldName);
+        const label = CategoryForm.getField(category, fieldName);
         if (!label) return undefined;
         return I18N.getLabel(label, this.getLanguages());
     }

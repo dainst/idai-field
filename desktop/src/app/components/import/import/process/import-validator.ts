@@ -173,6 +173,7 @@ export class ImportValidator extends Validator {
     public assertIsWellformed(document: Document|NewDocument): void {
 
         Validations.assertNoFieldsMissing(document, this.projectConfiguration);
+        Validations.assertMaxCharactersRespected(document, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);
         Validations.assertCorrectnessOfUrls(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);

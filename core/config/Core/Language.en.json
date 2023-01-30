@@ -19,7 +19,7 @@
           "label": "Coordinate reference system"
         },
         "shortName": {
-          "label": "Short name"
+          "label": "Project name"
         }
       }
     },

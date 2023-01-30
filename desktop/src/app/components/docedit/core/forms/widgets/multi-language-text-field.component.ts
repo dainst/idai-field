@@ -64,8 +64,11 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     public onBlur() {
 
         this.focused = false;
-        this.selectedText = this.selectedText.trim();
-        this.onChanges(this.selectedText);
+        const trimmedText: string = this.selectedText.trim();
+        
+        if (this.selectedText !== trimmedText) {
+            this.onChanges(this.selectedText);
+        }
     }
 
 

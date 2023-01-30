@@ -17,5 +17,14 @@
 
   #no-images-placeholder {
     width: calc(100% - 258px);
+    height: 100% !important;
+  }
+
+  &.no-images {
+    height: 100% !important;
+    
+    #resource-info-popover .document-info {
+      height: 100% !important;
+    }
   }
 }

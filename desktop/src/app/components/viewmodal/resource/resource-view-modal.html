@@ -10,7 +10,8 @@
 </div>
 
 <div id="view-modal-body" class="modal-body px-0">
-    <div *ngIf="ready" id="view-modal-content" class="flex-nowrap bg-light px-0 resource-view-modal">
+    <div *ngIf="ready" id="view-modal-content" class="flex-nowrap bg-light px-0 resource-view-modal"
+         [class.no-images]="images.length === 0">
         <document-info id="resource-info-popover"
                        [document]="document"
                        [getExpandAllGroups]="getExpandAllGroupsForMainResource"

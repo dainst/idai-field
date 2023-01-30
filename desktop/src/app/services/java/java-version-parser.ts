@@ -8,9 +8,11 @@ export module JavaVersionParser {
      */
     export function parse(javaVersionOutput: string): number {
 
+        console.log('Java version:', javaVersionOutput);
+
         if (new RegExp('version "?\\d+\\.\\d+\\.\\d+_\\d+"?').test(javaVersionOutput)
                 || new RegExp('version "\\d+"').test(javaVersionOutput)
-                || new RegExp('version "?\\d+\\.\\d+\\.\\d+"?').test(javaVersionOutput)) {
+                || new RegExp('(version|openjdk) "?\\d+\\.\\d+\\.\\d+"?').test(javaVersionOutput)) {
             return parseVersionNumber(getVersionString(javaVersionOutput));
         } else {
             return 0;
@@ -20,7 +22,9 @@ export module JavaVersionParser {
 
     function getVersionString(stderr: string): string {
 
-        return stderr.split(' ')[2].replace(/"/g, '');
+        const position: number = stderr.includes('version') ? 2 : 1;
+
+        return stderr.split(' ')[position].replace(/"/g, '');
     }
 
 

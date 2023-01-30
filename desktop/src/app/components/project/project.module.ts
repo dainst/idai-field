@@ -11,6 +11,7 @@ import { DownloadProjectProgressModalComponent } from './download-project-progre
 import { CancelModalComponent } from './cancel-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ProjectInformationModalComponent } from './project-information-modal.component';
+import { DoceditModule } from '../docedit/docedit.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ProjectInformationModalComponent } from './project-information-modal.co
         NgbModule,
         FormsModule,
         RouterModule,
-        WidgetsModule
+        WidgetsModule,
+        DoceditModule
     ],
     declarations: [
         CreateProjectModalComponent,

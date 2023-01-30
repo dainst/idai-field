@@ -34,6 +34,7 @@ export class CreateProjectModalComponent implements OnInit {
     public projectName: I18N.String|undefined;
     public selectedTemplate: Template;
     public selectedLanguages: string[];
+    public selectedLanguageObjects: Array<Language>;
     public creating: boolean = false;
     public modalOpened: boolean = false;
     public page: number = 0;
@@ -59,8 +60,6 @@ export class CreateProjectModalComponent implements OnInit {
     public getTemplateDescription = (templateName: string) =>
         this.labels.getDescription(this.getTemplate(templateName));
 
-    public getSelectedLanguageObjects = () => this.selectedLanguages.map(languageCode => this.languages[languageCode]);
-
     public getIdentifierMaxLength = () => ProjectIdentifierValidation.PROJECT_IDENTIFIER_MAX_LENGTH;
 
     public goBack = () => this.page--;
@@ -79,6 +78,13 @@ export class CreateProjectModalComponent implements OnInit {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
+    }
+
+
+    public onLanguagesChanged() {
+
+        this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
+        this.resetProjectName();
     }
 
 

@@ -27,7 +27,7 @@
     <languages-list [languages]="languages" 
                     [selectedLanguages]="selectedLanguages"
                     (onModalToggled)="modalOpened = $event"
-                    (onChanged)="resetProjectName()"></languages-list>
+                    (onChanged)="onLanguagesChanged()"></languages-list>
     <div id="languages-info" class="small-info-text" i18n="@@project.createModal.languages.info">
         Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie
         mindestens eine Sprache aus.
@@ -53,7 +53,7 @@
          class="create-project-modal-heading"
          i18n="@@project.createModal.projectName">Projektname:</div>
     <multi-language-text-field [fieldData]="projectName"
-                               [languages]="getSelectedLanguageObjects()"
+                               [languages]="selectedLanguageObjects"
                                (onFieldDataChanged)="updateProjectName($event)"></multi-language-text-field>
     <div class="small-info-text" i18n="@@project.createModal.projectName.info">
         Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und

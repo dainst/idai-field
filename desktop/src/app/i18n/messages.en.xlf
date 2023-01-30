@@ -617,6 +617,10 @@
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">221</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.resource" datatype="html">
         <source>(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</source>
@@ -856,8 +860,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
-        <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank / eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten Projekt übereinstimmen. </source>
-        <target state="final">
+        <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen. </source>
+        <target state="translated">
                         Please enter the complete path to a backup file as well as the name of a target database /
                         a target project. The name of the target project must not match the name of the currently
                         open project.
@@ -879,8 +883,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit dem angegebenen Namen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="final">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
+        <target state="translated">
                         <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> While restoring a backup file, a possibly existing target database of the specified name will
                         be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>overwritten entirely<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
                     </target>
@@ -894,15 +898,19 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.project" datatype="html">
-        <source>Projekt</source>
-        <target state="final">Project</target>
+      <trans-unit id="project.identifier" datatype="html">
+        <source>Projektkennung</source>
+        <target state="new">Projektkennung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectForm" datatype="html">
@@ -1814,15 +1822,31 @@
         <target state="final"> Create new project </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.projectName" datatype="html">
         <source>Projektname:</source>
         <target state="final">Project name:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.projectName.info" datatype="html">
+        <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. </source>
+        <target state="new"> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
+          <context context-type="linenumber">85,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.next" datatype="html">
+        <source>Weiter</source>
+        <target state="new">Weiter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
@@ -1830,7 +1854,15 @@
         <target state="final">Configuration:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.configuration.info" datatype="html">
+        <source> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </source>
+        <target state="new"> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">148,170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.languages" datatype="html">
@@ -1838,20 +1870,44 @@
         <target state="final">Project languages:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.languages.info" datatype="html">
+        <source> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </source>
+        <target state="new"> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.identifier" datatype="html">
+        <source>Projektkennung:</source>
+        <target state="new"> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie "_" und "-". Die Kennung muss stets mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.identifier.info" datatype="html">
+        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </source>
+        <target state="new"> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie "_" und "-". Die Kennung muss stets mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">194</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.create" datatype="html">
         <source>Erstellen</source>
         <target state="final">Create</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
-        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="final"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
+        <target state="translated"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -1866,8 +1922,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
-        <source> Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Please enter the project name in order to confirm deletion. </target>
+        <source> Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="translated"> Please enter the project name in order to confirm deletion. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -1941,20 +1997,12 @@
           <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.download.projectName" datatype="html">
-        <source>Projektname</source>
-        <target state="final">Project name</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
         <source>Passwort</source>
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
@@ -1962,7 +2010,7 @@
         <target state="final">Download thumbnails</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
@@ -1970,15 +2018,15 @@
         <target state="final">Download original images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
-        <source>Existierendes Projekt gleichen Namens überschreiben</source>
-        <target state="final">Overwrite existing project of the same name</target>
+        <source>Existierendes Projekt gleicher Kennung überschreiben</source>
+        <target state="translated">Overwrite existing project of the same name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">230</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
@@ -1990,8 +2038,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
-        <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
-        <target state="final"> Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
+        <target state="translated"> Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectName()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">106</context>
@@ -2560,7 +2608,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
@@ -2656,7 +2704,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
@@ -2848,7 +2896,7 @@
         <target state="final">Duplicate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
@@ -2858,7 +2906,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
@@ -2896,7 +2944,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -2906,7 +2954,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
@@ -3388,7 +3436,7 @@
         <target state="final">Identifier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.shortDescription" datatype="html">
@@ -3396,7 +3444,7 @@
         <target state="final">Short description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
@@ -3404,7 +3452,7 @@
         <target state="final">Show child resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showInContext.tooltip" datatype="html">
@@ -3412,7 +3460,7 @@
         <target state="final">Show in context</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -3424,7 +3472,7 @@
         <target state="final">Show in context of operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -3436,7 +3484,7 @@
         <target state="final">Switch to operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">136</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -3456,7 +3504,7 @@
         <target state="final">Move</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -3464,7 +3512,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">217</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
@@ -3953,7 +4001,7 @@
         <target state="final">New resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-teaser.component.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
@@ -4615,7 +4663,7 @@
         <target state="final">No languages selected</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
@@ -4645,7 +4693,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -5007,7 +5055,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
@@ -5019,7 +5067,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -5682,25 +5730,25 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.error.noProjectName" datatype="html">
-        <source>Geben Sie einen Projektnamen an, um fortzufahren.</source>
-        <target state="final">Please enter a project name to proceed.</target>
+      <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
+        <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
+        <target state="new">Geben Sie eine Projektkennung an, um fortzufahren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.error.sameProjectName" datatype="html">
+      <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
-        <target state="final">Please do not choose the active project as the target project.</target>
+        <target state="new">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.warning.unsimilarProjectName" datatype="html">
-        <source>Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="final">The project name you entered differs strongly from the project name of the original project. Please check if you have selected the correct backup file before synchronizing data from the restored project with other Field Desktop instances or Field servers.</target>
+      <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
+        <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
+        <target state="new">Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6362,6 +6410,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
+        <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
+        <target state="new">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.categoryNotAllowed" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</source>
         <target state="final">Resources of the following category are not allowed on import: '[0]'</target>
@@ -6730,6 +6786,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
+        <source>Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</source>
+        <target state="new">Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.docedit.validation.error.noRecordedIn" datatype="html">
         <source>Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</source>
         <target state="final">Please choose a target resource for the relation 'Recorded in operation'.</target>
@@ -6906,9 +6970,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.resources.warning.projectNameNotSame" datatype="html">
-        <source>Die Namen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="final">The names do not match. The project is not being deleted.</target>
+      <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
+        <source>Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
+        <target state="new">Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6917,38 +6981,6 @@
       <trans-unit id="messages.resources.error.categoryNotFound" datatype="html">
         <source>Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</source>
         <target state="final">Missing category definition for '[0]' in Fields.json.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.noProjectName" datatype="html">
-        <source>Bitte geben Sie einen Namen für das neue Projekt ein.</source>
-        <target state="final">Please enter a name for the new project.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.projectNameExists" datatype="html">
-        <source>Ein Projekt mit dem Namen '[0]' existiert bereits.</source>
-        <target state="final">A project of the name '[0]' already exists.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.projectNameLength" datatype="html">
-        <source>Der angegebene Projektname ist um [0] Zeichen zu lang.</source>
-        <target state="final">The specified project name is [0] characters too long.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.projectNameSymbols" datatype="html">
-        <source>Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie _ und -.</source>
-        <target state="final">Allowed characters are lowercase letters and numbers as well as _ and -.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7021,6 +7053,54 @@
       <trans-unit id="messages.resources.error.parentResourceDeleted" datatype="html">
         <source>Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
         <target state="final">The resource cannot be created as the parent resource has been deleted by another user in the meantime.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.missingIdentifier" datatype="html">
+        <source>Bitte geben Sie eine Kennung für das neue Projekt ein.</source>
+        <target state="new">Bitte geben Sie eine Kennung für das neue Projekt ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.identifierExists" datatype="html">
+        <source>Ein Projekt mit der Kennung '[0]' existiert bereits.</source>
+        <target state="new">Ein Projekt mit der Kennung '[0]' existiert bereits.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
+        <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
+        <target state="new">Die angegebene Projektkennung ist um [0] Zeichen zu lang.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
+        <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
+        <target state="new">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
+        <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
+        <target state="new">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
+        <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
+        <target state="new">Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

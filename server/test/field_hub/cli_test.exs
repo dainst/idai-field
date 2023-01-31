@@ -275,7 +275,7 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.get_project_issues(@project_name)
       end)
 
-    assert log =~ "Issue: no_project_document."
+    assert log =~ "[error] Issue: no_project_document"
   end
 
   test "print_issues/1 with empty list logs that there are no issues" do

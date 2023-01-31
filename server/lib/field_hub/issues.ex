@@ -67,11 +67,25 @@ defmodule FieldHub.Issues do
   """
   def evaluate_project_document(project_name) do
     project_name
-    |> CouchService.get_docs_by_category(["Project"])
-    |> Enum.to_list()
+    |> CouchService.get_docs(["project"])
     |> case do
-      [] ->
-        [%Issue{type: :no_project_document, severity: :error, data: %{}}]
+      [error: %{error: "not_found", reason: "missing", uuid: "project"}] ->
+        [
+          %Issue{
+            type: :no_project_document,
+            severity: :error,
+            data: %{reason: "Document with id 'project' not found."}
+          }
+        ]
+
+      [%{"_deleted" => true}] ->
+        [
+          %Issue{
+            type: :no_project_document,
+            severity: :error,
+            data: %{reason: "Document with id 'project' got deleted at some point."}
+          }
+        ]
 
       [%{"resource" => resource}] ->
         case resource do

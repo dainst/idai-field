@@ -28,7 +28,7 @@ defmodule FieldHub.Project do
   def create(project_name) do
     couch_result =
       project_name
-      |> CouchService.create_project(CouchService.get_admin_credentials())
+      |> CouchService.create_project()
       |> case do
         %{status_code: 201} ->
           :created
@@ -68,7 +68,7 @@ defmodule FieldHub.Project do
   def delete(project_name) do
     couch_result =
       project_name
-      |> CouchService.delete_project(CouchService.get_admin_credentials())
+      |> CouchService.delete_project()
       |> case do
         %{status_code: 200} ->
           :deleted
@@ -107,7 +107,6 @@ defmodule FieldHub.Project do
     CouchService.update_user_role_in_project(
       user_name,
       project_name,
-      CouchService.get_admin_credentials(),
       role
     )
     |> case do

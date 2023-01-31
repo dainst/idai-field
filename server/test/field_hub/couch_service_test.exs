@@ -36,32 +36,6 @@ defmodule FieldHub.CouchServiceTest do
     assert {:error, 401} = result
   end
 
-  test "authenticate_and_authorize/2 with valid and authorized credentials yields :ok" do
-    result = CouchService.authenticate_and_authorize(@valid_credentials, @project)
-    assert :ok = result
-  end
-
-  test "authenticate_and_authorize/2 with invalid credentials yields 401" do
-    result =
-      CouchService.authenticate_and_authorize(
-        %Credentials{name: @user_name, password: "nope"},
-        @project
-      )
-
-    assert {:error, %HTTPoison.Response{status_code: 401}} = result
-  end
-
-  test "authenticate_and_authorize/2 with valid but unauthorized credentials yields 403" do
-    other_project = "other_test_project"
-    other_user = "other_user_name"
-    TestHelper.create_test_db_and_user(other_project, other_user, "other_password")
-
-    result = CouchService.authenticate_and_authorize(@valid_credentials, other_project)
-    assert {:error, %HTTPoison.Response{status_code: 403}} = result
-
-    TestHelper.remove_test_db_and_user(other_project, other_user)
-  end
-
   test "get_all_databases/0 returns a list of databases" do
     # The tests use the same CouchDB instance as the development context, so development
     # databases will show up here and we have to make a diff comparison.

@@ -32,11 +32,7 @@ defmodule FieldHub.CLI do
     Logger.info("Running initial CouchDB setup for single node at #{CouchService.base_url()}...")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
-    {users, replicator} =
-      CouchService.initial_setup(%CouchService.Credentials{
-        name: admin_user,
-        password: Application.get_env(:field_hub, :couchdb_admin_password)
-      })
+    {users, replicator} = CouchService.initial_setup()
 
     case users do
       %{status_code: 412} ->

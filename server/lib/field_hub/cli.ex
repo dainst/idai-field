@@ -247,6 +247,12 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Prints basic statistics (database and file system related) for all existing or a specific project.
+
+  __Parameters__
+  - `project_name` the project's name (optional)
+  """
   def get_project_statistics() do
     Application.get_env(:field_hub, :couchdb_admin_name)
     |> Project.evaluate_all_projects_for_user()
@@ -254,12 +260,22 @@ defmodule FieldHub.CLI do
   end
 
   def get_project_statistics(project_name) do
+    HTTPoison.start()
+
     project_name
     |> Project.evaluate_project()
     |> print_statistics()
   end
 
+  @doc """
+  Prints all issues for a given project.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def get_project_issues(project_name) do
+    HTTPoison.start()
+
     project_name
     |> Issues.evaluate_all()
     |> print_issues()

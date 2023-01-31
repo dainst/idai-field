@@ -332,8 +332,7 @@ defmodule FieldHub.CouchService do
   @doc """
   Returns the documents for a list of UUIDs (matched against the documents `_id` values).
 
-  If there was an error for a specific UUID, a map in the form of `%{uuid: uuid, error: error, reason: reason}`
-  is returned for the UUID.
+  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: reason}}`.
 
   See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#db-bulk-get.
 

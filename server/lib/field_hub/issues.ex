@@ -281,7 +281,7 @@ defmodule FieldHub.Issues do
 
           detailed_docs =
             CouchService.get_docs(project_name, ids)
-            |> Enum.map(fn({:ok, doc}) ->
+            |> Enum.map(fn {:ok, doc} ->
               doc
             end)
 

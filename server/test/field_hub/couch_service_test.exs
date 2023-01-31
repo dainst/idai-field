@@ -69,13 +69,8 @@ defmodule FieldHub.CouchServiceTest do
 
   test "get_docs/2 returns error for unknown uuids" do
     assert [
-             %{
-               "_id" => "o25"
-             },
-             {
-               :error,
-               %{error: "not_found", reason: "missing", uuid: "unknown"}
-             }
+             %{"_id" => "o25"},
+             %{error: "not_found", reason: "missing", uuid: "unknown"}
            ] = CouchService.get_docs(@project, ["o25", "unknown"])
   end
 

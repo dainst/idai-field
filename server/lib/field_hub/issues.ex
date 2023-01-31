@@ -69,7 +69,7 @@ defmodule FieldHub.Issues do
     project_name
     |> CouchService.get_docs(["project"])
     |> case do
-      [error: %{error: "not_found", reason: "missing", uuid: "project"}] ->
+      [%{error: "not_found"}] ->
         [
           %Issue{
             type: :no_project_document,
@@ -78,7 +78,7 @@ defmodule FieldHub.Issues do
           }
         ]
 
-      [%{"_deleted" => true}] ->
+      [%{"_deleted" => true} = _doc] ->
         [
           %Issue{
             type: :no_project_document,
@@ -87,7 +87,7 @@ defmodule FieldHub.Issues do
           }
         ]
 
-      [%{"resource" => resource}] ->
+      [%{"resource" => resource} = _doc] ->
         case resource do
           %{"relations" => %{"hasDefaultMapLayer" => []}} ->
             [%Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}]

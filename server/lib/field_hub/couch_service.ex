@@ -10,9 +10,12 @@ defmodule FieldHub.CouchService do
   require Logger
 
   @doc """
-  Authenticate with given `%Credentials{}`.
+  Authenticate with credentials.
 
   Returns `:ok` if credentials are valid, otherwise `{:error, reason}`.
+
+  __Parameters__
+  - `credentials` the #{Credentials}.
   """
   def authenticate(%Credentials{} = credentials) do
     response =

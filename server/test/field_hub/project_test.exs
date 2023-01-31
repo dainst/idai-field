@@ -23,6 +23,16 @@ defmodule FieldHub.ProjectTest do
     %{database: :deleted, file_store: []} = Project.delete(@project)
   end
 
+  test "can not create project with invalid characters in name" do
+    :invalid_name = Project.create("Проект")
+
+    %{database: :unknown_project, file_store: []} = Project.delete("Проект")
+  end
+
+  test "evaluate_project/1 on unknown project returns the expected response" do
+    :unknown = Project.evaluate_project("unknown")
+  end
+
   describe "Test user manipulation -" do
     setup %{} do
       Project.create(@project)

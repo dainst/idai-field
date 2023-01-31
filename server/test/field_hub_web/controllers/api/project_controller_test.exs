@@ -125,6 +125,23 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
                }
              } = response
     end
+
+    test "POST /projects/:project with invalid project name returns :bad_request", %{
+      conn: conn
+    } do
+      conn =
+        conn
+        |> put_req_header("authorization", TestHelper.get_admin_basic_auth())
+        |> post("/projects/Проект")
+
+      assert conn.status == 400
+
+      response = Jason.decode!(conn.resp_body)
+
+      assert %{
+               "reason" => "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+             } = response
+    end
   end
 
   describe "Test existing projects: " do
@@ -181,6 +198,15 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
                },
                "name" => @project
              } = response
+    end
+
+    test "GET /projects/:project with unknown project returns :not_found", %{conn: conn} do
+      conn =
+        conn
+        |> put_req_header("authorization", @project_user_auth)
+        |> get("/projects/does-not-exist")
+
+      assert conn.status == 404
     end
 
     test "GET /projects/:project invalid credentials returns 401", %{conn: conn} do

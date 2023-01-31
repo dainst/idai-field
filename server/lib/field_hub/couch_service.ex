@@ -365,10 +365,10 @@ defmodule FieldHub.CouchService do
     |> Enum.map(fn %{"docs" => result} ->
       case result do
         [%{"ok" => doc}] ->
-          doc
+          {:ok, doc}
 
-        [%{"error" => %{"id" => uuid, "error" => error, "reason" => reason}}] ->
-          %{uuid: uuid, error: error, reason: reason}
+        [%{"error" => %{"id" => uuid, "error" => error}}] ->
+          {:error, %{uuid: uuid, reason: error}}
       end
     end)
   end

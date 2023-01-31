@@ -2,15 +2,35 @@ defmodule FieldHub.Issues do
   alias FieldHub.FileStore
   alias FieldHub.CouchService
 
+  @severity_ranking [:info, :warning, :error]
+
   defmodule Issue do
+    @moduledoc """
+    Simple struct for Issues.
+
+    __Keys__
+    - `type` an atom identifying the issue type.
+    - `severity` severity of the issue, one of `[:info, :warning, :error]`.
+    - `data` is expected to be a #{Map}, with arbitrary values that may provide some metadata concerning the Issue.
+    """
     @enforce_keys [:type, :severity, :data]
     defstruct [:type, :severity, :data]
   end
 
-  @severity_ranking [:info, :warning, :error]
-
   require Logger
 
+  @moduledoc """
+  Bundles a suite of evaluation functions that search for issues within projects.
+
+  FieldHub concerns itself only with issues that can be derived from checking the projects' configurations.
+  """
+
+  @doc """
+  Runs all defined evaluation functions on a project and returns a combined list of #{Issue}.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def evaluate_all(project_name) do
     try do
       [
@@ -38,6 +58,13 @@ defmodule FieldHub.Issues do
     end
   end
 
+  @doc """
+  Checks if project's `project` document is present, and if a default map layer has been set. The latter can be used
+  downstream by other applications as a default map background.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def evaluate_project_document(project_name) do
     project_name
     |> CouchService.get_docs_by_category(["Project"])
@@ -60,6 +87,13 @@ defmodule FieldHub.Issues do
     end
   end
 
+  @doc """
+  Checks if all original images have been uploaded and compares thumbnail and original image file sizes (original images are
+  expected to be larger in general).
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def evaluate_images(project_name) do
     try do
       project_name
@@ -191,6 +225,16 @@ defmodule FieldHub.Issues do
     end
   end
 
+  @doc """
+  Checks for non unique `identifier` values.
+
+  Every document in a Field project should have a unique value in `resource.identifier`. There may be some rare edge cases
+  where two documents get the same identifier when two users create them separately. FieldHub as the central syncing target
+  checks for these cases.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def evaluate_identifiers(project_name) do
     query = %{
       selector: %{},
@@ -234,6 +278,15 @@ defmodule FieldHub.Issues do
     end
   end
 
+  @doc """
+  Checks for unresolveable relations between documents.
+
+  Historically, unresolveable relations were created by accident while directly manipulating the database (basically: deleting documents
+  not through the Field Desktop application, but directly in CouchDB/PouchDB).
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def evaluate_relations(project_name) do
     query = %{
       selector: %{},
@@ -278,7 +331,13 @@ defmodule FieldHub.Issues do
     |> Enum.reject(fn val -> val == :ok end)
   end
 
-  def sort_issues_by_decreasing_serverity(issues) do
+  @doc """
+  Sorts a list of issues by severity in the order `#{inspect(Enum.reverse(@severity_ranking))}`.
+
+  __Parameters__
+  - `issues` the list of issues.
+  """
+  def sort(issues) do
     issues
     |> Enum.sort(fn %{severity: severity_a}, %{severity: severity_b} ->
       Enum.find_index(

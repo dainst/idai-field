@@ -1,5 +1,4 @@
 defmodule FieldHub.CLI do
-
   alias FieldHub.{
     CouchService,
     FileStore,
@@ -10,10 +9,22 @@ defmodule FieldHub.CLI do
 
   require Logger
 
+  @moduledoc """
+  Bundles functions to be called from the command line.
+
+  While it is possible to call every function using eval, in release builds eval will not start other applications. For most of the following functions
+  a running HTTPoison application (process) is expected to be running, the functions therefore make sure to start HTTPoison.
+
+  See https://hexdocs.pm/mix/1.12/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc.
+  """
+
+  @doc """
+  Run basic setup for the whole application.
+  """
   def setup() do
     HTTPoison.start()
 
-    Logger.info("RUNNING SETUP")
+    Logger.info("Running setup.")
 
     admin_user = Application.get_env(:field_hub, :couchdb_admin_name)
     app_user = Application.get_env(:field_hub, :couchdb_user_name)
@@ -63,6 +74,7 @@ defmodule FieldHub.CLI do
     |> Project.get_all_for_user()
     |> Enum.each(fn project_name ->
       Logger.info("Running setup for existing project #{project_name}.")
+
       Project.update_user(app_user, project_name, :member)
       |> case do
         :set ->
@@ -71,17 +83,32 @@ defmodule FieldHub.CLI do
 
       FileStore.create_directories(project_name)
       |> Enum.each(fn {variant_name, :ok} ->
-        Logger.info("- File directory for '#{variant_name}' is setup for project '#{project_name}'.")
+        Logger.info(
+          "- File directory for '#{variant_name}' is setup for project '#{project_name}'."
+        )
       end)
     end)
 
     Logger.info("Setup done.")
   end
 
+  @doc """
+  Creates a new project and its default user of the same name. Generates a random password for the user.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def create_project(project_name) do
     create_project(project_name, CouchService.create_password())
   end
 
+  @doc """
+  Creates a new project and its default user of the same name with the given password.
+
+  __Parameters__
+  - `project_name` the project's name.
+  - `password` the default user's password.
+  """
   def create_project(project_name, password) do
     HTTPoison.start()
 
@@ -125,6 +152,12 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Deletes a project.
+
+  __Parameters__
+  - `project_name` the project's name.
+  """
   def delete_project(project_name) do
     HTTPoison.start()
 
@@ -152,10 +185,23 @@ defmodule FieldHub.CLI do
     delete_user(project_name)
   end
 
+  @doc """
+  Creates a user with a random password.
+
+  __Parameters__
+  - `user_name` the user's name.
+  """
   def create_user(user_name) do
     create_user(user_name, CouchService.create_password())
   end
 
+  @doc """
+  Creates a user with a given password.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `password` the user's password.
+  """
   def create_user(user_name, password) do
     HTTPoison.start()
 
@@ -169,6 +215,12 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Deletes a user.
+
+  __Parameters__
+  - `user_name` the user's name.
+  """
   def delete_user(user_name) do
     HTTPoison.start()
 
@@ -182,6 +234,13 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Sets a new password for an existing user.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `user_password` the user's password.
+  """
   def set_password(user_name, user_password) do
     HTTPoison.start()
 
@@ -195,6 +254,13 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Sets a user as project admin.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `project_name` the project's name.
+  """
   def add_user_as_project_admin(user_name, project_name) do
     HTTPoison.start()
 
@@ -211,6 +277,13 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Sets a user as project member.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `project_name` the project's name.
+  """
   def add_user_as_project_member(user_name, project_name) do
     HTTPoison.start()
 
@@ -227,6 +300,13 @@ defmodule FieldHub.CLI do
     end
   end
 
+  @doc """
+  Removes a user from all roles within a project.
+
+  __Parameters__
+  - `user_name` the user's name.
+  - `project_name` the project's name.
+  """
   def remove_user_from_project(user_name, project_name) do
     HTTPoison.start()
 

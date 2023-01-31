@@ -408,17 +408,6 @@ export class PouchdbDatastore {
     private static cleanUp(document: Document): Document {
 
         const clonedDocument = Document.clone(document);
-        PouchdbDatastore.replaceCategoryWithType(clonedDocument);
         return Document.removeEmptyRelationArrays(clonedDocument);
-    }
-
-
-    // TODO Remove this in a future version
-    private static replaceCategoryWithType(document: Document) {
-
-        if (document.resource.category) {
-            document.resource.type = document.resource.category;
-            delete document.resource.category;
-        }
     }
 }

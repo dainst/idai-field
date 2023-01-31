@@ -40,8 +40,6 @@ export class SampleDataLoaderBase {
         result.created = { user: 'sample_data', date: new Date() };
         result.modified = [{ user: 'sample_data', date: new Date() }];
         result._id = document.resource.id;
-        result.resource.type = document.resource.category;
-        delete result.resource.category;
 
         return result;
     }

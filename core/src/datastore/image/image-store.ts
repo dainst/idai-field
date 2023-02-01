@@ -71,7 +71,7 @@ export class ImageStore {
      * Store data with the provided id.
      * @param uuid the identifier for the data
      * @param data the binary data to be stored
-     * @param project (optional) the project's name, will default to the application's current active project
+     * @param project (optional) the project identifier, will default to the application's current active project
      * @param type (optional) image's type, will default to {@link ImageVariant.ORIGINAL}.
      */
     public async store(uuid: string, data: Buffer, project: string = this.activeProject, type: ImageVariant = ImageVariant.ORIGINAL) {
@@ -80,10 +80,6 @@ export class ImageStore {
         
         await this.setupDirectories(project);
         await this.filesystem.writeFile(filePath, data);
-
-        if (type === ImageVariant.ORIGINAL) {
-            await this.createThumbnail(uuid, data, project);
-        }
     }
 
 
@@ -91,7 +87,7 @@ export class ImageStore {
      * Returns the raw Buffer data for the requested image.
      * @param uuid the identifier for the image
      * @param type variant type of the image, see {@link ImageVariant}.
-     * @param project (optional) the project's name, will default to the application's current active project
+     * @param project (optional) the project identifier, will default to the application's current active project
      */
     public async getData(uuid: string, type: ImageVariant, project: string = this.activeProject): Promise<Buffer> {
         
@@ -103,7 +99,7 @@ export class ImageStore {
      * Removes the image from the filesystem and creates an empty tombstone file with
      * the same name plus a {@link tombstoneSuffix}.
      * @param uuid the identifier for the image to be removed
-     * @param project (optional) the project's name, will default to the application's current active project
+     * @param project (optional) the project identifier, will default to the application's current active project
      */
     public async remove(uuid: string, project: string = this.activeProject): Promise<any> {
         
@@ -126,7 +122,7 @@ export class ImageStore {
 
     /**
      * Remove the image store data for the given project.
-     * @param project the project's name
+     * @param project the project identifier
      */
     public async deleteData(project: string): Promise<any> {
 
@@ -170,7 +166,7 @@ export class ImageStore {
     }
 
 
-    public async createThumbnail(imageId: string, data: Buffer, project: string) {
+    public async createThumbnail(imageId: string, data: Buffer, project: string = this.activeProject) {
 
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
         const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);

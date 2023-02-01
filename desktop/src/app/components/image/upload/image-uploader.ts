@@ -232,7 +232,8 @@ export class ImageUploader {
         }
 
         try {
-            this.imagestore.store(document.resource.id, buffer);
+            await this.imagestore.store(document.resource.id, buffer);
+            await this.imagestore.createThumbnail(document.resource.id, buffer);
         } catch (err) {
             console.error(err);
             throw [M.IMAGESTORE_ERROR_WRITE, file.name];

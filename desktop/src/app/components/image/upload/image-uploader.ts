@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference } from 'idai-field-core';
+    ImageStore, ImageGeoreference, ImageDocument } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -218,35 +218,45 @@ export class ImageUploader {
     }
 
 
-    private uploadFile(file: File, category: CategoryForm, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(file: File, category: CategoryForm, depictsRelationTarget?: Document): Promise<any> {
+
+        const buffer: Buffer = await this.readFile(file);
+        
+        let document: ImageDocument;
+        
+        try {
+            document = await this.createImageDocument(file.name, buffer, category, depictsRelationTarget);
+        } catch (err) {
+            console.error(err);
+            throw [M.IMAGESTORE_ERROR_UPLOAD, file.name];
+        }
+
+        try {
+            this.imagestore.store(document.resource.id, buffer);
+        } catch (err) {
+            console.error(err);
+            throw [M.IMAGESTORE_ERROR_WRITE, file.name];
+        }
+    }
+
+
+    private async readFile(file: File): Promise<Buffer> {
 
         return new Promise<any>((resolve, reject) => {
-
             const reader = new FileReader();
-            reader.onloadend = (that => {
-                return () => {
-                    const buffer: Buffer = Buffer.from(reader.result);
-                    that.createImageDocument(file.name, buffer, category, depictsRelationTarget)
-                        .catch(error => {
-                            console.error(error);
-                            reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
-                        })
-                        .then(doc => that.imagestore.store(doc.resource.id, buffer))
-                        .then(() =>
-                            resolve(undefined)
-                        )
-                        .catch(error => {
-                            console.error(error);
-                            reject([M.IMAGESTORE_ERROR_WRITE, file.name]);
-                        });
-                };
-            })(this);
+
+            reader.onloadend = (() => {
+                const buffer: Buffer = Buffer.from(reader.result);
+                resolve(buffer);
+            });
+
             reader.onerror = () => {
                 return (error: any) => {
                     console.error(error);
                     reject([M.IMAGES_ERROR_FILEREADER, file.name]);
                 };
             };
+
             reader.readAsArrayBuffer(file);
         });
     }

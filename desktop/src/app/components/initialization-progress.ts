@@ -11,6 +11,7 @@ type InitializationPhase =
     |'loadingSettings'
     |'settingUpDatabase'
     |'loadingSampleObjects'
+    |'processingImages'
     |'loadingConfiguration'
     |'loadingDocuments'
     |'indexingDocuments';
@@ -23,6 +24,8 @@ type InitializationPhase =
 export class InitializationProgress {
 
     private phase: InitializationPhase = 'settingUpServer';
+    private imagesToProcess: number;
+    private processedImages: number = 0;
     private documentsToIndex: number;
     private indexedDocuments: number = 0;
     private locale: string = 'en';
@@ -35,6 +38,19 @@ export class InitializationProgress {
     public async setPhase(phase: InitializationPhase) {
 
         this.phase = phase;
+        await this.updateProgressBar();
+    }
+
+
+    public setImagesToProcess(imagesToProcess: number) {
+
+        this.imagesToProcess = imagesToProcess;
+    }
+
+
+    public async setProcessedImages(processedImages: number) {
+
+        this.processedImages = processedImages;
         await this.updateProgressBar();
     }
 
@@ -182,9 +198,11 @@ export class InitializationProgress {
             case 'loadingSettings':
                 return 5;
             case 'settingUpDatabase':
-                return 20;
+                return 15;
             case 'loadingSampleObjects':
-                return 25;
+                return 20;
+            case 'processingImages':
+                return 25 + this.getImageProcessingProgress();
             case 'loadingConfiguration':
                 return 35;
             case 'loadingDocuments':
@@ -192,6 +210,14 @@ export class InitializationProgress {
             case 'indexingDocuments':
                 return this.documentsToIndex - this.indexedDocuments < 1000 ? 100 : 50 + this.getIndexingProgress();
         }
+    }
+
+
+    private getImageProcessingProgress(): number {
+
+        return this.processedImages > 0
+            ? Math.round(10 * (this.processedImages / this.imagesToProcess))
+            : 0;
     }
 
 

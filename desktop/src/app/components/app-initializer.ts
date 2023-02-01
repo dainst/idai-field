@@ -1,7 +1,7 @@
 import { Map, to } from 'tsfun';
 import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo, ImageDocument } from 'idai-field-core';
+    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -110,7 +110,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
     await setProjectNameInProgress(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
-    await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject);
+    await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
@@ -247,18 +247,25 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
 };
 
 
-const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string) => {
+const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string,
+                                   progress: InitializationProgress) => {
+
+    await progress.setPhase('processingImages');
 
     const fileInfos: Map<FileInfo> = await imagestore.getFileInfos(
         projectIdentifier,
         [ImageVariant.ORIGINAL, ImageVariant.DISPLAY]
     );
 
+    progress.setImagesToProcess(Object.keys(fileInfos).length);
+
+    let count: number = 0;
     for (let imageId of Object.keys(fileInfos)) {
         const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
         if (variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY)) {
             await createDisplayImage(imageId, imagestore, db);
         }
+        progress.setProcessedImages(++count);
     }
 }
 

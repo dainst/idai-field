@@ -264,17 +264,21 @@ const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database,
 const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database,
                                   projectIdentifier: string) => {
 
-    const document: ImageDocument = await db.get(imageId);
-    const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
-    const width: number = document.resource.width;
-    const height: number = document.resource.height;
+    try {
+        const document: ImageDocument = await db.get(imageId);
+        const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
+        const width: number = document.resource.width;
+        const height: number = document.resource.height;
 
-    if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) return;
+        if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) return;
 
-    const originalData: Buffer = await imagestore.getData(imageId, ImageVariant.ORIGINAL, projectIdentifier);
-    const displayData: Buffer = await ImageManipulation.createDisplayImage(originalData, width, height, fileExtension);
+        const originalData: Buffer = await imagestore.getData(imageId, ImageVariant.ORIGINAL, projectIdentifier);
+        const displayData: Buffer = await ImageManipulation.createDisplayImage(originalData, width, height, fileExtension);
 
-    if (displayData) {
-        await imagestore.store(imageId, displayData, projectIdentifier, ImageVariant.DISPLAY);
+        if (displayData) {
+            await imagestore.store(imageId, displayData, projectIdentifier, ImageVariant.DISPLAY);
+        }
+    } catch (err) {
+        console.warn('Failed to create display variant for image ' + imageId, err);
     }
 };

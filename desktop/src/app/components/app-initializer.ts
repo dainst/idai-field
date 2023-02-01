@@ -265,13 +265,14 @@ const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: P
                                   projectIdentifier: string) => {
 
     const document: ImageDocument = await db.get(imageId);
+    const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
+    const width: number = document.resource.width;
+    const height: number = document.resource.height;
+
+    if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) return;
 
     const originalData: Buffer = await imagestore.getData(imageId, ImageVariant.ORIGINAL, projectIdentifier);
-    const displayData: Buffer = await ImageManipulation.createDisplayImage(
-        originalData,
-        document.resource.width,
-        document.resource.height,
-        ImageDocument.getOriginalFileExtension(document));
+    const displayData: Buffer = await ImageManipulation.createDisplayImage(originalData, width, height, fileExtension);
 
     if (displayData) {
         await imagestore.store(imageId, displayData, projectIdentifier, ImageVariant.DISPLAY);

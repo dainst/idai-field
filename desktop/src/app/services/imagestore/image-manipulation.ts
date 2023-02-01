@@ -31,21 +31,28 @@ export module ImageManipulation {
         }
     }
 
+
+    export function needsDisplayVersion(width: number, height: number, fileExtension: string): boolean {
+
+        return fileExtension.toLowerCase().includes('tif')
+            || width > MAX_DISPLAY_WIDTH
+            || height > MAX_DISPLAY_HEIGHT;
+    }
+
     
     export async function createDisplayImage(buffer: Buffer, width: number, height: number,
-                                             fileExtension: string): Promise<Buffer|undefined> {
+                                             fileExtension: string): Promise<Buffer> {
 
-        let image = undefined;
+        let image = getImage(buffer);
 
         if (fileExtension.toLowerCase().includes('tif')) {
-            image = getImage(buffer).png();
+            image = image.png();
         }
         if (width > MAX_DISPLAY_WIDTH || height > MAX_DISPLAY_HEIGHT) {
-            if (!image) image = getImage(buffer);
             image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
         }
         
-        return image?.toBuffer();
+        return image.toBuffer();
     }
 
 

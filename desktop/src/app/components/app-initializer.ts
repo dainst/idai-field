@@ -14,7 +14,7 @@ import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
-import { ImageManipulation } from '../services/imagestore/image-manipulation';
+import { createDisplayVariant } from '../services/imagestore/create-display-variant';
 
 
 interface Services {
@@ -165,7 +165,7 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnai
                               imagestore: ImageStore, progress: InitializationProgress) => {
 
     if (settings.selectedProject !== 'test') return;
-    
+
     await progress.setPhase('loadingSampleObjects');
     await imagestore.deleteData(settings.selectedProject);
 
@@ -257,29 +257,19 @@ const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database,
     for (let imageId of Object.keys(fileInfos)) {
         const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
         if (variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY)) {
-            await createDisplayImage(imageId, imagestore, db, projectIdentifier);
+            await createDisplayImage(imageId, imagestore, db);
         }
     }
 }
 
 
-const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database,
-                                  projectIdentifier: string) => {
+const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database) => {
 
     try {
-        const document: ImageDocument = await db.get(imageId);
-        const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
-        const width: number = document.resource.width;
-        const height: number = document.resource.height;
-
-        if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) return;
-
-        const originalData: Buffer = await imagestore.getData(imageId, ImageVariant.ORIGINAL, projectIdentifier);
-        const displayData: Buffer = await ImageManipulation.createDisplayImage(originalData, width, height, fileExtension);
-
-        if (displayData) {
-            await imagestore.store(imageId, displayData, projectIdentifier, ImageVariant.DISPLAY);
-        }
+        await createDisplayVariant(
+            await db.get(imageId),
+            imagestore
+        );
     } catch (err) {
         console.warn('Failed to create display variant for image ' + imageId, err);
     }

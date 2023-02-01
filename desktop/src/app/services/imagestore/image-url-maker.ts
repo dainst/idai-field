@@ -1,7 +1,7 @@
 import { Injectable, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Datastore, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
-import { ImageManipulation } from './image-manipulation';
+import { createDisplayVariant } from './create-display-variant';
 
 
 @Injectable()
@@ -104,18 +104,8 @@ export class ImageUrlMaker {
         }
 
         const document: ImageDocument = await this.datastore.get(imageId) as ImageDocument;
-        const displayData: Buffer = await ImageManipulation.createDisplayImage(
-            data,
-            document.resource.width,
-            document.resource.height,
-            ImageDocument.getOriginalFileExtension(document)
-        );
+        const displayData: Buffer = await createDisplayVariant(document, this.imagestore, data);
 
-        if (displayData) {
-            await this.imagestore.store(imageId, displayData, undefined, ImageVariant.DISPLAY);
-            return displayData;
-        } else {
-            return data;
-        }
+        return displayData ?? data;
     }
 }

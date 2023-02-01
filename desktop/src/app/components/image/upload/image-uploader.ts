@@ -12,6 +12,7 @@ import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulation } from '../../../services/imagestore/image-manipulation';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
+import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
 
 export interface ImageUploadResult {
@@ -234,6 +235,7 @@ export class ImageUploader {
         try {
             await this.imagestore.store(document.resource.id, buffer);
             await this.imagestore.createThumbnail(document.resource.id, buffer);
+            await createDisplayVariant(document, this.imagestore, buffer);
         } catch (err) {
             console.error(err);
             throw [M.IMAGESTORE_ERROR_WRITE, file.name];

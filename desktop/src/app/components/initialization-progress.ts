@@ -52,9 +52,14 @@ export class InitializationProgress {
     }
 
 
-    public async setEnvironment(projectName: string, locale: string) {
+    public async setLocale(locale: string) {
 
         this.locale = locale;
+    }
+
+
+    public async setProjectName(projectName: string) {
+
         this.updateInitializationInfo(projectName);
     }
 

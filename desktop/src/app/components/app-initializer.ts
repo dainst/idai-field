@@ -98,6 +98,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       configReader: ConfigReader,
                                       configLoader: ConfigLoader) => async (): Promise<void> => {
 
+    progress.setLocale(Settings.getLocale());
     await expressServer.setupServer();
 
     const settings = await loadSettings(settingsService, progress);
@@ -105,7 +106,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
 
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
     await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
-    await setUpProgressEnvironment(settings, progress);
+    await setProjectNameInProgress(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
 
     const services = await loadConfiguration(
@@ -130,12 +131,12 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 };
 
 
-const setUpProgressEnvironment = async (settings: Settings, progress: InitializationProgress) => {
+const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
 
     const projectIdentifier = settings.dbs[0];
     const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
-    await progress.setEnvironment(projectName ?? projectIdentifier, Settings.getLocale());
+    await progress.setProjectName(projectName ?? projectIdentifier);
 };
 
 

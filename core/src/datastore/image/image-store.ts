@@ -136,7 +136,7 @@ export class ImageStore {
     
     /**
      * Returns all known images and lists their available variants in a project.
-     * @param project the project's name
+     * @param project the project identifier
      * @param types (optional) List of {@link ImageVariant} one is interested in. If an empty list is provided (default), images are not filtered
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.

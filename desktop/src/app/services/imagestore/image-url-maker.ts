@@ -110,6 +110,7 @@ export class ImageUrlMaker {
             document.resource.height,
             ImageDocument.getOriginalFileExtension(document)
         );
+
         if (displayData) {
             await this.imagestore.store(imageId, displayData, undefined, ImageVariant.DISPLAY);
             return displayData;

@@ -1,6 +1,7 @@
+import { Map, to } from 'tsfun';
 import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration, Document, Labels } from 'idai-field-core';
+    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo, ImageDocument } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -13,6 +14,7 @@ import { ExpressServer } from '../services/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
+import { ImageManipulation } from '../services/imagestore/image-manipulation';
 
 
 interface Services {
@@ -90,7 +92,7 @@ export class AppInitializerServiceLocator {
 export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocator,
                                       settingsService: SettingsService,
                                       pouchdbDatastore: PouchdbDatastore,
-                                      imageStore: ImageStore,
+                                      imagestore: ImageStore,
                                       expressServer: ExpressServer,
                                       documentCache: DocumentCache,
                                       thumbnailGenerator: ThumbnailGenerator,
@@ -107,7 +109,8 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
     await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
     await setProjectNameInProgress(settings, progress);
-    await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imageStore);
+    await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
+    await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject);
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
@@ -239,4 +242,38 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
     await configurationIndex.rebuild(configurationDocument);
 
     return configurationIndex;
+};
+
+
+const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string) => {
+
+    const fileInfos: Map<FileInfo> = await imagestore.getFileInfos(
+        projectIdentifier,
+        [ImageVariant.ORIGINAL, ImageVariant.DISPLAY]
+    );
+
+    for (let imageId of Object.keys(fileInfos)) {
+        const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
+        if (variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY)) {
+            await createDisplayImage(imageId, imagestore, db, projectIdentifier);
+        }
+    }
+}
+
+
+const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database,
+                                  projectIdentifier: string) => {
+
+    const document: ImageDocument = await db.get(imageId);
+
+    const originalData: Buffer = await imagestore.getData(imageId, ImageVariant.ORIGINAL, projectIdentifier);
+    const displayData: Buffer = await ImageManipulation.createDisplayImage(
+        originalData,
+        document.resource.width,
+        document.resource.height,
+        ImageDocument.getOriginalFileExtension(document));
+
+    if (displayData) {
+        await imagestore.store(imageId, displayData, projectIdentifier, ImageVariant.DISPLAY);
+    }
 };

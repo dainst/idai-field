@@ -41,7 +41,7 @@ export class LayerImageProvider {
         let url: string|SafeResourceUrl;
         try {
             url = this.sanitizer.sanitize(
-                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.ORIGINAL)
+                SecurityContext.RESOURCE_URL, await this.imageUrlMaker.getUrl(resourceId, ImageVariant.DISPLAY)
             );
             return { imgSrc: url };
         } catch (err) {

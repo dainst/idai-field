@@ -76,7 +76,7 @@ export class ImageViewerComponent implements OnChanges {
         const image: ImageContainer = { document };
 
         try {
-            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.ORIGINAL);
+            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
         } catch (e) {
             image.imgSrc = undefined;
         }

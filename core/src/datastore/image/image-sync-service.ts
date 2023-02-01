@@ -25,7 +25,7 @@ export class ImageSyncService {
 
     private active: FileSyncPreference[] = [];
     private schedules: { [variant in ImageVariant]?: ReturnType<typeof setTimeout> } = {};
-    private status: { [variant in ImageVariant]: SyncStatus } = {
+    private status: { [variant in ImageVariant]?: SyncStatus } = {
         'original_image': SyncStatus.Offline,
         'thumbnail_image': SyncStatus.Offline
     };
@@ -40,7 +40,7 @@ export class ImageSyncService {
     }
 
 
-    public getStatus(): { [variant in ImageVariant]: SyncStatus } {
+    public getStatus(): { [variant in ImageVariant]?: SyncStatus } {
 
         return this.status;
     }

@@ -4,7 +4,8 @@ import { ThumbnailGeneratorInterface } from './thumbnail-generator-interface';
 
 export enum ImageVariant {
     ORIGINAL = 'original_image',
-    THUMBNAIL = 'thumbnail_image'
+    THUMBNAIL = 'thumbnail_image',
+    DISPLAY = 'display_image'
 }
 
 export interface FileVariantInformation {
@@ -21,13 +22,11 @@ export interface FileInfo {
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 
 export const thumbnailDirectory = 'thumbs/';
+export const displayDirectory = 'display/';
 export const tombstoneSuffix = '.deleted';
 
 
 /**
- * An image store that uses the file system to store the original images and
- * thumbnails in order to be able to sync them.
- *
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  * @author Daniel De Oliviera
@@ -146,6 +145,7 @@ export class ImageStore {
 
         let originalFileStats = [];
         let thumbnailFileStats = [];
+        let displayFileStats = [];
 
         if (types.length === 0) {
             originalFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
@@ -157,10 +157,14 @@ export class ImageStore {
             if (types.includes(ImageVariant.THUMBNAIL)) {
                 thumbnailFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
             }
+            if (types.includes(ImageVariant.DISPLAY)) {
+                displayFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.DISPLAY));
+            }
         }
         
         let result = this.aggregateFileMap({}, originalFileStats, ImageVariant.ORIGINAL);
         result = this.aggregateFileMap(result, thumbnailFileStats, ImageVariant.THUMBNAIL);
+        result = this.aggregateFileMap(result, displayFileStats, ImageVariant.DISPLAY);
         
         return result;
     }
@@ -181,7 +185,7 @@ export class ImageStore {
             let uuid = stat.path;
             let deleted: boolean;
     
-            if(uuid.endsWith(tombstoneSuffix)) {
+            if (uuid.endsWith(tombstoneSuffix)) {
                 deleted = true;
                 uuid = uuid.replace(tombstoneSuffix, '');
             } else {
@@ -220,6 +224,11 @@ export class ImageStore {
         if (!(await this.filesystem.exists(thumbnailsPath))) {
             await this.filesystem.mkdir(thumbnailsPath, true);
         }
+
+        const displayPath = this.getDirectoryPath(project, ImageVariant.DISPLAY);
+        if (!(await this.filesystem.exists(displayPath))) {
+            await this.filesystem.mkdir(displayPath, true);
+        }
     }
 
 
@@ -252,10 +261,14 @@ export class ImageStore {
 
     private getDirectoryPath(project: string, type?: ImageVariant): string {
 
-        if (type === undefined || type === ImageVariant.ORIGINAL) {
-            return this.absolutePath + project + '/';
-        } else {
-            return this.absolutePath + project + '/' + thumbnailDirectory;
+        switch (type) {
+            case ImageVariant.ORIGINAL:
+            case undefined:
+                return this.absolutePath + project + '/';
+            case ImageVariant.THUMBNAIL:
+                return this.absolutePath + project + '/' + thumbnailDirectory;
+            case ImageVariant.DISPLAY:
+                return this.absolutePath + project + '/' + displayDirectory;
         }
     }
 
@@ -266,11 +279,12 @@ export class ImageStore {
     }
 
     
-    public static getFileSizeSums(files: { [uuid: string]: FileInfo }): { [variantName in ImageVariant]: number } {
-        
+    public static getFileSizeSums(files: { [uuid: string]: FileInfo }) {
+
         const sums: { [variantName in ImageVariant]: number } = {
+            original_image: 0,
             thumbnail_image: 0,
-            original_image: 0
+            display_image: 0
         };
 
         for (const fileInfo of Object.values(files)) {

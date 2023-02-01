@@ -18,7 +18,7 @@ export class ImageUrlMaker {
 
     public static blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
-    private originalUrls: { [imageKey: string]: SafeResourceUrl} = {};
+    private displayUrls: { [imageKey: string]: SafeResourceUrl} = {};
     private thumbnailUrls: { [imageKey: string]: SafeResourceUrl} = {};
 
 
@@ -35,38 +35,22 @@ export class ImageUrlMaker {
      * See also https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL.
      *
      * @param imageId the image's id
-     * @param type the image's version, for possible values see {@link ImageVariant}
+     * @param variant the image's version, for possible values see {@link ImageVariant}
      */
-     public async getUrl(imageId: string, type: ImageVariant): Promise<SafeResourceUrl> {
+     public async getUrl(imageId: string, variant: ImageVariant): Promise<SafeResourceUrl> {
 
-        const relevantList = (type === ImageVariant.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+        const relevantList = (variant === ImageVariant.DISPLAY) ? this.displayUrls : this.thumbnailUrls;
 
-        if (relevantList[imageId]) {
-            return relevantList[imageId];
-        }
+        if (relevantList[imageId]) return relevantList[imageId];
 
-        try {
-            const data: Buffer = await this.imagestore.getData(imageId, type);
-            const document: ImageDocument = await this.datastore.get(imageId) as ImageDocument;
-            const displayData: Buffer = type === ImageVariant.ORIGINAL
-                ? await ImageManipulation.createDisplayImage(
-                    data,
-                    document.resource.width,
-                    document.resource.height,
-                    ImageDocument.getOriginalFileExtension(document)
-                ) : data;
+        const displayData: Buffer|undefined = await this.fetchDisplayData(imageId, variant);
+        if (!displayData) return ImageUrlMaker.blackImg;
 
-            relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
-                URL.createObjectURL(new Blob([displayData]))
-            );
+        relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
+            URL.createObjectURL(new Blob([displayData]))
+        );
 
-            return relevantList[imageId];
-        } catch (e) {
-            if (type === ImageVariant.ORIGINAL) {
-                throw e;
-            }
-            return ImageUrlMaker.blackImg;
-        }
+        return relevantList[imageId];
     }
 
 
@@ -76,11 +60,11 @@ export class ImageUrlMaker {
      */
     public revokeAllUrls() {
 
-        for (const imageId of Object.keys(this.originalUrls)) {
-            this.revokeUrl(imageId, ImageVariant.ORIGINAL);
+        for (const imageId of Object.keys(this.displayUrls)) {
+            this.revokeUrl(imageId, ImageVariant.DISPLAY);
         }
 
-        for (const imageId of Object.keys(this.originalUrls)) {
+        for (const imageId of Object.keys(this.displayUrls)) {
             this.revokeUrl(imageId, ImageVariant.THUMBNAIL);
         }
     }
@@ -88,10 +72,49 @@ export class ImageUrlMaker {
 
     private revokeUrl(imageId: string, type: ImageVariant) {
 
-        const requestedList = (type === ImageVariant.ORIGINAL) ? this.originalUrls : this.thumbnailUrls;
+        const requestedList = (type === ImageVariant.DISPLAY) ? this.displayUrls : this.thumbnailUrls;
         if (!requestedList[imageId]) return;
 
         URL.revokeObjectURL(this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, requestedList[imageId]));
         delete requestedList[imageId];
+    }
+
+
+    private async fetchDisplayData(imageId: string, variant: ImageVariant): Promise<Buffer|undefined> {
+
+        try {
+            return await this.imagestore.getData(imageId, variant);
+        } catch (err) {
+            if (variant === ImageVariant.DISPLAY) {
+                return this.fetchDisplayDataFromOriginal(imageId);
+            } else {
+                return undefined;
+            }
+        }
+    }
+
+
+    private async fetchDisplayDataFromOriginal(imageId: string): Promise<Buffer|undefined> {
+
+        let data: Buffer;
+        try {
+            data = await this.imagestore.getData(imageId, ImageVariant.ORIGINAL);
+        } catch (err) {
+            return undefined;
+        }
+
+        const document: ImageDocument = await this.datastore.get(imageId) as ImageDocument;
+        const displayData: Buffer = await ImageManipulation.createDisplayImage(
+            data,
+            document.resource.width,
+            document.resource.height,
+            ImageDocument.getOriginalFileExtension(document)
+        );
+        if (displayData) {
+            await this.imagestore.store(imageId, displayData, undefined, ImageVariant.DISPLAY);
+            return displayData;
+        } else {
+            return data;
+        }
     }
 }

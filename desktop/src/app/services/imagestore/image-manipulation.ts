@@ -33,9 +33,9 @@ export module ImageManipulation {
 
     
     export async function createDisplayImage(buffer: Buffer, width: number, height: number,
-                                             fileExtension: string): Promise<Buffer> {
+                                             fileExtension: string): Promise<Buffer|undefined> {
 
-        let image;
+        let image = undefined;
 
         if (fileExtension.toLowerCase().includes('tif')) {
             image = getImage(buffer).png();
@@ -45,9 +45,7 @@ export module ImageManipulation {
             image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
         }
         
-        return image
-            ? image.toBuffer()
-            : buffer;
+        return image?.toBuffer();
     }
 
 

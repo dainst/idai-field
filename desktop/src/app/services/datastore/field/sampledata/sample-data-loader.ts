@@ -2,7 +2,6 @@ import { SampleDataLoaderBase } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../getAsynchronousFs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
-
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -48,6 +47,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
         }
     }
 
+    
     private async copyImageFiles(srcFolderPath: string, destFolderPath: string, fileName: string) {
 
         fs.mkdirSync(destFolderPath, { recursive: true });

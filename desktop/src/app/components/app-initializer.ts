@@ -106,7 +106,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     const settings = await loadSettings(settingsService, progress);
     await setUpDatabase(settingsService, settings, progress);
 
-    await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, progress);
+    await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
     await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
     await setProjectNameInProgress(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
@@ -162,13 +162,15 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 
 
 const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator,
-                              progress: InitializationProgress) => {
+                              imagestore: ImageStore, progress: InitializationProgress) => {
 
-    if (settings.selectedProject === 'test') {
-        await progress.setPhase('loadingSampleObjects');
-        const loader = new SampleDataLoader(thumbnailGenerator, settings.imagestorePath, Settings.getLocale());
-        return loader.go(db, settings.selectedProject);
-    }
+    if (settings.selectedProject !== 'test') return;
+    
+    await progress.setPhase('loadingSampleObjects');
+    await imagestore.deleteData(settings.selectedProject);
+
+    const loader = new SampleDataLoader(thumbnailGenerator, settings.imagestorePath, Settings.getLocale());
+    return loader.go(db, settings.selectedProject);
 };
 
 

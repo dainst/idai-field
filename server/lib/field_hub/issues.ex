@@ -67,13 +67,27 @@ defmodule FieldHub.Issues do
   """
   def evaluate_project_document(project_name) do
     project_name
-    |> CouchService.get_docs_by_category(["Project"])
-    |> Enum.to_list()
+    |> CouchService.get_docs(["project"])
     |> case do
-      [] ->
-        [%Issue{type: :no_project_document, severity: :error, data: %{}}]
+      [{:error, %{reason: "not_found"}}] ->
+        [
+          %Issue{
+            type: :no_project_document,
+            severity: :error,
+            data: %{reason: "Document with id 'project' not found."}
+          }
+        ]
 
-      [%{"resource" => resource}] ->
+      [{:ok, %{"_deleted" => true} = _doc}] ->
+        [
+          %Issue{
+            type: :no_project_document,
+            severity: :error,
+            data: %{reason: "Document with id 'project' got deleted at some point."}
+          }
+        ]
+
+      [{:ok, %{"resource" => resource} = _doc}] ->
         case resource do
           %{"relations" => %{"hasDefaultMapLayer" => []}} ->
             [%Issue{type: :no_default_project_map_layer, severity: :info, data: %{}}]
@@ -267,7 +281,9 @@ defmodule FieldHub.Issues do
 
           detailed_docs =
             CouchService.get_docs(project_name, ids)
-            |> Enum.to_list()
+            |> Enum.map(fn {:ok, doc} ->
+              doc
+            end)
 
           %Issue{
             type: :non_unique_identifiers,

@@ -10,9 +10,12 @@ defmodule FieldHub.CouchService do
   require Logger
 
   @doc """
-  Authenticate with given `%Credentials{}`.
+  Authenticate with credentials.
 
   Returns `:ok` if credentials are valid, otherwise `{:error, reason}`.
+
+  __Parameters__
+  - `credentials` the #{Credentials}.
   """
   def authenticate(%Credentials{} = credentials) do
     response =
@@ -329,6 +332,10 @@ defmodule FieldHub.CouchService do
   @doc """
   Returns the documents for a list of UUIDs (matched against the documents `_id` values).
 
+  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: reason}}`.
+
+  See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#db-bulk-get.
+
   __Parameters__
   - `project_name` the project's name.
   - `uuids` the list of ids requested.
@@ -357,10 +364,10 @@ defmodule FieldHub.CouchService do
     |> Enum.map(fn %{"docs" => result} ->
       case result do
         [%{"ok" => doc}] ->
-          doc
+          {:ok, doc}
 
-        [%{"error" => %{"id" => uuid, "error" => error, "reason" => reason}}] ->
-          {:error, %{uuid: uuid, error: error, reason: reason}}
+        [%{"error" => %{"id" => uuid, "error" => error}}] ->
+          {:error, %{uuid: uuid, reason: error}}
       end
     end)
   end

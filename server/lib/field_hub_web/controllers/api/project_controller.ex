@@ -15,16 +15,9 @@ defmodule FieldHubWeb.Api.ProjectController do
   end
 
   def show(conn, %{"project" => project_name}) do
-    case Project.evaluate_project(project_name) do
-      :unknown ->
-        conn
-        |> put_status(:not_found)
-        |> put_view(StatusView)
-        |> render(%{error: "Project #{project_name} does not exist."})
+    project_info = Project.evaluate_project(project_name)
 
-      project_info ->
-        render(conn, "show.json", %{project: project_info})
-    end
+    render(conn, "show.json", %{project: project_info})
   end
 
   def create(conn, %{"project" => project_name}) do

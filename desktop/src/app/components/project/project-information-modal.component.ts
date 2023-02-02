@@ -36,8 +36,10 @@ export class ProjectInformationModalComponent implements OnInit {
 
     public thumbnailFileCount: number;
     public originalFileCount: number;
+    public displayFileCount: number;
     public thumbnailFileSize: string;
     public originalFileSize: string;
+    public displayFileSize: string;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -113,9 +115,13 @@ export class ProjectInformationModalComponent implements OnInit {
         this.originalFileCount = await ProjectInformationModalComponent.getFileCount(
             fileInfos, ImageVariant.ORIGINAL
         );
+        this.displayFileCount = await ProjectInformationModalComponent.getFileCount(
+            fileInfos, ImageVariant.DISPLAY
+        );
 
         this.thumbnailFileSize = await this.getFileSize(ImageVariant.THUMBNAIL);
         this.originalFileSize = await this.getFileSize(ImageVariant.ORIGINAL);
+        this.displayFileSize = await this.getFileSize(ImageVariant.DISPLAY);
     }
 
 

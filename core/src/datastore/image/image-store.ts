@@ -143,19 +143,14 @@ export class ImageStore {
         let thumbnailFileStats = [];
         let displayFileStats = [];
 
-        if (types.length === 0) {
+        if (types.length === 0 || types.includes(ImageVariant.ORIGINAL)) {
             originalFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
+        } 
+        if (types.length === 0 || types.includes(ImageVariant.THUMBNAIL)) {
             thumbnailFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
-        } else {
-            if (types.includes(ImageVariant.ORIGINAL)) {
-                originalFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
-            } 
-            if (types.includes(ImageVariant.THUMBNAIL)) {
-                thumbnailFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
-            }
-            if (types.includes(ImageVariant.DISPLAY)) {
-                displayFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.DISPLAY));
-            }
+        }
+        if (types.length === 0 || types.includes(ImageVariant.DISPLAY)) {
+            displayFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.DISPLAY));
         }
         
         let result = this.aggregateFileMap({}, originalFileStats, ImageVariant.ORIGINAL);

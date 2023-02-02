@@ -49,6 +49,15 @@
             <div *ngIf="!lastChangedDocument" i18n="@@project.informationModal.deletedResource" class="indented">
                 Gelöschte Ressource
             </div>
+            <div i18n="@@project.informationModal.originals">
+                Original-Bilddateien:
+            </div>
+            <div i18n="@@project.informationModal.fileCount" class="indented">
+                Anzahl: {{originalFileCount}}
+            </div>
+            <div i18n="@@project.informationModal.fileSize" class="indented">
+                Belegter Festplattenspeicher: {{originalFileSize}}
+            </div>
             <div i18n="@@project.informationModal.thumbnails">
                 Vorschau-Bilddateien:
             </div>
@@ -58,14 +67,14 @@
             <div i18n="@@project.informationModal.fileSize" class="indented">
                 Belegter Festplattenspeicher: {{thumbnailFileSize}}
             </div>
-            <div i18n="@@project.informationModal.originals">
-                Original-Bilddateien:
+            <div i18n="@@project.informationModal.displayImages">
+                Für die Anzeige optimierte Bilddateien:
             </div>
             <div i18n="@@project.informationModal.fileCount" class="indented">
-                Anzahl: {{originalFileCount}}
+                Anzahl: {{displayFileCount}}
             </div>
             <div i18n="@@project.informationModal.fileSize" class="indented">
-                Belegter Festplattenspeicher: {{originalFileSize}}
+                Belegter Festplattenspeicher: {{displayFileSize}}
             </div>
         </div>
     </div>

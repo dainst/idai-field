@@ -39,6 +39,7 @@ export class InitializationProgress {
 
         this.phase = phase;
         await this.updateProgressBar();
+        this.updateInitializationDetailInfo(phase, 3000);
     }
 
 
@@ -97,6 +98,7 @@ export class InitializationProgress {
         );
         InitializationProgress.setElementText('initialization-info-project-name', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
+        InitializationProgress.setElementText('initialization-detail-info', '');
 
         const errorMessages: string[] = this.getErrorMessages(msgsWithParams);
         if (errorMessages.length > 0) this.showErrorMessages(errorMessages);
@@ -170,6 +172,24 @@ export class InitializationProgress {
         );
 
         await AngularUtility.refresh();
+    }
+
+
+    private updateInitializationDetailInfo(phase: InitializationPhase, delay: number) {
+
+        const message: string = getMessage('phase/' + this.phase, this.locale);
+
+        if (message) {
+            setTimeout(() => {
+                if (this.phase !== phase || this.error) return;
+                InitializationProgress.setElementText(
+                    'initialization-detail-info',
+                    message
+                );
+            }, delay);
+        } else {
+            InitializationProgress.setElementText('initialization-detail-info', '');
+        }
     }
 
 

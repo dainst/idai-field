@@ -619,7 +619,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.resource" datatype="html">
@@ -1409,7 +1409,7 @@
         <target state="final"> Edit category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
@@ -1829,15 +1829,15 @@
         <target state="final">Project name:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
-        <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. </source>
-        <target state="final"> Optionally, you can specify a project name for each language. The name may contain any characters and be up to <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> characters long. </target>
+        <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
+        <target state="final"> Optionally, you can specify a project name for each language. The name may contain any characters and be up to <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> characters long. It can be changed at any time in the project properties. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
-          <context context-type="linenumber">85,60</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.next" datatype="html">
@@ -1845,7 +1845,7 @@
         <target state="final">Next</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
@@ -1889,8 +1889,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
-        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss mit einem Kleinbuchstaben beginnen und darf höchstens <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. </source>
-        <target state="final"> Enter a unique identifier for the new project here. Permitted characters are lowercase letters and digits as well as underscores and hyphens. The identifier must always start with a lowercase letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. </target>
+        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss mit einem Kleinbuchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> mehr geändert werden. </source>
+        <target state="final"> Enter a unique identifier for the new project here. Permitted characters are lowercase letters and digits as well as underscores and hyphens. The identifier must always start with a lowercase letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. It <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>cannot<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> be changed at a later time.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1901,7 +1901,7 @@
         <target state="final">Create</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
@@ -7446,7 +7446,7 @@
         <target state="final"> Color </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">

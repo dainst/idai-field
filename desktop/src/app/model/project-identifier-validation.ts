@@ -7,7 +7,7 @@ import { MsgWithParams } from '../components/messages/msg-with-params';
  */
 export namespace ProjectIdentifierValidation {
 
-    export const PROJECT_IDENTIFIER_MAX_LENGTH: number = 18;
+    export const PROJECT_IDENTIFIER_MAX_LENGTH: number = 30;
 
     export module Errors {
 

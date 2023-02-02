@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Loading} from './loading';
+import { Component, Input } from '@angular/core';
+import { Loading } from './loading';
+
 
 @Component({
     selector: 'loading-icon',

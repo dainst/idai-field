@@ -44,7 +44,7 @@
                [(ngModel)]="projectIdentifier"
                (keydown)="$event.key !== 'Enter' || createProject()" />
     </div>
-    <div class="small-info-text" i18n="@@project.createModal.identifier.info.1">
+    <div class="small-info-text" i18n="@@project.createModal.identifier.info">
         Geben Sie hier eine eindeutige Kennung des neuen Projekts ein.
         Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss
         mit einem Kleinbuchstaben beginnen und darf maximal {{getIdentifierMaxLength()}} Zeichen lang sein. Sie kann

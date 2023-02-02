@@ -38,8 +38,15 @@ describe('ProjectIdentifierValidator', () => {
 
     it('validate project identifier: wrong length', () => {
 
-        expect(ProjectIdentifierValidation.validate('project_identifier_with_too_many_characters'))
-            .toEqual([ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_LENGTH, '25']);
+        const projectIdentifier: string = 'project_identifier_with_too_many_characters';
+        const expectedLengthDifference: number =
+            projectIdentifier.length - ProjectIdentifierValidation.PROJECT_IDENTIFIER_MAX_LENGTH;
+
+        expect(ProjectIdentifierValidation.validate(projectIdentifier))
+            .toEqual([
+                ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_LENGTH,
+                expectedLengthDifference.toString()
+            ]);
     });
 
 

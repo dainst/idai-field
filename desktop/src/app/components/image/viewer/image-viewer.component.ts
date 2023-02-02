@@ -31,6 +31,9 @@ export class ImageViewerComponent implements OnChanges {
                 private zone: NgZone) {}
 
 
+    public isLoadingIconVisible = () => this.loading.getLoadingTimeInMilliseconds('image-viewer') > 50;
+
+
     async ngOnChanges() {
 
         if (!this.imagestore.getAbsoluteRootPath()) {

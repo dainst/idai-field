@@ -6,6 +6,6 @@
         </div>
         <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc"
              (load)="onLoadingFinished()">
-        <loading-icon [context]="'image-viewer'"></loading-icon>
+        <loading-icon *ngIf="isLoadingIconVisible()" [context]="'image-viewer'"></loading-icon>
     </div>
 </div>

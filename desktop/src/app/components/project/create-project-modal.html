@@ -44,10 +44,11 @@
                [(ngModel)]="projectIdentifier"
                (keydown)="$event.key !== 'Enter' || createProject()" />
     </div>
-    <div class="small-info-text" i18n="@@project.createModal.identifier.info">
+    <div class="small-info-text" i18n="@@project.createModal.identifier.info.1">
         Geben Sie hier eine eindeutige Kennung des neuen Projekts ein.
         Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie Unterstriche und Bindestriche. Die Kennung muss
-        mit einem Kleinbuchstaben beginnen und darf höchstens {{getIdentifierMaxLength()}} Zeichen lang sein.
+        mit einem Kleinbuchstaben beginnen und darf maximal {{getIdentifierMaxLength()}} Zeichen lang sein. Sie kann
+        zu einem späteren Zeitpunkt <b>nicht</b> mehr geändert werden.
     </div>
     <div id="project-name-heading"
          class="create-project-modal-heading"
@@ -57,7 +58,7 @@
                                (onFieldDataChanged)="updateProjectName($event)"></multi-language-text-field>
     <div class="small-info-text" i18n="@@project.createModal.projectName.info">
         Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und
-        maximal {{getNameMaxLength()}} Zeichen lang sein.
+        maximal {{getNameMaxLength()}} Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden.
     </div>
 </div>
 

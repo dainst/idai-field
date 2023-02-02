@@ -40,6 +40,7 @@ export interface ImporterOptions {
     sourceType: string;
     file?: any|undefined;
     url?: string|undefined;
+    ignoreUnconfiguredFields?: boolean;
 }
 
 
@@ -140,6 +141,7 @@ export module Importer {
                         mergeMode: options.mergeMode,
                         permitDeletions: options.permitDeletions,
                         operationId: options.selectedOperationId,
+                        ignoreUnconfiguredFields: options.ignoreUnconfiguredFields,
                         useIdentifiersInRelations: true
                     });
         }

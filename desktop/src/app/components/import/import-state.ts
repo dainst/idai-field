@@ -15,6 +15,7 @@ export class ImportState implements ImporterOptions {
     public selectedOperationId: string = '';
     public mergeMode = false;
     public permitDeletions = false;
+    public ignoreUnconfiguredFields = false;
 
     // For CSV import
 

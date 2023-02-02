@@ -130,7 +130,7 @@ export class ImportValidator extends Validator {
      */
     public assertFieldsDefined(document: Document|NewDocument): void {
 
-        const undefinedFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
+        const undefinedFields = this.getUndefinedFields(document);
         if (undefinedFields.length > 0) {
             throw [
                 E.INVALID_FIELDS,
@@ -138,6 +138,12 @@ export class ImportValidator extends Validator {
                 undefinedFields.join(', ')
             ];
         }
+    }
+
+
+    public getUndefinedFields(document: Document|NewDocument): string[] {
+
+        return Validations.validateDefinedFields(document.resource, this.projectConfiguration);
     }
 
 

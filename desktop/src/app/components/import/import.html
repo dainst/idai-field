@@ -139,6 +139,18 @@
                                 unverändert.
                             </div>
                         </div>
+                        <div class="form-group form-check-inline">
+                            <input type="checkbox" id="ignore-unconfigured-fields-checkbox" class="form-check-input"
+                                    [(ngModel)]="importState.ignoreUnconfiguredFields">
+                            <label for="ignore-unconfigured-fields-checkbox" class="form-check-label"
+                                  i18n="@@import.ignoreUnconfiguredFields">
+                                Nicht konfigurierte Felder ignorieren
+                            </label>
+                        </div>
+                        <div class="import-info" i18n="@@import.ignoreUnconfiguredFields.info">
+                            Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der
+                            Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen.
+                        </div>
                     </div>
 
                     <div class="form-group" *ngIf="importState.format === 'csv' && importState.file && !importState.typeFromFileName">

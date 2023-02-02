@@ -10,7 +10,8 @@ import { mergeResource } from './merge-resource';
  */
 export function processDocuments(documents: Array<Document>,
                                  mergeDocs: { [resourceId: string]: Document },
-                                 validator: ImportValidator): Array<Document> {
+                                 validator: ImportValidator,
+                                 ignoreUnconfiguredFields: boolean): Array<Document> {
 
     const mergeMode = size(mergeDocs) > 0;
     if (!mergeMode) assertNoDuplicates(documents);
@@ -18,7 +19,6 @@ export function processDocuments(documents: Array<Document>,
     const finalDocuments = {};
 
     for (const document of documents) {
-
         if (!mergeMode) validator.assertIsKnownCategory(document);
 
         let finalDocument = document;
@@ -34,7 +34,12 @@ export function processDocuments(documents: Array<Document>,
         // we do test for fields of import document if they are defined.
         // We need to make sure the category is set in any case.
         document.resource.category = finalDocument.resource.category;
-        validator.assertFieldsDefined(document);
+
+        if (ignoreUnconfiguredFields) {
+            validator.getUndefinedFields(document).forEach(fieldName => delete document.resource[fieldName]);
+        } else {
+            validator.assertFieldsDefined(document);
+        }
 
         if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
 

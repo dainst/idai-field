@@ -19,6 +19,7 @@ export interface ImportOptions {
     permitDeletions?: boolean;
     operationId?: string;
     useIdentifiersInRelations?: boolean;
+    ignoreUnconfiguredFields?: boolean;
 }
 
 
@@ -112,7 +113,9 @@ async function importDocuments(services: ImportServices,
         preprocessFields(documentsToImport, options);
         await preprocessRelations(documentsToImport, helpers, options);
         const mergeDocs = preprocessDocuments(existingImportDocuments, helpers, options, documentsToImport);
-        const processedDocuments = processDocuments(documentsToImport, mergeDocs, services.validator);
+        const processedDocuments = processDocuments(
+            documentsToImport, mergeDocs, services.validator, options.ignoreUnconfiguredFields
+        );
         const targetDocuments = await processRelations(
             processedDocuments,
             services.validator,

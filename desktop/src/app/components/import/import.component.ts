@@ -143,6 +143,7 @@ export class ImportComponent implements OnInit {
         this.importState.url = undefined;
         this.importState.mergeMode = false;
         this.importState.permitDeletions = false;
+        this.importState.ignoreUnconfiguredFields = false;
     }
 
 

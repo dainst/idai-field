@@ -43,8 +43,6 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isCustomCategory = () => this.category.source === 'custom';
 
-    public isIdentifierPrefixAvailable = () => !this.category.isAbstract && this.category.name !== 'Project';
-
     public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
 
 
@@ -131,6 +129,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         this.getClonedFormDefinition().color = CategoryEditorModalComponent.getHexColor(
             this.category.defaultColor
         );
+    }
+
+
+    public isIdentifierPrefixAvailable(): boolean {
+        
+        return !this.category.isAbstract
+            && this.category.name !== 'Project'
+            && this.category.name !== 'Image'
+            && this.category.parentCategory?.name !== 'Image';
     }
 
 

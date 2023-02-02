@@ -8,8 +8,6 @@ export module JavaVersionParser {
      */
     export function parse(javaVersionOutput: string): number {
 
-        console.log('Java version:', javaVersionOutput);
-
         if (new RegExp('version "?\\d+\\.\\d+\\.\\d+_\\d+"?').test(javaVersionOutput)
                 || new RegExp('version "\\d+"').test(javaVersionOutput)
                 || new RegExp('(version|openjdk) "?\\d+\\.\\d+\\.\\d+"?').test(javaVersionOutput)) {

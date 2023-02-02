@@ -2208,7 +2208,7 @@
         <target state="final">Informazioni sulla banca dati</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
-          <context context-type="linenumber">47,56</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
@@ -2216,7 +2216,7 @@
         <target state="final"> Dati memorizzati su questo computer per il progetto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
@@ -2280,7 +2280,7 @@
         <target state="final"> Modificato da: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
@@ -2288,19 +2288,23 @@
         <target state="final"> Anteprima dei file di immagine: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
-        <source> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </source>
-        <target state="final"> Spazio occupato sul disco rigido: <x id="INTERPOLATION" equiv-text="{{thumbnailFileSize}}"/> </target>
+        <source> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </source>
+        <target state="final"> Spazio occupato sul disco rigido: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
@@ -2308,7 +2312,7 @@
         <target state="final"> File di immagini originali: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
@@ -6570,19 +6574,31 @@
         <target state="final">Configurazione del progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
-        <source> Anzahl: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </source>
-        <target state="final"> Numero di files: <x id="INTERPOLATION" equiv-text="{{thumbnailFileCount}}"/> </target>
+        <source> Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </source>
+        <target state="final"> Numero di files: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.displayImages" datatype="html">
+        <source> Für die Anzeige optimierte Bilddateien: </source>
+        <target state="new"> Für die Anzeige optimierte Bilddateien: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">85,89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
@@ -6590,7 +6606,7 @@
         <target state="final"> Proprietà del progetto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
@@ -7282,7 +7298,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">

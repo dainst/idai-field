@@ -45,14 +45,22 @@ export class ImageViewerComponent implements OnChanges {
 
     public containsOriginal(imageContainer: ImageContainer): boolean {
 
-        return imageContainer.imgSrc !== undefined && imageContainer.imgSrc !== '';
+        return imageContainer?.imgSrc !== undefined && imageContainer?.imgSrc !== '';
     }
 
 
     public isImageContainerVisible(): boolean {
         
         return !this.loadingIconVisible
-            || this.image.resource.id === this.imageContainer.document.resource.id;
+            || (this.image?.resource.id === this.imageContainer?.document.resource.id);
+    }
+
+
+    public isOriginalNotFoundWarningVisible(): boolean {
+
+        return this.imageContainer
+            && !this.containsOriginal(this.imageContainer)
+            && !this.loadingIconVisible;
     }
 
 
@@ -87,20 +95,20 @@ export class ImageViewerComponent implements OnChanges {
         this.startLoading();
         this.changeDetectorRef.detectChanges();
 
-        const image: ImageContainer = { document };
+        const imageContainer: ImageContainer = { document };
 
         try {
-            image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
+            imageContainer.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
             this.changeDetectorRef.detectChanges();
         } catch (e) {
-            image.imgSrc = undefined;
-            image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
+            imageContainer.imgSrc = undefined;
+            imageContainer.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
             this.stopLoading();
         }
 
-        this.showConsoleErrorIfImageIsMissing(image);
+        this.showConsoleErrorIfImageIsMissing(imageContainer);
 
-        return image;
+        return imageContainer;
     }
 
 
@@ -114,15 +122,15 @@ export class ImageViewerComponent implements OnChanges {
     }
 
 
-    private showConsoleErrorIfImageIsMissing(image: ImageContainer) {
+    private showConsoleErrorIfImageIsMissing(imageContainer: ImageContainer) {
 
-        if (this.containsOriginal(image)) return;
+        if (this.containsOriginal(imageContainer)) return;
 
-        const imageId: string = image.document && image.document.resource
-            ? image.document.resource.id
+        const imageId: string = imageContainer.document && imageContainer.document.resource
+            ? imageContainer.document.resource.id
             : 'unknown';
 
-        if (image.thumbSrc === ImageUrlMaker.blackImg) {
+        if (imageContainer.thumbSrc === ImageUrlMaker.blackImg) {
             showMissingImageMessageOnConsole(imageId);
         } else {
             showMissingOriginalImageMessageOnConsole(imageId);

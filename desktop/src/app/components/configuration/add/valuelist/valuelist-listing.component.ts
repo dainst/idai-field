@@ -59,7 +59,6 @@ export class ValuelistListingComponent implements OnChanges {
     }
 
 
-
     public getSearchResultLabel(valuelist: Valuelist): string|undefined {
 
         const searchTokens: string[] = tokenize([this.searchTerm], false);

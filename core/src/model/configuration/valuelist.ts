@@ -30,6 +30,7 @@ export interface Valuelist {
     order?: string[];
 
     source?: Valuelist.SourceTypes;
+    deprecated?: boolean;
 }
 
 

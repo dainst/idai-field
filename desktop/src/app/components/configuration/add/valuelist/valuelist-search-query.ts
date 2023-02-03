@@ -29,7 +29,8 @@ export module ValuelistSearchQuery {
                                  configurationIndex: ConfigurationIndex): Array<Valuelist> {
         
         return valuelists.filter(valuelist => {
-            return (!query.onlyCustom || valuelist.source === 'custom')
+            return !valuelist.deprecated
+                && (!query.onlyCustom || valuelist.source === 'custom')
                 && (!query.onlyInUse
                     || configurationIndex.getValuelistUsage(valuelist.id).length > 0);
         });

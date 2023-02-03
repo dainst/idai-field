@@ -234,8 +234,8 @@ export class DownloadProjectComponent {
                 )).subscribe({
                     next: lastSequence => {
                         const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
-                        progressModalRef.componentInstance.databaseProgressPercent = Math.min(
-                            (databaseProgress / databaseSteps * 100), 100
+                        progressModalRef.componentInstance.setDatabaseProgressPercent(
+                            Math.min((databaseProgress / databaseSteps * 100), 100)
                         );
                     },
                     error: err => reject(err),

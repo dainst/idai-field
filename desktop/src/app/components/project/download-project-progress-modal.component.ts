@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AngularUtility } from '../../angular/angular-utility';
 import { CancelModalComponent } from './cancel-modal.component';
@@ -21,12 +21,20 @@ export class DownloadProjectProgressModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private modalService: NgbModal) {}
+                private modalService: NgbModal,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     public getRoundedProgress(progressPercent: number): number {
 
         return Math.floor(progressPercent);
+    }
+
+
+    public setDatabaseProgressPercent(databaseProgressPercent: number) {
+
+        this.databaseProgressPercent = databaseProgressPercent;
+        this.changeDetectorRef.detectChanges();
     }
 
 

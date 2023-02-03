@@ -103,11 +103,11 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     progress.setLocale(Settings.getLocale());
     await expressServer.setupServer();
 
-    const settings = await loadSettings(settingsService, progress);
+    let settings = await loadSettings(settingsService, progress);
     await setUpDatabase(settingsService, settings, progress);
-
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
-    await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
+
+    settings = await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
     await setProjectNameInProgress(settings, progress);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
@@ -227,10 +227,11 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
 };
 
 
-const updateProjectNameInSettings = async (settingsService: SettingsService, db: PouchDB.Database<{}>) => {
+const updateProjectNameInSettings = async (settingsService: SettingsService,
+                                           db: PouchDB.Database<{}>): Promise<Settings> => {
 
     const projectDocument = await db.get('project') as Document;
-    settingsService.updateProjectName(projectDocument);
+    return await settingsService.updateProjectName(projectDocument);
 };
 
 

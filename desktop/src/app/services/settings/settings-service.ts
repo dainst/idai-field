@@ -218,7 +218,7 @@ export class SettingsService {
     }
 
 
-    public async updateProjectName(projectDocument: Document) {
+    public async updateProjectName(projectDocument: Document): Promise<Settings> {
 
         const settings = this.settingsProvider.getSettings();
         if (!settings.projectNames) settings.projectNames = {};
@@ -230,6 +230,8 @@ export class SettingsService {
         }
         
         await this.settingsProvider.setSettingsAndSerialize(settings);
+
+        return settings;
     }
 
 

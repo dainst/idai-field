@@ -61,7 +61,8 @@ jobs:
       matrix:
         os:
           - { name: 'Linux', version: 'ubuntu-latest' }
-          - { name: 'MacOS', version: 'macos-latest' }
+          - { name: 'MacOS Apple Silicon', version: 'macos-latest' }
+          - { name: 'MacOS Intel', version: 'macos-latest' }
           - { name: 'Windows', version: 'windows-latest' }
       fail-fast: false
     runs-on: ${{ matrix.os.version }}
@@ -86,9 +87,20 @@ jobs:
     - name: Build desktop
       run: npm run build:all
       working-directory: desktop
-    - name: Create macOS package
-      run: npm run package:mac
-      if: runner.os == 'macOS'
+    - name: Create macOS (Apple Silicon) package 
+      run: npm run package:macArm64
+      if: matrix.os.name == 'MacOS Apple Silicon'
+      env:
+        CSC_LINK: ${{ secrets.MAC_CERT }}
+        CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}
+        MAC_NOTARIZE: ${{ contains(github.event.head_commit.message, '[notarize]') && 'true' || 'false' }}
+        MAC_NOTARIZE_AID: ${{ secrets.MAC_NOTARIZE_AID }}
+        MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
+        MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
+      working-directory: desktop
+    - name: Create macOS (Intel) package
+      run: npm run package:macX64
+      if: matrix.os.name == 'MacOS Intel'
       env:
         CSC_LINK: ${{ secrets.MAC_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}

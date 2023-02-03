@@ -412,7 +412,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
@@ -423,7 +423,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">236</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
@@ -442,6 +442,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
+        <source> Nicht konfigurierte Felder ignorieren </source>
+        <target state="final"> Ignore unconfigured fields </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">101,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
+        <source> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </source>
+        <target state="final"> If this option is enabled, fields in the import file that are not part of the project configuration are ignored during import. Otherwise, the import will be aborted. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">112,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -467,7 +483,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -518,7 +534,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -526,7 +542,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
@@ -534,7 +550,7 @@
         <target state="final">Select category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -550,7 +566,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -558,7 +574,7 @@
         <target state="final">Field separator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -571,7 +587,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -582,7 +598,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -595,7 +611,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
@@ -603,7 +619,7 @@
         <target state="final">Non-imported resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">218</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
@@ -615,7 +631,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
@@ -1033,7 +1049,7 @@
         <target state="final">Create new valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
@@ -1921,8 +1937,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
-        <source> Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Please enter the project identifier in order to confirm deletion. </target>
+        <source> Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="final"> Please enter the project identifier to confirm deletion. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>

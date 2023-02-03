@@ -514,7 +514,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
@@ -522,7 +522,7 @@
         <target state="final"> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">236</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
@@ -541,6 +541,22 @@
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
+        <source> Nicht konfigurierte Felder ignorieren </source>
+        <target state="final"> Nicht konfigurierte Felder ignorieren </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">101,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
+        <source> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </source>
+        <target state="final"> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">112,120</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source> Vorhandene Ressource ergänzen </source>
         <target state="final"> Vorhandene Ressource ergänzen </target>
@@ -554,7 +570,7 @@
         <target state="final"> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -586,7 +602,7 @@
         <target state="final"> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -594,7 +610,7 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
@@ -602,7 +618,7 @@
         <target state="final">Kategorie auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -618,7 +634,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -626,7 +642,7 @@
         <target state="final">Feldtrennzeichen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -634,7 +650,7 @@
         <target state="final"> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -642,7 +658,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -650,7 +666,7 @@
         <target state="final"> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
@@ -658,7 +674,7 @@
         <target state="final">Nicht importierte Ressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">218</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
@@ -670,7 +686,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
@@ -1058,7 +1074,7 @@
         <target state="final">Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
@@ -2042,8 +2058,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
-        <source> Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Bitte geben Sie den Projektbezeichner ein, um den Löschvorgang zu bestätigen. </target>
+        <source> Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="final"> Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>

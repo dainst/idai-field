@@ -82,12 +82,8 @@ export class ImageViewerComponent implements OnChanges {
             image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
         } catch (e) {
             image.imgSrc = undefined;
-        }
-
-        try {
             image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
-        } catch (e) {
-            image.thumbSrc = ImageUrlMaker.blackImg;
+            this.loading.stop('image-viewer', false);
         }
 
         this.showConsoleErrorIfImageIsMissing(image);

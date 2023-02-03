@@ -115,6 +115,7 @@ export class ImageGridComponent implements OnChanges {
 
 
     private async loadImages(rows: any) {
+
         for (const row of rows) {
             for (const cell of row) {
                 if (
@@ -128,6 +129,7 @@ export class ImageGridComponent implements OnChanges {
             }
         }
     }
+
 
     /**
      * Insert stub document for first cell that will act as drop area for uploading images

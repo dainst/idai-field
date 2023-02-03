@@ -96,12 +96,7 @@ export class ImageUrlMaker {
 
     private async fetchDisplayDataFromOriginal(imageId: string): Promise<Buffer|undefined> {
 
-        let data: Buffer;
-        try {
-            data = await this.imagestore.getData(imageId, ImageVariant.ORIGINAL);
-        } catch (err) {
-            return undefined;
-        }
+        const data: Buffer = await this.imagestore.getData(imageId, ImageVariant.ORIGINAL);
 
         const document: ImageDocument = await this.datastore.get(imageId) as ImageDocument;
         const displayData: Buffer = await createDisplayVariant(document, this.imagestore, data);

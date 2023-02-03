@@ -9471,6 +9471,7 @@
     }
   },
   "Drawing-drawingType-kalapodi": {
+    "deprecated": true,
     "creationDate": "2019",
     "createdBy": "Arne Kimmig",
     "description": {},
@@ -31859,6 +31860,7 @@
     }
   },
   "Find-storagePlace-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -31896,6 +31898,7 @@
     }
   },
   "Find-measuringPointOrigin-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -31913,6 +31916,7 @@
     }
   },
   "Find-workflow-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32007,6 +32011,7 @@
     ]
   },
   "Photo-imageSubject-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32094,6 +32099,7 @@
     }
   },
   "Metal-objectTypeGeneral-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32131,6 +32137,7 @@
     }
   },
   "Metal-objectType-kalapodi": {
+    "deprecated": "true",
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32443,6 +32450,7 @@
     }
   },
   "Metal-formDescription-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32560,6 +32568,7 @@
     }
   },
   "Metal-metalMaterial-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32627,6 +32636,7 @@
     }
   },
   "Coin-metalMaterial-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -32694,6 +32704,7 @@
     }
   },
   "Coin-mint-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -33971,6 +33982,7 @@
     }
   },
   "Brick-brickUsage-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -34033,6 +34045,7 @@
     }
   },
   "Pottery-materialType-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -34055,6 +34068,7 @@
     }
   },
   "Pottery-vesselFormSpecific-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -34242,6 +34256,7 @@
     }
   },
   "Layer-layerClassification-kalapodi": {
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "description": {},
@@ -34446,6 +34461,7 @@
     }
   },
   "periods-kalapodi-1": {
+    "deprecated": true,
     "createdBy": "A. K. 2019",
     "creationDate": "",
     "description": {},

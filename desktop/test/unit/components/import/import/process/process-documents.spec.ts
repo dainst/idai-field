@@ -2,6 +2,7 @@ import { Document, Relation } from 'idai-field-core';
 import { ImportErrors as E } from '../../../../../../src/app/components/import/import/import-errors';
 import { createMockValidator, d } from '../helper';
 import { processDocuments } from '../../../../../../src/app/components/import/import/process/process-documents';
+import { ValidationErrors } from '../../../../../../src/app/model/validation-errors';
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
@@ -100,11 +101,9 @@ describe('processDocuments', () => {
     });
 
 
-    // err cases /////////////////////////////////////////////////////////////////////////////////////////////
+    it('validation error - not wellformed', () => {
 
-    it('validation error - report invalid fields', () => {
-
-        validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
+        validator.assertFieldsDefined.and.callFake(() => { throw [ValidationErrors.MISSING_PROPERTY, 'Feature', 'invalidField'] });
 
         try {
             processDocuments([
@@ -112,8 +111,9 @@ describe('processDocuments', () => {
             ], {}, validator, false);
             fail();
         } catch (err) {
-            expect(err[0]).toEqual(E.INVALID_FIELDS);
-            expect(err[1]).toEqual('invalidField');
+            expect(err[0]).toEqual(ValidationErrors.MISSING_PROPERTY);
+            expect(err[1]).toEqual('Feature');
+            expect(err[2]).toEqual('invalidField');
         }
     });
 
@@ -151,7 +151,7 @@ describe('processDocuments', () => {
     });
 
 
-    it('field is not defined', () => {
+    it('report invalid fields', () => {
 
         validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS]});
 
@@ -164,5 +164,18 @@ describe('processDocuments', () => {
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_FIELDS);
         }
+    });
+
+
+    it('ignore invalid fields', () => {
+
+        const document = d('nf1', 'Feature', 'one');
+        document.resource.invalidField = 'value';
+
+        validator.getUndefinedFields.and.returnValue(['invalidField']);
+
+        const result = processDocuments([document], {}, validator, true);
+
+        expect(result[0].resource.invalidField).toBeUndefined();
     });
 });

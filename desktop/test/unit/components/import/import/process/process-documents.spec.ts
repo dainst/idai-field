@@ -44,7 +44,9 @@ describe('processDocuments', () => {
         const result = processDocuments(
             [document],
             { '1': existingFeature } as any,
-            validator);
+            validator,
+            false
+        );
 
         const resource = result[0].resource;
         expect(resource.id).toBe('ef1');
@@ -86,7 +88,9 @@ describe('processDocuments', () => {
         const result = processDocuments(
             [document1, document2],
             { 'ef1': existingFeature } as any,
-            validator);
+            validator,
+            false
+        );
 
         const resource = result[0].resource;
         expect(resource.id).toBe('ef1');
@@ -105,7 +109,7 @@ describe('processDocuments', () => {
         try {
             processDocuments([
                 d('nf1', 'Feature', 'one')
-            ], {}, validator);
+            ], {}, validator, false);
             fail();
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_FIELDS);
@@ -121,7 +125,7 @@ describe('processDocuments', () => {
         try {
             processDocuments([
                 d('nf1', 'Feature', 'one')
-            ], {}, validator);
+            ], {}, validator, false);
             fail();
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_IDENTIFIER_PREFIX);
@@ -138,7 +142,7 @@ describe('processDocuments', () => {
             processDocuments(<any>[
                 d('nf1', 'Feature', 'dup', {liesWithin: ['etc1']}),
                 d('nf2', 'Feature', 'dup', {liesWithin: ['etc1']}),
-            ], {}, validator);
+            ], {}, validator, false);
             fail();
         } catch (err) {
             expect(err[0]).toEqual(E.DUPLICATE_IDENTIFIER);
@@ -155,7 +159,7 @@ describe('processDocuments', () => {
             processDocuments([
                     d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
                 ], {},
-                validator);
+                validator, false);
             fail();
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_FIELDS);

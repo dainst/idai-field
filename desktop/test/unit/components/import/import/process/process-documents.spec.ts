@@ -102,9 +102,9 @@ describe('processDocuments', () => {
 
     // err cases /////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('validation error - not wellformed', () => {
+    it('validation error - report invalid fields', () => {
 
-        validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
+        validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
 
         try {
             processDocuments([

@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, NgZone } from '@angular/core';
+import { Component, OnChanges, Input, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageContainer } from '../../../services/imagestore/image-container';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
@@ -6,7 +6,6 @@ import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnCons
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
-import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -22,16 +21,16 @@ export class ImageViewerComponent implements OnChanges {
     @Input() image: ImageDocument;
 
     public imageContainer: ImageContainer;
+    public loadingIconVisible: boolean = false;
+    public loadingIconTimeout: any = undefined;
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
                 private imagestore: ImageStore,
                 private messages: Messages,
                 private loading: Loading,
-                private zone: NgZone) {}
-
-
-    public isLoadingIconVisible = () => this.loading.getLoadingTimeInMilliseconds('image-viewer') > 50;
+                private zone: NgZone,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     async ngOnChanges() {
@@ -44,25 +43,36 @@ export class ImageViewerComponent implements OnChanges {
     }
 
 
-    public containsOriginal(image: ImageContainer): boolean {
+    public containsOriginal(imageContainer: ImageContainer): boolean {
 
-        return image.imgSrc !== undefined && image.imgSrc !== '';
+        return imageContainer.imgSrc !== undefined && imageContainer.imgSrc !== '';
     }
 
 
-    public onLoadingFinished() {
+    public isImageContainerVisible(): boolean {
+        
+        return !this.loadingIconVisible
+            || this.image.resource.id === this.imageContainer.document.resource.id;
+    }
 
+
+    public stopLoading() {
+
+        if (this.loadingIconTimeout) {
+            clearTimeout(this.loadingIconTimeout);
+            this.loadingIconTimeout = undefined;
+        }
         this.loading.stop('image-viewer', false);
+        this.loadingIconVisible = false;
     }
 
 
     private async update() {
 
-        this.loading.stop('image-viewer', false);
+        this.stopLoading();
 
-        this.imageContainer = { document: this.image, imgSrc: ImageUrlMaker.blackImg };
-        await AngularUtility.refresh();
-
+        if (this.image.resource.id === this.imageContainer?.document.resource.id) return;
+        
         this.zone.run(async () => {
             const newImageContainer: ImageContainer = await this.loadImage(this.image);
             if (newImageContainer.document.resource.id === this.image.resource.id) {
@@ -74,21 +84,33 @@ export class ImageViewerComponent implements OnChanges {
 
     private async loadImage(document: ImageDocument): Promise<ImageContainer> {
 
-        this.loading.start('image-viewer', false);
+        this.startLoading();
+        this.changeDetectorRef.detectChanges();
 
         const image: ImageContainer = { document };
 
         try {
             image.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
+            this.changeDetectorRef.detectChanges();
         } catch (e) {
             image.imgSrc = undefined;
             image.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
-            this.loading.stop('image-viewer', false);
+            this.stopLoading();
         }
 
         this.showConsoleErrorIfImageIsMissing(image);
 
         return image;
+    }
+
+
+    private startLoading() {
+
+        this.loading.start('image-viewer', false);
+
+        this.loadingIconTimeout = setTimeout(() => {
+            this.loadingIconVisible = true;
+        }, 250);
     }
 
 

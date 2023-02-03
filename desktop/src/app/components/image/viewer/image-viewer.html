@@ -1,11 +1,14 @@
 <div *ngIf="imageContainer" id="image-container">
     <div class="d-flex align-items-center justify-content-center">
-        <div *ngIf="!containsOriginal(imageContainer)" class="alert alert-info" role="alert"
+        <div *ngIf="!containsOriginal(imageContainer) && !loadingIconVisible" class="alert alert-info" role="alert"
              i18n="@@image.originalNotFoundWarning">
             Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
         </div>
-        <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc"
-             (load)="onLoadingFinished()">
-        <loading-icon *ngIf="isLoadingIconVisible()" [context]="'image-viewer'"></loading-icon>
+        <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
+             [src]="imageContainer.imgSrc"
+             (load)="stopLoading()">
+        <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
+             [src]="imageContainer.thumbSrc">
+        <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
     </div>
 </div>

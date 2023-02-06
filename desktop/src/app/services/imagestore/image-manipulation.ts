@@ -59,7 +59,7 @@ export module ImageManipulation {
     function shouldConvertToJpeg(width: number, height: number, fileExtension: string) {
 
         return fileExtension.toLowerCase().includes('tif')
-            || width * height > MAX_ORIGINAL_PIXELS;
+            || (!['jpg', 'jpeg'].includes(fileExtension) && width * height > MAX_ORIGINAL_PIXELS);
     }
 
 

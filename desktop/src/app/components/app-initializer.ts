@@ -255,21 +255,22 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
 const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string,
                                    progress: InitializationProgress) => {
 
-    await progress.setPhase('processingImages');
-
     const fileInfos: Map<FileInfo> = await imagestore.getFileInfos(
         projectIdentifier,
         [ImageVariant.ORIGINAL, ImageVariant.DISPLAY]
     );
 
-    progress.setImagesToProcess(Object.keys(fileInfos).length);
+    const imageIds: string[] = Object.keys(fileInfos).filter(imageId => {
+        const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
+        return variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY);
+    });
+
+    await progress.setPhase('processingImages');
+    progress.setImagesToProcess(imageIds.length);
 
     let count: number = 0;
-    for (let imageId of Object.keys(fileInfos)) {
-        const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
-        if (variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY)) {
-            await createDisplayImage(imageId, imagestore, db);
-        }
+    for (let imageId of imageIds) {
+        await createDisplayImage(imageId, imagestore, db);    
         progress.setProcessedImages(++count);
     }
 }

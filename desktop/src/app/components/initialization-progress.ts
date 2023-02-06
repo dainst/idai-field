@@ -39,7 +39,7 @@ export class InitializationProgress {
 
         this.phase = phase;
         await this.updateProgressBar();
-        this.updateInitializationDetailInfo(phase, 3000);
+        this.updateInitializationDetailInfo(phase, 5000);
     }
 
 

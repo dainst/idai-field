@@ -189,6 +189,7 @@ export class ProjectInformationModalComponent implements OnInit {
 
         return Object.values(fileInfos).filter(fileInfo => {
             return !fileInfo.deleted
+                && (!fileInfo.useOriginalForDisplay || variant !== ImageVariant.DISPLAY)
                 && fileInfo.variants.filter(v => v.name === variant).length === 1;
         }).length;
     }

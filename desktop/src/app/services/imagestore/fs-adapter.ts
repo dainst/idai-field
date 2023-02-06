@@ -86,7 +86,7 @@ export class FsAdapter implements FilesystemAdapterInterface {
         if (!(await this.isDirectory(folderPath))) return results;
 
         const fullPaths = (await getAsynchronousFs().readdir(folderPath))
-            .filter((name: string) => !name.includes('.') || name.includes('.deleted'))
+            .filter((name: string) => !name.includes('.') || name.includes('.deleted') || name.includes('.original'))
             .map((filename: string) => {
             return folderPath + filename;
         });

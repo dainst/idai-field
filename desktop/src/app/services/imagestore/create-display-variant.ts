@@ -15,7 +15,10 @@ export async function createDisplayVariant(document: ImageDocument, imagestore: 
     const width: number = document.resource.width;
     const height: number = document.resource.height;
 
-    if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) return;
+    if (!ImageManipulation.needsDisplayVersion(width, height, fileExtension)) {
+        await imagestore.addUseOriginalMarker(imageId);
+        return;
+    }
 
     originalData = originalData ?? await imagestore.getData(imageId, ImageVariant.ORIGINAL);
     const displayData: Buffer = await ImageManipulation.createDisplayImage(originalData, width, height, fileExtension);

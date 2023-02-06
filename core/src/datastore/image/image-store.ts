@@ -15,6 +15,7 @@ export interface FileVariantInformation {
 
 export interface FileInfo {
     deleted: boolean;
+    useOriginalForDisplay?: boolean;
     types: ImageVariant[]; // TODO: Deprecate in 4.x
     variants: FileVariantInformation[];
 }
@@ -24,6 +25,7 @@ export const THUMBNAIL_TARGET_HEIGHT: number = 320;
 export const thumbnailDirectory = 'thumbs/';
 export const displayDirectory = 'display/';
 export const tombstoneSuffix = '.deleted';
+export const useOriginalSuffix = '.original';
 
 
 /**
@@ -121,6 +123,20 @@ export class ImageStore {
 
 
     /**
+     * Adds a marker file with the same name plus a {@link useOriginalSuffix} indicating that the original variant
+     * should be used for the display variant.
+     * @param uuid the identifier of the image
+     * @param project (optional) the project identifier, will default to the application's current active project
+     */
+    public async addUseOriginalMarker(uuid: string, project: string = this.activeProject): Promise<any> {
+        
+        await this.filesystem.writeFile(
+            this.getFilePath(project, ImageVariant.DISPLAY, uuid) + useOriginalSuffix, Buffer.from([])
+        );
+    }
+
+
+    /**
      * Remove the image store data for the given project.
      * @param project the project identifier
      */
@@ -174,13 +190,15 @@ export class ImageStore {
 
         for (const stat of fileStatList) {
             let uuid = stat.path;
-            let deleted: boolean;
+            let deleted: boolean = false;
+            let useOriginal: boolean = false;
     
             if (uuid.endsWith(tombstoneSuffix)) {
                 deleted = true;
                 uuid = uuid.replace(tombstoneSuffix, '');
-            } else {
-                deleted = false;
+            } else if (uuid.endsWith(useOriginalSuffix)) {
+                useOriginal = true;
+                uuid = uuid.replace(useOriginalSuffix, '');
             }
     
             if (uuid in aggregated) {
@@ -198,6 +216,8 @@ export class ImageStore {
                     deleted
                 };
             };
+
+            if (useOriginal) aggregated[uuid].useOriginalForDisplay = true;
         }
 
         return aggregated;

@@ -117,6 +117,12 @@ export class ImageStore {
             ),
             this.filesystem.writeFile(
                 this.getFilePath(project, ImageVariant.THUMBNAIL, uuid) + tombstoneSuffix, Buffer.from([])
+            ),
+            this.filesystem.remove(
+                this.getFilePath(project, ImageVariant.DISPLAY, uuid)
+            ),
+            this.filesystem.remove(
+                this.getFilePath(project, ImageVariant.DISPLAY, uuid + useOriginalSuffix)
             )
         ]);
     }

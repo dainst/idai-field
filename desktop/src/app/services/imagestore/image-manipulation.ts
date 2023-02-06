@@ -1,7 +1,7 @@
 const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
 const MAX_INPUT_PIXELS = 2500000000;
-const MAX_ORIGINAL_PIXELS = 16000000;
+const MAX_ORIGINAL_PIXELS = 25000000;
 const MAX_DISPLAY_WIDTH = 10000;
 const MAX_DISPLAY_HEIGHT = 10000;
 

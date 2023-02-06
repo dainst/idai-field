@@ -76,8 +76,7 @@ The [FieldHub.CLI](lib/field_hub/cli.ex) module implements a range of CLI functi
 mix run -e 'FieldHub.CLI.create_user("simon_hohl", "very_secret_password")'
 ```
 
-You can run any function defined in the project this way, the CLI module just has the cleaner
-interface and is also available in production.
+You can run any function defined in the project this way, the CLI module just has the cleaner interface and is also viable in production.
 
 ## Building a new docker image version
 

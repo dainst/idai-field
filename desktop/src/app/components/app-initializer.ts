@@ -261,10 +261,13 @@ const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database,
     );
 
     const imageIds: string[] = Object.keys(fileInfos).filter(imageId => {
+        if (fileInfos[imageId].deleted) return false;
         const variants: Array<ImageVariant> = fileInfos[imageId].variants.map(to('name'));
         return variants.includes(ImageVariant.ORIGINAL) && !variants.includes(ImageVariant.DISPLAY);
     });
 
+    if (imageIds.length === 0) return;
+    
     await progress.setPhase('processingImages');
     progress.setImagesToProcess(imageIds.length);
 

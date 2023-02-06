@@ -29,6 +29,6 @@ export module ImageDocument {
 
     export function getOriginalFileExtension(document: ImageDocument): string {
         
-        return document.resource.originalFilename.split('.').pop();
+        return document.resource.originalFilename.split('.').pop().toLowerCase();
     }
 }

@@ -130,6 +130,8 @@ export class ImageStore {
      */
     public async addUseOriginalMarker(uuid: string, project: string = this.activeProject): Promise<any> {
         
+        await this.setupDirectories(project);
+
         await this.filesystem.writeFile(
             this.getFilePath(project, ImageVariant.DISPLAY, uuid) + useOriginalSuffix, Buffer.from([])
         );

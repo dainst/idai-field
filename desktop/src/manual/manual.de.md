@@ -479,6 +479,7 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 
 * *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
+* *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.

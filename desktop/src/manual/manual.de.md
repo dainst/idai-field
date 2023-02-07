@@ -171,7 +171,9 @@ Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **
 
 #### Georeferenzierung
 
-Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung aus einem World-File eingelesen werden. Unterstützt werden World-Files mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* und *pgw*.
+Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung eingelesen werden. Unterstützt werden Dateien im GeoTIFF-Format mit der Dateiendung *tif/tiff* sowie World-Files mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* und *tfw*.
+
+Liegt das Bild als GeoTIFF vor, muss nichts weiter unternommen werden. Die Georeferenzierungsinformationen werden beim Import des Bildes automatisch übernommen.
 
 World-Files können auf zwei verschiedene Arten importiert werden: Ist der Dateiname des World-Files vor der Endung identisch mit dem Namen der entsprechenden Bilddatei, kann die Datei über den Bilderimport (Plus-Button) hinzugefügt werden. Die Zuordnung zum Bild findet dabei automatisch statt. Alternativ kann ein World-File auch über die Bildansicht importiert werden, die Sie in der Bilderverwaltung per Doppelklick auf das entsprechende Bild erreichen. Öffnen Sie hier die Sektion "Georeferenzdaten" und klicken den Button "World-File laden", um anschließend die gewünschte Datei auszuwählen.
 

@@ -167,7 +167,9 @@ If a resource is linked to multiple images, one of the images is marked with a s
 
 #### Georeferencing
 
-Before an image can be used as a map layer, georeferencing information must first be provided by importing a world file. World files with the file extensions *wld*, *jpgw*, *jpegw*, *jgw*, *pngw* and *pgw* are supported.
+Before an image can be used as a map layer, georeferencing information must first be provided. Supported are files in GeoTIFF format with the file extension *tif/tiff* as well as world files with the file extensions *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* and *tfw*.
+
+If the image file is in GeoTIFF format, nothing further needs to be done. The georeferencing information is automatically applied when the image is imported.
 
 World files can be imported in two different ways: If the file name of the world file before the extension is identical to the name of the corresponding image file, the file can be added via image import (plus button). The assignment to the image takes place automatically. Alternatively, a world file can also be imported via the image view, which you can reach by double-clicking on the corresponding image in the image management. Open the section "Georeference data" and click the "Load world file" button to select the desired file.
 

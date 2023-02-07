@@ -6,6 +6,12 @@ const MAX_DISPLAY_WIDTH = 10000;
 const MAX_DISPLAY_HEIGHT = 10000;
 
 
+export module ImageManipulationErrors {
+
+    export const MAX_INPUT_PIXELS_EXCEEDED = 'imageManipulation/maxInputPixelsExceeded';
+}
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -13,8 +19,16 @@ export module ImageManipulation {
 
     export async function getSize(buffer: Buffer): Promise<{ width: number, height: number }> {
 
-        const metadata = await getImage(buffer).metadata();
-        return { width: metadata.width, height: metadata.height };
+        try {
+            const metadata = await getImage(buffer).metadata();
+            return { width: metadata.width, height: metadata.height };
+        } catch (err) {
+            if (err.toString().includes('Input image exceeds pixel limit')) {
+                throw [ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED, MAX_INPUT_PIXELS];
+            } else {
+                throw err;
+            }
+        }
     }
 
 

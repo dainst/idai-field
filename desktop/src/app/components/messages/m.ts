@@ -211,6 +211,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'imagestore.error.invalidPath.write';
     public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imagestore.error.invalidPath.delete';
     public static IMAGESTORE_ERROR_UPLOAD = 'imagestore.error.upload';
+    public static IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED = 'imagestore.error.upload.pixelLimitExceeded';
     public static IMAGESTORE_ERROR_WRITE = 'imagestore.error.write';
     public static IMAGESTORE_ERROR_DELETE = 'imagestore.error.delete';
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'imagestore.error.invalidWorldfile';
@@ -1720,6 +1721,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.imagestore.error.upload',
                 value: 'Die Datei \'[0]\' konnte nicht gelesen werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED] = {
+            content: i18n({
+                id: 'messages.imagestore.error.upload.pixelLimitExceeded',
+                value: 'Die Datei \'[0]\' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.'
             }),
             level: 'danger',
             params: [],

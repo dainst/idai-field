@@ -889,7 +889,7 @@
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
         <target state="final">
-                        Please note: After restoring a backup, all preview images will be computed anew based on the
+                        Please note: After restoring a backup, all thumbnail images will be computed anew based on the
                         original image data. For this reason, the application may initially run slower than usual.
                     </target>
         <context-group purpose="location">

@@ -2002,7 +2002,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.continue" datatype="html">
@@ -2168,7 +2168,7 @@
         <target state="final">Встановлення з'єднання...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
@@ -2179,7 +2179,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.connect" datatype="html">
@@ -3431,7 +3431,7 @@
         <target state="final">Розгорнути всі групи</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
@@ -3439,7 +3439,7 @@
         <target state="final">Батьківський ресурс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
@@ -6436,6 +6436,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.imagestore.error.upload.pixelLimitExceeded" datatype="html">
+        <source>Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</source>
+        <target state="new">Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.imagestore.error.write" datatype="html">
         <source>Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</source>
         <target state="final">Не вдалося зберегти файл '[0]' у каталозі ілюстрацій.</target>
@@ -7470,7 +7478,7 @@
         <target state="final"> Початкової версії (оригіналу) ілюстрації немає в каталозі зображень. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">

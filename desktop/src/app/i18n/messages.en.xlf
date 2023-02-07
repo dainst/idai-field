@@ -1821,7 +1821,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.continue" datatype="html">
@@ -1977,7 +1977,7 @@
         <target state="final">Establishing connection...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
@@ -1985,7 +1985,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% of project data loaded... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.connect" datatype="html">
@@ -3770,7 +3770,7 @@
         <target state="final">Expand all groups</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
@@ -3778,7 +3778,7 @@
         <target state="final">Parent resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">
@@ -4712,7 +4712,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -6944,6 +6944,14 @@
       <trans-unit id="messages.imagestore.error.upload" datatype="html">
         <source>Die Datei '[0]' konnte nicht gelesen werden.</source>
         <target state="final">The file '[0]' could not be read.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.imagestore.error.upload.pixelLimitExceeded" datatype="html">
+        <source>Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</source>
+        <target state="final">The file '[0]' could not be read: The maximum pixel count of [1] was exceeded. Please reduce the resolution of the image and try again.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -1,6 +1,5 @@
 import { Component, Input, Output, ElementRef, ViewChild, EventEmitter, OnChanges } from '@angular/core';
-import { Document, Resource, Named, FieldDocument, Groups, ProjectConfiguration, Datastore,
-    Hierarchy } from 'idai-field-core';
+import { Document, Named, FieldDocument, Groups, ProjectConfiguration, Datastore, Hierarchy } from 'idai-field-core';
 
 
 @Component({

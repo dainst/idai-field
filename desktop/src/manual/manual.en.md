@@ -1,7 +1,7 @@
 ## First steps
 
-After starting the Field Desktop application for the first time, the project "test" will be active, allowing
-you to experiment with the application's functionality using a set of test data. Please note that as long as the
+After starting the Field Desktop application for the first time, the test project will be active, allowing
+you to experiment with the application's functionality using a set of sample data. Please note that as long as the
 test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting
 the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for
 the test project.  
@@ -13,7 +13,7 @@ In order to work with Field Desktop productively and create your own project, yo
 your editor name. This name will be stored in the database along with every change you make. It is strongly
 recommended to fill in this field, especially if data is going to be synchronized.  
 
-2. In the "Project" menu, select the menu item **New...** and enter the desired name of your project. Allowed characters are letters, numbers, hyphens and underscores. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project.
+2. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
 
 3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend

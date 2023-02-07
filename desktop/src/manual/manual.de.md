@@ -1,7 +1,7 @@
 ## Erste Schritte
 
-Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Projekt "test", das es
-Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
+Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Testprojekt, das es
+Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
 Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
@@ -14,7 +14,7 @@ bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Nam
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
 Daten synchronisiert werden sollen.
 
-2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf und geben Sie den gewünschten Namen Ihres Projekts ein. Erlaubte Zeichen sind Buchstaben, Zahlen, Bindestriche und Unterstriche. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen.
+2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
 
 3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 

@@ -108,12 +108,22 @@ Images can be imported into the application in two different ways: via the menu 
 
 To start the import, click the plus button and select the files you want to add to the project. Alternatively, you can drag the files directly from a file manager application to the highlighted area surrounding the plus button. If multiple image categories (i.e. subcategories of the category "Image") are defined for the project, you can then select the desired category from a dropdown menu.
 
-Supported image formats are *jpg/jpeg* and *png*. Please note that very large images may cause performance issues while using the application. It is recommended to reduce large image files to a maximum size of about 10 MB using an image editing software before importing. Furthermore, images with very high resolution may not be imported in some cases. If this happens, reduce the resolution of the corresponding images and then restart the import.
+Supported image formats are *jpg/jpeg*, *png* and *tif/tiff*.
+
+
+### Image variants
+
+For each imported image, the application creates a copy as well as a smaller version as a preview image and stores it in the **Images directory**, whose path you can see in the settings under "Advanced settings". The files in this folder are managed by the application and must not be edited, renamed or deleted manually, otherwise errors may occur when viewing or synchronizing images.
+
+In total, the application manages up to three different variants for each image:
+* *Original image*: The unmodified image file as it was imported into the project
+* *Thumbnail image*: An automatically generated low-resolution variant of the image that is displayed as a preview image in the application (for example, in image management or for resources with linked images)
+* *Image optimized for display*: For certain images, another variant is created for display in the application. Files in TIFF format are converted to JPEG and images with very high resolution are reduced in size. This step takes place when the project is loaded, which can lead to a one-time extension of the loading time by a few minutes, depending on the amount of existing image files.
+
+You can open an overview of the data currently present in the image directory via the menu "Project" ➝ "Data overview".
 
 
 ### Manage images
-
-For each imported image, the application creates a copy as well as a smaller version as a preview image and stores it in the **Images directory**, whose path you can see in the settings under "Advanced settings". The files in this folder are managed by the application and must not be edited, renamed or deleted manually, otherwise errors may occur when viewing or synchronizing images.
 
 To manage images, open the menu "Tools" ➝ "Image management". Here you can view and search through all the images in the project (see also chapter *Search*).
 

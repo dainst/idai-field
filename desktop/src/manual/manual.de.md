@@ -112,12 +112,22 @@ Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: �
 
 Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
 
-Unterstützte Bildformate sind *jpg/jpeg* und *png*. Bitte beachten Sie, dass sehr große Bilder unter Umständen zu Verzögerungen bei der Benutzung der Anwendung führen können. Empfohlen wird, große Bilddateien vor dem Import gegebenenfalls mithilfe eines Bildbearbeitungsprogramms auf eine Maximalgröße von ca. 10 MB zu reduzieren. Darüber hinaus können Bilder mit sehr hoher Auflösung in manchen Fällen nicht importiert werden. Verringern Sie in diesen Fällen die Auflösung der entsprechenden Bilder und starten den Import anschließend erneut.
+Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
+
+
+### Bildvarianten
+
+Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
+
+Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varianten:
+* *Originalbild*: Die unveränderte Bilddatei, wie sie in das Projekt importiert wurde
+* *Vorschaubild*: Eine automatisch erzeugte Variante des Bildes mit geringer Auflösung, die als Vorschaubild in der Anwendung angezeigt wird (z. B. in der Bilderverwaltung oder bei Ressourcen mit verknüpften Bildern)
+* *Für die Anzeige optimiertes Bild*: Für einige Bilder wird zur Anzeige in der Anwendung eine weitere Variante des Bildes erzeugt. Dateien im TIFF-Format werden nach JPEG konvertiert und Bilder mit sehr hoher Auflösung werden verkleinert. Dieser Schritt findet beim Laden des Projekts statt, was je nach Menge der vorhandenen Bilddateien zu einer einmaligen Verlängerung der Ladezeit um einige Minuten führen kann.
+
+Eine Übersicht der aktuell im Bilderverzeichnis vorliegenden Daten können Sie über das Menü "Projekt" ➝ "Datenübersicht" abrufen.
 
 
 ### Bilder verwalten
-
-Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
 
 Öffnen Sie zur Verwaltung der Bilder das Menü "Werkzeuge" ➝ "Bilderverwaltung". Hier können Sie sämtliche Bilder des Projekts einsehen und durchsuchen (siehe dazu auch das Kapitel *Suche*).
 

@@ -263,11 +263,15 @@ export class ImageStore {
     }
 
 
-    private async readFileSystem(imageId: string, type: ImageVariant, project: string): Promise<Buffer> {
+    private async readFileSystem(imageId: string, variant: ImageVariant, project: string): Promise<Buffer> {
 
-        const path = this.getFilePath(project, type, imageId);
+        const path = this.getFilePath(project, variant, imageId);
 
-        if (type === ImageVariant.THUMBNAIL && !(await this.filesystem.exists(path))) {
+        if (variant === ImageVariant.DISPLAY && await this.filesystem.exists(path + useOriginalSuffix)) {
+            return this.readFileSystem(imageId, ImageVariant.ORIGINAL, project);
+        }
+
+        if (variant === ImageVariant.THUMBNAIL && !(await this.filesystem.exists(path))) {
             const originalFilePath = this.getFilePath(project, ImageVariant.ORIGINAL, imageId);
             if (await this.filesystem.exists(originalFilePath)) {
                 await this.createThumbnail(imageId, await this.filesystem.readFile(originalFilePath), project);

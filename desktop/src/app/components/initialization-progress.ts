@@ -75,9 +75,9 @@ export class InitializationProgress {
     }
 
 
-    public async setProjectName(projectName: string) {
+    public async setProjectName(projectName: string, projectIdentifier?: string) {
 
-        this.updateInitializationInfo(projectName);
+        this.updateInitializationInfo(projectName, projectIdentifier);
     }
 
 
@@ -154,7 +154,7 @@ export class InitializationProgress {
     }
 
 
-    private async updateInitializationInfo(projectName: string) {
+    private async updateInitializationInfo(projectName: string, projectIdentifier?: string) {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
@@ -165,6 +165,13 @@ export class InitializationProgress {
             'initialization-info-project-name',
             projectName
         );
+
+        if (projectIdentifier) {
+            InitializationProgress.setElementText(
+                'initialization-info-project-identifier',
+                '(' + projectIdentifier + ')'
+            );
+        }
 
         InitializationProgress.setElementText(
             'initialization-info-message-2',

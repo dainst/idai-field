@@ -140,9 +140,8 @@ const setProjectNameInProgress = async (settings: Settings, progress: Initializa
     const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(
-        projectName
-            ? projectName + ' (' + projectIdentifier + ')'
-            : projectIdentifier
+        projectName ?? projectIdentifier,
+        projectName ? projectIdentifier : undefined
     );
 };
 

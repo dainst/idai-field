@@ -1,10 +1,5 @@
 const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
-const MAX_INPUT_PIXELS = 2500000000;
-const MAX_ORIGINAL_PIXELS = 25000000;
-const MAX_DISPLAY_WIDTH = 10000;
-const MAX_DISPLAY_HEIGHT = 10000;
-
 
 export module ImageManipulationErrors {
 
@@ -16,6 +11,19 @@ export module ImageManipulationErrors {
  * @author Thomas Kleinke
  */
 export module ImageManipulation {
+
+    export const MAX_INPUT_PIXELS = 2500000000;
+    export const MAX_ORIGINAL_PIXELS = 25000000;
+    export const MAX_DISPLAY_WIDTH = 10000;
+    export const MAX_DISPLAY_HEIGHT = 10000;
+
+
+    export function getImage(buffer: Buffer): any {
+
+        return sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
+    }
+
+
 
     export async function getSize(buffer: Buffer): Promise<{ width: number, height: number }> {
 
@@ -32,11 +40,11 @@ export module ImageManipulation {
     }
 
 
-    export async function createThumbnail(buffer: Buffer, targetHeight: number,
+    export async function createThumbnail(image: any, targetHeight: number,
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            return await getImage(buffer)
+            return await image
                 .resize(undefined, targetHeight)
                 .jpeg({ quality: targetJpegQuality })
                 .toBuffer();
@@ -47,45 +55,19 @@ export module ImageManipulation {
     }
 
 
-    export function needsDisplayVersion(width: number, height: number, fileExtension: string): boolean {
+    export async function isOpaque(image: any): Promise<boolean> {
 
-        return shouldConvertToJpeg(width, height, fileExtension)
-            || shouldResize(width, height);
+        const stats = await image.stats();
+        return stats.isOpaque;
     }
 
     
-    export async function createDisplayImage(buffer: Buffer, width: number, height: number,
-                                             fileExtension: string): Promise<Buffer> {
+    export async function createDisplayImage(image: any, convertToJpeg: boolean,
+                                             resize: boolean): Promise<Buffer> {
 
-        let image = getImage(buffer);
-
-        if (shouldConvertToJpeg(width, height, fileExtension)) {
-            image = image.jpeg();
-        }
-        if (shouldResize(width, height)) {
-            image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
-        }
+        if (convertToJpeg) image = image.jpeg();
+        if (resize) image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
         
         return image.toBuffer();
-    }
-
-
-    function shouldConvertToJpeg(width: number, height: number, fileExtension: string) {
-
-        return fileExtension.toLowerCase().includes('tif')
-            || (!['jpg', 'jpeg'].includes(fileExtension) && width * height > MAX_ORIGINAL_PIXELS);
-    }
-
-
-    function shouldResize(width: number, height: number) {
-
-        return width > MAX_DISPLAY_WIDTH
-            || height > MAX_DISPLAY_HEIGHT;
-    }
-
-
-    function getImage(buffer: Buffer): any {
-
-        return sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
     }
 }

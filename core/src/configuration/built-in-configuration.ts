@@ -943,14 +943,6 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Inscription'],
-            range: ['Trench'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
             domain: ['Level:inherit', 'Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling',
                 'Roof', 'Stairs', 'Opening', 'Damage:inherit', 'DesignElement:inherit'],
             range: ['Building'],
@@ -976,7 +968,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Find:inherit', 'FindCollection:inherit'],
+            domain: ['Find:inherit', 'FindCollection:inherit', 'Inscription', 'Sample'],
             range: ['Trench', 'Building', 'Survey'],
             editable: false,
             visible: false,
@@ -986,14 +978,6 @@ export class BuiltInConfiguration {
             name: 'isRecordedIn',
             domain: ['Feature:inherit', 'FeatureGroup:inherit', 'FeatureSegment:inherit'],
             range: ['Trench'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'isRecordedIn',
-            domain: ['Sample'],
-            range: ['Trench', 'Survey'],
             editable: false,
             visible: false,
             inputType: 'relation'

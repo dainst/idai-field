@@ -40,11 +40,11 @@ export module ImageManipulation {
     }
 
 
-    export async function createThumbnail(image: any, targetHeight: number,
+    export async function createThumbnail(buffer: Buffer, targetHeight: number,
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            return await image
+            return await getImage(buffer)
                 .resize(undefined, targetHeight)
                 .jpeg({ quality: targetJpegQuality })
                 .toBuffer();

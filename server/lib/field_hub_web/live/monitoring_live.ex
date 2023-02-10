@@ -28,13 +28,13 @@ defmodule FieldHubWeb.MonitoringLive do
     |> case do
       :granted ->
         Process.send(self(), :update_stats, [])
-        Process.send(self(), :update_issues, [])
 
         {
           :ok,
           socket
           |> assign(:stats, :loading)
-          |> assign(:issues, :loading)
+          |> assign(:issue_status, :idle)
+          |> assign(:issues, :no_data)
           |> assign(:issue_count, 0)
           |> assign(:project, project)
           |> assign(:current_user, user_name)
@@ -58,7 +58,7 @@ defmodule FieldHubWeb.MonitoringLive do
 
   def handle_info(
         :update_issues,
-        %{assigns: %{project: project, stats: stats}} = socket
+        %{assigns: %{project: project}} = socket
       ) do
     issues = Issues.evaluate_all(project)
 
@@ -68,18 +68,34 @@ defmodule FieldHubWeb.MonitoringLive do
 
     issue_count = Enum.count(issues)
 
-    schedule_next_in = ms_for_next_issue_evaluation(stats.database.doc_count)
-
-    Logger.debug("Running next issue update in #{schedule_next_in} ms.")
-
-    Process.send_after(self(), :update_issues, schedule_next_in)
-
     {
       :noreply,
       socket
       |> assign(:issues, grouped)
+      |> assign(:issue_status, :idle)
       |> assign(:issue_count, issue_count)
     }
+  end
+
+  def handle_event(
+        "evaluate_issues",
+        _value,
+        %{assigns: %{project: project, current_user: user_name}} = socket
+      ) do
+    socket =
+      Project.check_project_authorization(project, user_name)
+      |> case do
+        :granted ->
+          Process.send(self(), :update_issues, [])
+
+          socket
+          |> assign(:issue_status, :evaluating)
+
+        _ ->
+          redirect(socket, to: "/")
+      end
+
+    {:noreply, socket}
   end
 
   def get_file_label(key) do

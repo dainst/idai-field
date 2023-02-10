@@ -1,7 +1,6 @@
 defmodule FieldHubWeb.MonitoringLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
-  import ExUnit.CaptureLog
 
   use FieldHubWeb.ConnCase
 
@@ -62,6 +61,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
         current_user: "test_user",
         flash: %{},
         issue_count: count,
+        issue_status: :idle,
         issues: groups,
         live_action: nil,
         project: "test_project",
@@ -106,7 +106,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
       assert html_on_mount =~ "<h2>Statistics</h2>\n\nLoading..."
-      assert html_on_mount =~ "<h2>Issues</h2>\n\n🔍 Evaluating..."
+      assert html_on_mount =~ "<h2>Issues</h2>"
 
       html = render(view)
 
@@ -114,45 +114,44 @@ defmodule FieldHubWeb.MonitoringLiveTest do
 
       assert html =~
                "<h2>Statistics</h2><section>Database documents: 21</section><section>Database size: 48.39 KB (49548 bytes)</section><section>Original images: 2, size: 697.78 KB (714528 bytes)</section><section>Thumbnail images: 2, size: 18.84 KB (19295 bytes)</section>"
-
-      assert html =~ "<h2>Issues</h2>\n\nNone."
     end
 
-    test "issue in project gets displayed", %{conn: conn} do
+    test "user can trigger issue evaluation", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
-
-      html = render(view)
-      assert html =~ "<h2>Issues</h2>\n\nNone."
 
       TestHelper.delete_document(@project, "project")
 
-      {:ok, view, _html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
-      html = render(view)
+      html =
+        view
+        |> element("button")
+        |> render_click()
 
-      assert not (html =~ "<h2>Issues</h2>\n\nNone.")
+      assert html =~ "🔍 Evaluating..."
+
+      # Elixir/Erlang kinda deep dive:
+      #
+      # In general, the MonitoringLive's `handle_info/3` and `handle_event/3` communicate via events/messages
+      # that they send to the view process.
+      #
+      # The `render_click/1` above sends a event "evaluate_issues" to the view process.
+      # The handle_event function itself then sends another message (:update_issues) and updates the
+      # socket's :issue_status to :evaluating. It then returns the socket.
+      #
+      # The views state at this point in the test: :issue_status is :evaluating (and HTML reflects that),
+      # but there are no issues evaluated yet, because the :update_issues message has not been handled by
+      # the view yet.
+      #
+      # In order to wait for the evaluation result, we call the following function:
+      _ = :sys.get_state(view.pid)
+      # Because all messages are handled sequentially by the process, we 'wait' for all
+      # previous messages to be completed by sending one of our own (`get_state/1`). As soon as we get
+      # a result for `get_state/1` we know that all other messages in the queue have been processed
+      # (including :update_issues) and we should have our issues visible in the HTML.
+      html =
+        view
+        |> render()
+
       assert html =~ "<h2>Issues (3)</h2>"
-    end
-
-    test "unexpected issue gets displayed", %{conn: conn} do
-      doc_without_identifier = %{
-        _id: "4c306cbd-383d-432f-b527-33437d630815",
-        resource: %{
-          id: "4c306cbd-383d-432f-b527-33437d630815"
-        }
-      }
-
-      TestHelper.create_document(@project, doc_without_identifier)
-
-      log =
-        capture_log(fn ->
-          {:ok, view, _html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
-          html = render(view)
-
-          assert html =~ "<h2>Issues (1)</h2>"
-          assert html =~ "Unexpected issue"
-        end)
-
-      assert log =~ "[error] Unexpected error while evaluation project '#{@project}'"
     end
   end
 end

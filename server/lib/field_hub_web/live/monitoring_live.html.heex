@@ -31,9 +31,23 @@
 
     <section>
         <h2>Issues<%= if @issue_count != 0, do: " (#{@issue_count})" %></h2>
+
+        <button class="button" phx-click="evaluate_issues">
+            <%= case @issues do %>
+                <% :no_data -> %>
+                Evaluate
+                <% _data -> %>
+                Re-evaluate
+            <% end %>
+        </button>
+
+        <%= if @issue_status == :evaluating do %>
+            <%= "🔍 Evaluating..." %>
+        <% end %>
+
         <%= case @issues do %>
-            <% :loading -> %>
-                <%= "🔍 Evaluating..." %>
+            <% :no_data -> %>
+                <%= "" %>
             <% issue_groups when issue_groups == %{} -> %>
                 <%= "None." %>
             <% issue_groups -> %>

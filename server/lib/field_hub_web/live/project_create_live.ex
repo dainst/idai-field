@@ -56,20 +56,29 @@ defmodule FieldHubWeb.ProjectCreateLive do
         %{assigns: %{current_user: user_name}} = socket
       ) do
     socket =
-      with true <- User.is_admin?(user_name),
-           :created <- User.create(name, password),
-           %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} <-
-             Project.create(name),
-           :set <- Project.update_user(name, name, :member) do
-        socket
-        |> put_flash(:info, "Project created successfully.")
-        |> push_redirect(to: "/ui/projects/show/#{name}")
-      else
-        e ->
-          Logger.error(e)
+      case User.is_admin?(user_name) do
+        true ->
+          create_project(name, password)
+          |> case do
+            :ok ->
+              socket
+              |> put_flash(
+                :info,
+                "Project created project '#{name}' with password '#{password}' successfully."
+              )
+              |> push_redirect(to: "/ui/projects/show/#{name}")
 
-          socket
-          |> put_flash(:error, "Something went wrong.")
+            {:error, msg} ->
+              Logger.error(
+                "While creating a project got error '#{msg}', attempt by user '#{user_name}'."
+              )
+
+              socket
+              |> put_flash(:error, msg)
+          end
+
+        false ->
+          redirect(socket, to: "/")
       end
 
     {:noreply, socket}
@@ -138,4 +147,36 @@ defmodule FieldHubWeb.ProjectCreateLive do
     do: """
     Please provide a password.
     """
+
+  defp create_project(name, password) do
+    case User.create(name, password) do
+      :created ->
+        Project.create(name)
+
+      :already_exists ->
+        {:error, "Error creating default user '#{name}', the user already exists."}
+    end
+    |> case do
+      {:error, _} = error ->
+        # if user creation failed, just pass on the error
+        error
+
+      %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
+        Project.update_user(name, name, :member)
+
+      e ->
+        {:error, "Error creating project '#{name}' database and/or file directories : #{e}."}
+    end
+    |> case do
+      {:error, _} = error ->
+        # if user or project creation failed, just pass on the error
+        error
+
+      :set ->
+        :ok
+
+      e ->
+        {:error, "Error setting default user: #{e}."}
+    end
+  end
 end

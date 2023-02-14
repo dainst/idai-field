@@ -1,11 +1,11 @@
-defmodule FieldHubWeb.MonitoringLiveTest do
+defmodule FieldHubWeb.ProjectShowLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
 
   use FieldHubWeb.ConnCase
 
   alias FieldHub.Issues
-  alias FieldHubWeb.MonitoringLive
+  alias FieldHubWeb.ProjectShowLive
 
   alias FieldHub.{
     TestHelper
@@ -20,14 +20,14 @@ defmodule FieldHubWeb.MonitoringLiveTest do
   test "redirect to login if not authenticated", %{conn: conn} do
     assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
              conn
-             |> live("/ui/monitoring/#{@project}")
+             |> live("/ui/projects/show/#{@project}")
   end
 
   test "redirect to landing page if not authorized for project", %{conn: conn} do
     assert {:error, {:redirect, %{flash: _, to: "/"}}} =
              conn
              |> log_in_user("nope")
-             |> live("/ui/monitoring/#{@project}")
+             |> live("/ui/projects/show/#{@project}")
   end
 
   test "issues are displayed, even if no custom label or description defined" do
@@ -57,7 +57,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
       |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)
 
     html =
-      render_component(MonitoringLive, %{
+      render_component(ProjectShowLive, %{
         current_user: "test_user",
         flash: %{},
         issue_count: count,
@@ -79,10 +79,6 @@ defmodule FieldHubWeb.MonitoringLiveTest do
     assert html =~ "unknown_without_data (1)"
   end
 
-  test "issue rescheduling gets scaled with large document count in database" do
-    assert 10000 == MonitoringLive.ms_for_next_issue_evaluation(100)
-    assert 50000 == MonitoringLive.ms_for_next_issue_evaluation(10000)
-  end
 
   describe "with logged in user" do
     setup %{conn: conn} do
@@ -102,7 +98,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
     end
 
     test "authorized user can see monitoring page", %{conn: conn} do
-      {:ok, view, html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
+      {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
       assert html_on_mount =~ "<h2>Statistics</h2>\n\nLoading..."
@@ -117,7 +113,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
     end
 
     test "user can trigger issue evaluation", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/monitoring/#{@project}")
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       TestHelper.delete_document(@project, "project")
 
@@ -130,7 +126,7 @@ defmodule FieldHubWeb.MonitoringLiveTest do
 
       # Elixir/Erlang kinda deep dive:
       #
-      # In general, the MonitoringLive's `handle_info/3` and `handle_event/3` communicate via events/messages
+      # In general, the ProjectShowLive's `handle_info/3` and `handle_event/3` communicate via events/messages
       # that they send to the view process.
       #
       # The `render_click/1` above sends a event "evaluate_issues" to the view process.

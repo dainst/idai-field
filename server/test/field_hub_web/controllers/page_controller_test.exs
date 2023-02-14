@@ -39,7 +39,7 @@ defmodule FieldHubWeb.PageControllerTest do
         |> put_session(:user_token, token)
         |> get("/")
 
-      assert html_response(conn, 200) =~ "/monitoring/test_project"
+      assert html_response(conn, 200) =~ "/projects/show/test_project"
     end
 
     test "GET / without valid session token does not display projects", %{conn: conn} do
@@ -47,7 +47,7 @@ defmodule FieldHubWeb.PageControllerTest do
         conn
         |> get("/")
 
-      assert not String.contains?(html_response(conn, 200), "/monitoring/test_project")
+      assert not String.contains?(html_response(conn, 200), "/projects/show/test_project")
     end
   end
 end

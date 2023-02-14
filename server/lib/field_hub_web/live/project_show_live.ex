@@ -185,16 +185,4 @@ defmodule FieldHubWeb.ProjectShowLive do
   def issue_classes(:info), do: "monitoring-issue info"
   def issue_classes(:warning), do: "monitoring-issue warning"
   def issue_classes(:error), do: "monitoring-issue error"
-
-  def ms_for_next_issue_evaluation(database_doc_count) do
-    ms = database_doc_count * 5
-
-    case ms do
-      val when val < 10000 ->
-        10000
-
-      val ->
-        val
-    end
-  end
 end

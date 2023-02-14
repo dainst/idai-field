@@ -3,6 +3,8 @@
 
     <h1>Project <i><%= @project %></i></h1>
 
+    <p class="alert alert-info"><%= live_flash(@flash, :info) %></p>
+
     <h2>Statistics</h2>
 
     <%= case @stats do %>

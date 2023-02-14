@@ -62,7 +62,7 @@ defmodule FieldHubWeb.CreateProjectLive do
              Project.create(name),
            :set <- Project.update_user(name, name, :member) do
         socket
-        |> put_flash(:error, "Something went wrong.")
+        |> put_flash(:info, "Project created successfully.")
         |> push_redirect(to: "/ui/monitoring/#{name}")
       else
         e ->

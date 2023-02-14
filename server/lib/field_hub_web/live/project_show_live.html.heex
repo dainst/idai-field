@@ -34,7 +34,7 @@
     <section>
         <h2>Issues<%= if @issue_count != 0, do: " (#{@issue_count})" %></h2>
 
-        <button class="button" phx-click="evaluate_issues">
+        <button class="button" style="width: 100%" phx-click="evaluate_issues">
             <%= case @issues do %>
                 <% :no_data -> %>
                 Evaluate

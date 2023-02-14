@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.CreateProjectLive do
+defmodule FieldHubWeb.ProjectCreateLive do
   alias FieldHubWeb.{
     Router.Helpers,
     UserAuth
@@ -63,7 +63,7 @@ defmodule FieldHubWeb.CreateProjectLive do
            :set <- Project.update_user(name, name, :member) do
         socket
         |> put_flash(:info, "Project created successfully.")
-        |> push_redirect(to: "/ui/monitoring/#{name}")
+        |> push_redirect(to: "/ui/projects/show/#{name}")
       else
         e ->
           Logger.error(e)

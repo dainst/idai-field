@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.MonitoringLive do
+defmodule FieldHubWeb.ProjectShowLive do
   alias FieldHubWeb.{
     Router.Helpers,
     UserAuth

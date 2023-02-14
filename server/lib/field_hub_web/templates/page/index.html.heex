@@ -6,7 +6,7 @@ This server runs FieldHub (<small><%= Application.spec(:field_hub, :vsn) %></sma
     <hr>
 
     <%= if User.is_admin?(@current_user) do %>
-        <%= button("Create new project", to: "/ui/project/new", method: :get, class: "btn", style: "width:100%") %>
+        <%= button("Create new project", to: "/ui/projects/create", method: :get, class: "btn", style: "width:100%") %>
     <% end %>
 
     <hr>
@@ -20,7 +20,7 @@ This server runs FieldHub (<small><%= Application.spec(:field_hub, :vsn) %></sma
 
         <ul>
         <%= Enum.map(projects, fn(project) -> %>
-            <li><%= link(project, to: "/ui/monitoring/#{project}")  %></li>
+            <li><%= link(project, to: "/ui/projects/show/#{project}")  %></li>
         <% end) %>
         </ul>
     <% end %>

@@ -40,22 +40,26 @@ defmodule FieldHubWeb.Router do
   scope "/ui", FieldHubWeb do
     pipe_through :browser
 
-    get "/session/new", UserSessionController, :new
-    post "/session/login", UserSessionController, :create
-    post "/session/logout", UserSessionController, :delete
-
-    scope "/" do
-      pipe_through :ui_require_user_authentication
-      pipe_through :ui_require_project_authorization
-
-      live "/monitoring/:project", MonitoringLive
+    scope "/session" do
+      get "/new", UserSessionController, :new
+      post "/login", UserSessionController, :create
+      post "/logout", UserSessionController, :delete
     end
 
-    scope "/" do
+    scope "/projects" do
       pipe_through :ui_require_user_authentication
-      pipe_through :ui_require_admin
 
-      live "/project/new", CreateProjectLive
+      scope "/show/:project" do
+        pipe_through :ui_require_project_authorization
+
+        live "/", ProjectShowLive
+      end
+
+      scope "/create" do
+        pipe_through :ui_require_admin
+
+        live "/", ProjectCreateLive
+      end
     end
   end
 

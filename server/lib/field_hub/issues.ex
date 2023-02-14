@@ -69,7 +69,7 @@ defmodule FieldHub.Issues do
     project_name
     |> CouchService.get_docs(["project"])
     |> case do
-      [{:error, %{reason: "not_found"}}] ->
+      [{:error, %{reason: :not_found}}] ->
         [
           %Issue{
             type: :no_project_document,
@@ -78,7 +78,7 @@ defmodule FieldHub.Issues do
           }
         ]
 
-      [{:ok, %{"_deleted" => true} = _doc}] ->
+      [{:error, %{reason: :deleted}}] ->
         [
           %Issue{
             type: :no_project_document,

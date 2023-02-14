@@ -332,42 +332,42 @@ defmodule FieldHub.CouchService do
   @doc """
   Returns the documents for a list of UUIDs (matched against the documents `_id` values).
 
-  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: reason}}`.
+  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: :not_found | :deleted}}`.
 
-  See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#db-bulk-get.
+  See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#post--db-_all_docs.
 
   __Parameters__
   - `project_name` the project's name.
   - `uuids` the list of ids requested.
   """
   def get_docs(project_name, uuids) do
+    # TODO: Maybe implement this also with Stream.resource/3 like the _find endpoint to support an arbitrary length of uuids without
+    # flooding memory by loading all documents at once.
     body =
       %{
-        docs:
-          uuids
-          |> Enum.map(fn uuid ->
-            %{id: uuid}
-          end)
+        keys: uuids,
+        include_docs: true
       }
       |> Jason.encode!()
 
     %{body: body} =
       HTTPoison.post!(
-        "#{base_url()}/#{project_name}/_bulk_get",
+        "#{base_url()}/#{project_name}/_all_docs",
         body,
         headers()
       )
 
     body
     |> Jason.decode!()
-    |> Map.get("results")
-    |> Enum.map(fn %{"docs" => result} ->
-      case result do
-        [%{"ok" => doc}] ->
+    |> Map.get("rows")
+    |> Enum.map(fn (row) ->
+      case row do
+        %{"error" => "not_found", "key" => uuid} ->
+          {:error, %{uuid: uuid, reason: :not_found}}
+        %{"value" => %{"deleted" => true}, "key" => uuid} ->
+          {:error, %{uuid: uuid, reason: :deleted}}
+        %{"doc" => doc} ->
           {:ok, doc}
-
-        [%{"error" => %{"id" => uuid, "error" => error}}] ->
-          {:error, %{uuid: uuid, reason: error}}
       end
     end)
   end

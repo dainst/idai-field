@@ -83,4 +83,8 @@ defmodule FieldHub.User do
         false
     end
   end
+
+  def is_admin?(name) do
+    name == Application.get_env(:field_hub, :couchdb_admin_name)
+  end
 end

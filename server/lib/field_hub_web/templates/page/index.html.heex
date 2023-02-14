@@ -4,12 +4,20 @@ This server runs FieldHub (<small><%= Application.spec(:field_hub, :vsn) %></sma
 
 <%= if @current_user do %>
     <hr>
+
+    <%= if User.is_admin?(@current_user) do %>
+        <%= button("Create new project", to: "/ui/project/new", method: :get, class: "btn", style: "width:100%") %>
+    <% end %>
+
+    <hr>
+
     <h2>Your projects</h2>
 
     <%= case @projects do %>
     <% [] -> %>
         No projects.
     <% projects -> %>
+
         <ul>
         <%= Enum.map(projects, fn(project) -> %>
             <li><%= link(project, to: "/ui/monitoring/#{project}")  %></li>

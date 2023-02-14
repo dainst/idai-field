@@ -50,6 +50,13 @@ defmodule FieldHubWeb.Router do
 
       live "/monitoring/:project", MonitoringLive
     end
+
+    scope "/" do
+      pipe_through :ui_require_user_authentication
+      pipe_through :ui_require_admin
+
+      live "/project/new", CreateProjectLive
+    end
   end
 
   scope "/", FieldHubWeb.Api do

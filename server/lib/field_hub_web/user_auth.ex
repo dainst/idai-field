@@ -5,7 +5,8 @@ defmodule FieldHubWeb.UserAuth do
   alias FieldHub.{
     CouchService,
     CouchService.Credentials,
-    Project
+    Project,
+    User
   }
 
   alias FieldHubWeb.Router.Helpers, as: Routes
@@ -248,6 +249,19 @@ defmodule FieldHubWeb.UserAuth do
       :unknown_project ->
         conn
         |> put_flash(:error, "Unknown project '#{project_name}'.")
+        |> redirect(to: "/")
+        |> halt()
+    end
+  end
+
+  def ui_require_admin(%{assigns: %{current_user: current_user}} = conn, _) do
+    case User.is_admin?(current_user) do
+      true ->
+        conn
+
+      _ ->
+        conn
+        |> put_flash(:error, "You are not authorized to view this page.")
         |> redirect(to: "/")
         |> halt()
     end

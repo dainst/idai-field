@@ -1,0 +1,47 @@
+<div class="container">
+    <%= live_redirect "Back to overview", to: Helpers.page_path(@socket, :index) %>
+
+    <h1>Create a new project</h1>
+
+    <p class="alert alert-danger"><%= live_flash(@flash, :error) %></p>
+
+    <form phx-change="update" phx-submit="create">
+        <button
+            style="width: 100%"
+            disabled={Enum.count(@issues) > 0}>
+            Create project
+        </button>
+
+        <input
+            type="text"
+            placeholder="Project name"
+            id="name"
+            name="name"
+            value={@project_name}
+        />
+        <div class="row">
+            <div class="column">
+                <input
+                    type="text"
+                    placeholder="Password"
+                    id="password"
+                    name="password"
+                    value={@project_password}
+                />
+            </div>
+            <div class="column">
+                <button type="button" class="button button-outline" phx-click="generate_password" style="width: 100%">
+                    Generate password
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <ul>
+        <%= for issue <- @issues do %>
+            <li><%= format_issue(issue) %></li>
+        <% end %>
+    </ul>
+</div>

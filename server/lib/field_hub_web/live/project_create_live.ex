@@ -14,7 +14,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   require Logger
 
-  def mount(_parmas, %{"user_token" => user_token} = _session, socket) do
+  def mount(_params, %{"user_token" => user_token} = _session, socket) do
     user_name =
       user_token
       |> UserAuth.get_user_by_session_token()

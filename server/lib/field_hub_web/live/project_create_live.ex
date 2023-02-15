@@ -59,13 +59,13 @@ defmodule FieldHubWeb.ProjectCreateLive do
               socket
               |> put_flash(
                 :info,
-                "Project created project '#{name}' with password '#{password}' successfully."
+                "Project created project `#{name}` with password `#{password}` successfully."
               )
               |> push_redirect(to: "/ui/projects/show/#{name}")
 
             {:error, msg} ->
               Logger.error(
-                "While creating a project got error '#{msg}', attempt by user '#{user_name}'."
+                "While creating a project got error `#{msg}`, attempt by user `#{user_name}`."
               )
 
               socket
@@ -77,12 +77,6 @@ defmodule FieldHubWeb.ProjectCreateLive do
       end
 
     {:noreply, socket}
-  end
-
-  def handle_event("generate_password", _values, %{assigns: %{project_name: name}} = socket) do
-    password = CouchService.create_password()
-
-    {:noreply, evaluate_inputs(socket, name, password)}
   end
 
   defp evaluate_inputs(socket, name, password) do
@@ -124,18 +118,18 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   defp format_issue(:name_empty),
     do: """
-    Please provide a project name.
+    Please provide a project identifier.
     """
 
   defp format_issue(:name_invalid),
     do: """
-    Please provide a valid project name. The name must begin with a lower case letter (a-z), followed by any of the following letters:
+    Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
     Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /.
     """
 
   defp format_issue(:name_taken),
     do: """
-    This project name is already taken.
+    This project identifier is already taken.
     """
 
   defp format_issue(:password_empty),
@@ -149,7 +143,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
         Project.create(name)
 
       :already_exists ->
-        {:error, "Error creating default user '#{name}', the user already exists."}
+        {:error, "Error creating default user `#{name}`, the user already exists."}
     end
     |> case do
       {:error, _} = error ->
@@ -159,8 +153,8 @@ defmodule FieldHubWeb.ProjectCreateLive do
       %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
         Project.update_user(name, name, :member)
 
-      e ->
-        {:error, "Error creating project '#{name}' database and/or file directories : #{e}."}
+      %{database: :already_exists} ->
+        {:error, "Error creating `#{name}`, a database with the identifier already exists."}
     end
     |> case do
       {:error, _} = error ->
@@ -169,9 +163,6 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
       :set ->
         :ok
-
-      e ->
-        {:error, "Error setting default user: #{e}."}
     end
   end
 end

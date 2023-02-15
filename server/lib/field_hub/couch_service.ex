@@ -360,12 +360,14 @@ defmodule FieldHub.CouchService do
     body
     |> Jason.decode!()
     |> Map.get("rows")
-    |> Enum.map(fn (row) ->
+    |> Enum.map(fn row ->
       case row do
         %{"error" => "not_found", "key" => uuid} ->
           {:error, %{uuid: uuid, reason: :not_found}}
+
         %{"value" => %{"deleted" => true}, "key" => uuid} ->
           {:error, %{uuid: uuid, reason: :deleted}}
+
         %{"doc" => doc} ->
           {:ok, doc}
       end

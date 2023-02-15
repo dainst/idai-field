@@ -4,18 +4,20 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   use FieldHubWeb.ConnCase
 
+  alias FieldHub.CouchService
   alias FieldHubWeb.UserAuth
   alias FieldHub.Issues
   alias FieldHubWeb.ProjectShowLive
 
   alias FieldHub.{
+    User,
     TestHelper
   }
 
   @endpoint FieldHubWeb.Endpoint
 
   @project "test_project"
-  @user_name "test_user"
+  @user_name "test_project"
   @user_password "test_password"
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
@@ -194,6 +196,42 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert {:redirect, %{to: "/"}} = socket.redirected
     end
 
+    test "non admin user can not set a new password" do
+      new_password = "the_password"
+
+      {:noreply, socket} =
+        ProjectShowLive.handle_event(
+          "set_password",
+          nil,
+          %Phoenix.LiveView.Socket{
+            assigns: %{
+              project: @project,
+              current_user: "unauthorized",
+              new_password: new_password,
+              __changed__: %{},
+              flash: %{}
+            }
+          }
+        )
+
+      assert %{assigns: %{flash: %{"error" => "You are not authorized to set the password."}}} =
+               socket
+
+      # New password invalid.
+      assert {:error, 401} =
+               CouchService.authenticate(%CouchService.Credentials{
+                 name: @project,
+                 password: new_password
+               })
+
+      # Old password still valid.
+      assert :ok =
+               CouchService.authenticate(%CouchService.Credentials{
+                 name: @project,
+                 password: @user_password
+               })
+    end
+
     test "non admin user has no passwort setting interface", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
       html = render(view)
@@ -266,6 +304,57 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       assert not (html =~
                     "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>")
+    end
+
+    test "button click as admin sets current password", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      new_password = "updated_password"
+
+      view
+      |> element("form")
+      |> render_change(%{password: new_password})
+
+      html =
+        view
+        |> element("button", "Set new password")
+        |> render_click()
+
+      assert html =~ "Successfully updated the password to &#39;#{new_password}&#39;."
+
+      # Old password invalid
+      assert {:error, 401} =
+               CouchService.authenticate(%CouchService.Credentials{
+                 name: @project,
+                 password: @user_password
+               })
+
+      # New password accepted
+      assert :ok =
+               CouchService.authenticate(%CouchService.Credentials{
+                 name: @project,
+                 password: new_password
+               })
+    end
+
+    test "throws warning if default user is missing", %{conn: conn} do
+      # This case is highly unlikely, but is checked by the view nonetheless for completeness sake.
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      User.delete(@user_name)
+
+      view
+      |> element("form")
+      |> render_change(%{password: "updated_password"})
+
+      html =
+        view
+        |> element("button", "Set new password")
+        |> render_click()
+
+      assert html =~
+               "Default user for &#39;#{@project}&#39; seems to be missing, unable to set the password."
     end
   end
 end

@@ -102,33 +102,43 @@ defmodule FieldHubWeb.ProjectShowLive do
   end
 
   def handle_event("update", %{"password" => password} = _values, socket) do
-    { :noreply, assign(socket, :new_password, password) }
+    {:noreply, assign(socket, :new_password, password)}
   end
 
   def handle_event("generate_password", _values, socket) do
-    { :noreply, assign(socket, :new_password, CouchService.create_password()) }
+    {:noreply, assign(socket, :new_password, CouchService.create_password())}
   end
 
-  def handle_event("set_password", _values, %{assigns: %{project: project, current_user: user_name, new_password: new_password}} = socket) do
+  def handle_event(
+        "set_password",
+        _values,
+        %{assigns: %{project: project, current_user: user_name, new_password: new_password}} =
+          socket
+      ) do
     socket =
       case User.is_admin?(user_name) do
         true ->
           User.update_password(project, new_password)
+
         false ->
           {:error, "You are not authorized to set the password."}
       end
       |> case do
         {:error, _} = error ->
           error
+
         :updated ->
           {:ok, "Successfully updated the password to '#{new_password}'."}
+
         :unknown ->
-          {:error, "Default user for '#{project}' seems to be missing, unable to set the password."}
+          {:error,
+           "Default user for '#{project}' seems to be missing, unable to set the password."}
       end
       |> case do
         {:ok, msg} ->
           socket
           |> put_flash(:info, msg)
+
         {:error, msg} ->
           socket
           |> put_flash(:error, msg)

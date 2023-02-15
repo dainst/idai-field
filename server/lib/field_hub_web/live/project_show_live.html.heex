@@ -4,6 +4,7 @@
     <h1>Project <i><%= @project %></i></h1>
 
     <p class="alert alert-info"><%= live_flash(@flash, :info) %></p>
+    <p class="alert alert-danger"><%= live_flash(@flash, :error) %></p>
 
     <h2>Statistics</h2>
 
@@ -37,7 +38,7 @@
             <div class="row">
                 <div class="column">Issues<%= if @issue_count != 0, do: " (#{@issue_count})" %></div>
                 <div class="column">
-                    <button class="button" phx-click="evaluate_issues">
+                    <button class="button" phx-click="evaluate_issues" style="float:right">
                         <%= case @issues do %>
                             <% :no_data -> %>
                             Evaluate
@@ -97,5 +98,34 @@
                 <% end) %>
         <% end %>
     </section>
-    <hr>
+
+    <%= if User.is_admin?(@current_user) do %>
+        <hr>
+                <form phx-change="update">
+        <div class="row">
+            <div class="column">
+                    <input
+                        type="text"
+                        placeholder="New password"
+                        id="password"
+                        name="password"
+                        value={@new_password}
+                    />
+            </div>
+        </div><div class="row">
+            <div class="column">
+                <button type="button" class="button button-outline" phx-click="generate_password" style="width:100%">
+                    Generate new password
+                </button>
+            </div>
+            <div class="column">
+                <button type="button" class="button" phx-click="set_password" disabled={@new_password == ""} style="width:100%">
+                    Set new password
+                </button>
+            </div>
+        </div>
+                </form>
+
+        <hr>
+    <% end %>
 </div>

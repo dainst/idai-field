@@ -4,6 +4,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   use FieldHubWeb.ConnCase
 
+  alias FieldHubWeb.UserAuth
   alias FieldHub.Issues
   alias FieldHubWeb.ProjectShowLive
 
@@ -17,17 +18,45 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
   @user_name "test_user"
   @user_password "test_password"
 
+  @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
+
   test "redirect to login if not authenticated", %{conn: conn} do
+    # Test the authentication plug (http)
     assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
              conn
              |> live("/ui/projects/show/#{@project}")
+
+    # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
+    # access the page.
+    socket =
+      ProjectShowLive.mount(
+        %{"project" => @project},
+        %{"user_token" => "invalid"},
+        %Phoenix.LiveView.Socket{}
+      )
+
+    assert {:redirect, %{to: "/"}} = socket.redirected
   end
 
   test "redirect to landing page if not authorized for project", %{conn: conn} do
+    unknown_user = "unknown"
+
+    # Test the authorization plug (http)
     assert {:error, {:redirect, %{flash: _, to: "/"}}} =
              conn
-             |> log_in_user("nope")
+             |> log_in_user(unknown_user)
              |> live("/ui/projects/show/#{@project}")
+
+    # Test the mount function (websocket), this makes sure that users that navigated here from another
+    # live view with an existing socket are authorized.
+    socket =
+      ProjectShowLive.mount(
+        %{"project" => @project},
+        %{"user_token" => UserAuth.generate_user_session_token(unknown_user)},
+        %Phoenix.LiveView.Socket{}
+      )
+
+    assert {:redirect, %{to: "/"}} = socket.redirected
   end
 
   test "issues are displayed, even if no custom label or description defined" do
@@ -147,6 +176,96 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         |> render()
 
       assert html =~ "Issues (3)"
+    end
+
+    test "user without project authorization can not trigger issue evaluation" do
+      {:noreply, socket} =
+        ProjectShowLive.handle_event(
+          "evaluate_issues",
+          nil,
+          %Phoenix.LiveView.Socket{
+            assigns: %{
+              project: @project,
+              current_user: "unauthorized"
+            }
+          }
+        )
+
+      assert {:redirect, %{to: "/"}} = socket.redirected
+    end
+
+    test "non admin user has no passwort setting interface", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      html = render(view)
+      assert not (html =~ "<h2>Password change</h2>")
+    end
+  end
+
+  describe "with logged in admin" do
+    setup %{conn: conn} do
+      # Run before each tests
+      TestHelper.create_complete_example_project(@project, @user_name, @user_password)
+
+      on_exit(fn ->
+        # Run after each tests
+        TestHelper.remove_complete_example_project(
+          @project,
+          @user_name
+        )
+      end)
+
+      conn = log_in_user(conn, @admin_user)
+      {:ok, %{conn: conn}}
+    end
+
+    test "admin has passwort setting interface", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      assert html =~ "<h2>Password change</h2>"
+    end
+
+    test "password input triggers updated socket", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      assert html =~
+               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
+
+      # The "Set new password" button should be disabled as long as the input is an empty string.
+      assert html =~ "phx-click=\"set_password\" disabled=\"disabled\" style=\"width:100%\""
+
+      html =
+        view
+        |> element("form")
+        |> render_change(%{password: "typed_in_password"})
+
+      assert html =~
+               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"typed_in_password\"/></div>"
+
+      # The "Set new password" button should no longer be disabled.
+      assert html =~ "phx-click=\"set_password\" style=\"width:100%\""
+    end
+
+    test "button click generates random password", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html =
+        view
+        |> render()
+
+      assert html =~
+               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
+
+      html =
+        view
+        |> element("button", "Generate new password")
+        |> render_click()
+
+      assert not (html =~
+                    "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>")
     end
   end
 end

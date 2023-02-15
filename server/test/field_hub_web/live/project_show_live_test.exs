@@ -4,12 +4,14 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   use FieldHubWeb.ConnCase
 
-  alias FieldHub.CouchService
-  alias FieldHubWeb.UserAuth
-  alias FieldHub.Issues
-  alias FieldHubWeb.ProjectShowLive
+  alias FieldHubWeb.{
+    UserAuth,
+    ProjectShowLive
+  }
 
   alias FieldHub.{
+    CouchService,
+    Issues,
     User,
     TestHelper
   }

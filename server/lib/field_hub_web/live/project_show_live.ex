@@ -44,7 +44,7 @@ defmodule FieldHubWeb.ProjectShowLive do
         }
 
       _ ->
-        redirect(socket, to: "/login")
+        redirect(socket, to: "/")
     end
   end
 

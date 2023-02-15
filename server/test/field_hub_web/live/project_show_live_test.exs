@@ -79,7 +79,6 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     assert html =~ "unknown_without_data (1)"
   end
 
-
   describe "with logged in user" do
     setup %{conn: conn} do
       # Run before each tests
@@ -102,7 +101,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
       assert html_on_mount =~ "<h2>Statistics</h2>\n\nLoading..."
-      assert html_on_mount =~ "<h2>Issues</h2>"
+      assert html_on_mount =~ "<h2><div class=\"row\"><div class=\"column\">Issues</div>"
 
       html = render(view)
 
@@ -147,7 +146,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "<h2>Issues (3)</h2>"
+      assert html =~ "Issues (3)"
     end
   end
 end

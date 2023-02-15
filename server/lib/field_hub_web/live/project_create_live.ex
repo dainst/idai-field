@@ -36,18 +36,13 @@ defmodule FieldHubWeb.ProjectCreateLive do
   def handle_event(
         "update",
         %{"name" => name, "password" => password} = _values,
-        %{assigns: %{current_user: user_name}} = socket
+        socket
       ) do
-    socket =
-      case User.is_admin?(user_name) do
-        true ->
-          evaluate_inputs(socket, name, password)
+    {:noreply, evaluate_inputs(socket, name, password)}
+  end
 
-        _ ->
-          redirect(socket, to: "/")
-      end
-
-    {:noreply, socket}
+  def handle_event("generate_password", _values, %{assigns: %{project_name: name}} = socket) do
+    {:noreply, evaluate_inputs(socket, name, CouchService.create_password())}
   end
 
   def handle_event(

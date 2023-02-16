@@ -3,9 +3,9 @@
 This server runs FieldHub (<small><%= Application.spec(:field_hub, :vsn) %></small>), providing a centralized syncing target for different projects that use the <a href="https://github.com/dainst/idai-field" target="_blank">Field desktop application</a>.
 
 <%= if @current_user do %>
-    <hr>
 
     <%= if User.is_admin?(@current_user) do %>
+        <hr>
         <%= button("Create new project", to: "/ui/projects/create", method: :get, class: "btn", style: "width:100%") %>
     <% end %>
 

@@ -9,21 +9,21 @@ alias FieldHub.{
 }
 
 defmodule FieldHub.TestHelper do
-  def create_test_db_and_user(project_name, user_name, user_password) do
-    Project.create(project_name)
+  def create_test_db_and_user(project_identifier, user_name, user_password) do
+    Project.create(project_identifier)
     User.create(user_name, user_password)
-    Project.update_user(user_name, project_name, :member)
+    Project.update_user(user_name, project_identifier, :member)
   end
 
-  def remove_test_db_and_user(project_name, user_name) do
-    remove_project(project_name)
+  def remove_test_db_and_user(project_identifier, user_name) do
+    remove_project(project_identifier)
     User.delete(user_name)
   end
 
-  def remove_project(project_name) do
-    Project.delete(project_name)
+  def remove_project(project_identifier) do
+    Project.delete(project_identifier)
     # Currently the Project is not deleting file directories.
-    FileStore.remove_directories(project_name)
+    FileStore.remove_directories(project_identifier)
   end
 
   def create_user(user_name, user_password) do
@@ -34,33 +34,33 @@ defmodule FieldHub.TestHelper do
     User.delete(user_name)
   end
 
-  def add_dummy_files_to_store(project_name) do
+  def add_dummy_files_to_store(project_identifier) do
     FileStore.store(
       "file_a",
-      project_name,
+      project_identifier,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
     FileStore.store(
       "file_b",
-      project_name,
+      project_identifier,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
     FileStore.store(
       "file_c",
-      project_name,
+      project_identifier,
       :original_image,
       String.duplicate("0123456789", 10_000)
     )
 
-    FileStore.discard("file_c", project_name)
+    FileStore.discard("file_c", project_identifier)
   end
 
-  def create_complete_example_project(project_name, user_name, user_password) do
-    create_test_db_and_user(project_name, user_name, user_password)
+  def create_complete_example_project(project_identifier, user_name, user_password) do
+    create_test_db_and_user(project_identifier, user_name, user_password)
 
     fixtures_directory = "test/fixtures/complete_project"
 
@@ -70,7 +70,7 @@ defmodule FieldHub.TestHelper do
       |> Enum.each(fn file ->
         File.cp!(
           "#{fixtures_directory}/file_store/#{variant_directory}/#{file}",
-          "#{Application.get_env(:field_hub, :file_directory_root)}/#{project_name}/#{variant_directory}/#{file}"
+          "#{Application.get_env(:field_hub, :file_directory_root)}/#{project_identifier}/#{variant_directory}/#{file}"
         )
       end)
     end)
@@ -98,20 +98,20 @@ defmodule FieldHub.TestHelper do
       %{docs: docs}
       |> Jason.encode!()
 
-    "#{CouchService.base_url()}/#{project_name}/_bulk_docs"
+    "#{CouchService.base_url()}/#{project_identifier}/_bulk_docs"
     |> HTTPoison.post!(
       payload,
       headers()
     )
   end
 
-  def remove_complete_example_project(project_name, user_name) do
-    remove_test_db_and_user(project_name, user_name)
-    FileStore.remove_directories(project_name)
+  def remove_complete_example_project(project_identifier, user_name) do
+    remove_test_db_and_user(project_identifier, user_name)
+    FileStore.remove_directories(project_identifier)
   end
 
-  def database_exists?(project_name) do
-    "#{CouchService.base_url()}/#{project_name}"
+  def database_exists?(project_identifier) do
+    "#{CouchService.base_url()}/#{project_identifier}"
     |> HTTPoison.get!(headers())
   end
 
@@ -123,33 +123,33 @@ defmodule FieldHub.TestHelper do
     "Basic #{encoded}"
   end
 
-  def create_document(project_name, doc) do
-    "#{CouchService.base_url()}/#{project_name}"
+  def create_document(project_identifier, doc) do
+    "#{CouchService.base_url()}/#{project_identifier}"
     |> HTTPoison.post!(
       Jason.encode!(doc),
       headers()
     )
   end
 
-  def update_document(project_name, %{"_id" => id} = doc) do
-    rev = get_current_revision(project_name, id)
+  def update_document(project_identifier, %{"_id" => id} = doc) do
+    rev = get_current_revision(project_identifier, id)
 
-    "#{CouchService.base_url()}/#{project_name}/#{id}?rev=#{rev}"
+    "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}"
     |> HTTPoison.put(
       Jason.encode!(doc),
       headers()
     )
   end
 
-  def delete_document(project_name, id) do
-    rev = get_current_revision(project_name, id)
+  def delete_document(project_identifier, id) do
+    rev = get_current_revision(project_identifier, id)
 
-    "#{CouchService.base_url()}/#{project_name}/#{id}?rev=#{rev}"
+    "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}"
     |> HTTPoison.delete(headers())
   end
 
-  def get_current_revision(project_name, id) do
-    "#{CouchService.base_url()}/#{project_name}/#{id}"
+  def get_current_revision(project_identifier, id) do
+    "#{CouchService.base_url()}/#{project_identifier}/#{id}"
     |> HTTPoison.get!(headers())
     |> case do
       %{body: body} ->

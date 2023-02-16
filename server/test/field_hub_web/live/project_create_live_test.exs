@@ -222,7 +222,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_submit(%{identifier: @project, password: @project})
+        |> render_submit(%{identifier: @project, password: "some_password"})
         |> follow_redirect(conn)
         |> then(fn {:ok, _project_show_view, html_on_mount} ->
           html_on_mount
@@ -235,7 +235,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
 
       # html should now render the project_show content
       assert html =~
-               "Project created project `#{@project}` with password `#{@project}` successfully."
+               "Project created project `#{@project}` with password `some_password` successfully."
     end
 
     test "error displayed and logged if project identifier already in use", %{conn: conn} do
@@ -251,7 +251,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
           html =
             view
             |> element("form")
-            |> render_submit(%{identifier: @project, password: @project})
+            |> render_submit(%{identifier: @project, password: "some_password"})
 
           assert html =~ expected_msg
         end)
@@ -271,7 +271,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
           html =
             view
             |> element("form")
-            |> render_submit(%{identifier: @project, password: @project})
+            |> render_submit(%{identifier: @project, password: "some_password"})
 
           assert html =~ expected_msg
         end)

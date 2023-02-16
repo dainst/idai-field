@@ -29,21 +29,21 @@ defmodule FieldHub.Issues do
   Runs all defined evaluation functions on a project and returns a combined list of #{Issue}.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def evaluate_all(project_name) do
+  def evaluate_all(project_identifier) do
     try do
       [
-        evaluate_project_document(project_name),
-        evaluate_images(project_name),
-        evaluate_identifiers(project_name),
-        evaluate_relations(project_name)
+        evaluate_project_document(project_identifier),
+        evaluate_images(project_identifier),
+        evaluate_identifiers(project_identifier),
+        evaluate_relations(project_identifier)
       ]
       |> Enum.concat()
     rescue
       e ->
         stack_trace = Exception.format(:error, e, __STACKTRACE__)
-        Logger.error("Unexpected error while evaluation project '#{project_name}':")
+        Logger.error("Unexpected error while evaluation project '#{project_identifier}':")
         Logger.error(stack_trace)
 
         [
@@ -63,10 +63,10 @@ defmodule FieldHub.Issues do
   downstream by other applications as a default map background.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def evaluate_project_document(project_name) do
-    project_name
+  def evaluate_project_document(project_identifier) do
+    project_identifier
     |> CouchService.get_docs(["project"])
     |> case do
       [{:error, %{reason: :not_found}}] ->
@@ -106,11 +106,11 @@ defmodule FieldHub.Issues do
   expected to be larger in general).
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def evaluate_images(project_name) do
+  def evaluate_images(project_identifier) do
     try do
-      project_name
+      project_identifier
       |> FileStore.file_index()
     rescue
       e -> e
@@ -126,9 +126,9 @@ defmodule FieldHub.Issues do
         ]
 
       file_store_data ->
-        project_name
+        project_identifier
         |> CouchService.get_docs_by_category(
-          ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_name)
+          ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_identifier)
         )
         |> Stream.map(fn %{
                            "created" => %{
@@ -216,8 +216,8 @@ defmodule FieldHub.Issues do
     end
   end
 
-  defp get_custom_image_categories(project_name) do
-    project_name
+  defp get_custom_image_categories(project_identifier) do
+    project_identifier
     |> CouchService.get_docs_by_category(["Configuration"])
     |> Enum.to_list()
     |> case do
@@ -247,9 +247,9 @@ defmodule FieldHub.Issues do
   checks for these cases.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def evaluate_identifiers(project_name) do
+  def evaluate_identifiers(project_identifier) do
     query = %{
       selector: %{},
       fields: [
@@ -258,7 +258,7 @@ defmodule FieldHub.Issues do
       ]
     }
 
-    CouchService.get_find_query_stream(project_name, query)
+    CouchService.get_find_query_stream(project_identifier, query)
     |> Enum.group_by(fn %{"resource" => %{"identifier" => identifier}} ->
       identifier
     end)
@@ -280,7 +280,7 @@ defmodule FieldHub.Issues do
           ids = Enum.map(docs, fn %{"_id" => id} -> id end)
 
           detailed_docs =
-            CouchService.get_docs(project_name, ids)
+            CouchService.get_docs(project_identifier, ids)
             |> Enum.map(fn {:ok, doc} ->
               doc
             end)
@@ -301,9 +301,9 @@ defmodule FieldHub.Issues do
   not through the Field Desktop application, but directly in CouchDB/PouchDB).
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def evaluate_relations(project_name) do
+  def evaluate_relations(project_identifier) do
     query = %{
       selector: %{},
       fields: [
@@ -313,7 +313,7 @@ defmodule FieldHub.Issues do
     }
 
     relations =
-      CouchService.get_find_query_stream(project_name, query)
+      CouchService.get_find_query_stream(project_identifier, query)
       |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
         referenced_uuids =
           relations

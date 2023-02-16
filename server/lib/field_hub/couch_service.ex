@@ -75,11 +75,11 @@ defmodule FieldHub.CouchService do
   Returns the #{HTTPoison.Response} for the creation attempt.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def create_project(project_name) do
+  def create_project(project_identifier) do
     HTTPoison.put!(
-      "#{base_url()}/#{project_name}",
+      "#{base_url()}/#{project_identifier}",
       "",
       get_admin_credentials()
       |> headers()
@@ -92,11 +92,11 @@ defmodule FieldHub.CouchService do
   Returns the #{HTTPoison.Response} for the deletion attempt.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def delete_project(project_name) do
+  def delete_project(project_identifier) do
     HTTPoison.delete!(
-      "#{base_url()}/#{project_name}",
+      "#{base_url()}/#{project_identifier}",
       get_admin_credentials()
       |> headers()
     )
@@ -198,12 +198,12 @@ defmodule FieldHub.CouchService do
 
   __Parameters__
   - `user_name` the user's name.
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `role` the users new role, one of `[:none, :member, :admin]`. If `:none` is passed, the user will be removed from all current roles in the project.
   """
   def update_user_role_in_project(
         user_name,
-        project_name,
+        project_identifier,
         role
       )
       when role in [:none, :member, :admin] do
@@ -215,7 +215,7 @@ defmodule FieldHub.CouchService do
     |> case do
       %{status_code: 200} ->
         HTTPoison.get!(
-          "#{base_url()}/#{project_name}/_security",
+          "#{base_url()}/#{project_identifier}/_security",
           get_admin_credentials()
           |> headers()
         )
@@ -224,7 +224,7 @@ defmodule FieldHub.CouchService do
             %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
 
             HTTPoison.put!(
-              "#{base_url()}/#{project_name}/_security",
+              "#{base_url()}/#{project_identifier}/_security",
               user_update_payload(user_name, existing_admins, existing_members, role),
               get_admin_credentials()
               |> headers()
@@ -291,10 +291,10 @@ defmodule FieldHub.CouchService do
   Returns the `_security` document in a project database.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def get_database_security(project_name) do
-    "#{base_url()}/#{project_name}/_security"
+  def get_database_security(project_identifier) do
+    "#{base_url()}/#{project_identifier}/_security"
     |> HTTPoison.get!(headers())
   end
 
@@ -320,11 +320,11 @@ defmodule FieldHub.CouchService do
   Get CouchDB's basic metadata for the given project.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def get_db_infos(project_name) do
+  def get_db_infos(project_identifier) do
     HTTPoison.get!(
-      "#{base_url()}/#{project_name}",
+      "#{base_url()}/#{project_identifier}",
       headers()
     )
   end
@@ -337,10 +337,10 @@ defmodule FieldHub.CouchService do
   See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#post--db-_all_docs.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `uuids` the list of ids requested.
   """
-  def get_docs(project_name, uuids) do
+  def get_docs(project_identifier, uuids) do
     # TODO: Maybe implement this also with Stream.resource/3 like the _find endpoint to support an arbitrary length of uuids without
     # flooding memory by loading all documents at once.
     body =
@@ -352,7 +352,7 @@ defmodule FieldHub.CouchService do
 
     %{body: body} =
       HTTPoison.post!(
-        "#{base_url()}/#{project_name}/_all_docs",
+        "#{base_url()}/#{project_identifier}/_all_docs",
         body,
         headers()
       )
@@ -381,7 +381,7 @@ defmodule FieldHub.CouchService do
   See also https://elixir-lang.org/getting-started/enumerables-and-streams.html.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `categories` a list of requested categories.
 
   ## Example
@@ -434,8 +434,8 @@ defmodule FieldHub.CouchService do
         }
       ]
   """
-  def get_docs_by_category(project_name, categories) do
-    get_find_query_stream(project_name, %{
+  def get_docs_by_category(project_identifier, categories) do
+    get_find_query_stream(project_identifier, %{
       selector: %{
         "$or":
           Enum.map(categories, fn category ->
@@ -456,10 +456,10 @@ defmodule FieldHub.CouchService do
   See also https://elixir-lang.org/getting-started/enumerables-and-streams.html.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `query` a #{Map} that can be encoded as a valid `_find` JSON query, see https://docs.couchdb.org/en/stable/api/database/find.html.
   """
-  def get_find_query_stream(project_name, query) do
+  def get_find_query_stream(project_identifier, query) do
     batch_size = 500
 
     Stream.resource(
@@ -469,7 +469,7 @@ defmodule FieldHub.CouchService do
       end,
       fn payload ->
         HTTPoison.post!(
-          "#{base_url()}/#{project_name}/_find",
+          "#{base_url()}/#{project_identifier}/_find",
           Jason.encode!(payload),
           headers(),
           recv_timeout: 60000

@@ -80,10 +80,10 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
-  def api_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
+  def api_require_project_authorization(%{params: %{"project" => project_identifier}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: user_name}} ->
-        case Project.check_project_authorization(project_name, user_name) do
+        case Project.check_project_authorization(project_identifier, user_name) do
           :granted ->
             conn
 
@@ -94,7 +94,7 @@ defmodule FieldHubWeb.UserAuth do
 
           :unknown_project ->
             conn
-            |> send_resp(404, "Unknown project #{project_name}.")
+            |> send_resp(404, "Unknown project #{project_identifier}.")
             |> halt()
         end
 
@@ -228,10 +228,10 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authorized for a specified project.
   """
-  def ui_require_project_authorization(%{params: %{"project" => project_name}} = conn, _opts) do
+  def ui_require_project_authorization(%{params: %{"project" => project_identifier}} = conn, _opts) do
     case conn do
       %{assigns: %{current_user: current_user}} ->
-        Project.check_project_authorization(project_name, current_user)
+        Project.check_project_authorization(project_identifier, current_user)
 
       _ ->
         :denied
@@ -242,13 +242,13 @@ defmodule FieldHubWeb.UserAuth do
 
       :denied ->
         conn
-        |> put_flash(:error, "You are not authorized for project '#{project_name}'.")
+        |> put_flash(:error, "You are not authorized for project '#{project_identifier}'.")
         |> redirect(to: "/")
         |> halt()
 
       :unknown_project ->
         conn
-        |> put_flash(:error, "Unknown project '#{project_name}'.")
+        |> put_flash(:error, "Unknown project '#{project_identifier}'.")
         |> redirect(to: "/")
         |> halt()
     end

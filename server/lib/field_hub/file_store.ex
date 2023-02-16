@@ -23,12 +23,12 @@ defmodule FieldHub.FileStore do
   Returns a map with keys `#{inspect(@valid_file_variants)}` and values `:ok` or `{:error, posix}` each.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def create_directories(project_name) do
+  def create_directories(project_identifier) do
     @valid_file_variants
     |> Enum.map(fn type ->
-      get_variant_directory(project_name, type)
+      get_variant_directory(project_identifier, type)
       |> File.mkdir_p()
     end)
     |> Enum.zip(@valid_file_variants)
@@ -41,15 +41,15 @@ defmodule FieldHub.FileStore do
   Remove all file directories for a project, not reversable.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
 
   Returns `{:ok, files_and_directories}` with all files and directories removed in no specific order, `{:error, posix, file}` otherwise.
 
   """
-  def remove_directories(project_name) do
-    clear_cache(project_name)
+  def remove_directories(project_identifier) do
+    clear_cache(project_identifier)
 
-    project_name
+    project_identifier
     |> get_project_directory()
     |> File.rm_rf()
   end
@@ -59,7 +59,7 @@ defmodule FieldHub.FileStore do
   all files are returned.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `requested_variants` (optional) list of requested variants, valid values: `#{inspect(@valid_file_variants)}`
 
   Returns a map that, once encoded as JSON, will pass the validation against the 'files-list.json' JSON schema used by all Field applications.
@@ -78,12 +78,12 @@ defmodule FieldHub.FileStore do
       }
 
   """
-  def file_index(project_name, requested_variants \\ @valid_file_variants) do
-    case Cachex.get(@index_cache_name, project_name) do
+  def file_index(project_identifier, requested_variants \\ @valid_file_variants) do
+    case Cachex.get(@index_cache_name, project_identifier) do
       {:ok, nil} ->
-        new_file_index = create_file_index(project_name)
+        new_file_index = create_file_index(project_identifier)
 
-        Cachex.put!(@index_cache_name, project_name, new_file_index,
+        Cachex.put!(@index_cache_name, project_identifier, new_file_index,
           ttl: @index_cache_expiration_ms
         )
 
@@ -132,13 +132,13 @@ defmodule FieldHub.FileStore do
 
     __Parameters__
   - `uuid` the files uuid.
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `file_variant` the specific variant for the uuid, one of `#{inspect(@valid_file_variants)}`
 
   Returns the path as a String.
   """
-  def get_file_path(uuid, project_name, file_variant) do
-    path = "#{get_variant_directory(project_name, file_variant)}/#{uuid}"
+  def get_file_path(uuid, project_identifier, file_variant) do
+    path = "#{get_variant_directory(project_identifier, file_variant)}/#{uuid}"
 
     case File.stat(path) do
       {:error, _} = error ->
@@ -155,15 +155,15 @@ defmodule FieldHub.FileStore do
   __Parameters__
 
   - `uuid` the uuid for the file (will be used as its file_name).
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
   - `data` the binary data to store.
 
   Returns `:ok` on success or `{:error, posix}` on failure. If a file already exists, it will not
   be replaced but the function will return `:ok` regardless.
   """
-  def store(uuid, project_name, file_variant, data) do
-    directory = get_variant_directory(project_name, file_variant)
+  def store(uuid, project_identifier, file_variant, data) do
+    directory = get_variant_directory(project_identifier, file_variant)
 
     file_path = "#{directory}/#{uuid}"
 
@@ -174,7 +174,7 @@ defmodule FieldHub.FileStore do
         File.write(file_path, data)
       end
 
-    clear_cache(project_name)
+    clear_cache(project_identifier)
     result
   end
 
@@ -187,16 +187,16 @@ defmodule FieldHub.FileStore do
   __Parameters__
 
   - `uuid` the uuid for the file (will be used as its file_name).
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
 
   Returns `:ok`. If a file already exists, it will not be replaced but the
   function will return `:ok` regardless.
   """
-  def discard(uuid, project_name) do
+  def discard(uuid, project_identifier) do
     @valid_file_variants
-    |> Enum.map(&store("#{uuid}#{@tombstone_suffix}", project_name, &1, []))
+    |> Enum.map(&store("#{uuid}#{@tombstone_suffix}", project_identifier, &1, []))
 
-    clear_cache(project_name)
+    clear_cache(project_identifier)
 
     :ok
   end

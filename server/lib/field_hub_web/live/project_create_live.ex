@@ -35,33 +35,33 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   def handle_event(
         "update",
-        %{"name" => name, "password" => password} = _values,
+        %{"identifier" => identifier, "password" => password} = _values,
         socket
       ) do
-    {:noreply, evaluate_inputs(socket, name, password)}
+    {:noreply, evaluate_inputs(socket, identifier, password)}
   end
 
-  def handle_event("generate_password", _values, %{assigns: %{project_name: name}} = socket) do
-    {:noreply, evaluate_inputs(socket, name, CouchService.create_password())}
+  def handle_event("generate_password", _values, %{assigns: %{project_identifier: identifier}} = socket) do
+    {:noreply, evaluate_inputs(socket, identifier, CouchService.create_password())}
   end
 
   def handle_event(
         "create",
-        %{"name" => name, "password" => password} = _values,
+        %{"identifier" => identifier, "password" => password} = _values,
         %{assigns: %{current_user: user_name}} = socket
       ) do
     socket =
       case User.is_admin?(user_name) do
         true ->
-          create_project(name, password)
+          create_project(identifier, password)
           |> case do
             :ok ->
               socket
               |> put_flash(
                 :info,
-                "Project created project `#{name}` with password `#{password}` successfully."
+                "Project created project `#{identifier}` with password `#{password}` successfully."
               )
-              |> push_redirect(to: "/ui/projects/show/#{name}")
+              |> push_redirect(to: "/ui/projects/show/#{identifier}")
 
             {:error, msg} ->
               Logger.error(
@@ -79,17 +79,17 @@ defmodule FieldHubWeb.ProjectCreateLive do
     {:noreply, socket}
   end
 
-  defp evaluate_inputs(socket, name, password) do
-    name_issue =
+  defp evaluate_inputs(socket, identifier, password) do
+    identifier_issue =
       cond do
-        name == "" ->
-          :name_empty
+        identifier == "" ->
+          :identifier_empty
 
-        not String.match?(name, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
-          :name_invalid
+        not String.match?(identifier, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
+          :identifier_invalid
 
-        Project.exists?(name) ->
-          :name_taken
+        Project.exists?(identifier) ->
+          :identifier_taken
 
         true ->
           :ok
@@ -105,29 +105,29 @@ defmodule FieldHubWeb.ProjectCreateLive do
       end
 
     socket
-    |> assign(:project_name, name)
+    |> assign(:project_identifier, identifier)
     |> assign(:project_password, password)
     |> assign(
       :issues,
       Enum.reject(
-        [name_issue] ++ [password_issue],
+        [identifier_issue] ++ [password_issue],
         fn val -> val == :ok end
       )
     )
   end
 
-  defp format_issue(:name_empty),
+  defp format_issue(:identifier_empty),
     do: """
     Please provide a project identifier.
     """
 
-  defp format_issue(:name_invalid),
+  defp format_issue(:identifier_invalid),
     do: """
     Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
     Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /.
     """
 
-  defp format_issue(:name_taken),
+  defp format_issue(:identifier_taken),
     do: """
     This project identifier is already taken.
     """
@@ -137,13 +137,13 @@ defmodule FieldHubWeb.ProjectCreateLive do
     Please provide a password.
     """
 
-  defp create_project(name, password) do
-    case User.create(name, password) do
+  defp create_project(identifier, password) do
+    case User.create(identifier, password) do
       :created ->
-        Project.create(name)
+        Project.create(identifier)
 
       :already_exists ->
-        {:error, "Error creating default user `#{name}`, the user already exists."}
+        {:error, "Error creating default user `#{identifier}`, the user already exists."}
     end
     |> case do
       {:error, _} = error ->
@@ -151,10 +151,10 @@ defmodule FieldHubWeb.ProjectCreateLive do
         error
 
       %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
-        Project.update_user(name, name, :member)
+        Project.update_user(identifier, identifier, :member)
 
       %{database: :already_exists} ->
-        {:error, "Error creating `#{name}`, a database with the identifier already exists."}
+        {:error, "Error creating `#{identifier}`, a database with the identifier already exists."}
     end
     |> case do
       {:error, _} = error ->

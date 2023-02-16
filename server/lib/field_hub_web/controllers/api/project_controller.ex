@@ -14,13 +14,13 @@ defmodule FieldHubWeb.Api.ProjectController do
     render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
   end
 
-  def show(conn, %{"project" => project_name}) do
-    project_info = Project.evaluate_project(project_name)
+  def show(conn, %{"project" => id}) do
+    project_info = Project.evaluate_project(id)
 
     render(conn, "show.json", %{project: project_info})
   end
 
-  def create(conn, %{"project" => project_name}) do
+  def create(conn, %{"project" => id}) do
     password =
       conn.body_params
       |> case do
@@ -39,20 +39,20 @@ defmodule FieldHubWeb.Api.ProjectController do
       end
 
     cond do
-      Project.exists?(project_name) ->
+      Project.exists?(id) ->
         conn
         |> put_status(:precondition_failed)
         |> put_view(StatusView)
-        |> render(%{error: "Project #{project_name} already exists."})
+        |> render(%{error: "Project #{id} already exists."})
 
-      User.exists?(project_name) ->
+      User.exists?(id) ->
         conn
         |> put_status(:precondition_failed)
         |> put_view(StatusView)
-        |> render(%{error: "Default project user #{project_name} already exists."})
+        |> render(%{error: "Default project user #{id} already exists."})
 
       true ->
-        project_creation = Project.create(project_name)
+        project_creation = Project.create(id)
 
         case project_creation do
           :invalid_name ->
@@ -64,8 +64,8 @@ defmodule FieldHubWeb.Api.ProjectController do
             })
 
           _ ->
-            user_creation = User.create(project_name, password)
-            role_creation = Project.update_user(project_name, project_name, :member)
+            user_creation = User.create(id, password)
+            role_creation = Project.update_user(id, id, :member)
 
             response_payload = %{
               status_project: project_creation,
@@ -82,9 +82,9 @@ defmodule FieldHubWeb.Api.ProjectController do
     end
   end
 
-  def delete(conn, %{"project" => project_name}) do
-    project = Project.delete(project_name)
-    user = User.delete(project_name)
+  def delete(conn, %{"project" => id}) do
+    project = Project.delete(id)
+    user = User.delete(id)
 
     response_payload = %{
       status_project: project,

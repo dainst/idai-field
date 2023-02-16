@@ -106,7 +106,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_change(%{name: @project})
+        |> render_change(%{identifier: @project})
 
       assert not (html =~ "<li>Please provide a project identifier.\n</li>")
       assert html =~ "<li>Please provide a password.\n</li>"
@@ -136,7 +136,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_change(%{name: ""})
+        |> render_change(%{identifier: ""})
 
       assert html =~ "<li>Please provide a project identifier.\n</li>"
       assert not (html =~ "<li>Please provide a password.\n</li>")
@@ -198,7 +198,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_change(%{name: "123"})
+        |> render_change(%{identifier: "123"})
 
       assert html =~ "Please provide a valid project identifier."
     end
@@ -211,7 +211,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_change(%{name: @project})
+        |> render_change(%{identifier: @project})
 
       assert html =~ "This project identifier is already taken."
     end
@@ -222,7 +222,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_submit(%{name: @project, password: @project})
+        |> render_submit(%{identifier: @project, password: @project})
         |> follow_redirect(conn)
         |> then(fn {:ok, _project_show_view, html_on_mount} ->
           html_on_mount
@@ -251,7 +251,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
           html =
             view
             |> element("form")
-            |> render_submit(%{name: @project, password: @project})
+            |> render_submit(%{identifier: @project, password: @project})
 
           assert html =~ expected_msg
         end)
@@ -271,7 +271,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
           html =
             view
             |> element("form")
-            |> render_submit(%{name: @project, password: @project})
+            |> render_submit(%{identifier: @project, password: @project})
 
           assert html =~ expected_msg
         end)
@@ -284,7 +284,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
     {:noreply, socket} =
       ProjectCreateLive.handle_event(
         "create",
-        %{"name" => @project, "password" => "some_password"},
+        %{"identifier" => @project, "password" => "some_password"},
         %Phoenix.LiveView.Socket{
           assigns: %{
             current_user: @project

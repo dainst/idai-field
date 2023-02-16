@@ -23,11 +23,11 @@ defmodule FieldHub.Project do
   is the return value of FileStore.create_directories/1.
 
   __Parameters__
-  - `project_name` the project's name
+  - `project_identifier` the project's name
   """
-  def create(project_name) do
+  def create(project_identifier) do
     couch_result =
-      project_name
+      project_identifier
       |> CouchService.create_project()
       |> case do
         %{status_code: 201} ->
@@ -47,11 +47,11 @@ defmodule FieldHub.Project do
       val ->
         update_user(
           Application.get_env(:field_hub, :couchdb_user_name),
-          project_name,
+          project_identifier,
           :member
         )
 
-        file_store_response = FileStore.create_directories(project_name)
+        file_store_response = FileStore.create_directories(project_identifier)
         %{database: val, file_store: file_store_response}
     end
   end
@@ -63,11 +63,11 @@ defmodule FieldHub.Project do
   Returns `%{dabase :deleted | :unknown_project, file_store: []}`.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def delete(project_name) do
+  def delete(project_identifier) do
     couch_result =
-      project_name
+      project_identifier
       |> CouchService.delete_project()
       |> case do
         %{status_code: 200} ->
@@ -79,10 +79,10 @@ defmodule FieldHub.Project do
 
     # Deactivated for now, we do not really delete images for existing projects (we are just adding tombstone files)
     # so we probably should also keep the files directory when deleting project (?).
-    # FileStore.remove_directories(project_name)
+    # FileStore.remove_directories(project_identifier)
     # |> case do
     #   {:ok, deleted} ->
-    #     Logger.info("Deleted #{Enum.count(deleted)} files for '#{project_name}'.")
+    #     Logger.info("Deleted #{Enum.count(deleted)} files for '#{project_identifier}'.")
     #     deleted
     #     |> Enum.each(&Logger.info(&1))
 
@@ -100,13 +100,13 @@ defmodule FieldHub.Project do
 
   __Parameters__
   - `user_name` the user's name.
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `role` the user's intended role in the project. Valid values: `:none` (removing user from all current roles), `:member` or `:admin`.
   """
-  def update_user(user_name, project_name, role) do
+  def update_user(user_name, project_identifier, role) do
     CouchService.update_user_role_in_project(
       user_name,
-      project_name,
+      project_identifier,
       role
     )
     |> case do
@@ -128,10 +128,10 @@ defmodule FieldHub.Project do
   Checks if a project of the given name exists.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   """
-  def exists?(project_name) do
-    CouchService.get_db_infos(project_name)
+  def exists?(project_identifier) do
+    CouchService.get_db_infos(project_identifier)
     |> case do
       %{status_code: 200} ->
         true
@@ -149,8 +149,8 @@ defmodule FieldHub.Project do
   """
   def get_all_for_user(user_name) do
     CouchService.get_all_databases()
-    |> Enum.filter(fn project_name ->
-      :granted == check_project_authorization(project_name, user_name)
+    |> Enum.filter(fn project_identifier ->
+      :granted == check_project_authorization(project_identifier, user_name)
     end)
   end
 
@@ -161,7 +161,7 @@ defmodule FieldHub.Project do
   project's database and file store state.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
 
   ## Example
       iex> Project.evaluate_project("development")
@@ -185,18 +185,18 @@ defmodule FieldHub.Project do
         name: "development"
       }
   """
-  def evaluate_project(project_name) do
-    project_name
+  def evaluate_project(project_identifier) do
+    project_identifier
     |> evaluate_database()
     |> case do
       :unknown ->
         :unknown
 
       db_statistics ->
-        file_statistics = evaluate_file_store(project_name)
+        file_statistics = evaluate_file_store(project_identifier)
 
         %{
-          name: project_name,
+          name: project_identifier,
           database: db_statistics,
           files: file_statistics
         }
@@ -221,14 +221,14 @@ defmodule FieldHub.Project do
   Returns `:denied | :granted | :unknown_project`.
 
   __Parameters__
-  - `project_name` the project's name.
+  - `project_identifier` the project's name.
   - `user_name` the user's name.
   """
-  def check_project_authorization(project_name, user_name) do
+  def check_project_authorization(project_identifier, user_name) do
     if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
       :granted
     else
-      CouchService.get_database_security(project_name)
+      CouchService.get_database_security(project_identifier)
       |> case do
         %{status_code: 200, body: body} ->
           %{"members" => members, "admins" => admins} = Jason.decode!(body)
@@ -248,8 +248,8 @@ defmodule FieldHub.Project do
     end
   end
 
-  defp evaluate_database(project_name) do
-    FieldHub.CouchService.get_db_infos(project_name)
+  defp evaluate_database(project_identifier) do
+    FieldHub.CouchService.get_db_infos(project_identifier)
     |> case do
       %{status_code: 200, body: body} ->
         %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
@@ -261,8 +261,8 @@ defmodule FieldHub.Project do
     end
   end
 
-  defp evaluate_file_store(project_name) do
-    FileStore.file_index(project_name)
+  defp evaluate_file_store(project_identifier) do
+    FileStore.file_index(project_identifier)
     |> Enum.reduce(
       Map.new(@variant_types, fn type ->
         {type,

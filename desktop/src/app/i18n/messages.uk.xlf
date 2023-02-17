@@ -560,7 +560,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
         <source> Nicht konfigurierte Felder ignorieren </source>
-        <target state="new"> Nicht konfigurierte Felder ignorieren </target>
+        <target state="final"> Неналаштовані поля ігноруються </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">101,104</context>
@@ -568,7 +568,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
         <source> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </source>
-        <target state="new"> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </target>
+        <target state="final"> Якщо цей параметр увімкнено, поля у файлі імпорту, які не є частиною конфігурації проекту, ігноруються під час імпорту. Інакше імпортування буде перервано. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">112,120</context>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen. </source>
-        <target state="translated"> Введіть тут повний шлях до файлу резервної копії та назву цільової бази даних/цільового проекту. Ім'я цільового проекту не має збігатися з назвою поточного відкритого проекту. </target>
+        <target state="final"> Введіть тут повний шлях до файлу резервної копії та назву цільової бази даних/цільового проекту. Ім'я цільового проекту не має збігатися з назвою поточного відкритого проекту. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">86</context>
@@ -956,13 +956,13 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="translated">
+        <target state="final">
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
           Увага:
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
           Під час імпорту файлу резервної копії будь-яка існуюча цільова база даних із вказаним ім’ям
           <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>
-          повністю перезаписана
+          буде повністю перезаписана
           <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
           .
         </target>
@@ -981,7 +981,7 @@
       </trans-unit>
       <trans-unit id="project.identifier" datatype="html">
         <source>Projektkennung</source>
-        <target state="new">Projektkennung</target>
+        <target state="final">Ідентифікатор проекту</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">60</context>
@@ -1773,7 +1773,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix" datatype="html">
         <source> Bezeichner-Präfix </source>
-        <target state="new"> Bezeichner-Präfix </target>
+        <target state="final"> Префікс ідентифікатора </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">57</context>
@@ -1781,7 +1781,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.single" datatype="html">
         <source> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="new"> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </target>
+        <target state="final"> Ресурс цієї категорії вже створено. Зверніть увагу, що префікс <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>не<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> встановлюється автоматично для вже існуючих ідентифікаторів. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">79,77</context>
@@ -1789,7 +1789,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.multiple" datatype="html">
         <source> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="new"> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </target>
+        <target state="final"> Вже були створені <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> ресурси цієї категорії. Зверніть увагу, що префікс <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>не<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> встановлюється автоматично для вже існуючих ідентифікаторів. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">88,83</context>
@@ -2031,7 +2031,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
-        <target state="new"> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </target>
+        <target state="final"> За бажанням ви можете вказати назву проекту для кожної мови. Ім'я може містити будь-які символи і не більше <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> символів. Його можна будь-коли змінити у властивостях проекту. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -2039,7 +2039,7 @@
       </trans-unit>
       <trans-unit id="buttons.next" datatype="html">
         <source>Weiter</source>
-        <target state="new">Weiter</target>
+        <target state="final">Далі</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -2055,7 +2055,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration.info" datatype="html">
         <source> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </source>
-        <target state="new"> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </target>
+        <target state="final"> Вибрана конфігурація запуску визначає, які категорії, формуляри та поля спочатку доступні для нового проекту. Потім конфігурацію можна налаштувати за потребами. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -2071,7 +2071,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </source>
-        <target state="new"> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </target>
+        <target state="final"> Вибиріть тут мови, на яких повинні бути введені дані у рамках проекту. Виберіть хоча б одну мову. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -2079,7 +2079,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="new"> Projektkennung: </target>
+        <target state="final"> Iндентифікітор проекту: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -2087,7 +2087,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> mehr geändert werden. </source>
-        <target state="new">Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> mehr geändert werden. </target>
+        <target state="final"> Введіть тут однозначний/унікальний ідентифікатор для нового проекту. Дозволеними символами є малі літери латинського алфавіту, цифри, підкреслення та дефіси. Ідентифікатор має починатися з літери і не може перевищувати максимум <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> символів. Його пізніше <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>не<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> зможете змінити. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -2123,7 +2123,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source> Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="translated"> Введіть назву проекту, щоб підтвердити видалення. </target>
+        <target state="final"> Введіть назву проекту, щоб підтвердити видалення. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -2232,7 +2232,7 @@
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
         <source>Existierendes Projekt gleicher Kennung überschreiben</source>
-        <target state="translated">Перезаписати існуючий проект з такою ж назвою</target>
+        <target state="final">Перезаписати існуючий проект з такою ж назвою</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">230</context>
@@ -2360,7 +2360,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.displayImages" datatype="html">
         <source> Für die Anzeige optimierte Bilddateien: </source>
-        <target state="new"> Für die Anzeige optimierte Bilddateien: </target>
+        <target state="final"> Оптимізовані для перегляду файли ілюстрацій: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">85,89</context>
@@ -3520,7 +3520,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.identifier" datatype="html">
         <source>Bezeichner</source>
-        <target state="new">Bezeichner</target>
+        <target state="final">Ідентифікатор/назва</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -4342,7 +4342,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidIdentifier" datatype="html">
         <source> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
-        <target state="new"> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Bitte tragen Sie einen neuen Bezeichner ein. </target>
+        <target state="final"> Зареєстрований ідентифікатор/назва<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> не починається з налаштованого префікса ідентифікатора <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Введіть новий ідентифікатор. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/identifier.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -5236,7 +5236,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
         <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="new">Geben Sie eine Projektkennung an, um fortzufahren.</target>
+        <target state="final">Щоб продовжити, введіть ідентифікатор проекту.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5244,7 +5244,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
-        <target state="new">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
+        <target state="final"> Будь ласка, виберіть як ціль, інакший від наразі вибраного проекту.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5252,7 +5252,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
         <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="new">Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</target>
+        <target state="final"> Вибраний вами ідентифікатор проекту значно відрізняється від ідентифікатора оригінального проекту. Переконайтеся, що ви вибрали правильний файл резервної копії, перш ніж синхронізувати дані з відновленого проекту з іншими Field Desktop екземплярами або Field-серверами.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5268,7 +5268,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.identifierPrefix" datatype="html">
         <source>Der Ressourcen-Bezeichner '[0]' beginnt nicht mit dem für die Kategorie '[1]' konfigurierten Bezeichner-Präfix '[2]'.</source>
-        <target state="new">Der Ressourcen-Bezeichner '[0]' beginnt nicht mit dem für die Kategorie '[1]' konfigurierten Bezeichner-Präfix '[2]'.</target>
+        <target state="final">Ідентифікатор ресурсу '[0]' не починається з для категорії  '[1]' налаштованого префікса-ідентифікатора '[2]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5452,15 +5452,15 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifier" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</source>
-        <target state="final">Під час імпорту сталася помилка: знайдено одну або кілька функцій без властивості.identifier.</target>
+        <target state="final">Під час імпорту сталася помилка: знайдено одну або кілька функцій без властивості індентифікатора.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</target>
+        <source>Під час імпорту сталася помилка: знайдено один або декілька об’єктів без атрибута «ідентифікатор».</source>
+        <target state="final">Під час імпорту сталася помилка: знайдено один або декілька об’єктів без атрибута «ідентифікатор».</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5926,7 +5926,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="new">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="final">У полі '[1]' категорії '[0]' можна ввести максимум [2] символи.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6310,7 +6310,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="new">Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="final">У полі '[1]' можна ввести максимум [2] символи.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6438,7 +6438,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.upload.pixelLimitExceeded" datatype="html">
         <source>Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</source>
-        <target state="new">Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</target>
+        <target state="final">Файл '[0]' не вдалося прочитати: максимальну кількість пікселів від [1] перевищено. Зменште роздільну здатність ілюстрації та повторіть спробу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6494,7 +6494,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
         <source>Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="new">Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
+        <target state="final">Ідентифікатори проекту не збігаються. Проект не буде видалено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6582,7 +6582,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.missingIdentifier" datatype="html">
         <source>Bitte geben Sie eine Kennung für das neue Projekt ein.</source>
-        <target state="new">Bitte geben Sie eine Kennung für das neue Projekt ein.</target>
+        <target state="final">Будь ласка, введіть ідентифікатор для нового проекту.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6590,7 +6590,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierExists" datatype="html">
         <source>Ein Projekt mit der Kennung '[0]' existiert bereits.</source>
-        <target state="new">Ein Projekt mit der Kennung '[0]' existiert bereits.</target>
+        <target state="final">Проект з ідентифікатором '[0]' вже існує.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6598,7 +6598,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
         <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
-        <target state="new">Die angegebene Projektkennung ist um [0] Zeichen zu lang.</target>
+        <target state="final"> Введений ідентифікатор проекту є на [0] символів задовгим.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6606,7 +6606,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="new">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
+        <target state="final">Введений ідентифікатор проекту містить недопустимі символи.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6614,7 +6614,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
         <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
-        <target state="new">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
+        <target state="final">Ідентифікатор проекту повинен починатися з малої літери.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6622,7 +6622,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
         <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
-        <target state="new">Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</target>
+        <target state="final">Зазначена назва проекту для мови [0] є на [1] символів задовгою.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

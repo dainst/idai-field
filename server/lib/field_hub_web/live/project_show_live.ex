@@ -29,11 +29,14 @@ defmodule FieldHubWeb.ProjectShowLive do
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->
-        Process.send(self(), :update_stats, [])
+        Process.send(self(), :update_overview, [])
 
         {
           :ok,
           socket
+          |> assign(:supervisor, :loading)
+          |> assign(:contact, :loading)
+          |> assign(:staff, :loading)
           |> assign(:stats, :loading)
           |> assign(:issue_status, :idle)
           |> assign(:issues, :no_data)
@@ -49,14 +52,77 @@ defmodule FieldHubWeb.ProjectShowLive do
   end
 
   def handle_info(
-        :update_stats,
+        :update_overview,
         %{assigns: %{project: project}} = socket
       ) do
     stats = Project.evaluate_project(project)
 
-    Process.send_after(self(), :update_stats, 10000)
+    project_doc =
+      project
+      |> Project.get_documents(["project"])
+      |> case do
+        [
+          ok: doc
+        ] ->
+          doc
 
-    {:noreply, assign(socket, :stats, stats)}
+        _ ->
+          :no_data
+      end
+
+    contact =
+      case project_doc do
+        %{
+          "resource" => %{
+            "contactPerson" => contactPerson,
+            "contactMail" => contactMail
+          }
+        } ->
+          %{
+            name: contactPerson,
+            mail: contactMail
+          }
+
+        _ ->
+          :no_data
+      end
+
+    supervisor =
+      case project_doc do
+        %{
+          "resource" => %{
+            "projectSupervisor" => supervisor
+          }
+        } ->
+          supervisor
+
+        _ ->
+          :no_data
+      end
+
+    staff =
+      case project_doc do
+        %{
+          "resource" => %{
+            "staff" => staff
+          }
+        } ->
+          staff
+
+        _ ->
+          :no_data
+      end
+
+    Process.send_after(self(), :update_overview, 10000)
+
+    {
+      :noreply,
+      socket
+      |> assign(:supervisor, supervisor)
+      |> assign(:contact, contact)
+      |> assign(:staff, staff)
+      |> assign(:stats, stats)
+    }
   end
 
   def handle_info(

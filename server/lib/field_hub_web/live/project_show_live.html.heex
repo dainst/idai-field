@@ -6,29 +6,74 @@
     <p class="alert alert-info"><%= live_flash(@flash, :info) %></p>
     <p class="alert alert-danger"><%= live_flash(@flash, :error) %></p>
 
-    <h2>Statistics</h2>
+    <section>
 
-    <%= case @stats do %>
-        <% :loading -> %>
-            <%= "Loading..." %>
-        <% %{
-            database: %{
-                doc_count: db_doc_count,
-                file_size: db_file_size
-            },
-            files: files
-        } -> %>
-            <section>Database documents: <%= db_doc_count %></section>
-            <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
-            <%= case files do %>
-                <% :enoent -> %>
-                    <section>No files directory found! See issues below.</section>
-                <% values -> %>
-                <%= Enum.map(values, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
-                    <section><%= variant_name |> get_file_label() |> String.capitalize()  %>: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
-                <% end) %>
-            <% end %>
-    <% end %>
+        <h2>Overview</h2>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>Supervisor</td>
+                    <td><%= case @supervisor do %>
+                        <% :loading -> %>
+                            <%= "Loading..." %>
+                        <% :no_data -> %>
+                            <%= "No supervisor found in project document." %>
+                        <% name -> %>
+                            <%= name %>
+                    <% end %></td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td><%= case @contact do %>
+                        <% :loading -> %>
+                            <%= "Loading..." %>
+                        <% :no_data -> %>
+                            <%= "No contact data found in project document." %>
+                        <% %{name: name, mail: mail} -> %>
+                            <%= name %> (<a href={"mailto:#{mail}"}><%= mail %></a>)
+                    <% end %></td>
+                </tr>
+                <tr>
+                    <td>Staff</td>
+                    <td><%= case @staff do %>
+
+                            <% :loading -> %>
+                                <%= "Loading..." %>
+                            <% :no_data -> %>
+                                <%= "No staff names found in project document." %>
+                            <% names -> %>
+                                <%= Enum.join(names, ", ") %>
+                    <% end %></td>
+                </tr>
+                <tr>
+                    <td>Statistics</td>
+                    <td><%= case @stats do %>
+                        <% :loading -> %>
+                            <%= "Loading..." %>
+                        <% %{
+                            database: %{
+                                doc_count: db_doc_count,
+                                file_size: db_file_size
+                            },
+                            files: files
+                        } -> %>
+                            <section>Database documents: <%= db_doc_count %></section>
+                            <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
+                            <%= case files do %>
+                                <% :enoent -> %>
+                                    <section>No files directory found! See issues below.</section>
+                                <% values -> %>
+                                <%= Enum.map(values, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
+                                    <section><%= variant_name |> get_file_label() |> String.capitalize()  %>: <%= files_count %>, size: <%= Sizeable.filesize(files_size) %> (<%= files_size %> bytes)</section>
+                                <% end) %>
+                            <% end %>
+                    <% end %></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
 
     <hr>
 

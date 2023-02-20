@@ -248,6 +248,10 @@ defmodule FieldHub.Project do
     end
   end
 
+  def get_documents(project_identifier, uuids) do
+    FieldHub.CouchService.get_docs(project_identifier, uuids)
+  end
+
   defp evaluate_database(project_identifier) do
     FieldHub.CouchService.get_db_infos(project_identifier)
     |> case do

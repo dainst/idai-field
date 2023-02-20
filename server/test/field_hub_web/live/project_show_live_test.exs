@@ -98,6 +98,9 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         issues: groups,
         live_action: nil,
         project: "test_project",
+        supervisor: :loading,
+        contact: :loading,
+        staff: :loading,
         stats: :loading
       })
 
@@ -133,15 +136,20 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
-      assert html_on_mount =~ "<h2>Statistics</h2>\n\nLoading..."
+      assert html_on_mount =~ "<tr><td>Supervisor</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "<tr><td>Contact</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "<tr><td>Staff</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
       assert html_on_mount =~ "<h2><div class=\"row\"><div class=\"column\">Issues</div>"
 
       html = render(view)
 
       assert html =~ "<h1>Project <i>#{@project}</i></h1>"
 
-      assert html =~
-               "<h2>Statistics</h2><section>Database documents: 21</section><section>Database size: 48.39 KB (49548 bytes)</section><section>Original images: 2, size: 697.78 KB (714528 bytes)</section><section>Thumbnail images: 2, size: 18.84 KB (19295 bytes)</section>"
+      assert html =~ "Database documents: 21"
+      assert html =~ "Database size: 48.39 KB (49548 bytes)"
+      assert html =~ "Original images: 2, size: 697.78 KB (714528 bytes)"
+      assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
     end
 
     test "user can trigger issue evaluation", %{conn: conn} do

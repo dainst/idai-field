@@ -160,7 +160,7 @@ nav {
   }
 }
 
-.issue-group.hide .issue-table {
+.issue-group.hide .issue-content {
   display: none;
 }
 

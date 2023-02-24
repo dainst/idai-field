@@ -141,7 +141,9 @@ defmodule FieldHub.CLI do
         Project.update_user(project_identifier, project_identifier, :member)
         |> case do
           :set ->
-            Logger.info("Set user '#{project_identifier}' as member to project '#{project_identifier}'.")
+            Logger.info(
+              "Set user '#{project_identifier}' as member to project '#{project_identifier}'."
+            )
         end
 
         Logger.info("Project creation done.")
@@ -266,10 +268,14 @@ defmodule FieldHub.CLI do
         Logger.info("User '#{user_name}' has been set as admin to '#{project_identifier}'.")
 
       :unknown_project ->
-        Logger.warning("Tried to set user '#{user_name}' to unknown project '#{project_identifier}'.")
+        Logger.warning(
+          "Tried to set user '#{user_name}' to unknown project '#{project_identifier}'."
+        )
 
       :unknown_user ->
-        Logger.warning("Tried to set unknown user '#{user_name}' to project '#{project_identifier}'.")
+        Logger.warning(
+          "Tried to set unknown user '#{user_name}' to project '#{project_identifier}'."
+        )
     end
   end
 
@@ -289,10 +295,14 @@ defmodule FieldHub.CLI do
         Logger.info("User '#{user_name}' has been set as member to '#{project_identifier}'.")
 
       :unknown_project ->
-        Logger.warning("Tried to set user '#{user_name}' to unknown project '#{project_identifier}'.")
+        Logger.warning(
+          "Tried to set user '#{user_name}' to unknown project '#{project_identifier}'."
+        )
 
       :unknown_user ->
-        Logger.warning("Tried to set unknown user '#{user_name}' to project '#{project_identifier}'.")
+        Logger.warning(
+          "Tried to set unknown user '#{user_name}' to project '#{project_identifier}'."
+        )
     end
   end
 
@@ -309,7 +319,9 @@ defmodule FieldHub.CLI do
     Project.update_user(user_name, project_identifier, :none)
     |> case do
       :unset ->
-        Logger.info("User '#{user_name}' has been unset from all roles in '#{project_identifier}'.")
+        Logger.info(
+          "User '#{user_name}' has been unset from all roles in '#{project_identifier}'."
+        )
 
       :unknown_project ->
         Logger.warning(

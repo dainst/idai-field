@@ -37,14 +37,14 @@ defmodule FieldHub.IssuesTest do
 
     assert [
              %FieldHub.Issues.Issue{
-               data: %{unresolved_relations: ["project"], uuid: "o26"},
+               data: %{unresolved: ["project"], doc: %{"_id" => "o26"}},
                severity: :error,
                type: :unresolved_relation
              },
              %FieldHub.Issues.Issue{
                type: :unresolved_relation,
                severity: :error,
-               data: %{unresolved_relations: ["project"], uuid: "o25"}
+               data: %{unresolved: ["project"], doc: %{"_id" => "o25"}}
              },
              %FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}
            ] = Issues.evaluate_all(@project) |> Issues.sort()
@@ -142,17 +142,17 @@ defmodule FieldHub.IssuesTest do
              %FieldHub.Issues.Issue{
                type: :unresolved_relation,
                severity: :error,
-               data: %{unresolved_relations: ["sa1"], uuid: "st1"}
+               data: %{unresolved: ["sa1"], doc: %{"_id" => "st1"}}
              },
              %FieldHub.Issues.Issue{
                type: :unresolved_relation,
                severity: :error,
-               data: %{unresolved_relations: ["sa1"], uuid: "syu1"}
+               data: %{unresolved: ["sa1"], doc: %{"_id" => "syu1"}}
              },
              %FieldHub.Issues.Issue{
                type: :unresolved_relation,
                severity: :error,
-               data: %{unresolved_relations: ["sa1"], uuid: "syu2"}
+               data: %{unresolved: ["sa1"], doc: %{"_id" => "syu2"}}
              }
            ] = Issues.evaluate_relations(@project)
   end
@@ -184,7 +184,7 @@ defmodule FieldHub.IssuesTest do
                  file_type: "Drawing",
                  uuid: "o25"
                },
-               severity: :info,
+               severity: :warning,
                type: :missing_original_image
              }
            ] = Issues.evaluate_images(@project)
@@ -206,7 +206,7 @@ defmodule FieldHub.IssuesTest do
                  file_type: "Drawing",
                  uuid: "o25"
                },
-               severity: :info,
+               severity: :warning,
                type: :missing_original_image
              }
            ] = Issues.evaluate_images(@project)
@@ -219,7 +219,7 @@ defmodule FieldHub.IssuesTest do
     assert [
              %FieldHub.Issues.Issue{
                type: :missing_original_image,
-               severity: :info,
+               severity: :warning,
                data: %{
                  created: _,
                  created_by: "anonymous",
@@ -262,7 +262,7 @@ defmodule FieldHub.IssuesTest do
                  original_size: 18409,
                  thumbnail_size: 18409
                },
-               severity: :warning,
+               severity: :info,
                type: :image_variants_size
              }
            ] = Issues.evaluate_images(@project)

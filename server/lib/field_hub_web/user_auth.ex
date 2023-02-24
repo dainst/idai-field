@@ -80,7 +80,10 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
   """
-  def api_require_project_authorization(%{params: %{"project" => project_identifier}} = conn, _opts) do
+  def api_require_project_authorization(
+        %{params: %{"project" => project_identifier}} = conn,
+        _opts
+      ) do
     case conn do
       %{assigns: %{current_user: user_name}} ->
         case Project.check_project_authorization(project_identifier, user_name) do
@@ -228,7 +231,10 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authorized for a specified project.
   """
-  def ui_require_project_authorization(%{params: %{"project" => project_identifier}} = conn, _opts) do
+  def ui_require_project_authorization(
+        %{params: %{"project" => project_identifier}} = conn,
+        _opts
+      ) do
     case conn do
       %{assigns: %{current_user: current_user}} ->
         Project.check_project_authorization(project_identifier, current_user)

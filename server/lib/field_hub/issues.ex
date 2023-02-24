@@ -1,6 +1,9 @@
 defmodule FieldHub.Issues do
-  alias FieldHub.FileStore
-  alias FieldHub.CouchService
+  alias FieldHub.{
+    CouchService,
+    FileStore,
+    Project
+  }
 
   @severity_ranking [:info, :warning, :error]
 
@@ -43,7 +46,7 @@ defmodule FieldHub.Issues do
     rescue
       e ->
         stack_trace = Exception.format(:error, e, __STACKTRACE__)
-        Logger.error("Unexpected error while evaluation project '#{project_identifier}':")
+        Logger.error("Unexpected error while evaluating project '#{project_identifier}':")
         Logger.error(stack_trace)
 
         [
@@ -340,7 +343,15 @@ defmodule FieldHub.Issues do
           %Issue{
             type: :unresolved_relation,
             severity: :error,
-            data: %{uuid: uuid, unresolved_relations: unresoved_relations}
+            data: %{
+              doc:
+                project_identifier
+                |> Project.get_documents([uuid])
+                |> then(fn [ok: doc] ->
+                  doc
+                end),
+              unresolved: unresoved_relations
+            }
           }
       end
     end)

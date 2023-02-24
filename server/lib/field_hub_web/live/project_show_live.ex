@@ -1,7 +1,8 @@
 defmodule FieldHubWeb.ProjectShowLive do
   alias FieldHubWeb.{
     Router.Helpers,
-    UserAuth
+    UserAuth,
+    ProjectShowLiveIssues
   }
 
   alias FieldHub.{
@@ -235,67 +236,6 @@ defmodule FieldHubWeb.ProjectShowLive do
     do: "Same identifier used for different documents"
 
   def get_issue_type_label(type), do: type
-
-  def get_issue_description(%{type: :file_directory_not_found, data: %{path: path}}) do
-    "File directory '#{path}' for the project not found!"
-  end
-
-  def get_issue_description(%{type: :missing_original_image, data: data}) do
-    "#{generic_file_description(data)} Original file is missing and should be uploaded."
-  end
-
-  def get_issue_description(%{
-        type: :image_variants_size,
-        data: %{original_size: original, thumbnail_size: thumbnail} = data
-      }) do
-    extended_description =
-      "The original image (#{Sizeable.filesize(original)}) should be greater than the thumbnail (#{Sizeable.filesize(thumbnail)}). "
-
-    "#{generic_file_description(data)} #{extended_description}"
-  end
-
-  def get_issue_description(%{
-        type: :unresolved_relation,
-        data: %{
-          uuid: uuid,
-          unresolved_relations: list_of_uuids
-        }
-      }) do
-    "Document `#{uuid}` relates to missing documents with `#{Enum.join(list_of_uuids, ", ")}`."
-  end
-
-  def get_issue_description(%{type: :no_default_project_map_layer}) do
-    "There is no default map layer defined for the project."
-  end
-
-  def get_issue_description(%{type: :no_project_document}) do
-    "Could not find a project document in the database!"
-  end
-
-  def get_issue_description(%{data: data}) do
-    # fallback: output key/value pairs
-    data
-    |> Enum.map(fn {key, value} ->
-      "#{key}: #{inspect(value, pretty: true)}"
-    end)
-    |> Enum.join(", ")
-    |> case do
-      "" ->
-        "No description available"
-
-      val ->
-        {:preformatted, val}
-    end
-  end
-
-  defp generic_file_description(%{
-         file_name: file_name,
-         file_type: file_type,
-         created_by: created_by,
-         created: created
-       }) do
-    "'#{file_name}' (#{file_type}), created by #{created_by} on #{created}."
-  end
 
   def issue_classes(:info), do: "monitoring-issue info"
   def issue_classes(:warning), do: "monitoring-issue warning"

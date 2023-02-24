@@ -1,15 +1,19 @@
-import PouchDB =  require('pouchdb-node');
-import { Datastore, Document } from 'idai-field-core';
 import { update } from 'tsfun';
+import { Datastore, Document } from 'idai-field-core';
 import { getImageSuggestions } from '../../../../../src/app/components/docedit/widgets/get-image-suggestions';
 import { createApp } from '../../subsystem-helper';
+
+import PouchDB =  require('pouchdb-node');
 
 
 describe('subsystem/getImageSuggestions', () => {
 
     let datastore: Datastore;
 
-    const doc = { resource: { id: '1', identifier: 'One', category: 'Image', relations: {}, georeference: true }, project: undefined }
+    const doc = {
+        resource: { id: '1', identifier: 'One', category: 'Image', relations: {}, georeference: true },
+        project: undefined
+    };
 
     const query = {
         q: '',
@@ -18,12 +22,14 @@ describe('subsystem/getImageSuggestions', () => {
         limit: 1
     };
 
+
     beforeEach(async done => {
 
         datastore = (await createApp()).datastore;
         done();
     });
 
+    
     afterEach(done => new PouchDB('testdb').destroy().then(() => { done(); }), 5000);
 
 

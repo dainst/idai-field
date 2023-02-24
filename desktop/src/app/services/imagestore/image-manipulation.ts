@@ -24,7 +24,6 @@ export module ImageManipulation {
     }
 
 
-
     export async function getSize(buffer: Buffer): Promise<{ width: number, height: number }> {
 
         try {

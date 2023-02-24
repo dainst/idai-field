@@ -191,7 +191,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.add_user_as_project_member(@project_identifier, @project_identifier)
       end)
 
-    assert log =~ "User '#{@project_identifier}' has been set as member to '#{@project_identifier}'."
+    assert log =~
+             "User '#{@project_identifier}' has been set as member to '#{@project_identifier}'."
   end
 
   test "add_user_as_project_member/2 with unknown user should print warning" do
@@ -227,7 +228,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.remove_user_from_project(@project_identifier, @project_identifier)
       end)
 
-    assert log =~ "User '#{@project_identifier}' has been unset from all roles in '#{@project_identifier}'."
+    assert log =~
+             "User '#{@project_identifier}' has been unset from all roles in '#{@project_identifier}'."
   end
 
   test "remove_user_from_project/2 with unknown user should print warning" do

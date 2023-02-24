@@ -41,7 +41,11 @@ defmodule FieldHubWeb.ProjectCreateLive do
     {:noreply, evaluate_inputs(socket, identifier, password)}
   end
 
-  def handle_event("generate_password", _values, %{assigns: %{project_identifier: identifier}} = socket) do
+  def handle_event(
+        "generate_password",
+        _values,
+        %{assigns: %{project_identifier: identifier}} = socket
+      ) do
     {:noreply, evaluate_inputs(socket, identifier, CouchService.create_password())}
   end
 

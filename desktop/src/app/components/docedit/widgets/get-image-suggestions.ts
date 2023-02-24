@@ -13,9 +13,7 @@ export type Result = [Array<ImageDocument>, TotalCount];
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export async function getImageSuggestions(datastore: Datastore,
-                                          document: Document,
-                                          mode: 'depicts'|'layers',
+export async function getImageSuggestions(datastore: Datastore, document: Document, mode: 'depicts'|'layers',
                                           query_: Query): Promise<Either<ErrMsgs, Result>> {
 
     const query = update('constraints', {'project:exist': { value: 'KNOWN', subtract: true }}, query_);
@@ -52,11 +50,10 @@ export async function getImageSuggestions(datastore: Datastore,
             undefined,
             [
                resultDocuments as Array<ImageDocument>,
-               resultDocuments.length
+               result.totalCount
             ]
         ];
     } catch (errWithParams) {
-
         const msgs = [['Error in find with query', query]];
         if (errWithParams.length === 2) {
             msgs.push(['Error in find', errWithParams[1]]);

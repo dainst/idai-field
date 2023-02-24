@@ -137,12 +137,7 @@ export class ImagePickerComponent implements OnInit {
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
 
-        const result =
-            await getImageSuggestions(
-                this.datastore,
-                this.document,
-                this.mode,
-                this.getQuery());
+        const result = await getImageSuggestions(this.datastore, this.document, this.mode, this.getQuery());
 
         if (isOk(result)) {
             if (queryId === this.currentQueryId) {

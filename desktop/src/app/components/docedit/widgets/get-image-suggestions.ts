@@ -34,7 +34,7 @@ export async function getImageSuggestions(datastore: Datastore, document: Docume
     try {
         const result = await datastore.find(query);
 
-        const resultDocuments = mode === 'depicts'
+        const filteredDocuments: Array<Document> = mode === 'depicts'
             ? result.documents
             : result.documents
                 .filter(resultDoc => !resultDoc.resource
@@ -49,8 +49,8 @@ export async function getImageSuggestions(datastore: Datastore, document: Docume
         return [
             undefined,
             [
-               resultDocuments as Array<ImageDocument>,
-               result.totalCount
+               filteredDocuments as Array<ImageDocument>,
+               getTotalCount(result, filteredDocuments)
             ]
         ];
     } catch (errWithParams) {
@@ -60,4 +60,10 @@ export async function getImageSuggestions(datastore: Datastore, document: Docume
         }
         return [msgs, undefined];
     }
+}
+
+function getTotalCount(result: Datastore.FindResult, filteredDocuments: Array<Document>): number {
+
+    const difference: number = result.documents.length - filteredDocuments.length;
+    return result.totalCount - difference;
 }

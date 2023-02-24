@@ -156,7 +156,7 @@ defmodule FieldHub.Issues do
               # Image data completely missing for document uuid.
               %Issue{
                 type: :missing_original_image,
-                severity: :info,
+                severity: :warning,
                 data: issue_data
               }
 
@@ -164,7 +164,7 @@ defmodule FieldHub.Issues do
               # Only thumbnail present for document uuid.
               %Issue{
                 type: :missing_original_image,
-                severity: :info,
+                severity: :warning,
                 data: issue_data
               }
 
@@ -189,7 +189,7 @@ defmodule FieldHub.Issues do
                   # Original image files should not be smaller than thumbnails.
                   %Issue{
                     type: :image_variants_size,
-                    severity: :warning,
+                    severity: :info,
                     data:
                       Map.merge(
                         issue_data,

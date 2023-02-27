@@ -226,7 +226,12 @@ defmodule FieldHub.Project do
   """
   def check_project_authorization(project_identifier, user_name) do
     if user_name == Application.get_env(:field_hub, :couchdb_admin_name) do
-      :granted
+      case exists?(project_identifier) do
+        true ->
+          :granted
+        false ->
+          :unknown_project
+      end
     else
       CouchService.get_database_security(project_identifier)
       |> case do

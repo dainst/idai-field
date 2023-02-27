@@ -170,7 +170,7 @@
     "ajv": "^6.12.6",
     "codelyzer": "^5.1.2",
     "cross-var": "^1.1.0",
-    "electron": "23.0.0",
+    "electron": "23.1.1",
     "electron-builder": "23.6.0",
     "file-api": "0.10.4",
     "file-url": "2.0.2",

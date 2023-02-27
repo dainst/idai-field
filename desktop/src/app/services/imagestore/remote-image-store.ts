@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ImageVariant, RemoteImageStoreInterface, FileInfo } from 'idai-field-core';
+import { ImageVariant, RemoteImageStoreInterface, FileInfo, base64Encode } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
@@ -41,7 +41,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             data,
             headers: {
                 'Content-Type': 'image/x-www-form-urlencoded',
-                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
+                Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
         })
         .then((response) => {
@@ -75,7 +75,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             method: 'delete',
             url: address + '/files/' + project + '/' + uuid,
             headers: {
-                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
+                Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
         });
     }
@@ -115,7 +115,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             params: { types },
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
+                Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
         });
 
@@ -157,14 +157,11 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             responseType: 'arraybuffer',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
+                Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
         });
 
         return Buffer.from(response.data);
     }
 
-    public static base64Encode(input: string): string {
-        return Buffer.from(input).toString('base64')
-    }
 }

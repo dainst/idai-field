@@ -38,3 +38,9 @@ export const intoObj = <T>(keyName: string, valName: string) =>
         isDefined(item[keyName])
             ? (object[((item[keyName]) as any).toString()] = item[valName], object)
             : object;
+
+
+export const base64Encode = (input: string): string => {
+
+    return Buffer.from(input).toString('base64')
+}

@@ -4,6 +4,7 @@ import { ImageStore, IdGenerator, ImageVariant } from 'idai-field-core';
 import { ExpressServer } from '../../../../src/app/services/express-server';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
+import { RemoteImageStore } from '../../../../src/app/services/imagestore/remote-image-store';
 
 import schema from 'idai-field-core/api-schemas/files-list.json';
 
@@ -20,7 +21,7 @@ describe('ImageSyncService', () => {
   const localFilePath = process.cwd() + '/test/test-temp/';
   const expressServerFilePath = process.cwd() + '/test/test-temp-remote/';
   const testProjectIdentifier = 'test_tmp_project';
-  const password = 'pw';
+  const password = 'passwörd';
 
   let imageStore: ImageStore;
   let imageStoreExpressServer: ImageStore;
@@ -105,9 +106,9 @@ describe('ImageSyncService', () => {
       }
 
       const response = await request(expressMainApp)
-        .get('/files/test_tmp_project')
+        .get(`/files/${testProjectIdentifier}`)
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+        .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -138,9 +139,9 @@ describe('ImageSyncService', () => {
       }
 
       const response = await request(expressMainApp)
-        .get('/files/test_tmp_project')
+        .get(`/files/${testProjectIdentifier}`)
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+        .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -176,9 +177,9 @@ describe('ImageSyncService', () => {
       }
 
       const response = await request(expressMainApp)
-        .get('/files/test_tmp_project')
+        .get(`/files/${testProjectIdentifier}`)
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+        .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {
@@ -213,9 +214,9 @@ describe('ImageSyncService', () => {
       }
 
       const response = await request(expressMainApp)
-        .get('/files/test_tmp_project')
+        .get(`/files/${testProjectIdentifier}`)
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+        .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
         .expect(200);
 
       if (!await validate(response.body)) {

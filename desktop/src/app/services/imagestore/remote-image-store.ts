@@ -41,7 +41,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             data,
             headers: {
                 'Content-Type': 'image/x-www-form-urlencoded',
-                Authorization: `Basic ${btoa(project + ':' + password)}`
+                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
             }
         })
         .then((response) => {
@@ -75,7 +75,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             method: 'delete',
             url: address + '/files/' + project + '/' + uuid,
             headers: {
-                Authorization: `Basic ${btoa(project + ':' + password)}`
+                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
             }
         });
     }
@@ -115,7 +115,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             params: { types },
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Basic ${btoa(project + ':' + password)}`
+                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
             }
         });
 
@@ -157,10 +157,14 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             responseType: 'arraybuffer',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Basic ${btoa(project + ':' + password)}`
+                Authorization: `Basic ${RemoteImageStore.base64Encode(project + ':' + password)}`
             }
         });
 
         return Buffer.from(response.data);
+    }
+
+    public static base64Encode(input: string): string {
+        return Buffer.from(input).toString('base64')
     }
 }

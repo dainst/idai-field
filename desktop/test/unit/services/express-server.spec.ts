@@ -3,6 +3,7 @@ import { IdGenerator, PouchdbDatastore, ImageStore } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
+import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
 // Not explicitely exported by idai-field-core, because it is only used for tests.
 import schema from '../../../../core/api-schemas/files-list.json';
 
@@ -14,7 +15,7 @@ describe('ExpressServer', () => {
 
     const testFilePath = process.cwd() + '/test/test-temp/';
     const testProjectIdentifier = 'test_tmp_project';
-    const password = 'pw';
+    const password = 'passwörd';
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
@@ -101,7 +102,7 @@ describe('ExpressServer', () => {
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             // Body should be {}
@@ -121,7 +122,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=thumbnail_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
             done();
         } catch (e) {
@@ -136,7 +137,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=original_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
             done();
         } catch (e) {
@@ -152,7 +153,7 @@ describe('ExpressServer', () => {
                 .put(`/files/test_tmp_project/1?type=original_image`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(409);
             done();
         } catch (e) {
@@ -170,14 +171,14 @@ describe('ExpressServer', () => {
                     .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
-                    .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                    .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                     .expect(200);
             }
 
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             expect(Object.keys(response.body).length).toBe(2);
@@ -198,7 +199,7 @@ describe('ExpressServer', () => {
                     .put(`/files/test_tmp_project/${uuid}?type=thumbnail_image`)
                     .send(mockImage)
                     .set('Content-Type', 'image/x-www-form-urlencoded')
-                    .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                    .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                     .expect(200);
             }
 
@@ -206,13 +207,13 @@ describe('ExpressServer', () => {
                 .delete(`/files/test_tmp_project/${uuids[0]}`)
                 .send(mockImage)
                 .set('Content-Type', 'image/x-www-form-urlencoded')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             const response = await request(expressMainApp)
                 .get('/files/test_tmp_project')
                 .set('Content-Type', 'application/json')
-                .set('Authorization', `Basic ${btoa(testProjectIdentifier + ':' + password)}`)
+                .set('Authorization', `Basic ${RemoteImageStore.base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
 
             expect(Object.keys(response.body).length).toBe(3);

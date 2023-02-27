@@ -31,7 +31,7 @@ describe('ImageSyncService', () => {
     const syncTarget: SyncTarget = {
         // see desktop/test/hub-integration/docker-compose.yml
         address: 'http://localhost:4003',
-        password: 'pw',
+        password: 'passwörd',
         isSyncActive: true,
         fileSyncPreferences: [
             {

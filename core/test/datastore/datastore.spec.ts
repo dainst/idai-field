@@ -1,5 +1,8 @@
-import { CategoryConverter, createCategory, Datastore, doc, DocumentCache,
-    ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter } from '../../src/datastore/category-converter';
+import { Datastore } from '../../src/datastore/datastore';
+import { DocumentCache } from '../../src/datastore/document-cache';
+import { ProjectConfiguration } from '../../src/services/project-configuration';
+import { createCategory, doc } from '../test-helpers';
 
 
 /**

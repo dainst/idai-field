@@ -1,5 +1,7 @@
-import { DatastoreErrors, doc, PouchdbDatastore } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { DatastoreErrors } from '../../../src/datastore/datastore-errors';
+import { PouchdbDatastore } from '../../../src/datastore/pouchdb/pouchdb-datastore';
+import { Document } from '../../../src/model/document';
+import { doc } from '../../test-helpers';
 
 
 /**

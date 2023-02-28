@@ -6,7 +6,7 @@ describe('helpers', () => {
   
     it('isProjectDocument', () => {
 
-        const result = isProjectDocument({ resource: { id: 'project' }} as any);
+        const result = isProjectDocument({ resource: { id: 'project' } } as any);
         expect(result).toBeTruthy();
     });
 

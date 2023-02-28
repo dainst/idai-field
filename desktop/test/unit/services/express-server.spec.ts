@@ -3,7 +3,7 @@ import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode} from 'idai-fie
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
-// Not explicitely exported by idai-field-core, because it is only used for tests.
+// Not explicitly exported by idai-field-core, because it is only used for tests.
 import schema from '../../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
@@ -53,19 +53,21 @@ describe('ExpressServer', () => {
 
 
     // Re-initialize image store data for each test.
-    beforeEach(async (done) => {
+    beforeEach(async done => {
+
         await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
         done();
     });
 
 
-    afterEach(async (done) => {
+    afterEach(async done => {
+
         await imageStore.deleteData(testProjectIdentifier);
         done();
     });
 
 
-    afterAll(async (done) => {
+    afterAll(async done => {
 
         await pouchdbDatastore.destroyDb(testProjectIdentifier);
 
@@ -160,6 +162,7 @@ describe('ExpressServer', () => {
         }
     });
 
+
     it('/files/:project returns an index of previously stored images', async done => {
 
         try {
@@ -189,7 +192,8 @@ describe('ExpressServer', () => {
         }
     });
 
-    it('/files/:project returns previously deleted images marked as deleted', async (done) => {
+
+    it('/files/:project returns previously deleted images marked as deleted', async done => {
 
         try {
             const uuids = ['1', '2', '3'];

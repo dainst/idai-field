@@ -1,4 +1,4 @@
-import {Backup} from '../../../../src/app/components/backup/backup';
+import { Backup } from '../../../../src/app/components/backup/backup';
 
 import fs = require('fs');
 import rimraf = require('rimraf');

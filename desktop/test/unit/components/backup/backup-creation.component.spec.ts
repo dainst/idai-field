@@ -1,5 +1,7 @@
-import {BackupCreationComponent} from '../../../../src/app/components/backup/backup-creation.component';
+import { BackupCreationComponent } from '../../../../src/app/components/backup/backup-creation.component';
+
 import PouchDB = require('pouchdb-node');
+
 
 /**
  * @author Daniel de Oliviera
@@ -15,9 +17,6 @@ describe('BackupCreationComponent', () => {
     let backupProvider: any;
     let tabManager: any;
     let menuService: any;
-
-
-    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
 
 
     beforeEach(() => {
@@ -45,6 +44,9 @@ describe('BackupCreationComponent', () => {
         settingsService.getSettings.and.returnValue({ selectedProject: 'selectedproject' } as any);
         dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
     });
+
+
+    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
 
 
     it('create backup', async done => {

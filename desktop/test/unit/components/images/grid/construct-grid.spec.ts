@@ -1,4 +1,4 @@
-import {constructGrid} from '../../../../../src/app/components/image/grid/construct-grid';
+import { constructGrid } from '../../../../../src/app/components/image/grid/construct-grid';
 
 
 /**

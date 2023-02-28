@@ -1,9 +1,8 @@
-const fs = require('fs');
-
 import { ImageStore, ImageVariant } from 'idai-field-core';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
 
+const fs = require('fs');
 
 
 /**
@@ -18,7 +17,9 @@ describe('Imagestore', () => {
 
     let imageStore: ImageStore;
 
+
     beforeAll(async done => {
+
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
         await imageStore.init(testFilePath, testProjectIdentifier);
 
@@ -27,6 +28,7 @@ describe('Imagestore', () => {
 
 
     afterAll(async (done) => {
+
         fs.rmSync(testFilePath, { recursive: true });
         done();
     });

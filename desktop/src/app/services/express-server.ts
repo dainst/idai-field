@@ -6,17 +6,19 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
 const bodyParser = typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
-
 let PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+
 
 @Injectable()
 export class ExpressServer {
 
     private password: string;
-
     private allowLargeFileUploads: boolean;
-
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
+
+
+    constructor(private imagestore: ImageStore) {}
+
 
     public getPassword = () => this.password;
 
@@ -25,8 +27,6 @@ export class ExpressServer {
     public getAllowLargeFileUploads = () => this.allowLargeFileUploads;
 
     public setAllowLargeFileUploads = (allow: boolean) => this.allowLargeFileUploads = allow;
-
-    constructor(private imagestore: ImageStore) {}
 
     public getPouchDB = () => PouchDB;
 
@@ -104,8 +104,6 @@ export class ExpressServer {
                     res.status(500).send({ reason: 'Whoops?' });
                 }
             }
-
-
         });
 
 

@@ -132,7 +132,7 @@ describe('importDocuments', () => {
             context,
             helpers,
             { mergeMode: true, useIdentifiersInRelations: true }))(
-            [{ resource: { id: '1', relations: {} } } as any]);
+            [{ resource: { identifier: '123', id: '1', relations: {} } } as any]);
 
         expect(result.createDocuments.length).toBe(0);
         expect(result.updateDocuments.length).toBe(1);

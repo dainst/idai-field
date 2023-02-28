@@ -1,7 +1,9 @@
 import { identity } from 'tsfun';
+import { Resource } from 'idai-field-core';
 import { ImportErrors as E, ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
 import { buildImportDocuments } from '../../../../../src/app/components/import/import/import-documents';
 import { Settings } from '../../../../../src/app/services/settings/settings';
+import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
 
 
 /**
@@ -70,7 +72,7 @@ describe('importDocuments', () => {
 
         services = { validator };
 
-        const find  = (_: string) => Promise.resolve(undefined);
+        const find = (_: string) => Promise.resolve(undefined);
 
         const get = async resourceId => {
 
@@ -158,13 +160,38 @@ describe('importDocuments', () => {
 
     it('not well formed', async done => { // shows that err from default-import-calc gets propagated
 
-        validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});
+        validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]; });
 
         const [error, _] = await importFunction([
             { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
         ]);
 
         expect(error[0]).toEqual(ImportErrors.INVALID_CATEGORY);
+        done();
+    });
+
+
+    it('missing identifier', async done => {
+
+        validator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.MISSING_PROPERTY, Resource.IDENTIFIER]; });
+
+        helpers.find = (identifier: string) => {
+            if (!identifier) throw ['Find should not be called with undefined'];
+            Promise.resolve(undefined);
+        };
+
+        importFunction = buildImportDocuments(
+            services,
+            context,
+            helpers,
+            { mergeMode: false, useIdentifiersInRelations: true }
+        ); 
+
+        const [error, _] = await importFunction([
+            { resource: { category: 'Trench', relations: {} } } as any
+        ]);
+
+        expect(error[0]).toEqual(ValidationErrors.MISSING_PROPERTY);
         done();
     });
 

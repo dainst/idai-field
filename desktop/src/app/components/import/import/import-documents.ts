@@ -158,6 +158,7 @@ async function makeExistingDocumentsMap(find: Find,
     const lookup = {};
     for (const document of documents) {
         const identifier = document.resource[Resource.IDENTIFIER] as string; // not a FieldDocument yet
+        if (!identifier) continue;
         const found = await find(identifier);
         if (found) lookup[identifier] = found;
     }

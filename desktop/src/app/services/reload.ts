@@ -5,9 +5,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
- *
- *  We have to reload manually since protractor's selectors apparently aren't reliably working as they
- *  should after a reload. So we will do this by hand in the E2Es.
  */
 export const reload = () => {
 

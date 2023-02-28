@@ -112,9 +112,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
                   <%= key %>
                 </td>
                 <td>
-                  <pre>
-                    <%= inspect(value, pretty: true)%>
-                  </pre>
+                  <pre><%= inspect(value, pretty: true) %></pre>
                 </td>
               </tr>
             <% end %>

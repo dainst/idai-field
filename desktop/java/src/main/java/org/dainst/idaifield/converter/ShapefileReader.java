@@ -27,7 +27,10 @@ class ShapefileReader {
         List<Resource> resources = new ArrayList<>();
 
         try (FeatureIterator<SimpleFeature> features = getFeatureCollection(shapefilePath).features()) {
-            while (features.hasNext()) resources.add(createResource(features.next()));
+            while (features.hasNext()) {
+                Resource resource = createResource(features.next());
+                if (resource.getGeometry() != null) resources.add(resource);
+            }
         }
 
         return resources;
@@ -114,8 +117,10 @@ class ShapefileReader {
 
     private static void setGeometry(Resource resource, SimpleFeature feature) throws Exception {
 
-        resource.setGeometry(
-                GeometryConverter.convert((org.locationtech.jts.geom.Geometry) feature.getDefaultGeometry())
-        );
+        org.locationtech.jts.geom.Geometry geometry = (org.locationtech.jts.geom.Geometry) feature.getDefaultGeometry();
+
+        if (geometry != null) {
+            resource.setGeometry(GeometryConverter.convert(geometry));
+        }
     }
 }

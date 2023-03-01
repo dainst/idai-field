@@ -87,16 +87,27 @@ public class Datastore {
 
         Resource resource = new Resource();
         resource.setIdentifier(jsonResource.getString("identifier"));
-        resource.setCategory(jsonResource.getString("type"));
+        resource.setCategory(readCategory(jsonResource));
         if (jsonResource.has("shortDescription")) {
             resource.setShortDescription(createShortDescription(jsonResource.get("shortDescription")));
         }
-
 
         JSONObject jsonGeometry = jsonResource.getJSONObject("geometry");
         resource.setGeometry(createGeometry(jsonGeometry));
 
         return resource;
+    }
+
+
+    private static String readCategory(JSONObject jsonResource) {
+
+        if (jsonResource.has("category")) {
+            return jsonResource.getString("category");
+        } else if (jsonResource.has("type")) {
+            return jsonResource.getString("type");
+        } else {
+            return null;
+        }
     }
 
 

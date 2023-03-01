@@ -21,7 +21,8 @@ export module ShapefileExporter {
                 'shapefile-tool.jar',
                 getArguments(
                     settings.selectedProject, settings.hostPassword,
-                    projectDocument, outputFilePath, operationId)
+                    projectDocument, outputFilePath, operationId
+                )
             );
         } catch (err) {
             return Promise.reject(getErrorMsgWithParams(err));

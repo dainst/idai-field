@@ -61,6 +61,7 @@ const INITIALIZATION_MESSAGES = {
         'loading1': 'Progetto',
         'loading2': 'in caricamento...',
         'loadTestProject': 'Caricare progetto di prova',
+        'phase/processingImages': 'Le immagini vengono ottimizzate per la visualizzazione.\nQuesto processo viene eseguito una sola volta e può richiedere alcuni minuti.',
         'databaseError': 'Si è verificato un errore: non è stato possibile caricare il database del progetto.',
         'configurationError': 'Si è verificato un errore: non è stato possibile caricare la configurazione del progetto.',
         'fetchDocumentsError': 'Si è verificato un errore: le risorse del progetto non possono essere estratte dal database.',

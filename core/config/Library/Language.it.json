@@ -762,7 +762,7 @@
       }
     },
     "FeatureGroup": {
-      "label": "Unità Stratigrafica",
+      "label": "Gruppo di strutture",
       "fields": {
         "comparison": {
           "label": "Confronto(i)",
@@ -771,7 +771,7 @@
       }
     },
     "FeatureSegment": {
-      "label": "Unità Stratigrafica",
+      "label": "Segmento di struttura",
       "fields": {
         "comparison": {
           "label": "Confronto(i)",
@@ -780,6 +780,14 @@
         "hasDisturbance": {
           "label": "Disturbo",
           "description": "C'è un disturbo nei reperti?"
+        },
+        "featureSegmentBorders": {
+          "label": "Limite del segmento di struttura",
+          "description": "Determinazione dei limiti del segmento di struttura"
+        },
+        "featureSegmentForm": {
+          "label": "Forma del segmento di struttura",
+          "description": "Forma del segmento di struttura nella pianta o nella sezione: quale forma riconoscibile si può individuare?"
         }
       }
     },
@@ -1387,7 +1395,7 @@
       }
     },
     "FindCollection": {
-      "label": "Find collection",
+      "label": "Collezione di reperti",
       "fields": {
         "amount": {
           "label": "Numero (totale)"
@@ -1400,7 +1408,8 @@
           "description": "Peso in grammi"
         },
         "storagePlace": {
-          "label": "Luogo di conservazione"
+          "label": "Luogo di conservazione",
+          "description": "Luogo di conservazione della collezione di reperti"
         }
       }
     },

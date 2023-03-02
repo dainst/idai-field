@@ -198,6 +198,11 @@ defmodule FieldHub.TestHelper do
           )
       },
       %Issue{
+        type: :missing_image_copyright,
+        severity: :warning,
+        data: image_metadata
+      },
+      %Issue{
         data: %{
           documents: [
             %{

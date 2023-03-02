@@ -229,6 +229,7 @@ defmodule FieldHub.Project do
       case exists?(project_identifier) do
         true ->
           :granted
+
         false ->
           :unknown_project
       end

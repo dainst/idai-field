@@ -48,7 +48,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     ~H"""
     <div class="issue-content">
       <em>In general the original images are expected to be greater than their thumbnails.
-      For the following files this is not the case:</em>
+      For the following files this is not the case.</em>
       <ul>
         <%= for %{data: data} <- @issues do %>
           <li class="container">
@@ -57,6 +57,22 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
             <strong>
               <%= Sizeable.filesize(data.thumbnail_size) %> (thumbnail), <%= Sizeable.filesize(data.original_size) %> (original)
             </strong>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    """
+  end
+
+  def render(%{id: :missing_image_copyright} = assigns) do
+    ~H"""
+    <div class="issue-content">
+      <em>There are some images without copyright information and/or information who drafted them.</em>
+      <ul>
+        <%= for %{data: data} <- @issues do %>
+          <li class="container">
+            '<%= data.file_name %>' (<%= data.file_type %>),
+            database entry created by <%= data.created_by %> on <%= data.created %>.
           </li>
         <% end %>
       </ul>

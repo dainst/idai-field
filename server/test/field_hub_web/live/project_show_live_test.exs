@@ -111,6 +111,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     assert html =~ "No project document (1)"
     assert html =~ "Unexpected issue (1)"
     assert html =~ "Unresolved relation (1)"
+    assert html =~ "Images missing copyright information (1)"
     assert html =~ "unknown (1)"
     assert html =~ "unknown_without_data (1)"
   end
@@ -187,7 +188,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (3)"
+      assert html =~ "Issues (5)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do

@@ -106,7 +106,7 @@ defmodule FieldHub.Issues do
 
   @doc """
   Checks if all original images have been uploaded and compares thumbnail and original image file sizes (original images are
-  expected to be larger in general).
+  expected to be larger in general). Also evaluates if copyright was set for all images.
 
   __Parameters__
   - `project_identifier` the project's name.
@@ -128,88 +128,18 @@ defmodule FieldHub.Issues do
           }
         ]
 
-      file_store_data ->
+      file_index ->
         project_identifier
         |> CouchService.get_docs_by_category(
           ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_identifier)
         )
-        |> Stream.map(fn %{
-                           "created" => %{
-                             "user" => created_by,
-                             "date" => created
-                           },
-                           "resource" => %{
-                             "id" => uuid,
-                             "category" => category,
-                             "identifier" => file_name
-                           }
-                         } ->
-          issue_data = %{
-            uuid: uuid,
-            file_type: category,
-            file_name: file_name,
-            created_by: created_by,
-            created: created
-          }
-
-          file_store_data
-          |> Map.get(uuid)
-          |> case do
-            nil ->
-              # Image data completely missing for document uuid.
-              %Issue{
-                type: :missing_original_image,
-                severity: :warning,
-                data: issue_data
-              }
-
-            %{variants: [%{name: :thumbnail_image}]} ->
-              # Only thumbnail present for document uuid.
-              %Issue{
-                type: :missing_original_image,
-                severity: :warning,
-                data: issue_data
-              }
-
-            %{variants: [_, _] = variants} ->
-              # If two variants (thumbnail and original) are present, check their sizes.
-              thumbnail_size =
-                variants
-                |> Enum.find(fn %{name: variant_name} ->
-                  variant_name == :thumbnail_image
-                end)
-                |> Map.get(:size)
-
-              original_size =
-                variants
-                |> Enum.find(fn %{name: variant_name} ->
-                  variant_name == :original_image
-                end)
-                |> Map.get(:size)
-
-              case thumbnail_size do
-                val when val >= original_size ->
-                  # Original image files should not be smaller than thumbnails.
-                  %Issue{
-                    type: :image_variants_size,
-                    severity: :info,
-                    data:
-                      Map.merge(
-                        issue_data,
-                        %{original_size: original_size, thumbnail_size: thumbnail_size}
-                      )
-                  }
-
-                _ ->
-                  # Otherwise :ok.
-                  :ok
-              end
-
-            _ ->
-              # Only original image found is :ok.
-              :ok
-          end
+        |> Stream.map(fn image_document ->
+          [
+            compare_images_db_and_filestore(file_index, image_document),
+            evaluate_image_copyright(image_document)
+          ]
         end)
+        |> Enum.concat()
         |> Enum.reject(fn val ->
           case val do
             :ok -> true
@@ -217,6 +147,107 @@ defmodule FieldHub.Issues do
           end
         end)
     end
+  end
+
+  defp compare_images_db_and_filestore(file_store_data, image_document) do
+    issue_base_data = extract_image_metadata(image_document)
+
+    file_store_data
+    |> Map.get(issue_base_data.uuid)
+    |> case do
+      nil ->
+        # Image data completely missing for document uuid.
+        %Issue{
+          type: :missing_original_image,
+          severity: :warning,
+          data: issue_base_data
+        }
+
+      %{variants: [%{name: :thumbnail_image}]} ->
+        # Only thumbnail present for document uuid.
+        %Issue{
+          type: :missing_original_image,
+          severity: :warning,
+          data: issue_base_data
+        }
+
+      %{variants: [_, _] = variants} ->
+        # If two variants (thumbnail and original) are present, check their sizes.
+        thumbnail_size =
+          variants
+          |> Enum.find(fn %{name: variant_name} ->
+            variant_name == :thumbnail_image
+          end)
+          |> Map.get(:size)
+
+        original_size =
+          variants
+          |> Enum.find(fn %{name: variant_name} ->
+            variant_name == :original_image
+          end)
+          |> Map.get(:size)
+
+        case thumbnail_size do
+          val when val >= original_size ->
+            # Original image files should not be smaller than thumbnails.
+            %Issue{
+              type: :image_variants_size,
+              severity: :info,
+              data:
+                Map.merge(
+                  issue_base_data,
+                  %{original_size: original_size, thumbnail_size: thumbnail_size}
+                )
+            }
+
+          _ ->
+            # Otherwise :ok.
+            :ok
+        end
+
+      _ ->
+        # Only original image found is :ok.
+        :ok
+    end
+  end
+
+  defp evaluate_image_copyright(%{
+         "resource" => %{
+           "imageRights" => _image_rights,
+           "draughtsmen" => _draughtsmen
+         }
+       }) do
+    :ok
+  end
+
+  defp evaluate_image_copyright(doc) do
+    %Issue{
+      type: :missing_image_copyright,
+      severity: :warning,
+      data: extract_image_metadata(doc)
+    }
+  end
+
+  defp extract_image_metadata(
+         %{
+           "created" => %{
+             "user" => created_by,
+             "date" => created
+           },
+           "resource" => %{
+             "id" => uuid,
+             "category" => category,
+             "identifier" => file_name
+           }
+         } = _doc
+       ) do
+    %{
+      uuid: uuid,
+      file_type: category,
+      file_name: file_name,
+      created_by: created_by,
+      created: created
+    }
   end
 
   defp get_custom_image_categories(project_identifier) do

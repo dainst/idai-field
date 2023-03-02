@@ -9,6 +9,12 @@
       }
     }
   },
+  "ExcavationArea": {
+    "parent": "Operation",
+    "color": "#62d5f1",
+    "description": {},
+    "fields": {}
+  },
   "Glass": {
     "parent": "Find",
     "color": "#99CC33",

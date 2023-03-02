@@ -208,6 +208,10 @@
         }
       }
     },
+    "ExcavationArea": {
+      "label": "Excavation area",
+      "fields": {}
+    },
     "Glass": {
       "label": "Vetro",
       "fields": {

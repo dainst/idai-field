@@ -208,6 +208,10 @@
         }
       }
     },
+    "ExcavationArea": {
+      "label": "Untersuchungsfläche",
+      "fields": {}
+    },
     "Glass": {
       "label": "Glas",
       "fields": {

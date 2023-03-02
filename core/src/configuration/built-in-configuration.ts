@@ -236,6 +236,22 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        ExcavationArea: {
+            parent: 'Operation',
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry']
+                    }
+                ]
+            }
+        },
         Profile: {
             fields: {},
             minimalForm: {
@@ -936,7 +952,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Profile', 'Planum'],
-            range: ['Trench'],
+            range: ['Trench', 'ExcavationArea'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -969,7 +985,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Find:inherit', 'FindCollection:inherit', 'Inscription', 'Sample'],
-            range: ['Trench', 'Building', 'Survey'],
+            range: ['Trench', 'Building', 'Survey', 'ExcavationArea'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -977,7 +993,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Feature:inherit', 'FeatureGroup:inherit', 'FeatureSegment:inherit'],
-            range: ['Trench'],
+            range: ['Trench', 'ExcavationArea'],
             editable: false,
             visible: false,
             inputType: 'relation'

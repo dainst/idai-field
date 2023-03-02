@@ -276,6 +276,26 @@
         }
       ]
     },
+    "ExcavationArea:default": {
+      "categoryName": "ExcavationArea",
+      "creationDate": "2023",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["diary"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["dimensionVerticalExtent"]
+        }
+      ]
+    },
     "Glass:default": {
       "categoryName": "Glass",
       "creationDate": "2019",

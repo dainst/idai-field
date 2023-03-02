@@ -254,8 +254,33 @@ defmodule FieldHub.Project do
     end
   end
 
+  @doc """
+  Returns the documents for a list of UUIDs (matched against the documents `_id` values).
+
+  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: :not_found | :deleted}}`.
+
+  __Parameters__
+  - `project_identifier` the project's name.
+  - `uuids` the list of ids requested.
+  """
   def get_documents(project_identifier, uuids) do
-    FieldHub.CouchService.get_docs(project_identifier, uuids)
+    project_identifier
+    |> FieldHub.CouchService.get_docs(uuids)
+    |> then(fn %{body: body} -> body end)
+    |> Jason.decode!()
+    |> Map.get("rows")
+    |> Enum.map(fn row ->
+      case row do
+        %{"error" => "not_found", "key" => uuid} ->
+          {:error, %{uuid: uuid, reason: :not_found}}
+
+        %{"value" => %{"deleted" => true}, "key" => uuid} ->
+          {:error, %{uuid: uuid, reason: :deleted}}
+
+        %{"doc" => doc} ->
+          {:ok, doc}
+      end
+    end)
   end
 
   defp evaluate_database(project_identifier) do

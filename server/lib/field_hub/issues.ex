@@ -70,7 +70,7 @@ defmodule FieldHub.Issues do
   """
   def evaluate_project_document(project_identifier) do
     project_identifier
-    |> CouchService.get_docs(["project"])
+    |> Project.get_documents(["project"])
     |> case do
       [{:error, %{reason: :not_found}}] ->
         [
@@ -314,7 +314,7 @@ defmodule FieldHub.Issues do
           ids = Enum.map(docs, fn %{"_id" => id} -> id end)
 
           detailed_docs =
-            CouchService.get_docs(project_identifier, ids)
+            Project.get_documents(project_identifier, ids)
             |> Enum.map(fn {:ok, doc} ->
               doc
             end)

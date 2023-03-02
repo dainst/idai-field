@@ -19,7 +19,7 @@ defmodule FieldHub.ProjectTest do
 
   test "can create project with a given name" do
     assert %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} =
-      Project.create(@project)
+             Project.create(@project)
 
     assert %{database: :deleted, file_store: []} = Project.delete(@project)
   end
@@ -36,7 +36,7 @@ defmodule FieldHub.ProjectTest do
 
   test "check_project_authorization/2 with unknown project is reported" do
     assert :unknown_project = Project.check_project_authorization("unknown", @user_name)
-    assert :unknown_project = Project.check_project_authorization("unknown", @admin_name )
+    assert :unknown_project = Project.check_project_authorization("unknown", @admin_name)
   end
 
   describe "Test user manipulation -" do

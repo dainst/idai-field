@@ -9,6 +9,7 @@ defmodule FieldHub.ProjectTest do
   use ExUnit.Case
 
   @project "test"
+  @admin_name Application.compile_env(:field_hub, :couchdb_admin_name)
   @user_name "test_user"
   @user_password "test_password"
 
@@ -17,20 +18,25 @@ defmodule FieldHub.ProjectTest do
   end
 
   test "can create project with a given name" do
-    %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} =
+    assert %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} =
       Project.create(@project)
 
-    %{database: :deleted, file_store: []} = Project.delete(@project)
+    assert %{database: :deleted, file_store: []} = Project.delete(@project)
   end
 
   test "can not create project with invalid characters in name" do
-    :invalid_name = Project.create("Проект")
+    assert :invalid_name = Project.create("Проект")
 
-    %{database: :unknown_project, file_store: []} = Project.delete("Проект")
+    assert %{database: :unknown_project, file_store: []} = Project.delete("Проект")
   end
 
   test "evaluate_project/1 on unknown project returns the expected response" do
-    :unknown = Project.evaluate_project("unknown")
+    assert :unknown = Project.evaluate_project("unknown")
+  end
+
+  test "check_project_authorization/2 with unknown project is reported" do
+    assert :unknown_project = Project.check_project_authorization("unknown", @user_name)
+    assert :unknown_project = Project.check_project_authorization("unknown", @admin_name )
   end
 
   describe "Test user manipulation -" do

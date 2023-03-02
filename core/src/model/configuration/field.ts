@@ -26,6 +26,7 @@ export interface Field extends I18N.LabeledValue {
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
+    selectable?: boolean;               // defaults to true
     fulltextIndexed?: boolean;
     constraintIndexed?: boolean;
     defaultConstraintIndexed?: boolean;

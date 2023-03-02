@@ -40,10 +40,11 @@ export namespace FieldIndex {
 
     function createIndexSection(fields: Array<Field>): IndexSection {
 
-        return fields.reduce((section, field) => {
-            addToSection(field, section);
-            return section;
-        }, {});
+        return fields.filter(field => field.selectable)
+            .reduce((section, field) => {
+                addToSection(field, section);
+                return section;
+            }, {});
     }
 
 

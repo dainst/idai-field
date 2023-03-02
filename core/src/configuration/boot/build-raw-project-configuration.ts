@@ -190,6 +190,7 @@ function setDefaultFieldVisibility(field: TransientFieldDefinition) {
 
     if (field.visible === undefined) field.visible = true;
     if (field.editable === undefined) field.editable = true;
+    if (field.selectable === undefined) field.selectable = true;
 }
 
 

@@ -7,6 +7,7 @@ export interface BuiltInFieldDefinition extends BaseFieldDefinition {
     inputTypeOptions?: { validation?: { permissive?: true } };
     visible?: boolean;
     editable?: boolean;
+    selectable?: boolean;
     mandatory?: true;
     fixedInputType?: true;
     valuelistFromProjectField?: string;

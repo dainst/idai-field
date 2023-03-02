@@ -15,5 +15,6 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'fulltextIndexed',
     'creationDate',
     'createdBy',
-    'references'
+    'references',
+    'selectable'
 ];

@@ -334,6 +334,8 @@ defmodule FieldHub.Issues do
   Historically, unresolveable relations were created by accident while directly manipulating the database (basically: deleting documents
   not through the Field Desktop application, but directly in CouchDB/PouchDB).
 
+  Unresolveable relations can also be created by incomplete synchronisation.
+
   __Parameters__
   - `project_identifier` the project's name.
   """
@@ -346,7 +348,7 @@ defmodule FieldHub.Issues do
       ]
     }
 
-    relations =
+    uuid_relations_pairs =
       CouchService.get_find_query_stream(project_identifier, query)
       |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
         referenced_uuids =
@@ -360,17 +362,27 @@ defmodule FieldHub.Issues do
         {uuid, referenced_uuids}
       end)
 
-    all_uuids =
-      Enum.map(relations, fn {uuid, _relations} ->
+    all_existing_uuids =
+      Enum.map(uuid_relations_pairs, fn {uuid, _relations} ->
         uuid
       end)
 
-    Stream.map(relations, fn {uuid, current_relations} ->
-      case current_relations -- all_uuids do
+    all_referenced_uuids =
+      Enum.reduce(uuid_relations_pairs, [], fn ({_uuid, relations}, acc) ->
+        acc ++ relations
+      end)
+      |> Enum.uniq()
+
+    all_missing_uuids = all_referenced_uuids -- all_existing_uuids
+
+    uuid_relations_pairs
+    |> Stream.map(fn({uuid, locally_referenced}) ->
+      locally_referenced_not_missing = locally_referenced -- all_missing_uuids
+
+      case locally_referenced -- locally_referenced_not_missing do
         [] ->
           :ok
-
-        unresoved_relations ->
+        missing_but_referenced ->
           %Issue{
             type: :unresolved_relation,
             severity: :error,
@@ -381,7 +393,7 @@ defmodule FieldHub.Issues do
                 |> then(fn [ok: doc] ->
                   doc
                 end),
-              unresolved: unresoved_relations
+              unresolved: missing_but_referenced
             }
           }
       end

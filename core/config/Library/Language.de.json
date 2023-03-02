@@ -1247,6 +1247,34 @@
         }
       }
     },
+    "FindDrawing": {
+      "label": "Fundzeichnung",
+      "fields": {
+        "scale": {
+          "label": "Maßstab"
+        },
+        "sheetNumberFrom": {
+          "label": "Blattnummer (von)"
+        },
+        "sheetNumberTo": {
+          "label": "Blattnummer (bis)"
+        }
+      }
+    },
+    "PlanDrawing": {
+      "label": "Planzeichnung",
+      "fields": {
+        "scale": {
+          "label": "Maßstab"
+        },
+        "sheetNumberFrom": {
+          "label": "Blattnummer (von)"
+        },
+        "sheetNumberTo": {
+          "label": "Blattnummer (bis)"
+        }
+      }
+    },
     "Survey": {
       "label": "Survey-Areal",
       "fields": {

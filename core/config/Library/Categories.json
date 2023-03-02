@@ -1150,6 +1150,44 @@
       }
     }
   },
+  "PlanDrawing": {
+    "parent": "Image",
+    "description": {},
+    "fields": {
+      "scale": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-scale-default"
+      },
+      "sheetNumberFrom": {
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
+      },
+      "sheetNumberTo": {
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
+      }
+    }
+  },
+  "FindDrawing": {
+    "parent": "Image",
+    "description": {},
+    "fields": {
+      "scale": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "Drawing-scale-default"
+      },
+      "sheetNumberFrom": {
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
+      },
+      "sheetNumberTo": {
+        "inputType": "unsignedInt",
+        "constraintIndexed": true
+      }
+    }
+  },
   "Survey": {
     "parent": "Operation",
     "description": {},

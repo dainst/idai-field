@@ -14,6 +14,7 @@ defmodule FieldHub.IssuesTest do
   @project_doc File.read!("test/fixtures/documents/project.json")
   @configuration_doc File.read!("test/fixtures/documents/configuration.json")
   @custom_category_image File.read!("test/fixtures/documents/custom_category_image.json")
+  @copyright_image File.read!("test/fixtures/documents/copyright_image.json")
 
   setup %{} do
     # Run before each tests
@@ -300,6 +301,49 @@ defmodule FieldHub.IssuesTest do
                }
              }
            ] = issues
+  end
+
+  test "Image with valid copyright does not raise issue" do
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "PE07-So-07_Z001.jpg",
+                 file_type: "Drawing",
+                 uuid: "o25"
+               }
+             },
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "mapLayerTest2.png",
+                 file_type: "Image",
+                 uuid: "o26"
+               }
+             }
+           ] = Issues.evaluate_images(@project)
+
+    TestHelper.update_document(@project, Jason.decode!(@copyright_image))
+
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "mapLayerTest2.png",
+                 file_type: "Image",
+                 uuid: "o26"
+               }
+             }
+           ] = Issues.evaluate_images(@project)
   end
 
   test "missing thumbnail raises no issue" do

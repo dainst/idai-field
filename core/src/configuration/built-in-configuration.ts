@@ -593,7 +593,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
                         name: Groups.IDENTIFICATION,

@@ -97,6 +97,9 @@
     },
     "documentationUnit": {
       "label": "Documentation unit"
+    },
+    "webGisId": {
+      "label": "Web GIS ID"
     }
   },
   "categories": {

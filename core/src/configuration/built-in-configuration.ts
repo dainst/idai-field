@@ -120,6 +120,9 @@ export class BuiltInConfiguration {
         documentationUnit: {
             inputType: Field.InputType.SIMPLE_MULTIINPUT,
             selectable: false
+        },
+        webGisId: {
+            inputType: Field.InputType.UNSIGNEDINT
         }
     };
     

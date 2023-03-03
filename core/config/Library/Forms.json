@@ -377,7 +377,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "staff", "epsgId"]
+          "fields": ["description", "staff", "campaigns", "coordinateReferenceSystem", "epsgId"]
         }
       ]
     },

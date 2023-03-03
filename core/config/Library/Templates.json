@@ -537,7 +537,7 @@
     "configuration": {
       "forms": {
         "Project:archaeoDox": {
-          "hidden": [],
+          "hidden": ["campaigns", "coordinateReferenceSystem"],
           "fields": {}
         },
         "Place:archaeoDox": {

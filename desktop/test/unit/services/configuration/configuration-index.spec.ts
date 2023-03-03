@@ -89,6 +89,19 @@ describe('ConfigurationIndex', () => {
                             de: 'Erstes Feld',
                             en: 'First field'
                         }
+                    },
+                    field2: {
+                        name: 'field2',
+                        selectable: false,
+                        inputType: Field.InputType.TEXT as Field.InputType,
+                        label: {
+                            de: 'Zweites Feld',
+                            en: 'Second field'
+                        },
+                        defaultLabel: {
+                            de: 'Zweites Feld',
+                            en: 'Second field'
+                        }
                     }
                 }
             }
@@ -103,6 +116,9 @@ describe('ConfigurationIndex', () => {
         expect(index.findFields('Feld', 'A')[0].name).toEqual('field1');
         expect(index.findFields('First', 'A')[0].name).toEqual('field1');
         expect(index.findFields('field', 'A')[0].name).toEqual('field1');
+        expect(index.findFields('field2', 'A').length).toBe(0);
+        expect(index.findFields('Zweites', 'A').length).toBe(0);
+        expect(index.findFields('Second', 'A').length).toBe(0);
         expect(index.findFields('Abc', 'A').length).toBe(0);
     });
 

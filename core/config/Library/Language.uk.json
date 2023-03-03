@@ -105,6 +105,9 @@
     },
     "damage": {
       "label": "Пошкодження в процентах"
+    },
+    "documentationUnit": {
+      "label": "Documentation unit"
     }
   },
   "categories": {

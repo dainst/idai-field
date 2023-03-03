@@ -116,6 +116,10 @@ export class BuiltInConfiguration {
         },
         damage: {
             inputType: Field.InputType.FLOAT
+        },
+        documentationUnit: {
+            inputType: Field.InputType.SIMPLE_MULTIINPUT,
+            selectable: false
         }
     };
     

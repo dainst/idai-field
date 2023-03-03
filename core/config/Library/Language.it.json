@@ -105,6 +105,9 @@
     },
     "damage": {
       "label": "Danni in percentuale"
+    },
+    "documentationUnit": {
+      "label": "Documentation unit"
     }
   },
   "categories": {

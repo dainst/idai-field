@@ -94,6 +94,9 @@
     },
     "damage": {
       "label": "Damage in percent"
+    },
+    "documentationUnit": {
+      "label": "Documentation unit"
     }
   },
   "categories": {

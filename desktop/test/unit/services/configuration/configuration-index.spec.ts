@@ -79,6 +79,7 @@ describe('ConfigurationIndex', () => {
                 fields: {
                     field1: {
                         name: 'field1',
+                        selectable: true,
                         inputType: Field.InputType.TEXT as Field.InputType,
                         label: {
                             de: 'Erstes Feld',

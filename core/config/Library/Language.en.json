@@ -103,6 +103,9 @@
     },
     "shortDescriptionAddendum": {
       "label": "Short description (Addendum)"
+    },
+    "phase": {
+      "label": "Phase"
     }
   },
   "categories": {

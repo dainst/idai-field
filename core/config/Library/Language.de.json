@@ -114,6 +114,9 @@
     },
     "shortDescriptionAddendum": {
       "label": "Kurzbeschreibung (Ergänzung)"
+    },
+    "phase": {
+      "label": "Phase"
     }
   },
   "categories": {

@@ -126,6 +126,9 @@ export class BuiltInConfiguration {
         },
         shortDescriptionAddendum: {
             inputType: Field.InputType.INPUT
+        },
+        phase: {
+            inputType: Field.InputType.INPUT
         }
     };
     

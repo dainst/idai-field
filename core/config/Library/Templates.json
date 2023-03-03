@@ -555,7 +555,8 @@
         "FeatureGroup:archaeoDox": {
           "hidden": [],
           "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh"
+            "shortDescription": "Feature-shortDescription-amh",
+            "phase": "phase-amh"
           },
           "fields": {
             "shortDescription": {
@@ -566,7 +567,8 @@
         "Feature:archaeoDox": {
           "hidden": [],
           "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh"
+            "shortDescription": "Feature-shortDescription-amh",
+            "phase": "phase-amh"
           },
           "fields": {
             "shortDescription": {

@@ -111,6 +111,9 @@
     },
     "webGisId": {
       "label": "Web-GIS-ID"
+    },
+    "shortDescriptionAddendum": {
+      "label": "Kurzbeschreibung (Ergänzung)"
     }
   },
   "categories": {

@@ -123,6 +123,9 @@ export class BuiltInConfiguration {
         },
         webGisId: {
             inputType: Field.InputType.UNSIGNEDINT
+        },
+        shortDescriptionAddendum: {
+            inputType: Field.InputType.INPUT
         }
     };
     

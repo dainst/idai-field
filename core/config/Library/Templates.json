@@ -554,64 +554,23 @@
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
-          "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh",
-            "phase": "phase-amh",
-            "period": "period-amh"
-          },
-          "fields": {
-            "shortDescription": {
-              "inputType": "dropdown"
-            }
-          }
+          "fields": {}
         },
         "Feature:archaeoDox": {
           "hidden": [],
-          "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh",
-            "phase": "phase-amh",
-            "period": "period-amh"
-          },
-          "fields": {
-            "shortDescription": {
-              "inputType": "dropdown"
-            }
-          }
+          "fields": {}
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
-          "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh",
-            "period": "period-amh"
-          },
-          "fields": {
-            "shortDescription": {
-              "inputType": "dropdown"
-            }
-          }
+          "fields": {}
         },
         "Find:archaeoDox": {
           "hidden": [],
-          "valuelists": {
-            "shortDescription": "Find-shortDescription-amh",
-            "period": "period-amh"
-          },
-          "fields": {
-            "shortDescription": {
-              "inputType": "dropdown"
-            }
-          }
+          "fields": {}
         },
         "Sample:archaeoDox": {
           "hidden": [],
-          "valuelists": {
-            "shortDescription": "Sample-shortDescription-amh"
-          },
-          "fields": {
-            "shortDescription": {
-              "inputType": "dropdown"
-            }
-          }
+          "fields": {}
         },
         "Image:archaeoDox": {
           "hidden": [],

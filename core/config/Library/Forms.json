@@ -595,6 +595,16 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
+      "valuelists": {
+        "shortDescription": "Feature-shortDescription-amh",
+        "phase": "phase-amh",
+        "period": "period-amh"
+      },
+      "fields": {
+        "shortDescription": {
+          "inputType": "dropdown"
+        }
+      },
       "groups": [
         {
           "name": "stem",
@@ -650,6 +660,16 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
+      "valuelists": {
+        "shortDescription": "Feature-shortDescription-amh",
+        "phase": "phase-amh",
+        "period": "period-amh"
+      },
+      "fields": {
+        "shortDescription": {
+          "inputType": "dropdown"
+        }
+      },
       "groups": [
         {
           "name": "stem",
@@ -704,6 +724,15 @@
       "description": {},
       "createdBy": "",
       "creationDate": "",
+      "valuelists": {
+        "shortDescription": "Feature-shortDescription-amh",
+        "period": "period-amh"
+      },
+      "fields": {
+        "shortDescription": {
+          "inputType": "dropdown"
+        }
+      },
       "groups": [
         {
           "name": "stem",
@@ -1059,6 +1088,15 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Find",
+      "valuelists": {
+        "shortDescription": "Find-shortDescription-amh",
+        "period": "period-amh"
+      },
+      "fields": {
+        "shortDescription": {
+          "inputType": "dropdown"
+        }
+      },
       "groups": [
         {
           "name": "stem",
@@ -1239,6 +1277,14 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Sample",
+      "valuelists": {
+        "shortDescription": "Sample-shortDescription-amh"
+      },
+      "fields": {
+        "shortDescription": {
+          "inputType": "dropdown"
+        }
+      },
       "groups": [
         {
           "name": "stem",

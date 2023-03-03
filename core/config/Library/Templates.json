@@ -556,7 +556,8 @@
           "hidden": [],
           "valuelists": {
             "shortDescription": "Feature-shortDescription-amh",
-            "phase": "phase-amh"
+            "phase": "phase-amh",
+            "period": "period-amh"
           },
           "fields": {
             "shortDescription": {
@@ -568,7 +569,8 @@
           "hidden": [],
           "valuelists": {
             "shortDescription": "Feature-shortDescription-amh",
-            "phase": "phase-amh"
+            "phase": "phase-amh",
+            "period": "period-amh"
           },
           "fields": {
             "shortDescription": {
@@ -579,7 +581,8 @@
         "FeatureSegment:archaeoDox": {
           "hidden": [],
           "valuelists": {
-            "shortDescription": "Feature-shortDescription-amh"
+            "shortDescription": "Feature-shortDescription-amh",
+            "period": "period-amh"
           },
           "fields": {
             "shortDescription": {
@@ -589,11 +592,26 @@
         },
         "Find:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "valuelists": {
+            "shortDescription": "Find-shortDescription-amh",
+            "period": "period-amh"
+          },
+          "fields": {
+            "shortDescription": {
+              "inputType": "dropdown"
+            }
+          }
         },
         "Sample:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "valuelists": {
+            "shortDescription": "Sample-shortDescription-amh"
+          },
+          "fields": {
+            "shortDescription": {
+              "inputType": "dropdown"
+            }
+          }
         },
         "Image:archaeoDox": {
           "hidden": [],

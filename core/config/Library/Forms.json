@@ -536,7 +536,7 @@
         },
         {
           "name": "properties",
-          "fields": ["webGisId"]
+          "fields": ["webGisId", "gazId"]
         },
         {
           "name": "position",

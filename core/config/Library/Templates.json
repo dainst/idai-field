@@ -541,7 +541,7 @@
           "fields": {}
         },
         "Place:archaeoDox": {
-          "hidden": [],
+          "hidden": ["gazId"],
           "fields": {}
         },
         "Operation:archaeoDox": {

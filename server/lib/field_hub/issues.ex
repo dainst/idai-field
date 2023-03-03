@@ -70,7 +70,7 @@ defmodule FieldHub.Issues do
   """
   def evaluate_project_document(project_identifier) do
     project_identifier
-    |> CouchService.get_docs(["project"])
+    |> Project.get_documents(["project"])
     |> case do
       [{:error, %{reason: :not_found}}] ->
         [
@@ -106,7 +106,7 @@ defmodule FieldHub.Issues do
 
   @doc """
   Checks if all original images have been uploaded and compares thumbnail and original image file sizes (original images are
-  expected to be larger in general).
+  expected to be larger in general). Also evaluates if copyright was set for all images.
 
   __Parameters__
   - `project_identifier` the project's name.
@@ -128,88 +128,18 @@ defmodule FieldHub.Issues do
           }
         ]
 
-      file_store_data ->
+      file_index ->
         project_identifier
         |> CouchService.get_docs_by_category(
           ["Image", "Photo", "Drawing"] ++ get_custom_image_categories(project_identifier)
         )
-        |> Stream.map(fn %{
-                           "created" => %{
-                             "user" => created_by,
-                             "date" => created
-                           },
-                           "resource" => %{
-                             "id" => uuid,
-                             "category" => category,
-                             "identifier" => file_name
-                           }
-                         } ->
-          issue_data = %{
-            uuid: uuid,
-            file_type: category,
-            file_name: file_name,
-            created_by: created_by,
-            created: created
-          }
-
-          file_store_data
-          |> Map.get(uuid)
-          |> case do
-            nil ->
-              # Image data completely missing for document uuid.
-              %Issue{
-                type: :missing_original_image,
-                severity: :warning,
-                data: issue_data
-              }
-
-            %{variants: [%{name: :thumbnail_image}]} ->
-              # Only thumbnail present for document uuid.
-              %Issue{
-                type: :missing_original_image,
-                severity: :warning,
-                data: issue_data
-              }
-
-            %{variants: [_, _] = variants} ->
-              # If two variants (thumbnail and original) are present, check their sizes.
-              thumbnail_size =
-                variants
-                |> Enum.find(fn %{name: variant_name} ->
-                  variant_name == :thumbnail_image
-                end)
-                |> Map.get(:size)
-
-              original_size =
-                variants
-                |> Enum.find(fn %{name: variant_name} ->
-                  variant_name == :original_image
-                end)
-                |> Map.get(:size)
-
-              case thumbnail_size do
-                val when val >= original_size ->
-                  # Original image files should not be smaller than thumbnails.
-                  %Issue{
-                    type: :image_variants_size,
-                    severity: :info,
-                    data:
-                      Map.merge(
-                        issue_data,
-                        %{original_size: original_size, thumbnail_size: thumbnail_size}
-                      )
-                  }
-
-                _ ->
-                  # Otherwise :ok.
-                  :ok
-              end
-
-            _ ->
-              # Only original image found is :ok.
-              :ok
-          end
+        |> Stream.map(fn image_document ->
+          [
+            compare_images_db_and_filestore(file_index, image_document),
+            evaluate_image_copyright(image_document)
+          ]
         end)
+        |> Enum.concat()
         |> Enum.reject(fn val ->
           case val do
             :ok -> true
@@ -217,6 +147,107 @@ defmodule FieldHub.Issues do
           end
         end)
     end
+  end
+
+  defp compare_images_db_and_filestore(file_store_data, image_document) do
+    issue_base_data = extract_image_metadata(image_document)
+
+    file_store_data
+    |> Map.get(issue_base_data.uuid)
+    |> case do
+      nil ->
+        # Image data completely missing for document uuid.
+        %Issue{
+          type: :missing_original_image,
+          severity: :warning,
+          data: issue_base_data
+        }
+
+      %{variants: [%{name: :thumbnail_image}]} ->
+        # Only thumbnail present for document uuid.
+        %Issue{
+          type: :missing_original_image,
+          severity: :warning,
+          data: issue_base_data
+        }
+
+      %{variants: [_, _] = variants} ->
+        # If two variants (thumbnail and original) are present, check their sizes.
+        thumbnail_size =
+          variants
+          |> Enum.find(fn %{name: variant_name} ->
+            variant_name == :thumbnail_image
+          end)
+          |> Map.get(:size)
+
+        original_size =
+          variants
+          |> Enum.find(fn %{name: variant_name} ->
+            variant_name == :original_image
+          end)
+          |> Map.get(:size)
+
+        case thumbnail_size do
+          val when val >= original_size ->
+            # Original image files should not be smaller than thumbnails.
+            %Issue{
+              type: :image_variants_size,
+              severity: :info,
+              data:
+                Map.merge(
+                  issue_base_data,
+                  %{original_size: original_size, thumbnail_size: thumbnail_size}
+                )
+            }
+
+          _ ->
+            # Otherwise :ok.
+            :ok
+        end
+
+      _ ->
+        # Only original image found is :ok.
+        :ok
+    end
+  end
+
+  defp evaluate_image_copyright(%{
+         "resource" => %{
+           "imageRights" => _image_rights,
+           "draughtsmen" => _draughtsmen
+         }
+       }) do
+    :ok
+  end
+
+  defp evaluate_image_copyright(doc) do
+    %Issue{
+      type: :missing_image_copyright,
+      severity: :warning,
+      data: extract_image_metadata(doc)
+    }
+  end
+
+  defp extract_image_metadata(
+         %{
+           "created" => %{
+             "user" => created_by,
+             "date" => created
+           },
+           "resource" => %{
+             "id" => uuid,
+             "category" => category,
+             "identifier" => file_name
+           }
+         } = _doc
+       ) do
+    %{
+      uuid: uuid,
+      file_type: category,
+      file_name: file_name,
+      created_by: created_by,
+      created: created
+    }
   end
 
   defp get_custom_image_categories(project_identifier) do
@@ -283,7 +314,7 @@ defmodule FieldHub.Issues do
           ids = Enum.map(docs, fn %{"_id" => id} -> id end)
 
           detailed_docs =
-            CouchService.get_docs(project_identifier, ids)
+            Project.get_documents(project_identifier, ids)
             |> Enum.map(fn {:ok, doc} ->
               doc
             end)
@@ -303,6 +334,8 @@ defmodule FieldHub.Issues do
   Historically, unresolveable relations were created by accident while directly manipulating the database (basically: deleting documents
   not through the Field Desktop application, but directly in CouchDB/PouchDB).
 
+  Unresolveable relations can also be created by incomplete synchronisation.
+
   __Parameters__
   - `project_identifier` the project's name.
   """
@@ -315,7 +348,7 @@ defmodule FieldHub.Issues do
       ]
     }
 
-    relations =
+    uuid_relations_pairs =
       CouchService.get_find_query_stream(project_identifier, query)
       |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
         referenced_uuids =
@@ -329,17 +362,27 @@ defmodule FieldHub.Issues do
         {uuid, referenced_uuids}
       end)
 
-    all_uuids =
-      Enum.map(relations, fn {uuid, _relations} ->
+    all_existing_uuids =
+      Enum.map(uuid_relations_pairs, fn {uuid, _relations} ->
         uuid
       end)
 
-    Stream.map(relations, fn {uuid, current_relations} ->
-      case current_relations -- all_uuids do
+    all_referenced_uuids =
+      Enum.reduce(uuid_relations_pairs, [], fn ({_uuid, relations}, acc) ->
+        acc ++ relations
+      end)
+      |> Enum.uniq()
+
+    all_missing_uuids = all_referenced_uuids -- all_existing_uuids
+
+    uuid_relations_pairs
+    |> Stream.map(fn({uuid, locally_referenced}) ->
+      locally_referenced_not_missing = locally_referenced -- all_missing_uuids
+
+      case locally_referenced -- locally_referenced_not_missing do
         [] ->
           :ok
-
-        unresoved_relations ->
+        missing_but_referenced ->
           %Issue{
             type: :unresolved_relation,
             severity: :error,
@@ -350,7 +393,7 @@ defmodule FieldHub.Issues do
                 |> then(fn [ok: doc] ->
                   doc
                 end),
-              unresolved: unresoved_relations
+              unresolved: missing_but_referenced
             }
           }
       end

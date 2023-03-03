@@ -1,0 +1,53 @@
+{
+    "_id": "o25",
+    "resource": {
+      "id": "o25",
+      "identifier": "PE07-So-07_Z001.jpg",
+      "shortDescription": {
+        "de": "Kartenhintergrund 1",
+        "en": "Map layer 1",
+        "it": "Immagine di sfondo 1",
+        "uk": "Підоснова 1"
+      },
+      "originalFilename": "PE07-So-07_Z001.jpg",
+      "height": 2423,
+      "width": 3513,
+      "relations": {
+        "isMapLayerOf": [
+          "project"
+        ]
+      },
+      "georeference": {
+        "bottomLeftCoordinates": [
+          39.1411810096,
+          27.1892609283
+        ],
+        "topLeftCoordinates": [
+          39.1412672328,
+          27.1892609283
+        ],
+        "topRightCoordinates": [
+          39.1412672328,
+          27.1893859555
+        ]
+      },
+      "type": "Drawing",
+      "imageRights": {
+        "de": "Simon Hohl",
+        "en": "Simon Hohl"
+      },
+      "draughtsmen": [
+        "Fabian Riebschläger"
+      ]
+    },
+    "created": {
+      "user": "sample_data",
+      "date": "2022-11-08T08:01:08.265Z"
+    },
+    "modified": [
+      {
+        "user": "sample_data",
+        "date": "2022-11-08T08:01:08.265Z"
+      }
+    ]
+  }

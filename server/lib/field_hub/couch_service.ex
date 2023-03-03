@@ -330,48 +330,29 @@ defmodule FieldHub.CouchService do
   end
 
   @doc """
-  Returns the documents for a list of UUIDs (matched against the documents `_id` values).
-
-  Returns a list, for each requested UUID either with an element `{:ok, document}` or `{:error, %{uuid: uuid, reason: :not_found | :deleted}}`.
+  Returns the result of a `_all_docs` CouchDB query for the provided list of ids.
 
   See also https://docs.couchdb.org/en/stable/api/database/bulk-api.html#post--db-_all_docs.
 
   __Parameters__
   - `project_identifier` the project's name.
-  - `uuids` the list of ids requested.
+  - `ids` the list of ids requested.
   """
-  def get_docs(project_identifier, uuids) do
+  def get_docs(project_identifier, ids) do
     # TODO: Maybe implement this also with Stream.resource/3 like the _find endpoint to support an arbitrary length of uuids without
     # flooding memory by loading all documents at once.
     body =
       %{
-        keys: uuids,
+        keys: ids,
         include_docs: true
       }
       |> Jason.encode!()
 
-    %{body: body} =
-      HTTPoison.post!(
-        "#{base_url()}/#{project_identifier}/_all_docs",
-        body,
-        headers()
-      )
-
-    body
-    |> Jason.decode!()
-    |> Map.get("rows")
-    |> Enum.map(fn row ->
-      case row do
-        %{"error" => "not_found", "key" => uuid} ->
-          {:error, %{uuid: uuid, reason: :not_found}}
-
-        %{"value" => %{"deleted" => true}, "key" => uuid} ->
-          {:error, %{uuid: uuid, reason: :deleted}}
-
-        %{"doc" => doc} ->
-          {:ok, doc}
-      end
-    end)
+    HTTPoison.post!(
+      "#{base_url()}/#{project_identifier}/_all_docs",
+      body,
+      headers()
+    )
   end
 
   @doc """

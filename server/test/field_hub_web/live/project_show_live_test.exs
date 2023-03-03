@@ -10,6 +10,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
   }
 
   alias FieldHub.{
+    Project,
     CouchService,
     Issues,
     User,
@@ -111,6 +112,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     assert html =~ "No project document (1)"
     assert html =~ "Unexpected issue (1)"
     assert html =~ "Unresolved relation (1)"
+    assert html =~ "Images missing copyright information (1)"
     assert html =~ "unknown (1)"
     assert html =~ "unknown_without_data (1)"
   end
@@ -187,7 +189,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (3)"
+      assert html =~ "Issues (5)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do
@@ -246,6 +248,76 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
       html = render(view)
       assert not (html =~ "<h2>Password change</h2>")
+    end
+
+    test "project document data is displayed in overview", %{conn: conn} do
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      # These are the current defaults in the mock project based on the Desktop applications `test` project.
+      assert html =~ "No supervisor found in project document"
+      assert html =~ "No contact data found in project document"
+      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+    end
+
+    test "missing project document is handled in overview", %{conn: conn} do
+      TestHelper.delete_document(@project, "project")
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      assert html =~ "No supervisor found in project document"
+      assert html =~ "No contact data found in project document"
+      assert html =~ "No staff names found in project document"
+    end
+
+    test "project supervisor is displayed in overview", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn(resource) ->
+          Map.put(resource, "projectSupervisor", "Ms. Supervisor")
+        end))
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      assert html =~ "<td>Supervisor</td><td>\nMs. Supervisor\n</td>"
+    end
+
+    test "project contact is displayed in overview", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn(resource) ->
+          resource
+          |> Map.put("contactPerson", "Mr. Contact")
+          |> Map.put("contactMail", "mr.contact@dainst.de")
+        end))
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      assert html =~ "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
+    end
+
+    test "project staff is displayed in overview", %{conn: conn} do
+
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      html = render(view)
+
+      # These are the current defaults in the mock project based on the Desktop applications `test` project.
+      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
     end
   end
 

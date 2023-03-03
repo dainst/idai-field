@@ -14,6 +14,7 @@ defmodule FieldHub.IssuesTest do
   @project_doc File.read!("test/fixtures/documents/project.json")
   @configuration_doc File.read!("test/fixtures/documents/configuration.json")
   @custom_category_image File.read!("test/fixtures/documents/custom_category_image.json")
+  @copyright_image File.read!("test/fixtures/documents/copyright_image.json")
 
   setup %{} do
     # Run before each tests
@@ -29,25 +30,57 @@ defmodule FieldHub.IssuesTest do
   end
 
   test "can evaluate issues for complete project" do
-    assert [] = Issues.evaluate_all(@project)
+    # Currently, the default "test" project in the Desktop client does not set copyright for images. Because
+    # that Desktop project is the basis for this test, it currently raises two issues
+    # instantly.
+    #
+    # That is also the reason why most other tests apply a filter to the evaluated issues.
+    #
+    # See also https://github.com/dainst/idai-field/issues/131
+    # Once this issue is closed, project used for these tests should be updated (server/test/fixtures/complete_project)
+    # and the following tests simplified again.
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: _
+             },
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: _
+             }
+           ] = Issues.evaluate_all(@project)
   end
 
   test "missing project document creates multiple issues" do
     TestHelper.delete_document(@project, "project")
 
+    issues =
+      @project
+      |> Issues.evaluate_all()
+      |> Enum.filter(fn %Issue{type: type} ->
+        case type do
+          :unresolved_relation ->
+            true
+
+          _ ->
+            false
+        end
+      end)
+
     assert [
              %FieldHub.Issues.Issue{
-               data: %{unresolved: ["project"], doc: %{"_id" => "o26"}},
+               data: %{unresolved: ["project"], doc: %{"_id" => "o25"}},
                severity: :error,
                type: :unresolved_relation
              },
              %FieldHub.Issues.Issue{
-               type: :unresolved_relation,
+               data: %{unresolved: ["project"], doc: %{"_id" => "o26"}},
                severity: :error,
-               data: %{unresolved: ["project"], doc: %{"_id" => "o25"}}
-             },
-             %FieldHub.Issues.Issue{type: :no_project_document, severity: :error, data: %{}}
-           ] = Issues.evaluate_all(@project) |> Issues.sort()
+               type: :unresolved_relation
+             }
+           ] = issues
   end
 
   test "empty list of default map layers raises issue" do
@@ -175,6 +208,19 @@ defmodule FieldHub.IssuesTest do
     File.rm!("#{root_path}/#{@project}/original_images/o25")
     File.rm!("#{root_path}/#{@project}/thumbnail_images/o25")
 
+    issues =
+      @project
+      |> Issues.evaluate_images()
+      |> Enum.filter(fn %{type: type} ->
+        case type do
+          :missing_original_image ->
+            true
+
+          _ ->
+            false
+        end
+      end)
+
     assert [
              %FieldHub.Issues.Issue{
                data: %{
@@ -187,7 +233,7 @@ defmodule FieldHub.IssuesTest do
                severity: :warning,
                type: :missing_original_image
              }
-           ] = Issues.evaluate_images(@project)
+           ] = issues
   end
 
   test "missing image raises issue even if thumbnail is present" do
@@ -197,6 +243,19 @@ defmodule FieldHub.IssuesTest do
 
     assert File.exists?("#{root_path}/#{@project}/thumbnail_images/o25")
 
+    issues =
+      @project
+      |> Issues.evaluate_images()
+      |> Enum.filter(fn %{type: type} ->
+        case type do
+          :missing_original_image ->
+            true
+
+          _ ->
+            false
+        end
+      end)
+
     assert [
              %FieldHub.Issues.Issue{
                data: %{
@@ -209,12 +268,25 @@ defmodule FieldHub.IssuesTest do
                severity: :warning,
                type: :missing_original_image
              }
-           ] = Issues.evaluate_images(@project)
+           ] = issues
   end
 
   test "missing original image of custom project category raises issue" do
     TestHelper.create_document(@project, Jason.decode!(@configuration_doc))
     TestHelper.create_document(@project, Jason.decode!(@custom_category_image))
+
+    issues =
+      @project
+      |> Issues.evaluate_images()
+      |> Enum.filter(fn %{type: type} ->
+        case type do
+          :missing_original_image ->
+            true
+
+          _ ->
+            false
+        end
+      end)
 
     assert [
              %FieldHub.Issues.Issue{
@@ -228,6 +300,49 @@ defmodule FieldHub.IssuesTest do
                  uuid: "25c6f27b-7078-449b-80c1-d765fedbfdb2"
                }
              }
+           ] = issues
+  end
+
+  test "Image with valid copyright does not raise issue" do
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "PE07-So-07_Z001.jpg",
+                 file_type: "Drawing",
+                 uuid: "o25"
+               }
+             },
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "mapLayerTest2.png",
+                 file_type: "Image",
+                 uuid: "o26"
+               }
+             }
+           ] = Issues.evaluate_images(@project)
+
+    TestHelper.update_document(@project, Jason.decode!(@copyright_image))
+
+    assert [
+             %FieldHub.Issues.Issue{
+               type: :missing_image_copyright,
+               severity: :warning,
+               data: %{
+                 created: _,
+                 created_by: "sample_data",
+                 file_name: "mapLayerTest2.png",
+                 file_type: "Image",
+                 uuid: "o26"
+               }
+             }
            ] = Issues.evaluate_images(@project)
   end
 
@@ -238,7 +353,20 @@ defmodule FieldHub.IssuesTest do
 
     assert File.exists?("#{root_path}/#{@project}/original_images/o25")
 
-    assert [] = Issues.evaluate_images(@project)
+    issues =
+      @project
+      |> Issues.evaluate_images()
+      |> Enum.filter(fn %{type: type} ->
+        case type do
+          :missing_original_image ->
+            true
+
+          _ ->
+            false
+        end
+      end)
+
+    assert [] = issues
   end
 
   test "original and thumbnail image of same size raises issue" do
@@ -250,6 +378,19 @@ defmodule FieldHub.IssuesTest do
       "#{root_path}/#{@project}/thumbnail_images/o25",
       "#{root_path}/#{@project}/original_images/o25"
     )
+
+    issues =
+      @project
+      |> Issues.evaluate_images()
+      |> Enum.filter(fn %{type: type} ->
+        case type do
+          :image_variants_size ->
+            true
+
+          _ ->
+            false
+        end
+      end)
 
     assert [
              %FieldHub.Issues.Issue{
@@ -265,7 +406,7 @@ defmodule FieldHub.IssuesTest do
                severity: :info,
                type: :image_variants_size
              }
-           ] = Issues.evaluate_images(@project)
+           ] = issues
   end
 
   test "sort_issues_by_decreasing_serverity/1" do

@@ -57,17 +57,88 @@ defmodule FieldHub.CouchServiceTest do
   end
 
   test "get_docs/2 returns a project's documents with the given UUIDs" do
-    assert [
-             {:ok, %{"_id" => "o25"}},
-             {:ok, %{"_id" => "o26"}}
-           ] = CouchService.get_docs(@project, ["o25", "o26"])
+    %HTTPoison.Response{status_code: 200, body: body} =
+      CouchService.get_docs(@project, ["o25", "o26"])
+
+    assert %{
+             "rows" => [
+               %{
+                 "id" => "o25",
+                 "doc" => %{
+                   "_id" => "o25",
+                   "_rev" => _,
+                   "created" => %{
+                     "date" => _,
+                     "user" => "sample_data"
+                   },
+                   "modified" => [
+                     %{"date" => _, "user" => "sample_data"}
+                   ],
+                   "resource" => %{
+                     "georeference" => _,
+                     "height" => 2423,
+                     "id" => "o25",
+                     "identifier" => "PE07-So-07_Z001.jpg",
+                     "originalFilename" => "PE07-So-07_Z001.jpg",
+                     "relations" => %{"isMapLayerOf" => ["project"]},
+                     "shortDescription" => %{
+                       "de" => "Kartenhintergrund 1",
+                       "en" => "Map layer 1",
+                       "it" => "Immagine di sfondo 1",
+                       "uk" => "Підоснова 1"
+                     },
+                     "type" => "Drawing",
+                     "width" => 3513
+                   }
+                 }
+               },
+               %{
+                 "id" => "o26",
+                 "doc" => %{
+                   "_id" => "o26",
+                   "_rev" => _,
+                   "created" => %{
+                     "date" => _,
+                     "user" => "sample_data"
+                   },
+                   "modified" => [
+                     %{"date" => _, "user" => "sample_data"}
+                   ],
+                   "resource" => %{
+                     "georeference" => _,
+                     "height" => 782,
+                     "id" => "o26",
+                     "identifier" => "mapLayerTest2.png",
+                     "originalFilename" => "mapLayerTest2.png",
+                     "relations" => %{"isMapLayerOf" => ["project"]},
+                     "shortDescription" => %{
+                       "de" => "Kartenhintergrund 2",
+                       "en" => "Map layer 2",
+                       "it" => "Immagine di sfondo 2",
+                       "uk" => "Підоснова 2"
+                     },
+                     "type" => "Image",
+                     "width" => 748
+                   }
+                 }
+               }
+             ]
+           } = Jason.decode!(body)
   end
 
   test "get_docs/2 returns error for unknown uuids" do
-    assert [
-             {:ok, %{"_id" => "o25"}},
-             {:error, %{reason: :not_found, uuid: "unknown"}}
-           ] = CouchService.get_docs(@project, ["o25", "unknown"])
+    %HTTPoison.Response{status_code: 200, body: body} =
+      CouchService.get_docs(@project, ["o25", "unknown"])
+
+    assert %{
+             "rows" => [
+               %{
+                 "id" => "o25",
+                 "doc" => _
+               },
+               %{"error" => "not_found", "key" => "unknown"}
+             ]
+           } = Jason.decode!(body)
   end
 
   test "get_docs_by_category/2 returns a project's documents matching the given types" do

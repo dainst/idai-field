@@ -1593,9 +1593,7 @@
         "valuelistId": "Sample-soilProperties-amh"
       },
       "storagePlace": {
-        "inputType": "radio",
-        "constraintIndexed": true,
-        "valuelistId": "Find-storagePlace-default"
+        "inputType": "input"
       }
     }
   },

@@ -554,15 +554,36 @@
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "valuelists": {
+            "shortDescription": "Feature-shortDescription-amh"
+          },
+          "fields": {
+            "shortDescription": {
+              "inputType": "dropdown"
+            }
+          }
         },
         "Feature:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "valuelists": {
+            "shortDescription": "Feature-shortDescription-amh"
+          },
+          "fields": {
+            "shortDescription": {
+              "inputType": "dropdown"
+            }
+          }
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "valuelists": {
+            "shortDescription": "Feature-shortDescription-amh"
+          },
+          "fields": {
+            "shortDescription": {
+              "inputType": "dropdown"
+            }
+          }
         },
         "Find:archaeoDox": {
           "hidden": [],

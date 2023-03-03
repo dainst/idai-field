@@ -1141,6 +1141,12 @@
         },
         "sampleType": {
           "label": "Sample type"
+        },
+        "soilProperties": {
+          "label": "Soil properties"
+        },
+        "storagePlace": {
+          "label": "Storage place"
         }
       }
     },
@@ -1329,15 +1335,21 @@
     "Photo": {
       "label": "Photo",
       "fields": {
-        "originalType": {
-          "label": "Original type",
-          "description": "Original format of the image; in case of digitalized images the original analogous format"
+        "viewingDirection": {
+          "label": "Viewing direction"
+        },
+        "originalFormat": {
+          "label": "Original format"
         }
       }
     },
     "Profile": {
       "label": "Profile",
-      "fields": {}
+      "fields": {
+        "viewingDirection": {
+          "label": "Viewing direction"
+        }
+      }
     },
     "Metal": {
       "label": "Metal",

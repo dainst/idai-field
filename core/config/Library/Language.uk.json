@@ -1237,6 +1237,12 @@
         "sampleType": {
           "label": "Вид проби",
           "description": "Який зразок/ яка проба береться? Які обстеження необхідно провести?"
+        },
+        "soilProperties": {
+          "label": "Soil properties"
+        },
+        "storagePlace": {
+          "label": "Місце збереження"
         }
       }
     },
@@ -1455,15 +1461,21 @@
     "Photo": {
       "label": "Фотографія",
       "fields": {
-        "originalType": {
-          "label": "Тип",
-          "description": "Оригінальний формат зображення; у випадку цифрових копій, оригінальний аналоговий формат"
+        "viewingDirection": {
+          "label": "Viewing direction"
+        },
+        "originalFormat": {
+          "label": "Original format"
         }
       }
     },
     "Profile": {
       "label": "Профіль",
-      "fields": {}
+      "fields": {
+        "viewingDirection": {
+          "label": "Viewing direction"
+        }
+      }
     },
     "Metal": {
       "label": "Метал",

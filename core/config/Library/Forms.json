@@ -32,7 +32,6 @@
       "creationDate": "2019",
       "description": {},
       "createdBy": "",
-      "valuelists": {},
       "groups": [
         {
           "name": "stem",
@@ -296,6 +295,18 @@
         }
       ]
     },
+    "ExcavationArea:archaeoDox": {
+      "categoryName": "ExcavationArea",
+      "creationDate": "2023",
+      "description": {},
+      "createdBy": "",
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["webGisId"]
+        }
+      ]
+    },
     "Glass:default": {
       "categoryName": "Glass",
       "creationDate": "2019",
@@ -351,6 +362,22 @@
           "fields": ["description", "institution", "projectSupervisor", "contactPerson",
             "contactMail", "staff", "campaigns", "projectURI", "externalReference", "bibliographicReferences",
             "license", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"]
+        }
+      ]
+    },
+    "Project:archaeoDox": {
+      "categoryName": "Project",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["category", "shortName", "shortDescription"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "staff", "epsgId"]
         }
       ]
     },
@@ -451,6 +478,26 @@
         }
       ]
     },
+    "Operation:archaeoDox": {
+      "categoryName": "Operation",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "documentationUnit"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry"]
+        }
+      ]
+    },
     "Place:default": {
       "categoryName": "Place",
       "description": {},
@@ -474,6 +521,26 @@
         {
           "name": "time",
           "fields": ["dating"]
+        }
+      ]
+    },
+    "Place:archaeoDox": {
+      "categoryName": "Place",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription"]
+        },
+        {
+          "name": "properties",
+          "fields": ["webGisId"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry"]
         }
       ]
     },
@@ -523,6 +590,36 @@
         }
       ]
     },
+    "Feature:archaeoDox": {
+      "categoryName": "Feature",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+            "processor", "date", "diary", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "featureForm", "featureBorders", "comparison"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating", "phase", "isAfter", "isBefore", "isContemporaryWith"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy",
+            "fills", "isFilledBy"]
+        }
+      ]
+    },
     "FeatureGroup:default": {
       "categoryName": "FeatureGroup",
       "description": {},
@@ -552,6 +649,31 @@
         }
       ]
     },
+    "FeatureGroup:archaeoDox": {
+      "categoryName": "FeatureGroup",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+            "processor", "date", "diary", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "comparison"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating", "phase"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn"]
+        }
+      ]
+    },
     "FeatureSegment:default": {
       "categoryName": "FeatureSegment",
       "description": {},
@@ -578,6 +700,31 @@
         {
           "name": "time",
           "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "FeatureSegment:archaeoDox": {
+      "categoryName": "FeatureSegment",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "processor",
+            "date", "diary", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "featureSegmentForm", "featureSegmentBorders", "comparison"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn"]
         }
       ]
     },
@@ -632,6 +779,22 @@
         {
           "name": "properties",
           "fields": ["description", "height", "width", "literature", "imageRights"]
+        }
+      ]
+    },
+    "Image:archaeoDox": {
+      "categoryName": "Image",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "height", "width"]
         }
       ]
     },
@@ -789,6 +952,30 @@
         }
       ]
     },
+    "FindDrawing:archaeoDox": {
+      "categoryName": "FindDrawing",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["scale", "sheetNumberFrom", "sheetNumberTo"]
+        }
+      ]
+    },
+    "PlanDrawing:archaeoDox": {
+      "categoryName": "PlanDrawing",
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["scale", "sheetNumberFrom", "sheetNumberTo"]
+        }
+      ]
+    },
     "Survey:default": {
       "categoryName": "Survey",
       "description": {},
@@ -871,6 +1058,31 @@
         }
       ]
     },
+    "Find:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Find",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+            "processor", "date", "isSameAs"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "amount", "weight"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry"]
+        }
+      ]
+    },
     "FindCollection:default": {
       "description": {},
       "createdBy": "",
@@ -917,6 +1129,18 @@
       "creationDate": "",
       "categoryName": "Photo",
       "groups": []
+    },
+    "Photo:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Photo",
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["viewingDirection", "originalFormat"]
+        }
+      ]
     },
     "Metal:default": {
       "description": {},
@@ -1014,6 +1238,27 @@
         }
       ]
     },
+    "Sample:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Sample",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+            "processor", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "soilProperties", "weight", "storagePlace", "labNumber"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry"]
+        }
+      ]
+    },
     "TypeCatalog:default": {
       "description": {},
       "createdBy": "",
@@ -1083,6 +1328,26 @@
         }
       ]
     },
+    "Profile:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Profile",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["viewingDirection"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent"]
+        }
+      ]
+    },
     "Planum:default": {
       "description": {},
       "createdBy": "",
@@ -1109,6 +1374,22 @@
         {
           "name": "time",
           "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Planum:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Planum",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date", "diary"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent"]
         }
       ]
     }

@@ -70125,7 +70125,7 @@
     "creationDate": "2023-01-10",
     "description": {}
   },
-  "viewingDirection-amh": {
+  "viewingDirection-default": {
     "values": {
       "N": {
         "label": {
@@ -70190,7 +70190,7 @@
       "NW"
     ]
   },
-  "Photo-mediaFormat-amh": {
+  "Photo-originalFormat-default": {
     "values": {
       "Digital": {
         "label": {

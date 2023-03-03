@@ -524,5 +524,96 @@
         "Type"
       ]
     }
+  },
+  "archaeoDox": {
+    "author": "Archäologisches Museum Hamburg",
+    "label": {
+      "de": "ArchaeoDox",
+      "en": "ArchaeoDox",
+      "it": "ArchaeoDox",
+      "uk": "ArchaeoDox"
+    },
+    "description": {},
+    "configuration": {
+      "forms": {
+        "Project:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Place:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Operation:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "ExcavationArea:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureGroup:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Feature:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureSegment:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Find:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Sample:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Image:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Photo:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "PlanDrawing:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FindDrawing:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Planum:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Profile:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        }
+      },
+      "order": [
+        "Project",
+        "Place",
+        "Operation",
+        "ExcavationArea",
+        "FeatureGroup",
+        "Feature",
+        "FeatureSegment",
+        "Find",
+        "Sample",
+        "Image",
+        "Photo",
+        "PlanDrawing",
+        "FindDrawing",
+        "Planum",
+        "Profile"
+      ]
+    }
   }
 }

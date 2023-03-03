@@ -1237,6 +1237,12 @@
         "sampleType": {
           "label": "Art der Probe",
           "description": "Welche Probe wird genommen? Welche Untersuchungen sollen vorgenommen werden?"
+        },
+        "soilProperties": {
+          "label": "Bodeneigenschaften"
+        },
+        "storagePlace": {
+          "label": "Aufbewahrungsort"
         }
       }
     },
@@ -1484,15 +1490,21 @@
     "Photo": {
       "label": "Foto",
       "fields": {
-        "originalType": {
-          "label": "Vorlagenart",
-          "description": "Ursprungsformat des Bildes; bei Digitalisaten ursprüngliches analoges Format"
+        "viewingDirection": {
+          "label": "Blickrichtung"
+        },
+        "originalFormat": {
+          "label": "Originalformat"
         }
       }
     },
     "Profile": {
       "label": "Profil",
-      "fields": {}
+      "fields": {
+        "viewingDirection": {
+          "label": "Blickrichtung"
+        }
+      }
     },
     "Metal": {
       "label": "Metall",

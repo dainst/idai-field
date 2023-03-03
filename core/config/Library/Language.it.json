@@ -1237,6 +1237,12 @@
         "sampleType": {
           "label": "Tipo di campione",
           "description": "Quale campione verrà prelevato? Quali sono le analisi da effettuare?"
+        },
+        "soilProperties": {
+          "label": "Soil properties"
+        },
+        "storagePlace": {
+          "label": "Luogo di conservazione"
         }
       }
     },
@@ -1455,15 +1461,21 @@
     "Photo": {
       "label": "Foto",
       "fields": {
-        "originalType": {
-          "label": "Formato originale",
-          "description": "Formato originale dell'immagine; nel caso di digitalizzazioni, indicare il formato analogico di origine"
+        "viewingDirection": {
+          "label": "Viewing direction"
+        },
+        "originalFormat": {
+          "label": "Formato originale"
         }
       }
     },
     "Profile": {
       "label": "Sezione",
-      "fields": {}
+      "fields": {
+        "viewingDirection": {
+          "label": "Viewing direction"
+        }
+      }
     },
     "Metal": {
       "label": "Metallo",

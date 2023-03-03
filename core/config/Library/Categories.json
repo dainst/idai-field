@@ -1397,7 +1397,18 @@
   "Photo": {
     "parent": "Image",
     "description": {},
-    "fields": {}
+    "fields": {
+      "viewingDirection": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "viewingDirection-default"
+      },
+      "originalFormat": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Photo-originalFormat-default"
+      }
+    }
   },
   "Metal": {
     "parent": "Find",
@@ -1574,6 +1585,17 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sample-sampleType-default"
+      },
+      "soilProperties": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "selectable": false,
+        "valuelistId": "Sample-soilProperties-amh"
+      },
+      "storagePlace": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Find-storagePlace-default"
       }
     }
   },
@@ -1590,6 +1612,17 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "damages-default"
+      }
+    }
+  },
+  "Profile": {
+    "description": {},
+    "fields": {
+      "viewingDirection": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "selectable": false,
+        "valuelistId": "viewingDirection-default"
       }
     }
   }

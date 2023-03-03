@@ -21,7 +21,7 @@
         <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+                <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="input-type-colon">:</span>
                 <span>{{getInputTypeLabel()}}</span>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">

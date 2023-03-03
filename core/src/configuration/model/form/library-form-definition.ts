@@ -1,4 +1,3 @@
-import { Valuelists } from '../../../model';
 import { I18N, Name } from '../../../tools';
 import { ConfigurationErrors } from '../../boot/configuration-errors';
 import { BaseFormDefinition, BaseGroupDefinition } from './base-form-definition';

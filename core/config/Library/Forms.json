@@ -606,10 +606,6 @@
           "fields": ["description", "featureForm", "featureBorders", "comparison"]
         },
         {
-          "name": "dimension",
-          "fields": ["area", "dimensionLength", "dimensionWidth"]
-        },
-        {
           "name": "time",
           "fields": ["period", "dating", "phase", "isAfter", "isBefore", "isContemporaryWith"]
         },

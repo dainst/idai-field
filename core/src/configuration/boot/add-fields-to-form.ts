@@ -30,7 +30,14 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
         return fields;
     }, clonedForm.fields ?? {});
 
-    if (form.source === 'custom') applyCustomChanges(clonedForm, form, parentForm);
+    if (parentForm) {
+        if (!clonedForm.valuelists) clonedForm.valuelists = {};
+        for (let fieldName of Object.keys(parentForm.valuelists ?? {})) {
+            clonedForm.valuelists[fieldName] = parentForm.valuelists[fieldName];
+        }
+    }
+
+    applyFormChanges(clonedForm, form, parentForm);
 
     return clonedForm;
 }
@@ -87,32 +94,32 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
 }
 
 
-function applyCustomChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
-                            parentForm?: CustomFormDefinition) {
+function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
+                          parentForm?: CustomFormDefinition) {
 
     if (parentForm?.fields) {
         Object.keys(parentForm.fields).forEach(fieldName => {
-            applyCustomFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName], clonedForm);
+            applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
         });
     }
 
     if (form.fields) {
         Object.keys(form.fields).forEach(fieldName => {
-            applyCustomFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName], clonedForm);
+            applyFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName]);
         });
     }
 }
 
 
-function applyCustomFieldChanges(field: TransientFieldDefinition, customFieldDefinition: CustomFieldDefinition, form: TransientFormDefinition) {
+function applyFieldChanges(field: TransientFieldDefinition, changedField: CustomFieldDefinition) {
 
-    if (!field || !customFieldDefinition) return;
+    if (!field || !changedField) return;
 
-    if (customFieldDefinition.inputType) {
-        field.inputType = customFieldDefinition.inputType as Field.InputType;
+    if (changedField.inputType) {
+        field.inputType = changedField.inputType as Field.InputType;
     }
 
-    if (customFieldDefinition.constraintIndexed !== undefined) {
-        field.constraintIndexed = customFieldDefinition.constraintIndexed;
+    if (changedField.constraintIndexed !== undefined) {
+        field.constraintIndexed = changedField.constraintIndexed;
     }
 }

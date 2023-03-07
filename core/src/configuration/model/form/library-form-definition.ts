@@ -1,5 +1,7 @@
+import { Map } from 'tsfun';
 import { I18N, Name } from '../../../tools';
 import { ConfigurationErrors } from '../../boot/configuration-errors';
+import { CustomFieldDefinition } from '../field/custom-field-definition';
 import { BaseFormDefinition, BaseGroupDefinition } from './base-form-definition';
 
 
@@ -13,6 +15,7 @@ export interface LibraryFormDefinition extends BaseFormDefinition {
     description: I18N.String,
     createdBy: string,
     creationDate: string;
+    fields?: Map<CustomFieldDefinition>;
     groups: Array<BaseGroupDefinition>;
 }
 

@@ -172,7 +172,7 @@ function processForms(validateFields: any,
 function setDefaultConstraintIndexed(categories:  Map<TransientCategoryDefinition>, builtInFields: Map<Field>,
                                      commonFields: Map<Field>) {
 
-    iterateOverFields(categories, (categoryName, category, fieldName, field) => {
+    iterateOverFields(categories, (_, __, ___, field) => {
         field.defaultConstraintIndexed = field.constraintIndexed === true;
     });
 
@@ -197,7 +197,6 @@ function setDefaultFieldVisibility(field: TransientFieldDefinition) {
 function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> {
 
     iterateOverFields(forms, (_, form: TransientFormDefinition, fieldName, field) => {
-
         if (form.valuelists && form.valuelists[fieldName]) {
             field.valuelistId = form.valuelists[fieldName];
         }

@@ -56,15 +56,13 @@ function handleDirectExtension(customForm: CustomFormDefinition,
                                relations: Array<Relation>,
                                parentForm?: CustomFormDefinition): TransientFormDefinition {
 
-    const clonedCustomForm: TransientFormDefinition = parentForm
-        ? inheritValuelists(customForm, parentForm) as TransientFormDefinition
-        : clone(customForm) as TransientFormDefinition;
+    const clonedCustomForm: TransientFormDefinition
+        = inheritValuelists(customForm, parentForm, extendedForm) as TransientFormDefinition;
     
     clonedCustomForm.categoryName = extendedForm.categoryName;
     
     const result = addFieldsToForm(
-        clonedCustomForm, categories, builtInFields, commonFields, relations, parentForm,
-        extendedForm
+        clonedCustomForm, categories, builtInFields, commonFields, relations, parentForm, extendedForm
     );
 
     if (parentForm) result.hidden = getMergedHiddenArray(result, parentForm);
@@ -181,16 +179,23 @@ function getParentCategoryName(customForm: CustomFormDefinition, customFormName:
 }
 
 
-function inheritValuelists(childForm: CustomFormDefinition,
-                           parentForm: CustomFormDefinition): CustomFormDefinition {
-
-    if (!parentForm.valuelists) return childForm;
+function inheritValuelists(childForm: CustomFormDefinition, parentForm?: CustomFormDefinition,
+                           extendedForm?: TransientFormDefinition): CustomFormDefinition {
 
     const clonedChildForm = clone(childForm);
     if (!clonedChildForm.valuelists) clonedChildForm.valuelists = {};
+    
+    const extendedFormValuelists = extendedForm?.valuelists ?? {};
+    const parentFormValuelists = parentForm?.valuelists ?? {};
 
-    Object.keys(parentForm.valuelists).forEach(fieldName => {
-        clonedChildForm.valuelists[fieldName] = parentForm.valuelists[fieldName];
+    Object.keys(extendedFormValuelists).forEach(fieldName => {
+        if (!clonedChildForm.valuelists[fieldName]) {
+            clonedChildForm.valuelists[fieldName] = extendedFormValuelists[fieldName];
+        }
+    });
+
+    Object.keys(parentFormValuelists).forEach(fieldName => {
+        clonedChildForm.valuelists[fieldName] = parentFormValuelists[fieldName];
     });
 
     return clonedChildForm;

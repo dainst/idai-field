@@ -35,7 +35,10 @@ export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
     return flow(forms,
         map(form => setGroups(form, Object.values(forms), selectedForms)),
         filter(isDefined),
-        map(form => addFieldsToForm(form, categories, builtInFields, commonFields, relations))
+        map(form => addFieldsToForm(
+            form, categories, builtInFields, commonFields, relations,
+            getParentForm(form, Object.values(forms), selectedForms)
+        ))
     );
 }
 

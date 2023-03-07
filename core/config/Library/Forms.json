@@ -598,11 +598,33 @@
       "valuelists": {
         "shortDescription": "Feature-shortDescription-amh",
         "phase": "phase-amh",
-        "period": "period-amh"
+        "period": "period-amh",
+        "archaeoDox:distinguishingCriterium": "Layer-distinguishingCriteria-default",
+        "archaeoDox:soilType": "Layer-soilType-default",
+        "archaeoDox:consistency": "Layer-consistency-default"
       },
       "fields": {
         "shortDescription": {
           "inputType": "dropdown"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "inputType": "dropdown"
+        },
+        "archaeoDox:isNatural": {
+          "inputType": "boolean",
+          "constraintIndexed": true
+        },
+        "archaeoDox:soilType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "archaeoDox:consistency": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "inputType": "boolean",
+          "constraintIndexed": true
         }
       },
       "groups": [
@@ -613,7 +635,8 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "featureForm", "featureBorders", "comparison"]
+          "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium", "archaeoDox:isNatural",
+            "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
         },
         {
           "name": "time",
@@ -1090,11 +1113,21 @@
       "categoryName": "Find",
       "valuelists": {
         "shortDescription": "Find-shortDescription-amh",
-        "period": "period-amh"
+        "period": "period-amh",
+        "archaeoDox:material": "Find-material-amh",
+        "archaeoDox:typeOfWare": "Find-typeOfWare-amh"
       },
       "fields": {
         "shortDescription": {
           "inputType": "dropdown"
+        },
+        "archaeoDox:typeOfWare": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "archaeoDox:material": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
         }
       },
       "groups": [
@@ -1105,7 +1138,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "amount", "weight"]
+          "fields": ["description", "archaeoDox:material", "archaeoDox:typeOfWare", "amount", "weight"]
         },
         {
           "name": "time",

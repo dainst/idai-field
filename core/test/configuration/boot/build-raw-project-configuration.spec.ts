@@ -1044,7 +1044,7 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('ignore attempts to overwrite fields in library', () => {
+    it('ignore attempts to overwrite fields in library categories', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1087,6 +1087,80 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('input');
         expect(result['A'].groups[0].fields[1].inputType).toBe('text');
+    });
+
+
+    it('allow overwriting inputType & constraintIndexed in library forms', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: { inputType: 'input', constraintIndexed: true }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
+                }
+            },
+            B: {
+                parent: 'A',
+                fields: {},
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }]
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'text', constraintIndexed: true }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aField', 'aCommon'] }],
+                fields: {
+                    aField: {
+                        inputType: 'boolean',
+                        constraintIndexed: false
+                    },
+                    aCommon: {
+                        inputType: 'boolean',
+                        constraintIndexed: false
+                    }
+                },
+                valuelists: {},
+                createdBy: '',
+                creationDate: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            },
+            B: {
+                fields: {}
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            commonFields
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toBe('boolean');
+        expect(result['A'].groups[0].fields[0].constraintIndexed).toBe(false);
+        expect(result['A'].groups[0].fields[1].inputType).toBe('boolean');
+        expect(result['A'].groups[0].fields[1].constraintIndexed).toBe(false);
+
+        expect(result['B'].groups[0].fields[0].inputType).toBe('boolean');
+        expect(result['B'].groups[0].fields[0].constraintIndexed).toBe(false);
+        expect(result['B'].groups[0].fields[1].inputType).toBe('boolean');
+        expect(result['B'].groups[0].fields[1].constraintIndexed).toBe(false);
     });
 
 

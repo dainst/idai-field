@@ -1537,5 +1537,34 @@
         }
       }
     }
+  },
+  "Find:archaeoDox": {
+    "fields": {
+      "archaeoDox:material": {
+        "label": "Матеріал"
+      },
+      "archaeoDox:typeOfWare": {
+        "label": "Type of ware"
+      }
+    }
+  },
+  "Feature:archaeoDox": {
+    "fields": {
+      "archaeoDox:distinguishingCriterium": {
+        "label": "Distinguishing criterium"
+      },
+      "archaeoDox:isNatural": {
+        "label": "Природність"
+      },
+      "archaeoDox:soilType": {
+        "label": "Тип грунту"
+      },
+      "archaeoDox:consistency": {
+        "label": "Консистенція"
+      },
+      "archaeoDox:isArchaeologicallyIrrelevant": {
+        "label": "Archaeologically irrelevant"
+      }
+    }
   }
 }

@@ -1412,5 +1412,34 @@
         }
       }
     }
+  },
+  "Find:archaeoDox": {
+    "fields": {
+      "archaeoDox:material": {
+        "label": "Material"
+      },
+      "archaeoDox:typeOfWare": {
+        "label": "Type of ware"
+      }
+    }
+  },
+  "Feature:archaeoDox": {
+    "fields": {
+      "archaeoDox:distinguishingCriterium": {
+        "label": "Distinguishing criterium"
+      },
+      "archaeoDox:isNatural": {
+        "label": "Natural"
+      },
+      "archaeoDox:soilType": {
+        "label": "Soil type"
+      },
+      "archaeoDox:consistency": {
+        "label": "Consistency"
+      },
+      "archaeoDox:isArchaeologicallyIrrelevant": {
+        "label": "Archaeologically irrelevant"
+      }
+    }
   }
 }

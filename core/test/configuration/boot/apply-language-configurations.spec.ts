@@ -12,7 +12,7 @@ import { TransientFormDefinition } from '../../../src/configuration/model/form/t
  */
 describe('applyLanguageConfigurations', () => {
 
-    it('apply language configuration, () => {
+    it('apply language configuration', () => {
         
         const categories: Map<TransientCategoryDefinition> = {
             A: { name: 'A', fields: { a: {}, a1: {}, a2: {} } } as any,

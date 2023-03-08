@@ -85,6 +85,79 @@ describe('applyLanguageConfigurations', () => {
     });
 
 
+    it('inherit language settings for fields from parent', () => {
+        
+        const categories: Map<TransientCategoryDefinition> = {
+            A: { name: 'A', fields: { a1: {}, a2: {} } } as any,
+            B: { name: 'B', parent: 'A', fields: { a1: {}, a2: {}, b: {} } } as any
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            'A:form': { name: 'A:form', categoryName: 'A', fields: { a1: {}, a2: {} } } as any,
+            'B:form': { name: 'B:form', categoryName: 'B', fields: { a1: {}, a2: {}, b: {} } } as any,
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [{
+                    categories: {
+                        A: {
+                            fields: {
+                                a1: {
+                                    label: 'a1_'
+                                },
+                                a2: {
+                                    label: 'a2_'
+                                }
+                            }
+                        },
+                        B: {
+                            fields: {
+                                b: {
+                                    label: 'b_'
+                                }
+                            }
+                        }
+                    },
+                    forms: {
+                        'A:form': {
+                            fields: {
+                                a1: {
+                                    label: 'a1_form'
+                                }
+                            }
+                        },
+                        'B:form': {
+                            fields: {
+                                b: {
+                                    label: 'b_form'
+                                }
+                            }
+                        }
+                    }
+                }]
+            },
+            default: {}
+        };
+
+        applyLanguagesToCategory(languageConfigurations, categories['A']);
+        applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToForm(languageConfigurations, forms['A:form']);
+        applyLanguagesToForm(languageConfigurations, forms['B:form'], 'A', 'A:form');
+
+        expect(categories['A'].fields['a1'].label.en).toEqual('a1_');
+        expect(categories['A'].fields['a2'].label.en).toEqual('a2_');
+        expect(categories['B'].fields['a1'].label.en).toEqual('a1_');
+        expect(categories['B'].fields['a2'].label.en).toEqual('a2_');
+        expect(categories['B'].fields['b'].label.en).toEqual('b_');
+        expect(forms['A:form'].fields['a1'].label.en).toEqual('a1_form');
+        expect(forms['A:form'].fields['a2'].label.en).toEqual('a2_');
+        expect(forms['B:form'].fields['a1'].label.en).toEqual('a1_form');
+        expect(forms['B:form'].fields['a2'].label.en).toEqual('a2_');
+        expect(forms['B:form'].fields['b'].label.en).toEqual('b_form');
+    });
+
+
     it('apply multiple language configurations', () => {
 
         const categories: Map<TransientCategoryDefinition> = {

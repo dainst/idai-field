@@ -31,6 +31,7 @@ import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm,
 import { Category } from '../../model/configuration/category';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { mergeValuelists } from './merge-valuelists';
+import { getParentForm } from './get-parent-form';
 
 
 const CATEGORIES = 0;
@@ -85,7 +86,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         Assertions.assertValuelistIdsProvided,
         replaceValuelistIdsWithValuelists(valuelists),
         cond(isDefined(customForms), hideFields),
-        applyLanguagesForCustomFormFields(languageConfigurations, categories),
+        applyLanguagesToForms(languageConfigurations, categories, selectedForms),
         prepareRawProjectConfiguration,
         addRelations(relationDefinitions),
         updateStruct(
@@ -235,13 +236,22 @@ function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuel
 }
 
 
-function applyLanguagesForCustomFormFields(languageConfigurations: LanguageConfigurations,
-                                           categories: Map<TransientCategoryDefinition>) {
+function applyLanguagesToForms(languageConfigurations: LanguageConfigurations,
+                                categories: Map<TransientCategoryDefinition>,
+                                selectedForms: string[]) {
     
     return (forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> => {
 
         for (const form of Object.values(forms)) {
-            applyLanguagesToForm(languageConfigurations, form, form.parent ?? categories[form.categoryName].parent);
+            const parentForm: TransientFormDefinition|undefined
+                = getParentForm(form, Object.values(forms), selectedForms);
+
+            applyLanguagesToForm(
+                languageConfigurations,
+                form,
+                form.parent ?? categories[form.categoryName].parent,
+                parentForm?.name
+            );
         }
         
         return forms;

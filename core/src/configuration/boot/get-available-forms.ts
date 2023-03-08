@@ -6,6 +6,7 @@ import { LibraryFormDefinition } from '../model/form/library-form-definition';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { addFieldsToForm } from './add-fields-to-form';
 import { ConfigurationErrors } from './configuration-errors';
+import { getParentForm } from './get-parent-form';
 import { mergeGroupsConfigurations } from './merge-groups-configurations';
 
 
@@ -104,15 +105,4 @@ function setGroups(form: TransientFormDefinition, forms: Array<TransientFormDefi
     clonedForm.groups = mergeGroupsConfigurations(parentForm.groups, clonedForm.groups);
 
     return clonedForm;
-}
-
-
-function getParentForm(form: TransientFormDefinition, forms: Array<TransientFormDefinition>,
-                       selectedForms: string[]): TransientFormDefinition|undefined {
-
-    if (!form.parent) return;
-
-    return forms.find(form2 => {
-        return form2.categoryName === form.parent && selectedForms.includes(form2.name);
-    });
 }

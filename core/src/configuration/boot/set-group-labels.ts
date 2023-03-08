@@ -24,6 +24,6 @@ function getGroupLabel(groupName: string,
                        languageConfigurations: LanguageConfigurations) {
 
     return LanguageConfiguration.getI18nString(
-        languageConfigurations[configuration], 'groups', groupName
+        languageConfigurations[configuration], 'groups', groupName, false
     );
 };

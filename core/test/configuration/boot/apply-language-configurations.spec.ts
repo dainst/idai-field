@@ -2,7 +2,8 @@ import { Map } from 'tsfun';
 import { LanguageConfigurations } from '../../../src/configuration/model/language/language-configurations';
 import { Relation } from '../../../src/model/configuration/relation';
 import { TransientCategoryDefinition } from '../../../src/configuration/model/category/transient-category-definition';
-import { applyLanguagesToCategory, applyLanguagesToRelations } from '../../../src/configuration/boot/apply-languages-configurations';
+import { applyLanguagesToCategory, applyLanguagesToForm, applyLanguagesToRelations } from '../../../src/configuration/boot/apply-languages-configurations';
+import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
 
 
 /**
@@ -11,11 +12,15 @@ import { applyLanguagesToCategory, applyLanguagesToRelations } from '../../../sr
  */
 describe('applyLanguageConfigurations', () => {
 
-    it('apply language', () => {
+    it('apply language configuration, () => {
         
         const categories: Map<TransientCategoryDefinition> = {
-            A: { name: 'A', fields: { a: {}, a1: {} } } as any,
+            A: { name: 'A', fields: { a: {}, a1: {}, a2: {} } } as any,
             B: { name: 'B', fields: { b: {} } } as any
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            'A:form': { name: 'A:form', categoryName: 'A', fields: { a: {}, a1: {}, a2: {} } } as any
         };
 
         const relations: Array<Relation> = [
@@ -35,6 +40,18 @@ describe('applyLanguageConfigurations', () => {
                                 },
                                 a1: {
                                     description: 'a1_desc'
+                                },
+                                a2: {
+                                    label: 'a2_'
+                                }
+                            }
+                        }
+                    },
+                    forms: {
+                        'A:form': {
+                            fields: {
+                                a: {
+                                    label: 'a_form'
                                 }
                             }
                         }
@@ -51,6 +68,7 @@ describe('applyLanguageConfigurations', () => {
 
         applyLanguagesToCategory(languageConfigurations, categories['A']);
         applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToForm(languageConfigurations, forms['A:form']);
         applyLanguagesToRelations(languageConfigurations, relations);
 
         expect(categories['A'].label.en).toEqual('A_');
@@ -59,6 +77,9 @@ describe('applyLanguageConfigurations', () => {
         expect(categories['A'].fields['a1'].label.en).toBeUndefined();
         expect(categories['A'].fields['a'].description).toEqual({});
         expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');
+        expect(forms['A:form'].fields['a'].label.en).toEqual('a_form');
+        expect(forms['A:form'].fields['a1'].label.en).toBeUndefined();
+        expect(forms['A:form'].fields['a2'].label.en).toEqual('a2_');
         expect(relations[0].label.en).toEqual('isRecordedIn_');
         expect(relations[1].label).toEqual({});
     });

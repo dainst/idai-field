@@ -1586,12 +1586,6 @@
         "constraintIndexed": true,
         "valuelistId": "Sample-sampleType-default"
       },
-      "soilProperties": {
-        "inputType": "radio",
-        "constraintIndexed": true,
-        "selectable": false,
-        "valuelistId": "Sample-soilProperties-archaeoDox"
-      },
       "storagePlace": {
         "inputType": "input"
       }
@@ -1610,17 +1604,6 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "damages-default"
-      }
-    }
-  },
-  "Profile": {
-    "description": {},
-    "fields": {
-      "viewingDirection": {
-        "inputType": "dropdown",
-        "constraintIndexed": true,
-        "selectable": false,
-        "valuelistId": "viewingDirection-default"
       }
     }
   }

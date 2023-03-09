@@ -1238,9 +1238,6 @@
           "label": "Art der Probe",
           "description": "Welche Probe wird genommen? Welche Untersuchungen sollen vorgenommen werden?"
         },
-        "soilProperties": {
-          "label": "Bodeneigenschaften"
-        },
         "storagePlace": {
           "label": "Aufbewahrungsort"
         }
@@ -1499,12 +1496,7 @@
       }
     },
     "Profile": {
-      "label": "Profil",
-      "fields": {
-        "viewingDirection": {
-          "label": "Blickrichtung"
-        }
-      }
+      "label": "Profil"
     },
     "Metal": {
       "label": "Metall",
@@ -1582,7 +1574,12 @@
       "label": "Flächenzeichnung"
     },
     "Profile:archaeoDox": {
-      "label": "Profilzeichnung"
+      "label": "Profilzeichnung",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "Blickrichtung"
+        }
+      }
     },
     "Find:archaeoDox": {
       "fields": {
@@ -1638,6 +1635,9 @@
       "fields": {
         "shortDescription": {
           "label": "Kurzbeschreibung (Klassifikation)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "Bodeneigenschaften"
         }
       }
     }

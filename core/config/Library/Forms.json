@@ -1322,6 +1322,11 @@
       "fields": {
         "shortDescription": {
           "inputType": "dropdown"
+        },
+        "archaeoDox:soilProperties": {
+          "inputType": "radio",
+          "constraintIndexed": true,
+          "valuelistId": "Sample-soilProperties-archaeoDox"
         }
       },
       "groups": [
@@ -1332,7 +1337,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "soilProperties", "weight", "storagePlace", "labNumber"]
+          "fields": ["description", "archaeoDox:soilProperties", "weight", "storagePlace", "labNumber"]
         },
         {
           "name": "position",
@@ -1414,6 +1419,13 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "Profile",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "inputType": "dropdown",
+          "constraintIndexed": true,
+          "valuelistId": "viewingDirection-default"
+        }
+      },
       "groups": [
         {
           "name": "stem",
@@ -1421,7 +1433,7 @@
         },
         {
           "name": "properties",
-          "fields": ["viewingDirection"]
+          "fields": ["archaeoDox:viewingDirection"]
         },
         {
           "name": "position",

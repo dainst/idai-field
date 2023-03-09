@@ -423,7 +423,7 @@ defmodule FieldHub.CLI do
 
     data
     |> Enum.each(fn {key, value} ->
-      logger_function.("- #{key}: #{value}")
+      logger_function.("- #{key}: #{inspect(value, pretty: true)}")
     end)
   end
 

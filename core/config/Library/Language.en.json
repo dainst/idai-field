@@ -1413,6 +1413,18 @@
       }
     }
   },
+  "Project:archaeoDox": {
+    "label": "Process"
+  },
+  "Place:archaeoDox": {
+    "label": "Find spot"
+  },
+  "Planum:archaeoDox": {
+    "label": "Planum drawing"
+  },
+  "Profile:archaeoDox": {
+    "label": "Profile drawing"
+  },
   "Find:archaeoDox": {
     "fields": {
       "archaeoDox:material": {

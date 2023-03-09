@@ -1572,6 +1572,18 @@
     }
   },
   "forms": {
+    "Project:archaeoDox": {
+      "label": "Vorgang"
+    },
+    "Place:archaeoDox": {
+      "label": "Fundplatz"
+    },
+    "Planum:archaeoDox": {
+      "label": "Flächenzeichnung"
+    },
+    "Profile:archaeoDox": {
+      "label": "Profilzeichnung"
+    },
     "Find:archaeoDox": {
       "fields": {
         "archaeoDox:material": {
@@ -1583,6 +1595,7 @@
       }
     },
     "Feature:archaeoDox": {
+      "label": "Befund",
       "fields": {
         "archaeoDox:distinguishingCriterium": {
           "label": "Unterscheidungskriterium"

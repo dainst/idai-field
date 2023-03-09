@@ -11,7 +11,7 @@ import { LanguageConfigurations } from '../model/language/language-configuration
 export function applyLanguagesToCategory(languageConfigurations: LanguageConfigurations,
                                          categoryDefinition: TransientCategoryDefinition) {
 
-    applyLanguagesToFormOrCategory(languageConfigurations, categoryDefinition, categoryDefinition.name);
+    applyLanguagesToFormOrCategory(languageConfigurations, categoryDefinition, 'categories', categoryDefinition.name);
     applyLanguagesToCategoryFields(languageConfigurations, categoryDefinition.fields, categoryDefinition.name,
         categoryDefinition.parent);
 }
@@ -21,7 +21,8 @@ export function applyLanguagesToForm(languageConfigurations: LanguageConfigurati
                                      formDefinition: TransientFormDefinition,
                                      parentCategoryName?: string, parentFormName?: string) {
 
-    applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, formDefinition.categoryName);
+    applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'categories', formDefinition.categoryName);
+    applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'forms', formDefinition.name);
     applyLanguagesToCategoryFields(languageConfigurations, formDefinition.fields, formDefinition.categoryName,
         parentCategoryName);
     applyLanguagesToFormFields(languageConfigurations, formDefinition.fields, formDefinition.name, parentFormName);
@@ -90,21 +91,21 @@ function applyLanguagesToFormFields(languageConfigurations: LanguageConfiguratio
 
 function applyLanguagesToFormOrCategory(languageConfigurations: LanguageConfigurations,
                                         definition: TransientFormDefinition|TransientCategoryDefinition,
-                                        name: string) {
+                                        section: 'categories'|'forms', name: string) {
 
-    definition.label = LanguageConfiguration.getI18nString(
-        languageConfigurations.complete, 'categories', name, false, 'label'
-    );
-    definition.defaultLabel = LanguageConfiguration.getI18nString(
-        languageConfigurations.default, 'categories', name, false, 'label'
-    );
+    definition.label = I18N.mergeI18nStrings(definition.label, LanguageConfiguration.getI18nString(
+        languageConfigurations.complete, section, name, false, 'label'
+    ));
+    definition.defaultLabel = I18N.mergeI18nStrings(definition.defaultLabel, LanguageConfiguration.getI18nString(
+        languageConfigurations.default, section, name, false, 'label'
+    ));
 
     if (!definition.description) {
         definition.description = LanguageConfiguration.getI18nString(
-            languageConfigurations.complete, 'categories', name, false, 'description'
+            languageConfigurations.complete, section, name, false, 'description'
         );
         definition.defaultDescription = LanguageConfiguration.getI18nString(
-            languageConfigurations.default, 'categories', name, false, 'description'
+            languageConfigurations.default, section, name, false, 'description'
         );
     }
 }
@@ -112,8 +113,7 @@ function applyLanguagesToFormOrCategory(languageConfigurations: LanguageConfigur
 
 function applyLanguagesToFormOrCategoryFields(languageConfigurations: LanguageConfigurations,
                                               fields: Map<TransientFieldDefinition>, name: string,
-                                              section: 'categories'|'forms',
-                                              parentName?: string) {
+                                              section: 'categories'|'forms', parentName?: string) {
 
     for (const fieldName of Object.keys(fields)) {
         const field = fields[fieldName];

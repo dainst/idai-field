@@ -3,8 +3,8 @@ import { I18N } from '../../../tools/i18n';
 
 export interface LanguageConfiguration {
 
-    categories?: { [categoryName: string]: CategoryLanguageDefinition };
-    forms?: { [categoryName: string]: FormLanguageDefinition };
+    categories?: { [categoryName: string]: CategoryOrFormLanguageDefinition };
+    forms?: { [categoryName: string]: CategoryOrFormLanguageDefinition };
     relations?: { [relationName: string]: FieldLanguageDefinition };
     groups?: { [groupName: string]: string };
     commons?: { [fieldName: string]: FieldLanguageDefinition };
@@ -12,19 +12,13 @@ export interface LanguageConfiguration {
 }
 
 
-export interface CategoryLanguageDefinition {
+export interface CategoryOrFormLanguageDefinition {
 
     label?: string;
     description?: string;
     fields?: { [fieldName: string]: FieldLanguageDefinition };
 }
 
-
-export interface FormLanguageDefinition {
-
-    description?: string;
-    fields?: { [fieldName: string]: FieldLanguageDefinition };
-}
 
 
 export interface FieldLanguageDefinition {

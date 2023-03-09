@@ -39,6 +39,7 @@ import { I18N } from '../../../src/tools/i18n';
         name: 'testCategory',
         label: categoryLabel,
         defaultLabel: categoryLabel,
+        categoryLabel: categoryLabel,
         description: categoryDescription,
         defaultDescription: categoryDescription,
         children: [],

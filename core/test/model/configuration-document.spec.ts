@@ -11,6 +11,7 @@ import { CategoryForm } from '../../src/model/configuration/category-form';
         name: 'TestCategory',
         label: {},
         defaultLabel: {},
+        categoryLabel: {},
         description: {},
         defaultDescription: {},
         children: [],

@@ -141,10 +141,11 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
             ? parentCategoryDefinition.mustLieWithin : categoryDefinition.mustLieWithin;
         category.isAbstract = categoryDefinition?.abstract || false;
         category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
-        category.required = categoryDefinition?.required || false;
+        category.required = categoryDefinition?.required || false;
 
         category.libraryId = formDefinition.name;
         category.label = formDefinition.label;
+        category.categoryLabel = categoryDefinition ? categoryDefinition.label : clone(formDefinition.label);
         category.source = formDefinition.source;
         category.customFields = formDefinition.customFields;
         category.description = formDefinition.description;
@@ -165,7 +166,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         category[TEMP_FIELDS] = formDefinition.fields || {};
         Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
         category[TEMP_GROUPS] = formDefinition.groups || [];
-        category[TEMP_HIDDEN] = formDefinition.hidden || [];
+        category[TEMP_HIDDEN] = formDefinition.hidden || [];
 
         return category as CategoryForm;
     }

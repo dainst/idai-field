@@ -157,6 +157,7 @@ export const createCategory = (name: string): Tree<CategoryForm> => ({
     item: {
         name,
         label: {},
+        categoryLabel: {},
         isAbstract: false,
         children: [],
         parentCategory: undefined,

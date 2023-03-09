@@ -41,7 +41,7 @@ export class CategoryListingComponent implements OnChanges {
 
     public selectForm = (form: CategoryForm) => this.onFormSelected.emit(form);
 
-    public getLabel = (value: I18N.LabeledValue) => this.labels.get(value);
+    public getCategoryLabel = (form: CategoryForm) => this.labels.getFromI18NString(form.categoryLabel);
 
     public getForms = (categoryName: string) => this.categoryForms.filter(form => form.name === categoryName);
 
@@ -65,5 +65,11 @@ export class CategoryListingComponent implements OnChanges {
             result.push({ form, isCategoryHeader: false });
             return result;
         }, []);
+    }
+
+
+    private getLabel(value: I18N.LabeledValue): string {
+    
+        return this.labels.get(value);
     }
 }

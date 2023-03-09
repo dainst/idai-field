@@ -33,6 +33,7 @@ export interface CategoryForm {
     description: I18N.String;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
+    categoryLabel: I18N.String;
     
     createdBy?: string,
     creationDate?: Date;

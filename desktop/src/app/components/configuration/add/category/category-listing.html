@@ -6,7 +6,7 @@
         (click)="!item.isCategoryHeader && selectForm(item.form)">
         <div *ngIf="item.isCategoryHeader">
             <category-icon [category]="item.form" size="30"></category-icon>
-            <span class="item-label">{{getLabel(item.form)}}</span>
+            <span class="item-label">{{getCategoryLabel(item.form)}}</span>
             <span *ngIf="getSearchResultLabel(item.form)"
                   class="search-result-label"> ({{getSearchResultLabel(item.form)}})</span>
         </div>

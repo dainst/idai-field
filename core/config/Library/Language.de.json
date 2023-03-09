@@ -1586,6 +1586,9 @@
     },
     "Find:archaeoDox": {
       "fields": {
+        "shortDescription": {
+          "label": "Kurzbeschreibung (Klassifikation)"
+        },
         "archaeoDox:material": {
           "label": "Material"
         },
@@ -1594,9 +1597,19 @@
         }
       }
     },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Kurzbeschreibung (Klassifikation)"
+        }
+      }
+    },
     "Feature:archaeoDox": {
       "label": "Befund",
       "fields": {
+        "shortDescription": {
+          "label": "Kurzbeschreibung (Klassifikation)"
+        },
         "archaeoDox:distinguishingCriterium": {
           "label": "Unterscheidungskriterium"
         },
@@ -1611,6 +1624,20 @@
         },
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": "Ohne archäologische Relevanz"
+        }
+      }
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Kurzbeschreibung (Klassifikation)"
+        }
+      }
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Kurzbeschreibung (Klassifikation)"
         }
       }
     }

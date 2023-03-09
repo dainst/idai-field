@@ -97,6 +97,7 @@ export class InitializationProgress {
             getMessage(errorMsgKey, this.locale)
         );
         InitializationProgress.setElementText('initialization-info-project-name', '');
+        InitializationProgress.setElementText('initialization-info-project-identifier', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
         InitializationProgress.setElementText('initialization-detail-info', '');
 

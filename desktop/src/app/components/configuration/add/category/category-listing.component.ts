@@ -48,12 +48,20 @@ export class CategoryListingComponent implements OnChanges {
     public isNewCategoryOptionShown = (): boolean => this.emptyForm
         && !this.items.map(item => item.form.libraryId).includes(this.emptyForm.libraryId)
         && !Object.keys(this.configurationDocument.resource.forms).includes(this.emptyForm.libraryId);
-
-    public getSearchResultLabel = (form: CategoryForm) => getSearchResultLabel(form, this.searchTerm, this.getLabel);
     
     public getItemId = (item: CategoryListingItem) => item.isCategoryHeader
         ? 'category-header-' + item.form.name
         : 'select-category-form-' + item.form.libraryId.replace(':', '-');
+
+
+    public getSearchResultLabel(form: CategoryForm) {
+
+        return getSearchResultLabel(
+            form,
+            this.searchTerm,
+            (value: I18N.LabeledValue) => this.labels.get(value)
+        );
+    }
 
 
     private createItems(): Array<CategoryListingItem> {
@@ -65,11 +73,5 @@ export class CategoryListingComponent implements OnChanges {
             result.push({ form, isCategoryHeader: false });
             return result;
         }, []);
-    }
-
-
-    private getLabel(value: I18N.LabeledValue): string {
-    
-        return this.labels.get(value);
     }
 }

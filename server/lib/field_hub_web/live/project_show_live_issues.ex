@@ -47,7 +47,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   def render(%{id: :image_variants_size} = assigns) do
     ~H"""
     <div class="issue-content">
-      <em>In general the original images are expected to be greater than their thumbnails.
+      <em>In general the original images are expected to be larger than their thumbnails.
       For the following files this is not the case.</em>
       <ul>
         <%= for %{data: data} <- @issues do %>

@@ -607,6 +607,9 @@
         "shortDescription": {
           "inputType": "dropdown"
         },
+        "phase": {
+          "inputType": "dropdown"
+        },
         "archaeoDox:distinguishingCriterium": {
           "inputType": "dropdown"
         },
@@ -691,6 +694,9 @@
       "fields": {
         "shortDescription": {
           "inputType": "dropdown"
+        },
+        "phase": {
+          "inputType": "dropdown"
         }
       },
       "groups": [
@@ -759,8 +765,8 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "processor",
-            "date", "diary", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+            "processor", "date", "diary", "isSameAs"]
         },
         {
           "name": "properties",

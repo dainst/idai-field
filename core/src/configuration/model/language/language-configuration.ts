@@ -20,7 +20,6 @@ export interface CategoryOrFormLanguageDefinition {
 }
 
 
-
 export interface FieldLanguageDefinition {
 
     label?: string;

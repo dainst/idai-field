@@ -16,11 +16,13 @@ describe('applyLanguageConfigurations', () => {
         
         const categories: Map<TransientCategoryDefinition> = {
             A: { name: 'A', fields: { a: {}, a1: {}, a2: {} } } as any,
-            B: { name: 'B', fields: { b: {} } } as any
+            B: { name: 'B', fields: { b: {} } } as any,
+            C: { name: 'C', fields: {} } as any
         };
 
         const forms: Map<TransientFormDefinition> = {
-            'A:form': { name: 'A:form', categoryName: 'A', fields: { a: {}, a1: {}, a2: {} } } as any
+            'A:form': { name: 'A:form', categoryName: 'A', fields: { a: {}, a1: {}, a2: {} } } as any,
+            'C:form': { name: 'C:form', categoryName: 'C', fields: {} } as any
         };
 
         const relations: Array<Relation> = [
@@ -45,6 +47,9 @@ describe('applyLanguageConfigurations', () => {
                                     label: 'a2_'
                                 }
                             }
+                        },
+                        C: {
+                            label: 'C_'
                         }
                     },
                     forms: {
@@ -54,6 +59,9 @@ describe('applyLanguageConfigurations', () => {
                                     label: 'a_form'
                                 }
                             }
+                        },
+                        'C:form': {
+                            label: 'C_form'
                         }
                     },
                     relations: {
@@ -68,18 +76,23 @@ describe('applyLanguageConfigurations', () => {
 
         applyLanguagesToCategory(languageConfigurations, categories['A']);
         applyLanguagesToCategory(languageConfigurations, categories['B']);
+        applyLanguagesToCategory(languageConfigurations, categories['C']);
         applyLanguagesToForm(languageConfigurations, forms['A:form']);
+        applyLanguagesToForm(languageConfigurations, forms['C:form']);
         applyLanguagesToRelations(languageConfigurations, relations);
 
         expect(categories['A'].label.en).toEqual('A_');
         expect(categories['B'].label).toEqual({});
+        expect(categories['C'].label.en).toEqual('C_');
         expect(categories['A'].fields['a'].label.en).toEqual('a_');
         expect(categories['A'].fields['a1'].label.en).toBeUndefined();
         expect(categories['A'].fields['a'].description).toEqual({});
         expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');
+        expect(forms['A:form'].label.en).toEqual('A_');
         expect(forms['A:form'].fields['a'].label.en).toEqual('a_form');
         expect(forms['A:form'].fields['a1'].label.en).toBeUndefined();
         expect(forms['A:form'].fields['a2'].label.en).toEqual('a2_');
+        expect(forms['C:form'].label.en).toEqual('C_form');
         expect(relations[0].label.en).toEqual('isRecordedIn_');
         expect(relations[1].label).toEqual({});
     });

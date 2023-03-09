@@ -70076,7 +70076,7 @@
       }
     }
   },
-  "phase-amh": {
+  "phase-archaeoDox": {
     "values": {
       "phase1": {
         "label": {
@@ -70108,7 +70108,7 @@
     "creationDate": "2023-01-10",
     "description": {}
   },
-  "Sample-soilProperties-amh": {
+  "Sample-soilProperties-archaeoDox": {
     "values": {
       "Feucht": {
         "label": {
@@ -70222,7 +70222,7 @@
     "creationDate": "2023-01-10",
     "description": {}
   },
-  "Find-material-amh": {
+  "Find-material-archaeoDox": {
     "description": {
       "de": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Material"
     },
@@ -71978,7 +71978,7 @@
       "http://uri.gbv.de/terminology/amh_material/"
     ]
   },
-  "period-amh": {
+  "period-archaeoDox": {
     "description": {
       "de": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Datierung"
     },
@@ -72430,7 +72430,7 @@
       "http://uri.gbv.de/terminology/amh_datierung/"
     ]
   },
-  "Find-shortDescription-amh": {
+  "Find-shortDescription-archaeoDox": {
     "description": {
       "de": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Objektbezeichnung"
     },
@@ -80538,7 +80538,7 @@
       "http://uri.gbv.de/terminology/amh_objektbezeichnung/"
     ]
   },
-  "Find-typeOfWare-amh": {
+  "Find-typeOfWare-archaeoDox": {
     "description": {
       "de": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Warenart"
     },
@@ -80886,7 +80886,7 @@
       "http://uri.gbv.de/terminology/amh_warenart/"
     ]
   },
-  "Sample-shortDescription-amh": {
+  "Sample-shortDescription-archaeoDox": {
     "values": {
       "1116cc6f-fe64-3890-9772-a91e1cfdce71": {
         "label": {
@@ -80973,7 +80973,7 @@
       "c74ff067-9a3f-3d58-89c9-0db00cdfe76e"
     ]
   },
-  "Feature-shortDescription-amh": {
+  "Feature-shortDescription-archaeoDox": {
     "description": {
       "de": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Befunde"
     },

@@ -596,9 +596,9 @@
       "createdBy": "",
       "creationDate": "",
       "valuelists": {
-        "shortDescription": "Feature-shortDescription-amh",
-        "phase": "phase-amh",
-        "period": "period-amh",
+        "shortDescription": "Feature-shortDescription-archaeoDox",
+        "phase": "phase-archaeoDox",
+        "period": "period-archaeoDox",
         "archaeoDox:distinguishingCriterium": "Layer-distinguishingCriteria-default",
         "archaeoDox:soilType": "Layer-soilType-default",
         "archaeoDox:consistency": "Layer-consistency-default"
@@ -684,9 +684,9 @@
       "createdBy": "",
       "creationDate": "",
       "valuelists": {
-        "shortDescription": "Feature-shortDescription-amh",
-        "phase": "phase-amh",
-        "period": "period-amh"
+        "shortDescription": "Feature-shortDescription-archaeoDox",
+        "phase": "phase-archaeoDox",
+        "period": "period-archaeoDox"
       },
       "fields": {
         "shortDescription": {
@@ -748,8 +748,8 @@
       "createdBy": "",
       "creationDate": "",
       "valuelists": {
-        "shortDescription": "Feature-shortDescription-amh",
-        "period": "period-amh"
+        "shortDescription": "Feature-shortDescription-archaeoDox",
+        "period": "period-archaeoDox"
       },
       "fields": {
         "shortDescription": {
@@ -1112,10 +1112,10 @@
       "creationDate": "",
       "categoryName": "Find",
       "valuelists": {
-        "shortDescription": "Find-shortDescription-amh",
-        "period": "period-amh",
-        "archaeoDox:material": "Find-material-amh",
-        "archaeoDox:typeOfWare": "Find-typeOfWare-amh"
+        "shortDescription": "Find-shortDescription-archaeoDox",
+        "period": "period-archaeoDox",
+        "archaeoDox:material": "Find-material-archaeoDox",
+        "archaeoDox:typeOfWare": "Find-typeOfWare-archaeoDox"
       },
       "fields": {
         "shortDescription": {
@@ -1311,7 +1311,7 @@
       "creationDate": "",
       "categoryName": "Sample",
       "valuelists": {
-        "shortDescription": "Sample-shortDescription-amh"
+        "shortDescription": "Sample-shortDescription-archaeoDox"
       },
       "fields": {
         "shortDescription": {

@@ -1590,7 +1590,7 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "selectable": false,
-        "valuelistId": "Sample-soilProperties-amh"
+        "valuelistId": "Sample-soilProperties-archaeoDox"
       },
       "storagePlace": {
         "inputType": "input"

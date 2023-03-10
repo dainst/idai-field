@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, not, isUndefined } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, Valuelist } from 'idai-field-core';
+    CustomLanguageConfigurations, Valuelist, FieldResource } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -264,7 +264,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isConstraintIndexOptionEnabled(): boolean {
 
         return this.category.name !== 'Project'
-            && (this.field.source === 'custom' || this.field.defaultConstraintIndexed)
+            && (this.field.name !== FieldResource.SHORTDESCRIPTION)
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     }
 
@@ -281,7 +281,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 id: 'configuration.fieldSpecificSearch.notAllowedForInputType',
                 value: 'Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.'
             });
-        } else if (this.field.source !== 'custom' && !this.field.defaultConstraintIndexed) {
+        } else if (this.field.name === FieldResource.SHORTDESCRIPTION) {
             return this.i18n({
                 id: 'configuration.fieldSpecificSearch.changingNotAllowed',
                 value: 'Die Einstellung kann für dieses Feld nicht geändert werden.'

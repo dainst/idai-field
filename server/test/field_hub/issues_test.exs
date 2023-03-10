@@ -151,7 +151,7 @@ defmodule FieldHub.IssuesTest do
                        "identifier" => "PQ1-ST1",
                        "relations" => _,
                        "shortDescription" => _,
-                       "type" => "SurveyUnit"
+                       "category" => "SurveyUnit"
                      }
                    },
                    %{

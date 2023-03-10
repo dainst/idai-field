@@ -87,7 +87,7 @@ defmodule FieldHub.CouchServiceTest do
                        "it" => "Immagine di sfondo 1",
                        "uk" => "Підоснова 1"
                      },
-                     "type" => "Drawing",
+                     "category" => "Drawing",
                      "width" => 3513
                    }
                  }
@@ -117,7 +117,7 @@ defmodule FieldHub.CouchServiceTest do
                        "it" => "Immagine di sfondo 2",
                        "uk" => "Підоснова 2"
                      },
-                     "type" => "Image",
+                     "category" => "Image",
                      "width" => 748
                    }
                  }

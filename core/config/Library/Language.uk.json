@@ -106,7 +106,7 @@
     "damage": {
       "label": "Пошкодження в процентах"
     },
-    "documentationUnit": {
+    "archaeoDox:documentationUnit": {
       "label": "Documentation unit"
     },
     "webGisId": {

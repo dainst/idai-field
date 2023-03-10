@@ -486,7 +486,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "documentationUnit"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit"]
         },
         {
           "name": "properties",
@@ -633,7 +633,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date", "diary", "isSameAs"]
         },
         {
@@ -702,7 +702,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date", "diary", "isSameAs"]
         },
         {
@@ -765,7 +765,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date", "diary", "isSameAs"]
         },
         {
@@ -844,7 +844,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date"]
         },
         {
           "name": "properties",
@@ -1139,7 +1139,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date", "isSameAs"]
         },
         {
@@ -1332,7 +1332,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "documentationUnit",
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date"]
         },
         {
@@ -1429,7 +1429,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date", "diary"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
           "name": "properties",
@@ -1478,7 +1478,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "documentationUnit", "processor", "date", "diary"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
           "name": "position",

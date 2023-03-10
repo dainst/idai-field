@@ -117,10 +117,6 @@ export class BuiltInConfiguration {
         damage: {
             inputType: Field.InputType.FLOAT
         },
-        documentationUnit: {
-            inputType: Field.InputType.SIMPLE_MULTIINPUT,
-            selectable: false
-        },
         webGisId: {
             inputType: Field.InputType.UNSIGNEDINT
         },
@@ -129,7 +125,11 @@ export class BuiltInConfiguration {
         },
         phase: {
             inputType: Field.InputType.INPUT
-        }
+        },
+        'archaeoDox:documentationUnit': {
+            inputType: Field.InputType.SIMPLE_MULTIINPUT,
+            selectable: false
+        },
     };
     
 

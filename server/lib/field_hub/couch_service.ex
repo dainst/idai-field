@@ -353,6 +353,32 @@ defmodule FieldHub.CouchService do
       body,
       headers()
     )
+    |> case do
+      # This is rather elaborate code to replace "type" keys with "category", see replace_resource_type_with_category/1.
+      # Once replace_resource_type_with_category/1 gets removed, this complete `case` structure can be removed also.
+      %{status_code: 200, body: body} = result ->
+        updated_body =
+          body
+          |> Jason.decode!()
+          |> Map.update!("rows", fn rows ->
+            rows
+            |> Enum.map(fn row ->
+              case row do
+                %{"doc" => doc} ->
+                  Map.put(row, "doc", replace_resource_type_with_category(doc))
+
+                val ->
+                  val
+              end
+            end)
+          end)
+          |> Jason.encode!()
+
+        Map.put(result, :body, updated_body)
+
+      result ->
+        result
+    end
   end
 
   @doc """

@@ -164,7 +164,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         |> element("button")
         |> render_click()
 
-      assert html =~ "🔍 Evaluating..."
+      assert html =~ "Evaluating issues, for big projects this may take several minutes..."
 
       # Elixir/Erlang kinda deep dive:
       #

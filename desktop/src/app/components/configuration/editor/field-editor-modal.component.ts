@@ -69,8 +69,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isCustomField = () => this.field.source === 'custom';
 
-    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
-
     public isI18nInputType = () => Field.InputType.I18N_INPUT_TYPES.includes(this.getInputType());
 
     public isI18nOptionEnabled = () => this.getInputType() !== Field.InputType.TEXT;
@@ -301,6 +299,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             return '';
         }
+    }
+
+
+    public isI18nCompatible(): boolean {
+
+        return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
+            && !['staff', 'campaigns'].includes(this.field.name);
     }
 
 

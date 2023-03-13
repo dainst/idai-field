@@ -8,6 +8,8 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   `live_component/1` call.
   """
 
+  alias Phoenix.LiveView.JS
+
   def render(%{id: :no_project_document} = assigns) do
     ~H"""
     <span class="issue-content">Could not find a project document in the database!</span>
@@ -84,12 +86,14 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     ~H"""
     <div class="issue-content">
       <em>
-        There are documents missing, that are being referenced by other documents in the database. Possible solutions:
+        There are documents missing, that are being referenced by other documents in the database.
+      </em>
+      <br/>
+      Possible solutions:
         <ul>
           <li>Remove or update the broken relations in the desktop application.</li>
           <li>Check project backups to find out about more about the now missing document.</li>
         </ul>
-      </em>
       <%= for %{data: data} <- @issues do %>
         <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
           Missing document <span style="text-decoration:underline;"><%= data.missing %></span> is referenced by the following documents:
@@ -124,6 +128,31 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
           <% end %>
           </tbody>
           </table>
+        </div>
+      <% end %>
+    </div>
+    """
+  end
+
+  def render(%{id: :non_unique_identifiers} = assigns) do
+    ~H"""
+    <div class="issue-content">
+      <em>There are documents sharing the same identifier.</em>
+      <br/>
+        This may happen if two researchers add the same identifier while working
+        offline, then activate syncing at a later point. Solution: Update the identifier in your desktop application.
+      <%= for %{data: data} <- @issues do %>
+
+        <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
+        Identifier "<%= data.identifier %>" is used by
+        <a style="cursor: pointer;" phx-click={
+          JS.toggle(to: "#duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}")
+        }> <%= Enum.count(data.documents) %> documents</a>.
+
+        <div hidden id={"duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}"}>
+          <%= for doc <- data.documents do %>
+            <pre><%= Jason.encode!(doc, pretty: true) %></pre>
+          <% end %>
         </div>
       <% end %>
     </div>

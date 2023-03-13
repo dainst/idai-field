@@ -291,7 +291,7 @@ defmodule FieldHub.Issues do
         Enum.map(groups, fn {identifier, docs} ->
           ids = Enum.map(docs, fn %{"_id" => id} -> id end)
 
-          detailed_docs =
+          documents =
             Project.get_documents(project_identifier, ids)
             |> Enum.map(fn {:ok, doc} ->
               doc
@@ -300,7 +300,7 @@ defmodule FieldHub.Issues do
           %Issue{
             type: :non_unique_identifiers,
             severity: :error,
-            data: %{identifier: identifier, documents: detailed_docs}
+            data: %{identifier: identifier, documents: documents }
           }
         end)
     end

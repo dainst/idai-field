@@ -468,6 +468,41 @@ describe('ConstraintIndex', () => {
     });
 
 
+    it('index multi input fields', () => {
+
+        categories = [
+            {
+                name: 'category',
+                groups: [{ fields: [
+                    { name: 'identifier' },
+                    { name: 'shortDescription' },
+                    { name: 'field1', inputType: 'multiInput', constraintIndexed: true },
+                    { name: 'field2', inputType: 'simpleMultiInput', constraintIndexed: true }
+                ]}]
+            }
+        ];
+
+        const docs = [doc('1')];
+        docs[0].resource.field1 = [
+            { 'de': 'Testwert 1', 'en': 'Test value 1' },
+            { 'de': 'Testwert 2', 'en': 'Test value 2' }
+        ];
+        docs[0].resource.field2 = ['testvalue1', 'testValue2'];
+        
+
+        ci = ConstraintIndex.make({}, categories);
+
+        ConstraintIndex.put(ci, docs[0]);
+
+        expect(ConstraintIndex.get(ci, 'field1:contain', 'Testwert 1')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'field1:contain', 'Testwert 2')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'field1:contain', 'Test value 1')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'field1:contain', 'Test value 2')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'field2:contain', 'testValue1')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'field2:contain', 'testValue2')).toEqual(['1']);
+    });
+
+
     it('index a single value field and an array field of the same name', () => {
 
         categories = [

@@ -97,9 +97,11 @@
                 </div>
             </div>
         </h2>
-
         <%= if @issue_status == :evaluating do %>
-            <div class="issue-loading-spinner"></div>
+        <div class="row">
+            <span class="issue-loading-spinner"></span>
+            <span style="margin-top:6px;margin-left:10px">Evaluating issues, for big projects this may take several minutes...</span>
+        </div>
         <% end %>
 
         <%= case @issues do %>

@@ -8,6 +8,8 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   `live_component/1` call.
   """
 
+  alias Phoenix.LiveView.JS
+
   def render(%{id: :no_project_document} = assigns) do
     ~H"""
     <span class="issue-content">Could not find a project document in the database!</span>
@@ -47,19 +49,22 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   def render(%{id: :image_variants_size} = assigns) do
     ~H"""
     <div class="issue-content">
-      <em>In general the original images are expected to be greater than their thumbnails.
+      <em>In general the original images are expected to be larger than their thumbnails.
       For the following files this is not the case.</em>
-      <ul>
-        <%= for %{data: data} <- @issues do %>
-          <li class="container">
-            '<%= data.file_name %>' (<%= data.file_type %>),
-            created by <%= data.created_by %> on <%= data.created %>, sizes:
+
+      <%= for %{data: data} <- @issues do %>
+      <div class="row">
+          <div class="column column-25">
+            <img src={"#{get_thumbnail_data(data.uuid, @project)}"}/>
+          </div>
+          <div class="column">
+            '<%= data.file_name %>' (<%= data.file_type %>), created by <%= data.created_by %> on <%= data.created %>, sizes:
             <strong>
               <%= Sizeable.filesize(data.thumbnail_size) %> (thumbnail), <%= Sizeable.filesize(data.original_size) %> (original)
             </strong>
-          </li>
-        <% end %>
-      </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
     """
   end
@@ -83,28 +88,76 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   def render(%{id: :unresolved_relation} = assigns) do
     ~H"""
     <div class="issue-content">
-      <em>The following database documents contained unresolved relations.</em>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Document</th>
-            <th>Unresolved relations (UUIDs)</th>
-          </tr>
-        </thead>
-        <tbody>
-        <%= for %{data: data} <- @issues do %>
+      <em>
+        There are documents missing, that are being referenced by other documents in the database.
+      </em>
+      <br/>
+      Possible solutions:
+        <ul>
+          <li>Remove or update the broken relations in the desktop application.</li>
+          <li>Check project backups to find out about more about the now missing document.</li>
+        </ul>
+      <%= for %{data: data} <- @issues do %>
+        <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
+          Missing document <span style="text-decoration:underline;"><%= data.missing %></span> is referenced by the following documents:
+          <table>
+          <thead>
             <tr>
-              <td><pre style="white-space: pre-wrap"><%= inspect(data.doc, pretty: true) %></pre></td>
-              <td>
-              <%= for uuid <- data.unresolved do %>
-                  <div style="border-width:1px;border-style:dashed;padding:2px"><%= uuid %></div>
-              <% end %>
-              </td>
+              <th>Identifier</th>
+              <th>Category</th>
+              <th>Unresolved relationship(s)</th>
+              <th>History</th>
             </tr>
-        <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+          <%= for doc <- data.referencing_docs do %>
+            <tr>
+              <td><%= doc.identifier %></td>
+              <td><%= doc.category %></td>
+              <td>
+                <ul>
+                <%= for relation <- doc.relations do %>
+                  <li><%= relation %></li>
+                <% end %>
+                </ul>
+              </td>
+              <td>
+                <div>Created by <%= doc.created.user %>, <%= doc.created.date %>.</div>
+                <%= for modification <- doc.modified do %>
+                  <div>Changed by <%= modification.user %>, <%= modification.date %>.</div>
+                <% end %>
+              </td>
+            <tr>
+          <% end %>
+          </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+    """
+  end
+
+  def render(%{id: :non_unique_identifiers} = assigns) do
+    ~H"""
+    <div class="issue-content">
+      <em>There are documents sharing the same identifier.</em>
+      <br/>
+        This may happen if two researchers add the same identifier while working
+        offline, then activate syncing at a later point. Solution: Update the identifier in your desktop application.
+      <%= for %{data: data} <- @issues do %>
+
+        <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
+        Identifier "<%= data.identifier %>" is used by
+        <a style="cursor: pointer;" phx-click={
+          JS.toggle(to: "#duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}")
+        }> <%= Enum.count(data.documents) %> documents</a>.
+
+        <div hidden id={"duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}"}>
+          <%= for doc <- data.documents do %>
+            <pre><%= Jason.encode!(doc, pretty: true) %></pre>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     """
   end
@@ -142,5 +195,20 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
       <% end %>
     </div>
     """
+  end
+
+  defp get_thumbnail_data(uuid, project) do
+    FieldHub.FileStore.get_file_path(uuid, project, :thumbnail_image)
+    |> case do
+      {:ok, path} ->
+        path
+        |> File.read!()
+        |> Base.encode64()
+        |> then(fn(encoded) ->
+          "data:image/*;base64,#{encoded}"
+        end)
+      {:error, :enoent} ->
+        "No thumbnail available"
+    end
   end
 end

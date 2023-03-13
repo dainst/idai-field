@@ -53,7 +53,7 @@ defmodule FieldHub.IssuesTest do
            ] = Issues.evaluate_all(@project)
   end
 
-  test "missing project document creates multiple issues" do
+  test "missing project document creates issue" do
     TestHelper.delete_document(@project, "project")
 
     issues =
@@ -71,12 +71,27 @@ defmodule FieldHub.IssuesTest do
 
     assert [
              %FieldHub.Issues.Issue{
-               data: %{unresolved: ["project"], doc: %{"_id" => "o25"}},
-               severity: :error,
-               type: :unresolved_relation
-             },
-             %FieldHub.Issues.Issue{
-               data: %{unresolved: ["project"], doc: %{"_id" => "o26"}},
+               data: %{
+                 missing: "project",
+                 referencing_docs: [
+                   %{
+                     category: "Image",
+                     created: %{date: _, user: "sample_data"},
+                     identifier: "mapLayerTest2.png",
+                     modified: [%{date: _, user: "sample_data"}],
+                     uuid: "o26",
+                     relations: ["isMapLayerOf"]
+                   },
+                   %{
+                     category: "Drawing",
+                     created: %{date: _, user: "sample_data"},
+                     identifier: "PE07-So-07_Z001.jpg",
+                     modified: [%{date: _, user: "sample_data"}],
+                     uuid: "o25",
+                     relations: ["isMapLayerOf"]
+                   }
+                 ]
+               },
                severity: :error,
                type: :unresolved_relation
              }
@@ -151,7 +166,7 @@ defmodule FieldHub.IssuesTest do
                        "identifier" => "PQ1-ST1",
                        "relations" => _,
                        "shortDescription" => _,
-                       "type" => "SurveyUnit"
+                       "category" => "SurveyUnit"
                      }
                    },
                    %{
@@ -168,24 +183,39 @@ defmodule FieldHub.IssuesTest do
            ] = Issues.evaluate_identifiers(@project)
   end
 
-  test "unresolveable issues raises issue" do
+  test "unresolveable relations raises issue" do
     TestHelper.delete_document(@project, "sa1")
 
     assert [
              %FieldHub.Issues.Issue{
-               type: :unresolved_relation,
+               data: %{
+                 missing: "sa1",
+                 referencing_docs: [
+                   %{
+                     category: "SurveyUnit",
+                     created: %{date: _, user: "sample_data"},
+                     identifier: "PQ2",
+                     modified: [%{date: _, user: "sample_data"}],
+                     uuid: "syu2"
+                   },
+                   %{
+                     category: "SurveyUnit",
+                     created: %{date: _, user: "sample_data"},
+                     identifier: "PQ1",
+                     modified: [%{date: _, user: "sample_data"}],
+                     uuid: "syu1"
+                   },
+                   %{
+                     category: "SurveyUnit",
+                     created: %{date: _, user: "sample_data"},
+                     identifier: "PQ1-ST1",
+                     modified: [%{date: _, user: "sample_data"}],
+                     uuid: "st1"
+                   }
+                 ]
+               },
                severity: :error,
-               data: %{unresolved: ["sa1"], doc: %{"_id" => "st1"}}
-             },
-             %FieldHub.Issues.Issue{
-               type: :unresolved_relation,
-               severity: :error,
-               data: %{unresolved: ["sa1"], doc: %{"_id" => "syu1"}}
-             },
-             %FieldHub.Issues.Issue{
-               type: :unresolved_relation,
-               severity: :error,
-               data: %{unresolved: ["sa1"], doc: %{"_id" => "syu2"}}
+               type: :unresolved_relation
              }
            ] = Issues.evaluate_relations(@project)
   end

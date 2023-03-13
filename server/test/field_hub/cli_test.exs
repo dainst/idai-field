@@ -314,10 +314,10 @@ defmodule FieldHub.CLITest do
       end)
 
     assert log =~ "[error] Issue: error_level_issue:"
-    assert log =~ "[error] - some_error_msg: ABORT ABORT!"
+    assert log =~ "[error] - some_error_msg: \"ABORT ABORT!\""
     assert log =~ "[warning] Issue: warning_level_issue:"
-    assert log =~ "[warning] - some_warning_msg: This was probably unintended."
+    assert log =~ "[warning] - some_warning_msg: \"This was probably unintended.\""
     assert log =~ "[info] Issue: info_level_issue:"
-    assert log =~ "[info] - some_info_msg: Everything is fine, no need to worry."
+    assert log =~ "[info] - some_info_msg: \"Everything is fine, no need to worry.\""
   end
 end

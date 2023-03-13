@@ -227,7 +227,7 @@ defmodule FieldHubWeb.ProjectShowLive do
   def get_issue_type_label(:no_project_document), do: "No project document"
   def get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
   def get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
-  def get_issue_type_label(:image_variants_size), do: "Image variants file size"
+  def get_issue_type_label(:image_variants_size), do: "Original images file size"
   def get_issue_type_label(:missing_image_copyright), do: "Images missing copyright information"
   def get_issue_type_label(:missing_original_image), do: "Missing original images"
   def get_issue_type_label(:unexpected_error), do: "Unexpected issue"

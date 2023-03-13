@@ -364,6 +364,10 @@ defmodule FieldHub.CouchService do
             rows
             |> Enum.map(fn row ->
               case row do
+                %{"doc" => nil} = val ->
+                  # case for deleted documents
+                  val
+
                 %{"doc" => doc} ->
                   Map.put(row, "doc", replace_resource_type_with_category(doc))
 

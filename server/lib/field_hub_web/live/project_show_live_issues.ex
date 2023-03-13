@@ -149,10 +149,10 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
         <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
         Identifier "<%= data.identifier %>" is used by
         <a style="cursor: pointer;" phx-click={
-          JS.toggle(to: "#duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}")
+          JS.toggle(to: "#duplicate-identifier-docs-#{Base.encode32(data.identifier)}")
         }> <%= Enum.count(data.documents) %> documents</a>.
 
-        <div hidden id={"duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}"}>
+        <div hidden id={"duplicate-identifier-docs-#{Base.encode32(data.identifier)}"}>
           <%= for doc <- data.documents do %>
             <pre><%= Jason.encode!(doc, pretty: true) %></pre>
           <% end %>

@@ -157,6 +157,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
             <pre><%= Jason.encode!(doc, pretty: true) %></pre>
           <% end %>
         </div>
+      </div>
       <% end %>
     </div>
     """

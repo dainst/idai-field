@@ -154,8 +154,8 @@ export module ConstraintIndex {
 
     function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
 
-        const elementForPath = getOn(definition.pathArray, doc);
-        const elements = isObject(elementForPath) ? Object.values(elementForPath) : [elementForPath];
+        const contentAtPath = getOn(definition.pathArray, doc);
+        const elements: any[] = getElements(contentAtPath);
 
         for (let element of elements) {
             switch(definition.type) {
@@ -181,6 +181,26 @@ export module ConstraintIndex {
                     break;
             }
         }
+    }
+
+
+    function getElements(data: any): any[] {
+
+        if (data === undefined) return [undefined];
+        if (isObject(data)) return Object.values(data);
+
+        if (isArray(data)) {
+            data = data.reduce((result, element) => {
+                if (isObject(element)) {
+                    result = result.concat(Object.values(element));
+                } else {
+                    result.push(element);
+                }
+                return result;
+            }, []);
+        }
+
+        return [data];
     }
 
 
@@ -277,6 +297,7 @@ export module ConstraintIndex {
         switch (field.inputType) {
             case 'checkboxes':
             case 'multiInput':
+            case 'simpleMultiInput':
                 return 'contain';
             default:
                 return 'match';
@@ -385,7 +406,8 @@ export module ConstraintIndex {
                         pathArray: ['resource', field.name, 'endValue'],
                         type: indexType
                     }
-                }];
+                }
+            ];
         }
 
         return [{

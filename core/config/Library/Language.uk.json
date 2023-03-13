@@ -107,16 +107,16 @@
       "label": "Пошкодження в процентах"
     },
     "archaeoDox:documentationUnit": {
-      "label": "Documentation unit"
+      "label": "Підрозділ документації"
     },
     "webGisId": {
-      "label": "Web GIS ID"
+      "label": "Web-GIS/ГІС-ID"
     },
     "shortDescriptionAddendum": {
-      "label": "Short description (Addendum)"
+      "label": "Короткий опис/характеристика(додатково)"
     },
     "phase": {
-      "label": "Phase"
+      "label": "Період/фаза"
     }
   },
   "categories": {
@@ -221,7 +221,7 @@
       }
     },
     "ExcavationArea": {
-      "label": "Excavation area",
+      "label": "Зона обстеження",
       "fields": {}
     },
     "Glass": {
@@ -1263,30 +1263,30 @@
       }
     },
     "FindDrawing": {
-      "label": "Find drawing",
+      "label": "Малюнок знахідки",
       "fields": {
         "scale": {
-          "label": "Scale"
+          "label": "Масштаб"
         },
         "sheetNumberFrom": {
-          "label": "Sheet number (from)"
+          "label": "Номер аркуша (від)"
         },
         "sheetNumberTo": {
-          "label": "Sheet number (to)"
+          "label": "Номер аркуша (до)"
         }
       }
     },
     "PlanDrawing": {
-      "label": "Plan drawing",
+      "label": "Креслення плану",
       "fields": {
         "scale": {
-          "label": "Scale"
+          "label": "Масштаб"
         },
         "sheetNumberFrom": {
-          "label": "Sheet number (from)"
+          "label": "Номер аркуша (від)"
         },
         "sheetNumberTo": {
-          "label": "Sheet number (to)"
+          "label": "Номер аркуша (до)"
         }
       }
     },
@@ -1308,7 +1308,7 @@
         },
         "treatment": {
           "label": "Обробка",
-          "description": "Beschreibungsfeld Поле опису наявності античних слідів обробки (наприклад: «тавро каменяра на основі»"
+          "description": "Поле опису наявності античних слідів обробки (наприклад: «тавро каменяра на основі»)"
         },
         "workmanship": {
           "label": "Виконання",
@@ -1487,10 +1487,10 @@
       "label": "Фотографія",
       "fields": {
         "viewingDirection": {
-          "label": "Viewing direction"
+          "label": "Напрямок прямої видимості"
         },
         "originalFormat": {
-          "label": "Original format"
+          "label": "Оригінальний формат"
         }
       }
     },
@@ -1559,49 +1559,49 @@
     }
   },
   "Project:archaeoDox": {
-    "label": "Process"
+    "label": "Процес"
   },
   "Place:archaeoDox": {
-    "label": "Find spot"
+    "label": "Місце знахідки"
   },
   "Planum:archaeoDox": {
-    "label": "Planum drawing"
+    "label": "Малюнок поверхні"
   },
   "Profile:archaeoDox": {
-    "label": "Profile drawing",
+    "label": "Креслення профілю",
     "fields": {
       "archaeoDox:viewingDirection": {
-        "label": "Viewing direction"
+        "label": "Напрямок прямої видимості"
       }
     }
   },
   "Find:archaeoDox": {
     "fields": {
       "shortDescription": {
-        "label": "Short description (Classification)"
+        "label": "Короткий опис (класифікація)"
       },
       "archaeoDox:material": {
         "label": "Матеріал"
       },
       "archaeoDox:typeOfWare": {
-        "label": "Type of ware"
+        "label": "Тип товару"
       }
     }
   },
   "FeatureGroup:archaeoDox": {
     "fields": {
       "shortDescription": {
-        "label": "Short description (Classification)"
+        "label": "Короткий опис (класифікація)"
       }
     }
   },
   "Feature:archaeoDox": {
     "fields": {
       "shortDescription": {
-        "label": "Short description (Classification)"
+        "label": "Короткий опис (класифікація)"
       },
       "archaeoDox:distinguishingCriterium": {
-        "label": "Distinguishing criterium"
+        "label": "Критерій розрізнення"
       },
       "archaeoDox:isNatural": {
         "label": "Природність"
@@ -1613,24 +1613,24 @@
         "label": "Консистенція"
       },
       "archaeoDox:isArchaeologicallyIrrelevant": {
-        "label": "Archaeologically irrelevant"
+        "label": "Без археологічного значення"
       }
     }
   },
   "FeatureSegment:archaeoDox": {
     "fields": {
       "shortDescription": {
-        "label": "Short description (Classification)"
+        "label": "Короткий опис (класифікація)"
       }
     }
   },
   "Sample:archaeoDox": {
     "fields": {
       "shortDescription": {
-        "label": "Short description (Classification)"
+        "label": "Короткий опис (класифікація)"
       },
       "archaeoDox:soilProperties": {
-        "label": "Soil properties"
+        "label": "Властивості ґрунту"
       }
     }
   }

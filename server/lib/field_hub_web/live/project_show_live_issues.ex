@@ -83,28 +83,49 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   def render(%{id: :unresolved_relation} = assigns) do
     ~H"""
     <div class="issue-content">
-      <em>The following database documents contained unresolved relations.</em>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Document</th>
-            <th>Unresolved relations (UUIDs)</th>
-          </tr>
-        </thead>
-        <tbody>
-        <%= for %{data: data} <- @issues do %>
+      <em>
+        There are documents missing, that are being referenced by other documents in the database. Possible solutions:
+        <ul>
+          <li>Remove or update the broken relations in the desktop application.</li>
+          <li>Check project backups to find out about more about the now missing document.</li>
+        </ul>
+      </em>
+      <%= for %{data: data} <- @issues do %>
+        <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
+          Missing document <span style="text-decoration:underline;"><%= data.missing %></span> is referenced by the following documents:
+          <table>
+          <thead>
             <tr>
-              <td><pre style="white-space: pre-wrap"><%= inspect(data.doc, pretty: true) %></pre></td>
-              <td>
-              <%= for uuid <- data.unresolved do %>
-                  <div style="border-width:1px;border-style:dashed;padding:2px"><%= uuid %></div>
-              <% end %>
-              </td>
+              <th>Identifier</th>
+              <th>Category</th>
+              <th>Unresolved relationship(s)</th>
+              <th>History</th>
             </tr>
-        <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+          <%= for doc <- data.referencing_docs do %>
+            <tr>
+              <td><%= doc.identifier %></td>
+              <td><%= doc.category %></td>
+              <td>
+                <ul>
+                <%= for relation <- doc.relations do %>
+                  <li><%= relation %></li>
+                <% end %>
+                </ul>
+              </td>
+              <td>
+                <div>Created by <%= doc.created.user %>, <%= doc.created.date %>.</div>
+                <%= for modification <- doc.modified do %>
+                  <div>Changed by <%= modification.user %>, <%= modification.date %>.</div>
+                <% end %>
+              </td>
+            <tr>
+          <% end %>
+          </tbody>
+          </table>
+        </div>
+      <% end %>
     </div>
     """
   end

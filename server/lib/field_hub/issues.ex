@@ -228,28 +228,6 @@ defmodule FieldHub.Issues do
     }
   end
 
-  defp extract_image_metadata(
-         %{
-           "created" => %{
-             "user" => created_by,
-             "date" => created
-           },
-           "resource" => %{
-             "id" => uuid,
-             "category" => category,
-             "identifier" => file_name
-           }
-         } = _doc
-       ) do
-    %{
-      uuid: uuid,
-      file_type: category,
-      file_name: file_name,
-      created_by: created_by,
-      created: created
-    }
-  end
-
   defp get_custom_image_categories(project_identifier) do
     project_identifier
     |> CouchService.get_docs_by_category(["Configuration"])
@@ -353,11 +331,12 @@ defmodule FieldHub.Issues do
       |> Enum.map(fn %{"_id" => uuid, "resource" => %{"relations" => relations}} ->
         referenced_uuids =
           relations
-          |> Enum.map(fn {_relation_type_key, uuids} ->
-            uuids
+          |> Enum.map(fn {_relation_type, uuids} ->
+            Enum.map(uuids, fn uuid ->
+              uuid
+            end)
           end)
           |> List.flatten()
-          |> Enum.uniq()
 
         {uuid, referenced_uuids}
       end)
@@ -368,7 +347,7 @@ defmodule FieldHub.Issues do
       end)
 
     all_referenced_uuids =
-      Enum.reduce(uuid_relations_pairs, [], fn ({_uuid, relations}, acc) ->
+      Enum.reduce(uuid_relations_pairs, [], fn {_uuid, relations}, acc ->
         acc ++ relations
       end)
       |> Enum.uniq()
@@ -376,29 +355,46 @@ defmodule FieldHub.Issues do
     all_missing_uuids = all_referenced_uuids -- all_existing_uuids
 
     uuid_relations_pairs
-    |> Stream.map(fn({uuid, locally_referenced}) ->
+    |> Enum.reduce(%{}, fn {uuid, locally_referenced}, acc ->
       locally_referenced_not_missing = locally_referenced -- all_missing_uuids
 
       case locally_referenced -- locally_referenced_not_missing do
         [] ->
-          :ok
+          acc
+
         missing_but_referenced ->
-          %Issue{
-            type: :unresolved_relation,
-            severity: :error,
-            data: %{
-              doc:
-                project_identifier
-                |> Project.get_documents([uuid])
-                |> then(fn [ok: doc] ->
-                  doc
-                end),
-              unresolved: missing_but_referenced
-            }
-          }
+          referencing_document =
+            project_identifier
+            |> Project.get_documents([uuid])
+            |> then(fn [ok: doc] ->
+              doc
+            end)
+
+          missing_but_referenced
+          |> Enum.reduce(%{}, fn missing, inner ->
+            Map.update(inner, missing, [referencing_document], fn existing ->
+              existing ++ [referencing_document]
+            end)
+          end)
+          |> Map.merge(acc, fn _key, value_a, value_b ->
+            value_a ++ value_b
+          end)
       end
     end)
-    |> Enum.reject(fn val -> val == :ok end)
+    |> Enum.map(fn {missing_uuid, referencing_documents} ->
+      referenced_metadata =
+        referencing_documents
+        |> Enum.map(&extract_relation(&1, missing_uuid))
+
+      %Issue{
+        type: :unresolved_relation,
+        severity: :error,
+        data: %{
+          missing: missing_uuid,
+          referencing_docs: referenced_metadata
+        }
+      }
+    end)
   end
 
   @doc """
@@ -419,5 +415,67 @@ defmodule FieldHub.Issues do
           fn val -> val == severity_b end
         )
     end)
+  end
+
+  defp extract_core_metadata(%{
+         "created" => created,
+         "modified" => modified,
+         "resource" => %{
+           "id" => uuid,
+           "category" => category,
+           "identifier" => identifier
+         }
+       }) do
+    %{
+      uuid: uuid,
+      category: category,
+      identifier: identifier,
+      created: parse_changes(created),
+      modified: Enum.map(modified, &parse_changes/1)
+    }
+  end
+
+  defp parse_changes(%{"date" => date, "user" => user}) do
+    %{
+      date: date,
+      user: user
+    }
+  end
+
+  defp extract_relation(%{"resource" => %{"relations" => relations}} = db_doc, referenced_uuid) do
+    relations =
+      relations
+      |> Enum.map(fn {relation_type, ids} ->
+        if referenced_uuid in ids do
+          relation_type
+        else
+          :not_found
+        end
+      end)
+      |> Enum.reject(fn val -> val == :not_found end)
+
+    Map.merge(extract_core_metadata(db_doc), %{relations: relations})
+  end
+
+  defp extract_image_metadata(
+         %{
+           "created" => %{
+             "user" => created_by,
+             "date" => created
+           },
+           "resource" => %{
+             "id" => uuid,
+             "category" => category,
+             "identifier" => file_name
+           }
+         } = _doc
+       ) do
+    %{
+      uuid: uuid,
+      file_type: category,
+      file_name: file_name,
+      created_by: created_by,
+      created: created
+    }
   end
 end

@@ -223,8 +223,25 @@ defmodule FieldHub.TestHelper do
         type: :unresolved_relation,
         severity: :error,
         data: %{
-          unresolved: ["sa1"],
-          doc: %{"_id" => "syu2", "resource" => %{"some" => "content"}}
+          missing: "sa1",
+          referencing_docs: [
+            %{
+              category: "SurveyUnit",
+              created: %{date: "2023-01-05T10:32:09.290Z", user: "sample_data"},
+              identifier: "PQ2",
+              modified: [%{date: "2023-01-05T10:32:09.290Z", user: "sample_data"}],
+              relations: ["isMapLayerOf"],
+              uuid: "syu2"
+            },
+            %{
+              category: "SurveyUnit",
+              created: %{date: "2023-01-05T10:32:09.290Z", user: "sample_data"},
+              identifier: "PQ1",
+              modified: [%{date: "2023-01-05T10:32:09.290Z", user: "sample_data"}],
+              relations: ["isMapLayerOf"],
+              uuid: "syu1"
+            }
+          ]
         }
       },
       %Issue{

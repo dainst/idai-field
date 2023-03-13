@@ -107,7 +107,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
     assert html =~ "Project file directory not found (1)"
     assert html =~ "Missing original images (1)"
-    assert html =~ "Image variants file size (1)"
+    assert html =~ "Original images file size (1)"
     assert html =~ "No default map layer (1)"
     assert html =~ "No project document (1)"
     assert html =~ "Unexpected issue (1)"
@@ -189,7 +189,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (5)"
+      assert html =~ "Issues (4)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do
@@ -251,7 +251,6 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "project document data is displayed in overview", %{conn: conn} do
-
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       html = render(view)
@@ -280,9 +279,10 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       TestHelper.update_document(
         @project,
         project_doc
-        |> Map.update!("resource", fn(resource) ->
+        |> Map.update!("resource", fn resource ->
           Map.put(resource, "projectSupervisor", "Ms. Supervisor")
-        end))
+        end)
+      )
 
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
@@ -297,21 +297,22 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       TestHelper.update_document(
         @project,
         project_doc
-        |> Map.update!("resource", fn(resource) ->
+        |> Map.update!("resource", fn resource ->
           resource
           |> Map.put("contactPerson", "Mr. Contact")
           |> Map.put("contactMail", "mr.contact@dainst.de")
-        end))
+        end)
+      )
 
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       html = render(view)
 
-      assert html =~ "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
+      assert html =~
+               "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
     end
 
     test "project staff is displayed in overview", %{conn: conn} do
-
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       html = render(view)

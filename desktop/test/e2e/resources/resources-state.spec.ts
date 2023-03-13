@@ -300,7 +300,7 @@ test.describe('resources/state --', () => {
     });
 
 
-    test('search -- perform constraint search for simple input field', async () => {
+    test('search -- perform constraint search for input field', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 

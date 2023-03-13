@@ -1262,6 +1262,34 @@
         }
       }
     },
+    "FindDrawing": {
+      "label": "Find drawing",
+      "fields": {
+        "scale": {
+          "label": "Scale"
+        },
+        "sheetNumberFrom": {
+          "label": "Sheet number (from)"
+        },
+        "sheetNumberTo": {
+          "label": "Sheet number (to)"
+        }
+      }
+    },
+    "PlanDrawing": {
+      "label": "Plan drawing",
+      "fields": {
+        "scale": {
+          "label": "Scale"
+        },
+        "sheetNumberFrom": {
+          "label": "Sheet number (from)"
+        },
+        "sheetNumberTo": {
+          "label": "Sheet number (to)"
+        }
+      }
+    },
     "Survey": {
       "label": "Area del Survey",
       "fields": {

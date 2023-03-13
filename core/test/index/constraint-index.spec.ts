@@ -387,11 +387,6 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        const ie1 = IndexItem.from(docs[0]);
-        const ie2 = IndexItem.from(docs[1]);
-        const ie3 = IndexItem.from(docs[2]);
-        const ie4 = IndexItem.from(docs[3]);
-
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
         ConstraintIndex.put(ci, docs[2]);

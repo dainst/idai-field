@@ -81,11 +81,9 @@
 
         <h2>
             <div class="row">
-                <div class="column column-80">
-                    Issues<%= if @issue_count != 0, do: " (#{@issue_count})" %>
-                </div>
+                <div class="column">Issues<%= if @issue_count != 0, do: " (#{@issue_count})" %></div>
 
-                <div class="column column-20">
+                <div class="column">
                     <button class="button" phx-click="evaluate_issues">
                         <%= case @issues do %>
                             <% :no_data -> %>

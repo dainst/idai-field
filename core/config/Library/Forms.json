@@ -1303,7 +1303,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "sampleType", "labNumber", "weight"]
+          "fields": ["description", "sampleType", "storagePlace", "labNumber", "weight"]
         },
         {
           "name": "position",

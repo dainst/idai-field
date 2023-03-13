@@ -609,7 +609,7 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('index valOptionalEndVal field', () => {
+    it('index field of input type dropdownRange', () => {
 
         categories = [{
             name: 'category',

@@ -190,3 +190,29 @@ nav {
   background-color: rgb(253, 53, 53); 
   color: white;
 }
+
+.issue-loading-spinner {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  margin-left: 50%;
+  margin-bottom: 30px;
+}
+.issue-loading-spinner:after {
+  content: " ";
+  width: 32px;
+  height: 32px;
+  animation: issue-loading-anim 1.2s linear infinite;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  border-color: transparent #000000 transparent #000000;
+  display: block;
+}
+@keyframes issue-loading-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

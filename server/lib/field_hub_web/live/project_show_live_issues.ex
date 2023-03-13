@@ -51,17 +51,20 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     <div class="issue-content">
       <em>In general the original images are expected to be larger than their thumbnails.
       For the following files this is not the case.</em>
-      <ul>
-        <%= for %{data: data} <- @issues do %>
-          <li class="container">
-            '<%= data.file_name %>' (<%= data.file_type %>),
-            created by <%= data.created_by %> on <%= data.created %>, sizes:
+
+      <%= for %{data: data} <- @issues do %>
+      <div class="row">
+          <div class="column column-25">
+            <img src={"#{get_thumbnail_data(data.uuid, @project)}"}/>
+          </div>
+          <div class="column">
+            '<%= data.file_name %>' (<%= data.file_type %>), created by <%= data.created_by %> on <%= data.created %>, sizes:
             <strong>
               <%= Sizeable.filesize(data.thumbnail_size) %> (thumbnail), <%= Sizeable.filesize(data.original_size) %> (original)
             </strong>
-          </li>
-        <% end %>
-      </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
     """
   end
@@ -192,5 +195,20 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
       <% end %>
     </div>
     """
+  end
+
+  defp get_thumbnail_data(uuid, project) do
+    FieldHub.FileStore.get_file_path(uuid, project, :thumbnail_image)
+    |> case do
+      {:ok, path} ->
+        path
+        |> File.read!()
+        |> Base.encode64()
+        |> then(fn(encoded) ->
+          "data:image/*;base64,#{encoded}"
+        end)
+      {:error, :enoent} ->
+        "No thumbnail available"
+    end
   end
 end

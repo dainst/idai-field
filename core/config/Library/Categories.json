@@ -1271,7 +1271,7 @@
         "valuelistId": "Coin-denomination-default"
       },
       "manufacturingMethod": {
-        "inputType": "input",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Coin-manufacturingMethod-default"
       },

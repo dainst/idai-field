@@ -832,6 +832,60 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('remove valuelist from field if a non-valuelist input type is set', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aField: {
+                        inputType: 'dropdown',
+                        valuelistId: 'aField-valuelist'
+                    }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
+                fields: {
+                    aField: {
+                        inputType: 'text'
+                    }
+                },
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms,
+            {},
+            {
+                'aField-valuelist': {
+                    values: { a: {} }, description: {}, creationDate: '', createdBy: ''
+                }
+            }
+        );
+
+        expect(result['A'].groups[0].fields[0]['valuelist']).toBeUndefined();
+    });
+
+
     it('extend valuelist', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

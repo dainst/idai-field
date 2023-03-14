@@ -180,6 +180,11 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 categoryName: 'A',
                 description: {},
+                fields: {
+                    field1: {
+                        inputType: 'dropdown'
+                    }
+                },
                 valuelists: {
                     field1: 'list1'
                 },
@@ -450,7 +455,14 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 categoryName: 'A',
                 groups: [{ name: Groups.STEM, fields: ['aField'] }],
-                valuelists: { aField: 'aField-valuelist-id-1' },
+                fields: { 
+                    aField: {
+                        inputType: 'dropdown'
+                    }
+                },
+                valuelists: {
+                    aField: 'aField-valuelist-id-1'
+                },
                 description: {},
                 createdBy: '',
                 creationDate: ''

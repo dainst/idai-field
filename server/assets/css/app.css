@@ -198,6 +198,11 @@ nav {
   margin-bottom: 30px;
   margin-left: 20px;
 }
+
+.issue-content td {
+  vertical-align: top;
+}
+
 .issue-loading-spinner:after {
   content: " ";
   width: 32px;

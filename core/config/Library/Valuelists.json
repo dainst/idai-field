@@ -12545,6 +12545,48 @@
       }
     }
   },
+  "storagePlace-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Landesamt": {
+        "label": {
+          "de": "Landesamt",
+          "it": "Ufficio statale",
+          "uk": "Державне Управління"
+        }
+      },
+      "Museum": {
+        "label": {
+          "de": "Museum",
+          "it": "Museo",
+          "uk": "Музей"
+        }
+      },
+      "Privatbesitz": {
+        "label": {
+          "de": "Privatbesitz",
+          "it": "Proprietà privata",
+          "uk": "Приватна власність"
+        }
+      },
+      "Restaurierungswerkstatt": {
+        "label": {
+          "de": "Restaurierungswerkstatt",
+          "it": "Laboratorio di restauro",
+          "uk": "Реставраційна майстерня"
+        }
+      },
+      "Staatsbesitz": {
+        "label": {
+          "de": "Staatsbesitz",
+          "it": "Proprietà dello Stato",
+          "uk": "Державна власність"
+        }
+      }
+    }
+  },
   "PlasterFragment-plasterComponents-default": {
     "createdBy": "",
     "creationDate": "",

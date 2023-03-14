@@ -1345,7 +1345,7 @@
       "storagePlace": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "Find-storagePlace-default"
+        "valuelistId": "storagePlace-default"
       }
     }
   },
@@ -1363,7 +1363,7 @@
       "storagePlace": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "Find-storagePlace-default"
+        "valuelistId": "storagePlace-default"
       },
       "bibliography": {
         "inputType": "text"
@@ -1587,7 +1587,9 @@
         "valuelistId": "Sample-sampleType-default"
       },
       "storagePlace": {
-        "inputType": "input"
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "storagePlace-default"
       }
     }
   },

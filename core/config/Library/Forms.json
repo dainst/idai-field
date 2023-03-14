@@ -1323,6 +1323,9 @@
         "shortDescription": {
           "inputType": "dropdown"
         },
+        "storagePlace": {
+          "inputType": "input"
+        },
         "archaeoDox:soilProperties": {
           "inputType": "radio",
           "constraintIndexed": true,

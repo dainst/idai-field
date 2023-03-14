@@ -225,13 +225,19 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
 
 function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuelists: Map<Valuelist>) {
 
+    if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)) {
+        delete field.valuelist;
+        delete field.valuelistId;
+        return;
+    }
+
     if (!field.valuelistId) return;
 
     field.valuelist = valuelists[field.valuelistId];
     if (field.valuelist?.extendedValuelist) {
         field.valuelist = Valuelist.applyExtension(field.valuelist, valuelists[field.valuelist.extendedValuelist]);
     }
-    
+
     delete field.valuelistId;
 }
 

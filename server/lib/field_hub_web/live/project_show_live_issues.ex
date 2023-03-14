@@ -149,14 +149,15 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
         <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
         Identifier "<%= data.identifier %>" is used by
         <a style="cursor: pointer;" phx-click={
-          JS.toggle(to: "#duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}")
+          JS.toggle(to: "#duplicate-identifier-docs-#{Base.encode32(data.identifier, padding: false)}")
         }> <%= Enum.count(data.documents) %> documents</a>.
 
-        <div hidden id={"duplicate-identifier-docs-#{String.replace(data.identifier, " ", "_")}"}>
+        <div hidden id={"duplicate-identifier-docs-#{Base.encode32(data.identifier, padding: false)}"}>
           <%= for doc <- data.documents do %>
             <pre><%= Jason.encode!(doc, pretty: true) %></pre>
           <% end %>
         </div>
+      </div>
       <% end %>
     </div>
     """
@@ -198,6 +199,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   end
 
   defp get_thumbnail_data(uuid, project) do
+    # TODO: Add  /ui/images route and replace blob variant
     FieldHub.FileStore.get_file_path(uuid, project, :thumbnail_image)
     |> case do
       {:ok, path} ->

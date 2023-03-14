@@ -138,11 +138,11 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
-      assert html_on_mount =~ "<tr><td>Supervisor</td><td>\nLoading...\n</td></tr>"
-      assert html_on_mount =~ "<tr><td>Contact</td><td>\nLoading...\n</td></tr>"
-      assert html_on_mount =~ "<tr><td>Staff</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "No supervisor found in project document."
+      assert html_on_mount =~ "No contact data found in project document."
+      assert html_on_mount =~ "Person 1, Person 2"
       assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
-      assert html_on_mount =~ "<h2><div class=\"row\"><div class=\"column\">Issues</div>"
+      assert html_on_mount =~ "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
 
       html = render(view)
 
@@ -164,7 +164,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         |> element("button")
         |> render_click()
 
-      assert html =~ "🔍 Evaluating..."
+      assert html =~ "Evaluating issues, for big projects this may take several minutes..."
 
       # Elixir/Erlang kinda deep dive:
       #

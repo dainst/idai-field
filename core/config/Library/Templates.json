@@ -554,23 +554,28 @@
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "BK"
         },
         "Feature:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "B"
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "BA"
         },
         "Find:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "F"
         },
         "Sample:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "P"
         },
         "Image:archaeoDox": {
           "hidden": [],
@@ -590,11 +595,13 @@
         },
         "Planum:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "FLZ"
         },
         "Profile:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "identifierPrefix": "PRZ"
         }
       },
       "order": [

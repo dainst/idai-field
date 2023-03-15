@@ -613,7 +613,23 @@
         "FindDrawing",
         "Planum",
         "Profile"
-      ]
+      ],
+      "languages": {
+        "de": {
+          "relations": {
+            "isPresentIn": {
+              "label": "Ist enthalten in Profil-/Flächenzeichnung"
+            }
+          }
+        },
+        "en": {
+          "relations": {
+            "isPresentIn": {
+              "label": "Is present in profile/plan drawing"
+            }
+          }
+        }
+      }
     }
   }
 }

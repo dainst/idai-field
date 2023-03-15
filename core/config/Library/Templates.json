@@ -528,10 +528,10 @@
   "archaeoDox": {
     "author": "Archäologisches Museum Hamburg",
     "label": {
-      "de": "ArchaeoDox",
-      "en": "ArchaeoDox",
-      "it": "ArchaeoDox",
-      "uk": "ArchaeoDox"
+      "de": "archaeoDox",
+      "en": "archaeoDox",
+      "it": "archaeoDox",
+      "uk": "archaeoDox"
     },
     "description": {},
     "configuration": {

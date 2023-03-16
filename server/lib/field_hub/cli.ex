@@ -66,25 +66,6 @@ defmodule FieldHub.CLI do
         Logger.warning("Application user '#{app_user}' already exists.")
     end
 
-    admin_user
-    |> Project.get_all_for_user()
-    |> Enum.each(fn project_identifier ->
-      Logger.info("Running setup for existing project #{project_identifier}.")
-
-      Project.update_user(app_user, project_identifier, :member)
-      |> case do
-        :set ->
-          Logger.info("- User '#{app_user}' is set as member of project '#{project_identifier}'.")
-      end
-
-      FileStore.create_directories(project_identifier)
-      |> Enum.each(fn {variant_name, :ok} ->
-        Logger.info(
-          "- File directory for '#{variant_name}' is setup for project '#{project_identifier}'."
-        )
-      end)
-    end)
-
     Logger.info("Setup done.")
   end
 

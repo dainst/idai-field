@@ -36,15 +36,13 @@ export class BackupLoadingComponent {
     private static TIMEOUT: number = 200;
 
 
-    constructor(
-        private modalService: NgbModal,
-        private messages: Messages,
-        private settingsProvider: SettingsProvider,
-        private settingsService: SettingsService,
-        private backupProvider: BackupProvider,
-        private tabManager: TabManager,
-        private menuService: Menus
-    ) {}
+    constructor(private modalService: NgbModal,
+                private messages: Messages,
+                private settingsProvider: SettingsProvider,
+                private settingsService: SettingsService,
+                private backupProvider: BackupProvider,
+                private tabManager: TabManager,
+                private menuService: Menus) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -91,7 +89,9 @@ export class BackupLoadingComponent {
     private async readBackupFile() {
 
         try {
-            const warnings: MsgWithParams[] = await this.backupProvider.readDump(this.path, this.projectIdentifier) as any;
+            const warnings: MsgWithParams[] = await this.backupProvider.readDump(
+                this.path, this.projectIdentifier, this.settingsService
+            ) as any;
             await this.settingsService.addProject(this.projectIdentifier);
             if (warnings) warnings.forEach(warning => this.messages.add(warning));
             this.messages.add([M.BACKUP_READ_SUCCESS]);

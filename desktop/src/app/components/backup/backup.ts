@@ -1,5 +1,6 @@
 import { Name } from 'idai-field-core';
 import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
+import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
@@ -43,7 +44,8 @@ export module Backup {
     /**
      * Returns warnings as array of msgWithParams
      */
-    export async function readDump(filePath: string, project: Name): Promise<string[][]> {
+    export async function readDump(filePath: string, project: Name,
+                                   settingsService: SettingsService): Promise<string[][]> {
 
         if (!fs.existsSync(filePath)) throw FILE_NOT_EXIST;
         if (!fs.lstatSync(filePath).isFile()) throw FILE_NOT_EXIST;
@@ -66,6 +68,8 @@ export module Backup {
 
         projectDocument.resource.identifier = project;
         await db2.put(projectDocument, { force: true });
+
+        await settingsService.updateProjectName(projectDocument);
 
         return warnings;
     }

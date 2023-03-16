@@ -111,7 +111,7 @@ defmodule FieldHub.CLI do
               Logger.info("Created directory for '#{file_variant}'.")
 
             {file_variant, posix} ->
-              Logger.info("Unable to create directory for '#{file_variant}': #{posix}")
+              Logger.error("Unable to create directory for '#{file_variant}': #{posix}")
           end
         end)
 
@@ -200,7 +200,7 @@ defmodule FieldHub.CLI do
         Logger.info("Created user '#{user_name}' with password '#{password}'.")
 
       :already_exists ->
-        Logger.info("User '#{user_name}' already exists.")
+        Logger.warning("User '#{user_name}' already exists.")
     end
   end
 

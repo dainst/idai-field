@@ -54,7 +54,6 @@ defmodule FieldHubWeb.ProjectShowLive do
         :update_overview,
         %{assigns: %{project: project}} = socket
       ) do
-
     stats = Project.evaluate_project(project)
 
     Process.send_after(self(), :update_overview, 10000)
@@ -184,7 +183,6 @@ defmodule FieldHubWeb.ProjectShowLive do
   def issue_classes(:error), do: "monitoring-issue error"
 
   defp read_project_doc(%{assigns: %{project: project}} = socket) do
-
     project_doc =
       project
       |> Project.get_documents(["project"])

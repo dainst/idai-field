@@ -300,7 +300,7 @@ defmodule FieldHub.Issues do
           %Issue{
             type: :non_unique_identifiers,
             severity: :error,
-            data: %{identifier: identifier, documents: documents }
+            data: %{identifier: identifier, documents: documents}
           }
         end)
     end

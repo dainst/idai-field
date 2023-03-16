@@ -142,7 +142,9 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
       assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
-      assert html_on_mount =~ "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+
+      assert html_on_mount =~
+               "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
 
       html = render(view)
 

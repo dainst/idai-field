@@ -72,7 +72,9 @@ defmodule FieldHub.CLITest do
     assert log =~ "[info] Deleted user '#{@project_identifier}'."
     assert log =~ "[info] Deleted 0 files for 'test_project'."
 
-    assert File.exists?("#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}")
+    assert File.exists?(
+             "#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+           )
   end
 
   test "delete_project/1 with file store deletion" do
@@ -85,7 +87,9 @@ defmodule FieldHub.CLITest do
     assert log =~ "[info] Deleted project database '#{@project_identifier}'."
     assert log =~ "[info] Deleted user '#{@project_identifier}'."
     assert log =~ "[info] Deleted 3 files for 'test_project'."
-    assert log =~ "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+
+    assert log =~
+             "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
 
     assert log =~
              "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}/thumbnail_images"
@@ -93,7 +97,9 @@ defmodule FieldHub.CLITest do
     assert log =~
              "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}/original_images"
 
-    assert not File.exists?("#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}")
+    assert not File.exists?(
+             "#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+           )
   end
 
   test "delete_project/1 on an unknown project should print warning" do

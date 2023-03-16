@@ -87,7 +87,6 @@ defmodule FieldHub.Project do
           error ->
             error
         end
-
       else
         []
       end

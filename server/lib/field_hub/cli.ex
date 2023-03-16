@@ -181,8 +181,12 @@ defmodule FieldHub.CLI do
         case file_store do
           {:error, posix, file} ->
             Logger.error("Got posix error #{posix} while trying to delete #{file}.")
+
           deleted_files_list ->
-            Logger.info("Deleted #{Enum.count(deleted_files_list)} files for '#{project_identifier}'.")
+            Logger.info(
+              "Deleted #{Enum.count(deleted_files_list)} files for '#{project_identifier}'."
+            )
+
             deleted_files_list
             |> Enum.each(&Logger.info(&1))
         end

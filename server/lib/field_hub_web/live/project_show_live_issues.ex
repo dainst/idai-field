@@ -206,9 +206,10 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
         path
         |> File.read!()
         |> Base.encode64()
-        |> then(fn(encoded) ->
+        |> then(fn encoded ->
           "data:image/*;base64,#{encoded}"
         end)
+
       {:error, :enoent} ->
         "No thumbnail available"
     end

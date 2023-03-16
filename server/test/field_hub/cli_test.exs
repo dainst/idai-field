@@ -70,23 +70,37 @@ defmodule FieldHub.CLITest do
 
     assert log =~ "[info] Deleted project database '#{@project_identifier}'."
     assert log =~ "[info] Deleted user '#{@project_identifier}'."
-    assert log =~ "[info] Deleted 0 files for 'test_project'."
+    assert log =~ "[info] Deleted 0 files for '#{@project_identifier}'."
+
+    assert File.exists?(
+             "#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+           )
   end
 
-test "delete_project/1 with file store deletion" do
-  log =
-    capture_log(fn ->
-      assert :ok = CLI.create_project(@project_identifier)
-      assert :ok = CLI.delete_project(@project_identifier, true)
-    end)
+  test "delete_project/1 with file store deletion" do
+    log =
+      capture_log(fn ->
+        assert :ok = CLI.create_project(@project_identifier)
+        assert :ok = CLI.delete_project(@project_identifier, true)
+      end)
 
-  assert log =~ "[info] Deleted project database '#{@project_identifier}'."
-  assert log =~ "[info] Deleted user '#{@project_identifier}'."
-  assert log =~ "[info] Deleted 3 files for 'test_project'."
-  assert log =~ "[info] #{Application.get_env(:field_hub, :file_directory_root)}/test_project"
-  assert log =~ "[info] #{Application.get_env(:field_hub, :file_directory_root)}/test_project/thumbnail_images"
-  assert log =~ "[info] #{Application.get_env(:field_hub, :file_directory_root)}/test_project/original_images"
-end
+    assert log =~ "[info] Deleted project database '#{@project_identifier}'."
+    assert log =~ "[info] Deleted user '#{@project_identifier}'."
+    assert log =~ "[info] Deleted 3 files for '#{@project_identifier}'."
+
+    assert log =~
+             "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+
+    assert log =~
+             "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}/thumbnail_images"
+
+    assert log =~
+             "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}/original_images"
+
+    assert not File.exists?(
+             "#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
+           )
+  end
 
   test "delete_project/1 on an unknown project should print warning" do
     log =

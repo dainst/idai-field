@@ -57,15 +57,15 @@ defmodule FieldHub.Project do
   end
 
   @doc """
-  Deletes the project by name. Currently the project's file directory (images...) will
-  be left intact in the filesystem.
+  Deletes the project by name.
 
-  Returns `%{dabase :deleted | :unknown_project, file_store: []}`.
+  Returns `%{dabase :deleted | :unknown_project, file_store: list_of_deleted_files | {:error, posix, file_path}}`.
 
   __Parameters__
   - `project_identifier` the project's name.
+  - `delete_files` (optional) set true to also delete (image) files.
   """
-  def delete(project_identifier) do
+  def delete(project_identifier, delete_files \\ false) do
     couch_result =
       project_identifier
       |> CouchService.delete_project()
@@ -77,20 +77,22 @@ defmodule FieldHub.Project do
           :unknown_project
       end
 
-    # Deactivated for now, we do not really delete images for existing projects (we are just adding tombstone files)
-    # so we probably should also keep the files directory when deleting project (?).
-    # FileStore.remove_directories(project_identifier)
-    # |> case do
-    #   {:ok, deleted} ->
-    #     Logger.info("Deleted #{Enum.count(deleted)} files for '#{project_identifier}'.")
-    #     deleted
-    #     |> Enum.each(&Logger.info(&1))
+    file_store_result =
+      if delete_files do
+        FileStore.remove_directories(project_identifier)
+        |> case do
+          {:ok, deleted} ->
+            deleted
 
-    #   {:error, reason, file} ->
-    #     Logger.error("Got posix error #{reason} while trying to delete #{file}.")
-    # end
+          error ->
+            error
+        end
 
-    %{database: couch_result, file_store: []}
+      else
+        []
+      end
+
+    %{database: couch_result, file_store: file_store_result}
   end
 
   @doc """

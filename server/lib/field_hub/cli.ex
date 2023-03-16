@@ -153,13 +153,20 @@ defmodule FieldHub.CLI do
   @doc """
   Deletes a project.
 
+  By default will only delete the database and will leave the files in your file system intact:
+
+  The reason being that databases are always fully synchronized, but files are not necessarily. Your FieldHub
+  installation may be the only node in your project's syncing network that still retains certain high
+  resolution images of colleagues that have left the project.
+
   __Parameters__
   - `project_identifier` the project's name.
+  - `delete_files` (optional) set true to also delete (image) files.
   """
-  def delete_project(project_identifier) do
+  def delete_project(project_identifier, delete_files \\ false) do
     HTTPoison.start()
 
-    Project.delete(project_identifier)
+    Project.delete(project_identifier, delete_files)
     |> case do
       %{database: :unknown_project, file_store: _file_store} = result ->
         Logger.warning("Project database '#{project_identifier}' does not exists.")
@@ -171,13 +178,14 @@ defmodule FieldHub.CLI do
     end
     |> case do
       %{database: _, file_store: file_store} ->
-        file_store
-        |> Enum.map(fn result ->
-          case result do
-            {:ok, file_variant} ->
-              Logger.info("Deleted directory for '#{file_variant}'.")
-          end
-        end)
+        case file_store do
+          {:error, posix, file} ->
+            Logger.error("Got posix error #{posix} while trying to delete #{file}.")
+          deleted_files_list ->
+            Logger.info("Deleted #{Enum.count(deleted_files_list)} files for '#{project_identifier}'.")
+            deleted_files_list
+            |> Enum.each(&Logger.info(&1))
+        end
     end
 
     delete_user(project_identifier)

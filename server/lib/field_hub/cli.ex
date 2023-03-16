@@ -1,7 +1,6 @@
 defmodule FieldHub.CLI do
   alias FieldHub.{
     CouchService,
-    FileStore,
     Issues,
     Project,
     User
@@ -25,9 +24,6 @@ defmodule FieldHub.CLI do
     HTTPoison.start()
 
     Logger.info("Running setup.")
-
-    admin_user = Application.get_env(:field_hub, :couchdb_admin_name)
-    app_user = Application.get_env(:field_hub, :couchdb_user_name)
 
     Logger.info("Running initial CouchDB setup for single node at #{CouchService.base_url()}...")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
@@ -53,6 +49,8 @@ defmodule FieldHub.CLI do
       %{status_code: code} when 199 < code and code < 300 ->
         Logger.info("Created system database `_replicator`.")
     end
+
+    app_user = Application.get_env(:field_hub, :couchdb_user_name)
 
     User.create(
       app_user,

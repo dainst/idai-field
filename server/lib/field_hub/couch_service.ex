@@ -299,7 +299,8 @@ defmodule FieldHub.CouchService do
   end
 
   @doc """
-  Returns a list of all databases (excluding CouchDB's internal ones: `_users` and `_replicator`).
+  Returns a list of all databases the application user has access to. This excludes internal databases like
+  `_security` or `_users` and databases within the CouchDB instance that are not associated with FieldHub.
   """
   def get_all_databases() do
     "#{base_url()}/_all_dbs"
@@ -309,9 +310,15 @@ defmodule FieldHub.CouchService do
     )
     |> Map.get(:body)
     |> Jason.decode!()
-    |> Stream.reject(fn val ->
-      # Filter out CouchDB's internal databases.
-      val in ["_replicator", "_users"]
+    |> Stream.filter(fn project_identifier ->
+      # Only keep databases that the application user has access to (see `headers/0`).
+      HTTPoison.get!("#{base_url()}/#{project_identifier}", headers())
+      |> case do
+        %{status_code: 200} ->
+          true
+        _ ->
+          false
+      end
     end)
     |> Enum.to_list()
   end

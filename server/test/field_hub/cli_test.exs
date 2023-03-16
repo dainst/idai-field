@@ -70,7 +70,7 @@ defmodule FieldHub.CLITest do
 
     assert log =~ "[info] Deleted project database '#{@project_identifier}'."
     assert log =~ "[info] Deleted user '#{@project_identifier}'."
-    assert log =~ "[info] Deleted 0 files for 'test_project'."
+    assert log =~ "[info] Deleted 0 files for '#{@project_identifier}'."
 
     assert File.exists?(
              "#{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"
@@ -86,7 +86,7 @@ defmodule FieldHub.CLITest do
 
     assert log =~ "[info] Deleted project database '#{@project_identifier}'."
     assert log =~ "[info] Deleted user '#{@project_identifier}'."
-    assert log =~ "[info] Deleted 3 files for 'test_project'."
+    assert log =~ "[info] Deleted 3 files for '#{@project_identifier}'."
 
     assert log =~
              "[info] #{Application.get_env(:field_hub, :file_directory_root)}/#{@project_identifier}"

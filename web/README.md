@@ -53,7 +53,7 @@ The goal here is to ingest and index one or more project from a `couchdb` into o
 
 Assuming `elasticsearch` already runs, we start the `api` and trigger the process of reading in and converting the contents from a couchdb (filled with suitable Field data) by
 
-    1$ docker-compose up
+    1$ docker-compose up api
     2$ curl -XPOST localhost:4000/api/worker/reindex
 
 Obeserve the logging in `$1` to see when the process finished. After that, call

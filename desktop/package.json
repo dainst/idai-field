@@ -209,8 +209,5 @@
     "crypto": false,
     "child_process": false,
     "https": false
-  },
-  "overrides": {
-    "leveldown": "6.1.1"
   }
 }

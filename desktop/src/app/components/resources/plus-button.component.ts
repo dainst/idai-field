@@ -44,14 +44,13 @@ export class PlusButtonComponent implements OnChanges {
     public toplevelCategoriesArray: Array<CategoryForm>;
 
 
-    constructor(
-        private elementRef: ElementRef,
-        private resourcesComponent: ResourcesComponent,
-        private projectConfiguration: ProjectConfiguration,
-        private messages: Messages,
-        private viewFacade: ViewFacade,
-        private datastore: Datastore,
-        private i18n: I18n) {
+    constructor(private elementRef: ElementRef,
+                private resourcesComponent: ResourcesComponent,
+                private projectConfiguration: ProjectConfiguration,
+                private messages: Messages,
+                private viewFacade: ViewFacade,
+                private datastore: Datastore,
+                private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
@@ -81,13 +80,15 @@ export class PlusButtonComponent implements OnChanges {
 
         const newDocument: FieldDocument = <FieldDocument> {
             resource: {
-                identifier: '',
                 relations: this.createRelations(),
                 category: this.selectedCategory
             }
         };
-        if (this.skipFormAndReturnNewDocument) this.documentRequested.emit(newDocument);
-        else this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
+        if (this.skipFormAndReturnNewDocument) {
+            this.documentRequested.emit(newDocument);
+        } else {
+            this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
+        }
     }
 
 

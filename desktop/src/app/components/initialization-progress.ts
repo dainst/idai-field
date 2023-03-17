@@ -167,7 +167,7 @@ export class InitializationProgress {
             projectName
         );
 
-        if (projectIdentifier) {
+        if (projectIdentifier && projectName !== projectIdentifier) {
             InitializationProgress.setElementText(
                 'initialization-info-project-identifier',
                 '(' + projectIdentifier + ')'

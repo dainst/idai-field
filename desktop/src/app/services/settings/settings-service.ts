@@ -268,7 +268,7 @@ export class SettingsService {
                 forms: template.configuration.forms,
                 order: template.configuration.order,
                 valuelists: {},
-                languages: template.configuration.languages,
+                languages: template.configuration.languages ?? {},
                 projectLanguages: selectedLanguages,
                 relations: {}
             },

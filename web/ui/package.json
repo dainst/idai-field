@@ -23,7 +23,7 @@
     "chokidar": "3.0.0",
     "cross-env": "7.0.3",
     "i18next": "^19.8.7",
-    "idai-field-core": "^1.1.6",
+    "idai-field-core": "^1.1.7",
     "idai-shapes-ceramics_resnet50": "^1.0.1",
     "idai-shapes-ceramics-segmentation-unet": "^1.0.0",
     "leaflet": "^1.7.1",

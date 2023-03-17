@@ -28,6 +28,7 @@ defmodule Api.Worker.Indexer do
   defp perform_reindex configuration, project, index do
     IdaiFieldDb.fetch_changes(project)
     |> Enum.filter(&filter_non_owned_document/1)
+    |> Enum.map(&Mapper.rename_type_to_category/1)
     |> Enum.map(Mapper.process)
     |> Enum.filter(&filter_configuration_document/1)
     |> log_finished("mapping", project)

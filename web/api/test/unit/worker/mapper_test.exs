@@ -1,14 +1,14 @@
 defmodule Api.Worker.MapperTest do
-  
+
   alias Api.Worker.Mapper
-  
+
   use ExUnit.Case
   use Plug.Test
-  
+
   test "convert type to category" do
     change = %{ doc: %{ resource: %{ type: "abc" }}}
     %{ doc: %{ resource: resource }} = Mapper.process change
-    
+
     assert resource[:type] == nil
     assert resource.category == "abc"
   end
@@ -19,8 +19,8 @@ defmodule Api.Worker.MapperTest do
       identifier: "Proj-A",
       id: "id-A"
     }}}
-    %{id: change_id, doc: %{ resource: resource }} = Mapper.process change
-    
+    %{id: change_id, doc: %{ resource: resource }} = change |> Mapper.rename_type_to_category |> Mapper.process
+
     assert resource.category == "Project"
     assert resource.id == "Proj-A"
     assert change_id == "Proj-A"
@@ -29,10 +29,10 @@ defmodule Api.Worker.MapperTest do
   test "leave deletion unchanged" do
     change = %{ deleted: true }
     result = Mapper.process change
-  
+
     assert result == %{ deleted: true }
   end
-  
+
   test "convert old style period field - period is string" do
     change = %{ doc: %{ resource: %{
       :type => "abc",

@@ -105,7 +105,8 @@ defmodule Api.Worker.Enricher.Labels do
      end
   end
 
-  defp get_field_definition(category_definition, field_name) do
+  # TODO extract
+  def get_field_definition(category_definition, field_name) do
     group = Enum.find(category_definition.groups, &get_field_definition_from_group(&1, field_name))
     get_field_definition_from_group(group, field_name)
   end

@@ -11,7 +11,8 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             category: %{
               name: "Trench"
             },
-            shortDescription: "hallo"
+            a: "hallo",
+            b: %{ "de": "hallo-de"}
           }
         },
       }
@@ -21,13 +22,19 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
           fields: [
             %{
               inputType: "input",
-              name: "shortDescription",
+              name: "a",
+            },
+            %{
+              inputType: "input",
+              name: "b",
             }
           ]
         }
       ]
 
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.shortDescription
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.a
     assert %{ unspecifiedLanguage: "hallo" } == result
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.b
+    assert %{ "de": "hallo-de" } == result
   end
 end

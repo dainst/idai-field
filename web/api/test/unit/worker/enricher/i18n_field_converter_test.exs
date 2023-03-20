@@ -12,8 +12,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               name: "Trench"
             },
             a: "hallo",
-            b: %{ "de" => "hallo-de"},
-            c: "hallo-simple-input"
+            b: %{ "de" => "hallo-de" },
+            c: "hallo-simple-input",
+            d: "hallo\nmulti",
+            e: %{ "de" => "hallo-de\nmulti" },
+            f: "hallo-simple\nmulti-input"
           }
         },
       }
@@ -32,6 +35,18 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             %{
               inputType: "simpleInput",
               name: "c",
+            },
+            %{
+              inputType: "multiInput",
+              name: "d",
+            },
+            %{
+              inputType: "multiInput",
+              name: "e",
+            },
+            %{
+              inputType: "simpleMultiInput",
+              name: "f",
             }
           ]
         }
@@ -43,5 +58,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
     assert %{ "de" => "hallo-de" } == result
     result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.c
     assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == result
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.d
+    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == result
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.e
+    assert %{ "de" => "hallo-de\nmulti" } == result
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.f
+    assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == result
   end
 end

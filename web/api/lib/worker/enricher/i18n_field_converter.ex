@@ -16,7 +16,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
       if is_nil(field_definition[:inputType]) do
         resource
       else
-        if field_definition.inputType == "input" or field_definition.inputType == "simpleInput" do
+        if field_definition.inputType == "input"
+             or field_definition.inputType == "simpleInput"
+             or field_definition.inputType == "multiInput"
+             or field_definition.inputType == "simpleMultiInput"
+           do
           convert_string resource, field_name, field_value
         else
           resource

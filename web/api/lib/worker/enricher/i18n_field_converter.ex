@@ -1,7 +1,7 @@
 defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   alias Api.Core.CategoryTreeList
-  alias Api.Worker.Enricher.Labels
+  alias Api.Worker.Enricher.Utils
 
   defp convert_string(resource, field_name, field_value) when not is_map(field_value) do  # this is from legacy project then
     put_in(resource, [field_name], %{ unspecifiedLanguage: field_value })
@@ -12,7 +12,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   defp convert_resource_field category_definition do
     fn {field_name, field_value}, resource ->
-      field_definition = Labels.get_field_definition category_definition, Atom.to_string(field_name)
+      field_definition = Utils.get_field_definition category_definition, Atom.to_string(field_name)
       if is_nil(field_definition[:inputType]) do
         resource
       else

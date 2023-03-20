@@ -1,7 +1,8 @@
 defmodule Api.Worker.Enricher.Labels do
   require Logger
-  alias Api.Core.Utils
+  alias Api.Core
   alias Api.Core.CategoryTreeList
+  alias Api.Worker.Enricher.Utils
 
   @core_properties [:id, :identifier, :shortDescription, :geometry, :geometry_wgs84, :georeference,
     :gazId, :parentId, :featureVectors, :license, :shortName, :originalFilename]
@@ -18,7 +19,7 @@ defmodule Api.Worker.Enricher.Labels do
     else
       Enum.reduce(resource, %{}, add_labels_to_field(category_definition, configuration))
       |> Enum.into(%{})
-      |> Utils.atomize
+      |> Core.Utils.atomize
     end
   end
 
@@ -49,7 +50,7 @@ defmodule Api.Worker.Enricher.Labels do
     cond do
       Enum.member?(@core_properties, field_name) -> put_in(resource, [field_name], field_value)
 
-      get_field_definition(category_definition, field_name) == nil ->
+      Utils.get_field_definition(category_definition.groups, field_name) == nil ->
         Logger.warn "Label not found: field \"#{field_name}\" of category \"#{category_definition.name}\""
         resource
       true ->
@@ -94,7 +95,7 @@ defmodule Api.Worker.Enricher.Labels do
 
   defp get_label(_, nil, _), do: nil
   defp get_label(field_name, field_value, category_definition) do
-     field_definition = get_field_definition(category_definition, field_name)
+     field_definition = Utils.get_field_definition(category_definition.groups, field_name)
      cond do
       is_nil(field_definition) -> raise "No field definition found for field #{field_name} of category "
         <> category_definition.name
@@ -104,17 +105,6 @@ defmodule Api.Worker.Enricher.Labels do
       true -> %{}
      end
   end
-
-  # TODO extract
-  def get_field_definition(category_definition, field_name) do
-    group = Enum.find(category_definition.groups, &get_field_definition_from_group(&1, field_name))
-    get_field_definition_from_group(group, field_name)
-  end
-
-  defp get_field_definition_from_group(%{ fields: fields }, field_name) do
-    Enum.find(fields, fn field -> field.name == field_name end)
-  end
-  defp get_field_definition_from_group(_, _), do: nil
 
   defp get_labels_object(%{ "labels" => labels }), do: labels
   defp get_labels_object(_), do: %{}

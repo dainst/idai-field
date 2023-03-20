@@ -15,21 +15,19 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
           }
         },
       }
-    category_definition =
-      %{
-          groups: [
+    category_definition_groups =
+      [
+        %{
+          fields: [
             %{
-              fields: [
-                %{
-                  inputType: "input",
-                  name: "shortDescription",
-                }
-              ]
+              inputType: "input",
+              name: "shortDescription",
             }
-          ],
-          name: "Trench",
-      }
-    result = (I18NFieldConverter.convert_category change, category_definition).doc.resource.shortDescription
+          ]
+        }
+      ]
+
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.shortDescription
     assert %{ unspecifiedLanguage: "hallo" } == result
   end
 end

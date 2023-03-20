@@ -1,7 +1,7 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
+import { Dating, Dimension, I18N, Literature, OptionalRange } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +12,9 @@ import { search } from '../../api/documents';
 import { Query } from '../../api/query';
 import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
-import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
+import { getLabel, getNumberOfUndisplayedLabels, getTranslation } from '../languages';
 import { LoginContext } from '../login';
 import { getDocumentLink } from './document-utils';
-import { getLangStr } from '../languages';
 import DocumentTeaser from './DocumentTeaser';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
@@ -264,7 +263,7 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
     }
     
     // We assume it is a multi language value then
-    return getLangStr(object);
+    return getTranslation(object as undefined as I18N.String);
 };
 
 

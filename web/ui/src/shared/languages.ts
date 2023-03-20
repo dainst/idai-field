@@ -1,4 +1,5 @@
 import { set } from 'tsfun';
+import { I18N } from 'idai-field-core';
 import { I18nString, LabeledValue } from '../api/document';
 
 export const USER_INTERFACE_LANGUAGES = ['en', 'de'];
@@ -43,11 +44,30 @@ function getBasicLanguageCode(language: string): string {
 }
 
 
-// TODO move this to idai-field core or re-use functions from there
-export function getLangStr(object) {
+// TODO incorporate the additive changes made here into idai-field-core#I18N.getTranslation
+// TODO should we accept an `undefined` labels argument?
+// TODO review initialization order; are we sure LANGUAGES (passed in as languages argument; see above)
+// is populated yet?
+export function getTranslation(labels: I18N.String|undefined): string {
 
-    if (!object) return undefined;
+    if (!labels) return '';
+    if (!LANGUAGES) {
+        console.warn('getTranslation complains: LANGUAGES not populated yet');
+        return '';
+    }
 
-    const firstKey = Object.keys(object)[0];
-    return object[firstKey];
+    let translated = I18N.getTranslation(labels, LANGUAGES);
+    if (translated) return translated;
+
+    // TODO think about what we return here
+
+    translated = labels['unspecifiedLanguage'];
+    if (translated) return translated;
+
+    const firstKey = Object.keys(labels)[0];
+    translated = labels[firstKey];
+    if (translated) return translated;
+
+    // TODO END
+    throw Error('getTranslation cannot translate');
 }

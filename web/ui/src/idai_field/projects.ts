@@ -1,6 +1,6 @@
 import { ResultDocument } from '../api/result';
 import { Document } from '../api/document';
-import { getLangStr } from '../shared/languages';
+import { getTranslation } from '../shared/languages';
 
 
 const MAX_LABEL_LENGTH = 35;
@@ -8,8 +8,8 @@ const MAX_LABEL_LENGTH = 35;
 
 export const getProjectLabel = (projectDocument: ResultDocument|Document): string => {
 
-    const shortDescription = getLangStr(projectDocument.resource.shortDescription);
-    const shortName = getLangStr(projectDocument.resource.shortName);
+    const shortDescription = getTranslation(projectDocument.resource.shortDescription);
+    const shortName = getTranslation(projectDocument.resource.shortName);
 
     return shortName ??
         (shortDescription

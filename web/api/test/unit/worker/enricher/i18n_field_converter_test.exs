@@ -4,7 +4,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
   use Plug.Test
   alias Api.Worker.Enricher.I18NFieldConverter
 
-  test "convert" do
+  test "convert input, simpleInput, multiInput, simpleMultiInput" do
     change = %{
         doc: %{
           resource: %{
@@ -24,30 +24,12 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
       [
         %{
           fields: [
-            %{
-              inputType: "input",
-              name: "a",
-            },
-            %{
-              inputType: "input",
-              name: "b",
-            },
-            %{
-              inputType: "simpleInput",
-              name: "c",
-            },
-            %{
-              inputType: "multiInput",
-              name: "d",
-            },
-            %{
-              inputType: "multiInput",
-              name: "e",
-            },
-            %{
-              inputType: "simpleMultiInput",
-              name: "f",
-            }
+            %{ inputType: "input", name: "a" },
+            %{ inputType: "input", name: "b" },
+            %{ inputType: "simpleInput", name: "c" },
+            %{ inputType: "multiInput", name: "d" },
+            %{ inputType: "multiInput", name: "e" },
+            %{ inputType: "simpleMultiInput", name: "f" }
           ]
         }
       ]

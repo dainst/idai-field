@@ -68,7 +68,8 @@ const renderTeaser = (document: ResultDocument, size: string, height: number, as
                     <Col className={ 'p-0 text-muted short-description'
                             + (showShortDescription === 'full' ? '' : ' single-line') }
                          style={ textStyle }>
-                        { getTranslation(document.resource.shortDescription) }
+                            
+                        { getTranslation(document.resource.shortDescription) /* TODO fix typing */ }
                     </Col>
                 </Row>
                 }

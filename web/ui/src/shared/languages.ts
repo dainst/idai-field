@@ -48,6 +48,8 @@ function getBasicLanguageCode(language: string): string {
 // TODO should we accept an `undefined` labels argument?
 // TODO review initialization order; are we sure LANGUAGES (passed in as languages argument; see above)
 // is populated yet?
+// Note that we probably want to return a string here in any case, in contrast to I18N.getTranslation,
+// which may return undefined.
 export function getTranslation(labels: I18N.String|undefined): string {
 
     if (!labels) return '';

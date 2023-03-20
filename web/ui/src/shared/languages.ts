@@ -41,3 +41,13 @@ function getBasicLanguageCode(language: string): string {
     const index: number = language.indexOf('-');
     return index > 0 ? language.substring(0, index) : language;
 }
+
+
+// TODO move this to idai-field core or re-use functions from there
+export function getLangStr(object) {
+
+    if (!object) return undefined;
+
+    const firstKey = Object.keys(object)[0];
+    return object[firstKey];
+}

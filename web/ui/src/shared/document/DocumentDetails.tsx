@@ -15,6 +15,7 @@ import { ImageCarousel } from '../image/ImageCarousel';
 import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
 import { LoginContext } from '../login';
 import { getDocumentLink } from './document-utils';
+import { getLangStr } from '../languages';
 import DocumentTeaser from './DocumentTeaser';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
@@ -262,8 +263,8 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
         );
     }
     
-    console.warn('Failed to render field value:', object);
-    return undefined;
+    // We assume it is a multi language value then
+    return getLangStr(object);
 };
 
 

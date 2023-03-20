@@ -25,6 +25,7 @@ import { EXCLUDED_CATEGORIES } from '../constants';
 import CategoryFilter from '../filter/CategoryFilter';
 import ProjectHierarchyButton from './ProjectHierarchyButton';
 import ProjectMap from './ProjectMap';
+import { getLangStr } from '../../shared/languages';
 
 
 const MAP_FIT_OPTIONS = { padding : [ 10, 10, 10, 10 ], duration: 500 };
@@ -87,17 +88,20 @@ export default function ProjectHome(): ReactElement {
 }
 
 
-const renderTitle = (title: string, projectDocument: Document) =>
-    <div className="d-flex p-2 m-2" style={ headerStyle }>
-        <div className="flex-fill">
-            <h2><img src="/marker-icon.svg" alt="Home" style={ homeIconStyle } /> {title}</h2>
-        </div>
-        <div className="text-right" style={ buttonsStyle }>
-            <LicenseInformationButton license={ projectDocument.resource.license } />
-            <DocumentPermalinkButton url={ getDocumentPermalink(projectDocument) } />
-        </div>
-    </div>;
+const renderTitle = (title: string, projectDocument: Document) => {
 
+    const titleStr = getLangStr(title);
+
+    return (<div className="d-flex p-2 m-2" style={ headerStyle }>
+            <div className="flex-fill">
+                <h2><img src="/marker-icon.svg" alt="Home" style={ homeIconStyle } /> {titleStr}</h2>
+            </div>
+            <div className="text-right" style={ buttonsStyle }>
+                <LicenseInformationButton license={ projectDocument.resource.license } />
+                <DocumentPermalinkButton url={ getDocumentPermalink(projectDocument) } />
+            </div>
+        </div>);
+}
 
 const renderSidebar = (projectId: string, projectDocument: Document, categoryFilter: ResultFilter,
         setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number,

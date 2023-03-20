@@ -4,7 +4,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
   alias Api.Worker.Enricher.Utils
 
   defp convert_string(resource, field_name, field_value) when not is_map(field_value) do  # this is from legacy project then
-    put_in(resource, [field_name], %{ unspecifiedLanguage: field_value })
+    put_in(resource, [field_name], %{ "unspecifiedLanguage" => field_value })
   end
   defp convert_string resource, _field_name, _field_value do
     resource
@@ -16,7 +16,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
       if is_nil(field_definition[:inputType]) do
         resource
       else
-        if field_definition[:inputType] == "input" do
+        if field_definition.inputType == "input" or field_definition.inputType == "simpleInput" do
           convert_string resource, field_name, field_value
         else
           resource

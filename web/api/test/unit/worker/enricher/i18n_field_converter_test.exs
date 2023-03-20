@@ -12,7 +12,8 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               name: "Trench"
             },
             a: "hallo",
-            b: %{ "de": "hallo-de"}
+            b: %{ "de" => "hallo-de"},
+            c: "hallo-simple-input"
           }
         },
       }
@@ -27,14 +28,20 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             %{
               inputType: "input",
               name: "b",
+            },
+            %{
+              inputType: "simpleInput",
+              name: "c",
             }
           ]
         }
       ]
 
     result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.a
-    assert %{ unspecifiedLanguage: "hallo" } == result
+    assert %{ "unspecifiedLanguage" => "hallo" } == result
     result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.b
-    assert %{ "de": "hallo-de" } == result
+    assert %{ "de" => "hallo-de" } == result
+    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.c
+    assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == result
   end
 end

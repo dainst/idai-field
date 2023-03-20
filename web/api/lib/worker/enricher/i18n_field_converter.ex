@@ -31,7 +31,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
   end
 
   def convert change, configuration do
-    name = change.doc.resource.category.name # TODO review category.name
+    name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
     category_definition = CategoryTreeList.find_by_name(name, configuration)
     convert_category change, category_definition
   end

@@ -11,12 +11,12 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             category: %{
               name: "Trench"
             },
-            a: "hallo",
-            b: %{ "de" => "hallo-de" },
-            c: "hallo-simple-input",
-            d: "hallo\nmulti",
-            e: %{ "de" => "hallo-de\nmulti" },
-            f: "hallo-simple\nmulti-input"
+            inputField: "hallo",
+            inputFieldMap: %{ "de" => "hallo-de" },
+            simpleInputField: "hallo-simple-input",
+            multiInputField: "hallo\nmulti",
+            multiInputFieldMap: %{ "de" => "hallo-de\nmulti" },
+            simpleMultiInputField: "hallo-simple\nmulti-input"
           }
         },
       }
@@ -24,27 +24,23 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
       [
         %{
           fields: [
-            %{ inputType: "input", name: "a" },
-            %{ inputType: "input", name: "b" },
-            %{ inputType: "simpleInput", name: "c" },
-            %{ inputType: "multiInput", name: "d" },
-            %{ inputType: "multiInput", name: "e" },
-            %{ inputType: "simpleMultiInput", name: "f" }
+            %{ inputType: "input", name: "inputField" },
+            %{ inputType: "input", name: "inputFieldMap" },
+            %{ inputType: "simpleInput", name: "simpleInputField" },
+            %{ inputType: "multiInput", name: "multiInputField" },
+            %{ inputType: "multiInput", name: "multiInputFieldMap" },
+            %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
           ]
         }
       ]
 
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.a
-    assert %{ "unspecifiedLanguage" => "hallo" } == result
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.b
-    assert %{ "de" => "hallo-de" } == result
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.c
-    assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == result
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.d
-    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == result
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.e
-    assert %{ "de" => "hallo-de\nmulti" } == result
-    result = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource.f
-    assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == result
+    resource = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource
+
+    assert %{ "unspecifiedLanguage" => "hallo" } == resource.inputField
+    assert %{ "de" => "hallo-de" } == resource.inputFieldMap
+    assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == resource.simpleInputField
+    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == resource.multiInputField
+    assert %{ "de" => "hallo-de\nmulti" } == resource.multiInputFieldMap
+    assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
   end
 end

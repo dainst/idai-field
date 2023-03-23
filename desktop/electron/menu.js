@@ -358,16 +358,26 @@ const getProjects = config => {
 
 const getProjectLabel = (projectIdentifier, config) => {
 
+    const projectName = getProjectName(projectIdentifier, config);
+
+    return projectName && projectName !== projectIdentifier
+        ? projectName + ' (' + projectIdentifier + ')'
+        : projectIdentifier;
+};
+
+
+const getProjectName = (projectIdentifier, config) => {
+
     const labels = config.projectNames?.[projectIdentifier];
-    if (!labels) return projectIdentifier;
+    if (!labels) return undefined;
 
     if (typeof labels === 'string') {
-        return labels + ' (' + projectIdentifier + ')';
+        return labels;
     } else {
         const language = config.languages.find(language => labels[language]);
         return language
-            ? labels[language] + ' (' + projectIdentifier + ')'
-            : projectIdentifier;
+            ? labels[language]
+            : undefined;
     }
 };
 

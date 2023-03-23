@@ -542,7 +542,8 @@
         },
         "Place:archaeoDox": {
           "hidden": ["gazId"],
-          "fields": {}
+          "fields": {},
+          "color": "#9cbde8"
         },
         "Operation:archaeoDox": {
           "hidden": [],
@@ -550,58 +551,70 @@
         },
         "ExcavationArea:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "color": "#0000ff"
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "BK"
+          "identifierPrefix": "BK",
+          "color": "#ff00ff"
         },
         "Feature:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "B"
+          "identifierPrefix": "B",
+          "color": "#ffff00"
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "BA"
+          "identifierPrefix": "BA",
+          "color": "#969696"
         },
         "Find:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "F"
+          "identifierPrefix": "F",
+          "color": "#ff0000"
         },
         "Sample:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "P"
+          "identifierPrefix": "P",
+          "color": "#ff0000"
         },
         "Image:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "color": "#dcdcdc"
         },
         "Photo:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "color": "#dcdcdc"
         },
         "PlanDrawing:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "color": "#0000ff"
         },
         "FindDrawing:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {},
+          "color": "#ff0000"
         },
         "Planum:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "FLZ"
+          "identifierPrefix": "FLZ",
+          "color": "#0000ff"
         },
         "Profile:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "identifierPrefix": "PRZ"
+          "identifierPrefix": "PRZ",
+          "color": "#00ff00"
         }
       },
       "order": [

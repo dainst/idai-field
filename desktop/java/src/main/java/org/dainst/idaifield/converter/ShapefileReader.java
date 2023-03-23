@@ -107,6 +107,8 @@ class ShapefileReader {
 
     private static void updateShortDescription(Resource resource, String language, String content) {
 
+        if (content.length() == 0) return;
+
         if (resource.getShortDescription() == null) {
             resource.setShortDescription(new HashMap<String, String>());
         }

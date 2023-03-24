@@ -62,11 +62,13 @@ export class ListComponent extends BaseList implements OnChanges {
     }
 
 
-    public async createNewDocument(doc: FieldDocument) {
+    public async createNewDocument(document: FieldDocument) {
+
+        document.resource.identifier = '';
 
         this.documents = this.documents
             .filter(_ => _.resource.id)
-            .concat([doc]);
+            .concat([document]);
     }
 
 

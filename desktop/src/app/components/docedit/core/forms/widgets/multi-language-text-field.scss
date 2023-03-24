@@ -1,6 +1,10 @@
 multi-language-text-field {
+  position: relative;
+  left: 1px;
+
   input,
   textarea {
+    margin-left: -1px !important;
     &.with-tabs {
       border-top: 0 !important;
     }
@@ -14,6 +18,7 @@ multi-language-text-field {
     transition: border-color 0.15s ease-in-out;
 
     a {
+      position: relative;
       height: 34px;
       font-size: 14px;
       border-top-left-radius: 14px !important;
@@ -21,6 +26,7 @@ multi-language-text-field {
       border-bottom: none !important;
       border-color: transparent !important;
       padding: 6px 12px !important;
+      margin-left: -1px;
       color: grey !important;
       user-select: none;
 
@@ -65,6 +71,7 @@ multi-language-text-field {
       border-top-color: #7998cb !important;
       border-left-color: #7998cb !important;
       border-right-color: #7998cb !important;
+      z-index: 1000;
     }
 
     a:hover:not(.active) {

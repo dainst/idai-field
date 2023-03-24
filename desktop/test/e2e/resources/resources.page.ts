@@ -140,19 +140,19 @@ export class ResourcesPage {
 
     public static clickListEditButton(identifier: string) {
 
-        return click('#resource-' + identifier + ' .list-edit-button');
+        return click(this.getListButton('edit', identifier));
     }
 
 
     public static clickListMoveButton(identifier: string) {
 
-        return click('#resource-' + identifier + ' .list-move-button');
+        return click(this.getListButton('move', identifier));
     }
 
 
     public static clickListDeleteButton(identifier: string) {
 
-        return click('#resource-' + identifier + ' .list-delete-button');
+        return click(this.getListButton('delete', identifier));
     }
 
 
@@ -242,7 +242,11 @@ export class ResourcesPage {
 
     public static async getListModeInputField(identifier, index) {
 
-        return (await getLocator('#resource-' + identifier + ' input')).nth(index);
+        const locator = identifier
+            ? getLocator('#resource-' + identifier + ' input')
+            : getLocator('#new-resource input');
+
+        return (await locator).nth(index);
     }
 
 
@@ -303,6 +307,16 @@ export class ResourcesPage {
     public static getListRows() {
 
         return getLocator('.row-wrapper');
+    }
+
+
+    public static getListButton(type: 'edit'|'move'|'delete', identifier?: string) {
+
+        const buttonClass: string = '.list-' + type + '-button';
+
+        return identifier
+            ? getLocator('#resource-' + identifier + ' ' + buttonClass)
+            : getLocator('#new-resource ' + buttonClass);
     }
 
 

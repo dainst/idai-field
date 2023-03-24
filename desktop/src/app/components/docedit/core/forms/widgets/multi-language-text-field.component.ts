@@ -3,11 +3,15 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleCh
 import { clone, isEmpty, isString } from 'tsfun';
 import { I18N } from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
+import { ComponentHelpers } from '../../../../component-helpers';
 
 
 @Component({
     selector: 'multi-language-text-field',
-    templateUrl: './multi-language-text-field.html'
+    templateUrl: './multi-language-text-field.html',
+    host: {
+        '(window:mousedown)': 'onMouseDown($event)',
+    }
 })
 
 /**
@@ -22,6 +26,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     @Output() onFieldDataChanged: EventEmitter<I18N.String|string|undefined>
         = new EventEmitter<I18N.String|string|undefined>();
 
+    @ViewChild('multiLanguageTextField') multiLanguageTextFieldElement: ElementRef;
     @ViewChild('inputField') inputFieldElement: ElementRef;
 
     public tabLanguages: Array<Language>;
@@ -63,7 +68,6 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     public onBlur() {
 
-        this.focused = false;
         const trimmedText: string = this.selectedText.trim();
         
         if (this.selectedText !== trimmedText) {
@@ -78,6 +82,30 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         this.selectedLanguage = language.code;
         this.updateSelectedText();
         this.inputFieldElement.nativeElement.focus();
+    }
+
+
+    public onMouseDown(event: any) {
+
+        if (!ComponentHelpers.isInside(
+            event.target,
+            target => target === this.multiLanguageTextFieldElement.nativeElement
+        )) {
+            this.focused = false;
+        }
+    }
+
+
+    public onKeyDown() {
+
+        setTimeout(() => {
+            if (!ComponentHelpers.isInside(
+                document.activeElement,
+                target => target === this.multiLanguageTextFieldElement.nativeElement
+            )) {
+                this.focused = false;
+            };
+        });
     }
 
 

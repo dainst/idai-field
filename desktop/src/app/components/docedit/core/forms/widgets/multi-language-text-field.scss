@@ -1,3 +1,6 @@
+$default-border-color: #ced4da;
+$focused-border-color: #7998cb;
+
 multi-language-text-field {
   position: relative;
   left: 1px;
@@ -10,14 +13,14 @@ multi-language-text-field {
     }
 
     &.focused {
-      border-color: #7998cb;
+      border-color: $focused-border-color;
     }
   }
 
   .nav-tabs {
     position: relative;
     right: 1px;
-    border-bottom-color: #ced4da;
+    border-bottom-color: $default-border-color;
     transition: border-color 0.15s ease-in-out;
 
     a {
@@ -38,7 +41,7 @@ multi-language-text-field {
         transition: border-top-color 0.15s ease-in-out,
                     border-left-color 0.15s ease-in-out,
                     border-right-color 0.15s ease-in-out;
-        border-color: #ced4da !important;
+        border-color: $default-border-color !important;
       }
 
       &.filled-in {
@@ -47,7 +50,7 @@ multi-language-text-field {
 
       &:hover {
         background-color: #fff;
-        border-color: #ced4da !important;
+        border-color: $default-border-color !important;
       }
     }
 
@@ -69,12 +72,12 @@ multi-language-text-field {
   }
 
   .nav-tabs.focused {
-    border-color: #7998cb !important;
+    border-color: $focused-border-color !important;
 
     a.active {
-      border-top-color: #7998cb !important;
-      border-left-color: #7998cb !important;
-      border-right-color: #7998cb !important;
+      border-top-color: $focused-border-color !important;
+      border-left-color: $focused-border-color !important;
+      border-right-color: $focused-border-color !important;
       z-index: 1000;
     }
 
@@ -85,11 +88,11 @@ multi-language-text-field {
 
   .nav-tabs:not(.focused) {
     a:active {
-      border-color: #ced4da !important;
+      border-color: $default-border-color !important;
     }
 
     a:hover:not(.active) {
-      border-bottom: 1px #ced4da solid !important;
+      border-bottom: 1px $default-border-color solid !important;
     }
   }
 }

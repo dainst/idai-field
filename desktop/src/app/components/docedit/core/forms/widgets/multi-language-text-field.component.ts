@@ -96,7 +96,9 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     }
 
 
-    public onKeyDown() {
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (!['Tab', 'Escape'].includes(event.key)) return;
 
         setTimeout(() => {
             if (!ComponentHelpers.isInside(

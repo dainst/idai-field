@@ -15,10 +15,13 @@ multi-language-text-field {
   }
 
   .nav-tabs {
+    position: relative;
+    right: 1px;
     transition: border-color 0.15s ease-in-out;
 
     a {
       position: relative;
+      left: 1px;
       height: 34px;
       font-size: 14px;
       border-top-left-radius: 14px !important;

@@ -28,6 +28,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     @ViewChild('multiLanguageTextField') multiLanguageTextFieldElement: ElementRef;
     @ViewChild('inputField') inputFieldElement: ElementRef;
+    @ViewChild('tabs') tabsElement: ElementRef;
 
     public tabLanguages: Array<Language>;
     public additionalLanguages: Array<Language>;
@@ -87,10 +88,12 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     public onMouseDown(event: any) {
 
-        if (!ComponentHelpers.isInside(
-            event.target,
-            target => target === this.multiLanguageTextFieldElement.nativeElement
-        )) {
+        if (event.target === this.tabsElement.nativeElement
+            || !ComponentHelpers.isInside(
+                event.target,
+                target => target === this.multiLanguageTextFieldElement.nativeElement
+            )
+        ) {
             this.focused = false;
         }
     }

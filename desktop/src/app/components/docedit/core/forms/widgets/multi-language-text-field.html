@@ -1,5 +1,5 @@
 <div #multiLanguageTextField (keydown)="onKeyDown($event)">
-    <ul *ngIf="hasTabs()" class="nav nav-tabs" [class.focused]="focused">
+    <ul #tabs *ngIf="hasTabs()" class="nav nav-tabs" [class.focused]="focused">
         <li *ngFor="let language of tabLanguages"
             [class]="'nav-item language-tab language-tab-' + language.code"
             (click)="selectLanguage(language)">

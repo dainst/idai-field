@@ -199,7 +199,7 @@ export class RowComponent implements AfterViewInit, OnChanges {
     private async save() {
 
         if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') {
-            await this.restoreIdentifier(this.document);
+            if (this.document.resource.id) await this.restoreIdentifier(this.document);
             return;
         }
 

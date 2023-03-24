@@ -1,7 +1,7 @@
 <div id="{{makeId()}}"
      class="row-wrapper">
     <div class="label-field">
-        <div class="category-label" [class.text-info]="!document.resource.id">
+        <div class="category-label" [class.text-info]="isNewResource()">
             <i>{{getCategoryLabel()}}</i>
         </div>
 
@@ -92,7 +92,7 @@
                 (click)="editDocument()">
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
-        <button *ngIf="isMoveOptionAvailable()"
+        <button [class.hidden-option]="!isMoveOptionAvailable()"
                 class="btn btn-small btn-link float-right list-move-button"
                 ngbTooltip="Verschieben"
                 i18n-ngbTooltip="@@resources.list.moveButton.tooltip"
@@ -100,23 +100,24 @@
                 container="body"
                 triggers="manual"
                 #moveTooltip="ngbTooltip"
-                (mouseover)="moveTooltip.open()"
+                (mouseover)="isMoveOptionAvailable() && moveTooltip.open()"
                 (mouseleave)="moveTooltip.close()"
                 (mousedown)="moveTooltip.close()"
-                (click)="moveDocument()">
+                (click)="isMoveOptionAvailable() && moveDocument()">
             <span class="mdi mdi-file-tree mdi-18px"></span>
         </button>
-        <button class="btn btn-small btn-link float-right list-delete-button"
+        <button [class.hidden-option]="!isDeleteOptionAvailable()"
+                class="btn btn-small btn-link float-right list-delete-button"
                 ngbTooltip="Löschen"
                 i18n-ngbTooltip="@@resources.list.deleteButton.tooltip"
                 placement="bottom"
                 container="body"
                 triggers="manual"
                 #deleteTooltip="ngbTooltip"
-                (mouseover)="deleteTooltip.open()"
+                (mouseover)="isMoveOptionAvailable() && deleteTooltip.open()"
                 (mouseleave)="deleteTooltip.close()"
                 (mousedown)="deleteTooltip.close()"
-                (click)="deleteDocument()">
+                (click)="isDeleteOptionAvailable() && deleteDocument()">
             <span class="mdi mdi-delete mdi-18px"></span>
         </button>
     </div>

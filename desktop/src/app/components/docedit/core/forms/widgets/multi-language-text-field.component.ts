@@ -88,7 +88,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
 
     public onMouseDown(event: any) {
 
-        if (event.target === this.tabsElement.nativeElement
+        if (this.tabsElement && event.target === this.tabsElement.nativeElement
             || !ComponentHelpers.isInside(
                 event.target,
                 target => target === this.multiLanguageTextFieldElement.nativeElement

@@ -26,6 +26,22 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     put_in(resource, [field_name], Enum.map(field_value, &convert_dating_item/1))
   end
 
+  defp convert_dimension_measurement_comment(dimension_measurement_comment) when not is_map(dimension_measurement_comment) do # legacy project
+    %{ unspecifiedLanguage: dimension_measurement_comment }
+  end
+  defp convert_dimension_measurement_comment dimension_measurement_comment do
+    IO.inspect dimension_measurement_comment
+    dimension_measurement_comment
+  end
+
+  defp convert_dimension_item dimension_item do
+    put_in(dimension_item.measurementComment, convert_dimension_measurement_comment(dimension_item.measurementComment))
+  end
+
+  defp convert_dimension resource, field_name, field_value do
+    put_in(resource, [field_name], Enum.map(field_value, &convert_dimension_item/1))
+  end
+
   defp convert_resource_field category_definition_groups do
     fn {field_name, field_value}, resource ->
       field_definition = Utils.get_field_definition category_definition_groups, Atom.to_string(field_name)
@@ -36,6 +52,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
         cond do
           field_definition.inputType == "dating" ->
             convert_dating resource, field_name, field_value
+
+          field_definition.inputType == "dimension" ->
+            convert_dimension resource, field_name, field_value
 
           field_definition.inputType == "input"
               or field_definition.inputType == "simpleInput"

@@ -44,7 +44,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
     assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
   end
 
-  test "convert_dating" do
+  test "convert dating" do
     category_definition_groups =
       [
         %{
@@ -74,5 +74,37 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     assert %{ de: "Eine Datierung", en: "A Dating" } == (List.first resource.datingField).source
     assert %{ unspecifiedLanguage: "Eine Datierung" } == (List.first resource.legacyDatingField).source
+  end
+
+  test "convert dimension" do
+    category_definition_groups =
+      [
+        %{
+          fields: [
+            %{ inputType: "dimension", name: "dimensionField" },
+            %{ inputType: "dimension", name: "legacyDimensionField" },
+          ]
+        }
+      ]
+    change = %{
+        doc: %{
+          resource: %{
+            category: %{
+              name: "Trench"
+            },
+            dimensionField: [%{
+              measurementComment: %{de: "Eine Abmessung", en: "A dimension"}
+            }],
+            legacyDimensionField: [%{
+              measurementComment: "Eine Abmessung"
+            }]
+          }
+        },
+      }
+
+    resource = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource
+
+    assert %{ de: "Eine Abmessung", en: "A dimension" } == (List.first resource.dimensionField).measurementComment
+    assert %{ unspecifiedLanguage: "Eine Abmessung" } == (List.first resource.legacyDimensionField).measurementComment
   end
 end

@@ -247,7 +247,7 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
     if (isLabeled(object)) return object.label;
     if (Dating.isDating(object)) return Dating.generateLabel(object, t,
         // eslint-disable-next-line
-        (value: any) => getLabel({ name: undefined, label: value }));
+        (value: any) => getLabel({ label: value, name: undefined }));
     if (Literature.isLiterature(object)) return renderLiterature(object, t);
 
     const isOptionalRange = OptionalRange.buildIsOptionalRange(isLabeledValue);

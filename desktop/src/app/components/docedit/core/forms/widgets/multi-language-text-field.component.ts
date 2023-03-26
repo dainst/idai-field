@@ -38,6 +38,7 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
     public selectedText: string;
     public shownAdditionalLanguage: Language|undefined;
     public focused: boolean = false;
+    public additionalLanguagesDropdownOpened: boolean = false;
 
 
     public isFilledIn = (languageCode: string) => this.multiLanguageText?.[languageCode] !== undefined;
@@ -73,6 +74,16 @@ export class MultiLanguageTextFieldComponent implements OnChanges {
         
         if (this.selectedText !== trimmedText) {
             this.onChanges(this.selectedText);
+        }
+    }
+
+
+    public onAdditionalLanguagesDropdownMenuToggled(opened: boolean) {
+
+        this.additionalLanguagesDropdownOpened = opened;
+
+        if (this.additionalLanguagesDropdownOpened && this.shownAdditionalLanguage) {
+            this.selectLanguage(this.shownAdditionalLanguage);
         }
     }
 

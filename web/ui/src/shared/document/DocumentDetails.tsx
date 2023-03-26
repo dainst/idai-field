@@ -245,7 +245,9 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
 
     if (isLabeledValue(object)) return renderMultiLanguageText(object, t);
     if (isLabeled(object)) return object.label;
-    if (Dating.isDating(object)) return Dating.generateLabel(object, t, (value: any) => value);
+    if (Dating.isDating(object)) return Dating.generateLabel(object, t,
+        // eslint-disable-next-line
+        (value: any) => getLabel({ name: undefined, label: value }));
     if (Literature.isLiterature(object)) return renderLiterature(object, t);
 
     const isOptionalRange = OptionalRange.buildIsOptionalRange(isLabeledValue);
@@ -255,7 +257,9 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
         const labeledPosition =
             (object as Dimension).measurementPosition;
         return Dimension.generateLabel(
-            object1, getDecimalValue, t, (value: any) => getLabel({label: value, name: "None"}), labeledPosition
+            object1, getDecimalValue, t,
+                // eslint-disable-next-line
+                (value: any) => getLabel({ label: value, name: undefined }), labeledPosition
                 // eslint-disable-next-line
                 ? getLabel(labeledPosition as any)
                 : undefined

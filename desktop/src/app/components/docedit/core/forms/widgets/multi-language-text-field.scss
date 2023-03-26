@@ -1,25 +1,39 @@
+$default-border-color: #ced4da;
+$focused-border-color: #7998cb;
+
 multi-language-text-field {
+  position: relative;
+  left: 1px;
+
   input,
   textarea {
+    margin-left: -1px !important;
     &.with-tabs {
       border-top: 0 !important;
     }
 
     &.focused {
-      border-color: #7998cb;
+      border-color: $focused-border-color;
     }
   }
 
   .nav-tabs {
+    position: relative;
+    right: 1px;
+    border-bottom-color: $default-border-color;
     transition: border-color 0.15s ease-in-out;
 
     a {
+      position: relative;
+      left: 1px;
       height: 34px;
       font-size: 14px;
       border-top-left-radius: 14px !important;
       border-top-right-radius: 14px !important;
       border-bottom: none !important;
+      border-color: transparent !important;
       padding: 6px 12px !important;
+      margin-left: -1px;
       color: grey !important;
       user-select: none;
 
@@ -27,6 +41,7 @@ multi-language-text-field {
         transition: border-top-color 0.15s ease-in-out,
                     border-left-color 0.15s ease-in-out,
                     border-right-color 0.15s ease-in-out;
+        border-color: $default-border-color !important;
       }
 
       &.filled-in {
@@ -35,6 +50,7 @@ multi-language-text-field {
 
       &:hover {
         background-color: #fff;
+        border-color: $default-border-color !important;
       }
     }
 
@@ -56,12 +72,13 @@ multi-language-text-field {
   }
 
   .nav-tabs.focused {
-    border-color: #7998cb;
+    border-color: $focused-border-color !important;
 
     a.active {
-      border-top-color: #7998cb;
-      border-left-color: #7998cb;
-      border-right-color: #7998cb;
+      border-top-color: $focused-border-color !important;
+      border-left-color: $focused-border-color !important;
+      border-right-color: $focused-border-color !important;
+      z-index: 1000;
     }
 
     a:hover:not(.active) {
@@ -70,8 +87,12 @@ multi-language-text-field {
   }
 
   .nav-tabs:not(.focused) {
-    a.active {
-      border-color: #ced4da !important;
+    a:active {
+      border-color: $default-border-color !important;
+    }
+
+    a:hover:not(.active) {
+      border-bottom: 1px $default-border-color solid !important;
     }
   }
 }

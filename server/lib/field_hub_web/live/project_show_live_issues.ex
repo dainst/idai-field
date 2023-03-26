@@ -91,12 +91,6 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
       <em>
         There are documents missing, that are being referenced by other documents in the database.
       </em>
-      <br/>
-      Possible solutions:
-        <ul>
-          <li>Remove or update the broken relations in the desktop application.</li>
-          <li>Check project backups to find out about more about the now missing document.</li>
-        </ul>
       <%= for %{data: data} <- @issues do %>
         <div style="padding:5px;border-width:1px;border-style:solid;margin-bottom:5px">
           Missing document <span style="text-decoration:underline;"><%= data.missing %></span> is referenced by the following documents:

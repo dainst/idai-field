@@ -36,12 +36,35 @@ test.describe('resources/list --', () => {
     });
 
 
-   test('show newly created resource in list view', async () => {
+    test('create new resource', async () => {
 
-        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('feature-architecture');
+        expect(await ResourcesPage.getListModeInputFieldValue(undefined, 0)).toEqual('');
 
-        const inputValue = await ResourcesPage.getListModeInputFieldValue('1', 0);
-        expect(inputValue).toEqual('1');
+        await ResourcesPage.typeInNewResourceAndHitEnterInList('1');
+        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+    });
+
+
+    test('hide edit and move buttons for new resources', async () => {
+
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('feature-architecture');
+        expect(await (await ResourcesPage.getListButton('edit')).getAttribute('class'))
+            .not.toContain('hidden-option');
+        expect(await (await ResourcesPage.getListButton('move')).getAttribute('class'))
+            .toContain('hidden-option');
+        expect(await (await ResourcesPage.getListButton('delete')).getAttribute('class'))
+            .toContain('hidden-option');
+
+        await ResourcesPage.typeInNewResourceAndHitEnterInList('1');
+        expect(await (await ResourcesPage.getListButton('edit', '1')).getAttribute('class'))
+            .not.toContain('hidden-option');
+        expect(await (await ResourcesPage.getListButton('move', '1')).getAttribute('class'))
+            .not.toContain('hidden-option');
+        expect(await (await ResourcesPage.getListButton('delete', '1')).getAttribute('class'))
+            .not.toContain('hidden-option');
     });
 
 

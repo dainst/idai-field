@@ -80,6 +80,8 @@ export class RowComponent implements AfterViewInit, OnChanges {
         ? 'resource-' + this.document.resource.identifier
         : 'new-resource';
 
+    public isNewResource = () => !this.document.resource.id;
+
 
     ngAfterViewInit() {
 
@@ -151,7 +153,14 @@ export class RowComponent implements AfterViewInit, OnChanges {
 
     public isMoveOptionAvailable(): boolean {
 
-        return this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
+        return !this.isNewResource()
+            && this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
+    }
+
+
+    public isDeleteOptionAvailable(): boolean {
+
+        return !this.isNewResource();
     }
 
 
@@ -199,7 +208,7 @@ export class RowComponent implements AfterViewInit, OnChanges {
     private async save() {
 
         if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') {
-            await this.restoreIdentifier(this.document);
+            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
             return;
         }
 

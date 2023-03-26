@@ -30,7 +30,6 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     %{ unspecifiedLanguage: dimension_measurement_comment }
   end
   defp convert_dimension_measurement_comment dimension_measurement_comment do
-    IO.inspect dimension_measurement_comment
     dimension_measurement_comment
   end
 

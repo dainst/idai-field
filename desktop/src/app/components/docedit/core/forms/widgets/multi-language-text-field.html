@@ -9,12 +9,14 @@
             (focus)="focused = true">{{language.label}}</a>
         </li>
         <li *ngIf="additionalLanguages?.length > 0" class="nav-item additional-languages-dropdown"
-            ngbDropdown placement="bottom-right" role="group">
-        <a class="nav-link" [class.active]="shownAdditionalLanguage.code === selectedLanguage"
-            [class.filled-in]="isFilledIn(shownAdditionalLanguage.code)" ngbDropdownToggle>
-                {{shownAdditionalLanguage.label}}
-        </a>
-        <div class="additional-languages-dropdown-menu dropdown-menu" ngbDropdownMenu>
+            ngbDropdown placement="bottom-right" role="group"
+            (openChange)="onAdditionalLanguagesDropdownMenuToggled($event)">
+            <a class="nav-link"
+               [class.active]="shownAdditionalLanguage.code === selectedLanguage || additionalLanguagesDropdownOpened"
+               [class.filled-in]="isFilledIn(shownAdditionalLanguage.code)" ngbDropdownToggle>
+                    {{shownAdditionalLanguage.label}}
+            </a>
+            <div class="additional-languages-dropdown-menu dropdown-menu" ngbDropdownMenu>
                 <div class="additional-languages-dropdown-list">
                     <button *ngFor="let language of additionalLanguages"
                             class="dropdown-item"
@@ -22,7 +24,7 @@
                             {{language.label}}
                     </button>
                 </div>
-        </div>
+            </div>
         </li>
     </ul>
     <input *ngIf="!multiLine" #inputField [(ngModel)]="selectedText"

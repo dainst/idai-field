@@ -255,7 +255,7 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
         const labeledPosition =
             (object as Dimension).measurementPosition;
         return Dimension.generateLabel(
-            object1, getDecimalValue, t, (value: any) => value, labeledPosition
+            object1, getDecimalValue, t, (value: any) => getLabel({label: value, name: "None"}), labeledPosition
                 // eslint-disable-next-line
                 ? getLabel(labeledPosition as any)
                 : undefined

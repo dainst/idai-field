@@ -11,11 +11,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             category: %{
               name: "Trench"
             },
-            inputField: "hallo",
-            inputFieldMap: %{ "de" => "hallo-de" },
+            legacyInputField: "hallo",
+            inputField: %{ "de" => "hallo-de" },
             simpleInputField: "hallo-simple-input",
-            multiInputField: "hallo\nmulti",
-            multiInputFieldMap: %{ "de" => "hallo-de\nmulti" },
+            legacyMultiInputField: "hallo\nmulti",
+            multiInputField: %{ "de" => "hallo-de\nmulti" },
             simpleMultiInputField: "hallo-simple\nmulti-input"
           }
         },
@@ -24,11 +24,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
       [
         %{
           fields: [
+            %{ inputType: "input", name: "legacyInputField" },
             %{ inputType: "input", name: "inputField" },
-            %{ inputType: "input", name: "inputFieldMap" },
             %{ inputType: "simpleInput", name: "simpleInputField" },
+            %{ inputType: "multiInput", name: "legacyMultiInputField" },
             %{ inputType: "multiInput", name: "multiInputField" },
-            %{ inputType: "multiInput", name: "multiInputFieldMap" },
             %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
           ]
         }
@@ -36,11 +36,43 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     resource = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource
 
-    assert %{ "unspecifiedLanguage" => "hallo" } == resource.inputField
-    assert %{ "de" => "hallo-de" } == resource.inputFieldMap
+    assert %{ "unspecifiedLanguage" => "hallo" } == resource.legacyInputField
+    assert %{ "de" => "hallo-de" } == resource.inputField
     assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == resource.simpleInputField
-    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == resource.multiInputField
-    assert %{ "de" => "hallo-de\nmulti" } == resource.multiInputFieldMap
+    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == resource.legacyMultiInputField
+    assert %{ "de" => "hallo-de\nmulti" } == resource.multiInputField
     assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
+  end
+
+  test "convert_dating" do
+    category_definition_groups =
+      [
+        %{
+          fields: [
+            %{ inputType: "dating", name: "datingField" },
+            %{ inputType: "dating", name: "legacyDatingField" },
+          ]
+        }
+      ]
+    change = %{
+        doc: %{
+          resource: %{
+            category: %{
+              name: "Trench"
+            },
+            datingField: [%{
+              source: %{de: "Eine Datierung", en: "A Dating"}
+            }],
+            legacyDatingField: [%{
+              source: "Eine Datierung"
+            }]
+          }
+        },
+      }
+
+    resource = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource
+
+    assert %{ de: "Eine Datierung", en: "A Dating" } == (List.first resource.datingField).source
+    assert %{ unspecifiedLanguage: "Eine Datierung" } == (List.first resource.legacyDatingField).source
   end
 end

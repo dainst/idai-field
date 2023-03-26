@@ -10,33 +10,54 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     resource
   end
 
-  defp convert_resource_field category_definition do
+  defp convert_dating_source(dating_item_source) when not is_map(dating_item_source) do # from legacy project
+    # TODO review, here we use keyword, above we use string
+    %{ unspecifiedLanguage: dating_item_source }
+  end
+  defp convert_dating_source dating_item_source do
+    dating_item_source
+  end
+
+  defp convert_dating_item dating_item do
+    put_in(dating_item.source, convert_dating_source(dating_item.source))
+  end
+
+  defp convert_dating resource, field_name, field_value do
+    put_in(resource, [field_name], Enum.map(field_value, &convert_dating_item/1))
+  end
+
+  defp convert_resource_field category_definition_groups do
     fn {field_name, field_value}, resource ->
-      field_definition = Utils.get_field_definition category_definition, Atom.to_string(field_name)
+      field_definition = Utils.get_field_definition category_definition_groups, Atom.to_string(field_name)
+
       if is_nil(field_definition[:inputType]) do
         resource
       else
-        if field_definition.inputType == "input"
-             or field_definition.inputType == "simpleInput"
-             or field_definition.inputType == "multiInput"
-             or field_definition.inputType == "simpleMultiInput"
-           do
-          convert_string resource, field_name, field_value
-        else
-          resource
+        cond do
+          field_definition.inputType == "dating" ->
+            convert_dating resource, field_name, field_value
+
+          field_definition.inputType == "input"
+              or field_definition.inputType == "simpleInput"
+              or field_definition.inputType == "multiInput"
+              or field_definition.inputType == "simpleMultiInput" ->
+            convert_string resource, field_name, field_value
+
+          true ->
+            resource
         end
       end
     end
   end
 
-  def convert_category change = %{ doc: %{ resource: resource } }, category_definition do
-    resource = Enum.reduce(resource, resource, convert_resource_field(category_definition))
+  def convert_category change = %{ doc: %{ resource: resource } }, category_definition_groups do
+    resource = Enum.reduce(resource, resource, convert_resource_field(category_definition_groups))
     put_in(change.doc.resource, resource)
   end
 
   def convert change, configuration do
     name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
     category_definition = CategoryTreeList.find_by_name(name, configuration)
-    convert_category change, category_definition
+    convert_category change, category_definition.groups
   end
 end

@@ -60,7 +60,7 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world,field.dainst.org; PathPrefix:/api"
+        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world; PathPrefix:/api"
         - "traefik.port=4000"
 
   ui:
@@ -72,7 +72,10 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world,field.dainst.org"
+        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world"
+        - "traefik.frontend.redirect.regex=^https://field.dainst.org(.*)"
+        - "traefik.frontend.redirect.replacement=https://field.idai.world$${1}"
+        - "traefik.frontend.redirect.permanent=true"
         - "traefik.port=80"
 
 volumes:

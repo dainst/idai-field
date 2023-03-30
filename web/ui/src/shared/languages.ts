@@ -2,7 +2,7 @@ import { set } from 'tsfun';
 import { I18N } from 'idai-field-core';
 import { I18nString, LabeledValue } from '../api/document';
 
-export const USER_INTERFACE_LANGUAGES = ['en', 'de', 'unspecifiedLanguage'];
+export const USER_INTERFACE_LANGUAGES = ['en', 'de'];
 
 export const LANGUAGES: string[] = initializeLanguages();
 
@@ -32,7 +32,7 @@ function initializeLanguages(): string[] {
         window.navigator.languages
             .map(getBasicLanguageCode)
             .filter(language => language.length === 2)
-            .concat(USER_INTERFACE_LANGUAGES)
+            .concat(USER_INTERFACE_LANGUAGES.concat(['unspecifiedLanguage']))
     );
 }
 

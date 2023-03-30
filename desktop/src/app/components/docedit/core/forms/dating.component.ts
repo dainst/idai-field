@@ -93,6 +93,10 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
+        if (dating.type === 'scientific') {
+            dating.begin.inputType = dating.end.inputType;
+        }
+        
         Dating.addNormalizedValues(dating);
 
         return Dating.isDating(dating) && Dating.isValid(dating);

@@ -222,7 +222,7 @@ export module Dating {
         if (!dating.begin || !dating.end || !dating.margin) return;
 
         dating.begin.inputYear = dating.end.inputYear;
-        dating.begin.year = dating.begin.inputYear - dating.margin;
-        dating.end.year = dating.end.inputYear + dating.margin;
+        dating.begin.year = dating.begin.year - dating.margin;
+        dating.end.year = dating.end.year + dating.margin;
     }
 }

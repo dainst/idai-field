@@ -10,6 +10,17 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     resource
   end
 
+  defp convert_string_array_item(item) when not is_map(item) do # legacy
+    %{ "unspecifiedLanguage" => item }
+  end
+  defp convert_string_array_item item do
+    item
+  end
+
+  defp convert_string_array(resource, field_name, field_value) do
+    put_in(resource, [field_name], Enum.map(field_value, &convert_string_array_item/1))
+  end
+
   defp convert_dating_source(dating_item_source) when not is_map(dating_item_source) do # from legacy project
     # TODO review, here we use keyword, above we use string
     %{ unspecifiedLanguage: dating_item_source }
@@ -54,6 +65,10 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
           field_definition.inputType == "dimension" ->
             convert_dimension resource, field_name, field_value
+
+          field_definition.inputType == "multiInput"
+            or field_definition.inputType == "simpleMultiInput" ->
+              convert_string_array resource, field_name, field_value
 
           field_definition.inputType == "input"
               or field_definition.inputType == "simpleInput"

@@ -15,8 +15,10 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             inputField: %{ "de" => "hallo-de" },
             simpleInputField: "hallo-simple-input",
             legacyTextField: "hallo\ntext",
-            textField: %{ "de" => "hallo-de\ntext" }
-            # simpleMultiInputField: "hallo-simple\nmulti-input"
+            textField: %{ "de" => "hallo-de\ntext" },
+            legacyMultiInputField: ["a", "b"],
+            multiInputField: [%{ "de" => "a" }, %{ "de" => "b" }],
+            simpleMultiInputField: ["a", "b"]
           }
         },
       }
@@ -28,8 +30,10 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             %{ inputType: "input", name: "inputField" },
             %{ inputType: "simpleInput", name: "simpleInputField" },
             %{ inputType: "text", name: "legacyTextField" },
-            %{ inputType: "text", name: "textField" }
-            # %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
+            %{ inputType: "text", name: "textField" },
+            %{ inputType: "multiInput", name: "legacyMultiInputField" },
+            %{ inputType: "multiInput", name: "multiInputField" },
+            %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
           ]
         }
       ]
@@ -41,7 +45,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
     assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == resource.simpleInputField
     assert %{ "unspecifiedLanguage" => "hallo\ntext" } == resource.legacyTextField
     assert %{ "de" => "hallo-de\ntext" } == resource.textField
-    # assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
+    assert [%{ "unspecifiedLanguage" => "a" }, %{ "unspecifiedLanguage" => "b" }] == resource.legacyMultiInputField
+    assert [%{ "de" => "a" }, %{ "de" => "b" }] == resource.multiInputField
+    assert [%{ "unspecifiedLanguage" => "a" }, %{ "unspecifiedLanguage" => "b" }] == resource.simpleMultiInputField
   end
 
   test "convert dating" do

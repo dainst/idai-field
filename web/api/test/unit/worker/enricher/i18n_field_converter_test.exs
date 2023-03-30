@@ -14,9 +14,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             legacyInputField: "hallo",
             inputField: %{ "de" => "hallo-de" },
             simpleInputField: "hallo-simple-input",
-            legacyMultiInputField: "hallo\nmulti",
-            multiInputField: %{ "de" => "hallo-de\nmulti" },
-            simpleMultiInputField: "hallo-simple\nmulti-input"
+            legacyTextField: "hallo\ntext",
+            textField: %{ "de" => "hallo-de\ntext" }
+            # simpleMultiInputField: "hallo-simple\nmulti-input"
           }
         },
       }
@@ -27,9 +27,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             %{ inputType: "input", name: "legacyInputField" },
             %{ inputType: "input", name: "inputField" },
             %{ inputType: "simpleInput", name: "simpleInputField" },
-            %{ inputType: "multiInput", name: "legacyMultiInputField" },
-            %{ inputType: "multiInput", name: "multiInputField" },
-            %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
+            %{ inputType: "text", name: "legacyTextField" },
+            %{ inputType: "text", name: "textField" }
+            # %{ inputType: "simpleMultiInput", name: "simpleMultiInputField" }
           ]
         }
       ]
@@ -39,9 +39,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
     assert %{ "unspecifiedLanguage" => "hallo" } == resource.legacyInputField
     assert %{ "de" => "hallo-de" } == resource.inputField
     assert %{ "unspecifiedLanguage" => "hallo-simple-input" } == resource.simpleInputField
-    assert %{ "unspecifiedLanguage" => "hallo\nmulti" } == resource.legacyMultiInputField
-    assert %{ "de" => "hallo-de\nmulti" } == resource.multiInputField
-    assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
+    assert %{ "unspecifiedLanguage" => "hallo\ntext" } == resource.legacyTextField
+    assert %{ "de" => "hallo-de\ntext" } == resource.textField
+    # assert %{ "unspecifiedLanguage" => "hallo-simple\nmulti-input" } == resource.simpleMultiInputField
   end
 
   test "convert dating" do

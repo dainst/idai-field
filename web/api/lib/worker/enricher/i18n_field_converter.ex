@@ -57,8 +57,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
           field_definition.inputType == "input"
               or field_definition.inputType == "simpleInput"
-              or field_definition.inputType == "multiInput"
-              or field_definition.inputType == "simpleMultiInput" ->
+              or field_definition.inputType == "text" ->
             convert_string resource, field_name, field_value
 
           true ->

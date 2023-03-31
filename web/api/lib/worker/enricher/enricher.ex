@@ -1,4 +1,4 @@
-defmodule Api.Worker.Enricher.Enricher do # TODO pull artifact up one level
+defmodule Api.Worker.Enricher.Enricher do
   alias Api.Worker.Enricher.Preprocess
   alias Api.Worker.Enricher.I18NFieldConverter
   alias Api.Worker.Enricher.Gazetteer

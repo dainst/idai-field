@@ -1,6 +1,6 @@
 import { Geometry } from 'geojson';
 import { isObject, to } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
+import { Dating, Dimension, Literature, OptionalRange, I18N } from 'idai-field-core';
 import { getLabel, getTranslation } from '../shared/languages';
 import { ResultDocument } from './result';
 
@@ -22,9 +22,9 @@ export interface ChangeEvent {
 export interface Resource {
     category: LabeledValue;
     id: string;
-    identifier: string;
-    shortDescription: string;
-    shortName?: string;
+    identifier: I18N.String;
+    shortDescription: I18N.String;
+    shortName?: I18N.String;
     groups: FieldGroup[];
     geometry: Geometry;
     childrenCount: number;

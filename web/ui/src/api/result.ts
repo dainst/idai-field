@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { ImageGeoreference } from 'idai-field-core';
+import { ImageGeoreference, I18N } from 'idai-field-core';
 import { ChangeEvent, I18nString, LabeledValue } from './document';
 
 export interface Result {
@@ -21,9 +21,9 @@ export interface ResultDocument {
 export interface ResultResource {
     category: LabeledValue;
     id: string;
-    identifier: string;
-    shortDescription: string;
-    shortName?: string;
+    identifier: I18N.String;
+    shortDescription: I18N.String;
+    shortName?: I18N.String;
     childrenCount: number;
     parentId: string;
     grandparentId: string;

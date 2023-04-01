@@ -91,7 +91,8 @@ export default function ProjectHome(): ReactElement {
 
 const renderTitle = (title: string, projectDocument: Document) => {
 
-    const titleStr = getTranslation(title as undefined as I18N.String);
+    // TODO review
+    const titleStr: string = getTranslation(title as undefined as I18N.String);
 
     return (<div className="d-flex p-2 m-2" style={ headerStyle }>
             <div className="flex-fill">
@@ -159,7 +160,7 @@ const renderSidebar = (projectId: string, projectDocument: Document, categoryFil
 const renderContent = (projectId: string, projectDocument: Document, images: ResultDocument[], location: Location,
         highlightedCategories: string[], predecessors: ResultDocument[], t: TFunction) => {
 
-    const description = getFieldValue(projectDocument, 'description');
+    const description: string = getTranslation(getFieldValue(projectDocument, 'description') as undefined);
 
     return <div className="flex-fill" style={ contentStyle }>
         <div className="px-2 my-1 clearfix">
@@ -205,21 +206,28 @@ const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     const homepage: FieldValue = getFieldValue(projectDocument, 'externalReference');
     const gazetteerId: FieldValue = getFieldValue(projectDocument, 'gazId');
 
-    
+    const institution: string = getTranslation(getFieldValue(projectDocument, 'institution') as undefined);
+    const projectSupervisor: string = getTranslation(getFieldValue(projectDocument, 'projectSupervisor') as undefined);
+    const contactPerson: string = getTranslation(getFieldValue(projectDocument, 'contactPerson') as undefined);
+    const staff: string =
+        (getFieldValue(projectDocument, 'staff') as undefined[])
+            .map(staff => getTranslation(staff))
+            .join(', ');
+
     return <dl>
         <dt>{ t('projectHome.institution') }</dt>
-        <dd>{ getFieldValue(projectDocument, 'institution')?.toString() }</dd>
+        <dd>{ institution }</dd>
         <dt>{ t('projectHome.projectSupervisor') }</dt>
-        <dd>{ getFieldValue(projectDocument, 'projectSupervisor')?.toString() }</dd>
+        <dd>{ projectSupervisor }</dd>
         <dt>{ t('projectHome.contactPerson') }</dt>
         { contactMail && <dd>
             <a href={ `mailto:${contactMail.toString()}` }>
                 <Icon path={ mdiEmail } size={ 0.8 } className="mr-1" />
-                { getFieldValue(projectDocument, 'contactPerson')?.toString() }
+                { contactPerson }
             </a>
         </dd> }
         <dt>{ t('projectHome.staff') }</dt>
-        <dd>{ (getFieldValue(projectDocument, 'staff') as FieldValue[])?.join(', ') }</dd>
+        <dd>{ staff }</dd>
         { (homepage || gazetteerId) && <dt>{ t('projectHome.links') }</dt> }
         <dd>
             <ul className="list-unstyled" style={ listStyle }>

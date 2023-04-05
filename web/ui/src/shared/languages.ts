@@ -1,4 +1,5 @@
 import { set } from 'tsfun';
+import { I18N } from 'idai-field-core';
 import { I18nString, LabeledValue } from '../api/document';
 
 export const USER_INTERFACE_LANGUAGES = ['en', 'de'];
@@ -31,7 +32,7 @@ function initializeLanguages(): string[] {
         window.navigator.languages
             .map(getBasicLanguageCode)
             .filter(language => language.length === 2)
-            .concat(USER_INTERFACE_LANGUAGES)
+            .concat(USER_INTERFACE_LANGUAGES.concat('unspecifiedLanguage'))
     );
 }
 
@@ -40,4 +41,15 @@ function getBasicLanguageCode(language: string): string {
 
     const index: number = language.indexOf('-');
     return index > 0 ? language.substring(0, index) : language;
+}
+
+
+export function getTranslation(labels: I18N.String|undefined): string {
+
+    if (!labels) return '';
+    if (!LANGUAGES) {
+        console.warn('getTranslation complains: LANGUAGES not populated yet');
+        return '';
+    }
+    return I18N.getTranslation(labels, LANGUAGES) ?? '';
 }

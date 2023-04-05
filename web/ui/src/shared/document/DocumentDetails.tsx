@@ -1,7 +1,7 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Dimension, Literature, OptionalRange } from 'idai-field-core';
+import { Dating, Dimension, I18N, Literature, OptionalRange } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import { search } from '../../api/documents';
 import { Query } from '../../api/query';
 import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
-import { getLabel, getNumberOfUndisplayedLabels } from '../languages';
+import { getLabel, getNumberOfUndisplayedLabels, getTranslation } from '../languages';
 import { LoginContext } from '../login';
 import { getDocumentLink } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
@@ -245,7 +245,9 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
 
     if (isLabeledValue(object)) return renderMultiLanguageText(object, t);
     if (isLabeled(object)) return object.label;
-    if (Dating.isDating(object)) return Dating.generateLabel(object, t, (value: any) => value);
+    if (Dating.isDating(object)) return Dating.generateLabel(object, t,
+        // eslint-disable-next-line
+        (value: any) => getLabel({ label: value, name: undefined }));
     if (Literature.isLiterature(object)) return renderLiterature(object, t);
 
     const isOptionalRange = OptionalRange.buildIsOptionalRange(isLabeledValue);
@@ -255,15 +257,17 @@ const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | u
         const labeledPosition =
             (object as Dimension).measurementPosition;
         return Dimension.generateLabel(
-            object1, getDecimalValue, t, (value: any) => value, labeledPosition
+            object1, getDecimalValue, t,
+                // eslint-disable-next-line
+                (value: any) => getLabel({ label: value, name: undefined }), labeledPosition
                 // eslint-disable-next-line
                 ? getLabel(labeledPosition as any)
                 : undefined
         );
     }
     
-    console.warn('Failed to render field value:', object);
-    return undefined;
+    // We assume it is a multi language value then
+    return getTranslation(object as undefined as I18N.String);
 };
 
 

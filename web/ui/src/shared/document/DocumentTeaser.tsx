@@ -5,6 +5,7 @@ import { ResultDocument } from '../../api/result';
 import RelativeOrAbsoluteLink from '../linkbutton/RelativeOrAbsoluteLink';
 import CategoryIcon from './CategoryIcon';
 import './document-teaser.css';
+import { getTranslation } from '../languages';
 
 
 interface DocumentTeaserProps {
@@ -67,7 +68,8 @@ const renderTeaser = (document: ResultDocument, size: string, height: number, as
                     <Col className={ 'p-0 text-muted short-description'
                             + (showShortDescription === 'full' ? '' : ' single-line') }
                          style={ textStyle }>
-                        { document.resource.shortDescription }
+                            
+                        { getTranslation(document.resource.shortDescription) /* TODO fix typing */ }
                     </Col>
                 </Row>
                 }

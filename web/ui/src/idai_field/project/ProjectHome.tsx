@@ -9,6 +9,7 @@ import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { I18N } from 'idai-field-core';
 import { Document, FieldValue, getDocumentImages, getFieldValue } from '../../api/document';
 import { get, search } from '../../api/documents';
 import { buildProjectQueryTemplate, parseFrontendGetParams, Query } from '../../api/query';
@@ -25,6 +26,7 @@ import { EXCLUDED_CATEGORIES } from '../constants';
 import CategoryFilter from '../filter/CategoryFilter';
 import ProjectHierarchyButton from './ProjectHierarchyButton';
 import ProjectMap from './ProjectMap';
+import { getTranslation } from '../../shared/languages';
 
 
 const MAP_FIT_OPTIONS = { padding : [ 10, 10, 10, 10 ], duration: 500 };
@@ -43,7 +45,7 @@ export default function ProjectHome(): ReactElement {
     const [typeCatalogId, setTypeCatalogId] = useState<string>(null);
     
     const [projectDocument, setProjectDocument] = useState<Document>();
-    const [title, setTitle] = useState<string>('');
+    const [title, setTitle] = useState<I18N.String>({ unspecifiedLanguage: '' });
     const [images, setImages] = useState<ResultDocument[]>();
     const [highlightedCategories, setHighlightedCategories] = useState<string[]>([]);
     const [predecessors] = useState<ResultDocument[]>([]);
@@ -87,17 +89,20 @@ export default function ProjectHome(): ReactElement {
 }
 
 
-const renderTitle = (title: string, projectDocument: Document) =>
-    <div className="d-flex p-2 m-2" style={ headerStyle }>
-        <div className="flex-fill">
-            <h2><img src="/marker-icon.svg" alt="Home" style={ homeIconStyle } /> {title}</h2>
-        </div>
-        <div className="text-right" style={ buttonsStyle }>
-            <LicenseInformationButton license={ projectDocument.resource.license } />
-            <DocumentPermalinkButton url={ getDocumentPermalink(projectDocument) } />
-        </div>
-    </div>;
+const renderTitle = (title: I18N.String, projectDocument: Document) => {
 
+    const titleStr: string = getTranslation(title);
+
+    return (<div className="d-flex p-2 m-2" style={ headerStyle }>
+            <div className="flex-fill">
+                <h2><img src="/marker-icon.svg" alt="Home" style={ homeIconStyle } /> {titleStr}</h2>
+            </div>
+            <div className="text-right" style={ buttonsStyle }>
+                <LicenseInformationButton license={ projectDocument.resource.license } />
+                <DocumentPermalinkButton url={ getDocumentPermalink(projectDocument) } />
+            </div>
+        </div>);
+};
 
 const renderSidebar = (projectId: string, projectDocument: Document, categoryFilter: ResultFilter,
         setHighlightedCategories: (categories: string[]) => void, t: TFunction, typeCatalogCount: number,
@@ -154,7 +159,7 @@ const renderSidebar = (projectId: string, projectDocument: Document, categoryFil
 const renderContent = (projectId: string, projectDocument: Document, images: ResultDocument[], location: Location,
         highlightedCategories: string[], predecessors: ResultDocument[], t: TFunction) => {
 
-    const description = getFieldValue(projectDocument, 'description');
+    const description: string = getTranslation(getFieldValue(projectDocument, 'description') as undefined);
 
     return <div className="flex-fill" style={ contentStyle }>
         <div className="px-2 my-1 clearfix">
@@ -200,21 +205,28 @@ const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     const homepage: FieldValue = getFieldValue(projectDocument, 'externalReference');
     const gazetteerId: FieldValue = getFieldValue(projectDocument, 'gazId');
 
-    
+    const institution: string = getTranslation(getFieldValue(projectDocument, 'institution') as undefined);
+    const projectSupervisor: string = getTranslation(getFieldValue(projectDocument, 'projectSupervisor') as undefined);
+    const contactPerson: string = getTranslation(getFieldValue(projectDocument, 'contactPerson') as undefined);
+    const staff: string =
+        (getFieldValue(projectDocument, 'staff') as undefined[])
+            .map(staff => getTranslation(staff))
+            .join(', ');
+
     return <dl>
         <dt>{ t('projectHome.institution') }</dt>
-        <dd>{ getFieldValue(projectDocument, 'institution')?.toString() }</dd>
+        <dd>{ institution }</dd>
         <dt>{ t('projectHome.projectSupervisor') }</dt>
-        <dd>{ getFieldValue(projectDocument, 'projectSupervisor')?.toString() }</dd>
+        <dd>{ projectSupervisor }</dd>
         <dt>{ t('projectHome.contactPerson') }</dt>
         { contactMail && <dd>
             <a href={ `mailto:${contactMail.toString()}` }>
                 <Icon path={ mdiEmail } size={ 0.8 } className="mr-1" />
-                { getFieldValue(projectDocument, 'contactPerson')?.toString() }
+                { contactPerson }
             </a>
         </dd> }
         <dt>{ t('projectHome.staff') }</dt>
-        <dd>{ (getFieldValue(projectDocument, 'staff') as FieldValue[])?.join(', ') }</dd>
+        <dd>{ staff }</dd>
         { (homepage || gazetteerId) && <dt>{ t('projectHome.links') }</dt> }
         <dd>
             <ul className="list-unstyled" style={ listStyle }>
@@ -290,7 +302,7 @@ const checkTypeCatalogs = async (id: string, searchParams: URLSearchParams, toke
 };
 
 
-const getProjectTitle = (projectDocument: Document): string => {
+const getProjectTitle = (projectDocument: Document): I18N.String => {
 
     return projectDocument.resource.shortDescription
         ?? projectDocument.resource.shortName

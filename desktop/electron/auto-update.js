@@ -118,12 +118,16 @@ const setUp = async (mainWindow) => {
         });
     });
 
-    autoUpdater.on('error', () => {
+    autoUpdater.on('error', error => {
+        log.error('Error during auto update');
+        log.error(error);
         mainWindow.webContents.send('downloadInterrupted');
     });
 
-    process.on('uncaughtException', () => {
-       mainWindow.webContents.send('downloadInterrupted');
+    process.on('uncaughtException', error => {
+        log.error('Uncaught exception during auto update');
+        log.error(error);
+        mainWindow.webContents.send('downloadInterrupted');
     });
 
     await autoUpdater.checkForUpdates();

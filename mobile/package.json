@@ -40,7 +40,7 @@
     "expo-location": "~10.0.0",
     "expo-status-bar": "~1.0.3",
     "expo-three": "^5.7.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-pouchdb": "^4.2.0",
     "idai-field-core": "^1.1.1",
     "pouchdb": "^7.2.2",

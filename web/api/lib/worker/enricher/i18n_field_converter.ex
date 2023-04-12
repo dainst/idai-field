@@ -3,6 +3,17 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
   alias Api.Core.CategoryTreeList
   alias Api.Worker.Enricher.Utils
 
+  def convert_category change = %{ doc: %{ resource: resource } }, category_definition_groups do
+    resource = Enum.reduce(resource, resource, convert_resource_field(category_definition_groups))
+    put_in(change.doc.resource, resource)
+  end
+
+  def convert change, configuration do
+    name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
+    category_definition = CategoryTreeList.find_by_name(name, configuration)
+    convert_category change, category_definition.groups
+  end
+
   defp convert_string(resource, field_name, field_value) when not is_map(field_value) do  # this is from legacy project then
     put_in(resource, [field_name], %{ "unspecifiedLanguage" => field_value })
   end
@@ -80,16 +91,5 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
         end
       end
     end
-  end
-
-  def convert_category change = %{ doc: %{ resource: resource } }, category_definition_groups do
-    resource = Enum.reduce(resource, resource, convert_resource_field(category_definition_groups))
-    put_in(change.doc.resource, resource)
-  end
-
-  def convert change, configuration do
-    name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
-    category_definition = CategoryTreeList.find_by_name(name, configuration)
-    convert_category change, category_definition.groups
   end
 end

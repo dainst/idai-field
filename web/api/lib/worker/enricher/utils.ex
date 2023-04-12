@@ -1,6 +1,5 @@
 defmodule Api.Worker.Enricher.Utils do
 
-  # TODO extract
   def get_field_definition(category_definition_groups, field_name) do
     group = Enum.find(category_definition_groups, &get_field_definition_from_group(&1, field_name))
     get_field_definition_from_group(group, field_name)

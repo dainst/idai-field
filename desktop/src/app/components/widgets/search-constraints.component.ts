@@ -11,6 +11,7 @@ type ConstraintListItem = {
     fieldName: string,
     label: string;
     searchTerm: string,
+    valuelist?: Valuelist,
     searchInputType?: SearchInputType
 };
 
@@ -136,6 +137,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         } else if (constraintListItem.searchInputType === 'boolean'
                 || constraintListItem.searchInputType === 'exists') {
             return this.getBooleanSearchTermLabel(constraintListItem.searchTerm);
+        } else if (constraintListItem.valuelist) {
+            return this.labels.getValueLabel(constraintListItem.valuelist, constraintListItem.searchTerm);
         } else {
             return constraintListItem.searchTerm;
         }
@@ -302,13 +305,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         this.constraintListItems = Object.keys(constraints)
             .map(constraintName => {
                 const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
+                const baseName: string = SearchConstraintsComponent.getBaseFieldName(fieldName);
+                const field: Field = this.getField(baseName);
 
                 return {
                     name: constraintName,
                     fieldName: fieldName,
                     label: this.getLabel(constraintName),
                     searchTerm: constraints[constraintName],
-                    searchInputType: this.getSearchInputType(this.getField(fieldName))
+                    valuelist: field?.valuelist,
+                    searchInputType: this.getSearchInputType(field)
                 }
             });
     }
@@ -424,13 +430,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private getLabel(constraintName: string): string {
 
         const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
+        const baseFieldName: string = SearchConstraintsComponent.getBaseFieldName(fieldName);
 
         const defaultField: Field|undefined = this.getDefaultField(fieldName);
         if (defaultField) return this.getFieldLabel(defaultField);
-
-        const baseFieldName = fieldName.includes('.')
-            ? fieldName.substring(0, fieldName.indexOf('.'))
-            : fieldName;
 
         const field = clone(CategoryForm.getFields(this.projectConfiguration.getCategory(this.category))
             .find(on(Field.NAME, is(baseFieldName))));
@@ -460,5 +463,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private static getFieldName(constraintName: string): string {
 
         return constraintName.substring(0, constraintName.lastIndexOf(':'));
+    }
+
+    
+    private static getBaseFieldName(fieldName: string): string {
+
+        return fieldName.includes('.')
+            ? fieldName.substring(0, fieldName.indexOf('.'))
+            : fieldName;
     }
 }

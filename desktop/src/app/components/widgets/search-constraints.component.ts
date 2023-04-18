@@ -11,7 +11,7 @@ type ConstraintListItem = {
     fieldName: string,
     label: string;
     searchTerm: string,
-    searchInputType?: string
+    searchInputType?: SearchInputType
 };
 
 type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';

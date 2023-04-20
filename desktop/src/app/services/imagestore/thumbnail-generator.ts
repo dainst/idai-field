@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
-import { ImageManipulation } from './image-manipulation';
-
-
-const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
+import { ThumbnailGeneratorInterface } from 'idai-field-core';
 
 
 @Injectable()
@@ -19,12 +15,8 @@ const THUMBNAIL_TARGET_JPEG_QUALITY = 60;
  */
 export class ThumbnailGenerator implements ThumbnailGeneratorInterface {
 
-    public generate(buffer: Buffer): Promise<Buffer> {
+    public async generate(buffer: Buffer): Promise<Buffer> {
 
-        return ImageManipulation.createThumbnail(
-            buffer,
-            THUMBNAIL_TARGET_HEIGHT,
-            THUMBNAIL_TARGET_JPEG_QUALITY
-        );
+        return buffer;
     }
 }

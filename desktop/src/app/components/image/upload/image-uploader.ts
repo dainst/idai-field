@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { isArray } from 'tsfun';
 import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
     ImageStore, ImageGeoreference, ImageDocument } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
@@ -11,7 +10,6 @@ import { M } from '../../messages/m';
 import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
-import { ImageManipulation, ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
@@ -229,12 +227,8 @@ export class ImageUploader {
         try {
             document = await this.createImageDocument(file.name, buffer, category, depictsRelationTarget);
         } catch (err) {
-            if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
-                throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, file.name, err[1]];
-            } else {
-                console.error(err);
-                throw [M.IMAGESTORE_ERROR_UPLOAD, file.name];
-            }
+            console.error(err);
+            throw [M.IMAGESTORE_ERROR_UPLOAD, file.name];
         }
 
         try {
@@ -273,7 +267,8 @@ export class ImageUploader {
     private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
                                       depictsRelationTarget?: Document): Promise<any> {
 
-        const { width, height } = await ImageManipulation.getSize(buffer);
+        const width = 100;
+        const height = 100;
 
         const document: NewImageDocument = {
             resource: {

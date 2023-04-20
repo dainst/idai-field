@@ -40,9 +40,6 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "customWebpackConfig": {
-              "path": "./custom-webpack.config.js"
-            },
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "deleteOutputPath": false,

@@ -100,17 +100,34 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       configReader: ConfigReader,
                                       configLoader: ConfigLoader) => async (): Promise<void> => {
 
+    console.debug('Initializing...');
+    console.debug('Setting locale...');
     progress.setLocale(Settings.getLocale());
+    console.debug('Setting up express server...');
     await expressServer.setupServer();
 
+    console.debug('Loading settings...');
     let settings = await loadSettings(settingsService, progress);
+
+    console.debug('Setting up database...');
     await setUpDatabase(settingsService, settings, progress);
+
+    console.debug('Loading sample data in case of test project...');
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
 
+    console.debug('Updating project name in settings...');
     settings = await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
+
+    console.debug('Setting project name in progress...');
     await setProjectNameInProgress(settings, progress);
+
+    console.debug('Copying thumbnails from database...');
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
+
+    console.debug('Creating display images...');
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
+
+    console.debug('Loading configuration...');
 
     const services = await loadConfiguration(
         settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
@@ -118,7 +135,11 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     );
     serviceLocator.init(services);
 
+    console.debug('Loading documents...');
+
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
+
+    console.debug('Finished application initialization!');
 
     return await AngularUtility.refresh(700);
 };

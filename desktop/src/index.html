@@ -131,18 +131,6 @@
     </style>
 
     <script>
-        var log = typeof window !== 'undefined' ? window.require('electron-log') : require('electron-log');
-        Object.assign(console, log.functions);
-
-        console.debug('\n_______\n');
-        console.debug('Starting application...');
-
-        log.catchErrors({
-            onError(error, _) {
-                console.error(error);
-            }
-        });
-
         window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
         window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
         window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove', 'wheel', 'mouseout', 'pointerout']; // disable patch specified eventNames

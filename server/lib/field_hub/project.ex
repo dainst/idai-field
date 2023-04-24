@@ -136,7 +136,10 @@ defmodule FieldHub.Project do
     |> case do
       %{status_code: 200} ->
         true
-
+      # Databases without the FieldHub's application user are considered non-existing
+      # by the application.
+      %{status_code: 403} ->
+        false
       %{status_code: 404} ->
         false
     end

@@ -309,12 +309,12 @@ export module Validations {
                 }
                 break;
             case 'MultiPoint':
-                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
                     return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
                 }
                 break;
             case 'LineString':
-                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
                     return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
                 }
                 break;
@@ -559,7 +559,14 @@ export module Validations {
     }
 
 
-    export function validatePolylineOrMultiPointCoordinates(coordinates: number[][]): boolean {
+    export function validateMultiPointCoordinates(coordinates: number[][]): boolean {
+
+        return coordinates.length !== 0
+            && coordinates.every(validatePointCoordinates);
+    }
+
+
+    export function validatePolylineCoordinates(coordinates: number[][]): boolean {
 
         return coordinates.length >= 2
             && coordinates.every(validatePointCoordinates);
@@ -569,7 +576,7 @@ export module Validations {
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
         return coordinates.length !== 0
-            && coordinates.every(validatePolylineOrMultiPointCoordinates);
+            && coordinates.every(validatePolylineCoordinates);
     }
 
 

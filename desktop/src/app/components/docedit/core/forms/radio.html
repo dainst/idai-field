@@ -18,7 +18,6 @@
     </label>
 </div>
 
-<empty-valuelist-info *ngIf="hasEmptyValuelist()" [resource]="resource" [field]="field">
-</empty-valuelist-info>
+<empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
 
 <outliers [resource]="resource" [fieldName]="field.name" [valuelist]="valuelist"></outliers>

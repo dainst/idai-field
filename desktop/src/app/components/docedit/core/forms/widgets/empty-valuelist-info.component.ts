@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { is } from 'tsfun';
-import { Datastore, Field, ProjectConfiguration, Resource, ValuelistUtil, Labels, CategoryForm,
-    Named } from 'idai-field-core';
+import { Datastore, Field, ProjectConfiguration, ValuelistUtil, Labels, CategoryForm, Named } from 'idai-field-core';
 
 
 type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
@@ -16,7 +15,6 @@ type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
  */
 export class EmptyValuelistInfoComponent implements OnChanges {
 
-    @Input() resource: Resource;
     @Input() field: Field;
 
     public infoType: EmptyValuelistInfoType;

@@ -83,7 +83,11 @@ Use the `uid` to set the owner for `FILE_DIRECTORY`.
 ```
 sudo chown 65534 files/
 ```
+### Creating a project using the interface
 
+Open http://localhost and login with the CouchDB admin credentials as defined in your .env file. You should be able to create new projects in your browser.
+
+### Creating a project using the CLI
 Next we create a project with a random password. 
 ```
 docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_project("my_first_project")'

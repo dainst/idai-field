@@ -21,4 +21,27 @@ defmodule Api.Documents.FilterTest do
 
     assert Enum.all?(subcategories, &(&1 in expanded_categories))
   end
+
+  test "preprocess multilanguage filters" do
+    start_supervised({ProjectConfigLoader, {["default"]}})
+    conf = ProjectConfigLoader.get("default")
+
+    filters1 = [
+      {"resource.category.name", "Find"},
+      {"resource.category.name", "Layer"},
+      {"resource.shortDescription", "abc"}
+    ]
+
+    # we won't split here because for splitting we expect exactly one category name filter
+    assert {filters1, []} == Filter.split_off_multilanguage_filters filters1, conf
+
+    filters2 = [
+      {"resource.category.name", "Find"},
+      {"resource.shortDescription", "abc"}
+    ]
+
+    assert {[{"resource.category.name", "Find"}], 
+            [[{"resource.shortDescription.de", "abc"},
+              {"resource.shortDescription.en", "abc"}]]} == Filter.split_off_multilanguage_filters filters2, conf
+  end
 end

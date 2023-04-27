@@ -2,12 +2,19 @@ defmodule Api.Documents.Filter do
 
   alias Api.Core.CategoryTreeList
 
-  def parse(nil), do: nil
-  def parse([]), do: nil
-  def parse(filter_strings = [_|_]), do: Enum.map(filter_strings, &parse_filter_string/1)
+  def parse(nil), do: []
+  def parse(filter_strings) do 
+    Enum.map filter_strings, fn filter_string ->
+      [field, value] = String.split(filter_string, ":")
+      {field, String.replace(value, "%3A", ":")}
+    end
+  end
 
-  def split_off_multilanguage_filters(nil, _), do: {nil, nil}
-  def split_off_multilanguage_filters(filters = [_|_], project_conf) do
+  def wrap_values_as_singletons(filters) do
+    Enum.map filters, fn {name, value} -> {name, [value]} end
+  end
+
+  def split_off_multilanguage_filters(filters, project_conf) do
     unless has_exactly_one_category_filter? filters do
       {filters, []}
     else
@@ -23,8 +30,8 @@ defmodule Api.Documents.Filter do
     end
   end
 
-  def expand(nil, _), do: nil
-  def expand(filters = [_|_], project_conf), do: Enum.map(filters, &(expand_filter(&1, project_conf)))
+  def expand_categories(nil, _), do: nil
+  def expand_categories(filters, project_conf), do: Enum.map(filters, &(expand(&1, project_conf)))
 
   defp preprocess_multilanguage_filters multilanguage_filters do
     Enum.map multilanguage_filters, fn {name, value} ->
@@ -35,10 +42,10 @@ defmodule Api.Documents.Filter do
 
   defp get_input_field_names category_definition do
     category_definition.groups
-        |> Enum.map(fn group -> group.fields end)
-        |> List.flatten
-        |> Enum.filter(fn field -> field.inputType == "input" end)
-        |> Enum.map(fn field -> field.name end)
+    |> Enum.map(fn group -> group.fields end)
+    |> List.flatten
+    |> Enum.filter(fn field -> field.inputType == "input" end)
+    |> Enum.map(fn field -> field.name end)
   end
 
   defp get_category_name filters do
@@ -48,19 +55,13 @@ defmodule Api.Documents.Filter do
     category_name
   end
 
-  defp has_exactly_one_category_filter?(nil, _), do: false
-  defp has_exactly_one_category_filter?(filters = [_|_]) do
+  defp has_exactly_one_category_filter?(filters) do
     1 == length Enum.filter filters, fn {name, _} ->
       name == "resource.category.name"
     end
   end
 
-  defp parse_filter_string(filter_string) do
-    [field, value] = String.split(filter_string, ":")
-    {field, [String.replace(value, "%3A", ":")]}
-  end
-
-  defp expand_filter({"resource.category.name", [parent_category]}, project_conf) do
+  defp expand({"resource.category.name", [parent_category]}, project_conf) do
     categories = [parent_category] ++
       with %{trees: child_categories_conf} <- Enum.find(project_conf, &(&1.item.name == parent_category))
       do
@@ -70,5 +71,5 @@ defmodule Api.Documents.Filter do
       end
     {"resource.category.name", categories}
   end
-  defp expand_filter({field, value}, _), do: {field, value}
+  defp expand({field, value}, _), do: {field, value}
 end

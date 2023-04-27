@@ -3,7 +3,7 @@ defmodule Api.Documents.FilterTest do
   alias Api.Core.ProjectConfigLoader
   use ExUnit.Case
 
-  test "expand" do
+  test "expand categories" do
     start_supervised({ProjectConfigLoader, {["default"]}})
     conf = ProjectConfigLoader.get("default")
 
@@ -13,7 +13,7 @@ defmodule Api.Documents.FilterTest do
       {"project", ["test"]}
     ]
 
-    expanded_filters = Filter.expand(filters, conf)
+    expanded_filters = Filter.expand_categories(filters, conf)
     {_ , expanded_categories} = Enum.find(expanded_filters, fn {"resource.category.name", val} -> val end)
 
     subcategories = Enum.find(conf, &(&1.item.name == "Find"))

@@ -21,23 +21,26 @@ defmodule Api.Documents.Index do
   must_not - pass nil to set no must_not filters
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
-    {filters, must_not, project_conf} = preprocess(filters, must_not)
-    Query.init(q, size, from)
+    {filters, multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
+    query = Query.init(q, size, from)
     |> Query.track_total
     |> Query.add_aggregations()
     |> Query.add_filters(filters)
+    |> Query.add_should_filters(multilanguage_filters)
     |> Query.add_must_not(must_not)
     |> Query.add_exists(exists)
     |> Query.add_not_exists(not_exists)
     |> Query.set_sort(sort)
     |> Query.set_readable_projects(readable_projects)
     |> Query.set_vector_query(vector_query)
+
+    query
     |> build_post_atomize
     |> Mapping.map(project_conf)
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do
-    {filters, must_not, project_conf} = preprocess(filters, must_not)
+    {filters, _multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
     Query.init(q, @max_geometries)
     |> Query.add_filters(filters)
     |> Query.add_must_not(must_not)
@@ -52,16 +55,27 @@ defmodule Api.Documents.Index do
 
   defp preprocess(filters, must_not) do
     filters = Filter.parse(filters)
+
     project_conf = ProjectConfigLoader.get(get_project(filters))
-    filters = Filter.expand(filters, project_conf)
-    must_not = must_not |> Filter.parse |> Filter.expand(project_conf)
-    {filters, must_not, project_conf}
+    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters filters, project_conf
+    
+    filters = 
+      filters 
+      |> Filter.wrap_values_as_singletons
+      |> Filter.expand_categories(project_conf)
+    must_not = 
+      must_not 
+      |> Filter.parse 
+      |> Filter.wrap_values_as_singletons
+      |> Filter.expand_categories(project_conf)
+
+    {filters, multilanguage_filters, must_not, project_conf}
   end
 
   defp get_project(nil), do: "default"
   defp get_project(filters) do
     case Enum.find(filters, fn {field, _value} -> field == "project" end) do
-      {"project", [project]} -> project
+      {"project", project} -> project
       _ -> "default"
     end
   end

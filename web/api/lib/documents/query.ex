@@ -26,6 +26,12 @@ defmodule Api.Documents.Query do
     filter = Enum.map(filters, &build_terms_query/1)
     update_in(query.query.script_score.query.bool.filter, &(&1 ++ filter))
   end
+  
+  def add_should_filters(query, nil), do: query
+  def add_should_filters(query, filters) do
+    filter = %{ bool: %{ should: Enum.map(filters, &build_match_query/1) }}
+    update_in(query.query.script_score.query.bool.filter, &(&1 ++ filter))
+  end
 
   def add_must_not(query, nil), do: query
   def add_must_not(query, must_not) do
@@ -101,6 +107,10 @@ defmodule Api.Documents.Query do
 
   defp build_terms_query({field, value}) do
     %{ terms: %{ field => value }}
+  end
+
+  defp build_match_query({field, value}) do
+    %{ match: %{ field => value }}
   end
 
   defp build_exists_query(field) do

@@ -1,4 +1,6 @@
-[
+{
+  "projectLanguages": ["de", "en"],
+  "categories": [
     {
       "item": {
         "name": "Operation",
@@ -46359,4 +46361,4 @@
       "trees": []
     }
   ]
-  
+}

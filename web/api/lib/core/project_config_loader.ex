@@ -20,7 +20,9 @@ defmodule Api.Core.ProjectConfigLoader do
     Agent.update(__MODULE__, fn configs -> Map.put(configs, project, load(project)) end, 600000)
   end
 
-  def get(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end, 600000)
+  def get(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end, 600000).categories
+  
+  def get_languages(project_name), do: Agent.get(__MODULE__, fn configs -> configs[project_name] end, 600000).projectLanguages
 
   defp load(project_name) do
     if Mix.env() != :test do create_config_file project_name end

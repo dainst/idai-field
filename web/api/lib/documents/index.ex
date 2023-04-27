@@ -56,8 +56,10 @@ defmodule Api.Documents.Index do
   defp preprocess(filters, must_not) do
     filters = Filter.parse(filters)
 
-    project_conf = ProjectConfigLoader.get(get_project(filters))
-    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters filters, project_conf
+    project = get_project(filters)
+    project_conf = ProjectConfigLoader.get project
+    languages = ProjectConfigLoader.get_languages project
+    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters filters, project_conf, languages
     
     filters = 
       filters 

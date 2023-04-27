@@ -14,7 +14,7 @@ defmodule Api.Documents.Filter do
     Enum.map filters, fn {name, value} -> {name, [value]} end
   end
 
-  def split_off_multilanguage_filters(filters, project_conf) do
+  def split_off_multilanguage_filters(filters, project_conf, languages) do
     unless has_exactly_one_category_filter? filters do
       {filters, []}
     else
@@ -26,17 +26,16 @@ defmodule Api.Documents.Filter do
         field_name = String.replace name, "resource.", ""
         field_name not in input_fields
       end)
-      {filters, preprocess_multilanguage_filters multilanguage_filters}
+      {filters, (preprocess_multilanguage_filters multilanguage_filters, languages)}
     end
   end
 
   def expand_categories(nil, _), do: nil
   def expand_categories(filters, project_conf), do: Enum.map(filters, &(expand(&1, project_conf)))
 
-  defp preprocess_multilanguage_filters multilanguage_filters do
+  defp preprocess_multilanguage_filters multilanguage_filters, languages do
     Enum.map multilanguage_filters, fn {name, value} ->
-      [{name <> ".de", value},
-       {name <> ".en", value}]
+      Enum.map languages ++ ["unspecifiedLanguage"], fn language -> {name <> "." <> language, value} end
     end
   end
 

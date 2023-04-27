@@ -36,6 +36,7 @@ defmodule Api.Documents.Mapping do
           %{
             name: Filters.get_filter_name(filter),
             label: filter.label,
+            groups: filter["groups"],
             values: build_values(buckets, filter, default_config)
           }
         end
@@ -45,9 +46,9 @@ defmodule Api.Documents.Mapping do
   defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
     buckets = map_buckets(buckets, filter)
     Tree.map_tree_list(default_config,
-      fn %{ name: name, label: label } ->
+      fn %{ name: name, label: label, groups: groups } ->
         bucket = Enum.find(buckets, fn bucket -> bucket.value.name == name end)
-        %{ value: %{ name: name, label: label }, count: (if bucket, do: bucket.count, else: 0) }
+        %{ value: %{ name: name, label: label, groups: groups }, count: (if bucket, do: bucket.count, else: 0) }
       end
     )
     |> Tree.filter_tree_list(fn %{ count: count } -> count > 0 end)

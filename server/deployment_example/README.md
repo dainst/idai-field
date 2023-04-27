@@ -83,7 +83,11 @@ Use the `uid` to set the owner for `FILE_DIRECTORY`.
 ```
 sudo chown 65534 files/
 ```
+### Creating a project using the interface
 
+Open http://localhost and login with the CouchDB admin credentials as defined in your .env file. You should be able to create new projects in your browser.
+
+### Creating a project using the CLI
 Next we create a project with a random password. 
 ```
 docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_project("my_first_project")'
@@ -101,6 +105,8 @@ The result should look something like this:
 ```
 
 If you want to set the password yourself, just add a second parameter (also see [CLI documentation](https://github.com/dainst/idai-field/wiki/FieldHub#manual)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
+
+### Using the newly created project
 
 You should now be able to sync a Field Client with the server giving the above credentials and the servers domain or IP.
 

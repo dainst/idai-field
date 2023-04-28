@@ -20,16 +20,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const fieldNames = getInputFieldNames(searchParams, filter);
 
     useEffect(() => {
-
-        const params = searchParams
-            .toString()
-            .split('&')
-            .filter(param => param.startsWith('resource.'))
-            .map(param => param.replace('resource.', ''))
-            .filter(param => !param.startsWith('category'))
-            .map(param => param.split('='));
-        setFilters(params as undefined as [string, string][]);
-
+        setFilters(extractFiltersFromSearchParams(searchParams));
     }, [searchParams]);
 
     return (<>
@@ -63,6 +54,15 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     </>);
 }
 
+
+const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
+    searchParams
+        .toString()
+        .split('&')
+        .filter(param => param.startsWith('resource.'))
+        .map(param => param.replace('resource.', ''))
+        .filter(param => !param.startsWith('category'))
+        .map(param => param.split('=')) as undefined as [string, string][];
 
 const getInputFieldNames = (searchParams: URLSearchParams, filter: ResultFilter) => {
 

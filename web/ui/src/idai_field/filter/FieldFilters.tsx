@@ -28,19 +28,15 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     }, [searchParams]);
 
     return (<>
-        <ul>
-            { filters.map(filter => <li 
-                    key={ filter[0] }
-                    onClick={ () => { setFilters(filters.filter(f => filter[0] !== f[0])); navigateTo(filter[0], filter[1]); }}>
-                {filter[0] + ':' + filter[1]}
-            </li>)}
-        </ul>
+        <ExistingFilters filters={ filters } setFilters={ setFilters } navigateTo={ navigateTo } />
         <InputGroup>
             <DropdownButton
             id="basicbutton"
             title={ currentFilter !== '' ? currentFilter : 'Auswählen' }>
                 {
-                    fieldNames.map(fieldName =>
+                    fieldNames
+                        .filter(fieldName => !searchParams.has('resource.' + fieldName))
+                        .map(fieldName =>
                         <Dropdown.Item key={ fieldName }
                                     active={ fieldName === currentFilter }
                                     onClick={ () => setCurrentFilter(fieldName) }>
@@ -59,6 +55,23 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
             </>}
         </InputGroup>
     </>);
+}
+
+
+function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string, string][],
+    setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
+    navigateTo: (k: string, v: string) => void }) {
+
+    return <ul>
+            { filters.map(filter => <li
+                    key={ filter[0] }
+                    onClick={ () => {
+                        setFilters(filters.filter(f => filter[0] !== f[0]));
+                        navigateTo(filter[0], filter[1]);
+                    } }>
+                {filter[0] + ':' + filter[1]}
+            </li>)}
+   </ul>;
 }
 
 

@@ -21,27 +21,29 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
     const [filters, setFilters] = useState<[string,string][]>([]);
 
-    const fieldNames = getInputFieldNames(searchParams, filter);
+    const [fieldNames, dropdownMap] = getFields(searchParams, filter);
 
     useEffect(() => {
         setFilters(extractFiltersFromSearchParams(searchParams));
     }, [searchParams]);
 
     return (<>
-        <ExistingFilters filters={ filters } setFilters={ setFilters } navigateTo={ navigateTo } />
+        <ExistingFilters filters={ filters } setFilters={ setFilters } navigateTo={ navigateTo } />
         <InputGroup>
             <DropdownButton
-            id="basicbutton"
-            title={ currentFilter !== '' ? currentFilter : 'Auswählen' /* TODO i18n */ }>
-                <DropdownItems
-                    fieldNames={ fieldNames }
-                    searchParams={ searchParams }
-                    currentFilter={ currentFilter }
-                    setCurrentFilter={ setCurrentFilter } />
+                id="basicbutton"
+                title={ currentFilter !== '' ? currentFilter : 'Auswählen' /* TODO i18n */ }>
+                    <DropdownItems
+                        fieldNames={ fieldNames }
+                        searchParams={ searchParams }
+                        currentFilter={ currentFilter }
+                        setCurrentFilter={ setCurrentFilter } />
             </DropdownButton>
             { currentFilter && <>
-                <Form.Control aria-label="Text input with dropdown button"
-                              onChange={ e => setCurrentFilterText(e.target.value) } />
+                { dropdownMap[currentFilter]
+                    ? <div>TODO show dropdown</div>
+                    : <Form.Control aria-label="Text input with dropdown button"
+                    onChange={ e => setCurrentFilterText(e.target.value) } /> }
                 <Button onClick={ () => { setFilters(filters.concat([[currentFilter, currentFilterText]]));
                     navigateTo(currentFilter, currentFilterText); } }>
                         Add
@@ -79,7 +81,7 @@ function DropdownItems({ fieldNames, searchParams, currentFilter, setCurrentFilt
         <Dropdown.Item key={ fieldName }
                     active={ fieldName === currentFilter }
                     onClick={ () => setCurrentFilter(fieldName) }>
-            { fieldName }
+            { fieldName /* TODO i18n */}
         </Dropdown.Item>)
     }</>;
 }
@@ -95,19 +97,27 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .map(param => param.split('=')) as undefined as [string, string][];
 
 
-const getInputFieldNames = (searchParams: URLSearchParams, filter: ResultFilter) => {
+const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [string[], unknown] => {
 
     const filterBucket = findFilterBucket(searchParams.get('resource.category.name'), filter.values);
-    if (!filterBucket) return [];
+    if (!filterBucket) return [[], {}];
     
     const groups = filterBucket.value['groups'];
-    if (!groups) return [];
+    if (!groups) return [[], {}];
 
-    const fields = groups.map(group => group['fields']);
+    const fields = flatten(groups.map(group => group['fields'])) as unknown as { inputType: string, name: string }[];
 
-    return (flatten(fields) as unknown as { inputType: string, name: string }[])
-        .filter(field => field.inputType === 'input')
+    const dropdownMap = {};
+    fields
+        .filter(field => field.inputType === 'dropdown')
+        .map(field => [field.name, field['valuelist']])
+        .forEach(([fieldName, valuelist]: [string, unknown]) => dropdownMap[fieldName] = valuelist);
+
+    const fieldNames = fields
+        .filter(field => field.inputType === 'input' || field.inputType === 'dropdown')
         .map(field => field.name);
+
+    return [fieldNames, dropdownMap];
 };
 
 

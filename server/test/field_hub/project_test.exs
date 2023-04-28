@@ -1,5 +1,6 @@
 defmodule FieldHub.ProjectTest do
   alias FieldHub.{
+    CouchService,
     FileStore,
     User,
     Project,
@@ -15,6 +16,24 @@ defmodule FieldHub.ProjectTest do
 
   test "exists?/1 correctly returns false" do
     assert false == Project.exists?(@project)
+  end
+
+  test "exists?/1 correctly returns false for project without application user" do
+    name = "project_without_app_user"
+
+    on_exit(fn ->
+      CouchService.delete_project(name)
+    end)
+
+    # Use couch service directly to create database without setting users. `create_project/1` uses
+    # the administrator credentials for this task.
+    CouchService.create_project(name)
+
+    # 403 means database exists but application has no access. `get_db_infos/1` uses the application user
+    # credentials for this task.
+    assert %{status_code: 403} = CouchService.get_db_infos(name)
+
+    assert !Project.exists?(name)
   end
 
   test "can create project with a given name" do

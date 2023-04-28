@@ -11,7 +11,11 @@ import { buildParamsForFilterValue } from './utils';
 export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {
 
+    // TODO guard that projectId and projectView be present
+
     const history = useHistory();
+    const navigateTo = (k: string, v: string) => history.push(`/project/${projectId}/${projectView}?`
+        + buildParamsForFilterValue(searchParams, 'resource.' + k, v));
 
     const [currentFilter, setCurrentFilter] = useState<string>('');
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
@@ -25,7 +29,11 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
     return (<>
         <ul>
-            { filters.map(filter => <li key={ filter[0] }>{filter[0] + ':' + filter[1]}</li>)}
+            { filters.map(filter => <li 
+                    key={ filter[0] }
+                    onClick={ () => { setFilters(filters.filter(f => filter[0] !== f[0])); navigateTo(filter[0], filter[1]); }}>
+                {filter[0] + ':' + filter[1]}
+            </li>)}
         </ul>
         <InputGroup>
             <DropdownButton
@@ -45,8 +53,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                 <Form.Control aria-label="Text input with dropdown button"
                               onChange={ e => setCurrentFilterText(e.target.value) } />
                 <Button onClick={ () => { setFilters(filters.concat([[currentFilter, currentFilterText]]));
-                    history.push(`/project/${projectId}/${projectView}?`
-                    + buildParamsForFilterValue(searchParams, 'resource.' + currentFilter, currentFilterText)); } }>
+                    navigateTo(currentFilter, currentFilterText); } }>
                         Add
                 </Button>
             </>}
@@ -63,6 +70,7 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .map(param => param.replace('resource.', ''))
         .filter(param => !param.startsWith('category'))
         .map(param => param.split('=')) as undefined as [string, string][];
+
 
 const getInputFieldNames = (searchParams: URLSearchParams, filter: ResultFilter) => {
 

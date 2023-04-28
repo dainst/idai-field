@@ -6,6 +6,7 @@ import { flatten } from 'tsfun';
 import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/result';
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
+import { getTranslation } from '../../shared/languages';
 
 // TODO review all occurences of 'resource.' replacements
 
@@ -20,7 +21,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
     const [filters, setFilters] = useState<[string,string][]>([]);
 
-    const [fieldNames, dropdownMap] = getFields(searchParams, filter);
+    const [fields, dropdownMap] = getFields(searchParams, filter);
 
     useEffect(() => {
         setFilters(extractFiltersFromSearchParams(searchParams));
@@ -31,9 +32,12 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <InputGroup>
             <DropdownButton
                 id="basicbutton"
-                title={ currentFilter !== '' ? currentFilter : 'Auswählen' /* TODO i18n */ }>
+                title={ currentFilter !== '' 
+                    ? currentFilter /* TODO i18n */
+                    : 'Auswählen' /* TODO i18n */ }>
+
                     <DropdownItems
-                        fieldNames={ fieldNames }
+                        fields={ fields }
                         searchParams={ searchParams }
                         currentFilter={ currentFilter }
                         setCurrentFilter={ setCurrentFilter } />
@@ -70,18 +74,18 @@ function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string
 }
 
 
-function DropdownItems({ fieldNames, searchParams, currentFilter, setCurrentFilter }: { fieldNames: string[],
+function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: unknown[],
     searchParams: URLSearchParams, currentFilter: string,
     setCurrentFilter: React.Dispatch<React.SetStateAction<string>> }) {
 
-    return <>{ fieldNames
-        .filter(fieldName => !searchParams.has('resource.' + fieldName))
-        .map(fieldName =>
-        <Dropdown.Item key={ fieldName }
-                    active={ fieldName === currentFilter }
-                    onClick={ () => setCurrentFilter(fieldName) }>
-            { fieldName /* TODO i18n */}
-        </Dropdown.Item>)
+    return <>{ fields
+        .filter(field => !searchParams.has('resource.' + field['name']))
+        .map(field =>
+            <Dropdown.Item key={ field['name'] }
+                        active={ field['name'] === currentFilter }
+                        onClick={ () => setCurrentFilter(field['name']) }>
+                { getTranslation(field['label']) }
+            </Dropdown.Item>)
     }</>;
 }
 
@@ -96,7 +100,7 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .map(param => param.split('=')) as undefined as [string, string][];
 
 
-const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [string[], unknown] => {
+const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [unknown[], unknown] => {
 
     const filterBucket = findFilterBucket(searchParams.get('resource.category.name'), filter.values);
     if (!filterBucket) return [[], {}];
@@ -112,11 +116,10 @@ const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [string
         .map(field => [field.name, field['valuelist']])
         .forEach(([fieldName, valuelist]: [string, unknown]) => dropdownMap[fieldName] = valuelist);
 
-    const fieldNames = fields
+    const fields_ = fields
         .filter(field => field.inputType === 'input' || field.inputType === 'dropdown')
-        .map(field => field.name);
 
-    return [fieldNames, dropdownMap];
+    return [fields_, dropdownMap];
 };
 
 

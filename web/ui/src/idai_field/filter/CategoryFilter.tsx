@@ -38,6 +38,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 function InputFieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}) {
 
+    // TODO when mounting this component, recover existing filters from URL
+
     const history = useHistory();
 
     const [currentFilter, setCurrentFilter] = useState<string>('');

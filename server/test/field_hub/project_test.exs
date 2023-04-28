@@ -22,12 +22,12 @@ defmodule FieldHub.ProjectTest do
     name = "project_without_app_user"
 
     on_exit(fn ->
-      CouchService.delete_project(name)
+      CouchService.delete_database(name)
     end)
 
     # Use couch service directly to create database without setting users. `create_project/1` uses
     # the administrator credentials for this task.
-    CouchService.create_project(name)
+    CouchService.create_database(name)
 
     # 403 means database exists but application has no access. `get_db_infos/1` uses the application user
     # credentials for this task.

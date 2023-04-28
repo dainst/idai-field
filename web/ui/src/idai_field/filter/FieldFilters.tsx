@@ -11,8 +11,6 @@ import { buildParamsForFilterValue } from './utils';
 export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {
 
-    // TODO guard that projectId and projectView be present
-
     const history = useHistory();
     const navigateTo = (k: string, v: string) => history.push(`/project/${projectId}/${projectView}?`
         + buildParamsForFilterValue(searchParams, 'resource.' + k, v));

@@ -33,17 +33,11 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
             <DropdownButton
             id="basicbutton"
             title={ currentFilter !== '' ? currentFilter : 'Auswählen' /* TODO i18n */ }>
-                {
-                    fieldNames
-                        .filter(fieldName => !searchParams.has('resource.' + fieldName))
-                        .map(fieldName =>
-                        <Dropdown.Item key={ fieldName }
-                                    active={ fieldName === currentFilter }
-                                    onClick={ () => setCurrentFilter(fieldName) }>
-                            { fieldName }
-                        </Dropdown.Item>)
-                }
-            
+                <DropdownItems
+                    fieldNames={ fieldNames }
+                    searchParams={ searchParams }
+                    currentFilter={ currentFilter }
+                    setCurrentFilter={ setCurrentFilter } />
             </DropdownButton>
             { currentFilter && <>
                 <Form.Control aria-label="Text input with dropdown button"
@@ -72,6 +66,22 @@ function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string
                 {filter[0] + ':' + filter[1]}
             </li>)}
    </ul>;
+}
+
+
+function DropdownItems({ fieldNames, searchParams, currentFilter, setCurrentFilter }: { fieldNames: string[],
+    searchParams: URLSearchParams, currentFilter: string,
+    setCurrentFilter: React.Dispatch<React.SetStateAction<string>> }) {
+
+    return <>{ fieldNames
+        .filter(fieldName => !searchParams.has('resource.' + fieldName))
+        .map(fieldName =>
+        <Dropdown.Item key={ fieldName }
+                    active={ fieldName === currentFilter }
+                    onClick={ () => setCurrentFilter(fieldName) }>
+            { fieldName }
+        </Dropdown.Item>)
+    }</>;
 }
 
 

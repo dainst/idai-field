@@ -32,7 +32,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <InputGroup>
             <DropdownButton
             id="basicbutton"
-            title={ currentFilter !== '' ? currentFilter : 'Auswählen' }>
+            title={ currentFilter !== '' ? currentFilter : 'Auswählen' /* TODO i18n */ }>
                 {
                     fieldNames
                         .filter(fieldName => !searchParams.has('resource.' + fieldName))

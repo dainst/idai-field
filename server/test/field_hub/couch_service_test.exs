@@ -61,8 +61,7 @@ defmodule FieldHub.CouchServiceTest do
     # `FieldHub.Project.create/1` would additionally call `CouchService.update_user_role_in_project/3`.
     outside_project = "outside_field_hub"
 
-
-    CouchService.create_project(outside_project)
+    CouchService.create_database(outside_project)
 
     databases = CouchService.get_all_databases()
 
@@ -70,7 +69,7 @@ defmodule FieldHub.CouchServiceTest do
     assert "_security" not in databases
     assert "_users" not in databases
 
-    CouchService.delete_project(outside_project)
+    CouchService.delete_database(outside_project)
   end
 
   test "get_docs/2 returns a project's documents with the given UUIDs" do

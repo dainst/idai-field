@@ -7,6 +7,7 @@ import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/resu
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
 
+// TODO review all occurences of 'resource.' replacements
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {

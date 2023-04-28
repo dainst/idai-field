@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, ReactNode, useState } from 'react';
+import React, { CSSProperties, ReactElement, ReactNode, useState, useEffect } from 'react';
 import { Col, Dropdown, DropdownButton, Row, Button, InputGroup, Form } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { flatten } from 'tsfun';
@@ -38,8 +38,6 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 function InputFieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}) {
 
-    // TODO when mounting this component, recover existing filters from URL
-
     const history = useHistory();
 
     const [currentFilter, setCurrentFilter] = useState<string>('');
@@ -47,6 +45,19 @@ function InputFieldFilters({ projectId, projectView, searchParams, filter }: { p
     const [filters, setFilters] = useState<[string,string][]>([]);
 
     const fieldNames = getInputFieldNames(searchParams, filter);
+
+    useEffect(() => {
+
+        const params = searchParams
+            .toString()
+            .split('&')
+            .filter(param => param.startsWith('resource.'))
+            .map(param => param.replace('resource.', ''))
+            .filter(param => !param.startsWith('category'))
+            .map(param => param.split("="));
+        setFilters(params as undefined as [string, string][]);
+
+    }, [searchParams])
 
     return (<>
         <ul>

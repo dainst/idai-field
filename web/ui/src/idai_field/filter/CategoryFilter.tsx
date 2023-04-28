@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
-import { Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { CSSProperties, ReactElement, ReactNode, useState } from 'react';
+import { Col, Dropdown, DropdownButton, Row, Button, InputGroup, Form } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 import { flatten } from 'tsfun';
 import { Tree, Forest } from 'idai-field-core';
 import { FilterBucketTreeNode, FilterBucket, ResultFilter } from '../../api/result';
@@ -38,28 +38,44 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 function InputFieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}) {
 
+    const history = useHistory();
+
+    const [currentFilter, setCurrentFilter] = useState<string>('');
+    const [currentFilterText, setCurrentFilterText] = useState<string>('');
+    const [filters, setFilters] = useState<[string,string][]>([]);
+
     const fieldNames = getInputFieldNames(searchParams, filter);
-    console.log('fieldNames', fieldNames);
 
-    return <div>
-        <DropdownButton id="basicbutton" title="abc">
-            {
-                fieldNames.map(fieldName => renderFieldName(fieldName))
-            }
-        </DropdownButton>
-
-        <Link to={ `/project/${projectId}/${projectView}?`
-            + buildParamsForFilterValue(searchParams, 'resource.shortDescription', 'Ein') }>xo
-        </Link>
-    </div>;
+    return (<>
+        <ul>
+            { filters.map(filter => <li key={ filter[0] }>{filter[0] + ':' + filter[1]}</li>)}
+        </ul>
+        <InputGroup>
+            <DropdownButton
+            id="basicbutton"
+            title={ currentFilter !== '' ? currentFilter : 'Auswählen' }>
+                {
+                    fieldNames.map(fieldName =>
+                        <Dropdown.Item key={ fieldName }
+                                    active={ fieldName === currentFilter }
+                                    onClick={ () => setCurrentFilter(fieldName) }>
+                            { fieldName }
+                        </Dropdown.Item>)
+                }
+            
+            </DropdownButton>
+            { currentFilter && <>
+                <Form.Control aria-label="Text input with dropdown button"
+                              onChange={ e => setCurrentFilterText(e.target.value) } />
+                <Button onClick={ () => { setFilters(filters.concat([[currentFilter, currentFilterText]]));
+                    history.push(`/project/${projectId}/${projectView}?`
+                    + buildParamsForFilterValue(searchParams, 'resource.' + currentFilter, currentFilterText)); } }>
+                        Add
+                </Button>
+            </>}
+        </InputGroup>
+    </>);
 }
-
-
-const renderFieldName = (fieldName: string) => {
-    return <Dropdown.Item key={ fieldName }>
-        { fieldName }
-    </Dropdown.Item>;
-};
 
 
 const getInputFieldNames = (searchParams: URLSearchParams, filter: ResultFilter) => {

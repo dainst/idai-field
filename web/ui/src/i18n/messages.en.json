@@ -1,4 +1,7 @@
 {
+  "fieldFilters": {
+    "select": "Select"
+  },
   "navbar": {
     "projects": "Projects",
     "desktop": "Desktop",

@@ -3,17 +3,20 @@ import { Dropdown, DropdownButton, Button, InputGroup, Form } from 'react-bootst
 import { useHistory } from 'react-router-dom';
 import { Tree, Forest } from 'idai-field-core';
 import { Field } from '../../api/document';
-import { flatten, Map, includedIn } from 'tsfun';
+import { flatten, Map } from 'tsfun';
 import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/result';
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
 import { getTranslation } from '../../shared/languages';
+import { useTranslation } from 'react-i18next';
 
 // TODO review all occurences of 'resource.' replacements
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {
 
+    const { t } = useTranslation();
+    
     const history = useHistory();
     const navigateTo = (k: string, v: string) => history.push(`/project/${projectId}/${projectView}?`
         + buildParamsForFilterValue(searchParams, 'resource.' + k, v));
@@ -36,7 +39,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
-                title={ currentFilter[0] ? currentFilter[1] : 'Auswählen' /* TODO i18n */ }>
+                title={ currentFilter[0] ? currentFilter[1] : t('fieldFilters.select') }>
                     <DropdownItems
                         fields={ fields }
                         searchParams={ searchParams }
@@ -55,7 +58,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                         onChange={ e => setCurrentFilterText(e.target.value) } />
                         <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
                                 navigateTo(currentFilter[0], currentFilterText); } }>
-                            Add { /* TODO i18n */ }
+                            +
                         </Button>
                     </> }
                 
@@ -71,9 +74,11 @@ function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, naviga
         filters: [string, string][],
         navigateTo: (k: string, v: string) => void }): ReactElement {
 
+    const { t } = useTranslation();
+
     const [selected, setSelected] = useState<string>('');
 
-    return <><DropdownButton id="field-filters-inner-dropdown" title={ selected || 'Auswählen' /* TODO i18n */ }>
+    return <><DropdownButton id="field-filters-inner-dropdown" title={ selected || t('fieldFilters.select') }>
         { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
             <Dropdown.Item
                 key={ k }
@@ -83,7 +88,7 @@ function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, naviga
         </DropdownButton>
         <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0] + '.name', selected]]));
                                   navigateTo(currentFilter[0] + '.name', selected); } }>
-            Add { /* TODO i18n */ }
+            +
         </Button>
     </>;
 }

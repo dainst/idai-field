@@ -17,13 +17,16 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const navigateTo = (k: string, v: string) => history.push(`/project/${projectId}/${projectView}?`
         + buildParamsForFilterValue(searchParams, 'resource.' + k, v));
 
-    const [currentFilter, setCurrentFilter] = useState<string>('');
+    const [currentFilter, setCurrentFilter] = useState<[string, string]>(['', '']);
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
     const [filters, setFilters] = useState<[string,string][]>([]);
 
     const [fields, dropdownMap] = getFields(searchParams, filter);
 
     useEffect(() => {
+        // TODO review problem: We cannot recover the translation from the url params,
+        // so we currently use someFieldName:someFieldValue items here, which matches
+        // the URL, but is different from behaviour of Field Desktop
         setFilters(extractFiltersFromSearchParams(searchParams));
     }, [searchParams]);
 
@@ -31,24 +34,21 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <ExistingFilters filters={ filters } setFilters={ setFilters } navigateTo={ navigateTo } />
         <InputGroup>
             <DropdownButton
-                id="basicbutton"
-                title={ currentFilter !== '' 
-                    ? currentFilter /* TODO i18n */
-                    : 'Auswählen' /* TODO i18n */ }>
-
+                id="field-filters-dropdown"
+                title={ currentFilter[0] ? currentFilter[1] : 'Auswählen' /* TODO i18n */ }>
                     <DropdownItems
                         fields={ fields }
                         searchParams={ searchParams }
-                        currentFilter={ currentFilter }
+                        currentFilter={ currentFilter[0] }
                         setCurrentFilter={ setCurrentFilter } />
             </DropdownButton>
-            { currentFilter && <>
-                { dropdownMap[currentFilter]
+            { currentFilter[0] && <>
+                { dropdownMap[currentFilter[0]]
                     ? <div>TODO show dropdown</div>
                     : <Form.Control aria-label="Text input with dropdown button"
                     onChange={ e => setCurrentFilterText(e.target.value) } /> }
-                <Button onClick={ () => { setFilters(filters.concat([[currentFilter, currentFilterText]]));
-                    navigateTo(currentFilter, currentFilterText); } }>
+                <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
+                    navigateTo(currentFilter[0], currentFilterText); } }>
                         Add
                 </Button>
             </>}
@@ -76,14 +76,14 @@ function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string
 
 function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: unknown[],
     searchParams: URLSearchParams, currentFilter: string,
-    setCurrentFilter: React.Dispatch<React.SetStateAction<string>> }) {
+    setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
 
     return <>{ fields
         .filter(field => !searchParams.has('resource.' + field['name']))
         .map(field =>
             <Dropdown.Item key={ field['name'] }
                         active={ field['name'] === currentFilter }
-                        onClick={ () => setCurrentFilter(field['name']) }>
+                        onClick={ () => setCurrentFilter([field['name'], getTranslation(field['label'])]) }>
                 { getTranslation(field['label']) }
             </Dropdown.Item>)
     }</>;
@@ -117,7 +117,7 @@ const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [unknow
         .forEach(([fieldName, valuelist]: [string, unknown]) => dropdownMap[fieldName] = valuelist);
 
     const fields_ = fields
-        .filter(field => field.inputType === 'input' || field.inputType === 'dropdown')
+        .filter(field => field.inputType === 'input' || field.inputType === 'dropdown');
 
     return [fields_, dropdownMap];
 };

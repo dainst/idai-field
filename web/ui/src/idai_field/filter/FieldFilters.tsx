@@ -25,6 +25,12 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
     const [filters, setFilters] = useState<[string,string][]>([]);
 
+    const selectCurrentFilter = (k: string, v: string) => {
+        setFilters(filters.concat([[k, v]]));
+        navigateTo(k, v);
+        setCurrentFilter(['', '']);
+    };
+
     const [fields, dropdownMap] = getFields(searchParams, filter);
 
     useEffect(() => {
@@ -51,13 +57,12 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                     ? <InnerDropdown
                         dropdownMap={ dropdownMap }
                         currentFilter={ currentFilter }
-                        setFilters={ setFilters }
+                        selectCurrentFilter={ selectCurrentFilter }
                         filters={ filters }
                         navigateTo={ navigateTo } />
                     : <><Form.Control aria-label="Text input with dropdown button"
                         onChange={ e => setCurrentFilterText(e.target.value) } />
-                        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
-                                navigateTo(currentFilter[0], currentFilterText); } }>
+                        <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>
                             +
                         </Button>
                     </> }
@@ -68,9 +73,9 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 }
 
 
-function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, navigateTo }:
+function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
     { dropdownMap: unknown, currentFilter: [string, string],
-        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
+        selectCurrentFilter: (k: string, v: string) => void,
         filters: [string, string][],
         navigateTo: (k: string, v: string) => void }): ReactElement {
 
@@ -86,8 +91,7 @@ function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, naviga
                 { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
             </Dropdown.Item>) }
         </DropdownButton>
-        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0] + '.name', selected]]));
-                                  navigateTo(currentFilter[0] + '.name', selected); } }>
+        <Button onClick={ () => selectCurrentFilter(currentFilter[0] + '.name', selected) }>
             +
         </Button>
     </>;

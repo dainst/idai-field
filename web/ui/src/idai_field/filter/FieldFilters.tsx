@@ -80,9 +80,8 @@ function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, naviga
                 { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
             </Dropdown.Item>) }
         </DropdownButton>
-        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], selected]]));
-                                // TODO note that dropdown fields must be matched by name on the backend
-                                navigateTo(currentFilter[0], selected); } }>
+        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0] + '.name', selected]]));
+                                  navigateTo(currentFilter[0] + '.name', selected); } }>
             Add { /* TODO i18n */ }
         </Button>
     </>;

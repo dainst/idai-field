@@ -44,7 +44,7 @@ export interface ResultFilter {
 
 
 export interface LabeledValueWithGroups extends LabeledValue {
-    groups?: FieldGroup[];
+    groups: FieldGroup[]|null;
 }
 
 

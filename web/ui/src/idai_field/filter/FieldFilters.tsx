@@ -44,21 +44,48 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
             </DropdownButton>
             { currentFilter[0] && <>
                 { dropdownMap[currentFilter[0]]
-                    ? <DropdownButton id="field-filters-inner-dropdown" title="select">
-                        { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
-                            <Dropdown.Item key={ k }>
-                                { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
-                            </Dropdown.Item>) }
-                      </DropdownButton>
-                    : <Form.Control aria-label="Text input with dropdown button"
-                        onChange={ e => setCurrentFilterText(e.target.value) } /> }
-                <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
-                    navigateTo(currentFilter[0], currentFilterText); } }>
-                        Add
-                </Button>
+                    ? <InnerDropdown 
+                        dropdownMap={ dropdownMap } 
+                        currentFilter={ currentFilter }
+                        setFilters={ setFilters }
+                        filters={ filters }
+                        navigateTo={ navigateTo } />
+                    : <><Form.Control aria-label="Text input with dropdown button"
+                        onChange={ e => setCurrentFilterText(e.target.value) } />
+                        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
+                                navigateTo(currentFilter[0], currentFilterText); } }>
+                            Add { /* TODO i18n */ }
+                        </Button>
+                    </> }
+                
             </>}
         </InputGroup>
     </>);
+}
+
+
+function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, navigateTo }:
+    { dropdownMap: unknown, currentFilter: [string, string], 
+        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
+        filters: [string, string][],
+        navigateTo: (k: string, v: string) => void }): ReactElement {
+
+    const [selected, setSelected] = useState<string>('');
+
+    return <><DropdownButton id="field-filters-inner-dropdown" title={ selected || 'Auswählen' /* TODO i18n */ }>
+        { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
+            <Dropdown.Item
+                key={ k }
+                onClick={ () => setSelected(k) }>
+                { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
+            </Dropdown.Item>) }
+        </DropdownButton>
+        <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], selected]]));
+                                // TODO note that dropdown fields must be matched by name on the backend
+                                navigateTo(currentFilter[0], selected); } }>
+            Add { /* TODO i18n */ }
+        </Button>
+    </>;
 }
 
 

@@ -57,9 +57,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                     ? <InnerDropdown
                         dropdownMap={ dropdownMap }
                         currentFilter={ currentFilter }
-                        selectCurrentFilter={ selectCurrentFilter }
-                        filters={ filters }
-                        navigateTo={ navigateTo } />
+                        selectCurrentFilter={ selectCurrentFilter } />
                     : <><Form.Control aria-label="Text input with dropdown button"
                         onChange={ e => setCurrentFilterText(e.target.value) } />
                         <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>

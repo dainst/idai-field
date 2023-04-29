@@ -32,7 +32,14 @@ async function start() {
         console.error(`Error while trying to generate configuration file for project ${projectName}: `, err);
     }
 
-    writeProjectConfiguration(fullConfiguration, projectName);
+    writeProjectConfiguration(
+        {
+            projectLanguages: configurationDocument.resource.projectLanguages.length === 0
+                ? ["de", "en"] : configurationDocument.resource.projectLanguages, 
+            categories: fullConfiguration
+        }, 
+        projectName
+    );
 }
 
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect, ReactElement } from 'react';
 import { Dropdown, DropdownButton, Button, InputGroup, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Tree, Forest } from 'idai-field-core';
-import { flatten } from 'tsfun';
+import { Field } from '../../api/document';
+import { flatten, Map, includedIn } from 'tsfun';
 import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/result';
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
@@ -105,17 +106,17 @@ function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string
 }
 
 
-function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: unknown[],
+function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: Field[],
     searchParams: URLSearchParams, currentFilter: string,
     setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
 
     return <>{ fields
-        .filter(field => !searchParams.has('resource.' + field['name']))
+        .filter(field => !searchParams.has('resource.' + field.name))
         .map(field =>
-            <Dropdown.Item key={ field['name'] }
-                        active={ field['name'] === currentFilter }
-                        onClick={ () => setCurrentFilter([field['name'], getTranslation(field['label'])]) }>
-                { getTranslation(field['label']) }
+            <Dropdown.Item key={ field.name }
+                        active={ field.name === currentFilter }
+                        onClick={ () => setCurrentFilter([field.name, getTranslation(field.label)]) }>
+                { getTranslation(field.label) }
             </Dropdown.Item>)
     }</>;
 }
@@ -131,26 +132,26 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .map(param => param.split('=')) as undefined as [string, string][];
 
 
-const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [unknown[], unknown] => {
+const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [Field[], Map<Field>] => {
 
     const filterBucket = findFilterBucket(searchParams.get('resource.category.name'), filter.values);
     if (!filterBucket) return [[], {}];
     
-    const groups = filterBucket.value['groups'];
+    const groups = filterBucket.value.groups;
     if (!groups) return [[], {}];
 
-    const fields = flatten(groups.map(group => group['fields'])) as unknown as { inputType: string, name: string }[];
+    const allFields = flatten(groups.map(group => group.fields));
 
     const dropdownMap = {};
-    fields
+    allFields
         .filter(field => field.inputType === 'dropdown')
         .map(field => [field.name, field['valuelist']])
         .forEach(([fieldName, valuelist]: [string, unknown]) => dropdownMap[fieldName] = valuelist);
 
-    const fields_ = fields
+    const fields = allFields
         .filter(field => field.inputType === 'input' || field.inputType === 'dropdown');
 
-    return [fields_, dropdownMap];
+    return [fields, dropdownMap];
 };
 
 

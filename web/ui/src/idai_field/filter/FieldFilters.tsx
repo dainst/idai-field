@@ -44,9 +44,14 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
             </DropdownButton>
             { currentFilter[0] && <>
                 { dropdownMap[currentFilter[0]]
-                    ? <div>TODO show dropdown</div>
+                    ? <DropdownButton id="field-filters-inner-dropdown" title="select">
+                        { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
+                            <Dropdown.Item key={ k }>
+                                { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
+                            </Dropdown.Item>) }
+                      </DropdownButton>
                     : <Form.Control aria-label="Text input with dropdown button"
-                    onChange={ e => setCurrentFilterText(e.target.value) } /> }
+                        onChange={ e => setCurrentFilterText(e.target.value) } /> }
                 <Button onClick={ () => { setFilters(filters.concat([[currentFilter[0], currentFilterText]]));
                     navigateTo(currentFilter[0], currentFilterText); } }>
                         Add

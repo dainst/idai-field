@@ -44,8 +44,8 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
             </DropdownButton>
             { currentFilter[0] && <>
                 { dropdownMap[currentFilter[0]]
-                    ? <InnerDropdown 
-                        dropdownMap={ dropdownMap } 
+                    ? <InnerDropdown
+                        dropdownMap={ dropdownMap }
                         currentFilter={ currentFilter }
                         setFilters={ setFilters }
                         filters={ filters }
@@ -65,7 +65,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
 
 function InnerDropdown({ dropdownMap, currentFilter, setFilters, filters, navigateTo }:
-    { dropdownMap: unknown, currentFilter: [string, string], 
+    { dropdownMap: unknown, currentFilter: [string, string],
         setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
         filters: [string, string][],
         navigateTo: (k: string, v: string) => void }): ReactElement {

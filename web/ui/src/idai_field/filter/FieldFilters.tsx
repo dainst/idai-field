@@ -75,9 +75,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
 function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
     { dropdownMap: unknown, currentFilter: [string, string],
-        selectCurrentFilter: (k: string, v: string) => void,
-        filters: [string, string][],
-        navigateTo: (k: string, v: string) => void }): ReactElement {
+        selectCurrentFilter: (k: string, v: string) => void }): ReactElement {
 
     const { t } = useTranslation();
 

@@ -263,7 +263,7 @@ defmodule FieldHub.CouchService do
       admins: existing_admins,
       members: %{
         names: updated_names,
-        roles: existing_admins["roles"]
+        roles: existing_members["roles"]
       }
     }
     |> Jason.encode!()

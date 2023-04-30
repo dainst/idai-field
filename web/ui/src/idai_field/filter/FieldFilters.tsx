@@ -137,15 +137,21 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .map(param => param.split('=')) as undefined as [string, string][];
 
 
-const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [Field[], Map<Field>] => {
+const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: ResultFilter): Field[] => {
 
     const filterBucket = findFilterBucket(searchParams.get('resource.category.name'), filter.values);
-    if (!filterBucket) return [[], {}];
+    if (!filterBucket) return [];
     
     const groups = filterBucket.value.groups;
-    if (!groups) return [[], {}];
+    if (!groups) return [];
 
-    const allFields = flatten(groups.map(group => group.fields));
+    return flatten(groups.map(group => group.fields));
+}
+
+
+const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [Field[], Map<Field>] => {
+
+    const allFields = getFieldsForActiveCategory(searchParams, filter);
 
     const dropdownMap = {};
     allFields

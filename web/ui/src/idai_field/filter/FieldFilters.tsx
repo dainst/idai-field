@@ -11,6 +11,7 @@ import { getTranslation } from '../../shared/languages';
 import { useTranslation } from 'react-i18next';
 
 // TODO review all occurences of 'resource.' replacements
+// TODO review all occurences of '.name' replacements
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
     projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {
@@ -41,7 +42,12 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     }, [searchParams]);
 
     return (<>
-        <ExistingFilters filters={ filters } setFilters={ setFilters } navigateTo={ navigateTo } />
+        <ExistingFilters
+          filters={ filters }
+          setFilters={ setFilters }
+          navigateTo={ navigateTo }
+          fields={ fields }
+          dropdownMap={ dropdownMap } />
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
@@ -94,19 +100,26 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
 }
 
 
-function ExistingFilters({ filters, setFilters, navigateTo }: { filters: [string, string][],
-    setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
-    navigateTo: (k: string, v: string) => void }) {
+function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap }: { filters: [string, string][],
+    setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>, navigateTo: (k: string, v: string) => void,
+    fields: Field[], dropdownMap: Map<Field> }) {
 
     return <ul>
-            { filters.map(filter => <li
-                    key={ filter[0] }
-                    onClick={ () => {
-                        setFilters(filters.filter(f => filter[0] !== f[0]));
-                        navigateTo(filter[0], filter[1]);
-                    } }>
-                {filter[0] + ':' + filter[1]}
-            </li>)}
+            { filters.map(filter => {
+                const isDropdown = filter[0].endsWith('.name');
+                const filterName = filter[0].replace('.name', '');
+                const fieldName = getTranslation(fields.find(field => field.name === filterName).label);
+                const fieldValue = isDropdown
+                    ? getTranslation(dropdownMap[filterName]['values'][filter[1]].label)
+                    : filter[1];
+                return <li
+                        key={ 'existing-filter::' + filter[0] }
+                        onClick={ () => {
+                            setFilters(filters.filter(f => filter[0] !== f[0]));
+                            navigateTo(filter[0], filter[1]);
+                        } }>
+                    { fieldName + ':' + fieldValue }
+                </li>; })}
    </ul>;
 }
 
@@ -146,7 +159,7 @@ const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: Resul
     if (!groups) return [];
 
     return flatten(groups.map(group => group.fields));
-}
+};
 
 
 const getFields = (searchParams: URLSearchParams, filter: ResultFilter): [Field[], Map<Field>] => {

@@ -35,9 +35,6 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [fields, dropdownMap] = getFields(searchParams, filter);
 
     useEffect(() => {
-        // TODO review problem: We cannot recover the translation from the url params,
-        // so we currently use someFieldName:someFieldValue items here, which matches
-        // the URL, but is different from behaviour of Field Desktop
         setFilters(extractFiltersFromSearchParams(searchParams));
     }, [searchParams]);
 

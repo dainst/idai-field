@@ -3,10 +3,10 @@ defmodule Api.Documents.Filter do
   alias Api.Core.CategoryTreeList
 
   def parse(nil), do: []
-  def parse(filter_strings) do 
+  def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
-      {field, String.replace(value, "%3A", ":")}
+      {String.replace(field, "%3A", ":"), String.replace(value, "%3A", ":")}
     end
   end
 
@@ -22,7 +22,7 @@ defmodule Api.Documents.Filter do
       category_definition = CategoryTreeList.find_by_name category_name, project_conf
       input_fields = get_input_field_names category_definition
 
-      {filters, multilanguage_filters} = Enum.split_with(filters, fn {name, _value} ->        
+      {filters, multilanguage_filters} = Enum.split_with(filters, fn {name, _value} ->
         field_name = String.replace name, "resource.", ""
         field_name not in input_fields
       end)

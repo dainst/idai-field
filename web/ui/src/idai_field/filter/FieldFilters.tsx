@@ -97,17 +97,18 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
 
     return <ul>
             { filters.map(filter => {
-                const isDropdown = filter[0].endsWith('.name');
-                const filterName = filter[0].replace('.name', '');
-                const fieldName = getTranslation(fields.find(field => field.name === filterName).label);
+                let filterName = filter[0].replace('%3A', ':');
+                const isDropdown = filterName.endsWith('.name');
+                filterName = filterName.replace('.name', '');
+                const fieldName = translate(fields.find(field => field.name === filterName));
                 const fieldValue = isDropdown
                     ? getTranslation(dropdownMap[filterName]['values'][filter[1]].label)
                     : filter[1];
                 return <li
                         key={ 'existing-filter::' + filter[0] }
                         onClick={ () => {
-                            setFilters(filters.filter(f => filter[0] !== f[0]));
-                            navigateTo(filter[0], filter[1]);
+                            setFilters(filters.filter(f => filterName !== f[0]));
+                            navigateTo(filterName, filter[1]);
                         } }>
                     { fieldName + ':' + fieldValue }
                 </li>; })}
@@ -121,14 +122,16 @@ function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }
 
     return <>{ fields
         .filter(field => !searchParams.has('resource.' + field.name))
-        .map(field =>
-            <Dropdown.Item key={ field.name }
+        .map(field => <Dropdown.Item key={ field.name }
                         active={ field.name === currentFilter }
-                        onClick={ () => setCurrentFilter([field.name, getTranslation(field.label)]) }>
-                { getTranslation(field.label) }
-            </Dropdown.Item>)
+                        onClick={ () => setCurrentFilter([field.name, translate(field)]) }>
+                { translate(field) }
+            </Dropdown.Item> )
     }</>;
 }
+
+
+const translate = (field: Field) => getTranslation(field.label) || field.name;
 
 
 const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: ResultFilter): Field[] => {

@@ -117,7 +117,7 @@ export const parseFrontendGetParams = (params: URLSearchParams, query: Query = {
 
     const filters = Array.from(params.entries())
         .filter(([field]) => field !== 'q' && field !== 'r' && field !== 'parent' && field !== 'sort')
-        .map(([field, value]) => ({ field, value }));
+        .map(([field, value]) => ({ field: field.replace(':', '%3A'), value }));
     
     if (!newQuery.filters) newQuery.filters = [];
     newQuery.filters = newQuery.filters.concat(filters);

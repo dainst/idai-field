@@ -55,7 +55,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketTreeNode,
     filters: [string, string][]) => {
 
-    const params_ = filters.reduce((acc, [k, v]) => buildParamsForFilterValue(acc, 'resource.' + k.replace('%3A', ':'), v), params);
+    const params_ = filters.reduce((acc, [k, v]) =>
+        buildParamsForFilterValue(acc, 'resource.' + k.replace('%3A', ':'), v), params);
     return buildParamsForFilterValue(params_, key, bucket.item.value.name);
 };
 

@@ -10,8 +10,6 @@ import { buildParamsForFilterValue } from './utils';
 import { getTranslation } from '../../shared/languages';
 import { useTranslation } from 'react-i18next';
 
-// TODO review all occurences of 'resource.' replacements
-// TODO review all occurences of '.name' replacements
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter, filters, setFilters }: {
     projectId: string, projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter,

@@ -1,7 +1,7 @@
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
+import React, { CSSProperties, ReactElement, ReactNode, useState, useEffect } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { flatten } from 'tsfun';
+import { flatten, sameset } from 'tsfun';
 import { FilterBucketTreeNode, ResultFilter } from '../../api/result';
 import CategoryIcon from '../../shared/document/CategoryIcon';
 import { getLabel } from '../../shared/languages';
@@ -16,11 +16,23 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         projectView?: ProjectView, onMouseEnter?: (categories: string[]) => void,
         onMouseLeave?: (categories: string[]) => void }): ReactElement {
 
+    const [filters, setFilters] = useState<[string,string][]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!sameset(categories, searchParams.getAll('resource.category.name'))) {
+            setCategories(searchParams.getAll('resource.category.name'));
+            setFilters([]);
+        } else {
+            setFilters(extractFiltersFromSearchParams(searchParams));
+        }
+    }, [searchParams, categories]);
+
     if (!filter.values.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filter.values.map((bucket: FilterBucketTreeNode) =>
-            renderFilterValue(filter.name, bucket, searchParams, onMouseEnter, projectId, projectView)) }
+            renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove later
             (projectId && projectView)
@@ -30,23 +42,33 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
               projectId={ projectId }
               projectView={ projectView }
               searchParams={ searchParams }
-              filter={ filter } />
+              filter={ filter }
+              filters={ filters }
+              setFilters={ setFilters } />
         }
     </div>;
 }
 
 
-const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
-        onMouseEnter?: (categories: string[]) => void, projectId?: string, projectView?: ProjectView,
-        level: number = 1): ReactNode => {
-    return <React.Fragment key={ bucket.item.value.name }>
+const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketTreeNode,
+    filters: [string, string][]) => {
 
+    const params_ = filters.reduce((acc, [k, v]) => buildParamsForFilterValue(acc, 'resource.' + k, v), params);
+    return buildParamsForFilterValue(params_, key, bucket.item.value.name);
+};
+
+
+const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
+        filters: [string, string][], projectId?: string, projectView?: ProjectView,
+        onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
+
+    return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
                 as={ Link }
                 style={ filterValueStyle(level) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
-                    + buildParamsForFilterValue(params, key, bucket.item.value.name) + '' }>
+                    + buildParams(params, key, bucket, filters) + '' }>
             <Row>
                 <Col xs={ 1 }><CategoryIcon category={ bucket.item.value }
                                             size="30" /></Col>
@@ -65,7 +87,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key, b, params, onMouseEnter, projectId, projectView, level + 1))
+            renderFilterValue(key, b, params, filters, projectId, projectView, onMouseEnter, level + 1))
         }
     </React.Fragment>;
     };
@@ -88,3 +110,13 @@ const categoryLabelStyle: CSSProperties = {
     margin: '3px 10px',
     whiteSpace: 'normal'
 };
+
+
+const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
+    searchParams
+        .toString()
+        .split('&')
+        .filter(param => param.startsWith('resource.'))
+        .map(param => param.replace('resource.', ''))
+        .filter(param => !param.startsWith('category'))
+        .map(param => param.split('=')) as undefined as [string, string][];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement } from 'react';
+import React, { useState, ReactElement } from 'react';
 import { Dropdown, DropdownButton, Button, InputGroup, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Tree, Forest } from 'idai-field-core';
@@ -13,8 +13,9 @@ import { useTranslation } from 'react-i18next';
 // TODO review all occurences of 'resource.' replacements
 // TODO review all occurences of '.name' replacements
 
-export default function FieldFilters({ projectId, projectView, searchParams, filter }: { projectId: string,
-    projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter}): ReactElement {
+export default function FieldFilters({ projectId, projectView, searchParams, filter, filters, setFilters }: {
+    projectId: string, projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter,
+    filters: [string, string][], setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
 
     const { t } = useTranslation();
     
@@ -24,7 +25,6 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
     const [currentFilter, setCurrentFilter] = useState<[string, string]>(['', '']);
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
-    const [filters, setFilters] = useState<[string,string][]>([]);
 
     const selectCurrentFilter = (k: string, v: string) => {
         setFilters(filters.concat([[k, v]]));
@@ -33,10 +33,6 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     };
 
     const [fields, dropdownMap] = getFields(searchParams, filter);
-
-    useEffect(() => {
-        setFilters(extractFiltersFromSearchParams(searchParams));
-    }, [searchParams]);
 
     return (<>
         <ExistingFilters
@@ -135,16 +131,6 @@ function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }
             </Dropdown.Item>)
     }</>;
 }
-
-
-const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
-    searchParams
-        .toString()
-        .split('&')
-        .filter(param => param.startsWith('resource.'))
-        .map(param => param.replace('resource.', ''))
-        .filter(param => !param.startsWith('category'))
-        .map(param => param.split('=')) as undefined as [string, string][];
 
 
 const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: ResultFilter): Field[] => {

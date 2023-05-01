@@ -110,7 +110,7 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                             setFilters(filters.filter(f => filterName !== f[0]));
                             navigateTo(filterName, filter[1]);
                         } }>
-                    { fieldName + ':' + fieldValue }
+                    { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ':' + fieldValue }
                 </li>; })}
    </ul>;
 }

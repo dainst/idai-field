@@ -12,21 +12,23 @@ import FieldFilters from './FieldFilters';
 
 
 export default function CategoryFilter({ filter, searchParams = new URLSearchParams(), projectId, projectView,
-        onMouseEnter, onMouseLeave }: { filter: ResultFilter, searchParams?: URLSearchParams, projectId?: string,
-        projectView?: ProjectView, onMouseEnter?: (categories: string[]) => void,
-        onMouseLeave?: (categories: string[]) => void }): ReactElement {
+        onMouseEnter, onMouseLeave, inPopover }: { filter: ResultFilter, searchParams?: URLSearchParams,
+        projectId?: string, projectView?: ProjectView, onMouseEnter?: (categories: string[]) => void,
+        onMouseLeave?: (categories: string[]) => void, inPopover: boolean }): ReactElement {
 
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
-        if (!sameset(categories, searchParams.getAll('resource.category.name'))) {
-            setCategories(searchParams.getAll('resource.category.name'));
-            setFilters([]);
-        } else {
-            setFilters(extractFiltersFromSearchParams(searchParams));
+        if (inPopover) {
+            if (!sameset(categories, searchParams.getAll('resource.category.name'))) {
+                setCategories(searchParams.getAll('resource.category.name'));
+                setFilters([]);
+            } else {
+                setFilters(extractFiltersFromSearchParams(searchParams));
+            }
         }
-    }, [searchParams, categories]);
+    }, [searchParams, categories, inPopover]);
 
     if (!filter.values.length) return null;
 

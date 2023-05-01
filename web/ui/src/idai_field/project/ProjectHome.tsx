@@ -150,7 +150,8 @@ const renderSidebar = (projectId: string, projectDocument: Document, categoryFil
             <div className="flex-fill py-2" style={ filterColStyle }>
                 <CategoryFilter filter={ categoryFilter } projectId={ projectId } projectView="search"
                     onMouseEnter={ setHighlightedCategories }
-                    onMouseLeave={ setHighlightedCategories } />
+                    onMouseLeave={ setHighlightedCategories }
+                    inPopover={ false } />
             </div>
         </Card>
     </div>;

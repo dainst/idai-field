@@ -96,19 +96,20 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
     fields: Field[], dropdownMap: Map<Field> }) {
 
     return <ul>
-            { filters.map(filter => {
-                let filterName = filter[0].replace('%3A', ':');
+            { filters.map(([k, v]) => {
+                const filterName = k
+                    .replace('%3A', ':')
+                    .replace('.name', '');
                 const isDropdown = filterName.endsWith('.name');
-                filterName = filterName.replace('.name', '');
                 const fieldName = translate(fields.find(field => field.name === filterName));
                 const fieldValue = isDropdown
-                    ? getTranslation(dropdownMap[filterName]['values'][filter[1]].label)
-                    : filter[1];
+                    ? getTranslation(dropdownMap[filterName]['values'][v].label)
+                    : v;
                 return <li
-                        key={ 'existing-filter::' + filter[0] }
+                        key={ 'existing-filter::' + k }
                         onClick={ () => {
                             setFilters(filters.filter(f => filterName !== f[0]));
-                            navigateTo(filterName, filter[1]);
+                            navigateTo(filterName, v);
                         } }>
                     { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ':' + fieldValue }
                 </li>; })}

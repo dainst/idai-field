@@ -18,7 +18,8 @@ export default function Filters({ filters, searchParams, projectId, projectView,
 
     const { t } = useTranslation();
 
-    if (!filters.find(filter => filter.values.length > 0)) return <></>;
+    // TODO review
+    // if (!filters.find(filter => filter.values.length > 0)) return <></>;
 
     return <div>
         <OverlayTrigger trigger="click" placement="right" rootClose

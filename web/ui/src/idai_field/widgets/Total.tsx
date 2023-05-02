@@ -25,7 +25,7 @@ export default function Total({ total, filters, searchParams, projectId, project
 
     const { t } = useTranslation();
 
-    if (!total) return <></>;
+    if (total === undefined) return <></>;
 
     const children = <>
         { t('widgets.total.total') }

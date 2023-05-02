@@ -68,6 +68,7 @@ defmodule Api.Documents.Filter do
       else
         _ -> []
       end
+
     {"resource.category.name", categories}
   end
   defp expand({field, value}, _), do: {field, value}

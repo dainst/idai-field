@@ -39,6 +39,7 @@ export interface ResultResource {
 export interface ResultFilter {
     name: string;
     values: (FilterBucket | FilterBucketTreeNode)[];
+    unfilteredValues: (FilterBucket | FilterBucketTreeNode)[]; // TODO review, or null?
     label: I18nString;
 }
 

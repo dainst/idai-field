@@ -12,7 +12,7 @@ remoteMain.initialize();
 
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it', 'uk'];
+const mainLanguages = ['de', 'en', 'it', 'uk', 'es'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864

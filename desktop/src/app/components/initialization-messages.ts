@@ -114,6 +114,35 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/noValuelistProvided': 'Для поля «[1]» категорії «[0]» не вказано список значень.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Поле «[0]», визначене в категорії «[1]», не можна перевизначати в підкатегорії «[2]».'
     },
+    'es': {
+        'loading1': 'Projekt',
+        'loading2': 'wird geladen...',
+        'loadTestProject': 'Testprojekt laden',
+        'phase/processingImages': 'Bilder werden für die Anzeige optimiert.\nDieser Schritt wird einmalig durchgeführt und kann einige Minuten dauern.',
+        'databaseError': 'Ein Fehler ist aufgetreten: Die Projektdatenbank konnte nicht geladen werden.',
+        'configurationError': 'Ein Fehler ist aufgetreten: Die Projektkonfiguration konnte nicht geladen werden.',
+        'fetchDocumentsError': 'Ein Fehler ist aufgetreten: Die Projektressourcen konnte nicht aus der Datenbank gelesen werden.',
+        'indexingError': 'Ein Fehler ist aufgetreten: Die Indizierung der Projektressourcen ist fehlgeschlagen.',
+        'oneConfigurationError': 'Fehler in der Projektkonfiguration:',
+        'multipleConfigurationErrors': 'Fehler in der Projektkonfiguration:',
+        'configuration/error/invalidJson': 'Die Konfigurationsdatei "[0]" enthält kein valides JSON.',
+        'configuration/error/missingValuelist': 'Die Werteliste für das Feld "[0]" der Kategorie "[1]" konnte nicht gefunden werden.',
+        'configuration/error/missingFieldName': 'Ein in der Projektkonfiguration definiertes Feld hat keinen Namen.',
+        'configuration/error/missingRelationCategory': 'Die in einer Relationsdefinition angegebene Kategorie "[0]" konnte nicht gefunden werden.',
+        'configuration/fields/custom/parentNotDefined': 'Die Oberkategorie "[0]" konnte nicht gefunden werden.',
+        'configuration/fields/custom/tryingToSubtypeANonExtendableCategory': 'Für die Kategorie "[0]" dürfen keine Unterkategorien angelegt werden.',
+        'configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten': 'Für das Feld "[1]" der Kategorie "[0]" darf keine Werteliste gesetzt werden, da die erlaubten Werte der Projektressource entnommen werden.',
+        'configuration/buildProjectCategories/duplicationInSelection': 'Für die Kategorie "[0]" wurde mehr als ein Formular gewählt.',
+        'configuration/buildProjectCategories/mustHaveParent': 'Für die Kategorie "[0]" muss eine Oberkategorie gewählt werden.',
+        'configuration/buildProjectCategories/missingCategoryProperty': 'Die Eigenschaft "[0]" muss für die Kategorie "[1]" gesetzt werden.',
+        'configuration/buildProjectCategories/illegalCategoryProperty': 'Die Eigenschaft "[0]" darf für die Kategorie "[1]" nicht gesetzt werden.',
+        'configuration/buildProjectCategories/missingFieldProperty': 'Die Eigenschaft "[0]" muss für das Feld "[2]" der Kategorie "[1]" gesetzt werden.',
+        'configuration/buildProjectCategories/mustNotSetInputType': 'Die Eigenschaft "inputType" darf für das Feld "[1]" der Kategorie "[0]" nicht geändert werden.',
+        'configuration/buildProjectCategories/illegalFieldInputType': 'Der als Eigenschaft "inputType" des Feldes "[1]" gesetzte Wert "[0]" ist ungültig.',
+        'configuration/buildProjectCategories/illegalFieldProperty': 'Die Eigenschaft "[1]" ist ungültig.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste angegeben.',
+        'configuration/buildProjectCategories/triedToOverwriteParentField': 'Das in der Kategorie "[1]" definierte Feld "[0]" darf in der Subkategorie "[2]" nicht neu definiert werden.'
+    }
 };
 
 

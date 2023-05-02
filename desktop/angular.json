@@ -30,6 +30,10 @@
           "uk": {
             "translation": "src/app/i18n/messages.uk.xlf",
             "baseHref": "/"
+          },
+          "es": {
+            "translation": "src/app/i18n/messages.es.xlf",
+            "baseHref": "/"
           }
         }
       },
@@ -87,6 +91,9 @@
             "uk": {
               "localize": ["uk"]
             },
+            "es": {
+              "localize": ["es"]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -123,6 +130,9 @@
             },
             "uk": {
               "browserTarget": "idai-field:build:uk"
+            },
+            "es": {
+              "browserTarget": "idai-field:build:es"
             },
             "production": {
               "browserTarget": "idai-field:build:production"

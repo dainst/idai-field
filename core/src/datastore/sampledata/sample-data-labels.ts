@@ -106,5 +106,32 @@ export const SAMPLE_DATA_LABELS = {
         'room': 'Приміщення',
         'roomShort': 'П',
         'mapLayer': 'Підоснова'
-    }
+    },
+    'es': {
+        'testProject': 'Testprojekt',
+        'testCampaign': 'Testkampagne',
+        'person': 'Person',
+        'trench': 'Schnitt',
+        'trenchShort': 'S',
+        'stratigraphicalUnit': 'Stratigraphische Einheit',
+        'stratigraphicalUnitShort': 'SE',
+        'layer': 'Erdbefund',
+        'architecture': 'Architektur',
+        'grave': 'Grab',
+        'findShort': 'F',
+        'coin': 'Münze',
+        'testFind': 'Testfund',
+        'testFindShort': 'testf',
+        'surveyArea': 'Survey-Areal',
+        'surveyAreaShort': 'A',
+        'surveyUnit': 'Planquadrat',
+        'surveyUnitShort': 'PQ',
+        'stone': 'Stein',
+        'stoneShort': 'ST',
+        'building': 'Gebäude',
+        'buildingShort': 'B',
+        'room': 'Raum',
+        'roomShort': 'R',
+        'mapLayer': 'Kartenhintergrund'
+    },
 };

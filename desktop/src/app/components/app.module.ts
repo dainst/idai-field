@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
 import localeUk from '@angular/common/locales/uk';
+import localeEs from '@angular/common/locales/es';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -70,6 +71,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeIt, 'it');
 registerLocaleData(localeUk, 'uk');
+registerLocaleData(localeEs, 'es');
 
 
 @NgModule({

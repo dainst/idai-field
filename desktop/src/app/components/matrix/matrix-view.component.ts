@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
-    Relation, Labels, CategoryForm } from 'idai-field-core';
+    Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
 import { DoceditComponent } from '../docedit/docedit.component';
 import { MatrixClusterMode, MatrixRelationsMode, MatrixState } from './matrix-state';
 import { Loading } from '../widgets/loading';
@@ -162,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
             edges,
             this.matrixState.getLineMode() === 'curved'
         );
@@ -245,19 +245,34 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
+    private getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
         : { [period: string]: Array<FeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: FeatureDocument) => {
-            const period: string = document.resource.period?.value || 'UNKNOWN';
+            const period: string = this.getPeriodLabel(document);
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);
             return periodMap;
         }, {});
     }
+    
 
+    private getPeriodLabel(document: FeatureDocument): string {
+
+        const value: string|undefined = document.resource.period?.value;
+        if (!value) return 'UNKNOWN';
+
+        const valuelist: Valuelist = CategoryForm.getField(
+            this.projectConfiguration.getCategory(document.resource.category),
+            'period'
+        )?.valuelist;
+
+        return valuelist
+            ? this.labels.getValueLabel(valuelist, value)
+            : value;
+    }
 
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 

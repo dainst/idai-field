@@ -93,7 +93,7 @@ const renderSidebar = (total: number, filters: ResultFilter[], searchParams: URL
     newSearchParams.set('r', 'overview');
 
     return <div className="projects-overview-sidebar">
-        <Total total={ total } filters={ filters } searchParams={ searchParams } />
+        <Total total={ total } filters={ filters } searchParams={ searchParams } projectView={ 'overview' } />
         <Card ref={ documentListRef } style={ documentListContainerStyle } onScroll={ onScroll }>
             <DocumentList searchParams={ newSearchParams } documents={ documents } />
         </Card>

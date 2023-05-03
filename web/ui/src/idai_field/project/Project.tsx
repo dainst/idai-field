@@ -32,7 +32,7 @@ export const CHUNK_SIZE = 50;
 const MAP_FIT_OPTIONS = { padding : [ 100, 100, 100, SIDEBAR_WIDTH + 100 ], duration: 500 };
 
 
-export type ProjectView = 'search'|'hierarchy';
+export type ProjectView = 'search' | 'hierarchy' | 'overview';
 
 
 export default function Project(): ReactElement {

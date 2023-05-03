@@ -30,10 +30,11 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inPopover]);
 
-    if (!filter[projectView === 'overview' ? 'values' : 'unfilteredValues'].length) return null;
+    const filterValues = filter[projectView !== 'overview' && inPopover ? 'unfilteredValues' : 'values'];
+    if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
-        { filter[projectView === 'overview' ? 'values' : 'unfilteredValues'].map((bucket: FilterBucketTreeNode) =>
+        { filterValues.map((bucket: FilterBucketTreeNode) =>
             renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView, onMouseEnter)) }
 
         { projectId && projectView

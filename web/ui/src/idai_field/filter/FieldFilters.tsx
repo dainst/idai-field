@@ -84,7 +84,7 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
                 { getTranslation(dropdownMap[currentFilter[0]].values[k].label) }
             </Dropdown.Item>) }
         </DropdownButton>
-        <Button onClick={ () => selectCurrentFilter(currentFilter[0] + '.name', selected) }>
+        <Button onClick={ () => selectCurrentFilter(currentFilter[0], selected) }>
             +
         </Button>
     </>;
@@ -98,9 +98,8 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
     return <ul>
             { filters.map(([k, v]) => {
                 const filterName = k
-                    .replace('%3A', ':')
-                    .replace('.name', '');
-                const isDropdown = filterName.endsWith('.name');
+                    .replace('%3A', ':');
+                const isDropdown = dropdownMap[filterName];
                 const field = fields.find(field => field.name === filterName);
                 if (!field) return null; // for example for the parent=root param
                 const fieldName = translate(field);

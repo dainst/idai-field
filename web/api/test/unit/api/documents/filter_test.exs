@@ -33,16 +33,17 @@ defmodule Api.Documents.FilterTest do
     ]
 
     # we won't split here because for splitting we expect exactly one category name filter
-    assert {filters1, []} == Filter.split_off_multilanguage_filters filters1, conf, ["de", "en"]
+    assert {filters1, []} == Filter.split_off_multilanguage_filters_and_add_name_suffixes filters1, conf, ["de", "en"]
 
     filters2 = [
       {"resource.category.name", "Find"},
       {"resource.shortDescription", "abc"}
     ]
 
-    assert {[{"resource.category.name", "Find"}], 
+    assert {[{"resource.category.name", "Find"}],
             [[{"resource.shortDescription.de", "abc"},
               {"resource.shortDescription.en", "abc"},
-              {"resource.shortDescription.unspecifiedLanguage", "abc"}]]} == Filter.split_off_multilanguage_filters filters2, conf, ["de", "en"]
+              {"resource.shortDescription.unspecifiedLanguage", "abc"}]]} ==
+                Filter.split_off_multilanguage_filters_and_add_name_suffixes filters2, conf, ["de", "en"]
   end
 end

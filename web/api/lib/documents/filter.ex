@@ -6,6 +6,12 @@ defmodule Api.Documents.Filter do
   def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
+      field = if not String.starts_with?(field, "project") and not String.starts_with?(field, "resource.") do
+        "resource." <> field
+      else
+        field
+      end
+      IO.inspect field
       {String.replace(field, "%3A", ":"), String.replace(value, "%3A", ":")}
     end
   end

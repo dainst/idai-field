@@ -11,7 +11,6 @@ defmodule Api.Documents.Filter do
       else
         field
       end
-      IO.inspect field
       {String.replace(field, "%3A", ":"), String.replace(value, "%3A", ":")}
     end
   end

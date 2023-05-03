@@ -139,7 +139,7 @@
     <div *ngIf="showNoResourcesWarning()"
          class="col-8 text-center alert alert-warning matrix-alert">
         <em i18n="@@matrix.view.noResourcesWarning">
-            Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie 'Stratigraphische Einheit' in der
+            Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "{{getCategoryLabel('Feature')}}" in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </em>
     </div>

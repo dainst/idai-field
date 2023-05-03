@@ -54,7 +54,7 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
-    private configuredOperationCategories: Array<CategoryForm> = [];
+    private configuredOperationCategories: string[] = [];
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -68,6 +68,10 @@ export class MatrixViewComponent implements OnInit {
 
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
+
+    public getCategoryLabel = (categoryName: string) => this.labels.get(
+        this.projectConfiguration.getCategory(categoryName)
+    );
 
     public showNoResourcesWarning = () => !this.noOperations() && !this.noConfiguredOperationCategories()
         && this.noFeatures() && !this.loading.isLoading();
@@ -170,7 +174,7 @@ export class MatrixViewComponent implements OnInit {
     private async populateOperations(): Promise<void> {
 
         this.configuredOperationCategories = SUPPORTED_OPERATION_CATEGORIES.map(categoryName => {
-            return this.projectConfiguration.getCategory(categoryName);
+            return this.projectConfiguration.getCategory(categoryName)?.name
         }).filter(not(isUndefined));
         if (this.configuredOperationCategories.length === 0) return;
 

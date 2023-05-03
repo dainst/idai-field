@@ -55,7 +55,7 @@ const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketT
     filters: [string, string][]) => {
 
     const params_ = filters.reduce((acc, [k, v]) =>
-        buildParamsForFilterValue(acc, 'resource.' + k.replace('%3A', ':'), v), params);
+        buildParamsForFilterValue(acc, k.replace('%3A', ':'), v), params);
     return buildParamsForFilterValue(params_, key, bucket.item.value.name);
 };
 
@@ -118,7 +118,5 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
     searchParams
         .toString()
         .split('&')
-        .filter(param => param.startsWith('resource.'))
-        .map(param => param.replace('resource.', ''))
-        .filter(param => !param.startsWith('category'))
+        .filter(param => !param.startsWith('resource'))
         .map(param => param.split('=')) as undefined as [string, string][];

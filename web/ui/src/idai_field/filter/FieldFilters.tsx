@@ -19,12 +19,13 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     
     const history = useHistory();
     const navigateTo = (k: string, v: string) => history.push(`/project/${projectId}/${projectView}?`
-        + buildParamsForFilterValue(searchParams, 'resource.' + k, v));
+        + buildParamsForFilterValue(searchParams, k, v));
 
     const [currentFilter, setCurrentFilter] = useState<[string, string]>(['', '']);
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
 
     const selectCurrentFilter = (k: string, v: string) => {
+        console.log('selectcurrent', k, v)
         setFilters(filters.concat([[k, v]]));
         navigateTo(k, v);
         setCurrentFilter(['', '']);
@@ -101,7 +102,9 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                     .replace('%3A', ':')
                     .replace('.name', '');
                 const isDropdown = filterName.endsWith('.name');
-                const fieldName = translate(fields.find(field => field.name === filterName));
+                const field = fields.find(field => field.name === filterName);
+                if (!field) return null; // for example for the parent=root param
+                const fieldName = translate(field);
                 const fieldValue = isDropdown
                     ? getTranslation(dropdownMap[filterName]['values'][v].label)
                     : v;
@@ -109,7 +112,7 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                         key={ 'existing-filter::' + k }
                         onClick={ () => {
                             setFilters(filters.filter(f => filterName !== f[0]));
-                            navigateTo(filterName, v);
+                            navigateTo(k, v);
                         } }>
                     { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ':' + fieldValue }
                 </li>; })}
@@ -122,7 +125,7 @@ function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }
     setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
 
     return <>{ fields
-        .filter(field => !searchParams.has('resource.' + field.name))
+        .filter(field => !searchParams.has(field.name))
         .map(field => <Dropdown.Item key={ field.name }
                         active={ field.name === currentFilter }
                         onClick={ () => setCurrentFilter([field.name, translate(field)]) }>

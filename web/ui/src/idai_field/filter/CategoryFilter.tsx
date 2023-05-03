@@ -37,7 +37,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         { filterValues.map((bucket: FilterBucketTreeNode) =>
             renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView, onMouseEnter)) }
 
-        { projectId && projectView
+        { false && // TODO remove
+            projectId && projectView
             && (searchParams.getAll('resource.category.name').length === 1)
             &&
             <FieldFilters

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { isEmpty, on, is } from 'tsfun';
+import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
-    Relation, Labels } from 'idai-field-core';
+    Relation, Labels, CategoryForm } from 'idai-field-core';
 import { DoceditComponent } from '../docedit/docedit.component';
 import { MatrixClusterMode, MatrixRelationsMode, MatrixState } from './matrix-state';
 import { Loading } from '../widgets/loading';
@@ -54,6 +54,7 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
+    private configuredOperationCategories: Array<CategoryForm> = [];
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -68,9 +69,14 @@ export class MatrixViewComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
 
-    public showNoResourcesWarning = () => !this.noOperations() && this.noFeatures() && !this.loading.isLoading();
+    public showNoResourcesWarning = () => !this.noOperations() && !this.noConfiguredOperationCategories()
+        && this.noFeatures() && !this.loading.isLoading();
 
-    public showNoOperationsWarning = () => this.operationsLoaded && this.noOperations();
+    public showNoOperationsWarning = () => !this.noConfiguredOperationCategories() && this.operationsLoaded
+        && this.noOperations();
+
+    public showNoConfiguredOperationCategoriesWarning = () => this.noConfiguredOperationCategories()
+        && this.operationsLoaded;
 
     public showOperationSelector = () => !this.noOperations();
 
@@ -81,6 +87,8 @@ export class MatrixViewComponent implements OnInit {
     public setSelectionMode = (selectionMode: MatrixSelectionMode) => this.selection.setMode(selectionMode);
 
     public clearSelection = () => this.selection.clear();
+
+    private noConfiguredOperationCategories = () => isEmpty(this.configuredOperationCategories);
 
     private noOperations = () => isEmpty(this.operations);
 
@@ -161,6 +169,11 @@ export class MatrixViewComponent implements OnInit {
 
     private async populateOperations(): Promise<void> {
 
+        this.configuredOperationCategories = SUPPORTED_OPERATION_CATEGORIES.map(categoryName => {
+            return this.projectConfiguration.getCategory(categoryName);
+        }).filter(not(isUndefined));
+        if (this.configuredOperationCategories.length === 0) return;
+
         this.operations = (await this.datastore.find({ categories: SUPPORTED_OPERATION_CATEGORIES }))
             .documents as Array<FieldDocument>;
         if (this.operations.length === 0) return;
@@ -196,7 +209,7 @@ export class MatrixViewComponent implements OnInit {
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
-        const result = await this.datastore.find( {
+        const result = await this.datastore.find({
             constraints: { 'isChildOf:contain': { value: operation.resource.id, searchRecursively: true } },
             categories: categories
         });

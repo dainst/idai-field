@@ -120,6 +120,14 @@
     <loading-icon></loading-icon>
     <matrix-options-menu (onChange)="calculateGraph()"></matrix-options-menu>
 
+    <div *ngIf="showNoConfiguredOperationCategoriesWarning()"
+         class="col-8 text-center alert alert-warning matrix-alert">
+        <em i18n="@@matrix.view.noConfiguredOperationCategoriesWarning">
+            Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die
+            Matrixdarstellung geeignet sind.
+        </em>
+    </div>
+
     <div *ngIf="showNoOperationsWarning()"
          class="col-8 text-center alert alert-warning matrix-alert">
         <em i18n="@@matrix.view.noOperationsWarning">

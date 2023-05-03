@@ -25,7 +25,6 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
 
     const selectCurrentFilter = (k: string, v: string) => {
-        console.log('selectcurrent', k, v)
         setFilters(filters.concat([[k, v]]));
         navigateTo(k, v);
         setCurrentFilter(['', '']);

@@ -23,6 +23,8 @@ import SAME_AS = Relation.SAME_AS;
 
 const Viz = require('viz.js');
 
+const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
+
 
 @Component({
     templateUrl: './matrix-view.html',
@@ -46,12 +48,12 @@ export class MatrixViewComponent implements OnInit {
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
 
-    public trenches: Array<FieldDocument> = [];
-    public selectedTrench: FieldDocument|undefined;
+    public operations: Array<FieldDocument> = [];
+    public selectedOperation: FieldDocument|undefined;
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
-    private trenchesLoaded: boolean = false;
+    private operationsLoaded: boolean = false;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -66,11 +68,11 @@ export class MatrixViewComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
 
-    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
+    public showNoResourcesWarning = () => !this.noOperations() && this.noFeatures() && !this.loading.isLoading();
 
-    public showNoTrenchesWarning = () => this.trenchesLoaded && this.noTrenches();
+    public showNoOperationsWarning = () => this.operationsLoaded && this.noOperations();
 
-    public showTrenchSelector = () => !this.noTrenches();
+    public showOperationSelector = () => !this.noOperations();
 
     public documentsSelected = () => this.selection.documentsSelected();
 
@@ -80,7 +82,7 @@ export class MatrixViewComponent implements OnInit {
 
     public clearSelection = () => this.selection.clear();
 
-    private noTrenches = () => isEmpty(this.trenches);
+    private noOperations = () => isEmpty(this.operations);
 
     private noFeatures = () => isEmpty(this.featureDocuments);
 
@@ -88,8 +90,8 @@ export class MatrixViewComponent implements OnInit {
     async ngOnInit() {
 
         await this.matrixState.load();
-        await this.populateTrenches();
-        this.trenchesLoaded = true;
+        await this.populateOperations();
+        this.operationsLoaded = true;
     }
 
 
@@ -129,9 +131,9 @@ export class MatrixViewComponent implements OnInit {
 
     public async reloadGraph() {
 
-        if (!this.selectedTrench || !this.graphFromSelection) return;
+        if (!this.selectedOperation || !this.graphFromSelection) return;
 
-        await this.loadFeatureDocuments(this.selectedTrench);
+        await this.loadFeatureDocuments(this.selectedOperation);
         this.calculateGraph();
 
         this.graphFromSelection = false;
@@ -157,46 +159,45 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async populateTrenches(): Promise<void> {
+    private async populateOperations(): Promise<void> {
 
-        if (!this.projectConfiguration.getCategory('Trench')) return;
+        this.operations = (await this.datastore.find({ categories: SUPPORTED_OPERATION_CATEGORIES }))
+            .documents as Array<FieldDocument>;
+        if (this.operations.length === 0) return;
 
-        this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents as Array<FieldDocument>;
-        if (this.trenches.length === 0) return;
+        const previouslySelectedOperation: FieldDocument = this.operations
+            .find(on(['resource','id'], is(this.matrixState.getSelectedOperationId())));
+        if (previouslySelectedOperation) return this.selectOperation(previouslySelectedOperation);
 
-        const previouslySelectedTrench = this.trenches
-            .find(on(['resource','id'], is(this.matrixState.getSelectedTrenchId())));
-        if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
-
-        await this.selectTrench(this.trenches[0]);
+        await this.selectOperation(this.operations[0]);
     }
 
 
-    public async selectTrench(trench: FieldDocument) {
+    public async selectOperation(operation: FieldDocument) {
 
-        if (trench === this.selectedTrench) return;
+        if (operation === this.selectedOperation) return;
 
         this.selection.clear(false);
 
-        this.selectedTrench = trench;
-        this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
+        this.selectedOperation = operation;
+        this.matrixState.setSelectedOperationId(this.selectedOperation.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
         this.graph = undefined;
 
-        await this.loadFeatureDocuments(trench);
+        await this.loadFeatureDocuments(operation);
         this.calculateGraph();
     }
 
 
-    private async loadFeatureDocuments(trench: FieldDocument) {
+    private async loadFeatureDocuments(operation: FieldDocument) {
 
         this.loading.start();
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
         const result = await this.datastore.find( {
-            constraints: { 'isChildOf:contain': { value: trench.resource.id, searchRecursively: true } },
+            constraints: { 'isChildOf:contain': { value: operation.resource.id, searchRecursively: true } },
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
@@ -215,8 +216,8 @@ export class MatrixViewComponent implements OnInit {
 
         const reset = async () => {
             this.featureDocuments = [];
-            this.selectedTrench = undefined;
-            await this.populateTrenches();
+            this.selectedOperation = undefined;
+            await this.populateOperations();
         };
 
         await doceditRef.result

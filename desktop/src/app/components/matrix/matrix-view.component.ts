@@ -50,11 +50,11 @@ export class MatrixViewComponent implements OnInit {
 
     public operations: Array<FieldDocument> = [];
     public selectedOperation: FieldDocument|undefined;
+    public configuredOperationCategories: string[] = [];
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
-    private configuredOperationCategories: string[] = [];
 
 
     constructor(private projectConfiguration: ProjectConfiguration,

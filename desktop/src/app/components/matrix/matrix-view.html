@@ -130,8 +130,13 @@
 
     <div *ngIf="showNoOperationsWarning()"
          class="col-8 text-center alert alert-warning matrix-alert">
-        <em i18n="@@matrix.view.noOperationsWarning">
-            Legen Sie eine Maßnahme der Kategorie 'Schnitt' oder 'Untersuchungsfläche' in der
+        <em *ngIf="configuredOperationCategories.length === 1" i18n="@@matrix.view.noOperationsWarning.single">
+            Legen Sie eine Maßnahme der Kategorie "{{getCategoryLabel(configuredOperationCategories[0])}}" in der
+            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
+        </em>
+        <em *ngIf="configuredOperationCategories.length === 2" i18n="@@matrix.view.noOperationsWarning.multiple">
+            Legen Sie eine Maßnahme der Kategorie "{{getCategoryLabel(configuredOperationCategories[0])}}" oder
+            "{{getCategoryLabel(configuredOperationCategories[1])}}" in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>

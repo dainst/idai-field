@@ -55,9 +55,6 @@ export class TaskbarUpdateComponent {
     }
 
 
-    public isAutoUpdateActive = () => this.settingsProvider.getSettings().isAutoUpdateActive;
-
-
     public waitForError(zone: NgZone) {
 
         this.errorTimeout = setTimeout(() => {

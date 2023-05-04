@@ -176,11 +176,11 @@ export class ExpressServer {
         }));
 
         let mainAppHandle: any;
-        await new Promise<void>((resolve) => {
+        await new Promise<void>((resolve, reject) => {
             mainAppHandle = app.listen(3000, () => {
                 console.log('PouchDB Server is listening on port 3000');
                 resolve();
-            });
+            }).on('error', err => reject(err))
         });
 
         const fauxtonApp = express();

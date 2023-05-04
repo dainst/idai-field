@@ -23,6 +23,8 @@ export function applyLanguagesToForm(languageConfigurations: LanguageConfigurati
 
     applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'categories', formDefinition.categoryName);
     applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'forms', formDefinition.name);
+    applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'categories', formDefinition.categoryName,
+        true);
     applyLanguagesToCategoryFields(languageConfigurations, formDefinition.fields, formDefinition.categoryName,
         parentCategoryName);
     applyLanguagesToFormFields(languageConfigurations, formDefinition.fields, formDefinition.name, parentFormName);
@@ -91,22 +93,27 @@ function applyLanguagesToFormFields(languageConfigurations: LanguageConfiguratio
 
 function applyLanguagesToFormOrCategory(languageConfigurations: LanguageConfigurations,
                                         definition: TransientFormDefinition|TransientCategoryDefinition,
-                                        section: 'categories'|'forms', name: string) {
+                                        section: 'categories'|'forms', name: string, onlyCustom: boolean = false) {
 
     definition.label = I18N.mergeI18nStrings(definition.label, LanguageConfiguration.getI18nString(
-        languageConfigurations.complete, section, name, false, 'label'
+        onlyCustom ? languageConfigurations.custom : languageConfigurations.complete, section, name, false, 'label'
     ));
-    definition.defaultLabel = I18N.mergeI18nStrings(definition.defaultLabel, LanguageConfiguration.getI18nString(
-        languageConfigurations.default, section, name, false, 'label'
-    ));
+    if (!onlyCustom) {
+        definition.defaultLabel = I18N.mergeI18nStrings(definition.defaultLabel, LanguageConfiguration.getI18nString(
+            languageConfigurations.default, section, name, false, 'label'
+        ));
+    }
 
     if (!definition.description) {
         definition.description = LanguageConfiguration.getI18nString(
-            languageConfigurations.complete, section, name, false, 'description'
+            onlyCustom ? languageConfigurations.custom : languageConfigurations.complete, section, name, false,
+            'description'
         );
-        definition.defaultDescription = LanguageConfiguration.getI18nString(
-            languageConfigurations.default, section, name, false, 'description'
-        );
+        if (!onlyCustom) {
+            definition.defaultDescription = LanguageConfiguration.getI18nString(
+                languageConfigurations.default, section, name, false, 'description'
+            );
+        }
     }
 }
 

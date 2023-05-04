@@ -48,14 +48,4 @@
             X
         </span>
     </span>
-
-    <span *ngIf="!isAutoUpdateActive() && !downloadComplete && progressPercent === -1"
-       ngbTooltip="Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von Field Desktop."
-       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.deactivated"
-       placement="bottom" container="body">
-        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
-        <span class="badge-pill badge-warning taskbar-badge">
-            ?
-        </span>
-    </span>
 </div>

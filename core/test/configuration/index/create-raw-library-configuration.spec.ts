@@ -105,7 +105,7 @@ describe('createRawLibraryConfiguration', () => {
                                     identifier: { label: 'Identifier' } 
                                 } 
                             },
-                        }  
+                        }
                     }, 
                     // library - language conf
                     {
@@ -117,6 +117,11 @@ describe('createRawLibraryConfiguration', () => {
                                     b: { label: 'B' }, 
                                     c: { label: 'C' }} 
                                 } 
+                        },
+                        forms: {
+                            'Find:a': {
+                                label: 'Fund (Formular A)'
+                            }
                         },
                         groups: {
                             'group-a': 'Group-a',
@@ -133,28 +138,34 @@ describe('createRawLibraryConfiguration', () => {
 
         expect(forms[0].name).toEqual('Find');
         expect(forms[0].libraryId).toEqual('Find');
+        expect(forms[0].label.de).toEqual('Fund');
 
         expect(forms[1].name).toEqual('Find');
         expect(forms[1].libraryId).toEqual('Find:a');
+        expect(forms[1].label.de).toEqual('Fund (Formular A)');
 
         expect(forms[2].name).toEqual('Pottery');
         expect(forms[2].libraryId).toEqual('Pottery');
         expect(forms[2].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[2].label.de).toEqual('Keramik');
 
         expect(forms[3].name).toEqual('Pottery');
         expect(forms[3].libraryId).toEqual('Pottery:a');
         expect(forms[3].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[3].label.de).toEqual('Keramik');
         expect(forms[3].groups[0].name).toEqual('group-a');
-        expect(forms[3].groups[0].label['de']).toEqual('Group-a');
+        expect(forms[3].groups[0].label.de).toEqual('Group-a');
 
         expect(forms[4].name).toEqual('Pottery');
         expect(forms[4].libraryId).toEqual('Pottery:b');
         expect(forms[4].parentCategory.libraryId).toEqual('Find:a');
+        expect(forms[4].label.de).toEqual('Keramik');
         expect(forms[4].groups[0].name).toEqual('group-b');
-        expect(forms[4].groups[0].label['de']).toEqual('Group-b');
+        expect(forms[4].groups[0].label.de).toEqual('Group-b');
 
         expect(forms[5].name).toEqual('Find');
         expect(forms[5].libraryId).toEqual('Find:b');
+        expect(forms[5].label.de).toEqual('Fund');
 
         expect(result.valuelists['valuelist-1'].values['a']).toBeDefined();
         expect(result.valuelists['valuelist-2'].values['b']).toBeDefined();

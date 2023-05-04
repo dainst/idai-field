@@ -9,6 +9,7 @@ import { ProjectView } from '../project/Project';
 import CloseButton from './CloseButton';
 import { buildParamsForFilterValue, isFilterValueInParams } from './utils';
 import FieldFilters from './FieldFilters';
+import { deleteFilterFromParams } from '../../api/query';
 
 
 export default function CategoryFilter({ filter, searchParams = new URLSearchParams(), projectId, projectView,
@@ -19,8 +20,10 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
+    const inProjectPopover = projectView !== 'overview' && inPopover;
+
     useEffect(() => {
-        if (inPopover) {
+        if (inProjectPopover) {
             if (!sameset(categories, searchParams.getAll('resource.category.name'))) {
                 setCategories(searchParams.getAll('resource.category.name'));
                 setFilters([]);
@@ -28,17 +31,17 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 setFilters(extractFiltersFromSearchParams(searchParams));
             }
         }
-    }, [searchParams, categories, inPopover]);
+    }, [searchParams, categories, inProjectPopover]);
 
-    const inProjectPopover = projectView !== 'overview' && inPopover;
     const filterValues = filter[inProjectPopover ? 'unfilteredValues' : 'values'];
     if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues.map((bucket: FilterBucketTreeNode) =>
-            renderFilterValue(filter.name, bucket, searchParams, filters, inProjectPopover, projectId, projectView, onMouseEnter)) }
+            renderFilterValue(filter.name, bucket, searchParams, filters,
+                inProjectPopover, projectId, projectView, onMouseEnter)) }
 
-        { false && // TODO remove
+        { // false && // TODO remove
             projectId && projectView
             && (searchParams.getAll('resource.category.name').length === 1)
             &&
@@ -55,11 +58,15 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
 
 const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketTreeNode,
-    filters: [string, string][]) => {
+    filters: [string, string][], inProjectPopover: boolean) => {
 
     const params_ = filters.reduce((acc, [k, v]) =>
         buildParamsForFilterValue(acc, k.replace('%3A', ':'), v), params);
-    return buildParamsForFilterValue(params_, key, bucket.item.value.name);
+    return buildParamsForFilterValue(
+        inProjectPopover
+            ? deleteFilterFromParams(params_, key)
+            : params_,
+        key, bucket.item.value.name);
 };
 
 
@@ -73,7 +80,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                 style={ filterValueStyle(level) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
-                    + buildParams(params, key, bucket, filters) + '' }>
+                    + buildParams(params, key, bucket, filters, inProjectPopover) + '' }>
             <Row>
                 <Col xs={ 1 }><CategoryIcon category={ bucket.item.value }
                                             size="30" /></Col>
@@ -94,7 +101,8 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key, b, params, filters, inProjectPopover, projectId, projectView, onMouseEnter, level + 1))
+            renderFilterValue(key, b, params, filters, inProjectPopover, projectId, projectView,
+                onMouseEnter, level + 1))
         }
     </React.Fragment>;
     };

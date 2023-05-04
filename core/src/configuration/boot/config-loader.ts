@@ -102,7 +102,6 @@ export class ConfigLoader {
                 custom: this.mergeLanguageConfigurations({}, configurationDocument.resource.languages),
                 default: defaultLanguageConfigurations
             };
-            console.log('language configurations:', languageConfigurations);
             categoriesOrder = configurationDocument.resource.order;
             customValuelists = configurationDocument.resource.valuelists;
             projectLanguages = configurationDocument.resource.projectLanguages;

@@ -14,7 +14,7 @@ export type MatrixClusterMode = 'periods'|'none';
 @Injectable()
 export class MatrixState {
 
-    private selectedTrenchId: string = 't2'; // this is the test projects second trench. if it does not exist in other projects, the app handles that
+    private selectedOperationId: string = 't2'; // this is the test projects second trench. if it does not exist in other projects, the app handles that
     private relationsMode: MatrixRelationsMode = 'temporal';
     private lineMode: MatrixLineMode = 'ortho';
     private clusterMode: MatrixClusterMode = 'periods';
@@ -23,15 +23,15 @@ export class MatrixState {
     constructor(private stateSerializer: StateSerializer) {}
 
 
-    public getSelectedTrenchId(): string {
+    public getSelectedOperationId(): string {
 
-        return this.selectedTrenchId;
+        return this.selectedOperationId;
     }
 
 
-    public setSelectedTrenchId(selectedTrenchId: string) {
+    public setSelectedOperationId(selectedOperationId: string) {
 
-        this.selectedTrenchId = selectedTrenchId;
+        this.selectedOperationId = selectedOperationId;
     }
 
 

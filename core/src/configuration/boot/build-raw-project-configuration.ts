@@ -50,7 +50,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              customValuelists: Map<Valuelist> = {},
                                              builtInFieldDefinitions: Map<BuiltInFieldDefinition> = {},
                                              relationDefinitions: Array<Relation> = [],
-                                             languageConfigurations: LanguageConfigurations = { default: {}, complete: {} },
+                                             languageConfigurations: LanguageConfigurations = { default: {}, custom: {}, complete: {} },
                                              projectLanguages: string[] = [],
                                              categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
@@ -243,8 +243,7 @@ function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuel
 
 
 function applyLanguagesToForms(languageConfigurations: LanguageConfigurations,
-                                categories: Map<TransientCategoryDefinition>,
-                                selectedForms: string[]) {
+                               categories: Map<TransientCategoryDefinition>, selectedForms: string[]) {
     
     return (forms: Map<TransientFormDefinition>): Map<TransientFormDefinition> => {
 

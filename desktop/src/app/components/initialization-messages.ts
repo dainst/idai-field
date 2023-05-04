@@ -2,8 +2,10 @@ const INITIALIZATION_MESSAGES = {
     'de': {
         'loading1': 'Projekt',
         'loading2': 'wird geladen...',
+        'restart': 'Neu starten',
         'loadTestProject': 'Testprojekt laden',
         'phase/processingImages': 'Bilder werden für die Anzeige optimiert.\nDieser Schritt wird einmalig durchgeführt und kann einige Minuten dauern.',
+        'alreadyOpenError': 'Die Anwendung konnte nicht gestartet werden. Bitte prüfen Sie, ob Field Desktop bereits in einem anderen Fenster geöffnet ist.',
         'databaseError': 'Ein Fehler ist aufgetreten: Die Projektdatenbank konnte nicht geladen werden.',
         'configurationError': 'Ein Fehler ist aufgetreten: Die Projektkonfiguration konnte nicht geladen werden.',
         'fetchDocumentsError': 'Ein Fehler ist aufgetreten: Die Projektressourcen konnte nicht aus der Datenbank gelesen werden.',
@@ -31,8 +33,10 @@ const INITIALIZATION_MESSAGES = {
     'en': {
         'loading1': 'Loading project',
         'loading2': '...',
+        'restart': 'Restart',
         'loadTestProject': 'Load test project',
         'phase/processingImages': 'Images are being optimized for display.\nThis step is performed once and may take a few minutes.',
+        'alreadyOpenError': 'The application could not be started. Please check if Field Desktop is already open in another window.',
         'databaseError': 'An error has occurred: The project database could not be loaded.',
         'configurationError': 'An error has occurred: The project configuration could not be loaded.',
         'fetchDocumentsError': 'An error has occurred: The project resources could not be read from the database.',
@@ -60,8 +64,10 @@ const INITIALIZATION_MESSAGES = {
     'it': {
         'loading1': 'Progetto',
         'loading2': 'in caricamento...',
+        'restart': 'Restart',
         'loadTestProject': 'Caricare progetto di prova',
         'phase/processingImages': 'Le immagini vengono ottimizzate per la visualizzazione.\nQuesto processo viene eseguito una sola volta e può richiedere alcuni minuti.',
+        'alreadyOpenError': 'The application could not be started. Please check if Field Desktop is already open in another window.',
         'databaseError': 'Si è verificato un errore: non è stato possibile caricare il database del progetto.',
         'configurationError': 'Si è verificato un errore: non è stato possibile caricare la configurazione del progetto.',
         'fetchDocumentsError': 'Si è verificato un errore: le risorse del progetto non possono essere estratte dal database.',
@@ -88,7 +94,9 @@ const INITIALIZATION_MESSAGES = {
     }, 'uk': {
         'loading1': 'Проект',
         'loading2': 'Завантаження...',
+        'restart': 'Restart',
         'loadTestProject': 'Завантаження тестового проекту',
+        'alreadyOpenError': 'The application could not be started. Please check if Field Desktop is already open in another window.',
         'phase/processingImages': 'Ілюстрації буде оптимізовано для відображення.\nЦей крок виконається один раз і може зайняти декілька хвилин.',
         'databaseError': 'Сталася помилка: не вдалося завантажити базу даних проекту.',
         'configurationError': 'Сталася помилка: не вдалося завантажити конфігурацію проекту.',

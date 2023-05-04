@@ -1,5 +1,5 @@
 import { Map, to } from 'tsfun';
-import { BuiltInFieldDefinition, LanguageConfigurations } from '../../../src/configuration';
+import { BuiltInFieldDefinition, LanguageConfiguration, LanguageConfigurations } from '../../../src/configuration';
 import { buildRawProjectConfiguration } from '../../../src/configuration/boot/build-raw-project-configuration';
 import { ConfigurationErrors } from '../../../src/configuration/boot/configuration-errors';
 import { BuiltInCategoryDefinition } from '../../../src/configuration/model/category/built-in-category-definition';
@@ -2123,24 +2123,27 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {}
             },
             B: {
-                fields: {}
+                fields: {}
             }
         };
 
+        const defaultLanguageConfigurations: Map<Array<LanguageConfiguration>> = {
+            de: [{
+                groups: {
+                    'stem': 'Stem',
+                    'properties': 'Eigenschaften'
+                },
+                categories: {
+                    A: { label: 'A_' },
+                    B: { label: 'B_' }
+                }
+            }]
+        };
+
         const languageConfigurations = {
-            complete: {
-                de: [{
-                    groups: {
-                        'stem': 'Stem',
-                        'properties': 'Eigenschaften'
-                    },
-                    categories: {
-                        A: { label: 'A_' },
-                        B: { label: 'B_' }
-                    }
-                }]
-            },
-            default: {}
+            complete: defaultLanguageConfigurations,
+            custom: {},
+            default: defaultLanguageConfigurations
         };
 
         const result = buildRaw(
@@ -2197,7 +2200,7 @@ describe('buildRawProjectConfiguration', () => {
             {},
             customForms,
             {}, {}, {}, {}, [],
-            { default: {}, complete: {} },
+            { default: {}, custom: {}, complete: {} },
             [],
             orderConfiguration
         ).map(Named.toName);
@@ -2253,7 +2256,7 @@ describe('buildRawProjectConfiguration', () => {
             {},
             customForms,
             {}, {}, {}, {}, [],
-            { default: {}, complete: {} },
+            { default: {}, custom: {}, complete: {} },
             [],
             orderConfiguration
         )['D'].children.map(to(Named.NAME));
@@ -2476,7 +2479,7 @@ describe('buildRawProjectConfiguration', () => {
         }];
 
         const languageConfigurations: LanguageConfigurations = {
-            complete: {
+            complete: {
                 en: [{
                     categories: {
                         A: {
@@ -2513,6 +2516,23 @@ describe('buildRawProjectConfiguration', () => {
                     },
                     relations: {
                         isRelated: { label: 'Default relation label' }
+                    }
+                }]
+            },
+            custom: {
+                en: [{
+                    categories: {
+                        A: {
+                            label: 'Custom category label',
+                            fields: {
+                                field1: { label: 'Field 1 Custom' },
+                                field3: { label: 'Field 3' },
+                                aCommon: { label: 'Custom common field label' }
+                            }
+                        }
+                    },
+                    relations: {
+                        isRelated: { label: 'Custom relation label' }
                     }
                 }]
             }

@@ -27,17 +27,17 @@
     max-width: 100%;
   }
 
-  .trench-selection-button {
+  .operation-selection-button {
     max-width: 50vw;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: default;
   }
 
-  #trench-selection-menu {
+  #operation-selection-menu {
     padding: 0;
 
-    #trench-selection-buttons {
+    #operation-selection-buttons {
       max-height: calc(100vh - 350px);
       overflow-y: auto;
 
@@ -51,7 +51,7 @@
     }
   }
 
-  #selected-trench-label {
+  #selected-operation-label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

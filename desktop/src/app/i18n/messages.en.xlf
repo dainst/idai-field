@@ -872,7 +872,7 @@
         <target state="final">Restore backup</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
@@ -883,7 +883,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
@@ -1121,7 +1121,7 @@
         <target state="final">Field label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
@@ -1469,7 +1469,7 @@
         <target state="final">Allow field specific search</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
@@ -1765,7 +1765,7 @@
         <target state="final">Downloading version <x id="INTERPOLATION" equiv-text="{{version}}"/>...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
@@ -2188,14 +2188,6 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
-        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von Field Desktop.</source>
-        <target state="final">The automatic update check is deactivated. You are possibly not using the latest version of Field Desktop.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
         <target state="final">
@@ -2595,7 +2587,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
@@ -3364,7 +3356,7 @@
         <target state="final">Please select a category.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
@@ -3380,7 +3372,7 @@
         <target state="final">Please select a geometry type.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
@@ -3388,7 +3380,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
@@ -3396,7 +3388,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -3404,7 +3396,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">183</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -3412,7 +3404,7 @@
         <target state="final">No geometry data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.types" datatype="html">
@@ -3455,7 +3447,7 @@
         <target state="final">Identifier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.shortDescription" datatype="html">
@@ -3463,7 +3455,7 @@
         <target state="final">Short description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
@@ -3491,7 +3483,7 @@
         <target state="final">Show in context of operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
@@ -3515,7 +3507,7 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -3523,7 +3515,7 @@
         <target state="final">Move</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -3531,7 +3523,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">218</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
@@ -4414,7 +4406,7 @@
         <target state="final">BP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
@@ -4422,7 +4414,7 @@
         <target state="final">Imprecise</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.uncertain" datatype="html">
@@ -4430,7 +4422,7 @@
         <target state="final">Uncertain</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.period" datatype="html">
@@ -4438,7 +4430,7 @@
         <target state="final">Period</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.exact" datatype="html">
@@ -4446,7 +4438,7 @@
         <target state="final">Exact</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.before" datatype="html">
@@ -4454,7 +4446,7 @@
         <target state="final">Before</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.after" datatype="html">
@@ -4462,7 +4454,7 @@
         <target state="final">After</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.scientific" datatype="html">
@@ -4470,7 +4462,7 @@
         <target state="final">Scientific</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.until" datatype="html">
@@ -4478,7 +4470,7 @@
         <target state="final">until</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.source" datatype="html">
@@ -4486,7 +4478,7 @@
         <target state="final">Source:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.add" datatype="html">
@@ -4590,7 +4582,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
@@ -4720,7 +4712,7 @@
         <target state="final">Add...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
@@ -5089,23 +5081,12 @@
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
-        <source> Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="final">
-            Please create a resource of category 'Trench' in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-            in order to work with it here.
-          </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">235</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
         <source>Bearbeitungsmodus</source>
         <target state="final">Edit mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -5113,7 +5094,7 @@
         <target state="final">Single selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -5121,7 +5102,7 @@
         <target state="final">Group selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -5129,7 +5110,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -5137,7 +5118,7 @@
         <target state="final">Create matrix from selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -5145,18 +5126,42 @@
         <target state="final">Reload matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
+        <source> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </source>
+        <target state="final"> No operation categories suitable for the matrix view are configured for this project. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">228,243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final"> Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> in order to work with it here. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">268</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final"> Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" or "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> in order to work with it here. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">150,138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
-        <source> Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
+        <source> Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
         <target state="final">
-            Please create resources of category 'Stratigraphical Unit' in the excavation view and link them using
+            Please create resources of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in the excavation view for the selected operation and link them using
             temporal or spatial relations.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">

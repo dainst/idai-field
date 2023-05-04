@@ -110,7 +110,7 @@ export class ConfigurationIndex {
         const valuelists = await this.configReader.read('/Library/Valuelists.json');
         const defaultLanguages = await this.configLoader.readDefaultLanguageConfigurations();
         const customLanguages = this.getCustomLanguageConfigurations(configurationDocument);
-        const languages = this.configLoader.getCompleteLanguageConfigurations(defaultLanguages, customLanguages);
+        const languages = this.configLoader.mergeLanguageConfigurations(defaultLanguages, customLanguages);
         const usedCategoryForms = customProjectConfiguration
             ? customProjectConfiguration.getCategories()
             : this.projectConfiguration.getCategories();

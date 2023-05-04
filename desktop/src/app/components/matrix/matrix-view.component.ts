@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { isEmpty, on, is } from 'tsfun';
+import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
-    Relation, Labels } from 'idai-field-core';
+    Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
 import { DoceditComponent } from '../docedit/docedit.component';
 import { MatrixClusterMode, MatrixRelationsMode, MatrixState } from './matrix-state';
 import { Loading } from '../widgets/loading';
@@ -22,6 +22,8 @@ import CUTS = Relation.Position.CUTS;
 import SAME_AS = Relation.SAME_AS;
 
 const Viz = require('viz.js');
+
+const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
 
 @Component({
@@ -46,12 +48,13 @@ export class MatrixViewComponent implements OnInit {
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
 
-    public trenches: Array<FieldDocument> = [];
-    public selectedTrench: FieldDocument|undefined;
+    public operations: Array<FieldDocument> = [];
+    public selectedOperation: FieldDocument|undefined;
+    public configuredOperationCategories: string[] = [];
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
-    private trenchesLoaded: boolean = false;
+    private operationsLoaded: boolean = false;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -66,11 +69,20 @@ export class MatrixViewComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
 
-    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
+    public getCategoryLabel = (categoryName: string) => this.labels.get(
+        this.projectConfiguration.getCategory(categoryName)
+    );
 
-    public showNoTrenchesWarning = () => this.trenchesLoaded && this.noTrenches();
+    public showNoResourcesWarning = () => !this.noOperations() && !this.noConfiguredOperationCategories()
+        && this.noFeatures() && !this.loading.isLoading();
 
-    public showTrenchSelector = () => !this.noTrenches();
+    public showNoOperationsWarning = () => !this.noConfiguredOperationCategories() && this.operationsLoaded
+        && this.noOperations();
+
+    public showNoConfiguredOperationCategoriesWarning = () => this.noConfiguredOperationCategories()
+        && this.operationsLoaded;
+
+    public showOperationSelector = () => !this.noOperations();
 
     public documentsSelected = () => this.selection.documentsSelected();
 
@@ -80,7 +92,9 @@ export class MatrixViewComponent implements OnInit {
 
     public clearSelection = () => this.selection.clear();
 
-    private noTrenches = () => isEmpty(this.trenches);
+    private noConfiguredOperationCategories = () => isEmpty(this.configuredOperationCategories);
+
+    private noOperations = () => isEmpty(this.operations);
 
     private noFeatures = () => isEmpty(this.featureDocuments);
 
@@ -88,8 +102,8 @@ export class MatrixViewComponent implements OnInit {
     async ngOnInit() {
 
         await this.matrixState.load();
-        await this.populateTrenches();
-        this.trenchesLoaded = true;
+        await this.populateOperations();
+        this.operationsLoaded = true;
     }
 
 
@@ -129,9 +143,9 @@ export class MatrixViewComponent implements OnInit {
 
     public async reloadGraph() {
 
-        if (!this.selectedTrench || !this.graphFromSelection) return;
+        if (!this.selectedOperation || !this.graphFromSelection) return;
 
-        await this.loadFeatureDocuments(this.selectedTrench);
+        await this.loadFeatureDocuments(this.selectedOperation);
         this.calculateGraph();
 
         this.graphFromSelection = false;
@@ -148,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
             edges,
             this.matrixState.getLineMode() === 'curved'
         );
@@ -157,46 +171,50 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async populateTrenches(): Promise<void> {
+    private async populateOperations(): Promise<void> {
 
-        if (!this.projectConfiguration.getCategory('Trench')) return;
+        this.configuredOperationCategories = SUPPORTED_OPERATION_CATEGORIES.map(categoryName => {
+            return this.projectConfiguration.getCategory(categoryName)?.name
+        }).filter(not(isUndefined));
+        if (this.configuredOperationCategories.length === 0) return;
 
-        this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents as Array<FieldDocument>;
-        if (this.trenches.length === 0) return;
+        this.operations = (await this.datastore.find({ categories: SUPPORTED_OPERATION_CATEGORIES }))
+            .documents as Array<FieldDocument>;
+        if (this.operations.length === 0) return;
 
-        const previouslySelectedTrench = this.trenches
-            .find(on(['resource','id'], is(this.matrixState.getSelectedTrenchId())));
-        if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
+        const previouslySelectedOperation: FieldDocument = this.operations
+            .find(on(['resource','id'], is(this.matrixState.getSelectedOperationId())));
+        if (previouslySelectedOperation) return this.selectOperation(previouslySelectedOperation);
 
-        await this.selectTrench(this.trenches[0]);
+        await this.selectOperation(this.operations[0]);
     }
 
 
-    public async selectTrench(trench: FieldDocument) {
+    public async selectOperation(operation: FieldDocument) {
 
-        if (trench === this.selectedTrench) return;
+        if (operation === this.selectedOperation) return;
 
         this.selection.clear(false);
 
-        this.selectedTrench = trench;
-        this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
+        this.selectedOperation = operation;
+        this.matrixState.setSelectedOperationId(this.selectedOperation.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
         this.graph = undefined;
 
-        await this.loadFeatureDocuments(trench);
+        await this.loadFeatureDocuments(operation);
         this.calculateGraph();
     }
 
 
-    private async loadFeatureDocuments(trench: FieldDocument) {
+    private async loadFeatureDocuments(operation: FieldDocument) {
 
         this.loading.start();
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
-        const result = await this.datastore.find( {
-            constraints: { 'isChildOf:contain': { value: trench.resource.id, searchRecursively: true } },
+        const result = await this.datastore.find({
+            constraints: { 'isChildOf:contain': { value: operation.resource.id, searchRecursively: true } },
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
@@ -215,8 +233,8 @@ export class MatrixViewComponent implements OnInit {
 
         const reset = async () => {
             this.featureDocuments = [];
-            this.selectedTrench = undefined;
-            await this.populateTrenches();
+            this.selectedOperation = undefined;
+            await this.populateOperations();
         };
 
         await doceditRef.result
@@ -227,19 +245,34 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
+    private getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
         : { [period: string]: Array<FeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: FeatureDocument) => {
-            const period: string = document.resource.period?.value || 'UNKNOWN';
+            const period: string = this.getPeriodLabel(document);
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);
             return periodMap;
         }, {});
     }
+    
 
+    private getPeriodLabel(document: FeatureDocument): string {
+
+        const value: string|undefined = document.resource.period?.value;
+        if (!value) return 'UNKNOWN';
+
+        const valuelist: Valuelist = CategoryForm.getField(
+            this.projectConfiguration.getCategory(document.resource.category),
+            'period'
+        )?.valuelist;
+
+        return valuelist
+            ? this.labels.getValueLabel(valuelist, value)
+            : value;
+    }
 
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 

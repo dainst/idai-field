@@ -30,12 +30,13 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inPopover]);
 
-    const filterValues = filter[projectView !== 'overview' && inPopover ? 'unfilteredValues' : 'values'];
+    const inProjectPopover = projectView !== 'overview' && inPopover;
+    const filterValues = filter[inProjectPopover ? 'unfilteredValues' : 'values'];
     if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues.map((bucket: FilterBucketTreeNode) =>
-            renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView, onMouseEnter)) }
+            renderFilterValue(filter.name, bucket, searchParams, filters, inProjectPopover, projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
             projectId && projectView
@@ -63,7 +64,7 @@ const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketT
 
 
 const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
-        filters: [string, string][], projectId?: string, projectView?: ProjectView,
+        filters: [string, string][], inProjectPopover: boolean, projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     return <React.Fragment key={ bucket.item.value.name }>
@@ -84,14 +85,16 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                                         projectId={ projectId } projectView={ projectView } />
                     }
                 </Col>
-                <Col xs={ 1 }
-                     style={ { margin: '3px' } }>
-                    <span className="float-right"><em>{ bucket.item.count }</em></span>
-                </Col>
+                { !inProjectPopover &&
+                    <Col xs={ 1 }
+                        style={ { margin: '3px' } }>
+                        <span className="float-right"><em>{ bucket.item.count }</em></span>
+                    </Col>
+                }
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key, b, params, filters, projectId, projectView, onMouseEnter, level + 1))
+            renderFilterValue(key, b, params, filters, inProjectPopover, projectId, projectView, onMouseEnter, level + 1))
         }
     </React.Fragment>;
     };

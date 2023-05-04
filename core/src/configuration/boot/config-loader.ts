@@ -96,11 +96,13 @@ export class ConfigLoader {
             customForms = configurationDocument.resource.forms;
             const defaultLanguageConfigurations = this.readDefaultLanguageConfigurations();
             languageConfigurations = {
-                complete: this.getCompleteLanguageConfigurations(
+                complete: this.mergeLanguageConfigurations(
                     defaultLanguageConfigurations, configurationDocument.resource.languages
                 ),
+                custom: this.mergeLanguageConfigurations({}, configurationDocument.resource.languages),
                 default: defaultLanguageConfigurations
             };
+            console.log('language configurations:', languageConfigurations);
             categoriesOrder = configurationDocument.resource.order;
             customValuelists = configurationDocument.resource.valuelists;
             projectLanguages = configurationDocument.resource.projectLanguages;
@@ -154,8 +156,8 @@ export class ConfigLoader {
     }
 
 
-    public getCompleteLanguageConfigurations(defaultLanguageConfigurations: { [language: string]: Array<LanguageConfiguration> },
-                                             customLanguageConfiguration: { [language: string]: LanguageConfiguration })
+    public mergeLanguageConfigurations(defaultLanguageConfigurations: { [language: string]: Array<LanguageConfiguration> },
+                                       customLanguageConfiguration: { [language: string]: LanguageConfiguration })
             : { [language: string]: Array<LanguageConfiguration> } {
 
         return Object.keys(customLanguageConfiguration).reduce((result, language) => {

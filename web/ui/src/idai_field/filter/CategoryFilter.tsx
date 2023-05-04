@@ -41,7 +41,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
             renderFilterValue(filter.name, bucket, searchParams, filters,
                 inProjectPopover, projectId, projectView, onMouseEnter)) }
 
-        { // false && // TODO remove
+        { false && // TODO remove
             projectId && projectView
             && (searchParams.getAll('resource.category.name').length === 1)
             &&

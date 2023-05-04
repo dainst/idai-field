@@ -47,13 +47,17 @@ defmodule Api.Documents.Mapping do
 
   defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
     buckets = map_buckets(buckets, filter)
-    unfiltered = Tree.map_tree_list(default_config,
-      fn %{ name: name, label: label, groups: groups } ->
-        bucket = Enum.find(buckets, fn bucket -> bucket.value.name == name end)
-        %{ value: %{ name: name, label: label, groups: groups }, count: (if bucket, do: bucket.count, else: 0) }
-      end
-    )
-    |> Enum.map(&add_children_count/1)
+    unfiltered = default_config
+      |> Tree.filter_tree_list(fn %{ name: name } ->
+        name != "Type" and name != "TypeCatalog" and name != "Project" and name != "Image"
+       end)
+      |> Tree.map_tree_list(
+        fn %{ name: name, label: label, groups: groups } ->
+          bucket = Enum.find(buckets, fn bucket -> bucket.value.name == name end)
+          %{ value: %{ name: name, label: label, groups: groups }, count: (if bucket, do: bucket.count, else: 0) }
+        end
+      )
+      |> Enum.map(&add_children_count/1)
 
     {Tree.filter_tree_list(unfiltered, fn %{ count: count } -> count > 0 end), unfiltered}
   end

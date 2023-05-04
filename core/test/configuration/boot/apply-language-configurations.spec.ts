@@ -365,7 +365,7 @@ describe('applyLanguageConfigurations', () => {
                             description: 'c Beschreibung Custom'
                         }
                     }
-                },
+                }
             },
             relations: {
                 isRecordedIn: {
@@ -413,5 +413,59 @@ describe('applyLanguageConfigurations', () => {
         
         expect(relations[0].label.de).toEqual('Liegt in (Custom)');
         expect(relations[0].defaultLabel.de).toEqual('Liegt in (Library)');
+    });
+
+
+    it('overwrite form labels in custom language configuration', () => {
+
+        const forms: Map<TransientFormDefinition> = {
+            'A:form': { name: 'A:form', categoryName: 'A', fields: {} } as any
+        };
+
+        const coreConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Category Core'
+                }
+            }
+        };
+
+        const libraryConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Category Library'
+                }
+            },
+            forms: {
+                'A:form': {
+                    label: 'A Form Library'
+                }
+            }
+        };
+        
+        const customConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Custom'
+                }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                de: [libraryConfiguration, coreConfiguration]
+            },
+            complete: {
+                de: [customConfiguration, libraryConfiguration, coreConfiguration]
+            },
+            custom: {
+                de: [customConfiguration]
+            }
+        };
+
+        applyLanguagesToForm(languageConfigurations, forms['A:form']);
+
+        expect(forms['A:form'].label.de).toEqual('A Custom');
+        expect(forms['A:form'].defaultLabel.de).toEqual('A Form Library');
     });
 });

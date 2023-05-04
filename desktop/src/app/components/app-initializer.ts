@@ -170,7 +170,7 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
         );
     } catch (msgWithParams) {
         await progress.setError('databaseError');
-        return Promise.reject();
+        return Promise.reject('Database error');
     }
 };
 
@@ -199,7 +199,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         configuration = await settingsService.loadConfiguration();
     } catch (err) {
         progress.setError('configurationError', err);
-        return Promise.reject();
+        return Promise.reject('Configuration error');
     }
 
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }

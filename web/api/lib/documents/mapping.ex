@@ -45,11 +45,21 @@ defmodule Api.Documents.Mapping do
     end
   end
 
+  defp get_children_of_image default_config do
+    image_category = Enum.find(default_config, fn %{ item: %{ name: name } } -> name == "Image" end)
+    if image_category do
+      Enum.map image_category.trees, fn %{ item: %{ name: name} } -> name end
+    else
+      []
+    end
+  end
+
   defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
+    children_of_image = get_children_of_image default_config
     buckets = map_buckets(buckets, filter)
     unfiltered = default_config
       |> Tree.filter_tree_list(fn %{ name: name } ->
-        name != "Type" and name != "TypeCatalog" and name != "Project" and name != "Image"
+        name not in ["Type", "TypeCatalog", "Project", "Image"] ++ children_of_image
        end)
       |> Tree.map_tree_list(
         fn %{ name: name, label: label, groups: groups } ->

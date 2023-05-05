@@ -18,9 +18,6 @@ export default function Filters({ filters, searchParams, projectId, projectView,
 
     const { t } = useTranslation();
 
-    // TODO review
-    // if (!filters.find(filter => filter.values.length > 0)) return <></>;
-
     return <div>
         <OverlayTrigger trigger="click" placement="right" rootClose
                 overlay={ renderFilterPopover(filters, searchParams, t, projectId, projectView, onMouseOverCategories) }

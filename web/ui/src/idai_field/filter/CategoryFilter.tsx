@@ -39,12 +39,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
-        ? 'values'
-        : 'unfilteredValues'];
-
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
-        { filterValues
+        { filter.values
             .map((bucket: FilterBucketTreeNode) =>
                 renderFilterValue(filter.name, bucket, searchParams, filters,
                     projectId, projectView, onMouseEnter)) }

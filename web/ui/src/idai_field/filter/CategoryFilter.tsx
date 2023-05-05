@@ -33,13 +33,16 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectPopover]);
 
-    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1  ? 'values' : 'unfilteredValues'];
+    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
+        ? 'values'
+        : 'unfilteredValues'];
     if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
-        { filterValues.map((bucket: FilterBucketTreeNode) =>
-            renderFilterValue(filter.name, bucket, searchParams, filters,
-                inProjectPopover, projectId, projectView, onMouseEnter)) }
+        { filterValues
+            .map((bucket: FilterBucketTreeNode) =>
+                renderFilterValue(filter.name, bucket, searchParams, filters,
+                    inProjectPopover, projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
             projectId && projectView
@@ -74,6 +77,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         filters: [string, string][], inProjectPopover: boolean, projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
+    if (bucket.item.count === 0) return null; // this is for the case where we deal with unfiltered values
     const key_ = 'resource.category.name' ? 'category' : key;
 
     return <React.Fragment key={ bucket.item.value.name }>

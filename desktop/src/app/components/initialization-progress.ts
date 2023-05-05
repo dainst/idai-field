@@ -209,6 +209,11 @@ export class InitializationProgress {
         const element: HTMLElement = document.getElementById('reload-button');
         if (element) {
             element.style.opacity = '1';
+            if (['settingUpServer', 'loadingSettings', 'settingUpDatabase'].includes(this.phase)) {
+                element.style.animation = '1.5s ease-in-out init-fade-in';
+                element.style.transition = 'none';
+            }
+            
             element.innerText = getMessage(
                 loadTestProject
                     ? 'loadTestProject'

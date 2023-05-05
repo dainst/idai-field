@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement, ReactNode, useState, useEffect } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { flatten, sameset } from 'tsfun';
 import { FilterBucketTreeNode, ResultFilter } from '../../api/result';
 import CategoryIcon from '../../shared/document/CategoryIcon';
@@ -17,6 +17,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         projectId?: string, projectView?: ProjectView, onMouseEnter?: (categories: string[]) => void,
         onMouseLeave?: (categories: string[]) => void, inPopover: boolean }): ReactElement {
 
+    const history = useHistory();
+
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
@@ -28,10 +30,14 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 setCategories(searchParams.getAll('category'));
                 setFilters([]);
             } else {
-                setFilters(extractFiltersFromSearchParams(searchParams));
+                const newFilters = extractFiltersFromSearchParams(searchParams);
+                if (searchParams.getAll('category').length === 0 && newFilters.length !== 0) {
+                    history.push(`/project/${projectId}/${projectView}?`);
+                }
+                setFilters(newFilters);
             }
         }
-    }, [searchParams, categories, inProjectPopover]);
+    }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
 
     const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
         ? 'values'
@@ -44,7 +50,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                     projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
-            projectId && projectView
+            projectId && projectView && inProjectPopover
             &&
             <FieldFilters
               projectId={ projectId }

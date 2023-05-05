@@ -39,6 +39,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
           navigateTo={ navigateTo }
           fields={ fields }
           dropdownMap={ dropdownMap } />
+        { searchParams.getAll('category').length === 1 &&
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
@@ -63,7 +64,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                     </> }
                 
             </>}
-        </InputGroup>
+        </InputGroup> }
     </>);
 }
 

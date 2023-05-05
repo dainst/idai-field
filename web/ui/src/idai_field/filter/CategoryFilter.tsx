@@ -33,7 +33,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectPopover]);
 
-    const filterValues = filter[inProjectPopover ? 'unfilteredValues' : 'values'];
+    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1  ? 'values' : 'unfilteredValues'];
     if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
@@ -94,7 +94,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                                         projectId={ projectId } projectView={ projectView } />
                     }
                 </Col>
-                { (!inProjectPopover || params.getAll('category').length !== 1) &&
+                {
                     <Col xs={ 1 }
                         style={ { margin: '3px' } }>
                         <span className="float-right"><em>{ bucket.item.count }</em></span>

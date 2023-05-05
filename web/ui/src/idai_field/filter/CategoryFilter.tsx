@@ -42,7 +42,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
                 renderFilterValue(filter.name, bucket, searchParams, filters,
-                    inProjectPopover, projectId, projectView, onMouseEnter)) }
+                    projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
             projectId && projectView
@@ -61,20 +61,17 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
 
 const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketTreeNode,
-    filters: [string, string][], inProjectPopover: boolean) => {
+    filters: [string, string][]) => {
 
     const params_ = filters.reduce((acc, [k, v]) =>
         buildParamsForFilterValue(acc, k.replace('%3A', ':'), v), params);
-    return buildParamsForFilterValue(
-        inProjectPopover
-            ? deleteFilterFromParams(params_, key)
-            : params_,
+    return buildParamsForFilterValue(deleteFilterFromParams(params_, key),
         key, bucket.item.value.name);
 };
 
 
 const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
-        filters: [string, string][], inProjectPopover: boolean, projectId?: string, projectView?: ProjectView,
+        filters: [string, string][], projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     if (bucket.item.count === 0) return null; // this is for the case where we deal with unfiltered values
@@ -86,7 +83,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                 style={ filterValueStyle(level) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
-                    + buildParams(params, key_, bucket, filters, inProjectPopover) + '' }>
+                    + buildParams(params, key_, bucket, filters) + '' }>
             <Row>
                 <Col xs={ 1 }><CategoryIcon category={ bucket.item.value }
                                             size="30" /></Col>
@@ -107,7 +104,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key_, b, params, filters, inProjectPopover, projectId, projectView,
+            renderFilterValue(key_, b, params, filters, projectId, projectView,
                 onMouseEnter, level + 1))
         }
     </React.Fragment>;

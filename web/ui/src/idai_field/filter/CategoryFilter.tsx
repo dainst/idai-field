@@ -94,7 +94,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                                         projectId={ projectId } projectView={ projectView } />
                     }
                 </Col>
-                { (!inProjectPopover || params.getAll('category').length !== 1) &&
+                { !inProjectPopover &&
                     <Col xs={ 1 }
                         style={ { margin: '3px' } }>
                         <span className="float-right"><em>{ bucket.item.count }</em></span>

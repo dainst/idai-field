@@ -124,6 +124,7 @@
     "bootstrap": "4.5.0",
     "camelcase": "6.3.0",
     "cldr": "^5.7.0",
+    "detect-port": "1.5.1",
     "electron-log": "4.4.8",
     "electron-updater": "6.0.3",
     "es6-shim": "0.35.4",

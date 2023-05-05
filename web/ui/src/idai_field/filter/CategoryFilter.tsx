@@ -36,7 +36,6 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
         ? 'values'
         : 'unfilteredValues'];
-    if (!filterValues.length) return null;
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
@@ -46,7 +45,6 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
         { false && // TODO remove
             projectId && projectView
-            && (searchParams.getAll('category').length === 1)
             &&
             <FieldFilters
               projectId={ projectId }

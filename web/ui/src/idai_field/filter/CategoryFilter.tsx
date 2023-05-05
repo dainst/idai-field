@@ -24,8 +24,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
     useEffect(() => {
         if (inProjectPopover) {
-            if (!sameset(categories, searchParams.getAll('resource.category.name'))) {
-                setCategories(searchParams.getAll('resource.category.name'));
+            if (!sameset(categories, searchParams.getAll('category'))) {
+                setCategories(searchParams.getAll('category'));
                 setFilters([]);
             } else {
                 setFilters(extractFiltersFromSearchParams(searchParams));
@@ -43,7 +43,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
         { false && // TODO remove
             projectId && projectView
-            && (searchParams.getAll('resource.category.name').length === 1)
+            && (searchParams.getAll('category').length === 1)
             &&
             <FieldFilters
               projectId={ projectId }
@@ -74,21 +74,23 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         filters: [string, string][], inProjectPopover: boolean, projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
+    const key_ = 'resource.category.name' ? 'category' : key;
+
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
                 as={ Link }
                 style={ filterValueStyle(level) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
-                    + buildParams(params, key, bucket, filters, inProjectPopover) + '' }>
+                    + buildParams(params, key_, bucket, filters, inProjectPopover) + '' }>
             <Row>
                 <Col xs={ 1 }><CategoryIcon category={ bucket.item.value }
                                             size="30" /></Col>
                 <Col style={ categoryLabelStyle }>
                     { getLabel(bucket.item.value) }
                     {
-                        isFilterValueInParams(params, key, bucket.item.value.name)
-                        && <CloseButton params={ params } filterKey={ key } value={ bucket.item.value.name }
+                        isFilterValueInParams(params, key_, bucket.item.value.name)
+                        && <CloseButton params={ params } filterKey={ key_ } value={ bucket.item.value.name }
                                         projectId={ projectId } projectView={ projectView } />
                     }
                 </Col>
@@ -101,7 +103,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key, b, params, filters, inProjectPopover, projectId, projectView,
+            renderFilterValue(key_, b, params, filters, inProjectPopover, projectId, projectView,
                 onMouseEnter, level + 1))
         }
     </React.Fragment>;
@@ -132,4 +134,6 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .toString()
         .split('&')
         .filter(param => !param.startsWith('resource'))
-        .map(param => param.split('=')) as undefined as [string, string][];
+        .map(param => param.split('='))
+        // .filter is a hack for as of yet not further investigated problem
+        .filter(([k, v]) => !(k === '' && v === undefined)) as undefined as [string, string][];

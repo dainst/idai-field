@@ -131,7 +131,7 @@ const getChildren = async (parentId: string, from: number, token: string, projec
         from,
         filters: [
             { field: 'project', value: project },
-            { field: 'resource.category.name', value: 'Type' }
+            { field: 'category', value: 'Type' }
         ]
     };
     query.parent = parentId;
@@ -148,7 +148,7 @@ const getCatalogsForProject = async (searchParams: URLSearchParams, from: number
         from,
         filters: [
             { field: 'project', value: project },
-            { field: 'resource.category.name', value: 'TypeCatalog' }
+            { field: 'category', value: 'TypeCatalog' }
         ]
     };
     query = parseFrontendGetParams(searchParams, query);

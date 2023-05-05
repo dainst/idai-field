@@ -53,7 +53,11 @@ export default function ProjectHome(): ReactElement {
     useEffect(() => {
 
         initFilters(projectId, searchParams, loginData.token)
-            .then(result => result.filters.find(filter => filter.name === 'resource.category.name'))
+            .then(result => {
+                const filter = result.filters.find(filter => filter.name === 'resource.category.name');
+                filter.name = 'category';
+                return filter;
+            })
             .then(setCategoryFilter);
 
         checkTypeCatalogs(projectId, searchParams, loginData.token)
@@ -295,7 +299,7 @@ const checkTypeCatalogs = async (id: string, searchParams: URLSearchParams, toke
         from: 0,
         filters: [
             { field: 'project', value: id },
-            { field: 'resource.category.name', value: 'TypeCatalog' }
+            { field: 'category', value: 'TypeCatalog' }
         ]
     } as Query;
     query = parseFrontendGetParams(searchParams, query);

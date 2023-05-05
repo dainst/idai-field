@@ -6,8 +6,12 @@ defmodule Api.Documents.Filter do
   def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
-      field = if not String.starts_with?(field, "project") and not String.starts_with?(field, "resource.") do
-        "resource." <> field
+      field = if field != "project" and not is_whitelisted_term_filter(filter_string) do
+        "resource." <> (if field == "category" do
+          field <> ".name"
+        else
+          field
+        end)
       else
         field
       end
@@ -46,6 +50,13 @@ defmodule Api.Documents.Filter do
 
   def expand_categories(nil, _), do: nil
   def expand_categories(filters, project_conf), do: Enum.map(filters, &(expand(&1, project_conf)))
+
+  # this is to preserve already cited links
+  # TODO remove and replace by nginx rewrite rule
+  defp is_whitelisted_term_filter filter_string do
+    filter_string == "resource.period.value.name:Phase 7"
+      or filter_string == "resource.category.name:Pottery"
+  end
 
   defp preprocess_multilanguage_filters multilanguage_filters, languages do
     Enum.map multilanguage_filters, fn {name, value} ->

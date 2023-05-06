@@ -139,7 +139,7 @@ const translate = (field: Field) => getTranslation(field.label) || field.name;
 
 const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: ResultFilter): Field[] => {
 
-    const filterBucket = findFilterBucket(searchParams.get('category'), filter.values);
+    const filterBucket = findFilterBucket(searchParams.get('category'), filter.unfilteredValues);
     if (!filterBucket) return [];
     
     const groups = filterBucket.value.groups;

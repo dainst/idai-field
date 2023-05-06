@@ -58,7 +58,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
               searchParams={ searchParams }
               filter={ filter }
               filters={ filters }
-              setFilters={ setFilters } />
+              setFilters={ setFilters }
+              filterValuesCount={ filterValues.length } />
         }
     </div>;
 }

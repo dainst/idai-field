@@ -11,8 +11,10 @@ import { getTranslation } from '../../shared/languages';
 import { useTranslation } from 'react-i18next';
 
 
-export default function FieldFilters({ projectId, projectView, searchParams, filter, filters, setFilters }: {
+export default function FieldFilters({ projectId, projectView, searchParams, filter, filters,
+    setFilters, filterValuesCount }: {
     projectId: string, projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter,
+    filterValuesCount: number,
     filters: [string, string][], setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
 
     const { t } = useTranslation();
@@ -39,7 +41,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
           navigateTo={ navigateTo }
           fields={ fields }
           dropdownMap={ dropdownMap } />
-        { searchParams.getAll('category').length === 1 &&
+        { searchParams.getAll('category').length === 1 && filterValuesCount > 0 &&
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"

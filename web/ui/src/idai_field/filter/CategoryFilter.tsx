@@ -41,7 +41,11 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
 
     const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
         ? 'values'
-        : 'unfilteredValues'];
+        // note that at this point unfilteredValues (part of the filter buckets) should not
+        // be necessary anymore. in principle we should be able to remove it from the frontend
+        // and the backend (unfiltered_values). however, when that was tried there was a problem
+        // with an infinite render loop which couldn't be resolved in that moment
+        : 'unfilteredValues']; 
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues

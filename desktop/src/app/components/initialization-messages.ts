@@ -94,9 +94,9 @@ const INITIALIZATION_MESSAGES = {
     }, 'uk': {
         'loading1': 'Проект',
         'loading2': 'Завантаження...',
-        'restart': 'Restart',
+        'restart': 'Стартувати заново',
         'loadTestProject': 'Завантаження тестового проекту',
-        'alreadyOpenError': 'The application could not be started. Please check if Field Desktop is already open in another window.',
+        'alreadyOpenError': 'Не вдалося запустити програму. Будь ласка, перевірте, чи програму Field Desktop уже відкрито в іншому вікні.',
         'phase/processingImages': 'Ілюстрації буде оптимізовано для відображення.\nЦей крок виконається один раз і може зайняти декілька хвилин.',
         'databaseError': 'Сталася помилка: не вдалося завантажити базу даних проекту.',
         'configurationError': 'Сталася помилка: не вдалося завантажити конфігурацію проекту.',

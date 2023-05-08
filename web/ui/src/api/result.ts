@@ -1,6 +1,6 @@
 import { Geometry } from 'geojson';
 import { ImageGeoreference, I18N } from 'idai-field-core';
-import { ChangeEvent, I18nString, LabeledValue } from './document';
+import { ChangeEvent, I18nString, LabeledValue, FieldGroup } from './document';
 
 export interface Result {
     size: number;
@@ -39,12 +39,18 @@ export interface ResultResource {
 export interface ResultFilter {
     name: string;
     values: (FilterBucket | FilterBucketTreeNode)[];
+    unfilteredValues: (FilterBucket | FilterBucketTreeNode)[]; // TODO review, or null?
     label: I18nString;
 }
 
 
+export interface LabeledValueWithGroups extends LabeledValue {
+    groups: FieldGroup[]|null;
+}
+
+
 export interface FilterBucket {
-    value: LabeledValue;
+    value: LabeledValueWithGroups;
     count: number;
 }
 

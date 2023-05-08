@@ -83,7 +83,7 @@ export class InitializationProgress {
 
     public async setError(errorMsgKey: string, msgsWithParams?: any[]) {
 
-        console.error(msgsWithParams);
+        if (msgsWithParams) console.error(msgsWithParams);
 
         this.error = true;
 
@@ -104,7 +104,10 @@ export class InitializationProgress {
         const errorMessages: string[] = this.getErrorMessages(msgsWithParams);
         if (errorMessages.length > 0) this.showErrorMessages(errorMessages);
 
-        this.showReloadButton(errorMessages.length > 0);
+        this.showReloadButton(
+            errorMessages.length > 0,
+            errorMsgKey !== 'alreadyOpenError'
+        );
 
         await this.updateProgressBar();
     }
@@ -201,14 +204,19 @@ export class InitializationProgress {
     }
 
 
-    private showReloadButton(withErrorMessages: boolean) {
+    private showReloadButton(withErrorMessages: boolean, loadTestProject: boolean) {
 
         const element: HTMLElement = document.getElementById('reload-button');
         if (element) {
             element.style.opacity = '1';
-            element.innerText = getMessage('loadTestProject', this.locale);
+            element.innerText = getMessage(
+                loadTestProject
+                    ? 'loadTestProject'
+                    : 'restart',
+                this.locale
+            );
             element.onclick = async () => {
-                await this.settingsService.selectProject('test');
+                if (loadTestProject) await this.settingsService.selectProject('test');
                 reload();
             };
             if (withErrorMessages) element.classList.add('with-error-messages');

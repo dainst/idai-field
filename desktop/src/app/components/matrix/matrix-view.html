@@ -1,19 +1,19 @@
 <div id="matrix-view" class="row bg-light">
     <div class="col col-md-6">
         <div class="row">
-            <div *ngIf="showTrenchSelector()" class="dropdown"
+            <div *ngIf="showOperationSelector()" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
                 <button class="btn btn-outline-primary" ngbDropdownToggle>
-                    <span *ngIf="selectedTrench" id="selected-trench-label">
-                        {{getDocumentLabel(selectedTrench)}}
+                    <span *ngIf="selectedOperation" id="selected-operation-label">
+                        {{getDocumentLabel(selectedOperation)}}
                     </span>
                 </button>
-                <div id="trench-selection-menu" class="dropdown-menu" ngbDropdownMenu>
-                    <div id="trench-selection-buttons">
-                        <button *ngFor="let trench of trenches"
-                                class="dropdown-item trench-selection-button"
-                                (click)="selectTrench(trench)">
-                            {{getDocumentLabel(trench)}}
+                <div id="operation-selection-menu" class="dropdown-menu" ngbDropdownMenu>
+                    <div id="operation-selection-buttons">
+                        <button *ngFor="let operation of operations"
+                                class="dropdown-item operation-selection-button"
+                                (click)="selectOperation(operation)">
+                            {{getDocumentLabel(operation)}}
                         </button>
                     </div>
                 </div>
@@ -120,10 +120,23 @@
     <loading-icon></loading-icon>
     <matrix-options-menu (onChange)="calculateGraph()"></matrix-options-menu>
 
-    <div *ngIf="showNoTrenchesWarning()"
+    <div *ngIf="showNoConfiguredOperationCategoriesWarning()"
          class="col-8 text-center alert alert-warning matrix-alert">
-        <em i18n="@@matrix.view.noTrenchesWarning">
-            Legen Sie eine Ressource der Kategorie 'Schnitt' in der
+        <em i18n="@@matrix.view.noConfiguredOperationCategoriesWarning">
+            Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die
+            Matrixdarstellung geeignet sind.
+        </em>
+    </div>
+
+    <div *ngIf="showNoOperationsWarning()"
+         class="col-8 text-center alert alert-warning matrix-alert">
+        <em *ngIf="configuredOperationCategories.length === 1" i18n="@@matrix.view.noOperationsWarning.single">
+            Legen Sie eine Maßnahme der Kategorie "{{getCategoryLabel(configuredOperationCategories[0])}}" in der
+            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
+        </em>
+        <em *ngIf="configuredOperationCategories.length === 2" i18n="@@matrix.view.noOperationsWarning.multiple">
+            Legen Sie eine Maßnahme der Kategorie "{{getCategoryLabel(configuredOperationCategories[0])}}" oder
+            "{{getCategoryLabel(configuredOperationCategories[1])}}" in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>
@@ -131,7 +144,7 @@
     <div *ngIf="showNoResourcesWarning()"
          class="col-8 text-center alert alert-warning matrix-alert">
         <em i18n="@@matrix.view.noResourcesWarning">
-            Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der
+            Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "{{getCategoryLabel('Feature')}}" in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </em>
     </div>

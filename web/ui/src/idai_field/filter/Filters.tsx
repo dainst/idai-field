@@ -18,8 +18,6 @@ export default function Filters({ filters, searchParams, projectId, projectView,
 
     const { t } = useTranslation();
 
-    if (!filters.find(filter => filter.values.length > 0)) return <></>;
-
     return <div>
         <OverlayTrigger trigger="click" placement="right" rootClose
                 overlay={ renderFilterPopover(filters, searchParams, t, projectId, projectView, onMouseOverCategories) }
@@ -43,7 +41,8 @@ const renderFilterPopover = (filters: ResultFilter[], searchParams: URLSearchPar
                                   projectView={ projectView } key={ filter.name }
                                   onMouseEnter={ categories => onMouseOverCategories
                                     && onMouseOverCategories(categories) }
-                                  onMouseLeave={ () => onMouseOverCategories && onMouseOverCategories(null) } />
+                                  onMouseLeave={ () => onMouseOverCategories && onMouseOverCategories(null) }
+                                  inPopover={ true } />
                 : <SimpleFilter filter={ filter } searchParams={ searchParams } projectId={ projectId }
                                 projectView={ projectView } key={ filter.name } />) }
             <RelationFilters searchParams={ searchParams } projectId={ projectId } projectView={ projectView } />

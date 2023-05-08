@@ -1934,7 +1934,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
@@ -2405,14 +2405,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
-        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von Field Desktop.</source>
-        <target state="final">Автоматичну перевірку оновлень вимкнено. Можливо, ви використовуєте не останню версію Field Desktop</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
@@ -4578,26 +4570,12 @@
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
-        <source> Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="final">
-          Створіть ресурс категорії «розріз» в 
-          <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>
-          огляді
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-          , щоб мати можливість працювати з ним тут.
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">235</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
         <source>Bearbeitungsmodus</source>
         <target state="final">Режим редагування</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -4605,7 +4583,7 @@
         <target state="final">Режим єдиного вибору</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -4613,7 +4591,7 @@
         <target state="final">Режим групового вибору</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -4621,7 +4599,7 @@
         <target state="final">Зняти вибір</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -4629,7 +4607,7 @@
         <target state="final">Створити матрицю з вибраного</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -4637,15 +4615,39 @@
         <target state="final">Завантажити матрицю наново</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
+        <source> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </source>
+        <target state="final"> Для цього проекту немає налаштованих категорій заходів, які підходять для матричного відображення. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">228,243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final"> Створіть показник категорії  "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" в <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>огляді<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> , щоб мати можливість працювати з ним тут. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">268</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final"> Створіть показник категорії "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" або "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" в <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>огляді<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> ,щоб мати можливість працювати з ним тут. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">150,138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
-        <source> Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
-        <target state="final"> Створіть для вибраного розрізу ресурси категорії «Стратиграфічна одиниця» у загальному виді розкопок (або плані), та зв’яжіть їх за допомогою часових або просторових відносин. </target>
+        <source> Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
+        <target state="final"> Створіть ресурси категорії для вибраного заходу  "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" у зображенні/вигляді розкопок та зв’яжіть їх із часовими чи просторовими відношеннями. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
@@ -5460,7 +5462,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="translated">Під час імпорту сталася помилка: знайдено один або декілька об’єктів без атрибута «ідентифікатор».</target>
+        <target state="final">Під час імпорту сталася помилка: знайдено один або декілька об’єктів без атрибута «ідентифікатор».</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

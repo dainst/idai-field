@@ -70,6 +70,7 @@ export interface Field {
     description: I18nString;
     label: I18nString;
     name: string;
+    inputType: string;
     value?: FieldValue;
     targets?: ResultDocument[];
 }

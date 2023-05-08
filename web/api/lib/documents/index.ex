@@ -59,15 +59,15 @@ defmodule Api.Documents.Index do
     project = get_project(filters)
     project_conf = ProjectConfigLoader.get project
     languages = ProjectConfigLoader.get_languages project
-    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters filters, project_conf, languages
-    
-    filters = 
-      filters 
+    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters_and_add_name_suffixes filters, project_conf, languages
+
+    filters =
+      filters
       |> Filter.wrap_values_as_singletons
       |> Filter.expand_categories(project_conf)
-    must_not = 
-      must_not 
-      |> Filter.parse 
+    must_not =
+      must_not
+      |> Filter.parse
       |> Filter.wrap_values_as_singletons
       |> Filter.expand_categories(project_conf)
 

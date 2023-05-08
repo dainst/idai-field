@@ -77,7 +77,7 @@ defmodule FieldHub.CouchService do
   __Parameters__
   - `project_identifier` the project's name.
   """
-  def create_project(project_identifier) do
+  def create_database(project_identifier) do
     HTTPoison.put!(
       "#{base_url()}/#{project_identifier}",
       "",
@@ -94,7 +94,7 @@ defmodule FieldHub.CouchService do
   __Parameters__
   - `project_identifier` the project's name.
   """
-  def delete_project(project_identifier) do
+  def delete_database(project_identifier) do
     HTTPoison.delete!(
       "#{base_url()}/#{project_identifier}",
       get_admin_credentials()
@@ -201,7 +201,7 @@ defmodule FieldHub.CouchService do
   - `project_identifier` the project's name.
   - `role` the users new role, one of `[:none, :member, :admin]`. If `:none` is passed, the user will be removed from all current roles in the project.
   """
-  def update_user_role_in_project(
+  def update_user_role_in_database(
         user_name,
         project_identifier,
         role
@@ -263,7 +263,7 @@ defmodule FieldHub.CouchService do
       admins: existing_admins,
       members: %{
         names: updated_names,
-        roles: existing_admins["roles"]
+        roles: existing_members["roles"]
       }
     }
     |> Jason.encode!()
@@ -316,6 +316,7 @@ defmodule FieldHub.CouchService do
       |> case do
         %{status_code: 200} ->
           true
+
         _ ->
           false
       end

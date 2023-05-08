@@ -4,6 +4,7 @@ import { Relation } from '../../../src/model/configuration/relation';
 import { TransientCategoryDefinition } from '../../../src/configuration/model/category/transient-category-definition';
 import { applyLanguagesToCategory, applyLanguagesToForm, applyLanguagesToRelations } from '../../../src/configuration/boot/apply-languages-configurations';
 import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
+import { LanguageConfiguration } from '../../../src/configuration/model/language/language-configuration';
 
 
 /**
@@ -30,48 +31,51 @@ describe('applyLanguageConfigurations', () => {
             { name: 'isContemporaryWith' } as Relation
         ];
 
-        const languageConfigurations: LanguageConfigurations = {
-            complete: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'A_',
-                            fields: {
-                                a: {
-                                    label: 'a_'
-                                },
-                                a1: {
-                                    description: 'a1_desc'
-                                },
-                                a2: {
-                                    label: 'a2_'
-                                }
+        const defaultLanguageConfigurations: Map<Array<LanguageConfiguration>> = {
+            en: [{
+                categories: {
+                    A: {
+                        label: 'A_',
+                        fields: {
+                            a: {
+                                label: 'a_'
+                            },
+                            a1: {
+                                description: 'a1_desc'
+                            },
+                            a2: {
+                                label: 'a2_'
                             }
-                        },
-                        C: {
-                            label: 'C_'
                         }
                     },
-                    forms: {
-                        'A:form': {
-                            fields: {
-                                a: {
-                                    label: 'a_form'
-                                }
-                            }
-                        },
-                        'C:form': {
-                            label: 'C_form'
-                        }
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'isRecordedIn_'
-                        }
+                    C: {
+                        label: 'C_'
                     }
-                }]
-            },
-            default: {}
+                },
+                forms: {
+                    'A:form': {
+                        fields: {
+                            a: {
+                                label: 'a_form'
+                            }
+                        }
+                    },
+                    'C:form': {
+                        label: 'C_form'
+                    }
+                },
+                relations: {
+                    isRecordedIn: {
+                        label: 'isRecordedIn_'
+                    }
+                }
+            }]
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: defaultLanguageConfigurations,
+            default: defaultLanguageConfigurations,
+            custom: {}
         };
 
         applyLanguagesToCategory(languageConfigurations, categories['A']);
@@ -110,47 +114,50 @@ describe('applyLanguageConfigurations', () => {
             'B:form': { name: 'B:form', categoryName: 'B', fields: { a1: {}, a2: {}, b: {} } } as any,
         };
 
-        const languageConfigurations: LanguageConfigurations = {
-            complete: {
-                en: [{
-                    categories: {
-                        A: {
-                            fields: {
-                                a1: {
-                                    label: 'a1_'
-                                },
-                                a2: {
-                                    label: 'a2_'
-                                }
-                            }
-                        },
-                        B: {
-                            fields: {
-                                b: {
-                                    label: 'b_'
-                                }
+        const defaultLanguageConfigurations: Map<Array<LanguageConfiguration>> = {
+            en: [{
+                categories: {
+                    A: {
+                        fields: {
+                            a1: {
+                                label: 'a1_'
+                            },
+                            a2: {
+                                label: 'a2_'
                             }
                         }
                     },
-                    forms: {
-                        'A:form': {
-                            fields: {
-                                a1: {
-                                    label: 'a1_form'
-                                }
-                            }
-                        },
-                        'B:form': {
-                            fields: {
-                                b: {
-                                    label: 'b_form'
-                                }
+                    B: {
+                        fields: {
+                            b: {
+                                label: 'b_'
                             }
                         }
                     }
-                }]
-            },
-            default: {}
+                },
+                forms: {
+                    'A:form': {
+                        fields: {
+                            a1: {
+                                label: 'a1_form'
+                            }
+                        }
+                    },
+                    'B:form': {
+                        fields: {
+                            b: {
+                                label: 'b_form'
+                            }
+                        }
+                    }
+                }
+            }]
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: defaultLanguageConfigurations,
+            default: defaultLanguageConfigurations,
+            custom: {}
         };
 
         applyLanguagesToCategory(languageConfigurations, categories['A']);
@@ -182,70 +189,73 @@ describe('applyLanguageConfigurations', () => {
             { name: 'isRecordedIn' } as Relation
         ];
 
+        const defaultLanguageConfigurations: Map<Array<LanguageConfiguration>> = {
+            es: [{
+                categories: {
+                    A: {
+                        fields: {
+                            a: {
+                                label: 'a Spanisches Label',
+                                description: 'a Spanische Beschreibung'
+                            }
+                        }
+                    }
+                }
+            }],
+            de: [{
+                categories: {
+                    A: {
+                        label: 'A Deutsch',
+                        fields: {
+                            a: {
+                                label: 'a Deutsches Label',
+                                description: 'a Deutsche Beschreibung'
+                            }
+                        }
+                    },
+                    B: {
+                        label: 'B Deutsch'
+                    }
+                },
+                relations: {
+                    isRecordedIn: {
+                        label: 'Liegt in (Deutsch)'
+                    }
+                }
+            }],
+            en: [{
+                categories: {
+                    A: {
+                        label: 'A Englisch',
+                        fields: {
+                            a: {
+                                label: 'a Englisches Label',
+                                description: 'a Englische Beschreibung'
+                            }
+                        }
+                    },
+                    B: {
+                        label: 'B Englisch',
+                        fields: {
+                            b: {
+                                label: 'b Englisches Label',
+                                description: 'b Englische Beschreibung'
+                            }
+                        }
+                    }
+                },
+                relations: {
+                    isRecordedIn: {
+                        label: 'Liegt in (Englisch)'
+                    }
+                }
+            }]
+        };
+
         const languageConfigurations: LanguageConfigurations = {
-            complete: {
-                es: [{
-                    categories: {
-                        A: {
-                            fields: {
-                                a: {
-                                    label: 'a Spanisches Label',
-                                    description: 'a Spanische Beschreibung'
-                                }
-                            }
-                        }
-                    }
-                }],
-                de: [{
-                    categories: {
-                        A: {
-                            label: 'A Deutsch',
-                            fields: {
-                                a: {
-                                    label: 'a Deutsches Label',
-                                    description: 'a Deutsche Beschreibung'
-                                }
-                            }
-                        },
-                        B: {
-                            label: 'B Deutsch'
-                        }
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'Liegt in (Deutsch)'
-                        }
-                    }
-                }],
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'A Englisch',
-                            fields: {
-                                a: {
-                                    label: 'a Englisches Label',
-                                    description: 'a Englische Beschreibung'
-                                }
-                            }
-                        },
-                        B: {
-                            label: 'B Englisch',
-                            fields: {
-                                b: {
-                                    label: 'b Englisches Label',
-                                    description: 'b Englische Beschreibung'
-                                }
-                            }
-                        }
-                    },
-                    relations: {
-                        isRecordedIn: {
-                            label: 'Liegt in (Englisch)'
-                        }
-                    }
-                }]
-            },
-            default: {}
+            complete: defaultLanguageConfigurations,
+            default: defaultLanguageConfigurations,
+            custom: {}
         };
 
         applyLanguagesToCategory(languageConfigurations, categories['A']);
@@ -355,7 +365,7 @@ describe('applyLanguageConfigurations', () => {
                             description: 'c Beschreibung Custom'
                         }
                     }
-                },
+                }
             },
             relations: {
                 isRecordedIn: {
@@ -370,6 +380,9 @@ describe('applyLanguageConfigurations', () => {
             },
             complete: {
                 de: [customConfiguration, libraryConfiguration, coreConfiguration]
+            },
+            custom: {
+                de: [customConfiguration]
             }
         };
 
@@ -400,5 +413,59 @@ describe('applyLanguageConfigurations', () => {
         
         expect(relations[0].label.de).toEqual('Liegt in (Custom)');
         expect(relations[0].defaultLabel.de).toEqual('Liegt in (Library)');
+    });
+
+
+    it('overwrite form labels in custom language configuration', () => {
+
+        const forms: Map<TransientFormDefinition> = {
+            'A:form': { name: 'A:form', categoryName: 'A', fields: {} } as any
+        };
+
+        const coreConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Category Core'
+                }
+            }
+        };
+
+        const libraryConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Category Library'
+                }
+            },
+            forms: {
+                'A:form': {
+                    label: 'A Form Library'
+                }
+            }
+        };
+        
+        const customConfiguration = {
+            categories: {
+                A: {
+                    label: 'A Custom'
+                }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            default: {
+                de: [libraryConfiguration, coreConfiguration]
+            },
+            complete: {
+                de: [customConfiguration, libraryConfiguration, coreConfiguration]
+            },
+            custom: {
+                de: [customConfiguration]
+            }
+        };
+
+        applyLanguagesToForm(languageConfigurations, forms['A:form']);
+
+        expect(forms['A:form'].label.de).toEqual('A Custom');
+        expect(forms['A:form'].defaultLabel.de).toEqual('A Form Library');
     });
 });

@@ -28,7 +28,7 @@ defmodule FieldHub.Project do
   def create(project_identifier) do
     couch_result =
       project_identifier
-      |> CouchService.create_project()
+      |> CouchService.create_database()
       |> case do
         %{status_code: 201} ->
           :created
@@ -68,7 +68,7 @@ defmodule FieldHub.Project do
   def delete(project_identifier, delete_files \\ false) do
     couch_result =
       project_identifier
-      |> CouchService.delete_project()
+      |> CouchService.delete_database()
       |> case do
         %{status_code: 200} ->
           :deleted
@@ -105,7 +105,7 @@ defmodule FieldHub.Project do
   - `role` the user's intended role in the project. Valid values: `:none` (removing user from all current roles), `:member` or `:admin`.
   """
   def update_user(user_name, project_identifier, role) do
-    CouchService.update_user_role_in_project(
+    CouchService.update_user_role_in_database(
       user_name,
       project_identifier,
       role
@@ -136,10 +136,12 @@ defmodule FieldHub.Project do
     |> case do
       %{status_code: 200} ->
         true
+
       # Databases without the FieldHub's application user are considered non-existing
       # by the application.
       %{status_code: 403} ->
         false
+
       %{status_code: 404} ->
         false
     end

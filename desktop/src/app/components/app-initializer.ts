@@ -101,7 +101,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       configLoader: ConfigLoader) => async (): Promise<void> => {
 
     progress.setLocale(Settings.getLocale());
-    await expressServer.setupServer();
+    await setupServer(expressServer, progress);
 
     let settings = await loadSettings(settingsService, progress);
     await setUpDatabase(settingsService, settings, progress);
@@ -122,6 +122,17 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
 
     return await AngularUtility.refresh(700);
 };
+
+
+const setupServer = async (expressServer: ExpressServer, progress: InitializationProgress) => {
+
+    try {
+        await expressServer.setupServer();
+    } catch (err) {
+        progress.setError('alreadyOpenError');
+        return Promise.reject('Application is already open');
+    }
+}
 
 
 const loadSettings = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Settings> => {
@@ -159,7 +170,7 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
         );
     } catch (msgWithParams) {
         await progress.setError('databaseError');
-        return Promise.reject();
+        return Promise.reject('Database error');
     }
 };
 
@@ -188,7 +199,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         configuration = await settingsService.loadConfiguration();
     } catch (err) {
         progress.setError('configurationError', err);
-        return Promise.reject();
+        return Promise.reject('Configuration error');
     }
 
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }

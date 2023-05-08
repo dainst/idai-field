@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Sources and distribution
 dist
 node_modules
 
@@ -7,5 +8,10 @@ node_modules
 .DS_Store
 Thumbs.db
 
-#lerna files
+# lerna files
 lerna-debug.log
+
+# Misc
+**/.lsp
+**/.clj-kondo
+

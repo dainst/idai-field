@@ -8,10 +8,7 @@
       "uk": "Стандартна",
       "es": "Standard"
     },
-    "description": {
-      "de": "Standard-Konfiguration",
-      "en": "Default configuration"
-    },
+    "description": {},
     "configuration": {
       "forms": {
         "Profile:default": {
@@ -298,10 +295,7 @@
       "uk": "Основа (розкопки)",
       "es": "Basis (Grabung)"
     },
-    "description": {
-      "de": "Basis-Konfiguration für Grabungen",
-      "en": "Basic configuration for excavations"
-    },
+    "description": {},
     "configuration": {
       "forms": {
         "Project": {
@@ -363,10 +357,7 @@
       "uk": "Основа (інвентаризація споруди)",
       "es": "Basis (Bauaufnahme)"
     },
-    "description": {
-      "de": "Basis-Konfiguration für die Bauaufnahme",
-      "en": "Basic configuration for building surveys"
-    },
+    "description": {},
     "configuration": {
       "forms": {
         "Project": {
@@ -463,10 +454,7 @@
       "uk": "Основа (обстеження)",
       "es": "Basis (Survey)"
     },
-    "description": {
-      "de": "Basis-Konfiguration für Surveys",
-      "en": "Basic configuration for surveys"
-    },
+    "description": {},
     "configuration": {
       "forms": {
         "Project": {

@@ -125,7 +125,9 @@ const INITIALIZATION_MESSAGES = {
     'es': {
         'loading1': 'Projekt',
         'loading2': 'wird geladen...',
+        'restart': 'Neu starten',
         'loadTestProject': 'Testprojekt laden',
+        'alreadyOpenError': 'Die Anwendung konnte nicht gestartet werden. Bitte prüfen Sie, ob Field Desktop bereits in einem anderen Fenster geöffnet ist.',
         'phase/processingImages': 'Bilder werden für die Anzeige optimiert.\nDieser Schritt wird einmalig durchgeführt und kann einige Minuten dauern.',
         'databaseError': 'Ein Fehler ist aufgetreten: Die Projektdatenbank konnte nicht geladen werden.',
         'configurationError': 'Ein Fehler ist aufgetreten: Die Projektkonfiguration konnte nicht geladen werden.',

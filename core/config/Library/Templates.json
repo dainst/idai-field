@@ -5,7 +5,8 @@
       "de": "Standard",
       "en": "Default",
       "it": "Standard",
-      "uk": "Стандартна"
+      "uk": "Стандартна",
+      "es": "Standard"
     },
     "description": {
       "de": "Standard-Konfiguration",
@@ -294,7 +295,8 @@
       "de": "Basis (Grabung)",
       "en": "Basic (Excavation)",
       "it": "Configurazione di base (scavo)",
-      "uk": "Основа (розкопки)"
+      "uk": "Основа (розкопки)",
+      "es": "Basis (Grabung)"
     },
     "description": {
       "de": "Basis-Konfiguration für Grabungen",
@@ -358,7 +360,8 @@
       "de": "Basis (Bauaufnahme)",
       "en": "Basic (Building survey)",
       "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)",
-      "uk": "Основа (інвентаризація споруди)"
+      "uk": "Основа (інвентаризація споруди)",
+      "es": "Basis (Bauaufnahme)"
     },
     "description": {
       "de": "Basis-Konfiguration für die Bauaufnahme",
@@ -457,7 +460,8 @@
       "de": "Basis (Survey)",
       "en": "Basic (Survey)",
       "it": "Configurazione di base (prospezione)",
-      "uk": "Основа (обстеження)"
+      "uk": "Основа (обстеження)",
+      "es": "Basis (Survey)"
     },
     "description": {
       "de": "Basis-Konfiguration für Surveys",
@@ -531,7 +535,8 @@
       "de": "archaeoDox",
       "en": "archaeoDox",
       "it": "archaeoDox",
-      "uk": "archaeoDox"
+      "uk": "archaeoDox",
+      "es": "archaeoDox"
     },
     "description": {},
     "configuration": {
@@ -653,6 +658,13 @@
           "relations": {
             "isPresentIn": {
               "label": "Включено в креслення профілю/в замальовці площини"
+            }
+          }
+        },
+        "es": {
+          "relations": {
+            "isPresentIn": {
+              "label": "Ist enthalten in Profil-/Flächenzeichnung"
             }
           }
         }

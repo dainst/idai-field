@@ -648,6 +648,13 @@
               "label": "Is present in profile/plan drawing"
             }
           }
+        },
+        "uk": {
+          "relations": {
+            "isPresentIn": {
+              "label": "Включено в креслення профілю/в замальовці площини"
+            }
+          }
         }
       }
     }

@@ -20,15 +20,15 @@
         },
         "locales": {
           "en": {
-            "translation": "src/app/i18n/messages.en.xlf",
+            "translation": "src/app/i18n/angular/messages.en.xlf",
             "baseHref": "/"
           },
           "it": {
-            "translation": "src/app/i18n/messages.it.xlf",
+            "translation": "src/app/i18n/angular/messages.it.xlf",
             "baseHref": "/"
           },
           "uk": {
-            "translation": "src/app/i18n/messages.uk.xlf",
+            "translation": "src/app/i18n/angular/messages.uk.xlf",
             "baseHref": "/"
           }
         }

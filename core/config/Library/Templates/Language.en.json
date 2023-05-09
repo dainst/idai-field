@@ -1,0 +1,25 @@
+{
+    "default": {
+      "label": "Default"
+    },
+    "minimalExcavation": {
+      "label": "Basic (Excavation)"
+    },
+    "minimalBuilding": {
+      "label": "Basic (Building survey)"
+    },
+    "minimalSurvey": {
+      "label": "Basic (Survey)"
+    },
+    "archaeoDox": {
+      "label": "archaeoDox",
+      "languageConfiguration": {
+        "relations": {
+          "isPresentIn": {
+            "label": "Is present in profile/plan drawing"
+          }
+        }
+      }
+    }
+  }
+  

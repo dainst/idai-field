@@ -1,0 +1,25 @@
+{
+    "default": {
+      "label": "Standard"
+    },
+    "minimalExcavation": {
+      "label": "Basis (Grabung)"
+    },
+    "minimalBuilding": {
+      "label": "Basis (Bauaufnahme)"
+    },
+    "minimalSurvey": {
+      "label": "Basis (Survey)"
+    },
+    "archaeoDox": {
+      "label": "archaeoDox",
+      "languageConfiguration": {
+        "relations": {
+          "isPresentIn": {
+            "label": "Ist enthalten in Profil-/Flächenzeichnung"
+          }
+        }
+      }
+    }
+  }
+  

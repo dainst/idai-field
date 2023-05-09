@@ -1,0 +1,25 @@
+{
+    "default": {
+      "label": "Standard"
+    },
+    "minimalExcavation": {
+      "label": "Configurazione di base (scavo)"
+    },
+    "minimalBuilding": {
+      "label": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)"
+    },
+    "minimalSurvey": {
+      "label": "Configurazione di base (prospezione)"
+    },
+    "archaeoDox": {
+      "label": "archaeoDox",
+      "languageConfiguration": {
+        "relations": {
+          "isPresentIn": {
+            "label": ""
+          }
+        }
+      }
+    }
+  }
+  

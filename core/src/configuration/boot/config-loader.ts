@@ -169,10 +169,25 @@ export class ConfigLoader {
 
     public readTemplates(): Map<Template> {
      
-        const templates = this.configReader.read('/Library/Templates.json');
+        const templates: Map<Template> = this.configReader.read('/Library/Templates/Templates.json');
         Object.keys(templates).forEach(templateId => templates[templateId].name = templateId);
 
-        return templates;
+        return DEFAULT_LANGUAGES.reduce((result, language) => {
+            const path: string = '/Library/Templates/Language.' + language + '.json';
+            if (!this.configReader.exists(path)) return result;
+
+            const labels = this.configReader.read(path);
+            Object.values(result).forEach(template => {
+                if (!template.label) template.label = {};
+                template.label[language] = labels[template.name]?.label;
+                if (labels[template.name]?.languageConfiguration) {
+                    if (!template.configuration.languages) template.configuration.languages = {}
+                    template.configuration.languages[language] = labels[template.name].languageConfiguration;
+                }
+            });
+
+            return result;
+        }, templates);
     }
 
 

@@ -1,0 +1,1477 @@
+{
+  "coordinate-reference-system-default-1": {
+    "values": {
+      "Eigenes Koordinatenbezugssystem": "Власна система координат",
+      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)"
+    }
+  },
+  "position-values-expansion-default": {
+    "values": {
+      "Maximale Ausdehnung": "Максимальне розширення",
+      "Minimale Ausdehnung": "Мінімальне розширення"
+    }
+  },
+  "position-values-edge-default": {
+    "values": {
+      "Oberkante": "Верхній край",
+      "Unterkante": "Нижній край"
+    }
+  },
+  "orientation-default-1": {
+    "values": {
+      "N-S": "Пн.- Пд.",
+      "NNO - SSW": "Пн.Пн.Сх. - Пд.Пд.Зх.",
+      "NNW-SSO": "Пн.Пн.Зх. - Пд.Пд.Сх.",
+      "NO-SW": "Пн.Сх. - Пд.Зх.",
+      "NW-SO": "Пн.Зх. - Пд.Сх.",
+      "W-O": "Зх. - Сх.",
+      "WNW-OSO": "Зх.Пн.Зх - Сх.Пд.Сх.",
+      "WSW-ONO": "Зх.Пд.Зх. - Сх.Пн.Сх."
+    }
+  },
+  "provenance-default-1": {
+    "values": {
+      "Anatolien": "Анатолія",
+      "Antiochia (Antakya)": "Антіохія (Антак'я)",
+      "Athen": "Афіни",
+      "Ägypten": "Єгипет",
+      "Britannien": "Великобританія",
+      "Deutschland": "Німеччина",
+      "Ephesos": "Ефес",
+      "Etruskisch": "Етруська",
+      "Gallien": "Галлія",
+      "Irland": "Іонія",
+      "Italien": "Італія",
+      "Kampanisch": "Кампанський",
+      "Karthagisch": "Карфагенський",
+      "Kleinasien": "Мала Азія",
+      "Knidos": "Кнід",
+      "Korinth": "Коринф",
+      "Kos": "Кос",
+      "Lesbos": "Лесбос",
+      "Levante": "Левант",
+      "Lokal": "Місцевий",
+      "Lokal/Regional": "Місцевий/регіональний",
+      "Milet": "Мілет",
+      "Mäandertal": "Звивиста долина",
+      "Nordafrika": "Північна Африка",
+      "Nordafrikanisch": "Північноафриканський",
+      "Palästina": "Палестина",
+      "Pannonien": "Паннонія",
+      "Peloponnes": "Пелопоннес",
+      "Regional": "Регіональний",
+      "Rhodos": "Родос",
+      "Samos": "Замос",
+      "Sizilien": "Сицилія",
+      "Skandinavien": "Скандинавія",
+      "Slawisch": "Слов'янський",
+      "Spanien": "Іспанія",
+      "Syrien": "Сирія",
+      "Südtunesisch": "Південно-туніський",
+      "Südägäis": "Південно-егейський"
+    }
+  },
+  "periods-default-1": {
+    "values": {
+      "Archaisch": "Архаїчний",
+      "Bronzezeitlich": "Бронзовий вік",
+      "Byzantinisch": "Візантійський",
+      "Eisenzeitlich": "Залізний вік",
+      "Frühbronzezeitlich": "Рання бронзова доба",
+      "Frühbyzantinisch": "Ранньовізантійський",
+      "Frühhellenistisch": "Ранньоелліністичний",
+      "Frühkaiserzeitlich": "Ранньоімперський",
+      "Frühklassisch": "Рання класика",
+      "Geometrisch": "Геометричний",
+      "Hellenistisch": "Елліністичний",
+      "Kaiserzeitlich": "Імператорський",
+      "Klassisch": "Класичний",
+      "Neolithisch": "Неоліт",
+      "Neuzeitlich": "Новочасний",
+      "Osmanisch": "Османський",
+      "Pleistozän": "Плейстоцен",
+      "Römisch": "Римський",
+      "Spätantik": "Пізньо античний",
+      "Spätbronzezeitlich": "Доба пізньої бронзи",
+      "Spätbyzantinisch": "Пізньовізантійський",
+      "Späthellenistisch": "Пізньоелліністичний",
+      "Spätkaiserzeitlich": "Пізньоімперський",
+      "Spätklassisch": "Пізньокласичний"
+    }
+  },
+  "colors-default-1": {
+    "values": {
+      "beige": "бежевий",
+      "blass-": "блідно-",
+      "blau": "синій",
+      "braun": "коричневий",
+      "cremefarben": "кремовий",
+      "dunkel-": "темно-",
+      "gelb": "жовтий",
+      "grau": "сірий",
+      "grün": "зелений",
+      "hell-": "світло-",
+      "leuchtend-": "яскраво-",
+      "ocker": "охра",
+      "orange": "помаранчевий",
+      "rosa": "рожевий",
+      "rot": "червоний",
+      "schwarz": "чорний",
+      "türkis": "бірюзовий",
+      "violett": "фіолетовий",
+      "weiß": "білий"
+    }
+  },
+  "colors-default-2": {
+    "values": {
+      "beige": "бежевий",
+      "dunkelbraun": "темно-коричневий",
+      "dunkelrot": "темно-червоний",
+      "gelb": "жовтий",
+      "hellbraun": "світло-коричневий",
+      "hellgrau": "світло-сірий",
+      "mittelbraun": "середньо-коричневий",
+      "ocker": "охра",
+      "orange": "помаранчевий",
+      "orangerot": "оранжево-червоний",
+      "rosa": "рожевий",
+      "rot": "червоний",
+      "rotbraun": "червонувато-коричневий",
+      "schwarz": "чорний",
+      "weiß": "білий"
+    }
+  },
+  "glass-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Розпис/живопис",
+      "Diatretdekor": "Діатретний декор",
+      "Emaille": "емаль",
+      "Facettschliffdekor": "Фаcетно-полірований декор",
+      "Fadendekor (aufgelegt)": "Нитковий декор (накладкою)",
+      "Fadendekor (verschmolzen)": "Нитковий декор (об’єднано)",
+      "Mosaikdekor": "мозаїчний декор",
+      "Reliefdekor": "Рельєфний декор",
+      "Riefeldekor": "Рифельний декор",
+      "Ritzungen": "Подряпини",
+      "Schlangenfadendekor": "декор змійкою",
+      "Schliffrillendekor": "Шліфувальний декор",
+      "Stempeldekor": "Штамповий декор",
+      "Tupfendekor": "Губковий декор",
+      "Warzendekor": "Бородавковий декор",
+      "Zwischengoldglas": "Проміжне золоте скло",
+      "figürlicher Schliffdekor": "фігурне шліфувальне оздоблення"
+    }
+  },
+  "glass-formDescription-default": {
+    "values": {
+      "ausladend": "достатній",
+      "bauchig": "випуклий",
+      "breitoval": "широкий овал",
+      "doppelkonisch": "біконічний",
+      "halbkugelig": "напівсферичний",
+      "hochoval": "високий овал",
+      "konisch": "конусний",
+      "kugelförmig": "сферичний",
+      "quadratisch": "квадратний",
+      "rechteckig": "прямокутний",
+      "rund": "круглий",
+      "schlank": "тонкий",
+      "schmal": "вузький",
+      "spindelförmig": "веретеноподібний",
+      "tonnenförmig": "у формі бочки",
+      "zylinderförmig": "циліндричний"
+    }
+  },
+  "glass-manufacturingMethod-default": {
+    "values": {
+      "Formgeblasen (mit Reliefdekor)": "Видувний (з рельєфним декором)",
+      "Formgeschmolzen": "Розплавлена ​​форма",
+      "Freigeblasen": "Вільно-видутий",
+      "In Vorformen geblasen": "В попередніх формах видуті",
+      "In offene Halbformen geblasen": "Роздуnий у відкриті напівформи",
+      "Kerngeformt": "Серцевинна форма",
+      "Sandkerngeschmolzen": "​​Розплавлене піщане ядро",
+      "gedreht (auf Drehscheibe)": "Кручений (на обертовій платформі)"
+    }
+  },
+  "glass-objectType-default": {
+    "values": {
+      "Anhänger": "Підвіска",
+      "Armreif": "Браслет",
+      "Einlage": "Вставка",
+      "Fensterglas": "Віконне скло",
+      "Gefäß": "Ваза/посудина",
+      "Gemme": "Різьблений камінь \"Ґем\"",
+      "Gerät": "Інструмент",
+      "Glasschlacke": "Склошлак",
+      "Lampe": "Лампа",
+      "Löffel": "Ложка",
+      "Perle": "Перлина",
+      "Ring": "Перстень/Кільце",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Brick-brickForm-default": {
+    "values": {
+      "Bodenziegel": "Цегла для підлоги",
+      "Dachziegel": "Дахівка",
+      "Flachziegel": "Плоска цегла",
+      "Formziegel": "Формована цегла",
+      "Hypokaustziegel": "Гіпокаусна цегла",
+      "Imbrex": "імбрекс",
+      "Leistenziegel": "Рейкова цегла",
+      "Lochziegel/Hohlziegel": "Дірчаста цегла/порожниста цегла",
+      "Tegula": "Плитка",
+      "Tonrohr": "Глиняна труба",
+      "Wandziegel": "Стінова цегла"
+    }
+  },
+  "Brick-brickUsage-default": {
+    "values": {
+      "Dach": "Дах",
+      "Decke": "Стеля",
+      "Fenster": "Вікно",
+      "Fussboden": "Підлога",
+      "Gewölbedecke": "Перекриття склепінням",
+      "Türrahmen": "Дверна рама",
+      "Türsturz": "Дверна балка",
+      "Wandverkleidung": "Стінна обшивка"
+    }
+  },
+  "Brick-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Розписи",
+      "Fingerabdruck": "Відбиток пальців",
+      "Kammritzung": "Відбиток гребіньця",
+      "Reliefdekor": "Рельєфний декор",
+      "Riefeldekor": "Рифельний декор",
+      "Ritzungen": "Подряпини",
+      "Sonstige Abdrücke": "Інші відбитки",
+      "Stempel": "Відбиток/Штамп",
+      "Stempeldekor": "Штамповий декор",
+      "Tupfendekor": "Декор відбитком губки",
+      "Wischzeichen": "Декор мазком",
+      "Überzug/Glasur": "Покриття/глазур"
+    }
+  },
+  "Brick-manufacturing-default": {
+    "values": {
+      "Dickwandig": "товстостінний",
+      "Dünnwandig": "тонкостінний",
+      "Gebrannt": "Випечений",
+      "Hart gebrannt": "Силь випечений",
+      "Luftgetrocknet": "висушений на повітрі",
+      "Oberfläche glatt": "Гладка поверхня",
+      "Oberfläche rau": "Поверхня шорстка",
+      "Sekundär gebrannt": "Вториннр випечено",
+      "Weich gebrannt": "М'яко випечено"
+    }
+  },
+  "Burial-amountIndividuals-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Burial-burialCharacteristic-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Burial-burialDocumentation-default": {
+    "values": {
+      "Endoskopie": "Ендоскопія",
+      "Foto": "Фотографія",
+      "Histologie": "Гістологія",
+      "Röntgen": "Рентген"
+    }
+  },
+  "Burial-positionArms-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Burial-positionLegs-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Burial-positioningIndividuals-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Building-architecturalOrders-default": {
+    "values": {
+      "Ionische Ordnung": "Доричний ордер",
+      "Komposite Ordnung": "Композитний ордер",
+      "Korinthische Ordnung": "Коринфський ордер",
+      "Toskanische Ordnung": "Тосканський ордер"
+    }
+  },
+  "Building-buildingCategory-default": {
+    "values": {
+      "Altar": "Вівтар",
+      "Amphitheater": "Амфітеатр",
+      "Basilika": "Базиліка",
+      "Bogen": "Арка",
+      "Brücke": "Міст",
+      "Circus": "Цирк",
+      "Grabbau": "Гробниця",
+      "Gymnasium": "Гімназія",
+      "Mauerkurtine": "Стінна завіса",
+      "Strasse": "Вулиця",
+      "Stützmauer": "Підпірна стіна",
+      "Säulenhalle": "Портик",
+      "Tempel": "Храм",
+      "Theater": "Театер",
+      "Therme": "Термальні ванни",
+      "Toranlage": "Оборонні ворота",
+      "Turm": "Вежа",
+      "Wohnbau": "Житлова споруда"
+    }
+  },
+  "Building-buildingCategorySpecific-default": {
+    "values": {
+      "Aediculabau": "Будівля едикули",
+      "Atriumhaus": "Атріумна споруда",
+      "Bogen": "Арка",
+      "Dipteros": "Диптерос",
+      "Ehrenbogen": "Арка пошани",
+      "Ehrensäule": "Колона пошани",
+      "Hoftempel": "Придворний храм",
+      "Palast": "Палац",
+      "Rundbau": "Кругла споруда",
+      "Schatzhaus": "Будинок скарбниця",
+      "Terassenheiligtum": "Терасне святилище",
+      "Torbogen": "В'їздна арка/ Арка воріт",
+      "Triumphbogen": "Тріумфальна арка",
+      "dreischiffig": "Тринавовий",
+      "fünfschiffig": "П'ятинавовий",
+      "griechisches Theater": "Грецький театр",
+      "römisches Theater": "Римський театр",
+      "vierschiffig": "чотирьохнавовий",
+      "zweischiffig": "двонавовий"
+    }
+  },
+  "Building-buildingTechnique-default": {
+    "values": {
+      "Blockverbandmauerwerk": "Блокована кладка",
+      "Bruchsteinmauerwerk": "Бутова кладка",
+      "Feldsteinmauerwerk": "Кам'яна кладка (напр. з річкового каменю)",
+      "Kyklopenmauerwerk": "Циклопічна кладка",
+      "Lehmziegelmauerwerk": "Глиняна кладка",
+      "Mischform Polygonal-/Quadermauerwerk": "Змішана форма багатокутної/блокової кладки",
+      "Opus Caementitium": "Opus Caementitium (римський бетон)",
+      "Polygonalmauerwerk": "Полігональна кладка",
+      "Quadermauerwerk": "Кладка з тесаного каменю",
+      "Spolienmauerwerk": "Сполієва кладка (вторинного використання)",
+      "Unregelmäßiges Polygonalmauerwerk": "Нерегулярна полігональна кладка",
+      "Würfel-/Handquadermauerwerk": "Кладка з куба/вручну обрізного каменю",
+      "Ziegelmauerwerk": "Цегляна кладка",
+      "irreguläres Mauerwerk": "Нерегулярна кладка",
+      "regelmäßiges Polygonalmauerwerk": "Регулярна полігональна кладка",
+      "regelmäßiges Quadermauerwerk": "Звичайна кладка з обрізного каменю",
+      "regelmäßiges Trapezoidalmauerwerk": "Регулярна трапецеподібна кладка",
+      "unregelmäßiges Quadermauerwerk": "Нерегулярна кладка з обрізного каменю",
+      "unregelmäßiges Trapezoidalmauerwerk": "Нерегулярна трапецеподібна кладка",
+      "unspezifisches Mauerwerk": "Неуточнена кладка"
+    }
+  },
+  "Building-buildingType-default": {
+    "values": {
+      "Befestigung": "Фортифікація",
+      "Haus": "Будинок",
+      "Lager": "Склад",
+      "Werkstatt": "Майстерня"
+    }
+  },
+  "Building-condition-default": {
+    "values": {
+      "sehr gut": "дуже добрий",
+      "gut": "добрий",
+      "mittel": "середній",
+      "schlecht": "незадовільний",
+      "sehr schlecht": "дуже незадовільний"
+    }
+  },
+  "Building-conditionAmount-default": {
+    "values": {
+      "Fragmentarisch": "Фрагментарний",
+      "Vollständig": "Повністю",
+      "Vollständig zerstört": "Повністю зруйновано"
+    }
+  },
+  "Building-context-default": {
+    "values": {
+      "Akropolis": "Акрополь",
+      "Forum": "Форум",
+      "Handwerksviertel": "Ремісничий квартал",
+      "Heiligtum": "Святиня",
+      "Nekropole": "Некрополь",
+      "Wohnviertel": "Житловий квартал"
+    }
+  },
+  "Building-material-default": {
+    "values": {
+      "Granit": "Граніт",
+      "Kalk": "Вапно",
+      "Kalkmörtel": "Вапняний розчин",
+      "Kalkstein": "Вапняк",
+      "Kalzit": "Кальцит",
+      "Kreide": "Крейда",
+      "Marmor": "Мармур",
+      "Pophyr": "Порфір",
+      "Quarz": "Кварц",
+      "Sandstein": "Пісковик",
+      "Ziegel": "Цегла"
+    }
+  },
+  "Building-material-default-2": {
+    "values": {
+      "Beton": "Бетон",
+      "Blei": "Свинець",
+      "Eisen": "Залізо",
+      "Erde": "Земля",
+      "Fliesen": "Плитка",
+      "Gips": "Гіпс",
+      "Glas": "Скляне",
+      "Holz": "Дерев´яне",
+      "Holzwerkstoff": "Деревний матеріал",
+      "Kunststoff": "Пластик/штучний матеріал",
+      "Lehm": "Глина",
+      "Metall": "Метал",
+      "Mörtel": "Розчин",
+      "Naturstein": "Натуральний камінь",
+      "Putz": "Тиньк",
+      "Stahl": "Сталь",
+      "Stahlbeton": "Залізобетон",
+      "Stuck": "Ліпнина",
+      "Unbekannt/Unerkannt": "Невідомий/Невиявлений",
+      "Ziegel": "Цегла"
+    }
+  },
+  "Building-material-default-3": {
+    "values": {
+      "Beton": "Бетон",
+      "Blei": "Свинець",
+      "Eisen": "Залізо",
+      "Erde": "Земля",
+      "Fliesen": "Плитка",
+      "Gips": "Гіпс",
+      "Glas": "Скляне",
+      "Holz": "Дерев´яне",
+      "Holzwerkstoff": "Деревний матеріал",
+      "Kunststoff": "Пластик/штучний матеріал",
+      "Lehm": "Глина",
+      "Metall": "Метал",
+      "Mörtel": "Розчин",
+      "Naturstein": "Натуральний камінь",
+      "Putz": "Тиньк",
+      "Stahl": "Сталь",
+      "Stahlbeton": "Залізобетон",
+      "Stuck": "Ліпнина",
+      "Unbekannt/Unerkannt": "Невідомий/Невиявлений",
+      "Granit": "Граніт",
+      "Kalk": "Вапно",
+      "Kalkmörtel": "Вапняний розчин",
+      "Kalkstein": "Вапняк",
+      "Kalzit": "Кальцит",
+      "Kreide": "Крейда",
+      "Marmor": "Мармур",
+      "Pophyr": "Порфір",
+      "Quarz": "Кварц",
+      "Sandstein": "Пісковик",
+      "Ziegel": "Цегла"
+    }
+  },
+  "Wood-color-default": {
+    "values": {
+      "braun": "коричневий",
+      "haselnuss": "Лісового горіха",
+      "schwarz": "Чорний"
+    }
+  },
+  "Wood-objectType-default": {
+    "values": {
+      "Architektur": "Архітектура",
+      "Altar": "Вівтар",
+      "Anhänger": "Підвіска",
+      "Gefäß": "Ваза/посудина",
+      "Gerät": "Прилад",
+      "Grabbehältnis": "Ємкість для могили",
+      "Grabmarkierung": "Могильна позначка",
+      "Grabplatte": "Надгробок/плита",
+      "Gussform": "Лита форма",
+      "Kasten/Kiste": "Ящик/коробка",
+      "Löffel": "Ложка",
+      "Mobiliar": "Меблі",
+      "Plastik/Skulptur": "Пластика/скульптура",
+      "Produktionsrest": "Залишок від виробництва ",
+      "Ring": "Перстень/Кільце",
+      "Sarkophag": "Саркофаг",
+      "Schmuck": "Саркофаг",
+      "Spielzeug": "Іграшка",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Wood-typeOfWood-default": {
+    "values": {
+      "Ahorn": "Клен",
+      "Apfel": "Яблуня",
+      "Birke": "Береза",
+      "Birne": "Груша",
+      "Buche": "Бук",
+      "Eibe": "Тиса",
+      "Eiche": "Дуб",
+      "Erle": "Вільха",
+      "Esche": "Ясен",
+      "Fichte": "Ялина",
+      "Kastanie": "Каштан",
+      "Kiefer": "Сосна",
+      "Kirsche": "Вишня",
+      "Lerche": "Модрина",
+      "Linde": "Липа",
+      "Nußbaum": "Горіх",
+      "Pappel": "Тополя",
+      "Tanne": "Ялиця",
+      "Ulme": "В'яз",
+      "Weide": "Верба",
+      "Zeder": "Кедр"
+    }
+  },
+  "Wood-manufacturingMethod-default": {
+    "values": {
+      "Gebohrt": "Висверлено",
+      "Gedämpft": "Випаровано",
+      "Gedreht": "Викручено",
+      "Gefräst": "Фрезерований",
+      "Gehobelt": "Струганий",
+      "Gesägt": "Розпиляний",
+      "Geschabt": "Зіскоблений",
+      "Geschliffen": "Полірований",
+      "Geschnitzt": "Різблений",
+      "Gespalten": "Розколений"
+    }
+  },
+  "Wood-surfaceCondition-default": {
+    "values": {
+      "Brandspuren": "Сліди обгорання",
+      "Keine Brandspuren": "Жодних слідів обгорання",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Wood-decorationTechnique-default": {
+    "values": {
+      "Applik": "Аплікація",
+      "Bemalung (Enkaustik)": "Живопис (енкаустика)",
+      "Bemalung (Eitemperatechnik)": "Розпис (техніка яєчна темпера)",
+      "Intarsie": "Інтарзія",
+      "Relief": "Рельєф",
+      "Ritzung": "Скребок",
+      "Schnitzung": "Різблення",
+      "Sgraffito": "Сграфіто",
+      "Vergoldung/metallischer Überzug": "Позолота/металізація"
+    }
+  },
+  "Wood-paintCondition-default": {
+    "values": {
+      "gut erhalten": "добре збереглося",
+      "abblätternd": "Лущення",
+      "verrieben": "зтертий",
+      "verwaschen": "Розмито",
+      "stark abgerieben": "сильно затерто",
+      "nicht erhalten": "не збережено"
+    }
+  },
+  "Architecture-blockProcessing-default": {
+    "values": {
+      "Bruchsteine": "Бутове каміння",
+      "Hausteine": "Тесаний камень",
+      "Lesesteine": "Зібране каміння/Холостяки",
+      "Werksteine": "Оброблені камені"
+    }
+  },
+  "Architecture-blockTreatment-default": {
+    "values": {
+      "bruchbau": "кар'єр",
+      "fein geglättet": "дрібно згладжений",
+      "gespitzt": "загостреним інструментом оброблено",
+      "grob behauen": "грубо обтесаний",
+      "grob geglättet": "грубо згладжений",
+      "scharriert": "рифлений",
+      "unbehauen": "необтесаний"
+    }
+  },
+  "Architecture-brickwork-default": {
+    "values": {
+      "Binderverband": "Тичкова перевязка",
+      "Blockverband": "Ланцюгова перевязка",
+      "Flämischer Verband": "Фламандська перевязка",
+      "Holländischer Verband": "Голандська перевязка",
+      "Kreuzverband": "Хрестова перевязка",
+      "Läuferverband": "Ложкова перевязка",
+      "Märkischer Verband": "Меркішерська перевязка"
+    }
+  },
+  "Architecture-construction-default": {
+    "values": {
+      "Fundament: Geschüttet": "Фундамент: насипний/наливний",
+      "Fundament: gesetzt": "Фундамент: вставками",
+      "Mauerkern: Lesesteine": "Ядро стіни: зібране каміння",
+      "einschalig vor Feld/Hang": "одношаровий перед полем/схилом",
+      "ohne Schalen/keine durchgehenden Lagen": "без оболонок/без суцільних шарів",
+      "ohne Schalen/nur durchgehende Lagen": "без оболонок/лише суцільні шари",
+      "zweischalig": "двошаровий",
+      "zweischalig mit Binderlagen": "двошаровий з перевязкою"
+    }
+  },
+  "Architecture-mortarBinder-default": {
+    "values": {
+      "dominant": "домінуючий",
+      "gering": "мала ймовірність/кількість",
+      "hoch": "велика/висока",
+      "mittel": "середня"
+    }
+  },
+  "Architecture-mortarConsistency-default": {
+    "values": {
+      "brüchig": "крихкий",
+      "erdig/lehmig": "земляний/суглинистий",
+      "fest": "міцний",
+      "hart": "твердий",
+      "locker": "розхитаний/розслаблений",
+      "mittelfein": "середньї дрібності",
+      "pulverig": "порошкоподібний",
+      "sandig": "піщаний/піскоподібний"
+    }
+  },
+  "Architecture-wallClassification-default": {
+    "values": {
+      "Aufgehendes": "Поверхневе",
+      "Fensterzusetzung": "Замуроване вікно",
+      "Flickung": "Залатане",
+      "Fundament": "Фундамент/основа",
+      "Gewölbe": "Склепіння",
+      "Mauer": "Стіна",
+      "Mauerbettung": "Вбудовування стіни",
+      "Mauerdurchbruch": "Пролом стіни",
+      "Mosaik": "Мозаїка",
+      "Türzusetzung": "Просідання дверей",
+      "Wandgestaltung": "Дизайн/декорування стін"
+    }
+  },
+  "Architecture-wallType-default": {
+    "values": {
+      "Außenmauer": "Зовнішня стіна",
+      "Befestigugsmauer": "Фортифікаційна стіна",
+      "Blockmauerwerk": "Блокова кладка",
+      "Bruchsteinmauer": "Стіна з бутового каменю",
+      "Fachwerk": "Фахверк",
+      "Feldsteinmauer": "Стіна з річкового/польвого каменю",
+      "Grenzmauer": "Стіна огордження",
+      "Ziegelmauer": "Цегляна стіна"
+    }
+  },
+  "Place-findspotClassification-default": {
+    "values": {
+      "Felsabarbeitung": "Обробка скальної породи",
+      "Funderfassung": "Документація знахідки",
+      "Fundsammlung": "Колекція знахідок",
+      "Grab": "Гробниця",
+      "Nekropole": "Некрополь",
+      "Spolie in rezenter Mauer": "Сполія в недавній стіні",
+      "Steinbruch": "Камяноломня",
+      "Straße/Platz": "Вулиця площа",
+      "Wein- bzw. Ölpresse": "Винний або олійний прес",
+      "einzelnes Steindenkmal": "Єдиний кам'яний пам'ятник",
+      "ländliches Gebäude": "Сільська споруда",
+      "urbanes Gebäude": "Міська споруда"
+    }
+  },
+  "Place-siteClassification-default": {
+    "values": {
+      "Bestattungsplatz": "Місце поховання",
+      "Siedlung": "Поселення"
+    }
+  },
+  "Layer-consistency-default": {
+    "values": {
+      "Durch Brand versiegelt": "Запечатаний вогнем",
+      "Oberfläche abgewaschen": "Поверхня розмита",
+      "Oberfläche verhärtet": "Поверхня загартована",
+      "fest": "міцне",
+      "flüssig": "рідке",
+      "hart": "тверде",
+      "lehmig": "глиняне",
+      "locker": "вільне",
+      "mittel bindend": "зередньо зв'язуючий",
+      "mittel formbar": "середньо формується",
+      "nicht bindend": "не зв'язуючи",
+      "nicht formbar": "не формується",
+      "porös": "пористий",
+      "sandig": "пісочний",
+      "schwach bindend": "слабо зв'язуючий",
+      "schwach formbar": "слабо формується",
+      "sehr gut formbar": "добре формується",
+      "sehr hart": "дуже тверде",
+      "sehr schwach formbar": "дуже слабо формується",
+      "sehr weich": "дуже м'ягке",
+      "stark bindend": "сильно зв'язуючи",
+      "steif": "пругий",
+      "weich": "м'ягкий"
+    }
+  },
+  "Layer-distinguishingCriteria-default": {
+    "values": {
+      "Farbe": "Колір",
+      "Form": "Форма",
+      "Grenzen": "Межі/Границі",
+      "Konsistenz": "Консистенція",
+      "Komposition": "Композиція"
+    }
+  },
+  "Layer-layerClassification-default": {
+    "values": {
+      "Brandschicht": "Згорілий шар",
+      "Kulturschicht": "Культурний шар",
+      "Laufhorizont": "Рівень стежки/підлоги",
+      "Planierschicht": "Вирівнюючий шар"
+    }
+  },
+  "Layer-soilType-default": {
+    "values": {
+      "Feinsand": "Дрібний пісок",
+      "Feinstsand": "Дрібнісінький пісок",
+      "Grobsand": "Грубший пісок",
+      "Lehm": "Глина",
+      "Lehmiger Sand": "Суглинистий пісок ",
+      "Lehmiger Schluff": "Суглинистий мул",
+      "Lehmiger Ton": "Глина суглиниста",
+      "Mergel": "Мергель",
+      "Mittlerer Sand": "Cередній пісок",
+      "Sand": "Пісок",
+      "Sandiger Lehm": "Піщана глина/супісок",
+      "Sandiger Schluff": "Піщаний мул",
+      "Sandiger Ton": "Піщана глина",
+      "Schluff": "Мул",
+      "Schluffiger Lehm": "Мулиста глина",
+      "Schluffiger Sand": "Мулистий пісок",
+      "Schluffiger Ton": "Мулиста глина",
+      "Ton": "Глина",
+      "Toniger Lehm": "Глинистий суглинок",
+      "Toniger Sand": "Глинистий пісок",
+      "Toniger Schluff": "Глинистий мул"
+    }
+  },
+  "Feature-featureBorders-default": {
+    "values": {
+      "deutlich": "ясно",
+      "diffus": "дифузний",
+      "eben": "рівний",
+      "erahnbar": "передбачуваний",
+      "erkennbar": "впізнаваний",
+      "etwas verwaschen": "дещо розмитий",
+      "fließend": "пливуче",
+      "geneigt": "похилений",
+      "gezackt": "зубчатий",
+      "scharf": "доброї чіткості/різкості",
+      "sehr deutlich": "дуже чітко",
+      "undeutlich": "невиразний",
+      "uneben": "нерівний",
+      "unklar": "не ясно",
+      "unregelmäßig": "нерегулярний",
+      "verwaschen": "розмитий",
+      "wellig": "хвилястий"
+    }
+  },
+  "Feature-featureForm-default": {
+    "values": {
+      "Befundrest": "Залишок знахідки",
+      "U-förmig": "П/подібний",
+      "V-förmig": "V-подібний",
+      "annähernd": "майже",
+      "formlos": "безформний",
+      "halbmondförmig": "у формі півмісяця",
+      "kesselförmig": "посудиноподібний",
+      "langgezogen": "видовжений",
+      "oval": "овальний",
+      "rechteckig": "прямокутний",
+      "regelmäßig": "регулярний",
+      "rund": "круглий",
+      "sanduhrförmig": "у формі пісочного годинника",
+      "trapezförmig": "трапецієподібний",
+      "trichterförmig": "воронко-/ лійкоподібний",
+      "unregelmäßig": "нерегулярний",
+      "wannenförmig": "діжкоподібний"
+    }
+  },
+  "Floor-floorClassification-default": {
+    "values": {
+      "Bastmatten": "Луб'яні циновки",
+      "Korkboden": "Коркова підлога",
+      "Mosaik": "Мозаїка",
+      "Pflaster": "Вимощення",
+      "Stampflehm": "Утрамбована глина",
+      "Terrazzo": "Тераццо",
+      "Webmatten": "Плетені циновки",
+      "Ziegel": "Цегла"
+    }
+  },
+  "Inscription-objectType-default": {
+    "values": {
+      "Alltäglicher Gebrauch": "Щоденне використання",
+      "Bauinschrift": "Будівельний напис",
+      "Ehreninschrift": "Почесний напис",
+      "Grabinschrift (Inschrift im Grabkontext)": "Надгробний напис (напис у надгробному контексті)",
+      "Private Ausstattung": "Приватне інвентар/меблі",
+      "Sakrale Ausstattung": "Сакральний інвентар",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Urkunde": "Сертифікат/документ",
+      "Wasserversorgung": "постачання води",
+      "Weihinschrift": "Напис посвяти",
+      "Öffentliche Ausstattung": "громадського користування"
+    }
+  },
+  "Pottery-clayHardness-default": {
+    "values": {
+      "1 (Fingernagel schabt, ritzt leicht)": "1 (подряпини нігтями, легкі подряпини)",
+      "2 (Fingernagel ritzt)": "2 (подряпини нігтями)",
+      "3 (Messerspitze ritzt leicht)": "легкі подряпини кінчиком ножа",
+      "4 (Messerspitze ritzt)": "подряпини кінчиком ножа",
+      "5 (Messerspitze ritzt schwer)": "глибокі подряпини кінчиком ножа"
+    }
+  },
+  "Pottery-coatInside-default": {
+    "values": {
+      "Glasur": "Глазур/інвертріатура",
+      "Schwarzfirnis": "Чорний лак "
+    }
+  },
+  "Pottery-coatInsideType-default": {
+    "values": {
+      "Andere": "Інші",
+      "Bemalung": "Розпис",
+      "Geglättet": "Розрівняний",
+      "Glasur": "Глазур",
+      "Poliert": "Полірований",
+      "Überzug": "покриття"
+    }
+  },
+  "Pottery-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Розпис",
+      "Fadendekor (aufgelegt)": "Нитковий/павутинний декор (накладкою)",
+      "Reliefdekor": "рельєфний декор",
+      "Riefeldekor": "рифельний декор",
+      "Ritzungen": "Подряпини",
+      "Stempel": "Відбиток",
+      "Stempeldekor": "штамповий декор",
+      "Tupfendekor": "Губковий декор"
+    }
+  },
+  "Pottery-objectType-default": {
+    "values": {
+      "Altar": "Вівтар",
+      "Anhänger": "Підвіска",
+      "Einlage": "Вставка",
+      "Gefäß": "Ваза посудина",
+      "Gerät": "Інструмент",
+      "Gussform": "Форма лиття",
+      "Kette": "Ланцюг",
+      "Kohlebecken": "Місце вогнища/мангал",
+      "Lampe": "лампа",
+      "Löffel": "ложка",
+      "Perle": "перлина",
+      "Plastik/Skulptur": "пластика/скульптура",
+      "Produktionsfragment": "фрагмент виробництва",
+      "Ring": "Перстень",
+      "Sarkophag": "Саркофаг",
+      "Schmuck": "Ювелірна прикраса",
+      "Siegel": "Печатка",
+      "Spielstein": "Іграшковий жетон/фігура",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Webgewicht": "вага плетіння",
+      "Werkzeug": "Інструмент"
+    }
+  },
+  "Pottery-vesselForm-default": {
+    "values": {
+      "Amphore": "Амфора",
+      "Aschenurne": "Урна для попелу",
+      "Becher": "Кухоль",
+      "Deckel": "Кришка",
+      "Deckelgefäß": "посудина з кришкою",
+      "Flasche": "Пляшка",
+      "Geschlossenes Gefäß": "закрита посудина",
+      "Kanne": "Лійка",
+      "Kochschüssel": "Посудина для варіння",
+      "Krug": "Глечик",
+      "Napf": "Чаша",
+      "Offenes Gefäß": "Відкрита посудина",
+      "Pfanne": "Cковорода",
+      "Räuchergefäß": "Кадильниця",
+      "Schüssel": "миска",
+      "Tasse": "Кубок/горнятко",
+      "Teller": "Тарілка",
+      "Teller/Untersatz": "Тарілка/підставка",
+      "Topf": "Горщик",
+      "Unbestimmt": "невизначений",
+      "Vorratsgefäß": "Посуд для зберігання"
+    }
+  },
+  "Pottery-vesselFormSpecific-default": {
+    "values": {
+      "Dattelflasche": "фінікова пляшка",
+      "Faltenbecher": "Складна чашка",
+      "Fischteller": "рибна тарілка",
+      "Glockenbecher": "дзвін чашка",
+      "Handelsamphore": "торгівельна амфора",
+      "Salznapf": "Сільниця",
+      "Spitzamphora": "Завужена амфора",
+      "Sprenkler": "Розпилювач/спринклер",
+      "Tränenfläschchen": "Слізна пляшечка",
+      "Vierkantflasche": "прямокутна пляшка",
+      "hexagonale Flasche": "шестигранна пляшка",
+      "zylindrische Flasche": "циліндрична пляшка"
+    }
+  },
+  "Grave-graveType-default": {
+    "values": {
+      "Baumsargbestattung": "Поховання деревною труною ",
+      "Erdgrab": "Земляна могила",
+      "Felsgrab": "скельна могила",
+      "Flachgrab": "неглибока могила",
+      "Ganggrab": "Прохідна могила",
+      "Gefäßbestattung": "Поховання в посудині",
+      "Gemauertes Grab": "Мурована могила",
+      "Glockengrab": "дзвін могила",
+      "Hügelgrab": "Курган",
+      "Mausoleum": "Мавзолей",
+      "Megalithgrab": "мегалітична гробниця",
+      "Schachthöhlengrab": "Шахтова печерна гробниця"
+    }
+  },
+  "Grave-tombBuilding-default": {
+    "values": {
+      "Bruchsteingemauert": "Стіни з бутового каменю",
+      "Quadergemauert": "Стіни з тесаного каменю",
+      "Ziegelgemauert": "Стіни з цегли"
+    }
+  },
+  "Bone-boneClassification-default": {
+    "values": {
+      "Becken (Pelvis)": "Таз (Pelvis)",
+      "Brustbein (Sternum)": "Грудина (Sternum)",
+      "Elle (Ulna)": "Ліктьова кістка (Ulna)",
+      "Fingerknochen (Phalanges)": "Кістки пальців (Phalanges)",
+      "Fußknochen": "Кістка ноги",
+      "Handknochen": "Кістка руки",
+      "Kniescheibe (Patella)": "Колінна чашечка (Patella)",
+      "Langknochen": "Довга кістка",
+      "Oberarm (Humerus)": "Плече (Humerus)",
+      "Oberschenkel (Femur)": "Стегно (Femur)",
+      "Rippen": "Ребра",
+      "Schienenbein (Tibia)": "Гомілка(Tibia)",
+      "Schlüsselbein (Clavicula)": "Ключиця (Clavicula)",
+      "Schulterblatt (Scapula)": "Лопатка (Scapula)",
+      "Schädel (Cranium)": "Череп (Cranium)",
+      "Speiche (Radius)": "Спиця (Radius)",
+      "Steißbein": "Куприк",
+      "Undefinierbar": "Невизначено",
+      "Unterkiefer (Mandibula)": "Нижня щелепа (Mandibula)",
+      "Wadenbein (Fibula)": "Малогомілкова кістка (Fibula)",
+      "Wirbel": "Кістка хребта",
+      "Zahn": "Зуб"
+    }
+  },
+  "Bone-boneType-default": {
+    "values": {
+      "Elfenbein": "Слонова кістка",
+      "Horn": "Ріг",
+      "Menschenknochen": "Людські кістки",
+      "Tierknochen": "Кістки тварин"
+    }
+  },
+  "Bone-burningGrade-default": {
+    "values": {
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": "I - 200°-300°C - зміна кольору приблизно жовтувато-біло-слонова кістка",
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": "II - 300°-400°C - зміна кольору приблизно коричнево-темно-коричневий/чорний",
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": "III - близько 550°C - знебарвлення приблизно сіре/синьо-сіро-молочно-сіре",
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": "IV - 650°-750°C - знебарвлення приблизно молочно-біле-матово-біле/крейдоподібне",
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": "V - від 800°C - зміна кольору майже білого/брудно-білого"
+    }
+  },
+  "Bone-sex-default": {
+    "values": {
+      "Männlich": "Чоловічий",
+      "Weiblich": "Жіночий"
+    }
+  },
+  "Bone-objectType-default": {
+    "values": {
+      "Anhänger": "Підвіска",
+      "Armreif": "Браслет",
+      "Astragal": "Астрагал",
+      "Bearbeitet (allgemein)": "Відредаговано (загальне)",
+      "Einlage": "Вставка",
+      "Gefäß": "Ваза/Посудина",
+      "Gerät": "Інструмент",
+      "Kette": "Ланцюг",
+      "Löffel": "Ложка",
+      "Perle": "Перлина",
+      "Ring": "Перстень/Кільце",
+      "Schmuck": "Ювелірний виріб",
+      "Spielstein": "Ігрова фішка/фігура",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Waffe": "Зброя",
+      "Weinheber": "Винопідйомник",
+      "Werkzeug": "Інструмент"
+    }
+  },
+  "Bone-species-default": {
+    "values": {
+      "Biber": "Бобер",
+      "Fisch": "Риби",
+      "Gänsevogel (z. B. Gans, Schwan oder Ente)": "Гуски (наприклад гусак, лебідь або качка)",
+      "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)": "Зайцеподібні Lagomorpha (наприклад заєць, піка або кролик)",
+      "Hirsch": "Олень",
+      "Nagetier (z.B. Maus, Ratte etc.)": "Гризун (наприклад, миша, щур тощо)",
+      "Rind": "Яловичина",
+      "Schwein": "Свиня",
+      "Vogel": "Птах",
+      "Ziegenartige (z. B. Schaf, Ziege)": "Гомініди (наприклад вівці, кози)"
+    }
+  },
+  "Terracotta-clayStructure-default": {
+    "values": {
+      "hart": "твердий",
+      "klingend hart": "сильно дзвонить",
+      "mittel": "середньо",
+      "weich": "м'який"
+    }
+  },
+  "Terracotta-surfaceCondition-default": {
+    "values": {
+      "Brandspuren": "Сліди пожежі",
+      "Sekundärbrand": "Вторинна пожежа",
+      "abblätternd": "Лущення",
+      "gut erhalten": "Добре збережено",
+      "stark abgerieben": "Сильно обтерто",
+      "starke Sinter- oder Mörtelablagerungen": "Важкі відкладення агломерату або розчину",
+      "verrieben": "зтертий",
+      "verwaschen": "розмито"
+    }
+  },
+  "Terracotta-vesselForm-default": {
+    "values": {
+      "Amphore": "Амфора",
+      "Aschenurne": "Урна попелу",
+      "Becher": "Кубок",
+      "Deckel": "Кришка",
+      "Deckelgefäß": "Посудина з кришкою",
+      "Flasche": "Пляшка",
+      "Krug": "Глечик",
+      "Napf": "Чаша",
+      "Schale": "Миска",
+      "Schüssel": "Ключ",
+      "Tasse": "Горнятко/Кубок",
+      "Teller": "Тарілка",
+      "Topf": "Горщик",
+      "Unbestimmt": "Невизначено",
+      "Vorratsgefäß": "Посудина для зберігання"
+    }
+  },
+  "Drawing-drawingMaterial-default": {
+    "values": {
+      "Digitale Datei": "Цифровий файл",
+      "Folie": "Плівка",
+      "Karton": "Картон",
+      "Lichtpause": "Синька/Ксерокс",
+      "Mikrofilm": "Мікрофільм",
+      "Millimeterpapier": "Міліметровий папір",
+      "Papier": "Папір",
+      "Photoabzüge": "Відбитки фотографій",
+      "Transparentfilm": "Прозора плівка",
+      "Transparentpapier": "Калька/Прозорий папір"
+    }
+  },
+  "Drawing-drawingTool-default": {
+    "values": {
+      "Bleistift": "Олівець",
+      "Buntstift": "Кольоровий олівець",
+      "Tusche": "Чорнило",
+      "digital erstellt": "Створено цифровим способом"
+    }
+  },
+  "Drawing-drawingType-default": {
+    "values": {
+      "AutoCAD Zeichnung (auch TachyCAD)": "Комп‘ютерне CAD-креслення",
+      "Handzeichnung": "Кресленння вручну",
+      "Pantograf": "Пантограф"
+    }
+  },
+  "Drawing-scale-default": {
+    "values": {
+      "1:1": "1:1",
+      "1:10": "1:10",
+      "1:100": "1:100",
+      "1:1000": "1:1000",
+      "1:10000": "1:10000",
+      "1:20": "1:20",
+      "1:50": "1:50",
+      "1:500": "1:500",
+      "1:5000": "1:5000"
+    }
+  },
+  "Survey-researchMethod-default": {
+    "values": {
+      "Befliegung": "Обліт",
+      "Begehung": "Обхід",
+      "Geoelektrik": "Геоелектрика",
+      "Geomagnetik": "Геомагнетика",
+      "Georadar": "Георадар",
+      "LIDAR": "ЛІДАР",
+      "Luft- oder Satellitenbilder": "Повітряні або супутникові знімки",
+      "Quadratisch": "Квадратне",
+      "Regelmäßig": "Регулярне",
+      "Seismik": "Сейсмічне"
+    }
+  },
+  "Stone-architectureElement-default": {
+    "values": {
+      "Akroter": "Акротер",
+      "Architrav": "Архітрав",
+      "Archtitravfriesblock": "Архітектурний фризовий блок",
+      "Basis": "База",
+      "Bauplastik": "архітектурні скульптури",
+      "Fries": "Фриз",
+      "Gesims": "Карниз",
+      "Kapitell": "Капітель",
+      "Konsole": "Консоль",
+      "Profilstück": "Частина профілю",
+      "Quaderblock": "Тесаний блок",
+      "Rinne": "Жолоб",
+      "Schrankenplatte": "Бар'єрна плита",
+      "Schwellenblock": "Фундаментний/пороговий блок",
+      "Säule": "Колона",
+      "Wandverkleidung": "Стінна обшивка"
+    }
+  },
+  "Stone-material-default": {
+    "values": {
+      "Andesit": "Андезит",
+      "Basalt": "Базальт",
+      "Feldspat": "Польовий шпат",
+      "Flint": "Кремінь",
+      "Glimmer": "Слюда",
+      "Granit": "Граніт",
+      "Kalk": "Вапно",
+      "Kalkmörtel": "Вапняний розчин",
+      "Kalkstein": "Вапняк",
+      "Kalzit": "Кальцит",
+      "Kreide": "Крейда",
+      "Marmor": "Мармор",
+      "Quarz": "Кварц",
+      "Sandstein": "Пісковик",
+      "Sinter": "Конкремент",
+      "Trachyt": "Трахіт",
+      "Tuff": "Туф"
+    }
+  },
+  "Stone-objectType-default": {
+    "values": {
+      "Altar": "Вівтар",
+      "Anhänger": "Підвіска",
+      "Architekturdekor": "Архітектурний декор",
+      "Bauglied": "Будівельна частина",
+      "Becken": "Басейн",
+      "Einlage": "Вставка",
+      "Fußbodenfragment": "Фрагмент підлоги",
+      "Gefäß": "Посудина",
+      "Gerät": "Інструмент",
+      "Grabmarkierung": "Могильний знак/позначка",
+      "Grabplatte": "Надгробок/плита",
+      "Gussform": "Форма для лиття",
+      "Inkrustation": "Інкрустація",
+      "Lampe": "Лампа",
+      "Löffel": "Ложка",
+      "Mahlstein": "Жорна",
+      "Mobiliar": "Меблі",
+      "Mörser": "Cтупка",
+      "Perle": "Перлина",
+      "Plastik/Skulptur": "Пластика/скульптура",
+      "Produktionsfragment": "Фрагмент продукції",
+      "Reibstein": "Камінь для тертя",
+      "Ring": "Перстень/Кільце",
+      "Rührstab": "Палиця для перемішування",
+      "Sarkophag": "Саркофаг",
+      "Schmuck": "Ювелірний виріб",
+      "Siegel": "Печатка",
+      "Spielbrett": "Ігрова дошка",
+      "Spielstein": "Ігрова фішка/фігура",
+      "Spolie": "Сполія",
+      "Statuenbasis": "База статуї",
+      "Tischfuß": "Ніжка стола",
+      "Webgewicht": "Вага плетіння",
+      "Werkzeug": "Інструмент",
+      "Ölpresse": "Олійний прес"
+    }
+  },
+  "Stone-origin-default": {
+    "values": {
+      "Alpen": "Альпи",
+      "Anatolien": "Анатолія",
+      "Chimtou": "Чімтоу",
+      "Kreta": "Крит",
+      "Sizilien": "Сицилія"
+    }
+  },
+  "Coin-denomination-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Coin-manufacturingMethod-default": {
+    "values": {
+      "Gegossen": "Литий",
+      "Geprägt": "Викарбований",
+      "Plattiert": "Пластинчастий",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Coin-metalMaterial-default": {
+    "values": {
+      "Aluminium": "Алюміній",
+      "Blei": "Свинець",
+      "Bronze": "Бронза",
+      "Eisen": "Залізо",
+      "Gold": "Золото",
+      "Kupfer": "Мідь",
+      "Messing": "Латунь",
+      "Silber": "Срібло",
+      "Stahl": "Сталь",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Zink": "Цинк",
+      "Zinn": "Олово"
+    }
+  },
+  "Coin-mint-default": {
+    "values": {
+      "Afrika": "Африка",
+      "Asien": "Азія",
+      "Athen": "Афіни",
+      "Babylon": "Вавилон",
+      "Chersones": "Херсонес",
+      "Constantinopolis (Istanbul)": "Константинополь (Стамбул)",
+      "Damaskus": "Дамаск",
+      "Italien": "Італія",
+      "Kertsch": "Керч",
+      "Kolchis": "Колхіда",
+      "Konstantinopel": "Константинопіль",
+      "Makedonien": "Македонія",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+    }
+  },
+  "Coin-stampPositioning-default": {
+    "values": {
+      "- 1 Uhr": "- 1 годин/a",
+      "- 2 Uhr": "- 2 годин/a",
+      "- 3 Uhr": "- 3 годин/a",
+      "- 4 Uhr": "- 4 годин/a",
+      "- 5 Uhr": "- 5 годин/a",
+      "- 6 Uhr": "- 6 годин/a",
+      "- 7 Uhr": "- 7 годин/a",
+      "- 8 Uhr": "- 8 годин/a",
+      "- 9 Uhr": "- 9 годин/a",
+      "- 10 Uhr": "- 10 годин/a",
+      "- 11 Uhr": "- 11 годин/a",
+      "- 12 Uhr": "- 12 годин/a"
+    }
+  },
+  "Find-storagePlace-default": {
+    "values": {
+      "Landesamt": "Державне Управління",
+      "Museum": "Музей",
+      "Privatbesitz": "Приватна власність",
+      "Regionalverwaltung": "Обласна адміністрація",
+      "Restaurierungswerkstatt": "Реставраційна майстерня",
+      "Staatsbesitz": "Державна власність"
+    }
+  },
+  "storagePlace-default": {
+    "values": {
+      "Landesamt": "Державне Управління",
+      "Museum": "Музей",
+      "Privatbesitz": "Приватна власність",
+      "Restaurierungswerkstatt": "Реставраційна майстерня",
+      "Staatsbesitz": "Державна власність"
+    }
+  },
+  "PlasterFragment-plasterComponents-default": {
+    "values": {
+      "Feinsand": "Дрібний пісок",
+      "Grus": "Подріблена скельна порода",
+      "Sand": "Пісок"
+    }
+  },
+  "Photo-originalType-default": {
+    "values": {
+      "Dia bunt": "Слайд/діапозитив кольоровий",
+      "Digitalfoto": "Цифрове фото",
+      "Glasnegativ": "Негатив",
+      "Kleinbild bunt": "35 mm кольорова",
+      "Kleinbild s/w": "35 mm ч/б",
+      "Messbild": "Вимірюванльна фотографія",
+      "Mittelformat": "Середній формат",
+      "Scan": "Сканування"
+    }
+  },
+  "Metal-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Розпис/живопис",
+      "Beschläge": "Кріплення/завіси",
+      "Emaille": "Емаль",
+      "Nielloverzierung": "Прикраса чернінням",
+      "Reliefdekor": "Рельєфний декор",
+      "Riefeldekor": "Рифельний декор",
+      "Ritzungen": "Подряпини",
+      "Stempel": "Штамп",
+      "Stempeldekor": "Штамповий декор",
+      "Vergoldung": "Позолота"
+    }
+  },
+  "Metal-manufacturingMethod-default": {
+    "values": {
+      "Gußtechnik": "Техніка лиття",
+      "Prägearbeit": "Техніка тиснення",
+      "Schmiedetechnik": "Техніка кування",
+      "Ziehtechnik": "Техніка малювання за допомогою розтягування"
+    }
+  },
+  "Metal-objectType-default": {
+    "values": {
+      "Anhänger": "Підвіска",
+      "Armreif": "Браслет",
+      "Barren": "Злиток",
+      "Beschlag": "Завіса/кріплення",
+      "Blech": "Лист бляхи",
+      "Einlage": "Інкрустація",
+      "Fibel": "Фібула/Булавка",
+      "Gefäß": "Інструмент",
+      "Gewicht": "Вага",
+      "Glocke": "Дзвін",
+      "Gussform": "Чавунна форма",
+      "Gusszapfen": "Чавунний тримак",
+      "Halbfabrikat": "Напівфабрикат",
+      "Kandelaber": "Підсвічник/Канделябр",
+      "Kette": "Ланцюг",
+      "Klinge": "Лезо",
+      "Knopf": "Гудзик",
+      "Lampe": "Лампа",
+      "Löffel": "Ложка",
+      "Mobiliar": "Меблі",
+      "Nagel": "Цвях",
+      "Perle": "Перлина",
+      "Pfeilspitze": "Наконечник стріли",
+      "Plastik/Skulptur": "Пластика/скульптура",
+      "Produktionsfragment": "Виробничий фрагмент ",
+      "Projektil": "Cнаряд",
+      "Reibe": "Терка",
+      "Ring": "Перстень/Кільце",
+      "Ringbarren": "Злиток для перстня",
+      "Rührstab": "Паличка для перемішування",
+      "Sarkophag": "Саркофаг",
+      "Schild": "Табличка",
+      "Schlacke": "Ключ",
+      "Schmiedeabfall": "Відходи кування",
+      "Schmuck": "Ювелірний виріб",
+      "Schnalle": "Пряжка",
+      "Schreibgerät": "Інструмент для письма",
+      "Siegel": "Печатка",
+      "Spiegel": "Дзеркало",
+      "Spielstein": "Ігрова фішка/фігура",
+      "Strigilis": "Стрігіл",
+      "Türschloss": "Дверний замок",
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Waffe": "Зброя",
+      "Wasserleitung": "Водопровід",
+      "Weinheber": "Винопідйомник",
+      "Werkzeug": "Інструмент",
+      "Zierbeschlag": "Декоративна завіса/фурнітура"
+    }
+  },
+  "Metal-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": "Алебастрон",
+      "Amphoriskos": "Амфорискос",
+      "Spitzamphora": "Завужена амфора",
+      "Sprenkler": "Шринклер",
+      "Vierkantflasche": "Чотирикутна пляшка",
+      "hexagonale Flasche": "Шестигранна пляшка",
+      "zylindrische Flasche": "Циліндрична пляшка"
+    }
+  },
+  "Sample-sampleType-default": {
+    "values": {
+      "Bodenprobe": "Проба грунту",
+      "C14-Analyse": "Радіокарбонний аналіз С14",
+      "Dendroprobe": "Дендрохронологічна проба",
+      "Hammerschlagsprobe": "Випробування ударом/молотком",
+      "Phosphatanalyse": "Фосфатний аналіз",
+      "Pollenanalyse": "Пилковий аналіз"
+    }
+  },
+  "TypeCatalog-criterion-default": {
+    "values": {
+      "Form": "Форма",
+      "Material": "Матеріал",
+      "Dekoration": "Декорація/прикраса",
+      "Spuren": "Відбитки/залишки"
+    }
+  },
+  "damages-default": {
+    "values": {
+      "totalCollapse": "Повністю пошкоджно / Завалення",
+      "partialCollapse": "Частково завалено",
+      "missingconst": "Бракує конструктивного елементу",
+      "looseconst": "Конструктивний елемент від´єднався",
+      "fractures": "Перелом / Розрив",
+      "riss1": "Тріщина (<1mm)",
+      "riss2": "Тріщина (1mm-5mm)",
+      "riss3": "Тріщина (>5mm)",
+      "riss4": "Тріщина (>10mm)",
+      "deformationSwelling": "Деформація: випуклість / здуття",
+      "delamination": "Розшаровування / відшарування стінок",
+      "moisture": "Вологість",
+      "cavities": "Порожнисті шари",
+      "exfoliation": "Відслоювання",
+      "spalling": "Відшарування / відломлювання",
+      "efflorescence": "Висоли солі",
+      "bioSettlement": "Біогенне поширення",
+      "fireDamage": "Пошкодження вогнем",
+      "erosion": "Ерозія",
+      "corrosion": "Корозія",
+      "crusting": "Утворення скоринки",
+      "mechanicDamage": "Механічне пошкодження",
+      "discoloration": "Зміна кольору",
+      "contamination": "Забруднення",
+      "fragmentation": "Розлам / розбиття",
+      "ruin": "Розпад",
+      "weathering": "Обвітрення",
+      "rotting": "Пошкодження деревини (структурно нешкідливі)",
+      "rottingstr": "Пошкодження деревини (структурно проблематичні)",
+      "vandalizm": "Вандалізм",
+      "fissure": "Тріщини у штукатурці"
+    }
+  },
+  "Damage-condition-default": {
+    "values": {
+      "CCO": "CCO - Без пошкоджень",
+      "CC1": "CC1 - Незначні пошкодження",
+      "CC2": "CC2 - Пошкодження середньої важкості",
+      "CC3": "CC3 - Важкі пошкодження",
+      "CC4": "CC4 - Повна втрата"
+    }
+  }
+}

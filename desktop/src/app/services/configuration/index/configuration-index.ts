@@ -107,8 +107,8 @@ export class ConfigurationIndex {
         const builtInConfiguration = new BuiltInConfiguration(getConfigurationName(this.projectIdentifier));
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
-        const valuelists = await this.configReader.read('/Library/Valuelists.json');
-        const defaultLanguages = await this.configLoader.readDefaultLanguageConfigurations();
+        const valuelists = this.configLoader.readValuelists();
+        const defaultLanguages = this.configLoader.readDefaultLanguageConfigurations();
         const customLanguages = this.getCustomLanguageConfigurations(configurationDocument);
         const languages = this.configLoader.mergeLanguageConfigurations(defaultLanguages, customLanguages);
         const usedCategoryForms = customProjectConfiguration
@@ -129,7 +129,7 @@ export class ConfigurationIndex {
         );
 
         this.valuelists = rawConfiguration.valuelists;
-        this.templates = await this.configLoader.readTemplates();
+        this.templates = this.configLoader.readTemplates();
 
         this.createSubIndices(
             Tree.flatten(rawConfiguration.forms),

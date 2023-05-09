@@ -1,0 +1,168 @@
+{
+  "Find-specialStatus-Pergamon": {
+    "values": {
+      "Envanterlik": "Envanterlik",
+      "Etütlük": "Etütlük"
+    }
+  },
+  "Feature-locusRecordingType-GoebekliTepe": {
+    "values": {
+      "Verfüllung": "Dolgu",
+      "Struktur": "Mimari eleman",
+      "Negativbefund": "Kesme"
+    }
+  },
+  "Layer-locusDepositType-GoebekliTepe": {
+    "values": {
+      "topsoil": "Yüzey toprağı",
+      "arbitrarySpit": "Keyfi oluşturulmuş",
+      "packingDeposit": "Sıkıştırma dolgusu",
+      "tumbledStones": "Devrilmiş taşlar",
+      "collapse": "Çöküntü",
+      "ashyDeposit": "Küllü dolgu",
+      "erosionalDepositsOrCleaning": "Erozyon dolgusu / Temizleme",
+      "depositOther": "Diğer (aşağıda belirtin)"
+    }
+  },
+  "Layer-locusCompaction-GoebekliTepe": {
+    "values": {
+      "compact": "Sert",
+      "mediumCompact": "Orta sertlikte",
+      "friable": "Ufalanabilir",
+      "loose": "Dağılan"
+    }
+  },
+  "Feature-locusDepositCollectionMethod-GoebekliTepe": {
+    "values": {
+      "drySieved": "Kuru elendi",
+      "wetSieved": "Sulu elendi",
+      "flotation": "Yüzdürüldü",
+      "hand-picked": "Elenmedi; buluntular yalnızca elle toplandı"
+    }
+  },
+  "Layer-locusDepositColourModifier-GoebekliTepe": {
+    "values": {
+      "light": "Açık",
+      "mid": "Orta",
+      "dark": "Koyu"
+    }
+  },
+  "Feature-locusDepositInclusions-GoebekliTepe": {
+    "values": {
+      "stones": "Taş",
+      "chippedStones": "Yontmataş",
+      "bones": "Kemik",
+      "plasterFragments": "Sıva parçası",
+      "gravel": "Çakıl",
+      "charcoal": "Odun kömürü",
+      "molluscs": "Yumuşakça kabuğu",
+      "mortar": "Harç",
+      "grit": "Kum tanesi",
+      "groundStone": "Sürtmetaş",
+      "limeInclusions": "Kireç kalıntısı",
+      "ash": "Kül"
+    }
+  },
+  "Feature-locusDepositInclusionsStone-GoebekliTepe": {
+    "values": {
+      "smallerThanFist": "küçük (yumruktan küçük)",
+      "fist-sized": "yumruk-boyu",
+      "medium-sized": "orta boy (yumruktan büyük–20 cm)",
+      "large": "büyük (20 üstü)"
+    }
+  },
+  "Feature-locusDepositStoneShape-GoebekliTepe": {
+    "values": {
+      "angular": "köşeli",
+      "rounded": "yuvarlak"
+    }
+  },
+  "Architecture-structuralElementType-GoebekliTepe": {
+    "values": {
+      "wall": "Duvar",
+      "bench": "Seki",
+      "wallOpeningOrDoor": "Duvar açıklığı/Kapı",
+      "floor": "Taban",
+      "niche": "Niş",
+      "roofOrCeiling": "Çatı/Tavan",
+      "pillar": "Dikilitaş",
+      "portalStone": "“Kapı” taşı (portal stone)",
+      "buttress": "Payanda",
+      "fireInstallationOrhearth": "Ateş yeri",
+      "stepsOrStairs": "Basamak/Merdiven",
+      "other": "Diğer"
+    }
+  },
+  "FeatureInterface-locusCutType-GoebekliTepe": {
+    "values": {
+      "pit": "Çukur",
+      "rockCut": "Kaya çukuru",
+      "constructionOrFoundationPit": "İnşa/Temel çukuru",
+      "postOrStakeHole": "Direk/Kazık deliği",
+      "other": "Diğer"
+    }
+  },
+  "FeatureInterface-locusCutShape-GoebekliTepe": {
+    "values": {
+      "circular": "Yuvarlak",
+      "square": "Kare",
+      "oval": "Oval",
+      "linear": "Çizgisel",
+      "rectangular": "Dörtgen",
+      "irregular": "Düzensiz",
+      "rectangularWithRoundedCorners": "Köşeleri yuvarlatılmış dörtgen",
+      "other": "Diğer"
+    }
+  },
+  "FeatureInterface-locusCutSlope-GoebekliTepe": {
+    "values": {
+      "breakOfSlope-top-sharp": "Üst kısım: keskin",
+      "breakOfSlope-top-gradual": "Üst kısım: kademeli",
+      "breakOfSlope-bottom-sharp": "Zemin: keskin",
+      "breakOfSlope-bottom-gradual": "Zemin: kademeli",
+      "breakOfSlope-sides-sharp": "Yan yüzler: keskin",
+      "breakOfSlope-sides-gradual": "Yan yüzler: kademeli",
+      "breakOfSlope-base-sharp": "Dip: keskin",
+      "breakOfSlope-base-gradual": "Dip: kademeli"
+    }
+  },
+  "Feature-locusStratigraphyRemarks-GoebekliTepe": {
+    "values": {
+      "primary": "Birincil",
+      "secondary": "İkincil",
+      "tertiary": "Üçüncül"
+    }
+  },
+  "Find-smallFindsCategory-GoebekliTepe": {
+    "values": {
+      "chippedStone": "Yontmataş",
+      "stoneObject": "needsReview! İşlenmiş Taş",
+      "bone": "Kemik",
+      "mollusc": "Yumuşakça kabuğu",
+      "clayObject": "Kil Nesnesi",
+      "pottery": "çanak çömlek",
+      "pigmentAndMinerals": "Pigment ve mineraller",
+      "glass": "needsReview! Cam",
+      "metal": "needsReview! Metal",
+      "undefined": "needsReview! Tanımsız"
+    }
+  },
+  "Find-smallFindsCollectionMethod-GoebekliTepe": {
+    "values": {
+      "singleFind": "Tek Bul",
+      "collection": "Toplamak"
+    }
+  },
+  "Find-smallFindsStorage-GoebekliTepe": {
+    "values": {
+      "stonegarden": "'Taş Bahçe'",
+      "museumUrfa": "Urfa Müzesi",
+      "depot1ExcavationHouseGT": "Depo 1",
+      "depot2ExcavationHouseGT": "Depo 2",
+      "depot3ExcavationHouseGT": "Depo 3",
+      "depot4ExcavationHouseGT": "Depo 4",
+      "noStorageData": "bilgi yok",
+      "missing": "kayıp"
+    }
+  }
+}

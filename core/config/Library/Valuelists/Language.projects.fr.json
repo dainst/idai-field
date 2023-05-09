@@ -1,0 +1,1466 @@
+{
+  "Pottery-vesselpart-Gadara": {
+    "values": {
+      "WF": "P",
+      "RF": "B",
+      "BF": "F",
+      "H": "A",
+      "KOMP": "C",
+      "VAR": "E"
+    }
+  },
+  "Pottery-coatType-Gadara": {
+    "values": {
+      "Unbehandelt": "non traitée",
+      "Überzug": "engobe",
+      "Poliert": "polie",
+      "Geglättet": "lissée",
+      "Glasiert": "glaçurée",
+      "Bemalung": "peinte"
+    }
+  },
+  "Pottery-coatColor-Gadara": {
+    "values": {
+      "beige": "beige",
+      "blass-": "pâle",
+      "blau": "bleu",
+      "braun": "brune",
+      "cremefarben": "crème",
+      "dunkel-": "foncé",
+      "gelb": "jaune",
+      "glänzend": "lustré",
+      "grau": "gris",
+      "grün": "verde",
+      "hell-": "clair",
+      "leuchtend-": "vive",
+      "ocker": "ocre",
+      "orange": "orange",
+      "rosa": "rose",
+      "rot": "rouge",
+      "schwarz": "noir",
+      "türkis": "turquoise",
+      "violett": "violette",
+      "weiß": "blanc"
+    }
+  },
+  "Find-amountDescription-Gadara": {
+    "values": {
+      "Kiste (klein)": " caisse (petite)",
+      "Stück": "pièce",
+      "Eimer": "seau",
+      "Kiste (groß)": "caisse (grand)",
+      "Tüte": "sachet"
+    }
+  },
+  "Floor-distinguishingCriteria-Abbircella": {
+    "values": {
+      "Farbe": "Couleur",
+      "Konsistenz": "Consistence",
+      "Komposition": "Composition"
+    }
+  },
+  "Feature-stratigraphicReliability-Abbircella": {
+    "values": {
+      "Gut": "Bonne",
+      "Mittel": "Moyenne",
+      "Schlecht": "Mauvaise",
+      "Unbekannt": "Inconnue"
+    }
+  },
+  "colors-Abbircella-1": {
+    "values": {
+      "Beige": "Beige",
+      "Blass-": "Pâle",
+      "Blau": "Bleue",
+      "Braun": "Marron",
+      "Cremefarben": "Crème",
+      "Dunkel-": "Foncée",
+      "Gelb": "Jaune",
+      "Grau": "Grise",
+      "Grün": "Verte",
+      "Pistazienfarben": "Pistache",
+      "Hell-": "Claire",
+      "Leuchtend": "Lumineuse",
+      "Ocker": "Ocre",
+      "Orange": "Orange",
+      "Rosa": "Rose",
+      "Rot": "Rouge",
+      "Schwarz": "Noire",
+      "Türkis": "Turquoise",
+      "Violett": "Violette",
+      "Weiß": "Blanche"
+    }
+  },
+  "colors-Abbircella-2": {
+    "values": {
+      "Beige": "Beige",
+      "Dunkelbraun": "Brun foncé",
+      "Dunkelrot": "Rouge foncé",
+      "Gelb": "Jaune",
+      "Hellbraun": "Brun clair",
+      "Hellgrau": "Gris clair",
+      "Mittelbraun": "Brun moyen",
+      "Ocker": "Ocre",
+      "Orange": "Orange",
+      "Orangerot": "Rouge orangé",
+      "Rosa": "Rose",
+      "Rot": "Rouge",
+      "Rotbraun": "Brun rouge",
+      "Schwarz": "Noir",
+      "Weiß": "Blanc"
+    }
+  },
+  "Feature-featureForm-Abbircella": {
+    "values": {
+      "Befundrest": "Reste",
+      "U-förmig": "En forme de U",
+      "V-förmig": "En forme de V",
+      "Annähernd": "Approximativement",
+      "Formlos": "Informe",
+      "Halbmondförmig": "En demi-lune",
+      "Langgezogen": "Allongée",
+      "Oval": "Ovale",
+      "Rechteckig": "Rectangulaire",
+      "Regelmäßig": "Régulière",
+      "Rund": "Ronde",
+      "Sanduhrförmig": "En forme de sablier",
+      "Trapezförmig": "Trapézoïdale",
+      "Unregelmäßig": "Irrégulière",
+      "Kesselförmig": "En forme de chaudron",
+      "Wannenförmig": "En forme de baignoire",
+      "Trichterförmig": "En forme d'entonnoir"
+    }
+  },
+  "Feature-featureBorders-Abbircella": {
+    "values": {
+      "Deutlich": "Distinctes",
+      "Diffus": "Diffuses",
+      "Eben": "Plaines",
+      "Erahnbar": "Devinables",
+      "Erkennbar": "Reconnaissables",
+      "Etwas verwaschen": "Légèrement délavées",
+      "Fließend": "Fluides",
+      "Geneigt": "Inclinées",
+      "Gezackt": "Dentées",
+      "Regelmäßig": "Régulières",
+      "Scharf": "Nettes",
+      "Sehr deutlich": "Très distinctes",
+      "Undeutlich": "Indistinctes",
+      "Uneben": "Inégales",
+      "Unklar": "Pas claires",
+      "Unregelmäßig": "Irrégulières",
+      "Verwaschen": "Délavées",
+      "Wellig": "Ondulées"
+    }
+  },
+  "Feature-drawn-Abbircella": {
+    "values": {
+      "Ja": "Oui",
+      "Nein": "Non",
+      "Nicht notwendig": "Pas nécessaire"
+    }
+  },
+  "periods-Abbircella-1": {
+    "values": {
+      "Vorrömisch I. ca. 500-146 v. Chr. (punisch)": "Préromain I. env. 500–146 av. J.-C. (punique)",
+      "Vorrömisch II. 146-31 v. Chr. (neopunisch)": "Préromain II. 146–31 av. J.-C. (néo-punique)",
+      "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)": "Haut-Empire. 31 av. J.-C. – 69 ap. J.-C. (augustéen / julio-claudien)",
+      "Mittlere Kaiserzeit I. ca. 69-117 n. Chr. (flavisch - trajanisch)": "Moyen-Empire I. environ 69–117 ap. J.-C. (flavien – trajanien)",
+      "Mittlere Kaiserzeit II. 117-235 n. Chr. (hadrianisch - severisch)": "Moyen-Empire II. 117–235 ap. J.-C. (hadrien – sévèrien)",
+      "Späte Kaiserzeit. 235-306 n. Chr. (Soldatenkaiser - tetrarchisch)": "Bas-Empire. 235–306 ap. J.-C. (anarchie militaire – tétrarchien)",
+      "Spätantike I.  306-530 n. Chr. (konstantinisch - vandalisch)": "Antiquité tardive I. 306–530 ap. J.-C. (constantinien – vandale)",
+      "Spätantike II. 530-698 n. Chr. (byzantinisch)": "Antiquité tardive II. 530–698 n. Chr. (byzantin)",
+      "Phase I": "Phase I",
+      "Phase II": "Phase II",
+      "Phase III": "Phase III",
+      "Phase IV": "Phase IV",
+      "Phase V": "Phase V",
+      "Phase VI": "Phase VI",
+      "Phase VII": "Phase VII",
+      "Phase VIII": "Phase VIII",
+      "Phase IX": "Phase IX",
+      "Phase X": "Phase X"
+    }
+  },
+  "Layer-consistency-Abbircella": {
+    "values": {
+      "Durch Brand versiegelt": "Scellée par le feu",
+      "Oberfläche abgewaschen": "Surface délavée",
+      "Oberfläche verhärtet": "Surface durcie",
+      "Fest": "Solide",
+      "Flüssig": "Liquide",
+      "Gut formbar": "Facilement formable",
+      "Hart": "Dure",
+      "Lehmig": "Argileuse",
+      "Locker": "Meuble",
+      "Mittel bindend": "Moyennement agglomérante",
+      "Mittel formbar": "Moyennement formable",
+      "Nicht bindend": "Pas agglomérante",
+      "Nicht formbar": "Pas formable",
+      "Porös": "Poreuse",
+      "Sandig": "Sablonneuse",
+      "Schwach bindend": "Faiblement agglomérante",
+      "Schwach formbar": "Faiblement formable",
+      "Sehr gut formbar": "Très facilement formable",
+      "Sehr hart": "Très dure",
+      "Sehr schwach formbar": "Très faiblement agglomérante",
+      "Sehr weich": "Très moelleuse",
+      "Stark bindend": "Très agglomérante",
+      "Steif": "Rigide",
+      "Weich": "Moelleuse",
+      "Pulverig": "Poudreuse"
+    }
+  },
+  "Layer-soilType-Abbircella": {
+    "values": {
+      "Sand": "Sable",
+      "Feinstsand": "Sable très fin",
+      "Feinsand": "Sable fin",
+      "Mittlerer Sand": "Sable de taille moyenne",
+      "Grobsand": "Sable grossier",
+      "Sandiger Schluff": "Limon sablonneux",
+      "Sandiger Ton": "Argile sablonneuse",
+      "Sandiger Lehm": "Glaise sablonneuse",
+      "Schluff": "Limon",
+      "Schluffiger Sand": "Sable limoneux",
+      "Schluffiger Ton": "Argile limoneuse",
+      "Schluffiger Lehm": "Glaise limoneuse",
+      "Ton": "Argile",
+      "Toniger Sand": "Sable argileux",
+      "Toniger Schluff": "Limon argileux",
+      "Toniger Lehm": "Glaise argileuse",
+      "Lehm": "Glaise",
+      "Mergel": "Marne"
+    }
+  },
+  "Layer-layerClassification-Abbircella": {
+    "values": {
+      "Natürliche Ablagerung": "Dépôt naturel",
+      "Absichtliche Deponierung": "Dépôt intentionnel",
+      "Anhäufung": "Accumulation",
+      "Versturzschicht": "Écroulement",
+      "Verfüllung": "Remplissage",
+      "Arbeitsniveau": "Niveau opérationnel",
+      "Anschüttung": "Remblaiement",
+      "Stampflehm": "Terre battue",
+      "Brandschicht": "Couche brûlée",
+      "Planierschicht": "Nivellement",
+      "Laufhorizont": "Couche d'occupation",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Negative-negativeClassification-Abbircella": {
+    "values": {
+      "Abfallgrube": "Fosse à déchets",
+      "Brunnen": "Fontaine",
+      "Feuerstelle": "Fosse à feu",
+      "Graben": "Tranchée",
+      "Grube": "Fosse",
+      "Ofen": "Four",
+      "Pfostenloch": "Trou de poteau",
+      "Pflugspur": "Piste de charrue",
+      "Tiergang": "Terrier",
+      "Wurzelkanal": "Canal racinaire",
+      "Zerstörte Mauer": "Mur détruit",
+      "Zerstörter Boden": "Plancher détruit",
+      "Raubgräberloch": "Tranchée des voleurs",
+      "Drainage": "Drainage",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-wallClassification-Abbircella": {
+    "values": {
+      "Aufgehendes Mauerwerk": "Maçonnerie en hausse",
+      "Fensterzusetzung": "Remplissage de fenêtre",
+      "Flickung": "Réparation",
+      "Fundament": "Fondation",
+      "Gewölbe": "Voûte",
+      "Mauer": "Mur",
+      "Mauerbettung": "Literie murale",
+      "Mauerdurchbruch": "Percée du mur",
+      "Mosaik": "Mosaïque",
+      "Opus sectile": "Opus sectile",
+      "Türzusetzung": "Remplissage de porte",
+      "Wandgestaltung": "Décoration murale",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-wallType-Abbircella": {
+    "values": {
+      "Außenmauer": "Mur extérieur",
+      "Befestigungsmauer": "Mur de fortification",
+      "Blockmauerwerk": "Maçonnerie en blocs",
+      "Bruchsteinmauer": "Mur des moellons",
+      "Fachwerk": "Pan de bois",
+      "Feldsteinmauer": "Mur de pierre locale",
+      "Grenzmauer": "Mur de frontière",
+      "Ziegelmauer": "Mur en briques",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-construction-Abbircella": {
+    "values": {
+      "Fundament: Geschüttet": "Fondation en tas",
+      "Fundament: Gesetzt": "Fondation posée",
+      "Mauerkern: Lesesteine": "Noyau du mur: Pierres ramassées",
+      "Einschalig vor Feld/Hang": "Maçonnerie monocoque devant un champ/pente",
+      "Ohne Schalen/keine durchgehenden Lagen": "Pas de coques/pas de couches continues",
+      "Ohne Schalen/nur durchgehende Lagen": "Pas de coques/seulement couches continues",
+      "Zweischalig": "Maçonnerie à deux coques",
+      "Zweischalig mit Binderlagen": "Maçonnerie à deux coques avec des couches de liant",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-brickwork-Abbircella": {
+    "values": {
+      "Binderverband": "Appareil en boutisse",
+      "Blockverband": "Appareil en blocs",
+      "Flämischer Verband": "Appareil flamand",
+      "Holländischer Verband": "Appareil hollandais",
+      "Kreuzverband": "Appareil à croisettes",
+      "Läuferverband": "Appareil en liants",
+      "Märkischer Verband": "Appareil marche",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-blockTreatment-Abbircella": {
+    "values": {
+      "Bossiert": "Ébauché",
+      "Unbehauen": "Pas travaillé",
+      "Grob behauen": "Dégrossé",
+      "Behauen": "Quadrillé",
+      "Gemischt": "Mixte",
+      "Bearbeitete Oberfläche": "Surface travaillée",
+      "Polierte Oberfläche": "Surface polie"
+    }
+  },
+  "Architecture-blockProcessing-Abbircella": {
+    "values": {
+      "Bruchsteine": "Moellons",
+      "Hausteine": "Pierres sculptées",
+      "Lesesteine": "Pierres ramassées",
+      "Werksteine": "Pierres de taille",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-mortarBinder-Abbircella": {
+    "values": {
+      "Dominant": "Dominant",
+      "Gering": "Insignifiant",
+      "Hoch": "Haut",
+      "Mittel": "Moyen"
+    }
+  },
+  "Architecture-mortarConsistency-Abbircella": {
+    "values": {
+      "Brüchig": "Pailleuse",
+      "Erdig/lehmig": "Terreuse/argileuse",
+      "Fest": "Solide",
+      "Hart": "Dure",
+      "Locker": "Meuble",
+      "Mittelfein": "Mi-fine",
+      "Pulverig": "Poudreuse",
+      "Sandig": "Sablonneuse"
+    }
+  },
+  "Architecture-condition-Abbircella": {
+    "values": {
+      "Sehr gut": "Très bonne",
+      "Gut": "Bonne",
+      "Mittel": "Moyenne",
+      "Schlecht": "Mauvaise",
+      "Sehr schlecht": "Très mauvaise"
+    }
+  },
+  "Architecture-conditionAmount-Abbircella": {
+    "values": {
+      "Fragmentarisch": "Fragmentaire",
+      "Teilweise erhalten": "Partiellement preservé",
+      "Vollständig": "Complet",
+      "Zerstört": "Détruis",
+      "Restauriert": "Restauré"
+    }
+  },
+  "Floor-floorClassification-Abbircella": {
+    "values": {
+      "Stampflehm": "Terre battue",
+      "Pflaster": "Pavement",
+      "Ziegel": "Briques ou tuiles",
+      "Opus alexandrinum": "Opus alexandrinum",
+      "Opus barbaricum": "Opus barbaricum",
+      "Opus musivum (tesserae)": "Opus musivum (tesserae)",
+      "Kieselmosaik": "Mosaïque de cailloux",
+      "Opus scutulatum": "Opus scutulatum",
+      "Opus sectile": "Opus sectile",
+      "Opus segmentatum": "Opus segmentatum",
+      "Opus signinum (cocciopesto)": "Opus signinum (cocciopesto)",
+      "Opus spicatum": "Opus spicatum",
+      "Opus tessellatum": "Opus tessellatum",
+      "Opus vermiculatum": "Opus vermiculatum",
+      "Mörtelfußboden": "Plancher en mortier",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Wall_surface-wallOrientation-Abbircella": {
+    "values": {
+      "Norden": "Nord",
+      "Nordost": "Nord-est",
+      "Nordwest": "Nord-ouest",
+      "Osten": "Est",
+      "Süden": "Sud",
+      "Südost": "Sud-est",
+      "Südwest": "Sud-ouest",
+      "Westen": "Ouest"
+    }
+  },
+  "PlasterFragment-plasterComponents-Abbircella": {
+    "values": {
+      "Feinsand": "Sablon",
+      "Grus": "Menu",
+      "Sand": "Sable",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-buildingTechnique-Abbircella": {
+    "values": {
+      "Ungebrannte oder gebrannte Ziegel": "Briques crues ou cuites",
+      "Opus craticium": "Opus craticium",
+      "Flechtwerk": "Cannage",
+      "Unregelmäßige unbearbeitete Steine oder Kiesel": "Pierres irregulières pas travaillées ou cailloux",
+      "Quadersteine": "Blocs",
+      "Beton": "Béton",
+      "Opus caementicium": "Opus caementicium",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Architecture-walling-Abbircella": {
+    "values": {
+      "Opus siliceum (polygonal)": "Opus siliceum (polygonal)",
+      "Opus testaceum/latericium (Dachziegel, Ziegel oder dreieckige Ziegel)": "Opus testaceum/latericium (Tuiles, briques ou briques triangulaires)",
+      "Opus vittatum/listatum (Ziegel und kleine Tuffsteine)": "Opus vittatum/listatum (briques et petits tuffeaux)",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Wall_surface-constructionDetails-Abbircella": {
+    "values": {
+      "Abflussöffnung": "Trou de drainage",
+      "Angelloch": "Trou de charnière de porte",
+      "Balkenloch": "Trou de poutre",
+      "Bleirohr": "Tuyau en plomb",
+      "Durchgang/Tür": "Passage/porte",
+      "Entlastungsbogen": "Linteau en arc",
+      "Fallrohr": "Tuyau de descente",
+      "Fenster": "Fenêtre",
+      "Fontäne": "Fontaine",
+      "Halbsäule": "Demi-colonne",
+      "Laibung": "Tableau",
+      "Nische": "Niche",
+      "Regalloch": "Trou d'étagère",
+      "Riegelloch": "Trou de boulon",
+      "Sonstiges Loch": "Autre trou",
+      "Sturzauflager": "Support de chute"
+    }
+  },
+  "Find-storagePlace-Abbircella": {
+    "values": {
+      "Dépot Zaghouan": "Dépot Zaghouan",
+      "Abbir Cella": "Abbir Cella",
+      "Djougar": "Djougar",
+      "Unbekannt": "Inconnu"
+    }
+  },
+  "Sample-sampleMaterial-Abbircella": {
+    "values": {
+      "Holzkohle": "Charbon",
+      "Mörtel": "Mortier",
+      "Bodenprobe": "Sol",
+      "Holz": "Bois",
+      "Stein": "Pierre",
+      "Keramik": "Céramique",
+      "Putz": "Enduit",
+      "Sonstiges": "Autre"
+    }
+  },
+  "Sample-sampleType-Abbircella": {
+    "values": {
+      "Bodenprobe": "Échantillon de sol",
+      "C14-Analyse": "Analyse du C14",
+      "Dendroprobe": "Échantillon pour étude dendrochronologique",
+      "Hammerschlagsprobe": "Test de calamine",
+      "Phosphatanalyse": "Analyse de phosphate",
+      "Pollenanalyse": "Analyse du pollen"
+    }
+  },
+  "orientation-Abbircella": {
+    "values": {
+      "N-S": "N-S",
+      "NNO-SSW": "N.N.E.-S.S.O.",
+      "NNW-SSO": "N.N.O.-S.S.E.",
+      "NO-SW": "N.E.-S.O.",
+      "NW-SO": "N.O.-S.E.",
+      "W-O": "O.-E.",
+      "WNW-OSO": "O.N.O.-E.S.E.",
+      "WSW-ONO": "O.S.O.-E.N.E."
+    }
+  },
+  "Survey-researchMethod-Abbircella": {
+    "values": {
+      "Befliegung": "Voler",
+      "Begehung": "Inspection",
+      "Geoelektrik": "Géoélectricité",
+      "Geomagnetik": "Géomagnétique",
+      "Georadar": "Georadar",
+      "LIDAR": "LIDAR",
+      "Luft- oder Satellitenbilder": "Imagerie aérienne ou satellitaire",
+      "Quadratisch": "Carré",
+      "Regelmäßig": "Régulier",
+      "Seismik": "Sismologie"
+    }
+  },
+  "Building-buildingCategory-Abbircella": {
+    "values": {
+      "Altar": "Autel",
+      "Amphitheater": "Amphithéâtre",
+      "Basilika": "Basilique",
+      "Bogen": "Arc",
+      "Brücke": "Pont",
+      "Circus": "Cirque",
+      "Grabmonument": "Monument funéraire",
+      "Gymnasion": "Gymnase",
+      "Mauerkurtine": "Curtin mural",
+      "Nymphäum": "Nymphée",
+      "Odeion": "Odéon",
+      "Straße (innerhalb einer Siedlung)": "Rue",
+      "Straße (außerhalb einer Siedlung)": "Route",
+      "Stützmauer": "Mur de soutènement",
+      "Säulenhalle": "Portique",
+      "Tempel": "Temple",
+      "Theater": "Théâtre",
+      "Therme": "Bains thermaux",
+      "Toranlage": "Système de porte",
+      "Turm": "Tour",
+      "Wohnbau": "Habitation",
+      "Sonstiges": "Autre",
+      "Unbestimmt": "Indéterminé"
+    }
+  },
+  "Inscription-objectType-Abbircella": {
+    "values": {
+      "Alltäglicher Gebrauch": "Utilisation quotidienne",
+      "Bauinschrift": "Inscription du bâtiment",
+      "Ehreninschrift": "Inscription d'honneur",
+      "Grabinschrift (Inschrift im Grabkontext)": "Inscription au tombeau",
+      "Private Ausstattung": "Cadre privé",
+      "Sakrale Ausstattung": "Cadre sacral",
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé",
+      "Urkunde": "Charte",
+      "Wasserversorgung": "Approvisionnement en eau",
+      "Weihinschrift": "Inscription sacrée",
+      "Öffentliche Ausstattung": "Cadre public"
+    }
+  },
+  "provenance-bourgou": {
+    "values": {
+      "Ägypten": "Égypte",
+      "Adria": "Adria",
+      "Attika": "Attica",
+      "Baetika": "Bétique",
+      "Byzacena": "Byzacène",
+      "Gallien": "Gaule",
+      "Ionien": "Ionie",
+      "Italien": "Italie",
+      "Kampanien": "Campanie",
+      "Kalabrien": "Calabre",
+      "Etrurien": "Étrurie",
+      "Karthago": "Carthage",
+      "Kleinasien": "Asie Mineure",
+      "Korinth": "Corinthe",
+      "Levante": "Levante",
+      "Lusitanien": "Lusitanie",
+      "lokal": "locale",
+      "Malta": "Malte",
+      "Nordafrika": "Afrique du Nord",
+      "Tarraconensis": "Tarraconensis",
+      "regional": "regional",
+      "lokal/regional": "locale/regional",
+      "Rhodos": "Rhodes",
+      "Sardinien": "Sardaigne",
+      "Sizilien": "Sicile",
+      "Spanien": "Espagne",
+      "Tripolitanien": "Tripolitaine",
+      "Tunesien": "Tunesie",
+      "Nordtunesien": "Tunisie-Nord",
+      "Südtunesien": "Tunisie Sud",
+      "Zentraltunesien": "Tunisie Centrale",
+      "Südgallien": "Gaule Sud",
+      "Ostmittelmeerraum": "Méditerranée orientale",
+      "Ägäis": "Egée",
+      "Westgriechenland": "Grèce occidentale",
+      "Zypern": "Chypre"
+    }
+  },
+  "periods-bourgou": {
+    "values": {
+      "Phase 1": "Phase 1 (Milieu du VIIIe/premier quart du VIIe siècle av. J.-C.)",
+      "Phase 2": "Phase 2 (2e quart du 7e siècle - milieu du 6e siècle avant J.-C.)",
+      "Phase 3": "Phase 3 (Milieu du 6e–1ère moitié/milieu du 5e siècle avant J.-C.)",
+      "Phase 4": "Phase 4 (4e–fin du 2e siècle avant J.-C.))",
+      "Phase 5": "Phase 5 (Fin du 2e - dernier quart du 1er siècle avant J.-C.)",
+      "Phase 6": "Phase 6 (Dernier quart du 1er siècle avant-milieu du 1er siècle après J.-C.)",
+      "Phase 7": "Phase 7 (3eme quart du 1er siècle après J.-C.)",
+      "Phase 8": "Phase 8 (Dernier tiers du 1er siècle-fin du 1er siècle après J.-C.)",
+      "Phase 9": "Phase 9 (Milieu du 2e siècle après J.-C.)",
+      "Phase 10": "Phase 10 (Fin du 2e siècle après J.-C.)"
+    }
+  },
+  "Brick-decorationTechnique-bourgou": {
+    "values": {
+      "Flechtwerkabdruck": "mat pressée",
+      "Fingerabdruck": "empreinte digitale",
+      "Barbotin": "Barbotin",
+      "Kammritzung": "Décoration de peigne",
+      "Rädchenverzierung": "guilloche",
+      "Ratterdekor": "guilloche",
+      "Reliefdekor": "Décor en relief",
+      "Riefeldekor": "decor en rainuré",
+      "Ritzungen": "Décor de scribe",
+      "Sonstige Abdrücke": "autres impressions",
+      "Stempel": "Timbre"
+    }
+  },
+  "Pottery-specificType-bourgou": {
+    "values": {
+      "Geschl. Gefäß": "FERM",
+      "Offenes Gefäß": "OUV",
+      "Boden": "F",
+      "Amphora": "A",
+      "Schüssel": "BAS",
+      "Schale": "BOL",
+      "Flasche": "BOT",
+      "Kasserolle": "CAS",
+      "Napf": "COP",
+      "Deckel": "COU",
+      "Krug/Kanne": "CRU",
+      "Vorratsgefäß": "JAR",
+      "Kohlebecken": "KAN",
+      "Topf": "MAR",
+      "Mortaria": "MOR",
+      "Teller/Pfanne": "PLA",
+      "Tajine": "TAJ"
+    }
+  },
+  "Pottery-materialType-bourgou": {
+    "values": {
+      "Afrikanische Sigillata (ARS)": "V AER",
+      "Afrik. Schwarzfirnis": "V AEN",
+      "Afrik. Schwarzfirnis pun.": "V AEN PUN",
+      "Dünnwandkeramik": "V PFI",
+      "Südgallische Sigillata": "V SSG",
+      "Italische Sigillata": "V SIT",
+      "Eastern Sigillata A (ESA)": "V SOR",
+      "Campana A": "V CAM A",
+      "Campana B": "V CAM B",
+      "Campana B-O": "V CAM B-O",
+      "Campana C": "V CAM C",
+      "Attische Feinkeramik": "V ATT",
+      "Freigeformte Ware": "V MOD",
+      "Calcitic Ware": "V MOD C",
+      "Korbgeformte Ware": "V MOD F",
+      "Freigeformte Ware ital.": "V MOD ITA",
+      "Freigeformte Ware pantel.": "V MOD P",
+      "Freigeformte Ware div.": "V MOD IND",
+      "Afrikanische Schlichte Ware": "V CAA",
+      "Afrik. Schlichte Ware eisenztl.": "V CAA FER",
+      "Afrik. Schlichte Ware pun.": "V CAA PUN",
+      "Afrik. Schlichte Ware trip.": "V CAA T",
+      "Schlichte Ware ital.": "V CITA",
+      "Schlichte Ware lev.": "V CLEA",
+      "Schlichte Ware ion.": "V CIOA",
+      "Schlichte Ware div.": "V CINDA",
+      "Afrikanische Küchenware": "V CAF",
+      "Afrik. Küchenware trip.": "V CAF CT",
+      "Afrik. Küchenware pun.": "V CAF PUN",
+      "Küchenware ital.": "V CIT",
+      "Küchenware ion.": "V COR",
+      "Küchenware div.": "V CIND",
+      "Amphora div.": "A IND",
+      "Afrikanische Amphora": "A AFR",
+      "Punische Amphora": "A PUN",
+      "Neopunische Amphora": "A NPU",
+      "Nuraghische Amphora": "A NUR",
+      "Baetische Amphora": "A Bet",
+      "Etruskische Amphora": "A ETR",
+      "Italische Amphora": "A ITA",
+      "Gallische Amphora": "A GAU",
+      "Westgriechische Amphora": "A MGR",
+      "Ostmediterrane Amphora": "A ORI"
+    }
+  },
+  "Pottery-vesselpart-bourgou": {
+    "values": {
+      "WF": "P",
+      "RF": "B",
+      "BF": "F",
+      "H": "A",
+      "vollst. Profil": "C",
+      "ganzes Gefäß": "E"
+    }
+  },
+  "Pottery-coatTpe-bourgou": {
+    "values": {
+      "unbehandelt": "non traitée",
+      "verloren": "perdue",
+      "geglättet": "lissée",
+      "fleckig": "tachée",
+      "verstrichen": "étalée",
+      "glatt verstrichen": "bien étalée",
+      "rau verstrichen": "rugueuse",
+      "poliert": "polie",
+      "metallisch glänzend": "metallescente",
+      "Überzug": "Engobe",
+      "Scum": "Scum",
+      "glasiert": "glaçurée",
+      "bemalt": "peinte"
+    }
+  },
+  "Pottery-rimTreatment-bourgou": {
+    "values": {
+      "weiss": "blanc",
+      "graubraun": "brun gris",
+      "hellbraun": "brun clair",
+      "sekundär geschwärzt": "secondairem. noircie",
+      "geschwärzt": "noircie"
+    }
+  },
+  "Pottery-coatColor-bourgou": {
+    "values": {
+      "verloren": "perdue",
+      "beige": "beige",
+      "blass-": "pâle-",
+      "blau": "bleu",
+      "braun": "brune",
+      "cremefarben": "crème",
+      "dunkel-": "foncé-",
+      "gelb": "jaune",
+      "glänzend": "lustré",
+      "grau": "gris",
+      "grün": "verde",
+      "hell-": "clair-",
+      "leuchtend-": "vive-",
+      "ocker": "ocre",
+      "orange": "orange",
+      "rosa": "rose",
+      "rot": "rouge",
+      "schwarz": "noir",
+      "türkis": "turquoise",
+      "violett": "violette",
+      "weiß": "blanc"
+    }
+  },
+  "Find-amountDescription-bourgou": {
+    "values": {
+      "Stück": "pièce",
+      "Eimer": "seau",
+      "Kiste": "caisse",
+      "Tüte": "sachet"
+    }
+  },
+  "Find-samplePl-bourgou": {
+    "values": {
+      "ausgeführt": "exporté",
+      "an Spezialist/Labor übergeben": "Remise aux spécialistes/laboratoire",
+      "zurückgeführt": "ramené"
+    }
+  },
+  "Find-Store-bourgou": {
+    "values": {
+      "nicht aufbewahrt": "jeté",
+      "Grabungshaus/Magazin": "Maison de fouille/Dépôt",
+      "Sonstiges": "Autres"
+    }
+  },
+  "Find-samplePl-Gadara": {
+    "values": {
+      "ausgeführt": "exporté",
+      "an Spezialist/Labor übergeben": "Remise aux spécialistes/laboratoire",
+      "zurückgeführt": "ramené",
+      "nein": "non"
+    }
+  },
+  "Find-Store-Gadara": {
+    "values": {
+      "nicht aufbewahrt": "jeté",
+      "Werkhof": "Chantier de travail",
+      "Grabungshaus": "Maison de fouille/Dépôt"
+    }
+  },
+  "coordinate-reference-system-milet": {
+    "values": {
+      "NoCoordinateSystem": "Aucun système de coordonnées valide",
+      "Bendt": "Bendt (1968, Système local Milet)",
+      "UTM35N": "EPSG32635 (UTM 35 N WGS84)"
+    }
+  },
+  "Survey-researchMethod-milet": {
+    "values": {
+      "Befliegung": "Prospection aérienne ou imagerie satellite",
+      "Kartierung": "Prospection cartographique",
+      "Begehung": "prospection pédestre",
+      "Fundkatalog": "catalogue des découvertes"
+    }
+  },
+  "localization-milet": {
+    "values": {
+      "Totalstation": "données de la station totale",
+      "manuell_kartiert": "localisation manuelle",
+      "nicht_lokalisiert": "non localisée / localisation inconnue",
+      "topographical_description": "localisée par description topographique"
+    }
+  },
+  "Find-workflow-milet": {
+    "values": {
+      "Inventarisiert": "inventorié",
+      "Fotografiert": "photographie",
+      "Gezeichnet": "dessin",
+      "Restauriert": "restauré",
+      "Detailbearbeitung fertig": "Découverte individuelle complète ?",
+      "Fehlerhaft": "à vérifier"
+    }
+  },
+  "Sculpture-sculptureBodypart-milet": {
+    "values": {
+      "left": "Gauche",
+      "right": "Droite",
+      "Head": "Tête",
+      "Neck": "Cou",
+      "Shoulder": "Epaule",
+      "Back": "Dos",
+      "Hip": "Hanche",
+      "Leg": "Jambe",
+      "Foot": "Pied",
+      "Attributes": "Attributs",
+      "indeterminable": "indéterminé",
+      "other": "autre"
+    }
+  },
+  "Sculpture-sculptureGender-milet": {
+    "values": {
+      "female": "féminine",
+      "male": "masculine",
+      "inconclusive": "indéterminé",
+      "other": "autre"
+    }
+  },
+  "Sculpture-sculptureType-milet": {
+    "values": {
+      "Deities, Personifications and Heroes": "Divinités, personnifications et héros",
+      "Imperial Family": "Famille impériale",
+      "Imperial and Senatorial Office Holders": "Portrait impérial ou sénateurs",
+      "Provincial Notables": "Notables provinciaux",
+      "Animals": "Animaux",
+      "Philosophers, Orators and Poets": "Philosophes, orateurs et poètes",
+      "Military": "Militaire",
+      "Athletes": "Athlètes",
+      "Citizen": "Citoyens",
+      "Other (human)": "Autre (humain)",
+      "Other mythological creatures": "Autre créature mythologique",
+      "Other": "Autre",
+      "Unknown": "Inconnu"
+    }
+  },
+  "Sculpture-sculptureClothing-milet": {
+    "values": {
+      "Toga, late antique": "Toge, tardo-antique",
+      "Toga with umbo": "Toge, avec umbo",
+      "Armour": "Armure",
+      "Tunic / chiton": "Tunique, Chiton",
+      "Tunic, colobium": "Tunique, colobium",
+      "Boots, Military": "bottes, militaire",
+      "Footwear, sandals": "Chaussures, sandales",
+      "Footwear, closed, plain boots": "Chaussures, fermées, bottes",
+      "Footwear, closed strapped boots": "Chaussures, bottes fermées à brides",
+      "Footwear, open, strapped shoes": "Chaussures, ouvertes, à brides",
+      "Cloak, paludamentum": "Manteau, paludamentum",
+      "Cloak, chlamys": "Manteau, Chlamys",
+      "Naked": "Nu",
+      "Other": "Autre"
+    }
+  },
+  "Sculpture-sculptureHairstyle-milet": {
+    "values": {
+      "Brushed forward": "brossé vers l'avant",
+      "Bun": "Chignon",
+      "Central braid": "Tresse centrale",
+      "Encircling braid(s)": "Tresses encerclantes ?",
+      "Long, covers ears": "Longs, couvrant les oreilles",
+      "Long, to shoulders": "Longs, aux épaules",
+      "Short": "Courts",
+      "Short-cropped": "Coupés courts",
+      "Wreath-style": "En couronne",
+      "Other": "Autre"
+    }
+  },
+  "Sculpture-sculptureBeardstyle-milet": {
+    "values": {
+      "Bearded, long": "Barbu, long",
+      "Bearded, short": "Barbu, court",
+      "Bearded, stubble": "Barbu, ras",
+      "Bearded, under-chin": "Barbu, sous le menton",
+      "Clean-shaven": "Rasé de près",
+      "beardless": "Imberbe",
+      "Other": "Autre"
+    }
+  },
+  "Sculpture-sculptureAttributes-milet": {
+    "values": {
+      "belt": "Ceinture",
+      "crown": "Couronne",
+      "codex / book": "Codex / Livre",
+      "corona civica": "Corona civica",
+      "crown fillet": "Couronne-filet",
+      "diadem": "Diadème",
+      "diadem, jewelled": "Diadème, avec bijoux",
+      "diadem, pearl-edged": "Diadème, avec perles",
+      "diadem, plain": "Diadème, simple",
+      "earrings": "Boucles d'oreille",
+      "fibula": "Fibule",
+      "finger ring": "Bague",
+      "mappa": "Mappa",
+      "necklace": "Collier",
+      "orb": "Orb",
+      "sceptre": "Sceptre",
+      "scroll": "Parchemin",
+      "spear": "Lance",
+      "staff": "Baguette / Crosse",
+      "sword": "Epée",
+      "tabellae": "tabellae",
+      "wreath": "Couronne",
+      "other": "Autre"
+    }
+  },
+  "Sculpture-colors-milet": {
+    "values": {
+      "rosa": "Rose",
+      "grün": "Vert",
+      "blau": "Bleu",
+      "bläulich-weiß": "Bleuté-blanc",
+      "hellgrau": "Gris clair",
+      "hellgräulich": "Grisâtre pâle",
+      "gräulich-weiß": "Grisâtre-blanc",
+      "gräulich": "Grisâtre",
+      "grau": "Gris",
+      "dunkelgrau": "Gris foncé",
+      "schwarz": "Noir",
+      "weiß": "Blanc",
+      "gräulich-blau": "Grisâtre-bleu"
+    }
+  },
+  "Sculpture-marbleType-milet": {
+    "values": {
+      "veined marble": "Marbre veiné",
+      "nonveined marble": "Marbre non veiné"
+    },
+    "description": "Type de marbre"
+  },
+  "quality-milet": {
+    "values": {
+      "very high quality": "Très bonne qualité",
+      "high quality": "Bonne qualité",
+      "medium quality": "Qualité moyenne",
+      "low quality": "Faible qualité",
+      "unfinished": "Inachevé",
+      "partially unfinished": "Partiellement inachevé"
+    },
+    "description": "Evaluation de la qualité"
+  },
+  "Layer-layerConsistency-milet": {
+    "values": {
+      "very_hard": "Très compacte",
+      "hard": "Compacte",
+      "solid": "Compacte ?",
+      "starchy": "Peu compacte ?",
+      "soft": "Meuble",
+      "very_soft": "Très meuble",
+      "liquid": "Liquide"
+    },
+    "description": "Consistance de la couche"
+  },
+  "Layer-layerInclusions-milet": {
+    "values": {
+      "Kiesel_klein": "Galets (petits)",
+      "Kiesel_mittel": "Galets (moyens)",
+      "Kiesel_groß": "Galets (gros)",
+      "Stein_klein": "Pierres (petites)",
+      "Stein_mittel": "Pierres (moyennes)",
+      "Stein_groß": "Pierres (grosses)",
+      "Kalk": "Chaux",
+      "Ziegelbruch_kleinteilig": "Fragments de terre cuite",
+      "HolzkohleAsche": "Charbons / Cendres",
+      "Wurzeln": "Racines",
+      "Tiergänge": "galleries animales / Terriers",
+      "Schnecken": "Escargots"
+    },
+    "description": "Inclusions"
+  },
+  "Layer-layerClassification-milet": {
+    "values": {
+      "Brandschicht": "Couche brûlée / rubéfiée",
+      "Kulturschicht": "Niveau/couche anthropique ?",
+      "Laufhorizont": "Sol",
+      "Planierschicht": "Couche de nivellement",
+      "Schuttschicht": "gravats/débris",
+      "Humusschicht": "Humus / surface",
+      "Filling": "Remplissage",
+      "Baugrube": "Foundation trench/pit (fosse de soubassement?)",
+      "Grave": "Tombe/Sépulture",
+      "artificial_removal": "artificial (removal of fixed height value) #todo",
+      "other": "Autre",
+      "unbekannt": "Inconnu"
+    }
+  },
+  "layerColors-milet": {
+    "values": {
+      "black": "Noir",
+      "grey": "Gris",
+      "brown": "Marron/Brun",
+      "yellow": "Jaune",
+      "ochre": "Ocre",
+      "red": "Rouge"
+    }
+  },
+  "layerColorsIntensity-milet": {
+    "values": {
+      "very_light": "Très clair",
+      "light": "Clair",
+      "medium": "Moyen",
+      "dark": "Sombre",
+      "very_dark": "Très sombre"
+    }
+  },
+  "Layer-soilType-milet": {
+    "values": {
+      "Lehm": "Argile-adobe ?",
+      "Sand": "Sable",
+      "Sand (fein)": "Sable (grain fin)",
+      "Sand (mittel)": "Sable (grain moyen)",
+      "Sand (grob)": "Sable (gros grain)",
+      "Schluff": "Limon",
+      "Ton": "Argile"
+    }
+  },
+  "Layer-layerFinds-milet": {
+    "values": {
+      "Keramik": "Céramique",
+      "Terrakotta": "Terre cuite",
+      "Stein (bearbeitet)": "Pierre (taillée)",
+      "Tesserae": "Tessarae",
+      "Inkrustationen": "Incrustations",
+      "Wandputz": "Stuc/Plâtre",
+      "Metall": "Métal",
+      "Glas": "Verre",
+      "Münzen": "Monnaies",
+      "Ziegel": "Briques",
+      "Knochen": "Os",
+      "Holz": "Bois",
+      "Mollusken": "Mollusques",
+      "Sample": "Prélèvement"
+    },
+    "description": "Aperçu des découvertes dans le contexte"
+  },
+  "Drawing-scale-milet": {
+    "values": {
+      "other": "Autre",
+      "NA": "Inconnu"
+    },
+    "description": "Echelle"
+  },
+  "Drawing-drawingType-milet": {
+    "values": {
+      "CAD": "Dessin-CAD",
+      "Totalstation-direct": "Dessin station totale",
+      "Handzeichnung-precise": "Dessin manuel à l'échelle",
+      "sketch": "Dessin manuel (Croquis)"
+    }
+  },
+  "viewDirection-milet": {
+    "values": {
+      "North": "Nord",
+      "Northeast": "Nord-Est",
+      "East": "Est",
+      "Southeast": "Sud-Est",
+      "South": "Sud",
+      "Southwest": "Sud-Ouest",
+      "West": "Ouest",
+      "Northwest": "Nord-Ouest",
+      "not_applicable": "NA"
+    },
+    "description": "Orientation de la prise de vue"
+  },
+  "findProcessingWorkflow-milet": {
+    "values": {
+      "01_first_impression": "Première impression (Niveau 1) ?",
+      "02a_quantification": "Quantification (Niveau 2A)",
+      "02b_quantification": "Quantification (Niveau 2B)",
+      "03_complete_processing": "Traitement complet (niveau 3)",
+      "04_no_processing": "aucun traitement demandé ?"
+    },
+    "description": "Demande pour traitement du matériel"
+  },
+  "Find-conditionAmount-milet": {
+    "values": {
+      "Fragmentarisch": "Fragmentaire",
+      "Fragmentarisch_0-25": "Fragmentaire (1-25%)",
+      "Fragmentarisch_25-50": "Fragmentaire (25-55%)",
+      "Fragmentarisch_50-75": "Fragmentaire (50-75%)",
+      "Fragmentarisch_75-100": "Fragmentaire (75-100%)",
+      "intakt": "Intact",
+      "unbekannt": "Inconnu"
+    }
+  },
+  "Building-material-milet": {
+    "values": {
+      "Granit": "Granit",
+      "Kalk": "Calcaire / chaux",
+      "Gneis": "Gneiss",
+      "Poros": "Poros",
+      "Breccia": "Brèche",
+      "Kalkmörtel": "Calcaire / Chaux mortier",
+      "Kalkstein": "(pièrre) meulière / calcaire",
+      "Marmor": "Marbre",
+      "Pophyr": "Porphyre",
+      "Quarz": "Quartz",
+      "Sandstein": "Grès",
+      "Tuffit": "Tuffit(e)",
+      "Ziegel": "Brique / Tuile"
+    }
+  },
+  "Building-context-milet": {
+    "values": {
+      "Akropolis": "Acropole",
+      "Forum": "Forum",
+      "Handwerksviertel": "Quartier artisanal",
+      "Heiligtum": "Sanctuaire",
+      "Nekropole": "Nécropole",
+      "Wohnviertel": "Quartier résidentiel",
+      "Extraurban": "Extra-urbain",
+      "Intraurban": "Intra-urbain"
+    }
+  },
+  "Pottery-potteryGroup-milet": {
+    "values": {
+      "feine Keramik": "Céramique fine",
+      "Mittelgrobe Keramik": "Céramique semi-grossière",
+      "Grobe Keramik": "Céramique grossière",
+      "Küchenkeramik": "Céramique culinaire",
+      "Graue Ware": "Céramique grise",
+      "Schwarzfirnisware": "céramique à vernis noir",
+      "Schwarzfigurige Keramik": "Céramique à figure noire",
+      "Rotfigurige Keramik": "Céramique à figure rouge",
+      "Weißgrundige Keramik": "Céramique à fond blanc",
+      "Kleckerware": "Céramique à engobe",
+      "Stapelware": "Matériel céramique empilé (dans un four) ?",
+      "Streifenkeramik": "céramique bandes (???; banded ware)",
+      "Westabhang-Keramik": "West-Slope",
+      "Westabhang-Nachfolgestil": "West-Slope (style suivant) ?",
+      "Sigillata unbestimmt": "Sigillata (indéterminé)",
+      "Italische Sigillata": "Sigillata italique",
+      "Eastern Sigillata A": "Eastern Sigillata A",
+      "Eastern Sigillata B": "Eastern Sigillata B",
+      "Eastern Sigillata C": "Eastern Sigillata C",
+      "African Red Slip": "African Red Slip (Sigilée claire africaine)",
+      "Late Roman C": "Late Roman C",
+      "Reliefkeramik": "Céramique à relief",
+      "Applikenkeramik": "Décoration d'appliques",
+      "Formschüsselkeramik": "Céramique moulée",
+      "Bleiglasurkeramik": "Céramique à glaçure plombifère",
+      "Barbotine Ware": "Céramique à barbotine",
+      "Dünnwandige Keramik": "Céramique à paroi fine",
+      "Byzantinische Glasierte Keramik": "Céramique à glaçure (byzantine)",
+      "Sgraffito": "Sgraffito",
+      "Handgeformte Keramik": "Céramique non tournée et non moulée",
+      "andere": "Autre"
+    }
+  },
+  "Pottery-functionalCategory-milet": {
+    "values": {
+      "Tafelgeschirr": "Céramique de table",
+      "Haushaltskeramik": "Céramique ménagère/de maison ?",
+      "Küchenkeramik": "Céramique de cuisine",
+      "Transportgefäße": "Céramique de transport",
+      "Vorratskeramik": "Céramique de stockage",
+      "Ölgefäße": "Contenants à huile",
+      "Miniaturkeramik": "Céramique miniature",
+      "Geräte": "Outils"
+    }
+  },
+  "Pottery-vesselForm-milet": {
+    "values": {
+      "Ampulle": "Ampoule",
+      "Backteller": "Plat de cuisson",
+      "Becher": "Tasse",
+      "Bienenkorb": "Ruche",
+      "Bügelhenkelgefäß / Eimer": "Seau",
+      "Deckel": "Couvercle",
+      "Fischteller": "Assiette à poisson",
+      "Flasche": "Bouteille / flasque",
+      "Gewicht": "Poids",
+      "Haushaltsschüssel": "Lékanè",
+      "Kanne": "Cruche",
+      "Kohlenbecken": "Braséro",
+      "Krug": "Cruche",
+      "Lampe": "Lampe",
+      "Mischgefäß": "Céramique servant à mélanger",
+      "Napf": "Petit bol ?",
+      "Pfanne": "Poëlle",
+      "Platte": "Plat de service",
+      "Rost": "Grille",
+      "Salznapf": "Salière",
+      "Schale": "Coupe",
+      "Schüssel": "Bol",
+      "Siebgefäß": "Tamis",
+      "Ständer": "Support/stand",
+      "Tasse": "Coupe/tasse",
+      "Teller": "Plaque",
+      "Topf": "Pot",
+      "Vorratstopf": "Pot de stockage",
+      "Wanne": "Bassin",
+      "Webgewicht": "Poids (de métier à tisser)",
+      "offenes Gefäß": "Céramique à forme ouverte",
+      "geschlossenes Gefäß": "Céramique à forme fermée",
+      "unbekanntes Gefäß": "Forme inconnue",
+      "unbestimmbares Gefäß": "Céramique non identifiable"
+    }
+  },
+  "Pottery-potteryCondition-milet": {
+    "values": {
+      "intakt": "Céramiques quasiment intactes",
+      "vollständig zerbrochen": "Céramique complète mais endommagée",
+      "vollständiges Profil": "Profil complet",
+      "große Scherben": "Gros tessons",
+      "kleine Scherben": "Petits tessons",
+      "(sehr) stark zerscherbt": "Très fragmentaire",
+      "Oberflächen stark beschädigt": "Surfaces très endommagées (plantes, effritage, etc)",
+      "Abrollungen": "Très érodée",
+      "Brandspuren": "Traces de brûlures secondaires "
+    }
+  },
+  "Pottery-fabricHardness-milet": {
+    "values": {
+      "weich": "Peu compacte (peut être gratée avec l'ongle)",
+      "hart": "Compacte (peut être gratée au couteau)",
+      "sehr hart": "Très compacte (peut difficilement être gratée au couteau)",
+      "klingend hart": "Extrêmement compacte (ne peut être gratée)"
+    }
+  },
+  "Pottery-temperType-milet": {
+    "values": {
+      "Glimmer": "Mica",
+      "Sand": "Sable",
+      "Kalk": "Calcaire",
+      "Calzit": "Calcite",
+      "Eisenoxid": "Oxyde de fer",
+      "Quarzit": "Quartzite",
+      "Steinchen": "Petites pierres",
+      "Muschelgrus": "Eclats de coquillages",
+      "Schamotte": "Chamotte",
+      "Organische": "Organique",
+      "Magerung": "Dégraissant",
+      "Vulkanisch": "Volcanique"
+    }
+  },
+  "Pottery-temperAmount-milet": {
+    "values": {
+      "nicht erkennbar": "Non identifiable",
+      "wenige": "Peu",
+      "einige": "Plusieurs/Quelques",
+      "mittel": "Moyen",
+      "reichlich": "Abondant",
+      "sehr viel": "Beaucoup"
+    }
+  },
+  "Pottery-temperGrain-milet": {
+    "values": {
+      "sehr fein": "Très fin",
+      "fein": "Fin",
+      "mittel": "Moyen",
+      "grob": "Grossier",
+      "sehr grob": "Très grossier"
+    }
+  },
+  "Pottery-surfaceTreatment-milet": {
+    "values": {
+      "verstrichen": "NA ?",
+      "geglättet": "Lissée",
+      "poliert": "Polie",
+      "glasiert": "Glaçurée",
+      "bemalt": "Peinte",
+      "Überzug": "Engobée",
+      "Stempel": "Timbres/impressions",
+      "Relief": "Relief",
+      "Einkerbungen": "Encoches/entailles",
+      "Applikation": "Appliques",
+      "Ritzungen": "Rayures",
+      "Kammstrich": "Stries (peigne)",
+      "Fingereindrücke": "Impressions de doigts"
+    }
+  },
+  "Sample-sampleType-milet": {
+    "values": {
+      "Dünnschliff": "Lame mince",
+      "Rückstände": "Résidus",
+      "Gebrauchsspuren": "Traces d'utilisation",
+      "Bodenprobe": "Echantillon de sol",
+      "C14-Analyse": "Analyse C14",
+      "Dendroprobe": "Echantillon dendrologique",
+      "Phosphatanalyse": "Analyse des phosphates",
+      "Pollenanalyse": "Analyse des pollens"
+    }
+  },
+  "Building-buildingCategory-milet": {
+    "values": {
+      "Altar": "Autel",
+      "Basilika": "Basilique",
+      "Bogen": "Arche",
+      "Brücke": "Pont",
+      "Grabbau": "Tombe",
+      "Gymnasium": "Gymnase",
+      "Mauerkurtine": "Courtine",
+      "Nymphäum": "Nymphée",
+      "Odeion": "Odéon",
+      "Strasse": "Rue",
+      "Stützmauer": "Mur de terrasse",
+      "Säulenhalle": "Portique",
+      "Tempel": "Temple / Sanctuaire",
+      "Theater": "Théâtre",
+      "Therme": "Thermes",
+      "Toranlage": "Porte",
+      "Befestigungsanlage": "Fortification",
+      "Wohnbau": "Bâtiment résidentiel",
+      "Platzanlage": "Place / Espace ouvert",
+      "Moschee": "Mosquée",
+      "Kirche": "Eglise",
+      "Monument": "Monument",
+      "Werkstatt": "Atelier"
+    }
+  },
+  "Building-buildingType-milet": {
+    "values": {
+      "Sakral": "Sacré / Religieux",
+      "Öffentlich": "Public",
+      "Privat": "Privé",
+      "Industriell": "Industriel",
+      "Infrastruktur": "Infrastructure",
+      "Monumental": "Monumental",
+      "Befestigung": "Fortification / Militaire"
+    }
+  },
+  "architecturalOrder-milet": {
+    "values": {
+      "dorisch": "Dorique",
+      "ionisch": "Ionique",
+      "komposit": "Composite",
+      "äolisch": "Eolien",
+      "korinthisch": "Corinthien",
+      "keine": "Aucun",
+      "nicht erhalten": "Non conservé / Inconnu"
+    }
+  },
+  "periods-milet": {
+    "values": {
+      "Neolitisch": "Néolithique",
+      "Chalkolitisch [Milet I]": "Chalcolithique [Milet I] ",
+      "Bronzezeitlich": "Age du Bronze",
+      "Frühbronzezeitlich [Milet II]": "Age du Bronze Ancien [Milet II]",
+      "Mittelbronzezeitlich [Milet III]": "Age du Bronze Moyen [Milet III]",
+      "Spätbronzezeitlich [Milet IV]": "Age du Bronze Récent [Milet IV]",
+      "Spätbronzezeitlich [Milet V]": "Age du Bronze Récent [Milet V]",
+      "Spätbronzezeitlich [Milet VI]": "Age du Bronze Récent [Milet VI]",
+      "Spätbronzezeitlich [Milet VII]": "Age du Bronze Récent [Milet VII]",
+      "Geometrisch": "Géométrique",
+      "Protogeometrisch": "Protogéométrique",
+      "Frühgeometrisch": "Géométrique Ancien",
+      "Mittelgeometrisch": "Géométrique Moyen",
+      "Spätgeometrisch": "Géométrique Récent",
+      "Archaisch": "Archaïque",
+      "Früharchaisch": "Début de l'époque archaïque ?",
+      "Hocharchaisch": "Haute époque archaïque ?",
+      "Spätarchaisch": "Epoque archaïque tardive/Fin de l'époque archaïque ?",
+      "Perserzerstörung": "Destruction perse",
+      "Klassisch": "Classique",
+      "Frühklassisch": "Début de l'époque classique ?",
+      "Spätklassik": "Fin de l'époque classique ?",
+      "Hellenistisch": "Hellénistique",
+      "Früher Hellenismus": "Haute époque hellénistique ?",
+      "Später Hellenismus": "Basse époque hellénistique ?",
+      "Kaiserzeitlich": "Epoque impériale romaine",
+      "Frühkaiserzeitlich": "Début de l'époque impériale ?",
+      "Mittelkaiserzeitlich": "Milieu de l'époque impériale",
+      "Spätkaiserzeitlich": "Tardo-impérial ?",
+      "Spätantik": "Fin de l'Antiquité",
+      "Byzantinisch": "Byzantine",
+      "Frühbyzantinisch / Spätantik": "Début de l'époque byzantine / Fin de l'Antiquité",
+      "Mittelbyzantinisch": "Milieu de l'époque byzantine",
+      "Spätbyzantinisch": "Epoque byzantine tardive / Fin de l'époque byzantine",
+      "Menteşe / emiratszeitlich": "Menteşe",
+      "Osmanisch": "Ottomane",
+      "Rezent": "Moderne"
+    }
+  },
+  "quantificationType-milet": {
+    "values": {
+      "Pottery": "001 Céramique",
+      "Bones": "002 Os",
+      "Mollusks": "003 Mollusques",
+      "Glass": "004 Verre",
+      "Metal": "005 Métal",
+      "Stone": "006 Pierre",
+      "Terracotta": "007 Terre cuite",
+      "Coins": "008 Monnaies",
+      "Plaster": "009 Plâtre",
+      "Sample": "010 Sample",
+      "Tesserae": "011 Tesserae",
+      "Inlays": "012 Incrustations",
+      "Ziegel": "013 Briques",
+      "Holz": "014 Bois"
+    }
+  },
+  "relativeAmountCheck-milet": {
+    "values": {
+      "gering": "Bas",
+      "mittel": "Median",
+      "hoch": "Haut",
+      "sehr hoch": "Très haut"
+    }
+  },
+  "Stone-origin-milet": {
+    "values": {
+      "Alpen": "Alpes",
+      "Anatolien": "Anatolie",
+      "Chimtou": "Chimtou",
+      "Harz": "Harz",
+      "Kreta": "Crète",
+      "Sizilien": "Sicile",
+      "Aphrodisias": "Aphrodisias",
+      "Burgass Adası": "Burgass Adası",
+      "Carrara": "Carrara",
+      "Docimium": "Docimium",
+      "Ephesus": "Éphèse",
+      "Euromos": "Euromus",
+      "Fourni": "Fourni",
+      "Heraclea at Latmus": "Héraclée du Latmos",
+      "Hymettus": "Hymette",
+      "Lesbos": "Lesbos",
+      "Marmara (Proconnesus)": "Marmara (Proconnèse)",
+      "Milas": "Milas",
+      "Miletus East": "Milet Est",
+      "Miletus West": "Milet Ouest",
+      "Naxos": "Naxos",
+      "Paros": "Paros",
+      "Pentelikon": "Pentélique",
+      "Priene": "Priène",
+      "Samos": "Samos",
+      "Stratonikeia": "Stratonicée",
+      "Thasos": "Thásos"
+    }
+  }
+}

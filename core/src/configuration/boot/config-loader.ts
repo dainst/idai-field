@@ -45,7 +45,7 @@ export class ConfigLoader {
 
         const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryFile('Categories.json');
         const libraryForms: Map<LibraryFormDefinition> = this.readLibraryFile('Forms.json');
-        const libraryValuelists: Map<Valuelist> = this.readLibraryFile('Valuelists.json');
+        const libraryValuelists: Map<Valuelist> = this.readValuelists();
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtInCategories as any)
@@ -188,6 +188,58 @@ export class ConfigLoader {
 
             return result;
         }, templates);
+    }
+
+
+    public readValuelists(): Map<Valuelist> {
+
+        const valuelists: Map<Valuelist> = this.readLibraryFile('Valuelists/Valuelists.json');
+        const languages = this.configReader.getValuelistsLanguages();
+        this.setValuelistsLanguages(valuelists, languages);
+
+        return valuelists;
+    }
+
+
+    private setValuelistsLanguages(valuelists: Map<Valuelist>, languages: any) {
+
+        Object.keys(valuelists).forEach(valuelistId => {
+            if (!valuelists[valuelistId].description) valuelists[valuelistId].description = {};
+        });
+
+        Object.keys(languages).forEach((section: 'default'|'project') => {
+            Object.keys(languages[section]).forEach(language => {
+                Object.keys(languages[section][language]).forEach(valuelistId => {
+                    this.setValuelistDescription(valuelists, section, language, valuelistId, languages);
+                    this.setValueLabels(valuelists, section, language, valuelistId, languages);
+                });
+            });
+        })
+    }
+
+
+    private setValuelistDescription(valuelists: Map<Valuelist>, section: 'default'|'project', language: string,
+                                    valuelistId: string, languages: any) {
+
+        if (!languages[section][language][valuelistId].description) return;
+
+        valuelists[valuelistId].description[language]
+            = languages[section][language][valuelistId].description;
+    }
+
+
+    private setValueLabels(valuelists: Map<Valuelist>, section: 'default'|'project', language: string,
+                           valuelistId: string, languages: any) {
+
+        if (!languages[section][language][valuelistId].values) return; 
+
+        Object.keys(languages[section][language][valuelistId].values).forEach(valueId => {
+            if (!valuelists[valuelistId].values[valueId].label) {
+                valuelists[valuelistId].values[valueId].label = {};
+            }
+            valuelists[valuelistId].values[valueId].label[language]
+                = languages[section][language][valuelistId].values[valueId];
+        });
     }
 
 

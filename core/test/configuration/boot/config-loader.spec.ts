@@ -28,6 +28,7 @@ describe('ConfigLoader', () => {
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
+        configReader.getValuelistsLanguages.and.returnValue({});
     }
 
 
@@ -47,7 +48,7 @@ describe('ConfigLoader', () => {
 
     beforeEach(() => {
 
-        configReader = jasmine.createSpyObj('configReader', ['read', 'exists']);
+        configReader = jasmine.createSpyObj('configReader', ['read', 'exists', 'getValuelistsLanguages']);
         applyConfig();
 
         configLoader = new ConfigLoader(configReader);

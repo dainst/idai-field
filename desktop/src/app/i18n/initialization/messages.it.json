@@ -1,10 +1,10 @@
 {
     "loading1": "Progetto",
     "loading2": "in caricamento...",
-    "restart": "Restart",
+    "restart": "Riavviare",
     "loadTestProject": "Caricare progetto di prova",
     "phase/processingImages": "Le immagini vengono ottimizzate per la visualizzazione.\nQuesto processo viene eseguito una sola volta e può richiedere alcuni minuti.",
-    "alreadyOpenError": "The application could not be started. Please check if Field Desktop is already open in another window.",
+    "alreadyOpenError": "Non è stato possibile avviare l'applicazione. Controllare se Field Desktop è già aperto in un'altra finestra.",
     "databaseError": "Si è verificato un errore: non è stato possibile caricare il database del progetto.",
     "configurationError": "Si è verificato un errore: non è stato possibile caricare la configurazione del progetto.",
     "fetchDocumentsError": "Si è verificato un errore: le risorse del progetto non possono essere estratte dal database.",

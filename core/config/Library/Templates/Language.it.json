@@ -16,7 +16,7 @@
       "languageConfiguration": {
         "relations": {
           "isPresentIn": {
-            "label": ""
+            "label": "È contenuto nel disegno di sezione/di superficie"
           }
         }
       }

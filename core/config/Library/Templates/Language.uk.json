@@ -1,0 +1,25 @@
+{
+    "default": {
+      "label": "Стандартна"
+    },
+    "minimalExcavation": {
+      "label": "Основа (розкопки)"
+    },
+    "minimalBuilding": {
+      "label": "Основа (інвентаризація споруди)"
+    },
+    "minimalSurvey": {
+      "label": "Основа (обстеження)"
+    },
+    "archaeoDox": {
+      "label": "archaeoDox",
+      "languageConfiguration": {
+        "relations": {
+          "isPresentIn": {
+            "label": "Включено в креслення профілю/в замальовці площини"
+          }
+        }
+      }
+    }
+  }
+  

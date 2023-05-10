@@ -1,16 +1,6 @@
 {
   "default": {
     "author": "DAI",
-    "label": {
-      "de": "Standard",
-      "en": "Default",
-      "it": "Standard",
-      "uk": "Стандартна"
-    },
-    "description": {
-      "de": "Standard-Konfiguration",
-      "en": "Default configuration"
-    },
     "configuration": {
       "forms": {
         "Profile:default": {
@@ -290,16 +280,6 @@
   },
   "minimalExcavation": {
     "author": "DAI",
-    "label": {
-      "de": "Basis (Grabung)",
-      "en": "Basic (Excavation)",
-      "it": "Configurazione di base (scavo)",
-      "uk": "Основа (розкопки)"
-    },
-    "description": {
-      "de": "Basis-Konfiguration für Grabungen",
-      "en": "Basic configuration for excavations"
-    },
     "configuration": {
       "forms": {
         "Project": {
@@ -354,16 +334,6 @@
   },
   "minimalBuilding": {
     "author": "DAI",
-    "label": {
-      "de": "Basis (Bauaufnahme)",
-      "en": "Basic (Building survey)",
-      "it": "Configurazione di base (Bauaufnahme/documentazione grafica di edifici)",
-      "uk": "Основа (інвентаризація споруди)"
-    },
-    "description": {
-      "de": "Basis-Konfiguration für die Bauaufnahme",
-      "en": "Basic configuration for building surveys"
-    },
     "configuration": {
       "forms": {
         "Project": {
@@ -453,16 +423,6 @@
   },
   "minimalSurvey": {
     "author": "DAI",
-    "label": {
-      "de": "Basis (Survey)",
-      "en": "Basic (Survey)",
-      "it": "Configurazione di base (prospezione)",
-      "uk": "Основа (обстеження)"
-    },
-    "description": {
-      "de": "Basis-Konfiguration für Surveys",
-      "en": "Basic configuration for surveys"
-    },
     "configuration": {
       "forms": {
         "Project": {
@@ -527,13 +487,6 @@
   },
   "archaeoDox": {
     "author": "Archäologisches Museum Hamburg",
-    "label": {
-      "de": "archaeoDox",
-      "en": "archaeoDox",
-      "it": "archaeoDox",
-      "uk": "archaeoDox"
-    },
-    "description": {},
     "configuration": {
       "forms": {
         "Project:archaeoDox": {
@@ -633,23 +586,7 @@
         "FindDrawing",
         "Planum",
         "Profile"
-      ],
-      "languages": {
-        "de": {
-          "relations": {
-            "isPresentIn": {
-              "label": "Ist enthalten in Profil-/Flächenzeichnung"
-            }
-          }
-        },
-        "en": {
-          "relations": {
-            "isPresentIn": {
-              "label": "Is present in profile/plan drawing"
-            }
-          }
-        }
-      }
+      ]
     }
   }
 }

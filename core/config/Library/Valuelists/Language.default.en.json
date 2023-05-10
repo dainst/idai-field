@@ -1,0 +1,66 @@
+{
+  "coordinate-reference-system-default-1": {
+    "values": {
+      "Eigenes Koordinatenbezugssystem": "Custom coordinate reference system",
+      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)"
+    }
+  },
+  "position-values-expansion-default": {
+    "values": {
+      "Maximale Ausdehnung": "Maximum expansion",
+      "Minimale Ausdehnung": "Minimum expansion"
+    }
+  },
+  "position-values-edge-default": {
+    "values": {
+      "Oberkante": "Top edge",
+      "Unterkante": "Lower edge"
+    }
+  },
+  "Building-condition-default": {
+    "values": {
+      "sehr gut": "very good",
+      "gut": "good",
+      "mittel": "medium",
+      "schlecht": "bad",
+      "sehr schlecht": "very bad"
+    }
+  },
+  "Building-conditionAmount-default": {
+    "values": {
+      "Fragmentarisch": "fragmentary",
+      "Vollständig": "complete",
+      "Vollständig zerstört": "completely destroyed"
+    }
+  },
+  "TypeCatalog-criterion-default": {
+    "values": {
+      "Form": "Shape",
+      "Material": "Material",
+      "Dekoration": "Decoration",
+      "Spuren": "Traces"
+    }
+  },
+  "Damage-condition-default": {
+    "values": {
+      "CCO": "CCO - No symptoms",
+      "CC1": "CC1 - Minor symptoms",
+      "CC2": "CC2 - Moderatly strong symptoms",
+      "CC3": "CC3 - Major symptoms",
+      "CC4": "CC4 - Total loss"
+    }
+  },
+  "viewingDirection-default": {
+    "values": {
+      "N": "E",
+      "NE": "NE",
+      "E": "E",
+      "SE": "SE",
+      "S": "S",
+      "SW": "SW",
+      "W": "W",
+      "NW": "NW"
+    }
+  }
+}

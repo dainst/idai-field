@@ -11,8 +11,8 @@ import { FieldResource } from './field-resource';
 import { Valuelist } from './configuration/valuelist';
 import { BaseGroupDefinition } from '../configuration/model/form/base-form-definition';
 import { ConfigReader } from '../configuration/boot/config-reader';
-import { SAMPLE_DATA_LABELS } from '../datastore/sampledata/sample-data-labels';
 import { getConfigurationName } from '../configuration/project-configuration-names';
+import { sampleDataLabels } from '../datastore/sampledata/sample-data-labels';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -278,7 +278,7 @@ export namespace ConfigurationDocument {
                 order: customConfiguration.order,
                 languages: languageConfigurations,
                 valuelists: {},
-                projectLanguages: projectIdentifier === 'test' ? Object.keys(SAMPLE_DATA_LABELS) : []
+                projectLanguages: projectIdentifier === 'test' ? Object.keys(sampleDataLabels) : []
             }
         };
 

@@ -9,7 +9,7 @@ export module Translations {
     export function getTranslations(): string {
 
         const locale: string = remote.getGlobal('getLocale')();
-        const filePath: string = remote.app.getAppPath() + '/src/app/i18n/messages.' + locale + '.xlf';
+        const filePath: string = remote.app.getAppPath() + '/src/app/i18n/angular/messages.' + locale + '.xlf';
 
         return fs.readFileSync(filePath, 'utf8');
     }

@@ -81,14 +81,28 @@ import languageSudanHeritage_en from '../../../config/Language-SudanHeritage.en.
 import languageUruk_en from '../../../config/Language-Uruk.en.json';
 import libraryForms from '../../../config/Library/Forms.json';
 import libraryCategories from '../../../config/Library/Categories.json';
-import libraryTemplates from '../../../config/Library/Templates.json';
+import libraryTemplates from '../../../config/Library/Templates/Templates.json';
+import libraryTemplatesLanguageDe from '../../../config/Library/Templates/Language.de.json';
+import libraryTemplatesLanguageEn from '../../../config/Library/Templates/Language.en.json';
+import libraryTemplatesLanguageIt from '../../../config/Library/Templates/Language.it.json';
+import libraryTemplatesLanguageUk from '../../../config/Library/Templates/Language.uk.json';
 import libraryLanguageDe from '../../../config/Library/Language.de.json';
 import libraryLanguageEn from '../../../config/Library/Language.en.json';
 import libraryLanguageEs from '../../../config/Library/Language.es.json';
 import libraryLanguageIt from '../../../config/Library/Language.it.json';
 import libraryLanguageFr from '../../../config/Library/Language.fr.json';
 import libraryLanguageUk from '../../../config/Library/Language.uk.json';
-import libraryValuelists from '../../../config/Library/Valuelists.json';
+import libraryValuelists from '../../../config/Library/Valuelists/Valuelists.json';
+import libraryValuelistsLanguageDefaultDe from '../../../config/Library/Valuelists/Language.default.de.json';
+import libraryValuelistsLanguageDefaultEn from '../../../config/Library/Valuelists/Language.default.en.json';
+import libraryValuelistsLanguageDefaultIt from '../../../config/Library/Valuelists/Language.default.it.json';
+import libraryValuelistsLanguageDefaultUk from '../../../config/Library/Valuelists/Language.default.uk.json';
+import libraryValuelistsLanguageProjectsDe from '../../../config/Library/Valuelists/Language.projects.de.json';
+import libraryValuelistsLanguageProjectsEn from '../../../config/Library/Valuelists/Language.projects.en.json';
+import libraryValuelistsLanguageProjectsEs from '../../../config/Library/Valuelists/Language.projects.es.json';
+import libraryValuelistsLanguageProjectsFr from '../../../config/Library/Valuelists/Language.projects.fr.json';
+import libraryValuelistsLanguageProjectsIt from '../../../config/Library/Valuelists/Language.projects.it.json';
+import libraryValuelistsLanguageProjectsTr from '../../../config/Library/Valuelists/Language.projects.tr.json';
 import { LanguageConfiguration } from '../model';
 
 
@@ -101,14 +115,18 @@ const PATH_MAP: Record<string, any> = {
     '/Core/Language.uk.json': coreLanguageUk,
     '/Library/Categories.json': libraryCategories,
     '/Library/Forms.json': libraryForms,
-    '/Library/Templates.json': libraryTemplates,
+    '/Library/Templates/Templates.json': libraryTemplates,
+    '/Library/Templates/Language.de.json': libraryTemplatesLanguageDe,
+    '/Library/Templates/Language.en.json': libraryTemplatesLanguageEn,
+    '/Library/Templates/Language.it.json': libraryTemplatesLanguageIt,
+    '/Library/Templates/Language.uk.json': libraryTemplatesLanguageUk,
     '/Library/Language.de.json': libraryLanguageDe,
     '/Library/Language.en.json': libraryLanguageEn,
     '/Library/Language.es.json': libraryLanguageEs,
     '/Library/Language.it.json': libraryLanguageIt,
     '/Library/Language.fr.json': libraryLanguageFr,
     '/Library/Language.uk.json': libraryLanguageUk,
-    '/Library/Valuelists.json': libraryValuelists,
+    '/Library/Valuelists/Valuelists.json': libraryValuelists,
     '/Config-Default.json': configDefault,
     '/Config-AbbirCella.json': configAbbirCella,
     '/Config-AlUla.json': configAlUla,
@@ -139,6 +157,24 @@ const PATH_MAP: Record<string, any> = {
 };
 
 
+const VALUELISTS_LANGUAGES = {
+    default: {
+        de: libraryValuelistsLanguageDefaultDe,
+        en: libraryValuelistsLanguageDefaultEn,
+        it: libraryValuelistsLanguageDefaultIt,
+        uk: libraryValuelistsLanguageDefaultUk
+    },
+    projects: {
+        de: libraryValuelistsLanguageProjectsDe,
+        en: libraryValuelistsLanguageProjectsEn,
+        es: libraryValuelistsLanguageProjectsEs,
+        fr: libraryValuelistsLanguageProjectsFr,
+        it: libraryValuelistsLanguageProjectsIt,
+        tr: libraryValuelistsLanguageProjectsTr,
+    }
+};
+
+
 const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: LanguageConfiguration }> = {
     'AbbirCella': { en: languageAbbirCella_en, fr: languageAbbirCella_fr },
     'AlUla': { en: languageAlUla_en },
@@ -166,7 +202,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'SelinuntBauteile' : { de: languageSelinuntBauteile_de, en: languageSelinuntBauteile_en, it: languageSelinuntBauteile_it },
     'SelinuntAkropolis' : { de: languageSelinuntAkropolis_de },
     'SudanHeritage': { en: languageSudanHeritage_en },
-    'Uruk': { en: languageUruk_en }
+    'Uruk': { en: languageUruk_en }
 };
 
 
@@ -177,4 +213,6 @@ export class ConfigReader {
     read = (path: string): any => clone(PATH_MAP[path]);
 
     getCustomLanguageConfigurations = (projectPrefix: string) => CUSTOM_LANGUAGE_CONFIGURATIONS[projectPrefix];
+
+    getValuelistsLanguages = () => VALUELISTS_LANGUAGES;
 }

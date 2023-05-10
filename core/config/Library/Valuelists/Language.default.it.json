@@ -1,0 +1,2065 @@
+{
+  "provenance-default-1": {
+    "values": {
+      "Anatolien": "Anatolia",
+      "Athen": "Atene",
+      "Ägypten": "Egitto",
+      "Attisch": "Attico",
+      "Britannien": "Britannia",
+      "Chios": "Chio",
+      "Deutschland": "Germania",
+      "Ephesos": "Efeso",
+      "Etruskisch": "Etrusco",
+      "Gallien": "Gallia",
+      "Ionien": "Ionia",
+      "Irland": "Irlanda",
+      "Italien": "Italia",
+      "Kampanisch": "Campano",
+      "Karthagisch": "Cartaginese",
+      "Kleinasien": "Asia Minore",
+      "Knidos": "Cnido",
+      "Korinth": "Corinto",
+      "Kos": "Kos",
+      "Lesbos": "Lesbo",
+      "Levante": "Levante",
+      "Lokal": "Locale",
+      "Lokal/Regional": "Locale/Regionale",
+      "Milet": "Mileto",
+      "Mäandertal": "Valle del Meandro",
+      "Nordafrika": "Nord Africa",
+      "Nordafrikanisch": "Nordafricano",
+      "Palästina": "Palestina",
+      "Pannonien": "Pannonia",
+      "Peloponnes": "Peloponneso",
+      "Regional": "Regionale",
+      "Rhodos": "Rodi",
+      "Samos": "Samo",
+      "Sizilien": "Sicilia",
+      "Skandinavien": "Scandinavia",
+      "Slawisch": "Slavo",
+      "Spanien": "Spagna",
+      "Syrien": "Siria",
+      "Südtunesisch": "Sud tunisino",
+      "Südägäis": "Sud Egeo"
+    }
+  },
+  "periods-default-1": {
+    "values": {
+      "Archaisch": "Arcaico",
+      "Bronzezeitlich": "Età del bronzo",
+      "Byzantinisch": "Bizantino",
+      "Eisenzeitlich": "Età del ferro",
+      "Frühbronzezeitlich": "Antica età del bronzo",
+      "Frühbyzantinisch": "Primo periodo Bizantino",
+      "Frühhellenistisch": "Antica età ellenistica",
+      "Frühkaiserzeitlich": "Prima età imperiale",
+      "Frühklassisch": "Antica età classica",
+      "Geometrisch": "Geometrico",
+      "Hellenistisch": "Ellenistico",
+      "Kaiserzeitlich": "Periodo imperiale",
+      "Klassisch": "Classico",
+      "Neolithisch": "Neolitico",
+      "Neuzeitlich": "Età moderna",
+      "Osmanisch": "Ottomano",
+      "Pleistozän": "Pleistocene",
+      "Rezent": "Recente",
+      "Römisch": "Romano",
+      "Spätantik": "Tardo-antico",
+      "Spätbronzezeitlich": "Tarda età del bronzo",
+      "Spätbyzantinisch": "Tardo-bizantino",
+      "Späthellenistisch": "Tardo-ellenistico",
+      "Spätkaiserzeitlich": "Tardo-imperiale",
+      "Spätklassisch": "Tardo-classico"
+    }
+  },
+  "colors-default-1": {
+    "values": {
+      "beige": "beige",
+      "blass-": "pallido",
+      "blau": "blu",
+      "braun": "marrone",
+      "cremefarben": "bianco sporco",
+      "dunkel-": "scuro",
+      "gelb": "giallo",
+      "grau": "grigio",
+      "grün": "verde",
+      "hell-": "chiaro",
+      "leuchtend-": "brillante",
+      "ocker": "ocra",
+      "orange": "arancione",
+      "rosa": "rosa",
+      "rot": "rosso",
+      "schwarz": "nero",
+      "türkis": "turchese",
+      "violett": "viola",
+      "weiß": "bianco"
+    }
+  },
+  "colors-default-2": {
+    "values": {
+      "beige": "beige",
+      "dunkelbraun": "marrone scuro",
+      "dunkelrot": "rosso scuro",
+      "gelb": "giallo",
+      "hellbraun": "marrone chiaro",
+      "hellgrau": "grigio chiaro",
+      "mittelbraun": "marrone medio",
+      "ocker": "ocra",
+      "orange": "arancione",
+      "orangerot": "rosso-arancio",
+      "rosa": "rosa",
+      "rot": "rosso",
+      "rotbraun": "rosso-bruno",
+      "schwarz": "nero",
+      "weiß": "bianco"
+    }
+  },
+  "glass-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Pittura",
+      "Diatretdekor": "Decorazione diatreta",
+      "Emaille": "Smalto",
+      "Facettschliffdekor": "Decorazione a sfaccettature",
+      "Fadendekor (aufgelegt)": "Decorazione filata (applicata)",
+      "Fadendekor (verschmolzen)": "Decorazione filata (fusa)",
+      "Mosaikdekor": "Decorazione a mosaico",
+      "Reliefdekor": "Decorazione a rilievo",
+      "Reticelladekor": "Decorazione a reticella",
+      "Riefeldekor": "Decorazione scanalata",
+      "Ritzungen": "Decorazione incisa",
+      "Schlangenfadendekor": "Decorazione a fili di serpente",
+      "Schliffrillendekor": "Decorazione a intaglio",
+      "Stempeldekor": "Decorazione a stampo",
+      "Tupfendekor": "Decorazione maculata",
+      "Warzendekor": "Decorazione a verruche",
+      "Zwischengoldglas": "Decorazione in foglia d'oro",
+      "figürlicher Schliffdekor": "Decorazione figurata a intaglio"
+    }
+  },
+  "glass-formDescription-default": {
+    "values": {
+      "ausladend": "ampio",
+      "bauchig": "panciuto",
+      "breitoval": "largo-ovale",
+      "doppelkonisch": "a doppio cono",
+      "halbkugelig": "emisferico",
+      "hochoval": "alto-ovale",
+      "konisch": "conico",
+      "kugelförmig": "sferico",
+      "quadratisch": "quadrato",
+      "rechteckig": "rettangolare",
+      "rund": "rotondo",
+      "schlank": "sottile",
+      "schmal": "affusolato",
+      "spindelförmig": "fusiforme",
+      "tonnenförmig": "bombato",
+      "zylinderförmig": "cilindrico"
+    }
+  },
+  "glass-manufacturingMethod-default": {
+    "values": {
+      "Formgeblasen (mit Reliefdekor)": "soffiaggio in stampo (con decorazione a rilievo)",
+      "Formgeschmolzen": "fusione in stampo",
+      "Freigeblasen": "soffiaggio libero",
+      "In Vorformen geblasen": "soffiaggio in preforme",
+      "In offene Halbformen geblasen": "soffiaggio in semistampi aperti",
+      "Kerngeformt": "formatura su nucleo",
+      "Sandkerngeschmolzen": "nucleo friabile di sabbia",
+      "gedreht (auf Drehscheibe)": "tornito (su tornio)"
+    }
+  },
+  "glass-objectType-default": {
+    "values": {
+      "Anhänger": "Pendente",
+      "Armreif": "Bracciale",
+      "Einlage": "Inserto",
+      "Fensterglas": "Vetro per finestre",
+      "Gefäß": "Vaso",
+      "Gemme": "Gemma",
+      "Gerät": "Strumento",
+      "Glasschlacke": "Scorie di vetro",
+      "Lampe": "Lucerna",
+      "Löffel": "Cucchiaio",
+      "Perle": "Perla",
+      "Produktionsfragment": "Frammento di produzione",
+      "Ring": "Anello",
+      "Rohglas": "Vetro grezzo",
+      "Rührstab": "Asta di mescolamento",
+      "Scheiben": "Dischi",
+      "Schmuck": "Gioiello",
+      "Spielstein": "Pedina da gioco",
+      "Tessera": "Tessera",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile",
+      "Weinheber": "Alzavino"
+    }
+  },
+  "glass-transparency-default": {
+    "values": {
+      "durchscheinend": "traslucido",
+      "durchsichtig": "trasparente",
+      "opak": "opaco",
+      "versintert": "sinterizzato"
+    }
+  },
+  "glass-vesselForm-default": {
+    "values": {
+      "Aschenurne": "Urna cineraria",
+      "Becher": "Bicchiere",
+      "Deckel": "Coperchio",
+      "Deckelgefäß": "Vaso con coperchio",
+      "Flasche": "Bottiglia",
+      "Krug": "Boccale",
+      "Napf": "Ciotola",
+      "Schale": "Coppa",
+      "Schüssel": "Scodella",
+      "Tasse": "Tazza",
+      "Teller": "Piatto",
+      "Topf": "Pentola",
+      "Unbestimmt": "Indeterminato",
+      "Vorratsgefäß": "Vaso da stoccaggio"
+    }
+  },
+  "glass-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": "Alabastron",
+      "Amphoriskos": "Anforisco",
+      "Aryballos": "Ariballo",
+      "Balsamarium": "Balsamiario",
+      "Dattelflasche": "Bottiglia per datteri",
+      "Faltenbecher": "Bicchiere a pareti rugose",
+      "Hydria": "Hydria",
+      "Kopfflasche": "Bottiglia a forma di testa",
+      "Kotyle": "Kotyle",
+      "Kragenschale": "Coppa a listello",
+      "Krater": "Cratere",
+      "Kylix": "Kylix",
+      "Lekythos": "Lekythos",
+      "Luterion": "Louterion",
+      "Oinochoe": "Oinochoe",
+      "Pelike": "Pelike",
+      "Rippenschale": "Coppa costolata",
+      "Schliffrillenschale": "Coppa scanalata",
+      "Schöpfer": "Attingitoio",
+      "Skyphos": "Skyphos",
+      "Spitzamphora": "Anfora a punta",
+      "Sprenkler": "Annaffiatoio",
+      "Stamnos": "Stamnos",
+      "Tierflasche": "Bottiglia zoomorfa",
+      "Unguentarium": "Unguentario",
+      "Vierkantflasche": "Bottiglia quadrata",
+      "hexagonale Flasche": "Bottiglia esagonale",
+      "zarte Rippenschale": "Fragile coppa costolata",
+      "zylindrische Flasche": "Bottiglia cilindrica"
+    }
+  },
+  "Mollusk-classification-default": {
+    "values": {
+      "Schuppe": "Tunica",
+      "Coxa": "Coxa",
+      "Muschelschale (Bivalvia)": "Valva (Bivalvia)",
+      "Schneckenhaus (Gastropoda)": "Guscio di lumaca (Gastropoda)"
+    }
+  },
+  "Brick-brickForm-default": {
+    "values": {
+      "Bodenziegel": "Mattone da pavimento",
+      "Dachziegel": "Tegola",
+      "Flachziegel": "Tegola piana",
+      "Formziegel": "Tegola sagomata",
+      "Hypokaustziegel": "Pilastrino",
+      "Imbrex": "Embrice",
+      "Kalyptere": "Coppo",
+      "Later": "Later",
+      "Leistenziegel": "Tegola modanata",
+      "Lochziegel/Hohlziegel": "Mattone forato",
+      "Stroter": "Stroter",
+      "Tegula": "Tegula",
+      "Tonrohr": "Tubo fittile",
+      "Wandziegel": "Mattone da parete"
+    }
+  },
+  "Brick-brickUsage-default": {
+    "values": {
+      "Dach": "Tetto",
+      "Decke": "Soffitto",
+      "Fenster": "Finestra",
+      "Fussboden": "Pavimento",
+      "Gewölbedecke": "Soffitto a volta",
+      "Klosterformat": "Chiostro",
+      "Türrahmen": "Cornice della porta",
+      "Türsturz": "Architrave",
+      "Wandverkleidung": "Rivestimento parietale"
+    }
+  },
+  "Brick-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Pittura",
+      "Fingerabdruck": "Impronta digitale",
+      "Kammritzung": "Incisione a pettine",
+      "Reliefdekor": "Decorazione a rilievo",
+      "Riefeldekor": "Decorazione a scanalature",
+      "Ritzungen": "Incisioni",
+      "Sonstige Abdrücke": "Altre impronte",
+      "Stempel": "Bollo",
+      "Stempeldekor": "Decorazione a stampo",
+      "Tupfendekor": "Decorazione maculata",
+      "Wischzeichen": "Strofinata",
+      "Überzug/Glasur": "Ingobbio/invetriatura"
+    }
+  },
+  "Brick-manufacturing-default": {
+    "values": {
+      "Dickwandig": "Parete spessa",
+      "Dünnwandig": "Parete sottile",
+      "Gebrannt": "Cotto",
+      "Hart gebrannt": "Cotto ad alte temperature",
+      "Luftgetrocknet": "Seccato all'aria",
+      "Oberfläche glatt": "Superficie liscia",
+      "Oberfläche rau": "Superficie ruvida",
+      "Sekundär gebrannt": "Cottura secondaria",
+      "Weich gebrannt": "Cottura leggera"
+    }
+  },
+  "Brick-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "tornito (su tornio)",
+      "gegossen": "fuso",
+      "gepresst": "pressato",
+      "handgeformt": "modellato a mano"
+    }
+  },
+  "Brick-specificType-default": {
+    "values": {
+      "Bodenziegel": "Mattone da pavimento",
+      "Bruchstein": "Concio",
+      "Dachziegel": "Tegola",
+      "Geröll": "Sasso",
+      "Hohlziegel": "Mattone forato",
+      "Hypokaustziegel": "Pilastrino",
+      "Kanalziegel": "Canale",
+      "Platten": "Lastre",
+      "Quader": "Concio",
+      "Tonrohr": "Tubo fittile",
+      "Variierend": "Vari",
+      "Wandziegel": "Mattone da parete",
+      "Ziegelbruch": "frantumi di mattoni"
+    }
+  },
+  "Brick-temper-default": {
+    "values": {
+      "Glimmer": "Mica",
+      "Kalk": "Calce",
+      "Mineralische Partikel": "Particelle minerali",
+      "Muschelgrus": "Tritume di conchiglia",
+      "Organische Partikel": "Particelle organiche",
+      "Quarz": "Quarzo",
+      "Schamotte": "Chamotte",
+      "Sonstige": "Altro",
+      "Steinchen": "Sassolini",
+      "Stroh/Spreu": "Paglia/Pula",
+      "Vacua": "Vacua",
+      "Vulkanische Partikel": "Particelle vulcaniche"
+    }
+  },
+  "Burial-amountIndividuals-default": {
+    "values": {
+      "Doppelbestattung": "Sepoltura doppia",
+      "Dreifachbestattung": "Sepoltura tripla",
+      "Einzelbestattung": "Sepoltura singola",
+      "Grabdeponat": "Deposizione funeraria",
+      "Kollektivbestattung": "Sepoltura collettiva",
+      "Massengrab": "Fossa comune",
+      "Mehrfachbestattung": "Sepoltura multipla",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile",
+      "Wiedergängerbestattung": "Riseppellimento"
+    }
+  },
+  "Burial-burialCharacteristic-default": {
+    "values": {
+      "Primäre Bestattung": "Sepoltura primaria",
+      "Sekundäre Bestattung": "Sepoltura secondaria",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile"
+    }
+  },
+  "Burial-burialDocumentation-default": {
+    "values": {
+      "Endoskopie": "Endoscopia",
+      "Foto": "Foto",
+      "Histologie": "Istologia",
+      "LM": "LM",
+      "REM": "REM",
+      "Röntgen": "Radiografia"
+    }
+  },
+  "Burial-graveFeature-default": {
+    "values": {
+      "Brandbestattung": "Incinerazione",
+      "Kenotaph": "Cenotafio",
+      "Körperbestattung": "Inumazione",
+      "Ossuar": "Ossuario",
+      "Teil-Körperbestattung": "Inumazione parziale"
+    }
+  },
+  "Burial-positionArms-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile",
+      "am Kinn": "sul mento",
+      "an den Seiten": "di fianco",
+      "auf dem Bauch": "sulla pancia",
+      "auf dem Becken": "sul bacino",
+      "auf der Brust": "sul petto",
+      "ungleichmäßig": "irregolare"
+    }
+  },
+  "Burial-positionLegs-default": {
+    "values": {
+      "Beine angewinkelt": "Gambe piegate",
+      "Beinhocker": "Gambe rannicchiate",
+      "Extremhocker": "molto rannicchiate",
+      "Hocker": "accovacciate",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile",
+      "gestreckt": "distese"
+    }
+  },
+  "Burial-positioningIndividuals-default": {
+    "values": {
+      "Bauchlage": "Posizione prona",
+      "Rückenlage": "Posizione supina",
+      "Seitenlage, links": "Posizione sul fianco sinistro",
+      "Seitenlage, rechts": "Posizione sul fianco destro",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile"
+    }
+  },
+  "Building-architecturalOrders-default": {
+    "values": {
+      "Dorische Ordnung": "Ordine dorico",
+      "Ionische Ordnung": "Ordine ionico",
+      "Komposite Ordnung": "Ordine composito",
+      "Korinthische Ordnung": "Ordine corinzio",
+      "Toskanische Ordnung": "Ordine tuscanico"
+    }
+  },
+  "Building-buildingCategory-default": {
+    "values": {
+      "Altar": "Altare",
+      "Amphitheater": "Anfiteatro",
+      "Basilika": "Basilica",
+      "Bogen": "Arco",
+      "Brücke": "Ponte",
+      "Circus": "Circo",
+      "Gymnasium": "Ginnasio",
+      "Mauerkurtine": "Muro di cortina",
+      "Nymphäum": "Ninfeo",
+      "Odeion": "Odeion",
+      "Strasse": "Strada",
+      "Stützmauer": "Muro di sostegno",
+      "Säulenhalle": "Portico",
+      "Tempel": "Tempio",
+      "Theater": "Teatro",
+      "Therme": "Terme",
+      "Turm": "Torre",
+      "Wohnbau": "Abitazione"
+    }
+  },
+  "Building-buildingCategorySpecific-default": {
+    "values": {
+      "Aediculabau": "Edicola",
+      "Atriumhaus": "Atrio",
+      "Bogen": "Arco",
+      "Dipteros": "Diptero",
+      "Ehrenbogen": "Arco onorario",
+      "Ehrensäule": "Colonna onoraria",
+      "Hoftempel": "Tempio con cortile",
+      "Palast": "Palazzo",
+      "Palästra": "Palestra",
+      "Peripteros": "Periptero",
+      "Peripteros sine portico": "Periptero senza portico",
+      "Peristylhaus": "Casa a peristilio",
+      "Pseudo-Dipteros": "Pseudodiptero",
+      "Pseudo-Peripteros": "Pseudoperiptero",
+      "Rednertribüne": "Tribuna",
+      "Rundbau": "Edificio circolare",
+      "Schatzhaus": "Thesauros",
+      "Terassenheiligtum": "Santuario a terrazza",
+      "Tholos": "Tholos",
+      "Torbogen": "Arcale",
+      "Triumphbogen": "Arco trionfale",
+      "Tumulus": "Tumulo",
+      "Villa": "Villa",
+      "dreischiffig": "a tre navate",
+      "fünfschiffig": "a cinque navate",
+      "griechisches Theater": "Teatro greco",
+      "römisches Theater": "Teatro romano",
+      "vierschiffig": "a quattro navate",
+      "zweischiffig": "a due navate"
+    }
+  },
+  "Building-buildingTechnique-default": {
+    "values": {
+      "Blockverbandmauerwerk": "Muratura a blocchi",
+      "Bruchsteinmauerwerk": "Muratura con conci di pietra",
+      "Feldsteinmauerwerk": "Muratura in pietrame",
+      "Kyklopenmauerwerk": "Muratura ciclopica",
+      "Lehmziegelmauerwerk": "Muratura in mattoni crudi",
+      "Mischform Polygonal-/Quadermauerwerk": "Mista: opera poligonale/quadrata",
+      "Opus Caementitium": "Opera cementizia",
+      "Polygonalmauerwerk": "Opera poligonale",
+      "Quadermauerwerk": "Opera quadrata",
+      "Spolienmauerwerk": "Muratura di spoglio",
+      "Unregelmäßiges Polygonalmauerwerk": "Opera poligonale irregolare",
+      "Ziegelmauerwerk": "Opera laterizia",
+      "irreguläres Mauerwerk": "Opera incerta",
+      "regelmäßiges Polygonalmauerwerk": "Opera poligonale regolare",
+      "regelmäßiges Quadermauerwerk": "Opera quadrata regolare",
+      "regelmäßiges Trapezoidalmauerwerk": "Opera trapezoidale regolare",
+      "unregelmäßiges Quadermauerwerk": "Opera quadrata irregolare",
+      "unregelmäßiges Trapezoidalmauerwerk": "Opera trapezoidale irregolare",
+      "unspezifisches Mauerwerk": "Opera non specifica"
+    }
+  },
+  "Building-buildingType-default": {
+    "values": {
+      "Befestigung": "Fortificazione",
+      "Haus": "Casa",
+      "Lager": "Magazzino",
+      "Werkstatt": "Officina"
+    }
+  },
+  "Building-condition-default": {
+    "values": {
+      "sehr gut": "molto buono",
+      "gut": "buono",
+      "mittel": "medio",
+      "schlecht": "cattivo",
+      "sehr schlecht": "pessimo"
+    }
+  },
+  "Building-conditionAmount-default": {
+    "values": {
+      "Fragmentarisch": "frammentario",
+      "Vollständig": "intero",
+      "Vollständig zerstört": "completamente distrutto"
+    }
+  },
+  "Building-context-default": {
+    "values": {
+      "Akropolis": "Acropoli",
+      "Forum": "Foro",
+      "Handwerksviertel": "Quartiere artigianale",
+      "Heiligtum": "Santuario",
+      "Nekropole": "Necropoli",
+      "Wohnviertel": "Quartiere abitativo"
+    }
+  },
+  "Building-material-default": {
+    "values": {
+      "Granit": "Granito",
+      "Kalk": "Calce",
+      "Kalkmörtel": "Malta di calce",
+      "Kalkstein": "Pietra calcarea",
+      "Kalzit": "Calcite",
+      "Kreide": "Gesso",
+      "Marmor": "Marmo",
+      "Pophyr": "Porfido",
+      "Quarz": "Quarzo",
+      "Sandstein": "Arenaria",
+      "Ziegel": "Laterizio"
+    }
+  },
+  "Building-material-default-2": {
+    "values": {
+      "Ziegel": "Laterizio"
+    }
+  },
+  "Building-material-default-3": {
+    "values": {
+      "Granit": "Granito",
+      "Kalk": "Calce",
+      "Kalkmörtel": "Malta di calce",
+      "Kalkstein": "Pietra calcarea",
+      "Kalzit": "Calcite",
+      "Kreide": "Gesso",
+      "Marmor": "Marmo",
+      "Pophyr": "Porfido",
+      "Quarz": "Quarzo",
+      "Sandstein": "Arenaria",
+      "Ziegel": "Laterizio"
+    }
+  },
+  "Wood-color-default": {
+    "values": {
+      "braun": "Marrone",
+      "haselnuss": "Nocciola",
+      "schwarz": "Nero"
+    }
+  },
+  "Wood-objectType-default": {
+    "values": {
+      "Architektur": "Architettura",
+      "Altar": "Altare",
+      "Anhänger": "Pendente",
+      "Gefäß": "Vaso",
+      "Gerät": "Strumento",
+      "Grabbehältnis": "Contenitore per tomba",
+      "Grabmarkierung": "Segnacolo funerario",
+      "Grabplatte": "Lapide",
+      "Gussform": "Matrice",
+      "Kasten/Kiste": "Scatola/cassa",
+      "Löffel": "Cucchiaio",
+      "Mobiliar": "Mobilio",
+      "Plastik/Skulptur": "Plastica/scultura",
+      "Produktionsrest": "Residui di produzione",
+      "Ring": "Anello",
+      "Sarkophag": "Sarcofago",
+      "Schmuck": "Gioiello",
+      "Spielzeug": "Giocattolo",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile"
+    }
+  },
+  "Wood-typeOfWood-default": {
+    "values": {
+      "Ahorn": "Acero",
+      "Apfel": "Melo",
+      "Birke": "Betulla",
+      "Birne": "Pero",
+      "Buche": "Faggio",
+      "Eibe": "Tasso",
+      "Eiche": "Rovere",
+      "Erle": "Alno",
+      "Esche": "Frassino",
+      "Fichte": "Abete",
+      "Kastanie": "Castagno",
+      "Kiefer": "Pino",
+      "Kirsche": "Ciliegio",
+      "Lerche": "Allodola",
+      "Linde": "Tiglio",
+      "Nußbaum": "Noce",
+      "Pappel": "Pioppo",
+      "Tanne": "Abete",
+      "Ulme": "Olmo",
+      "Weide": "Salice",
+      "Zeder": "Cedro"
+    }
+  },
+  "Wood-manufacturingMethod-default": {
+    "values": {
+      "Gebohrt": "Forato",
+      "Gedämpft": "Vaporizzato",
+      "Gedreht": "Tornito",
+      "Gefräst": "Fresato",
+      "Gehobelt": "Piallato",
+      "Gesägt": "Segato",
+      "Geschabt": "Rasato",
+      "Geschliffen": "Levigato",
+      "Geschnitzt": "Intagliato",
+      "Gespalten": "Spaccato"
+    }
+  },
+  "Wood-surfaceCondition-default": {
+    "values": {
+      "Brandspuren": "Tracce di bruciato",
+      "Keine Brandspuren": "Nessuna traccia di bruciato",
+      "Unsicher bzw. unbestimmbar": "Incerto o indeterminabile"
+    }
+  },
+  "Wood-decorationTechnique-default": {
+    "values": {
+      "Applik": "Applique",
+      "Bemalung (Enkaustik)": "Pittura (encausto)",
+      "Bemalung (Eitemperatechnik)": "Pittura (tempera all'uovo)",
+      "Intarsie": "Intarsio",
+      "Relief": "Rilievo",
+      "Ritzung": "Incisione",
+      "Schnitzung": "Intaglio",
+      "Sgraffito": "Sgraffito",
+      "Vergoldung/metallischer Überzug": "Doratura/ingobbio metallico"
+    }
+  },
+  "Wood-paintCondition-default": {
+    "values": {
+      "gut erhalten": "ben conservato",
+      "abblätternd": "sfaldato",
+      "verrieben": "sfregato",
+      "verwaschen": "slavato",
+      "stark abgerieben": "molto logorato",
+      "nicht erhalten": "non conservato"
+    }
+  },
+  "Architecture-blockProcessing-default": {
+    "values": {
+      "Bruchsteine": "Conci",
+      "Hausteine": "Pietre battute",
+      "Lesesteine": "Scapoli",
+      "Werksteine": "Pietre da taglio"
+    }
+  },
+  "Architecture-blockTreatment-default": {
+    "values": {
+      "bossiert": "bugnato",
+      "bruchbau": "crepato",
+      "fein geglättet": "finemente levigato",
+      "gespitzt": "appuntito",
+      "gestockt": "sfalsato",
+      "grob behauen": "sgrossato",
+      "grob geglättet": "grossolanamente lisciato",
+      "scharriert": "bocciardato",
+      "unbehauen": "grezzo"
+    }
+  },
+  "Architecture-brickwork-default": {
+    "values": {
+      "Binderverband": "tessitura di testa",
+      "Blockverband": "tessitura a blocco",
+      "Flämischer Verband": "tessitura fiamminga",
+      "Holländischer Verband": "tessitura olandese",
+      "Kreuzverband": "tessitura a croce",
+      "Läuferverband": "tessitura a cortina",
+      "Märkischer Verband": "tessitura marca"
+    }
+  },
+  "Architecture-construction-default": {
+    "values": {
+      "Fundament: Geschüttet": "Fondamenta: gettate",
+      "Fundament: gesetzt": "Fondamenta: poste",
+      "Mauerkern: Lesesteine": "Nucleo del muro: pietre raccolte",
+      "einschalig vor Feld/Hang": "con paramento davanti il campo/pendio",
+      "ohne Schalen/keine durchgehenden Lagen": "senza paramento/senza filari continui",
+      "ohne Schalen/nur durchgehende Lagen": "senza paramento/solo filari continui",
+      "zweischalig": "a due paramenti",
+      "zweischalig mit Binderlagen": "a due paramenti con blocchi di testa "
+    }
+  },
+  "Architecture-mortarBinder-default": {
+    "values": {
+      "dominant": "dominante",
+      "gering": "esiguo",
+      "hoch": "elevato",
+      "mittel": "medio"
+    }
+  },
+  "Architecture-mortarConsistency-default": {
+    "values": {
+      "brüchig": "friabile",
+      "erdig/lehmig": "terrosa/argillosa",
+      "fest": "coesa",
+      "hart": "dura",
+      "locker": "sciolta",
+      "mittelfein": "medio-fine",
+      "pulverig": "polverosa",
+      "sandig": "sabbiosa"
+    }
+  },
+  "Architecture-wallClassification-default": {
+    "values": {
+      "Aufgehendes": "Emergente",
+      "Fensterzusetzung": "Inserimento finestra",
+      "Flickung": "Riparazione",
+      "Fundament": "Fondazione",
+      "Gewölbe": "Volta",
+      "Mauer": "Muro",
+      "Mauerbettung": "Massicciata del muro",
+      "Mauerdurchbruch": "Breccia del muro",
+      "Mosaik": "Mosaico",
+      "Opus sectile": "Opus sectile",
+      "Türzusetzung": "Inserimento porta",
+      "Wandgestaltung": "Conformazione parete"
+    }
+  },
+  "Architecture-wallType-default": {
+    "values": {
+      "Außenmauer": "Muro perimetrale",
+      "Befestigugsmauer": "Mura urbiche",
+      "Blockmauerwerk": "Muratura a blocchi",
+      "Bruchsteinmauer": "Muro a conci",
+      "Fachwerk": "Costruzione a traliccio",
+      "Feldsteinmauer": "Muro in pietrame",
+      "Grenzmauer": "Muro di confine",
+      "Ziegelmauer": "Muro di mattoni"
+    }
+  },
+  "Place-findspotClassification-default": {
+    "values": {
+      "Einzelmauer": "Parete singola",
+      "Felsabarbeitung": "Lavorazione della roccia",
+      "Funderfassung": "Registrazione dei reperti",
+      "Fundsammlung": "Raccolta dei reperti",
+      "Grab": "Tomba",
+      "Nekropole": "Necropoli",
+      "Spolie in rezenter Mauer": "Spoglie nel muro recente",
+      "Steinbruch": "Cava di pietra",
+      "Straße/Platz": "Strada/piazza",
+      "Wein- bzw. Ölpresse": "Torchio per vino o olio",
+      "einzelnes Steindenkmal": "Monumento in pietra singolo",
+      "ländliches Gebäude": "Edificio rurale",
+      "urbanes Gebäude": "Edificio urbano"
+    }
+  },
+  "Place-siteClassification-default": {
+    "values": {
+      "Bestattungsplatz": "Luogo di sepoltura",
+      "Siedlung": "Insediamento"
+    }
+  },
+  "Layer-consistency-default": {
+    "values": {
+      "Durch Brand versiegelt": "sigillato dal fuoco",
+      "Oberfläche abgewaschen": "superficie slavata",
+      "Oberfläche verhärtet": "superficie indurita",
+      "fest": "solido",
+      "flüssig": "liquido",
+      "gut formbar": "facilmente malleabile",
+      "hart": "duro",
+      "lehmig": "argilloso",
+      "locker": "sciolto",
+      "mittel bindend": "mediamente compatto",
+      "mittel formbar": "mediamente malleabile",
+      "nicht bindend": "non compatto",
+      "nicht formbar": "non malleabile",
+      "porös": "poroso",
+      "sandig": "sabbioso",
+      "schwach bindend": "poco compatto",
+      "schwach formbar": "poco malleabile",
+      "sehr gut formbar": "ottima malleabilità",
+      "sehr hart": "molto duro",
+      "sehr schwach formbar": "molto poco malleabile",
+      "sehr weich": "molto morbido",
+      "stark bindend": "estremamente compatto",
+      "steif": "rigido",
+      "weich": "morbido"
+    }
+  },
+  "Layer-distinguishingCriteria-default": {
+    "values": {
+      "Farbe": "Colore",
+      "Form": "Forma",
+      "Grenzen": "Limiti",
+      "Konsistenz": "Consistenza",
+      "Komposition": "Composizione"
+    }
+  },
+  "Layer-layerClassification-default": {
+    "values": {
+      "Brandschicht": "Strato di incendio",
+      "Kulturschicht": "Strato di insediamento",
+      "Laufhorizont": "Piano di calpestio",
+      "Planierschicht": "Strato di livellamento"
+    }
+  },
+  "Layer-soilType-default": {
+    "values": {
+      "Feinsand": "Sabbia fine",
+      "Feinstsand": "Sabbia finissima",
+      "Grobsand": "Sabbia grossolana",
+      "Lehm": "Argilla",
+      "Lehmiger Sand": "Sabbia argillosa",
+      "Lehmiger Schluff": "Limo argilloso",
+      "Lehmiger Ton": "Argilla argillosa",
+      "Mergel": "Marna",
+      "Mittlerer Sand": "Sabbia media",
+      "Sand": "Sabbia",
+      "Sandiger Lehm": "Argilla sabbiosa",
+      "Sandiger Schluff": "Limo sabbioso",
+      "Sandiger Ton": "Argilla sabbiosa",
+      "Schluff": "Limo",
+      "Schluffiger Lehm": "Argilla limosa",
+      "Schluffiger Sand": "Sabbia limosa",
+      "Schluffiger Ton": "Argilla limosa",
+      "Ton": "Argilla",
+      "Toniger Lehm": "Terriccio argilloso",
+      "Toniger Sand": "Sabbia argillosa",
+      "Toniger Schluff": "Limo argilloso"
+    }
+  },
+  "Feature-featureBorders-default": {
+    "values": {
+      "deutlich": "chiari",
+      "diffus": "diffusi",
+      "eben": "piani",
+      "erahnbar": "intuibili",
+      "erkennbar": "riconoscibili",
+      "etwas verwaschen": "leggermente slavati",
+      "fließend": "fluidi",
+      "geneigt": "inclinati",
+      "gezackt": "frastagliati",
+      "regelmäßig": "regolari",
+      "scharf": "netti",
+      "sehr deutlich": "molto chiari",
+      "undeutlich": "indistinti",
+      "uneben": "non piani",
+      "unklar": "non chiari",
+      "unregelmäßig": "irregolari",
+      "verwaschen": "slavati",
+      "wellig": "ondulati"
+    }
+  },
+  "Feature-featureForm-default": {
+    "values": {
+      "Befundrest": "resto di Unità Stratigrafica",
+      "U-förmig": "a forma di U",
+      "V-förmig": "a forma di V",
+      "annähernd": "approssimativo",
+      "formlos": "informe",
+      "halbmondförmig": "a forma di mezzaluna",
+      "kesselförmig": "a forma di conca",
+      "langgezogen": "esteso",
+      "oval": "ovale",
+      "rechteckig": "rettangolare",
+      "regelmäßig": "regolare",
+      "rund": "rotondo",
+      "sanduhrförmig": "a forma di clessidra",
+      "trapezförmig": "trapezoidale",
+      "trichterförmig": "a forma di imbuto",
+      "unregelmäßig": "irregolare",
+      "wannenförmig": "a forma di vasca"
+    }
+  },
+  "Floor-floorClassification-default": {
+    "values": {
+      "Bastmatten": "stuoia",
+      "Korkboden": "pavimento in sughero",
+      "Mosaik": "mosaico",
+      "Opus sectile": "Opus sectile",
+      "Opus signinum": "Opus signinum",
+      "Pflaster": "lastricato",
+      "Stampflehm": "terra battuta",
+      "Terrazzo": "terrazzo",
+      "Webmatten": "stuoia di tessuto",
+      "Ziegel": "mattone"
+    }
+  },
+  "Inscription-objectType-default": {
+    "values": {
+      "Alltäglicher Gebrauch": "uso quotidiano",
+      "Bauinschrift": "iscrizione edificio",
+      "Ehreninschrift": "iscrizione onoraria",
+      "Grabinschrift (Inschrift im Grabkontext)": "iscrizione tomba (iscrizione nel contesto della tomba)",
+      "Private Ausstattung": "allestimento privato",
+      "Sakrale Ausstattung": "allestimento sacrale",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Urkunde": "documento",
+      "Wasserversorgung": "approvvigionamento idrico",
+      "Weihinschrift": "iscrizione votiva",
+      "Öffentliche Ausstattung": "allestimento pubblico"
+    }
+  },
+  "Pottery-clayHardness-default": {
+    "values": {
+      "1 (Fingernagel schabt, ritzt leicht)": "1 (Tenero, scalfibile con l'unghia)",
+      "2 (Fingernagel ritzt)": "2 (scalfibile con l'unghia)",
+      "3 (Messerspitze ritzt leicht)": "3 (Facilmente scalfibile con punta di coltello)",
+      "4 (Messerspitze ritzt)": "4 (Scalfibile con punta di coltello)",
+      "5 (Messerspitze ritzt schwer)": "5 (Difficilmente scalfibile con punta di coltello)"
+    }
+  },
+  "Pottery-coatInside-default": {
+    "values": {
+      "Glasur": "invetriatura",
+      "Redslip": "Redslip",
+      "Schwarzfirnis": "vernice nera",
+      "Tongrundig": "acroma"
+    }
+  },
+  "Pottery-coatInsideType-default": {
+    "values": {
+      "Andere": "altro",
+      "Bemalung": "pittura",
+      "Geglättet": "lisciato",
+      "Glasur": "invetriatura",
+      "Poliert": "lucidato",
+      "Verstrichen": "spalmato",
+      "Überzug": "ingobbio"
+    }
+  },
+  "Pottery-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "pittura",
+      "Fadendekor (aufgelegt)": "decorazione filata (applicata)",
+      "Reliefdekor": "decorazione a rilievo",
+      "Riefeldekor": "decorazione a scanalature",
+      "Ritzungen": "incisioni",
+      "Stempel": "bollo",
+      "Stempeldekor": "decorazione a stampo",
+      "Tupfendekor": "decorazione maculata",
+      "Warzendekor": "decorazione a verruche"
+    }
+  },
+  "Pottery-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "tornito (su tornio)",
+      "gegossen": "fuso",
+      "gepresst": "pressato",
+      "handgeformt": "modellato a mano",
+      "in Form gedreht": "modellato in forma",
+      "nachgedreht (überdreht)": "ripassato al tornio (ribaltato)"
+    }
+  },
+  "Pottery-materialType-default": {
+    "values": {
+      "Feinkeramik (Feine Ware)": "Ceramica fine",
+      "Gebrauchskeramik (Grobe Ware)": "Ceramica comune"
+    }
+  },
+  "Pottery-objectType-default": {
+    "values": {
+      "Altar": "Altare",
+      "Anhänger": "Pendente",
+      "Antefix": "Antefissa",
+      "Becken": "Bacino",
+      "Einlage": "Inserto",
+      "Gefäß": "Vaso",
+      "Gerät": "Strumento",
+      "Gussform": "Matrice",
+      "Kette": "Catena",
+      "Kohlebecken": "Braciere",
+      "Lampe": "Lucerna",
+      "Löffel": "Cucchiaio",
+      "Perle": "Perla",
+      "Plastik/Skulptur": "Plastica/scultura",
+      "Produktionsfragment": "Frammento di produzione",
+      "Ring": "Anello",
+      "Sarkophag": "Sarcofago",
+      "Schmuck": "Gioiello",
+      "Siegel": "Sigillo",
+      "Spielstein": "Pedina da gioco",
+      "Spinnwirtel": "Fusaiola",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Webgewicht": "Peso da telaio",
+      "Werkzeug": "Attrezzo"
+    }
+  },
+  "Pottery-specificType-default": {
+    "values": {
+      "Arretina schwarz": "Aretina nera",
+      "Attisch farbig aufgehöhte Schwarzglanzton Ware": "Ceramica attica nero brillante",
+      "Attische Keramik": "Ceramica attica",
+      "Attische Rotfigurige Keramik": "Ceramica attica a figure rosse",
+      "Attische Schwarzfigurige Keramik": "Ceramica attica a figure nere",
+      "Attische Schwarzglanzton Ware": "Ceramica attica a vernice nera lucida",
+      "Bemalte Keramik": "Ceramica dipinta",
+      "Bemalte Ware (floral)": "Ceramica dipinta (floreale)",
+      "Bemalte Ware (linear)": "Ceramica dipinta (lineare)",
+      "Bichrome Ware": "Ceramica bicroma",
+      "Campana A": "Campana A",
+      "Campana B": "Campana B",
+      "Campana B Imitation": "Imitazione Campana B",
+      "Campana B-oid": "Campana bioide",
+      "Campana C": "Campana C",
+      "Dünnwandige Feinkeramik": "Ceramica fine a pareti sottili",
+      "Firnisware": "Ceramica verniciata",
+      "Glasierte Keramik": "Ceramica invetriata",
+      "Glattwandige Ware": "Ceramica a pareti lisciate",
+      "Hand": "a mano",
+      "Korinthische Keramik": "Ceramica corinzia",
+      "Küchenware": "Ceramica da cucina",
+      "Ostgriechische Keramik": "Ceramica greco-orientale",
+      "Prähistorische Keramik": "Ceramica preistorica",
+      "Red Slip Ware": "Red slip ware",
+      "Schlichte Ware": "Ceramica semplice",
+      "Schwarzglanzton Ware": "Ceramica buccheroide",
+      "Terra sigilata": "Terra sigillata"
+    }
+  },
+  "Pottery-temperAmount-default": {
+    "values": {
+      "Keine Einschlüsse": "Inclusi assenti",
+      "Mittel": "medi",
+      "Nicht erkennbar": "non riconoscibili",
+      "Sehr Viel": "moltissimi",
+      "Vereinzelt": "sporadici",
+      "Viel": "molti",
+      "Wenig": "pochi"
+    }
+  },
+  "Pottery-temperParticles-default": {
+    "values": {
+      "fein": "fini",
+      "grob": "grossi",
+      "mittel": "medi",
+      "mittelfein": "medio-fini",
+      "sehr fein": "molto fini",
+      "sehr grob": "molto grossi"
+    }
+  },
+  "Pottery-vesselForm-default": {
+    "values": {
+      "Amphore": "Anfora",
+      "Aschenurne": "Urna cineraria",
+      "Becher": "Bicchiere",
+      "Deckel": "Coperchio",
+      "Deckelgefäß": "Vaso con coperchio",
+      "Flasche": "Bottiglia",
+      "Geschlossenes Gefäß": "Vaso chiuso",
+      "Kanne": "Brocca",
+      "Kasserole": "Casseruola",
+      "Kochschüssel": "Ciotola da cucina",
+      "Krug": "Boccale",
+      "Napf": "Ciotola",
+      "Offenes Gefäß": "Vaso aperto",
+      "Pfanne": "Padella",
+      "Räuchergefäß": "Incensiere",
+      "Schale": "Coppa",
+      "Schüssel": "Scodella",
+      "Tasse": "Tazza",
+      "Teller": "Piatto",
+      "Teller/Untersatz": "Piatto/piattino",
+      "Topf": "Pentola",
+      "Unbestimmt": "Indeterminato",
+      "Vorratsgefäß": "Vaso da stoccaggio"
+    }
+  },
+  "Pottery-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": "Alabastron",
+      "Amphoriskos": "Anforisco",
+      "Aryballos": "Ariballo",
+      "Balsamarium": "Balsamario",
+      "Dattelflasche": "Bottiglia per datteri",
+      "Faltenbecher": "Bicchiere a pareti rugose",
+      "Fischteller": "Piatto da pesce",
+      "Glockenbecher": "Bicchiere a campana",
+      "Handelsamphore": "Anfora commerciale",
+      "Hydria": "Hydria",
+      "Kopfflasche": "Bottiglia a forma di testa",
+      "Kotyle": "Kotyle",
+      "Kragenschale": "Coppa a listello",
+      "Krater": "Cratere",
+      "Kylix": "Kylix",
+      "Lekane": "Lekane",
+      "Lekythos": "Lekythos",
+      "Luterion": "Louterion",
+      "Lutrophore": "Loutrophoros",
+      "Miscellanea": "Miscellanea",
+      "Oinochoe": "Oinochoe",
+      "Pelike": "Pelike",
+      "Pithos": "Pithos",
+      "Pyxis": "Pyxis",
+      "Salznapf": "Saliera",
+      "Skyphos": "Skyphos",
+      "Spitzamphora": "Anfora a punta",
+      "Sprenkler": "Annaffiatoio",
+      "Stamnos": "Stamnos",
+      "Tierflasche": "Bottiglia zoomorfa",
+      "Tischamphore": "Anfora da tavola",
+      "Tränenfläschchen": "Lacrimatoio",
+      "Vierkantflasche": "Bottiglia quadrata",
+      "hexagonale Flasche": "Bottiglia esagonale",
+      "zylindrische Flasche": "Bottiglia cilindrica"
+    }
+  },
+  "Grave-graveType-default": {
+    "values": {
+      "Baumsargbestattung": "Tomba in tronco d'albero",
+      "Brandgrubengrab": "Tomba a fossa a incinerazione",
+      "Brandschüttung": "Rogo",
+      "Doliengrab": "Tomba a dolio",
+      "Dolmen": "Dolmen",
+      "Erdgrab": "Tomba a fossa",
+      "Felsgrab": "Tomba rupestre",
+      "Felsnischengrab": "Tomba a nicchia nella roccia",
+      "Flachgrab": "Tomba piatta",
+      "Ganggrab": "Tomba a corridoio",
+      "Gefäßbestattung": "Enchytrismòs",
+      "Gemauertes Grab": "Tomba a mattoni",
+      "Glockengrab": "Tomba a campana",
+      "Gruft": "Cripta",
+      "Hügelgrab": "Tomba a tumulo",
+      "Kistengrab": "Tomba a cista",
+      "Mausoleum": "Mausoleo",
+      "Megalithgrab": "Tomba megalitica",
+      "Schachthöhlengrab": "Tomba a grotticella",
+      "Steineinfassung": "Bordo in pietra",
+      "Steinplattengrab": "Tomba a lastre di pietra",
+      "Urnengrab": "Urna cineraria",
+      "Ziegelplattengrab": "Tomba a lastre di mattoni"
+    }
+  },
+  "Grave-specificType-default": {
+    "values": {
+      "Amphorenbestattung": "Tomba in anfora",
+      "In Dinos": "in dinos",
+      "In Krug": "in brocca",
+      "a cappuccina": "a cappuccina",
+      "bruchsteingemauertes Grab": "Tomba costruita con pietre di cava",
+      "quadergemauertes Grab": "Tomba costruita con conci",
+      "ziegelgemauertes Grab": "Tomba costruita con tegole"
+    }
+  },
+  "Grave-tombBuilding-default": {
+    "values": {
+      "Bruchsteingemauert": "Costruzione con pietre di cava",
+      "Quadergemauert": "Costruzione con conci",
+      "Ziegelgemauert": "Costruzione con tegole"
+    }
+  },
+  "Bone-biologicalAge-default": {
+    "values": {
+      "Adult (18/20-40)": "Adulto (18/20-40)",
+      "Fetus/Neonatus": "Feto/neonato",
+      "Infans I (0-7)": "Infante I (0-7)",
+      "Infans II (7-13)": "Infante II (7-13)",
+      "Juvenil (13-18/20)": "Giovane (13-18/20)",
+      "Matur (40-60)": "Maturo (40-60)",
+      "Senil (60 <)": "Senile (60 <)"
+    }
+  },
+  "Bone-boneClassification-default": {
+    "values": {
+      "Becken (Pelvis)": "Bacino (Pelvis)",
+      "Brustbein (Sternum)": "Sterno (Sternum)",
+      "Elle (Ulna)": "Ulna",
+      "Fingerknochen (Phalanges)": "Ossa delle dita (Phalanges)",
+      "Fußknochen": "Ossa dei piedi",
+      "Handknochen": "Ossa della mano",
+      "Kniescheibe (Patella)": "Rotula (Patella)",
+      "Langknochen": "Ossa lunghe",
+      "Oberarm (Humerus)": "Parte superiore del braccio (Humerus)",
+      "Oberschenkel (Femur)": "Femore",
+      "Rippen": "Costole",
+      "Schienenbein (Tibia)": "Tibia",
+      "Schlüsselbein (Clavicula)": "Clavicola",
+      "Schulterblatt (Scapula)": "Scapola",
+      "Schädel (Cranium)": "Cranio",
+      "Speiche (Radius)": "Radio",
+      "Steißbein": "Coccige",
+      "Undefinierbar": "indefinibile",
+      "Unterkiefer (Mandibula)": "Mandibola",
+      "Wadenbein (Fibula)": "Perone (Fibula)",
+      "Wirbel": "Vertebra",
+      "Zahn": "Dente"
+    }
+  },
+  "Bone-boneType-default": {
+    "values": {
+      "Elfenbein": "Avorio",
+      "Horn": "Corno",
+      "Menschenknochen": "Ossa umane",
+      "Tierknochen": "Ossa animali"
+    }
+  },
+  "Bone-burningGrade-default": {
+    "values": {
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": "I - 200°-300°C - viraggio all'incirca bianco-giallastro-avorio vetroso",
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": "II - 300°-400°C - viraggio all'incirca marrone-marrone scuro/nero",
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": "III - um 550°C - viraggio all'incirca grigio/grgio-blu-grigio latte grigio chiaro",
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": "IV - 650°-750°C - viraggio all'incirca bianco-latte-bianco opaco/bianco gesso",
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": "V - da 800°C - viraggio all'incirca bianco antico/bianco sporco"
+    }
+  },
+  "Bone-sex-default": {
+    "values": {
+      "Männlich": "maschile",
+      "Weiblich": "femminile"
+    }
+  },
+  "Bone-objectType-default": {
+    "values": {
+      "Anhänger": "Pendente",
+      "Armreif": "Bracciale",
+      "Astragal": "Astragalo",
+      "Bearbeitet (allgemein)": "lavorato (generale)",
+      "Einlage": "Inserto",
+      "Gefäß": "Vaso",
+      "Gerät": "Strumento",
+      "Kette": "Catena",
+      "Löffel": "Cucchiaio",
+      "Perle": "Perla",
+      "Ring": "Anello",
+      "Schmuck": "Gioiello",
+      "Spielstein": "Pedina da gioco",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Waffe": "Arma",
+      "Weinheber": "Alzavino",
+      "Werkzeug": "Attrezzo"
+    }
+  },
+  "Bone-species-default": {
+    "values": {
+      "Biber": "Castoro",
+      "Fisch": "Pesce",
+      "Gänsevogel (z. B. Gans, Schwan oder Ente)": "Uccello (per es. oca, cigno o anatra",
+      "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)": "Lagomorfi (ad es. lepre, pika o coniglio)",
+      "Hirsch": "Cervo",
+      "Nagetier (z.B. Maus, Ratte etc.)": "Roditore (ad es. topo, ratto etc.)",
+      "Rind": "Bovino",
+      "Schwein": "Maiale",
+      "Vogel": "Uccello",
+      "Ziegenartige (z. B. Schaf, Ziege)": "Caprini (per es. pecora, capra)"
+    }
+  },
+  "Terracotta-clayStructure-default": {
+    "values": {
+      "hart": "dura",
+      "klingend hart": "molto dura",
+      "mittel": "media",
+      "weich": "morbida"
+    }
+  },
+  "Terracotta-surfaceCondition-default": {
+    "values": {
+      "Brandspuren": "Tracce di bruciato",
+      "Sekundärbrand": "Cottura secondaria",
+      "abblätternd": "sfaldata",
+      "gut erhalten": "ben conservata",
+      "stark abgerieben": "molto logorata",
+      "starke Sinter- oder Mörtelablagerungen": "pesantemente incrostata o concrezionata",
+      "verrieben": "sfregata",
+      "versintert": "sinterizzata",
+      "verwaschen": "slavata"
+    }
+  },
+  "Terracotta-vesselForm-default": {
+    "values": {
+      "Amphore": "Anfora",
+      "Aschenurne": "Urna cineraria",
+      "Becher": "Bicchiere",
+      "Deckel": "Coperchio",
+      "Deckelgefäß": "Vaso con coperchio",
+      "Flasche": "Bottiglia",
+      "Krug": "Boccale",
+      "Napf": "Ciotola",
+      "Schale": "Coppa",
+      "Schüssel": "Scodella",
+      "Tasse": "Tazza",
+      "Teller": "Piatto",
+      "Topf": "Pentola",
+      "Unbestimmt": "Indeterminato",
+      "Vorratsgefäß": "Vaso da stoccaggio"
+    }
+  },
+  "Terracotta-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": "Alabastron",
+      "Amphoriskos": "Anforisco",
+      "Aryballos": "Ariballo",
+      "Balsamarium": "Balsamario",
+      "Dattelflasche": "Bottiglia per datteri",
+      "Faltenbecher": "Bicchiere a pareti rugose",
+      "Hydria": "Hydria",
+      "Kopfflasche": "Bottiglia a forma di testa",
+      "Kotyle": "Kotyle",
+      "Kragenschale": "Coppa a listello",
+      "Krater": "Cratere",
+      "Kylix": "Kylix",
+      "Lekythos": "Lekythos",
+      "Luterion": "Louterion",
+      "Lutrophore": "Loutrophoros",
+      "Oinochoe": "Oinochoe",
+      "Pelike": "Pelike",
+      "Pithos": "Pithos",
+      "Skyphos": "Skyphos",
+      "Spitzamphora": "Anfora a punta",
+      "Stamnos": "Stamnos",
+      "Vierkantflasche": "Bottiglia quadrata",
+      "hexagonale Flasche": "Bottiglia esagonale",
+      "zylindrische Flasche": "Bottiglia cilindrica"
+    }
+  },
+  "Drawing-drawingMaterial-default": {
+    "values": {
+      "Digitale Datei": "File digitale",
+      "Folie": "Diapositiva",
+      "Karton": "Cartone",
+      "Lichtpause": "Cianografia",
+      "Mikrofilm": "Microfilm",
+      "Millimeterpapier": "Carta millimetrica",
+      "Papier": "Carta",
+      "Photoabzüge": "Stampa fotografica",
+      "Transparentfilm": "Pellicola trasparente",
+      "Transparentpapier": "Carta lucida"
+    }
+  },
+  "Drawing-drawingTool-default": {
+    "values": {
+      "Bleistift": "Matita",
+      "Buntstift": "Pastelli",
+      "Tusche": "China",
+      "digital erstellt": "Creato digitalmente"
+    }
+  },
+  "Drawing-drawingType-default": {
+    "values": {
+      "AutoCAD Zeichnung (auch TachyCAD)": "Disegno AutoCAD (anche TachyCAD)",
+      "Handzeichnung": "Disegno a mano",
+      "Pantograf": "Pantografo"
+    }
+  },
+  "Drawing-scale-default": {
+    "values": {
+      "1:1": "1:1",
+      "1:10": "1:10",
+      "1:100": "1:100",
+      "1:1000": "1:1000",
+      "1:10000": "1:10000",
+      "1:20": "1:20",
+      "1:50": "1:50",
+      "1:500": "1:500",
+      "1:5000": "1:5000"
+    }
+  },
+  "Survey-researchMethod-default": {
+    "values": {
+      "Befliegung": "Volo",
+      "Begehung": "Ricognizione",
+      "Geoelektrik": "Geoelettrica",
+      "Geomagnetik": "Geomagnetica",
+      "Georadar": "Georadar",
+      "LIDAR": "LIDAR",
+      "Luft- oder Satellitenbilder": "Immagini aeree o satellitari",
+      "Quadratisch": "Quadrato",
+      "Regelmäßig": "Regolare",
+      "Seismik": "Sismologia"
+    }
+  },
+  "Stone-architectureElement-default": {
+    "values": {
+      "Akroter": "Acroterio",
+      "Architrav": "Architrave",
+      "Archtitravfriesblock": "Fregio architettonico",
+      "Basis": "Base",
+      "Bauplastik": "Scultura architettonica",
+      "Fries": "Fregio",
+      "Gesims": "Cornice",
+      "Kapitell": "Capitello",
+      "Konsole": "Mensola",
+      "Profilstück": "Profilo",
+      "Quaderblock": "Blocco squadrato",
+      "Rinne": "Canaletta",
+      "Schrankenplatte": "Pannello",
+      "Schwellenblock": "Blocco della soglia",
+      "Sima": "Sima",
+      "Säule": "Colonna",
+      "Wandverkleidung": "Rivestimento murale"
+    }
+  },
+  "Stone-material-default": {
+    "values": {
+      "Andesit": "Andesite",
+      "Basalt": "Basalto",
+      "Feldspat": "Feldspato",
+      "Flint": "Selce",
+      "Glimmer": "Mica",
+      "Granit": "Granito",
+      "Kalk": "Calce",
+      "Kalkmörtel": "Malta di calce",
+      "Kalkstein": "Pietra calcarea",
+      "Kalzit": "Calcite",
+      "Kreide": "gesso",
+      "Marmor": "Marmo",
+      "Pophyr": "Porfido",
+      "Quarz": "Quarzo",
+      "Sandstein": "Arenaria",
+      "Sinter": "Concrezione",
+      "Trachyt": "Trachite",
+      "Tuff": "Tufo"
+    }
+  },
+  "Stone-objectType-default": {
+    "values": {
+      "Abschlag": "Scaglia",
+      "Altar": "Altare",
+      "Anhänger": "Pendente",
+      "Architekturdekor": "Decorazione architettonica",
+      "Bauglied": "Membratura",
+      "Becken": "Bacino",
+      "Einlage": "Inserto",
+      "Einsatzkopf": "Testa",
+      "Fußbodenfragment": "Frammento di pavimento",
+      "Gefäß": "Vaso",
+      "Gerät": "Strumento",
+      "Grabmarkierung": "Segnacolo funerario",
+      "Grabplatte": "Lapide",
+      "Gussform": "Matrice",
+      "Herme": "Erma",
+      "Inkrustation": "Incrostazione",
+      "Lampe": "Lucerna",
+      "Löffel": "Cicchiaio",
+      "Mahlstein": "Macina",
+      "Mobiliar": "Mobilio",
+      "Mörser": "Mortaio",
+      "Perle": "Perla",
+      "Plastik/Skulptur": "Plastica/scultura",
+      "Produktionsfragment": "Frammento di produzione",
+      "Reibstein": "Pestello",
+      "Ring": "Anello",
+      "Rührstab": "Asta di mescolamento",
+      "Sarkophag": "Sarcofago",
+      "Schmuck": "Gioiello",
+      "Siegel": "Sigillo",
+      "Spielbrett": "Scacchiera",
+      "Spielstein": "Pedina da gioco",
+      "Spinnwirtel": "Fusaiola",
+      "Spolie": "Spoglie",
+      "Statuenbasis": "Base di statua",
+      "Stele": "Stele",
+      "Tessera": "Tessera",
+      "Tischfuß": "Piede del tavolo",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Waffe": "Arma",
+      "Webgewicht": "Peso da telaio",
+      "Werkzeug": "Attrezzo",
+      "Ölpresse": "Frantoio"
+    }
+  },
+  "Stone-origin-default": {
+    "values": {
+      "Alpen": "Alpi",
+      "Anatolien": "Anatolia",
+      "Chimtou": "Chimtou",
+      "Harz": "Harz",
+      "Kreta": "Creta",
+      "Sizilien": "Sicilia"
+    }
+  },
+  "Coin-denomination-default": {
+    "values": {
+      "1 1/2 Skripula": "1 1/2 Skripula",
+      "1 1/2 Solidus": "1 1/2 Solidus",
+      "1/2 Stater (Hemistater)": "1/2 Statere (Emistatere)",
+      "1/30 Drachme": "1/30 Dracma",
+      "1/4  Stater (Tetarte)": "1/4  Statere (Tetarte)",
+      "1/4 Einheit": "Unità",
+      "1/5 Drachme": "1/5 Dracma",
+      "2 Solidus": "2 Solidus",
+      "3 Solidus": "3 Solidus",
+      "4 1/2 Solidus": "4 1/2 Solidus",
+      "60 As": "60 As",
+      "9 Siliqua": "9 Siliqua",
+      "9 Solidus": "9 Solidus",
+      "AE Gross": "AE grande",
+      "AE Klein": "AE piccola",
+      "AE Medium": "AE media",
+      "Aes 1": "Aes 1",
+      "Aes 2": "Aes 2",
+      "Aes 3": "Aes 3",
+      "Aes 3-4": "Aes 3-4",
+      "Aes 4": "Aes 4",
+      "Antoninian": "Antoniniano",
+      "Argenteus": "Argenteo",
+      "As": "As",
+      "Aureus": "Aureo",
+      "Aureus¹": "Aureo¹",
+      "Aureus²": "Aureo²",
+      "Bruchteil": "Frazione",
+      "Cistophor": "Cistoforo",
+      "Denar": "Denario",
+      "Denar (serratus)": "Denario (serrato)",
+      "Didrachme": "Didracma",
+      "Diobol": "Diobolo",
+      "Distater": "Distatere",
+      "Doppelter Sesterz": "Doppio Sesterzio",
+      "Drachme": "Dracma",
+      "Dupondius": "Dupondio",
+      "Gold-mehrfaches": "Multipli d'oro",
+      "Grosser Aes 2": "Grande Aes 2",
+      "Halber Solidus": "Mezzo Solidus",
+      "Hekte (1/6 Stater)": "Hekte (1/6 Statere)",
+      "Hemidrachme": "Emidracma",
+      "Hemiobol": "Emiobolo",
+      "Kleiner Aes 2": "Piccola Aes 2",
+      "Kontorniat": "Contorniato",
+      "Litra": "Litra",
+      "Medaillon": "Medaglione",
+      "Miliarense (leicht)": "Miliarense (leggera)",
+      "Miliarense (schwer)": "Miliarense (pesante)",
+      "Obolus": "Obolo",
+      "Quadrans": "Quadrante",
+      "Quinar": "Quinario",
+      "Quinar Aureus": "Quinario aureo",
+      "Reduzierte Siliqua": "Siliqua ridotta",
+      "Reduzierter Aes 2": "Aes 2 ridotta",
+      "Semis": "Semisse",
+      "Semissis": "Semissis",
+      "Semuncia": "Semioncia",
+      "Sesterz": "Sesterzio",
+      "Sextans": "Sestante",
+      "Silber-Mehrfaches": "Multipli d'argento",
+      "Siliqua": "Siliqua",
+      "Solidus": "Solidus",
+      "Stater": "Statere",
+      "Tetradrachme": "Tetradracma",
+      "Tremissis": "Tremisse",
+      "Triens": "Triente",
+      "Uncia": "Oncia",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Victoriatus": "Vittoriato"
+    }
+  },
+  "Coin-manufacturingMethod-default": {
+    "values": {
+      "Gegossen": "fusa",
+      "Geprägt": "coniata",
+      "Plattiert": "placcata",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile"
+    }
+  },
+  "Coin-metalMaterial-default": {
+    "values": {
+      "Aluminium": "Alluminio",
+      "Billon": "Billone",
+      "Blei": "Piombo",
+      "Bronze": "Bronzo",
+      "Eisen": "Ferro",
+      "Gold": "Oro",
+      "Kupfer": "Rame",
+      "Messing": "Ottone",
+      "Silber": "Argento",
+      "Stahl": "Acciaio",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Zink": "Zinco",
+      "Zinn": "Stagno"
+    }
+  },
+  "Coin-mint-default": {
+    "values": {
+      "Abdera": "Abdera",
+      "Abydos": "Abido",
+      "Afrika": "Africa",
+      "Agrigent": "Agrigento",
+      "Aigai (Vergina)": "Aigai (Vergina)",
+      "Aiolis": "Aiolis",
+      "Aitolischer Bund": "Lega Etolica",
+      "Akanthus": "Acanto",
+      "Akkon": "Acri",
+      "Alabanda": "Alabanda",
+      "Alexandria": "Alessandria",
+      "Alexandria Troas": "Alessandria Troade",
+      "Alexandrien": "Alessandria",
+      "Amasra": "Amasra",
+      "Amathus": "Amato",
+      "Ambianum (Amiens)": "Ambianum (Amiens)",
+      "Ambracia": "Ambracia",
+      "Amiens": "Amiens",
+      "Amisus": "Amisus",
+      "Amphipolis": "Anfipoli",
+      "Amrit": "Amrit",
+      "Anaktorio": "Anaktorio",
+      "Antiochia": "Antiochia",
+      "Antiochia (Antakya)": "Antiochia (Antakya)",
+      "Antiochia am Orontes": "Antiochia di Siria",
+      "Apameia Kibotos": "Apamea Ciboto",
+      "Apameia am Orontes": "Apamea di Siria",
+      "Apollonia": "Apollonia",
+      "Apulien": "Puglia",
+      "Aquileia": "Aquileia",
+      "Archaiischer Bund": "Lega Achea",
+      "Arelate (Arles)": "Arelate (Arles)",
+      "Argos": "Argo",
+      "Argos Amphilochicum": "Argo Anfilochico",
+      "Arles": "Arles",
+      "Arpi": "Arpi",
+      "Aruad": "Arados",
+      "Asia Minor": "Asia Minore",
+      "Asien": "Asia",
+      "Aspendos": "Aspendo",
+      "Assos": "Asso",
+      "Astibus": "Astibus",
+      "Athen": "Atene",
+      "Aydın": "Aydın",
+      "Babylon": "Babilonia",
+      "Barcino (Barcelona)": "Barcino (Barcellona)",
+      "Beirut": "Beirut",
+      "Bozcaada": "Bozcaada",
+      "Byblos": "Biblo",
+      "Byzantion": "Bisanzio",
+      "Böotien": "Beozia",
+      "Caesaraugusta": "Saragozza",
+      "Caesarea in Kappadokien": "Cesarea in Cappadocia",
+      "Cales": "Cales",
+      "Camulodunum (Colchester)": "Camulodunum (Colchester)",
+      "Canosa di Puglia": "Canosa di Puglia",
+      "Carnuntum": "Carnunto",
+      "Carthago (Tunis)": "Cartagine (Tunisi)",
+      "Catania": "Catania",
+      "Caulonia": "Caulonia",
+      "Chalcedon": "Calcedonia",
+      "Chalkida": "Calcide",
+      "Chalkidiki": "Penisola Calcidica",
+      "Chersones": "Chersoneso",
+      "Chios": "Chio",
+      "Colchester": "Colchester",
+      "Colonia Agrippina (Köln)": "Colonia Agrippina (Colonia)",
+      "Colonia Patricia": "Colonia Patricia",
+      "Comitatenses": "Comitatenses",
+      "Constantinopolis (Istanbul)": "Costantinopoli (Istanbul)",
+      "Crotone": "Crotone",
+      "Cyme": "Cuma",
+      "Damaskus": "Damasco",
+      "Diesseitiges Gallian / Norditalien": "Gallia Cisalpina / nord Italia",
+      "Dionysopolis": "Dionysopolis",
+      "Dyrrhachium": "Durazzo",
+      "Ekbatana": "Ecbatana",
+      "Elea": "Elea",
+      "Elis": "Elide",
+      "Emerita": "Emerita",
+      "Empüries": "Empuries",
+      "Ephesos": "Efeso",
+      "Eretria": "Eretria",
+      "Erythrai": "Eritre",
+      "Etrurien": "Etruria",
+      "Euböa": "Eubea",
+      "Foça": "Foça",
+      "Gallien": "Gallia",
+      "Gela": "Gela",
+      "Germe": "Germe",
+      "Gortyn": "Gortina",
+      "Halikarnassos": "Alicarnasso",
+      "Harran": "Harran",
+      "Heraclea": "Eraclea",
+      "Herakleia": "Eraclea",
+      "Herakleia Pontike": "Eraclea Pontica",
+      "Himera": "Himera",
+      "Hispanien": "Spagna",
+      "Hispanien-Punisch": "Spagna-punica",
+      "Histria": "Istria",
+      "Homs": "Homs",
+      "Ibiza": "ibiza",
+      "Idalion": "idalio",
+      "Italien": "Italia",
+      "Italien (Südosten)": "Italia (Sud-est)",
+      "Kabile": "Cabile",
+      "Kamarina": "Camarina",
+      "Karien": "Caria",
+      "Karthago": "Cartagine",
+      "Karystos": "Caristo",
+      "Kelenderis": "Celenderis",
+      "Kertsch": "Cherc",
+      "Klazomenai": "Clazomene",
+      "Knidos": "Cnido",
+      "Kolchis": "Colchide",
+      "Kolophon": "Colofone",
+      "Konstantinopel": "Costantinopoli",
+      "Korfu": "Corfu",
+      "Korinth": "Corinto",
+      "Korinthischer Bund": "Lega di Corinto",
+      "Kos": "Kos",
+      "Kydonia": "Cidonia",
+      "Kyrenaika": "Cirenaica",
+      "Kyrene": "Cirene",
+      "Kyzikos": "Cizico",
+      "Köln": "Colonia",
+      "Lampsakos": "Lampsaco",
+      "Laodikeia am Lykos": "Laodicea al Lico",
+      "Lapta": "Lapta",
+      "Larissa": "Larissa",
+      "Larnaka": "Larnaka",
+      "Latakia": "Laodicea",
+      "Lefkada": "Lefkada",
+      "Lentini": "Lentini",
+      "Lete": "Lete",
+      "Locri": "Locri",
+      "Locri Opuntii (Opus)": "Locride Opunzia (Opus)",
+      "Londinium": "Londinium",
+      "Lucera": "Lucera",
+      "Lugdunum": "Lugdunum",
+      "Lydien": "Lidia",
+      "Lykien": "Licia",
+      "Lysimacheia": "Lisimachia",
+      "Lyttos": "Litto",
+      "Magnesia am Mäander": "Magnesia sul Meandro",
+      "Mainz": "Magonza",
+      "Makedonien": "Macedonia",
+      "Makedonien (1. Region)": "Macedonien (1. Regione)",
+      "Mangalia": "Mangalia",
+      "Marmetini": "Marmetini",
+      "Maroneia": "Maronia",
+      "Marseille": "Marsiglia",
+      "Mediolanum": "Mediolanum",
+      "Megalopoli": "Megalopoli",
+      "Memphis": "Menfi",
+      "Messene": "Messene",
+      "Messina": "Messina",
+      "Metapont": "Metaponto",
+      "Milas": "Milas",
+      "Milet": "Mileto",
+      "Mithymna": "Metimna",
+      "Mittelitalien": "Italia centrale",
+      "Myriandrus": "Miriandro",
+      "Myrina": "Mirina",
+      "Mytilini": "Mitilene",
+      "Narbo": "Narbo",
+      "Naxos": "Nasso",
+      "Neapel": "Napoli",
+      "Nessebar": "Nessebar",
+      "Nikomedia": "Nicomedia",
+      "Nisibis": "Nisibis",
+      "Nuceria": "Noceria",
+      "Olbia": "Olbia",
+      "Oreus": "Oreus",
+      "Oria": "Oria",
+      "Ostia Antica": "Ostia Antica",
+      "Ouranoupolis": "Uranopoli",
+      "Paestum": "Paestum",
+      "Paphos": "Pafo",
+      "Parion": "Pario",
+      "Paros": "Paro",
+      "Pella": "Pella",
+      "Peloponnes": "Peloponneso",
+      "Pergamon": "Pergamo",
+      "Perge": "Perge",
+      "Persien": "Persia",
+      "Phanagoria": "Fanagoria",
+      "Phaselis": "Faselide",
+      "Phokis": "Focide",
+      "Priene": "Priene",
+      "Prusias ad Hypium": "Prusiade",
+      "Ravenna": "Ravenna",
+      "Reggio Calabria": "Reggio Calabria",
+      "Republik Zypern": "Repubblica di Cipro",
+      "Rhodos": "Rodi",
+      "Rom": "Roma",
+      "Rouen": "Rouen",
+      "Salamis": "Salamina",
+      "Samos": "Samo",
+      "Sardes": "Sardi",
+      "Sardinien": "Sardegna",
+      "Segesta": "Segesta",
+      "Seleukia Pieria": "Seleucia Pieria",
+      "Seleukia am Tigris": "Seleucia al Tigri",
+      "Selinus": "Selinunte",
+      "Sestos": "Sesto",
+      "Side": "Side",
+      "Sidon": "Sidone",
+      "Sikyon": "Sicione",
+      "Sinop": "Sinope",
+      "Sirmium": "Sirmio",
+      "Sisak": "Sisak",
+      "Sizilien": "Sicilia",
+      "Sizilien 2 (Republican period)": "Sicilia 2 (periodo repubblicano)",
+      "Sizilisch-Punisch": "Siciliano-punico",
+      "Smyrna": "Smirne",
+      "Sofia": "Sofia",
+      "Soloi": "Soli",
+      "Sosopol": "Sozopol",
+      "Susa (Persien)": "Susa (persia)",
+      "Sybaris": "Sibari",
+      "Syrakus": "Siracusa",
+      "Syrien": "Siria",
+      "Südgallische Münzstätte": "Zecca Gallia meridionale",
+      "Tanagra": "Tanagra",
+      "Taras": "Taras",
+      "Tarraco": "Tarraco",
+      "Tarsus": "Tarso",
+      "Tegea": "Tegea",
+      "Temnus": "Temnus",
+      "Teos": "Teo",
+      "Terina": "Terina",
+      "Tessin": "Tessin",
+      "Thasos": "Taso",
+      "Thessalische Liga": "Lega Tessala",
+      "Thessalonica": "Salonicco",
+      "Thessaloniki": "Salonicco",
+      "Thiva": "tebe",
+      "Thrakien": "Tracia",
+      "Thurioi": "Turi",
+      "Thyrrheium": "Terina",
+      "Trier": "Treviri",
+      "Tripoli (Libanon)": "Tripoli (Libano)",
+      "Tyros": "Tiro",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Viminatium": "Viminatium",
+      "Vindobona": "Vindobona",
+      "Warna": "Varna",
+      "Zancle": "Zancle",
+      "Äegina": "Egina",
+      "Äeneas": "Enea",
+      "Äetolien": "Etolia"
+    }
+  },
+  "Coin-mintingRuler-default": {
+    "values": {
+      "Constans": "Costanzo",
+      "Domitian": "Domiziano",
+      "Kaiser Nero": "Nerone",
+      "Konstantin": "Costantino",
+      "Licinius": "Licino",
+      "Myrina": "Myrina",
+      "Traian": "Traiano",
+      "Türkische Republick": "Repubblica Turca",
+      "Valentianus III": "Valenziano III"
+    }
+  },
+  "Coin-stampPositioning-default": {
+    "values": {
+      "- 1 Uhr": "- ore 1",
+      "- 2 Uhr": "- ore 2",
+      "- 3 Uhr": "- ore 3",
+      "- 4 Uhr": "- ore 4",
+      "- 5 Uhr": "- ore 5",
+      "- 6 Uhr": "- ore 6",
+      "- 7 Uhr": "- ore 7",
+      "- 8 Uhr": "- ore 8",
+      "- 9 Uhr": "- ore 9",
+      "- 10 Uhr": "- ore 10",
+      "- 11 Uhr": "- ore 11",
+      "- 12 Uhr": "- ore 12"
+    }
+  },
+  "Find-storagePlace-default": {
+    "values": {
+      "Landesamt": "Ufficio statale",
+      "Museum": "Museo",
+      "Museum Bergama": "Museo di Bergama",
+      "Pergamon Depot": "Deposito di Pergamo",
+      "Privatbesitz": "Proprietà privata",
+      "Regionalverwaltung": "Amministrazione regionale",
+      "Restaurierungswerkstatt": "Laboratorio di restauro",
+      "Staatsbesitz": "Proprietà dello Stato"
+    }
+  },
+  "storagePlace-default": {
+    "values": {
+      "Landesamt": "Ufficio statale",
+      "Museum": "Museo",
+      "Privatbesitz": "Proprietà privata",
+      "Restaurierungswerkstatt": "Laboratorio di restauro",
+      "Staatsbesitz": "Proprietà dello Stato"
+    }
+  },
+  "PlasterFragment-plasterComponents-default": {
+    "values": {
+      "Feinsand": "Sabbia fine",
+      "Grus": "frantumi di roccia",
+      "Sand": "Sabbia"
+    }
+  },
+  "Photo-originalType-default": {
+    "values": {
+      "Dia bunt": "Diapositiva colorata",
+      "Digitalfoto": "Foto digitale",
+      "Glasnegativ": "Negativo in vetro",
+      "Kleinbild bunt": "35 mm colorato",
+      "Kleinbild s/w": "35 mm b/n",
+      "Messbild": "Fotogramma",
+      "Mittelformat": "Formato medio",
+      "Scan": "Scansione"
+    }
+  },
+  "Metal-decorationTechnique-default": {
+    "values": {
+      "Bemalung": "Pittura",
+      "Beschläge": "Borchie",
+      "Emaille": "Smalto",
+      "Nielloverzierung": "Decorazione a niello",
+      "Reliefdekor": "Decorazione a rilievo",
+      "Riefeldekor": "Decorazione a scanalature",
+      "Ritzungen": "incisioni",
+      "Stempel": "Bollo",
+      "Stempeldekor": "Decorazione a stampo",
+      "Vergoldung": "Doratura"
+    }
+  },
+  "Metal-manufacturingMethod-default": {
+    "values": {
+      "Getrieben": "a sbalzo",
+      "Gußtechnik": "fusione",
+      "Prägearbeit": "goffratura",
+      "Schmiedetechnik": "forgiatura",
+      "Ziehtechnik": "trafilatura"
+    }
+  },
+  "Metal-objectType-default": {
+    "values": {
+      "Anhänger": "Pendente",
+      "Armreif": "Bracciale",
+      "Barren": "Barra",
+      "Beschlag": "Borchia",
+      "Blech": "Lamiera",
+      "Einlage": "Inserto",
+      "Fibel": "Fibula",
+      "Gefäß": "Vaso",
+      "Gerät": "Strumento",
+      "Gewicht": "Peso",
+      "Glocke": "Campana",
+      "Gussform": "Matrice",
+      "Gusszapfen": "Perno",
+      "Halbfabrikat": "Semilavorato",
+      "Kandelaber": "Candelabro",
+      "Kette": "Catena",
+      "Klinge": "Lama",
+      "Knopf": "Pomello",
+      "Lampe": "Lucerna",
+      "Löffel": "Cucchiaio",
+      "Mobiliar": "Mobilio",
+      "Nadel": "Ago",
+      "Nagel": "Chiodo",
+      "Perle": "Perla",
+      "Pfeilspitze": "Punta di freccia",
+      "Plastik/Skulptur": "Plastica/scultura",
+      "Produktionsfragment": "Frammento di produzione",
+      "Projektil": "Proiettile",
+      "Reibe": "Grattugia",
+      "Ring": "Anello",
+      "Ringbarren": "Barre ad anello",
+      "Rührstab": "Asta di mescolamento",
+      "Sarkophag": "Sarcofago",
+      "Schild": "Scudo",
+      "Schlacke": "Scoria",
+      "Schlüssel": "Chiave",
+      "Schmiedeabfall": "Scarti di forgiatura",
+      "Schmuck": "Gioiello",
+      "Schnalle": "Fibbia",
+      "Schreibgerät": "Strumento per scrivere",
+      "Siegel": "Sigillo",
+      "Spiegel": "Specchio",
+      "Spielstein": "Pedina da gioco",
+      "Spinnwirtel": "Fusaiola",
+      "Stabbarren": "Barre",
+      "Strigilis": "Strigile",
+      "Türschloss": "Serratura",
+      "Unsicher bzw. unbestimmbar": "incerto o indeterminabile",
+      "Waffe": "Arma",
+      "Wasserleitung": "Tubo dell'acqua",
+      "Weinheber": "Alzavino",
+      "Werkzeug": "Attrezzo",
+      "Zierbeschlag": "Accessorio ornamentale"
+    }
+  },
+  "Metal-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": "Alabastron",
+      "Amphoriskos": "Anforisco",
+      "Aryballos": "Ariballo",
+      "Balsamarium": "Balsamario",
+      "Dattelflasche": "Bottiglia per datteri",
+      "Faltenbecher": "Bicchiere a pareti rugose",
+      "Glockenbecher": "Bicchiere a campana",
+      "Hydria": "Hydria",
+      "Kopfflasche": "Bottiglia a forma di testa",
+      "Kotyle": "Kotyle",
+      "Kragenschale": "Coppa a listello",
+      "Krater": "Cratere",
+      "Kylix": "Kylix",
+      "Lekythos": "Lekythos",
+      "Luterion": "Louterion",
+      "Oinochoe": "Oinochoe",
+      "Pelike": "Pelike",
+      "Rippenschale": "Coppa costolata",
+      "Schliffrillenschale": "Coppa scanalata",
+      "Skyphos": "Skyphos",
+      "Spitzamphora": "Anfora a punta",
+      "Sprenkler": "Annaffiatoio",
+      "Stamnos": "Stamnos",
+      "Vierkantflasche": "Bottiglia quadrata",
+      "hexagonale Flasche": "Bottiglia esagonale",
+      "zylindrische Flasche": "Bottiglia cilindrica"
+    }
+  },
+  "Sample-sampleType-default": {
+    "values": {
+      "Bodenprobe": "Campione di terra",
+      "C14-Analyse": "Analisi C14",
+      "Dendroprobe": "Campione dendrologico",
+      "Hammerschlagsprobe": "Prova del martello",
+      "Phosphatanalyse": "Analisi dei fosfati",
+      "Pollenanalyse": "Analsii dei pollini"
+    }
+  },
+  "TypeCatalog-criterion-default": {
+    "values": {
+      "Form": "Forma",
+      "Material": "Materiale",
+      "Dekoration": "Decorazione",
+      "Spuren": "Tracce"
+    }
+  }
+}

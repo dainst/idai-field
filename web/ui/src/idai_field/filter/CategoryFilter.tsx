@@ -44,7 +44,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectSearchPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectSearchPopover || searchParams.getAll('category').length === 1
+    const filterValues = filter[!inProjectSearchPopover
         ? 'values'
         // TODO change how the unfilteredValues are calculated in the backend
         // they should be calculated based on a search without filters, only including the search term
@@ -87,7 +87,6 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         filters: [string, string][], projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
-    if (bucket.item.count === 0) return null; // this is for the case where we deal with unfiltered values
     const key_ = key === 'resource.category.name' ? 'category' : key;
 
     return <React.Fragment key={ bucket.item.value.name }>

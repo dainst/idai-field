@@ -1558,79 +1558,81 @@
       }
     }
   },
-  "Project:archaeoDox": {
-    "label": "Processo"
-  },
-  "Place:archaeoDox": {
-    "label": "Luogo di ritrovamento"
-  },
-  "Planum:archaeoDox": {
-    "label": "Disegno della superficie"
-  },
-  "Profile:archaeoDox": {
-    "label": "Disegno della sezione",
-    "fields": {
-      "archaeoDox:viewingDirection": {
-        "label": "Vista da"
+  "forms": {
+    "Project:archaeoDox": {
+      "label": "Processo"
+    },
+    "Place:archaeoDox": {
+      "label": "Luogo di ritrovamento"
+    },
+    "Planum:archaeoDox": {
+      "label": "Disegno della superficie"
+    },
+    "Profile:archaeoDox": {
+      "label": "Disegno della sezione",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "Vista da"
+        }
       }
-    }
-  },
-  "Find:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Descrizione breve (classificazione)"
-      },
-      "archaeoDox:material": {
-        "label": "Materiale"
-      },
-      "archaeoDox:typeOfWare": {
-        "label": "Tipo di impasto ceramico"
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrizione breve (classificazione)"
+        },
+        "archaeoDox:material": {
+          "label": "Materiale"
+        },
+        "archaeoDox:typeOfWare": {
+          "label": "Tipo di impasto ceramico"
+        }
       }
-    }
-  },
-  "FeatureGroup:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Descrizione breve (classificazione)"
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrizione breve (classificazione)"
+        }
       }
-    }
-  },
-  "Feature:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Descrizione breve (classificazione)"
-      },
-      "archaeoDox:distinguishingCriterium": {
-        "label": "Criterio di distinzione"
-      },
-      "archaeoDox:isNatural": {
-        "label": "Naturale"
-      },
-      "archaeoDox:soilType": {
-        "label": "Tipo di terreno"
-      },
-      "archaeoDox:consistency": {
-        "label": "Consistenza"
-      },
-      "archaeoDox:isArchaeologicallyIrrelevant": {
-        "label": "Senza rilevanza archeologica"
+    },
+    "Feature:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrizione breve (classificazione)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "Criterio di distinzione"
+        },
+        "archaeoDox:isNatural": {
+          "label": "Naturale"
+        },
+        "archaeoDox:soilType": {
+          "label": "Tipo di terreno"
+        },
+        "archaeoDox:consistency": {
+          "label": "Consistenza"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "Senza rilevanza archeologica"
+        }
       }
-    }
-  },
-  "FeatureSegment:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Descrizione breve (classificazione)"
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrizione breve (classificazione)"
+        }
       }
-    }
-  },
-  "Sample:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Descrizione breve (classificazione)"
-      },
-      "archaeoDox:soilProperties": {
-        "label": "Caratteristiche dello strato"
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrizione breve (classificazione)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "Caratteristiche dello strato"
+        }
       }
     }
   }

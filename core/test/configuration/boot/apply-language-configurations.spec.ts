@@ -419,13 +419,18 @@ describe('applyLanguageConfigurations', () => {
     it('overwrite form labels in custom language configuration', () => {
 
         const forms: Map<TransientFormDefinition> = {
-            'A:form': { name: 'A:form', categoryName: 'A', fields: {} } as any
+            'A:form': { name: 'A:form', categoryName: 'A', fields: { a: {} } } as any
         };
 
         const coreConfiguration = {
             categories: {
                 A: {
-                    label: 'A Category Core'
+                    label: 'A Category Core',
+                    fields: {
+                        a: {
+                            label: 'A Field Category Core'
+                        }
+                    }
                 }
             }
         };
@@ -433,12 +438,22 @@ describe('applyLanguageConfigurations', () => {
         const libraryConfiguration = {
             categories: {
                 A: {
-                    label: 'A Category Library'
+                    label: 'A Category Library',
+                    fields: {
+                        a: {
+                            label: 'A Field Category Library'
+                        }
+                    }
                 }
             },
             forms: {
                 'A:form': {
-                    label: 'A Form Library'
+                    label: 'A Form Library',
+                    fields: {
+                        a: {
+                            label: 'A Field Form Library'
+                        }
+                    }
                 }
             }
         };
@@ -446,7 +461,12 @@ describe('applyLanguageConfigurations', () => {
         const customConfiguration = {
             categories: {
                 A: {
-                    label: 'A Custom'
+                    label: 'A Custom',
+                    fields: {
+                        a: {
+                            label: 'A Field Custom'
+                        }
+                    }
                 }
             }
         };
@@ -467,5 +487,7 @@ describe('applyLanguageConfigurations', () => {
 
         expect(forms['A:form'].label.de).toEqual('A Custom');
         expect(forms['A:form'].defaultLabel.de).toEqual('A Form Library');
+        expect(forms['A:form'].fields['a'].label.de).toEqual('A Field Custom');
+        expect(forms['A:form'].fields['a'].defaultLabel.de).toEqual('A Field Form Library');
     });
 });

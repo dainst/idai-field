@@ -33,8 +33,9 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 const newFilters = extractFiltersFromSearchParams(searchParams);
                 if (searchParams.getAll('category').length === 0 && newFilters.length !== 0) {
                     history.push(`/project/${projectId}/${projectView}?`);
+                } else {
+                    setFilters(newFilters);
                 }
-                setFilters(newFilters);
             }
         }
     }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);

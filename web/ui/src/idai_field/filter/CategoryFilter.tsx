@@ -45,7 +45,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         // be necessary anymore. in principle we should be able to remove it from the frontend
         // and the backend (unfiltered_values). however, when that was tried there was a problem
         // with an infinite render loop which couldn't be resolved in that moment
-        : 'unfilteredValues']; 
+        : 'unfilteredValues'];
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
@@ -84,7 +84,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     if (bucket.item.count === 0) return null; // this is for the case where we deal with unfiltered values
-    const key_ = 'resource.category.name' ? 'category' : key;
+    const key_ = key === 'resource.category.name' ? 'category' : key;
 
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
@@ -144,6 +144,8 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .toString()
         .split('&')
         .filter(param => !param.startsWith('resource'))
+        .filter(param => !param.startsWith('category'))
+        .filter(param => !param.startsWith('q'))
         .map(param => param.split('='))
         // .filter is a hack for as of yet not further investigated problem
         .filter(([k, v]) => !(k === '' && v === undefined)) as undefined as [string, string][];

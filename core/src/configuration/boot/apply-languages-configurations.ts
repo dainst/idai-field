@@ -28,6 +28,8 @@ export function applyLanguagesToForm(languageConfigurations: LanguageConfigurati
     applyLanguagesToCategoryFields(languageConfigurations, formDefinition.fields, formDefinition.categoryName,
         parentCategoryName);
     applyLanguagesToFormFields(languageConfigurations, formDefinition.fields, formDefinition.name, parentFormName);
+    applyLanguagesToCategoryFields(languageConfigurations, formDefinition.fields, formDefinition.categoryName,
+        parentCategoryName, true);
 }
 
 
@@ -75,19 +77,21 @@ export function applyLanguagesToRelations(languageConfigurations: LanguageConfig
 
 function applyLanguagesToCategoryFields(languageConfigurations: LanguageConfigurations,
                                         fields: Map<TransientFieldDefinition>, categoryName: string,
-                                        parentCategoryName?: string) {
+                                        parentCategoryName?: string, onlyCustom?: boolean) {
 
     applyLanguagesToFormOrCategoryFields(
-        languageConfigurations, fields, categoryName, 'categories', parentCategoryName
+        languageConfigurations, fields, categoryName, 'categories', parentCategoryName, onlyCustom
     );                           
 }
 
 
 function applyLanguagesToFormFields(languageConfigurations: LanguageConfigurations,
                                     fields: Map<TransientFieldDefinition>, formName: string,
-                                    parentFormName?: string) {
+                                    parentFormName?: string, onlyCustom?: boolean) {
 
-    applyLanguagesToFormOrCategoryFields(languageConfigurations, fields, formName, 'forms', parentFormName);
+    applyLanguagesToFormOrCategoryFields(
+        languageConfigurations, fields, formName, 'forms', parentFormName, onlyCustom
+    );
 }
 
 
@@ -95,9 +99,13 @@ function applyLanguagesToFormOrCategory(languageConfigurations: LanguageConfigur
                                         definition: TransientFormDefinition|TransientCategoryDefinition,
                                         section: 'categories'|'forms', name: string, onlyCustom: boolean = false) {
 
-    definition.label = I18N.mergeI18nStrings(definition.label, LanguageConfiguration.getI18nString(
-        onlyCustom ? languageConfigurations.custom : languageConfigurations.complete, section, name, false, 'label'
-    ));
+    definition.label = I18N.mergeI18nStrings(
+        definition.label,
+        LanguageConfiguration.getI18nString(
+            onlyCustom ? languageConfigurations.custom : languageConfigurations.complete,
+            section, name, false, 'label'
+        )
+    );
     if (!onlyCustom) {
         definition.defaultLabel = I18N.mergeI18nStrings(definition.defaultLabel, LanguageConfiguration.getI18nString(
             languageConfigurations.default, section, name, false, 'label'
@@ -120,37 +128,47 @@ function applyLanguagesToFormOrCategory(languageConfigurations: LanguageConfigur
 
 function applyLanguagesToFormOrCategoryFields(languageConfigurations: LanguageConfigurations,
                                               fields: Map<TransientFieldDefinition>, name: string,
-                                              section: 'categories'|'forms', parentName?: string) {
+                                              section: 'categories'|'forms', parentName?: string,
+                                              onlyCustom: boolean = false) {
 
     for (const fieldName of Object.keys(fields)) {
         const field = fields[fieldName];
 
         field.label = I18N.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
-            languageConfigurations.complete, section, fieldName, true, 'label', name
+            onlyCustom ? languageConfigurations.custom : languageConfigurations.complete,
+            section, fieldName, true, 'label', name
         ));
         field.description = I18N.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
-            languageConfigurations.complete, section, fieldName, true, 'description', name
+            onlyCustom ? languageConfigurations.custom : languageConfigurations.complete,
+            section, fieldName, true, 'description', name
         ));
-        field.defaultLabel = I18N.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
-            languageConfigurations.default, section, fieldName, true, 'label', name
-        ));
-        field.defaultDescription = I18N.mergeI18nStrings(field.defaultDescription, LanguageConfiguration.getI18nString(
-            languageConfigurations.default, section, fieldName, true, 'description', name
-        ));
+        if (!onlyCustom) {
+            field.defaultLabel = I18N.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
+                languageConfigurations.default, section, fieldName, true, 'label', name
+            ));
+            field.defaultDescription = I18N.mergeI18nStrings(field.defaultDescription, LanguageConfiguration.getI18nString(
+                languageConfigurations.default, section, fieldName, true, 'description', name
+            ));
+        }
 
         if (parentName) {
             field.label = I18N.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
-                languageConfigurations.complete, section, fieldName, true, 'label', parentName
+                onlyCustom ? languageConfigurations.custom : languageConfigurations.complete,
+                section, fieldName, true, 'label', parentName
             ));  
             field.description = I18N.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
-                languageConfigurations.complete, section, fieldName, true, 'description', parentName
+                onlyCustom ? languageConfigurations.custom : languageConfigurations.complete,
+                section, fieldName, true, 'description', parentName
             ));
-            field.defaultLabel = I18N.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
-                languageConfigurations.default, section, fieldName, true, 'label', parentName
-            ));
-            field.defaultDescription = I18N.mergeI18nStrings(field.defaultDescription, LanguageConfiguration.getI18nString(
-                languageConfigurations.default, section, fieldName, true, 'description', parentName
-            ));
+
+            if (!onlyCustom) {
+                field.defaultLabel = I18N.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
+                    languageConfigurations.default, section, fieldName, true, 'label', parentName
+                ));
+                field.defaultDescription = I18N.mergeI18nStrings(field.defaultDescription, LanguageConfiguration.getI18nString(
+                    languageConfigurations.default, section, fieldName, true, 'description', parentName
+                ));
+            }
         }
     }
 }

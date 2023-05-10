@@ -51,7 +51,7 @@ const INITIALIZATION_MESSAGES = {
         'configuration/fields/custom/tryingToSubtypeANonExtendableCategory': 'No subcategories may be created for the category "[0]".',
         'configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten': 'No value list may be set for the field "[1]" of the category "[0]" as the allowed values are taken from the project resource.',
         'configuration/buildProjectCategories/duplicationInSelection': 'More than one form was selected for the category "[0]".',
-        'configuration/buildProjectCategories/mustHaveParent': 'A supercategory has to be selected for the category "[0]"',
+        'configuration/buildProjectCategories/mustHaveParent': 'A supercategory has to be selected for the category "[0]".',
         'configuration/buildProjectCategories/missingCategoryProperty': 'The property "[0]" must be set for the category "[1]".',
         'configuration/buildProjectCategories/illegalCategoryProperty': 'The property "[0]" must not be set for the category "[1]".',
         'configuration/buildProjectCategories/missingFieldProperty': 'The property "[0]" must be set for field "[2]" of category "[1]".',

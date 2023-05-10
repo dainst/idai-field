@@ -1558,79 +1558,81 @@
       }
     }
   },
-  "Project:archaeoDox": {
-    "label": "Процес"
-  },
-  "Place:archaeoDox": {
-    "label": "Місце знахідки"
-  },
-  "Planum:archaeoDox": {
-    "label": "Малюнок поверхні"
-  },
-  "Profile:archaeoDox": {
-    "label": "Креслення профілю",
-    "fields": {
-      "archaeoDox:viewingDirection": {
-        "label": "Напрямок прямої видимості"
+  "forms": {
+    "Project:archaeoDox": {
+      "label": "Процес"
+    },
+    "Place:archaeoDox": {
+      "label": "Місце знахідки"
+    },
+    "Planum:archaeoDox": {
+      "label": "Малюнок поверхні"
+    },
+    "Profile:archaeoDox": {
+      "label": "Креслення профілю",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "Напрямок прямої видимості"
+        }
       }
-    }
-  },
-  "Find:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Короткий опис (класифікація)"
-      },
-      "archaeoDox:material": {
-        "label": "Матеріал"
-      },
-      "archaeoDox:typeOfWare": {
-        "label": "Тип товару"
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Короткий опис (класифікація)"
+        },
+        "archaeoDox:material": {
+          "label": "Матеріал"
+        },
+        "archaeoDox:typeOfWare": {
+          "label": "Тип товару"
+        }
       }
-    }
-  },
-  "FeatureGroup:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Короткий опис (класифікація)"
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Короткий опис (класифікація)"
+        }
       }
-    }
-  },
-  "Feature:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Короткий опис (класифікація)"
-      },
-      "archaeoDox:distinguishingCriterium": {
-        "label": "Критерій розрізнення"
-      },
-      "archaeoDox:isNatural": {
-        "label": "Природність"
-      },
-      "archaeoDox:soilType": {
-        "label": "Тип грунту"
-      },
-      "archaeoDox:consistency": {
-        "label": "Консистенція"
-      },
-      "archaeoDox:isArchaeologicallyIrrelevant": {
-        "label": "Без археологічного значення"
+    },
+    "Feature:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Короткий опис (класифікація)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "Критерій розрізнення"
+        },
+        "archaeoDox:isNatural": {
+          "label": "Природність"
+        },
+        "archaeoDox:soilType": {
+          "label": "Тип грунту"
+        },
+        "archaeoDox:consistency": {
+          "label": "Консистенція"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "Без археологічного значення"
+        }
       }
-    }
-  },
-  "FeatureSegment:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Короткий опис (класифікація)"
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Короткий опис (класифікація)"
+        }
       }
-    }
-  },
-  "Sample:archaeoDox": {
-    "fields": {
-      "shortDescription": {
-        "label": "Короткий опис (класифікація)"
-      },
-      "archaeoDox:soilProperties": {
-        "label": "Властивості ґрунту"
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Короткий опис (класифікація)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "Властивості ґрунту"
+        }
       }
     }
   }

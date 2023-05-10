@@ -649,6 +649,13 @@
             }
           }
         },
+        "it": {
+          "relations": {
+            "isPresentIn": {
+              "label": "È contenuto nel disegno di sezione/di superficie"
+            }
+          }
+        },
         "uk": {
           "relations": {
             "isPresentIn": {

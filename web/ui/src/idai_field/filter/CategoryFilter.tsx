@@ -22,10 +22,13 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
-    const inProjectPopover = projectView !== 'overview' && inPopover;
+    const inProjectSearchPopover =
+        projectView !== 'overview'
+        && inPopover
+        && !window.location.href.includes('hierarchy');
 
     useEffect(() => {
-        if (inProjectPopover) {
+        if (inProjectSearchPopover) {
             if (!sameset(categories, searchParams.getAll('category'))) {
                 setCategories(searchParams.getAll('category'));
                 setFilters([]);
@@ -38,9 +41,9 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 }
             }
         }
-    }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
+    }, [searchParams, categories, inProjectSearchPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
+    const filterValues = filter[!inProjectSearchPopover || searchParams.getAll('category').length === 1
         ? 'values'
         // note that at this point unfilteredValues (part of the filter buckets) should not
         // be necessary anymore. in principle we should be able to remove it from the frontend
@@ -54,8 +57,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 renderFilterValue(filter.name, bucket, searchParams, filters,
                     projectId, projectView, onMouseEnter)) }
 
-        { false && // TODO remove
-            projectId && projectView && inProjectPopover
+        { // false && // TODO remove
+            projectId && projectView && inProjectSearchPopover
             &&
             <FieldFilters
               projectId={ projectId }

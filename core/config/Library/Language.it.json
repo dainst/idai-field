@@ -1531,7 +1531,11 @@
     },
     "BuildingPart": {
       "label": "Parte della costruzione",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Materiale"
+        }
+      }
     },
     "Area": {
       "label": "Area",

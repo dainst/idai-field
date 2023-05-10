@@ -1531,7 +1531,11 @@
     },
     "BuildingPart": {
       "label": "Частина/компонент споруди",
-      "fields": {}
+      "fields": {
+        "material": {
+          "label": "Матеріал"
+        }
+      }
     },
     "Area": {
       "label": "Частина/область",

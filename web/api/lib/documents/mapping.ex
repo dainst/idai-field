@@ -33,13 +33,11 @@ defmodule Api.Documents.Mapping do
         [String.to_atom(filter.field), :buckets]
       )
         do
-          {values, unfiltered_values} = build_values(buckets, filter, default_config)
           %{
             name: Filters.get_filter_name(filter),
             label: filter.label,
             groups: filter["groups"],
-            values: values,
-            unfilteredValues: unfiltered_values
+            values: build_values(buckets, filter, default_config)
           }
         end
     end
@@ -57,7 +55,7 @@ defmodule Api.Documents.Mapping do
   defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
     children_of_image = get_children_of_image default_config
     buckets = map_buckets(buckets, filter)
-    unfiltered = default_config
+    default_config
       |> Tree.filter_tree_list(fn %{ name: name } ->
         name not in ["Type", "TypeCatalog", "Project", "Image"] ++ children_of_image
        end)
@@ -68,11 +66,10 @@ defmodule Api.Documents.Mapping do
         end
       )
       |> Enum.map(&add_children_count/1)
-
-    {Tree.filter_tree_list(unfiltered, fn %{ count: count } -> count > 0 end), unfiltered}
+      |> Tree.filter_tree_list(fn %{ count: count } -> count > 0 end)
   end
   defp build_values(buckets, filter, _) do
-    {map_buckets(buckets, filter), []}
+    map_buckets(buckets, filter)
   end
 
   defp map_buckets(buckets, filter) do

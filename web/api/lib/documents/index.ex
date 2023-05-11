@@ -22,21 +22,61 @@ defmodule Api.Documents.Index do
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
     {filters, multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
-    query = Query.init(q, size, from)
-    |> Query.track_total
-    |> Query.add_aggregations()
-    |> Query.add_filters(filters)
-    |> Query.add_should_filters(multilanguage_filters)
-    |> Query.add_must_not(must_not)
-    |> Query.add_exists(exists)
-    |> Query.add_not_exists(not_exists)
-    |> Query.set_sort(sort)
-    |> Query.set_readable_projects(readable_projects)
-    |> Query.set_vector_query(vector_query)
+    query1 = Query.init(q, size, from)
+      |> Query.track_total
+      |> Query.add_aggregations()
+      |> Query.add_filters(filters)
+      |> Query.add_should_filters(multilanguage_filters)
+      |> Query.add_must_not(must_not)
+      |> Query.add_exists(exists)
+      |> Query.add_not_exists(not_exists)
+      |> Query.set_sort(sort)
+      |> Query.set_readable_projects(readable_projects)
+      |> Query.set_vector_query(vector_query)
 
-    query
-    |> build_post_atomize
-    |> Mapping.map(project_conf)
+    result1 = query1
+      |> build_post_atomize
+      |> Mapping.map(project_conf)
+
+    filters = Enum.filter filters, fn {k, _v} -> k != "resource.category.name" end
+    # TODO remove dropdown filters and any other field specific filters here
+
+    query2 = Query.init(q, size, from)
+      |> Query.track_total
+      |> Query.add_aggregations()
+      |> Query.add_filters(filters)
+      |> Query.add_must_not(must_not)
+      |> Query.add_exists(exists)
+      |> Query.add_not_exists(not_exists)
+      |> Query.set_sort(sort)
+      |> Query.set_readable_projects(readable_projects)
+      |> Query.set_vector_query(vector_query)
+
+    result2 = query2
+      |> build_post_atomize
+      |> Mapping.map(project_conf)
+
+    if Map.has_key? result2, :filters do
+      category_filters = Enum.filter result2.filters, fn e -> e.name == "resource.category.name" end
+
+      if List.first category_filters do
+        category_filter = List.first category_filters
+        unfiltered_values = category_filter.values
+
+        result1_category_filters = Enum.map result1.filters, fn f ->
+          if f.name == "resource.category.name" do
+            put_in f[:unfilteredValues], unfiltered_values
+          else
+            f
+          end
+        end
+        put_in result1[:filters], result1_category_filters
+      else
+        result1
+      end
+    else
+      result1
+    end
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do

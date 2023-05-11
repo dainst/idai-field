@@ -22,30 +22,34 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
-    const inProjectPopover = projectView !== 'overview' && inPopover;
+    const inProjectSearchPopover =
+        projectView !== 'overview'
+        && inPopover
+        && !window.location.href.includes('hierarchy');
 
     useEffect(() => {
-        if (inProjectPopover) {
+        if (inProjectSearchPopover) {
             if (!sameset(categories, searchParams.getAll('category'))) {
                 setCategories(searchParams.getAll('category'));
                 setFilters([]);
             } else {
                 const newFilters = extractFiltersFromSearchParams(searchParams);
                 if (searchParams.getAll('category').length === 0 && newFilters.length !== 0) {
-                    history.push(`/project/${projectId}/${projectView}?`);
+                    const qVal = searchParams.getAll('q')[0];
+                    history.push(`/project/${projectId}/${projectView}?` + (qVal ? `q=${qVal}` : ''));
+                } else {
+                    setFilters(newFilters);
                 }
-                setFilters(newFilters);
             }
         }
-    }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
+    }, [searchParams, categories, inProjectSearchPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectPopover || searchParams.getAll('category').length === 1
+    const filterValues = filter[!inProjectSearchPopover
         ? 'values'
-        // note that at this point unfilteredValues (part of the filter buckets) should not
-        // be necessary anymore. in principle we should be able to remove it from the frontend
-        // and the backend (unfiltered_values). however, when that was tried there was a problem
-        // with an infinite render loop which couldn't be resolved in that moment
-        : 'unfilteredValues']; 
+        // TODO change how the unfilteredValues are calculated in the backend
+        // they should be calculated based on a search without filters, only including the search term
+        // and then those buckets which have counts greater than 0 should go into unfilteredValues
+        : 'unfilteredValues'];
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
@@ -54,7 +58,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                     projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
-            projectId && projectView && inProjectPopover
+            projectId && projectView && inProjectSearchPopover
             &&
             <FieldFilters
               projectId={ projectId }
@@ -83,8 +87,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         filters: [string, string][], projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
-    if (bucket.item.count === 0) return null; // this is for the case where we deal with unfiltered values
-    const key_ = 'resource.category.name' ? 'category' : key;
+    const key_ = key === 'resource.category.name' ? 'category' : key;
 
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
@@ -144,6 +147,8 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .toString()
         .split('&')
         .filter(param => !param.startsWith('resource'))
+        .filter(param => !param.startsWith('category'))
+        .filter(param => !param.startsWith('q'))
         .map(param => param.split('='))
         // .filter is a hack for as of yet not further investigated problem
         .filter(([k, v]) => !(k === '' && v === undefined)) as undefined as [string, string][];

@@ -38,23 +38,7 @@ defmodule Api.Documents.Index do
     result2 = query2 |> build_post_atomize |> Mapping.map(project_conf)
 
     if Map.has_key? result2, :filters do
-      category_filters = Enum.filter result2.filters, fn e -> e.name == "resource.category.name" end
-
-      if List.first category_filters do
-        category_filter = List.first category_filters
-        unfiltered_values = category_filter.values
-
-        result_category_filters = Enum.map result.filters, fn filter ->
-          if filter.name == "resource.category.name" do
-            put_in filter[:unfilteredValues], unfiltered_values
-          else
-            filter
-          end
-        end
-        put_in result[:filters], result_category_filters
-      else
-        result
-      end
+      postprocess_search_result result, result2
     else
       result
     end
@@ -72,6 +56,26 @@ defmodule Api.Documents.Index do
     |> Query.set_readable_projects(readable_projects)
     |> build_post_atomize
     |> Mapping.map(project_conf)
+  end
+
+  defp postprocess_search_result result, result2 do
+    category_filters = Enum.filter result2.filters, fn e -> e.name == "resource.category.name" end
+
+    if List.first category_filters do
+      category_filter = List.first category_filters
+      unfiltered_values = category_filter.values
+
+      result_category_filters = Enum.map result.filters, fn filter ->
+        if filter.name == "resource.category.name" do
+          put_in filter[:unfilteredValues], unfiltered_values
+        else
+          filter
+        end
+      end
+      put_in result[:filters], result_category_filters
+    else
+      result
+    end
   end
 
   defp create_search_query q, size, from, filters, must_not, exists,

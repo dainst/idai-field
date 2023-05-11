@@ -44,12 +44,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectSearchPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectSearchPopover
-        ? 'values'
-        // TODO change how the unfilteredValues are calculated in the backend
-        // they should be calculated based on a search without filters, only including the search term
-        // and then those buckets which have counts greater than 0 should go into unfilteredValues
-        : 'unfilteredValues'];
+    const filterValues = filter[!inProjectSearchPopover ? 'values' : 'unfilteredValues'];
 
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues

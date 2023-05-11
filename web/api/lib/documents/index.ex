@@ -22,39 +22,20 @@ defmodule Api.Documents.Index do
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
     {filters, multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
-    query1 = Query.init(q, size, from)
-      |> Query.track_total
-      |> Query.add_aggregations()
-      |> Query.add_filters(filters)
-      |> Query.add_should_filters(multilanguage_filters)
-      |> Query.add_must_not(must_not)
-      |> Query.add_exists(exists)
-      |> Query.add_not_exists(not_exists)
-      |> Query.set_sort(sort)
-      |> Query.set_readable_projects(readable_projects)
-      |> Query.set_vector_query(vector_query)
 
-    result1 = query1
-      |> build_post_atomize
-      |> Mapping.map(project_conf)
+    query = create_search_query q, size, from, filters, must_not, exists,
+      not_exists, sort, vector_query, readable_projects, multilanguage_filters
 
+    result = query |> build_post_atomize |> Mapping.map(project_conf)
+
+    multilanguage_filters = []
     filters = Enum.filter filters, fn {k, _v} -> k != "resource.category.name" end
     # TODO remove dropdown filters and any other field specific filters here
 
-    query2 = Query.init(q, size, from)
-      |> Query.track_total
-      |> Query.add_aggregations()
-      |> Query.add_filters(filters)
-      |> Query.add_must_not(must_not)
-      |> Query.add_exists(exists)
-      |> Query.add_not_exists(not_exists)
-      |> Query.set_sort(sort)
-      |> Query.set_readable_projects(readable_projects)
-      |> Query.set_vector_query(vector_query)
+    query2 = create_search_query q, size, from, filters, must_not, exists,
+      not_exists, sort, vector_query, readable_projects, multilanguage_filters
 
-    result2 = query2
-      |> build_post_atomize
-      |> Mapping.map(project_conf)
+    result2 = query2 |> build_post_atomize |> Mapping.map(project_conf)
 
     if Map.has_key? result2, :filters do
       category_filters = Enum.filter result2.filters, fn e -> e.name == "resource.category.name" end
@@ -63,19 +44,19 @@ defmodule Api.Documents.Index do
         category_filter = List.first category_filters
         unfiltered_values = category_filter.values
 
-        result1_category_filters = Enum.map result1.filters, fn f ->
-          if f.name == "resource.category.name" do
-            put_in f[:unfilteredValues], unfiltered_values
+        result_category_filters = Enum.map result.filters, fn filter ->
+          if filter.name == "resource.category.name" do
+            put_in filter[:unfilteredValues], unfiltered_values
           else
-            f
+            filter
           end
         end
-        put_in result1[:filters], result1_category_filters
+        put_in result[:filters], result_category_filters
       else
-        result1
+        result
       end
     else
-      result1
+      result
     end
   end
 
@@ -91,6 +72,22 @@ defmodule Api.Documents.Index do
     |> Query.set_readable_projects(readable_projects)
     |> build_post_atomize
     |> Mapping.map(project_conf)
+  end
+
+  defp create_search_query q, size, from, filters, must_not, exists,
+    not_exists, sort, vector_query, readable_projects, multilanguage_filters do
+
+    Query.init(q, size, from)
+      |> Query.track_total
+      |> Query.add_aggregations()
+      |> Query.add_filters(filters)
+      |> Query.add_should_filters(multilanguage_filters)
+      |> Query.add_must_not(must_not)
+      |> Query.add_exists(exists)
+      |> Query.add_not_exists(not_exists)
+      |> Query.set_sort(sort)
+      |> Query.set_readable_projects(readable_projects)
+      |> Query.set_vector_query(vector_query)
   end
 
   defp preprocess(filters, must_not) do

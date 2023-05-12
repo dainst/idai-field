@@ -25,21 +25,21 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const inProjectPopover = projectView !== 'overview' && inPopover;
 
     useEffect(() => {
-        if (inProjectPopover) {
-            if (!sameset(categories, searchParams.getAll('category'))) {
-                setCategories(searchParams.getAll('category'));
-                setFilters([]);
+        if (!inProjectPopover) return;
+
+        if (!sameset(categories, searchParams.getAll('category'))) {
+            setCategories(searchParams.getAll('category'));
+            setFilters([]);
+        } else {
+            const newFilters = extractFiltersFromSearchParams(searchParams);
+            if (searchParams.getAll('category').length === 0
+                    && newFilters.length !== 0
+                    && searchParams.getAll('q')[0]) {
+                
+                const qVal = searchParams.getAll('q')[0];
+                history.push(`/project/${projectId}/${projectView}?` + (qVal ? `q=${qVal}` : ''));
             } else {
-                const newFilters = extractFiltersFromSearchParams(searchParams);
-                if (searchParams.getAll('category').length === 0
-                        && newFilters.length !== 0
-                        && searchParams.getAll('q')[0]) {
-                    
-                    const qVal = searchParams.getAll('q')[0];
-                    history.push(`/project/${projectId}/${projectView}?` + (qVal ? `q=${qVal}` : ''));
-                } else {
-                    setFilters(newFilters);
-                }
+                setFilters(newFilters);
             }
         }
     }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);

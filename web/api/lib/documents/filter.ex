@@ -6,7 +6,10 @@ defmodule Api.Documents.Filter do
   def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
-      field = if field != "project" and not is_whitelisted_term_filter(filter_string) do
+      field = if field != "project"
+          and not is_whitelisted_term_filter(filter_string)
+          and not String.starts_with?(field, "resource.relations") do
+
         "resource." <> (if field == "category" do
           field <> ".name"
         else

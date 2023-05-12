@@ -34,7 +34,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
             const newFilters = extractFiltersFromSearchParams(searchParams);
             if (searchParams.getAll('category').length === 0
                     && newFilters.length !== 0
-                    && searchParams.getAll('q')[0]) {
+                    && projectView === 'search') {
                 
                 const qVal = searchParams.getAll('q')[0];
                 history.push(`/project/${projectId}/${projectView}?` + (qVal ? `q=${qVal}` : ''));

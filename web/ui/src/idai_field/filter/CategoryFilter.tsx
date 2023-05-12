@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactElement, ReactNode, useState, useEffect } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { flatten, sameset } from 'tsfun';
+import { flatten, identity, sameset } from 'tsfun';
 import { FilterBucketTreeNode, ResultFilter } from '../../api/result';
 import CategoryIcon from '../../shared/document/CategoryIcon';
 import { getLabel } from '../../shared/languages';
@@ -48,8 +48,8 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
-                renderFilterValue(filter.name, bucket, searchParams, filters,
-                    projectId, projectView, onMouseEnter)) }
+                renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView,
+                    searchParams.getAll('category').length === 0 ? onMouseEnter : identity)) }
 
         { false && // TODO remove
             projectId && projectView && inProjectPopover

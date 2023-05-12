@@ -30,14 +30,9 @@ export default function SearchBar({ onSubmit, basepath }
     };
 
     const resetQueryString = (): void => {
-        const params = new URLSearchParams(searchParams);
-        if (params.has('q')) {
-            params.delete('q');
-            history.push(`${basepath}?${params}`);
-        } else {
-            setQueryString(undefined);
-            input.current.value = '';
-        }
+        const params = new URLSearchParams();
+        input.current.value = '';
+        history.push(`${basepath}?${params}`);
     };
 
     return (

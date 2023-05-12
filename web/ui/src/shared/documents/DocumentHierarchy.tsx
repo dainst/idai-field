@@ -84,7 +84,9 @@ const renderDocumentRow = (document: ResultDocument, searchParams: URLSearchPara
 const getHierarchyButtonSearchParams = (searchParams: URLSearchParams, documentId: string) => {
 
     const params = new URLSearchParams(searchParams);
+
     params.set('parent', documentId);
+    params.delete('category'); // reset filters when switching level
 
     return params.toString();
 };

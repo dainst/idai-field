@@ -33,6 +33,7 @@ export default function SearchBar({ onSubmit, basepath }
         // We deliberately set back everything here in order
         // to get rid of any category filters or specific field filters.
         // We could think about retaining a possible 'r=' param here.
+        // See also comment in DocumentHierarchy.tsx.
         const params = new URLSearchParams();
         input.current.value = '';
         history.push(`${basepath}?${params}`);

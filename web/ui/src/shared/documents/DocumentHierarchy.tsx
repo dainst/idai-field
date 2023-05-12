@@ -81,13 +81,12 @@ const renderDocumentRow = (document: ResultDocument, searchParams: URLSearchPara
 };
 
 
-const getHierarchyButtonSearchParams = (searchParams: URLSearchParams, documentId: string) => {
-
-    const params = new URLSearchParams(searchParams);
-
+const getHierarchyButtonSearchParams = (_searchParams: URLSearchParams, documentId: string) => {
+    // We deliberately set back everything here in order
+    // to get rid of any category filters or specific field filters.
+    // See also comment in SearchBar.tsx
+    const params = new URLSearchParams();
     params.set('parent', documentId);
-    params.delete('category'); // reset filters when switching level
-
     return params.toString();
 };
 

@@ -22,19 +22,19 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const [filters, setFilters] = useState<[string,string][]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
-    const inProjectSearchPopover =
-        projectView !== 'overview'
-        && inPopover
-        && !window.location.href.includes('hierarchy');
+    const inProjectPopover = projectView !== 'overview' && inPopover;
 
     useEffect(() => {
-        if (inProjectSearchPopover) {
+        if (inProjectPopover) {
             if (!sameset(categories, searchParams.getAll('category'))) {
                 setCategories(searchParams.getAll('category'));
                 setFilters([]);
             } else {
                 const newFilters = extractFiltersFromSearchParams(searchParams);
-                if (searchParams.getAll('category').length === 0 && newFilters.length !== 0) {
+                if (searchParams.getAll('category').length === 0
+                        && newFilters.length !== 0
+                        && searchParams.getAll('q')[0]) {
+                    
                     const qVal = searchParams.getAll('q')[0];
                     history.push(`/project/${projectId}/${projectView}?` + (qVal ? `q=${qVal}` : ''));
                 } else {
@@ -42,10 +42,9 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 }
             }
         }
-    }, [searchParams, categories, inProjectSearchPopover, projectId, projectView, history]);
+    }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
 
-    const filterValues = filter[!inProjectSearchPopover ? 'values' : 'unfilteredValues'];
-
+    const filterValues = filter['unfilteredValues'];
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
@@ -53,7 +52,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                     projectId, projectView, onMouseEnter)) }
 
         { false && // TODO remove
-            projectId && projectView && inProjectSearchPopover
+            projectId && projectView && inProjectPopover
             &&
             <FieldFilters
               projectId={ projectId }

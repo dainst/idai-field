@@ -142,6 +142,7 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .split('&')
         .filter(param => !param.startsWith('resource'))
         .filter(param => !param.startsWith('category'))
+        .filter(param => !param.startsWith('parent'))
         .filter(param => !param.startsWith('q'))
         .map(param => param.split('='))
         // .filter is a hack for as of yet not further investigated problem

@@ -48,7 +48,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
-                renderFilterValue(filter.name, bucket, searchParams, filters, projectId, projectView,
+                renderFilterValue(filter.name, bucket, searchParams, filters, categories, projectId, projectView,
                     searchParams.getAll('category').length === 0 ? onMouseEnter : identity)) }
 
         { false && // TODO remove
@@ -78,7 +78,7 @@ const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketT
 
 
 const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
-        filters: [string, string][], projectId?: string, projectView?: ProjectView,
+        filters: [string, string][], categories: string[], projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     const key_ = key === 'resource.category.name' ? 'category' : key;
@@ -86,7 +86,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
                 as={ Link }
-                style={ filterValueStyle(level) }
+                style={ filterValueStyle(level, bucket.item.value.name, categories ) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
                     + buildParams(params, key_, bucket, filters) + '' }>
@@ -110,7 +110,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
             </Row>
         </Dropdown.Item>
         { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key_, b, params, filters, projectId, projectView,
+            renderFilterValue(key_, b, params, filters, categories, projectId, projectView,
                 onMouseEnter, level + 1))
         }
     </React.Fragment>;
@@ -125,9 +125,18 @@ const getCategoryAndSubcategoryNames = (bucket: FilterBucketTreeNode): string[] 
 };
 
 
-const filterValueStyle = (level: number): CSSProperties => ({
-    paddingLeft: `${level * 1.2}em`
-});
+const filterValueStyle = (level: number, name: string, categories: string[]): CSSProperties => { 
+    const style = { paddingLeft: `${level * 1.2}em` } as CSSProperties;
+    // By default if you click a category, it gets color #eceeef
+    // If you reload the page or come from outside to a route 
+    // where a category is already selected, it does not have that background color.
+    // Since it is not clear to me, by which magic it gets the color when you click the category,
+    // I set it here manually if the category is selected. (ET)
+    const isSelected = categories.length === 1 && categories[0] === name;
+    if (isSelected) style.backgroundColor = '#eceeef';
+    // -
+    return style;
+};
 
 
 const categoryLabelStyle: CSSProperties = {

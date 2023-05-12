@@ -44,7 +44,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         }
     }, [searchParams, categories, inProjectPopover, projectId, projectView, history]);
 
-    const filterValues = filter['unfilteredValues'];
+    const filterValues = filter.unfilteredValues;
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>

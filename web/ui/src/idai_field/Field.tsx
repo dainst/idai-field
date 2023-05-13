@@ -13,6 +13,7 @@ import ProjectsOverview from './overview/ProjectsOverview';
 import Project from './project/Project';
 import ProjectHome from './project/ProjectHome';
 import ResourceRedirect from './ResourceRedirect';
+import RewriteRedirect from './RewriteRedirect';
 
 
 export default function Field(): ReactElement {
@@ -33,6 +34,7 @@ export default function Field(): ReactElement {
                     <Redirect from="/resources/:project/:identifier" to="/resource/:project/:identifier" />
 
                     <Route path="/project/:projectId" exact component={ ProjectHome } />
+                    <Route path="/project/:projectId/:view" exact component={ RewriteRedirect } />
                     <Route path="/project/:projectId/:view/:documentId?" component={ Project } />
 
                     <Redirect from="/document/:projectId/:documentId" to="/project/:projectId/hierarchy/:documentId" />

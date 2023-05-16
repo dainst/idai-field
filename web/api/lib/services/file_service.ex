@@ -1,7 +1,12 @@
 defmodule Api.Services.FileService do
   @root_path Application.compile_env(:api, :file_store_directory_root)
 
+  require Logger
+
   def replicate(source_url, source_user, source_password, target_project_name) do
+
+    Logger.debug("Replicating images of #{source_url} as #{target_project_name}")
+
     headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}

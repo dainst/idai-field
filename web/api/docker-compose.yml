@@ -49,7 +49,7 @@ services:
   #     - "./imagemagick:/etc/ImageMagick-6"
 
   couchdb:
-    image: couchdb:3.2.1
+    image: couchdb:3.3.2
     ports:
       - "5985:5984"
     environment:

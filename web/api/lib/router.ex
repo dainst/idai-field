@@ -31,6 +31,6 @@ defmodule Api.Router do
 
   def start_link(_opts) do
     :ets.new(:indexing, [:set, :public, :named_table]) # TODO make it protected or private
-    Plug.Cowboy.http(__MODULE__, [], port: 4001)
+    Plug.Cowboy.http(__MODULE__, [], port: Application.get_env(:api, :port))
   end
 end

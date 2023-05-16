@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   couchdb:
-    image: couchdb:3.2.1
+    image: couchdb:3.3.2
     environment:
       - COUCHDB_USER=${COUCHDB_ADMIN_NAME}
       - COUCHDB_PASSWORD=${COUCHDB_ADMIN_PASSWORD}

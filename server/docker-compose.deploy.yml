@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   couchdb:
-    image: couchdb:3.2.1
+    image: couchdb:3.3.2
     container_name: field-hub-db
     environment:
       - COUCHDB_USER

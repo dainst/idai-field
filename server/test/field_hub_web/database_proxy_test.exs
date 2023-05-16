@@ -1,7 +1,7 @@
 defmodule FieldHubWeb.DatabaseProxyTest do
   use FieldHubWeb.ConnCase
 
-  test "connection threw proxy plug can be established", %{conn: conn} do
+  test "connection through proxy plug can be established", %{conn: conn} do
     conn =
       conn
       |> get("/db")
@@ -15,7 +15,7 @@ defmodule FieldHubWeb.DatabaseProxyTest do
     assert %{
              "couchdb" => "Welcome",
              "vendor" => %{"name" => "The Apache Software Foundation"},
-             "version" => "3.2.1"
+             "version" => "3.3.2"
            } = response
   end
 end

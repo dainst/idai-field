@@ -2666,4 +2666,104 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['A'].identifierPrefix).toBe('A-');
     });
+
+
+    it('set subfields', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []   
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {
+                    field1: {
+                        inputType: Field.InputType.COMPLEX,
+                        subfields: [
+                            {
+                                name: 'subfield1-1',
+                                inputType: 'input'
+                            },
+                            {
+                                name: 'subfield1-2',
+                                inputType: 'dropdown',
+                                valuelistId: 'valuelist-1'
+                            }
+                        ]
+                    },
+                },
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    field2: {
+                        inputType: Field.InputType.COMPLEX,
+                        subfields: [
+                            {
+                                name: 'subfield2-1',
+                                inputType: 'text'
+                            },
+                            {
+                                name: 'subfield2-2',
+                                inputType: 'boolean'
+                            }
+                        ]
+                    }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] }
+                ]
+            }
+        };
+
+        const valuelists : Map<Valuelist> = {
+            'valuelist-1': {
+                values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            {},
+            valuelists
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toEqual(Field.InputType.COMPLEX);
+        expect(result['A'].groups[0].fields[0].subfields.length).toBe(2);
+        expect(result['A'].groups[0].fields[0].subfields[0].name).toEqual('subfield1-1');
+        expect(result['A'].groups[0].fields[0].subfields[0].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['A'].groups[0].fields[0].subfields[1].name).toEqual('subfield1-2');
+        expect(result['A'].groups[0].fields[0].subfields[1].inputType).toEqual(Field.InputType.DROPDOWN);
+        expect(result['A'].groups[0].fields[0].subfields[1].valuelist?.id).toEqual('valuelist-1');
+        expect(result['A'].groups[0].fields[1].inputType).toEqual(Field.InputType.COMPLEX);
+        expect(result['A'].groups[0].fields[1].subfields.length).toBe(2);
+        expect(result['A'].groups[0].fields[1].subfields[0].name).toEqual('subfield2-1');
+        expect(result['A'].groups[0].fields[1].subfields[0].inputType).toEqual(Field.InputType.TEXT);
+        expect(result['A'].groups[0].fields[1].subfields[1].name).toEqual('subfield2-2');
+        expect(result['A'].groups[0].fields[1].subfields[1].inputType).toEqual(Field.InputType.BOOLEAN);
+    });
 });

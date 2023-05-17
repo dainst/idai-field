@@ -1,14 +1,16 @@
-import { Map } from 'tsfun';
 import { Valuelist } from '../../../model/configuration/valuelist';
 import { I18N } from '../../../tools/i18n';
 import { BuiltInFieldDefinition } from './built-in-field-definition';
 import { LibrarySubfieldDefinition } from './library-field-definition';
 
 
-export interface TransientFieldDefinition extends BuiltInFieldDefinition, TransientSubfieldDefinition {
+export interface TransientFieldDefinition extends BuiltInFieldDefinition, I18N.LabeledValue, I18N.Described {
 
+    valuelist?: Valuelist;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
     defaultConstraintIndexed?: boolean;
-    subfields?: Map<TransientSubfieldDefinition>;
+    subfields?: Array<TransientSubfieldDefinition>;
 }
 
 

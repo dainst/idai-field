@@ -1,10 +1,10 @@
-import { Map } from 'tsfun';
 import { BaseFieldDefinition, BaseSubfieldDefinition } from './base-field-definition';
 
 
-export interface LibraryFieldDefinition extends BaseFieldDefinition, LibrarySubfieldDefinition {
+export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
-    subfields?: Map<LibrarySubfieldDefinition>;
+    valuelistId?: string;
+    subfields?: Array<LibrarySubfieldDefinition>;
 }
 
 

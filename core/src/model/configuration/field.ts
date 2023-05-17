@@ -28,7 +28,7 @@ export interface Field extends Subfield {
     allowOnlyValuesOfParent?: true;
     maxCharacters?: number;
     source?: Field.SourceType;
-    subfields?: Map<Subfield>;
+    subfields?: Array<Subfield>;
 }
 
 

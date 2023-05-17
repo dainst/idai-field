@@ -215,6 +215,11 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
             if (!form.fields) continue;
             for (const field of Object.values(form.fields)) {
                 replaceValuelistIdWithValuelist(field, valuelists);
+                if (field.subfields) {
+                    for (const subfield of field.subfields) {
+                        replaceValuelistIdWithValuelist(subfield, valuelists);
+                    }
+                }
             }
         }
 

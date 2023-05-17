@@ -1,9 +1,15 @@
-import { BaseFieldDefinition } from './base-field-definition';
+import { Map } from 'tsfun';
+import { BaseFieldDefinition, BaseSubfieldDefinition } from './base-field-definition';
 
 
-export interface LibraryFieldDefinition extends BaseFieldDefinition {
+export interface LibraryFieldDefinition extends BaseFieldDefinition, LibrarySubfieldDefinition {
 
-    inputType?: string;
+    subfields?: Map<LibrarySubfieldDefinition>;
+}
+
+
+export interface LibrarySubfieldDefinition extends BaseSubfieldDefinition {
+
     valuelistId?: string;
 }
 
@@ -13,8 +19,6 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'valuelistId',
     'constraintIndexed',
     'fulltextIndexed',
-    'creationDate',
-    'createdBy',
     'references',
-    'selectable'
+    'subfields'
 ];

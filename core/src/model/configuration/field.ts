@@ -1,4 +1,4 @@
-import { isArray, isObject, isString } from 'tsfun';
+import { isArray, isObject, isString, Map } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
@@ -13,16 +13,9 @@ import { Valuelist } from './valuelist';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export interface Field extends I18N.LabeledValue {
+export interface Field extends Subfield {
 
-    name: string;
-    inputType: Field.InputType;
     inputTypeOptions?: { validation?: { permissive?: true } };
-    label?: I18N.String;
-    description?: I18N.String;
-    defaultLabel?: I18N.String;
-    defaultDescription?: I18N.String;
-    valuelist?: Valuelist;
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
@@ -35,6 +28,16 @@ export interface Field extends I18N.LabeledValue {
     allowOnlyValuesOfParent?: true;
     maxCharacters?: number;
     source?: Field.SourceType;
+    subfields?: Map<Subfield>;
+}
+
+
+export interface Subfield extends I18N.LabeledValue, I18N.Described {
+
+    inputType: Field.InputType;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
+    valuelist?: Valuelist;
 }
 
 
@@ -86,7 +89,8 @@ export module Field {
         |'instanceOf'
         |'default'
         |'category'
-        |'identifier';
+        |'identifier'
+        |'complex';
 
     export module InputType {
 
@@ -114,6 +118,7 @@ export module Field {
         export const RELATION = 'relation';
         export const CATEGORY = 'category';
         export const IDENTIFIER = 'identifier';
+        export const COMPLEX = 'complex';
         export const NONE = 'none';
         export const DEFAULT = 'default';
 

@@ -1,13 +1,20 @@
+import { Map } from 'tsfun';
 import { Field } from '../../../model/configuration/field';
 
 
-export interface BaseFieldDefinition {
+export interface BaseFieldDefinition extends BaseSubfieldDefinition {
 
-    inputType?: string;
     constraintIndexed?: boolean;
     fulltextIndexed?: boolean;
     source?: Field.SourceType;
     references?: string[];
+    subfields?: Map<BaseSubfieldDefinition>;
+}
+
+
+export interface BaseSubfieldDefinition {
+
+    inputType?: string;
 }
 
 

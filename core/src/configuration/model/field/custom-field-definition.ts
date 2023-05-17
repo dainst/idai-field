@@ -1,10 +1,7 @@
 import { BaseFieldDefinition } from './base-field-definition';
 
 
-export interface CustomFieldDefinition extends BaseFieldDefinition {
-
-    inputType?: string;
-}
+export interface CustomFieldDefinition extends BaseFieldDefinition {}
 
 
 export module CustomFieldDefinition {
@@ -13,4 +10,4 @@ export module CustomFieldDefinition {
 }
 
 
-export const VALID_CUSTOM_FIELD_PROPERTIES = ['inputType', 'constraintIndexed', 'references'];
+export const VALID_CUSTOM_FIELD_PROPERTIES = ['inputType', 'constraintIndexed', 'references', 'subfields'];

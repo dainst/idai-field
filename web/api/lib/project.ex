@@ -36,7 +36,7 @@ defmodule Api.Project do
   end
 
   def replicate(source_url, source_project_name, source_user, source_password, project_name) do
-    target_project_name = "#{project_name}-#{Date.utc_today()}"
+    target_project_name = "project_#{project_name}-#{Date.utc_today()}"
 
     with {:ok, %{status_code: value}} when value == 200 or value == 201 <-
            CouchService.replicate(
@@ -53,6 +53,9 @@ defmodule Api.Project do
              target_project_name
            ),
          :ok <- create_project_metadata(target_project_name) do
+
+      CouchService.add_application_user(target_project_name)
+
       %{
         couch_status: :ok,
         file_response: file_response,
@@ -73,7 +76,7 @@ defmodule Api.Project do
     url = Application.get_env(:api, :couchdb_url)
 
     translations_database = "#{project_name}#{@translation_db_suffix}"
-    styles_database = "#{project_name}#{}"
+    styles_database = "#{project_name}#{@styles_db_suffix}"
 
     with {:ok, %{status_code: val}} when val == 201 or val == 412 <-
            CouchService.create_database(translations_database),
@@ -98,6 +101,9 @@ defmodule Api.Project do
           %{color: Map.get(parsed_category, :color)}
         )
       end)
+
+      CouchService.add_application_user(translations_database)
+      CouchService.add_application_user(styles_database)
 
       :ok
     else

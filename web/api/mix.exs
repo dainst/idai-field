@@ -32,7 +32,8 @@ defmodule Api.MixProject do
       {:cowboy, "~> 2.9"},
       {:remix, "~> 0.0.2", only: :dev},
       {:guardian, "~> 2.2"},
-      {:corsica, "~> 1.0"}
+      {:corsica, "~> 1.0"},
+      {:argon2_elixir, "~> 3.0"}
     ]
   end
 

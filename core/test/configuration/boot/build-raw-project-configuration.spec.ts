@@ -2727,19 +2727,31 @@ describe('buildRawProjectConfiguration', () => {
                             {
                                 name: 'subfield2-2',
                                 inputType: 'boolean'
+                            },
+                            {
+                                name: 'subfield2-3',
+                                inputType: 'checkboxes'
                             }
                         ]
                     }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1', 'field2'] }
-                ]
+                ],
+                valuelists: {
+                    'field2': {
+                        'subfield2-3': 'valuelist-2'
+                    }
+                }
             }
         };
 
         const valuelists : Map<Valuelist> = {
             'valuelist-1': {
                 values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            },
+            'valuelist-2': {
+                values: { b: {} }, description: {}, createdBy: '', creationDate: ''
             }
         };
 
@@ -2760,10 +2772,13 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[0].subfields[1].inputType).toEqual(Field.InputType.DROPDOWN);
         expect(result['A'].groups[0].fields[0].subfields[1].valuelist?.id).toEqual('valuelist-1');
         expect(result['A'].groups[0].fields[1].inputType).toEqual(Field.InputType.COMPLEX);
-        expect(result['A'].groups[0].fields[1].subfields.length).toBe(2);
+        expect(result['A'].groups[0].fields[1].subfields.length).toBe(3);
         expect(result['A'].groups[0].fields[1].subfields[0].name).toEqual('subfield2-1');
         expect(result['A'].groups[0].fields[1].subfields[0].inputType).toEqual(Field.InputType.TEXT);
         expect(result['A'].groups[0].fields[1].subfields[1].name).toEqual('subfield2-2');
         expect(result['A'].groups[0].fields[1].subfields[1].inputType).toEqual(Field.InputType.BOOLEAN);
+        expect(result['A'].groups[0].fields[1].subfields[2].name).toEqual('subfield2-3');
+        expect(result['A'].groups[0].fields[1].subfields[2].inputType).toEqual(Field.InputType.CHECKBOXES);
+        expect(result['A'].groups[0].fields[1].subfields[2].valuelist?.id).toEqual('valuelist-2');
     });
 });

@@ -2,6 +2,10 @@ defmodule Api.Services.CouchService do
   @fix_source_url Application.compile_env(:api, :fix_couch_source_url, false)
 
   @system_databases ["_users", "_replicator"]
+  @application_databases ["field_users"]
+
+  # TODO: Should probably be defined by Api.Publication module
+  @publication_suffix ~r".*_publication-\d{4}-\d{2}-\d{2}.*"
 
   @field_users_db Application.compile_env(:api, :field_user_db)
 
@@ -94,13 +98,13 @@ defmodule Api.Services.CouchService do
   @doc """
   Returns a list of all databases (excluding CouchDB's internal ones: `_users` and `_replicator`).
   """
-  def get_all_databases() do
+  def get_project_databases() do
     "#{local_url()}/_all_dbs"
     |> HTTPoison.get!(headers())
     |> Map.get(:body)
     |> Jason.decode!()
-    |> Stream.reject(fn val ->
-      val in @system_databases
+    |> Stream.reject(fn name ->
+      name in (@system_databases ++ @application_databases) or Regex.match?(@publication_suffix, name)
     end)
     |> Enum.to_list()
     |> Enum.sort()

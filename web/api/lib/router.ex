@@ -1,6 +1,8 @@
 defmodule Api.Router do
   use Plug.Router
 
+  alias Api.Project
+
   plug :match
   plug Corsica, origins: "*"
 
@@ -23,16 +25,23 @@ defmodule Api.Router do
   end
 
   get "/api/project" do
+    conn =
+      conn
+      |> Api.UserAuth.api_require_user_authentication(%{})
+
+    user_projects =
+      conn.assigns.current_user
+      |> Project.index()
+
     conn
-    |> Api.UserAuth.api_require_user_authentication(%{})
-    |> send_resp(200, "Users only route")
+    |> send_resp(200, Jason.encode!(user_projects))
   end
 
   get "/api/project/:project" do
     conn
     |> Api.UserAuth.api_require_user_authentication(%{})
     |> Api.UserAuth.api_require_project_authorization(%{})
-    |> send_resp(200, "Project member only route")
+    |> send_resp(200, Jason.encode!(Project.get_publications(project) |> then(fn({:ok, data}) -> data end)))
   end
 
   match _ do

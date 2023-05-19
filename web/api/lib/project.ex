@@ -80,6 +80,21 @@ defmodule Api.Project do
     end
   end
 
+  def check_project_authorization(project_name, user_name) do
+    project_name
+    |> get_project_document("users")
+    |> case do
+      {:ok, users} ->
+        if user_name in users["members"] do
+          :granted
+        else
+          :denied
+        end
+      _ ->
+        :denied
+    end
+  end
+
   def initialize_publication(project_name, source_url, source_project_name, source_user, source_password) do
     Publication.replicate(source_url, source_project_name, source_user, source_password, project_name)
     |> case do

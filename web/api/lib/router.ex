@@ -1,8 +1,6 @@
 defmodule Api.Router do
   use Plug.Router
 
-  import Api.UserAuth
-
   plug :match
   plug Corsica, origins: "*"
 
@@ -20,13 +18,21 @@ defmodule Api.Router do
   forward("/api/statistics", to: Api.Statistics.Router)
   forward("/api/worker", to: Api.Worker.Router)
 
-  get "/api/simon/public" do
+  get "/api/public" do
     send_resp(conn, 200, "Public route")
   end
 
-  get "/api/simon/membersonly" do
-    Api.UserAuth.api_require_user_authentication(conn, %{})
-    |> send_resp(200, "Members only route")
+  get "/api/project" do
+    conn
+    |> Api.UserAuth.api_require_user_authentication(%{})
+    |> send_resp(200, "Users only route")
+  end
+
+  get "/api/project/:project" do
+    conn
+    |> Api.UserAuth.api_require_user_authentication(%{})
+    |> Api.UserAuth.api_require_project_authorization(%{})
+    |> send_resp(200, "Project member only route")
   end
 
   match _ do

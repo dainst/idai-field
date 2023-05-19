@@ -10,7 +10,7 @@ defmodule Api.User do
     |> case do
       {:ok, %{"password" => hash}} ->
         if Argon2.verify_pass(user_password, hash) do
-          :success
+          :granted
         else
           :denied
         end

@@ -1,8 +1,9 @@
 defmodule Api.Project do
   alias Api.Services.{
-    CouchService,
-    FileService
+    CouchService
   }
+
+  alias Api.Publication
 
   require Logger
 
@@ -35,141 +36,77 @@ defmodule Api.Project do
     end)
   end
 
-  def replicate(source_url, source_project_name, source_user, source_password, project_name) do
-    target_project_name = "project_#{project_name}-#{Date.utc_today()}"
-
-    with {:ok, %{status_code: value}} when value == 200 or value == 201 <-
-           CouchService.replicate(
-             "#{source_url}/db/#{source_project_name}",
-             source_user,
-             source_password,
-             target_project_name
-           ),
-         {:ok, file_response} <-
-           FileService.replicate(
-             "#{source_url}/files/#{source_project_name}",
-             source_user,
-             source_password,
-             target_project_name
-           ),
-         :ok <- create_project_metadata(target_project_name) do
-
-      CouchService.add_application_user(target_project_name)
-
-      %{
-        couch_status: :ok,
-        file_response: file_response,
-        name: target_project_name
-      }
-    else
-      {:ok, %HTTPoison.Response{status_code: 409} = error} ->
-        Logger.error(error)
-        :conflict
-
-      error ->
-        Logger.error(error)
-        :error
-    end
+  def create(project_name) do
+    create(project_name, [])
   end
 
-  defp create_project_metadata(project_name) do
-    url = Application.get_env(:api, :couchdb_url)
-
-    translations_database = "#{project_name}#{@translation_db_suffix}"
-    styles_database = "#{project_name}#{@styles_db_suffix}"
-
-    with {:ok, %{status_code: val}} when val == 201 or val == 412 <-
-           CouchService.create_database(translations_database),
-         {:ok, %{status_code: val}} when val == 201 or val == 412 <-
-           CouchService.create_database(styles_database),
-         {:ok, full_config} <- create_full_configuration(url, project_name),
-         flattened_categories <-
-           Enum.reduce(full_config, [], &flatten_full_configuration/2) do
-      flattened_categories
-      |> Enum.map(&parse_category/1)
-      |> Enum.map(fn parsed_category ->
-        # Ugly split between translations and :color
-        CouchService.store_document(
-          translations_database,
-          "category_#{parsed_category.name}",
-          Map.delete(parsed_category, :color)
-        )
-
-        CouchService.store_document(
-          styles_database,
-          "category_#{parsed_category.name}",
-          %{color: Map.get(parsed_category, :color)}
-        )
-      end)
-
-      CouchService.add_application_user(translations_database)
-      CouchService.add_application_user(styles_database)
-
-      :ok
-    else
-      error ->
-        Logger.error(error)
-        :error
-    end
-  end
-
-  defp create_full_configuration(url, project_name) do
-    System.cmd(
-      "node",
-      [
-        Application.app_dir(
-          :api,
-          "priv/project_enricher/dist/createFullConfiguration.js"
-        ),
-        project_name,
-        url,
-        Application.get_env(:api, :couchdb_admin_name),
-        Application.get_env(:api, :couchdb_admin_password)
-      ]
-    )
+  def create(project_name, members) do
+    project_name
+    |> CouchService.create_database()
     |> case do
-      {full_configuration, 0} ->
-        {:ok, Jason.decode!(full_configuration)}
+      {:ok, %{status_code: 201}} ->
+        {:ok, %{status_code: 200}} = CouchService.add_application_user(project_name)
+
+        project_name
+        |> CouchService.store_document("users", %{members: members})
     end
   end
 
-  defp flatten_full_configuration(%{"item" => item, "trees" => trees}, acc) do
-    Enum.reduce(trees, acc ++ [item], &flatten_full_configuration/2)
+  def add_member(project_name, user_name) do
+    project_name
+    |> get_project_document("users")
+    |> case do
+      {:ok, users} ->
+        updated =
+          Map.update!(users, "members", fn(existing_members) ->
+            Enum.uniq(existing_members ++ [user_name])
+          end)
+
+        CouchService.store_document(project_name, "users", updated)
+    end
   end
 
-  defp parse_category(%{
-         "color" => color,
-         "description" => description,
-         "label" => label,
-         "name" => name,
-         "groups" => groups
-       }) do
-    %{
-      name: name,
-      description: Enum.map(description, &parse_language_map/1),
-      color: color,
-      label: Enum.map(label, &parse_language_map/1),
-      groups: Enum.map(groups, &parse_group/1)
-    }
+  def remove_member(project_name, user_name) do
+    project_name
+    |> get_project_document("users")
+    |> case do
+      {:ok, users} ->
+        updated =
+          Map.update!(users, "members", fn(existing_members) ->
+            List.delete(existing_members, user_name)
+          end)
+
+        CouchService.store_document(project_name, "users", updated)
+    end
   end
 
-  defp parse_group(%{"label" => label, "name" => name, "fields" => fields}) do
-    %{
-      label: Enum.map(label, &parse_language_map/1),
-      name: name,
-      fields: Enum.map(fields, &parse_field/1)
-    }
+  def initialize_publication(project_name, source_url, source_project_name, source_user, source_password) do
+    Publication.replicate(source_url, source_project_name, source_user, source_password, project_name)
+    |> case do
+      %{
+        name: publication_name
+      } = replication_result ->
+        project_name
+        |> get_project_document("publications")
+        |> case do
+          {:ok, publications} ->
+            CouchService.store_document(
+              project_name,
+              "publications",
+              Map.put(publications, publication_name, replication_result)
+            )
+        end
+    end
   end
 
-  defp parse_field(%{"description" => description, "label" => label, "name" => name}) do
-    %{
-      label: Enum.map(label, &parse_language_map/1),
-      name: name,
-      description: Enum.map(description, &parse_language_map/1)
-    }
-  end
-
-  defp parse_language_map({key, value}) do
-    %{String.to_atom(key) => value}
+  defp get_project_document(project_name, doc_id) do
+    CouchService.retrieve_document(project_name, doc_id)
+    |> case do
+      {:ok, %{body: body, status_code: 200}} ->
+        body
+        |> Jason.decode()
+      {:ok, %{status_code: 404}} ->
+        {:error, :unknown_project}
+      end
   end
 end

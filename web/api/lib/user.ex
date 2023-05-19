@@ -24,9 +24,7 @@ defmodule Api.User do
       @field_users_db,
       user_name,
       %{
-        password: Argon2.hash_pwd_salt(user_password),
-        project_admin: [],
-        project_member: []
+        password: Argon2.hash_pwd_salt(user_password)
       }
     )
   end

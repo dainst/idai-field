@@ -12,7 +12,7 @@
         "label": ""
     },
     "archaeoDox": {
-        "label": "",
+        "label": "archaeoDox",
         "languageConfiguration": {
             "relations": {
                 "isPresentIn": {

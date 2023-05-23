@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="de" datatype="plaintext" original="ng2.template" target-language="en">
     <body>
       <trans-unit id="ngb.alert.close" datatype="html">
@@ -11,10 +11,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
-        <source> Slide <x id="INTERPOLATION" equiv-text="lse);
-  private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="final"> Slide <x id="INTERPOLATION" equiv-text="lse);
-  private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <source> Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
+        <target state="final">Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -254,9 +252,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="tring;
-
-  disab"/></source>
+        <source><x id="INTERPOLATION" equiv-text="tring;    disab"/></source>
         <target state="final">PM</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
@@ -416,11 +412,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
-        <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </source>
-        <target state="final">
-                        Supported file formats: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
-                        Image formats can be imported via the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
-                    </target>
+        <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <target state="final">Supported file formats: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Image formats can be imported via the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -435,10 +428,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
-        <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>) bereits vergeben ist, werden ignoriert. </source>
-        <target state="final">
-                                Already existing resources, as determined by the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>, get ignored.
-                            </target>
+        <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
+        <target state="final">Already existing resources, as determined by the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, get ignored. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -446,7 +437,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
         <source> Nicht konfigurierte Felder ignorieren </source>
-        <target state="final"> Ignore unconfigured fields </target>
+        <target state="final">Ignore unconfigured fields</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">101,104</context>
@@ -454,7 +445,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
         <source> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </source>
-        <target state="final"> If this option is enabled, fields in the import file that are not part of the project configuration are ignored during import. Otherwise, the import will be aborted. </target>
+        <target state="final">If this option is enabled, fields in the import file that are not part of the project configuration are ignored during import. Otherwise, the import will be aborted.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">112,120</context>
@@ -462,40 +453,23 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source> Vorhandene Ressource ergänzen </source>
-        <target state="final">
-                            Update existing resources
-                        </target>
+        <target state="final">Update existing resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
-        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="final">
-                        If this option is active, already existing resources will be merged with the data of the import
-                        file. Fields of the import record will overwrite corresponding fields of the existing record.
-                        Geometries of the import record will overwrite those of the existing record. Fields existing in the
-                        original record that are undefined in the import record will remain untouched.
-                        The category cannot be changed. The assignment of
-                        records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
-                        Records in the import file that cannot be assigned to a resource will be ignored.
-                    </target>
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="final">If this option is active, already existing resources will be merged with the data of the import file. Fields of the import record will overwrite corresponding fields of the existing record. Geometries of the import record will overwrite those of the existing record. Fields existing in the original record that are undefined in the import record will remain untouched. The category cannot be changed. The assignment of records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Records in the import file that cannot be assigned to a resource will be ignored. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
-        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="final">
-                        If this option is active, already existing resources will be merged with the data of the import
-                        file. Fields of the import record will overwrite corresponding fields of the existing record.
-                        Fields existing in the original record that are undefined in the import record will remain untouched.
-                        The category cannot be changed. The assignment of
-                        records is performed based on the column <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
-                        Records in the import file that cannot be assigned to a resource will be ignored.
-                    </target>
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="final">If this option is active, already existing resources will be merged with the data of the import file. Fields of the import record will overwrite corresponding fields of the existing record. Fields existing in the original record that are undefined in the import record will remain untouched. The category cannot be changed. The assignment of records is performed based on the column <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Records in the import file that cannot be assigned to a resource will be ignored. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">119</context>
@@ -503,22 +477,15 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
         <source> Löschen erlauben </source>
-        <target state="final">
-            Permit deletions
-        </target>
+        <target state="final">Permit deletions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
-        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="final">
-                        If this option is activated, fields as well as relations can not only get updated
-                        but also removed. All fields and relations with the assigned value
-                        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> will
-                        be deleted. Undefined fields and relations do not get modified at all.
-                    </target>
+        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
+        <target state="final">If this option is activated, fields as well as relations can not only get updated but also removed. All fields and relations with the assigned value <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> will be deleted. Undefined fields and relations do not get modified at all. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">138</context>
@@ -526,12 +493,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
         <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="final">
-                        If this option is activated, fields as well as relations can not only get updated
-                        but also removed. A field or relation gets deleted if the corresponding field in
-                        the import file is empty. Fields and relations that are not specified as a column of
-                        the CSV table do not get modified at all.
-                    </target>
+        <target state="final">If this option is activated, fields as well as relations can not only get updated but also removed. A field or relation gets deleted if the corresponding field in the import file is empty. Fields and relations that are not specified as a column of the CSV table do not get modified at all.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">142</context>
@@ -578,13 +540,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
-        <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="final">
-                        The GeoJSON import does not create new resources. Instead, geometries are added to existing
-                        resources. Please note that already existing geometries are overwritten in this
-                        process. The assignment of records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> of the object <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>. Records in the
-                        import file that cannot be assigned to a resource will be ignored.
-                    </target>
+        <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="final">The GeoJSON import does not create new resources. Instead, geometries are added to existing resources. Please note that already existing geometries are overwritten in this process. The assignment of records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> of the object <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Records in the import file that cannot be assigned to a resource will be ignored. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -592,23 +549,15 @@
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
         <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="final">
-                        The installation of Java 8 or higher is required in order to perform a shapefile
-                        import.
-                    </target>
+        <target state="final">The installation of Java 8 or higher is required in order to perform a shapefile import.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
-        <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="final">
-                        The shapefile import does not create new resources. Instead, geometries are added to existing
-                        resources. Please note that already existing geometries are overwritten in this
-                        process. The assignment of records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>. Records in the
-                        shapefile that cannot be assigned to a resource will be ignored.
-                    </target>
+        <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="final">The shapefile import does not create new resources. Instead, geometries are added to existing resources. Please note that already existing geometries are overwritten in this process. The assignment of records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Records in the shapefile that cannot be assigned to a resource will be ignored. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -696,7 +645,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source> Hierarchische Relationen zusammenfassen (empfohlen) </source>
-        <target state="final"> Combine hierarchical relations (recommended) </target>
+        <target state="final">Combine hierarchical relations (recommended)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
@@ -735,8 +684,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
-        <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
-        <target state="final"> If this option is enabled, the hierarchical relations are combined into the simplified relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, which specifies the direct parent resource. This option should normally remain enabled. </target>
+        <source> Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
+        <target state="final">If this option is enabled, the hierarchical relations are combined into the simplified relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, which specifies the direct parent resource. This option should normally remain enabled. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">365</context>
@@ -768,9 +717,7 @@
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
         <source> Keine Ressourcen gefunden. </source>
-        <target state="final">
-                        No resources found.
-                    </target>
+        <target state="final">No resources found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">109</context>
@@ -778,21 +725,15 @@
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source> Keine Kataloge gefunden. </source>
-        <target state="final">
-                        No catalogs found.
-                    </target>
+        <target state="final">No catalogs found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
-        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="final">
-                        The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>,
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>category<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> of the corresponding
-                        resources.
-                    </target>
+        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="final">The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>category<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> of the corresponding resources. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">147</context>
@@ -800,10 +741,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
         <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich. </source>
-        <target state="final">
-                        The installation of Java JDK 8 or higher is required in order to perform a shapefile
-                        export.
-                    </target>
+        <target state="final">The installation of Java JDK 8 or higher is required in order to perform a shapefile export.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">131</context>
@@ -818,12 +756,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
-        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="final">
-                        The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>,
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>category<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> of the corresponding
-                        resources.
-                    </target>
+        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="final">The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>category<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> of the corresponding resources. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -846,14 +780,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
-        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="final">
-                        Creates a backup of the currently opened project. Regular backups increase data security
-                        and allow restoring the database from the last saved state in case of data loss.
-                        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
-                        Please note that image originals are not stored in the backup file. These can be found in the
-                        directory specified in the <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>settings<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> and should be saved separately.
-                    </target>
+        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="final">Creates a backup of the currently opened project. Regular backups increase data security and allow restoring the database from the last saved state in case of data loss. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Please note that image originals are not stored in the backup file. These can be found in the directory specified in the <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>settings<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> and should be saved separately. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -877,10 +805,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen. </source>
-        <target state="final">
-                        Please enter the complete path to a backup file as well as the name of a target project. The identifier
-                        of the target project must not match the identifier of the currently open project.
-                    </target>
+        <target state="final">Please enter the complete path to a backup file as well as the name of a target project. The identifier of the target project must not match the identifier of the currently open project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">83</context>
@@ -888,21 +813,15 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
-        <target state="final">
-                        Please note: After restoring a backup, all thumbnail images will be computed anew based on the
-                        original image data. For this reason, the application may initially run slower than usual.
-                    </target>
+        <target state="final">Please note: After restoring a backup, all thumbnail images will be computed anew based on the original image data. For this reason, the application may initially run slower than usual.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="final">
-                        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> While restoring a backup file, a possibly existing target database of the specified identifier will
-                        be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>overwritten entirely<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
-                    </target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
+        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> While restoring a backup file, a possibly existing target database of the specified identifier will be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>overwritten entirely<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -965,8 +884,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newField" datatype="html">
-        <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="final">Create new field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="final">Create new field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -993,8 +912,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newGroup" datatype="html">
-        <source>Neue Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="final">Create new group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Neue Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="final">Create new group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/group-listing.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -1021,8 +940,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.extendValuelistInfo" datatype="html">
-        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
-        <target state="final"> Please enter an identifier for your extension of valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
+        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
+        <target state="final">Please enter an identifier for your extension of valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -1045,8 +964,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newValuelist" datatype="html">
-        <source>Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="final">Create new valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="final">Create new valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
           <context context-type="linenumber">67</context>
@@ -1125,8 +1044,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
-        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </source>
-        <target state="final"> Create field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
+        <target state="final">Create field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">178</context>
@@ -1150,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelist" datatype="html">
         <source> Werteliste </source>
-        <target state="final"> Valuelist </target>
+        <target state="final">Valuelist</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -1158,7 +1077,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html">
         <source> Werteliste (Unterfeld "Gemessen an") </source>
-        <target state="final"> Valuelist (Subfield "As measured by") </target>
+        <target state="final">Valuelist (Subfield "As measured by")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">118</context>
@@ -1190,23 +1109,23 @@
       </trans-unit>
       <trans-unit id="configuration.groupLabel" datatype="html">
         <source> Gruppenbezeichnung </source>
-        <target state="final"> Group label </target>
+        <target state="final">Group label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificGroup" datatype="html">
-        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </source>
-        <target state="final"> Create group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
+        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
+        <target state="final">Create group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
           <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificGroup" datatype="html">
-        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="final"> Edit group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
+        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="final">Edit group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -1421,16 +1340,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificCategory" datatype="html">
-        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="final"> Edit category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="final">Edit category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
           <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
-        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> hinzufügen </source>
-        <target state="final"> Add category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
+        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> hinzufügen </source>
+        <target state="final">Add category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">24</context>
@@ -1438,7 +1357,7 @@
       </trans-unit>
       <trans-unit id="configuration.references" datatype="html">
         <source> Verweise </source>
-        <target state="final"> References </target>
+        <target state="final">References</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">40</context>
@@ -1458,7 +1377,7 @@
       </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
         <source> Grundeinstellungen </source>
-        <target state="final"> Basic settings </target>
+        <target state="final">Basic settings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">72</context>
@@ -1482,7 +1401,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.header" datatype="html">
         <source> Konfiguration aus anderem Projekt importieren </source>
-        <target state="final"> Import configuration from other project </target>
+        <target state="final">Import configuration from other project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">45</context>
@@ -1490,7 +1409,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
-        <target state="final"> Please note that all configuration adjustments (including valuelists) will be lost during import. The project configuration will be completely replaced by the configuration of the selected project. </target>
+        <target state="final">Please note that all configuration adjustments (including valuelists) will be lost during import. The project configuration will be completely replaced by the configuration of the selected project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -1514,7 +1433,7 @@
       </trans-unit>
       <trans-unit id="configuration.changeNotification.header" datatype="html">
         <source> Die Projektkonfiguration hat sich geändert. </source>
-        <target state="final"> The project configuration has been changed. </target>
+        <target state="final">The project configuration has been changed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -1538,7 +1457,7 @@
       </trans-unit>
       <trans-unit id="configuration.saveInfo.general" datatype="html">
         <source> Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen. </source>
-        <target state="final"> Do you really want to save the changes you have made to the configuration? Please note that your changes will affect the entire project. </target>
+        <target state="final">Do you really want to save the changes you have made to the configuration? Please note that your changes will affect the entire project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -1546,7 +1465,7 @@
       </trans-unit>
       <trans-unit id="configuration.saveInfo.synchronization" datatype="html">
         <source> Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen. </source>
-        <target state="final"> Other users working on the same project via a synchronization connection will have to restart the Field Desktop application in order to apply the configuration changes.</target>
+        <target state="final">Other users working on the same project via a synchronization connection will have to restart the Field Desktop application in order to apply the configuration changes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -1554,7 +1473,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
         <source> Anzeigetext </source>
-        <target state="final"> Label </target>
+        <target state="final">Label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -1562,23 +1481,23 @@
       </trans-unit>
       <trans-unit id="configuration.valueDescription" datatype="html">
         <source> Beschreibung </source>
-        <target state="final"> Description </target>
+        <target state="final">Description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editValue" datatype="html">
-        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten</source>
-        <target state="final">Edit value <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</source>
+        <target state="final">Edit value <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createValue" datatype="html">
-        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="final">Create value <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="final">Create value <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.html</context>
           <context context-type="linenumber">19</context>
@@ -1626,7 +1545,7 @@
       </trans-unit>
       <trans-unit id="configuration.customFilter" datatype="html">
         <source> Projektspezifische Wertelisten </source>
-        <target state="final"> Project specific valuelists </target>
+        <target state="final">Project specific valuelists</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
           <context context-type="linenumber">55</context>
@@ -1634,7 +1553,7 @@
       </trans-unit>
       <trans-unit id="configuration.inUseFilter" datatype="html">
         <source> Verwendete Wertelisten </source>
-        <target state="final"> Valuelists in use </target>
+        <target state="final">Valuelists in use</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
           <context context-type="linenumber">55</context>
@@ -1674,7 +1593,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
         <source> Projektkonfiguration </source>
-        <target state="final"> Project configuration </target>
+        <target state="final">Project configuration</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
           <context context-type="linenumber">81</context>
@@ -1798,7 +1717,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.header" datatype="html">
         <source> Download abbrechen? </source>
-        <target state="final"> Abort download? </target>
+        <target state="final">Abort download?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1806,7 +1725,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.info" datatype="html">
         <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen. </source>
-        <target state="final"> Please note that if you abort the download, it will start from the beginning if you download the project again at a later time. </target>
+        <target state="final">Please note that if you abort the download, it will start from the beginning if you download the project again at a later time.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1834,7 +1753,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.header" datatype="html">
         <source> Neues Projekt erstellen </source>
-        <target state="final"> Create new project </target>
+        <target state="final">Create new project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -1850,7 +1769,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source> Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
-        <target state="final"> Optionally, you can specify a project name for each language. The name may contain any characters and be up to <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> characters long. It can be changed at any time in the project properties. </target>
+        <target state="final">Optionally, you can specify a project name for each language. The name may contain any characters and be up to <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> characters long. It can be changed at any time in the project properties. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -1874,7 +1793,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration.info" datatype="html">
         <source> Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden. </source>
-        <target state="final"> The selected start configuration determines which categories, forms and fields are initially available for the new project. The configuration can then be customized as desired. </target>
+        <target state="final">The selected start configuration determines which categories, forms and fields are initially available for the new project. The configuration can then be customized as desired.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -1890,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source> Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus. </source>
-        <target state="final"> Select here the languages in which data is to be entered within the project. Please select at least one language. </target>
+        <target state="final">Select here the languages in which data is to be entered within the project. Please select at least one language.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1898,15 +1817,15 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="final"> Project identifier: </target>
+        <target state="final">Project identifier:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
-        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> mehr geändert werden. </source>
-        <target state="final"> Enter a unique identifier for the new project here. Permitted characters are lowercase letters of the latin alphabet, digits, underscores and hyphens. The identifier must always start with a letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. It <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>cannot<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> be changed at a later time.</target>
+        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
+        <target state="final">Enter a unique identifier for the new project here. Permitted characters are lowercase letters of the latin alphabet, digits, underscores and hyphens. The identifier must always start with a letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. It <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cannot<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> be changed at a later time.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1921,8 +1840,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
-        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="final"> Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? </target>
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="final">Delete project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -1938,7 +1857,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source> Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Please enter the project identifier to confirm deletion. </target>
+        <target state="final">Please enter the project identifier to confirm deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -1962,7 +1881,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.cancelling" datatype="html">
         <source>Download wird abgebrochen... </source>
-        <target state="final">Aborting download... </target>
+        <target state="final">Aborting download...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2006,7 +1925,7 @@
       </trans-unit>
       <trans-unit id="project.download.address.info" datatype="html">
         <source> Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden. </source>
-        <target state="final"> The URL of a Field server as well as the network address of another Field Desktop installation can be entered as the address. </target>
+        <target state="final">The URL of a Field server as well as the network address of another Field Desktop installation can be entered as the address.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">98</context>
@@ -2046,15 +1965,15 @@
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
         <source> Projektdatenübersicht </source>
-        <target state="final"> Project data overview </target>
+        <target state="final">Project data overview</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
-        <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </source>
-        <target state="final"> Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>: </target>
+        <source> Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </source>
+        <target state="final">Data stored on this computer for project <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">104</context>
@@ -2062,7 +1981,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
         <source> Ressourcen: </source>
-        <target state="final"> Resources: </target>
+        <target state="final">Resources:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">25</context>
@@ -2070,7 +1989,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.total" datatype="html">
         <source> Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </source>
-        <target state="final"> Total amount: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
+        <target state="final">Total amount: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">43</context>
@@ -2078,7 +1997,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.images" datatype="html">
         <source> Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </source>
-        <target state="final"> Of which images: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
+        <target state="final">Of which images: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">33</context>
@@ -2086,7 +2005,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.types" datatype="html">
         <source> Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </source>
-        <target state="final"> Of which types and catalogs: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
+        <target state="final">Of which types and catalogs: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">35</context>
@@ -2094,7 +2013,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.lastChangedResource" datatype="html">
         <source> Letzte bearbeitete Ressource: </source>
-        <target state="final"> Last changed resource: </target>
+        <target state="final">Last changed resource:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">37</context>
@@ -2102,7 +2021,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.date" datatype="html">
         <source> Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </source>
-        <target state="final"> Time: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
+        <target state="final">Time: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">58</context>
@@ -2110,7 +2029,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.deletedResource" datatype="html">
         <source> Gelöschte Ressource </source>
-        <target state="final"> Deleted resource </target>
+        <target state="final">Deleted resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">61,68</context>
@@ -2118,7 +2037,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.editedBy" datatype="html">
         <source> Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </source>
-        <target state="final"> Edited by: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
+        <target state="final">Edited by: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2126,7 +2045,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
         <source> Vorschau-Bilddateien: </source>
-        <target state="final"> Thumbnail image files: </target>
+        <target state="final">Thumbnail image files:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">73</context>
@@ -2134,7 +2053,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
         <source> Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </source>
-        <target state="final"> Disk space used: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </target>
+        <target state="final">Disk space used: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">70</context>
@@ -2150,7 +2069,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
         <source> Original-Bilddateien: </source>
-        <target state="final"> Original image files: </target>
+        <target state="final">Original image files:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2190,29 +2109,23 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
-        <target state="final">
-          Please note that the import of <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> image files may take some time.
-    </target>
+        <target state="final">Please note that the import of <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> image files may take some time. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
           <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
-        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="final">
-          The imported image will be linked to the resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
-        </target>
+        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="final">The imported image will be linked to the resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
-        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="final">
-          The imported images will be linked to the resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
-        </target>
+        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="final">The imported images will be linked to the resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2220,9 +2133,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
         <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
-        <target state="final">
-          Please select the desired category.
-        </target>
+        <target state="final">Please select the desired category.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2237,12 +2148,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
-        <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wird sie verworfen. </source>
-        <target state="final">
-        The current resource has just been deleted by another user.
-        You can create the resource anew by choosing <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Save<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. On clicking
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abort<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>, the resource will be discarded.
-    </target>
+        <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
+        <target state="final">The current resource has just been deleted by another user. You can create the resource anew by choosing <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Save<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. On clicking <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abort<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, the resource will be discarded. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2250,9 +2157,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
         <source> Zurück zur Editieransicht </source>
-        <target state="final">
-        Back to the edit form
-    </target>
+        <target state="final">Back to the edit form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -2260,10 +2165,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
         <source> Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
-        <target state="final">
-        This is an imported catalog.
-        Please note that associations between types of this catalog and finds will be removed too.
-    </target>
+        <target state="final">This is an imported catalog. Please note that associations between types of this catalog and finds will be removed too.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">42</context>
@@ -2271,11 +2173,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
         <source> Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
-        <target state="final">
-        Please note that deleting a catalog entails deletion of all types contained
-        within that catalog. In addition to that all
-        associations between types of the catalog and finds will get removed.
-    </target>
+        <target state="final">Please note that deleting a catalog entails deletion of all types contained within that catalog. In addition to that all associations between types of the catalog and finds will get removed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">72</context>
@@ -2283,10 +2181,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source> Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden. </source>
-        <target state="final">
-        Please note that deleting a type entails deletion of all subtypes. In addition to that all associations
-        between finds and types (and finds and subtypes) will get removed.
-    </target>
+        <target state="final">Please note that deleting a type entails deletion of all subtypes. In addition to that all associations between finds and types (and finds and subtypes) will get removed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2294,9 +2189,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
         <source> Verknüpfte Bilder löschen, bei denen keine Verknüpfungen zu anderen Ressourcen bestehen </source>
-        <target state="final">
-            Delete linked images that do not have links to other resources
-                </target>
+        <target state="final">Delete linked images that do not have links to other resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2304,9 +2197,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
         <source> (Ein Bild) </source>
-        <target state="final">
-                    (One image)
-                </target>
+        <target state="final">(One image)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2314,9 +2205,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
         <source> (<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder) </source>
-        <target state="final">
-                    (<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images)
-                </target>
+        <target state="final">(<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2340,9 +2229,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
         <source> Eine Ressource gefunden </source>
-        <target state="final">
-                One resource found
-            </target>
+        <target state="final">One resource found</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -2350,9 +2237,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden </source>
-        <target state="final">
-                <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> resources found
-            </target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> resources found </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -2360,9 +2245,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
         <source> Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen </source>
-        <target state="final">
-                    Limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources
-            </target>
+        <target state="final">Limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">24</context>
@@ -2414,7 +2297,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.single" datatype="html">
         <source> Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden. </source>
-        <target state="state"> There is a resource of this category in the project, which will not be visible anymore after the deletion. If you add the category again at a later time, the resource will be visible again. </target>
+        <target state="state">There is a resource of this category in the project, which will not be visible anymore after the deletion. If you add the category again at a later time, the resource will be visible again.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2422,7 +2305,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.multiple" datatype="html">
         <source> Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
-        <target state="final"> There are <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> resources of this category in the project, which will not be visible anymore after the deletion. If you add the category again at a later time, the resources will be visible again. </target>
+        <target state="final">There are <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> resources of this category in the project, which will not be visible anymore after the deletion. If you add the category again at a later time, the resources will be visible again. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2430,15 +2313,15 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.changes" datatype="html">
         <source> An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen. </source>
-        <target state="final"> Changes have been made to this category that will be lost upon deletion. </target>
+        <target state="final">Changes have been made to this category that will be lost upon deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
-        <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
-        <target state="final"> The category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> cannot be deleted as long as it has subcategories. Please remove the subcategories first. </target>
+        <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
+        <target state="final">The category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as it has subcategories. Please remove the subcategories first. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
@@ -2453,8 +2336,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
-        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="final">Do you really want to delete the field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>?</target>
+        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
+        <target state="final">Do you really want to delete the field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
         <note priority="1" from="description">configuration.deleteField.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
@@ -2470,8 +2353,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
-        <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="final"> Do you really want to delete the group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>? </target>
+        <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="final">Do you really want to delete the group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
@@ -2479,8 +2362,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
-        <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
-        <target state="final"> The group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> cannot be deleted as long as fields are assigned to it. Please move the fields to another group first or delete them. </target>
+        <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
+        <target state="final">The group <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as fields are assigned to it. Please move the fields to another group first or delete them. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
           <context context-type="linenumber">27,11</context>
@@ -2495,8 +2378,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
-        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="final"> Do you really want to delete the valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>? </target>
+        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="final">Do you really want to delete the valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -2504,23 +2387,23 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.confirmInfo" datatype="html">
         <source> Bitte geben Sie den Bezeichner der Werteliste ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Please enter the identifier of the valuelist to confirm deletion. </target>
+        <target state="final">Please enter the identifier of the valuelist to confirm deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
-        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
-        <target state="final"> The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> cannot be deleted as long as it is assigned to fields. Please assign a different valuelist to these fields first. </target>
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
+        <target state="final">The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as it is assigned to fields. Please assign a different valuelist to these fields first. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
-        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
-        <target state="final"> The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> cannot be deleted as long as it is assigned to a field. Please assign a different valuelist to this field first.</target>
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
+        <target state="final">The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as it is assigned to a field. Please assign a different valuelist to this field first.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46,24</context>
@@ -2667,8 +2550,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">
-        <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</source>
-        <target state="final">Create new category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="final">Create new category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -2683,8 +2566,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
-        <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </source>
-        <target state="final"> Do you really want to replace the form <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> with form <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>? </target>
+        <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ersetzen? </source>
+        <target state="final">Do you really want to replace the form <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> with form <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -2692,7 +2575,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html">
         <source> Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen. </source>
-        <target state="final"> Please enter the identifier of the selected form to confirm the change. </target>
+        <target state="final">Please enter the identifier of the selected form to confirm the change.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -2868,9 +2751,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
         <source> Wie viele Ressourcen möchten Sie anlegen? </source>
-        <target state="final">
-              How many resources do you want to create?
-        </target>
+        <target state="final">How many resources do you want to create?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -2878,9 +2759,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
         <source> Wie viele Kopien der Ressource möchten Sie anlegen? </source>
-        <target state="final">
-            How many copies of the resource do you want to create?
-        </target>
+        <target state="final">How many copies of the resource do you want to create?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -2912,9 +2791,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="final">
-            Create <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/>
-        </target>
+        <target state="final">Create <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -2922,9 +2799,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </source>
-        <target state="final">
-            Edit <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/>
-        </target>
+        <target state="final">Edit <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">27</context>
@@ -2940,9 +2815,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
         <source> Ressource wird gespeichert... </source>
-        <target state="final">
-                        Saving resource...
-                    </target>
+        <target state="final">Saving resource...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">57</context>
@@ -2950,9 +2823,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
         <source> Ressourcen werden erstellt... </source>
-        <target state="final">
-                        Creating resources...
-                    </target>
+        <target state="final">Creating resources...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">77</context>
@@ -2960,9 +2831,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
         <source> Ressource wird vervielfältigt... </source>
-        <target state="final">
-                        Duplicating resource...
-                    </target>
+        <target state="final">Duplicating resource...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">91</context>
@@ -2977,10 +2846,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
-        <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder </source>
-        <target state="final">
-        Images linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
-    </target>
+        <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verknüpfte Bilder </source>
+        <target state="final">Images linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">89</context>
@@ -2997,9 +2864,7 @@
       <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
         <source> Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
 </source>
-        <target state="final">
-    All links to other resources will be removed for the selected images.
-</target>
+        <target state="final">All links to other resources will be removed for the selected images.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -3015,9 +2880,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source> Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="final">
-            Do you really want to delete the <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> selected images?
-        </target>
+        <target state="final">Do you really want to delete the <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> selected images? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -3025,9 +2888,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source> Möchten Sie das markierte Bild wirklich löschen? </source>
-        <target state="final">
-            Do you really want to delete the selected image?
-        </target>
+        <target state="final">Do you really want to delete the selected image?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -3103,9 +2964,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
         <source> Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen? </source>
-        <target state="final">
-        Do you really want to delete the georeference data stored for this image?
-    </target>
+        <target state="final">Do you really want to delete the georeference data stored for this image?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -3201,7 +3060,7 @@
       </trans-unit>
       <trans-unit id="widgets.savingChangesModal.info" datatype="html">
         <source> Änderungen werden gespeichert... </source>
-        <target state="final"> Saving changes... </target>
+        <target state="final">Saving changes...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/saving-changes-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -3225,9 +3084,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
-        <target state="final">
-            Delete <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources?
-        </target>
+        <target state="final">Delete <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -3235,9 +3092,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.single" datatype="html">
         <source> Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final">
-            Please enter the identifier of this resource to confirm the deletion.
-        </target>
+        <target state="final">Please enter the identifier of this resource to confirm the deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -3245,9 +3100,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.multiple" datatype="html">
         <source> Bitte geben Sie den Bezeichner einer der zu löschenden Ressourcen ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final">
-            Please enter the identifier of one of the resources to be deleted to confirm the deletion.
-        </target>
+        <target state="final">Please enter the identifier of one of the resources to be deleted to confirm the deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -3255,9 +3108,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.single" datatype="html">
         <source> Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird. </source>
-        <target state="final">
-        Another resource belongs to this resource, which will be deleted as well.
-    </target>
+        <target state="final">Another resource belongs to this resource, which will be deleted as well.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">21</context>
@@ -3265,10 +3116,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
         <source> Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="final">
-        There are <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> other resources belonging to this resource,
-        which will be deleted as well.
-    </target>
+        <target state="final">There are <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> other resources belonging to this resource, which will be deleted as well. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -3276,9 +3124,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.multiple" datatype="html">
         <source> Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird. </source>
-        <target state="final">
-        Another resource belongs to these resources, which will be deleted as well.
-    </target>
+        <target state="final">Another resource belongs to these resources, which will be deleted as well.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">30</context>
@@ -3286,10 +3132,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
         <source> Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="final">
-        There are <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> other resources belonging to these resources,
-        which will be deleted as well.
-    </target>
+        <target state="final">There are <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> other resources belonging to these resources, which will be deleted as well. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">54</context>
@@ -3424,11 +3267,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> Zugeordnete Funde </source>
-        <target state="final">
-            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
-            Associated finds
-        </target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Zugeordnete Funde </source>
+        <target state="final"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Associated finds </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
           <context context-type="linenumber">109</context>
@@ -3628,9 +3468,7 @@
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen </source>
-        <target state="final">
-        <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> resources
-    </target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> resources </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -3661,8 +3499,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
-        <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="final">Do you really want to delete the category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>?</target>
+        <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
+        <target state="final">Do you really want to delete the category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -3671,7 +3509,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.confirmInfo" datatype="html">
         <source> Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="final"> Please enter the category name to confirm the deletion. </target>
+        <target state="final">Please enter the category name to confirm the deletion.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">17</context>
@@ -3910,22 +3748,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll: </source>
-        <target state="final">
-            Please select the new parent resource to which the resource
-            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> is to be assigned:
-        </target>
+        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden soll: </source>
+        <target state="final">Please select the new parent resource to which the resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> is to be assigned: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </source>
-        <target state="final">
-            Please select the new parent resource to which the selected <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
-            resources<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> are to be assigned:
-        </target>
+        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
+        <target state="final">Please select the new parent resource to which the selected <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> are to be assigned: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -3933,9 +3765,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.single" datatype="html">
         <source> Ressource wird verschoben... </source>
-        <target state="final">
-                Moving resource...
-            </target>
+        <target state="final">Moving resource...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -3943,9 +3773,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen werden verschoben... </source>
-        <target state="final">
-                Moving <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources...
-            </target>
+        <target state="final">Moving <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">35</context>
@@ -4057,9 +3885,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
         <source> Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen. </source>
-        <target state="final">
-                                Click the edit button to add georeferenced images as map layers.
-                            </target>
+        <target state="final">Click the edit button to add georeferenced images as map layers.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">180</context>
@@ -4123,7 +3949,7 @@
       </trans-unit>
       <trans-unit id="viewModal.noImages" datatype="html">
         <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
-        <target state="final"> No images are linked to this resource. </target>
+        <target state="final">No images are linked to this resource.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">91</context>
@@ -4151,29 +3977,23 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
         <source> Alle Konflikte wurden gelöst. </source>
-        <target state="final">
-                All conflicts have been resolved.
-            </target>
+        <target state="final">All conflicts have been resolved.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
-        <source> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt. </source>
-        <target state="final">
-                There is <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>one<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflict left.
-            </target>
+        <source> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikt. </source>
+        <target state="final">There is <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>one<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> conflict left. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
-        <source> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte. </source>
-        <target state="final">
-                There are <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflicts left.
-            </target>
+        <source> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikte. </source>
+        <target state="final">There are <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> conflicts left. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">23</context>
@@ -4189,7 +4009,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.competingVersion" datatype="html">
         <source> Konkurrierende Version:</source>
-        <target state="final"> Competing version:</target>
+        <target state="final">Competing version:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">40</context>
@@ -4233,9 +4053,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
         <source> Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </source>
-        <target state="final">
-                        Geometry of type <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/>
-                    </target>
+        <target state="final">Geometry of type <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">70</context>
@@ -4247,9 +4065,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.georeferenceData" datatype="html">
         <source> Georeferenzdaten </source>
-        <target state="final">
-                        Georeference data
-                    </target>
+        <target state="final">Georeference data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
           <context context-type="linenumber">55</context>
@@ -4313,9 +4129,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
         <source> Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge: </source>
-        <target state="final">
-        The field contains entries not included in the corresponding value list:
-    </target>
+        <target state="final">The field contains entries not included in the corresponding value list:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/outliers.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -4323,7 +4137,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidFieldData.info" datatype="html">
         <source> Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp: </source>
-        <target state="final"> The data entered in this field does not correspond to the configured input type: </target>
+        <target state="final">The data entered in this field does not correspond to the configured input type:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -4607,7 +4421,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html">
         <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
-        <target state="final"> Please note that all changes you have made to this form as well as subordinate forms will be lost when you switch forms. </target>
+        <target state="final">Please note that all changes you have made to this form as well as subordinate forms will be lost when you switch forms.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -4615,7 +4429,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html">
         <source> Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen. </source>
-        <target state="final"> Please note that all changes you have made to this form will be lost when you switch forms. </target>
+        <target state="final">Please note that all changes you have made to this form will be lost when you switch forms.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -4623,7 +4437,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistDescription" datatype="html">
         <source> Beschreibung der Werteliste </source>
-        <target state="final"> Valuelist description </target>
+        <target state="final">Valuelist description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">71</context>
@@ -4638,16 +4452,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
-        <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </source>
-        <target state="final"> Create valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
+        <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
+        <target state="final">Create valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificValuelist" datatype="html">
-        <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="final"> Edit valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> </target>
+        <source> Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="final">Edit valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -4655,7 +4469,7 @@
       </trans-unit>
       <trans-unit id="configuration.editValuelistInfo" datatype="html">
         <source> Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste benutzen. </source>
-        <target state="final"> Please note that after clicking the OK button, the changes made will be applied for all the fields that use this valuelist. </target>
+        <target state="final">Please note that after clicking the OK button, the changes made will be applied for all the fields that use this valuelist.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.html</context>
           <context context-type="linenumber">24</context>
@@ -4679,9 +4493,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
         <source> Bild wird eingelesen... </source>
-        <target state="final">
-                Importing image...
-            </target>
+        <target state="final">Importing image...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -4689,9 +4501,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="final">
-                <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> images imported...
-            </target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> images imported... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -4699,9 +4509,7 @@
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
         <source> Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis. </source>
-        <target state="final">
-            The original version of the image could not be found in the image directory.
-        </target>
+        <target state="final">The original version of the image could not be found in the image directory.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -4726,19 +4534,16 @@
       <trans-unit id="docedit.forms.missingValuelistInfo.configuration" datatype="html">
         <source> Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
 </source>
-        <target state="final"> The value list specified in the project configuration is empty.
-</target>
+        <target state="final">The value list specified in the project configuration is empty.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.projectDocumentField" datatype="html">
-        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>) ein.
 </source>
-        <target state="final"> Please enter the allowed values for this field in the project data
-    (field <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>).
-</target>
+        <target state="final">Please enter the allowed values for this field in the project data (field <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>). </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -4747,8 +4552,7 @@
       <trans-unit id="docedit.forms.missingValuelistInfo.parent" datatype="html">
         <source> Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.
 </source>
-        <target state="final"> No values can be chosen for this field as the corresponding field of the parent resource is not filled in.
-</target>
+        <target state="final">No values can be chosen for this field as the corresponding field of the parent resource is not filled in.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">13</context>
@@ -4827,8 +4631,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.invalidIdentifier" datatype="html">
-        <source> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
-        <target state="final"> The entered identifier <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> does not start with the configured identifier prefix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Please enter a new identifier. </target>
+        <source> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
+        <target state="final">The entered identifier <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> does not start with the configured identifier prefix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Please enter a new identifier. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/identifier.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -4856,9 +4660,7 @@
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
         <source> Sprachen </source>
-        <target state="final">
-                            Languages
-                        </target>
+        <target state="final">Languages</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -4866,11 +4668,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source> Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein. </source>
-        <target state="final">
-                            Languages can be sorted by priority. A translated user interface is available for
-                            languages in bold. In addition, translations of category and field names as well as
-                            value lists may be available in the project configuration for other languages.
-                        </target>
+        <target state="final">Languages can be sorted by priority. A translated user interface is available for languages in bold. In addition, translations of category and field names as well as value lists may be available in the project configuration for other languages.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -4878,23 +4676,15 @@
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source> Name des Bearbeiters/der Bearbeiterin </source>
-        <target state="final">
-                            Editor name
-                        </target>
+        <target state="final">Editor name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
-        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
-        <target state="final">
-                        The editor name is saved in the editing history in order to allow dataset changes to be attributable to a person.
-                        This setting is very <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>important<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> when synchronizing data
-                        between users or to a Field server, as it allows the system to attribute and resolve possible conflicts.
-                        Therefore it should be set before starting to work on a project. It is recommended to enter the
-                        full name of the user working with this application.
-                    </target>
+        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
+        <target state="final">The editor name is saved in the editing history in order to allow dataset changes to be attributable to a person. This setting is very <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>important<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> when synchronizing data between users or to a Field server, as it allows the system to attribute and resolve possible conflicts. Therefore it should be set before starting to work on a project. It is recommended to enter the full name of the user working with this application. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -4958,7 +4748,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
         <source> Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind. </source>
-        <target state="final"> Uploads of original images to this computer by others are blocked by default because their size may be problematic concerning disk space and they are not strictly necessary for using the application. </target>
+        <target state="final">Uploads of original images to this computer by others are blocked by default because their size may be problematic concerning disk space and they are not strictly necessary for using the application.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">144</context>
@@ -4966,7 +4756,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
         <source> Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann. </source>
-        <target state="final">This address and password need to be set in other Field Desktop installations in order to be able to synchronize data to this computer. </target>
+        <target state="final">This address and password need to be set in other Field Desktop installations in order to be able to synchronize data to this computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">105</context>
@@ -4982,9 +4772,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
         <source> Pfad </source>
-        <target state="final">
-                            Path
-                        </target>
+        <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4992,14 +4780,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </source>
-        <target state="final">
-                            This path can be left in its original setting in most cases. It may be necessary to change
-                            it if the image directory used by Field is stored on a network device (NAS)
-                            shared between multiple users. Within this directory, a subdirectory is created by
-                            the application for each project. The image files stored in these directories are managed by
-                            Field. Images files should not be placed there manually but instead be imported in
-                            the image overview or the image tab of the resource view.
-                        </target>
+        <target state="final">This path can be left in its original setting in most cases. It may be necessary to change it if the image directory used by Field is stored on a network device (NAS) shared between multiple users. Within this directory, a subdirectory is created by the application for each project. The image files stored in these directories are managed by Field. Images files should not be placed there manually but instead be imported in the image overview or the image tab of the resource view.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -5131,23 +4912,23 @@
       </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
         <source> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </source>
-        <target state="final"> No operation categories suitable for the matrix view are configured for this project. </target>
+        <target state="final">No operation categories suitable for the matrix view are configured for this project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">228,243</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
-        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="final"> Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> in order to work with it here. </target>
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final">Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> in order to work with it here. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">268</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
-        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="final"> Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" or "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> in order to work with it here. </target>
+        <source> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="final">Please create an operation of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" or "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> in order to work with it here. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">150,138</context>
@@ -5155,10 +4936,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
         <source> Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
-        <target state="final">
-            Please create resources of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in the excavation view for the selected operation and link them using
-            temporal or spatial relations.
-        </target>
+        <target state="final">Please create resources of category "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in the excavation view for the selected operation and link them using temporal or spatial relations. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">157</context>
@@ -5174,9 +4952,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
         <source> Zeitlich </source>
-        <target state="final">
-                        Temporal
-                    </target>
+        <target state="final">Temporal</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -5184,9 +4960,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.spatial" datatype="html">
         <source> Räumlich </source>
-        <target state="final">
-                        Spatial
-                    </target>
+        <target state="final">Spatial</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -5202,9 +4976,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.straight" datatype="html">
         <source> Gerade </source>
-        <target state="final">
-                        Straight
-                    </target>
+        <target state="final">Straight</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -5212,9 +4984,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.curved" datatype="html">
         <source> Gebogen </source>
-        <target state="final">
-                        Curved
-                    </target>
+        <target state="final">Curved</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -5222,9 +4992,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.clusterOption" datatype="html">
         <source> Gruppierung nach Grobdatierung </source>
-        <target state="final">
-                        Group by period
-                    </target>
+        <target state="final">Group by period</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -5312,7 +5080,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.from" datatype="html">
         <source>Von: </source>
-        <target state="final">From: </target>
+        <target state="final">From:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5320,7 +5088,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.to" datatype="html">
         <source>, bis: </source>
-        <target state="final">, to: </target>
+        <target state="final">, to:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5447,8 +5215,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
-        <source> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> der Projekteinstellungen. </source>
-        <target state="final"> The valuelist for this field corresponds to the entries in field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> of the project settings. </target>
+        <source> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> der Projekteinstellungen. </source>
+        <target state="final">The valuelist for this field corresponds to the entries in field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> of the project settings. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -5456,7 +5224,7 @@
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.liesWithin" datatype="html">
         <source> Ressourcen dieser Kategorie können unterhalb von Ressourcen folgender Kategorien angelegt werden: </source>
-        <target state="final"> Resources of this category can be created below resources of the following categories: </target>
+        <target state="final">Resources of this category can be created below resources of the following categories:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -5464,7 +5232,7 @@
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.includes" datatype="html">
         <source> Unterhalb von Ressourcen dieser Kategorie können Ressourcen folgender Kategorien angelegt werden: </source>
-        <target state="final"> Resources of the following categories can be created below resources of this category: </target>
+        <target state="final">Resources of the following categories can be created below resources of this category:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -5472,7 +5240,7 @@
       </trans-unit>
       <trans-unit id="configuration.hierarchicalRelationsInfo.noLiesWithin" datatype="html">
         <source> Ressourcen dieser Kategorie können nicht unterhalb von anderen Ressourcen angelegt werden. </source>
-        <target state="final"> Resources of this category cannot be created below other resources. </target>
+        <target state="final">Resources of this category cannot be created below other resources.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -5480,7 +5248,7 @@
       </trans-unit>
       <trans-unit id="configuration.hierarchicalRelationsInfo.noIncludes" datatype="html">
         <source> Unterhalb von Ressourcen dieser Kategorie können keine anderen Ressourcen angelegt werden. </source>
-        <target state="final"> No resources can be created below resources of this category. </target>
+        <target state="final">No resources can be created below resources of this category.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/hierarchical-relations-info.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -5568,7 +5336,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="final"> </target>
+        <target state="translated"> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7268,7 +7036,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
         <source> Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </source>
-        <target state="final"> Amount: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
+        <target state="final">Amount: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">76</context>
@@ -7284,7 +7052,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.displayImages" datatype="html">
         <source> Für die Anzeige optimierte Bilddateien: </source>
-        <target state="final"> Image files optimized for display: </target>
+        <target state="final">Image files optimized for display:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">85,89</context>
@@ -7292,7 +7060,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
         <source> Projekteigenschaften </source>
-        <target state="final"> Project properties </target>
+        <target state="final">Project properties</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -7408,7 +7176,7 @@
       </trans-unit>
       <trans-unit id="searchConstraints.dropdownRange.from" datatype="html">
         <source> (von)</source>
-        <target state="final"> (from)</target>
+        <target state="final">(from)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7416,7 +7184,7 @@
       </trans-unit>
       <trans-unit id="searchConstraints.dropdownRange.to" datatype="html">
         <source> (bis)</source>
-        <target state="final"> (to)</target>
+        <target state="final">(to)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7436,23 +7204,23 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix" datatype="html">
         <source> Bezeichner-Präfix </source>
-        <target state="final"> Identifier prefix </target>
+        <target state="final">Identifier prefix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.single" datatype="html">
-        <source> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="final"> A resource of this category has already been created. Plase note that the prefix will <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>not<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> be set automatically for existing identifiers. </target>
+        <source> Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
+        <target state="final">A resource of this category has already been created. Plase note that the prefix will <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>not<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> be set automatically for existing identifiers. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">79,77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.multiple" datatype="html">
-        <source> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="final"> <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> resources of this category have already been created. Plase note that the prefix will <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>not<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> be set automatically for existing identifiers. </target>
+        <source> Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> resources of this category have already been created. Plase note that the prefix will <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>not<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> be set automatically for existing identifiers. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">88,83</context>
@@ -7472,15 +7240,15 @@
       </trans-unit>
       <trans-unit id="configuration.color" datatype="html">
         <source> Farbe </source>
-        <target state="final"> Color </target>
+        <target state="final">Color</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
           <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
-        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> bearbeiten </source>
-        <target state="final"> Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/></target>
+        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="final">Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">21</context>

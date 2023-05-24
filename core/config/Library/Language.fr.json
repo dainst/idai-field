@@ -1,1212 +1,1207 @@
 {
-    "groups": {
-        "stem": "Noyau",
-        "time": "Temps",
-        "position": "Position / Contexte",
-        "dimension": "Dimensions",
-        "identification": "Identification"
+  "groups": {
+    "stem": "Noyau",
+    "time": "Temps",
+    "position": "Position / Contexte",
+    "dimension": "Dimensions",
+    "identification": "Identification"
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "Longueur"
     },
-    "commons": {
-        "dimensionLength": {
-            "label": "Longueur"
+    "dimensionWidth": {
+      "label": "Largeur"
+    },
+    "dimensionHeight": {
+      "label": "Hauteur"
+    },
+    "dimensionThickness": {
+      "label": "Epaisseur"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Etendue verticale"
+    },
+    "dimensionPerimeter": {
+      "label": "Périmètre"
+    },
+    "dimensionDiameter": {
+      "label": "Diamètre"
+    },
+    "dimensionOther": {
+      "label": "Autres dimensions",
+      "description": "D'autres dimensions peuvent être renseignées ici; expliquez svp"
+    },
+    "area": {
+      "label": "Aire/surface en m2"
+    },
+    "processor": {
+      "label": "Auteur",
+      "description": "Nom des personnes responsables de la resource ou de l'objet durant la campagne. NB: Les noms des éditeurs de la base de données sont enregistrés automatiquement et ne sont donc pas requis ici."
+    },
+    "campaign": {
+      "label": "Campagne"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "period": {
+      "label": "Période"
+    },
+    "dating": {
+      "label": "Datation"
+    },
+    "diary": {
+      "label": "Carnet de fouille",
+      "description": "Référence au carnet de fouille"
+    },
+    "beginningDate": {
+      "label": "Date de début",
+      "description": "Date à laquelle l'enregistrement a débuté"
+    },
+    "endDate": {
+      "label": "Date de fin",
+      "description": "Date à laquelle l'enregistrement s'est conclu"
+    },
+    "date": {
+      "label": "Date"
+    },
+    "orientation": {
+      "label": "Orientation"
+    },
+    "spatialLocation": {
+      "label": "Localisation spatiale"
+    },
+    "provenance": {
+      "label": "Provenance"
+    },
+    "literature": {
+      "label": "Référence littéraire/bibliographique"
+    },
+    "geometry": {
+      "label": "Géométrie"
+    },
+    "notes": {
+      "label": "Notes"
+    }
+  },
+  "categories": {
+    "RoomFloor": {
+      "label": "Sol"
+    },
+    "RoomWall": {
+      "label": "Mur"
+    },
+    "RoomCeiling": {
+      "label": "Plafond"
+    },
+    "Trench": {
+      "label": "Tranchée/zone de fouille ?",
+      "fields": {
+        "researchQuestion": {
+          "label": "Sujet de recherche"
         },
-        "dimensionWidth": {
-            "label": "Largeur"
+        "trenchComment": {
+          "label": "Commentaires sur la tranchée"
+        }
+      }
+    },
+    "Glass": {
+      "label": "Verre",
+      "fields": {
+        "decorationDescription": {
+          "label": "Description de la décoration"
         },
-        "dimensionHeight": {
-            "label": "Hauteur"
+        "color": {
+          "label": "Couleur et intensité"
         },
-        "dimensionThickness": {
-            "label": "Epaisseur"
+        "decorationTechnique": {
+          "label": "Traitement de surface ou technique de décoration"
         },
-        "dimensionVerticalExtent": {
-            "label": "Etendue verticale"
+        "formDescription": {
+          "label": "Description de la forme"
         },
-        "dimensionPerimeter": {
-            "label": "Périmètre"
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
         },
-        "dimensionDiameter": {
-            "label": "Diamètre"
+        "objectType": {
+          "label": "Type d'objet, dénomination"
         },
-        "dimensionOther": {
-            "label": "Autres dimensions",
-            "description": "D'autres dimensions peuvent être renseignées ici; expliquez svp"
+        "transparency": {
+          "label": "Transparence"
         },
-        "area": {
-            "label": "Aire/surface en m2"
+        "vesselForm": {
+          "label": "Forme de base de la céramique"
         },
-        "processor": {
-            "label": "Auteur",
-            "description": "Nom des personnes responsables de la resource ou de l'objet durant la campagne. NB: Les noms des éditeurs de la base de données sont enregistrés automatiquement et ne sont donc pas requis ici."
+        "vesselFormSpecific": {
+          "label": "Forme spécifique de la céramique"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Mollusque",
+      "fields": {
+        "classification": {
+          "label": "classification du mollusque"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Planum"
+    },
+    "Brick": {
+      "label": "Brique",
+      "fields": {
+        "featureText": {
+          "label": "texte du timbre/estampille",
+          "description": "Transcription du texte du timbre/estampille"
         },
-        "campaign": {
-            "label": "Campagne"
+        "brickForm": {
+          "label": "Forme de la brique"
+        },
+        "brickUsage": {
+          "label": "Provenance architecturale de la brique"
+        },
+        "clayColorOutside": {
+          "label": "Extérieur: Couleur de l'argile et intensité"
+        },
+        "coatColorInside": {
+          "label": "Revêtement (intérieur): Couleur et intensité"
+        },
+        "coatColorOutside": {
+          "label": "Revêtement (extérieur): Couleur et intensité"
+        },
+        "decorationTechnique": {
+          "label": "Traitement de la surface ou technique de décoration"
+        },
+        "formDescription": {
+          "label": "Description de la forme"
+        },
+        "manufacturing": {
+          "label": "Fabrication"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "specificType": {
+          "label": "Format"
+        },
+        "temper": {
+          "label": "Dégraissant"
+        }
+      }
+    },
+    "Project": {
+      "fields": {
+        "contactMail": {
+          "label": "Adresse email de la personne contact",
+          "description": "Adresse email du projet ou de la personne contact"
+        },
+        "contactPerson": {
+          "label": "Personne contact"
+        },
+        "epsgId": {
+          "label": "Code EPSG",
+          "description": "Préciser le code EPSG (voir http://spatialreference.org/, ex. 3004)"
+        },
+        "externalReference": {
+          "label": "Page du projet",
+          "description": "Références externes au projet"
+        },
+        "gazId": {
+          "label": "No. d'index"
+        },
+        "institution": {
+          "label": "Institution",
+          "description": "Institution responsable du projet"
+        },
+        "latitude": {
+          "label": "Latitude"
+        },
+        "longitude": {
+          "label": "Longitude"
+        },
+        "projectURI": {
+          "label": "URL du projet"
+        },
+        "staff": {
+          "label": "Staff"
+        },
+        "campaigns": {
+          "label": "Campagnes"
+        },
+        "projectSupervisor": {
+          "label": "Responsable",
+          "description": "Personne en charge du projet"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Tombe/sépulture",
+      "fields": {
+        "ageDetermination": {
+          "label": "Détermination de l'âge"
+        },
+        "ageDeterminationBasis": {
+          "label": "Base de la détermination de l'âge"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Taille du corps et robustesse"
+        },
+        "burialRite": {
+          "label": "Rite funéraire ou traitement du défunt"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état de conservation"
+        },
+        "dietReconstruction": {
+          "label": "Alimentation"
+        },
+        "findingPlace": {
+          "label": "Lieu de découverte",
+          "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Rapport paléopathologique"
+        },
+        "publicationDatingFinds": {
+          "label": "Datation (découvertes/objets)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datation (stratigraphie)"
+        },
+        "sexDetermination": {
+          "label": "Détermination du sexe"
+        },
+        "sexDeterminationBasis": {
+          "label": "Base pour la détermination du sexe"
+        },
+        "amountIndividuals": {
+          "label": "Type de sépulture"
+        },
+        "burialCharacteristic": {
+          "label": "Séquence d'inhumation (primaire/secondaire)"
+        },
+        "burialDocumentation": {
+          "label": "Documentation"
+        },
+        "graveFeature": {
+          "label": "Methode d'enterrement"
+        },
+        "positionArms": {
+          "label": "Position des bras"
+        },
+        "positionLegs": {
+          "label": "Position des jambes"
+        },
+        "positioningIndividuals": {
+          "label": "Positionement du défunt"
+        }
+      }
+    },
+    "Building": {
+      "label": "Bâtiment",
+      "fields": {
+        "buildingHistory": {
+          "label": "Histoire du bâtiment"
+        },
+        "buildingResearchHistory": {
+          "label": "Historique de la recherche"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état de conservation"
+        },
+        "excavationHistory": {
+          "label": "Historique de fouille"
+        },
+        "history": {
+          "label": "Histoire"
+        },
+        "hasRestoration": {
+          "label": "Restauration"
+        },
+        "architecturalOrders": {
+          "label": "Ordres architecturaux"
+        },
+        "buildingCategory": {
+          "label": "Catégorie de bâtiment / Type de bâtiment ?"
+        },
+        "buildingCategorySpecific": {
+          "label": "Catégorie de bâtiment / Type de bâtiment ? (specifique)"
+        },
+        "buildingTechnique": {
+          "label": "Technique de construction"
+        },
+        "buildingType": {
+          "label": "Type de bâtiment"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evalutation de l'état de conservation",
+          "description": "Part conservée par rapport à l'original"
+        },
+        "context": {
+          "label": "Contexte"
+        },
+        "material": {
+          "label": "Matériau"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Unité de prospection"
+    },
+    "Wood": {
+      "label": "Bois",
+      "fields": {
+        "color": {
+          "label": "Couleur"
+        },
+        "objectType": {
+          "label": "Type d'objet"
+        },
+        "typeOfWood": {
+          "label": "Type de bois"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "colorOutside": {
+          "label": "Couleur(s) du bois à l'extérieur"
+        },
+        "colorInside": {
+          "label": "Couleur(s) du bois à l'intérieur"
+        },
+        "colorOutsideMunsell": {
+          "label": "Couleur du bois à l'extérieur - no. Munsell"
+        },
+        "colorInsideMunsell": {
+          "label": "Couleur du bois à l'intérieur - no. Munsell"
+        },
+        "colorBreak": {
+          "label": "Couleur(s) du bois au coeur"
+        },
+        "colorBreakMunsell": {
+          "label": "Couleur(s) du bois au coeur - no. Munsell"
+        },
+        "surfaceCondition": {
+          "label": "Trâces de combustion"
+        },
+        "decorationTechnique": {
+          "label": "Décoration"
+        },
+        "paintColor": {
+          "label": "Couleur de la peinture"
+        },
+        "paintColorMunsell": {
+          "label": "Couleur de la peinture - no. Munsell"
+        },
+        "paintCondition": {
+          "label": "Etat de la peinture"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Architecture",
+      "fields": {
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état de conservation"
+        },
+        "constructionDetailsDescription": {
+          "label": "Description des détails de construction"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Description des techniques de construction"
+        },
+        "findingPlace": {
+          "label": "Lieu de découverte",
+          "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
+        },
+        "hasGrouting": {
+          "label": "Jointoiement"
+        },
+        "layerAmount": {
+          "label": "Nombre de couches"
+        },
+        "layerHeight": {
+          "label": "Hauteur de la couche"
+        },
+        "markDescription": {
+          "label": "Description des marques"
+        },
+        "materialCharacteristic": {
+          "label": "Caractéristiques matérielles"
+        },
+        "materialForm": {
+          "label": "Formes matérielles"
+        },
+        "muralCrown": {
+          "label": "Couronnement mural"
+        },
+        "publicationDatingFinds": {
+          "label": "Datation (découvertes)"
+        },
+        "publicationDatingScientific": {
+          "label": "Datation (scientifique)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datation (stratigraphie)"
+        },
+        "publicationRemark": {
+          "label": "Publication (remarques)"
+        },
+        "blockProcessing": {
+          "label": "Fabrication/taille des blocs"
+        },
+        "blockTreatment": {
+          "label": "Traitement des blocs"
+        },
+        "brickwork": {
+          "label": "Agencement des briques"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Part conservée par rapport à l'original"
+        },
+        "construction": {
+          "label": "Construction"
+        },
+        "mark": {
+          "label": "Marques/estampilles"
+        },
+        "mortarBinder": {
+          "label": "Joints de mortier"
+        },
+        "mortarColor": {
+          "label": "Couleur du mortier"
+        },
+        "mortarConsistency": {
+          "label": "Consistance du mortier"
+        },
+        "wallClassification": {
+          "label": "Classification du mur"
+        },
+        "wallType": {
+          "label": "Type de mur"
+        }
+      }
+    },
+    "Operation": {
+      "label": "Opération",
+      "fields": {
+        "diaryAbstract": {
+          "label": "Résumé du carnet de fouille"
+        },
+        "supervisor": {
+          "label": "Superviseur",
+          "description": "Personne en charge de l'operation"
+        }
+      }
+    },
+    "Place": {
+      "label": "Lieu",
+      "fields": {
+        "gazId": {
+          "label": "No. d'index géographique"
+        },
+        "placeName": {
+          "label": "Nom du lieu"
+        },
+        "buildingHistory": {
+          "label": "Histoire du bâtiment/de la construction ? "
+        },
+        "buildingResearchHistory": {
+          "label": "Historique de la recherche"
         },
         "description": {
-            "label": "Description"
+          "label": "Description"
         },
-        "period": {
-            "label": "Période"
+        "excavationHistory": {
+          "label": "Historique de la fouille"
         },
-        "dating": {
-            "label": "Datation"
+        "findSituation": {
+          "label": "Contexte de la découverte",
+          "description": "Description des circonstances de la découverte du lieu et personnes impliquées dans celle-ci"
         },
-        "diary": {
-            "label": "Carnet de fouille",
-            "description": "Référence au carnet de fouille"
+        "modernIntervention": {
+          "label": "Intervention récente"
         },
-        "beginningDate": {
-            "label": "Date de début",
-            "description": "Date à laquelle l'enregistrement a débuté"
+        "findspotClassification": {
+          "label": "Classification du lieu de découverte"
         },
-        "endDate": {
-            "label": "Date de fin",
-            "description": "Date à laquelle l'enregistrement s'est conclu"
-        },
-        "date": {
-            "label": "Date"
-        },
-        "orientation": {
-            "label": "Orientation"
-        },
-        "spatialLocation": {
-            "label": "Localisation spatiale"
-        },
-        "provenance": {
-            "label": "Provenance"
-        },
-        "literature": {
-            "label": "Référence littéraire/bibliographique"
-        },
-        "geometry": {
-            "label": "Géométrie"
-        },
-        "notes": {
-            "label": "Notes"
+        "siteClassification": {
+          "label": "Classification du site"
         }
+      }
     },
-    "categories": {
-        "RoomFloor": {
-            "label": "Sol"
+    "Layer": {
+      "label": "Couche",
+      "fields": {
+        "appearance": {
+          "label": "Formation",
+          "description": "Décrire comment la couche s'est formée, ex.: 'Effondrement du mur de brique du bâtiment xy'"
         },
-        "RoomWall": {
-            "label": "Mur"
+        "isNatural": {
+          "label": "Naturelle"
         },
-        "RoomCeiling": {
-            "label": "Plafond"
+        "consistency": {
+          "label": "Consistance"
         },
-        "Trench": {
-            "label": "Tranchée/zone de fouille ?",
-            "fields": {
-                "researchQuestion": {
-                    "label": "Sujet de recherche"
-                },
-                "trenchComment": {
-                    "label": "Commentaires sur la tranchée"
-                }
-            }
+        "distinguishingCriteria": {
+          "label": "Critères distinctifs"
         },
-        "Glass": {
-            "label": "Verre",
-            "fields": {
-                "decorationDescription": {
-                    "label": "Description de la décoration"
-                },
-                "color": {
-                    "label": "Couleur et intensité"
-                },
-                "decorationTechnique": {
-                    "label": "Traitement de surface ou technique de décoration"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "objectType": {
-                    "label": "Type d'objet, dénomination"
-                },
-                "transparency": {
-                    "label": "Transparence"
-                },
-                "vesselForm": {
-                    "label": "Forme de base de la céramique"
-                },
-                "vesselFormSpecific": {
-                    "label": "Forme spécifique de la céramique"
-                }
-            }
+        "layerClassification": {
+          "label": "Identification de la couche"
         },
-        "Mollusk": {
-            "label": "Mollusque",
-            "fields": {
-                "classification": {
-                    "label": "classification du mollusque"
-                }
-            }
-        },
-        "Planum": {
-            "label": "Planum"
-        },
-        "Brick": {
-            "label": "Brique",
-            "fields": {
-                "featureText": {
-                    "label": "texte du timbre/estampille",
-                    "description": "Transcription du texte du timbre/estampille"
-                },
-                "brickForm": {
-                    "label": "Forme de la brique"
-                },
-                "brickUsage": {
-                    "label": "Provenance architecturale de la brique"
-                },
-                "clayColorOutside": {
-                    "label": "Extérieur: Couleur de l'argile et intensité"
-                },
-                "coatColorInside": {
-                    "label": "Revêtement (intérieur): Couleur et intensité"
-                },
-                "coatColorOutside": {
-                    "label": "Revêtement (extérieur): Couleur et intensité"
-                },
-                "decorationTechnique": {
-                    "label": "Traitement de la surface ou technique de décoration"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "manufacturing": {
-                    "label": "Fabrication"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "specificType": {
-                    "label": "Format"
-                },
-                "temper": {
-                    "label": "Dégraissant"
-                }
-            }
-        },
-        "Project": {
-            "fields": {
-                "contactMail": {
-                    "label": "Adresse email de la personne contact",
-                    "description": "Adresse email du projet ou de la personne contact"
-                },
-                "contactPerson": {
-                    "label": "Personne contact"
-                },
-                "epsgId": {
-                    "label": "Code EPSG",
-                    "description": "Préciser le code EPSG (voir http://spatialreference.org/, ex. 3004)"
-                },
-                "externalReference": {
-                    "label": "Page du projet",
-                    "description": "Références externes au projet"
-                },
-                "gazId": {
-                    "label": "No. d'index"
-                },
-                "institution": {
-                    "label": "Institution",
-                    "description": "Institution responsable du projet"
-                },
-                "latitude": {
-                    "label": "Latitude"
-                },
-                "longitude": {
-                    "label": "Longitude"
-                },
-                "projectURI": {
-                    "label": "URL du projet"
-                },
-                "staff": {
-                    "label": "Staff"
-                },
-                "campaigns": {
-                    "label": "Campagnes"
-                },
-                "projectSupervisor": {
-                    "label": "Responsable",
-                    "description": "Personne en charge du projet"
-                }
-            }
-        },
-        "Burial": {
-            "label": "Tombe/sépulture",
-            "fields": {
-                "ageDetermination": {
-                    "label": "Détermination de l'âge"
-                },
-                "ageDeterminationBasis": {
-                    "label": "Base de la détermination de l'âge"
-                },
-                "bodyHeightAndRobustness": {
-                    "label": "Taille du corps et robustesse"
-                },
-                "burialRite": {
-                    "label": "Rite funéraire ou traitement du défunt"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état de conservation"
-                },
-                "dietReconstruction": {
-                    "label": "Alimentation"
-                },
-                "findingPlace": {
-                    "label": "Lieu de découverte",
-                    "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
-                },
-                "palaeopathologicalReport": {
-                    "label": "Rapport paléopathologique"
-                },
-                "publicationDatingFinds": {
-                    "label": "Datation (découvertes/objets)"
-                },
-                "publicationDatingStratigraphy": {
-                    "label": "Datation (stratigraphie)"
-                },
-                "sexDetermination": {
-                    "label": "Détermination du sexe"
-                },
-                "sexDeterminationBasis": {
-                    "label": "Base pour la détermination du sexe"
-                },
-                "amountIndividuals": {
-                    "label": "Type de sépulture"
-                },
-                "burialCharacteristic": {
-                    "label": "Séquence d'inhumation (primaire/secondaire)"
-                },
-                "burialDocumentation": {
-                    "label": "Documentation"
-                },
-                "graveFeature": {
-                    "label": "Methode d'enterrement"
-                },
-                "positionArms": {
-                    "label": "Position des bras"
-                },
-                "positionLegs": {
-                    "label": "Position des jambes"
-                },
-                "positioningIndividuals": {
-                    "label": "Positionement du défunt"
-                }
-            }
-        },
-        "Building": {
-            "label": "Bâtiment",
-            "fields": {
-                "buildingHistory": {
-                    "label": "Histoire du bâtiment"
-                },
-                "buildingResearchHistory": {
-                    "label": "Historique de la recherche"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état de conservation"
-                },
-                "excavationHistory": {
-                    "label": "Historique de fouille"
-                },
-                "history": {
-                    "label": "Histoire"
-                },
-                "hasRestoration": {
-                    "label": "Restauration"
-                },
-                "architecturalOrders": {
-                    "label": "Ordres architecturaux"
-                },
-                "buildingCategory": {
-                    "label": "Catégorie de bâtiment / Type de bâtiment ?"
-                },
-                "buildingCategorySpecific": {
-                    "label": "Catégorie de bâtiment / Type de bâtiment ? (specifique)"
-                },
-                "buildingTechnique": {
-                    "label": "Technique de construction"
-                },
-                "buildingType": {
-                    "label": "Type de bâtiment"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evalutation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'original"
-                },
-                "context": {
-                    "label": "Contexte"
-                },
-                "material": {
-                    "label": "Matériau"
-                }
-            }
-        },
-        "SurveyUnit": {
-            "label": "Unité de prospection"
-        },
-        "Wood": {
-            "label": "Bois",
-            "fields": {
-                "color": {
-                    "label": "Couleur"
-                },
-                "objectType": {
-                    "label": "Type d'objet"
-                },
-                "typeOfWood": {
-                    "label": "Type de bois"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "colorOutside": {
-                    "label": "Couleur(s) du bois à l'extérieur"
-                },
-                "colorInside": {
-                    "label": "Couleur(s) du bois à l'intérieur"
-                },
-                "colorOutsideMunsell": {
-                    "label": "Couleur du bois à l'extérieur - no. Munsell"
-                },
-                "colorInsideMunsell": {
-                    "label": "Couleur du bois à l'intérieur - no. Munsell"
-                },
-                "colorBreak": {
-                    "label": "Couleur(s) du bois au coeur"
-                },
-                "colorBreakMunsell": {
-                    "label": "Couleur(s) du bois au coeur - no. Munsell"
-                },
-                "surfaceCondition": {
-                    "label": "Trâces de combustion"
-                },
-                "decorationTechnique": {
-                    "label": "Décoration"
-                },
-                "paintColor": {
-                    "label": "Couleur de la peinture"
-                },
-                "paintColorMunsell": {
-                    "label": "Couleur de la peinture - no. Munsell"
-                },
-                "paintCondition": {
-                    "label": "Etat de la peinture"
-                }
-            }
-        },
-        "Architecture": {
-            "label": "Architecture",
-            "fields": {
-                "bibliography": {
-                    "label": "Bibliographie"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état de conservation"
-                },
-                "constructionDetailsDescription": {
-                    "label": "Description des détails de construction"
-                },
-                "descriptionOfBuildingTechnique": {
-                    "label": "Description des techniques de construction"
-                },
-                "findingPlace": {
-                    "label": "Lieu de découverte",
-                    "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
-                },
-                "hasGrouting": {
-                    "label": "Jointoiement"
-                },
-                "layerAmount": {
-                    "label": "Nombre de couches"
-                },
-                "layerHeight": {
-                    "label": "Hauteur de la couche"
-                },
-                "markDescription": {
-                    "label": "Description des marques"
-                },
-                "materialCharacteristic": {
-                    "label": "Caractéristiques matérielles"
-                },
-                "materialForm": {
-                    "label": "Formes matérielles"
-                },
-                "muralCrown": {
-                    "label": "Couronnement mural"
-                },
-                "publicationDatingFinds": {
-                    "label": "Datation (découvertes)"
-                },
-                "publicationDatingScientific": {
-                    "label": "Datation (scientifique)"
-                },
-                "publicationDatingStratigraphy": {
-                    "label": "Datation (stratigraphie)"
-                },
-                "publicationRemark": {
-                    "label": "Publication (remarques)"
-                },
-                "blockProcessing": {
-                    "label": "Fabrication/taille des blocs"
-                },
-                "blockTreatment": {
-                    "label": "Traitement des blocs"
-                },
-                "brickwork": {
-                    "label": "Agencement des briques"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'original"
-                },
-                "construction": {
-                    "label": "Construction"
-                },
-                "mark": {
-                    "label": "Marques/estampilles"
-                },
-                "mortarBinder": {
-                    "label": "Joints de mortier"
-                },
-                "mortarColor": {
-                    "label": "Couleur du mortier"
-                },
-                "mortarConsistency": {
-                    "label": "Consistance du mortier"
-                },
-                "wallClassification": {
-                    "label": "Classification du mur"
-                },
-                "wallType": {
-                    "label": "Type de mur"
-                }
-            }
-        },
-        "Operation": {
-            "label": "Opération",
-            "fields": {
-                "diaryAbstract": {
-                    "label": "Résumé du carnet de fouille"
-                },
-                "supervisor": {
-                    "label": "Superviseur",
-                    "description": "Personne en charge de l'operation"
-                }
-            }
-        },
-        "Place": {
-            "label": "Lieu",
-            "fields": {
-                "gazId": {
-                    "label": "No. d'index géographique"
-                },
-                "placeName": {
-                    "label": "Nom du lieu"
-                },
-                "buildingHistory": {
-                    "label": "Histoire du bâtiment/de la construction ? "
-                },
-                "buildingResearchHistory": {
-                    "label": "Historique de la recherche"
-                },
-                "description": {
-                    "label": "Description"
-                },
-                "excavationHistory": {
-                    "label": "Historique de la fouille"
-                },
-                "findSituation": {
-                    "label": "Contexte de la découverte",
-                    "description": "Description des circonstances de la découverte du lieu et personnes impliquées dans celle-ci"
-                },
-                "modernIntervention": {
-                    "label": "Intervention récente"
-                },
-                "findspotClassification": {
-                    "label": "Classification du lieu de découverte"
-                },
-                "siteClassification": {
-                    "label": "Classification du site"
-                }
-            }
-        },
-        "Layer": {
-            "label": "Couche",
-            "fields": {
-                "appearance": {
-                    "label": "Formation",
-                    "description": "Décrire comment la couche s'est formée, ex.: 'Effondrement du mur de brique du bâtiment xy'"
-                },
-                "isNatural": {
-                    "label": "Naturelle"
-                },
-                "consistency": {
-                    "label": "Consistance"
-                },
-                "distinguishingCriteria": {
-                    "label": "Critères distinctifs"
-                },
-                "layerClassification": {
-                    "label": "Identification de la couche"
-                },
-                "soilType": {
-                    "label": "Type de sédiment"
-                }
-            }
-        },
-        "Feature": {
-            "label": "Unité stratigraphique",
-            "fields": {
-                "hasDisturbance": {
-                    "label": "Perturbations"
-                },
-                "comparison": {
-                    "label": "Comparaison"
-                },
-                "color": {
-                    "label": "Couleur et intensité"
-                },
-                "featureBorders": {
-                    "label": "Limites de l'unité stratigraphique"
-                },
-                "featureForm": {
-                    "label": "Forme de l'unité stratigraphique"
-                }
-            }
-        },
-        "Floor": {
-            "label": "Sol",
-            "fields": {
-                "conditionComment": {
-                    "label": "Commentaire sur l'état de conservation"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Quantité conservée par rapport à l'original"
-                },
-                "consistency": {
-                    "label": "Consistance"
-                },
-                "distinguishingCriteria": {
-                    "label": "Critères distinctifs"
-                },
-                "floorClassification": {
-                    "label": "Classification du sol"
-                },
-                "layerClassification": {
-                    "label": "Classification de la couche"
-                },
-                "mortarBinder": {
-                    "label": "Joint de mortier"
-                }
-            }
-        },
-        "Inscription": {
-            "label": "Inscription",
-            "fields": {
-                "comparison": {
-                    "label": "Comparaison"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état de conservation"
-                },
-                "content": {
-                    "label": "Transcription"
-                },
-                "language": {
-                    "label": "Langue/alphabet"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'originale"
-                },
-                "objectType": {
-                    "label": "Identification ou type d'inscription"
-                }
-            }
-        },
-        "Image": {
-            "fields": {
-                "draughtsmen": {
-                    "label": "Auteur",
-                    "description": "Auteur(s) de l'illustration / dessin / photographie"
-                },
-                "processor": {
-                    "label": "Processeur"
-                }
-            }
-        },
-        "Pottery": {
-            "label": "Céramique",
-            "fields": {
-                "amountSherdsWall": {
-                    "label": "Nombre de tessons, panse"
-                },
-                "amountSherdsRim": {
-                    "label": "Nombre de tessons, bords"
-                },
-                "amountSherdsBase": {
-                    "label": "Nombre de tessons, bases/fonds"
-                },
-                "amountSherdsHandles": {
-                    "label": "Nombre de tessons, anses"
-                },
-                "amountSherdsLip": {
-                    "label": "Nombre de tessons, lèvres"
-                },
-                "amountSherdsPedestal": {
-                    "label": "Nombre de tessons, socle"
-                },
-                "amountSherdsRimBase": {
-                    "label": "Nombre de tessons, bords/bases"
-                },
-                "amountSherdsRimShoulder": {
-                    "label": "Nombre de tessons, bord/épaule"
-                },
-                "amountSherdsShoulder": {
-                    "label": "Nombre de tessons, épaule"
-                },
-                "amountSherdsOther": {
-                    "label": "Nombre de tessons, autres"
-                },
-                "amountSherdsPercent": {
-                    "label": "Quantification en pourcents"
-                },
-                "amountSherdsLid": {
-                    "label": "Nombre de couvercles"
-                },
-                "clayColorBreakMunsell": {
-                    "label": "Couleur de la tranche (cassures) (Munsell)"
-                },
-                "clayColorInsideMunsell": {
-                    "label": "Couleur interne (Munsell)"
-                },
-                "clayColorOutsideMunsell": {
-                    "label": "Couleur externe (Munsell)"
-                },
-                "hasCoat": {
-                    "label": "Enduit/engobe"
-                },
-                "decorationDescription": {
-                    "label": "Description de la décoration"
-                },
-                "breakStructure": {
-                    "label": "Notes sur la composition/cassure (Structure, porosité etc.)"
-                },
-                "residueAnalysis": {
-                    "label": "Analyse des résidus"
-                },
-                "sample": {
-                    "label": "Echantillon"
-                },
-                "purpose": {
-                    "label": "Usage"
-                },
-                "typeNumber": {
-                    "label": "Numéro du type",
-                    "description": "Numéro de catalogue du type"
-                },
-                "clayColorBreak": {
-                    "label": "Cassure/tranche: couleur et intensité de l'argile"
-                },
-                "clayColorInside": {
-                    "label": "Intérieur: couleur et intensité de l'argile"
-                },
-                "clayColorOutside": {
-                    "label": "Extérieur: couleur et intensité de l'argile"
-                },
-                "clayHardness": {
-                    "label": "Dureté de l'argile (Mohs scale)"
-                },
-                "coatColorInside": {
-                    "label": "Enduit (intérieur): couleur et intensité"
-                },
-                "coatColorOutside": {
-                    "label": "Enduit (extérieur): couleur et intensité"
-                },
-                "coatInside": {
-                    "label": "Enduit (intérieur)"
-                },
-                "coatInsideType": {
-                    "label": "Traitement (intérieur)"
-                },
-                "coatOutside": {
-                    "label": "Enduit (extérieur)"
-                },
-                "coatOutsideType": {
-                    "label": "Traitement (extérieur)"
-                },
-                "decorationTechnique": {
-                    "label": "Traitement de surface ou technique de décoration"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "manufacturing": {
-                    "label": "Fabrication"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "materialType": {
-                    "label": "Type de matériau"
-                },
-                "objectType": {
-                    "label": "Type d'objet"
-                },
-                "specificType": {
-                    "label": "Type de céramique"
-                },
-                "temper": {
-                    "label": "Dégraissant"
-                },
-                "temperAmount": {
-                    "label": "Quantité d'inclusions"
-                },
-                "temperParticles": {
-                    "label": "Particules de dégraissant"
-                },
-                "temperTypeClay": {
-                    "label": "Argile"
-                },
-                "vesselForm": {
-                    "label": "Forme de base de la céramique"
-                },
-                "vesselFormSpecific": {
-                    "label": "Forme spécifique de la céramique"
-                }
-            }
-        },
-        "Grave": {
-            "label": "Tombe",
-            "fields": {
-                "bibliography": {
-                    "label": "Bibliographie"
-                },
-                "conditionComment": {
-                    "label": "Commentaires sur l'état de conservation"
-                },
-                "findingPlace": {
-                    "label": "Lieu de découverte",
-                    "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
-                },
-                "publicationDatingFinds": {
-                    "label": "Datation (Objets/découvertes)"
-                },
-                "publicationDatingScientific": {
-                    "label": "Datation (scientifique)"
-                },
-                "publicationDatingStratigraphy": {
-                    "label": "Datation (stratigraphie)"
-                },
-                "publicationRemark": {
-                    "label": "Remarques sur les publications"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'original"
-                },
-                "distinguishingCriteria": {
-                    "label": "Critères distinctifs"
-                },
-                "graveType": {
-                    "label": "Type de tombe"
-                },
-                "specificType": {
-                    "label": "Type spécifique de tombe"
-                },
-                "soilType": {
-                    "label": "Type de sédiment"
-                },
-                "tombBuilding": {
-                    "label": "Construction de la tombe"
-                }
-            }
-        },
-        "Bone": {
-            "label": "Os/ossements",
-            "fields": {
-                "biologicalAge": {
-                    "label": "Age biologique",
-                    "description": "Age de l'individu (humain ou animal) au moment de la mort (e. g. Infans I)"
-                },
-                "boneClassification": {
-                    "label": "Classification des os"
-                },
-                "boneType": {
-                    "label": "Classification générale/moyenne des os"
-                },
-                "burningGrade": {
-                    "label": "Etat de combustion des os (selon Wahl 1982)"
-                },
-                "sex": {
-                    "label": "Sexe"
-                },
-                "objectType": {
-                    "label": "Identification / type d'objet"
-                },
-                "species": {
-                    "label": "Espèces"
-                }
-            }
-        },
-        "Room": {
-            "label": "Pièce",
-            "fields": {
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'original"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état"
-                },
-                "condition": {
-                    "label": "Etat"
-                }
-            }
-        },
-        "ProcessUnit": {
-            "label": "Unité de traitement",
-            "fields": {
-                "operationClassification": {
-                    "label": "Classification de l'opération"
-                }
-            }
-        },
-        "Terracotta": {
-            "label": "Terracotta",
-            "fields": {
-                "clayColorBreak": {
-                    "label": "Cassure/tranche: Couleur et intensité de l'argile"
-                },
-                "clayColorInside": {
-                    "label": "Intérieur: couleur et intensité de l'argile"
-                },
-                "clayColorOutside": {
-                    "label": "Extérieur: couleur et intensité de l'argile"
-                },
-                "clayStructure": {
-                    "label": "Structure"
-                },
-                "coatColorInside": {
-                    "label": "Enduit (intérieur): couleur et intensité"
-                },
-                "coatColorOutside": {
-                    "label": "Enduit (extérieur): couleur et intensité"
-                },
-                "decorationTechnique": {
-                    "label": "Traitement de surface ou technique de décoration"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "surfaceCondition": {
-                    "label": "Etat de la surface"
-                },
-                "temper": {
-                    "label": "Dégraissant"
-                },
-                "temperAmount": {
-                    "label": "Quantité d'inclusions"
-                },
-                "temperParticles": {
-                    "label": "Particules de dégraissant"
-                },
-                "vesselForm": {
-                    "label": "Forme basique de la céramique"
-                },
-                "vesselFormSpecific": {
-                    "label": "Forme spécifique de la céramique"
-                }
-            }
-        },
-        "Other": {
-            "label": "Autre",
-            "fields": {
-                "isNatural": {
-                    "label": "Naturel"
-                },
-                "consistency": {
-                    "label": "Consistence"
-                },
-                "distinguishingCriteria": {
-                    "label": "Critère distinctif"
-                },
-                "otherClassification": {
-                    "label": "Autre classification"
-                },
-                "soilType": {
-                    "label": "Type de sédiment"
-                }
-            }
-        },
-        "Sample": {
-            "label": "Echantillon",
-            "fields": {
-                "labNumber": {
-                    "label": "Numéro de laboratoire"
-                },
-                "weight": {
-                    "label": "Poids (en gr.)"
-                },
-                "sampleType": {
-                    "label": "Type d'échantillon"
-                }
-            }
-        },
-        "Drawing": {
-            "label": "Dessin",
-            "fields": {
-                "drawingMaterial": {
-                    "label": "Matériel de dessin",
-                    "description": "Matériel/programme ayant servi au dessin"
-                },
-                "drawingTool": {
-                    "label": "Outil de dessin"
-                },
-                "drawingType": {
-                    "label": "Type de dessin"
-                },
-                "scale": {
-                    "label": "Echelle"
-                }
-            }
-        },
-        "Survey": {
-            "label": "Aire de prospection",
-            "fields": {
-                "researchMethod": {
-                    "label": "Méthode de recherche"
-                }
-            }
-        },
-        "Stone": {
-            "label": "Pierre",
-            "fields": {
-                "purpose": {
-                    "label": "Usage"
-                },
-                "treatment": {
-                    "label": "Traitement"
-                },
-                "workmanship": {
-                    "label": "Fabrication/finition"
-                },
-                "architectureElement": {
-                    "label": "Element architectural"
-                },
-                "color": {
-                    "label": "Couleur et intensité"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "material": {
-                    "label": "Matériau"
-                },
-                "objectType": {
-                    "label": "Type d'objet"
-                },
-                "origin": {
-                    "label": "Origine du matériau"
-                },
-                "temperAmount": {
-                    "label": "Quantité des inclusions"
-                }
-            }
-        },
-        "Coin": {
-            "label": "Monnaie",
-            "fields": {
-                "frontSideDescription": {
-                    "label": "Description de l'avers"
-                },
-                "preservedDiameter": {
-                    "label": "Diamètre conservé",
-                    "description": "Diamètre de la monnaie en millimètres"
-                },
-                "reverseSideDescription": {
-                    "label": "Description du revers"
-                },
-                "denomination": {
-                    "label": "Dénomination"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "metalMaterial": {
-                    "label": "Matériau"
-                },
-                "mint": {
-                    "label": "Frappe/émission",
-                    "description": "Lieu ou la monnaie a été frappée"
-                },
-                "mintingRuler": {
-                    "label": "Emetteur de la monnaie",
-                    "description": "Personne ou entité responsable du monnayage"
-                },
-                "stampPositioning": {
-                    "label": "Positionnement du timbre",
-                    "description": "Rotation du timbre au verso par rapport au recto; spécification en 1-12h analogue au cadran de l'horloge (par exemple '12' pour une rotation égale)"
-                }
-            }
-        },
-        "Find": {
-            "label": "Découverte",
-            "fields": {
-                "instanceOf": {
-                    "label": "Classification typologique"
-                },
-                "amount": {
-                    "label": "Nombre total"
-                },
-                "bibliography": {
-                    "label": "Bibliographie"
-                },
-                "catalogueNumber": {
-                    "label": "Numéro de catalogue"
-                },
-                "comparison": {
-                    "label": "Comparaison"
-                },
-                "conditionComment": {
-                    "label": "Commentaire sur l'état"
-                },
-                "conditionPercent": {
-                    "label": "Pourcentage conservé"
-                },
-                "publicationMaterialSummary": {
-                    "label": "Résumé du matériel de publication"
-                },
-                "publicationRemark": {
-                    "label": "Remauque de publication"
-                },
-                "hasRestoration": {
-                    "label": "Restauration"
-                },
-                "storageInventoryNumber": {
-                    "label": "Numéro d'inventaire"
-                },
-                "weight": {
-                    "label": "Poids (en gr.)"
-                },
-                "condition": {
-                    "label": "Etat"
-                },
-                "conditionAmount": {
-                    "label": "Evaluation de l'état de conservation",
-                    "description": "Part conservée par rapport à l'original"
-                },
-                "storagePlace": {
-                    "label": "Lieu de conservation"
-                }
-            }
-        },
-        "PlasterFragment": {
-            "label": "Fragment d'enduit",
-            "fields": {
-                "composition": {
-                    "label": "Composition"
-                },
-                "hasDecoration": {
-                    "label": "Décor"
-                },
-                "color": {
-                    "label": "Couleur et intensité"
-                },
-                "plasterComponents": {
-                    "label": "Composants de l'enduit"
-                }
-            }
-        },
-        "Photo": {
-            "label": "Photo",
-            "fields": {
-                "originalType": {
-                    "description": "Format original de l'image; in case of digitalized images the original analogous format"
-                }
-            }
-        },
-        "Profile": {
-            "label": "Profil"
-        },
-        "Metal": {
-            "label": "Métal",
-            "fields": {
-                "materialDescription": {
-                    "label": "Description matérielle"
-                },
-                "decorationTechnique": {
-                    "label": "Traitement de surface ou technique de décoration"
-                },
-                "formDescription": {
-                    "label": "Description de la forme"
-                },
-                "manufacturingMethod": {
-                    "label": "Méthode de fabrication"
-                },
-                "metalMaterial": {
-                    "label": "Matériau"
-                },
-                "objectType": {
-                    "label": "Identification ou type d'objet"
-                },
-                "vesselForm": {
-                    "label": "Forme basique de l'objet"
-                },
-                "vesselFormSpecific": {
-                    "label": "Forme spécifique de l'objet"
-                }
-            }
-        },
-        "BuildingPart": {
-            "label": "Partie de bâtiment"
-        },
-        "Area": {
-            "label": "Secteur"
-        },
-        "Excavation": {
-            "label": "Fouilles",
-            "fields": {
-                "isIllegal": {
-                    "label": "Fouilles illégales"
-                }
-            }
-        },
-        "Type": {
-            "label": "Type"
-        },
-        "TypeCatalog": {
-            "label": "Type catalogue",
-            "fields": {
-                "criterion": {
-                    "label": "Critère"
-                }
-            }
+        "soilType": {
+          "label": "Type de sédiment"
         }
+      }
+    },
+    "Feature": {
+      "label": "Unité stratigraphique",
+      "fields": {
+        "hasDisturbance": {
+          "label": "Perturbations"
+        },
+        "comparison": {
+          "label": "Comparaison"
+        },
+        "color": {
+          "label": "Couleur et intensité"
+        },
+        "featureBorders": {
+          "label": "Limites de l'unité stratigraphique"
+        },
+        "featureForm": {
+          "label": "Forme de l'unité stratigraphique"
+        }
+      }
+    },
+    "Floor": {
+      "label": "Sol",
+      "fields": {
+        "conditionComment": {
+          "label": "Commentaire sur l'état de conservation"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Quantité conservée par rapport à l'original"
+        },
+        "consistency": {
+          "label": "Consistance"
+        },
+        "distinguishingCriteria": {
+          "label": "Critères distinctifs"
+        },
+        "floorClassification": {
+          "label": "Classification du sol"
+        },
+        "layerClassification": {
+          "label": "Classification de la couche"
+        },
+        "mortarBinder": {
+          "label": "Joint de mortier"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "Inscription",
+      "fields": {
+        "comparison": {
+          "label": "Comparaison"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état de conservation"
+        },
+        "content": {
+          "label": "Transcription"
+        },
+        "language": {
+          "label": "Langue/alphabet"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Part conservée par rapport à l'originale"
+        },
+        "objectType": {
+          "label": "Identification ou type d'inscription"
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "Auteur",
+          "description": "Auteur(s) de l'illustration / dessin / photographie"
+        },
+        "processor": {
+          "label": "Processeur"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Céramique",
+      "fields": {
+        "amountSherdsWall": {
+          "label": "Nombre de tessons, panse"
+        },
+        "amountSherdsRim": {
+          "label": "Nombre de tessons, bords"
+        },
+        "amountSherdsBase": {
+          "label": "Nombre de tessons, bases/fonds"
+        },
+        "amountSherdsHandles": {
+          "label": "Nombre de tessons, anses"
+        },
+        "amountSherdsLip": {
+          "label": "Nombre de tessons, lèvres"
+        },
+        "amountSherdsPedestal": {
+          "label": "Nombre de tessons, socle"
+        },
+        "amountSherdsRimBase": {
+          "label": "Nombre de tessons, bords/bases"
+        },
+        "amountSherdsRimShoulder": {
+          "label": "Nombre de tessons, bord/épaule"
+        },
+        "amountSherdsShoulder": {
+          "label": "Nombre de tessons, épaule"
+        },
+        "amountSherdsOther": {
+          "label": "Nombre de tessons, autres"
+        },
+        "amountSherdsPercent": {
+          "label": "Quantification en pourcents"
+        },
+        "amountSherdsLid": {
+          "label": "Nombre de couvercles"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Couleur de la tranche (cassures) (Munsell)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Couleur interne (Munsell)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Couleur externe (Munsell)"
+        },
+        "hasCoat": {
+          "label": "Enduit/engobe"
+        },
+        "decorationDescription": {
+          "label": "Description de la décoration"
+        },
+        "breakStructure": {
+          "label": "Notes sur la composition/cassure (Structure, porosité etc.)"
+        },
+        "residueAnalysis": {
+          "label": "Analyse des résidus"
+        },
+        "sample": {
+          "label": "Echantillon"
+        },
+        "purpose": {
+          "label": "Usage"
+        },
+        "typeNumber": {
+          "label": "Numéro du type",
+          "description": "Numéro de catalogue du type"
+        },
+        "clayColorBreak": {
+          "label": "Cassure/tranche: couleur et intensité de l'argile"
+        },
+        "clayColorInside": {
+          "label": "Intérieur: couleur et intensité de l'argile"
+        },
+        "clayColorOutside": {
+          "label": "Extérieur: couleur et intensité de l'argile"
+        },
+        "clayHardness": {
+          "label": "Dureté de l'argile (Mohs scale)"
+        },
+        "coatColorInside": {
+          "label": "Enduit (intérieur): couleur et intensité"
+        },
+        "coatColorOutside": {
+          "label": "Enduit (extérieur): couleur et intensité"
+        },
+        "coatInside": {
+          "label": "Enduit (intérieur)"
+        },
+        "coatInsideType": {
+          "label": "Traitement (intérieur)"
+        },
+        "coatOutside": {
+          "label": "Enduit (extérieur)"
+        },
+        "coatOutsideType": {
+          "label": "Traitement (extérieur)"
+        },
+        "decorationTechnique": {
+          "label": "Traitement de surface ou technique de décoration"
+        },
+        "formDescription": {
+          "label": "Description de la forme"
+        },
+        "manufacturing": {
+          "label": "Fabrication"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "materialType": {
+          "label": "Type de matériau"
+        },
+        "objectType": {
+          "label": "Type d'objet"
+        },
+        "specificType": {
+          "label": "Type de céramique"
+        },
+        "temper": {
+          "label": "Dégraissant"
+        },
+        "temperAmount": {
+          "label": "Quantité d'inclusions"
+        },
+        "temperParticles": {
+          "label": "Particules de dégraissant"
+        },
+        "temperTypeClay": {
+          "label": "Argile"
+        },
+        "vesselForm": {
+          "label": "Forme de base de la céramique"
+        },
+        "vesselFormSpecific": {
+          "label": "Forme spécifique de la céramique"
+        }
+      }
+    },
+    "Grave": {
+      "label": "Tombe",
+      "fields": {
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "conditionComment": {
+          "label": "Commentaires sur l'état de conservation"
+        },
+        "findingPlace": {
+          "label": "Lieu de découverte",
+          "description": "Pour saisir plusieurs autres ressources en rapport au lieu de découverte, ex.: (PE07 So 04,002)"
+        },
+        "publicationDatingFinds": {
+          "label": "Datation (Objets/découvertes)"
+        },
+        "publicationDatingScientific": {
+          "label": "Datation (scientifique)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datation (stratigraphie)"
+        },
+        "publicationRemark": {
+          "label": "Remarques sur les publications"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Part conservée par rapport à l'original"
+        },
+        "distinguishingCriteria": {
+          "label": "Critères distinctifs"
+        },
+        "graveType": {
+          "label": "Type de tombe"
+        },
+        "specificType": {
+          "label": "Type spécifique de tombe"
+        },
+        "soilType": {
+          "label": "Type de sédiment"
+        },
+        "tombBuilding": {
+          "label": "Construction de la tombe"
+        }
+      }
+    },
+    "Bone": {
+      "label": "Os/ossements",
+      "fields": {
+        "biologicalAge": {
+          "label": "Age biologique",
+          "description": "Age de l'individu (humain ou animal) au moment de la mort (e. g. Infans I)"
+        },
+        "boneClassification": {
+          "label": "Classification des os"
+        },
+        "boneType": {
+          "label": "Classification générale/moyenne des os"
+        },
+        "burningGrade": {
+          "label": "Etat de combustion des os (selon Wahl 1982)"
+        },
+        "sex": {
+          "label": "Sexe"
+        },
+        "objectType": {
+          "label": "Identification / type d'objet"
+        },
+        "species": {
+          "label": "Espèces"
+        }
+      }
+    },
+    "Room": {
+      "label": "Pièce",
+      "fields": {
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Part conservée par rapport à l'original"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état"
+        },
+        "condition": {
+          "label": "Etat"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Unité de traitement",
+      "fields": {
+        "operationClassification": {
+          "label": "Classification de l'opération"
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "Terracotta",
+      "fields": {
+        "clayColorBreak": {
+          "label": "Cassure/tranche: Couleur et intensité de l'argile"
+        },
+        "clayColorInside": {
+          "label": "Intérieur: couleur et intensité de l'argile"
+        },
+        "clayColorOutside": {
+          "label": "Extérieur: couleur et intensité de l'argile"
+        },
+        "clayStructure": {
+          "label": "Structure"
+        },
+        "coatColorInside": {
+          "label": "Enduit (intérieur): couleur et intensité"
+        },
+        "coatColorOutside": {
+          "label": "Enduit (extérieur): couleur et intensité"
+        },
+        "decorationTechnique": {
+          "label": "Traitement de surface ou technique de décoration"
+        },
+        "formDescription": {
+          "label": "Description de la forme"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "surfaceCondition": {
+          "label": "Etat de la surface"
+        },
+        "temper": {
+          "label": "Dégraissant"
+        },
+        "temperAmount": {
+          "label": "Quantité d'inclusions"
+        },
+        "temperParticles": {
+          "label": "Particules de dégraissant"
+        },
+        "vesselForm": {
+          "label": "Forme basique de la céramique"
+        },
+        "vesselFormSpecific": {
+          "label": "Forme spécifique de la céramique"
+        }
+      }
+    },
+    "Other": {
+      "label": "Autre",
+      "fields": {
+        "isNatural": {
+          "label": "Naturel"
+        },
+        "consistency": {
+          "label": "Consistence"
+        },
+        "distinguishingCriteria": {
+          "label": "Critère distinctif"
+        },
+        "otherClassification": {
+          "label": "Autre classification"
+        },
+        "soilType": {
+          "label": "Type de sédiment"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Echantillon",
+      "fields": {
+        "labNumber": {
+          "label": "Numéro de laboratoire"
+        },
+        "weight": {
+          "label": "Poids (en gr.)"
+        },
+        "sampleType": {
+          "label": "Type d'échantillon"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Dessin",
+      "fields": {
+        "drawingMaterial": {
+          "label": "Matériel de dessin",
+          "description": "Matériel/programme ayant servi au dessin"
+        },
+        "drawingTool": {
+          "label": "Outil de dessin"
+        },
+        "drawingType": {
+          "label": "Type de dessin"
+        },
+        "scale": {
+          "label": "Echelle"
+        }
+      }
+    },
+    "Survey": {
+      "label": "Aire de prospection",
+      "fields": {
+        "researchMethod": {
+          "label": "Méthode de recherche"
+        }
+      }
+    },
+    "Stone": {
+      "label": "Pierre",
+      "fields": {
+        "purpose": {
+          "label": "Usage"
+        },
+        "treatment": {
+          "label": "Traitement"
+        },
+        "workmanship": {
+          "label": "Fabrication/finition"
+        },
+        "architectureElement": {
+          "label": "Element architectural"
+        },
+        "color": {
+          "label": "Couleur et intensité"
+        },
+        "formDescription": {
+          "label": "Description de la forme"
+        },
+        "material": {
+          "label": "Matériau"
+        },
+        "objectType": {
+          "label": "Type d'objet"
+        },
+        "origin": {
+          "label": "Origine du matériau"
+        },
+        "temperAmount": {
+          "label": "Quantité des inclusions"
+        }
+      }
+    },
+    "Coin": {
+      "label": "Monnaie",
+      "fields": {
+        "frontSideDescription": {
+          "label": "Description de l'avers"
+        },
+        "preservedDiameter": {
+          "label": "Diamètre conservé",
+          "description": "Diamètre de la monnaie en millimètres"
+        },
+        "reverseSideDescription": {
+          "label": "Description du revers"
+        },
+        "denomination": {
+          "label": "Dénomination"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "metalMaterial": {
+          "label": "Matériau"
+        },
+        "mint": {
+          "label": "Frappe/émission",
+          "description": "Lieu ou la monnaie a été frappée"
+        },
+        "mintingRuler": {
+          "label": "Emetteur de la monnaie",
+          "description": "Personne ou entité responsable du monnayage"
+        },
+        "stampPositioning": {
+          "label": "Positionnement du timbre",
+          "description": "Rotation du timbre au verso par rapport au recto; spécification en 1-12h analogue au cadran de l'horloge (par exemple '12' pour une rotation égale)"
+        }
+      }
+    },
+    "Find": {
+      "label": "Découverte",
+      "fields": {
+        "instanceOf": {
+          "label": "Classification typologique"
+        },
+        "amount": {
+          "label": "Nombre total"
+        },
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "catalogueNumber": {
+          "label": "Numéro de catalogue"
+        },
+        "comparison": {
+          "label": "Comparaison"
+        },
+        "conditionComment": {
+          "label": "Commentaire sur l'état"
+        },
+        "conditionPercent": {
+          "label": "Pourcentage conservé"
+        },
+        "publicationMaterialSummary": {
+          "label": "Résumé du matériel de publication"
+        },
+        "publicationRemark": {
+          "label": "Remauque de publication"
+        },
+        "hasRestoration": {
+          "label": "Restauration"
+        },
+        "storageInventoryNumber": {
+          "label": "Numéro d'inventaire"
+        },
+        "weight": {
+          "label": "Poids (en gr.)"
+        },
+        "condition": {
+          "label": "Etat"
+        },
+        "conditionAmount": {
+          "label": "Evaluation de l'état de conservation",
+          "description": "Part conservée par rapport à l'original"
+        },
+        "storagePlace": {
+          "label": "Lieu de conservation"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "Fragment d'enduit",
+      "fields": {
+        "composition": {
+          "label": "Composition"
+        },
+        "hasDecoration": {
+          "label": "Décor"
+        },
+        "color": {
+          "label": "Couleur et intensité"
+        },
+        "plasterComponents": {
+          "label": "Composants de l'enduit"
+        }
+      }
+    },
+    "Photo": {
+      "label": "Photo"
+    },
+    "Profile": {
+      "label": "Profil"
+    },
+    "Metal": {
+      "label": "Métal",
+      "fields": {
+        "materialDescription": {
+          "label": "Description matérielle"
+        },
+        "decorationTechnique": {
+          "label": "Traitement de surface ou technique de décoration"
+        },
+        "formDescription": {
+          "label": "Description de la forme"
+        },
+        "manufacturingMethod": {
+          "label": "Méthode de fabrication"
+        },
+        "metalMaterial": {
+          "label": "Matériau"
+        },
+        "objectType": {
+          "label": "Identification ou type d'objet"
+        },
+        "vesselForm": {
+          "label": "Forme basique de l'objet"
+        },
+        "vesselFormSpecific": {
+          "label": "Forme spécifique de l'objet"
+        }
+      }
+    },
+    "BuildingPart": {
+      "label": "Partie de bâtiment"
+    },
+    "Area": {
+      "label": "Secteur"
+    },
+    "Excavation": {
+      "label": "Fouilles",
+      "fields": {
+        "isIllegal": {
+          "label": "Fouilles illégales"
+        }
+      }
+    },
+    "Type": {
+      "label": "Type"
+    },
+    "TypeCatalog": {
+      "label": "Type catalogue",
+      "fields": {
+        "criterion": {
+          "label": "Critère"
+        }
+      }
     }
+  }
 }

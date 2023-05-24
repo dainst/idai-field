@@ -922,9 +922,6 @@
         "vesselFormSpecific": {
           "label": "Specific vessel form"
         },
-        "FormComparisonCompendiadetail": {
-          "label": "Form comparison compendia detail"
-        },
         "ApplicationComparisonCompendiadetail": {
           "label": "Application comparison compendia detail"
         }

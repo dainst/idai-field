@@ -5336,7 +5336,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="translated"> </target>
+        <target state="translated"></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7252,6 +7252,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.test" datatype="html">
+        <source>Test-Text</source>
+        <target state="translated">Test text</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">113,121</context>
         </context-group>
       </trans-unit>
     </body>

@@ -3,7 +3,7 @@
     "srcDir": ".",
     "genDir": "src/app/i18n/angular",
     "defaultLanguage": "de",
-    "languages": ["de", "en", "it", "uk"],
+    "languages": ["de"],
     "beautifyOutput": true
   }
 }

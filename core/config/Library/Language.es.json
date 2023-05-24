@@ -339,9 +339,6 @@
         },
         "Type": {
             "label": "Tipo"
-        },
-        "Typecatalog": {
-            "label": "Tipología"
         }
     }
 }

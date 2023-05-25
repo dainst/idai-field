@@ -1035,31 +1035,31 @@
           "description": "Spezielle Form des Gefäßes"
         },
         "vesselpart": {
-          "label": "Part of vessel"
+          "label": "Gefäßteil"
         },
         "Firing": {
-          "label": "Firing of pottery"
+          "label": "Brennart der Keramik"
         },
         "FormComparisonCompendia": {
-          "label": "Form comparison compendia"
+          "label": "Formvergleich Kompendien"
         },
         "FormComparisonCompendiadetail": {
-          "label": "Form comparison compendia detail"
+          "label": "Formvergleich Kompendien Detail"
         },
         "DecorationComparisonCompendia": {
-          "label": "Decoration comparison compendia"
+          "label": "Dekorationsvergleich Kompendien"
         },
         "DecorationComparisonCompendiadetail": {
-          "label": "Decoration comparison compendia detail"
+          "label": "Dekorationsvergleich Kompendien Detail"
         },
         "ApplicationComparisonCompendia": {
-          "label": "Application comparison compendia"
+          "label": "Applikationsvergleich Kompendien"
         },
         "ApplicationComparisonCompendiadetail": {
-          "label": "Application comparison compendia detail"
+          "label": "Applikationsvergleich Kompendien Detail"
         },
         "Drawing": {
-          "label": "Drawing"
+          "label": "Zeichnung vorhanden"
         }
       }
     },

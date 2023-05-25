@@ -224,6 +224,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="tring;    disab"/></source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">112</context>
@@ -231,6 +232,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="r(step) ? step"/></source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">137</context>

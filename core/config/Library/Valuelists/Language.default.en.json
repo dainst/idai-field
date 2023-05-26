@@ -62,5 +62,15 @@
       "W": "W",
       "NW": "NW"
     }
+  },
+  "Photo-originalFormat-default": {
+    "values": {
+      "Farbe": "Color"
+    }
+  },
+  "Layer-distinguishingCriteria-default": {
+    "values": {
+      "Farbe": "Color"
+    }
   }
 }

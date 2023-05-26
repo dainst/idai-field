@@ -10,6 +10,7 @@ import CloseButton from './CloseButton';
 import { buildParamsForFilterValue, isFilterValueInParams } from './utils';
 import FieldFilters from './FieldFilters';
 import { deleteFilterFromParams } from '../../api/query';
+import './CategoryFilter.css';
 
 
 export default function CategoryFilter({ filter, searchParams = new URLSearchParams(), projectId, projectView,
@@ -55,8 +56,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 renderFilterValue(filter.name, bucket, searchParams, filters, category, projectId, projectView,
                     !category ? onMouseEnter : identity)) }
 
-        { false && // TODO remove
-            projectId && projectView && inProjectPopover
+        { projectId && projectView && inProjectPopover
             &&
             <FieldFilters
               projectId={ projectId }

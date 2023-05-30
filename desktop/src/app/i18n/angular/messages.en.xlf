@@ -1824,8 +1824,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
-        <source> Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
-        <target state="translated">Enter a unique identifier for the new project here. Permitted characters are lowercase letters of the latin alphabet, digits, underscores and hyphens. The identifier must always start with a letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. It <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cannot<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> be changed at a later time.</target>
+        <source>Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
+        <target state="translated">Enter a unique identifier for the new project here. Permitted characters are lowercase letters of the latin alphabet, digits, underscores and hyphens. The identifier must always start with a letter and can be up to <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> characters long. It <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cannot<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> be changed at a later time. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -2076,8 +2076,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
-        <source> Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
-        <target state="translated">Synchronize thumbnails <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/></target>
+        <source>Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
+        <target state="translated">Synchronize thumbnails <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">227</context>
@@ -2402,8 +2402,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
-        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
-        <target state="translated">The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as it is assigned to a field. Please assign a different valuelist to this field first.</target>
+        <source>Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
+        <target state="translated">The valuelist <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> cannot be deleted as long as it is assigned to a field. Please assign a different valuelist to this field first. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46,24</context>
@@ -3075,8 +3075,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
-        <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
-        <target state="translated">Delete resource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>?</target>
+        <source>Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
+        <target state="translated">Delete resource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -5716,7 +5716,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidJson" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].</source>
-        <target state="translated">An error has occurred during import: The JSON is not valid. Original error message: [0]</target>
+        <target state="translated">An error has occurred during import: The JSON is not valid. Original error message: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5732,7 +5732,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidGeojsonImportStruct" datatype="html">
         <source>Fehlerhafte GeoJSON-Importstruktur. Grund: [0].</source>
-        <target state="translated">Incorrect GeoJSON import structure. Cause: [0]</target>
+        <target state="translated">Incorrect GeoJSON import structure. Cause: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7247,8 +7247,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
-        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
-        <target state="translated">Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="translated">Edit field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">21</context>

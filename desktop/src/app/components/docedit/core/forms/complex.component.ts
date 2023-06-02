@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Map, clone } from 'tsfun';
-import { Field, Subfield, Labels, Resource, Complex } from 'idai-field-core';
+import { Field, Subfield, Labels, Resource, Complex, I18N, Valuelist } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 type EntryInEditing = { original: any, clone: any };
@@ -28,7 +29,8 @@ export class ComplexComponent implements OnChanges {
     private subfieldDescriptions: Map<string> = {};
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private utilTranslations: UtilTranslations) {}
 
     
     public isValid = (entry: any) => true; // TODO Implement
@@ -64,9 +66,14 @@ export class ComplexComponent implements OnChanges {
 
     public getLabel(entry: any): string {
 
-        // TODO Implement
-
-        return JSON.stringify(entry);
+        return Complex.generateLabel(
+            entry,
+            this.field.subfields,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (labeledValue: I18N.LabeledValue) => this.labels.get(labeledValue),
+            (value: I18N.String|string) => this.labels.getFromI18NString(value),
+            (valuelist: Valuelist, valueId: string) => this.labels.getValueLabel(valuelist, valueId)
+        );
     }
 
 

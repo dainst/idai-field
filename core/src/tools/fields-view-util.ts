@@ -10,10 +10,11 @@ import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
-import { Field } from '../model/configuration/field';
+import { Field, Subfield } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
+import { Complex } from '../model/complex';
 
 
 type FieldContent = any;
@@ -33,6 +34,7 @@ export interface FieldsViewField {
     value?: any;
     valuelist?: Valuelist;
     targets?: Array<Document>;
+    subfields?: Array<Subfield>;
 }
 
 
@@ -84,7 +86,16 @@ export module FieldsViewUtil {
                                    formatDecimal: (value: number) => string,
                                    labels: Labels): string {
 
-        if (object.label) {
+        if (field.subfields) {
+            return Complex.generateLabel(
+                object,
+                field.subfields,
+                getTranslation,
+                (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
+                (value: I18N.String|string) => labels.getFromI18NString(value),
+                (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId)
+            );
+        } else if (object.label) {
             return object.label;
         } else if (object.begin || object.end) {
             return Dating.generateLabel(
@@ -149,7 +160,8 @@ export module FieldsViewUtil {
                         isArray(fieldContent) ? 'array' :
                         isObject(fieldContent) ? 'object' :
                         'default',
-                    valuelist: field.valuelist
+                    valuelist: field.valuelist,
+                    subfields: field.subfields
                 };
         }
     } 

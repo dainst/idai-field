@@ -2755,19 +2755,69 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
+        const defaultLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    fields: {
+                        field1: {
+                            subfields: {
+                                'subfield1-1': {
+                                    'label': 'Subfield 1/1 Label',
+                                    'description': 'Subfield 1/1 Description'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    fields: {
+                        field2: {
+                            subfields: {
+                                'subfield2-1': {
+                                    'label': 'Subfield 2/1 Label',
+                                    'description': 'Subfield 2/1 Description'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [customLanguageConfiguration, defaultLanguageConfiguration]
+            },
+            default: {
+                en: [defaultLanguageConfiguration]
+            },
+            custom: {
+                en: [customLanguageConfiguration]
+            }
+        };
+
         const result = buildRaw(
             builtInCategories,
             libraryCategories,
             libraryForms,
             customForms,
             {},
-            valuelists
+            valuelists,
+            {}, {}, [],
+            languageConfigurations
         );
 
         expect(result['A'].groups[0].fields[0].inputType).toEqual(Field.InputType.COMPLEX);
         expect(result['A'].groups[0].fields[0].subfields.length).toBe(2);
         expect(result['A'].groups[0].fields[0].subfields[0].name).toEqual('subfield1-1');
         expect(result['A'].groups[0].fields[0].subfields[0].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['A'].groups[0].fields[0].subfields[0].label?.en).toEqual('Subfield 1/1 Label');
+        expect(result['A'].groups[0].fields[0].subfields[0].description?.en).toEqual('Subfield 1/1 Description');
         expect(result['A'].groups[0].fields[0].subfields[1].name).toEqual('subfield1-2');
         expect(result['A'].groups[0].fields[0].subfields[1].inputType).toEqual(Field.InputType.DROPDOWN);
         expect(result['A'].groups[0].fields[0].subfields[1].valuelist?.id).toEqual('valuelist-1');
@@ -2775,6 +2825,8 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[1].subfields.length).toBe(3);
         expect(result['A'].groups[0].fields[1].subfields[0].name).toEqual('subfield2-1');
         expect(result['A'].groups[0].fields[1].subfields[0].inputType).toEqual(Field.InputType.TEXT);
+        expect(result['A'].groups[0].fields[1].subfields[0].label?.en).toEqual('Subfield 2/1 Label');
+        expect(result['A'].groups[0].fields[1].subfields[0].description?.en).toEqual('Subfield 2/1 Description');
         expect(result['A'].groups[0].fields[1].subfields[1].name).toEqual('subfield2-2');
         expect(result['A'].groups[0].fields[1].subfields[1].inputType).toEqual(Field.InputType.BOOLEAN);
         expect(result['A'].groups[0].fields[1].subfields[2].name).toEqual('subfield2-3');

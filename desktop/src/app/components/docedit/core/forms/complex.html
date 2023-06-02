@@ -37,7 +37,7 @@
 <ng-template #complexEntryFormTemplate let-entry="entry">
 	<div class="card object-array-field-widget">
 		<div class="card-block">
-            <div *ngFor="let subfield of field.subfields">
+            <div *ngFor="let subfield of field.subfields" class="subfield-section">
                 <label>{{getSubfieldLabel(subfield)}}</label>
                 <edit-form-field [resource]="resource" [fieldContainer]="entry"
                     [field]="subfield" [languages]="languages"></edit-form-field>

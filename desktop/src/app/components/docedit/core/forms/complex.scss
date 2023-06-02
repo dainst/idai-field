@@ -1,0 +1,8 @@
+/**
+ * @author Thomas Kleinke
+ */
+form-field-complex {
+  .subfield-section:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}

@@ -42,8 +42,6 @@ export class DimensionComponent {
 
     public isEditing = (dimension: Dimension) => this.dimensionInEditing?.original === dimension
 
-    public isDimensionInEditing = (dimension?: Dimension) => this.dimensionInEditing?.original !== dimension;
-
     public isEditingAllowed = () => !this.dimensionInEditing && !this.newDimension;
 
 

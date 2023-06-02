@@ -13,15 +13,17 @@
         where only period is used
         -->
         <select *ngIf="showEndElements()"
-                [(ngModel)]="resource[field.name] && resource[field.name]['value']" (change)="setValue($event.target.value)"
+                [(ngModel)]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
+                (change)="setValue($event.target.value)"
                 class="form-control">
-            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option value="" [selected]="!fieldContainer.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
         </select>
         <select *ngIf="!showEndElements()"
-                [(ngModel)]="resource[field.name] && resource[field.name]['value']" (change)="setValue($event.target.value)"
+                [(ngModel)]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
+                (change)="setValue($event.target.value)"
                 class="form-control">
-            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option value="" [selected]="!fieldContainer.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
         </select>
         <!-- end -->
@@ -31,10 +33,13 @@
             <span i18n="@@docedit.forms.dropdownRange.to">bis</span>
         </label>
         <select *ngIf="showEndElements()"
-                [disabled]="!resource[field.name] || !resource[field.name]['value'] || resource[field.name]['value'] === ''"
-                [(ngModel)]="resource[field.name]['endValue']" (change)="setEndValue($event.target.value)"
+                [disabled]="!fieldContainer[field.name]
+                    || !fieldContainer[field.name]['value']
+                    || fieldContainer[field.name]['value'] === ''"
+                [(ngModel)]="fieldContainer[field.name]['endValue']"
+                (change)="setEndValue($event.target.value)"
                 class="form-control">
-            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option value="" [selected]="!fieldContainer.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
         </select>
         <div class="input-group-append">

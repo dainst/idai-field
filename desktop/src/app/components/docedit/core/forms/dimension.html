@@ -1,4 +1,4 @@
-<div *ngFor="let dimension of resource[field.name]; index as i"  class="mb-2">
+<div *ngFor="let dimension of fieldContainer[field.name]; index as i"  class="mb-2">
 	<div class="input-group mb-2" *ngIf="!isEditing(dimension)">
 		<input value="{{getLabel(dimension)}}" type="text" disabled class="form-control">
 		<div class="input-group-append">

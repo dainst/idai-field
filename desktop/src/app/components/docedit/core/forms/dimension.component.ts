@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, Map } from 'tsfun';
-import { Dimension, Labels, Field, Resource, I18N, ProjectConfiguration } from 'idai-field-core';
+import { Dimension, Labels, Field, I18N, ProjectConfiguration } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
@@ -21,7 +21,7 @@ type DimensionInEditing = { original: Dimension, clone: Dimension };
  */
 export class DimensionComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: Field;
     @Input() languages: Map<Language>;
 
@@ -112,8 +112,8 @@ export class DimensionComponent {
 
     public removeDimensionAtIndex(dimensionIndex: number) {
 
-        this.resource[this.field.name].splice(dimensionIndex, 1);
-        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+        this.fieldContainer[this.field.name].splice(dimensionIndex, 1);
+        if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
     }
 
 
@@ -140,12 +140,12 @@ export class DimensionComponent {
         Dimension.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {
-            if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-    		this.resource[this.field.name].push(dimension);
+            if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
+    		this.fieldContainer[this.field.name].push(dimension);
             this.newDimension = undefined;
     	} else {
-            const index: number = this.resource[this.field.name].indexOf(this.dimensionInEditing.original);
-            this.resource[this.field.name].splice(index, 1, dimension);
+            const index: number = this.fieldContainer[this.field.name].indexOf(this.dimensionInEditing.original);
+            this.fieldContainer[this.field.name].splice(index, 1, dimension);
             this.stopEditing();
         }
     }

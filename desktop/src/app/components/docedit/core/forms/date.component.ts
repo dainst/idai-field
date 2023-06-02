@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { isString } from 'tsfun';
-import { Field, parseDate, Resource } from 'idai-field-core';
+import { Field, parseDate } from 'idai-field-core';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
 
@@ -11,7 +11,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 })
 export class DateComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: Field;
 
     @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
@@ -22,7 +22,7 @@ export class DateComponent implements OnChanges {
     constructor(public dateFormatter: NgbDateParserFormatter) {}
 
 
-    public getFieldData = () => this.resource[this.field.name];
+    public getFieldData = () => this.fieldContainer[this.field.name];
 
     public isDatePickerVisible = () => this.getFieldData() === undefined;
 
@@ -46,9 +46,9 @@ export class DateComponent implements OnChanges {
             : this.dateFormatter.format(this.dateStruct);
 
         if (!isNaN(parseDate(formattedDate)?.getTime())) {
-            this.resource[this.field.name] = formattedDate;
+            this.fieldContainer[this.field.name] = formattedDate;
         } else {
-            delete this.resource[this.field.name];
+            delete this.fieldContainer[this.field.name];
         }
 
         this.updateDateStruct(formattedDate);
@@ -57,7 +57,7 @@ export class DateComponent implements OnChanges {
 
     public async removeFieldData() {
 
-        delete this.resource[this.field.name];
+        delete this.fieldContainer[this.field.name];
         this.dateStruct = {} as NgbDateStruct;
         await this.focusInputField();
     }

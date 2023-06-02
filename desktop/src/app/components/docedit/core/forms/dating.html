@@ -122,7 +122,7 @@
     </div>
 </ng-template>
 
-<div *ngFor="let dating of resource[field.name]; index as i"  class="checkbox">
+<div *ngFor="let dating of fieldContainer[field.name]; index as i"  class="checkbox">
     <div class="input-group mb-2">
         <input value="{{getLabel(dating)}}" type="text" disabled class="form-control">
         <div class="input-group-append">

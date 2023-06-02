@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Resource } from 'idai-field-core';
 
 
 type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon'|'MultiPolygon';
@@ -15,7 +14,7 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
  */
 export class GeometryComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
 
     public coordinates: string;
     public edit: boolean;
@@ -32,9 +31,9 @@ export class GeometryComponent implements OnChanges {
 
     public getGeometryTypeLabel(): string {
 
-        if (!this.resource.geometry) return this.i18n({ id: 'geometry.none', value: 'Keine Geometrie'});
+        if (!this.fieldContainer.geometry) return this.i18n({ id: 'geometry.none', value: 'Keine Geometrie'});
 
-        switch(this.resource.geometry.type) {
+        switch(this.fieldContainer.geometry.type) {
             case 'Point':
                 return this.i18n({ id: 'geometry.point', value: 'Punkt'});
             case 'MultiPoint':
@@ -55,12 +54,12 @@ export class GeometryComponent implements OnChanges {
 
     public setGeometryType(type: ''|GeometryType) {
 
-        if (!this.resource.geometry) {
-            this.resource.geometry = { type: type, coordinates: [] };
+        if (!this.fieldContainer.geometry) {
+            this.fieldContainer.geometry = { type: type, coordinates: [] };
         }  else if (type === '') {
-            delete this.resource.geometry;
+            delete this.fieldContainer.geometry;
         } else {
-            this.resource.geometry.type = type;
+            this.fieldContainer.geometry.type = type;
         }
 
         this.parseCoordinates(false);
@@ -69,8 +68,8 @@ export class GeometryComponent implements OnChanges {
 
     public resetCoordinates() {
 
-        this.coordinates = this.resource.geometry
-            ? JSON.stringify(this.resource.geometry.coordinates, undefined, 4)
+        this.coordinates = this.fieldContainer.geometry
+            ? JSON.stringify(this.fieldContainer.geometry.coordinates, undefined, 4)
             : '';
     }
 
@@ -78,7 +77,7 @@ export class GeometryComponent implements OnChanges {
     public parseCoordinates(resetIfInvalid: boolean) {
 
         try {
-            this.resource.geometry.coordinates = JSON.parse(this.coordinates);
+            this.fieldContainer.geometry.coordinates = JSON.parse(this.coordinates);
         } catch(err) {
             // Do nothing
             if (resetIfInvalid) this.resetCoordinates();

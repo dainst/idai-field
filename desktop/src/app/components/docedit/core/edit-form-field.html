@@ -1,56 +1,59 @@
 <form-field-input *ngIf="field.inputType === 'input' || field.inputType === undefined"
-           [resource]="resource" [fieldName]="field.name" [languages]="languages"></form-field-input>
+    [fieldContainer]="fieldContainer" [fieldName]="field.name" [languages]="languages"></form-field-input>
 
-<form-field-input *ngIf="field.inputType === 'text'" [resource]="resource" [fieldName]="field.name"
-           [languages]="languages" [multiLine]="true" ></form-field-input>
+<form-field-input *ngIf="field.inputType === 'text'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name" [languages]="languages"
+    [multiLine]="true" ></form-field-input>
 
 <form-field-simple-input *ngIf="field.inputType === 'simpleInput' || field.inputType === 'int'
-                || field.inputType === 'unsignedInt' || field.inputType === 'float'
-                || field.inputType === 'unsignedFloat' || field.inputType === 'url'"
-            [resource]="resource" [fieldName]="field.name"></form-field-simple-input>
+        || field.inputType === 'unsignedInt' || field.inputType === 'float'
+        || field.inputType === 'unsignedFloat' || field.inputType === 'url'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-simple-input>
 
-<form-field-multi-input *ngIf="field.inputType === 'multiInput'" [resource]="resource"
-                 [fieldName]="field.name" [languages]="languages"></form-field-multi-input>
+<form-field-multi-input *ngIf="field.inputType === 'multiInput'" [fieldContainer]="fieldContainer"
+    [fieldName]="field.name" [languages]="languages"></form-field-multi-input>
 
-<form-field-simple-multi-input *ngIf="field.inputType === 'simpleMultiInput'" [resource]="resource"
-                        [fieldName]="field.name"></form-field-simple-multi-input>
+<form-field-simple-multi-input *ngIf="field.inputType === 'simpleMultiInput'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-simple-multi-input>
 
-<form-field-dropdown *ngIf="field.inputType === 'dropdown'" [resource]="resource"
-              [field]="field"></form-field-dropdown>
+<form-field-dropdown *ngIf="field.inputType === 'dropdown'"
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown>
 
-<form-field-dropdown-range *ngIf="field.inputType === 'dropdownRange'" [resource]="resource"
-              [field]="field"></form-field-dropdown-range>
+<form-field-dropdown-range *ngIf="field.inputType === 'dropdownRange'"
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown-range>
 
-<form-field-radio *ngIf="field.inputType === 'radio'" [resource]="resource"
-           [field]="field"></form-field-radio>
+<form-field-radio *ngIf="field.inputType === 'radio'"
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-radio>
 
-<form-field-boolean *ngIf="field.inputType === 'boolean'" [resource]="resource"
-             [fieldName]="field.name"></form-field-boolean>
+<form-field-boolean *ngIf="field.inputType === 'boolean'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-boolean>
 
-<form-field-checkboxes *ngIf="field.inputType === 'checkboxes'" [resource]="resource"
-                [field]="field"></form-field-checkboxes>
+<form-field-checkboxes *ngIf="field.inputType === 'checkboxes'"
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-checkboxes>
 
-<form-field-dating *ngIf="field.inputType === 'dating'" [resource]="resource"
-            [field]="field" [languages]="languages"></form-field-dating>
+<form-field-dating *ngIf="field.inputType === 'dating'"
+    [fieldContainer]="fieldContainer" [field]="field" [languages]="languages"></form-field-dating>
 
-<form-field-date *ngIf="field.inputType === 'date'" [resource]="resource"
-          [field]="field"></form-field-date>
+<form-field-date *ngIf="field.inputType === 'date'"
+    [fieldContainer]="fieldContainer" [field]="field"></form-field-date>
 
-<form-field-dimension *ngIf="field.inputType === 'dimension'" [resource]="resource"
-               [field]="field" [languages]="languages"></form-field-dimension>
+<form-field-dimension *ngIf="field.inputType === 'dimension'"
+    [fieldContainer]="fieldContainer" [field]="field" [languages]="languages"></form-field-dimension>
 
-<form-field-literature *ngIf="field.inputType === 'literature'" [resource]="resource"
-                [field]="field"></form-field-literature>
+<form-field-literature *ngIf="field.inputType === 'literature'"
+    [fieldContainer]="fieldContainer" [field]="field"></form-field-literature>
 
-<form-field-complex *ngIf="field.inputType === 'complex'" [resource]="resource" [field]="field"
-                    [languages]="languages"></form-field-complex>
+<form-field-complex *ngIf="field.inputType === 'complex'"
+    [resource]="resource" [field]="field" [languages]="languages"></form-field-complex>
 
-<form-field-geometry *ngIf="field.inputType === 'geometry'" [resource]="resource"></form-field-geometry>
+<form-field-geometry *ngIf="field.inputType === 'geometry'"
+    [fieldContainer]="fieldContainer"></form-field-geometry>
 
-<form-field-identifier *ngIf="field.inputType === 'identifier'" [resource]="resource"
-                       [fieldName]="field.name" [identifierPrefix]="identifierPrefix"></form-field-identifier>
+<form-field-identifier *ngIf="field.inputType === 'identifier'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name" [identifierPrefix]="identifierPrefix"></form-field-identifier>
 
-<form-field-type-relation *ngIf="field.inputType === 'instanceOf'" [resource]="resource"></form-field-type-relation>
+<form-field-type-relation *ngIf="field.inputType === 'instanceOf'"
+    [resource]="resource"></form-field-type-relation>
 
-<relation-picker-group *ngIf="field.inputType === 'relation'" [resource]="resource"
-                       [relationDefinition]="field"></relation-picker-group>
+<relation-picker-group *ngIf="field.inputType === 'relation'"
+    [resource]="resource" [relationDefinition]="field"></relation-picker-group>

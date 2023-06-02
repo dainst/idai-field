@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Map } from 'tsfun';
-import { Resource, Field } from 'idai-field-core';
+import { Resource, Field, Subfield } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 
 
@@ -15,7 +15,12 @@ import { Language } from '../../../services/languages';
 export class EditFormFieldComponent {
 
     @Input() resource: Resource;
-    @Input() field: Field;
+    
+    // In most cases the resource is used as the field container. For fields of input type "complex", the
+    // field container is an entry object of the field data array.
+    @Input() fieldContainer: any;
+    
+    @Input() field: Field|Subfield;
     @Input() languages: Map<Language>;
     @Input() identifierPrefix: string|undefined;
 }

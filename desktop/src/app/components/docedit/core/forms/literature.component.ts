@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { is, remove, clone } from 'tsfun';
-import { Literature, Resource, Field } from 'idai-field-core';
+import { Literature, Field } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 
 
@@ -16,7 +16,7 @@ type LiteratureInEditing = { original: Literature, clone: Literature };
  */
 export class LiteratureComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: Field;
 
     public newLiterature: Literature|undefined;
@@ -85,8 +85,8 @@ export class LiteratureComponent {
         if (this.newLiterature === literature) {
             this.add(literature);
         } else {
-            const index: number = this.resource[this.field.name].indexOf(this.getOriginal(literature));
-            this.resource[this.field.name].splice(index, 1, literature);
+            const index: number = this.fieldContainer[this.field.name].indexOf(this.getOriginal(literature));
+            this.fieldContainer[this.field.name].splice(index, 1, literature);
         }
 
         this.inEditing = this.inEditing.filter(l => l.clone !== literature);
@@ -95,7 +95,7 @@ export class LiteratureComponent {
 
     public remove(literature: Literature) {
 
-        this.resource[this.field.name] = remove(is(literature))(this.resource[this.field.name]);
+        this.fieldContainer[this.field.name] = remove(is(literature))(this.fieldContainer[this.field.name]);
     }
 
 
@@ -107,8 +107,8 @@ export class LiteratureComponent {
 
     private add(literature: Literature) {
 
-        if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-        this.resource[this.field.name].push(literature);
+        if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
+        this.fieldContainer[this.field.name].push(literature);
         this.newLiterature = undefined;
     }
 }

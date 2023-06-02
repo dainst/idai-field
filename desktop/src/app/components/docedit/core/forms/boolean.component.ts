@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Resource } from 'idai-field-core';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { Resource } from 'idai-field-core';
  */
 export class BooleanComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
 
 
@@ -21,12 +20,12 @@ export class BooleanComponent {
 
     public setValue(value: any) {
 
-        this.resource[this.fieldName] = value;
+        this.fieldContainer[this.fieldName] = value;
     }
 
 
     public resetValue() {
 
-        delete this.resource[this.fieldName];
+        delete this.fieldContainer[this.fieldName];
     }
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Map, clone } from 'tsfun';
-import { Field, Resource } from 'idai-field-core';
+import { Field, Subfield, Labels, Resource } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
 
 
@@ -25,7 +25,7 @@ export class ComplexComponent {
     public fieldLanguages: Array<Language>;
 
 
-    constructor() {}
+    constructor(private labels: Labels) {}
 
     
     public isValid = (entry: any) => true; // TODO Implement
@@ -33,6 +33,8 @@ export class ComplexComponent {
     public isEditing = (entry: any) => this.entryInEditing?.original === entry
 
     public isEditingAllowed = () => !this.entryInEditing && !this.newEntry;
+
+    public getSubfieldLabel = (subfield: Subfield) => this.labels.get(subfield);
 
 
     public createNewEntry() {

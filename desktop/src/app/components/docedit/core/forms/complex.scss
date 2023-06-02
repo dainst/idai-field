@@ -14,5 +14,6 @@ form-field-complex {
 
   .invalid-data {
     font-style: italic;
+    pointer-events: none;
   }
 }

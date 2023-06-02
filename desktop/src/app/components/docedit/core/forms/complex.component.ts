@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Map, clone } from 'tsfun';
-import { Field, Subfield, Labels, Resource } from 'idai-field-core';
+import { Field, Subfield, Labels, Resource, Complex } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
 
 
@@ -45,6 +45,14 @@ export class ComplexComponent implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+    }
+
+
+    public getSubfields(): Array<Subfield> {
+        
+        return this.field.subfields?.filter(subfield => {
+            return Complex.ALLOWED_SUBFIELD_INPUT_TYPES.includes(subfield.inputType);
+        });
     }
 
 

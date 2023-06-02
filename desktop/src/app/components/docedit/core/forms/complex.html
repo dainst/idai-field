@@ -37,7 +37,7 @@
 <ng-template #complexEntryFormTemplate let-entry="entry">
 	<div class="card object-array-field-widget">
 		<div class="card-block">
-            <div *ngFor="let subfield of field.subfields" class="subfield-section">
+            <div *ngFor="let subfield of getSubfields()" class="subfield-section">
                 <label>{{getSubfieldLabel(subfield)}}</label>
                 <span *ngIf="getSubfieldDescription(subfield)"
                       placement="left"

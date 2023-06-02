@@ -15,6 +15,7 @@ export { ImageDocument } from './image-document';
 export { ImageGeoreference } from './image-georeference';
 export { ImageResource } from './image-resource';
 export { Literature } from './literature';
+export { Complex } from './complex';
 export { NewDocument } from './document';
 export { NewImageDocument } from './image-document';
 export { NewImageResource } from './image-resource';

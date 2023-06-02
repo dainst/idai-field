@@ -49,7 +49,7 @@ export class EditFormGroup implements OnChanges {
 
         const isFieldDataValid: boolean = this.validateFieldData(fieldData, field.inputType);
         
-        return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType) || field.inputType === Field.InputType.URL
+        return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType) || field.inputType === Field.InputType.URL
             ? isFieldDataValid || fieldData !== originalFieldData
             : isFieldDataValid;
     }

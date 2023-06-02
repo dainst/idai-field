@@ -48,6 +48,7 @@ import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-lang
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 import { IdentifierComponent } from './core/forms/identifier.component';
+import { ComplexComponent } from './core/forms/complex.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { IdentifierComponent } from './core/forms/identifier.component';
         LiteratureComponent,
         IdentifierComponent,
         InvalidFieldDataComponent,
-        MultiLanguageTextFieldComponent
+        MultiLanguageTextFieldComponent,
+        ComplexComponent
     ],
     exports: [
         DoceditComponent,

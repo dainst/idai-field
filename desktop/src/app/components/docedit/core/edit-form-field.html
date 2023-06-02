@@ -42,6 +42,9 @@
 <form-field-literature *ngIf="field.inputType === 'literature'" [resource]="resource"
                 [field]="field"></form-field-literature>
 
+<form-field-complex *ngIf="field.inputType === 'complex'" [resource]="resource" [field]="field"
+                    [languages]="languages"></form-field-complex>
+
 <form-field-geometry *ngIf="field.inputType === 'geometry'" [resource]="resource"></form-field-geometry>
 
 <form-field-identifier *ngIf="field.inputType === 'identifier'" [resource]="resource"

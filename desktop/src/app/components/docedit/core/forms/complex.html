@@ -1,0 +1,46 @@
+<div *ngFor="let entry of resource[field.name]; index as i"  class="mb-2">
+	<div class="input-group mb-2" *ngIf="!isEditing(entry)">
+		<input value="{{getLabel(entry)}}" type="text" disabled class="form-control">
+		<div class="input-group-append">
+            <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeEntryAtIndex(i)">
+				<span class="mdi mdi-delete"></span>
+			</button>
+            <button class="btn btn-info" [disabled]="!isEditingAllowed()" (click)="startEditing(entry)">
+				<span class="mdi mdi-pencil"></span>
+			</button>
+        </div>
+	</div>
+
+	<div *ngIf="isEditing(entry)">
+	    <ng-container [ngTemplateOutlet]="complexEntryFormTemplate"
+	                  [ngTemplateOutletContext]="{ entry: entryInEditing.clone }">
+	    </ng-container>
+	</div>
+</div>
+
+<div class="input-group" *ngIf="isEditingAllowed()">
+	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.complex.add" type="text" disabled class="form-control">
+	<div class="input-group-append">
+        <button class="btn btn-success" (click)="createNewEntry()"><span class="mdi mdi-plus-circle"></span></button>
+    </div>
+</div>
+
+<div *ngIf="newEntry">
+    <ng-container [ngTemplateOutlet]="complexEntryFormTemplate"
+                  [ngTemplateOutletContext]="{ entry: newEntry }">
+    </ng-container>
+</div>
+
+<ng-template #complexEntryFormTemplate let-entry="entry">
+	<div class="card object-array-field-widget">
+		<div class="card-block">
+		</div>
+		<div class="card-footer" align="right">
+			<button class="btn btn-primary" [disabled]="!isValid(entry)"
+					(click)="saveEntry(entry)"
+					i18n="@@buttons.ok">OK</button>
+			<button class="btn btn-secondary" *ngIf="newEntry == entry"
+					(click)="cancelNewEntry()" i18n="@@buttons.cancel">Abbrechen</button>
+		</div>
+	</div>
+</ng-template>

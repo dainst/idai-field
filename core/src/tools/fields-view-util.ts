@@ -112,7 +112,9 @@ export module FieldsViewUtil {
             );
         } else {
             const result = labels.getFromI18NString(object);
-            return result ? prepareString(result) : object;
+            return result && isString(result)
+                ? prepareString(result)
+                : JSON.stringify(object);
         }
     }
 

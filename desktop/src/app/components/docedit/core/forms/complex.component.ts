@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Map, clone } from 'tsfun';
+import { Map, clone, isEmpty } from 'tsfun';
 import { Field, Subfield, Labels, Resource, Complex, I18N, Valuelist } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
 import { UtilTranslations } from '../../../../util/util-translations';
@@ -34,7 +34,7 @@ export class ComplexComponent implements OnChanges {
                 private utilTranslations: UtilTranslations) {}
 
     
-    public isValid = (entry: any) => true; // TODO Implement
+    public isValid = (entry: any) => !isEmpty(entry);
 
     public isEditing = (entry: any) => this.entryInEditing?.original === entry
 

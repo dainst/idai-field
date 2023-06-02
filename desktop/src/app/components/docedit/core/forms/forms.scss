@@ -2,25 +2,25 @@ form-field-dating,
 form-field-dimension,
 form-field-literature,
 form-field-complex {
-	.btn-info {
-		margin-left: 0 !important;
-	}
+  .btn-info {
+    margin-left: 0 !important;
+  }
 
-	.object-array-field-widget {
-		@extend .bg-light;
+  .object-array-field-widget {
+    @extend .bg-light;
 
     .card-footer {
-			margin-left: -10px;
-			margin-right: -10px;
-			border-top: none;
+      margin-left: -10px;
+      margin-right: -10px;
+      border-top: none;
 
-			.btn-primary {
-				margin-right: 7px;
-			}
-		}
-	}
+      .btn-primary {
+        margin-right: 7px;
+      }
+    }
+  }
 
-	label {
-		font-size: 15px;
-	  }
+  label {
+    font-size: 15px;
+  }
 }

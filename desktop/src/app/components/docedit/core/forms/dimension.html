@@ -1,5 +1,5 @@
 <div *ngFor="let dimension of resource[field.name]; index as i"  class="mb-2">
-	<div class="input-group mb-2" *ngIf="!isInEditing(dimension)">
+	<div class="input-group mb-2" *ngIf="!isEditing(dimension)">
 		<input value="{{getLabel(dimension)}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
             <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeDimensionAtIndex(i)">
@@ -11,9 +11,9 @@
         </div>
 	</div>
 
-	<div *ngIf="isInEditing(dimension)">
+	<div *ngIf="isEditing(dimension)">
 	    <ng-container [ngTemplateOutlet]="dimensionFormTemplate"
-	                  [ngTemplateOutletContext]="{ dimension: getClone(dimension) }">
+	                  [ngTemplateOutletContext]="{ dimension: dimensionInEditing.clone }">
 	    </ng-container>
 	</div>
 </div>

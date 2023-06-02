@@ -26,7 +26,7 @@ export class DimensionComponent {
     @Input() languages: Map<Language>;
 
     public newDimension: Dimension|undefined = undefined;
-    public dimensionsInEditing: Array<DimensionInEditing> = [];
+    public dimensionInEditing: DimensionInEditing = undefined;
     public fieldLanguages: Array<Language>;
 
 
@@ -40,9 +40,11 @@ export class DimensionComponent {
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
 
-    public isEditing = () => this.dimensionsInEditing.length > 0;
+    public isEditing = (dimension: Dimension) => this.dimensionInEditing?.original === dimension
 
-    public isEditingAllowed = () => !this.isEditing() && !this.newDimension;
+    public isDimensionInEditing = (dimension?: Dimension) => this.dimensionInEditing?.original !== dimension;
+
+    public isEditingAllowed = () => !this.dimensionInEditing && !this.newDimension;
 
 
     public createNewDimension() {
@@ -100,33 +102,13 @@ export class DimensionComponent {
         const clonedDimension = clone(dimension);
         clonedDimension.isRange = clonedDimension.inputRangeEndValue ? true : false;
 
-        this.dimensionsInEditing.push({ original: dimension, clone: clonedDimension });
+        this.dimensionInEditing = { original: dimension, clone: clonedDimension };
     }
 
 
-    private stopEditing(dimension: Dimension) {
+    private stopEditing() {
 
-        this.dimensionsInEditing = this.dimensionsInEditing.filter(d => d.clone !== dimension);
-    }
-
-
-    public isInEditing(dimension: Dimension): boolean {
-
-        return this.dimensionsInEditing.find(d => d.original === dimension) !== undefined;
-    }
-
-
-    public getClone(dimension: Dimension): Dimension|undefined {
-
-        const dimensionInEditing = this.dimensionsInEditing.find(d => d.original === dimension);
-        if (dimensionInEditing) return dimensionInEditing.clone;
-    }
-
-
-    public getOriginal(clonedDimension: Dimension): Dimension|undefined {
-
-        const dimensionInEditing = this.dimensionsInEditing.find(d => d.clone === clonedDimension);
-        if (dimensionInEditing) return dimensionInEditing.original;
+        this.dimensionInEditing = undefined;
     }
 
 
@@ -164,9 +146,9 @@ export class DimensionComponent {
     		this.resource[this.field.name].push(dimension);
             this.newDimension = undefined;
     	} else {
-            const index: number = this.resource[this.field.name].indexOf(this.getOriginal(dimension));
+            const index: number = this.resource[this.field.name].indexOf(this.dimensionInEditing.original);
             this.resource[this.field.name].splice(index, 1, dimension);
-            this.stopEditing(dimension);
+            this.stopEditing();
         }
     }
 

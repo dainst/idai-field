@@ -39,6 +39,11 @@
 		<div class="card-block">
             <div *ngFor="let subfield of field.subfields" class="subfield-section">
                 <label>{{getSubfieldLabel(subfield)}}</label>
+                <span *ngIf="getSubfieldDescription(subfield)"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="{{getSubfieldDescription(subfield)}}"
+                      class="mdi mdi-information-outline float-right"></span>
                 <edit-form-field [resource]="resource" [fieldContainer]="entry"
                     [field]="subfield" [languages]="languages"></edit-form-field>
             </div>

@@ -5,4 +5,10 @@ form-field-complex {
   .subfield-section:not(:last-child) {
     margin-bottom: 10px;
   }
+
+  .mdi-information-outline {
+    position: relative;
+    bottom: 2px;
+    font-size: 20px;
+  }
 }

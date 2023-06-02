@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Map, clone } from 'tsfun';
 import { Field, Subfield, Labels, Resource } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
@@ -14,7 +14,7 @@ type EntryInEditing = { original: any, clone: any };
 /**
  * @author Thomas Kleinke
  */
-export class ComplexComponent {
+export class ComplexComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() field: Field;
@@ -23,6 +23,9 @@ export class ComplexComponent {
     public newEntry: any|undefined = undefined;
     public entryInEditing: EntryInEditing = undefined;
     public fieldLanguages: Array<Language>;
+    
+    private subfieldLabels: Map<string> = {};
+    private subfieldDescriptions: Map<string> = {};
 
 
     constructor(private labels: Labels) {}
@@ -34,7 +37,15 @@ export class ComplexComponent {
 
     public isEditingAllowed = () => !this.entryInEditing && !this.newEntry;
 
-    public getSubfieldLabel = (subfield: Subfield) => this.labels.get(subfield);
+    public getSubfieldLabel = (subfield: Subfield) => this.subfieldLabels[subfield.name];
+
+    public getSubfieldDescription = (subfield: Subfield) => this.subfieldDescriptions[subfield.name];
+
+
+    ngOnChanges() {
+
+        this.updateLabelsAndDescriptions();
+    }
 
 
     public createNewEntry() {
@@ -57,18 +68,6 @@ export class ComplexComponent {
     }
 
 
-    public startEditing(entry: any) {
-
-        this.entryInEditing = { original: entry, clone: clone(entry) };
-    }
-
-
-    private stopEditing() {
-
-        this.entryInEditing = undefined;
-    }
-
-
     public removeEntryAtIndex(entryIndex: number) {
 
         this.resource[this.field.name].splice(entryIndex, 1);
@@ -87,5 +86,27 @@ export class ComplexComponent {
             this.resource[this.field.name].splice(index, 1, entry);
             this.stopEditing();
         }
+    }
+
+
+    public startEditing(entry: any) {
+
+        this.entryInEditing = { original: entry, clone: clone(entry) };
+    }
+
+
+    private stopEditing() {
+
+        this.entryInEditing = undefined;
+    }
+
+
+    private updateLabelsAndDescriptions() {
+
+        this.field.subfields.forEach(subfield => {
+            const { label, description } = this.labels.getLabelAndDescription(subfield);
+            if (label) this.subfieldLabels[subfield.name] = label;
+            if (description) this.subfieldDescriptions[subfield.name] = description;
+        });
     }
 }

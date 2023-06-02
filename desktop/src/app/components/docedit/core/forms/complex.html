@@ -1,12 +1,23 @@
 <div *ngFor="let entry of resource[field.name]; index as i"  class="mb-2">
-	<div class="input-group mb-2" *ngIf="!isEditing(entry)">
-		<input value="{{getLabel(entry)}}" type="text" disabled class="form-control">
+	<div *ngIf="!isEditing(entry) && entryLabels[i]" class="input-group mb-2">
+		<input value="{{entryLabels[i]}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
             <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeEntryAtIndex(i)">
 				<span class="mdi mdi-delete"></span>
 			</button>
             <button class="btn btn-info" [disabled]="!isEditingAllowed()" (click)="startEditing(entry)">
 				<span class="mdi mdi-pencil"></span>
+			</button>
+        </div>
+	</div>
+
+	<div *ngIf="!isEditing(entry) && !entryLabels[i]" class="input-group mb-2">
+		<input value="Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt."
+			   i18n-value="@@docedit.forms.complex.invalidData"
+			   type="text" disabled class="form-control invalid-data">
+		<div class="input-group-append">
+            <button class="btn btn-danger" [disabled]="!isEditingAllowed()" (click)="removeEntryAtIndex(i)">
+				<span class="mdi mdi-delete"></span>
 			</button>
         </div>
 	</div>

@@ -27,22 +27,30 @@ export module Complex {
     ];
 
 
+    /**
+     * @returns null if no label could be generated because of invalid data
+     */
     export function generateLabel(entry: any, subfields: Array<Subfield>,
                                   translate: (term: string) => string,
                                   getFromLabeledValue: (labeledValue: I18N.LabeledValue) => string,
                                   getFromI18NString: (i18nString: I18N.String|string) => string,
-                                  getValueLabel: (valuelist: Valuelist, valueId: string) => string): string {
+                                  getValueLabel: (valuelist: Valuelist, valueId: string) => string): string|null {
 
-        return subfields.reduce((result, subfield) => {
-            const subfieldData: any = entry[subfield.name];
-            if (!subfieldData) return result;
+        try {
+            return subfields.reduce((result, subfield) => {
+                const subfieldData: any = entry[subfield.name];
+                if (!subfieldData) return result;
 
-            if (result.length !== 0) result += ', ';
-            return result
-                + getFromLabeledValue(subfield) + ': '
-                + generateSubfieldLabel(subfieldData, subfield.inputType, translate, getFromI18NString,
-                    getValueLabel, subfield.valuelist);
-        }, '');
+                if (result.length !== 0) result += ', ';
+                return result
+                    + getFromLabeledValue(subfield) + ': '
+                    + generateSubfieldLabel(subfieldData, subfield.inputType, translate, getFromI18NString,
+                        getValueLabel, subfield.valuelist);
+            }, '');
+        } catch (err) {
+            console.warn('Failed to generate label.', err);
+            return null;
+        }
     }
 
 

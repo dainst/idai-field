@@ -24,6 +24,7 @@ export class ComplexComponent implements OnChanges {
     public newEntry: any|undefined = undefined;
     public entryInEditing: EntryInEditing = undefined;
     public fieldLanguages: Array<Language>;
+    public entryLabels: Array<string|null>;
     
     private subfieldLabels: Map<string> = {};
     private subfieldDescriptions: Map<string> = {};
@@ -47,6 +48,7 @@ export class ComplexComponent implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+        this.updateEntryLabels();
     }
 
 
@@ -61,19 +63,6 @@ export class ComplexComponent implements OnChanges {
     public createNewEntry() {
 
     	this.newEntry = {};
-    }
-
-
-    public getLabel(entry: any): string {
-
-        return Complex.generateLabel(
-            entry,
-            this.field.subfields,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (labeledValue: I18N.LabeledValue) => this.labels.get(labeledValue),
-            (value: I18N.String|string) => this.labels.getFromI18NString(value),
-            (valuelist: Valuelist, valueId: string) => this.labels.getValueLabel(valuelist, valueId)
-        );
     }
 
 
@@ -101,6 +90,8 @@ export class ComplexComponent implements OnChanges {
             this.resource[this.field.name].splice(index, 1, entry);
             this.stopEditing();
         }
+
+        this.updateEntryLabels();
     }
 
 
@@ -123,5 +114,25 @@ export class ComplexComponent implements OnChanges {
             if (label) this.subfieldLabels[subfield.name] = label;
             if (description) this.subfieldDescriptions[subfield.name] = description;
         });
+    }
+
+    
+    private updateEntryLabels() {
+
+        const entries: any[] = this.resource[this.field.name] ?? [];
+        this.entryLabels = entries.map((entry) => this.generateEntryLabel(entry));
+    }
+
+
+    private generateEntryLabel(entry: any): string {
+
+        return Complex.generateLabel(
+            entry,
+            this.field.subfields,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (labeledValue: I18N.LabeledValue) => this.labels.get(labeledValue),
+            (value: I18N.String|string) => this.labels.getFromI18NString(value),
+            (valuelist: Valuelist, valueId: string) => this.labels.getValueLabel(valuelist, valueId)
+        );
     }
 }

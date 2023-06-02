@@ -84,7 +84,7 @@ export module FieldsViewUtil {
                                    field: FieldsViewField,
                                    getTranslation: (key: string) => string,
                                    formatDecimal: (value: number) => string,
-                                   labels: Labels): string {
+                                   labels: Labels): string|null {
 
         if (field.subfields) {
             return Complex.generateLabel(

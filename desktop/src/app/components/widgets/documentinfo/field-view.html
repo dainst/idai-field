@@ -1,8 +1,8 @@
 <div *ngIf="field.type === 'array' && field.value.length > 0" class="field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
     <ul>
-        <li *ngFor="let item of field.value" class="field-value">
-            {{getObjectLabel(item, field)}}
+        <li *ngFor="let label of getObjectLabels(field.value, field)" class="field-value">
+            {{label}}
         </li>
     </ul>
 </div>

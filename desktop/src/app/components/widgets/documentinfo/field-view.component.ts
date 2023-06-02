@@ -41,7 +41,14 @@ export class FieldViewComponent {
     }
 
 
-    public getObjectLabel(object: any, field: FieldsViewField): string {
+    public getObjectLabels(objects: any[], field: FieldsViewField): string[] {
+
+        return objects.map(object => this.getObjectLabel(object, field))
+            .filter(object => object !== null);
+    }
+
+
+    public getObjectLabel(object: any, field: FieldsViewField): string|null {
 
         return FieldsViewUtil.getObjectLabel(
             object,

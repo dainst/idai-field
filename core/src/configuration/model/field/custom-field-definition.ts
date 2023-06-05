@@ -1,7 +1,9 @@
-import { BaseFieldDefinition } from './base-field-definition';
+import { BaseFieldDefinition, BaseSubfieldDefinition } from './base-field-definition';
 
 
 export interface CustomFieldDefinition extends BaseFieldDefinition {}
+
+export interface CustomSubfieldDefinition extends BaseSubfieldDefinition {}
 
 
 export module CustomFieldDefinition {

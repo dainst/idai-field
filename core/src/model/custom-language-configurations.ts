@@ -1,3 +1,4 @@
+import { Path } from 'tsfun';
 import { LanguageConfiguration } from '../configuration/model/language/language-configuration';
 import { I18N } from '../tools/i18n';
 import { InPlace } from '../tools/in-place';
@@ -93,16 +94,7 @@ export module CustomLanguageConfigurations {
 
         InPlace.removeFrom(
             customLanguageConfigurations,
-            groupName
-                ? [languageCode, 'groups', groupName]
-                : field
-                    ? field.inputType === Field.InputType.RELATION
-                        ? [languageCode, 'relations', field.name, section]
-                        : subfield
-                            ? [languageCode, 'categories', categoryName, 'fields', field.name, 'subfields',
-                                subfield.name, section]
-                            : [languageCode, 'categories', categoryName, 'fields', field.name, section]
-                    : [languageCode, 'categories', categoryName, section]
+            getPath(section, languageCode, categoryName, field, subfield, groupName)
         );
     }
 
@@ -113,16 +105,23 @@ export module CustomLanguageConfigurations {
 
         InPlace.setOn(
             customLanguageConfigurations,
-            groupName
-                ? [languageCode, 'groups', groupName]
-                : field
-                    ? field.inputType === Field.InputType.RELATION
-                        ? [languageCode, 'relations', field.name, section]
-                        : subfield
-                            ? [languageCode, 'categories', categoryName, 'fields', field.name, 'subfields',
-                                subfield.name, section]
-                            : [languageCode, 'categories', categoryName, 'fields', field.name, section]
-                    : [languageCode, 'categories', categoryName, section]
+            getPath(section, languageCode, categoryName, field, subfield, groupName)
         )(newText);
+    }
+
+
+    function getPath(section: 'label'|'description', languageCode: string, categoryName?: string,
+                     field?: Field, subfield?: Subfield, groupName?: string): Path {
+
+        return groupName
+        ? [languageCode, 'groups', groupName]
+        : field
+            ? field.inputType === Field.InputType.RELATION
+                ? [languageCode, 'relations', field.name, section]
+                : subfield
+                    ? [languageCode, 'categories', categoryName, 'fields', field.name, 'subfields',
+                        subfield.name, section]
+                    : [languageCode, 'categories', categoryName, 'fields', field.name, section]
+            : [languageCode, 'categories', categoryName, section];
     }
 }

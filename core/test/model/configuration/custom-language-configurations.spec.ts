@@ -59,6 +59,21 @@ import { I18N } from '../../../src/tools/i18n';
         inputType: 'text'
     };
 
+    const complexField: Field = {
+        name: 'testComplexField',
+        subfields: [
+            {
+                name: 'testSubfield',
+                label: fieldLabel,
+                defaultLabel: fieldLabel,
+                description: fieldDescription,
+                defaultDescription: fieldDescription,
+                inputType: 'text'
+            }
+        ],
+        inputType: 'complex'
+    };
+
     const relation: Field = {
         name: 'testRelation',
         label: fieldLabel,
@@ -121,6 +136,58 @@ import { I18N } from '../../../src/tools/i18n';
             .toBe('New label');
         expect(customLanguageConfigurations.en.categories.testCategory.fields.testField.description)
             .toBe('New description');
+    });
+
+
+    it('Add new translations to custom language configurations for subfield', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Altes Label',
+                                        description: 'Alte Beschreibung'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Neues Label',
+            en: 'New label'
+        };
+
+        const editedDescription: I18N.String = {
+            de: 'Neue Beschreibung',
+            en: 'New description'
+        };
+
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            complexField,
+            complexField.subfields[0]
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .label).toBe('Neues Label');
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .description).toBe('Neue Beschreibung');
+        expect(customLanguageConfigurations.en.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .label).toBe('New label');
+        expect(customLanguageConfigurations.en.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .description).toBe('New description');
     });
 
 
@@ -221,6 +288,7 @@ import { I18N } from '../../../src/tools/i18n';
             undefined,
             undefined,
             undefined,
+            undefined,
             group
         );
 
@@ -276,6 +344,66 @@ import { I18N } from '../../../src/tools/i18n';
             .toBe('Altes Label');
         expect(customLanguageConfigurations.de.categories.testCategory.fields.testField.description)
             .toBeUndefined();
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
+    it('Remove deleted translations from custom language configurations for subfield', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Altes Label',
+                                        description: 'Alte Beschreibung'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            en: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Old label',
+                                        description: 'Old description'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Altes Label'
+        };
+
+        const editedDescription: I18N.String = {};
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            complexField,
+            complexField.subfields[0]
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .label).toBe('Altes Label');
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+            .description).toBeUndefined();
         expect(customLanguageConfigurations.en).toBeUndefined();
     });
 
@@ -386,6 +514,7 @@ import { I18N } from '../../../src/tools/i18n';
             undefined,
             undefined,
             undefined,
+            undefined,
             group
         );
 
@@ -425,6 +554,48 @@ import { I18N } from '../../../src/tools/i18n';
             editedDescription,
             category,
             field
+        );
+
+        expect(customLanguageConfigurations.de).toBeUndefined();
+    });
+
+
+    it('Remove translations equal to default translation from custom language configurations for subfield', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Altes Label',
+                                        description: 'Alte Beschreibung'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const editedLabel: I18N.String = {
+            de: 'Test-Feld'
+        };
+
+        const editedDescription: I18N.String = {
+            de: 'Beschreibungstext des Feldes'
+        };
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            editedLabel,
+            editedDescription,
+            category,
+            complexField,
+            complexField.subfields[0]
         );
 
         expect(customLanguageConfigurations.de).toBeUndefined();
@@ -516,6 +687,7 @@ import { I18N } from '../../../src/tools/i18n';
             undefined,
             undefined,
             undefined,
+            undefined,
             group
         );
 
@@ -570,6 +742,69 @@ import { I18N } from '../../../src/tools/i18n';
             .toBe('Label 2');
         expect(customLanguageConfigurations.de.categories.testCategory.fields.testField2.description)
             .toBe('Beschreibung 2');
+        expect(customLanguageConfigurations.en).toBeUndefined();
+    });
+
+
+    it('Remove all translations from custom language configurations for subfield', () => {
+
+        const customLanguageConfigurations: CustomLanguageConfigurations = {
+            de: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Label 1',
+                                        description: 'Beschreibung 1'
+                                    }
+                                }
+                            },
+                            testComplexField2: {
+                                subfields: {
+                                    testSubfield2: {
+                                        label: 'Label 2',
+                                        description: 'Beschreibung 2'
+                                    }
+                                }
+                            },
+                        }
+                    }
+                }
+            },
+            en: {
+                categories: {
+                    testCategory: {
+                        fields: {
+                            testComplexField: {
+                                subfields: {
+                                    testSubfield: {
+                                        label: 'Label',
+                                        description: 'Description'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        CustomLanguageConfigurations.update(
+            customLanguageConfigurations,
+            {},
+            {},
+            category,
+            complexField,
+            complexField.subfields[0]
+        );
+
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField).toBeUndefined();
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField2.subfields.testSubfield2
+            .label).toBe('Label 2');
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField2.subfields.testSubfield2
+            .description).toBe('Beschreibung 2');
         expect(customLanguageConfigurations.en).toBeUndefined();
     });
 
@@ -635,6 +870,7 @@ import { I18N } from '../../../src/tools/i18n';
             {},
             {},
             category,
+            undefined,
             undefined,
             group
         );

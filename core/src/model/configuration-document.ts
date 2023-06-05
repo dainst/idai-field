@@ -125,7 +125,7 @@ export namespace ConfigurationDocument {
 
         if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
             CustomLanguageConfigurations.update(
-                clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
+                clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, undefined, group
             );
         }
 

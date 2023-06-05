@@ -85,7 +85,7 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
 
         CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(),
-            this.clonedLabel, undefined, undefined, undefined, this.group
+            this.clonedLabel, undefined, undefined, undefined, undefined, this.group
         );
     }
 }

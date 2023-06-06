@@ -252,12 +252,7 @@
       "label": "Moeda"
     },
     "Photo": {
-      "label": "Fotografia",
-      "fields": {
-        "originalType": {
-          "description": "Formato original da imagem; no caso de imagens digitalizadas, indicar o formato analógico do original"
-        }
-      }
+      "label": "Fotografia"
     },
     "Type": {
       "label": "Tipo"

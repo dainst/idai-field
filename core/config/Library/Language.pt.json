@@ -77,9 +77,6 @@
     "spatialLocation": {
       "label": "Localização espacial"
     },
-    "staff": {
-      "label": "Equipa"
-    },
     "provenance": {
       "label": "Proveniência"
     },
@@ -258,14 +255,12 @@
       "label": "Fotografia",
       "fields": {
         "originalType": {
-          "label": "Formato original",
           "description": "Formato original da imagem; no caso de imagens digitalizadas, indicar o formato analógico do original"
         }
       }
     },
     "Type": {
-      "label": "Tipo",
-      "fields": {}
+      "label": "Tipo"
     },
     "TypeCatalog": {
       "label": "Tipo de catálogo",

@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.previous-month" datatype="html">
         <source>Previous month</source>
-        <target state="translated">M&#234;s anterior</target>
+        <target state="translated">Mês anterior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
           <context context-type="linenumber">46</context>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.next-month" datatype="html">
         <source>Next month</source>
-        <target state="translated">M&#234;s seguinte</target>
+        <target state="translated">Mês seguinte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
           <context context-type="linenumber">72</context>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-month" datatype="html">
         <source>Select month</source>
-        <target state="translated">Selecionar m&#234;s</target>
+        <target state="translated">Selecionar mês</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-view.ts</context>
           <context context-type="linenumber">31</context>
@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
         <source>Last</source>
-        <target state="translated">&#218;ltimo</target>
+        <target state="translated">Último</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/pagination/pagination.ts</context>
           <context context-type="linenumber">217</context>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="translated">Pol&#237;gono</target>
+        <target state="translated">Polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -196,7 +196,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
         <source>Multipolygon</source>
-        <target state="translated">Multipol&#237;gono</target>
+        <target state="translated">Multipolígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben</source>
-        <target state="translated">Nenhum crit&#233;rio de pesquisa especificado</target>
+        <target state="translated">Nenhum critério de pesquisa especificado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -259,7 +259,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
-        <source>Datens&#228;tze werden eingelesen...</source>
+        <source>Datensätze werden eingelesen...</source>
         <target state="translated">Importar datasets...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/upload-modal.component.ts</context>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="import.startImport" datatype="html">
         <source>Import starten</source>
-        <target state="translated">Iniciar importa&#231;&#227;o</target>
+        <target state="translated">Iniciar importação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">56</context>
@@ -299,7 +299,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
-        <source>Datei ausw&#228;hlen...</source>
+        <source>Datei auswählen...</source>
         <target state="translated">Escolher ficheiro...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
@@ -307,10 +307,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
-        <source> Unterst&#252;tzte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate k&#246;nnen in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
         <target state="translated">
                         Formatos de ficheiro suportados: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-                        Imagens podem ser importadas atrav&#233;s de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+                        Imagens podem ser importadas através de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
@@ -326,9 +326,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
-        <source> Datens&#228;tze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
+        <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
         <target state="translated">
-                                Recursos j&#225; existentes, o que &#233; determinado pelo campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, s&#227;o ignorados.
+                                Recursos já existentes, o que é determinado pelo campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, são ignorados.
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -336,7 +336,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
-        <source> Vorhandene Ressource erg&#228;nzen </source>
+        <source> Vorhandene Ressource ergänzen </source>
         <target state="translated">
                             Atualizar recursos existentes
                         </target>
@@ -346,15 +346,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
-        <source> Ist diese Option aktiviert, so werden bereits existierende Datens&#228;tze mit den Daten aus der Importdatei erg&#228;nzt. Felder des Importdatensatzes &#252;berschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes &#252;berschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unver&#228;ndert bestehen. Die Kategorie kann nicht ver&#228;ndert werden. Die Zuordnung von Datens&#228;tzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datens&#228;tze in der Importdatei, die nicht zugeordnet werden k&#246;nnen, werden ignoriert. </source>
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">
-                        Se esta op&#231;&#227;o estiver ativa, os recursos j&#225; existentes ser&#227;o combinados com os dados do ficheiro de
-                        importa&#231;&#227;o. Os campos do registo a importar substituem os campos correspondentes no registo j&#225;
-                        existente. As geometrias do registo a importar substituem as do registo j&#225; existente. Campos do
-                        registo j&#225; existente que n&#227;o estejam definidos ou alterados no registo a importar permanecem
-                        inalterados. A categoria n&#227;o pode ser alterada. A atribui&#231;&#227;o de registos &#233; feita com base no
+                        Se esta opção estiver ativa, os recursos já existentes serão combinados com os dados do ficheiro de
+                        importação. Os campos do registo a importar substituem os campos correspondentes no registo já
+                        existente. As geometrias do registo a importar substituem as do registo já existente. Campos do
+                        registo já existente que não estejam definidos ou alterados no registo a importar permanecem
+                        inalterados. A categoria não pode ser alterada. A atribuição de registos é feita com base no
                         campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>.
-                        Registos no ficheiro de importa&#231;&#227;o que n&#227;o possam ser atribu&#237;dos a um recurso ser&#227;o ignorados.
+                        Registos no ficheiro de importação que não possam ser atribuídos a um recurso serão ignorados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -362,15 +362,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
-        <source> Ist diese Option aktiviert, so werden bereits existierende Datens&#228;tze mit den Daten aus der Importdatei erg&#228;nzt. Felder des Importdatensatzes &#252;berschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unver&#228;ndert bestehen. Die Kategorie kann nicht ver&#228;ndert werden. Die Zuordnung von Datens&#228;tzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datens&#228;tze in der Importdatei, die nicht zugeordnet werden k&#246;nnen, werden ignoriert. </source>
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">
-                        Se esta op&#231;&#227;o estiver ativa, os recursos j&#225; existentes ser&#227;o combinados com os dados do ficheiro de
-                        importa&#231;&#227;o. Os campos do registo a importar substituem os campos correspondentes no registo j&#225;
-                        existente. As geometrias do registo a importar substituem as do registo j&#225; existente. Campos do
-                        registo j&#225; existente que n&#227;o estejam definidos ou alterados no registo a importar permanecem
-                        inalterados. A categoria n&#227;o pode ser alterada. A atribui&#231;&#227;o de registos &#233; feita com base na
+                        Se esta opção estiver ativa, os recursos já existentes serão combinados com os dados do ficheiro de
+                        importação. Os campos do registo a importar substituem os campos correspondentes no registo já
+                        existente. As geometrias do registo a importar substituem as do registo já existente. Campos do
+                        registo já existente que não estejam definidos ou alterados no registo a importar permanecem
+                        inalterados. A categoria não pode ser alterada. A atribuição de registos é feita com base na
                         coluna <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>.
-                        Registos no ficheiro de importa&#231;&#227;o que n&#227;o possam ser atribu&#237;dos a um recurso ser&#227;o ignorados.
+                        Registos no ficheiro de importação que não possam ser atribuídos a um recurso serão ignorados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -378,7 +378,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
-        <source> L&#246;schen erlauben </source>
+        <source> Löschen erlauben </source>
         <target state="translated">
             Permitir apagar
         </target>
@@ -388,12 +388,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
-        <source> Ist diese Option aktiviert, so k&#246;nnen sowohl Felder als auch Relationen nicht nur ver&#228;ndert, sondern auch entfernt werden. Gel&#246;scht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgef&#252;hrte Felder und Relationen bleiben unver&#228;ndert. </source>
+        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
         <target state="translated">
-                        Se esta op&#231;&#227;o estiver ativada, tanto campos como rela&#231;&#245;es podem ser atualizados
-                        ou removidos. Todos os campos e rela&#231;&#245;es com o valor atribu&#237;do de
-                        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> ser&#227;o
-                        eliminados. Campos e rela&#231;&#245;es n&#227;o definidos n&#227;o ser&#227;o modificados.
+                        Se esta opção estiver ativada, tanto campos como relações podem ser atualizados
+                        ou removidos. Todos os campos e relações com o valor atribuído de
+                        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> serão
+                        eliminados. Campos e relações não definidos não serão modificados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -401,12 +401,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
-        <source> Ist diese Option aktiviert, so k&#246;nnen sowohl Felder als auch Relationen nicht nur ver&#228;ndert, sondern auch entfernt werden. Gel&#246;scht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgef&#252;hrte Felder und Relationen bleiben unver&#228;ndert. </source>
+        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </source>
         <target state="translated">
-                        Se esta op&#231;&#227;o estiver ativada, tanto campos como rela&#231;&#245;es podem ser atualizados
-                        ou removidos. Todos os campos e rela&#231;&#245;es ser&#227;o eliminados se o campo correspondente
-                        no ficheiro de importa&#231;&#227;o estiver vazio. Campos e rela&#231;&#245;es que n&#227;o est&#227;o especificados
-                        como coluna na tabela CSV n&#227;o ser&#227;o modificados.
+                        Se esta opção estiver ativada, tanto campos como relações podem ser atualizados
+                        ou removidos. Todos os campos e relações serão eliminados se o campo correspondente
+                        no ficheiro de importação estiver vazio. Campos e relações que não estão especificados
+                        como coluna na tabela CSV não serão modificados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -422,7 +422,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
-        <source>Kategorie ausw&#228;hlen</source>
+        <source>Kategorie auswählen</source>
         <target state="translated">Selecionar categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -438,12 +438,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
-        <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugef&#252;gt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei &#252;berschrieben werden. Die Zuordnung von Datens&#228;tzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datens&#228;tze in der Importdatei, die nicht zugeordnet werden k&#246;nnen, werden ignoriert. </source>
+        <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">
-                        A importa&#231;&#227;o GeoJSON n&#227;o cria novos recursos. As geometrias s&#227;o adicionadas a recursos
-                        j&#225; existentes. Tenha em aten&#231;&#227;o que neste processo as geometrias j&#225; existentes ser&#227;o
-                        substitu&#237;das. A atribui&#231;&#227;o dos registos &#233; feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> das <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propriedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> do objeto. Registos no
-                        ficheiro de importa&#231;&#227;o que n&#227;o possam ser atribu&#237;dos ser&#227;o ignorados.
+                        A importação GeoJSON não cria novos recursos. As geometrias são adicionadas a recursos
+                        já existentes. Tenha em atenção que neste processo as geometrias já existentes serão
+                        substituídas. A atribuição dos registos é feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> das <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propriedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> do objeto. Registos no
+                        ficheiro de importação que não possam ser atribuídos serão ignorados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -451,9 +451,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchf&#252;hrung eines Shapefile-Imports ist die Installation von Java 8 oder h&#246;her erforderlich. </source>
+        <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
         <target state="translated">
-                        &#201; necess&#225;rio instalar Java 8 ou superior para poder fazer importa&#231;&#227;o de shapefile.
+                        É necessário instalar Java 8 ou superior para poder fazer importação de shapefile.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -461,12 +461,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
-        <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugef&#252;gt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei &#252;berschrieben werden. Die Zuordnung von Datens&#228;tzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datens&#228;tze im Shapefile, die nicht zugeordnet werden k&#246;nnen, werden ignoriert. </source>
+        <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">
-                        A importa&#231;&#227;o de shapefile n&#227;o cria novos recursos. As geometrias s&#227;o adicionadas a recursos
-                        j&#225; existentes. Tenha em aten&#231;&#227;o que neste processo as geometrias j&#225; existentes ser&#227;o
-                        substitu&#237;das. A atribui&#231;&#227;o dos registos &#233; feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Registos no
-                        shapefile que n&#227;o possam ser atribu&#237;dos a um recurso ser&#227;o ignorados.
+                        A importação de shapefile não cria novos recursos. As geometrias são adicionadas a recursos
+                        já existentes. Tenha em atenção que neste processo as geometrias já existentes serão
+                        substituídas. A atribuição dos registos é feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Registos no
+                        shapefile que não possam ser atribuídos a um recurso serão ignorados.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -475,14 +475,14 @@
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
         <source>Nicht importierte Ressourcen</source>
-        <target state="translated">Recursos n&#227;o importados</target>
+        <target state="translated">Recursos não importados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
-        <source>Zur&#252;ck</source>
+        <source>Zurück</source>
         <target state="translated">Voltar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
@@ -511,7 +511,7 @@
       </trans-unit>
       <trans-unit id="export.startExport" datatype="html">
         <source>Export starten</source>
-        <target state="translated">Iniciar exporta&#231;&#227;o</target>
+        <target state="translated">Iniciar exportação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -526,8 +526,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
-        <source>Keine Einschr&#228;nkung</source>
-        <target state="translated">Sem restri&#231;&#245;es</target>
+        <source>Keine Einschränkung</source>
+        <target state="translated">Sem restrições</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">267</context>
@@ -535,7 +535,7 @@
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
         <source>Katalog</source>
-        <target state="translated">Cat&#225;logo</target>
+        <target state="translated">Catálogo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">295</context>
@@ -559,7 +559,7 @@
       </trans-unit>
       <trans-unit id="export.formats.catalog" datatype="html">
         <source>Katalog</source>
-        <target state="translated">Cat&#225;logo</target>
+        <target state="translated">Catálogo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">173</context>
@@ -575,7 +575,7 @@
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
         <source>Nur Schema</source>
-        <target state="translated">S&#243; esquema</target>
+        <target state="translated">Só esquema</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">223</context>
@@ -594,7 +594,7 @@
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source> Keine Kataloge gefunden. </source>
         <target state="translated">
-                        Nenhum Cat&#225;logo encontrado.
+                        Nenhum Catálogo encontrado.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
@@ -605,7 +605,7 @@
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
         <target state="translated">
                         Os dados exportados incluem geometrias e os campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>,
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descri&#231;&#227;o curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
                         correspondentes.
                     </target>
         <context-group purpose="location">
@@ -614,9 +614,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchf&#252;hrung eines Shapefile-Exports ist die Installation von Java 8 oder h&#246;her erforderlich. </source>
+        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </source>
         <target state="translated">
-                        &#201; necess&#225;rio instalar Java 8 ou superior para poder fazer exporta&#231;&#227;o de shapefile.
+                        É necessário instalar Java 8 ou superior para poder fazer exportação de shapefile.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
@@ -625,7 +625,7 @@
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
         <source>Nicht exportierte Felder:</source>
-        <target state="translated">Campos n&#227;o exportados:</target>
+        <target state="translated">Campos não exportados:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">126,132</context>
@@ -635,7 +635,7 @@
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
         <target state="translated">
                         Os dados exportados incluem geometrias e campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>,
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descri&#231;&#227;o curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
                         correspondentes.
                     </target>
         <context-group purpose="location">
@@ -660,13 +660,13 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
-        <source> Erstellt ein Backup des aktuell ge&#246;ffneten Projekts. Regelm&#228;&#223;ige Backups erh&#246;hen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
         <target state="translated">
-                        Cria c&#243;pia de seguran&#231;a (backup) do projeto aberto. Backups regulares permitem aumentar
-                        a seguran&#231;a dos dados e restaurar a base de dados a partir da &#250;ltima grava&#231;&#227;o no caso de perda de dados.
+                        Cria cópia de segurança (backup) do projeto aberto. Backups regulares permitem aumentar
+                        a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados.
                         <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-                        Tenha em aten&#231;&#227;o que as imagens originais n&#227;o s&#227;o guardadas no ficheiro de backup. Estas podem ser encontradas
-                        na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>defini&#231;&#245;es<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente.
+                        Tenha em atenção que as imagens originais não são guardadas no ficheiro de backup. Estas podem ser encontradas
+                        na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
@@ -690,10 +690,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
-        <source> Geben Sie hier den vollst&#228;ndigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank / eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell ge&#246;ffneten Projekt &#252;bereinstimmen. </source>
+        <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank / eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten Projekt übereinstimmen. </source>
         <target state="translated">
                         Por favor, introduza o caminho completo para o ficheiro de backup, assim como o nome
-                        da base de dados / projeto de destino. O nome do projeto de destino n&#227;o pode ser igual
+                        da base de dados / projeto de destino. O nome do projeto de destino não pode ser igual
                         ao do projeto atualmente aberto.
                     </target>
         <context-group purpose="location">
@@ -702,10 +702,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
-        <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zun&#228;chst m&#246;glicherweise etwas langsamer laufen kann. </source>
+        <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
         <target state="translated">
-                        Aten&#231;&#227;o: ap&#243;s o restauro do backup, todas as imagens de p&#341;e-visualiza&#231;&#227;o ser&#227;o geradas
-                        de novo a partir das imagens originais. Assim, a aplica&#231;&#227;o pode inicialmente parecer mais lenta do que o normal.
+                        Atenção: após o restauro do backup, todas as imagens de pŕe-visualização serão geradas
+                        de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
@@ -720,24 +720,16 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.project" datatype="html">
-        <source>Projekt</source>
-        <target state="translated">Projeto</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.selectForm" datatype="html">
-        <source>Formular ausw&#228;hlen</source>
-        <target state="translated">Selecionar formul&#225;rio</target>
+        <source>Formular auswählen</source>
+        <target state="translated">Selecionar formulário</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addCategory" datatype="html">
-        <source>Kategorie hinzuf&#252;gen</source>
+        <source>Kategorie hinzufügen</source>
         <target state="translated">Adicionar categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
@@ -745,7 +737,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addField" datatype="html">
-        <source>Feld hinzuf&#252;gen</source>
+        <source>Feld hinzufügen</source>
         <target state="translated">Adicionar campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
@@ -757,7 +749,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectField" datatype="html">
-        <source>Feld ausw&#228;hlen</source>
+        <source>Feld auswählen</source>
         <target state="translated">Selecionar campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
@@ -773,7 +765,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addGroup" datatype="html">
-        <source>Gruppe hinzuf&#252;gen</source>
+        <source>Gruppe hinzufügen</source>
         <target state="translated">Adicionar grupo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
@@ -785,7 +777,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectGroup" datatype="html">
-        <source>Gruppe ausw&#228;hlen</source>
+        <source>Gruppe auswählen</source>
         <target state="translated">Selecionar grupo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
@@ -801,7 +793,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.selectValuelist" datatype="html">
-        <source>Werteliste ausw&#228;hlen</source>
+        <source>Werteliste auswählen</source>
         <target state="translated">Selecionar lista de valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
@@ -821,8 +813,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.extendValuelistInfo" datatype="html">
-        <source> Bitte w&#228;hlen Sie einen Bezeichner f&#252;r Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated"> Por favor introduza um identificador para a sua extens&#227;o da lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
+        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
+        <target state="translated"> Por favor introduza um identificador para a sua extensão da lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -830,7 +822,7 @@
       </trans-unit>
       <trans-unit id="configuration.createExtendingValuelist" datatype="html">
         <source>Erweiterung erstellen</source>
-        <target state="translated">Criar extens&#227;o</target>
+        <target state="translated">Criar extensão</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
           <context context-type="linenumber">25</context>
@@ -854,7 +846,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
         <source>Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</source>
-        <target state="translated">Esta lista de valores representa uma extens&#227;o de uma lista de valores existente.</target>
+        <target state="translated">Esta lista de valores representa uma extensão de uma lista de valores existente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
@@ -869,8 +861,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.seletedForm" datatype="html">
-        <source>Ausgew&#228;hltes Formular</source>
-        <target state="translated">Formul&#225;rio selecionado</target>
+        <source>Ausgewähltes Formular</source>
+        <target state="translated">Formulário selecionado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -893,7 +885,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSupercategory" datatype="html">
-        <source>Oberkategorie hinzuf&#252;gen</source>
+        <source>Oberkategorie hinzufügen</source>
         <target state="translated">Adicionar supercategoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
@@ -905,7 +897,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSubcategory" datatype="html">
-        <source>Unterkategorie hinzuf&#252;gen</source>
+        <source>Unterkategorie hinzufügen</source>
         <target state="translated">Adicionar subcategoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
@@ -918,7 +910,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldLabel" datatype="html">
         <source> Feldbezeichnung </source>
-        <target state="translated">Designa&#231;&#227;o do campo</target>
+        <target state="translated">Designação do campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">127</context>
@@ -973,7 +965,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addValuelist" datatype="html">
-        <source>Werteliste hinzuf&#252;gen</source>
+        <source>Werteliste hinzufügen</source>
         <target state="translated">Adicionar lista de valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
@@ -982,7 +974,7 @@
       </trans-unit>
       <trans-unit id="configuration.groupLabel" datatype="html">
         <source> Gruppenbezeichnung </source>
-        <target state="translated"> Designa&#231;&#227;o do grupo </target>
+        <target state="translated"> Designação do grupo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -1006,7 +998,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
         <source>Einzeiliger Text</source>
-        <target state="translated">Linha &#250;nica de texto</target>
+        <target state="translated">Linha única de texto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1014,7 +1006,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.unsignedInt" datatype="html">
         <source>Positive Ganzzahl</source>
-        <target state="translated">N&#250;mero inteiro positivo</target>
+        <target state="translated">Número inteiro positivo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1022,7 +1014,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
         <source>Kommazahl</source>
-        <target state="translated">N&#250;mero decimal</target>
+        <target state="translated">Número decimal</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1030,7 +1022,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
         <source>Positive Kommazahl</source>
-        <target state="translated">N&#250;mero decimal positivo</target>
+        <target state="translated">Número decimal positivo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1038,7 +1030,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
         <source>Einzeiliger Text mit Mehrfachauswahl</source>
-        <target state="translated">M&#250;ltiplas linhas &#250;nicas de texto</target>
+        <target state="translated">Múltiplas linhas únicas de texto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1070,7 +1062,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
         <source>Radiobutton</source>
-        <target state="translated">Bot&#227;o de r&#225;dio</target>
+        <target state="translated">Botão de rádio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1078,7 +1070,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
         <source>Ja / Nein</source>
-        <target state="translated">Sim / N&#227;o</target>
+        <target state="translated">Sim / Não</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1086,7 +1078,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
         <source>Checkboxen</source>
-        <target state="translated">Caixas de verifica&#231;&#227;o</target>
+        <target state="translated">Caixas de verificação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1094,7 +1086,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dating" datatype="html">
         <source>Datierungsangabe</source>
-        <target state="translated">Data&#231;&#227;o</target>
+        <target state="translated">Datação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1109,8 +1101,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
-        <source>Ma&#223;angabe</source>
-        <target state="translated">Dimens&#227;o</target>
+        <source>Maßangabe</source>
+        <target state="translated">Dimensão</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1118,7 +1110,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
         <source>Literaturangabe</source>
-        <target state="translated">Refer&#234;ncia bibliogr&#225;fica</target>
+        <target state="translated">Referência bibliográfica</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1134,7 +1126,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.instanceOf" datatype="html">
         <source>Typenauswahl</source>
-        <target state="translated">Sele&#231;&#227;o de tipo</target>
+        <target state="translated">Seleção de tipo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1142,7 +1134,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
         <source>Relation</source>
-        <target state="translated">Rela&#231;&#227;o</target>
+        <target state="translated">Relação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1157,23 +1149,23 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.changes" datatype="html">
-        <source>An der Konfiguration wurden &#196;nderungen vorgenommen.</source>
-        <target state="translated">A configura&#231;&#227;o foi modificada.</target>
+        <source>An der Konfiguration wurden Änderungen vorgenommen.</source>
+        <target state="translated">A configuração foi modificada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.conflicts.changed" datatype="html">
-        <source>Es wurden bereits Konflikte gel&#246;st.</source>
-        <target state="translated">Alguns conflitos j&#225; foram resolvidos.</target>
+        <source>Es wurden bereits Konflikte gelöst.</source>
+        <target state="translated">Alguns conflitos já foram resolvidos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoryChanged" datatype="html">
-        <source>Die Kategorie wurde ge&#228;ndert.</source>
+        <source>Die Kategorie wurde geändert.</source>
         <target state="translated">A categoria foi modificada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
@@ -1181,7 +1173,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.fieldChanged" datatype="html">
-        <source>Das Feld wurde ge&#228;ndert.</source>
+        <source>Das Feld wurde geändert.</source>
         <target state="translated">O campo foi modificado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
@@ -1197,7 +1189,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addSpecificCategory" datatype="html">
-        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> hinzuf&#252;gen </source>
+        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> hinzufügen </source>
         <target state="translated"> Adicionar categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
@@ -1206,7 +1198,7 @@
       </trans-unit>
       <trans-unit id="configuration.references" datatype="html">
         <source> Verweise </source>
-        <target state="translated"> Refer&#234;ncias </target>
+        <target state="translated"> Referências </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -1226,7 +1218,7 @@
       </trans-unit>
       <trans-unit id="configuration.basicSettings" datatype="html">
         <source> Grundeinstellungen </source>
-        <target state="translated"> Defini&#231;&#245;es b&#225;sicas </target>
+        <target state="translated"> Definições básicas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -1234,14 +1226,14 @@
       </trans-unit>
       <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html">
         <source>Feldspezifische Suche erlauben</source>
-        <target state="translated">Permitir pesquisa espec&#237;fica no campo</target>
+        <target state="translated">Permitir pesquisa específica no campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
-        <source>Sprache ausw&#228;hlen</source>
+        <source>Sprache auswählen</source>
         <target state="translated">Escolher linguagem</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/widgets/multi-language-input.component.ts</context>
@@ -1250,15 +1242,15 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.header" datatype="html">
         <source> Konfiguration aus anderem Projekt importieren </source>
-        <target state="translated"> Importar configura&#231;&#227;o de outro projeto </target>
+        <target state="translated"> Importar configuração de outro projeto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.warning" datatype="html">
-        <source> Bitte beachten Sie, dass s&#228;mtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollst&#228;ndig durch die Konfiguration des ausgew&#228;hlten Projekts ersetzt. </source>
-        <target state="translated"> Por favor, tenha em aten&#231;&#227;o que todos os ajustes &#224; configura&#231;&#227;o (incluindo listas de valores) ser&#227;o perdidos durante a importa&#231;&#227;o. A configura&#231;&#227;o do projeto ser&#225; totalmente substitu&#237;da pela configur&#231;&#227;o do projeto selecionado. </target>
+        <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
+        <target state="translated"> Por favor, tenha em atenção que todos os ajustes à configuração (incluindo listas de valores) serão perdidos durante a importação. A configuração do projeto será totalmente substituída pela configurção do projeto selecionado. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -1273,40 +1265,40 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.changeNotification.header" datatype="html">
-        <source> Die Projektkonfiguration hat sich ge&#228;ndert. </source>
-        <target state="translated"> A configura&#231;&#227;o do projeto foi modificada. </target>
+        <source> Die Projektkonfiguration hat sich geändert. </source>
+        <target state="translated"> A configuração do projeto foi modificada. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.changeNotification.applyChanges" datatype="html">
-        <source>&#196;nderungen anwenden</source>
-        <target state="translated">Aplicar altera&#231;&#245;es</target>
+        <source>Änderungen anwenden</source>
+        <target state="translated">Aplicar alterações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saveChanges" datatype="html">
-        <source>Konfigurations&#228;nderungen speichern</source>
-        <target state="translated">Gravar modifica&#231;&#245;es na configura&#231;&#227;o</target>
+        <source>Konfigurationsänderungen speichern</source>
+        <target state="translated">Gravar modificações na configuração</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saveInfo.general" datatype="html">
-        <source> M&#246;chten Sie die von Ihnen vorgenommenen &#196;nderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre &#196;nderungen das gesamte Projekt betreffen. </source>
-        <target state="translated"> Tem a certeza que pretende gravar as modifica&#231;&#245;es que fez na configura&#231;&#227;o? Atente que as modifica&#231;&#245;es ir&#227;o afetar todo o projeto. </target>
+        <source> Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen. </source>
+        <target state="translated"> Tem a certeza que pretende gravar as modificações que fez na configuração? Atente que as modificações irão afetar todo o projeto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.saveInfo.synchronization" datatype="html">
-        <source> Andere Benutzerinnen und Benutzer, die &#252;ber eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten m&#252;ssen, um die Konfigurations&#228;nderungen zu &#252;bernehmen. </source>
-        <target state="translated"> Outros utilizadores a trabalhar no mesmo projeto atrav&#233;s de sincroniza&#231;&#227;o ter&#227;o de reiniciar a aplica&#231;&#227;o Field Desktop para conseguir aplicar a modifica&#231;&#245;es na configura&#231;&#227;o.</target>
+        <source> Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen. </source>
+        <target state="translated"> Outros utilizadores a trabalhar no mesmo projeto através de sincronização terão de reiniciar a aplicação Field Desktop para conseguir aplicar a modificações na configuração.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -1314,7 +1306,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
         <source> Anzeigetext </source>
-        <target state="translated"> Designa&#231;&#227;o </target>
+        <target state="translated"> Designação </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">45</context>
@@ -1322,7 +1314,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueDescription" datatype="html">
         <source> Beschreibung </source>
-        <target state="translated"> Descri&#231;&#227;o </target>
+        <target state="translated"> Descrição </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -1362,7 +1354,7 @@
       </trans-unit>
       <trans-unit id="configuration.descriptionHeading" datatype="html">
         <source>Beschreibung:</source>
-        <target state="translated">Descri&#231;&#227;o:</target>
+        <target state="translated">Descrição:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
@@ -1386,7 +1378,7 @@
       </trans-unit>
       <trans-unit id="configuration.customFilter" datatype="html">
         <source> Projektspezifische Wertelisten </source>
-        <target state="translated"> Listas de valores espec&#237;ficas do projeto </target>
+        <target state="translated"> Listas de valores específicas do projeto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
           <context context-type="linenumber">55</context>
@@ -1402,14 +1394,14 @@
       </trans-unit>
       <trans-unit id="configuration.saving" datatype="html">
         <source>Konfiguration wird gespeichert...</source>
-        <target state="translated">Gravando configura&#231;&#227;o...</target>
+        <target state="translated">Gravando configuração...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-process-modal.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
-        <source>Ein verkn&#252;pftes Bild</source>
+        <source>Ein verknüpftes Bild</source>
         <target state="translated">Uma imagem ligada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
@@ -1417,7 +1409,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.linkedImages" datatype="html">
-        <source>verkn&#252;pfte Bilder</source>
+        <source>verknüpfte Bilder</source>
         <target state="translated">Imagens ligadas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
@@ -1434,7 +1426,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
         <source> Projektkonfiguration </source>
-        <target state="translated"> Configura&#231;&#227;o de projeto </target>
+        <target state="translated"> Configuração de projeto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -1458,7 +1450,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.connecting" datatype="html">
         <source>Synchronisationsverbindung wird hergestellt...</source>
-        <target state="translated">Estabelecendo liga&#231;&#227;o de sincroniza&#231;&#227;o...</target>
+        <target state="translated">Estabelecendo ligação de sincronização...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1466,7 +1458,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
         <source>Synchronisation ist deaktiviert.</source>
-        <target state="translated">Sincroniza&#231;&#227;o desativada.</target>
+        <target state="translated">Sincronização desativada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1474,7 +1466,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
         <source>Synchronisation abgeschlossen.</source>
-        <target state="translated">Sincroniza&#231;&#227;o completada.</target>
+        <target state="translated">Sincronização completada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1482,7 +1474,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
         <source>Synchronisation fehlgeschlagen</source>
-        <target state="translated">Sincroniza&#231;&#227;o falhou</target>
+        <target state="translated">Sincronização falhou</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1497,24 +1489,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
-        <source>Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Pr&#252;fen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</source>
-        <target state="translated">Assegure-se que o endere&#231;o especificado est&#225; correto e que existe uma liga&#231;&#227;o de rede at&#233; ao destino da sincroniza&#231;&#227;o. Se necess&#225;rio, verifique as configura&#231;&#245;es de firewall no seu computador e no computador remoto.</target>
+        <source>Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</source>
+        <target state="translated">Assegure-se que o endereço especificado está correto e que existe uma ligação de rede até ao destino da sincronização. Se necessário, verifique as configurações de firewall no seu computador e no computador remoto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
-        <source>Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und pr&#252;fen Sie das Passwort.</source>
-        <target state="translated">Assegure-se que o projeto existe no destino da sincroniza&#231;&#227;o e verifique a palavra-passe.</target>
+        <source>Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</source>
+        <target state="translated">Assegure-se que o projeto existe no destino da sincronização e verifique a palavra-passe.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
-        <source>Sie besitzen nicht die n&#246;tigen Rechte.</source>
-        <target state="translated">Permiss&#245;es negadas.</target>
+        <source>Sie besitzen nicht die nötigen Rechte.</source>
+        <target state="translated">Permissões negadas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1522,7 +1514,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
-        <target state="translated">A descarregar vers&#227;o <x id="INTERPOLATION" equiv-text="{{version}}"/>...</target>
+        <target state="translated">A descarregar versão <x id="INTERPOLATION" equiv-text="{{version}}"/>...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
           <context context-type="linenumber">77</context>
@@ -1534,7 +1526,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="translated">A vers&#227;o <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e ir&#225; ser instalada quando reiniciar</target>
+        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e irá ser instalada quando reiniciar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">28</context>
@@ -1542,7 +1534,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
         <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
-        <target state="translated">O descarregamento da vers&#227;o <x id="INTERPOLATION" equiv-text="{{version}}"/> foi interrompido. Por favor reinicie a aplica&#231;&#227;o para voltar a tentar.</target>
+        <target state="translated">O descarregamento da versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi interrompido. Por favor reinicie a aplicação para voltar a tentar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">37</context>
@@ -1550,7 +1542,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
         <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
-        <target state="translated">Ocorreu um erro durante o descarregamento da vers&#227;o <x id="INTERPOLATION" equiv-text="{{version}}"/>. Por favor, descarregue &#250;ltima vers&#227;o a partir de https://field.idai.world/download.</target>
+        <target state="translated">Ocorreu um erro durante o descarregamento da versão <x id="INTERPOLATION" equiv-text="{{version}}"/>. Por favor, descarregue última versão a partir de https://field.idai.world/download.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">46</context>
@@ -1565,8 +1557,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.info" datatype="html">
-        <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem sp&#228;teren Zeitpunkt erneut herunterladen. </source>
-        <target state="translated"> Tenha em aten&#231;&#227;o que se interromper o download, este ir&#225; reiniciar do princ&#237;pio se voltar a descarregar o projeto mais tarde. </target>
+        <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen. </source>
+        <target state="translated"> Tenha em atenção que se interromper o download, este irá reiniciar do princípio se voltar a descarregar o projeto mais tarde. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1610,7 +1602,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
         <source>Konfiguration:</source>
-        <target state="translated">Configura&#231;&#227;o:</target>
+        <target state="translated">Configuração:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -1625,7 +1617,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
-        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> l&#246;schen? </source>
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
         <target state="translated"> Eliminar projeto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
@@ -1633,7 +1625,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.deleteModal.deleteFiles" datatype="html">
-        <source>Bilder l&#246;schen</source>
+        <source>Bilder löschen</source>
         <target state="translated">Eliminar imagens</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
@@ -1641,8 +1633,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
-        <source> Bitte geben Sie den Projektnamen ein, um den L&#246;schvorgang zu best&#228;tigen. </source>
-        <target state="translated"> Por favor, introduza o nome do projeto para confirmar elimina&#231;&#227;o. </target>
+        <source> Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="translated"> Por favor, introduza o nome do projeto para confirmar eliminação. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -1650,7 +1642,7 @@
       </trans-unit>
       <trans-unit id="project.download.connecting" datatype="html">
         <source>Verbindung wird hergestellt...</source>
-        <target state="translated">Estabelecendo liga&#231;&#227;o...</target>
+        <target state="translated">Estabelecendo ligação...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">26</context>
@@ -1666,7 +1658,7 @@
       </trans-unit>
       <trans-unit id="project.download.address" datatype="html">
         <source>Adresse</source>
-        <target state="translated">Endere&#231;o</target>
+        <target state="translated">Endereço</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -1674,18 +1666,10 @@
       </trans-unit>
       <trans-unit id="project.download.address.info" datatype="html">
         <source> Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden. </source>
-        <target state="translated"> Tanto o URL de um servidor Field como o endere&#231;o de rede de outra insta&#231;&#227;o Field Desktop podem ser introduzidos neste endere&#231;o. </target>
+        <target state="translated"> Tanto o URL de um servidor Field como o endereço de rede de outra instação Field Desktop podem ser introduzidos neste endereço. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">97</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="project.download.projectName" datatype="html">
-        <source>Projektname</source>
-        <target state="translated">Nome do projeto</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
-          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
@@ -1720,14 +1704,6 @@
           <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.synchronization.originalImageFiles" datatype="html">
-        <source>Originalbilder synchronisieren</source>
-        <target state="translated">Sincronizar imagens originais</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">109</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
         <source>Projekt synchronisieren</source>
         <target state="translated">Sincronizar projeto</target>
@@ -1736,18 +1712,10 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
-        <source>Die automatische Pr&#252;fung auf Updates wurde deaktiviert. Sie verwenden m&#246;glicherweise nicht die neueste Version von Field Desktop.</source>
-        <target state="translated">A atualiza&#231;&#227;o autom&#225;tica est&#225; desativada. Pode n&#227;o estar a utilizar a vers&#227;o mais recente do Field Desktop.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
         <target state="translated">
-          Por favor, tenha em aten&#231;&#227;o que a importa&#231;&#227;o de <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> ficheiros de imagem pode levar algum tempo.
+          Por favor, tenha em atenção que a importação de <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> ficheiros de imagem pode levar algum tempo.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
@@ -1755,9 +1723,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
-        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verkn&#252;pft. </source>
+        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
         <target state="translated">
-          A imagem importada ser&#225; ligada ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
+          A imagem importada será ligada ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
@@ -1765,9 +1733,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
-        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verkn&#252;pft. </source>
+        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
         <target state="translated">
-          As imagens importadas ser&#227;o ligadas ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
+          As imagens importadas serão ligadas ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
@@ -1775,7 +1743,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
-        <source> Bitte w&#228;hlen Sie die gew&#252;nschte Kategorie aus. </source>
+        <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
         <target state="translated">
           Por favor, selecione a categoria desejada.
         </target>
@@ -1793,11 +1761,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
-        <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gel&#246;scht. Sie k&#246;nnen die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> w&#228;hlen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
+        <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
         <target state="translated">
         O atual recurso acabou de ser eliminado por outro utilizador.
         Pode voltar a criar o recurso escolhendo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso ser&#225; descartado.
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso será descartado.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
@@ -1805,9 +1773,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
-        <source> Zur&#252;ck zur Editieransicht </source>
+        <source> Zurück zur Editieransicht </source>
         <target state="translated">
-        Voltar ao formul&#225;rio de edi&#231;&#227;o
+        Voltar ao formulário de edição
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.html</context>
@@ -1815,10 +1783,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
-        <source> Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim L&#246;schen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
+        <source> Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
         <target state="translated">
-        Isto &#233; um cat&#225;logo importado.
-        Tenha em aten&#231;&#227;o que associa&#231;&#245;es entre os tipos deste cat&#225;logo e os achados tamb&#233;m ser&#227;o removidos.
+        Isto é um catálogo importado.
+        Tenha em atenção que associações entre os tipos deste catálogo e os achados também serão removidos.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -1836,7 +1804,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.single" datatype="html">
-        <source>Ressource wird gel&#246;scht...</source>
+        <source>Ressource wird gelöscht...</source>
         <target state="translated">Eliminando recurso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
@@ -1844,7 +1812,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.multiple" datatype="html">
-        <source>Ressourcen werden gel&#246;scht...</source>
+        <source>Ressourcen werden gelöscht...</source>
         <target state="translated">Eliminando recursos...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
@@ -1862,7 +1830,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
-        <source>L&#246;schen</source>
+        <source>Löschen</source>
         <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
@@ -1898,7 +1866,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteField.header" datatype="html">
-        <source>Feld l&#246;schen?</source>
+        <source>Feld löschen?</source>
         <target state="translated">Eliminar campo?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
@@ -1906,7 +1874,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.header" datatype="html">
-        <source>Gruppe l&#246;schen?</source>
+        <source>Gruppe löschen?</source>
         <target state="translated">Eliminar grupo?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
@@ -1914,7 +1882,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.header" datatype="html">
-        <source>Werteliste l&#246;schen?</source>
+        <source>Werteliste löschen?</source>
         <target state="translated">Eliminar lista de valores?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
@@ -2083,7 +2051,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.differingForms" datatype="html">
         <source>Formulare</source>
-        <target state="translated">Formul&#225;rios</target>
+        <target state="translated">Formulários</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2147,7 +2115,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.notSet" datatype="html">
         <source>(nicht gesetzt)</source>
-        <target state="translated">(n&#227;o definido)</target>
+        <target state="translated">(não definido)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">207</context>
@@ -2174,8 +2142,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.conflicts.differingLanguages" datatype="html">
-        <source>Texte / &#220;bersetzungen</source>
-        <target state="translated">Designa&#231;&#245;es / Tradu&#231;&#245;es</target>
+        <source>Texte / Übersetzungen</source>
+        <target state="translated">Designações / Traduções</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
@@ -2198,8 +2166,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
-        <source>&#196;nderungen verwerfen</source>
-        <target state="translated">Descartar altera&#231;&#245;es</target>
+        <source>Änderungen verwerfen</source>
+        <target state="translated">Descartar alterações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -2207,14 +2175,14 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
         <source>Ressource mehrfach erstellen</source>
-        <target state="translated">Criar m&#250;ltiplas inst&#226;ncias</target>
+        <target state="translated">Criar múltiplas instâncias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
-        <source>Ressource vervielf&#228;ltigen</source>
+        <source>Ressource vervielfältigen</source>
         <target state="translated">Duplicar recurso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
@@ -2222,7 +2190,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
-        <source> Wie viele Ressourcen m&#246;chten Sie anlegen? </source>
+        <source> Wie viele Ressourcen möchten Sie anlegen? </source>
         <target state="translated">
               Quantos recursos pretende criar?
         </target>
@@ -2232,9 +2200,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
-        <source> Wie viele Kopien der Ressource m&#246;chten Sie anlegen? </source>
+        <source> Wie viele Kopien der Ressource möchten Sie anlegen? </source>
         <target state="translated">
-            Quantas c&#243;pias do recurso pretende criar?
+            Quantas cópias do recurso pretende criar?
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
@@ -2258,7 +2226,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.duplicate" datatype="html">
-        <source>Vervielf&#228;ltigen</source>
+        <source>Vervielfältigen</source>
         <target state="translated">Duplicar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
@@ -2287,7 +2255,7 @@
       </trans-unit>
       <trans-unit id="buttons.createMultipleInstances" datatype="html">
         <source>Mehrfach erstellen</source>
-        <target state="translated">Criar m&#250;ltiplas inst&#226;ncias</target>
+        <target state="translated">Criar múltiplas instâncias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">29</context>
@@ -2314,7 +2282,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
-        <source> Ressource wird vervielf&#228;ltigt... </source>
+        <source> Ressource wird vervielfältigt... </source>
         <target state="translated">
                         Duplicando recurso...
                     </target>
@@ -2332,7 +2300,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
-        <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verkn&#252;pfte Bilder </source>
+        <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verknüpfte Bilder </source>
         <target state="translated">
         Imagens ligadas a <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>
     </target>
@@ -2342,7 +2310,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
-        <source>Zu verkn&#252;pfende Ressource w&#228;hlen:</source>
+        <source>Zu verknüpfende Ressource wählen:</source>
         <target state="translated">Selecionar recurso para ligar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/link-modal.component.ts</context>
@@ -2350,10 +2318,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
-        <source> Bei den ausgew&#228;hlten Bildern werden s&#228;mtliche Verkn&#252;pfungen zu anderen Ressourcen entfernt.
+        <source> Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
 </source>
         <target state="translated">
-    Todas as liga&#231;&#245;es para outros recursos ser&#227;o eliminadas das imagens selecionadas.
+    Todas as ligações para outros recursos serão eliminadas das imagens selecionadas.
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
@@ -2361,15 +2329,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html">
-        <source>Verkn&#252;pfungen l&#246;schen</source>
-        <target state="translated">Remover liga&#231;&#245;es</target>
+        <source>Verknüpfungen löschen</source>
+        <target state="translated">Remover ligações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
-        <source> M&#246;chten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich l&#246;schen? </source>
+        <source> Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
         <target state="translated">
             Pretende realmente eliminar as <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> imagens selecionadas?
         </target>
@@ -2379,7 +2347,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
-        <source> M&#246;chten Sie das markierte Bild wirklich l&#246;schen? </source>
+        <source> Möchten Sie das markierte Bild wirklich löschen? </source>
         <target state="translated">
             Pretende realmente eliminar a imagem selecionada?
         </target>
@@ -2389,7 +2357,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">
-        <source>Bild wird gel&#246;scht...</source>
+        <source>Bild wird gelöscht...</source>
         <target state="translated">Eliminando imagem...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
@@ -2397,7 +2365,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.multiple" datatype="html">
-        <source>Bilder werden gel&#246;scht...</source>
+        <source>Bilder werden gelöscht...</source>
         <target state="translated">Eliminando recursos...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
@@ -2405,7 +2373,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
-        <source>L&#246;schen</source>
+        <source>Löschen</source>
         <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
@@ -2413,15 +2381,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
-        <source>Verkn&#252;pfungen entfernen</source>
-        <target state="translated">Remover liga&#231;&#245;es</target>
+        <source>Verknüpfungen entfernen</source>
+        <target state="translated">Remover ligações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
-        <source>Verkn&#252;pfen</source>
+        <source>Verknüpfen</source>
         <target state="translated">Ligar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
@@ -2445,9 +2413,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
-        <source> M&#246;chten Sie die Georeferenzdaten, die f&#252;r dieses Bild hinterlegt wurden, wirklich l&#246;schen? </source>
+        <source> Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen? </source>
         <target state="translated">
-        Pretende realmente eliminar os dados de georeferencia&#231;&#227;o armazenados para esta imagem?
+        Pretende realmente eliminar os dados de georeferenciação armazenados para esta imagem?
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
@@ -2456,7 +2424,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.georeferenceData" datatype="html">
         <source>Georeferenzdaten</source>
-        <target state="translated">Dados de georeferencia&#231;&#227;o</target>
+        <target state="translated">Dados de georeferenciação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -2464,15 +2432,15 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.tooltips.exportGeoreferenceData" datatype="html">
         <source>Georeferenzdaten als Worldfile exportieren</source>
-        <target state="translated">Exportar dados de georeferencia&#231;&#227;o com ficheiro WORLD</target>
+        <target state="translated">Exportar dados de georeferenciação com ficheiro WORLD</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.tooltips.deleteGeoreferenceData" datatype="html">
-        <source>Georeferenzdaten l&#246;schen</source>
-        <target state="translated">Eliminar dados de georeferencia&#231;&#227;o</target>
+        <source>Georeferenzdaten löschen</source>
+        <target state="translated">Eliminar dados de georeferenciação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -2495,7 +2463,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.saveModal.applyHeader" datatype="html">
-        <source>&#220;bernehmen?</source>
+        <source>Übernehmen?</source>
         <target state="translated">Aplicar?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
@@ -2503,23 +2471,23 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.saveModal.question" datatype="html">
-        <source>M&#246;chten Sie die &#196;nderungen speichern?</source>
-        <target state="translated">Pretender gravar as altera&#231;&#245;es?</target>
+        <source>Möchten Sie die Änderungen speichern?</source>
+        <target state="translated">Pretender gravar as alterações?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.saveModal.applyQuestion" datatype="html">
-        <source>M&#246;chten Sie die &#196;nderungen &#252;bernehmen?</source>
-        <target state="translated">Pretende aplicar as altera&#231;&#245;es?</target>
+        <source>Möchten Sie die Änderungen übernehmen?</source>
+        <target state="translated">Pretende aplicar as alterações?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.apply" datatype="html">
-        <source>&#220;bernehmen</source>
+        <source>Übernehmen</source>
         <target state="translated">Aplicar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
@@ -2527,15 +2495,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.savingChangesModal.info" datatype="html">
-        <source> &#196;nderungen werden gespeichert... </source>
-        <target state="translated"> Gravando altera&#231;&#245;es... </target>
+        <source> Änderungen werden gespeichert... </source>
+        <target state="translated"> Gravando alterações... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/saving-changes-modal.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
-        <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> l&#246;schen? </source>
+        <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
         <target state="translated">Eliminar recurso <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.component.ts</context>
@@ -2543,7 +2511,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen l&#246;schen? </source>
+        <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
         <target state="translated">
             Eliminar <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos?
         </target>
@@ -2553,9 +2521,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.single" datatype="html">
-        <source> Bitte geben Sie den Bezeichner der Ressource ein, um den L&#246;schvorgang zu best&#228;tigen. </source>
+        <source> Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen. </source>
         <target state="translated">
-            Por favor introduza o identificar do recurso para confirmar elimina&#231;&#227;o.
+            Por favor introduza o identificar do recurso para confirmar eliminação.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -2579,7 +2547,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.delete" datatype="html">
-        <source>L&#246;schen</source>
+        <source>Löschen</source>
         <target state="translated">Apagar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
@@ -2587,15 +2555,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolygon" datatype="html">
-        <source>Polygon hinzuf&#252;gen</source>
-        <target state="translated">Adicionar pol&#237;gono</target>
+        <source>Polygon hinzufügen</source>
+        <target state="translated">Adicionar polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolyline" datatype="html">
-        <source>Polyline hinzuf&#252;gen</source>
+        <source>Polyline hinzufügen</source>
         <target state="translated">Adicionar polilinha</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
@@ -2603,7 +2571,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPoint" datatype="html">
-        <source>Punkt hinzuf&#252;gen</source>
+        <source>Punkt hinzufügen</source>
         <target state="translated">Adicionar ponto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
@@ -2611,7 +2579,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
-        <source>Bitte w&#228;hlen Sie eine Kategorie aus.</source>
+        <source>Bitte wählen Sie eine Kategorie aus.</source>
         <target state="translated">Por favor, selecione uma categoria.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
@@ -2627,7 +2595,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
-        <source>Bitte w&#228;hlen Sie einen Geometrietyp aus.</source>
+        <source>Bitte wählen Sie einen Geometrietyp aus.</source>
         <target state="translated">Por favor, selecione um tipo de geometria.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
@@ -2636,7 +2604,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="translated">Pol&#237;gono</target>
+        <target state="translated">Polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">131</context>
@@ -2700,7 +2668,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.shortDescription" datatype="html">
         <source>Kurzbeschreibung</source>
-        <target state="translated">Descri&#231;&#227;o curta</target>
+        <target state="translated">Descrição curta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">57</context>
@@ -2723,7 +2691,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
-        <source>L&#246;schen</source>
+        <source>Löschen</source>
         <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
@@ -2799,7 +2767,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
-        <source>L&#246;schen</source>
+        <source>Löschen</source>
         <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
@@ -2808,7 +2776,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
         <source>Polygon bearbeiten</source>
-        <target state="translated">Editar pol&#237;gono</target>
+        <target state="translated">Editar polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">112</context>
@@ -2816,7 +2784,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
         <source>Multipolygon bearbeiten</source>
-        <target state="translated">Editar multipol&#237;gono</target>
+        <target state="translated">Editar multipolígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">112</context>
@@ -2882,6 +2850,6 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      </body>
+    </body>
   </file>
 </xliff>

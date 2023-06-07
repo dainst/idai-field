@@ -16,6 +16,7 @@ export interface BaseFieldDefinition {
 export interface BaseSubfieldDefinition extends Named {
 
     inputType?: string;
+    references?: string[];
 }
 
 

@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield } from 'idai-field-core';
+    CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
+    InPlace } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -340,7 +341,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public onDropSubfield(event: CdkDragDrop<any>) {
 
-        // TODO Implement
+        InPlace.moveInArray(this.getClonedFieldDefinition().subfields, event.previousIndex, event.currentIndex);
     }
 
 

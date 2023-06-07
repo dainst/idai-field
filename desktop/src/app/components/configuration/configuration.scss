@@ -31,7 +31,9 @@
 @import './notifications/configuration-change-notification-modal';
 @import './conflicts/configuration-conflicts-modal';
 @import './import/import-configuration-modal';
-
+@import './editor/subfield-editor-modal';
+@import './editor/input-type-selector';
+@import './editor/field-editor-widgets';
 
 #configuration-loading-icon-container {
   width: 100%;

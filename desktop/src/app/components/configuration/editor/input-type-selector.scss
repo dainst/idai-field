@@ -1,0 +1,7 @@
+input-type-selector {
+  display: block;
+  
+  &:not(:last-child) {
+    margin-bottom: 25px;
+  }
+}

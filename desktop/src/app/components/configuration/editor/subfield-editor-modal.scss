@@ -1,0 +1,23 @@
+.subfield-editor-modal-header {
+  padding: 1rem 1rem;
+
+  h6 {
+    margin-bottom: 0;
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.subfield-editor-modal-body {
+  height: initial;
+  background-color: initial;
+  height: calc(100vh - 190px);
+}
+
+.subfield-editor-modal-footer {
+  .button-label {
+    margin-left: 0;
+  }
+}

@@ -48,6 +48,9 @@ import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relati
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
+import { SubfieldEditorModalComponent } from './editor/subfield-editor-modal.component';
+import { InputTypeSelectorComponent } from './editor/input-type-selector.component';
+import { I18nSwitchComponent } from './editor/i18n-switch.component';
 
 
 @NgModule({
@@ -99,7 +102,10 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
         ConfigurationConflictsModalComponent,
         HierarchicalRelationsInfoComponent,
         ImportConfigurationModalComponent,
-        ProjectLanguagesModalComponent
+        ProjectLanguagesModalComponent,
+        SubfieldEditorModalComponent,
+        InputTypeSelectorComponent,
+        I18nSwitchComponent
     ],
     providers: [
         ConfigurationChangeNotifications,
@@ -131,7 +137,8 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
         ConfigurationChangeNotificationModalComponent,
         ConfigurationConflictsModalComponent,
         ImportConfigurationModalComponent,
-        ProjectLanguagesModalComponent
+        ProjectLanguagesModalComponent,
+        SubfieldEditorModalComponent
     ]
 })
 

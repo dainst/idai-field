@@ -1,0 +1,18 @@
+.basic-settings-label {
+  width: 300px;
+  float: left;
+  font-size: 15px;
+  user-select: none;
+}
+
+.field-editor-switch {
+  width: 340px;
+  
+  div span {
+    user-select: none;
+
+    &.disabled {
+      color: grey;
+    }
+  }
+}

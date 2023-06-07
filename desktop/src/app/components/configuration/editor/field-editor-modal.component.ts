@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, not, isUndefined } from 'tsfun';
+import { clone, equal, isEmpty, nop, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, Valuelist, FieldResource } from 'idai-field-core';
+    CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
 import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
 import { Menus } from '../../../services/menus';
@@ -16,6 +17,7 @@ import { ApplyChangesResult } from '../configuration.component';
 import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../messages/m';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 
 
 @Component({
@@ -39,6 +41,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hideable: boolean;
     public hidden: boolean;
     public i18nCompatible: boolean;
+    public dragging: boolean;
+
+    private subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
 
     protected changeMessage = this.i18n({
         id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
@@ -50,6 +55,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 menuService: Menus,
                 messages: Messages,
                 private configurationIndex: ConfigurationIndex,
+                private labels: Labels,
                 private i18n: I18n) {
 
         super(activeModal, modals, menuService, messages);
@@ -60,6 +66,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
+    public getClonedSubfieldDefinitions = () => this.getClonedFieldDefinition().subfields;
+
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
@@ -67,11 +75,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isEditValuelistButtonVisible = () => this.clonedField.valuelist
         && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
 
+    public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPLEX;
+
     public isCustomField = () => this.field.source === 'custom';
-
-    public isI18nInputType = () => Field.InputType.I18N_INPUT_TYPES.includes(this.getInputType());
-
-    public isI18nOptionEnabled = () => this.getInputType() !== Field.InputType.TEXT;
 
 
     public initialize() {
@@ -92,10 +98,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
 
         if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
+        if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
 
         this.clonedField = clone(this.field);
+
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
+
+        this.subfieldI18nStrings = {};
     }
 
 
@@ -120,23 +130,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
+        if (!this.isSubfieldsSectionVisible()) {
+            delete this.getClonedFieldDefinition().subfields;
+        }
+
         await super.confirm(this.isValuelistChanged());
-    }
-
-
-    public getAvailableInputTypes(): Array<InputType> {
-
-        if (this.field.fixedInputType) return [];
-
-        const inputTypes: Array<InputType> = this.availableInputTypes.filter(inputType => {
-            return inputType.customFields && !Field.InputType.SIMPLE_INPUT_TYPES.includes(inputType.name);
-        });
-
-        return this.isCustomField()
-            ? inputTypes
-            : Field.InputType.getInterchangeableInputTypes(this.getInputType())
-                .map(alternativeType => inputTypes.find(inputType => inputType.name === alternativeType))
-                .filter(not(isUndefined));
     }
 
 
@@ -162,7 +160,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
     }
 
-    
     public async selectValuelist() {
 
         const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
@@ -289,19 +286,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
     }
 
-    public getI18nOptionTooltip(): string {
-
-        if (this.getInputType() === Field.InputType.TEXT) {
-            return this.i18n({
-                id: 'configuration.i18nOption.changingNotAllowed',
-                value: 'Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.'
-            });
-        } else {
-            return '';
-        }
-    }
-
-
     public isI18nCompatible(): boolean {
 
         return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
@@ -309,37 +293,52 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public isSelectedInputType(inputType: Field.InputType): boolean {
+    public getSubfieldLabel(subfieldDefinition: CustomSubfieldDefinition) {
+        
+        return this.labels.get(this.getClonedSubfield(subfieldDefinition));
+    }
 
-        const selectedInputType: Field.InputType = this.getInputType();
+    
+    public async editSubfield(subfield: CustomSubfieldDefinition) {
 
-        switch (selectedInputType) {
-            case Field.InputType.SIMPLE_INPUT:
-                return inputType === Field.InputType.INPUT;
-            case Field.InputType.SIMPLE_MULTIINPUT:
-                return inputType === Field.InputType.MULTIINPUT;
-            default:
-                return inputType === selectedInputType;
-        }
+        const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
+            SubfieldEditorModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.subfield = this.getClonedSubfield(subfield);
+        componentInstance.parentField = this.clonedField;
+        componentInstance.references = subfield.references;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.projectLanguages = this.getClonedProjectLanguages();
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            editedSubfieldData => {
+                subfield.inputType = editedSubfieldData.inputType;
+                subfield.references = editedSubfieldData.references;
+
+                if (!this.subfieldI18nStrings[subfield.name]) this.subfieldI18nStrings[subfield.name] = {};
+                this.subfieldI18nStrings[subfield.name] = {
+                    label: editedSubfieldData.label,
+                    description: editedSubfieldData.description
+                };
+            },
+            nop
+        );
     }
 
 
-    public toggleI18nInput() {
+    public deleteSubfield(subfield: CustomSubfieldDefinition) {
 
-        switch (this.getInputType()) {
-            case Field.InputType.INPUT:
-                this.setInputType(Field.InputType.SIMPLE_INPUT);
-                break;
-            case Field.InputType.SIMPLE_INPUT:
-                this.setInputType(Field.InputType.INPUT);
-                break;
-            case Field.InputType.MULTIINPUT:
-                this.setInputType(Field.InputType.SIMPLE_MULTIINPUT);
-                break;
-            case Field.InputType.SIMPLE_MULTIINPUT:
-                this.setInputType(Field.InputType.MULTIINPUT);
-                break;
-        }
+        // TODO Implement
+    }
+
+
+    public onDropSubfield(event: CdkDragDrop<any>) {
+
+        // TODO Implement
     }
 
 
@@ -412,6 +411,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription,
             this.category, this.field
         );
+
+        Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
+            CustomLanguageConfigurations.update(
+                this.getClonedLanguageConfigurations(),
+                this.subfieldI18nStrings[subfieldName].label,
+                this.subfieldI18nStrings[subfieldName].description,
+                this.category,
+                this.field,
+                this.field.subfields.find(subfield => subfield.name === subfieldName)
+            );
+        });
     }
 
 
@@ -425,5 +435,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     private isHidden(): boolean {
 
         return ConfigurationDocument.isHidden(this.getClonedFormDefinition())(this.field);
+    }
+
+
+    private getClonedSubfield(subfieldDefinition: CustomSubfieldDefinition): Subfield {
+
+        return this.clonedField.subfields.find(clonedSubfield => {
+            return clonedSubfield.name === subfieldDefinition.name;
+        });
     }
 }

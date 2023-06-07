@@ -1,4 +1,4 @@
-<div class="modal-header configuration-editor-modal-header">
+<div class="modal-header configuration-editor-modal-header field-editor-modal-header">
     <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificField">
         Feld <code>{{field.name}}</code> erstellen
     </h5>
@@ -18,18 +18,13 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body field-editor-modal-body">
-    <div *ngIf="getAvailableInputTypes().length > 0" class="configuration-editor-section">
-        <div class="configuration-editor-section-title"
-            i18n="@@configuration.field.inputType">Eingabetyp</div>
-        <select id="input-type-select" (change)="setInputType($event.target.value)" [disabled]="hidden"
-                class="form-control">
-            <option *ngFor="let inputType of getAvailableInputTypes()"
-                    value="{{inputType.name}}"
-                    [selected]="isSelectedInputType(inputType.name)">
-                {{inputType.label}}
-            </option>
-        </select>
-    </div>
+    <input-type-selector [selectedInputType]="getInputType()"
+                         [availableInputTypes]="availableInputTypes"
+                         [isCustomField]="isCustomField()"
+                         [isFixedInputType]="field.fixedInputType"
+                         [disabled]="hidden"
+                         (onChanged)="setInputType($event)">
+    </input-type-selector>
     <div class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
             Grundeinstellungen
@@ -48,25 +43,11 @@
                 </label>
             </div>
         </div>
-        <div *ngIf="isI18nCompatible()" id="i18n-switch"
-             ngbTooltip="{{getI18nOptionTooltip()}}"
-             container="body">
-            <div class="basic-settings-label">
-                <span i18n="@@configuration.allowMultiLanguage"
-                      [class.disabled]="!isI18nOptionEnabled()">Eingabe in mehreren Sprachen erlauben</span>
-            </div>
-            <div>
-                <label id="toggle-multi-language-slider"
-                       class="switch" [class.disabled]="!isI18nOptionEnabled()">
-                    <input type="checkbox"
-                           [checked]="isI18nInputType()"
-                           [disabled]="!isI18nOptionEnabled()"
-                           (change)="toggleI18nInput()">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
+        <i18n-switch *ngIf="isI18nCompatible()"
+                     [inputType]="getInputType()"
+                     (onChanged)="setInputType($event)"></i18n-switch>
         <div id="constraint-indexed-switch"
+             class="field-editor-switch"
              ngbTooltip="{{getConstraintIndexedTooltip()}}"
              container="body">
             <div class="basic-settings-label">
@@ -98,7 +79,7 @@
             Beschreibung
         </div>
         <multi-language-input [translations]="clonedDescription"
-            [defaultTranslations]="field.defaultDescription || {}"
+            [defaultTranslations]="field.defaultDescription ?? {}"
             [projectLanguages]="getClonedProjectLanguages()"
             [disabled]="hidden"></multi-language-input>
     </div>
@@ -175,6 +156,41 @@
                     (mousedown)="addValuelistTooltip.close()">
                 <span class="mdi mdi-plus"></span>
             </button>
+        </div>
+    </div>
+    <div *ngIf="isSubfieldsSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.subfields">
+            Unterfelder
+        </div>
+        <div id="subfields" cdkDropList (cdkDropListDropped)="onDropSubfield($event)">
+            <div *ngFor="let subfield of getClonedSubfieldDefinitions()"
+                 class="subfield-container"
+                 cdkDrag cdkDragBoundary="#subfields" cdkDragLockAxis="y"
+                 (cdkDragStarted)="dragging = true"
+                 (cdkDragEnded)="dragging = false">
+                <div class="subfield-input-group input-group">
+                    <span class="mdi mdi-drag" cdkDragHandle></span>
+                    <div class="subfield form-control">
+                        {{getSubfieldLabel(subfield)}}
+                        <code>{{subfield.name}}</code>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-danger"
+                                (click)="deleteSubfield(subfield)">
+                            <span class="mdi mdi-delete"></span>
+                        </button>
+                        <button class="btn btn-info"
+                                (click)="editSubfield(subfield)">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+                    </div>
+                </div>
+                <div *cdkDragPreview class="subfield-drag-preview subfield form-control">
+                    {{getSubfieldLabel(subfield)}}
+                    <code>{{subfield.name}}</code>
+                </div>
+                <div *cdkDragPlaceholder class="subfield-drag-placeholder"></div>
+            </div>
         </div>
     </div>
 </div>

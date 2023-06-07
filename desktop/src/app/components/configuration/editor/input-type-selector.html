@@ -1,0 +1,14 @@
+<div *ngIf="getAvailableInputTypes().length > 0" class="configuration-editor-section">
+    <div class="configuration-editor-section-title"
+         i18n="@@configuration.field.inputType">Eingabetyp</div>
+    <select id="input-type-select"
+            (change)="setInputType($event.target.value)"
+            [disabled]="disabled"
+            class="form-control">
+        <option *ngFor="let inputType of getAvailableInputTypes()"
+                value="{{inputType.name}}"
+                [selected]="isSelectedInputType(inputType.name)">
+            {{inputType.label}}
+        </option>
+    </select>
+</div>

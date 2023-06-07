@@ -1,0 +1,52 @@
+<div class="modal-header configuration-editor-modal-header subfield-editor-modal-header">
+    <h6 *ngIf="!new" i18n="@@configuration.editSubfield">Unterfeld <code>{{subfield.name}}</code> bearbeiten</h6>
+    <h6 *ngIf="new" i18n="@@configuration.createSubfield">Unterfeld <code>{{subfield.name}}</code> erstellen</h6>
+</div>
+
+<div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
+    <input-type-selector [selectedInputType]="getInputType()"
+                         [availableInputTypes]="availableInputTypes"
+                         [isCustomField]="true"
+                         [isFixedInputType]="false"
+                         [disabled]="false"
+                         (onChanged)="setInputType($event)">
+    </input-type-selector>
+    <div *ngIf="isI18nCompatible()" class="configuration-editor-section form-group">
+        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
+            Grundeinstellungen
+        </div>
+        <i18n-switch [inputType]="getInputType()"
+                     (onChanged)="setInputType($event)"></i18n-switch>
+    </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
+            Feldbezeichnung
+        </div>
+        <multi-language-input [translations]="data.label"
+            [defaultTranslations]="subfield.defaultLabel"
+            [projectLanguages]="projectLanguages"></multi-language-input>
+    </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.description">
+            Beschreibung
+        </div>
+        <multi-language-input [translations]="data.description"
+            [defaultTranslations]="subfield.defaultDescription ?? {}"
+            [projectLanguages]="projectLanguages"></multi-language-input>
+    </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="data.references"></references-input>
+    </div>
+</div>
+
+<div class="modal-footer subfield-editor-modal-footer bg-light">
+    <button id="confirm-subfield-button" class="btn btn-primary" (click)="confirmChanges()">
+        <span class="button-label" i18n="@@buttons.ok">OK</span>
+    </button>
+    <button id="cancel-button" class="btn btn-secondary" (click)="cancel()">
+        <span class="button-label" i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

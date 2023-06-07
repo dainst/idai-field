@@ -330,9 +330,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public deleteSubfield(subfield: CustomSubfieldDefinition) {
+    public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
 
-        // TODO Implement
+        this.getClonedFieldDefinition().subfields = this.getClonedFieldDefinition().subfields.filter(
+            subfield => subfield.name !== subfieldToDelete.name
+        );
     }
 
 

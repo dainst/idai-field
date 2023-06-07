@@ -28,6 +28,7 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
     public clonedField: Field;
+    public subfieldName?: string;
 
 
     constructor(activeModal: NgbActiveModal,
@@ -47,6 +48,14 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
 
         this.addValuelist(this.selectedValuelist);
         this.activeModal.close();
+    }
+
+
+    public getCurrentValuelistId(): string {
+
+        return this.subfieldName
+            ? this.clonedField?.subfields?.find(subfield => subfield.name === this.subfieldName)?.valuelist?.id
+            : this.clonedField?.valuelist?.id;
     }
 
 
@@ -78,7 +87,18 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
         const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name];
         if (!form.valuelists) form.valuelists = {};
-        form.valuelists[this.clonedField.name] = valuelist.id;
-        this.clonedField.valuelist = this.getCompleteValuelist(valuelist);
+
+        if (this.subfieldName) {
+            if (!form.valuelists[this.clonedField.name]) {
+                form.valuelists[this.clonedField.name] = {};
+            }
+            form.valuelists[this.clonedField.name][this.subfieldName] = valuelist.id;
+            this.clonedField.subfields
+                .find(subfield => subfield.name === this.subfieldName)
+                .valuelist = this.getCompleteValuelist(valuelist);
+        } else {
+            form.valuelists[this.clonedField.name] = valuelist.id;
+            this.clonedField.valuelist = this.getCompleteValuelist(valuelist);
+        }
     }
 }

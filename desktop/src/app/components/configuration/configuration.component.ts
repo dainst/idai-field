@@ -9,10 +9,10 @@ import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, D
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
-import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { CategoryEditorModalComponent } from './editor/category/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
-import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field/field-editor-modal.component';
+import { GroupEditorModalComponent } from './editor/group/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';

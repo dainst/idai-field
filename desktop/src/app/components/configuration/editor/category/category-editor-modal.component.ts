@@ -3,11 +3,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
-import { Menus } from '../../../services/menus';
-import { Messages } from '../../messages/messages';
-import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
-import { Modals } from '../../../services/modals';
+import { Menus } from '../../../../services/menus';
+import { Messages } from '../../../messages/messages';
+import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
+import { ConfigurationUtil } from '../../configuration-util';
+import { Modals } from '../../../../services/modals';
 
 
 @Component({

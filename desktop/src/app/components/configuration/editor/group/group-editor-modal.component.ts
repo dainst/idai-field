@@ -3,10 +3,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
 import { Group, GroupDefinition, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
-import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { Menus } from '../../../services/menus';
-import { Messages } from '../../messages/messages';
-import { Modals } from '../../../services/modals';
+import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
+import { Menus } from '../../../../services/menus';
+import { Messages } from '../../../messages/messages';
+import { Modals } from '../../../../services/modals';
 
 
 @Component({

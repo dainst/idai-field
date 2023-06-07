@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { not, isUndefined } from 'tsfun';
 import { Field } from 'idai-field-core';
-import { InputType } from '../configuration-util';
+import { InputType } from '../../../configuration-util';
 
 
 @Component({

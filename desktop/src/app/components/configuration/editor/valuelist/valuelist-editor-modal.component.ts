@@ -4,15 +4,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty, nop, set, Map, clone } from 'tsfun';
 import { I18N, InPlace, Labels, SortUtil, Valuelist, ValuelistValue } from 'idai-field-core';
-import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { Menus } from '../../../services/menus';
-import { Messages } from '../../messages/messages';
-import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { Modals } from '../../../services/modals';
-import { MenuContext } from '../../../services/menu-context';
+import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
+import { Menus } from '../../../../services/menus';
+import { Messages } from '../../../messages/messages';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { Modals } from '../../../../services/modals';
+import { MenuContext } from '../../../../services/menu-context';
 import { ValueEditorModalComponent } from './value-editor-modal.component';
-import { M } from '../../messages/m';
-import { ConfigurationUtil } from '../configuration-util';
+import { M } from '../../../messages/m';
+import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({

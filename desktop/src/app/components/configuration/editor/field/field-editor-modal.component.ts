@@ -5,18 +5,18 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield } from 'idai-field-core';
-import { InputType, ConfigurationUtil } from '../../../components/configuration/configuration-util';
-import { ConfigurationEditorModalComponent } from './configuration-editor-modal.component';
-import { Menus } from '../../../services/menus';
-import { Messages } from '../../messages/messages';
-import { Modals } from '../../../services/modals';
-import { MenuContext } from '../../../services/menu-context';
-import { ConfigurationIndex } from '../../../services/configuration/index/configuration-index';
-import { ValuelistEditorModalComponent } from './valuelist-editor-modal.component';
-import { ApplyChangesResult } from '../configuration.component';
-import { AddValuelistModalComponent } from '../add/valuelist/add-valuelist-modal.component';
-import { M } from '../../messages/m';
-import { AngularUtility } from '../../../angular/angular-utility';
+import { InputType, ConfigurationUtil } from '../../configuration-util';
+import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
+import { Menus } from '../../../../services/menus';
+import { Messages } from '../../../messages/messages';
+import { Modals } from '../../../../services/modals';
+import { MenuContext } from '../../../../services/menu-context';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
+import { ValuelistEditorModalComponent } from '../valuelist/valuelist-editor-modal.component';
+import { ApplyChangesResult } from '../../configuration.component';
+import { AddValuelistModalComponent } from '../../add/valuelist/add-valuelist-modal.component';
+import { M } from '../../../messages/m';
+import { AngularUtility } from '../../../../angular/angular-utility';
 import { SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Field, I18N, Subfield } from 'idai-field-core';
-import { InputType } from '../configuration-util';
+import { InputType } from '../../configuration-util';
 
 
 export type SubfieldEditorData = {

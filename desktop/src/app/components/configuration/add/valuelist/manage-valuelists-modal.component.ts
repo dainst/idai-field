@@ -4,7 +4,7 @@ import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
-import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
+import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';

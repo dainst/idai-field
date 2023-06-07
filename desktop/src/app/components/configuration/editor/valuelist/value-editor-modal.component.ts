@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isEmpty } from 'tsfun';
 import { ValuelistValue } from 'idai-field-core';
-import { Messages } from '../../messages/messages';
-import { ConfigurationUtil } from '../configuration-util';
+import { Messages } from '../../../messages/messages';
+import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({

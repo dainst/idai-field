@@ -117,6 +117,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
 
+        if (this.getClonedFieldDefinition().subfields?.length < 2 && this.isSubfieldsSectionVisible()) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_SUBFIELDS]);
+        }
+
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {

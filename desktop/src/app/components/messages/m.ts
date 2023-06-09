@@ -245,6 +245,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Configuration Package
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
+    public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
@@ -1955,6 +1956,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.noValuelist',
                 value: 'Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_SUBFIELDS] = {
+            content: i18n({
+                id: 'messages.configuration.error.noSubfields',
+                value: 'Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.'
             }),
             level: 'danger',
             params: [],

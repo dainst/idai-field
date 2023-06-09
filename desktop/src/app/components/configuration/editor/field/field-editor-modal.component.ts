@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, nop, Map, isString } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
+    CustomLanguageConfigurations, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
     InPlace, Valuelists } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -13,11 +13,7 @@ import { Messages } from '../../../messages/messages';
 import { Modals } from '../../../../services/modals';
 import { MenuContext } from '../../../../services/menu-context';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
-import { ValuelistEditorModalComponent } from '../valuelist/valuelist-editor-modal.component';
-import { ApplyChangesResult } from '../../configuration.component';
-import { AddValuelistModalComponent } from '../../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../../messages/m';
-import { AngularUtility } from '../../../../angular/angular-utility';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 
 
@@ -157,66 +153,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             this.getClonedFieldDefinition().inputType = newInputType;
         }
-    }
-
-    public async selectValuelist() {
-
-        const [result, componentInstance] = this.modals.make<AddValuelistModalComponent>(
-            AddValuelistModalComponent,
-            MenuContext.CONFIGURATION_MANAGEMENT,
-            'lg'
-        );
-
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
-        componentInstance.category = this.category;
-        componentInstance.clonedField = this.clonedField;
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
-            nop
-        );
-
-        AngularUtility.blurActiveElement();
-    }
-
-
-    public async editValuelist() {
-
-        const [result, componentInstance] = this.modals.make<ValuelistEditorModalComponent>(
-            ValuelistEditorModalComponent,
-            MenuContext.CONFIGURATION_VALUELIST_EDIT,
-            'lg'
-        );
-
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.valuelist = this.clonedField.valuelist;
-        if (this.clonedField.valuelist.extendedValuelist) {
-            componentInstance.extendedValuelist
-                = this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist);
-        }
-        componentInstance.openedFromFieldEditor = true;
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            (applyChangesResult: ApplyChangesResult) => {
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-                this.updateEditedValuelist(this.configurationDocument);
-            },
-            nop
-        );
-
-        AngularUtility.blurActiveElement();
     }
 
 
@@ -368,26 +304,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
-    }
-
-
-    private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
-
-        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
-        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
-        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
-
-        const valuelistId: string = this.clonedField.valuelist.id;
-        this.clonedField.valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
-        this.clonedField.valuelist.id = valuelistId;
-
-        if (this.clonedField.valuelist.extendedValuelist) {
-            this.clonedField.valuelist = Valuelist.applyExtension(
-                this.clonedField.valuelist,
-                this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist)
-            );
-        }
     }
 
 

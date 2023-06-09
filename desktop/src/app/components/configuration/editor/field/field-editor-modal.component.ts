@@ -250,9 +250,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public async createSubfield(newSubfieldName: string) {
+    public async createSubfield() {
 
-        const adjustedName: string = Naming.getSubfieldName(newSubfieldName);
+        const adjustedName: string = Naming.getSubfieldName(this.newSubfieldName);
+        this.newSubfieldName = '';
 
         const newSubfieldDefinition: CustomSubfieldDefinition = {
             name: adjustedName,

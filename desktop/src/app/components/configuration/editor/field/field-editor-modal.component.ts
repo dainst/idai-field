@@ -12,7 +12,6 @@ import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { Modals } from '../../../../services/modals';
 import { MenuContext } from '../../../../services/menu-context';
-import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { M } from '../../../messages/m';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 import { Naming } from '../../add/naming';
@@ -57,7 +56,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private configurationIndex: ConfigurationIndex,
                 private labels: Labels,
                 private i18n: I18n) {
 

@@ -40,7 +40,7 @@
         </li>
     </ul>
 </div>
-<div *ngIf="!clonedField.valuelist">
+<div *ngIf="!getSelectedValuelist()">
     <button id="add-valuelist-button" class="btn btn-success btn-square" type="button"
             (click)="selectValuelist()"
             ngbTooltip="Werteliste hinzufügen"

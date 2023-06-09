@@ -33,6 +33,23 @@
       }
     }
   }
+
+  #create-subfield-button {
+    position: relative;
+    left: 1px;
+    height: 33.5px;
+
+    .mdi {
+      position: relative;
+      bottom: 2px;
+      right: 1px;
+    }
+  }
+
+  #new-subfield-input {
+    max-width: 200px;
+    border-right: none;
+  }
 }
 
 .subfield {

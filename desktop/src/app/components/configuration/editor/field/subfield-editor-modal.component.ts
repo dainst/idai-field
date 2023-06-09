@@ -65,7 +65,7 @@ export class SubfieldEditorModalComponent {
         this.data = {
             label: this.subfield.label ?? {},
             description: this.subfield.description ?? {},
-            inputType: this.subfield.inputType ?? Field.InputType.INPUT,
+            inputType: this.subfield.inputType,
             references: this.references ?? [],
             valuelist: this.subfield.valuelist
         };

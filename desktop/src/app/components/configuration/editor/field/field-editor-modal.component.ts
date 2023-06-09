@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, Map, isString } from 'tsfun';
+import { clone, equal, isEmpty, nop, Map, isString, on, is } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
-    InPlace, Valuelists } from 'idai-field-core';
+    InPlace, Valuelists, Named } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -15,6 +15,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { M } from '../../../messages/m';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
+import { Naming } from '../../add/naming';
 
 
 @Component({
@@ -38,7 +39,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hideable: boolean;
     public hidden: boolean;
     public i18nCompatible: boolean;
+    public newSubfieldName: string;
     public dragging: boolean;
+
+    public newSubfieldInputPlaceholder: string = this.i18n({
+        id: 'configuration.newSubfield', value: 'Neues Unterfeld'
+    });
 
     private subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
 
@@ -234,6 +240,57 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
     
+    public isValidSubfieldName(subfieldName: string): boolean {
+
+        if (!subfieldName) return false;
+
+        const adjustedName: string = Naming.getSubfieldName(subfieldName);
+        return this.getClonedSubfieldDefinitions().find(on(Named.NAME, is(adjustedName))) === undefined;
+    }
+
+
+    public async createSubfield(newSubfieldName: string) {
+
+        const adjustedName: string = Naming.getSubfieldName(newSubfieldName);
+
+        const newSubfieldDefinition: CustomSubfieldDefinition = {
+            name: adjustedName,
+            inputType: Field.InputType.INPUT
+        };
+
+        const newSubfield: Subfield = {
+            name: adjustedName,
+            inputType: Field.InputType.INPUT,
+            label: {},
+            description: {}
+        };
+
+        const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
+            SubfieldEditorModalComponent,
+            MenuContext.CONFIGURATION_MODAL
+        );
+
+        componentInstance.subfield = newSubfield;
+        componentInstance.parentField = this.clonedField;
+        componentInstance.category = this.category;
+        componentInstance.availableInputTypes = this.availableInputTypes;
+        componentInstance.projectLanguages = this.getClonedProjectLanguages();
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
+        componentInstance.applyChanges = this.applyChanges;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            editedSubfieldData => {
+                this.addSubfield(newSubfieldDefinition, newSubfield);
+                this.setEditedSubfieldData(editedSubfieldData, newSubfieldDefinition, newSubfield);
+            },
+            nop
+        );
+    }
+
+    
     public async editSubfield(subfieldDefinition: CustomSubfieldDefinition) {
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
@@ -265,6 +322,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
 
         this.getClonedFieldDefinition().subfields = this.getClonedFieldDefinition().subfields.filter(
+            subfield => subfield.name !== subfieldToDelete.name
+        );
+        this.clonedField.subfields = this.clonedField.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
     }
@@ -304,6 +364,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
+    }
+
+    
+    private addSubfield(newSubfieldDefinition: CustomSubfieldDefinition, newSubfield: Subfield) {
+
+        if (!this.clonedField.subfields) this.clonedField.subfields = [];
+        this.clonedField.subfields.push(newSubfield);
+        this.getClonedFieldDefinition().subfields.push(newSubfieldDefinition);
     }
 
 
@@ -362,8 +430,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.subfieldI18nStrings[subfieldName].label,
                 this.subfieldI18nStrings[subfieldName].description,
                 this.category,
-                this.field,
-                this.field.subfields.find(subfield => subfield.name === subfieldName)
+                this.clonedField,
+                this.clonedField.subfields.find(subfield => subfield.name === subfieldName)
             );
         });
     }

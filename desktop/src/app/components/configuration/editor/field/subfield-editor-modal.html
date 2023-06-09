@@ -23,7 +23,7 @@
             Feldbezeichnung
         </div>
         <multi-language-input [translations]="data.label"
-            [defaultTranslations]="subfield.defaultLabel"
+            [defaultTranslations]="subfield.defaultLabel ?? {}"
             [projectLanguages]="projectLanguages"></multi-language-input>
     </div>
     <div class="configuration-editor-section">

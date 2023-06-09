@@ -143,5 +143,19 @@
                 <div *cdkDragPlaceholder class="subfield-drag-placeholder"></div>
             </div>
         </div>
+        <div class="input-group mb-2">
+            <input id="new-subfield-input"
+                   [(ngModel)]="newSubfieldName"
+                   type="text"
+                   placeholder="{{newSubfieldInputPlaceholder}}"
+                   class="form-control">
+            <div class="input-group-append">
+                <button id="create-subfield-button" class="btn btn-success" type="button"
+                        [disabled]="!isValidSubfieldName(newSubfieldName)"
+                        (click)="createSubfield(newSubfieldName)">
+                    <span class="mdi mdi-plus"></span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

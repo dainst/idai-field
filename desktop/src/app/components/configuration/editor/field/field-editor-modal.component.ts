@@ -378,7 +378,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         subfieldDefinition.inputType = editedSubfieldData.inputType;
         clonedSubfield.inputType = editedSubfieldData.inputType;
-        subfieldDefinition.references = editedSubfieldData.references;
+
+        if (editedSubfieldData.references.length > 0) {
+            subfieldDefinition.references = editedSubfieldData.references;
+        } else {
+            delete subfieldDefinition.references;
+        }
 
         const valuelists: Valuelists = this.getClonedFormDefinition().valuelists;
         if (editedSubfieldData.valuelist) {
@@ -395,6 +400,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
         clonedSubfield.valuelist = editedSubfieldData.valuelist;
 
+        clonedSubfield.label = editedSubfieldData.label;
+        clonedSubfield.description = editedSubfieldData.description;
+        
         if (!this.subfieldI18nStrings[subfieldDefinition.name]) this.subfieldI18nStrings[subfieldDefinition.name] = {};
         this.subfieldI18nStrings[subfieldDefinition.name] = {
             label: editedSubfieldData.label,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { clone } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Subfield, Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
 import { ApplyChangesResult } from '../../configuration.component';
@@ -63,11 +64,11 @@ export class SubfieldEditorModalComponent {
     public initialize() {
 
         this.data = {
-            label: this.subfield.label ?? {},
-            description: this.subfield.description ?? {},
+            label: clone(this.subfield.label) ?? {},
+            description: clone(this.subfield.description) ?? {},
             inputType: this.subfield.inputType,
-            references: this.references ?? [],
-            valuelist: this.subfield.valuelist
+            references: clone(this.references) ?? [],
+            valuelist: clone(this.subfield.valuelist)
         };
     }
 

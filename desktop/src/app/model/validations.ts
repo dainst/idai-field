@@ -63,7 +63,7 @@ export module Validations {
             Field.InputType.URL
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: string[] = getNewInvalidFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 

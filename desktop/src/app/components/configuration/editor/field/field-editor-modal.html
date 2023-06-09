@@ -122,23 +122,29 @@
                 <div class="subfield-input-group input-group">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
                     <div class="subfield form-control">
-                        {{getSubfieldLabel(subfield)}}
-                        <code>{{subfield.name}}</code>
+                        <div>
+                            <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
+                            <code>{{subfield.name}}</code>
+                        </div>
+                        <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
                     </div>
                     <div class="input-group-append">
                         <button class="btn btn-danger"
                                 (click)="deleteSubfield(subfield)">
                             <span class="mdi mdi-delete"></span>
                         </button>
-                        <button class="btn btn-info"
+                        <button class="btn btn-info edit-subfield-button"
                                 (click)="editSubfield(subfield)">
                             <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
                 </div>
                 <div *cdkDragPreview class="subfield-drag-preview subfield form-control">
-                    {{getSubfieldLabel(subfield)}}
-                    <code>{{subfield.name}}</code>
+                    <div>
+                        <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
+                        <code>{{subfield.name}}</code>
+                    </div>
+                    <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
                 </div>
                 <div *cdkDragPlaceholder class="subfield-drag-placeholder"></div>
             </div>

@@ -232,6 +232,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
     }
 
+
+    public getInputTypeLabel(subfield: CustomSubfieldDefinition): string {
+
+        return this.availableInputTypes.find(on(Named.NAME, is(subfield.inputType))).label;
+    }
+
+
     public isI18nCompatible(): boolean {
 
         return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())

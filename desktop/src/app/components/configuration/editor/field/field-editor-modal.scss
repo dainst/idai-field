@@ -14,7 +14,7 @@
       .subfield-input-group {
         .btn {
           width: 34px;
-          height: 33px;
+          height: 55px;
 
           .mdi {
             position: relative;
@@ -23,11 +23,16 @@
           }
         }
 
+        .edit-subfield-button {
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+
         .cdk-drag-handle {
           position: relative;
-          top: 4px;
+          top: 12px;
           right: 7px;
-          font-size: 17px;
+          font-size: 20px;
           cursor: grab;
         }
       }
@@ -53,7 +58,7 @@
 }
 
 .subfield {
-  height: 33px;
+  height: 55px;
   color: #495057;
   background-color: #e9ecef;
   user-select: none;
@@ -61,10 +66,15 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  .subfield-label {
+    margin-right: 5px;
+    font-weight: bold;
+  }
 }
 
 .subfield-drag-placeholder {
-  height: 33px;
+  height: 55px;
   margin-bottom: 0.5rem !important;
   background: #ccc;
   border: dotted 3px #999;

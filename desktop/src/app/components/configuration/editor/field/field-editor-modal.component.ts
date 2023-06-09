@@ -268,7 +268,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
             SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined,
+            'subfield-editor-modal'
         );
 
         componentInstance.subfield = newSubfield;
@@ -296,7 +298,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
             SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined,
+            'subfield-editor-modal'
         );
 
         const clonedSubfield: Subfield = this.getClonedSubfield(subfieldDefinition);

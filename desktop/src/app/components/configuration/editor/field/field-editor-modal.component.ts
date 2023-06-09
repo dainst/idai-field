@@ -106,7 +106,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.subfieldI18nStrings = this.field.subfields?.reduce((result, subfield) => {
             result[subfield.name] = { label: subfield.label, description: subfield.description };
             return result;
-        }, {});
+        }, {}) ?? {};
     }
 
 

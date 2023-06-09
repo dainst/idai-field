@@ -4,6 +4,8 @@ import { clone } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Subfield, Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
 import { ApplyChangesResult } from '../../configuration.component';
+import { Messages } from '../../../messages/messages';
+import { M } from '../../../messages/m';
 
 
 export type SubfieldEditorData = {
@@ -41,7 +43,8 @@ export class SubfieldEditorModalComponent {
     public data: SubfieldEditorData;
     
 
-    constructor(private activeModal: NgbActiveModal) {}
+    constructor(private activeModal: NgbActiveModal,
+                private messages: Messages) {}
 
     
     public getInputType = () => this.data.inputType;
@@ -74,6 +77,10 @@ export class SubfieldEditorModalComponent {
 
 
     public confirmChanges() {
+
+        if (!this.data.valuelist && this.isValuelistSectionVisible()) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
+        }
 
         this.activeModal.close(this.data);
     }

@@ -18,7 +18,7 @@ import { ApplyChangesResult } from '../../configuration.component';
 import { AddValuelistModalComponent } from '../../add/valuelist/add-valuelist-modal.component';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
-import { SubfieldEditorModalComponent } from './subfield-editor-modal.component';
+import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 
 
 @Component({
@@ -298,19 +298,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
     
-    public async editSubfield(subfield: CustomSubfieldDefinition) {
+    public async editSubfield(subfieldDefinition: CustomSubfieldDefinition) {
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
             SubfieldEditorModalComponent,
             MenuContext.CONFIGURATION_MODAL
         );
 
-        const clonedSubfield: Subfield = this.getClonedSubfield(subfield);
+        const clonedSubfield: Subfield = this.getClonedSubfield(subfieldDefinition);
 
         componentInstance.subfield = clonedSubfield;
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
-        componentInstance.references = subfield.references;
+        componentInstance.references = subfieldDefinition.references;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.getClonedProjectLanguages();
         componentInstance.configurationDocument = this.configurationDocument;
@@ -320,33 +320,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         await this.modals.awaitResult(
             result,
-            editedSubfieldData => {
-                console.log(editedSubfieldData);
-                subfield.inputType = editedSubfieldData.inputType;
-                clonedSubfield.inputType = editedSubfieldData.inputType;
-                subfield.references = editedSubfieldData.references;
-
-                const valuelists: Valuelists = this.getClonedFormDefinition().valuelists;
-                if (editedSubfieldData.valuelist) {
-                    if (!valuelists[this.clonedField.name]
-                            || isString(valuelists[this.clonedField.name])) {
-                        valuelists[this.clonedField.name] = {};
-                    }
-                    valuelists[this.clonedField.name][subfield.name] = editedSubfieldData.valuelist.id;
-                } else if (valuelists[this.clonedField.name]?.[subfield.name]) {
-                    delete valuelists[this.clonedField.name][subfield.name];
-                    if (isEmpty(valuelists[this.clonedField.name])) {
-                        delete valuelists[this.clonedField.name];
-                    }
-                }
-                clonedSubfield.valuelist = editedSubfieldData.valuelist;
-
-                if (!this.subfieldI18nStrings[subfield.name]) this.subfieldI18nStrings[subfield.name] = {};
-                this.subfieldI18nStrings[subfield.name] = {
-                    label: editedSubfieldData.label,
-                    description: editedSubfieldData.description
-                };
-            },
+            editedSubfieldData => this.setEditedSubfieldData(editedSubfieldData, subfieldDefinition, clonedSubfield),
             nop
         );
     }
@@ -414,6 +388,36 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.configurationIndex.getValuelist(this.clonedField.valuelist.extendedValuelist)
             );
         }
+    }
+
+
+    private setEditedSubfieldData(editedSubfieldData: SubfieldEditorData, subfieldDefinition: CustomSubfieldDefinition,
+                                  clonedSubfield: Subfield) {
+
+        subfieldDefinition.inputType = editedSubfieldData.inputType;
+        clonedSubfield.inputType = editedSubfieldData.inputType;
+        subfieldDefinition.references = editedSubfieldData.references;
+
+        const valuelists: Valuelists = this.getClonedFormDefinition().valuelists;
+        if (editedSubfieldData.valuelist) {
+            if (!valuelists[this.clonedField.name]
+                    || isString(valuelists[this.clonedField.name])) {
+                valuelists[this.clonedField.name] = {};
+            }
+            valuelists[this.clonedField.name][subfieldDefinition.name] = editedSubfieldData.valuelist.id;
+        } else if (valuelists[this.clonedField.name]?.[subfieldDefinition.name]) {
+            delete valuelists[this.clonedField.name][subfieldDefinition.name];
+            if (isEmpty(valuelists[this.clonedField.name])) {
+                delete valuelists[this.clonedField.name];
+            }
+        }
+        clonedSubfield.valuelist = editedSubfieldData.valuelist;
+
+        if (!this.subfieldI18nStrings[subfieldDefinition.name]) this.subfieldI18nStrings[subfieldDefinition.name] = {};
+        this.subfieldI18nStrings[subfieldDefinition.name] = {
+            label: editedSubfieldData.label,
+            description: editedSubfieldData.description
+        };
     }
 
 

@@ -153,6 +153,14 @@ export namespace ConfigurationDocument {
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
         );
 
+        if (field.subfields) {
+            field.subfields.forEach(subfield => {
+                CustomLanguageConfigurations.update(
+                    clonedConfigurationDocument.resource.languages, {}, {}, category, field, subfield
+                );
+            });
+        }
+
         return clonedConfigurationDocument;
     }
 

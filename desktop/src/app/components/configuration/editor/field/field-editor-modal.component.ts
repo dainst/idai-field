@@ -138,6 +138,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (!this.isSubfieldsSectionVisible()) {
             delete this.getClonedFieldDefinition().subfields;
+            Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
+                this.subfieldI18nStrings[subfieldName] = {};
+            });
         }
 
         await super.confirm(this.isValuelistChanged());
@@ -471,8 +474,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
             CustomLanguageConfigurations.update(
                 this.getClonedLanguageConfigurations(),
-                this.subfieldI18nStrings[subfieldName].label,
-                this.subfieldI18nStrings[subfieldName].description,
+                this.subfieldI18nStrings[subfieldName].label ?? {},
+                this.subfieldI18nStrings[subfieldName].description ?? {},
                 this.category,
                 this.clonedField,
                 this.clonedField.subfields.find(subfield => subfield.name === subfieldName)

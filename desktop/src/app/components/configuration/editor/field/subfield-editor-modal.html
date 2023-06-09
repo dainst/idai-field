@@ -6,7 +6,7 @@
 <div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
     <input-type-selector [selectedInputType]="getInputType()"
                          [availableInputTypes]="availableInputTypes"
-                         [isCustomField]="true"
+                         [isSubfield]="true"
                          [isFixedInputType]="false"
                          [disabled]="false"
                          (onChanged)="setInputType($event)">

@@ -16,6 +16,7 @@ export class InputTypeSelectorComponent {
     @Input() selectedInputType: Field.InputType;
     @Input() availableInputTypes: Array<InputType>;
     @Input() isCustomField: boolean;
+    @Input() isSubfield: boolean;
     @Input() isFixedInputType: boolean;
     @Input() disabled: boolean;
 
@@ -31,6 +32,13 @@ export class InputTypeSelectorComponent {
     public getAvailableInputTypes(): Array<InputType> {
 
         if (this.isFixedInputType) return [];
+
+        if (this.isSubfield) {
+            return this.availableInputTypes.filter(inputType => {
+                return Field.InputType.SUBFIELD_INPUT_TYPES.includes(inputType.name)
+                    && !Field.InputType.SIMPLE_INPUT_TYPES.includes(inputType.name);
+            });
+        }
 
         const inputTypes: Array<InputType> = this.availableInputTypes.filter(inputType => {
             return inputType.customFields && !Field.InputType.SIMPLE_INPUT_TYPES.includes(inputType.name);

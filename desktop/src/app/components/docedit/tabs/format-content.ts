@@ -2,6 +2,7 @@ import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
 import { Complex, Dating, Dimension, Field, I18N, Labels, Literature, OptionalRange, Resource,
     Valuelist } from 'idai-field-core';
 import { Language } from '../../../services/languages';
+import { DifferingField } from './field-diff';
 
 export type InnerHTML = string;
 
@@ -9,7 +10,7 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource, field: any,
+export function formatContent(resource: Resource, field: DifferingField,
                               getTranslation: (key: string) => string,
                               transform: (value: any) => string|null,
                               labels: Labels, languages: Map<Language>): InnerHTML {
@@ -46,7 +47,7 @@ function formatObject(fieldContent: string): InnerHTML {
 }
 
 
-const formatSingleValue = (fieldContent: any, field: any, getTranslation: (key: string) => string) => {
+const formatSingleValue = (fieldContent: any, field: DifferingField, getTranslation: (key: string) => string) => {
 
     if (field.inputType === 'boolean') {
         return getTranslation(JSON.stringify(fieldContent));
@@ -56,7 +57,7 @@ const formatSingleValue = (fieldContent: any, field: any, getTranslation: (key: 
 };
 
 
-const convertObject = (field: any, languages: Map<Language>,
+const convertObject = (field: DifferingField, languages: Map<Language>,
                        getTranslation: (key: string) => string, labels: Labels) =>
         (fieldContent: any) => {
 
@@ -74,7 +75,7 @@ const convertObject = (field: any, languages: Map<Language>,
 };
 
 
-const convertArray = (field: any, languages: Map<Language>, getTranslation: (key: string) => string,
+const convertArray = (field: DifferingField, languages: Map<Language>, getTranslation: (key: string) => string,
                       transform: (value: any) => string|null, labels: Labels) =>
         (fieldContent: Array<any>): Array<string> => {
 

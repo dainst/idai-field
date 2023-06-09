@@ -9,6 +9,7 @@ import { WinningSide } from './revision-selector.component';
 import { formatContent } from './format-content';
 import { ConflictResolving } from './conflict-resolving';
 import { Languages } from '../../../services/languages';
+import { DifferingField, DifferingFieldType } from './field-diff';
 
 
 /**
@@ -25,7 +26,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public conflictedRevisions: Array<Document> = [];
     public selectedRevision: Document|undefined;
-    public differingFields: any[];
+    public differingFields: Array<DifferingField>;
     private relationTargets: { [targetId: string]: Document|undefined };
 
 
@@ -45,7 +46,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public showLoadingIcon = () => this.isLoading()
         && this.loading.getLoadingTimeInMilliseconds('docedit-conflicts-tab') > 250;
 
-    public getFieldContent = (field: any, revision: Document) => formatContent(
+    public getFieldContent = (field: DifferingField, revision: Document) => formatContent(
         revision.resource,
         field,
         (key: string) => this.utilTranslations.getTranslation(key),
@@ -154,7 +155,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public setWinningSideForField(field: any, rightSideWinning: boolean) {
+    public setWinningSideForField(field: DifferingField, rightSideWinning: boolean) {
 
         field.rightSideWinning = rightSideWinning;
     }
@@ -170,9 +171,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private createDiff(document: Document, revision: Document, projectConfiguration: ProjectConfiguration): any[] {
+    private createDiff(document: Document, revision: Document,
+                       projectConfiguration: ProjectConfiguration): Array<DifferingField> {
 
-        let differingFields: any[] = [];
+        let differingFields: Array<DifferingField> = [];
 
         const differingFieldsNames: string[]
             = Resource.getDifferingFields(document.resource, revision.resource);
@@ -180,7 +182,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             = Resource.getDifferingRelations(document.resource, revision.resource);
 
         for (let fieldName of differingFieldsNames) {
-            let type: string;
+            let type: DifferingFieldType;
             let label: string;
 
             if (fieldName === 'geometry') {

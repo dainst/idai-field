@@ -51,6 +51,7 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
 import { SubfieldEditorModalComponent } from './editor/field/subfield-editor-modal.component';
 import { InputTypeSelectorComponent } from './editor/field//widgets/input-type-selector.component';
 import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.component';
+import { ValuelistSelectorComponent } from './editor/field/widgets/valuelist-selector.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.componen
         ProjectLanguagesModalComponent,
         SubfieldEditorModalComponent,
         InputTypeSelectorComponent,
-        I18nSwitchComponent
+        I18nSwitchComponent,
+        ValuelistSelectorComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

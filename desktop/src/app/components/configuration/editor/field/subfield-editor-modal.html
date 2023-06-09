@@ -40,6 +40,22 @@
         </div>
         <references-input [references]="data.references"></references-input>
     </div>
+    <div *ngIf="isValuelistSectionVisible()"
+         class="configuration-editor-section">
+        <div class="configuration-editor-section-title">
+            <span i18n="@@configuration.valuelist">
+                Werteliste
+            </span>
+        </div>
+        <valuelist-selector [inputType]="getInputType()"
+                            [configurationDocument]="configurationDocument"
+                            [clonedConfigurationDocument]="clonedConfigurationDocument"
+                            [category]="category"
+                            [clonedField]="parentField"
+                            [subfieldData]="data"
+                            [applyChanges]="applyChanges"
+        ></valuelist-selector>
+    </div>
 </div>
 
 <div class="modal-footer subfield-editor-modal-footer bg-light">

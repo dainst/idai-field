@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, Map } from 'tsfun';
+import { clone, equal, isEmpty, nop, Map, isString } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, Valuelist, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
-    InPlace } from 'idai-field-core';
+    InPlace, Valuelists } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -73,9 +73,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
 
-    public isEditValuelistButtonVisible = () => this.clonedField.valuelist
-        && this.clonedConfigurationDocument.resource.valuelists?.[this.clonedField.valuelist.id];
-
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPLEX;
 
     public isCustomField = () => this.field.source === 'custom';
@@ -123,7 +120,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!this.isValuelistSectionVisible() && this.getClonedFormDefinition().valuelists) {
+        if (!this.isValuelistSectionVisible() && this.getInputType() !== Field.InputType.COMPLEX
+                && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
         }
 
@@ -307,18 +305,41 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             MenuContext.CONFIGURATION_MODAL
         );
 
-        componentInstance.subfield = this.getClonedSubfield(subfield);
+        const clonedSubfield: Subfield = this.getClonedSubfield(subfield);
+
+        componentInstance.subfield = clonedSubfield;
         componentInstance.parentField = this.clonedField;
+        componentInstance.category = this.category;
         componentInstance.references = subfield.references;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.getClonedProjectLanguages();
+        componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
+        componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
             editedSubfieldData => {
+                console.log(editedSubfieldData);
                 subfield.inputType = editedSubfieldData.inputType;
+                clonedSubfield.inputType = editedSubfieldData.inputType;
                 subfield.references = editedSubfieldData.references;
+
+                const valuelists: Valuelists = this.getClonedFormDefinition().valuelists;
+                if (editedSubfieldData.valuelist) {
+                    if (!valuelists[this.clonedField.name]
+                            || isString(valuelists[this.clonedField.name])) {
+                        valuelists[this.clonedField.name] = {};
+                    }
+                    valuelists[this.clonedField.name][subfield.name] = editedSubfieldData.valuelist.id;
+                } else if (valuelists[this.clonedField.name]?.[subfield.name]) {
+                    delete valuelists[this.clonedField.name][subfield.name];
+                    if (isEmpty(valuelists[this.clonedField.name])) {
+                        delete valuelists[this.clonedField.name];
+                    }
+                }
+                clonedSubfield.valuelist = editedSubfieldData.valuelist;
 
                 if (!this.subfieldI18nStrings[subfield.name]) this.subfieldI18nStrings[subfield.name] = {};
                 this.subfieldI18nStrings[subfield.name] = {

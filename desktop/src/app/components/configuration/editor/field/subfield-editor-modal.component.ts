@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Field, I18N, Subfield } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, I18N, Subfield, Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
+import { ApplyChangesResult } from '../../configuration.component';
 
 
 export type SubfieldEditorData = {
@@ -9,6 +10,7 @@ export type SubfieldEditorData = {
     description: I18N.String;
     inputType: Field.InputType;
     references: string[];
+    valuelist: Valuelist;
 }
 
 
@@ -25,10 +27,15 @@ export class SubfieldEditorModalComponent {
 
     public subfield: Subfield;
     public parentField: Field;
+    public category: CategoryForm;
     public references: string[];
     public new: boolean;
     public availableInputTypes: Array<InputType>;
     public projectLanguages: string[];
+    public configurationDocument: ConfigurationDocument;
+    public clonedConfigurationDocument: ConfigurationDocument;
+    public applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
+        Promise<ApplyChangesResult>;
 
     public data: SubfieldEditorData;
     
@@ -44,6 +51,8 @@ export class SubfieldEditorModalComponent {
 
     public isI18nCompatible = (): boolean => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 
+    public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType());
+
     
     public onKeyDown(event: KeyboardEvent) {
 
@@ -57,7 +66,8 @@ export class SubfieldEditorModalComponent {
             label: this.subfield.label ?? {},
             description: this.subfield.description ?? {},
             inputType: this.subfield.inputType ?? Field.InputType.INPUT,
-            references: this.references ?? []
+            references: this.references ?? [],
+            valuelist: this.subfield.valuelist
         };
     }
 

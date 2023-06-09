@@ -100,63 +100,14 @@
                 Werteliste (Unterfeld "Gemessen an")
             </span>
         </div>
-        <div *ngIf="clonedField.valuelist">
-            <ul class="list-group list-group-flush">
-                <li id="valuelist-header" class="list-group-item">
-                    <code>{{clonedField.valuelist.id}}</code>
-                    <button id="swap-valuelist-button"
-                            class="btn btn-primary btn-square"
-                            type="button"
+        <valuelist-selector [inputType]="getInputType()"
+                            [configurationDocument]="configurationDocument"
+                            [clonedConfigurationDocument]="clonedConfigurationDocument"
+                            [category]="category"
+                            [clonedField]="clonedField"
+                            [applyChanges]="applyChanges"
                             [disabled]="hidden"
-                            (click)="selectValuelist()"
-                            ngbTooltip="Werteliste wechseln"
-                            i18n-ngbTooltip="@@configuration.replaceValuelist"
-                            container="body"
-                            placement="left"
-                            #swapValuelistTooltip="ngbTooltip"
-                            (mouseover)="swapValuelistTooltip.open()"
-                            (mouseleave)="swapValuelistTooltip.close()"
-                            (mousedown)="swapValuelistTooltip.close()">
-                        <span class="mdi mdi-swap-horizontal"></span>
-                    </button>
-                    <button *ngIf="isEditValuelistButtonVisible()"
-                            id="edit-valuelist-button"
-                            class="btn btn-primary btn-square"
-                            type="button"
-                            [disabled]="hidden"
-                            (click)="editValuelist()"
-                            ngbTooltip="Werteliste bearbeiten"
-                            i18n-ngbTooltip="@@configuration.editValuelist"
-                            container="body"
-                            placement="left"
-                            triggers="manual"
-                            #editValuelistTooltip="ngbTooltip"
-                            (mouseover)="editValuelistTooltip.open()"
-                            (mouseleave)="editValuelistTooltip.close()"
-                            (mousedown)="editValuelistTooltip.close()">
-                        <span class="mdi mdi-pencil"></span>
-                    </button>
-                </li>
-                <li *ngIf="clonedField.valuelist" class="list-group-item">
-                    <valuelist-view [valuelist]="clonedField.valuelist"></valuelist-view>
-                </li>
-            </ul>
-        </div>
-        <div *ngIf="!clonedField.valuelist">
-            <button id="add-valuelist-button" class="btn btn-success btn-square" type="button"
-                    (click)="selectValuelist()"
-                    ngbTooltip="Werteliste hinzufügen"
-                    i18n-ngbTooltip="@@configuration.addValuelist"
-                    container="body"
-                    placement="right"
-                    triggers="manual"
-                    #addValuelistTooltip="ngbTooltip"
-                    (mouseover)="addValuelistTooltip.open()"
-                    (mouseleave)="addValuelistTooltip.close()"
-                    (mousedown)="addValuelistTooltip.close()">
-                <span class="mdi mdi-plus"></span>
-            </button>
-        </div>
+        ></valuelist-selector>
     </div>
     <div *ngIf="isSubfieldsSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.subfields">

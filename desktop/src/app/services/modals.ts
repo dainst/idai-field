@@ -29,7 +29,7 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
+    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string, customCssClass?: string /* TODO provide own options object, or large?: true*/) {
 
         this.menuService.setContext(menuContext);
         this.menuContextsStack.push(menuContext);
@@ -37,9 +37,11 @@ export class Modals {
         const options: NgbModalOptions = {
             backdrop: 'static',
             keyboard: false,
-            animation: false
+            animation: false,
+            centered: true
         }
         if (size) options.size = size;
+        if (customCssClass) options.windowClass = customCssClass;
 
         const modalReference: NgbModalRef = this.modalService.open(
             modalClass,

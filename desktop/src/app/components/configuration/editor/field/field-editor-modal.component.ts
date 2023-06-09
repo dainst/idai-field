@@ -375,8 +375,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isSubfieldsChanged(): boolean {
 
-
-        return !equal(this.getCustomFieldDefinition()?.subfields, this.getClonedFieldDefinition()?.subfields)
+        return !equal(this.getCustomFieldDefinition()?.subfields ?? [],
+                      this.getClonedFieldDefinition()?.subfields ?? [])
             || this.isSubfieldsI18nChanged();
     }
 

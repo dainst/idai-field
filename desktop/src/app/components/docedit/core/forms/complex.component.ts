@@ -55,7 +55,7 @@ export class ComplexComponent implements OnChanges {
     public getSubfields(): Array<Subfield> {
         
         return this.field.subfields?.filter(subfield => {
-            return Complex.ALLOWED_SUBFIELD_INPUT_TYPES.includes(subfield.inputType);
+            return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType);
         });
     }
 

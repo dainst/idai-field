@@ -103,7 +103,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
 
-        this.subfieldI18nStrings = {};
+        this.subfieldI18nStrings = this.field.subfields?.reduce((result, subfield) => {
+            result[subfield.name] = { label: subfield.label, description: subfield.description };
+            return result;
+        }, {});
     }
 
 
@@ -341,6 +344,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
+            || this.isSubfieldsChanged()
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
@@ -362,6 +366,24 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
+    }
+
+
+    private isSubfieldsChanged(): boolean {
+
+
+        return !equal(this.getCustomFieldDefinition()?.subfields, this.getClonedFieldDefinition()?.subfields)
+            || this.isSubfieldsI18nChanged();
+    }
+
+
+    private isSubfieldsI18nChanged(): boolean {
+
+        return this.field.subfields?.filter(subfield => {
+            return !equal(subfield.label ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]?.label ?? {}))
+                || !equal(subfield.description ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]
+                    ?.description ?? {}));
+        }).length > 0;
     }
 
     

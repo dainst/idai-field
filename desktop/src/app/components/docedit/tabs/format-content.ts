@@ -1,5 +1,6 @@
 import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
-import { Dating, Dimension, I18N, Labels, Literature, OptionalRange, Resource } from 'idai-field-core';
+import { Complex, Dating, Dimension, Field, I18N, Labels, Literature, OptionalRange, Resource,
+    Valuelist } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 
 export type InnerHTML = string;
@@ -79,16 +80,22 @@ const convertArray = (field: any, languages: Map<Language>, getTranslation: (key
 
     return fieldContent.map(element => {
 
-        if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
+        if (field.inputType === Field.InputType.COMPLEX) {
+            const label: string|null = Complex.generateLabel(element, field.subfields, getTranslation,
+                (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
+                (value: I18N.String|string) => labels.getFromI18NString(value),
+                (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId));
+            return label ?? JSON.stringify(element);
+        } else if (field.inputType === Field.InputType.DIMENSION && Dimension.isDimension(element)) {
             return Dimension.generateLabel(element, transform, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 labels.getValueLabel(field.valuelist, element.measurementPosition));
-        } else if (field.inputType === 'dating' && Dating.isDating(element)) {
+        } else if (field.inputType === Field.InputType.DATING && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value));
-        } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
+        } else if (field.inputType === Field.InputType.LITERATURE && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, getTranslation)
-        } else if (field.inputType === 'multiInput') {
+        } else if (field.inputType === Field.InputType.MULTIINPUT) {
             return I18N.getFormattedContent(element, map(to('label'))(languages));
         } else if (isString(element)) {
             return field.valuelist ? labels.getValueLabel(field.valuelist, element) : element;

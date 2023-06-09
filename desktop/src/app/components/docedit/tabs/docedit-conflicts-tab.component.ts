@@ -203,6 +203,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label: label,
                 type: type,
                 valuelist: field?.valuelist,
+                subfields: field?.subfields,
                 rightSideWinning: false
             });
         }

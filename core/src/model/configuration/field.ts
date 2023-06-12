@@ -1,4 +1,4 @@
-import { isArray, isObject, isString, Map } from 'tsfun';
+import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
@@ -127,8 +127,8 @@ export module Field {
         export const I18N_COMPATIBLE_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT, SIMPLE_MULTIINPUT];
         export const I18N_INPUT_TYPES = [INPUT, TEXT, MULTIINPUT];
         export const SIMPLE_INPUT_TYPES = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
-        export const SUBFIELD_INPUT_TYPES = [INPUT, SIMPLE_INPUT, MULTIINPUT, SIMPLE_MULTIINPUT, TEXT, BOOLEAN,
-            DROPDOWN, RADIO, CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
+        export const SUBFIELD_INPUT_TYPES = [INPUT, SIMPLE_INPUT, SIMPLE_MULTIINPUT, TEXT, BOOLEAN, DROPDOWN,
+            RADIO, CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],

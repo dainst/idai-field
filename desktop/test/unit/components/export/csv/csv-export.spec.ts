@@ -534,7 +534,8 @@ describe('CSVExport', () => {
         fieldDefinitions[1].subfields = [
             { name: 'subfield1', inputType: 'int' },
             { name: 'subfield2', inputType: 'input' },
-            { name: 'subfield3', inputType: 'boolean' }
+            { name: 'subfield3', inputType: 'boolean' },
+            { name: 'subfield4', inputType: 'checkboxes' }
         ]
 
         const resources = [
@@ -543,7 +544,10 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
         resources[0]['complex'] = [
-            { subfield1: 1, subfield2: { en: 'Test content 1', de: 'Testinhalt 1' }, subfield3: true },
+            { 
+                subfield1: 1, subfield2: { en: 'Test content 1', de: 'Testinhalt 1' }, subfield3: true,
+                subfield4: ['value1', 'value2']
+            },
             { subfield3: false }
         ];
         resources[1]['complex'] = [
@@ -557,19 +561,23 @@ describe('CSVExport', () => {
         expect(result[0][2]).toBe('"complex.0.subfield2.de"');
         expect(result[0][3]).toBe('"complex.0.subfield2.en"');
         expect(result[0][4]).toBe('"complex.0.subfield3"');
-        expect(result[0][5]).toBe('"complex.1.subfield1"');
-        expect(result[0][6]).toBe('"complex.1.subfield2.de"');
-        expect(result[0][7]).toBe('"complex.1.subfield2.en"');
-        expect(result[0][8]).toBe('"complex.1.subfield3"');
+        expect(result[0][5]).toBe('"complex.0.subfield4"');
+        expect(result[0][6]).toBe('"complex.1.subfield1"');
+        expect(result[0][7]).toBe('"complex.1.subfield2.de"');
+        expect(result[0][8]).toBe('"complex.1.subfield2.en"');
+        expect(result[0][9]).toBe('"complex.1.subfield3"');
+        expect(result[0][10]).toBe('"complex.1.subfield4"');
 
         expect(result[1][1]).toBe('"1"');
         expect(result[1][2]).toBe('"Testinhalt 1"');
         expect(result[1][3]).toBe('"Test content 1"');
         expect(result[1][4]).toBe('"true"');
-        expect(result[1][5]).toBe('""');
+        expect(result[1][5]).toBe('"value1;value2"');
         expect(result[1][6]).toBe('""');
         expect(result[1][7]).toBe('""');
-        expect(result[1][8]).toBe('"false"');
+        expect(result[1][8]).toBe('""');
+        expect(result[1][9]).toBe('"false"');
+        expect(result[1][10]).toBe('""');
 
         expect(result[2][1]).toBe('"2"');
         expect(result[2][2]).toBe('"Testinhalt 2"');
@@ -579,6 +587,8 @@ describe('CSVExport', () => {
         expect(result[2][6]).toBe('""');
         expect(result[2][7]).toBe('""');
         expect(result[2][8]).toBe('""');
+        expect(result[2][9]).toBe('""');
+        expect(result[2][10]).toBe('""');
 
         expect(result[3][1]).toBe('""');
         expect(result[3][2]).toBe('""');
@@ -588,6 +598,8 @@ describe('CSVExport', () => {
         expect(result[3][6]).toBe('""');
         expect(result[3][7]).toBe('""');
         expect(result[3][8]).toBe('""');
+        expect(result[3][9]).toBe('""');
+        expect(result[3][10]).toBe('""');
     });
 
 

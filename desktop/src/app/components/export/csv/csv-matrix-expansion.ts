@@ -1,7 +1,7 @@
-import { flow, left, reverse, isString } from 'tsfun';
+import { flow, left, reverse, isString, isArray } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
-import { HeadingsAndMatrix } from './csv-export-consts';
+import { CsvExportConsts, HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
 import { CSVHeadingsExpansion } from './csv-headings-expansion';
 
@@ -271,6 +271,8 @@ export module CSVMatrixExpansion {
                     result = result.concat(rowsWithI18nStringExpanded(languages)(object[subfield.name]));
                 } else if (object[subfield.name] === undefined) {
                     result.push('');
+                } else if (isArray(object[subfield.name])) {
+                    result.push(object[subfield.name].join(CsvExportConsts.ARRAY_SEPARATOR));
                 } else {
                     result.push(object[subfield.name].toString());
                 }

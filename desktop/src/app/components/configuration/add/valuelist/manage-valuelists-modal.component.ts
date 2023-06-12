@@ -207,15 +207,18 @@ export class ManageValuelistsModalComponent {
 
         componentInstance.valuelistToExtend = valuelist;
 
+        let newValuelistId: string;
         await this.modals.awaitResult(
             result,
-            (newValuelistId: string) => {
-                this.createNewValuelist(Naming.getValuelistId(
-                    newValuelistId, this.settingsProvider.getSettings().selectedProject
-                ), valuelist);
-            },
+            (id: string) => newValuelistId = id,
             nop
         );
+
+        if (newValuelistId) {
+            this.createNewValuelist(Naming.getValuelistId(
+                newValuelistId, this.settingsProvider.getSettings().selectedProject
+            ), valuelist);
+        }
     }
 
 

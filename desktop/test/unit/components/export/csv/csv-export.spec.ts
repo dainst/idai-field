@@ -7,7 +7,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
     return fieldNames.map(fieldName => {
 
         let inputType = 'simpleInput';
-        if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) inputType = 'input';
+        if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) inputType = 'input';
         if (fieldName.startsWith('multiInput')) inputType = 'multiInput';
         if (fieldName.startsWith('dimension')) inputType = 'dimension';
         if (fieldName.startsWith('dating')) inputType = 'dating';
@@ -99,7 +99,7 @@ describe('CSVExport', () => {
     it('handle double quotes in field values', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
-        resource.shortDescription = { en: 'ABC " "DEF"' };
+        resource.shortDescription = { en: 'ABC " "DEF"' };
         const result = CSVExport.createExportable([resource], t, [], ['en']).csvData;
         expect(result[0]).toEqual('"identifier","shortDescription.en"');
         expect(result[1]).toEqual('"identifier1","ABC "" ""DEF"""');
@@ -110,7 +110,7 @@ describe('CSVExport', () => {
 
         const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'color']);
         fields.find(field => field.name === 'color').inputType = 'checkboxes';
-        const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
+        const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
         resource.color = ['blue', 'red', 'yellow'];
         const result = CSVExport.createExportable([resource], fields, [], ['en']).csvData;
         expect(result[0]).toEqual('"identifier","shortDescription.en","color"');
@@ -145,7 +145,7 @@ describe('CSVExport', () => {
 
         const resources = [
             ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
-            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
 
@@ -182,7 +182,7 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'periodA', 'periodB', 'custom']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
         ];
 
         resources[0].periodA = { value: 'A', endValue: 'B' };
@@ -210,8 +210,8 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'dating', 'custom']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
-            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
         resources[0].dating = [
@@ -285,7 +285,7 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'dating']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
         ];
 
         const result = CSVExport.createExportable(resources, t, [], ['en']).csvData.map(row => row.split(','));
@@ -352,9 +352,9 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'dimensionX', 'custom']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
-            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
-            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
         ];
         resources[0]['dimensionX'] = [
             { inputValue: 100, inputUnit: 'cm', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
@@ -410,7 +410,7 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
         ];
 
         const result = CSVExport.createExportable(resources, t, [], ['en']).csvData.map(row => row.split(','));
@@ -446,8 +446,8 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'dimensionX', 'dimensionY']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
-            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
         ];
         resources[0]['dimensionX'] = [{ inputValue: 100, inputUnit: 'cm',
             measurementComment: { en: 'A1', de: 'A2' } }];
@@ -486,7 +486,7 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'literature']);
 
         const resources = [
-            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
             ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category')
         ];
         resources[0].literature = [
@@ -579,6 +579,44 @@ describe('CSVExport', () => {
         expect(result[3][4]).toBe('""');
         expect(result[3][5]).toBe('""');
         expect(result[3][6]).toBe('""');
+    });
+
+
+    it('expand one complex field even if no values present', () => {
+
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        fieldDefinitions[1].subfields = [
+            { name: 'subfield1', inputType: 'int' },
+            { name: 'subfield2', inputType: 'input' }
+        ]
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+        ];
+
+        const result = CSVExport.createExportable(resources, fieldDefinitions, [], ['en'])
+            .csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"complex.0.subfield1"');
+        expect(result[0][2]).toBe('"complex.0.subfield2.en"');
+
+        expect(result[1][1]).toBe('""');
+    });
+
+
+    it('expand one complex field even if no values present, in header only mode', () => {
+
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        fieldDefinitions[1].subfields = [
+            { name: 'subfield1', inputType: 'int' },
+            { name: 'subfield2', inputType: 'input' }
+        ]
+
+        const result = CSVExport.createExportable([], fieldDefinitions, [], ['en'])
+            .csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"complex.0.subfield1"');
+        expect(result[0][2]).toBe('"complex.0.subfield2.en"');
     });
 
 

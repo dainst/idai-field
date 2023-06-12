@@ -162,6 +162,63 @@ describe('convertFieldTypes', () => {
     });
 
 
+    it('field type complex', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'complex',
+                inputType: 'complex',
+                subfields: [
+                    { name: 'subfield1', inputType: 'boolean' },
+                    { name: 'subfield2', inputType: 'unsignedInt' },
+                    { name: 'subfield3', inputType: 'checkboxes' },
+                    { name: 'subfield4', inputType: 'input' }
+                ]
+            }]}],
+        } as CategoryForm;
+
+        const resource = convertFieldTypes(category)({
+                complex: [{
+                    subfield1: 'true',
+                    subfield2: '7',
+                    subfield3: 'value1;value2',
+                    subfield4: 'text',
+                }],
+                relations: {}
+            } as unknown as Resource);
+
+        const complex: any = resource.complex[0];
+        expect(complex.subfield1).toBe(true);
+        expect(complex.subfield2).toBe(7);
+        expect(complex.subfield3).toEqual(['value1', 'value2']);
+        expect(complex.subfield4).toBe('text');
+    });
+
+
+    it('field type complex - leave nulls unconverted', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'complex',
+                inputType: 'complex',
+                subfields: [
+                    { name: 'subfield1', inputType: 'boolean' },
+                    { name: 'subfield2', inputType: 'unsignedInt' }
+                ]
+            }]}],
+        } as CategoryForm;
+
+        const resource = convertFieldTypes(category)({
+            complex: [null],
+            relations: {}
+        } as unknown as Resource);
+
+        expect(resource['complex']).toEqual([null]);
+    });
+
+
     it('field type radio', () => {
 
         const category = {

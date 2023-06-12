@@ -283,7 +283,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
             SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_SUBFIELD_EDIT,
             undefined,
             'subfield-editor-modal'
         );
@@ -313,7 +313,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
             SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL,
+            MenuContext.CONFIGURATION_SUBFIELD_EDIT,
             undefined,
             'subfield-editor-modal'
         );

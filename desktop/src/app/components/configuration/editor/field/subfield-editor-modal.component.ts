@@ -6,6 +6,8 @@ import { InputType } from '../../configuration-util';
 import { ApplyChangesResult } from '../../configuration.component';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 export type SubfieldEditorData = {
@@ -44,7 +46,8 @@ export class SubfieldEditorModalComponent {
     
 
     constructor(private activeModal: NgbActiveModal,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menus: Menus) {}
 
     
     public getInputType = () => this.data.inputType;
@@ -60,7 +63,9 @@ export class SubfieldEditorModalComponent {
     
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss();
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.CONFIGURATION_SUBFIELD_EDIT) {
+            this.activeModal.dismiss();
+        }
     }
 
 

@@ -1,5 +1,5 @@
 import { flatMap, range } from 'tsfun';
-import { I18N, OptionalRange } from 'idai-field-core';
+import { Field, I18N, OptionalRange, Subfield } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 
 
@@ -107,6 +107,28 @@ export module CSVHeadingsExpansion {
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'figure'
                 ]
                 )(range(n));
+            }
+        }
+    }
+
+
+    export function expandComplexHeadings(languages: string[], subfields: Array<Subfield>) {
+        
+        return (n: number) => {
+
+            return (fieldName: string) => {
+
+                return flatMap(i => subfields.reduce((result, subfield) => {
+                    if (Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)) {
+                        result = result.concat(languages.map(language => {
+                            return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + subfield.name
+                                + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
+                        }));
+                    } else {
+                        result.push(fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + subfield.name);
+                    }
+                    return result;
+                }, []))(range(n));
             }
         }
     }

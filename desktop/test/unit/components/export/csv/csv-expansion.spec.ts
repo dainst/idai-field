@@ -1,4 +1,4 @@
-import { I18N } from 'idai-field-core';
+import { Field, I18N } from 'idai-field-core';
 import { val } from 'tsfun';
 import { CSVExpansion } from '../../../../../src/app/components/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
@@ -21,7 +21,7 @@ describe('CSVExpansion', () => {
             ] as any,
             val(['abc.a', 'abc.b']),
             expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
-            )([1]);
+            )([{ index: 1, field: { name: 'abc', inputType: 'input' } }]);
 
         expect(result[0]).toEqual(['l', 'abc.a', 'abc.b', 'r']);
         expect(result[1][0]).toEqual(['l1', 'A', 'B', null]);
@@ -30,6 +30,12 @@ describe('CSVExpansion', () => {
 
 
     it('expand objectArray', () => {
+
+        const fields: Array<Field> = [
+            { name: 'l', inputType: Field.InputType.SIMPLE_INPUT },
+            { name: 'abc', inputType: Field.InputType.INPUT },
+            { name: 'r', inputType: Field.InputType.SIMPLE_INPUT }
+        ];
 
         const result = CSVExpansion.objectArrayExpand(
             [
@@ -40,12 +46,13 @@ describe('CSVExpansion', () => {
                 ]
             ] as any,
             ['de'],
+            fields,
             'b',
             (languages: string[]) => val(val(['abc.0.a'].concat(languages.map(language => 'abc.0.b.' + language)))),
             (languages: string[]) => expandHomogeneousItems(({ a, b }: any) => {
                 return [a].concat(b ? languages.map(language => b[language]) : []);
             }, 1 + languages.length)
-        )([1]);
+        )([{ index: 1, field: fields[1] }]);
 
         expect(result[0]).toEqual(['l', 'abc.0.a', 'abc.0.b.de', 'abc.0.b.en', 'r']);
         expect(result[1][0]).toEqual(['l1', 'A', 'B1', 'B2', null]);
@@ -85,7 +92,7 @@ describe('CSVExpansion', () => {
                         ? 'G'
                         : content[language] ?? ''
                 }), languages.length)
-            )([1]);
+            )([{ index: 1, field: { name: 'field1', inputType: 'input' } }]);
 
         expect(result[0]).toEqual(['l', 'field1.de', 'field1.en', 'field1.es', 'field1.it',
             'field1.unspecifiedLanguage', 'field2']);

@@ -1,5 +1,5 @@
 import { flow, left, reverse, isString } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field, I18N } from 'idai-field-core';
+import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -23,6 +23,11 @@ export module CSVMatrixExpansion {
     const expandLiteratureItems = (_: string[]) => CSVExpansion.expandHomogeneousItems(
         rowsWithLiteratureElementsExpanded, 5
     );
+    const expandComplexItems = (languages: string[], subfields: Array<Subfield>) =>
+        CSVExpansion.expandHomogeneousItems(
+            rowsWithComplexElementsExpanded(languages, subfields),
+            getNumberOfColumnsForComplexElements(languages, subfields)
+        );
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
 
 
@@ -58,6 +63,7 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
+                    fieldDefinitions,
                     undefined,
                     CSVHeadingsExpansion.expandI18nStringArrayHeadings,
                     expandI18nStrings
@@ -98,6 +104,7 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
+                    fieldDefinitions,
                     Dating.SOURCE,
                     CSVHeadingsExpansion.expandDatingHeadings,
                     expandDatingItems
@@ -119,6 +126,7 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
+                    fieldDefinitions,
                     Dimension.MEASUREMENTCOMMENT,
                     CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems
@@ -140,9 +148,32 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     undefined,
+                    fieldDefinitions,
                     undefined,
                     CSVHeadingsExpansion.expandLiteratureHeadings,
                     expandLiteratureItems
+                )
+            );
+        }
+    }
+
+
+    export function expandComplex(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.COMPLEX),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    fieldDefinitions,
+                    undefined,
+                    CSVHeadingsExpansion.expandComplexHeadings,
+                    expandComplexItems
                 )
             );
         }
@@ -234,4 +265,34 @@ export module CSVMatrixExpansion {
 
         return expandedLiterature;
     }
-}
+
+
+    function rowsWithComplexElementsExpanded(languages: string[], subfields: Array<Subfield>) {
+        
+        return (object: any): string[] => {
+
+            return subfields.reduce((result, subfield) => {
+                if (object[subfield.name] === undefined) {
+                    result.push('');
+                } else if (Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)) {
+                    result = result.concat(rowsWithI18nStringExpanded(languages)(object[subfield.name]));
+                } else {
+                    result.push(object[subfield.name].toString());
+                }
+                return result;
+            }, []);
+        }
+    }
+
+
+    function getNumberOfColumnsForComplexElements(languages: string[], subfields: Array<Subfield>): number {
+
+        if (!subfields) return undefined;
+
+        const i18nStringSubfields: Array<Subfield> = subfields.filter(subfield => {
+            return Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)
+        });
+
+        return subfields.length - i18nStringSubfields.length + i18nStringSubfields.length * languages.length;
+    }
+ }

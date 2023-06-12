@@ -14,6 +14,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('literature')) inputType = 'literature';
         if (fieldName.startsWith('period')) inputType = 'dropdownRange';
         if (fieldName.startsWith('relation')) inputType = 'relation';
+        if (fieldName.startsWith('complex')) inputType = 'complex';
 
         return { name: fieldName, inputType: inputType };
     }) as Array<Field>;
@@ -524,6 +525,60 @@ describe('CSVExport', () => {
         expect(result[2][3]).toBe('"https://www.example.de"');
         expect(result[2][4]).toBe('"12"');
         expect(result[2][5]).toBe('"1"');
+    });
+
+
+    it('expand complex fields', () => {
+
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        fieldDefinitions[1].subfields = [
+            { name: 'subfield1', inputType: 'int' },
+            { name: 'subfield2', inputType: 'input' }
+        ]
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
+        ];
+        resources[0]['complex'] = [
+            { subfield1: 1, subfield2: { en: 'Test content 1', de: 'Testinhalt 1' } },
+            { subfield1: 2, subfield2: { en: 'Test content 2', de: 'Testinhalt 2' } }
+        ];
+        resources[1]['complex'] = [
+            { subfield1: 3, subfield2: { en: 'Test content 3', de: 'Testinhalt 3' } }
+        ];
+
+        const result = CSVExport.createExportable(resources, fieldDefinitions, [], ['de', 'en'])
+            .csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"complex.0.subfield1"');
+        expect(result[0][2]).toBe('"complex.0.subfield2.de"');
+        expect(result[0][3]).toBe('"complex.0.subfield2.en"');
+        expect(result[0][4]).toBe('"complex.1.subfield1"');
+        expect(result[0][5]).toBe('"complex.1.subfield2.de"');
+        expect(result[0][6]).toBe('"complex.1.subfield2.en"');
+
+        expect(result[1][1]).toBe('"1"');
+        expect(result[1][2]).toBe('"Testinhalt 1"');
+        expect(result[1][3]).toBe('"Test content 1"');
+        expect(result[1][4]).toBe('"2"');
+        expect(result[1][5]).toBe('"Testinhalt 2"');
+        expect(result[1][6]).toBe('"Test content 2"');
+
+        expect(result[2][1]).toBe('"3"');
+        expect(result[2][2]).toBe('"Testinhalt 3"');
+        expect(result[2][3]).toBe('"Test content 3"');
+        expect(result[2][4]).toBe('""');
+        expect(result[2][5]).toBe('""');
+        expect(result[2][6]).toBe('""');
+
+        expect(result[3][1]).toBe('""');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('""');
+        expect(result[3][4]).toBe('""');
+        expect(result[3][5]).toBe('""');
+        expect(result[3][6]).toBe('""');
     });
 
 

@@ -58,7 +58,7 @@ export module CSVExpansion {
     export function objectArrayExpand(headingsAndMatrix: HeadingsAndMatrix,
                                       projectLanguages: string[],
                                       fieldDefinitions: Array<Field>,
-                                      i18nStringSubfieldName: string,
+                                      fixedI18nStringSubfieldName: string,
                                       expandHeadings: (languages: string[], subfields?: Array<Subfield>) =>
                                         (numItems: number) => (fieldName: string) => string[],
                                       expandObject: (languages: string[], subfields?: Array<Subfield>) =>
@@ -69,13 +69,7 @@ export module CSVExpansion {
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: CsvFieldIndex) => {
 
             const subfields: Array<Subfield>|undefined = columnIndex.field.subfields;
-            const i18nStringSubfieldNames = subfields
-                ? subfields.filter(subfield => {
-                    return Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType);
-                }).map(to(Named.NAME))
-                : i18nStringSubfieldName
-                    ? [i18nStringSubfieldName]
-                    : undefined;
+            const i18nStringSubfieldNames = getI18NSubfieldNames(subfields, fixedI18nStringSubfieldName);
 
             const languages: string[] = projectLanguages
                 ? getLanguagesFromObjectArray(
@@ -130,6 +124,18 @@ export module CSVExpansion {
             return [expandedHeader, expandedRows];
 
         }, headingsAndMatrix);
+    }
+
+
+    function getI18NSubfieldNames(subfields?: Array<Subfield>, fixedI18nSubstringName?: string): string[]|undefined {
+
+        return subfields
+            ? subfields.filter(subfield => {
+                return Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType);
+            }).map(to(Named.NAME))
+            : fixedI18nSubstringName
+                ? [fixedI18nSubstringName]
+                : undefined;
     }
 
 

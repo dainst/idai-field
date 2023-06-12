@@ -31,12 +31,6 @@ describe('CSVExpansion', () => {
 
     it('expand objectArray', () => {
 
-        const fields: Array<Field> = [
-            { name: 'l', inputType: Field.InputType.SIMPLE_INPUT },
-            { name: 'abc', inputType: Field.InputType.INPUT },
-            { name: 'r', inputType: Field.InputType.SIMPLE_INPUT }
-        ];
-
         const result = CSVExpansion.objectArrayExpand(
             [
                 ['l', 'abc', 'r'],
@@ -46,13 +40,12 @@ describe('CSVExpansion', () => {
                 ]
             ] as any,
             ['de'],
-            fields,
             'b',
             (languages: string[]) => val(val(['abc.0.a'].concat(languages.map(language => 'abc.0.b.' + language)))),
             (languages: string[]) => expandHomogeneousItems(({ a, b }: any) => {
                 return [a].concat(b ? languages.map(language => b[language]) : []);
             }, 1 + languages.length)
-        )([{ index: 1, field: fields[1] }]);
+        )([{ index: 1, field: { name: 'abc', inputType: Field.InputType.INPUT } }]);
 
         expect(result[0]).toEqual(['l', 'abc.0.a', 'abc.0.b.de', 'abc.0.b.en', 'r']);
         expect(result[1][0]).toEqual(['l1', 'A', 'B1', 'B2', null]);

@@ -63,7 +63,6 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    fieldDefinitions,
                     undefined,
                     CSVHeadingsExpansion.expandI18nStringArrayHeadings,
                     expandI18nStrings
@@ -104,7 +103,6 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    fieldDefinitions,
                     Dating.SOURCE,
                     CSVHeadingsExpansion.expandDatingHeadings,
                     expandDatingItems
@@ -126,7 +124,6 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    fieldDefinitions,
                     Dimension.MEASUREMENTCOMMENT,
                     CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems
@@ -148,7 +145,6 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     undefined,
-                    fieldDefinitions,
                     undefined,
                     CSVHeadingsExpansion.expandLiteratureHeadings,
                     expandLiteratureItems
@@ -170,7 +166,6 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    fieldDefinitions,
                     undefined,
                     CSVHeadingsExpansion.expandComplexHeadings,
                     expandComplexItems

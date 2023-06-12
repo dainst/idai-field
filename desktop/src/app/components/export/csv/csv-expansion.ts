@@ -57,7 +57,6 @@ export module CSVExpansion {
      */
     export function objectArrayExpand(headingsAndMatrix: HeadingsAndMatrix,
                                       projectLanguages: string[],
-                                      fieldDefinitions: Array<Field>,
                                       fixedI18nStringSubfieldName: string,
                                       expandHeadings: (languages: string[], subfields?: Array<Subfield>) =>
                                         (numItems: number) => (fieldName: string) => string[],

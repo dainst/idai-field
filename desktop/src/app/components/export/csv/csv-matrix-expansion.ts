@@ -182,7 +182,7 @@ export module CSVMatrixExpansion {
             return languages.map(language => {
                 return isString(i18nString)
                     ? (language === I18N.UNSPECIFIED_LANGUAGE ? i18nString : '')
-                    : (i18nString[language] ?? '');
+                    : (i18nString?.[language] ?? '');
             });
         };
     }
@@ -267,10 +267,10 @@ export module CSVMatrixExpansion {
         return (object: any): string[] => {
 
             return subfields.reduce((result, subfield) => {
-                if (object[subfield.name] === undefined) {
-                    result.push('');
-                } else if (Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)) {
+                if (Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)) {
                     result = result.concat(rowsWithI18nStringExpanded(languages)(object[subfield.name]));
+                } else if (object[subfield.name] === undefined) {
+                    result.push('');
                 } else {
                     result.push(object[subfield.name].toString());
                 }

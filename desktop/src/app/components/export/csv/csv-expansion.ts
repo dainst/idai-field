@@ -68,7 +68,7 @@ export module CSVExpansion {
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: CsvFieldIndex) => {
 
             const subfields: Array<Subfield>|undefined = columnIndex.field.subfields;
-            const i18nStringSubfieldNames = getI18NSubfieldNames(subfields, fixedI18nStringSubfieldName);
+            const i18nStringSubfieldNames = getI18nSubfieldNames(subfields, fixedI18nStringSubfieldName);
 
             const languages: string[] = projectLanguages
                 ? getLanguagesFromObjectArray(
@@ -126,7 +126,7 @@ export module CSVExpansion {
     }
 
 
-    function getI18NSubfieldNames(subfields?: Array<Subfield>, fixedI18nSubstringName?: string): string[]|undefined {
+    function getI18nSubfieldNames(subfields?: Array<Subfield>, fixedI18nSubstringName?: string): string[]|undefined {
 
         return subfields
             ? subfields.filter(subfield => {

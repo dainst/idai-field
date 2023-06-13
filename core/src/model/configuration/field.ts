@@ -127,8 +127,8 @@ export module Field {
         export const I18N_COMPATIBLE_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT, SIMPLE_MULTIINPUT];
         export const I18N_INPUT_TYPES = [INPUT, TEXT, MULTIINPUT];
         export const SIMPLE_INPUT_TYPES = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
-        export const SUBFIELD_INPUT_TYPES = [INPUT, SIMPLE_INPUT, SIMPLE_MULTIINPUT, TEXT, BOOLEAN, DROPDOWN,
-            RADIO, CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
+        export const SUBFIELD_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, BOOLEAN, DROPDOWN, RADIO, CHECKBOXES,
+            FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],
@@ -152,7 +152,7 @@ export module Field {
                 return isString(fieldData);
             } else if ([INPUT, TEXT].includes(inputType)) {
                 // TODO Improve validation for i18n strings
-                return isString(fieldData) || isObject(fieldData);
+                return isString(fieldData) || isObject(fieldData);
             } else if ([SIMPLE_MULTIINPUT, CHECKBOXES].includes(inputType)) {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
             } else if (inputType === MULTIINPUT) {
@@ -168,7 +168,7 @@ export module Field {
             } else if (inputType === URL) {
                 return validateUrl(fieldData);
             } else if (inputType === BOOLEAN) {
-                return fieldData === true || fieldData === false;
+                return fieldData === true || fieldData === false;
             } else if (inputType === DATE) {
                 return !isNaN(parseDate(fieldData)?.getTime());
             } else if (inputType === DROPDOWNRANGE) {

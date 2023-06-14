@@ -9,7 +9,7 @@ field-view {
 
     .field-label {
       font-weight: normal;
-      font-size: $font-size-smaller;
+      font-size: $font-size-medium;
       color: gray;
       margin-bottom: 2px;
       user-select: none;
@@ -60,6 +60,14 @@ field-view {
       .subfield-section {
         padding-bottom: 7px;
         border-left: 1px solid #b2b2b2;
+
+        &:first-child {
+          margin-top: 10px;
+        }
+
+        .subfield-label {
+          font-size: $font-size-smaller;
+        }
       }
     }
   }

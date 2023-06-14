@@ -55,14 +55,17 @@ export class Modals {
                                       onFinish: () => void) {
 
         let resultObject: any;
+        let canceled: boolean = false;
 
         try {
             resultObject = await result;
         } catch {
             // Modal has been canceled
+            canceled = true;
         }
 
-        if (resultObject) await onSuccess(resultObject);
+        if (!canceled) await onSuccess(resultObject);
+
         this.restorePreviousMenuContext();
         onFinish();
     }

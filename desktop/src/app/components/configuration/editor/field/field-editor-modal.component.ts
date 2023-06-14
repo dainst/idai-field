@@ -426,7 +426,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete subfieldDefinition.references;
         }
 
-        const valuelists: Valuelists = this.getClonedFormDefinition().valuelists;
+        this.setValuelistForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
+        this.setLabelsForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
+    }
+
+
+    private setValuelistForEditedSubfield(editedSubfieldData: SubfieldEditorData,
+                                          subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
+
+        const clonedForm: CustomFormDefinition = this.getClonedFormDefinition();
+
+        if (!clonedForm.valuelists) clonedForm.valuelists = {};
+
+        const valuelists: Valuelists = clonedForm.valuelists;
         if (editedSubfieldData.valuelist) {
             if (!valuelists[this.clonedField.name]
                     || isString(valuelists[this.clonedField.name])) {
@@ -439,7 +451,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 delete valuelists[this.clonedField.name];
             }
         }
+
         clonedSubfield.valuelist = editedSubfieldData.valuelist;
+    }
+
+
+    private setLabelsForEditedSubfield(editedSubfieldData: SubfieldEditorData,
+                                       subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
 
         clonedSubfield.label = editedSubfieldData.label;
         clonedSubfield.description = editedSubfieldData.description;

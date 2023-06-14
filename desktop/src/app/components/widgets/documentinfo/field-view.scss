@@ -11,7 +11,7 @@ field-view {
       font-weight: normal;
       font-size: $font-size-smaller;
       color: gray;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       user-select: none;
     }
 
@@ -35,6 +35,10 @@ field-view {
     ul {
       padding: 0;
       margin-bottom: 0;
+
+      li {
+        list-style-type: none;
+      }
     }
 
     category-icon {
@@ -46,6 +50,17 @@ field-view {
       position: relative;
       left: 5px;
       bottom: 1px;
+    }
+
+    &.complex-field {
+      .complex-field-entry:not(:last-child) {
+        margin-bottom: 15px;
+      }
+
+      .subfield-section {
+        padding-bottom: 7px;
+        border-left: 1px solid #b2b2b2;
+      }
     }
   }
 }

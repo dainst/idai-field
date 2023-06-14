@@ -1,7 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { isBoolean } from 'tsfun';
-import { FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Labels, validateUrl } from 'idai-field-core';
+import { FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Labels } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
 
 
@@ -22,11 +21,6 @@ export class FieldViewComponent {
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
 
-    public isBoolean = (value: any) => isBoolean(value);
-
-    public isUrl = (value: any) => validateUrl(value);
-
-
     constructor(private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
                 private labels: Labels) {}
@@ -40,22 +34,8 @@ export class FieldViewComponent {
         this.onJumpToResource.emit(document);
     }
 
+    public getSubfields(field: FieldsViewField, entry: any) {
 
-    public getObjectLabels(objects: any[], field: FieldsViewField): string[] {
-
-        return objects.map(object => this.getObjectLabel(object, field))
-            .filter(object => object !== null);
-    }
-
-
-    public getObjectLabel(object: any, field: FieldsViewField): string|null {
-
-        return FieldsViewUtil.getObjectLabel(
-            object,
-            field,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-            this.labels
-        );
+        return field.subfields.filter(subfield => entry[subfield.name] !== undefined);
     }
 }

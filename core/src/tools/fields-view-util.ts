@@ -14,7 +14,6 @@ import { Field, Subfield } from '../model/configuration/field';
 import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
-import { Complex } from '../model/complex';
 
 
 type FieldContent = any;
@@ -26,16 +25,24 @@ export interface FieldsViewGroup extends BaseGroup {
 }
 
 
-export interface FieldsViewField {
+export interface FieldsViewField extends FieldsViewSubfield {
+
+    value?: any;
+    targets?: Array<Document>;
+    subfields?: Array<FieldsViewSubfield>;
+}
+
+
+export interface FieldsViewSubfield {
 
     name: string;
     label: string;
-    type: 'default'|'array'|'object'|'relation'|'url';
-    value?: any;
+    type: FieldsViewFieldType;
     valuelist?: Valuelist;
-    targets?: Array<Document>;
-    subfields?: Array<Subfield>;
 }
+
+
+export type FieldsViewFieldType = 'default'|'relation'|'url'|'complex';
 
 
 export module FieldsViewGroup {
@@ -81,21 +88,12 @@ export module FieldsViewUtil {
 
 
     export function getObjectLabel(object: any, 
-                                   field: FieldsViewField,
+                                   field: FieldsViewSubfield,
                                    getTranslation: (key: string) => string,
                                    formatDecimal: (value: number) => string,
                                    labels: Labels): string|null {
 
-        if (field.subfields) {
-            return Complex.generateLabel(
-                object,
-                field.subfields,
-                getTranslation,
-                (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
-                (value: I18N.String|string) => labels.getFromI18NString(value),
-                (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId)
-            );
-        } else if (object.label) {
+        if (object.label) {
             return object.label;
         } else if (object.begin || object.end) {
             return Dating.generateLabel(
@@ -156,15 +154,40 @@ export module FieldsViewUtil {
                         : getValue(
                             fieldContent, field.name, projectConfiguration, labels, field.valuelist
                         ),
-                    type: field.inputType === Field.InputType.URL ? 'url' :
-                        isArray(fieldContent) ? 'array' :
-                        isObject(fieldContent) ? 'object' :
-                        'default',
+                    type: getFieldType(field.inputType),
                     valuelist: field.valuelist,
-                    subfields: field.subfields
+                    subfields: makeSubfields(field.subfields, labels)
                 };
         }
-    } 
+    }
+
+
+    export function makeSubfields(subfields: Array<Subfield>, labels: Labels): Array<FieldsViewSubfield> {
+
+        if (!subfields) return undefined;
+
+        return subfields.map(subfield => {
+            return {
+                name: subfield.name,
+                label: labels.get(subfield),
+                type: getFieldType(subfield.inputType),
+                valuelist: subfield.valuelist
+            };
+        });
+    }
+}
+
+
+function getFieldType(inputType: Field.InputType): FieldsViewFieldType {
+
+    switch (inputType) {
+        case Field.InputType.URL:
+            return 'url';
+        case Field.InputType.COMPLEX:
+            return 'complex';
+        default:
+            return 'default';
+    }  
 }
 
 

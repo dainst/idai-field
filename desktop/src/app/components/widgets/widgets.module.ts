@@ -23,6 +23,8 @@ import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
 import { FieldViewComponent } from './documentinfo/field-view.component';
 import { LanguagesListComponent } from './languages/languages-list.component';
+import { DefaultFieldViewComponent } from './documentinfo/default-field-view.component';
+import { UrlFieldViewComponent } from './documentinfo/url-field-view.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { LanguagesListComponent } from './languages/languages-list.component';
         DocumentInfoComponent,
         FieldsViewComponent,
         FieldViewComponent,
+        DefaultFieldViewComponent,
+        UrlFieldViewComponent,
         GeoreferenceViewComponent,
         DepictsRelationsViewComponent,
         ThumbnailComponent,

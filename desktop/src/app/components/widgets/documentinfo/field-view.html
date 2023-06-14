@@ -1,38 +1,29 @@
-<div *ngIf="field.type === 'array' && field.value.length > 0" class="field">
+<div *ngIf="field.type === 'complex' && field.value.length > 0" class="field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
     <ul>
-        <li *ngFor="let label of getObjectLabels(field.value, field)" class="field-value">
-            {{label}}
+        <li *ngFor="let entry of field.value" class="field-value">
+            <ul>
+                <li *ngFor="let subfield of getSubfields(field, entry)">
+                    <h4 class="subfield-label field-label">{{subfield.label}}</h4>
+                    <default-field-view *ngIf="subfield.type === 'default'"
+                                        [value]="entry[subfield.name]"
+                                        [field]="subfield"></default-field-view>
+                    <url-field-view *ngIf="subfield.type === 'url'"
+                                    [value]="entry[subfield.name]"></url-field-view>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>
 
-<div *ngIf="field.type === 'object'" class="field">
-    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
-    <div class="field-value" [innerHTML]="getObjectLabel(field.value, field)"></div>
-</div>
-
 <div *ngIf="field.type === 'default'" class="field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
-    <div class="field-value" *ngIf="isBoolean(field.value)">
-        <span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>
-        <span *ngIf="field.value === false" i18n="@@boolean.no">Nein</span>
-    </div>
-    <div *ngIf="!isBoolean(field.value)"
-         class="field-value" 
-         [innerHTML]="field.value"></div>
+    <default-field-view [value]="field.value" [field]="field"></default-field-view>
 </div>
 
 <div *ngIf="field.type === 'url'" class="field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
-    <div *ngIf="!isUrl(field.value)"
-         class="field-value" 
-         [innerHTML]="field.value"></div>
-    <a *ngIf="isUrl(field.value)"
-         class="field-value" 
-         [href]="field.value"
-         [innerHTML]="field.value"
-         target="_blank"></a>
+    <url-field-view [value]="field.value"></url-field-view>
 </div>
 
 <div *ngIf="field.type === 'relation'" class="field">

@@ -1,0 +1,14 @@
+<div class="field-value" *ngIf="isBoolean(value)">
+    <span *ngIf="value === true" i18n="@@boolean.yes">Ja</span>
+    <span *ngIf="value === false" i18n="@@boolean.no">Nein</span>
+</div>
+<div *ngIf="isArray(value)">
+    <ul>
+        <li *ngFor="let label of getObjectLabels(value)" class="field-value">
+            {{label}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="!isBoolean(value) && !isArray(value)"
+     class="field-value" 
+     [innerHTML]="getValue(value)"></div>

@@ -54,14 +54,17 @@ export class Modals {
     public async awaitResult<R = any>(result: Promise<R>, onSuccess: (result: any) => void,
                                       onFinish: () => void) {
 
+        let resultObject: any;
+
         try {
-            await onSuccess(await result);
+            resultObject = await result;
         } catch {
             // Modal has been canceled
-        } finally {
-            this.restorePreviousMenuContext();
-            onFinish();
         }
+
+        if (resultObject) await onSuccess(resultObject);
+        this.restorePreviousMenuContext();
+        onFinish();
     }
 
 

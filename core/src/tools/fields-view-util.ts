@@ -145,15 +145,7 @@ export module FieldsViewUtil {
                 : {
                     name: field.name,
                     label: labels.get(field),
-                    value: isArray(fieldContent)
-                        ? fieldContent.map((fieldContent: any) =>
-                            getValue(
-                                fieldContent, field.name, projectConfiguration, labels, field.valuelist
-                            )
-                        )
-                        : getValue(
-                            fieldContent, field.name, projectConfiguration, labels, field.valuelist
-                        ),
+                    value: getFieldValue(fieldContent, field, labels, projectConfiguration),
                     type: getFieldType(field.inputType),
                     valuelist: field.valuelist,
                     subfields: makeSubfields(field.subfields, labels)
@@ -178,6 +170,22 @@ export module FieldsViewUtil {
 }
 
 
+function getFieldValue(fieldContent: any, field: Field, labels: Labels,
+                       projectConfiguration: ProjectConfiguration): any {
+
+    return isArray(fieldContent)
+        ? fieldContent.map((fieldContent: any) =>
+            field.subfields && isObject(fieldContent)
+                ? getComplexFieldValue(fieldContent, labels, field.subfields)
+                : getValue(fieldContent, labels, field.valuelist)
+            
+        )
+        : field.name === Resource.CATEGORY
+            ? labels.get(projectConfiguration.getCategory(fieldContent))
+            : getValue(fieldContent, labels, field.valuelist);
+}
+
+
 function getFieldType(inputType: Field.InputType): FieldsViewFieldType {
 
     switch (inputType) {
@@ -191,19 +199,28 @@ function getFieldType(inputType: Field.InputType): FieldsViewFieldType {
 }
 
 
-function getValue(fieldContent: any,
-                  fieldName: string, 
-                  projectConfiguration: ProjectConfiguration,
-                  labels: Labels,
-                  valuelist?: Valuelist): any {
+function getValue(fieldContent: any, labels: Labels, valuelist?: Valuelist): any {
 
-    return fieldName === Resource.CATEGORY
-        ? labels.get(projectConfiguration.getCategory(fieldContent))
-        : valuelist
+    return valuelist
             ? labels.getValueLabel(valuelist, fieldContent)
             : isString(fieldContent)
                 ? prepareString(fieldContent)
                 : fieldContent;
+}
+
+
+function getComplexFieldValue(fieldContent: any, labels: Labels, subfields: Array<Subfield>): any {
+
+    return Object.keys(fieldContent).reduce((result, subfieldName) => {
+        const subfield: Subfield = subfields.find(on(Named.NAME, is(subfieldName)));
+        const subfieldContent: any = fieldContent[subfieldName];
+
+        result[subfieldName] = isArray(subfieldContent)
+            ? subfieldContent.map(element => getValue(element, labels, subfield?.valuelist))
+            : getValue(subfieldContent, labels, subfield?.valuelist)
+
+        return result;
+    }, {});
 }
 
 
@@ -218,8 +235,7 @@ function prepareString(stringValue: string): string {
 
 
 function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
-                                           relationTargets: Map<Array<Document>>,
-                                           labels: Labels): Mapping {
+                                           relationTargets: Map<Array<Document>>, labels: Labels): Mapping {
 
     const fieldContent: Mapping<Field, FieldContent>
         = compose(to(Named.NAME), getFieldContent(resource));

@@ -4,6 +4,7 @@
     <body>
       <trans-unit id="ngb.alert.close" datatype="html">
         <source>Close</source>
+        <target state="translated">Kapat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/alert/alert.ts</context>
           <context context-type="linenumber">43</context>
@@ -19,6 +20,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.previous" datatype="html">
         <source>Previous</source>
+        <target state="translated">Geri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">130</context>
@@ -26,6 +28,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.next" datatype="html">
         <source>Next</source>
+        <target state="translated">İleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">148</context>
@@ -77,6 +80,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.first" datatype="html">
         <source>««</source>
+        <target state="translated">««</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">158</context>
@@ -84,6 +88,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.first-aria" datatype="html">
         <source>First</source>
+        <target state="translated">Birinci</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">186</context>
@@ -91,6 +96,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.previous" datatype="html">
         <source>«</source>
+        <target state="translated">«</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">166</context>
@@ -98,6 +104,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.previous-aria" datatype="html">
         <source>Previous</source>
+        <target state="translated">Geri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">195</context>
@@ -105,6 +112,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.next" datatype="html">
         <source>»</source>
+        <target state="translated">»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">172</context>
@@ -112,6 +120,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.next-aria" datatype="html">
         <source>Next</source>
+        <target state="translated">İleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">205</context>
@@ -119,6 +128,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last" datatype="html">
         <source>»»</source>
+        <target state="translated">»»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">179</context>
@@ -126,6 +136,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
         <source>Last</source>
+        <target state="translated">Son</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">213</context>
@@ -306,6 +317,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
         <source>Polygon</source>
+        <target state="translated">Poligon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -313,6 +325,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
         <source>Multipolygon</source>
+        <target state="needs-translation">Çoklu poligon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -320,6 +333,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
         <source>Polyline</source>
+        <target state="needs-translation">Devamlı çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -327,6 +341,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
         <source>Multipolyline</source>
+        <target state="needs-translation">Çoklu devamlı çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -334,6 +349,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
         <source>Punkt</source>
+        <target state="translated">Nokta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -341,6 +357,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
         <source>Multipunkt</source>
+        <target state="needs-translation">Çoklu nokta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -348,6 +365,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
         <source>Keine</source>
+        <target state="translated">yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -369,6 +387,7 @@
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
         <source>Suchen...</source>
+        <target state="translated">Ara...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.component.ts</context>
           <context context-type="linenumber">27</context>
@@ -416,6 +435,7 @@
       </trans-unit>
       <trans-unit id="import.source" datatype="html">
         <source>Quelle</source>
+        <target state="translated">Kaynak</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -423,6 +443,7 @@
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
         <source>Datei</source>
+        <target state="translated">Dosya</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">92</context>
@@ -430,6 +451,7 @@
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
         <source>HTTP</source>
+        <target state="translated">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">120</context>
@@ -437,6 +459,7 @@
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
         <source>Pfad</source>
+        <target state="translated">Dosya yolu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -444,6 +467,7 @@
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
         <source>Datei auswählen...</source>
+        <target state="translated">Dosya seç...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">168</context>
@@ -451,6 +475,7 @@
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
         <source>URL</source>
+        <target state="translated">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">198</context>
@@ -535,6 +560,7 @@
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
         <source>Kategorie</source>
+        <target state="translated">Kategori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">164</context>
@@ -542,6 +568,7 @@
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
         <source>Kategorie auswählen</source>
+        <target state="translated">Kategori seç</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">177</context>
@@ -563,6 +590,7 @@
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
         <source>Feldtrennzeichen</source>
+        <target state="translated">Alan ayırıcısı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">215</context>
@@ -598,6 +626,7 @@
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
         <source>Zurück</source>
+        <target state="translated">Geri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -655,6 +684,7 @@
       </trans-unit>
       <trans-unit id="export.format.categorySelect" datatype="html">
         <source>Kategorie</source>
+        <target state="translated">Kategori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">328</context>
@@ -676,6 +706,7 @@
       </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">117</context>
@@ -683,6 +714,7 @@
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
         <source>Shapefile</source>
+        <target state="translated">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -704,6 +736,7 @@
       </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
         <source>CSV</source>
+        <target state="translated">CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">94</context>
@@ -711,6 +744,7 @@
       </trans-unit>
       <trans-unit id="export.csvimportmode.complete" datatype="html">
         <source>Komplett</source>
+        <target state="translated">Tümü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">202</context>
@@ -823,6 +857,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.path" datatype="html">
         <source>Pfad</source>
+        <target state="translated">Dosya yolu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">46</context>
@@ -1121,6 +1156,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.url" datatype="html">
         <source>URL</source>
+        <target state="translated">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1233,6 +1269,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.category" datatype="html">
         <source>Kategorie</source>
+        <target state="translated">Kategori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1717,6 +1754,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.continue" datatype="html">
         <source>Fortsetzen</source>
+        <target state="translated">Devam</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1868,6 +1906,7 @@
       </trans-unit>
       <trans-unit id="project.download.address" datatype="html">
         <source>Adresse</source>
+        <target state="translated">Adres</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">75</context>
@@ -1882,6 +1921,7 @@
       </trans-unit>
       <trans-unit id="project.download.password" datatype="html">
         <source>Passwort</source>
+        <target state="translated">Şifre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">141</context>
@@ -2675,6 +2715,7 @@
       </trans-unit>
       <trans-unit id="resources.map.delete" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -3558,6 +3599,7 @@
       </trans-unit>
       <trans-unit id="geometry.point" datatype="html">
         <source>Punkt</source>
+        <target state="translated">Nokta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -3667,6 +3709,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
         <source>Adresse</source>
+        <target state="translated">Adres</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">133</context>
@@ -3674,6 +3717,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
         <source>Passwort</source>
+        <target state="translated">Şifre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">164</context>
@@ -3681,6 +3725,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
         <source>Eigene Adresse</source>
+        <target state="translated">Adresiniz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">73</context>
@@ -3688,6 +3733,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.hostPassword" datatype="html">
         <source>Eigenes Passwort</source>
+        <target state="translated">Şifreniz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">86</context>
@@ -3723,6 +3769,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
         <source>Pfad</source>
+        <target state="translated">Dosya yolu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3751,6 +3798,7 @@
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
         <source>Update</source>
+        <target state="translated">Güncelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3973,6 +4021,7 @@
       </trans-unit>
       <trans-unit id="util.literature.doi" datatype="html">
         <source>DOI</source>
+        <target state="translated">DOİ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3980,6 +4029,7 @@
       </trans-unit>
       <trans-unit id="util.literature.page" datatype="html">
         <source>Seite</source>
+        <target state="translated">Sayfa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4022,6 +4072,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.project" datatype="html">
         <source>Projekt</source>
+        <target state="translated">Proje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4029,6 +4080,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.trench" datatype="html">
         <source>Schnitt</source>
+        <target state="translated">Açma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4036,6 +4088,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.building" datatype="html">
         <source>Bauwerk</source>
+        <target state="translated">Bina</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4043,6 +4096,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.survey" datatype="html">
         <source>Survey</source>
+        <target state="translated">Yüzey araştırma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4185,6 +4239,7 @@
       </trans-unit>
       <trans-unit id="docedit.parentLabel.project" datatype="html">
         <source>Projekt</source>
+        <target state="translated">Proje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4206,6 +4261,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometry" datatype="html">
         <source>Geometrie</source>
+        <target state="translated">Geometri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4266,6 +4322,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.filter.zip" datatype="html">
         <source>ZIP-Archiv</source>
+        <target state="translated">ZİP Arşiv</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>

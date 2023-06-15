@@ -1,9 +1,9 @@
 {
   "coordinate-reference-system-default-1": {
     "values": {
-      "Eigenes Koordinatenbezugssystem": "",
-      "EPSG4326 (WGS 84)": "",
-      "EPSG3857 (WGS 84 Web Mercator)": ""
+      "Eigenes Koordinatenbezugssystem": "Özel koordinat referans sistemi",
+      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)"
     }
   },
   "position-values-expansion-default": {
@@ -32,10 +32,10 @@
   },
   "provenance-default-1": {
     "values": {
-      "Anatolien": "",
-      "Antiochia (Antakya)": "",
-      "Athen": "",
-      "Ägypten": "",
+      "Anatolien": "Anadolu",
+      "Antiochia (Antakya)": "Antakya (Antiocheia)",
+      "Athen": "Atina",
+      "Ägypten": "Mısır",
       "Attisch": "",
       "Britannien": "",
       "Chios": "",
@@ -115,7 +115,7 @@
       "gelb": "",
       "grau": "",
       "grün": "",
-      "hell-": "",
+      "hell-": "sarı",
       "leuchtend-": "",
       "ocker": "",
       "orange": "",

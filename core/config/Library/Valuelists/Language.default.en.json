@@ -72,5 +72,22 @@
     "values": {
       "Farbe": "Color"
     }
+  },
+  "orientation-default-1": {
+    "values": {
+      "N-S": "N-S",
+      "NNO - SSW": "NNE - SSW",
+      "NNW-SSO": "NNW-SSE",
+      "NO-SW": "NE-SW",
+      "NW-SO": "NW-SE",
+      "W-O": "W-E",
+      "WNW-OSO": "WNW-ESE",
+      "WSW-ONO": "WSW-ENE"
+    }
+  },
+  "provenance-default-1": {
+    "values": {
+      "Anatolien": "Anatolia"
+    }
   }
 }

@@ -4,20 +4,6 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
-    <input-type-selector [selectedInputType]="getInputType()"
-                         [availableInputTypes]="availableInputTypes"
-                         [isSubfield]="true"
-                         [isFixedInputType]="false"
-                         [disabled]="false"
-                         (onChanged)="setInputType($event)">
-    </input-type-selector>
-    <div *ngIf="isI18nCompatible()" class="configuration-editor-section form-group basic-settings">
-        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
-            Grundeinstellungen
-        </div>
-        <i18n-switch [inputType]="getInputType()"
-                     (onChanged)="setInputType($event)"></i18n-switch>
-    </div>
     <div *ngIf="isConditionSectionVisible()" class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
             Bedingung
@@ -58,6 +44,20 @@
                 </label>
             </div>
         </div>
+    </div>
+    <input-type-selector [selectedInputType]="getInputType()"
+                         [availableInputTypes]="availableInputTypes"
+                         [isSubfield]="true"
+                         [isFixedInputType]="false"
+                         [disabled]="false"
+                         (onChanged)="setInputType($event)">
+    </input-type-selector>
+    <div *ngIf="isI18nCompatible()" class="configuration-editor-section form-group basic-settings">
+        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
+            Grundeinstellungen
+        </div>
+        <i18n-switch [inputType]="getInputType()"
+                     (onChanged)="setInputType($event)"></i18n-switch>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">

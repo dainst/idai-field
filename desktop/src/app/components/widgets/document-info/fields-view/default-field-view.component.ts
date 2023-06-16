@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { isBoolean, isObject, isArray } from 'tsfun';
 import { FieldsViewSubfield, FieldsViewUtil, Labels } from 'idai-field-core';
 import { DecimalPipe } from '@angular/common';
-import { UtilTranslations } from '../../../util/util-translations';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({

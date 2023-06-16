@@ -10,21 +10,21 @@ import { LoadingIconComponent } from './loading-icon.component';
 import { SearchBarComponent } from './search-bar.component';
 import { CategoryPickerComponent } from './category-picker.component';
 import { ZoomButtonsComponent } from './zoom-buttons.component';
-import { FieldsViewComponent } from './documentinfo/fields-view.component';
+import { FieldsViewComponent } from './document-info/fields-view/fields-view.component';
 import { DocumentTeaserComponent } from './document-teaser.component';
 import { CategoryIconComponent } from './category-icon.component';
-import { DocumentInfoComponent } from './documentinfo/document-info.component';
-import { GeoreferenceViewComponent } from './documentinfo/georeference-view.component';
-import { DepictsRelationsViewComponent } from './documentinfo/depicts-relations-view.component';
-import { ThumbnailComponent } from './documentinfo/thumbnail.component';
+import { DocumentInfoComponent } from './document-info/document-info.component';
+import { GeoreferenceViewComponent } from './document-info/georeference-view.component';
+import { DepictsRelationsViewComponent } from './document-info/depicts-relations-view.component';
+import { ThumbnailComponent } from './document-info/thumbnail.component';
 import { IdaiMessagesModule } from '../messages/idai-messages.module';
 import { PagingButtonsComponent } from './paging-buttons.component';
 import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
-import { FieldViewComponent } from './documentinfo/field-view.component';
+import { FieldViewComponent } from './document-info/fields-view/field-view.component';
 import { LanguagesListComponent } from './languages/languages-list.component';
-import { DefaultFieldViewComponent } from './documentinfo/default-field-view.component';
-import { UrlFieldViewComponent } from './documentinfo/url-field-view.component';
+import { DefaultFieldViewComponent } from './document-info/fields-view/default-field-view.component';
+import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 
 
 @NgModule({

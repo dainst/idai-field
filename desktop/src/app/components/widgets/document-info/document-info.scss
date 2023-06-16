@@ -1,8 +1,8 @@
-@import 'fields-view';
-@import 'field-view';
 @import 'depicts-relations-view';
 @import 'georeference-view';
 @import 'thumbnail';
+@import 'fields-view/fields-view';
+@import 'fields-view/field-view';
 
 /**
  * @author Thomas Kleinke

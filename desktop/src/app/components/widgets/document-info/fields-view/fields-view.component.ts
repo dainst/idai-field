@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
-import { UtilTranslations } from '../../../util/util-translations';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FieldDocument, FieldsViewField, FieldsViewGroup, FieldsViewUtil, Labels } from 'idai-field-core';
-import { UtilTranslations } from '../../../util/util-translations';
+import { FieldDocument, FieldsViewField, FieldsViewGroup, Labels } from 'idai-field-core';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({

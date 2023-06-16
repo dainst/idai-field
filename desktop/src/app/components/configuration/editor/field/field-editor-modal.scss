@@ -1,9 +1,4 @@
 .field-editor-modal-body {
-  .basic-settings > div:last-child .switch,
-  .basic-settings > i18n-switch:last-child .switch {
-    margin-bottom: -6px;
-  }
-
   #subfields {
     .cdk-drag-animating {
       transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);

@@ -248,6 +248,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
@@ -1985,6 +1986,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.subfieldConditionViolation.inputType',
                 value: 'Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION] = {
+            content: i18n({
+                id: 'messages.configuration.error.valueUsedInSubfieldCondition',
+                value: 'Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.'
             }),
             level: 'danger',
             params: [],

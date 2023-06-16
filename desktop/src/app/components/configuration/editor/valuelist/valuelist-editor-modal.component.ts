@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, isEmpty, nop, set, Map, clone } from 'tsfun';
-import { I18N, InPlace, Labels, SortUtil, Valuelist, ValuelistValue } from 'idai-field-core';
+import { equal, isEmpty, nop, set, Map, clone, on, is, isArray } from 'tsfun';
+import { I18N, InPlace, Labels, Named, SortUtil, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
@@ -13,6 +13,8 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ValueEditorModalComponent } from './value-editor-modal.component';
 import { M } from '../../../messages/m';
 import { ConfigurationUtil } from '../../configuration-util';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
+import { ValuelistUsage } from '../../../../services/configuration/index/valuelist-usage-index';
 
 
 @Component({
@@ -53,6 +55,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
+                private configurationIndex: ConfigurationIndex,
                 private i18n: I18n) {
 
         super(activeModal, modals, menuService, messages);
@@ -194,6 +197,12 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public deleteValue(valueId: string) {
 
+        try {
+            this.assertValueIsNotUsedAsSubfieldCondition(valueId);
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
+
         delete this.getClonedValuelistDefinition().values[valueId];
         this.order = this.removeDeletedValuesFromOrder(this.order);
     }
@@ -287,6 +296,38 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         });
 
         return result;
+    }
+
+
+    private assertValueIsNotUsedAsSubfieldCondition(valueId: string) {
+
+        const usage: Array<ValuelistUsage>|undefined = this.configurationIndex.getValuelistUsage(this.valuelist.id)
+        if (!usage) return;
+
+        for (let categoryUsage of usage) {
+            for (let field of categoryUsage.fields) {
+                if (!field.subfields) continue;
+
+                for (let subfield of field.subfields) {
+                    if (!subfield.condition) continue;
+
+                    const conditionSubfield: Subfield = field.subfields.find(
+                        on(Named.NAME, is(subfield.condition.subfieldName))
+                    );
+                    if (isArray(subfield.condition.values)
+                            && subfield.condition.values.includes(valueId)
+                            && conditionSubfield.valuelist?.id === this.valuelist.id) {
+                        throw [
+                            M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION,
+                            this.labels.getValueLabel(this.valuelist, valueId),
+                            this.labels.get(subfield),
+                            this.labels.get(field),
+                            this.labels.get(categoryUsage.category)
+                        ];
+                    }
+                }
+            }
+        }
     }
 
 

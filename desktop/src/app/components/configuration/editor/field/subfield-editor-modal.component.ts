@@ -109,7 +109,7 @@ export class SubfieldEditorModalComponent {
         return this.subfields.filter(subfield => {
             return subfield.name !== this.subfield.name
                 && !subfield.condition
-                && subfield.inputType === Field.InputType.BOOLEAN || subfield.valuelist;
+                && (subfield.inputType === Field.InputType.BOOLEAN || subfield.valuelist);
         });
     }
 

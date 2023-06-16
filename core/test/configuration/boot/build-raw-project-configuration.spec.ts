@@ -2730,7 +2730,11 @@ describe('buildRawProjectConfiguration', () => {
                             },
                             {
                                 name: 'subfield2-3',
-                                inputType: 'checkboxes'
+                                inputType: 'checkboxes',
+                                condition: {
+                                    subfieldName: 'subfield2-2',
+                                    value: true
+                                }
                             }
                         ]
                     }
@@ -2832,5 +2836,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[1].subfields[2].name).toEqual('subfield2-3');
         expect(result['A'].groups[0].fields[1].subfields[2].inputType).toEqual(Field.InputType.CHECKBOXES);
         expect(result['A'].groups[0].fields[1].subfields[2].valuelist?.id).toEqual('valuelist-2');
+        expect(result['A'].groups[0].fields[1].subfields[2].condition?.subfieldName).toEqual('subfield2-2');
+        expect(result['A'].groups[0].fields[1].subfields[2].condition?.value).toBe(true);
     });
 });

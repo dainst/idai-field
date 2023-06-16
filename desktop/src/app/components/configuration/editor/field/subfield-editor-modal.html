@@ -18,6 +18,23 @@
         <i18n-switch [inputType]="getInputType()"
                      (onChanged)="setInputType($event)"></i18n-switch>
     </div>
+    <div *ngIf="isConditionSectionVisible()" class="configuration-editor-section form-group">
+        <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
+            Bedingung
+        </div>
+        <select [(ngModel)]="data.condition.subfieldName" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let subfield of getConditionSubfields()" [value]="subfield.name">
+                {{getSubfieldLabel(subfield)}}
+            </option>
+        </select>
+        <select *ngIf="data.condition.subfieldName" [(ngModel)]="data.condition.value" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let value of getConditionValues()" [value]="value">
+                {{getValueLabel(value)}}
+            </option>
+        </select>
+    </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
             Feldbezeichnung

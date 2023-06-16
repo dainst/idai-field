@@ -291,6 +291,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.subfield = newSubfield;
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
+        componentInstance.subfields = this.clonedField.subfields;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.getClonedProjectLanguages();
         componentInstance.configurationDocument = this.configurationDocument;
@@ -324,6 +325,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
         componentInstance.references = subfieldDefinition.references;
+        componentInstance.subfields = this.clonedField.subfields;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.getClonedProjectLanguages();
         componentInstance.configurationDocument = this.configurationDocument;
@@ -424,6 +426,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             subfieldDefinition.references = editedSubfieldData.references;
         } else {
             delete subfieldDefinition.references;
+        }
+
+        if (editedSubfieldData.condition?.subfieldName && editedSubfieldData.condition?.value !== undefined) {
+            subfieldDefinition.condition = editedSubfieldData.condition;
+            clonedSubfield.condition = editedSubfieldData.condition;
+        } else {
+            delete subfieldDefinition.condition;
+            delete clonedSubfield.condition;
         }
 
         this.setValuelistForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);

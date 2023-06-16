@@ -17,6 +17,14 @@ export interface BaseSubfieldDefinition extends Named {
 
     inputType?: string;
     references?: string[];
+    condition?: BaseSubfieldConditionDefinition;
+}
+
+
+export interface BaseSubfieldConditionDefinition {
+
+    subfieldName: string;
+    value: string|boolean;
 }
 
 

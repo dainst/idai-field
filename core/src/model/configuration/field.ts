@@ -13,7 +13,7 @@ import { Valuelist } from './valuelist';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export interface Field extends Subfield {
+export interface Field extends BaseField {
 
     inputTypeOptions?: { validation?: { permissive?: true } };
     valuelistFromProjectField?: string;
@@ -32,12 +32,23 @@ export interface Field extends Subfield {
 }
 
 
-export interface Subfield extends I18N.LabeledValue, I18N.Described {
+export interface Subfield extends BaseField {
+
+    condition?: SubfieldCondition;
+}
+
+export interface BaseField extends I18N.LabeledValue, I18N.Described {
 
     inputType: Field.InputType;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
+}
+
+export interface SubfieldCondition {
+
+    subfieldName: string;
+    value: string|boolean;
 }
 
 

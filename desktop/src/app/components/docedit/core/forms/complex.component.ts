@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Map, clone, isEmpty } from 'tsfun';
+import { Map, clone, isArray, isEmpty, intersect, on, is } from 'tsfun';
 import { Field, Subfield, Labels, Resource, Complex, I18N, Valuelist, validateInt, validateFloat,
-    validateUnsignedInt, validateUnsignedFloat, validateUrl } from 'idai-field-core';
+    validateUnsignedInt, validateUnsignedFloat, validateUrl, Named } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { Messages } from '../../../messages/messages';
@@ -56,11 +56,27 @@ export class ComplexComponent implements OnChanges {
     }
 
 
-    public getSubfields(): Array<Subfield> {
+    public getSubfields(entry: any): Array<Subfield> {
         
         return this.field.subfields?.filter(subfield => {
-            return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType);
+            return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType)
+                && this.isConditionFulfilled(subfield, entry);
         });
+    }
+
+
+    private isConditionFulfilled(subfield: Subfield, entry: any): boolean {
+
+        if (!subfield.condition) return true;
+
+        const data: any = entry[subfield.condition.subfieldName];
+        return data !== undefined
+            ? isArray(subfield.condition.values)
+                ? isArray(data)
+                    ? intersect(data)(subfield.condition.values).length > 0
+                    : subfield.condition.values.includes(data)
+                : data === subfield.condition.values
+            : false;
     }
 
 
@@ -85,19 +101,21 @@ export class ComplexComponent implements OnChanges {
 
     public saveEntry(entry: any) {
 
+        const cleanedUpEntry: any = this.cleanUpEntry(entry);
+
         try {
-            this.assertSubfieldsDataIsCorrect(entry);
+            this.assertSubfieldsDataIsCorrect(cleanedUpEntry);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
 
     	if (this.newEntry === entry) {
             if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-    		this.resource[this.field.name].push(entry);
+    		this.resource[this.field.name].push(cleanedUpEntry);
             this.newEntry = undefined;
     	} else {
             const index: number = this.resource[this.field.name].indexOf(this.entryInEditing.original);
-            this.resource[this.field.name].splice(index, 1, entry);
+            this.resource[this.field.name].splice(index, 1, cleanedUpEntry);
             this.stopEditing();
         }
 
@@ -117,9 +135,19 @@ export class ComplexComponent implements OnChanges {
     }
 
 
+    private cleanUpEntry(entry: any): any {
+
+        return Object.keys(entry).reduce((result, subfieldName) => {
+            const subfield: Subfield = this.field.subfields.find(on(Named.NAME, is(subfieldName)));
+            if (this.isConditionFulfilled(subfield, entry)) result[subfieldName] = entry[subfieldName];
+            return result;
+        }, {});
+    }
+
+
     private assertSubfieldsDataIsCorrect(entry: any) {
 
-        this.getSubfields().forEach(subfield => {
+        this.getSubfields(entry).forEach(subfield => {
             const subfieldData: any = entry[subfield.name];
             if (subfieldData && !this.validateSubfieldData(subfieldData, subfield.inputType)) {
                 throw [this.getValidationErrorMessage(subfield.inputType), '', this.labels.get(subfield)];

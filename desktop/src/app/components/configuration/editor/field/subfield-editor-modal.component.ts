@@ -114,6 +114,16 @@ export class SubfieldEditorModalComponent {
     }
 
 
+    public resetConditionValues() {
+
+        if (this.getConditionType() === 'valuelist') {
+            this.data.condition.values = [];
+        } else {
+            this.data.condition.values = true;
+        }
+    }
+
+
     public getConditionType(): 'valuelist'|'boolean' {
 
         return this.getConditionSubfield().inputType === 'boolean'
@@ -136,7 +146,6 @@ export class SubfieldEditorModalComponent {
 
     public toggleConditionValue(value: string) {
 
-        if (this.data.condition.values === undefined) this.data.condition.values = [];
         const values: string[] = this.data.condition.values as string[];
         if ((values).includes(value)) {
             this.data.condition.values = values.filter(v => v !== value);

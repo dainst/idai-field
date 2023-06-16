@@ -22,7 +22,7 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
             Bedingung
         </div>
-        <select [(ngModel)]="data.condition.subfieldName" class="form-control">
+        <select [(ngModel)]="data.condition.subfieldName" (change)="resetConditionValues()" class="form-control">
             <option value=""></option>
             <option *ngFor="let subfield of getConditionSubfields()" [value]="subfield.name">
                 {{getSubfieldLabel(subfield)}}

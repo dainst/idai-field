@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, is, on } from 'tsfun';
+import { clone, is, isArray, on } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, SubfieldCondition,
     Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
@@ -87,7 +87,7 @@ export class SubfieldEditorModalComponent {
             inputType: this.subfield.inputType,
             references: clone(this.references) ?? [],
             valuelist: clone(this.subfield.valuelist),
-            condition: clone(this.subfield.condition) ?? { subfieldName: '', value: undefined }
+            condition: clone(this.subfield.condition) ?? { subfieldName: '', values: undefined }
         };
     }
 
@@ -117,6 +117,24 @@ export class SubfieldEditorModalComponent {
     public getConditionValues(): string[] {
 
         return this.labels.orderKeysByLabels(this.getConditionValuelist());
+    }
+
+
+    public toggleConditionValue(value: string) {
+
+        if (this.data.condition.values === undefined) this.data.condition.values = [];
+        const values: string[] = this.data.condition.values as string[];
+        if ((values).includes(value)) {
+            this.data.condition.values = values.filter(v => v !== value);
+        } else {
+            values.push(value);
+        }
+    }
+
+
+    public isSelectedConditionValue(value: string): boolean {
+
+        return isArray(this.data.condition.values) && this.data.condition.values.includes(value);
     }
 
 

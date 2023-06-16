@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, Map, isString, on, is } from 'tsfun';
+import { clone, equal, isEmpty, nop, Map, isString, on, is, isArray } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
-    InPlace, Valuelists, Named } from 'idai-field-core';
+    InPlace, Valuelists, Named, SubfieldCondition } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -428,7 +428,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete subfieldDefinition.references;
         }
 
-        if (editedSubfieldData.condition?.subfieldName && editedSubfieldData.condition?.value !== undefined) {
+        if (FieldEditorModalComponent.isValidSubfieldCondition(editedSubfieldData.condition)) {
             subfieldDefinition.condition = editedSubfieldData.condition;
             clonedSubfield.condition = editedSubfieldData.condition;
         } else {
@@ -530,5 +530,16 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.clonedField.subfields.find(clonedSubfield => {
             return clonedSubfield.name === subfieldDefinition.name;
         });
+    }
+
+
+    private static isValidSubfieldCondition(condition: SubfieldCondition): boolean {
+
+        return condition
+            && condition.subfieldName
+            && (condition.values === true
+                || condition.values === false
+                || isArray(condition.values) && condition.values.length > 0
+            );
     }
 }

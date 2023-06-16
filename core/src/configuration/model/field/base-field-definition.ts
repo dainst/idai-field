@@ -24,7 +24,7 @@ export interface BaseSubfieldDefinition extends Named {
 export interface BaseSubfieldConditionDefinition {
 
     subfieldName: string;
-    value: string|boolean;
+    values: string[]|boolean;
 }
 
 

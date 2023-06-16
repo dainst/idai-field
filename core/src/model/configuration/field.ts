@@ -48,7 +48,7 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
 export interface SubfieldCondition {
 
     subfieldName: string;
-    value: string|boolean;
+    values: string[]|boolean;
 }
 
 

@@ -18,6 +18,11 @@
   height: initial;
   background-color: initial;
   height: calc(100vh - 190px);
+
+  .checkbox input {
+    position: relative;
+    top: 11px;
+  }
 }
 
 .subfield-editor-modal-footer {

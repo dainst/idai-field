@@ -28,12 +28,16 @@
                 {{getSubfieldLabel(subfield)}}
             </option>
         </select>
-        <select *ngIf="data.condition.subfieldName" [(ngModel)]="data.condition.value" class="form-control">
-            <option value=""></option>
-            <option *ngFor="let value of getConditionValues()" [value]="value">
-                {{getValueLabel(value)}}
-            </option>
-        </select>
+        <div *ngIf="data.condition.subfieldName">
+            <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" [value]="value" type="checkbox"
+                        (click)="toggleConditionValue(value)"
+                        [checked]="isSelectedConditionValue(value)">
+                    {{getValueLabel(value)}}
+                </label>
+            </div>
+        </div>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">

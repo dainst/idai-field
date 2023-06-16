@@ -132,7 +132,7 @@ export class SubfieldEditorModalComponent {
 
     public getConditionType(): 'valuelist'|'boolean' {
 
-        return this.getConditionSubfield().inputType === 'boolean'
+        return this.getConditionSubfield()?.inputType === 'boolean'
             ? 'boolean'
             : 'valuelist';
     }

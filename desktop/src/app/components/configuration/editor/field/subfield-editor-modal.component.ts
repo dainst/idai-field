@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, is, isArray, on } from 'tsfun';
+import { clone, is, isArray, on, subsetOf } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, SubfieldCondition,
     Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
@@ -98,6 +98,12 @@ export class SubfieldEditorModalComponent {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
 
+        try {
+            this.assertChangesDoNotViolateConditionalSubfields();
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
+
         this.activeModal.close(this.data);
     }
 
@@ -164,9 +170,32 @@ export class SubfieldEditorModalComponent {
     private getConditionSubfield(): Subfield {
 
         const subfieldName: string = this.data.condition?.subfieldName;
-        if (!subfieldName) return undefined;
+        return subfieldName
+            ? this.getSubfield(subfieldName)
+            : undefined;
+    }
 
-        return this.subfields.find(on(Named.NAME, is(subfieldName)));
+
+    private assertChangesDoNotViolateConditionalSubfields() {
+
+        for (let subfield of this.subfields.filter(subfield => {
+            return subfield.condition?.subfieldName === this.subfield.name;
+        })) {
+            if ((subfield.condition.values === true || subfield.condition.values === false)
+                && this.data.inputType !== Field.InputType.BOOLEAN) {
+                    throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(subfield)];
+            } else if (isArray(subfield.condition.values)
+                && (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.data.inputType)
+                        || !subsetOf(Object.keys(this.data.valuelist.values), subfield.condition.values))) {
+                    throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(subfield)];
+            }
+        }
+    }
+
+
+    private getSubfield(name: string): Subfield {
+
+        return this.subfields.find(on(Named.NAME, is(name)));
     }
 
 

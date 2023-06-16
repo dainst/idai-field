@@ -28,13 +28,33 @@
                 {{getSubfieldLabel(subfield)}}
             </option>
         </select>
-        <div *ngIf="data.condition.subfieldName">
+        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'valuelist'">
             <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
                 <label class="form-check-label">
                     <input class="form-check-input" [value]="value" type="checkbox"
                         (click)="toggleConditionValue(value)"
                         [checked]="isSelectedConditionValue(value)">
                     {{getValueLabel(value)}}
+                </label>
+            </div>
+        </div>
+        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'boolean'">
+            <div class="radio form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio"    
+                           [value]="true"
+                           (click)="setConditionValue(true)"
+                           [checked]="data.condition.values === true">
+                    <span i18n="@@boolean.yes">Ja</span>
+                </label>
+            </div>
+            <div class="radio form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio"    
+                           [value]="false"
+                           (click)="setConditionValue(false)"
+                           [checked]="data.condition.values === false">
+                    <span i18n="@@boolean.no">Nein</span>
                 </label>
             </div>
         </div>

@@ -19,9 +19,16 @@
   background-color: initial;
   height: calc(100vh - 190px);
 
-  .checkbox input {
-    position: relative;
-    top: 11px;
+  .checkbox,
+  .radio {
+    label {
+      padding-left: 3px;
+    }
+
+    input {
+      position: relative;
+      top: 11px;
+    }
   }
 }
 

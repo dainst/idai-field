@@ -114,9 +114,23 @@ export class SubfieldEditorModalComponent {
     }
 
 
+    public getConditionType(): 'valuelist'|'boolean' {
+
+        return this.getConditionSubfield().inputType === 'boolean'
+            ? 'boolean'
+            : 'valuelist';
+    }
+
+
     public getConditionValues(): string[] {
 
         return this.labels.orderKeysByLabels(this.getConditionValuelist());
+    }
+
+
+    public setConditionValue(value: boolean) {
+
+        this.data.condition.values = value;
     }
 
 
@@ -138,11 +152,17 @@ export class SubfieldEditorModalComponent {
     }
 
 
-    private getConditionValuelist(): Valuelist {
+    private getConditionSubfield(): Subfield {
 
         const subfieldName: string = this.data.condition?.subfieldName;
         if (!subfieldName) return undefined;
 
-        return this.subfields.find(on(Named.NAME, is(subfieldName)))?.valuelist;
+        return this.subfields.find(on(Named.NAME, is(subfieldName)));
+    }
+
+
+    private getConditionValuelist(): Valuelist {
+
+        return this.getConditionSubfield()?.valuelist;
     }
 }

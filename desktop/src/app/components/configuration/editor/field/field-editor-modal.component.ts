@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, nop, Map, isString, on, is, isArray } from 'tsfun';
+import { clone, equal, isEmpty, Map, isString, on, is, isArray } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
     InPlace, Valuelists, Named, SubfieldCondition } from 'idai-field-core';
@@ -15,6 +15,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { M } from '../../../messages/m';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
 import { Naming } from '../../add/naming';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -305,7 +306,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.addSubfield(newSubfieldDefinition, newSubfield);
                 this.setEditedSubfieldData(editedSubfieldData, newSubfieldDefinition, newSubfield);
             },
-            nop
+            () => AngularUtility.blurActiveElement()
         );
     }
 
@@ -336,7 +337,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         await this.modals.awaitResult(
             result,
             editedSubfieldData => this.setEditedSubfieldData(editedSubfieldData, subfieldDefinition, clonedSubfield),
-            nop
+            () => AngularUtility.blurActiveElement()
         );
     }
 

@@ -59,7 +59,8 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                         currentFilter={ currentFilter }
                         selectCurrentFilter={ selectCurrentFilter } />
                     : <><Form.Control aria-label="Text input with dropdown button"
-                        onChange={ e => setCurrentFilterText(e.target.value) } />
+                        value={ currentFilterText }
+                        onChange={ e => setCurrentFilterText(e.target.value.replace(/[^a-zA-Z0-9]*/g, '')) } />
                         <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>
                             +
                         </Button>

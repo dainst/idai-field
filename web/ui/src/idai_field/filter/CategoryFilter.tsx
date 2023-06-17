@@ -6,7 +6,6 @@ import { FilterBucketTreeNode, ResultFilter } from '../../api/result';
 import CategoryIcon from '../../shared/document/CategoryIcon';
 import { getLabel } from '../../shared/languages';
 import { ProjectView } from '../project/Project';
-import CloseButton from './CloseButton';
 import { buildParamsForFilterValue, isFilterValueInParams } from './utils';
 import FieldFilters from './FieldFilters';
 import { deleteFilterFromParams } from '../../api/query';
@@ -26,14 +25,16 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     const inProjectPopover = projectView !== 'overview' && inPopover;
     
     useEffect(() => {
-        if (!inProjectPopover) return;
-
         const selectedCategories = searchParams.getAll('category');
         if (selectedCategories.length > 1) throw Error('IllegalState');
         const selectedCategory = searchParams.getAll('category')[0];
 
         if (category !== selectedCategory) {
             setCategory(selectedCategory);
+        }
+        if (!inProjectPopover) return;
+
+        if (category !== selectedCategory) {
             setFilters([]);
         } else {
             const newFilters = extractFiltersFromSearchParams(searchParams);
@@ -93,17 +94,13 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                 style={ filterValueStyle(level, bucket.item.value.name, category ) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
-                    + buildParams(params, key_, bucket, filters) + '' }>
+                            + (isFilterValueInParams(params, key_, bucket.item.value.name)
+                                ? deleteFilterFromParams(params, key_, bucket.item.value.name)
+                                : (buildParams(params, key_, bucket, filters) + '')) }>
             <Row>
-                <Col xs={ 1 }><CategoryIcon category={ bucket.item.value }
-                                            size="30" /></Col>
+                <Col xs={ 1 }><CategoryIcon category={ bucket.item.value } size="30" /></Col>
                 <Col style={ categoryLabelStyle }>
                     { getLabel(bucket.item.value) }
-                    {
-                        isFilterValueInParams(params, key_, bucket.item.value.name)
-                        && <CloseButton params={ params } filterKey={ key_ } value={ bucket.item.value.name }
-                                        projectId={ projectId } projectView={ projectView } />
-                    }
                 </Col>
                 {
                     <Col xs={ 1 }
@@ -112,8 +109,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                     </Col>
                 }
             </Row>
-        </Dropdown.Item>
-        { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
+        </Dropdown.Item>        { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
             renderFilterValue(key_, b, params, filters, category, projectId, projectView,
                 onMouseEnter, level + 1))
         }
@@ -137,7 +133,7 @@ const filterValueStyle = (level: number, name: string, category: string|undefine
     // Since it is not clear to me, by which magic it gets the color when you click the category,
     // I set it here manually if the category is selected. (ET)
     const isSelected = category === name;
-    if (isSelected) style.backgroundColor = '#eceeef';
+    style.backgroundColor = isSelected ? '#eceeef' : 'white';
     // -
     return style;
 };

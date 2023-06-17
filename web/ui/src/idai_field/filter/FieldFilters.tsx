@@ -101,7 +101,7 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
     setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>, navigateTo: (k: string, v: string) => void,
     fields: Field[], dropdownMap: Map<Field> }) {
 
-    return <><hr/><ul>
+    return <><hr></hr><ul>
             { filters.map(([k, v]) => {
                 const filterName = k
                     .replace('%3A', ':');

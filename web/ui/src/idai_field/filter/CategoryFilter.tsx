@@ -56,7 +56,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
                 renderFilterValue(filter.name, bucket, searchParams, filters, category, projectId, projectView,
                     !category ? onMouseEnter : identity)) }
 
-        { projectId && projectView && inProjectPopover
+        { projectId && projectView && inProjectPopover && category
             &&
             <FieldFilters
               projectId={ projectId }

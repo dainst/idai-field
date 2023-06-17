@@ -43,7 +43,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
           navigateTo={ navigateTo }
           fields={ fields }
           dropdownMap={ dropdownMap } />
-        { searchParams.getAll('category').length === 1 && filterValuesCount > 0 &&
+        { filterValuesCount > 0 &&
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
@@ -114,14 +114,14 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                     : v;
                 return <Row
                         key={ 'existing-filter::' + k }
-                        style={{ position: 'relative', left: '-22px' } }>
+                        style={ { position: 'relative', left: '-22px' } }>
                     <Col>
                     { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ': "' + fieldValue + '"'}
                     </Col>
                     <Col xs={ 1 }
                         style={ { margin: '3px' } }>
-                        <span 
-                            className="float-right" 
+                        <span
+                            className="float-right"
                             style={ { color: 'red' } }
                             onClick={ () => {
                                 setFilters(filters.filter(f => filterName !== f[0]));

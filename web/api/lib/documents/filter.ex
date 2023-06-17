@@ -6,9 +6,9 @@ defmodule Api.Documents.Filter do
   def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
-      field = if field != "project" and not is_whitelisted_term_filter(filter_string) do
+      field = if field != "project" and not (String.starts_with? filter_string, "resource.relations") do
 
-        "resource." <> (if field == "category" do
+        "resource." <> (if field in ["category", "period.value"] do
           field <> ".name"
         else
           field
@@ -51,14 +51,6 @@ defmodule Api.Documents.Filter do
 
   def expand_categories(nil, _), do: nil
   def expand_categories(filters, project_conf), do: Enum.map(filters, &(expand(&1, project_conf)))
-
-  # This is to preserve already cited links.
-  # TODO Remove and replace by nginx rewrite rule.
-  # See also web/ui/src/idai_field/RewriteRedirect.tsx
-  defp is_whitelisted_term_filter filter_string do
-    (String.starts_with? filter_string, "resource.period.value.name")
-      or (String.starts_with? filter_string, "resource.relations")
-  end
 
   defp preprocess_multilanguage_filters multilanguage_filters, languages do
     Enum.map multilanguage_filters, fn {name, value} ->

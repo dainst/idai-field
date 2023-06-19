@@ -1,0 +1,35 @@
+/**
+ * @author Thomas Kleinke
+ */
+ .complex-entry-modal {
+  top: 100px;
+
+  .modal-header {
+    background-color: $modal-header-background-color;
+    border-bottom: 1px solid #ccc;
+  
+    h5 {
+      margin-bottom: 0;
+    }
+  }
+  
+  .modal-body {
+    max-height: calc(100vh - 384px);
+    overflow-y: auto;
+  
+    .subfield-section:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  
+    .mdi-information-outline {
+      position: relative;
+      bottom: 2px;
+      font-size: 20px;
+    }
+  
+    .invalid-data {
+      font-style: italic;
+      pointer-events: none;
+    }
+  }  
+ }

@@ -1,3 +1,4 @@
+import { intersect, isArray } from 'tsfun';
 import { Valuelist } from '.';
 import { I18N } from '../tools/i18n';
 import { Field, Subfield } from './configuration/field';
@@ -8,6 +9,21 @@ import { Field, Subfield } from './configuration/field';
  */
 export module Complex {
 
+    export function isConditionFulfilled(entry: any, subfield: Subfield): boolean {
+
+        if (!subfield.condition) return true;
+
+        const data: any = entry[subfield.condition.subfieldName];
+        return data !== undefined
+            ? isArray(subfield.condition.values)
+                ? isArray(data)
+                    ? intersect(data)(subfield.condition.values).length > 0
+                    : subfield.condition.values.includes(data)
+                : data === subfield.condition.values
+            : false;
+    }
+
+    
     /**
      * @returns null if no label could be generated because of invalid data
      */
@@ -41,7 +57,7 @@ export module Complex {
                                    getValueLabel: (valuelist: Valuelist, valueId: string) => string,
                                    valuelist?: Valuelist): string {
 
-        switch(inputType) {
+        switch (inputType) {
             case Field.InputType.INPUT:
             case Field.InputType.TEXT:
                 return getFromI18NString(subfieldData);

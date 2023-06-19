@@ -29,7 +29,8 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string, customCssClass?: string /* TODO provide own options object, or large?: true*/) {
+    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string, customCssClass?: string,
+                             centered: boolean = true) {
 
         this.menuService.setContext(menuContext);
         this.menuContextsStack.push(menuContext);
@@ -38,8 +39,8 @@ export class Modals {
             backdrop: 'static',
             keyboard: false,
             animation: false,
-            centered: true
-        }
+            centered
+        };
         if (size) options.size = size;
         if (customCssClass) options.windowClass = customCssClass;
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Map, clone } from 'tsfun';
 import { Field, Labels, Resource, Complex, I18N, Valuelist} from 'idai-field-core';
 import { Language } from '../../../../services/languages';
@@ -8,6 +8,7 @@ import { Modals } from '../../../../services/modals';
 import { ComplexEntryModalComponent } from './complex-entry-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 /**
  * @author Thomas Kleinke
  */
-export class ComplexComponent implements OnChanges {
+export class ComplexComponent implements OnInit, OnChanges {
 
     @Input() resource: Resource;
     @Input() field: Field;
@@ -32,10 +33,17 @@ export class ComplexComponent implements OnChanges {
     constructor(private labels: Labels,
                 private utilTranslations: UtilTranslations,
                 private messages: Messages,
+                private menus: Menus,
                 private modals: Modals) {}
 
 
     public createEntry = () => this.editEntry({}, true);
+
+
+    ngOnInit() {
+        
+        this.modals.initialize(this.menus.getContext());
+    }
 
 
     ngOnChanges() {

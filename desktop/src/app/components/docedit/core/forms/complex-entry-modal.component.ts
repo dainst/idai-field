@@ -1,15 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, is, isEmpty, on } from 'tsfun';
-import { Complex, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt,
-    validateUrl } from 'idai-field-core';
+import { Complex, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
+    validateUnsignedInt, validateUrl } from 'idai-field-core';
 import { Language } from '../../../../services/languages';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 import { M } from '../../../messages/m';
 import { Messages } from '../../../messages/messages';
 
 
 @Component({
-    templateUrl: './complex-entry-modal.html'
+    templateUrl: './complex-entry-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -27,10 +32,11 @@ export class ComplexEntryModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private messages: Messages,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menus: Menus) {}
 
 
-    public cancel = () => this.activeModal.dismiss('cancel');
+    public cancel = () => this.activeModal.dismiss();
 
     public getSubfieldLabel = (subfield: Subfield) => this.subfieldLabels[subfield.name];
 
@@ -39,16 +45,20 @@ export class ComplexEntryModalComponent {
     public isEmpty = () => isEmpty(this.entry);
 
 
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss();
+        }
+    }
+
+
     public getSubfields(): Array<Subfield> {
         
-        const x = this.subfields?.filter(subfield => {
+        return this.subfields?.filter(subfield => {
             return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType)
                 && Complex.isConditionFulfilled(this.entry, subfield);
         });
-
-        console.log(x);
-
-        return x;
     }
 
 

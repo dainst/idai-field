@@ -121,12 +121,28 @@
                  (cdkDragEnded)="dragging = false">
                 <div class="subfield-input-group input-group">
                     <span class="mdi mdi-drag" cdkDragHandle></span>
-                    <div class="subfield form-control">
-                        <div>
-                            <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
-                            <code>{{subfield.name}}</code>
+                    <div class="subfield form-control container">
+                        <div class="row">
+                            <div class="col-md-6 subfield-left">
+                                <div class="subfield-base-section">
+                                    <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
+                                    <code>{{subfield.name}}</code>
+                                </div>
+                                <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
+                            </div>
+                            <div *ngIf="subfield.condition" class="col-md-6 subfield-right">
+                                <div class="subfield-condition">
+                                    <span class="subfield-condition-subfield">
+                                        {{getConditionSubfieldLabel(subfield.condition)}}:
+                                    </span>
+                                    <span *ngIf="subfield.condition.values === true" i18n="@@boolean.yes">Ja</span>
+                                    <span *ngIf="subfield.condition.values === false" i18n="@@boolean.no">Nein</span>
+                                    <span *ngIf="subfield.condition.values !== true && subfield.condition.values !== false">
+                                        {{getConditionValueLabels(subfield.condition)}}
+                                    </span>                                          
+                                </div>
+                            </div>
                         </div>
-                        <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
                     </div>
                     <div class="input-group-append">
                         <button class="btn btn-danger"

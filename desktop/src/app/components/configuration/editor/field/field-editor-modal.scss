@@ -59,6 +59,7 @@
 
 .subfield {
   height: 55px;
+  max-width: unset;
   color: #495057;
   background-color: #e9ecef;
   user-select: none;
@@ -67,9 +68,37 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
+  .subfield-base-section {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .subfield-left {
+    padding-top: 1px;
+  }
+
+  .subfield-right {
+    padding-top: 2px;
+  }
+
   .subfield-label {
     margin-right: 5px;
     font-weight: bold;
+  }
+
+  .subfield-condition {
+    font-size: 12px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    .subfield-condition-subfield {
+      font-style: italic;
+    }
   }
 }
 

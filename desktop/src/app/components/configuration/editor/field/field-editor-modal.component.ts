@@ -255,6 +255,26 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.labels.get(this.getClonedSubfield(subfieldDefinition));
     }
 
+
+    public getConditionSubfieldLabel(condition: SubfieldCondition): string {
+
+        const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
+
+        return subfield ? this.labels.get(subfield) : '';
+    }
+
+
+    public getConditionValueLabels(condition: SubfieldCondition): string {
+
+        const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
+
+        return subfield
+            ? (condition.values as string[])
+                .map(valueId => this.labels.getValueLabel(subfield.valuelist, valueId))
+                .join(', ')
+            : '';
+    }
+
     
     public isValidSubfieldName(subfieldName: string): boolean {
 

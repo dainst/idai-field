@@ -36,7 +36,7 @@ export module Complex {
         try {
             return subfields.reduce((result, subfield) => {
                 const subfieldData: any = entry[subfield.name];
-                if (!subfieldData) return result;
+                if (subfieldData === undefined) return result;
 
                 if (result.length !== 0) result += ', ';
                 return result

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
@@ -10,6 +11,7 @@ import { UtilTranslations } from '../util/util-translations';
 import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
+import { UpdateEditorComponent } from './settings/update-editor';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -34,6 +36,7 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
+                private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
@@ -61,6 +64,10 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+
+        if (settingsProvider.getSettings()["username"] == "anonymous") {
+            this.promptEditorName()
+        }
     }
 
 
@@ -130,5 +137,25 @@ export class AppComponent {
 
         document.addEventListener('dragover', event => event.preventDefault());
         document.addEventListener('drop', event => event.preventDefault());
+    }
+
+    private async promptEditorName() {
+        //this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                UpdateEditorComponent, { animation: false }
+            );
+            
+            //await modalRef.result;
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            //this.menus.setContext(MenuContext.CONFIGURATION);
+        }
+        
+        
+        //router.navigate(["settings"])
     }
 }

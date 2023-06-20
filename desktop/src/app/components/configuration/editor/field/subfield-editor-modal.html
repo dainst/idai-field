@@ -9,7 +9,7 @@
             Bedingung
         </div>
         <select [(ngModel)]="data.condition.subfieldName" (change)="resetConditionValues()" class="form-control">
-            <option value=""></option>
+            <option value="" i18n="@@configuration.subfieldCondition.none">- Keine -</option>
             <option *ngFor="let subfield of getConditionSubfields()" [value]="subfield.name">
                 {{getSubfieldLabel(subfield)}}
             </option>

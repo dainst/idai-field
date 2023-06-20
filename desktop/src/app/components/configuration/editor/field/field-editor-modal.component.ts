@@ -1,21 +1,15 @@
 import { Component } from '@angular/core';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, Map, isString, on, is, isArray } from 'tsfun';
+import { clone, equal, isEmpty, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, FieldResource, CustomSubfieldDefinition, Labels, Subfield,
-    InPlace, Valuelists, Named, SubfieldCondition } from 'idai-field-core';
+    CustomLanguageConfigurations, FieldResource } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { Modals } from '../../../../services/modals';
-import { MenuContext } from '../../../../services/menu-context';
 import { M } from '../../../messages/m';
-import { SubfieldEditorData, SubfieldEditorModalComponent } from './subfield-editor-modal.component';
-import { Naming } from '../../add/naming';
-import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -39,14 +33,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public hideable: boolean;
     public hidden: boolean;
     public i18nCompatible: boolean;
-    public newSubfieldName: string;
+    public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
-
-    public newSubfieldInputPlaceholder: string = this.i18n({
-        id: 'configuration.newSubfield', value: 'Neues Unterfeld'
-    });
-
-    private subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
 
     protected changeMessage = this.i18n({
         id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
@@ -57,7 +45,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private labels: Labels,
                 private i18n: I18n) {
 
         super(activeModal, modals, menuService, messages);
@@ -67,8 +54,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
-
-    public getClonedSubfieldDefinitions = () => this.getClonedFieldDefinition().subfields;
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
@@ -237,145 +222,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public getInputTypeLabel(subfield: CustomSubfieldDefinition): string {
-
-        return this.availableInputTypes.find(on(Named.NAME, is(subfield.inputType))).label;
-    }
-
-
     public isI18nCompatible(): boolean {
 
         return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
             && !['staff', 'campaigns'].includes(this.field.name);
-    }
-
-
-    public getSubfieldLabel(subfieldDefinition: CustomSubfieldDefinition) {
-        
-        return this.labels.get(this.getClonedSubfield(subfieldDefinition));
-    }
-
-
-    public getConditionSubfieldLabel(condition: SubfieldCondition): string {
-
-        const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
-
-        return subfield ? this.labels.get(subfield) : '';
-    }
-
-
-    public getConditionValueLabels(condition: SubfieldCondition): string {
-
-        const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
-
-        return subfield
-            ? (condition.values as string[])
-                .map(valueId => this.labels.getValueLabel(subfield.valuelist, valueId))
-                .join(', ')
-            : '';
-    }
-
-    
-    public isValidSubfieldName(subfieldName: string): boolean {
-
-        if (!subfieldName) return false;
-
-        const adjustedName: string = Naming.getSubfieldName(subfieldName);
-        return this.getClonedSubfieldDefinitions().find(on(Named.NAME, is(adjustedName))) === undefined;
-    }
-
-
-    public async createSubfield() {
-
-        const adjustedName: string = Naming.getSubfieldName(this.newSubfieldName);
-        this.newSubfieldName = '';
-
-        const newSubfieldDefinition: CustomSubfieldDefinition = {
-            name: adjustedName,
-            inputType: Field.InputType.INPUT
-        };
-
-        const newSubfield: Subfield = {
-            name: adjustedName,
-            inputType: Field.InputType.INPUT,
-            label: {},
-            description: {}
-        };
-
-        const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
-            SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_SUBFIELD_EDIT,
-            undefined,
-            'subfield-editor-modal'
-        );
-
-        componentInstance.subfield = newSubfield;
-        componentInstance.parentField = this.clonedField;
-        componentInstance.category = this.category;
-        componentInstance.subfields = this.clonedField.subfields;
-        componentInstance.availableInputTypes = this.availableInputTypes;
-        componentInstance.projectLanguages = this.getClonedProjectLanguages();
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            editedSubfieldData => {
-                this.addSubfield(newSubfieldDefinition, newSubfield);
-                this.setEditedSubfieldData(editedSubfieldData, newSubfieldDefinition, newSubfield);
-            },
-            () => AngularUtility.blurActiveElement()
-        );
-    }
-
-    
-    public async editSubfield(subfieldDefinition: CustomSubfieldDefinition) {
-
-        const [result, componentInstance] = this.modals.make<SubfieldEditorModalComponent>(
-            SubfieldEditorModalComponent,
-            MenuContext.CONFIGURATION_SUBFIELD_EDIT,
-            undefined,
-            'subfield-editor-modal'
-        );
-
-        const clonedSubfield: Subfield = this.getClonedSubfield(subfieldDefinition);
-
-        componentInstance.subfield = clonedSubfield;
-        componentInstance.parentField = this.clonedField;
-        componentInstance.category = this.category;
-        componentInstance.references = subfieldDefinition.references;
-        componentInstance.subfields = this.clonedField.subfields;
-        componentInstance.availableInputTypes = this.availableInputTypes;
-        componentInstance.projectLanguages = this.getClonedProjectLanguages();
-        componentInstance.configurationDocument = this.configurationDocument;
-        componentInstance.clonedConfigurationDocument = this.clonedConfigurationDocument;
-        componentInstance.applyChanges = this.applyChanges;
-        componentInstance.initialize();
-
-        await this.modals.awaitResult(
-            result,
-            editedSubfieldData => this.setEditedSubfieldData(editedSubfieldData, subfieldDefinition, clonedSubfield),
-            () => AngularUtility.blurActiveElement()
-        );
-    }
-
-
-    public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
-
-        this.getClonedFieldDefinition().subfields = this.getClonedFieldDefinition().subfields.filter(
-            subfield => subfield.name !== subfieldToDelete.name
-        );
-        this.clonedField.subfields = this.clonedField.subfields.filter(
-            subfield => subfield.name !== subfieldToDelete.name
-        );
-    }
-
-
-    public onDropSubfield(event: CdkDragDrop<any>) {
-
-        InPlace.moveInArray(this.getClonedFieldDefinition().subfields, event.previousIndex, event.currentIndex);
     }
 
 
@@ -428,78 +278,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }).length > 0;
     }
 
-    
-    private addSubfield(newSubfieldDefinition: CustomSubfieldDefinition, newSubfield: Subfield) {
-
-        if (!this.clonedField.subfields) this.clonedField.subfields = [];
-        this.clonedField.subfields.push(newSubfield);
-        this.getClonedFieldDefinition().subfields.push(newSubfieldDefinition);
-    }
-
-
-    private setEditedSubfieldData(editedSubfieldData: SubfieldEditorData, subfieldDefinition: CustomSubfieldDefinition,
-                                  clonedSubfield: Subfield) {
-
-        subfieldDefinition.inputType = editedSubfieldData.inputType;
-        clonedSubfield.inputType = editedSubfieldData.inputType;
-
-        if (editedSubfieldData.references.length > 0) {
-            subfieldDefinition.references = editedSubfieldData.references;
-        } else {
-            delete subfieldDefinition.references;
-        }
-
-        if (FieldEditorModalComponent.isValidSubfieldCondition(editedSubfieldData.condition)) {
-            subfieldDefinition.condition = editedSubfieldData.condition;
-            clonedSubfield.condition = editedSubfieldData.condition;
-        } else {
-            delete subfieldDefinition.condition;
-            delete clonedSubfield.condition;
-        }
-
-        this.setValuelistForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
-        this.setLabelsForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
-    }
-
-
-    private setValuelistForEditedSubfield(editedSubfieldData: SubfieldEditorData,
-                                          subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
-
-        const clonedForm: CustomFormDefinition = this.getClonedFormDefinition();
-
-        if (!clonedForm.valuelists) clonedForm.valuelists = {};
-
-        const valuelists: Valuelists = clonedForm.valuelists;
-        if (editedSubfieldData.valuelist) {
-            if (!valuelists[this.clonedField.name]
-                    || isString(valuelists[this.clonedField.name])) {
-                valuelists[this.clonedField.name] = {};
-            }
-            valuelists[this.clonedField.name][subfieldDefinition.name] = editedSubfieldData.valuelist.id;
-        } else if (valuelists[this.clonedField.name]?.[subfieldDefinition.name]) {
-            delete valuelists[this.clonedField.name][subfieldDefinition.name];
-            if (isEmpty(valuelists[this.clonedField.name])) {
-                delete valuelists[this.clonedField.name];
-            }
-        }
-
-        clonedSubfield.valuelist = editedSubfieldData.valuelist;
-    }
-
-
-    private setLabelsForEditedSubfield(editedSubfieldData: SubfieldEditorData,
-                                       subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
-
-        clonedSubfield.label = editedSubfieldData.label;
-        clonedSubfield.description = editedSubfieldData.description;
-        
-        if (!this.subfieldI18nStrings[subfieldDefinition.name]) this.subfieldI18nStrings[subfieldDefinition.name] = {};
-        this.subfieldI18nStrings[subfieldDefinition.name] = {
-            label: editedSubfieldData.label,
-            description: editedSubfieldData.description
-        };
-    }
-
 
     protected getLabel(): I18N.String {
 
@@ -543,24 +321,5 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     private isHidden(): boolean {
 
         return ConfigurationDocument.isHidden(this.getClonedFormDefinition())(this.field);
-    }
-
-
-    private getClonedSubfield(subfieldDefinition: CustomSubfieldDefinition): Subfield {
-
-        return this.clonedField.subfields.find(clonedSubfield => {
-            return clonedSubfield.name === subfieldDefinition.name;
-        });
-    }
-
-
-    private static isValidSubfieldCondition(condition: SubfieldCondition): boolean {
-
-        return condition
-            && condition.subfieldName
-            && (condition.values === true
-                || condition.values === false
-                || isArray(condition.values) && condition.values.length > 0
-            );
     }
 }

@@ -29,7 +29,6 @@ export class ValuelistSelectorComponent {
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
         Promise<ApplyChangesResult>;
     @Input() disabled: boolean;
-    
 
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
 

@@ -729,7 +729,7 @@ describe('ConfigLoader', () => {
             'A:default': { fields: {} },
             B: { fields: {} },
             'C:default': { fields: {} },
-            D: { fields: {} },
+            D: { fields: {} },
             Parent1: { fields: {} },
             'Parent2:default': { fields: {} }
         };

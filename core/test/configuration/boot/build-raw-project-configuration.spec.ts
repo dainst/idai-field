@@ -2478,63 +2478,49 @@ describe('buildRawProjectConfiguration', () => {
             inputType: 'relation'
         }];
 
+        const defaultLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    label: 'Default category label',
+                    fields: {
+                        field1: { label: 'Field 1 Default' },
+                        field2: { label: 'Field 2' }
+                    }
+                }
+            },
+            commons: {
+                aCommon: { label: 'Common field A' }
+            },
+            relations: {
+                isRelated: { label: 'Default relation label' }
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    label: 'Custom category label',
+                    fields: {
+                        field1: { label: 'Field 1 Custom' },
+                        field3: { label: 'Field 3' },
+                        aCommon: { label: 'Custom common field label' }
+                    }
+                }
+            },
+            relations: {
+                isRelated: { label: 'Custom relation label' }
+            }
+        };
+
         const languageConfigurations: LanguageConfigurations = {
             complete: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Custom category label',
-                            fields: {
-                                field1: { label: 'Field 1 Custom' },
-                                field2: { label: 'Field 2' },
-                                field3: { label: 'Field 3' },
-                                aCommon: { label: 'Custom common field label' }
-                            }
-                        }
-                    },
-                    commons: {
-                        aCommon: { label: 'Common field A' }
-                    },
-                    relations: {
-                        isRelated: { label: 'Custom relation label' }
-                    }
-                }]
+                en: [customLanguageConfiguration, defaultLanguageConfiguration]
             },
             default: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Default category label',
-                            fields: {
-                                field1: { label: 'Field 1 Default' },
-                                field2: { label: 'Field 2' }
-                            }
-                        }
-                    },
-                    commons: {
-                        aCommon: { label: 'Common field A' }
-                    },
-                    relations: {
-                        isRelated: { label: 'Default relation label' }
-                    }
-                }]
+                en: [defaultLanguageConfiguration]
             },
             custom: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Custom category label',
-                            fields: {
-                                field1: { label: 'Field 1 Custom' },
-                                field3: { label: 'Field 3' },
-                                aCommon: { label: 'Custom common field label' }
-                            }
-                        }
-                    },
-                    relations: {
-                        isRelated: { label: 'Custom relation label' }
-                    }
-                }]
+                en: [customLanguageConfiguration]
             }
         };
 

@@ -19,7 +19,7 @@ export class UpdateEditorComponent {
         private settingsService: SettingsService,
         private settingsProvider: SettingsProvider
     ) {
-        this.currentEditor = this.settingsProvider.getSettings()["username"];
+        this.currentEditor = this.settingsProvider.getSettings().username;
     }
 
     public confirm = () => {

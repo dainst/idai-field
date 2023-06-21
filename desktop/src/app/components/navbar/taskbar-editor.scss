@@ -1,0 +1,17 @@
+taskbar-editor {
+    #editor {
+        padding-right: 1rem !important;
+
+        position: relative;
+        left: 1px;
+        height: 20px;
+        .mdi {
+            float: left;
+            margin-right: 10px;
+        }
+
+        #editor-name {
+            white-space: nowrap
+        }
+    }
+}

@@ -12,6 +12,8 @@ import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { UpdateEditorComponent } from './settings/update-editor';
+import { MenuContext } from '../services/menu-context';
+import { Menus } from '../services/menus';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -36,6 +38,7 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
+                private menus: Menus,
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
@@ -139,8 +142,8 @@ export class AppComponent {
         document.addEventListener('drop', event => event.preventDefault());
     }
 
-    private async promptEditorName() {
-        //this.menus.setContext(MenuContext.CONFIGURATION_MODAL);
+    public async promptEditorName() {
+        this.menus.setContext(MenuContext.MODAL);
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
@@ -152,7 +155,7 @@ export class AppComponent {
         } catch (_) {
             return false;
         } finally {
-            //this.menus.setContext(MenuContext.CONFIGURATION);
+            this.menus.setContext(MenuContext.DEFAULT);
         }
         
         

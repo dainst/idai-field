@@ -7,7 +7,9 @@
         <taskbar-conflicts></taskbar-conflicts>
     </li>
 
-    <li> <taskbar-editor></taskbar-editor></li>
+    <li id="editor" class="nav-item pr-2">
+        <taskbar-editor></taskbar-editor>
+    </li>
 
     <li *ngIf="showSyncStatus()" class="nav-item pr-2">
         <taskbar-sync-status></taskbar-sync-status>
@@ -17,5 +19,3 @@
         <projects></projects>
     </li>
 </ul>
-
-

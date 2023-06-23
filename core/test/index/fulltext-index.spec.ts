@@ -1,5 +1,7 @@
+import { clone } from 'tsfun';
 import { FulltextIndex } from '../../src/index/fulltext-index';
 import { IndexItem } from '../../src/index/index-item';
+import { Field } from '../../src/model';
 import { doc as helpersDoc } from '../test-helpers';
 
 
@@ -10,7 +12,11 @@ import { doc as helpersDoc } from '../test-helpers';
 describe('FulltextIndex', () => {
 
     let fulltextIndex;
-    const fieldsToIndex = ['identifier', 'shortDescription'];
+
+    const fieldsToIndex: Array<Field> = [
+        { name: 'identifier', inputType: Field.InputType.IDENTIFIER },
+        { name: 'shortDescription', inputType: Field.InputType.SIMPLE_INPUT }
+    ];
 
 
     function doc(id, identifier, category, shortDescription = 'short') {
@@ -34,7 +40,7 @@ describe('FulltextIndex', () => {
 
         FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
         expect(FulltextIndex.get(fulltextIndex, 'identifier1', ['category'])).toEqual(['1']);
-        expect(FulltextIndex.get(fulltextIndex,'ide', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'ide', ['category'])).toEqual(['1']);
     });
 
 
@@ -211,12 +217,45 @@ describe('FulltextIndex', () => {
 
     it('index all language entries of shortDescription', () => {
 
+        const clonedFieldsToIndex = clone(fieldsToIndex);
+        clonedFieldsToIndex[1].inputType = Field.InputType.INPUT;
+
         const d = doc('1', 'identifier1', 'category');
         d['resource']['shortDescription'] = { de: 'Deutsch', en: 'English', it: 'Italiano' };
-        FulltextIndex.put(fulltextIndex, d, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d, clonedFieldsToIndex);
         expect(FulltextIndex.get(fulltextIndex, 'Deutsch', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fulltextIndex, 'English', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fulltextIndex, 'Italiano', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'other', ['category'])).toEqual([]);
+    });
+
+
+    it('index all value labels of valuelist based shortDescription', () => {
+
+        const clonedFieldsToIndex = clone(fieldsToIndex);
+        clonedFieldsToIndex[1].inputType = Field.InputType.DROPDOWN;
+        clonedFieldsToIndex[1].valuelist = {
+            values: {
+                testValue1: {
+                    label: { de: 'Deutsch', en: 'English', it: 'Italiano' }
+                },
+                testValue2: {} // Use value ID as fallback if no value labels are provided
+             }
+        };
+
+        const d1 = doc('1', 'identifier1', 'category');
+        d1['resource']['shortDescription'] = 'testValue1';
+        const d2 = doc('2', 'identifier1', 'category');
+        d2['resource']['shortDescription'] = 'testValue2';
+
+        FulltextIndex.put(fulltextIndex, d1, clonedFieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, clonedFieldsToIndex);
+
+        expect(FulltextIndex.get(fulltextIndex, 'Deutsch', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'English', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'Italiano', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fulltextIndex, 'testValue1', ['category'])).toEqual([]);
+        expect(FulltextIndex.get(fulltextIndex, 'testValue2', ['category'])).toEqual(['2']);
         expect(FulltextIndex.get(fulltextIndex, 'other', ['category'])).toEqual([]);
     });
 
@@ -241,10 +280,12 @@ describe('FulltextIndex', () => {
 
     it('index field specified in search configuration', () => {
 
+        const customField: Field = { name: 'customField', inputType: Field.InputType.SIMPLE_INPUT };
+
         const document = doc('1', 'identifier1', 'category');
         document.resource.customField = 'testValue';
         const ie = IndexItem.from(document);
-        FulltextIndex.put(fulltextIndex, document, fieldsToIndex.concat(['customField']));
+        FulltextIndex.put(fulltextIndex, document, fieldsToIndex.concat([customField]));
 
         const results = FulltextIndex.get(fulltextIndex, 'testValue', ['category']);
         expect(results.length).toBe(1);

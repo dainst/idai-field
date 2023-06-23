@@ -20,5 +20,6 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'constraintIndexed',
     'fulltextIndexed',
     'references',
+    'selectable',
     'subfields'
 ];

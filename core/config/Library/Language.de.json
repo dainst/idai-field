@@ -876,7 +876,8 @@
           "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
         },
         "processor": {
-          "label": "Bearbeiterin/Bearbeiter"
+          "label": "Bearbeiterin/Bearbeiter",
+          "description": "Bearbeiterin/Bearbeiter des Bildes im Falle von Änderungen nach der Erstellung des Bildes"
         },
         "imageRights": {
           "label": "Bildrechte"
@@ -1032,6 +1033,33 @@
         "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
+        },
+        "vesselpart": {
+          "label": "Gefäßteil"
+        },
+        "Firing": {
+          "label": "Brennart der Keramik"
+        },
+        "FormComparisonCompendia": {
+          "label": "Formvergleich Kompendien"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "Formvergleich Kompendien Detail"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "Dekorationsvergleich Kompendien"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "Dekorationsvergleich Kompendien Detail"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "Applikationsvergleich Kompendien"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "Applikationsvergleich Kompendien Detail"
+        },
+        "Drawing": {
+          "label": "Zeichnung vorhanden"
         }
       }
     },

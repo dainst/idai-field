@@ -1,13 +1,13 @@
 {
-  "testProject": "Test project",
-  "testCampaign": "Test campaign",
-  "person": "Person",
+  "testProject": "Projeto de teste",
+  "testCampaign": "Campanha de testen",
+  "person": "Pessoa",
   "trench": "Trench",
   "trenchShort": "T",
-  "stratigraphicalUnit": "Stratrigraphical unit",
-  "stratigraphicalUnitShort": "SU",
+  "stratigraphicalUnit": "Unidade estratrigráfica",
+  "stratigraphicalUnitShort": "UE",
   "layer": "Layer",
-  "architecture": "Architecture",
+  "architecture": "Arquitetura",
   "grave": "Grave",
   "findShort": "F",
   "coin": "Coin",
@@ -22,6 +22,5 @@
   "building": "Building",
   "buildingShort": "B",
   "room": "Room",
-  "roomShort": "R",
-  "mapLayer": "Map layer"
+  "roomShort": "R"
 }

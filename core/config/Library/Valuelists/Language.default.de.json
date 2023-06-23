@@ -86,10 +86,13 @@
       "Frühhellenistisch": "Frühhellenistisch",
       "Frühkaiserzeitlich": "Frühkaiserzeitlich",
       "Frühklassisch": "Frühklassisch",
+      "Frühmittelalter": "Frühmittelalter",
       "Geometrisch": "Geometrisch",
       "Hellenistisch": "Hellenistisch",
+      "Hochmittelalter": "Hochmittelalter",
       "Kaiserzeitlich": "Kaiserzeitlich",
       "Klassisch": "Klassisch",
+      "Mittelalter": "Mittelalter",
       "Neolithisch": "Neolithisch",
       "Neuzeitlich": "Neuzeitlich",
       "Osmanisch": "Osmanisch",
@@ -101,7 +104,8 @@
       "Spätbyzantinisch": "Spätbyzantinisch",
       "Späthellenistisch": "Späthellenistisch",
       "Spätkaiserzeitlich": "Spätkaiserzeitlich",
-      "Spätklassisch": "Spätklassisch"
+      "Spätklassisch": "Spätklassisch",
+      "Spätmittelalter": "Spätmittelalter"
     }
   },
   "colors-default-1": {

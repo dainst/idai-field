@@ -77,9 +77,6 @@
     "spatialLocation": {
       "label": "Spatial location"
     },
-    "staff": {
-      "label": "Staff"
-    },
     "provenance": {
       "label": "Provenance"
     },
@@ -208,8 +205,7 @@
       }
     },
     "ExcavationArea": {
-      "label": "Excavation area",
-      "fields": {}
+      "label": "Excavation area"
     },
     "Glass": {
       "label": "Glass",
@@ -252,8 +248,7 @@
       }
     },
     "Planum": {
-      "label": "Planum",
-      "fields": {}
+      "label": "Planum"
     },
     "Brick": {
       "label": "Brick",
@@ -463,8 +458,7 @@
       }
     },
     "SurveyUnit": {
-      "label": "Survey unit",
-      "fields": {}
+      "label": "Survey unit"
     },
     "Wood": {
       "label": "Wood",
@@ -491,7 +485,7 @@
           "label": "Wood color outside Munsell-Nr."
         },
         "colorInsideMunsell": {
-            "label": "Wood color inside Munsell-Nr."
+          "label": "Wood color inside Munsell-Nr."
         },
         "colorBreak": {
           "label": "Wood color(s) core"
@@ -715,12 +709,6 @@
         },
         "hasDisturbance": {
           "label": "Disturbance"
-        },
-        "featureGroupBorders": {
-          "label": "Borders of the feature segment"
-        },
-        "featureGroupForm": {
-          "label": "Form of the feature segment"
         }
       }
     },
@@ -800,11 +788,11 @@
       "label": "Pottery",
       "fields": {
         "amountSherdsWall": {
-         "label": "Number of wall sherds"
-       },
-       "amountSherdsRim": {
-         "label": "Number of rim sherds"
-       },
+          "label": "Number of wall sherds"
+        },
+        "amountSherdsRim": {
+          "label": "Number of rim sherds"
+        },
         "amountSherdsBase": {
           "label": "Number of base sherds"
         },
@@ -958,6 +946,9 @@
         },
         "ApplicationComparisonCompendiadetail": {
           "label": "Application comparison compendia detail"
+        },
+        "Drawing": {
+          "label": "Drawing present"
         }
       }
     },
@@ -1409,8 +1400,7 @@
       }
     },
     "Area": {
-      "label": "Area",
-      "fields": {}
+      "label": "Area"
     },
     "Excavation": {
       "label": "Excavation",
@@ -1421,8 +1411,7 @@
       }
     },
     "Type": {
-      "label": "Type",
-      "fields": {}
+      "label": "Type"
     },
     "TypeCatalog": {
       "label": "Type catalog",

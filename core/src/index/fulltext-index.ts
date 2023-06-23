@@ -1,9 +1,10 @@
-import { flatMap, flow, filter, isEmpty, map, forEach, lookup, not, isObject, flatten } from 'tsfun';
+import { flatMap, flow, filter, isEmpty, map, forEach, not, flatten, isString } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { ResultSets } from './result-sets';
 import { StringUtils } from '../tools/string-utils';
 import { I18N } from '../tools';
+import { Field, Valuelist, ValuelistValue } from '../model';
 
 
 export interface FulltextIndex {
@@ -26,7 +27,7 @@ export module FulltextIndex {
 
     export function put(index: FulltextIndex,
                         document: Document,
-                        fieldsToIndex: string[],
+                        fieldsToIndex: Array<Field>,
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
@@ -37,10 +38,8 @@ export module FulltextIndex {
 
         flow(
             fieldsToIndex,
-            filter(lookup(document.resource)),
-            filter((field: any) => document.resource[field] !== ''),
-            map(lookup(document.resource)),
-            flatMap(getTokens),
+            filter((field: Field) => document.resource[field.name] && document.resource[field.name] !== ''),
+            flatMap((field: Field) => getTokens(document.resource[field.name], field)),
             map(StringUtils.toLowerCase),
             map(StringUtils.toArray),
             forEach(indexToken(index, document))
@@ -166,10 +165,36 @@ export module FulltextIndex {
     }
 
 
-    function getTokens(value: string|I18N.String): string[] {
+    function getTokens(value: string|I18N.String, field: Field): string[] {
 
-        return isObject(value)
-            ? flatten(Object.values(value).map(text => StringUtils.split(tokenizationPattern)(text)))
-            : StringUtils.split(tokenizationPattern)(value as string);
+        return isString(value)
+            ? field.valuelist
+                ? getTokensFromValuelist(value, field.valuelist)
+                : getTokensFromString(value)
+            : getTokensFromI18nString(value);
+    }
+
+
+    function getTokensFromValuelist(valueId: string, valuelist: Valuelist): string[] {
+
+        const value: ValuelistValue = valuelist.values[valueId];
+
+        return value
+            ? value.label && !isEmpty(value.label)
+                ? getTokensFromI18nString(value.label)
+                : getTokensFromString(valueId)
+            : [];
+    }
+
+
+    function getTokensFromString(stringValue: string) {
+
+        return StringUtils.split(tokenizationPattern)(stringValue);
+    }
+
+
+    function getTokensFromI18nString(i18nString: I18N.String): string[] {
+
+        return flatten(Object.values(i18nString).map(text => StringUtils.split(tokenizationPattern)(text)));
     }
 }

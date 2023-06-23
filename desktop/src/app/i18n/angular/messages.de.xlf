@@ -275,7 +275,7 @@
       </trans-unit>
       <trans-unit id="ngb.toast.close-aria" datatype="html">
         <source>Close</source>
-        <target state="final">Close</target>
+        <target state="final">Schließen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/toast/toast.ts</context>
           <context context-type="linenumber">70</context>

@@ -611,7 +611,7 @@
           "inputType": "dropdown"
         },
         "archaeoDox:distinguishingCriterium": {
-          "inputType": "dropdown"
+          "inputType": "checkboxes"
         },
         "archaeoDox:isNatural": {
           "inputType": "boolean",

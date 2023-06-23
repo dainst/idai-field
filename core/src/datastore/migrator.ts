@@ -7,7 +7,8 @@ export const singleToMultipleValuesFieldNames: string[] = [
     'processor',
     'supervisor',
     'draughtsmen',
-    'campaign'
+    'campaign',
+    'archaeoDox:distinguishingCriterium'
 ];
 
 

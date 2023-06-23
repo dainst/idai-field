@@ -262,7 +262,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isConstraintIndexOptionEnabled(): boolean {
 
         return this.category.name !== 'Project'
-            && (this.field.name !== FieldResource.SHORTDESCRIPTION)
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     }
 
@@ -278,11 +277,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.i18n({
                 id: 'configuration.fieldSpecificSearch.notAllowedForInputType',
                 value: 'Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.'
-            });
-        } else if (this.field.name === FieldResource.SHORTDESCRIPTION) {
-            return this.i18n({
-                id: 'configuration.fieldSpecificSearch.changingNotAllowed',
-                value: 'Die Einstellung kann für dieses Feld nicht geändert werden.'
             });
         } else {
             return '';

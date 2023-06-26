@@ -178,6 +178,8 @@ export class SubfieldEditorModalComponent {
 
     private assertChangesDoNotViolateConditionalSubfields() {
 
+        if (!this.subfields?.length) return;
+
         for (let subfield of this.subfields.filter(subfield => {
             return subfield.condition?.subfieldName === this.subfield.name;
         })) {

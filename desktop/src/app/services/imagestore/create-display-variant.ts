@@ -14,7 +14,7 @@ export async function createDisplayVariant(document: ImageDocument, imagestore: 
     const width: number = document.resource.width;
     const height: number = document.resource.height;
 
-    const sharpImageHandle =  ImageManipulation.getImage(originalData);
+    const sharpImageHandle =  ImageManipulation.getSharpImage(originalData);
 
     const convertToJpeg: boolean = await shouldConvertToJpeg(
         width * height, fileExtension, sharpImageHandle

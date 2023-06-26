@@ -1,5 +1,6 @@
 const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
+import ExifReader from 'exifreader';
 
 export module ImageManipulationErrors {
 
@@ -18,24 +19,18 @@ export module ImageManipulation {
     export const MAX_DISPLAY_HEIGHT = 10000;
 
 
-    export function getImage(buffer: Buffer): any {
+    /**
+     * Create a sharp image instance based on raw buffer data.
+     * 
+     * See also https://sharp.pixelplumbing.com.
+     * 
+     * @param buffer, the raw image data.
+     * @returns A sharp instance or Error for invalid buffer parameters (for example 
+     * if the absolute number of pixels exceeds Field Desktop's maximum)
+     */
+    export function getSharpImage(buffer: Buffer): any {
 
         return sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
-    }
-
-
-    export async function getSize(buffer: Buffer): Promise<{ width: number, height: number }> {
-
-        try {
-            const metadata = await getImage(buffer).metadata();
-            return { width: metadata.width, height: metadata.height };
-        } catch (err) {
-            if (err.toString().includes('Input image exceeds pixel limit')) {
-                throw [ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED, MAX_INPUT_PIXELS];
-            } else {
-                throw err;
-            }
-        }
     }
 
 
@@ -43,7 +38,7 @@ export module ImageManipulation {
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            return await getImage(buffer)
+            return await getSharpImage(buffer)
                 .resize(undefined, targetHeight)
                 .jpeg({ quality: targetJpegQuality })
                 .toBuffer();

@@ -11,7 +11,8 @@ import { M } from '../../messages/m';
 import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
-import { ImageManipulation, ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { getMetadata } from '../../../services/imagestore/exif-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
@@ -273,13 +274,15 @@ export class ImageUploader {
     private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
                                       depictsRelationTarget?: Document): Promise<any> {
 
-        const { width, height } = await ImageManipulation.getSize(buffer);
+        const {width, height, creator, creationDate} = await getMetadata(buffer)
 
         const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
                 category: category.name,
                 originalFilename: fileName,
+                creationDate,
+                creator,
                 width,
                 height,
                 relations: {

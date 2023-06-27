@@ -12,7 +12,7 @@ import { ImageCategoryPickerModalComponent } from './image-category-picker-modal
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
-import { getMetadata } from '../../../services/imagestore/exif-metadata';
+import { getMetadata } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
@@ -274,7 +274,7 @@ export class ImageUploader {
     private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
                                       depictsRelationTarget?: Document): Promise<any> {
 
-        const {width, height, creator, creationDate} = await getMetadata(buffer)
+        const {width, height, creator, creationDate, copyright} = await getMetadata(buffer)
 
         const document: NewImageDocument = {
             resource: {

@@ -31,9 +31,14 @@ export class TaskbarEditorComponent implements OnInit {
     public getInitials(): string {
         let initials: string = '';
 
+        if(this.currentEditor === 'anonymous') return '';
+
         let splitted: string[] = this.currentEditor.split(' ');
         for (let i = 0; i < splitted.length; i++) {
-            initials += splitted[i].charAt(0) + '.';
+            const word = splitted[i].trim();
+            if (word !== '') {
+                initials += word.charAt(0) + '.';
+            }
         }
         return initials;
     }

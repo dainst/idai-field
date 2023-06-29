@@ -6,13 +6,17 @@ import { Settings } from '../../services/settings/settings';
 
 
 @Component({
-    templateUrl: './update-editor.html'
+    templateUrl: './update-editor.html',
+    host: {
+        '(window:keydown)': 'clickEnter($event)'
+    }
 })
 /**
  * @author Danilo Guzzo
  */
 export class UpdateEditorComponent {
     public currentEditor: string;
+
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -22,14 +26,22 @@ export class UpdateEditorComponent {
         this.currentEditor = this.settingsProvider.getSettings().username;
     }
 
+
     public confirm = () => {
-        console.log(this.currentEditor);
         let oldSettings: Settings = this.settingsProvider.getSettings();
-        oldSettings.username = this.currentEditor;
+        oldSettings.username = this.currentEditor;  
 
         this.settingsService.updateSettings(oldSettings);
         this.activeModal.close();
     }
 
+
     public cancel = () => this.activeModal.dismiss('cancel');
+    
+
+    public clickEnter(event: KeyboardEvent){
+        if(event.key === 'Enter'){
+            this.confirm();
+        }
+    }
 }

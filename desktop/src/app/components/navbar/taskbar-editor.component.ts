@@ -18,7 +18,6 @@ export class TaskbarEditorComponent implements OnInit {
         private appComponent: AppComponent
     ) {
         this.currentEditor = this.settingsProvider.getSettings().username;
-        this.createInitials();
         this.settingsProvider
             .settingsChangesNotifications()
             .subscribe((settings) => (this.currentEditor = settings.username));
@@ -29,20 +28,13 @@ export class TaskbarEditorComponent implements OnInit {
         this.currentEditor = this.settingsProvider.getSettings().username;
     }
 
-    public createInitials() {
-        let tempInitials: string = '';
-        if (this.currentEditor.length > 20) {
-            let splitted: string[] = this.currentEditor.split(' ');
-            for (let i = 0; i <= splitted.length - 1; i++) {
-                tempInitials += splitted[i].charAt(0).toUpperCase() + '.';
-            }
-            return tempInitials;
-        } else {
-            return this.currentEditor;
-        }
-    }
+    public getInitials(): string {
+        let initials: string = '';
 
-    public getEditorName(): string {
-        return this.currentEditor;
+        let splitted: string[] = this.currentEditor.split(' ');
+        for (let i = 0; i < splitted.length; i++) {
+            initials += splitted[i].charAt(0) + '.';
+        }
+        return initials;
     }
 }

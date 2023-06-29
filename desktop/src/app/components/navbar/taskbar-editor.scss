@@ -1,20 +1,29 @@
 taskbar-editor {
     #editor {
-        padding-right: 1rem !important;
         position: relative;
-        left: 1px;
         height: 20px;
 
         .mdi {
-            float: left;
-            margin-right: 10px;
+             float: left;
+             margin-right: 2px;
         }
+    }
 
-        #editor-name {
-            white-space: nowrap;
+    #button {
+        cursor: default;
+        border: none;
+        background-color: inherit;
+        outline: none;
+        box-shadow: none;
+        &:hover { 
+            color: $link-hover-color;
         }
+    }
 
-        .mdi-account-check:hover {
+    #editor-initials {
+        white-space: nowrap;
+        padding-bottom: 0px;
+        &:hover { 
             color: $link-hover-color;
         }
     }

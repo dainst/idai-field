@@ -1,12 +1,13 @@
-<div id="editor"  type="button" (click)="openModal()">
-    <span
-        class="mdi mdi-account-alert"
-        *ngIf="currentEditor === 'anonymous'"
-        ngbTooltip="currentEditor"
-    ></span>
-    <span
-        class="mdi mdi-account-check"
-        *ngIf="currentEditor != 'anonymous'"
-    ></span>
-    <a id="editor-name" class="nav-link px-2"> {{createInitials()}} </a>
+<div id="editor">
+    <button id="button" (click)="openModal()">
+        <span
+            class="mdi mdi-account-alert"
+            *ngIf="currentEditor === 'anonymous'"
+        ></span>
+        <span
+            class="mdi mdi-account-check"
+            *ngIf="currentEditor !== 'anonymous'"
+        ></span>
+        <span id="editor-initials" class="nav-link px-2">{{getInitials()}}</span>
+    </button>
 </div>

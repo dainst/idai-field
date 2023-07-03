@@ -1,0 +1,20 @@
+{
+    "name": "project_enricher",
+    "version": "1.0.0",
+    "main": "createFullConfiguration",
+    "type": "module",
+    "dependencies": {
+        "axios": "0.26.0",
+        "idai-field-core": "^1.1.6",
+        "tsfun": "5.5.38"
+    },
+    "devDependencies": {
+        "@types/jasmine": "~3.5.0",
+        "@types/node": "^12.12.38",
+        "@types/pouchdb": "^6.4.0",
+        "typescript": "~4.1.5"
+    },
+    "scripts": {
+        "build": "tsc -p ."
+    }
+}

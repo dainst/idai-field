@@ -17,6 +17,9 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   pubsub_server: FieldPublication.PubSub,
   live_view: [signing_salt: "K/pS/S7t"]
 
+config :field_publication,
+  field_user_db: "field_users"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

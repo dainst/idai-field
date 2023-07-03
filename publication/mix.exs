@@ -57,11 +57,25 @@ defmodule FieldPublication.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
+    seed_project_name = "test"
+
     [
-      setup: ["deps.get", "assets.setup", "assets.build"],
+      setup: [
+        "deps.get",
+        "assets.setup",
+        "assets.build",
+        "cmd npm install --prefix priv/publication_enricher",
+        "cmd npm run build --prefix priv/publication_enricher",
+        "run --eval 'FieldPublication.CouchService.initial_setup()'"
+      ],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      "seed-desktop-test": [
+        "run --eval 'FieldPublication.Project.create(\"#{seed_project_name}\")'",
+        # TODO: Password via config?
+        "run --eval 'FieldPublication.Project.initialize_publication(\"#{seed_project_name}\", \"http://localhost:3000\", \"#{seed_project_name}\", \"#{seed_project_name}\", \"sync_test\")'"
+      ]
     ]
   end
 end

@@ -4,27 +4,27 @@ taskbar-editor {
         height: 20px;
 
         .mdi {
-             float: left;
-             margin-right: 2px;
+            float: left;
+            margin-right: 5px;
+            &:hover {
+                color: $link-hover-color;
+            }
         }
-    }
 
-    #button {
-        cursor: default;
-        border: none;
-        background-color: inherit;
-        outline: none;
-        box-shadow: none;
-        &:hover { 
-            color: $link-hover-color;
+        #button {
+            cursor: default;
+            border: none;
+            background-color: inherit;
+            outline: none;
+            box-shadow: none;
         }
-    }
 
-    #editor-initials {
-        white-space: nowrap;
-        padding-bottom: 0px;
-        &:hover { 
-            color: $link-hover-color;
+        #editor-initials {
+            white-space: nowrap;
+            padding-bottom: 0px;
+            &:hover {
+                color: $link-hover-color;
+            }
         }
     }
 }

@@ -105,6 +105,7 @@ export class ImageUploader {
         return undefined;
     }
 
+
     private async selectMetadata(fileCount: number, depictsRelationTarget?: Document): Promise<ImageUploadMetadata|undefined> {
         this.projectConfiguration.getCategory('Image');
 
@@ -120,34 +121,6 @@ export class ImageUploader {
             return await modal.result;
         } catch (err) {
             return undefined;
-        }
-    }
-
-
-    private async chooseCategory(fileCount: number,
-                                 depictsRelationTarget?: Document): Promise<CategoryForm|undefined> {
-
-        const imageCategory = this.projectConfiguration.getCategory('Image');
-        if ((imageCategory.children.length > 0)
-                || fileCount >= 100 || depictsRelationTarget) {
-            this.menuService.setContext(MenuContext.MODAL);
-            const modal: NgbModalRef = this.modalService.open(
-                ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-            );
-
-            modal.componentInstance.fileCount = fileCount;
-            modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
-
-            try {
-                return await modal.result;
-            } catch (err) {
-                // Modal has been cancelled
-                return undefined;
-            } finally {
-                this.menuService.setContext(MenuContext.DEFAULT);
-            }
-        } else {
-            return imageCategory;
         }
     }
 

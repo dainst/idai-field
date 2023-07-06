@@ -1,7 +1,7 @@
 <div class="modal-body" id="image-category-picker-modal">
     <div *ngIf="fileCount >= 100" class="text-center alert alert-warning"
-         i18n="@@imageUpload.imageCategoryPickerModal.warning">
-       Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
+        i18n="@@imageUpload.imageCategoryPickerModal.warning">
+        Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
     </div>
     <div *ngIf="depictsRelationTarget" class="text-center alert alert-info">
         <span *ngIf="fileCount == 1" i18n="@@imageUpload.imageCategoryPickerModal.linkInfo.single">
@@ -18,26 +18,48 @@
         </span>
     </p>
     <ul *ngIf="imageCategory.children && imageCategory.children.length > 0" class="list-group">
-        <li [ngClass]="{ 'abstract-category': imageCategory.isAbstract }" class="list-group-item popover-item"
-            id="choose-image-supercategory" (click)="!imageCategory.isAbstract && activeModal.close(imageCategory)">
+        <li [ngClass]="{ 'abstract-category': imageCategory.isAbstract, 'selected': (imageCategory.name == metadata.category) }" class="list-group-item popover-item" 
+            id="choose-image-supercategory" (click)="!imageCategory.isAbstract && setCategory(imageCategory.name)">
             <category-icon [category]="imageCategory.name" size="30"></category-icon>
             <span class="image-category-label">{{getImageCategoryLabel(imageCategory)}}</span>
-            <ul id="choose-image-subcategory">
-                <li *ngFor="let childCategory of imageCategory.children; let index = index"
-                    id="choose-image-subcategory-option-{{index}}"
-                    class="list-group-item popover-item"
-                    (click)="activeModal.close(childCategory)">
-                    <category-icon [category]="childCategory.name" size="30"></category-icon>
-                    <span class="image-category-label">{{getImageCategoryLabel(childCategory)}}</span>
-                </li>
-            </ul>
+            
         </li>
+            <li *ngFor="let childCategory of imageCategory.children; let index = index"
+                id="choose-image-subcategory-option-{{index}}" class="list-group-item popover-item" [ngClass]="{ 'selected': (childCategory.name == metadata.category)}"
+                (click)="setCategory(childCategory.name)">
+                <category-icon class="child-image-icon" [category]="childCategory.name" size="30"></category-icon>
+                <span class="image-category-label">{{getImageCategoryLabel(childCategory)}}</span>
+            </li>
     </ul>
+
+    <p i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmen">
+        Bitte wählen Sie die Bildersteller/-innen aus.
+    </p>
+
+    <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
+        <label class="form-check-label">
+            <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleCreator(person)"
+                [checked]="metadata.draughtsmen.includes(person)">
+            {{person}}
+        </label>
+    </div>
+
+    <p i18n="@@imageUpload.imageCategoryPickerModal.chooseProcessors">
+        Bitte wählen Sie die Bearbeiter/-innen aus.
+    </p>
+
+    <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
+        <label class="form-check-label">
+            <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleProcessor(person)"
+                [checked]="metadata.processor.includes(person)">
+            {{person}}
+        </label>
+    </div>
 </div>
 
 <div class="modal-footer">
-    <button *ngIf="!imageCategory.children || imageCategory.children.length == 0" type="button" class="btn btn-primary"
-            (click)="activeModal.close(imageCategory)">
+    <button type="button" class="btn btn-primary"
+        (click)="activeModal.close(metadata)">
         <span i18n="@@buttons.ok">OK</span>
     </button>
     <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancel')">

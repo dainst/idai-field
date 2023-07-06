@@ -8,7 +8,7 @@ import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { M } from '../../messages/m';
-import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
+import { ImageCategoryPickerModalComponent, ImageUploadMetadata } from './image-category-picker-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
@@ -67,15 +67,15 @@ export class ImageUploader {
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
-            const category: CategoryForm|undefined = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
-            if (!category) return uploadResult;
+            const metadata: ImageUploadMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
+            if (!metadata) return uploadResult;
 
             this.menuService.setContext(MenuContext.MODAL);
             const uploadModalRef = this.modalService.open(
                 UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
             uploadResult = await this.uploadImageFiles(
-                imageFiles, category, uploadResult, depictsRelationTarget
+                imageFiles, metadata, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
             this.menuService.setContext(MenuContext.DEFAULT);
@@ -103,6 +103,24 @@ export class ImageUploader {
             ];
         }
         return undefined;
+    }
+
+    private async selectMetadata(fileCount: number, depictsRelationTarget?: Document): Promise<ImageUploadMetadata|undefined> {
+        this.projectConfiguration.getCategory('Image');
+
+        this.menuService.setContext(MenuContext.MODAL);
+        const modal: NgbModalRef = this.modalService.open(
+            ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+        )
+
+        modal.componentInstance.fileCount = fileCount;
+        modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
+
+        try {
+            return await modal.result;
+        } catch (err) {
+            return undefined;
+        }
     }
 
 
@@ -134,7 +152,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadImageFiles(files: Array<File>, category: CategoryForm, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(files: Array<File>, metadata: ImageUploadMetadata, uploadResult: ImageUploadResult,
                                    depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return uploadResult;
@@ -153,7 +171,7 @@ export class ImageUploader {
                     if (result.totalCount > 0) {
                         duplicateFilenames.push(file.name);
                     } else {
-                        await this.uploadFile(file, category, depictsRelationTarget);
+                        await this.uploadFile(file, metadata, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -221,14 +239,14 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(file: File, category: CategoryForm, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(file: File, metadata: ImageUploadMetadata, depictsRelationTarget?: Document): Promise<any> {
 
         const buffer: Buffer = await this.readFile(file);
         
         let document: ImageDocument;
         
         try {
-            document = await this.createImageDocument(file.name, buffer, category, depictsRelationTarget);
+            document = await this.createImageDocument(file.name, buffer, metadata, depictsRelationTarget);
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
                 throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, file.name, err[1]];
@@ -271,7 +289,7 @@ export class ImageUploader {
     }
 
 
-    private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
+    private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageUploadMetadata,
                                       depictsRelationTarget?: Document): Promise<any> {
 
         const {width, height, creator, creationDate, copyright} = await getMetadata(buffer)
@@ -279,10 +297,11 @@ export class ImageUploader {
         const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
-                category: category.name,
+                category: metadata.category,
                 originalFilename: fileName,
                 creationDate,
-                creator,
+                draughtsmen: metadata.draughtsmen,
+                processor: metadata.processor,
                 width,
                 height,
                 relations: {

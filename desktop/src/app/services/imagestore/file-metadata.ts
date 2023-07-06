@@ -16,22 +16,13 @@ export type ImageMetadata = {
  */
 export async function getMetadata(data: Buffer): Promise<ImageMetadata> {
     const rawExif: ExifReader.ExpandedTags = ExifReader.load(data, {expanded: true});
+    const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
 
-    console.log(rawExif);
-
-    rawExif
-
-    const result = {
-        width: rawExif.file['Image Width'].value,
-        height: rawExif.file['Image Height'].value,
-        creator: getCreator(rawExif),
-        creationDate: getCreationDate(rawExif),
-        copyright: getCopyright(rawExif)
-    }
-
-    console.log(result);
-
-    return result;
+    return {
+        width,
+        height,
+        creationDate: getCreationDate(rawExif)
+    };
 }
 
 function getCreator(tags: ExifReader.ExpandedTags) {

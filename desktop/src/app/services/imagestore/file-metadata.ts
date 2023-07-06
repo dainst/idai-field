@@ -1,4 +1,5 @@
 import ExifReader from 'exifreader';
+import { ImageManipulation } from './image-manipulation';
 
 export type ImageMetadata = {
     creator?: string,
@@ -56,6 +57,17 @@ function getCreationDate(tags: ExifReader.ExpandedTags) {
 
     if(tags.xmp && 'DateCreated' in tags.xmp) {
         let parsed = new Date(Date.parse(tags.xmp['DateCreated'].description))
+        if(parsed.toString() !== 'Invalid Date') return parsed;
+    }
+
+
+    if(tags.exif && tags.exif.DateTime) {
+        // Exif encodes the date as "2017:09:09 07:51:31" instead of "2017-09-09 07:51:31".
+        // Strictly speaking exif.DateTime describes the last time the image was updated, so we just use it as a last fallback.
+        let [date, time] = tags.exif.DateTime.description.split(" ");
+        date = date.replace(':', '-');
+
+        let parsed = new Date(`${date} ${time}`);
         if(parsed.toString() !== 'Invalid Date') return parsed;
     }
 

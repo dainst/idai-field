@@ -13,16 +13,17 @@ export interface ImageUploadMetadata {
 
 
 @Component({
-    selector: 'image-category-picker-modal',
-    templateUrl: './image-category-picker-modal.html',
+    selector: 'image-upload-metadata-modal',
+    templateUrl: './image-upload-metadata-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
 /**
  * @author Thomas Kleinke
+ * @author Simon Hohl
  */
-export class ImageCategoryPickerModalComponent {
+export class ImageUploadMetadataModalComponent {
 
     public fileCount: number;
     public depictsRelationTarget: Document;

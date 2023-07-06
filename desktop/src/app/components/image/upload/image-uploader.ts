@@ -8,7 +8,7 @@ import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { M } from '../../messages/m';
-import { ImageCategoryPickerModalComponent, ImageUploadMetadata } from './image-category-picker-modal.component';
+import { ImageUploadMetadataModalComponent, ImageUploadMetadata } from './image-upload-metadata-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
@@ -110,7 +110,7 @@ export class ImageUploader {
 
         this.menuService.setContext(MenuContext.MODAL);
         const modal: NgbModalRef = this.modalService.open(
-            ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+            ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
         )
 
         modal.componentInstance.fileCount = fileCount;
@@ -132,7 +132,7 @@ export class ImageUploader {
                 || fileCount >= 100 || depictsRelationTarget) {
             this.menuService.setContext(MenuContext.MODAL);
             const modal: NgbModalRef = this.modalService.open(
-                ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+                ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
 
             modal.componentInstance.fileCount = fileCount;

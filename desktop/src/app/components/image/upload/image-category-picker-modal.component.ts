@@ -58,7 +58,6 @@ export class ImageCategoryPickerModalComponent {
 
 
     public setCategory(category: string) {
-        console.log("setCategory");
         this.metadata.category = category;
     }
 

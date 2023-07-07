@@ -1,6 +1,9 @@
 import ExifReader from 'exifreader';
 import { ImageManipulation } from './image-manipulation';
 
+/**
+ * This is a container for __preliminary__ image related metadata before a database document for an image is created.
+ */
 export type ImageMetadata = {
     category: string,
     height?: number,
@@ -12,7 +15,7 @@ export type ImageMetadata = {
 }
 
 /**
- * Parses a subset of image metadata contained in an image file.
+ * Parses a subset of image metadata contained in an image file (exif/xmp/iptc).
  * @param data the raw Buffer data of an image.
  * 
  * @returns The image metadata.

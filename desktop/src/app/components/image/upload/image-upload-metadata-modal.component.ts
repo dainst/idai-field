@@ -4,6 +4,15 @@ import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 'idai-field-core';
 
 
+/**
+ * @author Thomas Kleinke
+ * @author Simon Hohl
+ * 
+ * This modal lets the user select some {@link ImageMetadata} explicitly:
+ * - category, defaults to "Image"
+ * - draughtsmen
+ * - processor
+ */
 @Component({
     selector: 'image-upload-metadata-modal',
     templateUrl: './image-upload-metadata-modal.html',
@@ -11,10 +20,6 @@ import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
-/**
- * @author Thomas Kleinke
- * @author Simon Hohl
- */
 export class ImageUploadMetadataModalComponent {
 
     public fileCount: number;

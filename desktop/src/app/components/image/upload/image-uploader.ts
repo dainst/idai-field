@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
-import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
+import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
     ImageStore, ImageGeoreference, ImageDocument } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';

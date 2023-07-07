@@ -278,6 +278,7 @@ export class ImageUploader {
                 processor: metadata.processor,
                 width: metadata.width,
                 height: metadata.height,
+                imageRights: metadata.copyright,
                 relations: {
                     depicts: []
                 }

@@ -37,7 +37,6 @@ export async function readFileMetadata(explicitlySetMetadata: ImageMetadata, dat
 
 function getCreator(tags: ExifReader.ExpandedTags) {
 
-    console.log(tags);
     if(tags.exif && tags.exif.Artist) {
         return tags.exif.Artist.description;
     }

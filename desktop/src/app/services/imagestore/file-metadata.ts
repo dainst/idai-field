@@ -41,6 +41,10 @@ function getCreator(tags: ExifReader.ExpandedTags) {
         return tags.exif.Artist.description;
     }
 
+    if(tags.iptc && tags.iptc['By-line']) {
+        return tags.iptc['By-line'].description;
+    }
+
     if(tags.xmp && 'creator' in tags.xmp) {
         return tags.xmp['creator'].description
     }

@@ -2,11 +2,13 @@ import ExifReader from 'exifreader';
 import { ImageManipulation } from './image-manipulation';
 
 export type ImageMetadata = {
-    creator?: string,
+    category: string,
+    height?: number,
+    width?: number
+    draughtsmen: string[],
+    processor: string[],
     creationDate?: Date,
     copyright?: string,
-    height: number,
-    width: number
 }
 
 /**
@@ -15,18 +17,24 @@ export type ImageMetadata = {
  * 
  * @returns The image metadata.
  */
-export async function getMetadata(data: Buffer): Promise<ImageMetadata> {
-    const rawExif: ExifReader.ExpandedTags = ExifReader.load(data, {expanded: true});
+export async function readFileMetadata(explicitlySetMetadata: ImageMetadata, data: Buffer): Promise<ImageMetadata> {
     const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
+    const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data, {expanded: true});
 
-    return {
-        width,
-        height,
-        creationDate: getCreationDate(rawExif)
-    };
+    explicitlySetMetadata.width = width;
+    explicitlySetMetadata.height = height;
+    explicitlySetMetadata.creationDate = getCreationDate(internalMetadata);
+    if(explicitlySetMetadata.draughtsmen.length == 0) {
+        const creator = getCreator(internalMetadata);
+        if(creator) explicitlySetMetadata.draughtsmen.push(creator);
+    }
+    explicitlySetMetadata.copyright = getCopyright(internalMetadata);
+    return explicitlySetMetadata;
 }
 
 function getCreator(tags: ExifReader.ExpandedTags) {
+
+    console.log(tags);
     if(tags.exif && tags.exif.Artist) {
         return tags.exif.Artist.description;
     }

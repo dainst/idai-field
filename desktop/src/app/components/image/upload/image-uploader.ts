@@ -8,11 +8,11 @@ import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { M } from '../../messages/m';
-import { ImageUploadMetadataModalComponent, ImageUploadMetadata } from './image-upload-metadata-modal.component';
+import { ImageUploadMetadataModalComponent } from './image-upload-metadata-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
-import { getMetadata } from '../../../services/imagestore/file-metadata';
+import { ImageMetadata, readFileMetadata } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
@@ -67,7 +67,7 @@ export class ImageUploader {
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
-            const metadata: ImageUploadMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
+            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
             if (!metadata) return uploadResult;
 
             this.menuService.setContext(MenuContext.MODAL);
@@ -106,7 +106,7 @@ export class ImageUploader {
     }
 
 
-    private async selectMetadata(fileCount: number, depictsRelationTarget?: Document): Promise<ImageUploadMetadata|undefined> {
+    private async selectMetadata(fileCount: number, depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
         this.projectConfiguration.getCategory('Image');
 
         this.menuService.setContext(MenuContext.MODAL);
@@ -125,7 +125,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadImageFiles(files: Array<File>, metadata: ImageUploadMetadata, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(files: Array<File>, metadata: ImageMetadata, uploadResult: ImageUploadResult,
                                    depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return uploadResult;
@@ -212,7 +212,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(file: File, metadata: ImageUploadMetadata, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(file: File, metadata: ImageMetadata, depictsRelationTarget?: Document): Promise<any> {
 
         const buffer: Buffer = await this.readFile(file);
         
@@ -262,21 +262,22 @@ export class ImageUploader {
     }
 
 
-    private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageUploadMetadata,
+    private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
                                       depictsRelationTarget?: Document): Promise<any> {
 
-        const {width, height, creator, creationDate, copyright} = await getMetadata(buffer)
+        // Try to extend metadata set explicitely by the user with metadata contained within the image file itself (exif/xmp/iptc).
+        metadata = await readFileMetadata(metadata, buffer)
 
         const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
                 category: metadata.category,
                 originalFilename: fileName,
-                creationDate,
+                creationDate: metadata.creationDate,
                 draughtsmen: metadata.draughtsmen,
                 processor: metadata.processor,
-                width,
-                height,
+                width: metadata.width,
+                height: metadata.height,
                 relations: {
                     depicts: []
                 }

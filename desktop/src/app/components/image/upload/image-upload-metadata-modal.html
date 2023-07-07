@@ -1,3 +1,9 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@imageUpload.imageCategoryPickerModal.header">
+        Bildmetadaten auswählen
+    </h5>
+</div>
+
 <div class="modal-body" id="image-category-picker-modal">
     <div *ngIf="fileCount >= 100" class="text-center alert alert-warning"
         i18n="@@imageUpload.imageCategoryPickerModal.warning">
@@ -33,9 +39,15 @@
             </li>
     </ul>
 
-    <p i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmen">
+    <hr/>
+
+    <div i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmen">
         Bitte wählen Sie die Bildersteller/-innen aus.
-    </p>
+    </div>
+    <div class="small-info-text" i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmeInfo">
+        Wenn Sie keine Bildersteller/-innen auswählen, wird die Anwendung versuchen diese aus den Metadaten des jeweiligen Bildes
+        auszulesen.
+    </div>
 
     <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
         <label class="form-check-label">
@@ -45,9 +57,11 @@
         </label>
     </div>
 
-    <p i18n="@@imageUpload.imageCategoryPickerModal.chooseProcessors">
+    <hr/>
+
+    <div i18n="@@imageUpload.imageCategoryPickerModal.chooseProcessors">
         Bitte wählen Sie die Bearbeiter/-innen aus.
-    </p>
+    </div>
 
     <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
         <label class="form-check-label">

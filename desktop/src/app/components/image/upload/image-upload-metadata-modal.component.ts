@@ -1,15 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 'idai-field-core';
-
-
-export interface ImageUploadMetadata {
-
-    category: string;
-    draughtsmen: string[];
-    processor: string[];
-
-}
 
 
 @Component({
@@ -29,7 +21,7 @@ export class ImageUploadMetadataModalComponent {
     public depictsRelationTarget: Document;
     public imageCategory: CategoryForm;
     public projectStaff: string[];
-    public metadata: ImageUploadMetadata;
+    public metadata: ImageMetadata;
 
     constructor(public activeModal: NgbActiveModal,
                 projectConfiguration: ProjectConfiguration,

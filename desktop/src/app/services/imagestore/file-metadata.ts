@@ -35,7 +35,7 @@ export async function readFileMetadata(explicitlySetMetadata: ImageMetadata, dat
     return explicitlySetMetadata;
 }
 
-function getCreator(tags: ExifReader.ExpandedTags) {
+function getCreator(tags: ExifReader.ExpandedTags): string {
 
     if(tags.exif && tags.exif.Artist) {
         return tags.exif.Artist.description;
@@ -52,7 +52,7 @@ function getCreator(tags: ExifReader.ExpandedTags) {
     return undefined
 }
 
-function getCreationDate(tags: ExifReader.ExpandedTags) {
+function getCreationDate(tags: ExifReader.ExpandedTags): Date {
 
     if(tags.exif && tags.exif.DateTimeOriginal) {
         // Exif encodes the date as "2017:09:09 07:51:31" instead of "2017-09-09 07:51:31".
@@ -88,7 +88,7 @@ function getCreationDate(tags: ExifReader.ExpandedTags) {
     return undefined;
 }
 
-function getCopyright(tags: ExifReader.ExpandedTags) {
+function getCopyright(tags: ExifReader.ExpandedTags): string {
     if(tags.exif && tags.exif.Copyright) {
         return tags.exif.Copyright.description;
     }

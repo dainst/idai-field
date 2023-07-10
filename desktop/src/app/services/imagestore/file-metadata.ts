@@ -16,23 +16,24 @@ export type ImageMetadata = {
 
 /**
  * Parses a subset of image metadata contained in an image file (exif/xmp/iptc).
+ * @param existingMetadata existing metadata that has been set explicitely beforehand. This function will try to fill in fields that are not set yet.
  * @param data the raw Buffer data of an image.
  * 
  * @returns The image metadata.
  */
-export async function readFileMetadata(explicitlySetMetadata: ImageMetadata, data: Buffer): Promise<ImageMetadata> {
+export async function extendMetadataByFileData(existingMetadata: ImageMetadata, data: Buffer): Promise<ImageMetadata> {
     const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
     const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data, {expanded: true});
 
-    explicitlySetMetadata.width = width;
-    explicitlySetMetadata.height = height;
-    explicitlySetMetadata.creationDate = getCreationDate(internalMetadata);
-    if(explicitlySetMetadata.draughtsmen.length == 0) {
+    existingMetadata.width = width;
+    existingMetadata.height = height;
+    existingMetadata.creationDate = getCreationDate(internalMetadata);
+    if(existingMetadata.draughtsmen.length == 0) {
         const creator = getCreator(internalMetadata);
-        if(creator) explicitlySetMetadata.draughtsmen.push(creator);
+        if(creator) existingMetadata.draughtsmen.push(creator);
     }
-    explicitlySetMetadata.copyright = getCopyright(internalMetadata);
-    return explicitlySetMetadata;
+    existingMetadata.copyright = getCopyright(internalMetadata);
+    return existingMetadata;
 }
 
 function getCreator(tags: ExifReader.ExpandedTags): string {

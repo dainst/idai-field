@@ -12,7 +12,7 @@ import { ImageUploadMetadataModalComponent } from './image-upload-metadata-modal
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
-import { ImageMetadata, readFileMetadata } from '../../../services/imagestore/file-metadata';
+import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 
@@ -266,19 +266,19 @@ export class ImageUploader {
                                       depictsRelationTarget?: Document): Promise<any> {
 
         // Try to extend metadata set explicitely by the user with metadata contained within the image file itself (exif/xmp/iptc).
-        metadata = await readFileMetadata(metadata, buffer)
+        const extendedMetadata = await extendMetadataByFileData(metadata, buffer)
 
         const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
-                category: metadata.category,
+                category: extendedMetadata.category,
                 originalFilename: fileName,
-                creationDate: metadata.creationDate,
-                draughtsmen: metadata.draughtsmen,
-                processor: metadata.processor,
-                width: metadata.width,
-                height: metadata.height,
-                imageRights: metadata.copyright,
+                creationDate: extendedMetadata.creationDate,
+                draughtsmen: extendedMetadata.draughtsmen,
+                processor: extendedMetadata.processor,
+                width: extendedMetadata.width,
+                height: extendedMetadata.height,
+                imageRights: extendedMetadata.copyright,
                 relations: {
                     depicts: []
                 }

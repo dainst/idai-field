@@ -3,12 +3,28 @@
 @import 'depicts-relations-view';
 @import 'georeference-view';
 @import 'thumbnail';
+@import 'qrcode-modal';
 
 /**
  * @author Thomas Kleinke
  */
+
 document-info {
   height: 100%;
+
+  .create-qrcode-btn {
+    font-size: 30px;
+    position: relative;
+    left: 100px;
+    border: none;
+    cursor: default;
+    background-color: transparent;
+    outline: none;
+
+    &:hover {
+      background-color: $list-item-hover-color;
+    }
+  }
 
   .document-info {
     height: 100%;
@@ -95,7 +111,7 @@ document-info {
         margin-right: 7px;
         color: #5c6166
       }
-
+     
       category-icon {
         margin-right: 2px;
       }

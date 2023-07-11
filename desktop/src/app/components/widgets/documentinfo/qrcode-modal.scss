@@ -1,0 +1,10 @@
+    @media print{
+      body {
+        visibility: hidden;
+      }
+      #modal {
+        visibility: visible;
+      }
+    } 
+
+

@@ -1,0 +1,21 @@
+<div class="modal-header" data-bs-backdrop="static" data-keyboard="false">
+    <h5 class="modal-title">QRCode</h5>
+</div>
+<div id="modal" >
+    <div class="qrcode-modal-content">
+        <h3 style="text-align: center">{{project}}</h3>
+        <h5 style="margin-left: 10px;">{{identifier}}</h5>
+    </div>
+
+    <canvas id="qrcode-canvas" style="margin-left: 100px"> </canvas>
+    <footer style="text-align: center">{{documentId}}</footer>
+</div>
+    <div class="modal-footer">
+        <div id="print-button" type="button" class="btn btn-primary" onclick="window.print()">
+            <span>Ausdrucken</span>
+        </div>
+        <div type="button" class="btn btn-secondary" (click)="close()">
+            <span i18n="@@buttons.cancel">Abbrechen</span>
+        </div>
+    </div>
+

@@ -32,25 +32,14 @@
                [resource]="document.resource"
                (onClick)="clickThumbnail()"></thumbnail>
 
-    <div #documentInfo class="info-container"
-         [class.with-thumbnail]="isThumbnailShown()"
-         [class.with-parent-info]="showParent && parentDocument">
-        <fields-view [resource]="document.resource"
-                     [openSection]="openSection"
-                     [expandAllGroups]="getExpandAllGroups()"
-                     (onSectionToggled)="setOpenSection($event)"
-                     (onJumpToResource)="jumpToResource($event)"></fields-view>
-        <georeference-view *ngIf="isImageDocument()"
-                           [document]="document"
-                           [openSection]="openSection"
-                           [expandAllGroups]="getExpandAllGroups()"
-                           [readonly]="isReadonly()"
-                           (onSectionToggled)="setOpenSection($event)"></georeference-view>
-        <depicts-relations-view *ngIf="isImageDocument()"
-                                [resource]="document.resource"
-                                [openSection]="openSection"
-                                [expandAllGroups]="getExpandAllGroups()"
-                                (onSectionToggled)="setOpenSection($event)"
-                                (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
+        <button
+            (click)="openQRCodeModal()"
+            class="create-qrcode-btn"
+            ngbTooltip="QRCode erzeugen"
+            placement="right"
+            container="body"
+        >
+            <span class="mdi mdi-qrcode-plus"> </span>
+        </button>
     </div>
 </div>

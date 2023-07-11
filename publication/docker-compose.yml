@@ -24,6 +24,7 @@ services:
 
   cantaloupe:
     image: "dainst/cantaloupe"
+    container_name: "field_publication_cantaloupe"
     environment:
       HTTP_HTTP2_ENABLED: "true"
       HTTPS_HTTP2_ENABLED: "true"
@@ -38,6 +39,8 @@ services:
       - "8182:8182"
     volumes:
       - "./data/cantaloupe:/imageroot"
+      - "./data/file_store:/source_images"
+      - "./imagemagick:/etc/ImageMagick-6"
 
   couchdb:
     image: couchdb:3.3.2

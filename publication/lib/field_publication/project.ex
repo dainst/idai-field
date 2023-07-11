@@ -1,7 +1,7 @@
 defmodule FieldPublication.Project do
   alias FieldPublication.CouchService
 
-  alias FieldPublication.Publication
+  alias FieldPublication.Worker.Replicator
 
   require Logger
 
@@ -86,7 +86,7 @@ defmodule FieldPublication.Project do
         source_user,
         source_password
       ) do
-    Publication.replicate(
+    Replicator.replicate(
       source_url,
       source_project_name,
       source_user,

@@ -1,13 +1,10 @@
-defmodule FieldPublication.Publication do
+defmodule FieldPublication.Worker.Replicator do
   alias FieldPublication.{
     CouchService,
     FileService
   }
 
   require Logger
-
-  @translation_db_suffix "_translations"
-  @styles_db_suffix "_styles"
 
   def replicate(source_url, source_project_name, source_user, source_password, project_name) do
     publication_name = "#{project_name}_publication-#{Date.utc_today()}"

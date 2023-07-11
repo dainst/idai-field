@@ -20,7 +20,7 @@ defmodule FieldPublication.FileService do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:ok, %Finch.Response{body: body, status: 200}} ->
-        target_path = "#{@root_path}/#{target_project_name}"
+        target_path = get_publication_path(target_project_name)
 
         File.mkdir_p!(target_path)
 
@@ -70,5 +70,22 @@ defmodule FieldPublication.FileService do
       end)
 
     %{uuid: uuid, status: status}
+  end
+
+  def get_publication_path(publication_name) do
+    "#{@root_path}/#{publication_name}"
+  end
+
+  def get_image_list(publication_name) do
+    root_path = get_publication_path(publication_name)
+
+    "#{root_path}/original_image"
+    |> File.ls()
+    |> case do
+      {:ok, files} ->
+        Enum.map(files, fn(file) -> "#{root_path}/original_image/#{file}" end)
+      error ->
+        error
+    end
   end
 end

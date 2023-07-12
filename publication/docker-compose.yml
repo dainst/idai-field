@@ -4,6 +4,7 @@ services:
 
   elasticsearch:
     image: "docker.elastic.co/elasticsearch/elasticsearch:7.8.0"
+    container_name: "field_publication_elasticsearch"
     environment:
       - "bootstrap.memory_lock=true"
       - "xpack.security.enabled=false"
@@ -21,27 +22,21 @@ services:
       - "9200:9200"
 
   cantaloupe:
-    image: "dainst/cantaloupe"
+    image: "ghcr.io/dainst/field_publication_cantaloupe:latest"
     container_name: "field_publication_cantaloupe"
     environment:
-      HTTP_HTTP2_ENABLED: "true"
-      HTTPS_HTTP2_ENABLED: "true"
-      ENDPOINT_IIIF_CONTENT_DISPOSITION: none
-      SOURCE_STATIC: FilesystemSource
-      FILESYSTEMSOURCE_BASICLOOKUPSTRATEGY_PATH_PREFIX: /imageroot/
-      PROCESSOR_SELECTION_STRATEGY: ManualSelectionStrategy
-      PROCESSOR_MANUALSELECTIONSTRATEGY_JP2: OpenJpegProcessor
       LOG_APPLICATION_LEVEL: warn
       LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
     ports:
       - "8182:8182"
     volumes:
-      - "./data/cantaloupe:/imageroot"
+      - "./data/cantaloupe:/image_root"
       - "./data/file_store:/source_images"
-      - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties.sample"
+      - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties"
 
   couchdb:
     image: couchdb:3.3.2
+    container_name: "field_publication_couchdb"
     ports:
       - "5985:5984"
     environment:

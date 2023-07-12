@@ -19,8 +19,6 @@ services:
         hard: -1
     ports:
       - "9200:9200"
-    volumes:
-      - "./data/elasticsearch:/usr/share/elasticsearch/data"
 
   cantaloupe:
     image: "dainst/cantaloupe"

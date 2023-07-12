@@ -20,6 +20,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   ]
 
 config :field_publication,
+  development_mode: true,
   couchdb_url: "http://localhost:5985",
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",
@@ -27,9 +28,7 @@ config :field_publication,
   couchdb_user_password: "app_user_password",
   known_data_sources: ["http://localhost:4000"],
   file_store_directory_root: "data/file_store",
-  web_images_directory_root: "data/cantaloupe",
-  image_magick_convert_base_command: "docker exec field_publication_cantaloupe convert",
-  fix_couch_source_url: true
+  web_images_directory_root: "data/cantaloupe"
 
 # ## SSL Support
 #

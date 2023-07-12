@@ -1,6 +1,5 @@
 defmodule FieldPublication.CouchService do
-  @fix_source_url Application.compile_env(:field_publication, :fix_couch_source_url, false)
-
+  @fix_source_url Application.compile_env(:field_publication, :development_mode, false)
   @system_databases ["_users", "_replicator"]
   @application_databases ["field_users"]
 

@@ -10,6 +10,9 @@ config :field_publication, FieldPublicationWeb.Endpoint,
 # In test we don't send emails.
 config :field_publication, FieldPublication.Mailer, adapter: Swoosh.Adapters.Test
 
+config :field_publication,
+  development_mode: true
+
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 

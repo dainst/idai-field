@@ -38,7 +38,7 @@ services:
     volumes:
       - "./data/cantaloupe:/imageroot"
       - "./data/file_store:/source_images"
-      - "./imagemagick:/etc/ImageMagick-6"
+      - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties.sample"
 
   couchdb:
     image: couchdb:3.3.2

@@ -4,12 +4,9 @@ defmodule FieldPublication.Worker.ImageProcessing do
     FileService
   }
 
-  @web_images_directory Application.get_env(:field_publication, :web_images_directory_root)
-  @im_cmd Application.compile_env(:field_publication, :image_magick_convert_base_command)
-
+  @web_images_directory Application.compile_env(:field_publication, :web_images_directory_root)
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
-
-  @run_image_magic_locally Application.compile_env(:field_publication, :run_image_magic_locally, false)
+  @dev_mode Application.compile_env(:field_publication, :development_mode, false)
 
   def prepare_publication(publication_name) do
     source_files =
@@ -17,7 +14,8 @@ defmodule FieldPublication.Worker.ImageProcessing do
       |> FileService.get_image_list()
 
     target_folder = "#{@web_images_directory}/#{publication_name}"
-    File.mkdir_p!(target_folder)
+
+    create_target_directory(target_folder)
 
     source_files
     |> Stream.map(fn(source_file) ->
@@ -26,14 +24,27 @@ defmodule FieldPublication.Worker.ImageProcessing do
     |> Enum.map(&convert_file/1)
   end
 
-  defp convert_file({input_file_path, target_file_path}) do
-    if @run_image_magic_locally do
-      System.cmd("convert", [input_file_path, target_file_path])
+  defp create_target_directory(target_path) do
+    if @dev_mode do
+      target_path = String.replace(target_path, "#{@web_images_directory}/", "")
+    System.cmd(
+      "docker", [
+        "exec",
+        "field_publication_cantaloupe",
+        "mkdir",
+        "-p",
+        "/imageroot/#{target_path}"
+      ]
+    )
     else
+      File.mkdir_p!(target_path)
+    end
+  end
+
+  defp convert_file({input_file_path, target_file_path}) do
+    if @dev_mode do
       input_file_path = String.replace(input_file_path, "#{@filestore_root}/", "")
       target_file_path = String.replace(target_file_path, "#{@web_images_directory}/", "")
-
-      IO.inspect("Running in cantaloupe container.")
 
       System.cmd(
         "docker", [
@@ -44,6 +55,8 @@ defmodule FieldPublication.Worker.ImageProcessing do
           "/imageroot/#{target_file_path}"
         ]
       )
+    else
+      System.cmd("convert", [input_file_path, target_file_path])
     end
   end
 end

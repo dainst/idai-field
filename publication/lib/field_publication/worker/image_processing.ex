@@ -33,7 +33,7 @@ defmodule FieldPublication.Worker.ImageProcessing do
         "field_publication_cantaloupe",
         "mkdir",
         "-p",
-        "/imageroot/#{target_path}"
+        "/image_root/#{target_path}"
       ]
     )
     else
@@ -52,7 +52,7 @@ defmodule FieldPublication.Worker.ImageProcessing do
           "field_publication_cantaloupe",
           "convert",
           "/source_images/#{input_file_path}",
-          "/imageroot/#{target_file_path}"
+          "/image_root/#{target_file_path}"
         ]
       )
     else

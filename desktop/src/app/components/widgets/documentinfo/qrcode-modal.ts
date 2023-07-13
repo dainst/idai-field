@@ -28,7 +28,7 @@ export class QrCodeModalComponent {
         var container = document.getElementById('qrcode-canvas')
         QRCode.toCanvas(
             container, 
-            `${this.project}-${this.documentId}-${this.identifier}`, 
+            `${this.project}-${this.documentId}`, 
             {width: 300}
         );
     }

@@ -1,59 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Routing } from '../../../services/routing';
+import { Datastore, FieldDocument } from 'idai-field-core';
 import QrScanner from 'qr-scanner'; 
 
 @Component({
     selector: 'qrcode-scanner-modal',
     templateUrl: './resources-search-modal-qr.html'
 })
+
 /**
  * @author Danilo Guzzo
  */
+
 export class QrCodeScannerModalComponent implements OnInit {
     
     private qrScanner: any;
     private videoElem: any;
-    private streaming: boolean;
    
+    @Output() onRelationClicked: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
+
     constructor(
         public activeModal: NgbActiveModal,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private datastore: Datastore,
+        private routingService: Routing
     ) {
      }
 
     ngOnInit(): void {
         
-        this.streaming = false;
         this.videoElem = document.querySelector("video");
 
-        // this.videoElem.addEventListener(
-        //     "canplay",
-        //     (ev) => {
-        //       if (!this.streaming) {
-        //         this.streaming = true;
-        //       }
-        //     },
-        //     false,
-        //   );
-        // this.qrScanner = new QrScanner(
-        //     videoElem,
-        //     result => console.log('decoded qr code:', result),
-        //     { returnDetailedScanResult: true }
-        // );
+        this.qrScanner = new QrScanner(
+            this.videoElem,
+            result => {
+                this.qrScanner.stop();
+                this.openDocument(result.data);
+            },
+            { returnDetailedScanResult: true, highlightScanRegion: true }
+        );
 
+        this.qrScanner.start();
     }
 
-    public async startScanning() {
-        
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    private async openDocument(scannedCode: string) {
+        const [uuid, projectName] = scannedCode.split('@')
 
-        this.videoElem.srcObject = stream;
-        this.videoElem.play()
+        // console.log(`Opening ${uuid} in project ${projectName}!`);
 
-    }
+        const document = (await this.datastore.get(uuid) as FieldDocument);
 
-    openModal(id: string) {
-        this.modalService.open(id);
+        this.routingService.jumpToResource(document);
+        this.activeModal.close();
     }
 
     public close = () => this.activeModal.close();

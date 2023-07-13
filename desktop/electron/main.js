@@ -246,6 +246,15 @@ const createWindow = () => {
         titleBarStyle: 'hiddenInset'
     });
 
+    // electron.desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+    //     for (const source of sources) {
+    //       if (source.name === 'Field Desktop') {
+    //         mainWindow.webContents.send('SET_SOURCE', source.id)
+    //         return
+    //       }
+    //     }
+    //   })
+
     remoteMain.enable(mainWindow.webContents);
 
     if (require('os').platform() === 'linux' && global.mode === 'production') {

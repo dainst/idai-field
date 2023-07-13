@@ -56,7 +56,7 @@ export class DocumentInfoComponent implements OnChanges {
         private datastore: Datastore,
         private settingsProvider: SettingsProvider,
         private menus: Menus,
-        private modalService: NgbModal,
+        private modalService: NgbModal
     ) {
         this.project = this.settingsProvider.getSettings().selectedProject;
     }

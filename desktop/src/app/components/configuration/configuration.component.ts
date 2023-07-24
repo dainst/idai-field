@@ -102,7 +102,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }), customFields: true },
         { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }), customFields: true },
         { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }), customFields: true },
-        { name: 'complex', label: this.i18n({ id: 'config.inputType.complex', value: 'Komplexes Objekt' }), customFields: true },
+        { name: 'complex', label: this.i18n({ id: 'config.inputType.complex', value: 'Kompositfeld' }), customFields: true },
         { name: 'geometry', label: this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' }) },
         { name: 'instanceOf', label: this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' }) },
         { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) },

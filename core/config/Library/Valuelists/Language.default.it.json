@@ -69,7 +69,11 @@
       "Spätbyzantinisch": "Tardo-bizantino",
       "Späthellenistisch": "Tardo-ellenistico",
       "Spätkaiserzeitlich": "Tardo-imperiale",
-      "Spätklassisch": "Tardo-classico"
+      "Spätklassisch": "Tardo-classico",
+      "Frühmittelalter": "Alto Medioevo",
+      "Hochmittelalter": "Basso Medioevo",
+      "Spätmittelalter": "Tardo Medioevo",
+      "Mittelalter": "Medioevo"
     }
   },
   "colors-default-1": {

@@ -1923,9 +1923,12 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 categoryName: 'A',
                 valuelists: {},
+                fields: {
+                    field3: { inputType: 'text' }
+                },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3'] }
                 ],
                 creationDate: '',
                 createdBy: '',
@@ -1937,11 +1940,11 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {
                     field2: { inputType: 'input' },
-                    field3: { inputType: 'text' }
+                    field4: { inputType: 'boolean' }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2', 'field3'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4'] }
                 ],
             }
         };
@@ -1957,6 +1960,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe('input');
         expect(result['A'].groups[1].fields[1].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[2].inputType).toBe('boolean');
         expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 

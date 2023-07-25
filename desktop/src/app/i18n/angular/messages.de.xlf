@@ -4014,6 +4014,14 @@
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.dropdown.notFound" datatype="html">
+        <source>Wert nicht gefunden</source>
+        <target state="final">Wert nicht gefunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown.component.ts</context>
+          <context context-type="linenumber">43,56</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
         <source>Start- und Endzeitraum angeben</source>
         <target state="final">Start- und Endzeitraum angeben</target>
@@ -4617,14 +4625,6 @@
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForInputType" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</source>
         <target state="final">Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.fieldSpecificSearch.changingNotAllowed" datatype="html">
-        <source>Die Einstellung kann für dieses Feld nicht geändert werden.</source>
-        <target state="final">Die Einstellung kann für dieses Feld nicht geändert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>

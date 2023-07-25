@@ -1,4 +1,6 @@
-<ng-select [(ngModel)]="resource[field.name]" (clear)="deleteFieldContent()">
+<ng-select [(ngModel)]="resource[field.name]"
+           (change)="deleteIfEmpty()"
+           (clear)="deleteIfEmpty()">
     <ng-option *ngFor="let value of getValues()" [value]="value">{{getLabel(value)}}</ng-option>
 </ng-select>
 

@@ -38,9 +38,13 @@ export class DropdownComponent implements OnChanges {
     }
 
 
-    public deleteFieldContent() {
+    public deleteIfEmpty() {
+
+        const fieldContent: any = this.resource[this.field.name];
         
-        delete this.resource[this.field.name];
+        if (fieldContent === '' || fieldContent === null) {
+            delete this.resource[this.field.name];
+        }
     }
 
 

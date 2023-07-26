@@ -19,9 +19,13 @@
     &.ng-select-opened,
     &.ng-touched,
     &.ng-dirty {
+      .ng-input {
+        margin-top: -1px !important;
+      }
+
       .ng-value {
-        position: relative;
-        top: 5px;
+        position: absolute;
+        top: 11px;
       }
 
       .ng-clear-wrapper {

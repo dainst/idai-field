@@ -6,7 +6,7 @@
 <div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
     <div *ngIf="isConditionSectionVisible()" class="configuration-editor-section form-group">
         <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
-            Bedingung
+            Bedingung für Anzeige des Unterfelds
         </div>
         <select [(ngModel)]="data.condition.subfieldName" (change)="resetConditionValues()" class="form-control">
             <option value="" i18n="@@configuration.subfieldCondition.none">- Keine -</option>

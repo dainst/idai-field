@@ -19,8 +19,10 @@
                             </div>
                             <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
                         </div>
-                        <div *ngIf="subfield.condition" class="col-md-6 subfield-right">
-                            <div class="subfield-condition">
+                        <div class="col-md-6 subfield-right">
+                            <div i18n="@@configuration.subfields.condition"
+                                 class="subfield-condition-header">Bedingung:</div>
+                            <div *ngIf="subfield.condition" class="subfield-condition">
                                 <span class="subfield-condition-subfield">
                                     {{getConditionSubfieldLabel(subfield.condition)}}:
                                 </span>
@@ -29,6 +31,10 @@
                                 <span *ngIf="subfield.condition.values !== true && subfield.condition.values !== false">
                                     {{getConditionValueLabels(subfield.condition)}}
                                 </span>                                          
+                            </div>
+                            <div *ngIf="!subfield.condition" class="subfield-no-condition"
+                                 i18n="@@configuration.subfields.condition.none">
+                                Keine
                             </div>
                         </div>
                     </div>

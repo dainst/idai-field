@@ -87,16 +87,23 @@ subfields-section #subfields {
 
   .subfield-condition {
     font-size: 12px;
-    white-space: normal;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
 
     .subfield-condition-subfield {
       font-style: italic;
     }
+  }
+
+  .subfield-condition-header {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .subfield-no-condition {
+    font-size: 12px;
+    font-style: italic;
   }
 }
 

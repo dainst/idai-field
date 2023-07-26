@@ -56,34 +56,34 @@
       border-color: #7998cb !important;
       box-shadow: none !important;
     }
-
-    .ng-dropdown-panel {
-      font-size: 13px;
-      transition: border-color 0.15s ease-in-out;
-
-      &.ng-select-top {
-        border-bottom-color: #7998cb;
-      }
-
-      &.ng-select-bottom {
-        border-top-color: #7998cb;
-      }
-
-      .ng-option {
-        position: relative;
-        left: 1px;
-        padding: 7px 10px;
-        cursor: default;
-
-        &.ng-option-marked,
-        &.ng-option-selected {
-          background-color: $list-item-hover-color !important;
-        }
-      }
-    }
   }
 
   empty-valuelist-info {
     margin-top: 10px;
+  }
+}
+
+.ng-dropdown-panel {
+  font-size: 13px;
+  transition: border-color 0.15s ease-in-out;
+
+  &.ng-select-top {
+    border-bottom-color: #7998cb !important;
+  }
+
+  &.ng-select-bottom {
+    border-top-color: #7998cb !important;
+  }
+
+  .ng-option {
+    position: relative;
+    left: 1px;
+    padding: 7px 10px;
+    cursor: default !important;
+
+    &.ng-option-marked,
+    &.ng-option-selected {
+      background-color: $list-item-hover-color !important;
+    }
   }
 }

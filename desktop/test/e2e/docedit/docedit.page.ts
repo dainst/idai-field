@@ -131,10 +131,10 @@ export class DoceditPage {
     }
 
 
-    public static async clickSelectOption(fieldName: string, optionValue: string) {
+    public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
         await click('#edit-form-element-' + fieldName + ' .ng-arrow-wrapper');
-        return click('#edit-form-element-' + fieldName + ' .ng-option span:has-text("' + optionValue + '")');
+        return click('#edit-form-element-' + fieldName + ' .ng-option span:has-text("' + optionValueLabel + '")');
     }
 
 

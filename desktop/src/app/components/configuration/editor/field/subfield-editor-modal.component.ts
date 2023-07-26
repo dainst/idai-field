@@ -114,9 +114,22 @@ export class SubfieldEditorModalComponent {
 
         return this.subfields.filter(subfield => {
             return subfield.name !== this.subfield.name
-                && !subfield.condition
-                && (subfield.inputType === Field.InputType.BOOLEAN || subfield.valuelist);
+                && (subfield.inputType === Field.InputType.BOOLEAN || subfield.valuelist)
+                && this.isValidConditionSubfield(this.subfield, subfield);
         });
+    }
+
+
+    private isValidConditionSubfield(subfield: Subfield, conditionSubfieldToCheck: Subfield): boolean {
+
+        do {
+            conditionSubfieldToCheck = conditionSubfieldToCheck.condition
+                ? this.subfields.find(s => s.name === conditionSubfieldToCheck.condition.subfieldName)
+                : undefined;
+            if (conditionSubfieldToCheck === subfield) return false;
+        } while (conditionSubfieldToCheck);
+
+        return true;
     }
 
 

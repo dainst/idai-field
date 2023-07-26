@@ -1,8 +1,11 @@
-<select [(ngModel)]="fieldContainer[field.name]" (change)="deleteIfEmpty($event.target.value)"
-        class="form-control">
-    <option value="" [selected]="!fieldContainer.hasOwnProperty(field.name)"></option>
-    <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
-</select>
+<ng-select [(ngModel)]="fieldContainer[field.name]"
+           clearAllText=""
+           notFoundText="Wert nicht gefunden"
+           i18n-notFoundText="@@docedit.forms.dropdown.notFound"
+           (change)="deleteIfEmpty()"
+           (clear)="deleteIfEmpty()">
+    <ng-option *ngFor="let value of getValues()" [value]="value">{{getLabel(value)}}</ng-option>
+</ng-select>
 
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
 

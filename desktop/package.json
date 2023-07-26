@@ -116,6 +116,7 @@
     "@mapbox/geojson-rewind": "0.5.2",
     "@mdi/font": "6.5.95",
     "@ng-bootstrap/ng-bootstrap": "10.0.0",
+    "@ng-select/ng-select": "7.4.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "address": "1.2.1",
     "archiver": "5.1.0",

@@ -25,7 +25,6 @@ defmodule FieldHubWeb do
       use Phoenix.Controller, namespace: FieldHubWeb
 
       import Plug.Conn
-      import FieldHubWeb.Gettext
       alias FieldHubWeb.Router.Helpers, as: Routes
     end
   end
@@ -83,7 +82,6 @@ defmodule FieldHubWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import FieldHubWeb.Gettext
     end
   end
 
@@ -99,7 +97,6 @@ defmodule FieldHubWeb do
       import Phoenix.View
 
       import FieldHubWeb.ErrorHelpers
-      import FieldHubWeb.Gettext
       alias FieldHubWeb.Router.Helpers, as: Routes
     end
   end

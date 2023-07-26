@@ -23,8 +23,8 @@ The docker-compose file describes 2 services:
 Additionally, an [.env](.env) file sets up some environment variables for docker-compose:
 
 ```
-COUCHDB_USER=fieldhub_admin
-COUCHDB_PASSWORD=fieldhub_password
+COUCHDB_ADMIN_NAME=fieldhub_admin
+COUCHDB_ADMIN_PASSWORD=fieldhub_password
 COUCHDB_USER_NAME=app_user
 COUCHDB_USER_PASSWORD=app_user_password
 DB_DATA_DIRECTORY=./couch_data
@@ -115,7 +115,7 @@ You should now be able to sync a Field Client with the server giving the above c
 To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file
 2. Setup docker daemon as a system service on your server (so that it starts after each server restart)
-3. Set the environment, especially `COUCHDB_USER_PASSWORD` `COUCHDB_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
+3. Set the environment, especially `COUCHDB_ADMIN_PASSWORD` `COUCHDB_USER_PASSWORD`, `HOST` and `SECRET_KEY_BASE`. See also the general [Wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 
 Afterwards stop and delete all previously created test containers.
 

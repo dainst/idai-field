@@ -97,7 +97,11 @@
       "Spätbyzantinisch": "Пізньовізантійський",
       "Späthellenistisch": "Пізньоелліністичний",
       "Spätkaiserzeitlich": "Пізньоімперський",
-      "Spätklassisch": "Пізньокласичний"
+      "Spätklassisch": "Пізньокласичний",
+      "Frühmittelalter": "Раннє середньовіччя",
+      "Spätmittelalter": "Пізнє середньовіччя",
+      "Hochmittelalter": "Високе середньовіччя",
+      "Mittelalter": "Середньовіччя"
     }
   },
   "colors-default-1": {

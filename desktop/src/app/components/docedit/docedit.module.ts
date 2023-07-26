@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { Datastore } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DocumentHolder } from '../../components/docedit/document-holder';
@@ -75,6 +76,7 @@ import { ComplexEntryModalComponent } from './core/forms/complex-entry-modal.com
         NgbModule,
         FormsModule,
         RouterModule,
+        NgSelectModule,
         IdaiMessagesModule,
         WidgetsModule,
         ImageGridModule,

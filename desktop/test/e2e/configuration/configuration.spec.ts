@@ -726,7 +726,7 @@ test.describe('configuration --', () => {
         await ResourcesPage.clickSelectCategory('operation-trench');
         await ResourcesPage.clickSelectGeometryType();
         await DoceditPage.typeInInputField('identifier', 'Test trench');
-        await DoceditPage.clickSelectOption('shortDescription', 'testValue');
+        await DoceditPage.clickSelectOption('shortDescription', 'Value label');
         await DoceditPage.clickSaveDocument();
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value label');
     });

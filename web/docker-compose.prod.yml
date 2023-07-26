@@ -72,7 +72,7 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world"
+        - "traefik.frontend.rule=Host:field.idai.world,shapes.idai.world,field.dainst.org"
         - "traefik.frontend.redirect.regex=^https://field.dainst.org(.*)"
         - "traefik.frontend.redirect.replacement=https://field.idai.world$${1}"
         - "traefik.frontend.redirect.permanent=true"

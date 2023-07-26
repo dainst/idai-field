@@ -34,8 +34,9 @@ async function start() {
 
     writeProjectConfiguration(
         {
-            projectLanguages: configurationDocument.resource.projectLanguages.length === 0
-                ? ["de", "en"] : configurationDocument.resource.projectLanguages, 
+            projectLanguages: configurationDocument.resource.projectLanguages?.length
+                ? configurationDocument.resource.projectLanguages
+                : ['de', 'en'],
             categories: fullConfiguration
         }, 
         projectName
@@ -44,7 +45,7 @@ async function start() {
 
 
 async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
-                                        projectName: string): Promise<ConfigurationDocument> {
+                                        projectName: string): Promise<ConfigurationDocument> {
 
    return ConfigurationDocument.getConfigurationDocument(
         (_) => {
@@ -58,7 +59,7 @@ async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string,
 
 
 async function fetchConfigurationDocumentFromCouchdb(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
-                                                     projectName: string): Promise<ConfigurationDocument> {
+                                                     projectName: string): Promise<ConfigurationDocument> {
 
     let result;
     

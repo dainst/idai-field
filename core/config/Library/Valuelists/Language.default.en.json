@@ -89,5 +89,13 @@
     "values": {
       "Anatolien": "Anatolia"
     }
+  },
+  "periods-default-1": {
+    "values": {
+      "Frühmittelalter": "Early Middle Ages",
+      "Mittelalter": "Middle Ages",
+      "Spätmittelalter": "Late Middle Ages",
+      "Hochmittelalter": "High Middle Ages"
+    }
   }
 }

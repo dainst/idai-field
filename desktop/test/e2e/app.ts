@@ -112,6 +112,13 @@ export async function hover(element) {
 }
 
 
+export async function scrollTo(element) {
+
+    if (isString(element)) element = await getLocator(element);
+    return element.scrollIntoViewIfNeeded();
+}
+
+
 export async function waitForExist(element, timeout = 30000) {
 
     if (isString(element)) element = await getLocator(element);

@@ -1,5 +1,5 @@
-import { waitForNotExist, click, waitForExist, getLocator, typeIn, selectOption, getValue, getText,
-    clearText } from '../app';
+import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
+    scrollTo } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -133,8 +133,10 @@ export class DoceditPage {
 
     public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
-        await click('#edit-form-element-' + fieldName + ' .ng-arrow-wrapper');
-        return click('#edit-form-element-' + fieldName + ' .ng-option span:has-text("' + optionValueLabel + '")');
+        const element = await getLocator('#edit-form-element-' + fieldName + ' .ng-arrow-wrapper');
+        await scrollTo(element);
+        await click(element);
+        return click('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
     }
 
 

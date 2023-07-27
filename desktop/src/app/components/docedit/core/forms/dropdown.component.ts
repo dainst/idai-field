@@ -24,6 +24,7 @@ export class DropdownComponent implements OnDestroy, OnChanges {
     public valuelist: Valuelist;
 
     public onScrollListener: any;
+    public scrollListenerInitialized: boolean = false;
 
 
     constructor(private datastore: Datastore,
@@ -53,6 +54,8 @@ export class DropdownComponent implements OnDestroy, OnChanges {
 
 
     public listenToScrollEvents() {
+
+        this.scrollListenerInitialized = false;
 
         this.onScrollListener = this.onScroll.bind(this);
         window.addEventListener('scroll', this.onScrollListener, true);
@@ -85,6 +88,11 @@ export class DropdownComponent implements OnDestroy, OnChanges {
 
 
     public onScroll(event: MouseEvent) {
+
+        if (!this.scrollListenerInitialized) {
+            this.scrollListenerInitialized = true;
+            return;
+        }
 
         if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ng-dropdown-panel')) { 
             this.selectElement.close();

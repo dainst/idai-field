@@ -17,6 +17,7 @@
     }
 
     &.ng-select-opened,
+    &.ng-select-focused,
     &.ng-touched,
     &.ng-dirty {
       .ng-input {
@@ -66,6 +67,7 @@
 .ng-dropdown-panel {
   font-size: 13px;
   transition: border-color 0.15s ease-in-out;
+  overflow-x: hidden;
 
   &.ng-select-top {
     border-bottom-color: #7998cb !important;
@@ -76,9 +78,6 @@
   }
 
   .ng-option {
-    position: relative;
-    left: 1px;
-    padding: 7px 10px;
     cursor: default !important;
 
     &.ng-option-marked,

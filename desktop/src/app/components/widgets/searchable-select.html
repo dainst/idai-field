@@ -1,0 +1,12 @@
+<ng-select [(ngModel)]="selectedValue"
+           #selectElement         
+           clearAllText=""
+           notFoundText="Wert nicht gefunden"
+           i18n-notFoundText="@@docedit.forms.dropdown.notFound"
+           appendTo="body"
+           (open)="listenToScrollEvents()"
+           (close)="stopListeningToScrollEvents()"
+           (change)="onChange()"
+           (clear)="onChange()">
+    <ng-option *ngFor="let value of values" [value]="value">{{getLabel(value)}}</ng-option>
+</ng-select>

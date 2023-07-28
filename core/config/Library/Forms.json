@@ -1436,7 +1436,7 @@
         },
         {
           "name": "properties",
-          "fields": ["archaeoDox:viewingDirection"]
+          "fields": ["description", "archaeoDox:viewingDirection"]
         },
         {
           "name": "position",
@@ -1482,6 +1482,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
         },
         {
           "name": "position",

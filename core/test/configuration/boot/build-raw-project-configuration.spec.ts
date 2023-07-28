@@ -1909,7 +1909,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: 'text' },
-                    field2: { inputType: 'text' }
+                    field2: { inputType: 'text' },
+                    field3: { inputType: 'text' }
                 },
                 minimalForm: {
                     groups: [
@@ -1924,11 +1925,12 @@ describe('buildRawProjectConfiguration', () => {
                 categoryName: 'A',
                 valuelists: {},
                 fields: {
-                    field3: { inputType: 'text' }
+                    field3: { inputType: 'int' },
+                    field4: { inputType: 'text' }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2', 'field3'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4'] }
                 ],
                 creationDate: '',
                 createdBy: '',
@@ -1940,11 +1942,11 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {
                     field2: { inputType: 'input' },
-                    field4: { inputType: 'boolean' }
+                    field5: { inputType: 'boolean' }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4', 'field5'] }
                 ],
             }
         };
@@ -1959,8 +1961,9 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe('input');
-        expect(result['A'].groups[1].fields[1].inputType).toBe('text');
-        expect(result['A'].groups[1].fields[2].inputType).toBe('boolean');
+        expect(result['A'].groups[1].fields[1].inputType).toBe('int');
+        expect(result['A'].groups[1].fields[2].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[3].inputType).toBe('boolean');
         expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 

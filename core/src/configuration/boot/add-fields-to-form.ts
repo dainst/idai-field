@@ -40,7 +40,7 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
         }
     }
 
-    applyFormChanges(clonedForm, form, parentForm);
+    applyFormChanges(clonedForm, form, parentForm, extendedForm);
 
     return clonedForm;
 }
@@ -99,11 +99,17 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
 
 
 function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
-                          parentForm?: CustomFormDefinition) {
+                          parentForm?: CustomFormDefinition, extendedForm?: CustomFormDefinition) {
 
     if (parentForm?.fields) {
         Object.keys(parentForm.fields).forEach(fieldName => {
             applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
+        });
+    }
+
+    if (extendedForm?.fields) {
+        Object.keys(extendedForm.fields).forEach(fieldName => {
+            applyFieldChanges(clonedForm.fields[fieldName], extendedForm.fields[fieldName]);
         });
     }
 

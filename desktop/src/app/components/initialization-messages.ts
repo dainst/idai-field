@@ -1,19 +1,20 @@
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+import messagesDe from '../i18n/initialization/messages.de.json';
+import messagesEn from '../i18n/initialization/messages.en.json';
+import messagesIt from '../i18n/initialization/messages.it.json';
+import messagesUk from '../i18n/initialization/messages.uk.json';
 
 
-const path = remote.app.getAppPath() + '/src/app/i18n/initialization/';
-
-const initializationMessages = fs.readdirSync(path).reduce((result, fileName) => {
-    const languageCode = fileName.split('.')[1];
-    result[languageCode] = JSON.parse(fs.readFileSync(path + fileName));
-    return result;
-}, {});
+const messageDictionary = {
+    de: messagesDe,
+    en: messagesEn,
+    it: messagesIt,
+    uk: messagesUk
+};
 
 
 export const getMessage = (key: string, locale: string, parameters?: string[]): string | undefined => {
 
-    let message: string = initializationMessages[locale][key];
+    let message: string = messageDictionary[locale][key];
 
     if (!message) return undefined;
 

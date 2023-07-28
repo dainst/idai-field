@@ -1,31 +1,25 @@
-import { Constraint, Query, Datastore, Relation, Constraints, CHILDOF_CONTAIN } from 'idai-field-core';
-import { Document, Resource } from 'idai-field-core';
-
-export const MAX_SUGGESTIONS: number = 5;
+import { Constraint, Query, Datastore, Relation, Constraints, CHILDOF_CONTAIN, Document,
+    Resource } from 'idai-field-core';
 
 
 /**
  * @author Thomas Kleinke
  */
 export async function getSuggestions(datastore: Datastore, resource: Resource,
-                                     relationDefinition: Relation,
-                                     idSearchString?: string): Promise<Array<Document>> {
+                                     relationDefinition: Relation): Promise<Array<Document>> {
 
     return (await datastore.find(
-        makeQuery(resource, relationDefinition, idSearchString)
+        makeQuery(resource, relationDefinition)
     )).documents;
 }
 
 
-function makeQuery(resource: Resource, relationDefinition: Relation,
-                   idSearchString?: string): Query {
+function makeQuery(resource: Resource, relationDefinition: Relation): Query {
 
     return {
-        q: idSearchString ? idSearchString : '',
+        q: '',
         categories: relationDefinition.range,
-        constraints: makeConstraints(resource, relationDefinition),
-        limit: MAX_SUGGESTIONS,
-        sort: { mode: 'exactMatchFirst' }
+        constraints: makeConstraints(resource, relationDefinition)
     };
 }
 

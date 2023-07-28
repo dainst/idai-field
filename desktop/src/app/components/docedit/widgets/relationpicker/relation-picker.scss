@@ -29,29 +29,7 @@
     }
   }
 
-  .suggestion-container-positioning {
-    position: relative;
-    top: 2px;
-
-    .suggestion-container {
-      position: absolute;
-      left: 50px;
-      background-color: #fff;
-      box-shadow: 3px 3px 3px #ccc;
-      z-index: 100;
-      cursor: default;
-    }
-  }
-
-  .suggestion {
-    padding: 7px 25px 7px 25px;
-
-    &.selected-suggestion {
-      background-color: #e8e8e8;
-    }
-  }
-
-  input {
+  ng-select {
     position: relative;
     left: 50px;
     top: 2px;

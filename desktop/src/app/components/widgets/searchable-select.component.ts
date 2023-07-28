@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild,
-    EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter,
+    OnInit } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ComponentHelpers } from '../component-helpers';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -11,13 +12,15 @@ import { ComponentHelpers } from '../component-helpers';
 /**
  * @author Thomas Kleinke
  */
-export class SearchableSelectComponent implements OnDestroy {
+export class SearchableSelectComponent implements OnInit, OnDestroy {
 
     @Input() selectedValue: string;
     @Input() values: string[];
     @Input() getLabel: (value: string) => string;
+    @Input() initiallyOpened: boolean = false;
 
     @Output() onValueSelected: EventEmitter<string> = new EventEmitter<string>();
+    @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('selectElement', { static: false }) private selectElement: NgSelectComponent;
 
@@ -28,15 +31,18 @@ export class SearchableSelectComponent implements OnDestroy {
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
 
+    async ngOnInit() {
+         
+        if (this.initiallyOpened) {
+            await AngularUtility.refresh();
+            this.selectElement.open();
+        }
+    }
+
+
     ngOnDestroy() {
         
         this.stopListeningToScrollEvents();
-    }
-
-    
-    public onChange() {
-
-        this.onValueSelected.emit(this.selectedValue);
     }
 
 

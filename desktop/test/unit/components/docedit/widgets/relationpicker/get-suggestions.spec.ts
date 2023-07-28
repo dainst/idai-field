@@ -1,6 +1,5 @@
 import { doc, Relation, Document } from 'idai-field-core';
-import { getSuggestions,
-    MAX_SUGGESTIONS } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
+import { getSuggestions } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
 
 
 /**
@@ -33,19 +32,17 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition, 'input');
+        await getSuggestions(datastore, document.resource, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
-            q: 'input',
+            q: '',
             categories: ['RangeCategory1', 'RangeCategory2'],
             constraints: {
                'id:match': {
                    value: ['id'],
                    subtract: true
                }
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -79,9 +76,7 @@ describe('getSuggestions', () => {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
                     subtract: true
                 }
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -116,9 +111,7 @@ describe('getSuggestions', () => {
                     value: ['id'],
                     subtract: true
                 }, 'isChildOf:contain': { value: 'operationId', searchRecursively: true },
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -156,9 +149,7 @@ describe('getSuggestions', () => {
                     value: [],
                     subtract: true
                 },
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();

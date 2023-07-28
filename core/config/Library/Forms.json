@@ -605,7 +605,8 @@
       },
       "fields": {
         "shortDescription": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "phase": {
           "inputType": "dropdown"
@@ -693,7 +694,8 @@
       },
       "fields": {
         "shortDescription": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "phase": {
           "inputType": "dropdown"
@@ -759,7 +761,8 @@
       },
       "fields": {
         "shortDescription": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         }
       },
       "groups": [
@@ -1125,7 +1128,8 @@
       },
       "fields": {
         "shortDescription": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "archaeoDox:typeOfWare": {
           "inputType": "dropdown",
@@ -1321,7 +1325,8 @@
       },
       "fields": {
         "shortDescription": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "storagePlace": {
           "inputType": "input"

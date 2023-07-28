@@ -1,8 +1,6 @@
-import {Component, ElementRef, Input, OnChanges} from '@angular/core';
-import {Document, Datastore, Resource} from 'idai-field-core';
-import {Relation} from 'idai-field-core';
-import {RelationPicker} from './relation-picker';
-import {DefaultRelationPicker} from './default-relation-picker';
+import { Component, ElementRef, Input, OnChanges } from '@angular/core';
+import { Document, Datastore, Resource, Relation } from 'idai-field-core';
+import { RelationPicker } from './relation-picker';
 
 
 @Component({
@@ -17,7 +15,6 @@ import {DefaultRelationPicker} from './default-relation-picker';
 export class RelationPickerComponent implements OnChanges {
 
     @Input() resource: Resource;
-
     @Input() relationDefinition: Relation;
     @Input() relationIndex: number;
 
@@ -44,7 +41,7 @@ export class RelationPickerComponent implements OnChanges {
 
     public async ngOnChanges() {
 
-        this.relationPicker = new DefaultRelationPicker(
+        this.relationPicker = new RelationPicker(
             this.resource, this.relationDefinition, this.datastore, this.relationIndex
         );
 

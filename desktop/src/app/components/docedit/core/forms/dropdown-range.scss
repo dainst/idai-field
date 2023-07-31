@@ -12,4 +12,9 @@ form-field-dropdown-range {
       margin-left: 7px;
     }
   }
+
+  searchable-select {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
 }

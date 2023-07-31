@@ -56,7 +56,7 @@ export class DropdownRangeComponent {
 
     public setValue(value: string) {
 
-        if (isUndefinedOrEmpty(value)) {
+        if (!value) {
             this.endActivated = false;
             delete this.fieldContainer[this.field.name];
         } else {
@@ -68,7 +68,7 @@ export class DropdownRangeComponent {
 
     public setEndValue(value: string) {
 
-        if (isUndefinedOrEmpty(value)) {
+        if (!value) {
             this.endActivated = false;
             delete this.fieldContainer[this.field.name][OptionalRange.ENDVALUE]
         } else {

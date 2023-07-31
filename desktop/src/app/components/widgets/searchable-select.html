@@ -7,8 +7,8 @@
            [readonly]="disabled"
            (open)="listenToScrollEvents()"
            (close)="stopListeningToScrollEvents()"
-           (change)="onValueSelected.emit(selectedValue)"
-           (clear)="onValueSelected.emit(selectedValue)"
+           (change)="emitChanges()"
+           (clear)="emitChanges()"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"
            (search)="onSearchTermChanged.emit($event.term)">

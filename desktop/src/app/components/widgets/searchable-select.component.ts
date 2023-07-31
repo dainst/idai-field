@@ -19,6 +19,7 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     @Input() getLabel: (value: string) => string;
     @Input() initiallyOpened: boolean = false;
     @Input() disabled: boolean = false;
+    @Input() closeOnClear: boolean = false;
 
     @Output() onValueSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
@@ -46,6 +47,14 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         
         this.stopListeningToScrollEvents();
+    }
+
+
+    public emitChanges() {
+
+        if (!this.selectedValue && this.closeOnClear) this.selectElement.close();
+        
+        this.onValueSelected.emit(this.selectedValue);
     }
 
 

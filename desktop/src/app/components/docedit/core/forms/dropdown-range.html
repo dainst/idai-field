@@ -9,6 +9,7 @@
         <searchable-select [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
                            [values]="getValues()"
                            [getLabel]="getLabel"
+                           [closeOnClear]="showEndElements()"
                            (onValueSelected)="setValue($event)"></searchable-select>
 
         <label *ngIf="showEndElements()" class="dropdown-range-end-label">

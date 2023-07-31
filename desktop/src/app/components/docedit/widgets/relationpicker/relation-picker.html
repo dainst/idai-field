@@ -10,7 +10,9 @@
                                [getLabel]="getTargetLabel"
                                [initiallyOpened]="true"
                                (onValueSelected)="onTargetSelected($event)"
-                               (onBlur)="onBlur()"></searchable-select>
+                               (onBlur)="onBlur()"
+                               (onScrollToEnd)="loadNextChunk()"
+                               (onSearchTermChanged)="search($event)"></searchable-select>
         </div>
         <div *ngIf="selectedTarget">
             <button class="btn btn-default" type="button" (click)="editTarget()">

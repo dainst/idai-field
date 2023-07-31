@@ -5,21 +5,24 @@ import { Constraint, Query, Datastore, Relation, Constraints, CHILDOF_CONTAIN, D
 /**
  * @author Thomas Kleinke
  */
-export async function getSuggestions(datastore: Datastore, resource: Resource,
-                                     relationDefinition: Relation): Promise<Array<Document>> {
+export async function getSuggestions(datastore: Datastore, resource: Resource, relationDefinition: Relation,
+                                     searchTerm: string, offset: number, limit: number): Promise<Array<Document>> {
 
     return (await datastore.find(
-        makeQuery(resource, relationDefinition)
+        makeQuery(resource, relationDefinition, searchTerm, offset, limit)
     )).documents;
 }
 
 
-function makeQuery(resource: Resource, relationDefinition: Relation): Query {
+function makeQuery(resource: Resource, relationDefinition: Relation, searchTerm: string, offset: number,
+                   limit: number): Query {
 
     return {
-        q: '',
+        q: searchTerm,
         categories: relationDefinition.range,
-        constraints: makeConstraints(resource, relationDefinition)
+        constraints: makeConstraints(resource, relationDefinition),
+        offset,
+        limit
     };
 }
 

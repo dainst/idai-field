@@ -32,10 +32,12 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory1', 'RangeCategory2'],
             constraints: {
                'id:match': {
@@ -66,10 +68,12 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
@@ -101,10 +105,12 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
@@ -136,13 +142,15 @@ describe('getSuggestions', () => {
         };
 
         try {
-            await getSuggestions(datastore, document.resource, relationDefinition);
+            await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
         } catch (err) {
             fail();
         }
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {

@@ -1,7 +1,10 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
-import { isUndefinedOrEmpty, to } from 'tsfun';
+import { Component, Input, OnChanges } from '@angular/core';
+import { isUndefinedOrEmpty } from 'tsfun';
 import { Document, Datastore, Resource, Relation } from 'idai-field-core';
 import { getSuggestions } from './get-suggestions';
+
+
+const SUGGESTIONS_CHUNK_SIZE: number = 20;
 
 
 @Component({
@@ -23,9 +26,11 @@ export class RelationPickerComponent implements OnChanges {
     public selectedTarget: Document|undefined;
     public disabled: boolean = false;
 
+    private searchTerm: string = '';
+    private offset: number = 0;
 
-    constructor(private element: ElementRef,
-                private datastore: Datastore) {}
+
+    constructor(private datastore: Datastore) {}
 
     
     public getAvailableTargetIds = () => this.availableTargets?.map(target => target.resource.id);
@@ -43,9 +48,10 @@ export class RelationPickerComponent implements OnChanges {
             console.error(err);
         }
 
-        if (!this.selectedTarget) {
-            this.availableTargets = await this.fetchAvailableTargets();
-        }
+        this.searchTerm = '';
+        this.offset = 0;
+
+        if (!this.selectedTarget) await this.loadNextChunk();
     }
 
 
@@ -67,6 +73,27 @@ export class RelationPickerComponent implements OnChanges {
 
         this.updateSelectedTarget();
         if (!this.selectedTarget) this.deleteRelation();
+    }
+
+
+    public async search(term: string) {
+
+        this.availableTargets = [];
+        this.offset = 0;
+        this.searchTerm = term;
+
+        await this.loadNextChunk();
+    }
+
+
+    public async loadNextChunk() {
+
+        const newTargets: Array<Document> = await this.fetchAvailableTargets();
+
+        if (!this.availableTargets) this.availableTargets = [];
+        this.availableTargets = this.availableTargets.concat(newTargets);
+
+        this.offset += SUGGESTIONS_CHUNK_SIZE;
     }
 
 
@@ -119,7 +146,10 @@ export class RelationPickerComponent implements OnChanges {
     private async fetchAvailableTargets(): Promise<Array<Document>> {
 
         try {
-            return await getSuggestions(this.datastore, this.resource, this.relationDefinition);
+            return await getSuggestions(
+                this.datastore, this.resource, this.relationDefinition, this.searchTerm, this.offset,
+                SUGGESTIONS_CHUNK_SIZE
+            );
         } catch (err) {
             console.error(err);
         }

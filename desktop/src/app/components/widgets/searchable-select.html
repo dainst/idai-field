@@ -8,6 +8,8 @@
            (close)="stopListeningToScrollEvents()"
            (change)="onValueSelected.emit(selectedValue)"
            (clear)="onValueSelected.emit(selectedValue)"
-           (blur)="onBlur.emit()">
+           (blur)="onBlur.emit()"
+           (scrollToEnd)="onScrollToEnd.emit()"
+           (search)="onSearchTermChanged.emit($event.term)">
     <ng-option *ngFor="let value of values" [value]="value">{{getLabel(value)}}</ng-option>
 </ng-select>

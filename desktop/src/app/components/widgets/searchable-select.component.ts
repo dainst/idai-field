@@ -21,6 +21,8 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
 
     @Output() onValueSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onScrollToEnd: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onSearchTermChanged: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('selectElement', { static: false }) private selectElement: NgSelectComponent;
 

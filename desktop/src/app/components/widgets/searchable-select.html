@@ -4,6 +4,7 @@
            notFoundText="Wert nicht gefunden"
            i18n-notFoundText="@@docedit.forms.dropdown.notFound"
            appendTo="body"
+           [readonly]="disabled"
            (open)="listenToScrollEvents()"
            (close)="stopListeningToScrollEvents()"
            (change)="onValueSelected.emit(selectedValue)"

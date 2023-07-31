@@ -18,6 +18,7 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     @Input() values: string[];
     @Input() getLabel: (value: string) => string;
     @Input() initiallyOpened: boolean = false;
+    @Input() disabled: boolean = false;
 
     @Output() onValueSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();

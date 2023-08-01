@@ -413,7 +413,7 @@ test.describe('resources/state --', () => {
 
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('geometry');
-        await SearchConstraintsPage.clickSelectExistsDropdownValue('KNOWN');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(true);
         await SearchConstraintsPage.clickAddConstraintButton();
 
         await SearchBarPage.clickChooseCategoryFilter('feature');

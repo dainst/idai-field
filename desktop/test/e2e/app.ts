@@ -166,6 +166,18 @@ export async function selectOption(element, optionValue) {
 }
 
 
+export async function selectOptionFromSearchableSelect(element, optionValueLabel) {
+
+    if (isString(element)) element = await getLocator(element);
+    element = await element.locator('.ng-arrow-wrapper');
+
+    await scrollTo(element);
+    await click(element);
+    
+    return click('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
+}
+
+
 export async function getText(element, trim = true) {
 
     if (isString(element)) element = await getLocator(element);

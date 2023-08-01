@@ -52,6 +52,19 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           protected i18n: I18n) {}
 
 
+    public getValueLabel = (valueId: string): string => {
+
+        switch (valueId) {
+            case 'KNOWN':
+                return this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
+            case 'UNKNOWN':
+                return this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
+            default:
+                return this.labels.getValueLabel(this.selectedField.valuelist, valueId);
+        }
+    }
+
+
     async ngOnChanges() {
 
         await this.removeInvalidConstraints();
@@ -59,10 +72,18 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
+    public getValues() {
+        
+        return ['KNOWN', 'UNKNOWN'].concat(
+            this.labels.orderKeysByLabels(this.selectedField.valuelist)
+        );
+    }
 
-    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
-        this.labels.getValueLabel(valuelist, valueId);
+
+    public selectValue(value: string) {
+
+        this.searchTerm = value ?? '';
+    }
 
 
     public getTooltip() {
@@ -178,7 +199,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         let target: any = event.target;
 
         do {
-            if (target.id && target.id.startsWith('constraints-menu')) return;
+            if (target.id && (target.id.startsWith('constraints-menu')
+                     || target.localName === 'ng-dropdown-panel')) {
+                return;
+            }
             target = target.parentNode;
         } while (target);
 

@@ -82,21 +82,27 @@ image-overview-search-constraints {
       background-color: white;
       margin-top: 1px;
 
-      select,
-      input {
+      select.form-control,
+      input.form-control {
         height: 39px;
         font-size: 14px;
       }
 
-      select {
+      select.form-control,
+      searchable-select {
         width: calc(50% - 31px);
       }
 
-      input {
-        width: calc(50% - 57px);
+      searchable-select {
+        .ng-select {
+          .ng-select-container {
+            height: 39px !important;
+            min-height: 39px;
 
-        &:focus {
-          z-index: 1;
+            .ng-input {
+              top: initial;
+            }
+          }
         }
       }
 
@@ -128,7 +134,6 @@ image-overview-search-constraints {
           border-color: #7998cb !important;
         }
       }
-      
 
       #add-constraint-button {
         height: 39px;

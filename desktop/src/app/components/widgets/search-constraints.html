@@ -61,19 +61,12 @@
             </div>
         </div>
 
-        <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
-                id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
-            <option value=""></option>
-            <option id="constraint-search-term-dropdown-option-any-value" value="KNOWN"
-                    i18n="@@resources.searchBar.constraints.options.anyValue">- Beliebiger Wert -</option>
-            <option id="constraint-search-term-dropdown-option-no-value" value="UNKNOWN"
-                    i18n="@@resources.searchBar.constraints.options.noValue">- Kein Wert -</option>
-            <option *ngFor="let value of getValues(selectedField.valuelist)" value="{{value}}">
-                {{getValueLabel(selectedField.valuelist, value)}}
-            </option>
-        </select>
+        <searchable-select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
+                           id="constraint-search-term-select"
+                           [selectedValue]="searchTerm"
+                           [values]="getValues()"
+                           [getLabel]="getValueLabel"
+                           (onValueSelected)="selectValue($event)"></searchable-select>
 
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"
                 id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">

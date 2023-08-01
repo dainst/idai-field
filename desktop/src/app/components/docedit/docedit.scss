@@ -130,6 +130,41 @@
     padding: 0;
     position: relative;
   }
+
+  searchable-select {
+    .ng-select {
+      .ng-select-container {
+        height: 33px !important;
+        min-height: 33px;
+      }
+  
+      &.ng-select-opened,
+      &.ng-select-focused,
+      &.ng-touched,
+      &.ng-dirty {
+        .ng-input {
+          margin-top: -1px !important;
+        }
+  
+        .ng-value {
+          position: absolute;
+          top: 11px;
+        }
+  
+        .ng-clear-wrapper {
+          position: absolute;
+          top: 10.5px;
+          right: 25px;
+        }
+  
+        .ng-arrow-wrapper {
+          position: absolute;
+          right: 0;
+          top: 11px;
+        }
+      }
+    }
+  }
 }
 
 #document-edit-dropdown-menu {

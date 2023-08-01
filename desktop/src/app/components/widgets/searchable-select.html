@@ -5,6 +5,7 @@
            i18n-notFoundText="@@docedit.forms.dropdown.notFound"
            appendTo="body"
            [readonly]="disabled"
+           [clearable]="selectedValue !== ''"
            (open)="listenToScrollEvents()"
            (close)="stopListeningToScrollEvents()"
            (change)="emitChanges()"

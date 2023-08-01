@@ -130,7 +130,10 @@
     padding: 0;
     position: relative;
   }
+}
 
+#document-edit-wrapper,
+.complex-entry-modal {
   searchable-select {
     .ng-select {
       .ng-select-container {

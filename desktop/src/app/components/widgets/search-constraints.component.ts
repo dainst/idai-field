@@ -52,21 +52,28 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           protected i18n: I18n) {}
 
 
-    public getValueLabel = (valueId: string): string => {
+    public getValueLabel = (value: string, existsQuery: boolean = false): string => {
 
-        switch (valueId) {
+        switch (value) {
             case 'KNOWN':
-                return this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
+                return existsQuery
+                    ? this.i18n({ id: 'boolean.yes', value: 'Ja' })
+                    : this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
             case 'UNKNOWN':
-                return this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
+                return existsQuery
+                    ? this.i18n({ id: 'boolean.false', value: 'Nein' })
+                    : this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
             case 'true':
                 return this.i18n({ id: 'boolean.yes', value: 'Ja' });
             case 'false':
                 return this.i18n({ id: 'boolean.false', value: 'Nein' });
             default:
-                return this.labels.getValueLabel(this.selectedField.valuelist, valueId);
+                return this.labels.getValueLabel(this.selectedField.valuelist, value);
         }
     }
+
+
+    public getExistsLabel = (value: string) => this.getValueLabel(value, true);
 
 
     async ngOnChanges() {
@@ -87,6 +94,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public getBooleanValues() {
 
         return ['KNOWN', 'UNKNOWN', 'true', 'false'];
+    }
+
+
+    public getExistsValues() {
+
+        return ['KNOWN', 'UNKNOWN'];
     }
 
 

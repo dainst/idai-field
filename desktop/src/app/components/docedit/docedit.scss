@@ -137,6 +137,10 @@
         height: 33px !important;
         min-height: 33px;
       }
+
+      .ng-value {
+        width: calc(100% - 55px);
+      }
   
       &.ng-select-opened,
       &.ng-select-focused,

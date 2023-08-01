@@ -304,6 +304,25 @@ describe('convertFieldTypes', () => {
     });
 
 
+    it('field type int', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'i',
+                inputType: 'int'
+            }]}],
+        } as CategoryForm;
+
+        const resource = convertFieldTypes(category)({
+                i: '-100',
+                relations: {}
+            } as unknown as Resource);
+
+        expect(resource['i']).toBe(-100);
+    });
+
+
     it('field type unsignedInt', () => {
 
         const category = {
@@ -328,28 +347,28 @@ describe('convertFieldTypes', () => {
         const category = {
             name: 'Category',
             groups: [{ fields: [{
-                name: 'uf1',
+                name: 'f1',
                 inputType: 'float'
             }, {
-                name: 'uf2',
+                name: 'f2',
                 inputType: 'float'
             },
             {
-                name: 'uf3',
+                name: 'f3',
                 inputType: 'float'
             }]}]
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                uf1: '100.1',
-                uf2: '100,2',
-                uf3: '-100,3',
+                f1: '100.1',
+                f2: '100,2',
+                f3: '-100,3',
                 relations: {}
             } as unknown as Resource);
 
-        expect(resource['uf1']).toBe(100.1);
-        expect(resource['uf2']).toBe(100.2);
-        expect(resource['uf3']).toBe(-100.3);
+        expect(resource['f1']).toBe(100.1);
+        expect(resource['f2']).toBe(100.2);
+        expect(resource['f3']).toBe(-100.3);
     });
 
 

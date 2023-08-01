@@ -6,7 +6,7 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
 type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'complex' | 'radio'
-    | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
+    | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'int' | 'unsignedInt' | 'float' | 'unsignedFloat'
     | 'checkboxes' | 'identifier'; // | 'geometry'
 
 
@@ -23,6 +23,7 @@ const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includ
  * Conversion of resource done by reference, i.e. in place
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function convertFieldTypes(category: CategoryForm) {
 
@@ -48,8 +49,7 @@ export function convertFieldTypes(category: CategoryForm) {
 
 
 // here only string to number, validation in exec
-const convertUnsignedInt = (container: any, path: Path) => convertNumber(container, path, 'int');
-const convertUnsignedFloat = (container: any, path: Path) => convertNumber(container, path, 'float');
+const convertInt = (container: any, path: Path) => convertNumber(container, path, 'int');
 const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
 
@@ -60,9 +60,8 @@ function convertTypeDependent(container: any, fieldName: string, inputType: Fiel
     if (inputType === 'dating') convertDating(container, fieldName);
     if (inputType === 'dimension') convertDimension(container, fieldName);
     if (inputType === 'checkboxes') convertCheckboxes(container, fieldName);
-    if (inputType === 'unsignedInt') convertUnsignedInt(container, fieldName);
-    if (inputType === 'unsignedFloat') convertUnsignedFloat(container, fieldName);
-    if (inputType === 'float') convertFloat(container, fieldName);
+    if (inputType === 'int' || inputType === 'unsignedInt') convertInt(container, fieldName);
+    if (inputType === 'float' || inputType === 'unsignedFloat') convertFloat(container, fieldName);
     if (inputType === 'complex') convertComplex(container, fieldName, field);
 }
 
@@ -102,9 +101,9 @@ function convertDating(container: any, fieldName: string) {
         if (dating === null) continue;
 
         try {
-            convertUnsignedInt(dating, ['begin','inputYear']);
-            convertUnsignedInt(dating, ['end','inputYear']);
-            convertUnsignedInt(dating, 'margin');
+            convertInt(dating, ['begin','inputYear']);
+            convertInt(dating, ['end','inputYear']);
+            convertInt(dating, 'margin');
             convertBoolean(dating, 'isImprecise');
             convertBoolean(dating, 'isUncertain');
         } catch (msgWithParams) {

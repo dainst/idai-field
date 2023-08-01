@@ -159,6 +159,12 @@ export class DoceditPage {
     }
 
 
+    public static clickCreateComplexEntry(fieldName: string) {
+
+        return click('#edit-form-element-' + fieldName + ' .create-complex-entry-button');
+    }
+
+
     // get text
 
     public static async getSimpleInputFieldValue(index) {

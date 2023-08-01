@@ -5,7 +5,7 @@
 
 <div class="modal-body bg-light">
     <div *ngFor="let subfield of getSubfields()" class="subfield-section">
-        <label>{{getSubfieldLabel(subfield)}}</label>
+        <label class="complex-entry-modal-subfield-label">{{getSubfieldLabel(subfield)}}</label>
         <span *ngIf="getSubfieldDescription(subfield)"
                 placement="left"
                 container="body"
@@ -24,7 +24,7 @@
             (click)="confirm()">
         <span i18n="@@buttons.ok">OK</span>
     </button>
-    <div class="btn btn-secondary"
+    <div id="cancel-button" class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

@@ -72,15 +72,27 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickConfirmSubfield() {
+
+        return click('#confirm-subfield-button');
+    }
+
+
     public static clickAddValue() {
 
         return click('#add-value-button');
     }
 
 
-    public static clickInputTypeSelectOption(optionValue: string) {
+    public static clickCreateSubfield() {
 
-        return selectOption('#input-type-select', optionValue);
+        return click('#create-subfield-button');
+    }
+
+
+    public static clickInputTypeSelectOption(optionValue: string, isSubfield: boolean = false) {
+
+        return selectOption(this.getModalClass(isSubfield) + ' .input-type-select', optionValue);
     }
 
 
@@ -101,9 +113,11 @@ export class EditConfigurationPage {
 
     // type in
 
-    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string) {
+    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string,
+                                          isSubfield: boolean = false) {
 
-        const inputElement = (await getLocator('multi-language-input')).nth(inputIndex);
+        const inputElement = (await getLocator(this.getModalClass(isSubfield) + ' multi-language-input'))
+            .nth(inputIndex);
         const translationElement = (await inputElement.locator('.language-input input')).nth(translationIndex);
         return typeIn(translationElement, text);
     }
@@ -118,5 +132,19 @@ export class EditConfigurationPage {
     public static typeInNewValue(valueId: string) {
 
         return typeIn('#new-value-input', valueId);
+    }
+
+
+    public static typeInNewSubfield(subfieldName: string) {
+
+        return typeIn('#new-subfield-input', subfieldName);
+    }
+
+
+    private static getModalClass(isSubfield: boolean) {
+
+        return isSubfield
+            ? '.subfield-editor-modal-body'
+            : '.field-editor-modal-body';
     }
 }

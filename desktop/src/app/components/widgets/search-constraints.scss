@@ -88,6 +88,14 @@ image-overview-search-constraints {
         font-size: 14px;
       }
 
+      input.form-control {
+        width: calc(50% - 57px);
+
+        &:focus {
+          z-index: 1;
+        }
+      }
+
       select.form-control,
       searchable-select {
         width: calc(50% - 31px);

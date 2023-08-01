@@ -63,9 +63,11 @@
 
         <searchable-select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                            id="constraint-search-term-select"
-                           [selectedValue]="searchTerm"
+                           [selectedValue]="searchTerm === '' ? null : searchTerm"
                            [values]="getValues()"
                            [getLabel]="getValueLabel"
+                           placeholder="Suchbegriff"
+                           i18n-placeholder="@@resources.searchBar.constraints.searchTerm">
                            (onValueSelected)="selectValue($event)"></searchable-select>
 
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"

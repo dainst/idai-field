@@ -17,6 +17,7 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     @Input() selectedValue: string;
     @Input() values: string[];
     @Input() getLabel: (value: string) => string;
+    @Input() placeholder: string;
     @Input() initiallyOpened: boolean = false;
     @Input() disabled: boolean = false;
     @Input() closeOnClear: boolean = false;

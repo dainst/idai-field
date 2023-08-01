@@ -6,6 +6,7 @@
            appendTo="body"
            [readonly]="disabled"
            [clearable]="selectedValue !== ''"
+           [placeholder]="placeholder"
            (open)="listenToScrollEvents()"
            (close)="stopListeningToScrollEvents()"
            (change)="emitChanges()"

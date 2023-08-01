@@ -66,7 +66,7 @@ image-overview-search-constraints {
         width: calc(100% - 36px);
         overflow: hidden;
         word-wrap: break-word;
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .mdi-close-circle {
@@ -85,11 +85,12 @@ image-overview-search-constraints {
       select.form-control,
       input.form-control {
         height: 39px;
-        font-size: 14px;
+        font-size: 13px;
       }
 
       input.form-control {
         width: calc(50% - 57px);
+        padding: 10px;
 
         &:focus {
           z-index: 1;
@@ -110,6 +111,10 @@ image-overview-search-constraints {
             .ng-input {
               top: initial;
             }
+
+            .ng-placeholder {
+              color: #666;
+            }
           }
         }
       }
@@ -129,7 +134,7 @@ image-overview-search-constraints {
           border-color: #ced4da;
           border-radius: 0;
           border-left: none;
-          font-size: 14px;
+          font-size: 13px;
           cursor: default;
         }
 
@@ -167,7 +172,7 @@ image-overview-search-constraints {
 #constraints-menu-input-dropdown-menu {
   .dropdown-item {
     height: 30px;
-    font-size: 14px;
+    font-size: 13px;
     color: black;
   }
 }

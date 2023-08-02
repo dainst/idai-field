@@ -1,10 +1,13 @@
-import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty } from 'tsfun';
+import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty, isString } from 'tsfun';
 import { Datastore } from '../datastore/datastore';
 import { Document } from './document';
 import { notBothEqual, notCompareInBoth } from '../tools/compare';
 import { Name } from '../tools/named';
 import { SortUtil } from '../tools/sort-util';
 import { concatIf } from '../tools/utils';
+import { Labels, ProjectConfiguration } from '../services';
+import { Valuelist } from './configuration/valuelist';
+import { CategoryForm } from './configuration/category-form';
 
 
 export interface NewResource {
@@ -134,5 +137,30 @@ export module Resource {
                 concatIf(notCompareInBoth(resource1, resource2)),
                 [] as string[]
             );
+    }
+
+
+    export const getShortDescriptionLabel = (resource: Resource, labels: Labels,
+                                             projectConfiguration: ProjectConfiguration): string => {
+
+        const shortDescription: any = resource.shortDescription;
+        if (!shortDescription) return undefined;
+
+        return isString(shortDescription)
+                ? getShortDescriptionLabelFromString(resource, shortDescription, labels, projectConfiguration)
+                : labels.getFromI18NString(shortDescription);
+    }
+
+
+    const getShortDescriptionLabelFromString = (resource: Resource, shortDescription: string, labels: Labels,
+                                                projectConfiguration: ProjectConfiguration): string => {
+
+        const valuelist: Valuelist|undefined = CategoryForm.getShortDescriptionValuelist(
+            projectConfiguration.getCategory(resource.category)
+        );
+
+        return valuelist
+            ? labels.getValueLabel(valuelist, shortDescription)
+            : shortDescription;
     }
 }

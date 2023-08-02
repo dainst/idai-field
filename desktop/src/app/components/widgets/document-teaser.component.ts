@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { isString } from 'tsfun';
-import { CategoryForm, Document, Field, FieldResource, Labels, ProjectConfiguration,
-    Valuelist } from 'idai-field-core';
+import { Document, Labels, ProjectConfiguration, Resource } from 'idai-field-core';
 
 
 @Component({
@@ -17,31 +15,7 @@ export class DocumentTeaserComponent {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public getShortDescription(): string {
-
-        const shortDescription: any = this.document.resource.shortDescription;
-        if (!shortDescription) return undefined;
-
-        return isString(shortDescription)
-                ? this.getFromString(shortDescription)
-                : this.labels.getFromI18NString(shortDescription);
-    }
-
-
-    private getFromString(shortDescription: string): string {
-
-        const valuelist: Valuelist|undefined = this.getValuelist();
-
-        return valuelist
-            ? this.labels.getValueLabel(valuelist, shortDescription)
-            : shortDescription;
-    }
-
-
-    private getValuelist(): Valuelist|undefined {
-
-        return CategoryForm.getShortDescriptionValuelist(
-            this.projectConfiguration.getCategory(this.document.resource.category)
-        );
-    }
+    public getShortDescription = () => Resource.getShortDescriptionLabel(
+        this.document.resource, this.labels, this.projectConfiguration
+    );
 }

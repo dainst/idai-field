@@ -189,13 +189,13 @@ test.describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickListModeButton();
         await ResourcesPage.performCreateResourceInList('Trench1', 'operation-trench');
-        await ResourcesPage.clickListSelectOption('Trench1', 'testValue1');
+        await ResourcesPage.clickListSelectOption('Trench1', 'Value 1');
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('Trench1');
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 1');
         
         await ResourcesPage.clickListModeButton();
-        await ResourcesPage.clickListSelectOption('Trench1', 'testValue2');
+        await ResourcesPage.clickListSelectOption('Trench1', 'Value 2');
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('Trench1');
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 2');    

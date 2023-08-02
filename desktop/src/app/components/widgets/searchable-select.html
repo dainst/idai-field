@@ -7,10 +7,9 @@
            [readonly]="disabled"
            [clearable]="selectedValue !== ''"
            [placeholder]="placeholder"
-           (open)="listenToScrollEvents()"
+           (open)="onOpen()"
            (close)="stopListeningToScrollEvents()"
            (change)="emitChanges()"
-           (clear)="emitChanges()"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"
            (search)="onSearchTermChanged.emit($event.term)">

@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter,
-    OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter, OnInit,
+    Renderer2 } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ComponentHelpers } from '../component-helpers';
 import { AngularUtility } from '../../angular/angular-utility';
@@ -18,6 +18,7 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     @Input() values: string[];
     @Input() getLabel: (value: string) => string;
     @Input() placeholder: string;
+    @Input() customPanelClass: string;
     @Input() initiallyOpened: boolean = false;
     @Input() disabled: boolean = false;
     @Input() closeOnClear: boolean = false;
@@ -33,7 +34,8 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     public scrollListenerInitialized: boolean = false;
 
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private renderer: Renderer2) {}
 
 
     async ngOnInit() {
@@ -48,6 +50,13 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         
         this.stopListeningToScrollEvents();
+    }
+
+
+    public async onOpen() {
+
+        this.listenToScrollEvents();
+        if (this.customPanelClass) this.addCustomPanelClass();
     }
 
 
@@ -74,6 +83,13 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
 
         window.removeEventListener('scroll', this.onScrollListener, true);
         this.onScrollListener = undefined;
+    }
+
+
+    public async addCustomPanelClass() {
+
+        await AngularUtility.refresh();
+        this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), this.customPanelClass);
     }
 
 

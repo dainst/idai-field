@@ -105,12 +105,24 @@ export class RowComponent implements AfterViewInit, OnChanges {
     }
 
 
-    public async onShortDescriptionValueChanged() {
+    public async onShortDescriptionValueChanged(newValue: string) {
 
-        if (this.document.resource.shortDescription === '') delete this.document.resource.shortDescription;
+        if (newValue) {
+            this.document.resource.shortDescription = newValue;
+        } else {
+            delete this.document.resource.shortDescription;
+        }
         
         this.saving = this.save();
         await this.saving;
+    }
+
+
+    public getSelectedShortDescriptionValue(): string {
+
+        return this.document.resource.shortDescription === ''
+            ? null
+            : this.document.resource.shortDescription as string;
     }
 
 

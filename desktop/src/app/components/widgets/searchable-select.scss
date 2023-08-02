@@ -31,11 +31,11 @@
   overflow-x: hidden;
 
   &.ng-select-top {
-    border-bottom-color: #7998cb !important;
+    margin-bottom: 0 !important;
   }
 
   &.ng-select-bottom {
-    border-top-color: #7998cb !important;
+    margin-top: 0 !important;
   }
 
   .ng-option {

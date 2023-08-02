@@ -168,7 +168,7 @@ test.describe('configuration --', () => {
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
         await AddCategoryFormModalPage.clickCreateNewCategory();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie', 'category');
         await EditConfigurationPage.clickConfirm();
 
         await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
@@ -245,7 +245,7 @@ test.describe('configuration --', () => {
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
         await CategoryPickerPage.clickOpenContextMenu('Place');
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Editierte Kategorie');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Editierte Kategorie', 'category');
         await EditConfigurationPage.clickConfirm();
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Editierte Kategorie');
         await ConfigurationPage.save();
@@ -348,7 +348,7 @@ test.describe('configuration --', () => {
         await AddFieldModalPage.typeInSearchFilterInput('newField');
         await AddFieldModalPage.clickCreateNewField();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld', 'field');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(ConfigurationPage.getField('test:newField'));
         await ConfigurationPage.save();
@@ -471,7 +471,7 @@ test.describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickCreateNewGroup();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe', 'group');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
         
@@ -709,13 +709,13 @@ test.describe('configuration --', () => {
         await CategoryPickerPage.clickSelectCategory('Operation');
         await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('dropdown');
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('test-list');
         await ManageValuelistsModalPage.clickCreateNewValuelist();
         await EditConfigurationPage.typeInNewValue('testValue');
         await EditConfigurationPage.clickAddValue();
-        await EditConfigurationPage.typeInTranslation(3, 0, 'Value label');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Value label', 'value');
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.clickConfirmValuelist();
         await EditConfigurationPage.clickConfirm();
@@ -740,19 +740,19 @@ test.describe('configuration --', () => {
         await AddFieldModalPage.typeInSearchFilterInput('complexField');
         await AddFieldModalPage.clickCreateNewField();
 
-        await EditConfigurationPage.clickInputTypeSelectOption('complex');
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Kompositfeld');
+        await EditConfigurationPage.clickInputTypeSelectOption('complex', 'field');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Kompositfeld', 'field');
         
         await EditConfigurationPage.typeInNewSubfield('subfield1');
         await EditConfigurationPage.clickCreateSubfield();
-        await EditConfigurationPage.clickInputTypeSelectOption('boolean', true);
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 1', true);
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'subfield');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 1', 'subfield');
         await EditConfigurationPage.clickConfirmSubfield();
 
         await EditConfigurationPage.typeInNewSubfield('subfield2');
         await EditConfigurationPage.clickCreateSubfield();
-        await EditConfigurationPage.clickInputTypeSelectOption('input', true);
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 2', true);
+        await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 2', 'subfield');
         await EditConfigurationPage.clickConfirmSubfield();
 
         await EditConfigurationPage.clickConfirm();

@@ -1,6 +1,9 @@
 import { click, getLocator, getText, selectOption, typeIn } from '../app';
 
 
+type ModalContext = 'field'|'subfield'|'value'|'group'|'category';
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -90,9 +93,9 @@ export class EditConfigurationPage {
     }
 
 
-    public static clickInputTypeSelectOption(optionValue: string, isSubfield: boolean = false) {
+    public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
 
-        return selectOption(this.getModalClass(isSubfield) + ' .input-type-select', optionValue);
+        return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);
     }
 
 
@@ -114,9 +117,9 @@ export class EditConfigurationPage {
     // type in
 
     public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string,
-                                          isSubfield: boolean = false) {
+                                          modalContext: ModalContext) {
 
-        const inputElement = (await getLocator(this.getModalClass(isSubfield) + ' multi-language-input'))
+        const inputElement = (await getLocator(this.getModalClass(modalContext) + ' multi-language-input'))
             .nth(inputIndex);
         const translationElement = (await inputElement.locator('.language-input input')).nth(translationIndex);
         return typeIn(translationElement, text);
@@ -141,10 +144,8 @@ export class EditConfigurationPage {
     }
 
 
-    private static getModalClass(isSubfield: boolean) {
+    private static getModalClass(modalContext: ModalContext = 'field') {
 
-        return isSubfield
-            ? '.subfield-editor-modal-body'
-            : '.field-editor-modal-body';
+        return '.' +  modalContext + '-editor-modal-body';
     }
 }

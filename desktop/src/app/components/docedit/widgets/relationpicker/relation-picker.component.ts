@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { isUndefinedOrEmpty } from 'tsfun';
-import { Document, Datastore, Resource, Relation } from 'idai-field-core';
+import { Document, Datastore, Resource, Relation, Labels, ProjectConfiguration } from 'idai-field-core';
 import { getSuggestions } from './get-suggestions';
 
 
@@ -30,13 +30,12 @@ export class RelationPickerComponent implements OnChanges {
     private offset: number = 0;
 
 
-    constructor(private datastore: Datastore) {}
+    constructor(private datastore: Datastore,
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
     
     public getAvailableTargetIds = () => this.availableTargets?.map(target => target.resource.id);
-
-    public getTargetLabel = (targetId: string) => this.availableTargets
-        .find(target => target.resource.id === targetId)?.resource.identifier;
 
 
     public async ngOnChanges() {
@@ -73,6 +72,24 @@ export class RelationPickerComponent implements OnChanges {
 
         this.updateSelectedTarget();
         if (!this.selectedTarget) this.deleteRelation();
+    }
+
+
+    public getTargetLabel = (targetId: string) => {
+
+        const document: Document = this.availableTargets
+            .find(target => target.resource.id === targetId)
+
+        let label: string = document?.resource.identifier;
+
+        if (document?.resource.shortDescription) {
+            const shortDescriptionLabel: string = Resource.getShortDescriptionLabel(
+                document.resource, this.labels, this.projectConfiguration
+            );
+            label += ' (' + shortDescriptionLabel + ')';
+        }
+
+        return label;
     }
 
 

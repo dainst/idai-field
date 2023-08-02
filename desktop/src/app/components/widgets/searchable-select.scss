@@ -12,6 +12,10 @@
       font-size: 13px;
       transition: border-color 0.15s ease-in-out;
 
+      &:hover {
+        box-shadow: none;
+      }
+
       .ng-clear-wrapper,
       .ng-arrow-wrapper {
         cursor: default;

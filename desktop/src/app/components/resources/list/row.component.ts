@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
 import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
     Labels, I18N, FieldResource, Valuelist } from 'idai-field-core';
@@ -21,16 +21,16 @@ import { Language } from '../../../services/languages';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class RowComponent implements AfterViewInit, OnChanges {
+export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
     @Input() category: CategoryForm;
     @Input() availableLanguages: Array<Language>;
     @Input() selectedLanguage: Language|undefined;
+    @Input() shortDescriptionValuelist: Valuelist|undefined;
+    @Input() shortDescriptionValues: string[];
 
     @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
-
-    public shortDescriptionValuelist: Valuelist|undefined;
 
     private initialValues: Map<string|I18N.String|undefined> = {};
     private saving: Promise<void>;
@@ -72,8 +72,6 @@ export class RowComponent implements AfterViewInit, OnChanges {
 
     public getCategoryLabel = () => this.labels.get(this.category);
 
-    public getShortDescriptionValues = () => this.labels.orderKeysByLabels(this.shortDescriptionValuelist);
-
     public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.shortDescriptionValuelist, valueId);
 
     public makeId = () => this.document.resource.id
@@ -86,12 +84,6 @@ export class RowComponent implements AfterViewInit, OnChanges {
     ngAfterViewInit() {
 
         this.focusIdentifierInputIfDocumentIsNew();
-    }
-
-
-    ngOnChanges() {
-        
-        this.shortDescriptionValuelist = CategoryForm.getShortDescriptionValuelist(this.category);
     }
 
 

@@ -220,7 +220,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIdentifierIsUnique(this.document);
         } catch(msgWithParams) {
             this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels));
-            await this.restoreIdentifier(this.document);
+            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
             this.changeDetectorRef.detectChanges();
             return;
         }

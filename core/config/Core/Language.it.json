@@ -69,6 +69,15 @@
     "isFilledBy": {
       "label": "Riempito da"
     },
+    "abuts": {
+      "label": "Si appoggia a"
+    },
+    "isAbuttedBy": {
+      "label": "Gli si appoggia"
+    },
+    "bondsWith": {
+      "label": "Si lega a"
+    },
     "borders": {
       "label": "Si appoggia a"
     },

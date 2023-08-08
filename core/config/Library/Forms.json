@@ -582,7 +582,7 @@
         {
           "name": "position",
           "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
-            "cuts", "isCutBy", "fills", "isFilledBy"]
+            "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith"]
         },
         {
           "name": "time",
@@ -649,7 +649,7 @@
         {
           "name": "position",
           "fields": ["geometry", "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy",
-            "fills", "isFilledBy"]
+            "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith"]
         }
       ]
     },

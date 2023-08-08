@@ -72,6 +72,15 @@
     "borders": {
       "label": "Grenzt an"
     },
+    "abuts": {
+      "label": "Stößt an"
+    },
+    "isAbuttedBy": {
+      "label": "Wird angestoßen von"
+    },
+    "bondsWith": {
+      "label": "Bindet ein"
+    },
     "isAfter": {
       "label": "Zeitlich nach"
     },

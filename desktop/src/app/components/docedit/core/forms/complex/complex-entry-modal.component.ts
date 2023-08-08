@@ -3,11 +3,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, is, isEmpty, on } from 'tsfun';
 import { Complex, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
     validateUnsignedInt, validateUrl } from 'idai-field-core';
-import { Language } from '../../../../services/languages';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
-import { M } from '../../../messages/m';
-import { Messages } from '../../../messages/messages';
+import { Language } from '../../../../../services/languages';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
+import { M } from '../../../../messages/m';
+import { Messages } from '../../../../messages/messages';
 
 
 @Component({

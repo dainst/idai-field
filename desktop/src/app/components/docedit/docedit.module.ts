@@ -48,8 +48,8 @@ import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-lang
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 import { IdentifierComponent } from './core/forms/identifier.component';
-import { ComplexComponent } from './core/forms/complex.component';
-import { ComplexEntryModalComponent } from './core/forms/complex-entry-modal.component';
+import { ComplexComponent } from './core/forms/complex/complex.component';
+import { ComplexEntryModalComponent } from './core/forms/complex/complex-entry-modal.component';
 
 
 @NgModule({

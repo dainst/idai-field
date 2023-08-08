@@ -59,12 +59,7 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
     const categoryRelations: Array<Relation> = clone(Relation.getRelations(relationDefinitions, category.name));
     applyHiddenForFields(categoryRelations, category[TEMP_HIDDEN]);
 
-    let fields: Map<Field> = {};
-    Object.assign(fields, category[TEMP_FIELDS]);
-    fields = categoryRelations.reduce((result, relation) => {
-        result[relation.name] = relation;
-        return result;
-    }, fields);
+    const fields: Map<Field> = combineFieldsWithRelations(category, categoryRelations);
 
     category.groups = category[TEMP_GROUPS].map(groupDefinition => {
         const group = Group.create(groupDefinition.name);
@@ -75,13 +70,7 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
     });
 
     if (includeAllRelations && category.groups.length > 0) {
-        categoryRelations.filter(relation => {
-            return !flatten(category.groups.map(to(Group.FIELDS)))
-                .map(to(Named.NAME))
-                .includes(relation.name);
-        }).forEach(relation => {
-            category.groups[0].fields.push(relation);
-        });
+        addAllRelationsToGroups(category, categoryRelations);
     }
 
     putUnassignedFieldsToGroups(category, fields);
@@ -90,14 +79,38 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
 }
 
 
+function combineFieldsWithRelations(category: CategoryForm, categoryRelations: Array<Relation>): Map<Field> {
+
+    let fields: Map<Field> = {};
+    Object.assign(fields, category[TEMP_FIELDS]);
+    fields = categoryRelations.reduce((result, relation) => {
+        result[relation.name] = relation;
+        return result;
+    }, fields);
+
+    return fields;
+}
+
+
+function addAllRelationsToGroups(category: CategoryForm, categoryRelations: Array<Relation>) {
+
+    categoryRelations.filter(relation => {
+        return !flatten(category.groups.map(to(Group.FIELDS)))
+            .map(to(Named.NAME))
+            .includes(relation.name);
+    }).forEach(relation => {
+        category.groups[0].fields.push(relation);
+    });
+}
+
+
 function putUnassignedFieldsToGroups(category: CategoryForm, fields: Map<Field>) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-    
-    Object.keys(fields)
-        .filter(fieldName => !fieldsInGroups.includes(fieldName)
-            && (fields[fieldName].visible || fields[fieldName].editable))
-        .map(fieldName => fields[fieldName])
+
+    Object.values(fields)
+        .filter(field => !fieldsInGroups.includes(field.name)
+            && (fields[field.name].visible || fields[field.name].editable))
         .forEach(field => putUnassignedFieldToGroup(category, field));
 }
 

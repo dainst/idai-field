@@ -59,13 +59,17 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
     const categoryRelations: Array<Relation> = clone(Relation.getRelations(relationDefinitions, category.name));
     applyHiddenForFields(categoryRelations, category[TEMP_HIDDEN]);
 
+    let fields: Map<Field> = {};
+    Object.assign(fields, category[TEMP_FIELDS]);
+    fields = categoryRelations.reduce((result, relation) => {
+        result[relation.name] = relation;
+        return result;
+    }, fields);
+
     category.groups = category[TEMP_GROUPS].map(groupDefinition => {
         const group = Group.create(groupDefinition.name);
         group.fields = set(groupDefinition.fields)
-            .map(fieldName => {
-                return category[TEMP_FIELDS][fieldName]
-                    ?? categoryRelations.find(relation => relation.name === fieldName)
-            })
+            .map((fieldName: string) => fields[fieldName])
             .filter(field => field !== undefined);
         return group;
     });
@@ -80,19 +84,19 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
         });
     }
 
-    putUnassignedFieldsToOtherGroup(category);
+    putUnassignedFieldsToOtherGroup(category, fields);
 
     return category;
 }
 
 
-function putUnassignedFieldsToOtherGroup(category: CategoryForm) {
+function putUnassignedFieldsToOtherGroup(category: CategoryForm, fields: Map<Field>) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-    const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])
+    const fieldsNotInGroups: Array<Field> = Object.keys(fields)
         .filter(fieldName => !fieldsInGroups.includes(fieldName)
-            && (category[TEMP_FIELDS][fieldName].visible || category[TEMP_FIELDS][fieldName].editable))
-        .map(fieldName => category[TEMP_FIELDS][fieldName]);
+            && (fields[fieldName].visible || fields[fieldName].editable))
+        .map(fieldName => fields[fieldName]);
 
     if (fieldsNotInGroups.length === 0) return;
 

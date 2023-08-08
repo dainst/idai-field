@@ -93,7 +93,7 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
     }
 
 
-    public onScroll(event: MouseEvent) {
+    private onScroll(event: MouseEvent) {
 
         if (!this.scrollListenerInitialized) {
             this.scrollListenerInitialized = true;

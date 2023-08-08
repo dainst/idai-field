@@ -84,29 +84,49 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
         });
     }
 
-    putUnassignedFieldsToOtherGroup(category, fields);
+    putUnassignedFieldsToGroups(category, fields);
 
     return category;
 }
 
 
-function putUnassignedFieldsToOtherGroup(category: CategoryForm, fields: Map<Field>) {
+function putUnassignedFieldsToGroups(category: CategoryForm, fields: Map<Field>) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-    const fieldsNotInGroups: Array<Field> = Object.keys(fields)
+    
+    Object.keys(fields)
         .filter(fieldName => !fieldsInGroups.includes(fieldName)
             && (fields[fieldName].visible || fields[fieldName].editable))
-        .map(fieldName => fields[fieldName]);
+        .map(fieldName => fields[fieldName])
+        .forEach(field => putUnassignedFieldToGroup(category, field));
+}
 
-    if (fieldsNotInGroups.length === 0) return;
 
-    let otherGroup: Group = category.groups.find(group => group.name === Groups.OTHER);
-    if (!otherGroup) {
-        otherGroup = Group.create(Groups.OTHER);
-        category.groups.push(otherGroup);
+function putUnassignedFieldToGroup(category: CategoryForm, field: Field) {
+
+    const groupName: string = getGroupNameForUnassaginedField(field.name);
+        
+    let group: Group = category.groups.find(group => group.name === groupName);
+    if (!group) {
+        group = Group.create(groupName);
+        category.groups.push(group);
     }
 
-    otherGroup.fields = otherGroup.fields.concat(fieldsNotInGroups);
+    group.fields.push(field);
+}
+
+
+function getGroupNameForUnassaginedField(fieldName: string): string {
+
+    if (Relation.Position.ALL.includes(fieldName)) {
+        return Groups.POSITION;
+    } else if (Relation.Time.ALL.includes(fieldName)) {
+        return Groups.TIME;
+    } else if (Relation.Type.ALL.includes(fieldName)) {
+        return Groups.IDENTIFICATION;
+    } else {
+        return Groups.OTHER;
+    }
 }
 
 

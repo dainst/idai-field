@@ -57,7 +57,7 @@ export class ComplexEntryModalComponent {
         
         return this.subfields?.filter(subfield => {
             return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType)
-                && Complex.isConditionFulfilled(this.entry, subfield);
+                && Complex.isConditionFulfilled(this.entry, subfield, this.subfields);
         });
     }
 

@@ -9,18 +9,28 @@ import { Field, Subfield } from './configuration/field';
  */
 export module Complex {
 
-    export function isConditionFulfilled(entry: any, subfield: Subfield): boolean {
+    export function isConditionFulfilled(entry: any, subfieldToCheck: Subfield, subfields: Array<Subfield>): boolean {
 
-        if (!subfield.condition) return true;
+        if (!subfieldToCheck.condition) return true;
 
-        const data: any = entry[subfield.condition.subfieldName];
-        return data !== undefined
-            ? isArray(subfield.condition.values)
+        const conditionSubfield: Subfield = subfields.find(subfield => {
+            return subfield.name === subfieldToCheck.condition.subfieldName;
+        });
+
+        const data: any = entry[conditionSubfield.name];
+        const fulfilled: boolean = data !== undefined
+            ? isArray(subfieldToCheck.condition.values)
                 ? isArray(data)
-                    ? intersect(data)(subfield.condition.values).length > 0
-                    : subfield.condition.values.includes(data)
-                : data === subfield.condition.values
+                    ? intersect(data)(subfieldToCheck.condition.values).length > 0
+                    : subfieldToCheck.condition.values.includes(data)
+                : data === subfieldToCheck.condition.values
             : false;
+
+        return fulfilled
+            ? conditionSubfield.condition
+                ? isConditionFulfilled(entry, conditionSubfield, subfields)
+                : true
+            : false
     }
 
     

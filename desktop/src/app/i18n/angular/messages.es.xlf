@@ -3292,13 +3292,6 @@
           <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
-        <source>Keine Ziele gefunden</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/widgets/relationpicker/relation-picker.component.ts</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
         <source>Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:</source>
         <context-group purpose="location">
@@ -4073,13 +4066,6 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForInputType" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.fieldSpecificSearch.changingNotAllowed" datatype="html">
-        <source>Die Einstellung kann für dieses Feld nicht geändert werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>

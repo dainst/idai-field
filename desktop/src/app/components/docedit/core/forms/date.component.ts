@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
-import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import { NgbDateParserFormatter, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { isString } from 'tsfun';
 import { Field, parseDate } from 'idai-field-core';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { ComponentHelpers } from '../../../component-helpers';
 
 
 @Component({
@@ -17,9 +18,12 @@ export class DateComponent implements OnChanges {
     @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
 
     public dateStruct: NgbDateStruct;
+    public onScrollListener: any;
+    public scrollListenerInitialized: boolean = false;
 
 
-    constructor(public dateFormatter: NgbDateParserFormatter) {}
+    constructor(public dateFormatter: NgbDateParserFormatter,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     public getFieldData = () => this.fieldContainer[this.field.name];
@@ -73,8 +77,40 @@ export class DateComponent implements OnChanges {
     }
 
 
+    public listenToScrollEvents(datePicker: NgbInputDatepicker) {
+
+        this.scrollListenerInitialized = false;
+
+        this.onScrollListener = this.onScroll(datePicker).bind(this);
+        window.addEventListener('scroll', this.onScrollListener, true);
+    }
+
+    
+    public stopListeningToScrollEvents() {
+
+        if (!this.onScrollListener) return;
+
+        window.removeEventListener('scroll', this.onScrollListener, true);
+        this.onScrollListener = undefined;
+    }
+
+
     private updateDateStruct(date: string) {
 
         this.dateStruct = this.dateFormatter.parse(date) ?? {} as NgbDateStruct;
+    }
+
+
+    private onScroll = (datePicker: NgbInputDatepicker) => (event: MouseEvent) => {
+
+        if (!this.scrollListenerInitialized) {
+            this.scrollListenerInitialized = true;
+            return;
+        }
+
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ngb-datapicker')) { 
+            datePicker.close();
+            this.changeDetectorRef.detectChanges();
+        }
     }
 }

@@ -61,12 +61,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                     : this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
             case 'UNKNOWN':
                 return existsQuery
-                    ? this.i18n({ id: 'boolean.false', value: 'Nein' })
+                    ? this.i18n({ id: 'boolean.no', value: 'Nein' })
                     : this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
             case 'true':
                 return this.i18n({ id: 'boolean.yes', value: 'Ja' });
             case 'false':
-                return this.i18n({ id: 'boolean.false', value: 'Nein' });
+                return this.i18n({ id: 'boolean.no', value: 'Nein' });
             default:
                 return this.labels.getValueLabel(this.selectedField.valuelist, value);
         }

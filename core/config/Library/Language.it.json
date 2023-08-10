@@ -221,8 +221,7 @@
       }
     },
     "ExcavationArea": {
-      "label": "Area di indagine",
-      "fields": {}
+      "label": "Area di indagine"
     },
     "Glass": {
       "label": "Vetro",
@@ -273,8 +272,7 @@
       }
     },
     "Planum": {
-      "label": "Pianta",
-      "fields": {}
+      "label": "Pianta"
     },
     "Brick": {
       "label": "Mattoni",
@@ -504,8 +502,7 @@
       }
     },
     "SurveyUnit": {
-      "label": "Quadrato di coordinate",
-      "fields": {}
+      "label": "Quadrato di coordinate"
     },
     "Wood": {
       "label": "Legno",
@@ -534,7 +531,7 @@
           "label": "Colore del legno all'esterno Munsell n."
         },
         "colorInsideMunsell": {
-            "label": "Colore del legno all'interno Munsell n."
+          "label": "Colore del legno all'interno Munsell n."
         },
         "colorBreak": {
           "label": "Colore(i) del nucleo legno"
@@ -845,7 +842,7 @@
       "fields": {
         "comparison": {
           "label": "Confronto(i)",
-          "description": "Confronto con simili reperti, oggetti, iscrizioni, ecc. Con riferimenti"
+          "description": "Confronto con reperti, oggetti, iscrizioni, ecc. simili con indicazione di un riferimento"
         },
         "conditionComment": {
           "label": "Commento sullo stato di conservazione"
@@ -876,7 +873,8 @@
           "description": "Creatore dell'immagine, fotografo o disegnatore"
         },
         "processor": {
-          "label": "Responsabile"
+          "label": "Responsabile",
+          "description": "Editore dell'immagine in caso di modifiche dopo la creazione dell'immagine"
         },
         "imageRights": {
           "label": "Diritti inerenti all'immagine"
@@ -887,11 +885,11 @@
       "label": "Ceramica",
       "fields": {
         "amountSherdsWall": {
-         "label": "Numero di frammenti di parete"
-       },
-       "amountSherdsRim": {
-         "label": "Numero di frammenti di orlo"
-       },
+          "label": "Numero di frammenti di parete"
+        },
+        "amountSherdsRim": {
+          "label": "Numero di frammenti di orlo"
+        },
         "amountSherdsBase": {
           "label": "Numero di frammenti di fondo"
         },
@@ -1032,6 +1030,18 @@
         "vesselFormSpecific": {
           "label": "Forma",
           "description": "Forma speciale del vaso"
+        },
+        "vesselpart": {
+          "label": "Parte del vaso"
+        },
+        "Drawing": {
+          "label": "Presente disegno"
+        },
+        "Firing": {
+          "label": "Metodo di cottura della ceramica"
+        },
+        "FormComparisonCompendia": {
+          "label": "Paragoni per la forma in compendi"
         }
       }
     },
@@ -1538,8 +1548,7 @@
       }
     },
     "Area": {
-      "label": "Area",
-      "fields": {}
+      "label": "Area"
     },
     "Excavation": {
       "label": "Scavo",
@@ -1550,8 +1559,7 @@
       }
     },
     "Type": {
-      "label": "Tipo",
-      "fields": {}
+      "label": "Tipo"
     },
     "TypeCatalog": {
       "label": "Tipo di catalogo",
@@ -1620,7 +1628,8 @@
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": "Senza rilevanza archeologica"
         }
-      }
+      },
+      "label": "Ritrovamento/struttura/strato"
     },
     "FeatureSegment:archaeoDox": {
       "fields": {

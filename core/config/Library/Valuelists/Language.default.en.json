@@ -53,7 +53,7 @@
   },
   "viewingDirection-default": {
     "values": {
-      "N": "E",
+      "N": "N",
       "NE": "NE",
       "E": "E",
       "SE": "SE",

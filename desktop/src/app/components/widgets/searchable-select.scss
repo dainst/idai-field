@@ -20,6 +20,11 @@
       .ng-arrow-wrapper {
         cursor: default;
       }
+
+      .ng-clear-wrapper {
+        position: relative;
+        top: 1.5px;
+      }
     }
 
     &.ng-select-focused .ng-select-container {

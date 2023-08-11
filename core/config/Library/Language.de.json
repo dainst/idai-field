@@ -1492,10 +1492,6 @@
     "PlasterFragment": {
       "label": "Putzfragment",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
         "composition": {
           "label": "Aufbau des Putzes",
           "description": "Beschreibung des Aufbaus des Putzes"

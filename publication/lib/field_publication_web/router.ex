@@ -17,7 +17,13 @@ defmodule FieldPublicationWeb.Router do
   scope "/", FieldPublicationWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", ProjectLive.Index, :index
+    live "/new", ProjectLive.Index, :new
+    live "/:id/edit", ProjectLive.Index, :edit
+
+    live "/:id", ProjectLive.Show, :show
+    live "/:id/show/edit", ProjectLive.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.

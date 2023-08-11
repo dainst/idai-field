@@ -1,3 +1,14 @@
+defimpl Jason.Encoder, for: [
+  FieldPublication.Projects.Project
+] do
+  def encode(value, opts) do
+    value
+    |> Map.from_struct()
+    |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
+    |> Jason.Encode.map(opts)
+  end
+end
+
 defmodule FieldPublication.CouchService do
   @fix_source_url Application.compile_env(:field_publication, :development_mode, false)
   @system_databases ["_users", "_replicator"]
@@ -6,7 +17,7 @@ defmodule FieldPublication.CouchService do
   # TODO: Should probably be defined by Api.Publication module
   @publication_suffix ~r".*_publication-\d{4}-\d{2}-\d{2}.*"
 
-  @field_users_db Application.compile_env(:field_publication, :field_user_db)
+  @core_database Application.compile_env(:field_publication, :core_database)
 
   # We trigger replication using a long running POST on the local CouchDB
   # in order to wait for the replication to finish, we extend the default
@@ -16,7 +27,7 @@ defmodule FieldPublication.CouchService do
   require Logger
 
   @doc """
-  Creates CouchDB's internal databases `_users` and `_replicator` and `_field_publication_users`.
+  Creates CouchDB's internal databases `_users` and `_replicator` and the applications main database.
 
   Returns a tuple with three #{HTTPoison.Response} for each creation attempt.
   """
@@ -46,16 +57,16 @@ defmodule FieldPublication.CouchService do
         Logger.info("Created system database `_replicator`.")
     end
 
-    {_, %Finch.Response{status:  status_code_field_publication_users}} = create_database(@field_users_db)
+    {_, %Finch.Response{status:  status_code_core_database}} = create_database(@core_database)
 
-    case status_code_field_publication_users do
+    case status_code_core_database do
       412 ->
         Logger.warning(
-          "Application database '#{@field_users_db}' already exists. You probably ran the CouchDB setup on an existing instance."
+          "Application database '#{@core_database}' already exists. You probably ran the CouchDB setup on an existing instance."
         )
 
       code when 199 < code and code < 300 ->
-        Logger.info("Created application database `#{@field_users_db}`.")
+        Logger.info("Created application database `#{@core_database}`.")
     end
 
     app_user = Application.get_env(:field_publication, :couchdb_user_name)
@@ -73,7 +84,7 @@ defmodule FieldPublication.CouchService do
         Logger.warning("Application user '#{app_user}' already exists.")
     end
 
-    add_application_user(@field_users_db)
+    add_application_user(@core_database)
   end
 
   @doc """
@@ -122,6 +133,17 @@ defmodule FieldPublication.CouchService do
     end
   end
 
+  def find_documents(%{type: type}, database_name \\ @core_database) do
+    Finch.build(
+      :post,
+      "#{local_url()}/#{database_name}/_find",
+      headers(),
+      %{ selector: %{ doc_type: type } }
+      |> Jason.encode!()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def create_database(name) do
     Finch.build(
       :put,
@@ -131,7 +153,7 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def store_document(database_name, doc_id, document) do
+  def store_document(doc_id, document, database_name \\ @core_database) do
     Finch.build(
       :put,
       "#{local_url()}/#{database_name}/#{doc_id}",
@@ -144,9 +166,22 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def retrieve_document(database_name, doc_id) do
+  def retrieve_document(doc_id, database_name \\ @core_database) do
     Finch.build(
       :get,
+      "#{local_url()}/#{database_name}/#{doc_id}",
+      headers(
+        Application.get_env(:field_publication, :couchdb_user_name),
+        Application.get_env(:field_publication, :couchdb_user_password)
+      )
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> IO.inspect()
+  end
+
+  def delete_document(doc_id, database_name \\ @core_database) do
+    Finch.build(
+      :delete,
       "#{local_url()}/#{database_name}/#{doc_id}",
       headers(
         Application.get_env(:field_publication, :couchdb_user_name),

@@ -18,7 +18,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   live_view: [signing_salt: "K/pS/S7t"]
 
 config :field_publication,
-  field_user_db: "field_users"
+  core_database: "field_publication"
 
 # Configures the mailer
 #

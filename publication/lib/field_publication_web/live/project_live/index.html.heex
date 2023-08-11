@@ -1,0 +1,44 @@
+<.header>
+  Listing Projects
+  <:actions>
+    <.link patch={~p"/new"}>
+      <.button>New Project</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="projects"
+  rows={@streams.projects}
+  row_click={fn {_id, project} -> JS.navigate(~p"/#{project}") end}
+>
+  <:col :let={{_id, project}} label="Project key"><%= project._id %></:col>
+  <:col :let={{_id, project}} label="Editors"><%= inspect(project.editors) %></:col>
+  <:col :let={{_id, project}} label="Name"><%= inspect(project.names) %></:col>
+  <:col :let={{_id, project}} label="Description"><%= inspect(project.descriptions) %></:col>
+  <:action :let={{_id, project}}>
+    <div class="sr-only">
+      <.link navigate={~p"/#{project}"}>Show</.link>
+    </div>
+    <.link patch={~p"/#{project}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, project}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: project._id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="project-modal" show on_cancel={JS.patch(~p"/")}>
+  <.live_component
+    module={FieldPublicationWeb.ProjectLive.FormComponent}
+    id={@project._id || :new}
+    title={@page_title}
+    action={@live_action}
+    project={@project}
+    patch={~p"/"}
+  />
+</.modal>

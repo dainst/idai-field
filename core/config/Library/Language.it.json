@@ -1097,7 +1097,7 @@
           "description": "Descrizione del suolo secondo la carta pedologica"
         },
         "tombBuilding": {
-          "label": "COstruzione della tomba"
+          "label": "Costruzione della tomba"
         }
       }
     },

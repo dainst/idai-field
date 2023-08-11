@@ -11,7 +11,7 @@
   "commons": {
     "dimensionLength": {
       "label": "Length",
-      "description": "Indication of the length"
+      "description": "Measurement of the length"
     },
     "dimensionWidth": {
       "label": "Width"

@@ -710,6 +710,12 @@
         },
         "hasDisturbance": {
           "label": "Disturbance"
+        },
+        "featureSegmentBorders": {
+          "label": "Borders of the feature segment"
+        },
+        "featureSegmentForm": {
+          "label": "Form of the feature segment"
         }
       }
     },
@@ -1481,7 +1487,8 @@
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": "Archaeologically irrelevant"
         }
-      }
+      },
+      "label": "Feature"
     },
     "FeatureSegment:archaeoDox": {
       "fields": {

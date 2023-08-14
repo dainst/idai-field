@@ -7238,6 +7238,150 @@
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.subfields" datatype="html">
+        <source>Unterfelder</source>
+        <target state="translated">Підполя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
+          <context context-type="linenumber">54,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.subfields.condition" datatype="html">
+        <source>Bedingung:</source>
+        <target state="translated">Умова:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
+          <context context-type="linenumber">85,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conditionalSubfield" datatype="html">
+        <source>Bedingung für Anzeige des Unterfelds</source>
+        <target state="translated">Умова для відображення підполя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
+          <context context-type="linenumber">13,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createSubfield" datatype="html">
+        <source>Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> створити</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
+          <context context-type="linenumber">14,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.subfieldCondition.none" datatype="html">
+        <source>- Keine -</source>
+        <target state="translated">- жодне -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
+          <context context-type="linenumber">32,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.complex" datatype="html">
+        <source>Kompositfeld</source>
+        <target state="translated">Комбіноване поле</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.complex.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="translated">Додати...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="linenumber">52,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.subfieldConditionViolation.inputType" datatype="html">
+        <source>Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
+        <target state="translated">Тип введення цього підполя не може бути змінений, оскільки воно було налаштоване як умовне поле для підполя "[0]".</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.subfields.condition.none" datatype="html">
+        <source>Keine</source>
+        <target state="translated">жодне</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
+          <context context-type="linenumber">155,162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editSubfield" datatype="html">
+        <source>Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</source>
+        <target state="needs-translation">Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.component.ts</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.createEntry" datatype="html">
+        <source>Eintrag anlegen</source>
+        <target state="translated">Створити запис / введення</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="linenumber">105,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.editEntry" datatype="html">
+        <source>Eintrag bearbeiten</source>
+        <target state="translated">Введення опрацювати</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="linenumber">128,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.complex.invalidData" datatype="html">
+        <source>Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</source>
+        <target state="translated">Неправильні дані. Відкоригуйте конфігурацію або видаліть об'єкт.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="linenumber">80,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dropdown.notFound" datatype="html">
+        <source>Wert nicht gefunden</source>
+        <target state="translated">Значення не знайдено</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/searchable-select.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newSubfield" datatype="html">
+        <source>Neues Unterfeld</source>
+        <target state="translated">Нове підполе</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.noSubfields" datatype="html">
+        <source>Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.</source>
+        <target state="translated">Будь ласка, створіть принаймні два підполя або змініть тип введення поля.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.subfieldConditionViolation.valuelists" datatype="html">
+        <source>Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
+        <target state="translated">Список значень цього підполя не можна видалити або замінити, оскільки його було налаштовано як умовне поле для підполя "[0]".</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.valueUsedInSubfieldCondition" datatype="html">
+        <source>Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.</source>
+        <target state="translated">Значення "[0]" не можна видалити, доки воно налаштоване як умовне значення для підполя "[1]" поля "[2]" категорії "[3]".</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

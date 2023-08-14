@@ -1039,6 +1039,24 @@
         },
         "Drawing": {
           "label": "Креслення в наявності"
+        },
+        "FormComparisonCompendia": {
+          "label": "Посібник з порівняння форм"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "Посібник детальніший з порівняння форм"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "Посібник з порівняння декору"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "Посібник з порівняння деталей декору"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "Посібник з порівняння аплікацій"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "Посібник з порівняння деталей аплікацій"
         }
       }
     },
@@ -1471,9 +1489,6 @@
     "PlasterFragment": {
       "label": "Фрагмент штукатурки",
       "fields": {
-        "area": {
-          "description": "Площа в квадратних метрах"
-        },
         "composition": {
           "label": "Структура штукатурки",
           "description": "Опис структури/шарів штукатурки"

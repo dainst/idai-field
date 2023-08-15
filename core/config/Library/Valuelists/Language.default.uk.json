@@ -41,7 +41,7 @@
       "Ephesos": "Ефес",
       "Etruskisch": "Етруська",
       "Gallien": "Галлія",
-      "Irland": "Іонія",
+      "Irland": "Ірландія",
       "Italien": "Італія",
       "Kampanisch": "Кампанський",
       "Karthagisch": "Карфагенський",
@@ -69,7 +69,10 @@
       "Spanien": "Іспанія",
       "Syrien": "Сирія",
       "Südtunesisch": "Південно-туніський",
-      "Südägäis": "Південно-егейський"
+      "Südägäis": "Південно-егейський",
+      "Attisch": "Давньогрецький",
+      "Chios": "Хіос",
+      "Ionien": "Іонія"
     }
   },
   "periods-default-1": {
@@ -101,7 +104,8 @@
       "Frühmittelalter": "Раннє середньовіччя",
       "Spätmittelalter": "Пізнє середньовіччя",
       "Hochmittelalter": "Високе середньовіччя",
-      "Mittelalter": "Середньовіччя"
+      "Mittelalter": "Середньовіччя",
+      "Rezent": "Споріднений"
     }
   },
   "colors-default-1": {
@@ -125,7 +129,8 @@
       "türkis": "бірюзовий",
       "violett": "фіолетовий",
       "weiß": "білий"
-    }
+    },
+    "description": "Набір кольорів 1, різне застосування; ІТ-відділ, 2019 р."
   },
   "colors-default-2": {
     "values": {
@@ -144,7 +149,8 @@
       "rotbraun": "червонувато-коричневий",
       "schwarz": "чорний",
       "weiß": "білий"
-    }
+    },
+    "description": "Набір кольорів 2, різні сфери застосування"
   },
   "glass-decorationTechnique-default": {
     "values": {
@@ -164,7 +170,8 @@
       "Tupfendekor": "Губковий декор",
       "Warzendekor": "Бородавковий декор",
       "Zwischengoldglas": "Проміжне золоте скло",
-      "figürlicher Schliffdekor": "фігурне шліфувальне оздоблення"
+      "figürlicher Schliffdekor": "фігурне шліфувальне оздоблення",
+      "Reticelladekor": "Ретіцельний декор"
     }
   },
   "glass-formDescription-default": {
@@ -213,7 +220,15 @@
       "Löffel": "Ложка",
       "Perle": "Перлина",
       "Ring": "Перстень/Кільце",
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Produktionsfragment": "Фрагмент з виробництва",
+      "Spielstein": "Ігровий елемент/фігура",
+      "Rohglas": "Скло-сирець",
+      "Rührstab": "Палиця для перемішування",
+      "Scheiben": "Частки / Пласти",
+      "Schmuck": "Прикраса",
+      "Tessera": "Тессера",
+      "Weinheber": "Підйомник для вина"
     }
   },
   "Brick-brickForm-default": {
@@ -1476,6 +1491,32 @@
       "CC2": "CC2 - Пошкодження середньої важкості",
       "CC3": "CC3 - Важкі пошкодження",
       "CC4": "CC4 - Повна втрата"
+    }
+  },
+  "glass-vesselForm-default": {
+    "values": {
+      "Teller": "Тарілка",
+      "Aschenurne": "Поховальна урна",
+      "Krug": "Глечик",
+      "Napf": "Чаша",
+      "Schale": "Миска",
+      "Schüssel": "Тарілка",
+      "Tasse": "Чашка / Горнятко",
+      "Topf": "Горщик",
+      "Unbestimmt": "Невизначено",
+      "Vorratsgefäß": "Посудина для зберігання",
+      "Becher": "Кухоль",
+      "Deckel": "Покришка",
+      "Deckelgefäß": "Посудина з покришкою",
+      "Flasche": "Пляшка"
+    }
+  },
+  "glass-transparency-default": {
+    "values": {
+      "durchscheinend": "напівпрозорий",
+      "durchsichtig": "прозорий",
+      "opak": "непрозорий",
+      "versintert": "спечений"
     }
   }
 }

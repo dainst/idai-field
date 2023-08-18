@@ -1518,5 +1518,29 @@
       "opak": "непрозорий",
       "versintert": "спечений"
     }
+  },
+  "glass-vesselFormSpecific-default": {
+    "values": {
+      "Faltenbecher": "Складана чашка",
+      "Schliffrillenschale": "Миска з вирізаними пазами",
+      "hexagonale Flasche": "Шестигранна пляшка",
+      "Dattelflasche": "Фінікова пляшка",
+      "Hydria": "Гідрія",
+      "Kragenschale": "Миска з коміром",
+      "Krater": "Кратер",
+      "Schöpfer": "Совок для горщика",
+      "Rippenschale": "Ребриста миска",
+      "Spitzamphora": "Гостроверха амфора",
+      "Sprenkler": "Зрошувач",
+      "Tierflasche": "Пляшка для тварин",
+      "Vierkantflasche": "Прямокутна пляшка",
+      "zylindrische Flasche": "циліндрична пляшка",
+      "zarte Rippenschale": "ніжна реберна раковина"
+    }
+  },
+  "Mollusk-classification-default": {
+    "values": {
+      "Muschelschale (Bivalvia)": "Раковина мідії (Bivalvia)"
+    }
   }
 }

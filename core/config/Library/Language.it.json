@@ -1473,9 +1473,6 @@
     "PlasterFragment": {
       "label": "Frammento di intonaco",
       "fields": {
-        "area": {
-          "description": "Superficie in metri quadrati"
-        },
         "composition": {
           "label": "Composizione dell'intonaco",
           "description": "Descrizione della composizione dell'intonaco"

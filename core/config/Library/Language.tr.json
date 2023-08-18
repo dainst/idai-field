@@ -1489,9 +1489,6 @@
     "PlasterFragment": {
       "label": "",
       "fields": {
-        "area": {
-          "description": ""
-        },
         "composition": {
           "label": "",
           "description": ""

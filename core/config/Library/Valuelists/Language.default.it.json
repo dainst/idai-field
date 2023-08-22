@@ -2171,7 +2171,8 @@
       "fragmentation": "Frammentazione",
       "ruin": "Decadimento",
       "rotting": "Danni al legno (strutturalmente innocui)",
-      "fissure": "Crepe nell'intonaco"
+      "fissure": "Crepe nell'intonaco",
+      "weathering": "Degrado causato dagli agenti atmosferici"
     }
   },
   "viewingDirection-default": {

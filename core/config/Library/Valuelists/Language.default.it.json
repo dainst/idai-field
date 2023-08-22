@@ -349,7 +349,8 @@
       "Tonrohr": "Tubo fittile",
       "Variierend": "Vari",
       "Wandziegel": "Mattone da parete",
-      "Ziegelbruch": "frantumi di mattoni"
+      "Ziegelbruch": "frantumi di mattoni",
+      "Abschläge": "Schegge"
     }
   },
   "Brick-temper-default": {
@@ -595,7 +596,8 @@
       "Stahl": "Acciaio",
       "Stahlbeton": "Cemento armato",
       "Stuck": "Stucco",
-      "Unbekannt/Unerkannt": "Sconosciuto/Non riconosciuto"
+      "Unbekannt/Unerkannt": "Sconosciuto/Non riconosciuto",
+      "Holzwerkstoff": "Derivati del legno"
     }
   },
   "Building-material-default-3": {
@@ -628,7 +630,8 @@
       "Putz": "Intonaco",
       "Stahl": "Acciaio",
       "Stahlbeton": "Cemento armato",
-      "Stuck": "Stucco"
+      "Stuck": "Stucco",
+      "Holzwerkstoff": "Derivati del legno"
     }
   },
   "Wood-color-default": {

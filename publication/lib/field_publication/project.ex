@@ -13,7 +13,7 @@ defmodule FieldPublication.Project do
     else
       project_databases
       |> Enum.filter(fn project_name ->
-        check_project_authorization(project_name, user_name) == :grantend
+        check_project_authorization(project_name, user_name) == :granted
       end)
     end
     |> IO.inspect()

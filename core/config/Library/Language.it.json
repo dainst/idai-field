@@ -1042,6 +1042,21 @@
         },
         "FormComparisonCompendia": {
           "label": "Paragoni per la forma in compendi"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "Paragone per la forma nel manuale, informazioni dettagliate"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "Paragone per la decorazione nel manuale"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "Paragone per la decorazione nel manuale, informazioni dettagliate"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "Paragone per l'applicazione nel manuale"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "Paragone per l'applicazione nel manuale, informazioni dettagliate"
         }
       }
     },

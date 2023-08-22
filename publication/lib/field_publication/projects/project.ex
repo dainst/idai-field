@@ -7,20 +7,19 @@ defmodule FieldPublication.Projects.Project do
     field :_rev, :string
     field :doc_type, :string, default: "project"
     field :visible, :boolean, default: false
-    field :editors, {:array, :string}, default: []
-    embeds_many :names, FieldPublication.Translation, on_replace: :delete
+    embeds_many :labels, FieldPublication.Translation, on_replace: :delete
     embeds_many :descriptions, FieldPublication.Translation, on_replace: :delete
   end
 
   @doc false
   def changeset(project, attrs) do
     project
-    |> cast(attrs, [:id, :_rev, :visible, :editors])
+    |> cast(attrs, [:id, :_rev, :visible])
     |> validate_required([:id])
     |> cast_embed(
-      :names,
-      sort_param: :names_sort,
-      drop_param: :names_drop,
+      :labels,
+      sort_param: :labels_sort,
+      drop_param: :labels_drop,
       required: true
     )
     |> cast_embed(

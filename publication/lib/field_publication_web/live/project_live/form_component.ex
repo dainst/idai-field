@@ -27,36 +27,43 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
         <.input field={@form[:visible]} type="checkbox" label="Visible" />
 
         <div>
-          <label>Names</label>
-          <.inputs_for :let={ef} field={@form[:names]}>
-            <input type="hidden" name="project[names_sort][]" value={ef.index} />
+          <label>Lables</label>
+          <div phx-feedback-for={@form[:labels].name}>
+            <.error :for={{msg, _} <- @form[:labels].errors}><%= msg %></.error>
+          </div>
+          <.inputs_for :let={ef} field={@form[:labels]}>
+            <input type="hidden" name="project[labels_sort][]" value={ef.index} />
             <.input type="text" field={ef[:language]} placeholder="language" />
             <.input type="text" field={ef[:text]} placeholder="text" />
             <label>
-              <input type="checkbox" name="project[names_drop][]" value={ef.index} class="hidden" />
+              <input type="checkbox" name="project[labels_drop][]" value={ef.index} class="hidden" />
               <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
             </label>
           </.inputs_for>
 
           <label class="block cursor-pointer">
-            <input type="checkbox" name="project[names_sort][]" class="hidden" />
+            <input type="checkbox" name="project[labels_sort][]" class="hidden" />
             add more
           </label>
 
-          <input type="hidden" name="project[names_drop][]" />
+          <input type="hidden" name="project[labels_drop][]" />
         </div>
         <div>
           <label>Descriptions</label>
-          <.inputs_for :let={ef} field={@form[:descriptions]}>
-            <input type="hidden" name="project[descriptions_sort][]" value={ef.index} />
-            <.input type="text" field={ef[:language]} placeholder="language" />
-            <.input type="text" field={ef[:text]} placeholder="text" />
-            <label>
-              <input type="checkbox" name="project[descriptions_drop][]" value={ef.index} class="hidden" />
-              <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
-            </label>
-          </.inputs_for>
-
+          <div phx-feedback-for={@form[:descriptions].name}>
+            <.error :for={{msg, _} <- @form[:descriptions].errors}><%= msg %></.error>
+          </div>
+          <div phx-feedback-for={@form[:descriptions].name}>
+            <.inputs_for :let={ef} field={@form[:descriptions]} >
+              <input type="hidden" name="project[descriptions_sort][]" value={ef.index} />
+              <.input type="text" field={ef[:language]} placeholder="language" />
+              <.input type="text" field={ef[:text]} placeholder="text" />
+              <label>
+                <input type="checkbox" name="project[descriptions_drop][]" value={ef.index} class="hidden" />
+                <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
+              </label>
+            </.inputs_for>
+          </div>
           <label class="block cursor-pointer">
             <input type="checkbox" name="project[descriptions_sort][]" class="hidden" />
             add more

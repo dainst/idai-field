@@ -15,17 +15,10 @@
   <:col :let={{_id, project}} label="Project key"><%= project.id %></:col>
 
   <:col :let={{_id, project}} label="Visible"><%= project.visible %></:col>
-  <:col :let={{_id, project}} label="Editors">
-    <ul >
-      <%= for user <- project.editors do %>
-        <li><%= user %></li>
-      <% end %>
-    </ul>
-  </:col>
   <:col :let={{_id, project}} label="Name">
     <ul>
-      <%= for name <- project.names do %>
-        <li><%= name.text %> (<%= name.language %>)</li>
+      <%= for label <- project.labels do %>
+        <li><%= label.text %> (<%= label.language %>)</li>
       <% end %>
     </ul>
   </:col>

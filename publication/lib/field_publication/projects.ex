@@ -91,7 +91,6 @@ defmodule FieldPublication.Projects do
       {:error, _changeset_with_errors} = error ->
         error
     end
-    |> IO.inspect()
   end
 
   @doc """

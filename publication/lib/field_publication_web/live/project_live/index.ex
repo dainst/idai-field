@@ -7,11 +7,8 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {
-      :ok,
-
-      socket
-      |> stream_configure(:projects, dom_id: &(&1._id))
-      |> stream(:projects, Projects.list_projects())}
+      :ok, stream(socket, :projects, Projects.list_projects())
+    }
   end
 
   @impl true

@@ -1,10 +1,11 @@
 defimpl Jason.Encoder, for: [
   FieldPublication.Projects.Project
 ] do
-  def encode(value, opts) do
-    value
+  def encode(%{id: id } = struct, opts) do
+    struct
     |> Map.from_struct()
     |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
+    |> Map.put(:_id, id)
     |> Jason.Encode.map(opts)
   end
 end

@@ -2,8 +2,7 @@ defmodule FieldPublication.Projects.Project do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:_id, :binary_id, autogenerate: false}
-  @derive {Phoenix.Param, key: :_id}
+  @primary_key {:id, :binary_id, autogenerate: false}
   embedded_schema do
     field :_rev, :string
     field :doc_type, :string, default: "project"
@@ -16,10 +15,8 @@ defmodule FieldPublication.Projects.Project do
   @doc false
   def changeset(project, attrs) do
     project
-    |> cast(attrs, [:_id, :_rev, :visible, :editors])
-    |> validate_required([:_id])
-    |> cast_embed(:names, required: true)
-    |> cast_embed(:descriptions, required: true)
+    |> cast(attrs, [:id, :_rev, :visible, :editors])
+    |> validate_required([:id])
   end
 
   def create(params) do

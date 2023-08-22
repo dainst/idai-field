@@ -78,7 +78,7 @@ defmodule FieldPublication.Projects do
     |> case do
       {:ok, %Project{} = project} ->
         CouchService.store_document(
-          project._id,
+          project.id,
           project
         )
         |> case do
@@ -87,7 +87,7 @@ defmodule FieldPublication.Projects do
           {:ok, %Finch.Response{ status: 409 }} ->
             %Project{}
             |> Project.changeset(attrs)
-            |> Ecto.Changeset.add_error(:document_exists, "A document with id #{project._id} already exists.")
+            |> Ecto.Changeset.add_error(:document_exists, "A document with id #{project.id} already exists.")
         end
       {:error, _changeset_with_errors} = error ->
         error
@@ -113,7 +113,7 @@ defmodule FieldPublication.Projects do
     |> case do
       {:ok, %Project{} = project} ->
         CouchService.store_document(
-          project._id,
+          project.id,
           project
         )
         |> case do
@@ -124,7 +124,7 @@ defmodule FieldPublication.Projects do
 
             project
             |> Project.changeset(attrs)
-            |> Ecto.Changeset.add_error(:document_exists, "A document with id #{project._id} already exists.")
+            |> Ecto.Changeset.add_error(:document_exists, "A document with id #{project.id} already exists.")
         end
       {:error, _changeset_with_errors} = error ->
         error
@@ -145,7 +145,7 @@ defmodule FieldPublication.Projects do
 
   """
   def delete_project(%Project{} = project) do
-    CouchService.delete_document(project._id)
+    CouchService.delete_document(project.id)
     |> IO.inspect()
   end
 

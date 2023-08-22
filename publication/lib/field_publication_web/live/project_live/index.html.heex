@@ -12,10 +12,30 @@
   rows={@streams.projects}
   row_click={fn {_id, project} -> JS.navigate(~p"/#{project}") end}
 >
-  <:col :let={{_id, project}} label="Project key"><%= project._id %></:col>
-  <:col :let={{_id, project}} label="Editors"><%= inspect(project.editors) %></:col>
-  <:col :let={{_id, project}} label="Name"><%= inspect(project.names) %></:col>
-  <:col :let={{_id, project}} label="Description"><%= inspect(project.descriptions) %></:col>
+  <:col :let={{_id, project}} label="Project key"><%= project.id %></:col>
+
+  <:col :let={{_id, project}} label="Visible"><%= project.visible %></:col>
+  <:col :let={{_id, project}} label="Editors">
+    <ul >
+      <%= for user <- project.editors do %>
+        <li><%= user %></li>
+      <% end %>
+    </ul>
+  </:col>
+  <:col :let={{_id, project}} label="Name">
+    <ul>
+      <%= for name <- project.names do %>
+        <li><%= name.text %> (<%= name.language %>)</li>
+      <% end %>
+    </ul>
+  </:col>
+  <:col :let={{_id, project}} label="Description">
+    <ul>
+      <%= for des <- project.descriptions do %>
+        <li><%= des.text %> (<%= des.language %>)</li>
+      <% end %>
+    </ul>
+  </:col>
   <:action :let={{_id, project}}>
     <div class="sr-only">
       <.link navigate={~p"/#{project}"}>Show</.link>
@@ -24,7 +44,7 @@
   </:action>
   <:action :let={{id, project}}>
     <.link
-      phx-click={JS.push("delete", value: %{id: project._id}) |> hide("##{id}")}
+      phx-click={JS.push("delete", value: %{id: project.id}) |> hide("##{id}")}
       data-confirm="Are you sure?"
     >
       Delete
@@ -35,7 +55,7 @@
 <.modal :if={@live_action in [:new, :edit]} id="project-modal" show on_cancel={JS.patch(~p"/")}>
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
-    id={@project._id || :new}
+    id={@project.id || :new}
     title={@page_title}
     action={@live_action}
     project={@project}

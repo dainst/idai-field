@@ -8,8 +8,8 @@ defmodule FieldPublication.Projects.Project do
     field :doc_type, :string, default: "project"
     field :visible, :boolean, default: false
     field :editors, {:array, :string}, default: []
-    embeds_many :names, FieldPublication.Translation
-    embeds_many :descriptions, FieldPublication.Translation
+    embeds_many :names, FieldPublication.Translation, on_replace: :delete
+    embeds_many :descriptions, FieldPublication.Translation, on_replace: :delete
   end
 
   @doc false
@@ -17,6 +17,18 @@ defmodule FieldPublication.Projects.Project do
     project
     |> cast(attrs, [:id, :_rev, :visible, :editors])
     |> validate_required([:id])
+    |> cast_embed(
+      :names,
+      sort_param: :names_sort,
+      drop_param: :names_drop,
+      required: true
+    )
+    |> cast_embed(
+      :descriptions,
+      sort_param: :descriptions_sort,
+      drop_param: :descriptions_drop,
+      required: true
+    )
   end
 
   def create(params) do
@@ -37,8 +49,8 @@ defmodule FieldPublication.Translation do
   @derive Jason.Encoder
   @primary_key false
   embedded_schema do
-    field :text, :string
-    field :language, :string
+    field :text, :string, primary_key: true
+    field :language, :string, primary_key: true
   end
 
   def changeset(translation, attrs) do

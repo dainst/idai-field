@@ -31,7 +31,6 @@ defmodule FieldPublication.Projects do
           project
         end)
     end
-    |> IO.inspect()
   end
 
   @doc """
@@ -57,7 +56,7 @@ defmodule FieldPublication.Projects do
         |> Jason.decode!()
         |> Project.create()
       end
-    |> IO.inspect()
+    |> then(fn({:ok, project}) -> project end)
   end
 
   @doc """

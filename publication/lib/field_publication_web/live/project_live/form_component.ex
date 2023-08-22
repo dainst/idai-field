@@ -19,9 +19,51 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:id]} type="text" label="Project key" />
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:description]} type="text" label="Description" />
+        <%= if @project.id do %>
+          <h1> <%=@project.id %></h1>
+        <% else %>
+          <.input field={@form[:id]} type="text" label="Project id" />
+        <% end %>
+        <.input field={@form[:visible]} type="checkbox" label="Visible" />
+
+        <div>
+          <label>Names</label>
+          <.inputs_for :let={ef} field={@form[:names]}>
+            <input type="hidden" name="project[names_sort][]" value={ef.index} />
+            <.input type="text" field={ef[:language]} placeholder="language" />
+            <.input type="text" field={ef[:text]} placeholder="text" />
+            <label>
+              <input type="checkbox" name="project[names_drop][]" value={ef.index} class="hidden" />
+              <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
+            </label>
+          </.inputs_for>
+
+          <label class="block cursor-pointer">
+            <input type="checkbox" name="project[names_sort][]" class="hidden" />
+            add more
+          </label>
+
+          <input type="hidden" name="project[names_drop][]" />
+        </div>
+        <div>
+          <label>Descriptions</label>
+          <.inputs_for :let={ef} field={@form[:descriptions]}>
+            <input type="hidden" name="project[descriptions_sort][]" value={ef.index} />
+            <.input type="text" field={ef[:language]} placeholder="language" />
+            <.input type="text" field={ef[:text]} placeholder="text" />
+            <label>
+              <input type="checkbox" name="project[descriptions_drop][]" value={ef.index} class="hidden" />
+              <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
+            </label>
+          </.inputs_for>
+
+          <label class="block cursor-pointer">
+            <input type="checkbox" name="project[descriptions_sort][]" class="hidden" />
+            add more
+          </label>
+
+          <input type="hidden" name="project[descriptions_drop][]" />
+        </div>
         <:actions>
           <.button phx-disable-with="Saving...">Save Project</.button>
         </:actions>

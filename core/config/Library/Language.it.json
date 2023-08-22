@@ -1470,7 +1470,8 @@
       "label": "Collezione di reperti",
       "fields": {
         "amount": {
-          "label": "Numero (totale)"
+          "label": "Numero (totale)",
+          "description": "Numero di reperti prelevati o inventariati"
         },
         "bibliography": {
           "label": "Bibliografia"

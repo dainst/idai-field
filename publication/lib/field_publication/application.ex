@@ -15,9 +15,8 @@ defmodule FieldPublication.Application do
       # Start Finch
       {Finch, name: FieldPublication.Finch},
       # Start the Endpoint (http/https)
-      FieldPublicationWeb.Endpoint
-      # Start a worker by calling: FieldPublication.Worker.start_link(arg)
-      # {FieldPublication.Worker, arg}
+      FieldPublicationWeb.Endpoint,
+      {Task.Supervisor, name: FieldPublication.Replication.Supervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

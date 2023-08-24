@@ -2,12 +2,13 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
-  alias FieldPublication.Projects.Project
-  alias FieldPublication.Worker.Replicator.Parameters
+  alias FieldPublication.Replication.Parameters
 
+  alias Phoenix.PubSub
 
-  import Ecto.Changeset
+  import Logger
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>
@@ -17,7 +18,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         for={@form}
         id="replication-form"
         phx-change="validate"
-        phx-submit="replicate"
+        phx-submit="start"
       >
         <.input field={@form[:source_url]} type="text" label="Source URL" />
         <.input field={@form[:source_project_name]} type="text" label="Source project name" />
@@ -70,7 +71,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {:noreply, assign(socket, :form, to_form(changeset))}
   end
 
-  def handle_event("replicate", %{"parameters" => replication_params}, socket) do
+  def handle_event("start", %{"parameters" => replication_params}, socket) do
     socket =
       replication_params
       |> Parameters.create()
@@ -81,21 +82,41 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         {:ok, parameters} ->
           IO.inspect(parameters)
 
-          FieldPublication.Worker.Replicator.replicate(parameters)
-          |> case do
-            {:error, :invalid_domain} ->
-              changeset =
-                parameters
-                |> Parameters.changeset()
-                |> add_error(:source_url, "The URL seems to be invalid.")
-                |> Map.put(:action, :validate)
+          broadcast_channel = FieldPublication.Replication.start(parameters)
 
-              assign(socket, :form, to_form(changeset))
-            _ ->
-              socket
-          end
+          PubSub.subscribe(FieldPublication.PubSub, broadcast_channel)
+
+          socket
+          # |> case do
+          # {:error, :invalid_domain} ->
+
+          #
+
+          #   changeset =
+          #     parameters
+          #     |> Parameters.changeset()
+          #     |> add_error(:source_url, "The URL seems to be invalid.")
+          #     |> Map.put(:action, :validate)
+
+          #   assign(socket, :form, to_form(changeset))
+          # _ ->
+          #   socket
+       # end
     end
     {:noreply, socket |> IO.inspect()}
   end
 
+  def handle_info({:replication_update, params}, socket) do
+    Logger.debug("Replication update received!")
+
+    IO.inspect(params)
+    {:noreply, socket}
+  end
+
+  def handle_info({:replication_error, params}, socket) do
+    Logger.debug("Replication error received!")
+
+    IO.inspect(params)
+    {:noreply, socket}
+  end
 end

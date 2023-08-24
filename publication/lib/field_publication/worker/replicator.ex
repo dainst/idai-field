@@ -1,4 +1,33 @@
 defmodule FieldPublication.Worker.Replicator do
+
+  defmodule Parameters do
+    use Ecto.Schema
+    import Ecto.Changeset
+
+    @primary_key false
+    embedded_schema do
+      field :source_url, :string
+      field :source_project_name, :string
+      field :source_user, :string
+      field :source_password, :string
+      field :local_project_name, :string
+    end
+
+    @doc false
+    def changeset(parameters, attrs \\ %{}) do
+      parameters
+      |> cast(attrs, [:source_url, :source_project_name, :source_user, :source_password, :local_project_name])
+      |> validate_required([:source_url, :source_project_name, :source_user, :source_password, :local_project_name])
+    end
+
+    def create(params) do
+      changeset(%Parameters{}, params)
+      |> apply_action(:create)
+    end
+  end
+
+  use GenServer
+
   alias FieldPublication.{
     CouchService,
     FileService
@@ -6,7 +35,25 @@ defmodule FieldPublication.Worker.Replicator do
 
   require Logger
 
-  def replicate(source_url, source_project_name, source_user, source_password, project_name) do
+  def init() do
+    state = %{}
+    Logger.info("Replicator ready")
+
+    {:ok, state}
+  end
+
+  def start_link(opts) do
+    GenServer.start_link(__MODULE__, opts)
+  end
+
+  def replicate(%Parameters{
+      source_url: source_url,
+      source_project_name: source_project_name,
+      source_user: source_user,
+      source_password: source_password,
+      local_project_name: project_name
+    }) do
+
     publication_name = "#{project_name}_publication-#{Date.utc_today()}"
 
     with {:ok, %Finch.Response{status: status_code}} when status_code == 200 or status_code == 201 <-
@@ -32,9 +79,20 @@ defmodule FieldPublication.Worker.Replicator do
         name: publication_name
       }
     else
+      {:ok, %Finch.Response{status: 401} = error} ->
+        Logger.error(error)
+        {:error, :unauthorized}
       {:ok, %Finch.Response{status: 409} = error} ->
         Logger.error(error)
-        :conflict
+        {:error, :conflict}
+      {:ok, %Finch.Response{status: 500, body: body} = error} ->
+        Logger.error(error)
+
+        Jason.decode!(body)
+        |> case do
+          %{"error" => "nxdomain"} ->
+            {:error, :invalid_domain}
+        end
 
       error ->
         Logger.error(error)

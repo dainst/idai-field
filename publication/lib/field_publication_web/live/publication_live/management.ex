@@ -2,13 +2,13 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
-  alias FieldPublication.Replication.Parameters
+  alias FieldPublication.Replication.{
+    LogEntry,
+    Parameters
+  }
 
   alias FieldPublicationWeb.PublicationLive.LogComponent
-
   alias Phoenix.PubSub
-
-  import Logger
 
   @impl true
   def render(assigns) do
@@ -64,12 +64,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       |> assign(:project, Projects.get_project!(project_id))
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
-      |> assign(:replication_logs, [
-        {:ok, :started, ~U[2023-08-25 10:26:18.857094Z], "Starting replication"},
-        {:error, :database_replication_error, ~U[2023-08-24 17:30:22.921978Z], "Database replication error"},
-        {:error, :file_replication_unauthorized, ~U[2023-08-24 17:30:22.929415Z], "File replication error"},
-        {:ok, :publication_configuration_recreated, ~U[2023-08-24 17:30:24.094135Z], "Publication's project configuration recreated."}
-        ])
+      |> assign(:replication_logs, [])
     }
   end
 
@@ -123,22 +118,21 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {:noreply, socket}
   end
 
-  def handle_info({:replication_update, params}, %{assigns: %{replication_logs: existing_logs}} = socket) do
-    Logger.debug("Replication update received!")
-
+  @impl true
+  def handle_info({:replication_log, %LogEntry{} = log_entry}, %{assigns: %{replication_logs: existing_entries}} = socket) do
     socket =
       socket
-      |> assign(:replication_logs, existing_logs ++ [params])
+      |> assign(:replication_logs, existing_entries ++ [log_entry])
 
     {:noreply, socket}
   end
 
-  def handle_info({:replication_error, params}, %{assigns: %{replication_logs: existing_logs}} = socket) do
-    Logger.warning("Replication error received!")
+  def handle_info({:replication_result, result}, socket) do
+
+    IO.inspect(result)
 
     socket =
       socket
-      |> assign(:replication_logs, existing_logs ++ [params])
       |> assign(:replication_running, false)
 
     {:noreply, socket}

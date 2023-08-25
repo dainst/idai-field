@@ -4,6 +4,8 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
   alias FieldPublication.Projects
   alias FieldPublication.Replication.Parameters
 
+  alias FieldPublicationWeb.PublicationLive.LogComponent
+
   alias Phoenix.PubSub
 
   import Logger
@@ -43,9 +45,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
           <!-- End of overlay. -->
         </div>
         <div class="border-l-4 border-indigo-500 rounded-r-lg basis-full bg-gray-200">
-          <%= for log <- @replication_logs do %>
-            <%= inspect(log) %>
-          <% end %>
+          <LogComponent.list logs={@replication_logs} />
         </div>
       </div>
     </div>
@@ -64,12 +64,12 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       |> assign(:project, Projects.get_project!(project_id))
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
-      |> assign(:replication_logs, [])
-      # |> assign(:replication_logs, [
-      #   {:database_replication_error, ~U[2023-08-24 17:30:22.921978Z]},
-      #   {:file_replication_unauthorized, ~U[2023-08-24 17:30:22.929415Z]},
-      #   {:publication_metadata_created, ~U[2023-08-24 17:30:24.094135Z]}
-      #   ])
+      |> assign(:replication_logs, [
+        {:ok, :started, ~U[2023-08-25 10:26:18.857094Z], "Starting replication"},
+        {:error, :database_replication_error, ~U[2023-08-24 17:30:22.921978Z], "Database replication error"},
+        {:error, :file_replication_unauthorized, ~U[2023-08-24 17:30:22.929415Z], "File replication error"},
+        {:ok, :publication_configuration_recreated, ~U[2023-08-24 17:30:24.094135Z], "Publication's project configuration recreated."}
+        ])
     }
   end
 

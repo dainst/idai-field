@@ -75,7 +75,7 @@ defmodule FieldPublication.Replication do
               name: :file_replication_finished,
               severity: :ok,
               timestamp: DateTime.utc_now(),
-              msg: "File replication has failed."
+              msg: "File replication has finished."
             })
 
             {:ok, Map.put(previous_results, :file_results, file_results)}
@@ -122,10 +122,10 @@ defmodule FieldPublication.Replication do
       source_password: source_password
   }, publication_name) do
       CouchService.replicate(
-            "#{source_url}/db/#{source_project_name}",
-            source_user,
-            source_password,
-            publication_name
+        "#{source_url}/db/#{source_project_name}",
+        source_user,
+        source_password,
+        publication_name
       )
       |> case do
         {:ok, %Finch.Response{status: 200}} ->
@@ -141,18 +141,91 @@ defmodule FieldPublication.Replication do
     source_user: source_user,
     source_password: source_password
   }, publication_name) do
-    FileService.replicate(
-        "#{source_url}/files/#{source_project_name}",
-        source_user,
-        source_password,
-        publication_name
-      )
-      |> case do
-        {:ok, _} = success ->
-          success
-        {:error, _} = error ->
-          error
-      end
+    Logger.debug("Replicating images of #{source_url} as #{publication_name}")
+
+    headers = [
+      {"Content-Type", "application/json"},
+      {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}
+    ]
+
+    files_url = "#{source_url}/files/#{source_project_name}"
+
+
+
+    Finch.build(
+      :get,
+      files_url,
+      headers
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> case do
+      {:ok, %Finch.Response{body: body, status: 200}} ->
+        target_path = FileService.get_publication_path(publication_name)
+
+        File.mkdir_p!(target_path)
+
+        result =
+          body
+          |> Jason.decode!()
+          |> Stream.reject(fn {_key, value} ->
+            case value do
+              %{"deleted" => true} ->
+                true
+
+              _ ->
+                false
+            end
+          end)
+          |> then(fn(file_list) ->
+
+            file_count =
+              file_list
+              |> Map.keys()
+              |> Enum.count()
+
+            file_list
+          end)
+          |> Enum.map(&write_file(&1, files_url, headers, target_path))
+
+        {:ok, result}
+
+      {:ok, %Finch.Response{status: 401}} ->
+        {:error, :unauthorized}
+
+      {:ok, %Finch.Response{status: 404}} ->
+        {:error, :not_found}
+    end
+    |> case do
+      {:ok, _} = success ->
+        success
+      {:error, _} = error ->
+        error
+    end
+  end
+
+  defp write_file({uuid, %{"variants" => variants}}, url, headers, project_directory) do
+    status =
+      variants
+      |> Enum.map(fn %{"name" => variant_name} ->
+        file_path = "#{project_directory}/#{variant_name}/#{uuid}"
+
+        unless File.exists?(file_path) do
+          Finch.build(
+            :get,
+            "#{url}/#{uuid}?type=#{variant_name}" |> IO.inspect(),
+            headers
+          )
+          |> Finch.request(FieldPublication.Finch)
+          |> case do
+            {:ok, %Finch.Response{body: data, status: 200}} ->
+              File.mkdir_p!("#{project_directory}/#{variant_name}")
+              %{variant_name => File.write!(file_path, data)}
+          end
+        end
+      end)
+    FileCounter.increment()
+    IO.inspect(FileCounter.value)
+    %{uuid: uuid, status: status}
   end
 
   defp create_publication_metadata(project_name, publication_name) do

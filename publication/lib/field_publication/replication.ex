@@ -9,16 +9,11 @@ defmodule FieldPublication.Replication do
 
   require Logger
 
-  def start(%Parameters{local_project_name: project_name} = params) do
-
-    broadcast_channel = "replication-#{project_name}-#{Date.utc_today()}"
+  def start(%Parameters{} = params, broadcast_channel) do
 
     Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn() ->
       replicate(params, broadcast_channel)
-      |> IO.inspect()
     end)
-
-    broadcast_channel
   end
 
   defp replicate(%Parameters{

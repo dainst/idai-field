@@ -114,6 +114,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
 
           socket
           |> assign(:replication_running, true)
+          |> assign(:replication_log, [])
     end
     {:noreply, socket}
   end

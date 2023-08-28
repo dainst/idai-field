@@ -46,6 +46,17 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         </div>
         <div class="border-l-4 border-indigo-500 rounded-r-lg basis-full bg-gray-200">
           <LogComponent.list logs={@replication_logs} />
+          <div :if={@file_replication_status} class="p-2">
+            <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
+              <div
+                class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
+                style={"width: #{@file_replication_status.percentage}%"}
+              ></div>
+              <div class="w-full absolute text-center">
+                <%= @file_replication_status.counter %> / <%= @file_replication_status.overall %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -65,6 +76,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
       |> assign(:replication_logs, [])
+      |> assign(:file_replication_status, nil)
     }
   end
 
@@ -114,7 +126,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
 
           socket
           |> assign(:replication_running, true)
-          |> assign(:replication_log, [])
+          |> assign(:replication_logs, [])
     end
     {:noreply, socket}
   end
@@ -137,5 +149,12 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       |> assign(:replication_running, false)
 
     {:noreply, socket}
+  end
+  def handle_info({:file_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
+    {:noreply, assign(socket, :file_replication_status, nil)}
+  end
+
+  def handle_info({:file_processing, state}, socket) do
+    {:noreply, assign(socket, :file_replication_status, Map.put(state, :percentage, (state.counter / state.overall * 100)))}
   end
 end

@@ -59,7 +59,7 @@ defmodule FieldPublication.Replication do
     |> case do
       {:ok, previous_results} ->
         parameters
-        |> run_file_replication(publication_name)
+        |> run_file_replication(publication_name, channel)
         |> case do
           {:error, name} = error ->
             broadcast(channel, %LogEntry{
@@ -140,7 +140,7 @@ defmodule FieldPublication.Replication do
     source_project_name: source_project_name,
     source_user: source_user,
     source_password: source_password
-  }, publication_name) do
+  }, publication_name, broadcast_channel) do
     Logger.debug("Replicating images of #{source_url} as #{publication_name}")
 
     headers = [
@@ -149,8 +149,6 @@ defmodule FieldPublication.Replication do
     ]
 
     files_url = "#{source_url}/files/#{source_project_name}"
-
-
 
     Finch.build(
       :get,
@@ -163,6 +161,9 @@ defmodule FieldPublication.Replication do
         target_path = FileService.get_publication_path(publication_name)
 
         File.mkdir_p!(target_path)
+
+        {:ok, file_counter_pid} = Agent.start_link(fn -> %{overall: :nil, counter: 0} end)
+
 
         result =
           body
@@ -180,12 +181,20 @@ defmodule FieldPublication.Replication do
 
             file_count =
               file_list
-              |> Map.keys()
               |> Enum.count()
+
+            broadcast(broadcast_channel, %LogEntry{
+              name: :overall_files,
+              severity: :ok,
+              timestamp: DateTime.utc_now(),
+              msg: "#{file_count} files will get replicated"
+            })
+
+            Agent.update(file_counter_pid, fn state -> Map.put(state, :overall, file_count) end)
 
             file_list
           end)
-          |> Enum.map(&write_file(&1, files_url, headers, target_path))
+          |> Enum.map(&write_file(&1, files_url, headers, target_path, file_counter_pid, broadcast_channel))
 
         {:ok, result}
 
@@ -203,7 +212,7 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  defp write_file({uuid, %{"variants" => variants}}, url, headers, project_directory) do
+  defp write_file({uuid, %{"variants" => variants}}, url, headers, project_directory, file_counter_pid, broadcast_channel) do
     status =
       variants
       |> Enum.map(fn %{"name" => variant_name} ->
@@ -221,10 +230,15 @@ defmodule FieldPublication.Replication do
               File.mkdir_p!("#{project_directory}/#{variant_name}")
               %{variant_name => File.write!(file_path, data)}
           end
+        else
+          :already_present
         end
       end)
-    FileCounter.increment()
-    IO.inspect(FileCounter.value)
+
+    Agent.update(file_counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
+
+    broadcast(broadcast_channel, {:file_processing, Agent.get(file_counter_pid, fn state -> state end)})
+
     %{uuid: uuid, status: status}
   end
 
@@ -291,5 +305,9 @@ defmodule FieldPublication.Replication do
 
   defp broadcast(channel, {:result, result}) do
     PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, result})
+  end
+
+  defp broadcast(channel, {:file_processing, data}) do
+    PubSub.broadcast(FieldPublication.PubSub, channel, {:file_processing, data})
   end
 end

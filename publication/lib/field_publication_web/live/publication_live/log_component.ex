@@ -12,6 +12,8 @@ defmodule FieldPublicationWeb.PublicationLive.LogComponent do
           <%= case severity do %>
             <% :error -> %>
               <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-red-500 rounded-2xl"></div>
+            <% :warning -> %>
+              <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-yellow-500 rounded-2xl"></div>
             <% :ok -> %>
               <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-green-500 rounded-2xl"></div>
           <% end %>

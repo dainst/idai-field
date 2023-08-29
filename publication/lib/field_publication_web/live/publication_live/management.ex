@@ -150,6 +150,14 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {:noreply, socket}
   end
 
+  def handle_info({:replication_result, {:ok, report}}, socket) do
+
+    IO.inspect(report)
+    Logger.debug("Todo: Replication successful.")
+
+    {:noreply, socket}
+  end
+
   def handle_info({:file_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
     {:noreply, assign(socket, :file_replication_status, nil)}
   end

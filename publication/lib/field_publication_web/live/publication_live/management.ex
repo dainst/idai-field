@@ -7,7 +7,11 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     Parameters
   }
 
-  alias FieldPublicationWeb.PublicationLive.LogComponent
+  alias FieldPublicationWeb.PublicationLive.{
+    LogComponent,
+    ProgressBarComponent
+  }
+
   alias Phoenix.PubSub
 
   require Logger
@@ -49,15 +53,10 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         <div class="border-l-4 border-indigo-500 rounded-r-lg basis-full bg-gray-200">
           <LogComponent.list logs={@replication_logs} />
           <div :if={@file_replication_status} class="p-2">
-            <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
-              <div
-                class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
-                style={"width: #{@file_replication_status.percentage}%"}
-              ></div>
-              <div class="w-full absolute text-center">
-                <%= @file_replication_status.counter %> / <%= @file_replication_status.overall %>
-              </div>
-            </div>
+            <ProgressBarComponent.display status={@file_replication_status} />
+          </div>
+          <div :if={@document_replication_status} class="p-2">
+            <ProgressBarComponent.display status={@document_replication_status} />
           </div>
         </div>
       </div>

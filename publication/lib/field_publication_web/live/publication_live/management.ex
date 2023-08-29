@@ -36,6 +36,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
               <.input field={@form[:source_user]} type="text" label="Source user name" />
               <.input field={@form[:source_password]} type="password" label="Source user password" />
               <.input field={@form[:local_project_name]} type="hidden" />
+              <div class="pt-5"><.input field={@form[:local_delete_existing]} type="checkbox" label="Delete existing publication" /></div>
             </div>
             <:actions>
               <.button phx-disable-with="Initializing...">Start replication</.button>

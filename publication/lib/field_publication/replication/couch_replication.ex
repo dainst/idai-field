@@ -18,7 +18,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     # The replication document will get added to CouchDB's internal database '_replicator' in order to trigger the replication.
     replication_doc = create_replication_doc(parameters, publication_name)
 
-    with {:ok, source_doc_count} <- source_doc_count(parameters),
+    with {:ok, source_doc_count} <- source_doc_count(parameters, channel),
       {:ok, %{status: 201}} <- put_replication_doc(publication_name, replication_doc) do
         # Once the document has been committed, poll the progress in regular intervals.
         poll_replication_status(parameters, publication_name, source_doc_count, channel)
@@ -29,7 +29,6 @@ defmodule FieldPublication.Replication.CouchReplication do
         {:error, :couchdb_error_count_exceeded}
       error ->
         error
-        |> IO.inspect()
     end
   end
 
@@ -51,25 +50,35 @@ defmodule FieldPublication.Replication.CouchReplication do
         url: "http://127.0.0.1:5984/#{publication_name}",
         headers: CouchService.headers() |> Enum.into(%{})
       }
-    } |> IO.inspect()
+    }
   end
 
-  defp put_replication_doc(publication_name, replication_doc) do
-    # If another replication doc of the same name is encountered, the function will replace
-    # the old document with the new one without asking.
+  def stop_replication(name) do
+    doc =
+      CouchService.retrieve_document(name, "_replicator")
+      |> then(fn({:ok, %{body: body}}) ->
+        body
+      end)
+      |> Jason.decode!()
 
-    CouchService.store_document(publication_name, replication_doc, "_replicator")
+    case doc do
+      %{"error" => "not_found", "reason" => "deleted"} ->
+        {:ok, :already_deleted}
+      doc ->
+        {:ok, %{status: 200}} = CouchService.delete_document(doc, "_replicator")
+
+        {:ok, :deleted}
+    end
+  end
+
+  defp put_replication_doc(name, replication_doc) do
+    CouchService.store_document(name, replication_doc, "_replicator")
     |> case do
       {:ok, %{status: 409}} ->
-        doc =
-          CouchService.retrieve_document(publication_name, "_replicator")
-          |> then(fn({:ok, %{body: body}}) ->
-            body
-          end)
-          |> Jason.decode!()
-
-        CouchService.delete_document(doc, "_replicator")
-        CouchService.store_document(publication_name, replication_doc, "_replicator")
+        # If another replication doc of the same name is encountered, the function will replace
+        # the old document with the new one without asking.
+        stop_replication(name)
+        CouchService.store_document(name, replication_doc, "_replicator")
 
       {:ok, %{status: 201}} = result ->
         result
@@ -94,8 +103,7 @@ defmodule FieldPublication.Replication.CouchReplication do
             Process.sleep(@poll_frequency)
             poll_replication_status(parameters, name, source_doc_count, channel)
 
-          %{"state" => "completed"} = response ->
-            IO.inspect(response)
+          %{"state" => "completed"} ->
             PubSub.broadcast(FieldPublication.PubSub, channel, {:document_processing, %{counter: source_doc_count, overall: source_doc_count}})
             {:ok, :completed}
 
@@ -114,7 +122,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp source_doc_count(%Parameters{source_url: url, source_project_name: project_name, source_user: user, source_password: password}) do
+  defp source_doc_count(%Parameters{source_url: url, source_project_name: project_name, source_user: user, source_password: password}, channel) do
     Finch.build(
       :get,
       "#{url}/db/#{project_name}",
@@ -123,14 +131,24 @@ defmodule FieldPublication.Replication.CouchReplication do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> case do
-          %{"doc_count" => count, "doc_del_count" => del_count} ->
-            {:ok, count + del_count} # This handles a CouchDB as source
-          %{"update_seq" => update_seq} when is_number(update_seq) ->
-            {:ok, update_seq} # this handles a PouchDB as source
-        end
+        {_, count } = result =
+          body
+          |> Jason.decode!()
+          |> case do
+            %{"doc_count" => count, "doc_del_count" => del_count} ->
+              {:ok, count + del_count} # This handles a CouchDB as source
+            %{"update_seq" => update_seq} when is_number(update_seq) ->
+              {:ok, update_seq} # this handles a PouchDB as source
+          end
+
+        PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, %LogEntry{
+          name: :document_count,
+          severity: :ok,
+          timestamp: DateTime.utc_now(),
+          msg: "#{count} database documents need replication."
+        }})
+
+        result
       {:ok, %{status: 401}} ->
         {:error, :unauthorized}
       {:error, %Mint.TransportError{} = reason} ->

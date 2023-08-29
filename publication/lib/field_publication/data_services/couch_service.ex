@@ -148,6 +148,15 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
+  def delete_database(name) do
+    Finch.build(
+      :delete,
+      "#{local_url()}/#{name}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def store_document(doc_id, document, database_name \\ @core_database) do
     Finch.build(
       :put,

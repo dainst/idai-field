@@ -7,6 +7,12 @@ defmodule FieldPublication.FileService do
     "#{@root_path}/#{publication_name}"
   end
 
+  def delete_publication(publication_name) do
+    publication_name
+    |> get_publication_path()
+    |> File.rm_rf()
+  end
+
   def get_image_list(publication_name) do
     root_path = get_publication_path(publication_name)
 

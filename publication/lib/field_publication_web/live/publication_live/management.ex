@@ -25,10 +25,10 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
             phx-submit="start"
           >
             <div>
-              <.input field={@form[:source_url]} type="text" label="Source URL" />
+              <.input field={@form[:source_url]} type="url" label="Source URL" />
               <.input field={@form[:source_project_name]} type="text" label="Source project name" />
               <.input field={@form[:source_user]} type="text" label="Source user name" />
-              <.input field={@form[:source_password]} type="text" label="Source user password" />
+              <.input field={@form[:source_password]} type="password" label="Source user password" />
               <.input field={@form[:local_project_name]} type="hidden" />
             </div>
             <:actions>

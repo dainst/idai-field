@@ -16,6 +16,7 @@ defmodule FieldPublication.Replication.Parameters do
     parameters
     |> cast(attrs, [:source_url, :source_project_name, :source_user, :source_password, :local_project_name])
     |> validate_required([:source_url, :source_project_name, :source_user, :source_password, :local_project_name])
+    |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid FieldHub.")
   end
 
   def create(params) do # TODO: Move out of this module

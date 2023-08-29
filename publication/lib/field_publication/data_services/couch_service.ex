@@ -11,7 +11,6 @@ defimpl Jason.Encoder, for: [
 end
 
 defmodule FieldPublication.CouchService do
-  @fix_source_url Application.compile_env(:field_publication, :development_mode, false)
   @system_databases ["_users", "_replicator"]
   @application_databases ["field_users"]
 
@@ -19,11 +18,6 @@ defmodule FieldPublication.CouchService do
   @publication_suffix ~r".*_publication-\d{4}-\d{2}-\d{2}.*"
 
   @core_database Application.compile_env(:field_publication, :core_database)
-
-  # We trigger replication using a long running POST on the local CouchDB
-  # in order to wait for the replication to finish, we extend the default
-  # timeouts of HTTPoison to 10 minutes.
-  @replication_timeout 1000 * 60 * 10
 
   require Logger
 
@@ -158,10 +152,7 @@ defmodule FieldPublication.CouchService do
     Finch.build(
       :put,
       "#{local_url()}/#{database_name}/#{doc_id}",
-      headers(
-        Application.get_env(:field_publication, :couchdb_user_name),
-        Application.get_env(:field_publication, :couchdb_user_password)
-      ),
+      headers(),
       Jason.encode!(document)
     )
     |> Finch.request(FieldPublication.Finch)
@@ -171,23 +162,16 @@ defmodule FieldPublication.CouchService do
     Finch.build(
       :get,
       "#{local_url()}/#{database_name}/#{doc_id}",
-      headers(
-        Application.get_env(:field_publication, :couchdb_user_name),
-        Application.get_env(:field_publication, :couchdb_user_password)
-      )
+      headers()
     )
     |> Finch.request(FieldPublication.Finch)
-    |> IO.inspect()
   end
 
-  def delete_document(doc_id, database_name \\ @core_database) do
+  def delete_document(%{"_id" => id, "_rev" => rev}, database_name \\ @core_database) do
     Finch.build(
       :delete,
-      "#{local_url()}/#{database_name}/#{doc_id}",
-      headers(
-        Application.get_env(:field_publication, :couchdb_user_name),
-        Application.get_env(:field_publication, :couchdb_user_password)
-      )
+      "#{local_url()}/#{database_name}/#{id}?rev=#{rev}",
+      headers()
     )
     |> Finch.request(FieldPublication.Finch)
   end
@@ -231,47 +215,14 @@ defmodule FieldPublication.CouchService do
     end
   end
 
-  def replicate(source_url, source_user, source_password, target_project_name) do
-    Logger.debug("Replicating database #{source_url} as #{target_project_name}")
-
-    payload =
-      %{
-        create_target: true,
-        winning_revs_only: true,
-        source: %{
-          # This URL is relative to the CouchDB application context, not necessarily the same as FieldPublication's.
-          url: source_url_fix(source_url),
-          headers: headers(source_user, source_password) |> Enum.into(%{})
-        },
-        target: %{
-          # This URL is relative to the CouchDB application context, not necessarily the same as FieldPublication's.
-          url: "http://127.0.0.1:5984/#{target_project_name}",
-          headers: headers() |> Enum.into(%{})
-        }
-      }
-      |> Jason.encode!()
-
-    Finch.build(
-      :post,
-      "#{local_url()}/_replicate",
-      [{"Content-Type", "application/json"}],
-      payload
-    )
-    |> Finch.request(
-      FieldPublication.Finch,
-      pool_timeout: @replication_timeout,
-      receive_timeout: @replication_timeout
-    )
-  end
-
-  defp headers() do
+  def headers() do
     headers(
       Application.get_env(:field_publication, :couchdb_admin_name),
       Application.get_env(:field_publication, :couchdb_admin_password)
     )
   end
 
-  defp headers(user_name, user_password) do
+  def headers(user_name, user_password) do
     credentials =
       "#{user_name}:#{user_password}"
       |> Base.encode64()
@@ -284,17 +235,5 @@ defmodule FieldPublication.CouchService do
 
   defp local_url() do
     Application.get_env(:field_publication, :couchdb_url)
-  end
-
-  defp source_url_fix(url) do
-    # If we want to connect to FieldHub running at localhost:4000 in development
-    # we have to use host.docker.internal as url for the FieldPublication CouchDB. This is
-    # necessary because calling localhost within the container would otherwise resolve to the container itself.
-
-    if @fix_source_url do
-      String.replace(url, "localhost", "host.docker.internal")
-    else
-      url
-    end
   end
 end

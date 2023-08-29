@@ -10,6 +10,8 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
   alias FieldPublicationWeb.PublicationLive.LogComponent
   alias Phoenix.PubSub
 
+  require Logger
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -76,6 +78,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
       |> assign(:replication_logs, [])
+      |> assign(:document_replication_status, nil)
       |> assign(:file_replication_status, nil)
     }
   end

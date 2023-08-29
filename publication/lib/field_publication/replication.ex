@@ -7,7 +7,7 @@ defmodule FieldPublication.Replication do
   end
 
   alias FieldPublication.{
-    CouchService,
+    Replication.CouchReplication,
     FileService,
     Replication.Parameters
   }
@@ -31,13 +31,13 @@ defmodule FieldPublication.Replication do
       name: :started,
       severity: :ok,
       timestamp: DateTime.utc_now(),
-      msg: "Starting replication for #{project_name} as #{publication_name}."
+      msg: "Starting database replication for #{project_name} as #{publication_name}."
     })
 
     parameters
-    |> run_database_replication(publication_name)
+    |> CouchReplication.start(publication_name, channel)
     |> case do
-      {:ok, couch_result} ->
+      {:ok, :completed} ->
         broadcast(channel, %LogEntry{
           name: :database_replication_finished,
           severity: :ok,
@@ -45,7 +45,7 @@ defmodule FieldPublication.Replication do
           msg: "Database replication has finished."
         })
 
-        {:ok, %{couch_result: couch_result}}
+        {:ok, %{couch_result: :successful}}
       {:error, name} = error ->
         broadcast(channel, %LogEntry{
           name: name,
@@ -111,28 +111,6 @@ defmodule FieldPublication.Replication do
     |> then(fn(result_or_error) ->
       broadcast(channel, {:result, result_or_error})
     end)
-  end
-
-
-  defp run_database_replication(
-    %Parameters{
-      source_url: source_url,
-      source_project_name: source_project_name,
-      source_user: source_user,
-      source_password: source_password
-  }, publication_name) do
-      CouchService.replicate(
-        "#{source_url}/db/#{source_project_name}",
-        source_user,
-        source_password,
-        publication_name
-      )
-      |> case do
-        {:ok, %Finch.Response{status: 200}} ->
-          {:ok, :database_replicated}
-        {:ok, %Finch.Response{status: 500} = error} ->
-          {:error, error}
-      end
   end
 
   defp run_file_replication(%Parameters{

@@ -140,21 +140,47 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {:noreply, socket}
   end
 
-  def handle_info({:replication_result, result}, socket) do
-
-    IO.inspect(result)
+  def handle_info({:replication_result, {:error, error}}, socket) do
 
     socket =
       socket
       |> assign(:replication_running, false)
+      |> create_error_feedback(error)
 
     {:noreply, socket}
   end
+
   def handle_info({:file_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
     {:noreply, assign(socket, :file_replication_status, nil)}
   end
 
   def handle_info({:file_processing, state}, socket) do
     {:noreply, assign(socket, :file_replication_status, Map.put(state, :percentage, (state.counter / state.overall * 100)))}
+  end
+
+  def handle_info({:document_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
+    {:noreply, assign(socket, :document_replication_status, nil)}
+  end
+
+  def handle_info({:document_processing, state}, socket) do
+    {:noreply, assign(socket, :document_replication_status, Map.put(state, :percentage, (state.counter / state.overall * 100)))}
+  end
+
+  defp create_error_feedback(%{assigns: %{form: %{params: params}}} = socket, %Mint.TransportError{} = error) do
+    changeset =
+      %Parameters{}
+      |> Parameters.changeset(params)
+      |> Parameters.set_source_connection_error(error)
+
+    assign(socket, :form, to_form(changeset))
+  end
+
+  defp create_error_feedback(%{assigns: %{form: %{params: params}}} = socket, :unauthorized) do
+    changeset =
+      %Parameters{}
+      |> Parameters.changeset(params)
+      |> Parameters.set_invalid_credentials()
+
+    assign(socket, :form, to_form(changeset))
   end
 end

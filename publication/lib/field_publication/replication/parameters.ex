@@ -19,6 +19,26 @@ defmodule FieldPublication.Replication.Parameters do
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid FieldHub.")
   end
 
+  def set_source_connection_error(changeset, %Mint.TransportError{reason: :nxdomain}) do
+    changeset
+    |> add_error(:source_url, "domain not nound")
+    |> Map.put(:action, :insert)
+  end
+
+  def set_source_connection_error(changeset, %Mint.TransportError{reason: :econnrefused}) do
+    changeset
+    |> add_error(:source_url, "connection refused")
+    |> Map.put(:action, :insert)
+  end
+
+  def set_invalid_credentials(changeset) do
+    changeset
+    |> add_error(:source_project_name, "invalid credentials")
+    |> add_error(:source_user, "invalid credentials")
+    |> add_error(:source_password, "invalid credentials")
+    |> Map.put(:action, :insert)
+  end
+
   def create(params) do # TODO: Move out of this module
     changeset(%FieldPublication.Replication.Parameters{}, params)
     |> apply_action(:create)

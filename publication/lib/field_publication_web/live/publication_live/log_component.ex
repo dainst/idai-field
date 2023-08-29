@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.PublicationLive.LogComponent do
             <% :ok -> %>
               <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-green-500 rounded-2xl"></div>
           <% end %>
-          <div><pre><%= timestamp %> | <%= msg %></pre></div>
+          <div class="font-mono"><%= timestamp %> | <%= msg %></div>
         </div>
       <% end %>
     </div>

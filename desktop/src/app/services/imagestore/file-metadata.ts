@@ -9,7 +9,6 @@ export type ImageMetadata = {
     height?: number,
     width?: number
     draughtsmen: string[],
-    processor: string[],
     creationDate?: Date,
     copyright?: string,
 }

@@ -275,7 +275,6 @@ export class ImageUploader {
                 originalFilename: fileName,
                 creationDate: extendedMetadata.creationDate,
                 draughtsmen: extendedMetadata.draughtsmen,
-                processor: extendedMetadata.processor,
                 width: extendedMetadata.width,
                 height: extendedMetadata.height,
                 imageRights: extendedMetadata.copyright,

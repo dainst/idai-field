@@ -38,8 +38,7 @@ export class ImageUploadMetadataModalComponent {
         this.projectStaff = [];
         this.metadata = {
             category: "Image",
-            draughtsmen: [],
-            processor: []
+            draughtsmen: []
         }
 
         this.loadProjectDocumentData();
@@ -64,15 +63,6 @@ export class ImageUploadMetadataModalComponent {
             this.metadata.draughtsmen = this.metadata.draughtsmen.filter((selected) => selected !== person);
         } else {
             this.metadata.draughtsmen.push(person);
-        }
-    }
-
-    
-    public toggleProcessor(person: string) {
-        if(person in this.metadata.draughtsmen) {
-            this.metadata.processor = this.metadata.processor.filter((selected) => selected !== person);
-        } else {
-            this.metadata.processor.push(person);
         }
     }
 

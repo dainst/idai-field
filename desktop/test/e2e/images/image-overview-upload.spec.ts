@@ -32,28 +32,25 @@ test.describe('images/upload --', () => {
         await stop();
     });
 
-
-    const uploadImage = async () => {
-
-        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
-        await ImageOverviewPage.chooseImageSubcategory(0);
-        await ImageOverviewPage.clickUploadConfirm();
-    };
-
-
     test('image upload should create a JSON document, which in turn gets displayed in the grid', async () => {
 
-        await uploadImage();
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
+        await ImageOverviewPage.clickUploadConfirm();
+
         await waitForExist(await ImageOverviewPage.getCellByIdentifier(imageFileName));
-    
     });
 
 
     test('do not allow uploading an image with a duplicate filename', async () => {
 
-        await uploadImage();
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
+        await ImageOverviewPage.clickUploadConfirm();
+
         await waitForExist(await ImageOverviewPage.getCellByIdentifier(imageFileName));
-        await uploadImage();
+
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
+        await ImageOverviewPage.clickUploadConfirm();
+
         await NavbarPage.awaitAlert('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
     });
 });

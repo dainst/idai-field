@@ -46,7 +46,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
-                          private datastore: Datastore,
+                          protected datastore: Datastore,
                           private renderer: Renderer2,
                           protected labels: Labels,
                           protected i18n: I18n) {}

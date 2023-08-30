@@ -3,7 +3,9 @@ import { SearchBarComponent } from '../../widgets/search-bar.component';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
-import { QrCodeScannerModalComponent } from './resources-search-modal-qr';
+import { QrCodeScannerModalComponent } from '../../widgets/resources-search-modal-qr';
+import { Datastore, FieldDocument } from 'idai-field-core';
+import { Routing } from '../../../services/routing';
 
 @Component({
     selector: 'resources-search-bar',
@@ -24,7 +26,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     constructor(
         private elementRef: ElementRef,
         private menus: Menus,
-        private modalService: NgbModal
+        private modalService: NgbModal,        
+        private datastore: Datastore,
+        private routingService: Routing
     ) {
         super();
     }
@@ -78,7 +82,10 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
                 { animation: false }
             );
 
-            //await modalRef.result;
+            const qrCode = await modalRef.result;
+
+            this.openDocument(qrCode);
+            
             return true;
         } catch (_) {
             return false;
@@ -86,4 +93,19 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
             this.menus.setContext(MenuContext.DEFAULT);
         }
     }
+
+    // to open the scanned document
+    private async openDocument(scannedCode: string) {
+        // split the scanned code with an '@'
+        console.log(scannedCode);
+
+        const [uuid, projectName] = scannedCode.split('@');
+        const document = (await this.datastore.get(uuid) as FieldDocument);
+
+        // open the scanned resource
+        this.routingService.jumpToResource(document);
+        // close the modal window
+        //this.activeModal.close();
+    }
+
 }

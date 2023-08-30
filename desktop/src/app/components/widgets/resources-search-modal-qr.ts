@@ -25,9 +25,7 @@ export class QrCodeScannerModalComponent implements OnInit {
     @Output() onRelationClicked: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     constructor(
-        public activeModal: NgbActiveModal,
-        private datastore: Datastore,
-        private routingService: Routing,
+        public activeModal: NgbActiveModal
     ) { 
         this.hasCamera = true;
      }
@@ -44,8 +42,7 @@ export class QrCodeScannerModalComponent implements OnInit {
                 this.playBeep(100,886,100);
                 // it stops the scanner and closes the window
                 this.qrScanner.stop();
-                // it open the referred document
-                this.openDocument(result.data);
+                this.activeModal.close(result.data);
             },
             { returnDetailedScanResult: true, highlightScanRegion: true }
         );
@@ -60,20 +57,6 @@ export class QrCodeScannerModalComponent implements OnInit {
                 this.hasCamera = false;
             }
         );
-    }
-
-    // to open the scanned document
-    private async openDocument(scannedCode: string) {
-        // split the scanned code with an '@'
-        const [uuid, projectName] = scannedCode.split('@');
-
-
-        const document = (await this.datastore.get(uuid) as FieldDocument);
-
-        // open the scanned resource
-        this.routingService.jumpToResource(document);
-        // close the modal window
-        this.activeModal.close();
     }
 
     public close = () => this.activeModal.close();

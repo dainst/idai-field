@@ -11,7 +11,6 @@ import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 
  * This modal lets the user select some {@link ImageMetadata} explicitly:
  * - category, defaults to "Image"
  * - draughtsmen
- * - processor
  */
 @Component({
     selector: 'image-upload-metadata-modal',

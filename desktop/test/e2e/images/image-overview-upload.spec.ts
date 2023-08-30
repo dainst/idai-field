@@ -37,6 +37,7 @@ test.describe('images/upload --', () => {
 
         await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
         await ImageOverviewPage.chooseImageSubcategory(0);
+        await ImageOverviewPage.clickUploadConfirm();
     };
 
 

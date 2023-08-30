@@ -26,6 +26,10 @@ export module ImageOverviewPage {
         return click('#choose-image-subcategory-option-' + index)
     }
 
+    export function clickUploadConfirm() {
+        return click('#confirmUploadButton')
+    }
+
 
     export function clickDeselectButton() {
 

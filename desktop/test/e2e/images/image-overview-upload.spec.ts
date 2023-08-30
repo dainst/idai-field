@@ -1,8 +1,8 @@
-import { navigateTo, resetApp, start, stop, waitForExist } from '../app';
+import { navigateTo, resetApp, start, stop, waitForExist, doubleClick, getByText } from '../app';
 import { ImageOverviewPage } from './image-overview.page';
 import { NavbarPage } from '../navbar.page';
 
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 const path = require('path');
 
 
@@ -52,5 +52,21 @@ test.describe('images/upload --', () => {
         await ImageOverviewPage.clickUploadConfirm();
 
         await NavbarPage.awaitAlert('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
+    });
+
+
+    test('explicitely selected draughtsman is displayed in resource view', async () => {
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
+
+        const staffName = "Person 1";
+
+        await ImageOverviewPage.selectStaffAsDraughtsmen(staffName);
+        await ImageOverviewPage.clickUploadConfirm();
+
+        await waitForExist(await ImageOverviewPage.getCellByIdentifier(imageFileName));
+
+        // Open image single view and check if staffName shows up as processor.
+        await doubleClick(await ImageOverviewPage.getCellByIdentifier(imageFileName));
+        await waitForExist(await getByText(staffName));
     });
 });

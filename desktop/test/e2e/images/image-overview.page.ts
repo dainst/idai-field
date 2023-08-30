@@ -32,6 +32,10 @@ export module ImageOverviewPage {
     }
 
 
+    export function selectStaffAsDraughtsmen(name: string) {
+        return click(`input[type="checkbox"][value="${name}"]`)
+    }
+
     export function clickDeselectButton() {
 
         return click('#deselect-images');

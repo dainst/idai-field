@@ -186,6 +186,10 @@ export async function getText(element, trim = true) {
     return trim ? text.trim() : text;
 }
 
+export async function getByText(text: string) {
+    return window.getByText(text);
+}
+
 
 export async function getValue(element) {
 

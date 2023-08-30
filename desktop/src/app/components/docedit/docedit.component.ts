@@ -16,7 +16,7 @@ import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
-
+import { QrCodeScannerModalComponent } from '../widgets/resources-search-modal-qr';
 
 @Component({
     selector: 'detail-modal',
@@ -53,6 +53,7 @@ export class DoceditComponent {
     constructor(public activeModal: NgbActiveModal,
                 public documentHolder: DocumentHolder,
                 private messages: Messages,
+                private menus: Menus,
                 private modalService: NgbModal,
                 private datastore: Datastore,
                 public projectConfiguration: ProjectConfiguration,
@@ -60,7 +61,28 @@ export class DoceditComponent {
                 private menuService: Menus,
                 public labels: Labels,
                 private i18n: I18n) {}
+    
+    public async openQrCodeScannerModal() {
+       
+        try {
+            this.menus.setContext(MenuContext.MODAL);
+            const modalRef: NgbModalRef = this.modalService.open(
+                QrCodeScannerModalComponent,
+                { animation: false }
+            );
 
+            const scannedCode = await modalRef.result;
+            this.documentHolder.clonedDocument.resource.id = scannedCode;
+            console.log(scannedCode);
+            // TODO: Set id in documentholder clone gedöns
+
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.DEFAULT);
+        }
+    }
 
     public isChanged = () => this.documentHolder.isChanged();
 
@@ -185,7 +207,7 @@ export class DoceditComponent {
         this.loading.start('docedit');
 
         const documentBeforeSave: Document = Document.clone(this.documentHolder.clonedDocument);
-
+        console.log(documentBeforeSave);
         try {
             const documentAfterSave: Document = numberOfDuplicates
                 ? await this.documentHolder.duplicate(numberOfDuplicates)
@@ -201,7 +223,7 @@ export class DoceditComponent {
             this.operationInProgress = 'none';
         }
     }
-
+//this.documentHolder.clonedDocument.resources.id = 
 
     private updateFields() {
 

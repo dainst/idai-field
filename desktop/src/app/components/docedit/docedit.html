@@ -21,6 +21,14 @@
                 <span class="sub-label">{{getResourceSubLabel()}}</span>
             </div>
 
+
+            <button
+            id="qr-scanner"
+            type="submit"
+            (click)="openQrCodeScannerModal()"
+        >
+            <i class="mdi mdi-qrcode-scan" aria-hidden="true"></i>
+        </button>
             <div>
                 <div class="btn-group" id="save-button-group">
                     <button class="btn btn-success disabled pull-right"

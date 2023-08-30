@@ -48,7 +48,7 @@ import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-lang
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 import { IdentifierComponent } from './core/forms/identifier.component';
-
+import { QrCodeModalComponent } from '../resources/widgets/qrcode-modal';
 
 @NgModule({
     providers: [
@@ -113,12 +113,14 @@ import { IdentifierComponent } from './core/forms/identifier.component';
         LiteratureComponent,
         IdentifierComponent,
         InvalidFieldDataComponent,
-        MultiLanguageTextFieldComponent
+        MultiLanguageTextFieldComponent,
+        QrCodeModalComponent
     ],
     exports: [
         DoceditComponent,
         RevisionSelectorComponent,
-        MultiLanguageTextFieldComponent
+        MultiLanguageTextFieldComponent,
+        QrCodeModalComponent
     ],
     entryComponents: [
         DoceditComponent,

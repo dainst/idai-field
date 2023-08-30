@@ -839,20 +839,15 @@
         "inputType": "input",
         "constraintIndexed": true
       },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-vesselForm-default"
+      },
       "vesselFormSpecific": {
         "inputType": "dropdown",
         "constraintIndexed": true,
         "valuelistId": "Pottery-vesselFormSpecific-default"
-      },
-      "vesselpart": {
-        "inputType": "checkboxes",
-        "constraintIndexed": true,
-        "valuelistId": "Pottery-vesselpart-Uruk"
-      },
-      "Firing": {
-        "inputType": "checkboxes",
-        "constraintIndexed": true,
-        "valuelistId": "Pottery-Firing-Uruk"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
@@ -887,35 +882,49 @@
       "FormComparisonCompendia": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk",
+        "selectable": false
       },
       "FormComparisonCompendiadetail": {
-        "inputType": "input"
+        "inputType": "input",
+        "selectable": false
       },
       "DecorationComparisonCompendia": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk",
+        "selectable": false
       },
       "DecorationComparisonCompendiadetail": {
-        "inputType": "input"
+        "inputType": "input",
+        "selectable": false
       },
       "ApplicationComparisonCompendia": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "Pottery-FormComparisonCompendia-Uruk"
+        "valuelistId": "Pottery-FormComparisonCompendia-Uruk",
+        "selectable": false
       },
       "ApplicationComparisonCompendiadetail": {
-        "inputType": "input"
+        "inputType": "input",
+        "selectable": false
       },
       "Drawing": {
         "inputType": "boolean",
-        "constraintIndexed": true
-      },
-      "vesselForm": {
-        "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "Pottery-vesselForm-default"
+        "selectable": false
+      },
+      "vesselpart": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-vesselpart-Uruk",
+        "selectable": false
+      },
+      "Firing": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Pottery-Firing-Uruk",
+        "selectable": false
       }
     }
   },

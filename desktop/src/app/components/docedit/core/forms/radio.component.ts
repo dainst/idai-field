@@ -15,6 +15,7 @@ import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from
 export class RadioComponent implements OnChanges {
 
     @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: any;
 
     public valuelist: Valuelist;
@@ -41,13 +42,13 @@ export class RadioComponent implements OnChanges {
 
     public setValue(value: any) {
 
-        this.resource[this.field.name] = value;
+        this.fieldContainer[this.field.name] = value;
     }
 
 
     public resetValue() {
 
-        delete this.resource[this.field.name];
+        delete this.fieldContainer[this.field.name];
     }
 
 

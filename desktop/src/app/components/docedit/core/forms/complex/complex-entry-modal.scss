@@ -1,0 +1,55 @@
+/**
+ * @author Thomas Kleinke
+ */
+ .complex-entry-modal {
+  top: 55px;
+
+  .modal-dialog {
+    max-width: calc(100vw - 350px);
+  }
+
+  .modal-header {
+    background-color: $modal-header-background-color;
+    border-bottom: 1px solid #ccc;
+  
+    h5 {
+      margin-bottom: 0;
+    }
+  }
+  
+  .modal-body {
+    max-height: calc(100vh - 292px);
+    overflow-y: auto;
+  
+    .subfield-section:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  
+    .mdi-information-outline {
+      position: relative;
+      bottom: 2px;
+      font-size: 20px;
+    }
+  
+    .invalid-data {
+      font-style: italic;
+      pointer-events: none;
+    }
+
+    .form-check-label,
+    label {
+      font-size: 15px;
+      user-select: none;
+    }
+
+    input,
+    textarea {
+      font-size: 13px;
+    }
+
+    input:not([type]),
+    input[type="text"] {
+      height: 33px;
+    }
+  }  
+ }

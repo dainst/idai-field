@@ -4,7 +4,7 @@ import { CategoryForm, ConfigurationDocument, ProjectConfiguration, SortUtil } f
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
-import { CategoryEditorModalComponent } from '../../editor/category-editor-modal.component';
+import { CategoryEditorModalComponent } from '../../editor/category/category-editor-modal.component';
 import { Modals } from '../../../../services/modals';
 import { ApplyChangesResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';

@@ -10,25 +10,25 @@
 
 <div *ngIf="edit">
     <select (change)="setGeometryType($event.target.value)" class="form-control">
-        <option value="" [selected]="!resource.hasOwnProperty(resource.geometry)"
+        <option value="" [selected]="!fieldContainer.hasOwnProperty(fieldContainer.geometry)"
                 i18n="@@geometry.none">Keine Geometrie</option>
-        <option value="Point" [selected]="resource.geometry && resource.geometry.type === 'Point'"
+        <option value="Point" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'Point'"
                 i18n="@@geometry.point">Punkt</option>
-        <option value="MultiPoint" [selected]="resource.geometry && resource.geometry.type === 'MultiPoint'"
+        <option value="MultiPoint" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiPoint'"
                 i18n="@@geometry.multiPoint">Multipunkt</option>
-        <option value="LineString" [selected]="resource.geometry && resource.geometry.type === 'LineString'"
+        <option value="LineString" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'LineString'"
                 i18n="@@geometry.polyline">Polyline</option>
         <option value="MultiLineString"
-                [selected]="resource.geometry && resource.geometry.type === 'MultiLineString'"
+                [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiLineString'"
                 i18n="@@geometry.multiPolyline">Multipolyline</option>
-        <option value="Polygon" [selected]="resource.geometry && resource.geometry.type === 'Polygon'"
+        <option value="Polygon" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'Polygon'"
                 i18n="@@geometry.polygon">Polygon</option>
         <option value="MultiPolygon"
-                [selected]="resource.geometry && resource.geometry.type === 'MultiPolygon'"
+                [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiPolygon'"
                 i18n="@@geometry.multiPolygon">Multipolygon</option>
     </select>
 
-    <textarea *ngIf="resource.geometry && resource.geometry.type !== ''"
+    <textarea *ngIf="fieldContainer.geometry && fieldContainer.geometry.type !== ''"
               class="form-control geometry-coordinates-textarea"
               [(ngModel)]="coordinates"
               (keyup)="parseCoordinates(false)"

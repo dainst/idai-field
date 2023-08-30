@@ -1,9 +1,15 @@
-import { BaseFieldDefinition } from './base-field-definition';
+import { BaseFieldDefinition, BaseSubfieldDefinition } from './base-field-definition';
 
 
 export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
-    inputType?: string;
+    valuelistId?: string;
+    subfields?: Array<LibrarySubfieldDefinition>;
+}
+
+
+export interface LibrarySubfieldDefinition extends BaseSubfieldDefinition {
+
     valuelistId?: string;
 }
 
@@ -13,8 +19,7 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'valuelistId',
     'constraintIndexed',
     'fulltextIndexed',
-    'creationDate',
-    'createdBy',
     'references',
-    'selectable'
+    'selectable',
+    'subfields'
 ];

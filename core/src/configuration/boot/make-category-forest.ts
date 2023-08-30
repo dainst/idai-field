@@ -59,50 +59,87 @@ const createGroups = (relationDefinitions: Array<Relation>, includeAllRelations:
     const categoryRelations: Array<Relation> = clone(Relation.getRelations(relationDefinitions, category.name));
     applyHiddenForFields(categoryRelations, category[TEMP_HIDDEN]);
 
+    const fields: Map<Field> = combineFieldsWithRelations(category, categoryRelations);
+
     category.groups = category[TEMP_GROUPS].map(groupDefinition => {
         const group = Group.create(groupDefinition.name);
         group.fields = set(groupDefinition.fields)
-            .map(fieldName => {
-                return category[TEMP_FIELDS][fieldName]
-                    ?? categoryRelations.find(relation => relation.name === fieldName)
-            })
+            .map((fieldName: string) => fields[fieldName])
             .filter(field => field !== undefined);
         return group;
     });
 
     if (includeAllRelations && category.groups.length > 0) {
-        categoryRelations.filter(relation => {
-            return !flatten(category.groups.map(to(Group.FIELDS)))
-                .map(to(Named.NAME))
-                .includes(relation.name);
-        }).forEach(relation => {
-            category.groups[0].fields.push(relation);
-        });
+        addAllRelationsToGroups(category, categoryRelations);
     }
 
-    putUnassignedFieldsToOtherGroup(category);
+    putUnassignedFieldsToGroups(category, fields);
 
     return category;
 }
 
 
-function putUnassignedFieldsToOtherGroup(category: CategoryForm) {
+function combineFieldsWithRelations(category: CategoryForm, categoryRelations: Array<Relation>): Map<Field> {
+
+    let fields: Map<Field> = {};
+    Object.assign(fields, category[TEMP_FIELDS]);
+    fields = categoryRelations.reduce((result, relation) => {
+        result[relation.name] = relation;
+        return result;
+    }, fields);
+
+    return fields;
+}
+
+
+function addAllRelationsToGroups(category: CategoryForm, categoryRelations: Array<Relation>) {
+
+    categoryRelations.filter(relation => {
+        return !flatten(category.groups.map(to(Group.FIELDS)))
+            .map(to(Named.NAME))
+            .includes(relation.name);
+    }).forEach(relation => {
+        category.groups[0].fields.push(relation);
+    });
+}
+
+
+function putUnassignedFieldsToGroups(category: CategoryForm, fields: Map<Field>) {
 
     const fieldsInGroups: string[] = (flatten(1, category[TEMP_GROUPS].map(group => group.fields)) as string[]);
-    const fieldsNotInGroups: Array<Field> = Object.keys(category[TEMP_FIELDS])
-        .filter(fieldName => !fieldsInGroups.includes(fieldName)
-            && (category[TEMP_FIELDS][fieldName].visible || category[TEMP_FIELDS][fieldName].editable))
-        .map(fieldName => category[TEMP_FIELDS][fieldName]);
 
-    if (fieldsNotInGroups.length === 0) return;
+    Object.values(fields)
+        .filter(field => !fieldsInGroups.includes(field.name)
+            && (fields[field.name].visible || fields[field.name].editable))
+        .forEach(field => putUnassignedFieldToGroup(category, field));
+}
 
-    let otherGroup: Group = category.groups.find(group => group.name === Groups.OTHER);
-    if (!otherGroup) {
-        otherGroup = Group.create(Groups.OTHER);
-        category.groups.push(otherGroup);
+
+function putUnassignedFieldToGroup(category: CategoryForm, field: Field) {
+
+    const groupName: string = getGroupNameForUnassaginedField(field.name);
+        
+    let group: Group = category.groups.find(group => group.name === groupName);
+    if (!group) {
+        group = Group.create(groupName);
+        category.groups.push(group);
     }
 
-    otherGroup.fields = otherGroup.fields.concat(fieldsNotInGroups);
+    group.fields.push(field);
+}
+
+
+function getGroupNameForUnassaginedField(fieldName: string): string {
+
+    if (Relation.Position.ALL.includes(fieldName)) {
+        return Groups.POSITION;
+    } else if (Relation.Time.ALL.includes(fieldName)) {
+        return Groups.TIME;
+    } else if (Relation.Type.ALL.includes(fieldName)) {
+        return Groups.IDENTIFICATION;
+    } else {
+        return Groups.OTHER;
+    }
 }
 
 

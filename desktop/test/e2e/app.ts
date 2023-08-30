@@ -112,6 +112,13 @@ export async function hover(element) {
 }
 
 
+export async function scrollTo(element) {
+
+    if (isString(element)) element = await getLocator(element);
+    return element.scrollIntoViewIfNeeded();
+}
+
+
 export async function waitForExist(element, timeout = 30000) {
 
     if (isString(element)) element = await getLocator(element);
@@ -156,6 +163,18 @@ export async function selectOption(element, optionValue) {
 
     if (isString(element)) element = await getLocator(element);
     return element.selectOption(optionValue);
+}
+
+
+export async function selectOptionFromSearchableSelect(element, optionValueLabel) {
+
+    if (isString(element)) element = await getLocator(element);
+    element = await element.locator('.ng-arrow-wrapper');
+
+    await scrollTo(element);
+    await click(element);
+    
+    return click('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
 }
 
 

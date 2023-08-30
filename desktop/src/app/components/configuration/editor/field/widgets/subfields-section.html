@@ -1,0 +1,77 @@
+<div class="configuration-editor-section">
+    <div class="configuration-editor-section-title" i18n="@@configuration.subfields">
+        Unterfelder
+    </div>
+    <div id="subfields" cdkDropList (cdkDropListDropped)="onDropSubfield($event)">
+        <div *ngFor="let subfield of getClonedSubfieldDefinitions()"
+             class="subfield-container"
+             cdkDrag cdkDragBoundary="#subfields" cdkDragLockAxis="y"
+             (cdkDragStarted)="onDragStarted()"
+             (cdkDragEnded)="onDragEnded()">
+            <div class="subfield-input-group input-group">
+                <span class="mdi mdi-drag" cdkDragHandle></span>
+                <div class="subfield form-control container">
+                    <div class="row">
+                        <div class="col-md-6 subfield-left">
+                            <div class="subfield-base-section">
+                                <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
+                                <code>{{subfield.name}}</code>
+                            </div>
+                            <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
+                        </div>
+                        <div class="col-md-6 subfield-right">
+                            <div i18n="@@configuration.subfields.condition"
+                                 class="subfield-condition-header">Bedingung:</div>
+                            <div *ngIf="subfield.condition" class="subfield-condition">
+                                <span class="subfield-condition-subfield">
+                                    {{getConditionSubfieldLabel(subfield.condition)}}:
+                                </span>
+                                <span *ngIf="subfield.condition.values === true" i18n="@@boolean.yes">Ja</span>
+                                <span *ngIf="subfield.condition.values === false" i18n="@@boolean.no">Nein</span>
+                                <span *ngIf="subfield.condition.values !== true && subfield.condition.values !== false">
+                                    {{getConditionValueLabels(subfield.condition)}}
+                                </span>                                          
+                            </div>
+                            <div *ngIf="!subfield.condition" class="subfield-no-condition"
+                                 i18n="@@configuration.subfields.condition.none">
+                                Keine
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-danger"
+                            (click)="deleteSubfield(subfield)">
+                        <span class="mdi mdi-delete"></span>
+                    </button>
+                    <button class="btn btn-info edit-subfield-button"
+                            (click)="editSubfield(subfield)">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
+                </div>
+            </div>
+            <div *cdkDragPreview class="subfield-drag-preview subfield form-control">
+                <div>
+                    <span class="subfield-label">{{getSubfieldLabel(subfield)}}</span>
+                    <code>{{subfield.name}}</code>
+                </div>
+                <div class="subfield-input-type">{{getInputTypeLabel(subfield)}}</div>
+            </div>
+            <div *cdkDragPlaceholder class="subfield-drag-placeholder"></div>
+        </div>
+    </div>
+    <div class="input-group mb-2">
+        <input id="new-subfield-input"
+               [(ngModel)]="newSubfieldName"
+               type="text"
+               placeholder="{{newSubfieldInputPlaceholder}}"
+               class="form-control">
+        <div class="input-group-append">
+            <button id="create-subfield-button" class="btn btn-success" type="button"
+                    [disabled]="!isValidSubfieldName(newSubfieldName)"
+                    (click)="createSubfield()">
+                <span class="mdi mdi-plus"></span>
+            </button>
+        </div>
+    </div>
+</div>

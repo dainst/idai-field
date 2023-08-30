@@ -1,0 +1,2855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="de" datatype="plaintext" original="ng2.template" target-language="pt">
+    <body>
+      <trans-unit id="ngb.alert.close" datatype="html">
+        <source>Close</source>
+        <target state="translated">Fechar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/alert/alert.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.carousel.previous" datatype="html">
+        <source>Previous</source>
+        <target state="translated">Anterior</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/carousel/carousel.ts</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.carousel.next" datatype="html">
+        <source>Next</source>
+        <target state="translated">Seguinte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/carousel/carousel.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.datepicker.previous-month" datatype="html">
+        <source>Previous month</source>
+        <target state="translated">Mês anterior</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.datepicker.next-month" datatype="html">
+        <source>Next month</source>
+        <target state="translated">Mês seguinte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-month.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.datepicker.select-month" datatype="html">
+        <source>Select month</source>
+        <target state="translated">Selecionar mês</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-view.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-view.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.datepicker.select-year" datatype="html">
+        <source>Select year</source>
+        <target state="translated">Selecionar ano</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-view.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-view.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.pagination.first-aria" datatype="html">
+        <source>First</source>
+        <target state="translated">Primeiro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/pagination/pagination.ts</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.pagination.previous-aria" datatype="html">
+        <source>Previous</source>
+        <target state="translated">Anterior</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/pagination/pagination.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.pagination.next-aria" datatype="html">
+        <source>Next</source>
+        <target state="translated">Seguinte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/pagination/pagination.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.pagination.last-aria" datatype="html">
+        <source>Last</source>
+        <target state="translated">Último</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/pagination/pagination.ts</context>
+          <context context-type="linenumber">217</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
+        <source>Increment hours</source>
+        <target state="translated">Aumentar horas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">231</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.hours" datatype="html">
+        <source>Hours</source>
+        <target state="translated">Horas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">184</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
+        <source>Decrement hours</source>
+        <target state="translated">Diminuir horas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">251</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
+        <source>Increment minutes</source>
+        <target state="translated">Aumentar minutos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">273</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.minutes" datatype="html">
+        <source>Minutes</source>
+        <target state="translated">Minutos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">209</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.decrement-minutes" datatype="html">
+        <source>Decrement minutes</source>
+        <target state="translated">Diminuir minutos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">290</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.increment-seconds" datatype="html">
+        <source>Increment seconds</source>
+        <target state="translated">Aumentar segundos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.seconds" datatype="html">
+        <source>Seconds</source>
+        <target state="translated">Segundos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.timepicker.decrement-seconds" datatype="html">
+        <source>Decrement seconds</source>
+        <target state="translated">Diminuir segundos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.toast.close-aria" datatype="html">
+        <source>Close</source>
+        <target state="translated">Fechar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/toast/toast.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
+        <source>Polygon</source>
+        <target state="translated">Polígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
+        <source>Multipolygon</source>
+        <target state="translated">Multipolígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
+        <source>Polyline</source>
+        <target state="translated">Polilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
+        <source>Multipolyline</source>
+        <target state="translated">Multipolilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
+        <source>Punkt</source>
+        <target state="translated">Ponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
+        <source>Multipunkt</source>
+        <target state="translated">Multiponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
+        <source>Keine</source>
+        <target state="translated">Nenhum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
+        <source>Keine Suchkriterien angegeben</source>
+        <target state="translated">Nenhum critério de pesquisa especificado</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
+        <source>Keine Ziele gefunden</source>
+        <target state="translated">Sem resultados</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.uploadModal.info" datatype="html">
+        <source>Datensätze werden eingelesen...</source>
+        <target state="translated">Importar datasets...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/upload-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.startImport" datatype="html">
+        <source>Import starten</source>
+        <target state="translated">Iniciar importação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.source" datatype="html">
+        <source>Quelle</source>
+        <target state="translated">Fonte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.file" datatype="html">
+        <source>Datei</source>
+        <target state="translated">Ficheiro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.path" datatype="html">
+        <source>Pfad</source>
+        <target state="translated">Caminho</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.chooseFile" datatype="html">
+        <source>Datei auswählen...</source>
+        <target state="translated">Escolher ficheiro...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.format.info" datatype="html">
+        <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <target state="translated">
+                        Formatos de ficheiro suportados: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                        Imagens podem ser importadas através de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">235</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.regularOption.label" datatype="html">
+        <source> Neue Ressourcen importieren</source>
+        <target state="translated">Importar novos recursos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.defaultOption.info" datatype="html">
+        <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
+        <target state="translated">
+                                Recursos já existentes, o que é determinado pelo campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, são ignorados.
+                            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.label" datatype="html">
+        <source> Vorhandene Ressource ergänzen </source>
+        <target state="translated">
+                            Atualizar recursos existentes
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.native.info" datatype="html">
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">
+                        Se esta opção estiver ativa, os recursos já existentes serão combinados com os dados do ficheiro de
+                        importação. Os campos do registo a importar substituem os campos correspondentes no registo já
+                        existente. As geometrias do registo a importar substituem as do registo já existente. Campos do
+                        registo já existente que não estejam definidos ou alterados no registo a importar permanecem
+                        inalterados. A categoria não pode ser alterada. A atribuição de registos é feita com base no
+                        campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>.
+                        Registos no ficheiro de importação que não possam ser atribuídos a um recurso serão ignorados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.csv.info" datatype="html">
+        <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">
+                        Se esta opção estiver ativa, os recursos já existentes serão combinados com os dados do ficheiro de
+                        importação. Os campos do registo a importar substituem os campos correspondentes no registo já
+                        existente. As geometrias do registo a importar substituem as do registo já existente. Campos do
+                        registo já existente que não estejam definidos ou alterados no registo a importar permanecem
+                        inalterados. A categoria não pode ser alterada. A atribuição de registos é feita com base na
+                        coluna <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>.
+                        Registos no ficheiro de importação que não possam ser atribuídos a um recurso serão ignorados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
+        <source> Löschen erlauben </source>
+        <target state="translated">
+            Permitir apagar
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
+        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
+        <target state="translated">
+                        Se esta opção estiver ativada, tanto campos como relações podem ser atualizados
+                        ou removidos. Todos os campos e relações com o valor atribuído de
+                        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> serão
+                        eliminados. Campos e relações não definidos não serão modificados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
+        <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </source>
+        <target state="translated">
+                        Se esta opção estiver ativada, tanto campos como relações podem ser atualizados
+                        ou removidos. Todos os campos e relações serão eliminados se o campo correspondente
+                        no ficheiro de importação estiver vazio. Campos e relações que não estão especificados
+                        como coluna na tabela CSV não serão modificados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.format.importCategorySelect" datatype="html">
+        <source>Kategorie</source>
+        <target state="translated">Categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.selectCategory" datatype="html">
+        <source>Kategorie auswählen</source>
+        <target state="translated">Selecionar categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.csv.separator" datatype="html">
+        <source>Feldtrennzeichen</source>
+        <target state="translated">Separador de campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.geojson.info" datatype="html">
+        <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">
+                        A importação GeoJSON não cria novos recursos. As geometrias são adicionadas a recursos
+                        já existentes. Tenha em atenção que neste processo as geometrias já existentes serão
+                        substituídas. A atribuição dos registos é feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> das <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propriedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> do objeto. Registos no
+                        ficheiro de importação que não possam ser atribuídos serão ignorados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.shapefile.javaWarning" datatype="html">
+        <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
+        <target state="translated">
+                        É necessário instalar Java 8 ou superior para poder fazer importação de shapefile.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.shapefile.info" datatype="html">
+        <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">
+                        A importação de shapefile não cria novos recursos. As geometrias são adicionadas a recursos
+                        já existentes. Tenha em atenção que neste processo as geometrias já existentes serão
+                        substituídas. A atribuição dos registos é feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Registos no
+                        shapefile que não possam ser atribuídos a um recurso serão ignorados.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.nonImportedResources" datatype="html">
+        <source>Nicht importierte Ressourcen</source>
+        <target state="translated">Recursos não importados</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.back" datatype="html">
+        <source>Zurück</source>
+        <target state="translated">Voltar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.invalidFields.resource" datatype="html">
+        <source>(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</source>
+        <target state="translated">(Recurso <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">140,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.modal.info" datatype="html">
+        <source>Daten werden exportiert...</source>
+        <target state="translated">Exportando dados...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export-modal.component.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.startExport" datatype="html">
+        <source>Export starten</source>
+        <target state="translated">Iniciar exportação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.operationSelect.label" datatype="html">
+        <source>Kontext</source>
+        <target state="translated">Contexto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.operationSelect.all" datatype="html">
+        <source>Keine Einschränkung</source>
+        <target state="translated">Sem restrições</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">267</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.catalogSelect.label" datatype="html">
+        <source>Katalog</source>
+        <target state="translated">Catálogo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">295</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.format.categorySelect" datatype="html">
+        <source>Kategorie</source>
+        <target state="translated">Categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">327</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.format" datatype="html">
+        <source>Format</source>
+        <target state="translated">Formato</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.formats.catalog" datatype="html">
+        <source>Katalog</source>
+        <target state="translated">Catálogo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csvimportmode.complete" datatype="html">
+        <source>Komplett</source>
+        <target state="translated">Completo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csvimportmode.schema" datatype="html">
+        <source>Nur Schema</source>
+        <target state="translated">Só esquema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">223</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csv.noResources" datatype="html">
+        <source> Keine Ressourcen gefunden. </source>
+        <target state="translated">
+                        Nenhum Recurso encontrado.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">356</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csv.noCatalogs" datatype="html">
+        <source> Keine Kataloge gefunden. </source>
+        <target state="translated">
+                        Nenhum Catálogo encontrado.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">360</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.geojson.info" datatype="html">
+        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">
+                        Os dados exportados incluem geometrias e os campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>,
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
+                        correspondentes.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
+          <context context-type="linenumber">360</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.javaWarning" datatype="html">
+        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </source>
+        <target state="translated">
+                        É necessário instalar Java 8 ou superior para poder fazer exportação de shapefile.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.invalidFields.heading" datatype="html">
+        <source>Nicht exportierte Felder:</source>
+        <target state="translated">Campos não exportados:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">126,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.info" datatype="html">
+        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">
+                        Os dados exportados incluem geometrias e campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>,
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos
+                        correspondentes.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/export/export.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.modal.info" datatype="html">
+        <source>Datenbank wird gesichert.</source>
+        <target state="translated">Gravando base de dados...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-creation-modal.component.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.createBackup" datatype="html">
+        <source>Backup erstellen</source>
+        <target state="translated">Criar backup</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.info" datatype="html">
+        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="translated">
+                        Cria cópia de segurança (backup) do projeto aberto. Backups regulares permitem aumentar
+                        a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados.
+                        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                        Tenha em atenção que as imagens originais não são guardadas no ficheiro de backup. Estas podem ser encontradas
+                        na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.modal.info" datatype="html">
+        <source>Datenbank wird eingelesen.</source>
+        <target state="translated">Restaurando base de dados...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading-modal.component.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.loadBackup" datatype="html">
+        <source>Backup einlesen</source>
+        <target state="translated">Restaurar backup</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.1" datatype="html">
+        <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank / eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten Projekt übereinstimmen. </source>
+        <target state="translated">
+                        Por favor, introduza o caminho completo para o ficheiro de backup, assim como o nome
+                        da base de dados / projeto de destino. O nome do projeto de destino não pode ser igual
+                        ao do projeto atualmente aberto.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.2" datatype="html">
+        <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
+        <target state="translated">
+                        Atenção: após o restauro do backup, todas as imagens de pŕe-visualização serão geradas
+                        de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.path" datatype="html">
+        <source>Pfad</source>
+        <target state="translated">Caminho</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.selectForm" datatype="html">
+        <source>Formular auswählen</source>
+        <target state="translated">Selecionar formulário</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addCategory" datatype="html">
+        <source>Kategorie hinzufügen</source>
+        <target state="translated">Adicionar categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addField" datatype="html">
+        <source>Feld hinzufügen</source>
+        <target state="translated">Adicionar campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.selectField" datatype="html">
+        <source>Feld auswählen</source>
+        <target state="translated">Selecionar campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newField" datatype="html">
+        <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Criar novo campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addGroup" datatype="html">
+        <source>Gruppe hinzufügen</source>
+        <target state="translated">Adicionar grupo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.selectGroup" datatype="html">
+        <source>Gruppe auswählen</source>
+        <target state="translated">Selecionar grupo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newGroup" datatype="html">
+        <source>Neue Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Criar novo grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/group/group-listing.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.selectValuelist" datatype="html">
+        <source>Werteliste auswählen</source>
+        <target state="translated">Selecionar lista de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.extendValuelist" datatype="html">
+        <source>Werteliste erweitern</source>
+        <target state="translated">Extender lista de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.extendValuelistInfo" datatype="html">
+        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
+        <target state="translated"> Por favor introduza um identificador para a sua extensão da lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createExtendingValuelist" datatype="html">
+        <source>Erweiterung erstellen</source>
+        <target state="translated">Criar extensão</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.manageValuelists" datatype="html">
+        <source>Wertelisten verwalten</source>
+        <target state="translated">Gerir listas de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/manage-valuelists-modal.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newValuelist" datatype="html">
+        <source>Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Criar nova lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
+        <source>Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</source>
+        <target state="translated">Esta lista de valores representa uma extensão de uma lista de valores existente.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuesHeading" datatype="html">
+        <source>Werte:</source>
+        <target state="translated">Valores:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.seletedForm" datatype="html">
+        <source>Ausgewähltes Formular</source>
+        <target state="translated">Formulário selecionado</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.inputType" datatype="html">
+        <source>Eingabetyp</source>
+        <target state="translated">Tipo de Entrada</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/field/field-preview.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addSupercategory" datatype="html">
+        <source>Oberkategorie hinzufügen</source>
+        <target state="translated">Adicionar supercategoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addSubcategory" datatype="html">
+        <source>Unterkategorie hinzufügen</source>
+        <target state="translated">Adicionar subcategoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.fieldLabel" datatype="html">
+        <source> Feldbezeichnung </source>
+        <target state="translated">Designação do campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createSpecificField" datatype="html">
+        <source> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
+        <target state="translated"> Criar campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.showField" datatype="html">
+        <source>Feld anzeigen</source>
+        <target state="translated">Mostrar campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelist" datatype="html">
+        <source> Werteliste </source>
+        <target state="translated"> Lista de valores </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html">
+        <source> Werteliste (Unterfeld "Gemessen an") </source>
+        <target state="translated"> Lista de valores (Subfield "As measured by") </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">96,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.replaceValuelist" datatype="html">
+        <source>Werteliste wechseln</source>
+        <target state="translated">Substituir lista de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editValuelist" datatype="html">
+        <source>Werteliste bearbeiten</source>
+        <target state="translated">Editar lista de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addValuelist" datatype="html">
+        <source>Werteliste hinzufügen</source>
+        <target state="translated">Adicionar lista de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.groupLabel" datatype="html">
+        <source> Gruppenbezeichnung </source>
+        <target state="translated"> Designação do grupo </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createSpecificGroup" datatype="html">
+        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
+        <target state="translated"> Criar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editSpecificGroup" datatype="html">
+        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="translated"> Editar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.input" datatype="html">
+        <source>Einzeiliger Text</source>
+        <target state="translated">Linha única de texto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.unsignedInt" datatype="html">
+        <source>Positive Ganzzahl</source>
+        <target state="translated">Número inteiro positivo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.float" datatype="html">
+        <source>Kommazahl</source>
+        <target state="translated">Número decimal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.unsignedFloat" datatype="html">
+        <source>Positive Kommazahl</source>
+        <target state="translated">Número decimal positivo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.multiInput" datatype="html">
+        <source>Einzeiliger Text mit Mehrfachauswahl</source>
+        <target state="translated">Múltiplas linhas únicas de texto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.text" datatype="html">
+        <source>Mehrzeiliger Text</source>
+        <target state="translated">Texto multilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dropdown" datatype="html">
+        <source>Dropdown-Liste</source>
+        <target state="translated">Lista dropdown</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dropdownRange" datatype="html">
+        <source>Dropdown-Liste (Bereich)</source>
+        <target state="translated">Lista dropdown (range)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.radio" datatype="html">
+        <source>Radiobutton</source>
+        <target state="translated">Botão de rádio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.boolean" datatype="html">
+        <source>Ja / Nein</source>
+        <target state="translated">Sim / Não</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.checkboxes" datatype="html">
+        <source>Checkboxen</source>
+        <target state="translated">Caixas de verificação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dating" datatype="html">
+        <source>Datierungsangabe</source>
+        <target state="translated">Datação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.date" datatype="html">
+        <source>Datum</source>
+        <target state="translated">Data</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dimension" datatype="html">
+        <source>Maßangabe</source>
+        <target state="translated">Dimensão</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.literature" datatype="html">
+        <source>Literaturangabe</source>
+        <target state="translated">Referência bibliográfica</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.geometry" datatype="html">
+        <source>Geometrie</source>
+        <target state="translated">Geometria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.instanceOf" datatype="html">
+        <source>Typenauswahl</source>
+        <target state="translated">Seleção de tipo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.relation" datatype="html">
+        <source>Relation</source>
+        <target state="translated">Relação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.category" datatype="html">
+        <source>Kategorie</source>
+        <target state="translated">Categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.changes" datatype="html">
+        <source>An der Konfiguration wurden Änderungen vorgenommen.</source>
+        <target state="translated">A configuração foi modificada.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.changed" datatype="html">
+        <source>Es wurden bereits Konflikte gelöst.</source>
+        <target state="translated">Alguns conflitos já foram resolvidos.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoryChanged" datatype="html">
+        <source>Die Kategorie wurde geändert.</source>
+        <target state="translated">A categoria foi modificada.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.fieldChanged" datatype="html">
+        <source>Das Feld wurde geändert.</source>
+        <target state="translated">O campo foi modificado.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editSpecificCategory" datatype="html">
+        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="translated"> Editar categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.addSpecificCategory" datatype="html">
+        <source> Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> hinzufügen </source>
+        <target state="translated"> Adicionar categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.references" datatype="html">
+        <source> Verweise </source>
+        <target state="translated"> Referências </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.basicSettings" datatype="html">
+        <source> Grundeinstellungen </source>
+        <target state="translated"> Definições básicas </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html">
+        <source>Feldspezifische Suche erlauben</source>
+        <target state="translated">Permitir pesquisa específica no campo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
+        <source>Sprache auswählen</source>
+        <target state="translated">Escolher linguagem</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/widgets/multi-language-input.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.importModal.header" datatype="html">
+        <source> Konfiguration aus anderem Projekt importieren </source>
+        <target state="translated"> Importar configuração de outro projeto </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.importModal.warning" datatype="html">
+        <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
+        <target state="translated"> Por favor, tenha em atenção que todos os ajustes à configuração (incluindo listas de valores) serão perdidos durante a importação. A configuração do projeto será totalmente substituída pela configurção do projeto selecionado. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.importModal.project" datatype="html">
+        <source>Projekt:</source>
+        <target state="translated">Projeto:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.changeNotification.header" datatype="html">
+        <source> Die Projektkonfiguration hat sich geändert. </source>
+        <target state="translated"> A configuração do projeto foi modificada. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.changeNotification.applyChanges" datatype="html">
+        <source>Änderungen anwenden</source>
+        <target state="translated">Aplicar alterações</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.saveChanges" datatype="html">
+        <source>Konfigurationsänderungen speichern</source>
+        <target state="translated">Gravar modificações na configuração</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.saveInfo.general" datatype="html">
+        <source> Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen. </source>
+        <target state="translated"> Tem a certeza que pretende gravar as modificações que fez na configuração? Atente que as modificações irão afetar todo o projeto. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.saveInfo.synchronization" datatype="html">
+        <source> Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen. </source>
+        <target state="translated"> Outros utilizadores a trabalhar no mesmo projeto através de sincronização terão de reiniciar a aplicação Field Desktop para conseguir aplicar a modificações na configuração.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valueLabel" datatype="html">
+        <source> Anzeigetext </source>
+        <target state="translated"> Designação </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valueDescription" datatype="html">
+        <source> Beschreibung </source>
+        <target state="translated"> Descrição </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.editValue" datatype="html">
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</source>
+        <target state="translated">Editar valor <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createValue" datatype="html">
+        <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Criar valor <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.html</context>
+          <context context-type="linenumber">20,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.values" datatype="html">
+        <source>Werte</source>
+        <target state="translated">Valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.createdBy" datatype="html">
+        <source>Erstellt von:</source>
+        <target state="translated">Criado por:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.descriptionHeading" datatype="html">
+        <source>Beschreibung:</source>
+        <target state="translated">Descrição:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.usedBy" datatype="html">
+        <source>Verwendet von:</source>
+        <target state="translated">Utilizado por:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuation.filterResults" datatype="html">
+        <source>Suchergebnisse filtern:</source>
+        <target state="translated">Resultados do filtro:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.customFilter" datatype="html">
+        <source> Projektspezifische Wertelisten </source>
+        <target state="translated"> Listas de valores específicas do projeto </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.inUseFilter" datatype="html">
+        <source> Verwendete Wertelisten </source>
+        <target state="translated"> Lista de valores em uso </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.saving" datatype="html">
+        <source>Konfiguration wird gespeichert...</source>
+        <target state="translated">Gravando configuração...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-process-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
+        <source>Ein verknüpftes Bild</source>
+        <target state="translated">Uma imagem ligada</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentInfo.thumbnail.linkedImages" datatype="html">
+        <source>verknüpfte Bilder</source>
+        <target state="translated">Imagens ligadas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
+        <source>Konflikte</source>
+        <target state="translated">Conflitos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
+        <source> Projektkonfiguration </source>
+        <target state="translated"> Configuração de projeto </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
+        <source>Es werden Daten hochgeladen.</source>
+        <target state="translated">Upload em curso.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
+        <source>Es werden Daten heruntergeladen.</source>
+        <target state="translated">Download em curso.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.connecting" datatype="html">
+        <source>Synchronisationsverbindung wird hergestellt...</source>
+        <target state="translated">Estabelecendo ligação de sincronização...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
+        <source>Synchronisation ist deaktiviert.</source>
+        <target state="translated">Sincronização desativada.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
+        <source>Synchronisation abgeschlossen.</source>
+        <target state="translated">Sincronização completada.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
+        <source>Synchronisation fehlgeschlagen</source>
+        <target state="translated">Sincronização falhou</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
+        <source>Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</source>
+        <target state="translated">Assegure-se que o endereço especificado está correto e que existe uma ligação de rede até ao destino da sincronização. Se necessário, verifique as configurações de firewall no seu computador e no computador remoto.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
+        <source>Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</source>
+        <target state="translated">Assegure-se que o projeto existe no destino da sincronização e verifique a palavra-passe.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
+        <source>Sie besitzen nicht die nötigen Rechte.</source>
+        <target state="translated">Permissões negadas.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
+        <target state="translated">A descarregar versão <x id="INTERPOLATION" equiv-text="{{version}}"/>...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
+        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e irá ser instalada quando reiniciar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
+        <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
+        <target state="translated">O descarregamento da versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi interrompido. Por favor reinicie a aplicação para voltar a tentar.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
+        <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
+        <target state="translated">Ocorreu um erro durante o descarregamento da versão <x id="INTERPOLATION" equiv-text="{{version}}"/>. Por favor, descarregue última versão a partir de https://field.idai.world/download.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.header" datatype="html">
+        <source> Download abbrechen? </source>
+        <target state="translated"> Cancelar download? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.info" datatype="html">
+        <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen. </source>
+        <target state="translated"> Tenha em atenção que se interromper o download, este irá reiniciar do princípio se voltar a descarregar o projeto mais tarde. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.abort" datatype="html">
+        <source>Abbrechen</source>
+        <target state="translated">Cancelar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.cancelModal.continue" datatype="html">
+        <source>Fortsetzen</source>
+        <target state="translated">Continuar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.header" datatype="html">
+        <source> Neues Projekt erstellen </source>
+        <target state="translated"> Criar novo projeto </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.projectName" datatype="html">
+        <source>Projektname:</source>
+        <target state="translated">Nome do projeto:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.createModal.configuration" datatype="html">
+        <source>Konfiguration:</source>
+        <target state="translated">Configuração:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.create" datatype="html">
+        <source>Erstellen</source>
+        <target state="translated">Criar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.deleteModal.header" datatype="html">
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="translated"> Eliminar projeto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.deleteModal.deleteFiles" datatype="html">
+        <source>Bilder löschen</source>
+        <target state="translated">Eliminar imagens</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
+        <source> Bitte geben Sie den Projektnamen ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="translated"> Por favor, introduza o nome do projeto para confirmar eliminação. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.connecting" datatype="html">
+        <source>Verbindung wird hergestellt...</source>
+        <target state="translated">Estabelecendo ligação...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.connect" datatype="html">
+        <source>Download starten</source>
+        <target state="translated">Iniciar download</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.address" datatype="html">
+        <source>Adresse</source>
+        <target state="translated">Endereço</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.address.info" datatype="html">
+        <source> Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden. </source>
+        <target state="translated"> Tanto o URL de um servidor Field como o endereço de rede de outra instação Field Desktop podem ser introduzidos neste endereço. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.password" datatype="html">
+        <source>Passwort</source>
+        <target state="translated">Palavra-passe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
+        <source>Vorschaubilder herunterladen</source>
+        <target state="translated">Descarregar amostras das imagens</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.download.originalImageFiles" datatype="html">
+        <source>Originalbilder herunterladen</source>
+        <target state="translated">Descarregar imagens originais</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
+          <context context-type="linenumber">192</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
+        <source>Vorschaubilder synchronisieren</source>
+        <target state="translated">Sincronizar amostras das imagens</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.synchronization" datatype="html">
+        <source>Projekt synchronisieren</source>
+        <target state="translated">Sincronizar projeto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
+        <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
+        <target state="translated">
+          Por favor, tenha em atenção que a importação de <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> ficheiros de imagem pode levar algum tempo.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
+        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">
+          A imagem importada será ligada ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
+        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">
+          As imagens importadas serão ligadas ao recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
+        <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
+        <target state="translated">
+          Por favor, selecione a categoria desejada.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
+        <source>Konflikt behandeln</source>
+        <target state="translated">Resolver conflito</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
+        <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
+        <target state="translated">
+        O atual recurso acabou de ser eliminado por outro utilizador.
+        Pode voltar a criar o recurso escolhendo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso será descartado.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
+        <source> Zurück zur Editieransicht </source>
+        <target state="translated">
+        Voltar ao formulário de edição
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
+        <source> Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
+        <target state="translated">
+        Isto é um catálogo importado.
+        Tenha em atenção que associações entre os tipos deste catálogo e os achados também serão removidos.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
+        <source> (Ein Bild) </source>
+        <target state="translated">
+                    (Uma imagem)
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deletionInProgressModal.info.single" datatype="html">
+        <source>Ressource wird gelöscht...</source>
+        <target state="translated">Eliminando recurso...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deletionInProgressModal.info.multiple" datatype="html">
+        <source>Ressourcen werden gelöscht...</source>
+        <target state="translated">Eliminando recursos...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
+        <source> Eine Ressource gefunden </source>
+        <target state="translated">
+                Um recurso encontrado
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="translated">Eliminar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteField.header" datatype="html">
+        <source>Feld löschen?</source>
+        <target state="translated">Eliminar campo?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteGroup.header" datatype="html">
+        <source>Gruppe löschen?</source>
+        <target state="translated">Eliminar grupo?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteValuelist.header" datatype="html">
+        <source>Werteliste löschen?</source>
+        <target state="translated">Eliminar lista de valores?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">44,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.cancel" datatype="html">
+        <source>Abbrechen</source>
+        <target state="translated">Cancelar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/link-modal.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
+          <context context-type="linenumber">224</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newCategory" datatype="html">
+        <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
+        <target state="translated">Criar nova categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.save" datatype="html">
+        <source>Speichern</source>
+        <target state="translated">Gravar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.differingForms" datatype="html">
+        <source>Formulare</source>
+        <target state="translated">Formulários</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.edited" datatype="html">
+        <source>(editiert)</source>
+        <target state="translated">(editado)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">234</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.new" datatype="html">
+        <source>(neu)</source>
+        <target state="translated">(novo)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.notSet" datatype="html">
+        <source>(nicht gesetzt)</source>
+        <target state="translated">(não definido)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.differingLanguages" datatype="html">
+        <source>Texte / Übersetzungen</source>
+        <target state="translated">Designações / Traduções</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.differingValuelists" datatype="html">
+        <source>Wertelisten</source>
+        <target state="translated">Listas de valores</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conflicts.differingCategoriesOrder" datatype="html">
+        <source>Reihenfolge der Kategorien</source>
+        <target state="translated">Ordem das categorias</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
+          <context context-type="linenumber">252</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.discardChanges" datatype="html">
+        <source>Änderungen verwerfen</source>
+        <target state="translated">Descartar alterações</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
+        <source>Ressource mehrfach erstellen</source>
+        <target state="translated">Criar múltiplas instâncias</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
+        <source>Ressource vervielfältigen</source>
+        <target state="translated">Duplicar recurso</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
+        <source> Wie viele Ressourcen möchten Sie anlegen? </source>
+        <target state="translated">
+              Quantos recursos pretende criar?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
+        <source> Wie viele Kopien der Ressource möchten Sie anlegen? </source>
+        <target state="translated">
+            Quantas cópias do recurso pretende criar?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.createResources" datatype="html">
+        <source>Ressourcen erstellen</source>
+        <target state="translated">Criar recursos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.saveResources" datatype="html">
+        <source>Ressourcen speichern</source>
+        <target state="translated">Gravar recursos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.duplicate" datatype="html">
+        <source>Vervielfältigen</source>
+        <target state="translated">Duplicar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.header.create" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
+        <target state="translated">
+            Criar <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/>
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.header.edit" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </source>
+        <target state="translated">
+            Editar <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/>
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.createMultipleInstances" datatype="html">
+        <source>Mehrfach erstellen</source>
+        <target state="translated">Criar múltiplas instâncias</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.save" datatype="html">
+        <source> Ressource wird gespeichert... </source>
+        <target state="translated">
+                        Gravando recurso...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
+        <source> Ressourcen werden erstellt... </source>
+        <target state="translated">
+                        Criando recursos...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
+        <source> Ressource wird vervielfältigt... </source>
+        <target state="translated">
+                        Duplicando recurso...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.images" datatype="html">
+        <source>Bilder</source>
+        <target state="translated">Imagens</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.linkedImages" datatype="html">
+        <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verknüpfte Bilder </source>
+        <target state="translated">
+        Imagens ligadas a <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
+        <source>Zu verknüpfende Ressource wählen:</source>
+        <target state="translated">Selecionar recurso para ligar:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/link-modal.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
+        <source> Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
+</source>
+        <target state="translated">
+    Todas as ligações para outros recursos serão eliminadas das imagens selecionadas.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html">
+        <source>Verknüpfungen löschen</source>
+        <target state="translated">Remover ligações</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
+        <source> Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
+        <target state="translated">
+            Pretende realmente eliminar as <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> imagens selecionadas?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
+        <source> Möchten Sie das markierte Bild wirklich löschen? </source>
+        <target state="translated">
+            Pretende realmente eliminar a imagem selecionada?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">
+        <source>Bild wird gelöscht...</source>
+        <target state="translated">Eliminando imagem...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.deletionInProgressModal.info.multiple" datatype="html">
+        <source>Bilder werden gelöscht...</source>
+        <target state="translated">Eliminando recursos...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="translated">Eliminar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
+        <source>Verknüpfungen entfernen</source>
+        <target state="translated">Remover ligações</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
+        <source>Verknüpfen</source>
+        <target state="translated">Ligar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
+        <source>Auswahl aufheben</source>
+        <target state="translated">Desselecionar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.imageCategoryFilter" datatype="html">
+        <source>Nach Bildkategorie filtern:</source>
+        <target state="translated">Filtrar por categoria de imagem:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
+        <source> Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen? </source>
+        <target state="translated">
+        Pretende realmente eliminar os dados de georeferenciação armazenados para esta imagem?
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.georeferenceData" datatype="html">
+        <source>Georeferenzdaten</source>
+        <target state="translated">Dados de georeferenciação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.exportGeoreferenceData" datatype="html">
+        <source>Georeferenzdaten als Worldfile exportieren</source>
+        <target state="translated">Exportar dados de georeferenciação com ficheiro WORLD</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.deleteGeoreferenceData" datatype="html">
+        <source>Georeferenzdaten löschen</source>
+        <target state="translated">Eliminar dados de georeferenciação</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.loadWorldfile" datatype="html">
+        <source>Worldfile laden</source>
+        <target state="translated">Carregar ficheiro WORLD</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.header" datatype="html">
+        <source>Speichern?</source>
+        <target state="translated">Gravar?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.applyHeader" datatype="html">
+        <source>Übernehmen?</source>
+        <target state="translated">Aplicar?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.question" datatype="html">
+        <source>Möchten Sie die Änderungen speichern?</source>
+        <target state="translated">Pretender gravar as alterações?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.saveModal.applyQuestion" datatype="html">
+        <source>Möchten Sie die Änderungen übernehmen?</source>
+        <target state="translated">Pretende aplicar as alterações?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.apply" datatype="html">
+        <source>Übernehmen</source>
+        <target state="translated">Aplicar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.savingChangesModal.info" datatype="html">
+        <source> Änderungen werden gespeichert... </source>
+        <target state="translated"> Gravando alterações... </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/saving-changes-modal.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.header.single" datatype="html">
+        <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
+        <target state="translated">Eliminar recurso <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/>?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
+        <target state="translated">
+            Eliminar <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.confirmDeleteInfo.single" datatype="html">
+        <source> Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen. </source>
+        <target state="translated">
+            Por favor introduza o identificar do recurso para confirmar eliminação.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.tooltips.mode.map" datatype="html">
+        <source>Kartendarstellung</source>
+        <target state="translated">Mapa</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/resources.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.tooltips.mode.list" datatype="html">
+        <source>Listendarstellung</source>
+        <target state="translated">Lista</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/resources.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="translated">Apagar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPolygon" datatype="html">
+        <source>Polygon hinzufügen</source>
+        <target state="translated">Adicionar polígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPolyline" datatype="html">
+        <source>Polyline hinzufügen</source>
+        <target state="translated">Adicionar polilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPoint" datatype="html">
+        <source>Punkt hinzufügen</source>
+        <target state="translated">Adicionar ponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectCategory" datatype="html">
+        <source>Bitte wählen Sie eine Kategorie aus.</source>
+        <target state="translated">Por favor, selecione uma categoria.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.edit" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="translated">Editar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
+        <source>Bitte wählen Sie einen Geometrietyp aus.</source>
+        <target state="translated">Por favor, selecione um tipo de geometria.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
+        <source>Polygon</source>
+        <target state="translated">Polígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
+        <source>Polyline</source>
+        <target state="translated">Polilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
+        <source>Punkt</source>
+        <target state="translated">Ponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">184</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
+        <source>Keine Geometriedaten</source>
+        <target state="translated">Sem dados de geometria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">208</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeGrid.types" datatype="html">
+        <source>Typen</source>
+        <target state="translated">Tipos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeGrid.subtypes" datatype="html">
+        <source>Untertypen</source>
+        <target state="translated">Subtipos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.category" datatype="html">
+        <source>Kategorie</source>
+        <target state="translated">Categoria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="translated">Identificador</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.shortDescription" datatype="html">
+        <source>Kurzbeschreibung</source>
+        <target state="translated">Descrição curta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.editButton.tooltip" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="translated">Editar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
+        <source>Verschieben</source>
+        <target state="translated">Mover</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
+        <source>Löschen</source>
+        <target state="translated">Eliminar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.navigation.project" datatype="html">
+        <source>Projekt</source>
+        <target state="translated">Projeto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.placeholder" datatype="html">
+        <source>Suchen...</source>
+        <target state="translated">Pesquisar...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
+        <source>Nach Kategorie filtern:</source>
+        <target state="translated">Filtrar por categoria:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/search-bar.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
+        <source>Alle Kategorien</source>
+        <target state="translated">Todas as categorias</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Nenhum recurso encontrado.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.childrenView.oneResource" datatype="html">
+        <source>Eine Ressource</source>
+        <target state="translated">Um recurso</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.move" datatype="html">
+        <source>Verschieben</source>
+        <target state="translated">Mover</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="translated">Eliminar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
+        <source>Polygon bearbeiten</source>
+        <target state="translated">Editar polígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
+        <source>Multipolygon bearbeiten</source>
+        <target state="translated">Editar multipolígono</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
+        <source>Polyline bearbeiten</source>
+        <target state="translated">Editar polilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
+        <source>Multipolyline bearbeiten</source>
+        <target state="translated">Editar multipolilinha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
+        <source>Punkt bearbeiten</source>
+        <target state="translated">Editar ponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
+        <source>Multipunkt bearbeiten</source>
+        <target state="translated">Editar multiponto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
+        <source>Alle Gruppen ausklappen</source>
+        <target state="translated">Expandir todos os grupos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/popover-menu.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.contextMenu.edit" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="translated">Editar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
+          <context context-type="linenumber">44,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="image-view-modal.modal-edit" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="translated">Editar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

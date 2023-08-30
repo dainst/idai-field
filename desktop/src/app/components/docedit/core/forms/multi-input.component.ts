@@ -1,8 +1,8 @@
 import { isObject, Map } from 'tsfun';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isString } from 'tsfun';
-import { I18N, ProjectConfiguration, Resource } from 'idai-field-core';
+import { I18N, ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
@@ -17,7 +17,7 @@ import { SettingsProvider } from '../../../../services/settings/settings-provide
  */
 export class MultiInputComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
     @Input() languages: Map<Language>;
 
@@ -31,10 +31,10 @@ export class MultiInputComponent implements OnChanges {
                 private i18n: I18n) {}
 
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
 
         this.fieldLanguages = Languages.getFieldLanguages(
-            this.resource[this.fieldName],
+            this.fieldContainer[this.fieldName],
             this.languages,
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
@@ -53,13 +53,13 @@ export class MultiInputComponent implements OnChanges {
 
         if (fieldData) {
             if (isString(fieldData)) {
-                this.resource[this.fieldName][index] = fieldData;
+                this.fieldContainer[this.fieldName][index] = fieldData;
             } else {
                 this.updateEntryAsI18nString(fieldData, index);
             }
         } else {
             if (this.hasNoConfiguredLanguages()) {
-                this.resource[this.fieldName][index] = '';
+                this.fieldContainer[this.fieldName][index] = '';
             } else {
                 this.updateEntryAsI18nString({}, index);
             }
@@ -81,8 +81,8 @@ export class MultiInputComponent implements OnChanges {
 
         if (!this.isValidEntry(this.newEntry)) return;
 
-        if (!this.resource[this.fieldName]) this.resource[this.fieldName] = [];
-        this.resource[this.fieldName].push(this.newEntry);
+        if (!this.fieldContainer[this.fieldName]) this.fieldContainer[this.fieldName] = [];
+        this.fieldContainer[this.fieldName].push(this.newEntry);
 
         this.newEntry = this.getEmptyEntry();
     }
@@ -90,10 +90,10 @@ export class MultiInputComponent implements OnChanges {
 
     public deleteEntry(entry: string) {
 
-        const index: number = this.resource[this.fieldName].indexOf(entry);
-        if (index > -1) this.resource[this.fieldName].splice(index, 1);
+        const index: number = this.fieldContainer[this.fieldName].indexOf(entry);
+        if (index > -1) this.fieldContainer[this.fieldName].splice(index, 1);
 
-        if (this.resource[this.fieldName].length === 0) delete this.resource[this.fieldName];
+        if (this.fieldContainer[this.fieldName].length === 0) delete this.fieldContainer[this.fieldName];
     }
 
 
@@ -112,10 +112,10 @@ export class MultiInputComponent implements OnChanges {
 
     private updateEntryAsI18nString(fieldData: I18N.String, index: number) {
 
-        if (isString(this.resource[this.fieldName][index])) {
-            this.resource[this.fieldName][index] = fieldData;
+        if (isString(this.fieldContainer[this.fieldName][index])) {
+            this.fieldContainer[this.fieldName][index] = fieldData;
         } else {
-            MultiInputComponent.updateI18nString(this.resource[this.fieldName][index], fieldData);
+            MultiInputComponent.updateI18nString(this.fieldContainer[this.fieldName][index], fieldData);
         }
     }
 

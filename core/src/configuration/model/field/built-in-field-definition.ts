@@ -1,9 +1,8 @@
-import { BaseFieldDefinition } from './base-field-definition';
+import { LibraryFieldDefinition } from './library-field-definition';
 
 
-export interface BuiltInFieldDefinition extends BaseFieldDefinition {
+export interface BuiltInFieldDefinition extends LibraryFieldDefinition {
 
-    valuelistId?: string;
     inputTypeOptions?: { validation?: { permissive?: true } };
     visible?: boolean;
     editable?: boolean;

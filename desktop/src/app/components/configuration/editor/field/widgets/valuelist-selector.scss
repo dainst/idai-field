@@ -1,0 +1,21 @@
+valuelist-selector {
+  #swap-valuelist-button,
+  #edit-valuelist-button {
+    height: 38px;
+    float: right;
+  }
+
+  #edit-valuelist-button {
+    margin-right: 8px;
+  }
+
+  #valuelist-header {
+    padding: 8px 8px 8px 16px;
+
+    code {
+      position: relative;
+      top: 7px;
+      user-select: none;
+    }
+  }
+}

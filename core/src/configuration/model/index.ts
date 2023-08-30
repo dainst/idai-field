@@ -1,10 +1,10 @@
 export { BaseCategoryDefinition } from './category/base-category-definition';
 export { BuiltInCategoryDefinition } from './category/built-in-category-definition';
 export { LibraryCategoryDefinition } from './category/library-category-definition';
-export { BaseFieldDefinition } from './field/base-field-definition';
+export { BaseFieldDefinition, BaseSubfieldDefinition } from './field/base-field-definition';
 export { BuiltInFieldDefinition } from './field/built-in-field-definition';
-export { LibraryFieldDefinition } from './field/library-field-definition';
-export { CustomFieldDefinition } from './field/custom-field-definition';
+export { LibraryFieldDefinition, LibrarySubfieldDefinition } from './field/library-field-definition';
+export { CustomFieldDefinition, CustomSubfieldDefinition } from './field/custom-field-definition';
 export { TransientFieldDefinition } from './field/transient-field-definition';
 export { BaseFormDefinition } from './form/base-form-definition';
 export { BuiltInFormDefinition } from './form/built-in-form-definition';

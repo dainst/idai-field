@@ -1,0 +1,8 @@
+<div *ngIf="!isUrl(value)"
+         class="field-value" 
+         [innerHTML]="value"></div>
+    <a *ngIf="isUrl(value)"
+         class="field-value" 
+         [href]="value"
+         [innerHTML]="value"
+         target="_blank"></a>

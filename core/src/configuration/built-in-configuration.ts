@@ -955,6 +955,36 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'abuts',
+            inverse: 'isAbuttedBy',
+            domain: ['Feature:inherit'],
+            range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isAbuttedBy',
+            inverse: 'abuts',
+            domain: ['Feature:inherit'],
+            range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'bondsWith',
+            inverse: 'bondsWith',
+            domain: ['Feature:inherit'],
+            range: ['Feature:inherit'],
+            sameMainCategoryResource: true,
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
             name: Relation.IS_PRESENT_IN,
             domain: ['Feature:inherit', 'FeatureGroup:inherit', 'FeatureSegment:inherit'],
             range: ['Profile', 'Planum'],

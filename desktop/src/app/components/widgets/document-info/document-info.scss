@@ -1,0 +1,124 @@
+@import 'depicts-relations-view';
+@import 'georeference-view';
+@import 'thumbnail';
+@import 'fields-view/fields-view';
+@import 'fields-view/field-view';
+
+/**
+ * @author Thomas Kleinke
+ */
+document-info {
+  height: 100%;
+
+  .document-info {
+    height: 100%;
+    width: $resources-listing-item-slim-width;
+    overflow: hidden;
+    float: left;
+
+    &:not(.transparent-background) {
+      background-color: #fff;
+    }
+
+    ul {
+      padding: 0;
+    }
+
+    .document-info-header {
+      height: 40px;
+      padding: 11px;
+      background-color: transparent;
+      border-bottom: 1px solid #ced4da;
+      text-align: center;
+      font-size: 14px;
+      user-select: none;
+      cursor: default;
+
+      .identifier-label {
+        position: relative;
+        left: 32px;
+        top: -41px;
+        width: calc(100% - 64px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .expand-all-groups-button {
+        left: -109px;
+        top: -11px;
+        border-radius: 0;
+      }
+
+      .edit-button,
+      .close-button {
+        left: 109px;
+        top: -71px;
+        border-radius: 0;
+      }
+
+      .btn {
+        position: relative;
+        height: 39px;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+          background-color: $list-item-hover-color;
+        }
+
+        &.active {
+          background-color: darken($popover-header-hover-bg-color, 10%);
+        }
+
+        &:active:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .document-info-parent {
+      height: 40px;
+      padding: 9px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      user-select: none;
+
+      &:hover {
+        background-color: $list-item-hover-color;
+        transition: background-color .5s ease;
+      }
+
+      .mdi {
+        position: relative;
+        bottom: 1px;
+        margin-right: 7px;
+        color: #5c6166
+      }
+
+      category-icon {
+        margin-right: 2px;
+      }
+    }
+
+    .info-container {
+      height: calc(100% - 40px);
+      overflow-y: auto;
+
+      &.with-parent-info:not(.with-thumbnail) {
+        height: calc(100% - 80px);
+      }
+
+      &.with-thumbnail:not(.with-parent-info) {
+        height: calc(100% - 212px);
+      }
+
+      &.with-thumbnail.with-parent-info {
+        height: calc(100% - 252px);
+      }
+    }
+  }
+}

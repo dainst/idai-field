@@ -16,7 +16,7 @@ describe('applyLanguageConfigurations', () => {
     it('apply language configuration', () => {
         
         const categories: Map<TransientCategoryDefinition> = {
-            A: { name: 'A', fields: { a: {}, a1: {}, a2: {} } } as any,
+            A: { name: 'A', fields: { a: { subfields: [{ name: 'aSubfield' }] }, a1: {}, a2: {} } } as any,
             B: { name: 'B', fields: { b: {} } } as any,
             C: { name: 'C', fields: {} } as any
         };
@@ -38,7 +38,12 @@ describe('applyLanguageConfigurations', () => {
                         label: 'A_',
                         fields: {
                             a: {
-                                label: 'a_'
+                                label: 'a_',
+                                subfields: {
+                                    'aSubfield': {
+                                        label: 'a_subfield_'
+                                    }
+                                }
                             },
                             a1: {
                                 description: 'a1_desc'
@@ -89,6 +94,7 @@ describe('applyLanguageConfigurations', () => {
         expect(categories['B'].label).toEqual({});
         expect(categories['C'].label.en).toEqual('C_');
         expect(categories['A'].fields['a'].label.en).toEqual('a_');
+        expect(categories['A'].fields['a'].subfields[0].label?.en).toEqual('a_subfield_');
         expect(categories['A'].fields['a1'].label.en).toBeUndefined();
         expect(categories['A'].fields['a'].description).toEqual({});
         expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');

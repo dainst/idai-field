@@ -13,6 +13,12 @@ export module Naming {
     }
 
 
+    export function getSubfieldName(searchTerm: string): string {
+
+        return removeSpecialCharacters(camelCase(searchTerm));
+    }
+
+
     export function getCategoryName(searchTerm: string, projectIdentifier: string): string {
 
         projectIdentifier = convertFirstCharacterToUpperCase(projectIdentifier);

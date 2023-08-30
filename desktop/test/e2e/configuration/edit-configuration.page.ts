@@ -1,6 +1,9 @@
 import { click, getLocator, getText, selectOption, typeIn } from '../app';
 
 
+type ModalContext = 'field'|'subfield'|'value'|'group'|'category';
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -72,15 +75,27 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickConfirmSubfield() {
+
+        return click('#confirm-subfield-button');
+    }
+
+
     public static clickAddValue() {
 
         return click('#add-value-button');
     }
 
 
-    public static clickInputTypeSelectOption(optionValue: string) {
+    public static clickCreateSubfield() {
 
-        return selectOption('#input-type-select', optionValue);
+        return click('#create-subfield-button');
+    }
+
+
+    public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
+
+        return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);
     }
 
 
@@ -101,9 +116,11 @@ export class EditConfigurationPage {
 
     // type in
 
-    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string) {
+    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string,
+                                          modalContext: ModalContext) {
 
-        const inputElement = (await getLocator('multi-language-input')).nth(inputIndex);
+        const inputElement = (await getLocator(this.getModalClass(modalContext) + ' multi-language-input'))
+            .nth(inputIndex);
         const translationElement = (await inputElement.locator('.language-input input')).nth(translationIndex);
         return typeIn(translationElement, text);
     }
@@ -118,5 +135,17 @@ export class EditConfigurationPage {
     public static typeInNewValue(valueId: string) {
 
         return typeIn('#new-value-input', valueId);
+    }
+
+
+    public static typeInNewSubfield(subfieldName: string) {
+
+        return typeIn('#new-subfield-input', subfieldName);
+    }
+
+
+    private static getModalClass(modalContext: ModalContext = 'field') {
+
+        return '.' +  modalContext + '-editor-modal-body';
     }
 }

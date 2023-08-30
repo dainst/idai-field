@@ -60,6 +60,15 @@
     "borders": {
       "label": "Adyacente a"
     },
+    "abuts": {
+      "label": "Se apoya en"
+    },
+    "isAbuttedBy": {
+      "label": "Se le apoya"
+    },
+    "bondsWith": {
+      "label": "Se une a"
+    },
     "isAfter": {
       "label": "Cronología: después de"
     },

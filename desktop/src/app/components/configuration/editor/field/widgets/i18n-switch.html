@@ -1,0 +1,20 @@
+<div id="i18n-switch"
+     class="field-editor-switch"
+     ngbTooltip="{{getI18nOptionTooltip()}}"
+     container="body">
+    <div class="basic-settings-label">
+        <span i18n="@@configuration.allowMultiLanguage"
+              [class.disabled]="!isI18nOptionEnabled()">Eingabe in mehreren Sprachen erlauben</span>
+    </div>
+    <div>
+        <label id="toggle-multi-language-slider"
+               class="switch"
+               [class.disabled]="!isI18nOptionEnabled()">
+            <input type="checkbox"
+                   [checked]="isI18nInputType()"
+                   [disabled]="!isI18nOptionEnabled()"
+                   (change)="toggleI18nInput()">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>

@@ -1,5 +1,5 @@
-import { dense, drop, flow, indices, is, on, first, take, prepend, clone, append, reduce, compose, cond,
-    isEmpty, Mapping } from 'tsfun';
+import { dense, drop, flow, is, on, first, take, prepend, clone, append, reduce, compose, cond, isEmpty,
+    Mapping, isUndefined, not } from 'tsfun';
 import { Resource, FieldResource, Field } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;
@@ -9,6 +9,9 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 
 
+export type CsvFieldIndex = { index: number, field: Field };
+
+
 /**
  * @author Daniel de Oliveira
  */
@@ -16,25 +19,36 @@ export module CsvExportUtils {
 
     /**
      * fieldDefinitions: [
-     *   {name: 'a1', inputType: 'a-i'},
-     *   {name: 'a2', inputType: 'a-i'},
-     *   {name: 'b', inputType: 'b-i'}
+     *   { name: 'a1', inputType: 'a-i' },
+     *   { name: 'a2', inputType: 'a-i' },
+     *   { name: 'b', inputType: 'b-i' }
      * ]
      * inputType: 'a-i'
      * headings: ['b', a1', 'a2']
      * ->
-     * [1, 2]
+     * [
+     *   { index: 1, field: { name: 'a1', inputType: 'a-i' } },
+     *   { index: 2, field: { name: 'a2', inputType: 'a-i' } }
+     * ]
      */
-    export function getIndices(fields: Array<Field>, inputType: string): (headings: string[]) => number[] {
+    export function getIndices(fields: Array<Field>, inputType: string): (headings: string[]) => Array<CsvFieldIndex> {
 
-        return indices((heading: string) => {
+        return (headings: string[]) => {
 
-            if (heading.includes(OBJECT_SEPARATOR)) return false;
-            const field = fields.find(on(Field.NAME, is(heading)));
-            if (!field) return false;
+            return headings.map(heading => {
+                if (heading.includes(OBJECT_SEPARATOR)) return undefined;
 
-            return field.inputType === inputType;
-        });
+                const field = fields.find(on(Field.NAME, is(heading)));
+                if (field?.inputType === inputType) {
+                    return {
+                        index: headings.indexOf(heading),
+                        field: field
+                    };
+                } else {
+                    return undefined;
+                }
+            }).filter(not(isUndefined));
+        }
     }
 
 

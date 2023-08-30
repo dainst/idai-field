@@ -302,7 +302,13 @@ export class ResourcesComponent implements OnDestroy {
         return this.viewFacade.getSelectedDocument() !== undefined
             && ((!popoverMenu && this.activePopoverMenu !== 'none')
                 || this.activePopoverMenu === popoverMenu)
-            && (!document || this.isSelected(document));
+            && (!document
+                || (this.isSelected(document)
+                    && (this.activePopoverMenu !== 'children' ||
+                        this.navigationService.shouldShowArrowBottomRight(document)
+                    )
+                )
+            );
     }
 
 

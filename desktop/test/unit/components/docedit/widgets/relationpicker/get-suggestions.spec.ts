@@ -1,6 +1,5 @@
 import { doc, Relation, Document } from 'idai-field-core';
-import { getSuggestions,
-    MAX_SUGGESTIONS } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
+import { getSuggestions } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
 
 
 /**
@@ -33,19 +32,19 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition, 'input');
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
-            q: 'input',
+            q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory1', 'RangeCategory2'],
             constraints: {
                'id:match': {
                    value: ['id'],
                    subtract: true
                }
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -69,19 +68,19 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
                     subtract: true
                 }
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -106,19 +105,19 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: ['id'],
                     subtract: true
                 }, 'isChildOf:contain': { value: 'operationId', searchRecursively: true },
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();
@@ -143,22 +142,22 @@ describe('getSuggestions', () => {
         };
 
         try {
-            await getSuggestions(datastore, document.resource, relationDefinition);
+            await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
         } catch (err) {
             fail();
         }
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
+            offset: 0,
+            limit: 10,
             categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: [],
                     subtract: true
                 },
-            },
-            limit: MAX_SUGGESTIONS,
-            sort: { mode: 'exactMatchFirst' }
+            }
         });
 
         done();

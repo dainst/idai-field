@@ -33,7 +33,9 @@
                     <row [document]="document"
                          [category]="getCategory(document)"
                          [availableLanguages]="availableLanguages"
-                         [selectedLanguage]="selectedLanguage"></row>
+                         [selectedLanguage]="selectedLanguage"
+                         [shortDescriptionValuelist]="getShortDescriptionValuelist(document)"
+                         [shortDescriptionValues]="getShortDescriptionValues(document)"></row>
                 </div>
             </cdk-virtual-scroll-viewport>
         </div>

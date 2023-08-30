@@ -125,7 +125,7 @@ export namespace ConfigurationDocument {
 
         if (!otherCategories.find(category => category.groups.find(g => g.name === group.name))) {
             CustomLanguageConfigurations.update(
-                clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, group
+                clonedConfigurationDocument.resource.languages, {}, {}, category, undefined, undefined, group
             );
         }
 
@@ -152,6 +152,14 @@ export namespace ConfigurationDocument {
         CustomLanguageConfigurations.update(
             clonedConfigurationDocument.resource.languages, {}, {}, category, field
         );
+
+        if (field.subfields) {
+            field.subfields.forEach(subfield => {
+                CustomLanguageConfigurations.update(
+                    clonedConfigurationDocument.resource.languages, {}, {}, category, field, subfield
+                );
+            });
+        }
 
         return clonedConfigurationDocument;
     }

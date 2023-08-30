@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, Map } from 'tsfun';
-import { Dimension, Labels, Field, Resource, I18N, ProjectConfiguration } from 'idai-field-core';
+import { Dimension, Labels, Field, I18N, ProjectConfiguration } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
@@ -21,12 +21,12 @@ type DimensionInEditing = { original: Dimension, clone: Dimension };
  */
 export class DimensionComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: Field;
     @Input() languages: Map<Language>;
 
     public newDimension: Dimension|undefined = undefined;
-    public dimensionsInEditing: Array<DimensionInEditing> = [];
+    public dimensionInEditing: DimensionInEditing = undefined;
     public fieldLanguages: Array<Language>;
 
 
@@ -40,9 +40,9 @@ export class DimensionComponent {
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
 
-    public isEditing = () => this.dimensionsInEditing.length > 0;
+    public isEditing = (dimension: Dimension) => this.dimensionInEditing?.original === dimension
 
-    public isEditingAllowed = () => !this.isEditing() && !this.newDimension;
+    public isEditingAllowed = () => !this.dimensionInEditing && !this.newDimension;
 
 
     public createNewDimension() {
@@ -100,40 +100,20 @@ export class DimensionComponent {
         const clonedDimension = clone(dimension);
         clonedDimension.isRange = clonedDimension.inputRangeEndValue ? true : false;
 
-        this.dimensionsInEditing.push({ original: dimension, clone: clonedDimension });
+        this.dimensionInEditing = { original: dimension, clone: clonedDimension };
     }
 
 
-    private stopEditing(dimension: Dimension) {
+    private stopEditing() {
 
-        this.dimensionsInEditing = this.dimensionsInEditing.filter(d => d.clone !== dimension);
-    }
-
-
-    public isInEditing(dimension: Dimension): boolean {
-
-        return this.dimensionsInEditing.find(d => d.original === dimension) !== undefined;
-    }
-
-
-    public getClone(dimension: Dimension): Dimension|undefined {
-
-        const dimensionInEditing = this.dimensionsInEditing.find(d => d.original === dimension);
-        if (dimensionInEditing) return dimensionInEditing.clone;
-    }
-
-
-    public getOriginal(clonedDimension: Dimension): Dimension|undefined {
-
-        const dimensionInEditing = this.dimensionsInEditing.find(d => d.clone === clonedDimension);
-        if (dimensionInEditing) return dimensionInEditing.original;
+        this.dimensionInEditing = undefined;
     }
 
 
     public removeDimensionAtIndex(dimensionIndex: number) {
 
-        this.resource[this.field.name].splice(dimensionIndex, 1);
-        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+        this.fieldContainer[this.field.name].splice(dimensionIndex, 1);
+        if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
     }
 
 
@@ -160,13 +140,13 @@ export class DimensionComponent {
         Dimension.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {
-            if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-    		this.resource[this.field.name].push(dimension);
+            if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
+    		this.fieldContainer[this.field.name].push(dimension);
             this.newDimension = undefined;
     	} else {
-            const index: number = this.resource[this.field.name].indexOf(this.getOriginal(dimension));
-            this.resource[this.field.name].splice(index, 1, dimension);
-            this.stopEditing(dimension);
+            const index: number = this.fieldContainer[this.field.name].indexOf(this.dimensionInEditing.original);
+            this.fieldContainer[this.field.name].splice(index, 1, dimension);
+            this.stopEditing();
         }
     }
 

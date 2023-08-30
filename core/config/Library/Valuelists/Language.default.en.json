@@ -53,7 +53,7 @@
   },
   "viewingDirection-default": {
     "values": {
-      "N": "E",
+      "N": "N",
       "NE": "NE",
       "E": "E",
       "SE": "SE",
@@ -61,6 +61,41 @@
       "SW": "SW",
       "W": "W",
       "NW": "NW"
+    }
+  },
+  "Photo-originalFormat-default": {
+    "values": {
+      "Farbe": "Color"
+    }
+  },
+  "Layer-distinguishingCriteria-default": {
+    "values": {
+      "Farbe": "Color"
+    }
+  },
+  "orientation-default-1": {
+    "values": {
+      "N-S": "N-S",
+      "NNO - SSW": "NNE - SSW",
+      "NNW-SSO": "NNW-SSE",
+      "NO-SW": "NE-SW",
+      "NW-SO": "NW-SE",
+      "W-O": "W-E",
+      "WNW-OSO": "WNW-ESE",
+      "WSW-ONO": "WSW-ENE"
+    }
+  },
+  "provenance-default-1": {
+    "values": {
+      "Anatolien": "Anatolia"
+    }
+  },
+  "periods-default-1": {
+    "values": {
+      "Frühmittelalter": "Early Middle Ages",
+      "Mittelalter": "Middle Ages",
+      "Spätmittelalter": "Late Middle Ages",
+      "Hochmittelalter": "High Middle Ages"
     }
   }
 }

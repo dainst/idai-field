@@ -72,9 +72,6 @@
     "spatialLocation": {
       "label": "Localisation spatiale"
     },
-    "staff": {
-      "label": "Staff"
-    },
     "provenance": {
       "label": "Provenance"
     },
@@ -86,7 +83,7 @@
     },
     "notes": {
       "label": "Notes"
-  }
+    }
   },
   "categories": {
     "RoomFloor": {
@@ -150,8 +147,7 @@
       }
     },
     "Planum": {
-      "label": "Planum",
-      "fields": {}
+      "label": "Planum"
     },
     "Brick": {
       "label": "Brique",
@@ -355,8 +351,7 @@
       }
     },
     "SurveyUnit": {
-      "label": "Unité de prospection",
-      "fields": {}
+      "label": "Unité de prospection"
     },
     "Wood": {
       "label": "Bois",
@@ -383,7 +378,7 @@
           "label": "Couleur du bois à l'extérieur - no. Munsell"
         },
         "colorInsideMunsell": {
-            "label": "Couleur du bois à l'intérieur - no. Munsell"
+          "label": "Couleur du bois à l'intérieur - no. Munsell"
         },
         "colorBreak": {
           "label": "Couleur(s) du bois au coeur"
@@ -655,8 +650,7 @@
           "description": "Auteur(s) de l'illustration / dessin / photographie"
         },
         "processor": {
-          "label": "Processeur",
-          "description": "Processeur de l'image en cas de modifications après la création de l'image"
+          "label": "Processeur"
         }
       }
     },
@@ -664,11 +658,11 @@
       "label": "Céramique",
       "fields": {
         "amountSherdsWall": {
-         "label": "Nombre de tessons, panse"
-       },
-       "amountSherdsRim": {
-         "label": "Nombre de tessons, bords"
-       },
+          "label": "Nombre de tessons, panse"
+        },
+        "amountSherdsRim": {
+          "label": "Nombre de tessons, bords"
+        },
         "amountSherdsBase": {
           "label": "Nombre de tessons, bases/fonds"
         },
@@ -1150,17 +1144,10 @@
       }
     },
     "Photo": {
-      "label": "Photo",
-      "fields": {
-        "originalType": {
-          "label": "Original",
-          "description": "Format original de l'image; in case of digitalized images the original analogous format"
-        }
-      }
+      "label": "Photo"
     },
     "Profile": {
-      "label": "Profil",
-      "fields": {}
+      "label": "Profil"
     },
     "Metal": {
       "label": "Métal",
@@ -1192,12 +1179,10 @@
       }
     },
     "BuildingPart": {
-      "label": "Partie de bâtiment",
-      "fields": {}
+      "label": "Partie de bâtiment"
     },
     "Area": {
-      "label": "Secteur",
-      "fields": {}
+      "label": "Secteur"
     },
     "Excavation": {
       "label": "Fouilles",
@@ -1208,8 +1193,7 @@
       }
     },
     "Type": {
-      "label": "Type",
-      "fields": {}
+      "label": "Type"
     },
     "TypeCatalog": {
       "label": "Type catalogue",

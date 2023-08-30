@@ -8,7 +8,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 import { Modals } from '../../../../services/modals';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
-import { GroupEditorModalComponent } from '../../editor/group-editor-modal.component';
+import { GroupEditorModalComponent } from '../../editor/group/group-editor-modal.component';
 import { Naming } from '../naming';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 

@@ -20,7 +20,13 @@ export interface CategoryOrFormLanguageDefinition {
 }
 
 
-export interface FieldLanguageDefinition {
+export interface FieldLanguageDefinition extends SubfieldLanguageDefinition {
+
+    subfields?: { [subfieldName: string]: SubfieldLanguageDefinition };
+}
+
+
+export interface SubfieldLanguageDefinition {
 
     label?: string;
     description?: string;
@@ -35,20 +41,25 @@ export module LanguageConfiguration {
     export function getI18nString(languageConfigurations: { [language: string]: Array<LanguageConfiguration> },
                                   section: 'categories'|'forms'|'relations'|'groups'|'commons'
                                   |'fields'|'other', subSectionName: string, fields: boolean,
-                                  textType?: 'label'|'description', categoryOrFormName?: string): I18N.String {
+                                  textType?: 'label'|'description', categoryOrFormName?: string,
+                                  subfieldName?: string): I18N.String {
 
         return Object.keys(languageConfigurations).reduce((labels, language) => {
 
             const configuration = languageConfigurations[language].find(config => {
                 const fieldConfiguration = fields
-                    ? config[section]?.[categoryOrFormName]?.fields?.[subSectionName]
+                    ? subfieldName
+                        ? config[section]?.[categoryOrFormName]?.fields?.[subSectionName]?.subfields?.[subfieldName]
+                        : config[section]?.[categoryOrFormName]?.fields?.[subSectionName]
                     : config[section]?.[subSectionName];
                 return fieldConfiguration && (!textType || fieldConfiguration[textType]);
             });
 
             if (configuration) {
                  const element = fields
-                    ? configuration[section]?.[categoryOrFormName].fields[subSectionName]
+                    ? subfieldName
+                        ? configuration[section]?.[categoryOrFormName].fields[subSectionName].subfields[subfieldName]
+                        : configuration[section]?.[categoryOrFormName].fields[subSectionName]
                     : configuration[section][subSectionName];
                 labels[language] = textType ? element[textType] : element;
             }

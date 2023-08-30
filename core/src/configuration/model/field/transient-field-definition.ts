@@ -1,21 +1,26 @@
 import { Valuelist } from '../../../model/configuration/valuelist';
 import { I18N } from '../../../tools/i18n';
-import { Named } from '../../../tools/named';
 import { BuiltInFieldDefinition } from './built-in-field-definition';
-import { LibraryFieldDefinition } from './library-field-definition';
+import { LibrarySubfieldDefinition } from './library-field-definition';
 
 
-export interface TransientFieldDefinition extends BuiltInFieldDefinition, LibraryFieldDefinition, Named {
+export interface TransientFieldDefinition extends BuiltInFieldDefinition, I18N.LabeledValue, I18N.Described {
 
     valuelist?: Valuelist;
-    valuelistId?: string,
-    valuelistFromProjectField?: string;
+    defaultLabel?: I18N.String;
+    defaultDescription?: I18N.String;
     defaultConstraintIndexed?: boolean;
-    label?: I18N.String;
-    description?: I18N.String;
+    subfields?: Array<TransientSubfieldDefinition>;
+}
+
+
+export interface TransientSubfieldDefinition extends LibrarySubfieldDefinition, I18N.LabeledValue, I18N.Described {
+    
+    valuelist?: Valuelist;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
 }
+
 
 
 export module TransientFieldDefinition {

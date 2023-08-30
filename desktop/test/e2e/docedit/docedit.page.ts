@@ -1,5 +1,5 @@
-import { waitForNotExist, click, waitForExist, getLocator, typeIn, selectOption, getValue, getText,
-    clearText } from '../app';
+import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
+    selectOptionFromSearchableSelect } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -131,9 +131,9 @@ export class DoceditPage {
     }
 
 
-    public static clickSelectOption(fieldName: string, optionValue: string) {
+    public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
-        return selectOption('#edit-form-element-' + fieldName + ' select', optionValue);
+        return selectOptionFromSearchableSelect('#edit-form-element-' + fieldName, optionValueLabel);
     }
 
 
@@ -156,6 +156,12 @@ export class DoceditPage {
     public static clickLanguageTab(fieldName: string, language: string) {
 
         return click('#edit-form-element-' + fieldName + ' .language-tab-' + language);
+    }
+
+
+    public static clickCreateComplexEntry(fieldName: string) {
+
+        return click('#edit-form-element-' + fieldName + ' .create-complex-entry-button');
     }
 
 

@@ -11,7 +11,8 @@
         </div>
 
         <div *ngIf="isValidFieldData(field)" class="card-block">
-            <edit-form-field [resource]="document['resource']"
+            <edit-form-field [resource]="document.resource"
+                             [fieldContainer]="document.resource"
                              [field]="field"
                              [languages]="languages"
                              [identifierPrefix]="identifierPrefix"></edit-form-field>

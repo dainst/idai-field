@@ -1,13 +1,10 @@
-const electron = require('electron');
-const fs = require('original-fs');
+const messageDictionary = {
+    de: require('./messages/messages.de.json'),
+    en: require('./messages/messages.en.json'),
+    it: require('./messages/messages.it.json'),
+    uk: require('./messages/messages.uk.json')
+};
 
-const path = electron.app.getAppPath() + '/electron/messages/';
-
-const messageDictionary = fs.readdirSync(path).reduce((result, fileName) => {
-    const languageCode = fileName.split('.')[1];
-    result[languageCode] = JSON.parse(fs.readFileSync(path + fileName));
-    return result;
-}, {});
 
 const get = (identifier) => messageDictionary[global.getLocale()][identifier];
 

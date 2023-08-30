@@ -98,6 +98,15 @@
     },
     "hasInstance": {
       "label": "Пов'язані знахідки"
+    },
+    "abuts": {
+      "label": "притуляється до"
+    },
+    "bondsWith": {
+      "label": "з`єднує"
+    },
+    "isAbuttedBy": {
+      "label": "викликається"
     }
   }
 }

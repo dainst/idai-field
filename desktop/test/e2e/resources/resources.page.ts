@@ -1,5 +1,5 @@
 import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
-    pause, getValue, selectOption } from '../app';
+    pause, getValue, selectOptionFromSearchableSelect } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -156,9 +156,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickListSelectOption(identifier: string, optionValue: string) {
+    public static clickListSelectOption(identifier: string, optionLabel: string) {
 
-        return selectOption('#resource-' + identifier + ' .dropdown-input-field select', optionValue);
+        return selectOptionFromSearchableSelect('#resource-' + identifier + ' .dropdown-input-field', optionLabel);
     }
 
 

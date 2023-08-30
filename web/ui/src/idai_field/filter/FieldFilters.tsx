@@ -1,5 +1,7 @@
+import { mdiCloseCircle } from '@mdi/js';
+import Icon from '@mdi/react';
 import React, { useState, ReactElement } from 'react';
-import { Dropdown, DropdownButton, Button, InputGroup, Form } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Tree, Forest } from 'idai-field-core';
 import { Field } from '../../api/document';
@@ -41,7 +43,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
           navigateTo={ navigateTo }
           fields={ fields }
           dropdownMap={ dropdownMap } />
-        { searchParams.getAll('category').length === 1 && filterValuesCount > 0 &&
+        { filterValuesCount > 0 &&
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
@@ -59,7 +61,8 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                         currentFilter={ currentFilter }
                         selectCurrentFilter={ selectCurrentFilter } />
                     : <><Form.Control aria-label="Text input with dropdown button"
-                        onChange={ e => setCurrentFilterText(e.target.value) } />
+                        value={ currentFilterText }
+                        onChange={ e => setCurrentFilterText(e.target.value.replace(/[^a-zA-Z0-9]*/g, '')) } />
                         <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>
                             +
                         </Button>
@@ -98,7 +101,7 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
     setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>, navigateTo: (k: string, v: string) => void,
     fields: Field[], dropdownMap: Map<Field> }) {
 
-    return <ul>
+    return <><hr></hr><ul>
             { filters.map(([k, v]) => {
                 const filterName = k
                     .replace('%3A', ':');
@@ -109,15 +112,26 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                 const fieldValue = isDropdown
                     ? getTranslation(dropdownMap[filterName]['values'][v].label)
                     : v;
-                return <li
+                return <Row
                         key={ 'existing-filter::' + k }
-                        onClick={ () => {
-                            setFilters(filters.filter(f => filterName !== f[0]));
-                            navigateTo(k, v);
-                        } }>
-                    { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ':' + fieldValue }
-                </li>; })}
-   </ul>;
+                        style={ { position: 'relative', left: '-22px' } }>
+                    <Col>
+                    { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ': "' + fieldValue + '"'}
+                    </Col>
+                    <Col xs={ 1 }
+                        style={ { margin: '3px' } }>
+                        <span
+                            className="float-right"
+                            style={ { color: 'red' } }
+                            onClick={ () => {
+                                setFilters(filters.filter(f => filterName !== f[0]));
+                                navigateTo(k, v);
+                            } }>
+                            <Icon path={ mdiCloseCircle } size={ 0.8 } />
+                        </span>
+                    </Col>
+                </Row>; })}
+   </ul></>;
 }
 
 

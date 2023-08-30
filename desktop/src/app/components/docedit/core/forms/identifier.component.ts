@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
-import { Resource } from 'idai-field-core';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { Resource } from 'idai-field-core';
  */
 export class IdentifierComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
     @Input() identifierPrefix: string|undefined;
 
@@ -25,7 +24,7 @@ export class IdentifierComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.currentIdentifier = this.resource[this.fieldName];
+        this.currentIdentifier = this.fieldContainer[this.fieldName];
         this.updateIdentifierBody();
     }
 
@@ -33,9 +32,9 @@ export class IdentifierComponent implements OnChanges {
     public update(value: string) {
 
         if (value === '') {
-            delete this.resource[this.fieldName];
+            delete this.fieldContainer[this.fieldName];
         } else {
-            this.resource[this.fieldName] = this.identifierPrefix
+            this.fieldContainer[this.fieldName] = this.identifierPrefix
                 ? this.identifierPrefix + value
                 : value;
         }
@@ -52,7 +51,7 @@ export class IdentifierComponent implements OnChanges {
 
         this.invalidIdentifier = false;
 
-        const fieldContent: string = this.resource[this.fieldName];
+        const fieldContent: string = this.fieldContainer[this.fieldName];
         if (!this.identifierPrefix || !fieldContent) {
             this.identifierBody = fieldContent;
         } else if (fieldContent.startsWith(this.identifierPrefix)) {

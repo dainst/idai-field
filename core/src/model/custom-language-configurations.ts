@@ -1,8 +1,9 @@
+import { Path } from 'tsfun';
 import { LanguageConfiguration } from '../configuration/model/language/language-configuration';
 import { I18N } from '../tools/i18n';
 import { InPlace } from '../tools/in-place';
 import { CategoryForm } from './configuration/category-form';
-import { Field } from './configuration/field';
+import { Field, Subfield } from './configuration/field';
 import { Group } from './configuration/group';
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
@@ -15,16 +16,16 @@ export module CustomLanguageConfigurations {
 
     export function update(customLanguageConfigurations: CustomLanguageConfigurations,
                            editedLabel: I18N.String, editedDescription?: I18N.String,
-                           category?: CategoryForm, field?: Field,
+                           category?: CategoryForm, field?: Field, subfield?: Subfield,
                            group?: Group) {
 
         updateSection(
-            customLanguageConfigurations, 'label', editedLabel, category, field, group
+            customLanguageConfigurations, 'label', editedLabel, category, field, subfield, group
         );
 
         if (!group && editedDescription) {
             updateSection(
-                customLanguageConfigurations, 'description', editedDescription, category, field
+                customLanguageConfigurations, 'description', editedDescription, category, field, subfield
             );
         }
     }
@@ -50,12 +51,12 @@ export module CustomLanguageConfigurations {
 
     function updateSection(customLanguageConfigurations: CustomLanguageConfigurations,
                            section: 'label'|'description', editedI18nString: I18N.String, category: CategoryForm,
-                           field?: Field, group?: Group) {
+                           field?: Field, subfield?: Subfield, group?: Group) {
 
         Object.keys(editedI18nString).forEach(languageCode => {
             handleNewTextInSection(
                 customLanguageConfigurations, section, editedI18nString[languageCode], languageCode, category,
-                field, group
+                field, subfield, group
             );
         });
 
@@ -63,7 +64,7 @@ export module CustomLanguageConfigurations {
             .filter(languageCode => !editedI18nString[languageCode])
             .forEach(languageCode => {
                 deleteFromSection(
-                    customLanguageConfigurations, section, languageCode, category?.name, field, group?.name
+                    customLanguageConfigurations, section, languageCode, category?.name, field, subfield, group?.name
                 );
             });
     }
@@ -71,17 +72,17 @@ export module CustomLanguageConfigurations {
 
     function handleNewTextInSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                     section: 'label'|'description', newText: string, languageCode: string,
-                                    category: CategoryForm, field?: Field, group?: Group) {
+                                    category: CategoryForm, field?: Field, subfield?: Subfield, group?: Group) {
 
-        const definition = group ?? field ?? category;
+        const definition = group ?? subfield ?? field ?? category;
 
         if (newText === definition[section === 'label' ? 'defaultLabel' : 'defaultDescription']?.[languageCode]) {
             deleteFromSection(
-                customLanguageConfigurations, section, languageCode, category?.name, field, group?.name
+                customLanguageConfigurations, section, languageCode, category?.name, field, subfield, group?.name
             );
         } else {
             addToSection(
-                customLanguageConfigurations, section, newText, languageCode, category?.name, field, group?.name
+                customLanguageConfigurations, section, newText, languageCode, category?.name, field, subfield, group?.name
             );
         }
     }
@@ -89,34 +90,38 @@ export module CustomLanguageConfigurations {
 
     function deleteFromSection(customLanguageConfigurations: CustomLanguageConfigurations,
                                section: 'label'|'description', languageCode: string, categoryName?: string,
-                               field?: Field, groupName?: string) {
+                               field?: Field, subfield?: Subfield, groupName?: string) {
 
         InPlace.removeFrom(
             customLanguageConfigurations,
-            groupName
-                ? [languageCode, 'groups', groupName]
-                : field
-                    ? field.inputType === Field.InputType.RELATION
-                        ? [languageCode, 'relations', field.name, section]
-                        : [languageCode, 'categories', categoryName, 'fields', field.name, section]
-                    : [languageCode, 'categories', categoryName, section]
+            getPath(section, languageCode, categoryName, field, subfield, groupName)
         );
     }
 
 
     function addToSection(customLanguageConfigurations: CustomLanguageConfigurations,
                           section: 'label'|'description', newText: string, languageCode: string,
-                          categoryName: string, field?: Field, groupName?: string) {
+                          categoryName: string, field?: Field, subfield?: Subfield, groupName?: string) {
 
         InPlace.setOn(
             customLanguageConfigurations,
-            groupName
-                ? [languageCode, 'groups', groupName]
-                : field
-                    ? field.inputType === Field.InputType.RELATION
-                        ? [languageCode, 'relations', field.name, section]
-                        : [languageCode, 'categories', categoryName, 'fields', field.name, section]
-                    : [languageCode, 'categories', categoryName, section]
+            getPath(section, languageCode, categoryName, field, subfield, groupName)
         )(newText);
+    }
+
+
+    function getPath(section: 'label'|'description', languageCode: string, categoryName?: string,
+                     field?: Field, subfield?: Subfield, groupName?: string): Path {
+
+        return groupName
+        ? [languageCode, 'groups', groupName]
+        : field
+            ? field.inputType === Field.InputType.RELATION
+                ? [languageCode, 'relations', field.name, section]
+                : subfield
+                    ? [languageCode, 'categories', categoryName, 'fields', field.name, 'subfields',
+                        subfield.name, section]
+                    : [languageCode, 'categories', categoryName, 'fields', field.name, section]
+            : [languageCode, 'categories', categoryName, section];
     }
 }

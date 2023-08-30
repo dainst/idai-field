@@ -1,7 +1,7 @@
-import { compose, cond, flatMap, identity, isDefined, reduce, isObject, flow, map, flatten, set,
-    isArray } from 'tsfun';
-import { I18N } from 'idai-field-core';
-import { CsvExportUtils } from './csv-export-utils';
+import { compose, cond, flatMap, identity, isDefined, reduce, isObject, flow, map, flatten, set, isArray,
+    to } from 'tsfun';
+import { Field, I18N, Named, Subfield } from 'idai-field-core';
+import { CsvFieldIndex, CsvExportUtils } from './csv-export-utils';
 import { HeadingsAndMatrix, Matrix } from './csv-export-consts';
 
 const EMPTY = '';
@@ -57,27 +57,33 @@ export module CSVExpansion {
      */
     export function objectArrayExpand(headingsAndMatrix: HeadingsAndMatrix,
                                       projectLanguages: string[],
-                                      i18nStringSubfieldName: string,
-                                      expandHeadings: (languages: string[]) => (numItems: number) =>
-                                        (fieldName: string) => string[],
-                                      expandObject: (languages: string[]) => (where: number, nrOfNewItems: number) =>
-                                        (items: any[]) => any[])
-            : (columnIndices: number[]) => HeadingsAndMatrix {
+                                      fixedI18nStringSubfieldName: string,
+                                      expandHeadings: (languages: string[], subfields?: Array<Subfield>) =>
+                                        (numItems: number) => (fieldName: string) => string[],
+                                      expandObject: (languages: string[], subfields?: Array<Subfield>) =>
+                                        (where: number, nrOfNewItems: number) => (items: any[]) => any[])
+            : (columnIndices: Array<CsvFieldIndex>) => HeadingsAndMatrix {
 
 
-        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: CsvFieldIndex) => {
+
+            const subfields: Array<Subfield>|undefined = columnIndex.field.subfields;
+            const i18nStringSubfieldNames = getI18nSubfieldNames(subfields, fixedI18nStringSubfieldName);
 
             const languages: string[] = projectLanguages
                 ? getLanguagesFromObjectArray(
-                    matrix, projectLanguages, columnIndex, i18nStringSubfieldName
+                    matrix, projectLanguages, columnIndex.index, i18nStringSubfieldNames
                 ) : [];
 
-            const max = Math.max(1, CsvExportUtils.getMax(columnIndex)(matrix));
+            const max = Math.max(1, CsvExportUtils.getMax(columnIndex.index)(matrix));
 
-            const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings(languages)(max))(headings);
+            const expandedHeader = CsvExportUtils.replaceItem(
+                columnIndex.index, expandHeadings(languages, subfields)(max)
+            )(headings);
+            
             const expandedRows = matrix
-                .map(expandArray(columnIndex, max))
-                .map(expandObject(languages)(columnIndex, max));
+                .map(expandArray(columnIndex.index, max))
+                .map(expandObject(languages, subfields)(columnIndex.index, max));
 
             return [expandedHeader, expandedRows];
 
@@ -88,12 +94,12 @@ export module CSVExpansion {
     export function objectExpand(headingsAndMatrix: HeadingsAndMatrix,
                                  expandHeadings: (fieldName: string) => string[],
                                  expandObject: (where: number, nrOfNewItems: number) => (items: any[]) => any[])
-            : (columnIndices: number[]) => HeadingsAndMatrix {
+            : (columnIndices: Array<CsvFieldIndex>) => HeadingsAndMatrix {
 
-        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: CsvFieldIndex) => {
 
-            const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings)(headings);
-            const expandedRows = matrix.map(expandObject(columnIndex, 1));
+            const expandedHeader = CsvExportUtils.replaceItem(columnIndex.index, expandHeadings)(headings);
+            const expandedRows = matrix.map(expandObject(columnIndex.index, 1));
 
             return [expandedHeader, expandedRows];
 
@@ -106,17 +112,29 @@ export module CSVExpansion {
                                      expandHeadings: (languages: string[]) => (fieldName: string) => string[],
                                      expandObject: (languages: string[]) => (where: number, nrOfNewItems: number) =>
                                         (items: any[]) => any[])
-            : (columnIndices: number[]) => HeadingsAndMatrix {
+            : (columnIndices: Array<CsvFieldIndex>) => HeadingsAndMatrix {
 
-        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: CsvFieldIndex) => {
 
-            const languages: string[] = getLanguages(matrix, projectLanguages, columnIndex);
-            const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings(languages))(headings);
-            const expandedRows = matrix.map(expandObject(languages)(columnIndex, 1));
+            const languages: string[] = getLanguages(matrix, projectLanguages, columnIndex.index);
+            const expandedHeader = CsvExportUtils.replaceItem(columnIndex.index, expandHeadings(languages))(headings);
+            const expandedRows = matrix.map(expandObject(languages)(columnIndex.index, 1));
 
             return [expandedHeader, expandedRows];
 
         }, headingsAndMatrix);
+    }
+
+
+    function getI18nSubfieldNames(subfields?: Array<Subfield>, fixedI18nSubstringName?: string): string[]|undefined {
+
+        return subfields
+            ? subfields.filter(subfield => {
+                return Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType);
+            }).map(to(Named.NAME))
+            : fixedI18nSubstringName
+                ? [fixedI18nSubstringName]
+                : undefined;
     }
 
 
@@ -140,25 +158,36 @@ export module CSVExpansion {
 
 
     function getLanguagesFromObjectArray(matrix: Matrix, projectLanguages: string[], columnIndex: number,
-                                         i18nStringSubfieldName?: string): string[] {
+                                         i18nStringSubfieldNames?: string[]): string[] {
 
-        const languages: string[][] = flatten(flow(
-            matrix,
-            map(row => row[columnIndex]),
-            map(field => isArray(field)
-                ? field.map(object => i18nStringSubfieldName ? object[i18nStringSubfieldName] : object)
-                    .map(i18nString => i18nString ?
-                            isObject(i18nString)
-                                ? Object.keys(i18nString)
-                                : [I18N.UNSPECIFIED_LANGUAGE]
-                            : []
-                    )
-                : [])
-        ));
+        const languages: string[][][] = matrix.map(row => row[columnIndex])
+            .map((field: any) => {
+                if (!isArray(field)) return [];
+                return field.map(object => {
+                    if (i18nStringSubfieldNames?.length > 0) {
+                        return i18nStringSubfieldNames.reduce((result: string[], subfieldName) => {
+                            result = result.concat(getLanguagesFromObject(object[subfieldName]));
+                            return result;
+                        }, []);
+                    } else {
+                        return getLanguagesFromObject(object);
+                    }
+                });
+            });
 
-        const result: string[] = set(projectLanguages.concat(flatten(languages)));
+        const result: string[] = set(projectLanguages.concat(flatten(flatten(languages))));
         
         return result.length > 0 ? result : [I18N.UNSPECIFIED_LANGUAGE];
+    }
+
+
+    function getLanguagesFromObject(object: any): string[] {
+
+        return object !== undefined
+            ? isObject(object)
+                ? Object.keys(object)
+                : [I18N.UNSPECIFIED_LANGUAGE]
+            : [];
     }
 
 

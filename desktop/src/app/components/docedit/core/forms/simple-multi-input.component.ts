@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Resource } from 'idai-field-core';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { Resource } from 'idai-field-core';
  */
 export class SimpleMultiInputComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
 
     public newEntry: string = '';
@@ -20,7 +19,7 @@ export class SimpleMultiInputComponent {
 
     public getEntries(): string[] {
 
-        return this.resource[this.fieldName] ? this.resource[this.fieldName] : [];
+        return this.fieldContainer[this.fieldName] ? this.fieldContainer[this.fieldName] : [];
     }
 
 
@@ -28,8 +27,8 @@ export class SimpleMultiInputComponent {
 
         if (!this.isValidEntry(this.newEntry)) return;
 
-        if (!this.resource[this.fieldName]) this.resource[this.fieldName] = [];
-        this.resource[this.fieldName].push(this.newEntry);
+        if (!this.fieldContainer[this.fieldName]) this.fieldContainer[this.fieldName] = [];
+        this.fieldContainer[this.fieldName].push(this.newEntry);
 
         this.newEntry = '';
     }
@@ -37,16 +36,16 @@ export class SimpleMultiInputComponent {
 
     public deleteEntry(entry: string) {
 
-        const index: number = this.resource[this.fieldName].indexOf(entry);
-        if (index > -1) this.resource[this.fieldName].splice(index, 1);
+        const index: number = this.fieldContainer[this.fieldName].indexOf(entry);
+        if (index > -1) this.fieldContainer[this.fieldName].splice(index, 1);
 
-        if (this.resource[this.fieldName].length === 0) delete this.resource[this.fieldName];
+        if (this.fieldContainer[this.fieldName].length === 0) delete this.fieldContainer[this.fieldName];
     }
 
 
     public isValidEntry(entry: string): boolean {
 
         return entry.length > 0
-            && (!this.resource[this.fieldName] || !this.resource[this.fieldName].includes(entry));
+            && (!this.fieldContainer[this.fieldName] || !this.fieldContainer[this.fieldName].includes(entry));
     }
 }

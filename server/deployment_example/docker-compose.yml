@@ -5,7 +5,7 @@ services:
     image: couchdb:3.3.2
     container_name: field-hub-db
     environment:
-      - COUCHDB_USER
+      - COUCHDB_ADMIN_NAME
       - COUCHDB_PASSWORD
     ports:
       - 5984:5984
@@ -20,8 +20,8 @@ services:
       - HOST
       - SECRET_KEY_BASE
       - COUCHDB_URL=http://couchdb:5984
-      - COUCHDB_ADMIN_NAME=${COUCHDB_USER}
-      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_PASSWORD}
+      - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_NAME}
+      - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
       - COUCHDB_USER_NAME=${COUCHDB_USER_NAME}
       - COUCHDB_USER_PASSWORD=${COUCHDB_USER_PASSWORD}
     ports:

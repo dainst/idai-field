@@ -10,6 +10,7 @@ import { ManageValuelistsModalComponent } from './manage-valuelists-modal.compon
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { SubfieldEditorData } from '../../editor/field/subfield-editor-modal.component';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
 
     public clonedConfigurationDocument: ConfigurationDocument;
     public category: CategoryForm;
-    public clonedField: Field;
+    public clonedField?: Field;
+    public subfieldData?: SubfieldEditorData;
 
 
     constructor(activeModal: NgbActiveModal,
@@ -47,6 +49,14 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
 
         this.addValuelist(this.selectedValuelist);
         this.activeModal.close();
+    }
+
+
+    public getCurrentValuelistId(): string {
+
+        return this.subfieldData
+            ? this.subfieldData.valuelist?.id
+            : this.clonedField?.valuelist?.id;
     }
 
 
@@ -75,10 +85,15 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
 
     private addValuelist(valuelist: Valuelist) {
 
-        const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
-        if (!form.valuelists) form.valuelists = {};
-        form.valuelists[this.clonedField.name] = valuelist.id;
-        this.clonedField.valuelist = this.getCompleteValuelist(valuelist);
+        if (this.subfieldData) {
+            this.subfieldData.valuelist = this.getCompleteValuelist(valuelist);
+        } else {
+            const form: CustomFormDefinition = this.clonedConfigurationDocument.resource
+                .forms[this.category.libraryId ?? this.category.name];
+            if (!form.valuelists) form.valuelists = {};
+
+            form.valuelists[this.clonedField.name] = valuelist.id;
+            this.clonedField.valuelist = this.getCompleteValuelist(valuelist);
+        }
     }
 }

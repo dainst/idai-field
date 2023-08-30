@@ -12,7 +12,7 @@ export class DoceditRelationsPage {
 
     public static async clickChooseRelationSuggestion(suggestionIndex) {
 
-        const element = (await getLocator('.suggestion')).nth(suggestionIndex);
+        const element = (await getLocator('.ng-option')).nth(suggestionIndex);
         return click(element);
     };
 

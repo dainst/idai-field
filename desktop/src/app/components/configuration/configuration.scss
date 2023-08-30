@@ -3,10 +3,15 @@
 @import './browse/configuration-field-drag-element';
 @import './browse/hierarchical-relations-info';
 @import './editor/configuration-editor-modal';
-@import './editor/field-editor-modal';
-@import './editor/category-editor-modal';
-@import './editor/valuelist-editor-modal';
-@import './editor/value-editor-modal';
+@import './editor/field/field-editor-modal';
+@import './editor/field/subfield-editor-modal';
+@import './editor/field/widgets/input-type-selector';
+@import './editor/field/widgets/valuelist-selector';
+@import './editor/field/widgets/field-editor-widgets';
+@import './editor/field/widgets/subfields-section';
+@import './editor/category/category-editor-modal';
+@import './editor/valuelist/valuelist-editor-modal';
+@import './editor/valuelist/value-editor-modal';
 @import './editor/widgets/multi-language-input';
 @import './editor/widgets/references-input';
 @import './delete/delete-modal';
@@ -31,7 +36,6 @@
 @import './notifications/configuration-change-notification-modal';
 @import './conflicts/configuration-conflicts-modal';
 @import './import/import-configuration-modal';
-
 
 #configuration-loading-icon-container {
   width: 100%;

@@ -4,7 +4,7 @@ import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
-import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
+import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
@@ -207,15 +207,18 @@ export class ManageValuelistsModalComponent {
 
         componentInstance.valuelistToExtend = valuelist;
 
+        let newValuelistId: string;
         await this.modals.awaitResult(
             result,
-            (newValuelistId: string) => {
-                this.createNewValuelist(Naming.getValuelistId(
-                    newValuelistId, this.settingsProvider.getSettings().selectedProject
-                ), valuelist);
-            },
+            (id: string) => newValuelistId = id,
             nop
         );
+
+        if (newValuelistId) {
+            this.createNewValuelist(Naming.getValuelistId(
+                newValuelistId, this.settingsProvider.getSettings().selectedProject
+            ), valuelist);
+        }
     }
 
 

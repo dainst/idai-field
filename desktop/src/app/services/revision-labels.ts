@@ -19,6 +19,10 @@ export module RevisionLabels {
 
     export function getLastModifiedDateLabel(revision: Document, timeSuffix: string): string {
 
+        // If the translation text for the time suffix is set to '.', this indicates that no time suffix should be used for
+        // the respective language.
+        if (timeSuffix === '.') timeSuffix = '';
+
         const locale: string = remote.getGlobal('getLocale')();
         moment.locale(locale);
 

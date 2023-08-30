@@ -1,0 +1,38 @@
+.subfield-editor-modal .modal-dialog {
+  max-width: calc(100vw - 230px);
+}
+
+.subfield-editor-modal-header {
+  padding: 1rem 1rem;
+
+  h6 {
+    margin-bottom: 0;
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.subfield-editor-modal-body {
+  height: calc(100vh - 190px);
+
+  .checkbox,
+  .radio {
+    label {
+      padding-left: 3px;
+      user-select: none;
+    }
+
+    input {
+      position: relative;
+      top: 11px;
+    }
+  }
+}
+
+.subfield-editor-modal-footer {
+  .button-label {
+    margin-left: 0;
+  }
+}

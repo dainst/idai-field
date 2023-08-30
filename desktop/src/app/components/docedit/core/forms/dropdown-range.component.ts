@@ -2,7 +2,9 @@ import { Component, Input } from '@angular/core';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
 
+
 const PROJECT = 'project';
+
 
 @Component({
     selector: 'form-field-dropdown-range',
@@ -15,6 +17,7 @@ const PROJECT = 'project';
 export class DropdownRangeComponent {
 
     @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: any;
 
     public valuelist: Valuelist;
@@ -46,30 +49,30 @@ export class DropdownRangeComponent {
     public showEndElements(): boolean {
 
         return this.endActivated
-            || (this.resource[this.field.name]
-                && !isUndefinedOrEmpty(this.resource[this.field.name][OptionalRange.ENDVALUE]));
+            || (this.fieldContainer[this.field.name]
+                && !isUndefinedOrEmpty(this.fieldContainer[this.field.name][OptionalRange.ENDVALUE]));
     }
 
 
     public setValue(value: string) {
 
-        if (isUndefinedOrEmpty(value)) {
+        if (!value) {
             this.endActivated = false;
-            delete this.resource[this.field.name];
+            delete this.fieldContainer[this.field.name];
         } else {
-            if (!this.resource[this.field.name]) this.resource[this.field.name] = {};
-            this.resource[this.field.name][OptionalRange.VALUE] = value;
+            if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = {};
+            this.fieldContainer[this.field.name][OptionalRange.VALUE] = value;
         }
     }
 
 
     public setEndValue(value: string) {
 
-        if (isUndefinedOrEmpty(value)) {
+        if (!value) {
             this.endActivated = false;
-            delete this.resource[this.field.name][OptionalRange.ENDVALUE]
+            delete this.fieldContainer[this.field.name][OptionalRange.ENDVALUE]
         } else {
-            this.resource[this.field.name][OptionalRange.ENDVALUE] = value;
+            this.fieldContainer[this.field.name][OptionalRange.ENDVALUE] = value;
         }
     }
 }

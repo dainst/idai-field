@@ -1,0 +1,24 @@
+{
+    "default": {
+        "label": ""
+    },
+    "minimalExcavation": {
+        "label": ""
+    },
+    "minimalBuilding": {
+        "label": ""
+    },
+    "minimalSurvey": {
+        "label": ""
+    },
+    "archaeoDox": {
+        "label": "archaeoDox",
+        "languageConfiguration": {
+            "relations": {
+                "isPresentIn": {
+                    "label": ""
+                }
+            }
+        }
+    }
+}

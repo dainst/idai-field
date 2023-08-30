@@ -1,0 +1,58 @@
+/**
+ * @author Thomas Kleinke
+ */
+ searchable-select {
+  .ng-select {
+    .ng-value-container {
+      height: 100%;
+    }
+
+    .ng-select-container {
+      border-radius: 0;
+      font-size: 13px;
+      transition: border-color 0.15s ease-in-out;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      .ng-clear-wrapper,
+      .ng-arrow-wrapper {
+        cursor: default;
+      }
+
+      .ng-clear-wrapper {
+        position: relative;
+        top: 1.5px;
+      }
+    }
+
+    &.ng-select-focused .ng-select-container {
+      border-color: #7998cb !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.ng-dropdown-panel {
+  font-size: 13px;
+  transition: border-color 0.15s ease-in-out;
+  overflow-x: hidden;
+
+  &.ng-select-top {
+    margin-bottom: 0 !important;
+  }
+
+  &.ng-select-bottom {
+    margin-top: 0 !important;
+  }
+
+  .ng-option {
+    cursor: default !important;
+
+    &.ng-option-marked,
+    &.ng-option-selected {
+      background-color: $list-item-hover-color !important;
+    }
+  }
+}

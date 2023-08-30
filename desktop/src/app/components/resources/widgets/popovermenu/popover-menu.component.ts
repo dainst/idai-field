@@ -32,7 +32,7 @@ export class PopoverMenuComponent {
 
     public setExpandAllGroups = (expandAllGroups: boolean) => this.viewFacade.setExpandAllGroups(expandAllGroups);
 
-    public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu);
+    public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu, this.document);
 
     public closePopover = () => this.resourcesComponent.closePopover();
 

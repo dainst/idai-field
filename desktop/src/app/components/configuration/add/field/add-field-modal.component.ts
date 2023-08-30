@@ -4,7 +4,7 @@ import { nop, to } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
-import { FieldEditorModalComponent } from '../../editor/field-editor-modal.component';
+import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
 import { InputType } from '../../configuration-util';
 import { ApplyChangesResult } from '../../configuration.component';

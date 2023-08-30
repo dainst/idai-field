@@ -61,45 +61,32 @@
             </div>
         </div>
 
-        <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
-                id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
-            <option value=""></option>
-            <option id="constraint-search-term-dropdown-option-any-value" value="KNOWN"
-                    i18n="@@resources.searchBar.constraints.options.anyValue">- Beliebiger Wert -</option>
-            <option id="constraint-search-term-dropdown-option-no-value" value="UNKNOWN"
-                    i18n="@@resources.searchBar.constraints.options.noValue">- Kein Wert -</option>
-            <option *ngFor="let value of getValues(selectedField.valuelist)" value="{{value}}">
-                {{getValueLabel(selectedField.valuelist, value)}}
-            </option>
-        </select>
+        <searchable-select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
+                           id="constraint-search-term-select"
+                           [selectedValue]="searchTerm === '' ? null : searchTerm"
+                           [values]="getValues()"
+                           [getLabel]="getValueLabel"
+                           placeholder="Suchbegriff"
+                           i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
+                           (onValueSelected)="selectValue($event)"></searchable-select>
 
-        <select *ngIf="getSearchInputType(selectedField) === 'boolean'"
-                id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
-            <option value=""></option>
-            <option id="constraint-search-term-boolean-select-option-any-value" value="KNOWN"
-                    i18n="@@resources.searchBar.constraints.options.anyValue">- Beliebiger Wert -</option>
-            <option id="constraint-search-term-boolean-select-option-no-value" value="UNKNOWN"
-                    i18n="@@resources.searchBar.constraints.options.noValue">- Kein Wert -</option>
-            <option id="constraint-search-term-boolean-select-option-true" value="true"
-                    i18n="@@boolean.yes">Ja</option>
-            <option id="constraint-search-term-boolean-select-option-false" value="false"
-                    i18n="@@boolean.no">Nein</option>
-        </select>
+        <searchable-select *ngIf="getSearchInputType(selectedField) === 'boolean'"
+                           id="constraint-search-term-boolean-select"
+                           [selectedValue]="searchTerm === '' ? null : searchTerm"
+                           [values]="getBooleanValues()"
+                           [getLabel]="getValueLabel"
+                           placeholder="Suchbegriff"
+                           i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
+                           (onValueSelected)="selectValue($event)"></searchable-select>
 
-        <select *ngIf="getSearchInputType(selectedField) === 'exists'"
-                id="constraint-search-term-exists-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
-            <option value=""></option>
-            <option id="constraint-search-term-exists-select-option-true" value="KNOWN"
-                    i18n="@@boolean.yes">Ja</option>
-            <option id="constraint-search-term-exists-select-option-false" value="UNKNOWN"
-                    i18n="@@boolean.no">Nein</option>
-        </select>
+        <searchable-select *ngIf="getSearchInputType(selectedField) === 'exists'"
+                           id="constraint-search-term-exists-select"
+                           [selectedValue]="searchTerm === '' ? null : searchTerm"
+                           [values]="getExistsValues()"
+                           [getLabel]="getExistsLabel"
+                           placeholder="Suchbegriff"
+                           i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
+                           (onValueSelected)="selectValue($event)"></searchable-select>
 
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary btn-square"
              (click)="addConstraint(); $event.stopPropagation();">

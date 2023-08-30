@@ -53,8 +53,10 @@ export namespace ValuelistUsageIndex {
         return flow(
             category.groups,
             flatMap(to('fields')),
-            filter(on('valuelist', isDefined)),
-            filter(on(['valuelist', 'id'], valuelistId))
+            filter(field => {
+                return field.valuelist?.id === valuelistId
+                    || field?.subfields?.find(subfield => subfield.valuelist?.id === valuelistId) !== undefined;
+            })
         );
     }
 }

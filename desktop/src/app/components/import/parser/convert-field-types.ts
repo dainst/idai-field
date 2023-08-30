@@ -1,12 +1,12 @@
 import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
-import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource } from 'idai-field-core';
+import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
-type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'
-    | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
+type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'complex' | 'radio'
+    | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'int' | 'unsignedInt' | 'float' | 'unsignedFloat'
     | 'checkboxes' | 'identifier'; // | 'geometry'
 
 
@@ -23,6 +23,7 @@ const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includ
  * Conversion of resource done by reference, i.e. in place
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function convertFieldTypes(category: CategoryForm) {
 
@@ -34,7 +35,7 @@ export function convertFieldTypes(category: CategoryForm) {
             if (!field) continue;
 
             const inputType = field.inputType as unknown as FieldType;
-            if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
+            if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType, field);
         }
 
         for (const relationName of Object.keys(resource.relations).filter(isnt(Relation.PARENT))) {
@@ -48,36 +49,27 @@ export function convertFieldTypes(category: CategoryForm) {
 
 
 // here only string to number, validation in exec
-const convertUnsignedInt = (container: any, path: Path) => convertNumber(container, path, 'int');
-const convertUnsignedFloat = (container: any, path: Path) => convertNumber(container, path, 'float');
+const convertInt = (container: any, path: Path) => convertNumber(container, path, 'int');
 const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
 
 
-function convertTypeDependent(resource: Resource, fieldName: string, inputType: FieldType) {
+function convertTypeDependent(container: any, fieldName: string, inputType: FieldType, field: Field) {
 
-    // leave 'date' as is
-    // leave 'radio' as is
-    if (inputType === 'boolean')       convertBoolean(resource, fieldName);
-    if (inputType === 'dating')        convertDating(resource, fieldName);
-    if (inputType === 'dimension')     convertDimension(resource, fieldName);
-    if (inputType === 'checkboxes')    convertCheckboxes(resource, fieldName);
-    if (inputType === 'unsignedInt')   convertUnsignedInt(resource, fieldName);
-    if (inputType === 'unsignedFloat') convertUnsignedFloat(resource, fieldName);
-    if (inputType === 'float')         convertFloat(resource, fieldName);
+    if (inputType === 'boolean') convertBoolean(container, fieldName);
+    if (inputType === 'dating') convertDating(container, fieldName);
+    if (inputType === 'dimension') convertDimension(container, fieldName);
+    if (inputType === 'checkboxes') convertCheckboxes(container, fieldName);
+    if (inputType === 'int' || inputType === 'unsignedInt') convertInt(container, fieldName);
+    if (inputType === 'float' || inputType === 'unsignedFloat') convertFloat(container, fieldName);
+    if (inputType === 'complex') convertComplex(container, fieldName, field);
 }
 
 
-function convertCheckboxes(resource: Resource, fieldName: string) {
-
-    resource[fieldName] = resource[fieldName].split(';');
-}
-
-
-function convertDimension(resource: Resource, fieldName: string) {
+function convertDimension(container: any, fieldName: string) {
 
     let i = 0;
-    for (const dimension of resource[fieldName] as Array<Dimension>) {
+    for (const dimension of container[fieldName] as Array<Dimension>) {
 
         if (dimension === undefined) throw 'Undefined dimension found';
         if (dimension === null) continue;
@@ -100,18 +92,18 @@ function convertDimension(resource: Resource, fieldName: string) {
 }
 
 
-function convertDating(resource: Resource, fieldName: string) {
+function convertDating(container: any, fieldName: string) {
 
     let i = 0;
-    for (let dating of resource[fieldName] as Array<Dating>) {
+    for (let dating of container[fieldName] as Array<Dating>) {
 
         if (dating === undefined) throw 'Undefined dating found';
         if (dating === null) continue;
 
         try {
-            convertUnsignedInt(dating, ['begin','inputYear']);
-            convertUnsignedInt(dating, ['end','inputYear']);
-            convertUnsignedInt(dating, 'margin');
+            convertInt(dating, ['begin','inputYear']);
+            convertInt(dating, ['end','inputYear']);
+            convertInt(dating, 'margin');
             convertBoolean(dating, 'isImprecise');
             convertBoolean(dating, 'isUncertain');
         } catch (msgWithParams) {
@@ -119,6 +111,30 @@ function convertDating(resource: Resource, fieldName: string) {
         }
         i++;
     }
+}
+
+
+function convertComplex(resource: Resource, fieldName: string, field: Field) {
+
+    resource[fieldName].forEach(element => {
+        if (element === undefined) throw 'Undefined complex object found';
+        if (element === null) return;
+
+        Object.keys(element).forEach(subfieldName => {
+            const inputType: FieldType = field.subfields?.find(on(Named.NAME, is(subfieldName)))?.inputType as FieldType;
+            if (inputType) {
+                convertTypeDependent(element, subfieldName, inputType, field);
+            } else {
+                throw 'Subfield definition not found: ' + subfieldName;
+            }
+        });
+    });
+}
+
+
+function convertCheckboxes(container: any, fieldName: string) {
+
+    container[fieldName] = container[fieldName].split(';');
 }
 
 

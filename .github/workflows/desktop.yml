@@ -95,7 +95,7 @@ jobs:
         MAC_NOTARIZE: ${{ contains(github.event.head_commit.message, '[notarize]') && 'true' || 'false' }}
         MAC_NOTARIZE_AID: ${{ secrets.MAC_NOTARIZE_AID }}
         MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
-        MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
+        MAC_NOTARIZE_TEAM_ID: ${{ secrets.MAC_NOTARIZE_TEAM_ID }}
       working-directory: desktop
     - name: Create Windows package
       run: npm run package:win

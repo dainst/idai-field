@@ -1,12 +1,12 @@
 import { Map } from 'tsfun';
 import { CategoryForm } from '../model/configuration/category-form';
+import { Field } from '../model';
 
 
-export function getFieldsToIndex(categoriesMap: Map<CategoryForm>, categoryName: string): string[] {
+export function getFieldsToIndex(categoriesMap: Map<CategoryForm>, categoryName: string): Array<Field> {
 
     return !categoriesMap[categoryName]
         ? []
         : CategoryForm.getFields(categoriesMap[categoryName])
-            .filter(field => field.fulltextIndexed)
-            .map(field => field.name);
+            .filter(field => field.fulltextIndexed);
 }

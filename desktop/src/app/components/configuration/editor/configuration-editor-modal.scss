@@ -54,4 +54,9 @@
     line-height: 19px;
     font-size: 15px;
   }
+
+  .basic-settings > div:last-child .switch,
+  .basic-settings > i18n-switch:last-child .switch {
+    margin-bottom: -6px;
+  }
 }

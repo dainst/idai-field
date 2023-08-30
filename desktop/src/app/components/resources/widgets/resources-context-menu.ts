@@ -1,7 +1,6 @@
 import { Document } from 'idai-field-core';
 import { ContextMenu } from '../../widgets/context-menu';
 
-
 /**
  * @author Thomas Kleinke
  */

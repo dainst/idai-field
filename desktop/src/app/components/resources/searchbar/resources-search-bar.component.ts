@@ -14,6 +14,7 @@ import { QrCodeScannerModalComponent } from './resources-search-modal-qr';
 })
 /**
  * @author Thomas Kleinke
+ * @author Danilo Guzzo
  */
 export class ResourcesSearchBarComponent extends SearchBarComponent {
     @Input() extendedSearch: boolean;

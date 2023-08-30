@@ -7,7 +7,6 @@ import {
     EventEmitter,
     OnChanges,
 } from '@angular/core';
-import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import {
     Document,
@@ -18,9 +17,6 @@ import {
     Datastore,
     Hierarchy
 } from 'idai-field-core';
-import { QrCodeModalComponent } from './qrcode-modal';
-import { Menus } from '../../../services/menus';
-import { MenuContext} from '../../../services/menu-context';
 
 @Component({
     selector: 'document-info',
@@ -54,10 +50,8 @@ export class DocumentInfoComponent implements OnChanges {
     constructor(
         private projectConfiguration: ProjectConfiguration,
         private datastore: Datastore,
-        private settingsProvider: SettingsProvider,
-        private menus: Menus,
-        private modalService: NgbModal
-    ) {
+        private settingsProvider: SettingsProvider
+     ) {
         this.project = this.settingsProvider.getSettings().selectedProject;
     }
 
@@ -106,27 +100,5 @@ export class DocumentInfoComponent implements OnChanges {
             (id) => this.datastore.get(id),
             this.document
         )) as FieldDocument;
-    }
-
-    public async openQRCodeModal() {
-
-        try {
-            this.menus.setContext(MenuContext.MODAL);
-
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeModalComponent, { animation: false, backdrop: 'static' }
-            );
-            
-            modalRef.componentInstance.project = this.project;
-            modalRef.componentInstance.documentId = this.document._id;
-            modalRef.componentInstance.identifier = this.document.resource.identifier;
-
-            modalRef.componentInstance.render();
-            return true;
-        } catch (_) {
-            return false;
-        } finally {
-            this.menus.setContext(MenuContext.DEFAULT);
-        }
     }
 }

@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, Document } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MenuContext } from '../../../services/menu-context';
+import { QrCodeModalComponent } from './qrcode-modal';
+import { Menus } from '../../../services/menus';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
-export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
+export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'create-qrcode'|'edit-images'|'create-polygon'|'create-line-string'
     |'create-point'|'edit-geometry';
-
 
 @Component({
     selector: 'resources-context-menu',
@@ -17,20 +21,31 @@ export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'c
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
+ * @author Danilo Guzzo
  */
 export class ResourcesContextMenuComponent implements OnChanges {
+    @ViewChild('documentInfo', { static: false }) documentInfoElement: ElementRef;
 
     @Input() contextMenu: ResourcesContextMenu;
     @Input() showViewOption: boolean = false;
+    @Input() document: Document;
 
     @Output() onSelectAction: EventEmitter<ResourcesContextMenuAction>
         = new EventEmitter<ResourcesContextMenuAction>();
+    
 
     public orientation: ContextMenuOrientation = 'top';
+    public project: string;
+    
 
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
-
+    constructor(
+        private projectConfiguration: ProjectConfiguration,
+        private modalService: NgbModal,
+        private menus: Menus,
+        private settingsProvider: SettingsProvider
+   ) {
+    this.project = this.settingsProvider.getSettings().selectedProject;
+   }
 
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
 
@@ -108,5 +123,33 @@ export class ResourcesContextMenuComponent implements OnChanges {
     private isReadonly(): boolean {
 
         return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
+    }
+
+    
+    public async openQRCodeModal() {
+
+        try {
+            // sets the area within which this object acts
+            this.menus.setContext(MenuContext.MODAL);
+            // Opens a new modal window with the specified content and supplied options
+            const modalRef: NgbModalRef = this.modalService.open(
+                QrCodeModalComponent, { animation: false, backdrop: 'static' }
+            );
+            /* "get componentInstance" is a promise that is resolved when the modal is closed and calls 
+                the project, documentID and identifier 
+             */
+            modalRef.componentInstance.project = this.project;
+            modalRef.componentInstance.documentId = this.document._id;
+            modalRef.componentInstance.identifier = this.document.resource.identifier;
+
+            // calls the method render() to generate the Qr-Code
+            modalRef.componentInstance.render();
+            return true;
+        } catch (e) {
+            console.error(e)
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.DEFAULT);
+        }
     }
 }

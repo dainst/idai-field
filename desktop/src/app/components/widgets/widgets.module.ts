@@ -23,6 +23,7 @@ import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
 import { FieldViewComponent } from './documentinfo/field-view.component';
 import { LanguagesListComponent } from './languages/languages-list.component';
+import { QrCodeScannerModalComponent } from './resources-search-modal-qr';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { LanguagesListComponent } from './languages/languages-list.component';
         PagingButtonsComponent,
         EditSaveDialogComponent,
         LanguagesListComponent,
+        QrCodeScannerModalComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
@@ -70,6 +72,7 @@ import { LanguagesListComponent } from './languages/languages-list.component';
         CategoryIconComponent,
         PagingButtonsComponent,
         EditSaveDialogComponent,
+        QrCodeScannerModalComponent,
         LanguagesListComponent
     ],
     entryComponents: []

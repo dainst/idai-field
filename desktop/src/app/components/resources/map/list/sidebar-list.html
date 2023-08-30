@@ -1,4 +1,4 @@
-<resources-context-menu *ngIf="contextMenu.isOpen()"
+<resources-context-menu [document]="selectedDocument" *ngIf="contextMenu.isOpen()"
     [contextMenu]="contextMenu"
     (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
 

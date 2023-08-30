@@ -5,6 +5,11 @@ import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core'
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
+import { QrCodeScannerModalComponent } from './resources-search-modal-qr';
+import { MenuContext } from '../../../services/menu-context';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Menus } from '../../../services/menus';
+
 
 
 @Component({
@@ -16,6 +21,7 @@ import { ResourcesSearchBarComponent } from './resources-search-bar.component';
 })
 /**
  * @author Thomas Kleinke
+ * @author Danilo Guzzo
  */
 export class ResourcesSearchConstraintsComponent extends SearchConstraintsComponent {
 
@@ -27,7 +33,10 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade,
-                labels: Labels) {
+                labels: Labels,
+                private menus: Menus,
+                private modalService: NgbModal
+    ) {
 
         super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
 
@@ -121,5 +130,22 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.viewFacade.setLimitSearchResults(true);
         return this.viewFacade.setCustomConstraints(constraints);
+    }
+
+    public async openQrCodeScannerModal() {
+        try {
+            this.menus.setContext(MenuContext.MODAL);
+            const modalRef: NgbModalRef = this.modalService.open(
+                QrCodeScannerModalComponent,
+                { animation: false }
+            );
+
+            //await modalRef.result;
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            this.menus.setContext(MenuContext.DEFAULT);
+        }
     }
 }

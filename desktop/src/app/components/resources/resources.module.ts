@@ -50,7 +50,7 @@ import { Routing } from '../../services/routing';
 import { StandardStateSerializer } from '../../services/standard-state-serializer';
 import { StateSerializer } from '../../services/state-serializer';
 import { SettingsProvider } from '../../services/settings/settings-provider';
-
+import { QrCodeScannerModalComponent } from './searchbar/resources-search-modal-qr';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -92,7 +92,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         MoveModalComponent,
         DeletionInProgressModalComponent,
         ChildrenViewComponent,
-        BaseList
+        BaseList,
+        QrCodeScannerModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

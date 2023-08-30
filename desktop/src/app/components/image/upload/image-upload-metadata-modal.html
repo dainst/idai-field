@@ -1,25 +1,25 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@imageUpload.imageCategoryPickerModal.header">
+    <h5 class="modal-title" i18n="@@imageUpload.imageMetadataModal.header">
         Bildmetadaten auswählen
     </h5>
 </div>
 
-<div class="modal-body" id="image-category-picker-modal">
+<div class="modal-body" id="image-upload-metadata-modal">
     <div *ngIf="fileCount >= 100" class="text-center alert alert-warning"
-        i18n="@@imageUpload.imageCategoryPickerModal.warning">
+        i18n="@@imageUpload.imageMetadataModal.warning">
         Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
     </div>
     <div *ngIf="depictsRelationTarget" class="text-center alert alert-info">
-        <span *ngIf="fileCount == 1" i18n="@@imageUpload.imageCategoryPickerModal.linkInfo.single">
+        <span *ngIf="fileCount == 1" i18n="@@imageUpload.imageMetadataModal.linkInfo.single">
             Das importierte Bild wird mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b> verknüpft.
         </span>
-        <span *ngIf="fileCount > 1" i18n="@@imageUpload.imageCategoryPickerModal.linkInfo.multiple">
+        <span *ngIf="fileCount > 1" i18n="@@imageUpload.imageMetadataModal.linkInfo.multiple">
             Die importierten Bilder werden mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b>
             verknüpft.
         </span>
     </div>
     <p *ngIf="imageCategory.children && imageCategory.children.length > 0">
-        <span i18n="@@imageUpload.imageCategoryPickerModal.chooseCategory">
+        <span i18n="@@imageUpload.imageMetadataModal.chooseCategory">
             Bitte wählen Sie die gewünschte Kategorie aus.
         </span>
     </p>
@@ -41,10 +41,10 @@
 
     <hr/>
 
-    <div i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmen">
+    <div i18n="@@imageUpload.imageMetadataModal.chooseDraughtsmen">
         Bitte wählen Sie die Bildersteller/-innen aus.
     </div>
-    <div class="small-info-text" i18n="@@imageUpload.imageCategoryPickerModal.chooseDraughtsmeInfo">
+    <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.chooseDraughtsmeInfo">
         Wenn Sie keine Bildersteller/-innen auswählen, wird die Anwendung versuchen diese aus den Metadaten des jeweiligen Bildes
         auszulesen.
     </div>
@@ -59,7 +59,7 @@
 
     <hr/>
 
-    <div i18n="@@imageUpload.imageCategoryPickerModal.chooseProcessors">
+    <div i18n="@@imageUpload.imageMetadataModal.chooseProcessors">
         Bitte wählen Sie die Bearbeiter/-innen aus.
     </div>
 

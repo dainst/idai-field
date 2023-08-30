@@ -7,7 +7,7 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "ng": "ng",
-    "ng:serve": "export NODE_OPTIONS=--openssl-legacy-provider && ng serve --servePath=dist && export NODE_OPTIONS=",
+    "ng:serve": "ng serve --servePath=dist",
     "ng:serve:en": "ng serve --servePath=dist --configuration=en",
     "ng:serve:it": "ng serve --servePath=dist --configuration=it",
     "ng:serve:uk": "ng serve --servePath=dist --configuration=uk",
@@ -27,8 +27,8 @@
     "postinstall": "npm run update-version-info && gulp copy-fonts",
     "lint": "ng lint",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
-    "e2e": "export NODE_OPTIONS=--openssl-legacy-provider &&  npm-run-all -p -r ng:serve:no-reload e2e:run && export NODE_OPTIONS=",
-    "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e/images/image-overview-upload.spec.ts --config=test/e2e/playwright.config.ts",
+    "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
+    "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e --config=test/e2e/playwright.config.ts",
     "test:hub-setup": "docker-compose -f test/hub-integration/docker-compose.yml up -d",
     "test:hub-run": "wait-on http-get://localhost:4003/ && jasmine JASMINE_CONFIG_PATH=test/hub-integration/config/jasmine.json",
     "test:hub-teardown": "docker-compose -f test/hub-integration/docker-compose.yml down -v",
@@ -36,7 +36,7 @@
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",
-    "i18n": "export NODE_OPTIONS=--openssl-legacy-provider && ng extract-i18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf && export NODE_OPTIONS=",
+    "i18n": "ng extract-i18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
     "update-version-info": "cross-var replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },
   "build": {

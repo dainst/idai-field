@@ -1,5 +1,4 @@
 defmodule FieldPublication.Replication do
-  alias FieldPublication.CouchService
   alias Phoenix.PubSub
 
   defmodule LogEntry do
@@ -8,9 +7,10 @@ defmodule FieldPublication.Replication do
   end
 
   alias FieldPublication.{
+    CouchService,
+    FileService,
     Replication.CouchReplication,
     Replication.FileReplication,
-    FileService,
     Replication.Parameters
   }
 

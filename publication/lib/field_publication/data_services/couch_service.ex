@@ -155,7 +155,7 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def retrieve_document(doc_id, database_name \\ @core_database) do
+  def get_document(doc_id, database_name \\ @core_database) do
     Finch.build(
       :get,
       "#{local_url()}/#{database_name}/#{doc_id}",
@@ -164,13 +164,33 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def delete_document(%{"_id" => id, "_rev" => rev}, database_name \\ @core_database) do
+  def put_document(%{id: id} = doc, database_name \\ @core_database) do
+    Finch.build(
+      :put,
+      "#{local_url()}/#{database_name}/#{id}",
+      headers(),
+      Jason.encode!(doc)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def delete_document(%{"_id" => id, "_rev" => rev}, database_name) do
     Finch.build(
       :delete,
       "#{local_url()}/#{database_name}/#{id}?rev=#{rev}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
+  end
+
+  def run_find_query(query, database_name \\ @core_database) do
+   Finch.build(
+    :post,
+    "#{local_url()}/#{database_name}/_find",
+    headers(),
+    Jason.encode!(query)
+   )
+   |> Finch.request(FieldPublication.Finch)
   end
 
   def add_application_user(project_identifier) do

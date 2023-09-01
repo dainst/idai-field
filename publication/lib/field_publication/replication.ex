@@ -115,7 +115,7 @@ defmodule FieldPublication.Replication do
               msg: "Publication's project configuration recreated."
             })
 
-          {:ok, _val} ->
+          {:ok, result} ->
             broadcast(channel, %LogEntry{
               name: :publication_configuration_recreated,
               severity: :ok,
@@ -123,7 +123,7 @@ defmodule FieldPublication.Replication do
               msg: "Publication's project configuration recreated."
             })
 
-            {:ok, Map.put(previous_results, :project_configuration_recreation, :success)}
+            {:ok, Map.put(previous_results, :project_configuration_recreation, result)}
           end
       error ->
         error

@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.PublicationLive.Management do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Projects
+  alias FieldPublication.Documents
   alias FieldPublication.Replication.{
     LogEntry,
     Parameters

@@ -62,7 +62,7 @@ defmodule FieldPublication.Replication.CouchReplication do
       |> Jason.decode!()
 
     case doc do
-      %{"error" => "not_found", "reason" => "deleted"} ->
+      %{"error" => "not_found"} ->
         {:ok, :already_deleted}
       doc ->
         {:ok, %{status: 200}} = CouchService.delete_document(doc["_id"], doc["_rev"], "_replicator")

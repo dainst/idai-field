@@ -7,32 +7,45 @@
   </:actions>
 </.header>
 
-<.table
-  id="projects"
-  rows={@streams.projects}
-  row_click={fn {_id, project} -> JS.navigate(~p"/#{project}") end}
->
-  <:col :let={{_id, project}} label="Project key"><%= project.id %></:col>
-  <:col :let={{_id, project}} label="Hidden"><%= project.hidden %></:col>
 
-  <:action :let={{_id, project}}>
-    <div class="sr-only">
-      <.link navigate={~p"/#{project}"}>Show</.link>
-    </div>
-    <.link patch={~p"/#{project}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{_id, project}}>
-    <.link patch={~p"/#{project}/publication/new"}>Draft new publcation</.link>
-  </:action>
-  <:action :let={{id, project}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: project.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+<table class="w-[40rem] mt-11 sm:w-full">
+  <thead  class="text-sm text-left leading-6 text-zinc-500">
+    <tr>
+      <th>Project key</th>
+      <th>Hidden</th>
+      <th>Publications</th>
+      <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th> 
+    </tr>
+  </thead>
+  <tbody class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700">
+    <%= for project <- @projects do %>
+    <tr class="group hover:bg-zinc-50">
+      <td><%= project.id %></td>
+      <td><%= project.hidden %></td>
+      <td>with two columns</td>
+      <td>
+        <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
+          <div class="sr-only">
+            <.link navigate={~p"/#{project}"}>Show</.link>
+          </div>
+          <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+            <.link patch={~p"/#{project}/publication/new"}>Draft new publication</.link>
+          </span>
+          <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+            <.link patch={~p"/#{project}/edit"}>Edit</.link>
+          </span>
+          <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+            <.link phx-click={JS.push("delete", value: %{id: project.id}) |> hide("##{project.id}")}
+              data-confirm="Are you sure?">
+              Delete
+            </.link>
+          </span>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <.modal :if={@live_action in [:new, :edit]} id="project-modal" show on_cancel={JS.patch(~p"/")}>
   <.live_component

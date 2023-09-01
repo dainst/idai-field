@@ -4,7 +4,7 @@ defmodule FieldPublication.FileService do
   require Logger
 
   def get_publication_path(publication_name) do
-    "#{@root_path}/#{publication_name}"
+    "#{@root_path}/publications/#{publication_name}"
   end
 
   def delete_publication(publication_name) do

@@ -2,26 +2,27 @@
   Project <%= @project.id %>
   <:subtitle>This is a project record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/projects/#{@project}/show/edit"} phx-click={JS.push_focus()}>
+    <.link patch={~p"/#{@project}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit project</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Name"><%= @project.name %></:item>
-  <:item title="Description"><%= @project.description %></:item>
+  <:item title="Project key"><%= @project.id %></:item>
+  <:item title="Hidden"><%= @project.hidden %></:item>
+  <:item title="Publicatiosn"><%= inspect(@project.publications) %></:item>
 </.list>
 
-<.back navigate={~p"/projects"}>Back to projects</.back>
+<.back navigate={~p"/"}>Back to projects</.back>
 
-<.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/projects/#{@project}")}>
+<.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/#{@project}")}>
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
     id={@project.id}
     title={@page_title}
     action={@live_action}
     project={@project}
-    patch={~p"/projects/#{@project}"}
+    patch={~p"/#{@project}"}
   />
 </.modal>

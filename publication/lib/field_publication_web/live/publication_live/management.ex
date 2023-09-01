@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.PublicationLive.Management do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Documents
+  alias FieldPublication.Schema.Project
   alias FieldPublication.Replication.{
     LogEntry,
     Parameters
@@ -74,7 +74,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {
       :ok,
       socket
-      |> assign(:project, Documents.get_project!(project_id))
+      |> assign(:project, Project.get_project!(project_id))
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
       |> assign(:replication_logs, [])
@@ -93,7 +93,11 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     changeset =
       %Parameters{}
       |> Parameters.changeset(%{
-        local_project_name: project.id
+        local_project_name: project.id,
+        source_url: "http://localhost:4000",
+        source_project_name: project.id,
+        source_user: project.id,
+        source_password: "sync_test"
       })
 
     socket
@@ -157,6 +161,10 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
 
     IO.inspect(report)
     Logger.debug("Todo: Replication successful.")
+
+    socket =
+      socket
+      |> assign(:replication_running, false)
 
     {:noreply, socket}
   end

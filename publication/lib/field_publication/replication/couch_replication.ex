@@ -65,7 +65,7 @@ defmodule FieldPublication.Replication.CouchReplication do
       %{"error" => "not_found", "reason" => "deleted"} ->
         {:ok, :already_deleted}
       doc ->
-        {:ok, %{status: 200}} = CouchService.delete_document(doc, "_replicator")
+        {:ok, %{status: 200}} = CouchService.delete_document(doc["_id"], doc["_rev"], "_replicator")
 
         {:ok, :deleted}
     end
@@ -153,7 +153,6 @@ defmodule FieldPublication.Replication.CouchReplication do
         {:error, :unauthorized}
       {:error, %Mint.TransportError{} = reason} ->
         {:error, reason}
-      # TODO: Handle other results
     end
   end
 

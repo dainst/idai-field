@@ -20,10 +20,8 @@ defmodule FieldPublicationWeb.Router do
     live "/", ProjectLive.Index, :index
     live "/new", ProjectLive.Index, :new
     live "/:id/edit", ProjectLive.Index, :edit
-
     live "/:id", ProjectLive.Show, :show
     live "/:id/show/edit", ProjectLive.Show, :edit
-
 
     live "/:project_id/publication/new", PublicationLive.Management, :new
     # live "/:id/publication", PublicationLive.Show, :index

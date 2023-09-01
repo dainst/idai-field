@@ -1,13 +1,13 @@
 defmodule FieldPublicationWeb.ProjectLive.Index do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Documents
-  alias FieldPublication.Documents.Project
+  alias FieldPublication.Schema.Project
 
   @impl true
   def mount(_params, _session, socket) do
     {
-      :ok, stream(socket, :projects, Documents.list_projects())
+      :ok,
+      assign(socket, :projects, Project.list_projects())
     }
   end
 
@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Project")
-    |> assign(:project, Documents.get_project!(id))
+    |> assign(:project, Project.get_project!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -35,15 +35,15 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   end
 
   @impl true
-  def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
-    {:noreply, stream_insert(socket, :projects, project)}
+  def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, _project}}, socket) do
+    {:noreply, assign(socket, :projects, Project.list_projects())}
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    project = Projects.get_project!(id)
-    {:ok, _} = Projects.delete_project(project)
+    project = Project.get_project!(id)
+    {:ok, _} = Project.delete_project(project)
 
-    {:noreply, stream_delete(socket, :projects, project)}
+    {:noreply, assign(socket, :projects, Project.list_projects())}
   end
 end

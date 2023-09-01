@@ -9,6 +9,8 @@ defmodule FieldPublication.Replication do
   alias FieldPublication.{
     CouchService,
     FileService,
+    Schema.Project,
+    Schema.Publication,
     Replication.CouchReplication,
     Replication.FileReplication,
     Replication.Parameters
@@ -187,33 +189,34 @@ defmodule FieldPublication.Replication do
   end
 
   defp create_publication_metadata(project_name, publication_name) do
-
     url = Application.get_env(:field_publication, :couchdb_url)
 
     {:ok, full_config} = create_full_configuration(url, publication_name)
 
-    metadata = %{
-      publication_name => %{
-        date: DateTime.to_iso8601(DateTime.now!("Etc/UTC")),
-        configuration: full_config
-      }
-    }
+    configuration_doc_name = "#{publication_name}-config"
 
-    CouchService.retrieve_document(project_name)
+    CouchService.get_document(configuration_doc_name)
     |> case do
-      {:ok, %Finch.Response{status: 404}} ->
-        CouchService.store_document(project_name, metadata)
-      {:ok, %Finch.Response{body: body, status: 200}} ->
-        updated =
-          body
-          |> Jason.decode!()
-          |> then(fn(existing) ->
-            existing
-            |> Map.merge(metadata)
-          end)
-
-        CouchService.store_document(project_name, updated)
+      {:ok, %{status: 404}} ->
+        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
+      {:ok, %{status: 200, body: body}} ->
+        %{"_rev" => rev} = Jason.decode!(body)
+        CouchService.delete_document(configuration_doc_name, rev)
+        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
     end
+
+    Project.get_project!(project_name)
+    |> Project.add_publication(
+      %Publication{
+        source_url: "todo",
+        source_project_name:  "todo",
+        configuration_doc: configuration_doc_name,
+        database: publication_name,
+        draft_date: Date.utc_today()
+      }
+    )
+
+    {:ok, :metadata_created}
   end
 
   defp create_full_configuration(url, publication_name) do

@@ -174,7 +174,7 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def delete_document(%{"_id" => id, "_rev" => rev}, database_name) do
+  def delete_document(id, rev, database_name \\ @core_database) do
     Finch.build(
       :delete,
       "#{local_url()}/#{database_name}/#{id}?rev=#{rev}",
@@ -182,6 +182,7 @@ defmodule FieldPublication.CouchService do
     )
     |> Finch.request(FieldPublication.Finch)
   end
+
 
   def run_find_query(query, database_name \\ @core_database) do
    Finch.build(
@@ -227,7 +228,7 @@ defmodule FieldPublication.CouchService do
         )
         |> Finch.request(FieldPublication.Finch)
 
-      {:ok, %{code: 404}} = res ->
+      {:ok, %{status: 404}} = res ->
         {:unknown_project, res}
     end
   end

@@ -13,27 +13,16 @@
   row_click={fn {_id, project} -> JS.navigate(~p"/#{project}") end}
 >
   <:col :let={{_id, project}} label="Project key"><%= project.id %></:col>
+  <:col :let={{_id, project}} label="Hidden"><%= project.hidden %></:col>
 
-  <:col :let={{_id, project}} label="Visible"><%= project.visible %></:col>
-  <:col :let={{_id, project}} label="Name">
-    <ul>
-      <%= for label <- project.labels do %>
-        <li><%= label.text %> (<%= label.language %>)</li>
-      <% end %>
-    </ul>
-  </:col>
-  <:col :let={{_id, project}} label="Description">
-    <ul>
-      <%= for des <- project.descriptions do %>
-        <li><%= des.text %> (<%= des.language %>)</li>
-      <% end %>
-    </ul>
-  </:col>
   <:action :let={{_id, project}}>
     <div class="sr-only">
       <.link navigate={~p"/#{project}"}>Show</.link>
     </div>
     <.link patch={~p"/#{project}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, project}}>
+    <.link patch={~p"/#{project}/publication/new"}>Draft new publcation</.link>
   </:action>
   <:action :let={{id, project}}>
     <.link

@@ -1,7 +1,8 @@
 defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Projects
+  alias FieldPublication.Documents
+  alias FieldPublication.Documents.Project
 
   @impl true
   def render(assigns) do
@@ -9,7 +10,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage project records in your database.</:subtitle>
+        <:subtitle>A project may have multiple publications.</:subtitle>
       </.header>
 
       <.simple_form
@@ -19,58 +20,21 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <%= if @project.id do %>
-          <h1> <%=@project.id %></h1>
-        <% else %>
-          <.input field={@form[:id]} type="text" label="Project id" />
+        <.input field={@form[:_rev]} type="hidden" />
+        <.input field={@form[:doc_type]} type="hidden" />
+
+        <%= case @action do %>
+          <% :edit -> %>
+            <h1> <%=@project.id %></h1>
+          <% :new -> %>
+           <.input field={@form[:id]} type="text" label="Project key" />
+          <% _ -> %>
         <% end %>
-        <.input field={@form[:visible]} type="checkbox" label="Visible" />
-
-        <div>
-          <label>Lables</label>
-          <div phx-feedback-for={@form[:labels].name}>
-            <.error :for={{msg, _} <- @form[:labels].errors}><%= msg %></.error>
-          </div>
-          <.inputs_for :let={ef} field={@form[:labels]}>
-            <input type="hidden" name="project[labels_sort][]" value={ef.index} />
-            <.input type="text" field={ef[:language]} placeholder="language" />
-            <.input type="text" field={ef[:text]} placeholder="text" />
-            <label>
-              <input type="checkbox" name="project[labels_drop][]" value={ef.index} class="hidden" />
-              <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
-            </label>
-          </.inputs_for>
-
-          <label class="block cursor-pointer">
-            <input type="checkbox" name="project[labels_sort][]" class="hidden" />
-            add more
-          </label>
-
-          <input type="hidden" name="project[labels_drop][]" />
-        </div>
-        <div>
-          <label>Descriptions</label>
-          <div phx-feedback-for={@form[:descriptions].name}>
-            <.error :for={{msg, _} <- @form[:descriptions].errors}><%= msg %></.error>
-          </div>
-          <div phx-feedback-for={@form[:descriptions].name}>
-            <.inputs_for :let={ef} field={@form[:descriptions]} >
-              <input type="hidden" name="project[descriptions_sort][]" value={ef.index} />
-              <.input type="text" field={ef[:language]} placeholder="language" />
-              <.input type="text" field={ef[:text]} placeholder="text" />
-              <label>
-                <input type="checkbox" name="project[descriptions_drop][]" value={ef.index} class="hidden" />
-                <.icon name="hero-x-mark" class="w-6 h-6 relative top-2" />
-              </label>
-            </.inputs_for>
-          </div>
-          <label class="block cursor-pointer">
-            <input type="checkbox" name="project[descriptions_sort][]" class="hidden" />
-            add more
-          </label>
-
-          <input type="hidden" name="project[descriptions_drop][]" />
-        </div>
+        <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
+        <%= if @publications != [] do %>
+          <label>Publications</label>
+          Todo
+        <% end %>
         <:actions>
           <.button phx-disable-with="Saving...">Save Project</.button>
         </:actions>
@@ -80,20 +44,21 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   @impl true
-  def update(%{project: project} = assigns, socket) do
-    changeset = Projects.change_project(project)
+  def update(%{project: %{publications: publications} = project} = assigns, socket) do
+    changeset = Project.changeset(project)
 
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:publications, publications)
      |> assign_form(changeset)}
   end
 
   @impl true
-  def handle_event("validate", %{"project" => project_params}, socket) do
+  def handle_event("validate", %{"project" => form_params}, socket) do
     changeset =
       socket.assigns.project
-      |> Projects.change_project(project_params)
+      |> Project.changeset(form_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
@@ -104,14 +69,16 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :edit, project_params) do
-    case Projects.update_project(socket.assigns.project, project_params) do
-      {:ok, project} ->
-        notify_parent({:saved, project})
+    case Documents.update_project(socket.assigns.project, project_params) do
+      {:ok, updated_project} ->
+        notify_parent({:saved, updated_project})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Project updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        {
+          :noreply,
+          socket
+          |> put_flash(:info, "Project updated successfully")
+          |> push_patch(to: socket.assigns.patch)
+        }
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -119,14 +86,16 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :new, project_params) do
-    case Projects.create_project(project_params) do
+    case Documents.create_project(project_params) do
       {:ok, project} ->
         notify_parent({:saved, project})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Project created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        {
+          :noreply,
+          socket
+          |> put_flash(:info, "Project created successfully")
+          |> push_patch(to: socket.assigns.patch)
+        }
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

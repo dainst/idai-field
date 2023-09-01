@@ -1,13 +1,13 @@
 defmodule FieldPublicationWeb.ProjectLive.Index do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Projects
-  alias FieldPublication.Projects.Project
+  alias FieldPublication.Documents
+  alias FieldPublication.Documents.Project
 
   @impl true
   def mount(_params, _session, socket) do
     {
-      :ok, stream(socket, :projects, Projects.list_projects())
+      :ok, stream(socket, :projects, Documents.list_projects())
     }
   end
 
@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Project")
-    |> assign(:project, Projects.get_project!(id))
+    |> assign(:project, Documents.get_project!(id))
   end
 
   defp apply_action(socket, :new, _params) do

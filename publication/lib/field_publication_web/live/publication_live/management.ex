@@ -74,7 +74,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     {
       :ok,
       socket
-      |> assign(:project, Projects.get_project!(project_id))
+      |> assign(:project, Documents.get_project!(project_id))
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
       |> assign(:replication_logs, [])

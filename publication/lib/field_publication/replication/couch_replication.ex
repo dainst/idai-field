@@ -25,7 +25,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     else
       {:error, :error_count_exceeded} ->
         CouchService.delete_document(publication_name, "_replicator")
-        # TODO: delete publication db
+        CouchService.delete_database(publication_name)
         {:error, :couchdb_error_count_exceeded}
       error ->
         error
@@ -55,7 +55,7 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   def stop_replication(name) do
     doc =
-      CouchService.retrieve_document(name, "_replicator")
+      CouchService.get_document(name, "_replicator")
       |> then(fn({:ok, %{body: body}}) ->
         body
       end)
@@ -87,7 +87,7 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   defp poll_replication_status(parameters, name, source_doc_count, channel) do
 
-    CouchService.retrieve_document(name, "/_scheduler/docs/_replicator")
+    CouchService.get_document(name, "/_scheduler/docs/_replicator")
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body

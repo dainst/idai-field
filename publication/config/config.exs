@@ -18,7 +18,8 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   live_view: [signing_salt: "K/pS/S7t"]
 
 config :field_publication,
-  core_database: "field_publication"
+  core_database: "field_publication",
+  file_variants_to_replicate: ["original_image"]
 
 # Configures the mailer
 #

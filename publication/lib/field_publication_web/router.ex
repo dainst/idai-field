@@ -23,10 +23,8 @@ defmodule FieldPublicationWeb.Router do
     live "/:id", ProjectLive.Show, :show
     live "/:id/show/edit", ProjectLive.Show, :edit
 
-    live "/:project_id/publication/new", PublicationLive.Management, :new
-    # live "/:id/publication", PublicationLive.Show, :index
-    # live "/:id/publication/id", PublicationLive.Show, :show
-
+    live "/:project_id/publication/new", PublicationLive.NewDraft, :new
+    live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
   end
 
   # Other scopes may use custom stacks.

@@ -3,18 +3,52 @@
   <:subtitle>This is a project record from your database.</:subtitle>
   <:actions>
     <.link navigate={~p"/#{@project}/publication/new"}>
-      <.button class="">Draft new publication</.button>
+      <.button>Draft new publication</.button>
     </.link>
     <.link patch={~p"/#{@project}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit project</.button>
-    </.link>          
+    </.link>
   </:actions>
 </.header>
 
 <.list>
   <:item title="Project key"><%= @project.id %></:item>
   <:item title="Hidden"><%= @project.hidden %></:item>
-  <:item title="Publications"><%= inspect(@project.publications) %></:item>
+  <:item title="Publications">
+    <table class="border-spacing-4 border-separate">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Draft date</th>
+          <th>Publication date</th>
+          <th>Data source</th>
+          <th>Comment</th>
+          <th></th>
+        </tr>
+      </thead>
+    <%= for publication <- @project.publications do %>
+      <tr class="pt-9">
+        <%= case publication.publication_date do %>
+          <% nil -> %>
+            <td class="bg-yellow-300 rounded border-spacing-y-2 p-2">Draft</td>
+          <% _ -> %>
+            <td class="bg-green-300 rounded border-spacing-y-2 p-2">Published</td>
+        <% end %>
+        <td><%= publication.draft_date %></td>
+        <td>
+          <%= if publication.publication_date do %>
+            <%= publication.publication_date %>
+          <% else %>
+            None
+          <% end %>
+        </td>
+        <td><a target="blank" class="hover:text-blue-600" href={publication.source_url}>Project '<%= publication.source_project_name %>'</a></td>
+        <td><%= List.first(publication.comments, %{text: "No comment provided."}) |> then(fn(%{text: text}) -> text end) %></td>
+        <td><.link navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>Edit publication</.link></td>
+      </tr>
+    <% end %>
+    </table>
+  </:item>
 </.list>
 
 <.back navigate={~p"/"}>Back to projects</.back>
@@ -26,6 +60,16 @@
     title={@page_title}
     action={@live_action}
     project={@project}
+    patch={~p"/#{@project}"}
+  />
+</.modal>
+
+<.modal :if={@live_action in [:edit_publication]} id="publication-modal" show on_cancel={JS.patch(~p"/#{@project}")}>
+  <.live_component
+    module={FieldPublicationWeb.PublicationLive.FormComponent}
+    id={Date.to_string(@publication_to_edit.draft_date)}
+    title={@page_title}
+    publication={@publication_to_edit}
     patch={~p"/#{@project}"}
   />
 </.modal>

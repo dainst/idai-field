@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.PublicationLive.Management do
+defmodule FieldPublicationWeb.PublicationLive.NewDraft do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project
@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
                   remove={"remove_comment"}
                 />
               </div>
-              </div>
+            </div>
 
             <:actions>
               <.button phx-disable-with="Initializing...">Start replication</.button>
@@ -127,7 +127,11 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         source_url: "http://localhost:4000",
         source_project_name: project.id,
         source_user: project.id,
-        source_password: "test"
+        source_password: "test",
+        comments: [
+          %{language: "de", text: "Ein Kommentar zur Veröffentlichung."},
+          %{language: "en", text: "A comment concerning the publication."}
+        ]
       })
 
     socket

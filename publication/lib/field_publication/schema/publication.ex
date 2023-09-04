@@ -22,4 +22,16 @@ defmodule FieldPublication.Schema.Publication do
     |> cast_embed(:comments)
     |> validate_required([:source_url, :source_project_name, :draft_date, :configuration_doc, :database])
   end
+
+  def update(%__MODULE__{} = publication, params \\ %{}) do
+    publication
+    |> changeset(params)
+    |> apply_action(:update)
+    |> case do
+      {:error, _changeset} = error ->
+        error
+      success ->
+        success
+    end
+  end
 end

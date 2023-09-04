@@ -13,10 +13,18 @@ defmodule FieldPublicationWeb.TranslationLive.FormComponent do
           <span class="pl-2 w-96">
             <.input type="textarea" field={translation[:text]} label="Comment"/>
           </span>
-          <span phx-click={@remove} phx-value-id={translation.id}>X</span>
+          <span phx-click={@remove} phx-target={
+            # This form can be used by both views and live components. If live components want to
+            # handle the data themselves, they can pass target={@myself}. Otherwise their view will have to
+            # implement `handle_info/3`.
+            if assigns[:target], do: @target
+          } phx-value-id={translation.id}>X</span>
         </div>
       </.inputs_for>
-      <a phx-click={@add} type="button">Add comment</a>
+      <a phx-click={@add} phx-target={
+        # Same as for @remove above.
+        if assigns[:target], do: @target
+      } type="button">Add comment</a>
     </div>
     """
   end

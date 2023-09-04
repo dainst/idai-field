@@ -221,19 +221,18 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     socket =
       socket
       |> assign(:replication_running, false)
+      |> put_flash(:info, "Error while creating draft.")
       |> create_error_feedback(error)
 
     {:noreply, socket}
   end
 
-  def handle_info({:replication_result, {:ok, report}}, socket) do
-
-    IO.inspect(report)
-    Logger.debug("Todo: Replication successful.")
+  def handle_info({:replication_result, {:ok, _report}},  %{assigns: %{project: project}} = socket) do
 
     socket =
       socket
-      |> assign(:replication_running, false)
+      |> put_flash(:info, "Draft successfully created")
+      |> push_navigate(to: "/#{project.id}")
 
     {:noreply, socket}
   end

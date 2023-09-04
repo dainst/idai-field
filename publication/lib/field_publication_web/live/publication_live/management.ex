@@ -20,7 +20,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
   def render(assigns) do
     ~H"""
     <div>
-      <h1 class="text-4xl font-extrabold">Setup new publication for <i><%= @project.id %></i></h1>
+      <h1 class="text-4xl font-extrabold">Create publication draft for <i><%= @project.id %></i></h1>
 
       <div class="flex flex-row mt-5 w-full">
         <div class="relative items-center block p-2 min-w-fit">
@@ -61,6 +61,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
           </div>
         </div>
       </div>
+      <.back navigate={~p"/#{@project.id}"}>Back to project</.back>
     </div>
     """
   end

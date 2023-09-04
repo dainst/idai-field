@@ -7929,7 +7929,7 @@
     }
   },
   "Metal-objectType-kalapodi": {
-    "deprecated": "true",
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "values": {

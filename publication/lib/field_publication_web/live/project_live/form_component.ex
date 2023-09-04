@@ -9,7 +9,6 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>A project may have multiple publications.</:subtitle>
       </.header>
 
       <.simple_form
@@ -30,10 +29,6 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           <% _ -> %>
         <% end %>
         <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
-        <%= if @publications != [] do %>
-          <label>Publications</label>
-          Todo
-        <% end %>
         <:actions>
           <.button phx-disable-with="Saving...">Save Project</.button>
         </:actions>
@@ -43,13 +38,12 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   @impl true
-  def update(%{project: %{publications: publications} = project} = assigns, socket) do
+  def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
 
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:publications, publications)
      |> assign_form(changeset)}
   end
 

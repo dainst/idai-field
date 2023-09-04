@@ -33,9 +33,7 @@ defmodule FieldPublication.Replication do
 
   defp replicate(%Parameters{
       local_project_name: project_name,
-      local_delete_existing: delete,
-      source_url: source_url,
-      source_project_name: source_project_name
+      local_delete_existing: delete
     } = parameters, channel) do
 
     publication_name = "#{project_name}_publication_#{Date.utc_today()}"
@@ -109,7 +107,7 @@ defmodule FieldPublication.Replication do
     end
     |> case do
       {:ok, previous_results} ->
-        create_publication_metadata(project_name, publication_name, source_url, source_project_name)
+        create_publication_metadata(parameters, publication_name)
         |> case do
           {:error, name} ->
             broadcast(channel, %LogEntry{
@@ -190,7 +188,12 @@ defmodule FieldPublication.Replication do
     {replication_stop, publication_deletion, file_deletion}
   end
 
-  defp create_publication_metadata(project_name, publication_name, source_url, source_project_name) do
+  defp create_publication_metadata(%Parameters{
+    source_url: source_url,
+    source_project_name: source_project_name,
+    local_project_name: project_name,
+    comments: comments
+  }, publication_name) do
     url = Application.get_env(:field_publication, :couchdb_url)
 
     {:ok, full_config} = create_full_configuration(url, publication_name)
@@ -207,15 +210,19 @@ defmodule FieldPublication.Replication do
         CouchService.put_document(%{id: configuration_doc_name, data: full_config})
     end
 
-    Project.get_project!(project_name)
-    |> Project.add_publication(
+    publication_metadata =
       %Publication{
         source_url: source_url,
         source_project_name: source_project_name,
         configuration_doc: configuration_doc_name,
         database: publication_name,
-        draft_date: Date.utc_today()
+        draft_date: Date.utc_today(),
+        comments: comments
       }
+
+    Project.get_project!(project_name)
+    |> Project.add_publication(
+      publication_metadata
     )
 
     {:ok, :metadata_created}

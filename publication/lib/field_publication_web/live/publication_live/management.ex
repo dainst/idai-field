@@ -22,26 +22,42 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
     <div>
       <h1 class="text-4xl font-extrabold">Create publication draft for <i><%= @project.id %></i></h1>
 
-      <div class="flex flex-row mt-5 w-full">
-        <div class="relative items-center block p-2 min-w-fit">
+      <div class="flex flex-row mt-5">
+        <div class="relative items-center block p-2 basis-3/5">
           <.simple_form
             for={@form}
             id="replication-form"
             phx-change="validate"
             phx-submit="start"
           >
-            <div>
-              <.input field={@form[:source_url]} type="url" label="Source URL" />
-              <.input field={@form[:source_project_name]} type="text" label="Source project name" />
-              <.input field={@form[:source_user]} type="text" label="Source user name" />
-              <.input field={@form[:source_password]} type="password" label="Source user password" />
-              <.input field={@form[:local_project_name]} type="hidden" />
-              <div class="pt-5"><.input field={@form[:local_delete_existing]} type="checkbox" label="Delete existing publication" /></div>
-            </div>
+            <div class="flex flex-row">
+              <div class="p-11">
+                <h2 class="text-2xl">Publication data</h2>
+                <.input field={@form[:source_url]} type="url" label="Source URL" />
+                <.input field={@form[:source_project_name]} type="text" label="Source project name" />
+                <.input field={@form[:source_user]} type="text" label="Source user name" />
+                <.input field={@form[:source_password]} type="password" label="Source user password" />
+                <.input field={@form[:local_project_name]} type="hidden" />
+                <div class="pt-5"><.input field={@form[:local_delete_existing]} type="checkbox" label="Delete existing publication" /></div>
+              </div>
+
+              <div class="p-11 border-l-2 border-black">
+                <h2 class="text-2xl">Publication comments</h2>
+                <.live_component
+                  module={FieldPublicationWeb.TranslationLive.FormComponent}
+                  id={@form[:comments]}
+                  form_field={@form[:comments]}
+                  add={"add_comment"}
+                  remove={"remove_comment"}
+                />
+              </div>
+              </div>
+
             <:actions>
               <.button phx-disable-with="Initializing...">Start replication</.button>
             </:actions>
           </.simple_form>
+
           <!-- Overlay while replication is running -->
           <div :if={@replication_running} class="bg-black/80 w-full h-full rounded-l-lg z-10 absolute top-0 left-0">
             <div role="status" class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2">
@@ -51,7 +67,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
           </div>
           <!-- End of overlay. -->
         </div>
-        <div class="border-l-4 border-indigo-500 rounded-r-lg basis-full bg-gray-200">
+        <div class="border-l-4 border-indigo-500 rounded-r-lg basis-2/5 bg-gray-200">
           <LogComponent.list logs={@replication_logs} />
           <div :if={@file_replication_status} class="p-2">
             <ProgressBarComponent.display status={@file_replication_status} />
@@ -63,6 +79,19 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
       </div>
       <.back navigate={~p"/#{@project.id}"}>Back to project</.back>
     </div>
+    """
+  end
+
+
+  def translation(assigns) do
+    ~H"""
+    <.inputs_for :let={translation} field={@form_field}>
+      <.input type="text" field={translation[:language]}/>
+      <.input type="text" field={translation[:text]}/>
+      <span phx-click={@remove} phx-value-id={translation.id}>X</span>
+    </.inputs_for>
+
+    <.button phx-click={@add} type="button">Add comment</.button>
     """
   end
 
@@ -98,7 +127,7 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
         source_url: "http://localhost:4000",
         source_project_name: project.id,
         source_user: project.id,
-        source_password: "sync_test"
+        source_password: "test"
       })
 
     socket
@@ -116,6 +145,41 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
 
     {:noreply, assign(socket, :form, to_form(changeset))}
   end
+
+  @impl true
+  def handle_event("add_comment", _, %{assigns: %{form: %{source: changeset}}} = socket) do
+    current_comments = Ecto.Changeset.get_field(changeset, :comments)
+
+    changeset =
+      Ecto.Changeset.put_embed(changeset, :comments, current_comments ++ [%{text: "", language: ""}])
+
+    {
+      :noreply,
+      socket
+      |> assign(:form, to_form(changeset))
+    }
+  end
+
+  @impl true
+  def handle_event("remove_comment", %{"id" => "parameters_comments_" <> id}, %{assigns: %{form: %{source: changeset}}} = socket) do
+    {index, _remainder} = Integer.parse(id)
+
+    updated_comments =
+      changeset
+      |> Ecto.Changeset.get_field(:comments)
+      |> List.delete_at(index)
+
+    changeset =
+      changeset
+      |> Ecto.Changeset.put_embed(:comments, updated_comments)
+
+    {
+      :noreply,
+      socket
+      |> assign(:form, to_form(changeset))
+    }
+  end
+
 
   def handle_event("start", %{"parameters" => replication_params}, socket) do
     socket =
@@ -137,6 +201,10 @@ defmodule FieldPublicationWeb.PublicationLive.Management do
           |> assign(:replication_logs, [])
     end
     {:noreply, socket}
+  end
+
+  def add_comment() do
+
   end
 
   @impl true

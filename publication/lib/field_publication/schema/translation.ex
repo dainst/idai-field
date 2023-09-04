@@ -9,7 +9,7 @@ defmodule FieldPublication.Schema.Translation do
     field :language, :string, primary_key: true
   end
 
-  def changeset(translation, attrs) do
+  def changeset(translation, attrs \\ %{}) do
     translation
     |> cast(attrs, [:text, :language])
     |> validate_required([:text, :language])

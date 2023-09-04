@@ -1,4 +1,6 @@
 defmodule FieldPublication.Replication.Parameters do
+  alias FieldPublication.Schema.Translation
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -10,6 +12,7 @@ defmodule FieldPublication.Replication.Parameters do
     field :source_password, :string
     field :local_project_name, :string
     field :local_delete_existing, :boolean, default: false
+    embeds_many :comments, Translation
   end
 
   @doc false
@@ -31,6 +34,7 @@ defmodule FieldPublication.Replication.Parameters do
       :local_project_name
     ])
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid FieldHub.")
+    |> cast_embed(:comments)
   end
 
   def set_source_connection_error(changeset, %Mint.TransportError{reason: :nxdomain}) do

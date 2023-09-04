@@ -75,7 +75,7 @@ defmodule FieldPublication.Schema.Project do
     end
   end
 
-  def update_project(%__MODULE__{} = project, params) do
+  def update_project(%__MODULE__{} = project, params \\ %{}) do
     project
     |> changeset(params)
     |> apply_action(:update)
@@ -110,10 +110,10 @@ defmodule FieldPublication.Schema.Project do
       |> Enum.reject(fn(%Publication{} = existing) ->
         existing.draft_date == new_publication.draft_date
       end)
-      |> Enum.map(&Map.from_struct/1)
 
-    project
-    |> update_project(%{publications: Enum.map(filtered ++ [new_publication], &Map.from_struct/1)})
+    Map.replace(project, :publications, filtered ++ [new_publication])
+    |> update_project()
+
   end
 
   def remove_publication(%__MODULE__{} = project, %Publication{} = removed_publication) do

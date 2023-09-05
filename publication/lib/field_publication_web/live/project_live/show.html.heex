@@ -57,7 +57,10 @@
         <td><%= List.first(publication.comments, %{text: "No comment provided."}) |> then(fn(%{text: text}) -> text end) %></td>
         <td>
           <.link navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>
-            <.button type="button" class="text-xs">Edit publication</.button>
+            <.button type="button" class="text-xs">Edit</.button>
+          </.link>
+          <.link :if={is_nil(publication.publication_date) or publication.publication_date > @today} navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/delete"}>
+            <.button type="button" class="text-xs">Delete</.button>
           </.link>
         </td>
       </tr>

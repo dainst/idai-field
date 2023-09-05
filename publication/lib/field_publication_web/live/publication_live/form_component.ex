@@ -97,7 +97,7 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
   end
 
   @impl true
-  def handle_event("remove_comment", %{"id" => "parameters_comments_" <> id}, %{assigns: %{form: %{source: changeset}}} = socket) do
+  def handle_event("remove_comment", %{"id" => "publication_comments_" <> id}, %{assigns: %{form: %{source: changeset}}} = socket) do
     {index, _remainder} = Integer.parse(id)
 
     updated_comments =

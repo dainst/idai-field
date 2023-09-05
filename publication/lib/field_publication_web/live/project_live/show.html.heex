@@ -1,6 +1,5 @@
 <.header>
-  Project <%= @project.id %>
-  <:subtitle>This is a project record from your database.</:subtitle>
+  Project '<%= @project.id %>' <%= if @project.hidden, do: "(currently hidden)" %>
   <:actions>
     <.link navigate={~p"/#{@project}/publication/new"}>
       <.button>Draft new publication</.button>
@@ -13,9 +12,8 @@
 
 <.list>
   <:item title="Project key"><%= @project.id %></:item>
-  <:item title="Hidden"><%= @project.hidden %></:item>
   <:item title="Publications">
-    <table class="border-spacing-4 border-separate">
+    <table class="border-spacing-2 border-spacing-x-4 border-separate">
       <thead>
         <tr>
           <th>State</th>
@@ -31,20 +29,37 @@
         <%= case publication.publication_date do %>
           <% nil -> %>
             <td class="bg-yellow-300 rounded border-spacing-y-2 p-2">Draft</td>
-          <% _ -> %>
-            <td class="bg-green-300 rounded border-spacing-y-2 p-2">Published</td>
+          <% date when date > @today -> %>
+            <td class="bg-green-300 rounded border-spacing-y-2 p-2">Publication scheduled</td>
+          <% _date -> %>
+            <td class="bg-green-600 rounded border-spacing-y-2 p-2">Published</td>
         <% end %>
         <td><%= publication.draft_date %></td>
         <td>
           <%= if publication.publication_date do %>
             <%= publication.publication_date %>
           <% else %>
-            None
+            -
           <% end %>
         </td>
-        <td><a target="blank" class="hover:text-blue-600" href={publication.source_url}>Project '<%= publication.source_project_name %>'</a></td>
+        <td>
+          <a target="blank" class="font-semibold text-zinc-900 hover:text-zinc-700 flex" href={publication.source_url}>         
+            <div class="w-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-24 h-24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </div>
+            <div>
+              Project '<%= publication.source_project_name %>'
+            </div>
+          </a>
+        </td>
         <td><%= List.first(publication.comments, %{text: "No comment provided."}) |> then(fn(%{text: text}) -> text end) %></td>
-        <td><.link navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>Edit publication</.link></td>
+        <td>
+          <.link navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>
+            <.button type="button" class="text-xs">Edit publication</.button>
+          </.link>
+        </td>
       </tr>
     <% end %>
     </table>

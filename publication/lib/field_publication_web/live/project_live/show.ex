@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, :today, Date.utc_today())}
   end
 
   @impl true
@@ -28,6 +28,10 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
       |> assign(:project, project)
       |> assign(:publication_to_edit, publication)
     }
+  end
+
+  def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
+    {:noreply, assign(socket, :project, project)}
   end
 
   @impl true

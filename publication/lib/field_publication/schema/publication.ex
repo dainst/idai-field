@@ -13,7 +13,7 @@ defmodule FieldPublication.Schema.Publication do
     field :publication_date, :date
     field :configuration_doc, :string
     field :database, :string
-    embeds_many :comments, Translation
+    embeds_many :comments, Translation, on_replace: :delete
   end
 
   def changeset(publication, attrs \\ %{}) do

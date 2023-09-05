@@ -111,7 +111,11 @@ defmodule FieldPublication.Schema.Project do
         existing.draft_date == new_publication.draft_date
       end)
 
-    Map.replace(project, :publications, filtered ++ [new_publication])
+    updated =
+      filtered ++ [new_publication]
+      |> Enum.sort(fn(a, b) -> a.draft_date > b.draft_date end)
+
+    Map.replace(project, :publications, updated)
     |> update_project()
 
   end

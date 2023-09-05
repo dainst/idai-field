@@ -22,7 +22,23 @@
     <tr class="group hover:bg-zinc-50">
       <td><%= project.id %></td>
       <td><%= project.hidden %></td>
-      <td>Todo: Display count of drafts/publications?</td>
+      <td><% publication_stats = publication_stats(project.publications) %>
+        <%= if publication_stats[:draft_count] > 0 do %>
+          <span class="bg-yellow-300 rounded border-spacing-y-2 p-2">
+            <%= publication_stats[:draft_count] %> Draft
+          </span>
+        <% end %>
+        <%= if publication_stats[:publication_scheduled_count] > 0 do %>
+          <span class="bg-green-300 rounded border-spacing-y-2 p-2 ml-1">
+            <%= publication_stats[:publication_scheduled_count] %> Scheduled
+          </span>
+        <% end %>
+        <%= if publication_stats[:published_count] > 0 do %>
+          <span class="bg-green-600 rounded border-spacing-y-2 p-2 ml-1">
+            <%=  publication_stats[:published_count] %> Published
+          </span>
+        <% end %>
+      </td>
       <td>
         <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
           <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">

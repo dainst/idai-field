@@ -11,6 +11,25 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
     }
   end
 
+  def publication_stats(publications) do
+    %{
+      draft_count:
+        publications
+        |> Enum.filter(fn(pub) -> is_nil(pub.publication_date) end)
+        |> Enum.count(),
+      publication_scheduled_count:
+        publications
+        |> Enum.filter(fn(pub) -> not is_nil(pub.publication_date) end)
+        |> Enum.filter(fn(pub) -> pub.publication_date < Date.utc_today() end)
+        |> Enum.count(),
+      published_count:
+        publications
+        |> Enum.filter(fn(pub) -> not is_nil(pub.publication_date) end)
+        |> Enum.filter(fn(pub) -> pub.publication_date > Date.utc_today() end)
+        |> Enum.count()
+    }
+  end
+
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}

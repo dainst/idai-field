@@ -581,8 +581,8 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove", "borders",
-            "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith"]
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn", "isBelow", "isAbove",
+            "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith", "borders"]
         },
         {
           "name": "time",
@@ -648,8 +648,8 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "isPresentIn", "isBelow", "isAbove", "borders", "cuts", "isCutBy",
-            "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith"]
+          "fields": ["geometry", "isPresentIn", "isBelow", "isAbove", "cuts", "isCutBy",
+            "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith", "borders"]
         }
       ]
     },

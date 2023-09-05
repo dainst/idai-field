@@ -541,7 +541,8 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', Relation.IS_PRESENT_IN].concat(Relation.Position.ALL)
+                        fields: ['geometry', 'isBelow', 'isAbove', 'cuts', 'isCutBy', 'fills', 'isFilledBy', 'abuts',
+                            'isAbuttedBy', 'bondsWith', 'borders']
                     },
                     {
                         name: Groups.TIME,

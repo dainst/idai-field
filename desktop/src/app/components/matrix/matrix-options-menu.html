@@ -7,20 +7,6 @@
         <form>
             <fieldset class="form-group">
                 <label class="pre-label" i18n="@@matrix.optionsMenu.relations.label">Relationen:</label>
-                <div id="form-check-relations-temporal" class="form-check form-check-inline form-radiobuttons">
-                    <input id="relations-radio-temporal"
-                           class="form-check-input"
-                           name="relations-mode-radios"
-                           type="radio"
-                           [checked]="getRelationsMode() === 'temporal'"
-                           (change)="setRelationsMode('temporal')">
-                    <label id="relations-radio-temporal-label"
-                           class="form-check-label"
-                           for="relations-radio-temporal"
-                           i18n="@@matrix.optionsMenu.relations.temporal">
-                        Zeitlich
-                    </label>
-                </div>
                 <div id="form-check-relations-spatial" class="form-check form-check-inline form-radiobuttons">
                     <input id="relations-radio-spatial"
                            class="form-check-input"
@@ -33,6 +19,20 @@
                            for="relations-radio-spatial"
                            i18n="@@matrix.optionsMenu.relations.spatial">
                         Räumlich
+                    </label>
+                </div>
+                <div id="form-check-relations-temporal" class="form-check form-check-inline form-radiobuttons">
+                    <input id="relations-radio-temporal"
+                           class="form-check-input"
+                           name="relations-mode-radios"
+                           type="radio"
+                           [checked]="getRelationsMode() === 'temporal'"
+                           (change)="setRelationsMode('temporal')">
+                    <label id="relations-radio-temporal-label"
+                           class="form-check-label"
+                           for="relations-radio-temporal"
+                           i18n="@@matrix.optionsMenu.relations.temporal">
+                        Zeitlich
                     </label>
                 </div>
             </fieldset>

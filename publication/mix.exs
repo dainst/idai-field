@@ -48,7 +48,8 @@ defmodule FieldPublication.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:iso639_elixir, "~> 0.2.1"}
+      {:iso639_elixir, "~> 0.2.1"},
+      {:cachex, "~> 3.6"}
     ]
   end
 

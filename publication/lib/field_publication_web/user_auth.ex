@@ -4,14 +4,18 @@ defmodule FieldPublicationWeb.UserAuth do
   import Plug.Conn
   import Phoenix.Controller
 
-  alias FieldPublicationWeb.Accounts
+  defmodule Token do
+    @enforce_keys [:name, :token, :context]
+    defstruct [:name, :token, :context]
+  end
 
-  # Make the remember me cookie valid for 60 days.
+  # Make the remember me cookie valid for 7 days.
   # If you want bump or reduce this value, also change
   # the token expiry itself in UserToken.
-  @max_age 60 * 60 * 24 * 60
+  @max_age 60 * 60 * 24 * 7
   @remember_me_cookie "_field_publication_web_user_remember_me"
   @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
+  @cache_name Application.compile_env(:field_publication, :user_tokens_cache_name)
 
   @doc """
   Logs the user in.
@@ -22,11 +26,10 @@ defmodule FieldPublicationWeb.UserAuth do
 
   It also sets a `:live_socket_id` key in the session,
   so LiveView sessions are identified and automatically
-  disconnected on log out. The line can be safely removed
-  if you are not using LiveView.
+  disconnected on log out.
   """
-  def log_in_user(conn, user, params \\ %{}) do
-    token = Accounts.generate_user_session_token(user)
+  def log_in_user(conn, user_name, params) do
+    token = generate_user_session_token(user_name)
     user_return_to = get_session(conn, :user_return_to)
 
     conn
@@ -72,7 +75,7 @@ defmodule FieldPublicationWeb.UserAuth do
   """
   def log_out_user(conn) do
     user_token = get_session(conn, :user_token)
-    user_token && Accounts.delete_user_session_token(user_token)
+    user_token && delete_session_token(user_token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       FieldPublicationWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
@@ -90,7 +93,7 @@ defmodule FieldPublicationWeb.UserAuth do
   """
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
-    user = user_token && Accounts.get_user_by_session_token(user_token)
+    user = user_token && get_user_by_session_token(user_token)
     assign(conn, :current_user, user)
   end
 
@@ -156,7 +159,7 @@ defmodule FieldPublicationWeb.UserAuth do
       socket =
         socket
         |> Phoenix.LiveView.put_flash(:error, "You must log in to access this page.")
-        |> Phoenix.LiveView.redirect(to: ~p"/users/log_in")
+        |> Phoenix.LiveView.redirect(to: ~p"/log_in")
 
       {:halt, socket}
     end
@@ -175,7 +178,7 @@ defmodule FieldPublicationWeb.UserAuth do
   defp mount_current_user(socket, session) do
     Phoenix.Component.assign_new(socket, :current_user, fn ->
       if user_token = session["user_token"] do
-        Accounts.get_user_by_session_token(user_token)
+        get_user_by_session_token(user_token)
       end
     end)
   end
@@ -195,9 +198,6 @@ defmodule FieldPublicationWeb.UserAuth do
 
   @doc """
   Used for routes that require the user to be authenticated.
-
-  If you want to enforce the user email is confirmed before
-  they use the application at all, here would be a good place.
   """
   def require_authenticated_user(conn, _opts) do
     if conn.assigns[:current_user] do
@@ -206,7 +206,7 @@ defmodule FieldPublicationWeb.UserAuth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: ~p"/users/log_in")
+      |> redirect(to: ~p"/log_in")
       |> halt()
     end
   end
@@ -224,4 +224,52 @@ defmodule FieldPublicationWeb.UserAuth do
   defp maybe_store_return_to(conn), do: conn
 
   defp signed_in_path(_conn), do: ~p"/"
+
+  defp generate_user_session_token(user) do
+    # Generates a token that will be stored in a signed place,
+    # such as session or cookie. As they are signed, those
+    # tokens do not need to be hashed.
+
+    # The reason why we store session tokens in the cache, even
+    # though Phoenix already provides a session cookie, is because
+    # Phoenix' default session cookies are not persisted, they are
+    # simply signed and potentially encrypted. This means they are
+    # valid indefinitely, unless you change the signing/encryption
+    # salt.
+
+    # Therefore, storing them allows individual user
+    # sessions to be expired. The token system can also be extended
+    # to store additional data, such as the device used for logging in.
+    # You could then use this information to display all valid sessions
+    # and devices in the UI and allow users to explicitly expire any
+    # session they deem invalid.
+
+    # This implementation is a modified version of the `mix phx.gen.auth`
+    # result, the main difference beeing that we do not store the token in
+    # our database, but in a `Cachex` cache. For our case this seemed simpler
+    # because we do not expect many user accounts, so holding (and expiring)
+    # tokens in memory instead of doing a database roundtrip should not be a problem.
+    token = :crypto.strong_rand_bytes(32)
+    cached_data = %Token{token: token, context: "session", name: user}
+
+    Cachex.put!(@cache_name, token, cached_data, ttl: 1000 * @max_age)
+    token
+  end
+
+  defp get_user_by_session_token(token) do
+    # Gets the user with the given signed token.
+    case Cachex.get(@cache_name, token) do
+      {:ok, %Token{name: name}} ->
+        name
+
+      _ ->
+        nil
+    end
+  end
+
+  defp delete_session_token(token) do
+    # Deletes the signed token with the given context.
+    Cachex.del(@cache_name, token)
+    :ok
+  end
 end

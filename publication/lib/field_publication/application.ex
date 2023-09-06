@@ -14,6 +14,10 @@ defmodule FieldPublication.Application do
       {Phoenix.PubSub, name: FieldPublication.PubSub},
       # Start Finch
       {Finch, name: FieldPublication.Finch},
+      Supervisor.child_spec(
+        {Cachex, name: Application.get_env(:field_publication, :user_tokens_cache_name)},
+        id: :user_tokens_cache
+      ),
       # Start the Endpoint (http/https)
       FieldPublicationWeb.Endpoint,
       {Task.Supervisor, name: FieldPublication.Replication.Supervisor}

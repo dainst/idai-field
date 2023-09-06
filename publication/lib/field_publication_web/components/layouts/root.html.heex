@@ -17,6 +17,18 @@
         <li class="text-[0.8125rem] leading-6 text-zinc-900">
           <%= @current_user %>
         </li>
+
+        <%= if FieldPublication.User.is_admin?(@current_user) do %>
+          <li>
+           <.link
+            href={~p"/admin/users"}
+            method="get"
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Users
+          </.link>
+          </li>
+        <% end %>
         <li>
           <.link
             href={~p"/log_out"}

@@ -96,6 +96,30 @@ defmodule FieldPublication.CouchService do
     end
   end
 
+  def list_users() do
+    Finch.build(
+      :get,
+      "#{local_url()}/_users/_all_docs",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  @doc """
+  Returns the user document in CouchDB's `_users` database.
+
+  __Parameters__
+  - `user_name` the user's name.
+  """
+  def get_user(name) do
+    Finch.build(
+      :get,
+      "#{local_url()}/_users/org.couchdb.user:#{name}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   @doc """
   Creates a CouchDB user.
 
@@ -348,6 +372,13 @@ defmodule FieldPublication.CouchService do
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{credentials}"}
     ]
+  end
+
+  def generate_password(length \\ 32) do
+    length
+    |> :crypto.strong_rand_bytes()
+    |> Base.encode64()
+    |> binary_part(0, length)
   end
 
   defp local_url() do

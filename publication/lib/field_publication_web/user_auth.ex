@@ -211,6 +211,21 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
+  @doc """
+  Used for routes exclusive to the CouchDB admin.
+  """
+  def require_administrator(conn, _opts) do
+    if FieldPublication.User.is_admin?(conn.assigns[:current_user]) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must log in to access this page.")
+      |> maybe_store_return_to()
+      |> redirect(to: ~p"/log_in")
+      |> halt()
+    end
+  end
+
   defp put_token_in_session(conn, token) do
     conn
     |> put_session(:user_token, token)

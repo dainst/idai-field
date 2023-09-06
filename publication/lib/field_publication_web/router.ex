@@ -47,6 +47,19 @@ defmodule FieldPublicationWeb.Router do
     end
   end
 
+  # Routes that require the admin user to be logged in.
+  scope "/", FieldPublicationWeb do
+    pipe_through [:browser, :require_administrator]
+
+    live_session :require_administrator,
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+      live "/admin/users", AdminLive.UserManagement, :index
+      live "/admin/users/new", AdminLive.UserManagement, :new
+      live "/admin/users/:name/new_password", AdminLive.UserManagement, :new_password
+      live "/admin/users/:name/delete", AdminLive.UserManagement, :delete
+    end
+  end
+
   # Routes without authentication required.
   scope "/", FieldPublicationWeb do
     pipe_through [:browser]

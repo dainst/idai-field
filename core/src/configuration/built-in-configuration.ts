@@ -541,7 +541,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isBelow', 'isAbove', 'cuts', 'isCutBy', 'fills', 'isFilledBy', 'abuts',
+                        fields: ['geometry', 'isAbove', 'isBelow', 'cuts', 'isCutBy', 'fills', 'isFilledBy', 'abuts',
                             'isAbuttedBy', 'bondsWith', 'borders']
                     },
                     {

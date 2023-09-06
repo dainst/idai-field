@@ -7382,6 +7382,34 @@
           <context context-type="linenumber">105,110</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.none" datatype="html">
+        <source>Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.</source>
+        <target state="translated">There is no direct stratigraphic relationship between the resources. The relation is not considered in the matrix view.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.aboveBelow" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.</source>
+        <target state="translated">The resources are displayed one above the other in the matrix view.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.above" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.</source>
+        <target state="translated">The resources are equated in the matrix view.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

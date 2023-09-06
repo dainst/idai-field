@@ -437,7 +437,7 @@ test.describe('configuration --', () => {
     test('reset custom changes when swapping category form', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
-        await ConfigurationPage.clickAddFieldButton();        
+        await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.clickSelectField('dimensionDiameter');
         await AddFieldModalPage.clickConfirmSelection();
         await waitForExist(ConfigurationPage.getField('identifier'));
@@ -461,6 +461,27 @@ test.describe('configuration --', () => {
         await waitForExist(await ConfigurationPage.getCategory('Layer'));
         await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
         await ConfigurationPage.save();
+    });
+
+
+    test('do not allow creating custom field of same name for child and parent category', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Pottery', 'Find');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('newField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickConfirm();
+        await waitForExist(ConfigurationPage.getField('test:newField'));
+        await ConfigurationPage.save();
+
+        await CategoryPickerPage.clickSelectCategory('Find');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('new');
+        await waitForExist(await AddFieldModalPage.getCreateNewFieldButton());
+        await AddFieldModalPage.typeInSearchFilterInput('newField');
+        await waitForNotExist(await AddFieldModalPage.getCreateNewFieldButton());
+        await AddFieldModalPage.clickCancel();
     });
 
 

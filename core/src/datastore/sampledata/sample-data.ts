@@ -68,7 +68,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
-                'isAfter': ['si2', 'si5'],
+                'isAbove': ['si2', 'si5'],
             },
             'geometry' : {
                 'type': 'Polygon',
@@ -104,8 +104,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
-                'isBefore': ['si1'],
-                'isAfter': ['si3']
+                'isBelow': ['si1'],
+                'isAbove': ['si3']
             },
             'geometry' : {
                 'type': 'Polygon',
@@ -141,9 +141,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'shortDescription': getI18nString('architecture'),
             'relations': {
                 'isRecordedIn': ['t2'],
-                'isBefore': ['si2'],
-                'isAfter': ['si4'],
-                'isContemporaryWith': ['si5']
+                'isBelow': ['si2'],
+                'isAbove': ['si4'],
+                'bondsWith': ['si5']
             },
             'geometry' : {
                 'type': 'Polygon',
@@ -191,7 +191,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'shortDescription': getI18nString('grave'),
             'relations': {
                 'isRecordedIn': ['t2'],
-                'isBefore': ['si3'],
+                'isBelow': ['si3'],
             },
             'geometry' : {
                 'type': 'Polygon',
@@ -253,8 +253,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'shortDescription': getI18nString('layer'),
             'relations': {
                 'isRecordedIn': ['t2'],
-                'isBefore': ['si1'],
-                'isContemporaryWith': ['si3']
+                'isBelow': ['si1'],
+                'bondsWith': ['si3']
             },
             'geometry' : {
                 'type': 'Polygon',

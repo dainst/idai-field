@@ -20,9 +20,15 @@ export class AddFieldModalPage {
     }
 
 
-    public static clickCreateNewField() {
+    public static async clickCreateNewField() {
 
-        return click('.new-entry-button');
+        return click(await this.getCreateNewFieldButton());
+    }
+
+
+    public static clickCancel() {
+
+        return click('#cancel-add-field-modal-button');
     }
 
 
@@ -31,6 +37,12 @@ export class AddFieldModalPage {
     public static getSelectFieldButton(fieldName: string) {
 
         return getLocator('#select-field-' + fieldName);
+    }
+
+
+    public static getCreateNewFieldButton() {
+
+        return getLocator('.new-entry-button');
     }
 
 

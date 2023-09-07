@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.ProjectLive.Index do
-  alias FieldPublication.User
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project
@@ -20,29 +19,15 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"project_id" => id}) do
-    # A project input modal is part of this `live view` (which only requires a valid user login), but we restrict the project :edit action to admins.
-    if User.is_admin?(socket.assigns.current_user) do
-      socket
-      |> assign(:page_title, "Edit Project")
-      |> assign(:project, Project.get_project!(id))
-    else
-      socket
-      |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
-      |> Phoenix.LiveView.redirect(to: ~p"/")
-    end
+    socket
+    |> assign(:page_title, "Edit Project")
+    |> assign(:project, Project.get_project!(id))
   end
 
   defp apply_action(socket, :new, _params) do
-    # A project input modal is part of this `live view` (which only requires a valid user login), but we restrict the project :new action to admins.
-    if User.is_admin?(socket.assigns.current_user) do
-      socket
-      |> assign(:page_title, "New Project")
-      |> assign(:project, %Project{})
-    else
-      socket
-      |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
-      |> Phoenix.LiveView.redirect(to: ~p"/")
-    end
+    socket
+    |> assign(:page_title, "New Project")
+    |> assign(:project, %Project{})
   end
 
   defp apply_action(socket, :index, _params) do

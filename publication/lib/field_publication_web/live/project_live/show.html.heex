@@ -14,7 +14,10 @@
 
 <.list>
   <:item title="Project key"><%= @project.id %></:item>
-  <:item title="Editors"><%= Enum.join(@project.editors, ", ") %></:item>
+  <:item title="Editors">
+    <% combined = Enum.join(@project.editors, ", ") %>
+    <%= if combined != "", do: combined, else: "-" %>
+  </:item>
   <:item title="Publications">
     <table class="border-spacing-2 border-spacing-x-4 border-separate">
       <thead>

@@ -10,10 +10,10 @@ defmodule FieldPublication.Replication do
     CouchService,
     FileService,
     Schema.Project,
-    Schema.Publication,
     Replication.CouchReplication,
     Replication.FileReplication,
-    Replication.Parameters
+    Replication.Parameters,
+    Replication.MetadataGeneration
   }
 
   require Logger
@@ -170,56 +170,39 @@ defmodule FieldPublication.Replication do
           msg: "Starting file replication."
         })
 
-        parameters
-        |> FileReplication.start(publication_name, channel)
-        |> case do
-          {:error, name} = error ->
-            broadcast(channel, %LogEntry{
-              name: name,
-              severity: :error,
-              timestamp: DateTime.utc_now(),
-              msg: "File replication has failed."
-            })
+        {:ok, file_results} = FileReplication.start(parameters, publication_name, channel)
 
-            error
+        broadcast(channel, %LogEntry{
+          name: :file_replication_finished,
+          severity: :ok,
+          timestamp: DateTime.utc_now(),
+          msg: "File replication has finished."
+        })
 
-          {:ok, file_results} ->
-            broadcast(channel, %LogEntry{
-              name: :file_replication_finished,
-              severity: :ok,
-              timestamp: DateTime.utc_now(),
-              msg: "File replication has finished."
-            })
-
-            {:ok, Map.put(previous_results, :file_results, file_results)}
-        end
+        {:ok, Map.put(previous_results, :file_results, file_results)}
 
       error ->
         error
     end
     |> case do
       {:ok, previous_results} ->
-        create_publication_metadata(parameters, publication_name)
-        |> case do
-          {:error, name} ->
-            broadcast(channel, %LogEntry{
-              name: name,
-              severity: :ok,
-              timestamp: DateTime.utc_now(),
-              msg: "Publication's project configuration recreated."
-            })
+        broadcast(channel, %LogEntry{
+          name: :publication_configuration_recreated,
+          severity: :ok,
+          timestamp: DateTime.utc_now(),
+          msg: "Creating publication metadata."
+        })
 
-          {:ok, result} ->
-            broadcast(channel, %LogEntry{
-              name: :publication_configuration_recreated,
-              severity: :ok,
-              timestamp: DateTime.utc_now(),
-              msg: "Publication's project configuration recreated."
-            })
+        {:ok, result} = MetadataGeneration.create(parameters, publication_name)
 
-            {:ok, Map.put(previous_results, :project_configuration_recreation, result)}
-        end
+        broadcast(channel, %LogEntry{
+          name: :publication_configuration_recreated,
+          severity: :ok,
+          timestamp: DateTime.utc_now(),
+          msg: "Publication metadata created."
+        })
 
+        {:ok, Map.put(previous_results, :project_configuration_recreation, result)}
       error ->
         error
     end
@@ -281,68 +264,6 @@ defmodule FieldPublication.Replication do
       end
 
     {replication_stop, publication_deletion, file_deletion}
-  end
-
-  defp create_publication_metadata(
-         %Parameters{
-           source_url: source_url,
-           source_project_name: source_project_name,
-           local_project_name: project_name,
-           comments: comments
-         },
-         publication_name
-       ) do
-    url = Application.get_env(:field_publication, :couchdb_url)
-
-    {:ok, full_config} = create_full_configuration(url, publication_name)
-
-    configuration_doc_name = "#{publication_name}-config"
-
-    CouchService.get_document(configuration_doc_name)
-    |> case do
-      {:ok, %{status: 404}} ->
-        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
-
-      {:ok, %{status: 200, body: body}} ->
-        %{"_rev" => rev} = Jason.decode!(body)
-        CouchService.delete_document(configuration_doc_name, rev)
-        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
-    end
-
-    publication_metadata =
-      %Publication{
-        source_url: source_url,
-        source_project_name: source_project_name,
-        configuration_doc: configuration_doc_name,
-        database: publication_name,
-        draft_date: Date.utc_today(),
-        comments: comments
-      }
-
-    Project.get_project!(project_name)
-    |> Project.add_publication(publication_metadata)
-
-    {:ok, :metadata_created}
-  end
-
-  defp create_full_configuration(url, publication_name) do
-    System.cmd(
-      "node",
-      [
-        Application.app_dir(
-          :field_publication,
-          "priv/publication_enricher/dist/createFullConfiguration.js"
-        ),
-        publication_name,
-        url,
-        Application.get_env(:field_publication, :couchdb_admin_name),
-        Application.get_env(:field_publication, :couchdb_admin_password)
-      ]
-    )
-    |> case do
-      {full_configuration, 0} ->
-        {:ok, Jason.decode!(full_configuration)}
-    end
   end
 
   def broadcast(channel, %LogEntry{severity: severity, msg: msg} = log_entry) do

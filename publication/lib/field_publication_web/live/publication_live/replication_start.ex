@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.PublicationLive.NewDraft do
+defmodule FieldPublicationWeb.PublicationLive.ReplicationStart do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project
@@ -271,7 +271,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     socket =
       socket
       |> put_flash(:info, "Draft successfully created")
-      |> push_navigate(to: "/#{project.id}")
+      |> push_navigate(to: "/edit/#{project.id}")
 
     {:noreply, socket}
   end

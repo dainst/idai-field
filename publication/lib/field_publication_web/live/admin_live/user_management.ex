@@ -44,6 +44,8 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
       </tbody>
     </table>
 
+    <.back navigate={~p"/"}>To projects</.back>
+
     <.modal :if={@live_action in [:new, :new_password]} id="user-modal" show on_cancel={JS.patch(~p"/admin/users")}>
       <.live_component
         module={FieldPublicationWeb.AdminLive.UserFormComponent}

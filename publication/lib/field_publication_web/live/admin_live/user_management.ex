@@ -32,7 +32,7 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
                 <.link navigate={~p"/admin/users/#{user.name}/new_password"}>New password</.link>
               </span>
               <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                <.link phx-click={JS.push("delete", value: %{id: user.name}) |> hide("##{user.name}")}
+                <.link phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
                   data-confirm="Are you sure?">
                   Delete
                 </.link>
@@ -90,13 +90,8 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
     |> assign(:user, %User.InputSchema{})
   end
 
-  defp apply_action(socket, :delete, params) do
-    socket
-    |> assign(:page_title, "Listing Projects")
-  end
-
   @impl true
-  def handle_event("delete", %{"id" => name}, socket) do
+  def handle_event("delete", %{"name" => name}, socket) do
     User.delete(name)
     {
       :noreply,

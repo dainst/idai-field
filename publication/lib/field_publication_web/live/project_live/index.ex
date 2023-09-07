@@ -5,10 +5,16 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    projects =
+      Project.list_projects()
+      |> Enum.filter(fn(%Project{} = project) ->
+        Project.has_project_access?(project.id, socket.assigns.current_user)
+      end)
+
     {
       :ok,
       socket
-      |> assign(:projects, Project.list_projects())
+      |> assign(:projects, projects)
       |> assign(:page_title, "Listing Projects")
     }
   end

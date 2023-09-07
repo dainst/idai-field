@@ -27,15 +27,15 @@ defmodule FieldPublication.Worker.ImageProcessing do
   defp create_target_directory(target_path) do
     if @dev_mode do
       target_path = String.replace(target_path, "#{@web_images_directory}/", "")
-    System.cmd(
-      "docker", [
-        "exec",
-        "field_publication_cantaloupe",
-        "mkdir",
-        "-p",
-        "/image_root/#{target_path}"
-      ]
-    )
+      System.cmd(
+        "docker", [
+          "exec",
+          "field_publication_cantaloupe",
+          "mkdir",
+          "-p",
+          "/image_root/#{target_path}"
+        ]
+      )
     else
       File.mkdir_p!(target_path)
     end

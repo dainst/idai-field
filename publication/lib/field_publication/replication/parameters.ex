@@ -9,7 +9,7 @@ defmodule FieldPublication.Replication.Parameters do
     field :source_url, :string
     field :source_project_name, :string
     field :source_user, :string
-    field :source_password, :string
+    field :source_password, :string, redact: true
     field :local_project_name, :string
     field :local_delete_existing, :boolean, default: false
     embeds_many :comments, Translation

@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
           </div>
         </div>
       </div>
-      <.back navigate={~p"/#{@project.id}"}>Back to project</.back>
+      <.back navigate={~p"/edit/#{@project.id}"}>Back to project</.back>
     </div>
     """
   end

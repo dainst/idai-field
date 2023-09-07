@@ -1,11 +1,11 @@
 <.header>
   Project '<%= @project.id %>' <%= if @project.hidden, do: "(currently hidden)" %>
   <:actions>
-    <.link navigate={~p"/#{@project}/publication/new"}>
+    <.link navigate={~p"/edit/#{@project}/publication/new"}>
       <.button>Draft new publication</.button>
     </.link>
     <%= if FieldPublication.User.is_admin?(@current_user) do %>
-      <.link navigate={~p"/#{@project}/show/edit"} phx-click={JS.push_focus()}>
+      <.link navigate={~p"/admin/projects/#{@project}/show/edit"} phx-click={JS.push_focus()}>
         <.button>Edit project</.button>
       </.link>
     <% end %>
@@ -63,7 +63,7 @@
         <td><%= List.first(publication.comments, %{text: "No comment provided."}) |> then(fn(%{text: text}) -> text end) %></td>
         <td>
           <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-            <.link navigate={~p"/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>
+            <.link navigate={~p"/edit/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>
               Edit
             </.link>
           </span>
@@ -82,23 +82,23 @@
 
 <.back navigate={~p"/"}>Back to projects</.back>
 
-<.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/#{@project}")}>
+<.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/edit/#{@project}")}>
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
     id={@project.id}
     title={@page_title}
     action={@live_action}
     project={@project}
-    patch={~p"/#{@project}"}
+    patch={~p"/edit/#{@project}"}
   />
 </.modal>
 
-<.modal :if={@live_action in [:edit_publication]} id="publication-modal" show on_cancel={JS.patch(~p"/#{@project}")}>
+<.modal :if={@live_action in [:edit_publication]} id="publication-modal" show on_cancel={JS.patch(~p"/edit/#{@project}")}>
   <.live_component
     module={FieldPublicationWeb.PublicationLive.FormComponent}
     id={Date.to_string(@publication_to_edit.draft_date)}
     title={@page_title}
     publication={@publication_to_edit}
-    patch={~p"/#{@project}"}
+    patch={~p"/edit/#{@project}"}
   />
 </.modal>

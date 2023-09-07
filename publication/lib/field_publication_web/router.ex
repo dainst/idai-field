@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Router do
+
   use FieldPublicationWeb, :router
 
   import FieldPublicationWeb.UserAuth
@@ -36,29 +37,11 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/", ProjectLive.Index, :index
+      live "/edit", ProjectLive.Index, :index
     end
   end
 
-  # Routes that require the admin user to be logged in.
-  scope "/", FieldPublicationWeb do
-    pipe_through [:browser, :require_administrator]
-
-    live_session :require_administrator,
-      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-
-      live "/new", ProjectLive.Index, :new
-      live "/admin/users", AdminLive.UserManagement, :index
-      live "/admin/users/new", AdminLive.UserManagement, :new
-      live "/admin/users/:name/new_password", AdminLive.UserManagement, :new_password
-
-      live "/:project_id/delete", ProjectLive.Index, :delete
-      live "/:project_id/edit", ProjectLive.Index, :edit
-      live "/:project_id/show/edit", ProjectLive.Show, :edit
-    end
-  end
-
-  scope "/", FieldPublicationWeb do
+  scope "/edit", FieldPublicationWeb do
     pipe_through [:browser, :require_project_access]
 
     live_session :require_project_access,
@@ -72,13 +55,31 @@ defmodule FieldPublicationWeb.Router do
     end
   end
 
+  # Routes that require the admin user to be logged in.
+  scope "/admin", FieldPublicationWeb do
+    pipe_through [:browser, :require_administrator]
+
+    live_session :require_administrator,
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+
+      live "/users", AdminLive.UserManagement, :index
+      live "/users/new", AdminLive.UserManagement, :new
+      live "/users/:name/new_password", AdminLive.UserManagement, :new_password
+
+      live "/projects/new", ProjectLive.Index, :new
+      live "/projects/:project_id/delete", ProjectLive.Index, :delete
+      live "/projects/:project_id/edit", ProjectLive.Index, :edit
+      live "/projects/:project_id/show/edit", ProjectLive.Show, :edit
+    end
+  end
+
   # Routes without authentication required.
   scope "/", FieldPublicationWeb do
     pipe_through [:browser]
 
+    get "/", PageController, :home
     delete "/log_out", UserSessionController, :delete
   end
-
 
   # Other scopes may use custom stacks.
   # scope "/api", FieldPublicationWeb do

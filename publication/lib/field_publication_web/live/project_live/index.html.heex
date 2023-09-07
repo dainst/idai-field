@@ -2,7 +2,7 @@
   Listing Projects
   <:actions>
     <%= if FieldPublication.User.is_admin?(@current_user) do %>
-      <.link patch={~p"/new"}>
+      <.link patch={~p"/admin/projects/new"}>
         <.button>New Project</.button>
       </.link>
     <% end %>
@@ -44,11 +44,11 @@
       <td>
         <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
           <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-            <.link navigate={~p"/#{project}"}>Show</.link>
+            <.link navigate={~p"/edit/#{project}"}>Show</.link>
           </span>            
           <%= if FieldPublication.User.is_admin?(@current_user) do %>
             <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-              <.link navigate={~p"/#{project}/edit"} phx-click={JS.push_focus()}>
+              <.link navigate={~p"/admin/projects/#{project}/edit"} phx-click={JS.push_focus()}>
                 Edit
               </.link>
             </span>

@@ -29,6 +29,9 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
             <div class="flex flex-row">
               <div class="p-11">
                 <h2 class="text-2xl">Publication data</h2>
+                <div :if={@initialization_error} class="border-red-800 bg-red-200 p-2 border-2 rounded" >
+                  <%= @initialization_error %>
+                </div>
                 <.input field={@form[:source_url]} type="url" label="Source URL" />
                 <.input field={@form[:source_project_name]} type="text" label="Source project name" />
                 <.input field={@form[:source_user]} type="text" label="Source user name" />
@@ -120,6 +123,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
       :ok,
       socket
       |> assign(:project, Project.get_project!(project_id))
+      |> assign(:initialization_error, nil)
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
       |> assign(:replication_logs, [])
@@ -160,7 +164,12 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
       |> Parameters.changeset(replication_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :form, to_form(changeset))}
+    {
+      :noreply,
+      socket
+      |> assign(:initialization_error, nil)
+      |> assign( :form, to_form(changeset))
+    }
   end
 
   @impl true
@@ -219,16 +228,19 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
             parameters,
             socket.assigns.replication_log_channel
           )
+          |> case do
+            {:ok, :started} ->
+              socket
+              |> assign(:replication_running, true)
+              |> assign(:replication_logs, [])
+            {:error, msg} ->
+              socket
+              |> assign(:initialization_error, msg)
+          end
 
-          socket
-          |> assign(:replication_running, true)
-          |> assign(:replication_logs, [])
       end
 
     {:noreply, socket}
-  end
-
-  def add_comment() do
   end
 
   @impl true
@@ -243,12 +255,11 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     {:noreply, socket}
   end
 
-  def handle_info({:replication_result, {:error, error}}, socket) do
+  def handle_info({:replication_result, {:error, _error}}, socket) do
     socket =
       socket
       |> assign(:replication_running, false)
       |> put_flash(:info, "Error while creating draft.")
-      |> create_error_feedback(error)
 
     {:noreply, socket}
   end
@@ -288,26 +299,5 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
        :document_replication_status,
        Map.put(state, :percentage, state.counter / state.overall * 100)
      )}
-  end
-
-  defp create_error_feedback(
-         %{assigns: %{form: %{params: params}}} = socket,
-         %Mint.TransportError{} = error
-       ) do
-    changeset =
-      %Parameters{}
-      |> Parameters.changeset(params)
-      |> Parameters.set_source_connection_error(error)
-
-    assign(socket, :form, to_form(changeset))
-  end
-
-  defp create_error_feedback(%{assigns: %{form: %{params: params}}} = socket, :unauthorized) do
-    changeset =
-      %Parameters{}
-      |> Parameters.changeset(params)
-      |> Parameters.set_invalid_credentials()
-
-    assign(socket, :form, to_form(changeset))
   end
 end

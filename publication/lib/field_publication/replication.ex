@@ -19,16 +19,60 @@ defmodule FieldPublication.Replication do
   require Logger
 
   def start(%Parameters{local_project_name: local_project_name} = params, broadcast_channel) do
-    broadcast(broadcast_channel, %LogEntry{
-      name: :start,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "Starting replication for #{local_project_name}."
-    })
+    with {:ok, :connection_successful} <- check_source_connection(params) do
 
-    Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
-      replicate(params, broadcast_channel)
-    end)
+      broadcast(broadcast_channel, %LogEntry{
+        name: :start,
+        severity: :ok,
+        timestamp: DateTime.utc_now(),
+        msg: "Starting replication for #{local_project_name}."
+      })
+
+       Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
+         replicate(params, broadcast_channel)
+       end)
+      {:ok, :started}
+    else
+      error ->
+        error
+    end
+  end
+
+  defp check_source_connection(%Parameters{
+         source_url: url,
+         source_project_name: project_name,
+         source_user: user,
+         source_password: password
+       }) do
+    Finch.build(
+      :head,
+      "#{url}/db/#{project_name}",
+      CouchService.headers(user, password)
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> IO.inspect()
+    |> case do
+      {:ok, %{status: 200, headers: headers}} ->
+        Enum.find(headers, nil, fn({key, value}) -> key == "server" and String.starts_with?(value, "CouchDB") end)
+        |> case do
+          nil ->
+            {:error, :no_couchdb}
+          _ ->
+            {:ok, :connection_successful}
+        end
+
+      {:ok, %{status: 404}} ->
+        {:error, :not_found}
+
+      {:ok, %{status: 401}} ->
+        {:error, :not_authorized}
+
+      {:error, %Mint.TransportError{reason: :nxdomain}} ->
+        {:error, :non_existent_domain}
+
+      {:error, %Mint.TransportError{reason: :econnrefused}} ->
+        {:error, :connection_refused}
+    end
   end
 
   defp replicate(

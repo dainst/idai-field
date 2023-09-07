@@ -37,29 +37,8 @@ defmodule FieldPublication.Replication.Parameters do
     |> cast_embed(:comments)
   end
 
-  def set_source_connection_error(changeset, %Mint.TransportError{reason: :nxdomain}) do
-    changeset
-    |> add_error(:source_url, "domain not nound")
-    |> Map.put(:action, :insert)
-  end
-
-  def set_source_connection_error(changeset, %Mint.TransportError{reason: :econnrefused}) do
-    changeset
-    |> add_error(:source_url, "connection refused")
-    |> Map.put(:action, :insert)
-  end
-
-  def set_invalid_credentials(changeset) do
-    changeset
-    |> add_error(:source_project_name, "invalid credentials")
-    |> add_error(:source_user, "invalid credentials")
-    |> add_error(:source_password, "invalid credentials")
-    |> Map.put(:action, :insert)
-  end
-
-  # TODO: Move out of this module
   def create(params) do
-    changeset(%FieldPublication.Replication.Parameters{}, params)
+    changeset(%__MODULE__{}, params)
     |> apply_action(:create)
   end
 end

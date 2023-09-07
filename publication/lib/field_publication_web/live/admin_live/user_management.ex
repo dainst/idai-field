@@ -89,8 +89,6 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
   end
 
   defp apply_action(socket, :delete, params) do
-
-    IO.inspect(params)
     socket
     |> assign(:page_title, "Listing Projects")
   end

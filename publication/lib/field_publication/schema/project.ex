@@ -4,6 +4,7 @@ defmodule FieldPublication.Schema.Project do
   import Ecto.Changeset
 
   alias FieldPublication.CouchService
+  alias FieldPublication.FileService
   alias FieldPublication.Schema.Publication
   alias FieldPublication.User
 
@@ -93,7 +94,7 @@ defmodule FieldPublication.Schema.Project do
               |> Jason.decode!()
               |> Map.get("rev")
 
-              updated_project.publications
+            updated_project.publications
             |> Enum.map(fn(%Publication{} = publication) ->
               CouchService.update_database_members(publication.database, updated_project.editors)
             end)
@@ -125,7 +126,6 @@ defmodule FieldPublication.Schema.Project do
 
     Map.replace(project, :publications, updated)
     |> update_project()
-
   end
 
   def remove_publication(%__MODULE__{} = project, %Publication{} = removed_publication) do
@@ -134,10 +134,21 @@ defmodule FieldPublication.Schema.Project do
       |> Enum.reject(fn(%Publication{} = existing) ->
         existing.draft_date == removed_publication.draft_date
       end)
-      |> Enum.map(&Map.from_struct/1)
 
-    project
-    |> update_project(%{publications: filtered})
+    removed_publication.database
+    |> CouchService.delete_database()
+
+    removed_publication.configuration_doc
+    |> CouchService.get_document()
+    |> then(fn({:ok, %{status: 200, body: body}}) -> Jason.decode!(body) end)
+    |> then(fn(%{"_id" => id, "_rev" => rev}) ->
+      CouchService.delete_document(id, rev)
+    end)
+
+    FileService.delete_publication("#{project.id}_publication_#{removed_publication.draft_date}")
+
+    Map.replace(project, :publications, filtered)
+    |> update_project()
   end
 
   def has_project_access?(_project_name, nil) do

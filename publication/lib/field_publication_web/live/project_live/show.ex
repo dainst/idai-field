@@ -57,6 +57,15 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
     {:noreply, assign(socket, :project, updated_project)}
   end
 
+  @impl true
+  def handle_event("delete_publication", %{"date" => date}, socket) do
+    deleted = Enum.find(socket.assigns.project.publications, fn(publication) -> Date.to_string(publication.draft_date) == date end)
+
+    {:ok, updated_project} = Project.remove_publication(socket.assigns.project, deleted)
+
+    {:noreply, assign(socket, :project, updated_project)}
+  end
+
   defp page_title(:show), do: "Show Project"
   defp page_title(:edit), do: "Edit Project"
   defp page_title(:edit_publication), do: "Edit publication"

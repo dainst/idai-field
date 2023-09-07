@@ -29,7 +29,10 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
             <div class="flex flex-row">
               <div class="p-11">
                 <h2 class="text-2xl">Publication data</h2>
-                <div :if={@initialization_error} class="border-red-800 bg-red-200 p-2 border-2 rounded" >
+                <div
+                  :if={@initialization_error}
+                  class="border-red-800 bg-red-200 p-2 border-2 rounded"
+                >
                   <%= @initialization_error %>
                 </div>
                 <.input field={@form[:source_url]} type="url" label="Source URL" />
@@ -168,7 +171,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
       :noreply,
       socket
       |> assign(:initialization_error, nil)
-      |> assign( :form, to_form(changeset))
+      |> assign(:form, to_form(changeset))
     }
   end
 
@@ -233,11 +236,11 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
               socket
               |> assign(:replication_running, true)
               |> assign(:replication_logs, [])
+
             {:error, msg} ->
               socket
               |> assign(:initialization_error, msg)
           end
-
       end
 
     {:noreply, socket}

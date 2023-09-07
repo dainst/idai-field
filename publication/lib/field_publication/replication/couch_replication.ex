@@ -57,21 +57,29 @@ defmodule FieldPublication.Replication.CouchReplication do
     }
   end
 
-  def stop_replication(name) do
-    doc =
-      CouchService.get_document(name, "_replicator")
-      |> then(fn {:ok, %{body: body}} ->
-        body
-      end)
-      |> Jason.decode!()
-
-    case doc do
+  def get_replication_doc(name) do
+    CouchService.get_document(name, "_replicator")
+    |> then(fn {:ok, %{body: body}} ->
+      body
+    end)
+    |> Jason.decode!()
+    |> case do
       %{"error" => "not_found"} ->
-        {:ok, :already_deleted}
+        {:error, :not_found}
 
       doc ->
-        {:ok, %{status: 200}} =
-          CouchService.delete_document(doc["_id"], doc["_rev"], "_replicator")
+        {:ok, doc}
+    end
+  end
+
+  def stop_replication(name) do
+    get_replication_doc(name)
+    |> case do
+      {:error, :not_found} ->
+        {:ok, :not_found}
+
+      {:ok, %{"_id" => id, "_rev" => rev}} ->
+        {:ok, %{status: 200}} = CouchService.delete_document(id, rev, "_replicator")
 
         {:ok, :deleted}
     end

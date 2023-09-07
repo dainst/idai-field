@@ -19,8 +19,8 @@ defmodule FieldPublication.Replication do
   require Logger
 
   def start(%Parameters{local_project_name: local_project_name} = params, broadcast_channel) do
-    with {:ok, :connection_successful} <- check_source_connection(params) do
-
+    with {:ok, :connection_successful} <- check_source_connection(params),
+         {:ok, _} <- ensure_no_existing_publication(params, broadcast_channel) do
       broadcast(broadcast_channel, %LogEntry{
         name: :start,
         severity: :ok,
@@ -28,13 +28,59 @@ defmodule FieldPublication.Replication do
         msg: "Starting replication for #{local_project_name}."
       })
 
-       Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
-         replicate(params, broadcast_channel)
-       end)
+      Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
+        replicate(params, broadcast_channel)
+      end)
+
       {:ok, :started}
     else
       error ->
         error
+    end
+  end
+
+  defp ensure_no_existing_publication(
+         %Parameters{
+           local_project_name: name,
+           local_delete_existing: true
+         },
+         channel
+       ) do
+    name
+    |> generate_publication_name()
+    |> delete_existing_publication(channel)
+
+    {:ok, :deleted_existing}
+  end
+
+  defp ensure_no_existing_publication(
+         %Parameters{
+           local_project_name: name
+         },
+         _channel
+       ) do
+    project = Project.get_project!(name)
+
+    project.publications
+    |> Enum.any?(fn publication -> publication.draft_date == Date.utc_today() end)
+    |> case do
+      true ->
+        {:error, :existing_publication}
+
+      false ->
+        name
+        |> generate_publication_name()
+        |> CouchReplication.get_replication_doc()
+        |> case do
+          {:ok, %{"_replication_state" => "completed"}} ->
+            {:ok, :no_publication}
+
+          {:ok, _} ->
+            {:error, :active_replication}
+
+          {:error, :not_found} ->
+            {:ok, :no_publication}
+        end
     end
   end
 
@@ -50,13 +96,15 @@ defmodule FieldPublication.Replication do
       CouchService.headers(user, password)
     )
     |> Finch.request(FieldPublication.Finch)
-    |> IO.inspect()
     |> case do
       {:ok, %{status: 200, headers: headers}} ->
-        Enum.find(headers, nil, fn({key, value}) -> key == "server" and String.starts_with?(value, "CouchDB") end)
+        Enum.find(headers, nil, fn {key, value} ->
+          key == "server" and String.starts_with?(value, "CouchDB")
+        end)
         |> case do
           nil ->
             {:error, :no_couchdb}
+
           _ ->
             {:ok, :connection_successful}
         end
@@ -77,16 +125,11 @@ defmodule FieldPublication.Replication do
 
   defp replicate(
          %Parameters{
-           local_project_name: project_name,
-           local_delete_existing: delete
+           local_project_name: project_name
          } = parameters,
          channel
        ) do
-    publication_name = "#{project_name}_publication_#{Date.utc_today()}"
-
-    if delete do
-      {{:ok, _}, {:ok, _}, {:ok, _}} = delete_existing_publication(publication_name, channel)
-    end
+    publication_name = generate_publication_name(project_name)
 
     broadcast(channel, %LogEntry{
       name: :db_start,
@@ -222,7 +265,6 @@ defmodule FieldPublication.Replication do
 
     file_deletion =
       FileService.delete_publication(name)
-      |> IO.inspect()
       |> case do
         {:ok, []} ->
           {:ok, :already_deleted}
@@ -317,5 +359,9 @@ defmodule FieldPublication.Replication do
 
   def broadcast(channel, {:result, result}) do
     PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, result})
+  end
+
+  defp generate_publication_name(project_name) do
+    "#{project_name}_publication_#{Date.utc_today()}"
   end
 end

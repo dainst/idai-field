@@ -38,9 +38,8 @@ defmodule FieldPublicationWeb.Router do
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
       live "/", ProjectLive.Index, :index
       live "/new", ProjectLive.Index, :new
-      live "/:id/edit", ProjectLive.Index, :edit
+
       live "/:id", ProjectLive.Show, :show
-      live "/:id/show/edit", ProjectLive.Show, :edit
 
       live "/:project_id/publication/new", PublicationLive.NewDraft, :new
       live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
@@ -53,6 +52,10 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_administrator,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+
+      live "/:id/edit", ProjectLive.Index, :edit
+      live "/:id/show/edit", ProjectLive.Show, :edit
+
       live "/admin/users", AdminLive.UserManagement, :index
       live "/admin/users/new", AdminLive.UserManagement, :new
       live "/admin/users/:name/new_password", AdminLive.UserManagement, :new_password

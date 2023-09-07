@@ -212,30 +212,37 @@ defmodule FieldPublication.CouchService do
     end
   end
 
-  @doc """
-  Returns a list of all databases (excluding CouchDB's internal ones: `_users` and `_replicator`).
-  """
-  def get_project_databases() do
+
+  def update_database_members(database_name, member_names) do
     Finch.build(
       :get,
-      "#{local_url()}/_all_dbs",
+      "#{local_url()}/#{database_name}/_security",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
     |> case do
-      {:ok, %Finch.Response{body: body, status: 200} = _response} ->
-        body
-        |> Jason.decode!()
-        |> Stream.reject(fn name ->
-          name in (@system_databases ++ @application_databases) or
-            Regex.match?(@publication_suffix, name)
-        end)
-        |> Enum.to_list()
-        |> Enum.sort()
+      {:ok, %{status: 200, body: body}} ->
+        %{"admins" => existing_admins} = Jason.decode!(body)
 
-      everything_else ->
-        Logger.error(everything_else)
-        []
+        payload = %{
+          admins: existing_admins,
+          members: %{
+            names: member_names,
+            roles: []
+          }
+        }
+        |> Jason.encode!()
+
+        Finch.build(
+          :put,
+          "#{local_url()}/#{database_name}/_security",
+          headers(),
+          payload
+        )
+        |> Finch.request(FieldPublication.Finch)
+
+      {:ok, %{status: 404}} = res ->
+        {:unknown_project, res}
     end
   end
 

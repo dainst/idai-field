@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Schema.Project
+  alias FieldPublication.User
 
   @impl true
   def render(assigns) do
@@ -29,6 +30,10 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           <% _ -> %>
         <% end %>
         <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
+        <.input field={@form[:editors]} type="select" multiple={true} options={@users} label="Editors" />
+        <a phx-click={"clear_editors"} phx-target={@myself} type="button" class="cursor-pointer block !mt-0 w-full text-center p-1 bg-zinc-900 hover:bg-zinc-700 rounded-b-md text-white">
+          Clear
+        </a>
         <:actions>
           <.button phx-disable-with="Saving...">Save Project</.button>
         </:actions>
@@ -40,11 +45,14 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   @impl true
   def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
-
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign_form(changeset)}
+    users = User.list() |> Enum.map(fn(%{name: name}) -> name end)
+    {
+      :ok,
+      socket
+      |> assign(assigns)
+      |> assign(:users, users)
+      |> assign_form(changeset)
+    }
   end
 
   @impl true
@@ -59,6 +67,18 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
   def handle_event("save", %{"project" => project_params}, socket) do
     save_project(socket, socket.assigns.action, project_params)
+  end
+
+  def handle_event("clear_editors", _, socket) do
+    changeset =
+      socket.assigns.project
+      |> Project.changeset(%{editors: []})
+      |> Map.put(:action, :update)
+    {
+      :noreply,
+      socket
+      |> assign_form(changeset)
+    }
   end
 
   defp save_project(socket, :edit, project_params) do

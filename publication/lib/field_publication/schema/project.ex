@@ -12,13 +12,14 @@ defmodule FieldPublication.Schema.Project do
     field :_rev, :string
     field :doc_type, :string, default: @doc_type
     field :hidden, :boolean, default: true
+    field :editors, {:array, :string}, default: []
     embeds_many :publications, Publication
   end
 
   @doc false
   def changeset(project, attrs \\ %{}) do
     project
-    |> cast(attrs, [:id, :_rev, :hidden])
+    |> cast(attrs, [:id, :_rev, :hidden, :editors])
     |> cast_embed(:publications)
     |> validate_required([:id])
     |> FieldPublication.Schema.validate_doc_type(@doc_type)
@@ -75,15 +76,15 @@ defmodule FieldPublication.Schema.Project do
     end
   end
 
-  def update_project(%__MODULE__{} = project, params \\ %{}) do
-    project
-    |> changeset(params)
+  def update_project(%__MODULE__{} = old_project, update_params \\ %{}) do
+    old_project
+    |> changeset(update_params)
     |> apply_action(:update)
     |> case do
       {:error, _changeset} = error ->
         error
-      {:ok, project} ->
-        CouchService.put_document(project)
+      {:ok, updated_project} ->
+        CouchService.put_document(updated_project)
         |> case do
           {:ok, %{status: 201, body: body}} ->
             new_rev =
@@ -91,7 +92,13 @@ defmodule FieldPublication.Schema.Project do
               |> Jason.decode!()
               |> Map.get("rev")
 
-            {:ok, Map.put(project, :_rev, new_rev)}
+              updated_project.publications
+            |> Enum.map(fn(%Publication{} = publication) ->
+              CouchService.update_database_members(publication.database, updated_project.editors)
+            end)
+
+            # Update the CouchDB document revision that changed with the successful `CouchService.put_document/1` above.
+            {:ok, Map.put(updated_project, :_rev, new_rev)}
         end
     end
   end

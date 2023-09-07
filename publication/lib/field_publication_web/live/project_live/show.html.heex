@@ -12,6 +12,7 @@
 
 <.list>
   <:item title="Project key"><%= @project.id %></:item>
+  <:item title="Editors"><%= Enum.join(@project.editors, ", ") %></:item>
   <:item title="Publications">
     <table class="border-spacing-2 border-spacing-x-4 border-separate">
       <thead>

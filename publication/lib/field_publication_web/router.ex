@@ -37,12 +37,6 @@ defmodule FieldPublicationWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
       live "/", ProjectLive.Index, :index
-      live "/new", ProjectLive.Index, :new
-
-      live "/:id", ProjectLive.Show, :show
-
-      live "/:project_id/publication/new", PublicationLive.NewDraft, :new
-      live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
     end
   end
 
@@ -53,13 +47,28 @@ defmodule FieldPublicationWeb.Router do
     live_session :require_administrator,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
 
-      live "/:id/edit", ProjectLive.Index, :edit
-      live "/:id/show/edit", ProjectLive.Show, :edit
-
+      live "/new", ProjectLive.Index, :new
       live "/admin/users", AdminLive.UserManagement, :index
       live "/admin/users/new", AdminLive.UserManagement, :new
       live "/admin/users/:name/new_password", AdminLive.UserManagement, :new_password
-      live "/admin/users/:name/delete", AdminLive.UserManagement, :delete
+
+      live "/:project_id/delete", ProjectLive.Index, :delete
+      live "/:project_id/edit", ProjectLive.Index, :edit
+      live "/:project_id/show/edit", ProjectLive.Show, :edit
+    end
+  end
+
+  scope "/", FieldPublicationWeb do
+    pipe_through [:browser, :require_project_access]
+
+    live_session :require_project_access,
+      on_mount: [
+        {FieldPublicationWeb.UserAuth, :ensure_authenticated},
+        {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
+      ] do
+        live "/:project_id", ProjectLive.Show, :show
+        live "/:project_id/publication/new", PublicationLive.NewDraft, :new
+        live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
     end
   end
 

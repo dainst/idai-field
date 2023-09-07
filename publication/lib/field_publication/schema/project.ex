@@ -5,6 +5,7 @@ defmodule FieldPublication.Schema.Project do
 
   alias FieldPublication.CouchService
   alias FieldPublication.Schema.Publication
+  alias FieldPublication.User
 
   @doc_type "project"
   @primary_key {:id, :binary_id, autogenerate: false}
@@ -137,5 +138,18 @@ defmodule FieldPublication.Schema.Project do
 
     project
     |> update_project(%{publications: filtered})
+  end
+
+  def has_project_access?(_project_name, nil) do
+    false
+  end
+
+  def has_project_access?(project_name, user_name) do
+    if User.is_admin?(user_name) do
+      true
+    else
+      project = get_project!(project_name)
+      user_name in project.editors
+    end
   end
 end

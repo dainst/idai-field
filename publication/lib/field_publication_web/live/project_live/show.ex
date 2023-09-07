@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project
+  alias FieldPublication.User
 
   @impl true
   def mount(_params, _session, socket) do
@@ -9,15 +10,30 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
-    {:noreply,
-     socket
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:project, Project.get_project!(id))}
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  @impl true
-  def handle_params(%{"project_id" => project_id, "draft_date" => draft_date}, _, socket) do
+  defp apply_action(socket, :show, %{"project_id" => id}) do
+    socket
+    |> assign(:page_title, page_title(socket.assigns.live_action))
+    |> assign(:project, Project.get_project!(id))
+  end
+
+  defp apply_action(socket, :edit, %{"project_id" => id}) do
+    # A project modal is part of this `live view` (which only requires editor status), but we restrict the project :edit action to admins.
+    if User.is_admin?(socket.assigns.current_user) do
+      socket
+      |> assign(:page_title, page_title(socket.assigns.live_action))
+      |> assign(:project, Project.get_project!(id))
+    else
+      socket
+      |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+      |> Phoenix.LiveView.redirect(to: ~p"/")
+    end
+  end
+
+  defp apply_action(socket, :edit_publication, %{"project_id" => project_id, "draft_date" => draft_date}) do
     project = Project.get_project!(project_id)
     publication = Enum.find(project.publications, fn(pub) -> Date.to_string(pub.draft_date) == draft_date end)
 
@@ -40,7 +56,6 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
 
     {:noreply, assign(socket, :project, updated_project)}
   end
-
 
   defp page_title(:show), do: "Show Project"
   defp page_title(:edit), do: "Edit Project"

@@ -4,9 +4,11 @@
     <.link navigate={~p"/#{@project}/publication/new"}>
       <.button>Draft new publication</.button>
     </.link>
-    <.link patch={~p"/#{@project}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit project</.button>
-    </.link>
+    <%= if FieldPublication.User.is_admin?(@current_user) do %>
+      <.link navigate={~p"/#{@project}/show/edit"} phx-click={JS.push_focus()}>
+        <.button>Edit project</.button>
+      </.link>
+    <% end %>
   </:actions>
 </.header>
 

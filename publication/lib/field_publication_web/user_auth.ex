@@ -165,6 +165,36 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
+  def on_mount(:ensure_has_project_access, %{"project_id" => project_name}, session, socket) do
+    socket = mount_current_user(socket, session)
+
+    if FieldPublication.Schema.Project.has_project_access?(project_name, socket.assigns.current_user) do
+      {:cont, socket}
+    else
+      socket =
+        socket
+        |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+        |> Phoenix.LiveView.redirect(to: ~p"/")
+
+      {:halt, socket}
+    end
+  end
+
+  def on_mount(:ensure_is_admin, _params, session, socket) do
+    socket = mount_current_user(socket, session)
+
+    if FieldPublication.User.is_admin?(socket.assigns.current_user) do
+      {:cont, socket}
+    else
+      socket =
+        socket
+        |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+        |> Phoenix.LiveView.redirect(to: ~p"/")
+
+      {:halt, socket}
+    end
+  end
+
   def on_mount(:redirect_if_user_is_authenticated, _params, session, socket) do
     socket = mount_current_user(socket, session)
 
@@ -212,16 +242,31 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   @doc """
+  Used for routes that require the user to be authenticated.
+  """
+  def require_project_access(%{params: %{"project_id" => project_id}} = conn, _opts) do
+
+    if FieldPublication.Schema.Project.has_project_access?(project_id, conn.assigns[:current_user]) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not allowed to access that page.")
+      |> redirect(to: ~p"/")
+      |> halt()
+    end
+  end
+
+  @doc """
   Used for routes exclusive to the CouchDB admin.
   """
   def require_administrator(conn, _opts) do
+
     if FieldPublication.User.is_admin?(conn.assigns[:current_user]) do
       conn
     else
       conn
       |> put_flash(:error, "You are not allowed to access that page.")
-      |> maybe_store_return_to()
-      |> redirect(to: ~p"/log_in")
+      |> redirect(to: ~p"/")
       |> halt()
     end
   end

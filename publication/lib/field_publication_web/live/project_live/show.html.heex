@@ -80,7 +80,7 @@
   </:item>
 </.list>
 
-<.back navigate={~p"/"}>Back to projects</.back>
+<.back navigate={~p"/edit"}>Back to projects</.back>
 
 <.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/edit/#{@project}")}>
   <.live_component

@@ -20,7 +20,6 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   ]
 
 config :field_publication,
-  development_mode: true,
   couchdb_url: "http://localhost:5985",
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",

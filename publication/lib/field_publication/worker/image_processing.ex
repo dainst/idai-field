@@ -5,7 +5,7 @@ defmodule FieldPublication.Worker.ImageProcessing do
 
   @web_images_directory Application.compile_env(:field_publication, :web_images_directory_root)
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
-  @dev_mode Application.compile_env(:field_publication, :development_mode, false)
+  @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
   def prepare_publication(publication_name) do
     source_files =

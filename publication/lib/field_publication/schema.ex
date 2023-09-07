@@ -1,8 +1,8 @@
-defimpl Jason.Encoder, for: [
-  FieldPublication.Schema.Project
-] do
+defimpl Jason.Encoder,
+  for: [
+    FieldPublication.Schema.Project
+  ] do
   def encode(%{id: id} = document, opts) do
-
     document
     |> Map.from_struct()
     |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
@@ -20,12 +20,14 @@ defmodule FieldPublication.Schema do
     |> case do
       {:data, ^expected} ->
         changeset
+
       {:data, type} ->
         changeset
         |> add_error(
           :doc_type,
           "expected 'doc_type' with value '#{expected}', got '#{type}'"
         )
+
       :error ->
         changeset
         |> add_error(

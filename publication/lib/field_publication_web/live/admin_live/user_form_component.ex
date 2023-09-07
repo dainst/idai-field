@@ -19,22 +19,35 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
-      <%= case @action do %>
-        <% :new_password -> %>
-          <.input field={@form[:name]} type="hidden" />
-          <div class="relative">
+        <%= case @action do %>
+          <% :new_password -> %>
+            <.input field={@form[:name]} type="hidden" />
+            <div class="relative">
               <.input field={@form[:password]} type="text" label=" New Password" />
-              <.button type="button" phx-click={"generate_password"} phx-target={@myself} class="absolute right-0 bottom-0 border-2 rounded-l-none">Generate</.button>
-          </div>
-        <% :new -> %>
-          <.input field={@form[:name]} type="text" label="Name" />
-          <div class="relative">
+              <.button
+                type="button"
+                phx-click="generate_password"
+                phx-target={@myself}
+                class="absolute right-0 bottom-0 border-2 rounded-l-none"
+              >
+                Generate
+              </.button>
+            </div>
+          <% :new -> %>
+            <.input field={@form[:name]} type="text" label="Name" />
+            <div class="relative">
               <.input field={@form[:password]} type="text" label="Password" />
-              <.button type="button" phx-click={"generate_password"} phx-target={@myself} class="absolute right-0 bottom-0 border-2 rounded-l-none">Generate</.button>
-          </div>
-        <% _ -> %>
-      <% end %>
+              <.button
+                type="button"
+                phx-click="generate_password"
+                phx-target={@myself}
+                class="absolute right-0 bottom-0 border-2 rounded-l-none"
+              >
+                Generate
+              </.button>
+            </div>
+          <% _ -> %>
+        <% end %>
         <:actions>
           <.button phx-disable-with="Saving...">Save User</.button>
         </:actions>
@@ -65,7 +78,7 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
     {:noreply, assign(socket, :form, to_form(changeset))}
   end
 
-  def handle_event("generate_password", _,  %{assigns: %{form: %{source: source}}} = socket) do
+  def handle_event("generate_password", _, %{assigns: %{form: %{source: source}}} = socket) do
     changeset =
       source
       |> Ecto.Changeset.put_change(:password, CouchService.generate_password())
@@ -82,6 +95,7 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
+
       %{name: name} ->
         notify_parent({:saved, name})
 
@@ -101,6 +115,7 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
         IO.inspect(changeset)
 
         {:noreply, assign(socket, :form, to_form(changeset))}
+
       %{name: name} ->
         notify_parent({:saved, name})
 

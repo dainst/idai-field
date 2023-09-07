@@ -11,11 +11,11 @@ defmodule FieldPublication.Schema.Project do
   @doc_type "project"
   @primary_key {:id, :binary_id, autogenerate: false}
   embedded_schema do
-    field :_rev, :string
-    field :doc_type, :string, default: @doc_type
-    field :hidden, :boolean, default: true
-    field :editors, {:array, :string}, default: []
-    embeds_many :publications, Publication
+    field(:_rev, :string)
+    field(:doc_type, :string, default: @doc_type)
+    field(:hidden, :boolean, default: true)
+    field(:editors, {:array, :string}, default: [])
+    embeds_many(:publications, Publication)
   end
 
   @doc false
@@ -40,15 +40,15 @@ defmodule FieldPublication.Schema.Project do
   end
 
   def list_projects() do
-    CouchService.run_find_query(%{selector: %{ doc_type: "project"}})
+    CouchService.run_find_query(%{selector: %{doc_type: "project"}})
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body
         |> Jason.decode!()
-        |> then(fn(%{"docs" => docs}) ->
+        |> then(fn %{"docs" => docs} ->
           docs
         end)
-        |> Enum.map(fn(doc) ->
+        |> Enum.map(fn doc ->
           changeset(%__MODULE__{}, doc)
           |> apply_changes()
         end)
@@ -62,12 +62,13 @@ defmodule FieldPublication.Schema.Project do
     |> case do
       {:error, _changeset} = error ->
         error
+
       {:ok, project} ->
         CouchService.put_document(project)
         |> case do
           {:ok, %{status: 201, body: body}} ->
-
             result = Jason.decode!(body)
+
             {
               :ok,
               %__MODULE__{}
@@ -85,6 +86,7 @@ defmodule FieldPublication.Schema.Project do
     |> case do
       {:error, _changeset} = error ->
         error
+
       {:ok, updated_project} ->
         CouchService.put_document(updated_project)
         |> case do
@@ -95,7 +97,7 @@ defmodule FieldPublication.Schema.Project do
               |> Map.get("rev")
 
             updated_project.publications
-            |> Enum.map(fn(%Publication{} = publication) ->
+            |> Enum.map(fn %Publication{} = publication ->
               CouchService.update_database_members(publication.database, updated_project.editors)
             end)
 
@@ -116,13 +118,13 @@ defmodule FieldPublication.Schema.Project do
   def add_publication(%__MODULE__{} = project, %Publication{} = new_publication) do
     filtered =
       project.publications
-      |> Enum.reject(fn(%Publication{} = existing) ->
+      |> Enum.reject(fn %Publication{} = existing ->
         existing.draft_date == new_publication.draft_date
       end)
 
     updated =
-      filtered ++ [new_publication]
-      |> Enum.sort(fn(a, b) -> a.draft_date > b.draft_date end)
+      (filtered ++ [new_publication])
+      |> Enum.sort(fn a, b -> a.draft_date > b.draft_date end)
 
     Map.replace(project, :publications, updated)
     |> update_project()
@@ -131,7 +133,7 @@ defmodule FieldPublication.Schema.Project do
   def remove_publication(%__MODULE__{} = project, %Publication{} = removed_publication) do
     filtered =
       project.publications
-      |> Enum.reject(fn(%Publication{} = existing) ->
+      |> Enum.reject(fn %Publication{} = existing ->
         existing.draft_date == removed_publication.draft_date
       end)
 
@@ -140,8 +142,8 @@ defmodule FieldPublication.Schema.Project do
 
     removed_publication.configuration_doc
     |> CouchService.get_document()
-    |> then(fn({:ok, %{status: 200, body: body}}) -> Jason.decode!(body) end)
-    |> then(fn(%{"_id" => id, "_rev" => rev}) ->
+    |> then(fn {:ok, %{status: 200, body: body}} -> Jason.decode!(body) end)
+    |> then(fn %{"_id" => id, "_rev" => rev} ->
       CouchService.delete_document(id, rev)
     end)
 

@@ -9,13 +9,13 @@ defmodule FieldPublicationWeb.UserSessionController do
   end
 
   defp create(conn, %{"user" => %{"name" => name, "password" => password}} = form_params, info) do
-
     CouchService.authenticate(name, password)
     |> case do
       {:ok, :authenticated} ->
         conn
         |> put_flash(:info, info)
         |> UserAuth.log_in_user(name, form_params)
+
       _ ->
         conn
         |> put_flash(:error, "Invalid name or password")

@@ -26,16 +26,18 @@ defmodule FieldPublication.Replication do
       msg: "Starting replication for #{local_project_name}."
     })
 
-    Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn() ->
+    Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
       replicate(params, broadcast_channel)
     end)
   end
 
-  defp replicate(%Parameters{
-      local_project_name: project_name,
-      local_delete_existing: delete
-    } = parameters, channel) do
-
+  defp replicate(
+         %Parameters{
+           local_project_name: project_name,
+           local_delete_existing: delete
+         } = parameters,
+         channel
+       ) do
     publication_name = "#{project_name}_publication_#{Date.utc_today()}"
 
     if delete do
@@ -61,6 +63,7 @@ defmodule FieldPublication.Replication do
         })
 
         {:ok, %{couch_result: :successful}}
+
       {:error, name} = error ->
         broadcast(channel, %LogEntry{
           name: name,
@@ -92,6 +95,7 @@ defmodule FieldPublication.Replication do
             })
 
             error
+
           {:ok, file_results} ->
             broadcast(channel, %LogEntry{
               name: :file_replication_finished,
@@ -102,6 +106,7 @@ defmodule FieldPublication.Replication do
 
             {:ok, Map.put(previous_results, :file_results, file_results)}
         end
+
       error ->
         error
     end
@@ -126,11 +131,12 @@ defmodule FieldPublication.Replication do
             })
 
             {:ok, Map.put(previous_results, :project_configuration_recreation, result)}
-          end
+        end
+
       error ->
         error
     end
-    |> then(fn(result_or_error) ->
+    |> then(fn result_or_error ->
       broadcast(channel, {:result, result_or_error})
     end)
   end
@@ -146,6 +152,7 @@ defmodule FieldPublication.Replication do
             timestamp: DateTime.utc_now(),
             msg: "Removed existing replication document for '#{name}'."
           })
+
           result
 
         result ->
@@ -164,6 +171,7 @@ defmodule FieldPublication.Replication do
           })
 
           {:ok, :deleted}
+
         {:ok, %{status: 404}} ->
           {:ok, :already_deleted}
       end
@@ -174,6 +182,7 @@ defmodule FieldPublication.Replication do
       |> case do
         {:ok, []} ->
           {:ok, :already_deleted}
+
         {:ok, _list_of_deleted_files} ->
           broadcast(channel, %LogEntry{
             name: :started,
@@ -188,12 +197,15 @@ defmodule FieldPublication.Replication do
     {replication_stop, publication_deletion, file_deletion}
   end
 
-  defp create_publication_metadata(%Parameters{
-    source_url: source_url,
-    source_project_name: source_project_name,
-    local_project_name: project_name,
-    comments: comments
-  }, publication_name) do
+  defp create_publication_metadata(
+         %Parameters{
+           source_url: source_url,
+           source_project_name: source_project_name,
+           local_project_name: project_name,
+           comments: comments
+         },
+         publication_name
+       ) do
     url = Application.get_env(:field_publication, :couchdb_url)
 
     {:ok, full_config} = create_full_configuration(url, publication_name)
@@ -204,6 +216,7 @@ defmodule FieldPublication.Replication do
     |> case do
       {:ok, %{status: 404}} ->
         CouchService.put_document(%{id: configuration_doc_name, data: full_config})
+
       {:ok, %{status: 200, body: body}} ->
         %{"_rev" => rev} = Jason.decode!(body)
         CouchService.delete_document(configuration_doc_name, rev)
@@ -221,9 +234,7 @@ defmodule FieldPublication.Replication do
       }
 
     Project.get_project!(project_name)
-    |> Project.add_publication(
-      publication_metadata
-    )
+    |> Project.add_publication(publication_metadata)
 
     {:ok, :metadata_created}
   end
@@ -252,6 +263,7 @@ defmodule FieldPublication.Replication do
     case severity do
       :error ->
         Logger.error(msg)
+
       _ ->
         Logger.debug(msg)
     end

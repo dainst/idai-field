@@ -4,6 +4,7 @@ defmodule FieldPublicationWeb.PublicationLive.LogComponent do
   alias FieldPublication.Replication.LogEntry
 
   attr :logs, :list, required: true
+
   def list(assigns) do
     ~H"""
     <div>

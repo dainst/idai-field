@@ -24,14 +24,25 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
         <%= case @action do %>
           <% :edit -> %>
-            <h1> <%=@project.id %></h1>
+            <h1><%= @project.id %></h1>
           <% :new -> %>
-           <.input field={@form[:id]} type="text" label="Project key" />
+            <.input field={@form[:id]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
         <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
-        <.input field={@form[:editors]} type="select" multiple={true} options={@users} label="Editors" />
-        <a phx-click={"clear_editors"} phx-target={@myself} type="button" class="cursor-pointer block !mt-0 w-full text-center p-1 bg-zinc-900 hover:bg-zinc-700 rounded-b-md text-white">
+        <.input
+          field={@form[:editors]}
+          type="select"
+          multiple={true}
+          options={@users}
+          label="Editors"
+        />
+        <a
+          phx-click="clear_editors"
+          phx-target={@myself}
+          type="button"
+          class="cursor-pointer block !mt-0 w-full text-center p-1 bg-zinc-900 hover:bg-zinc-700 rounded-b-md text-white"
+        >
           Clear
         </a>
         <:actions>
@@ -45,7 +56,8 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   @impl true
   def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
-    users = User.list() |> Enum.map(fn(%{name: name}) -> name end)
+    users = User.list() |> Enum.map(fn %{name: name} -> name end)
+
     {
       :ok,
       socket
@@ -74,6 +86,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
       socket.assigns.project
       |> Project.changeset(%{editors: []})
       |> Map.put(:action, :update)
+
     {
       :noreply,
       socket
@@ -102,6 +115,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
     case Project.create_project(project_params) do
       {:ok, project} ->
         notify_parent({:saved, project})
+
         {
           :noreply,
           socket

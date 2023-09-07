@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project
+
   alias FieldPublication.Replication.{
     LogEntry,
     Parameters
@@ -24,12 +25,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
 
       <div class="flex flex-row mt-5">
         <div class="relative items-center block p-2 basis-3/5">
-          <.simple_form
-            for={@form}
-            id="replication-form"
-            phx-change="validate"
-            phx-submit="start"
-          >
+          <.simple_form for={@form} id="replication-form" phx-change="validate" phx-submit="start">
             <div class="flex flex-row">
               <div class="p-11">
                 <h2 class="text-2xl">Publication data</h2>
@@ -38,7 +34,13 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
                 <.input field={@form[:source_user]} type="text" label="Source user name" />
                 <.input field={@form[:source_password]} type="password" label="Source user password" />
                 <.input field={@form[:local_project_name]} type="hidden" />
-                <div class="pt-5"><.input field={@form[:local_delete_existing]} type="checkbox" label="Delete existing publication" /></div>
+                <div class="pt-5">
+                  <.input
+                    field={@form[:local_delete_existing]}
+                    type="checkbox"
+                    label="Delete existing publication"
+                  />
+                </div>
               </div>
 
               <div class="p-11 border-l-2 border-black">
@@ -47,8 +49,8 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
                   module={FieldPublicationWeb.TranslationLive.FormComponent}
                   id={@form[:comments]}
                   form_field={@form[:comments]}
-                  add={"add_comment"}
-                  remove={"remove_comment"}
+                  add="add_comment"
+                  remove="remove_comment"
                 />
               </div>
             </div>
@@ -57,12 +59,27 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
               <.button phx-disable-with="Initializing...">Start replication</.button>
             </:actions>
           </.simple_form>
-
           <!-- Overlay while replication is running -->
-          <div :if={@replication_running} class="bg-black/80 w-full h-full rounded-l-lg z-10 absolute top-0 left-0">
+          <div
+            :if={@replication_running}
+            class="bg-black/80 w-full h-full rounded-l-lg z-10 absolute top-0 left-0"
+          >
             <div role="status" class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2">
-              <svg aria-hidden="true" class="w-8 h-8 mr-2 animate-spin dark:text-slate-300 fill-indigo-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg>
+              <svg
+                aria-hidden="true"
+                class="w-8 h-8 mr-2 animate-spin dark:text-slate-300 fill-indigo-500"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                /><path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
             </div>
           </div>
           <!-- End of overlay. -->
@@ -82,12 +99,11 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     """
   end
 
-
   def translation(assigns) do
     ~H"""
     <.inputs_for :let={translation} field={@form_field}>
-      <.input type="text" field={translation[:language]}/>
-      <.input type="text" field={translation[:text]}/>
+      <.input type="text" field={translation[:language]} />
+      <.input type="text" field={translation[:text]} />
       <span phx-click={@remove} phx-value-id={translation.id}>X</span>
     </.inputs_for>
 
@@ -97,7 +113,6 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
 
   @impl true
   def mount(%{"project_id" => project_id}, _session, socket) do
-
     replication_channel = "replication-#{project_id}"
     PubSub.subscribe(FieldPublication.PubSub, replication_channel)
 
@@ -119,7 +134,6 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
   end
 
   defp apply_action(%{assigns: %{project: project}} = socket, :new, _params) do
-
     changeset =
       %Parameters{}
       |> Parameters.changeset(%{
@@ -141,7 +155,6 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
 
   @impl true
   def handle_event("validate", %{"parameters" => replication_params}, socket) do
-
     changeset =
       %Parameters{}
       |> Parameters.changeset(replication_params)
@@ -155,7 +168,11 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     current_comments = Ecto.Changeset.get_field(changeset, :comments)
 
     changeset =
-      Ecto.Changeset.put_embed(changeset, :comments, current_comments ++ [%{text: "", language: ""}])
+      Ecto.Changeset.put_embed(
+        changeset,
+        :comments,
+        current_comments ++ [%{text: "", language: ""}]
+      )
 
     {
       :noreply,
@@ -165,7 +182,11 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
   end
 
   @impl true
-  def handle_event("remove_comment", %{"id" => "parameters_comments_" <> id}, %{assigns: %{form: %{source: changeset}}} = socket) do
+  def handle_event(
+        "remove_comment",
+        %{"id" => "parameters_comments_" <> id},
+        %{assigns: %{form: %{source: changeset}}} = socket
+      ) do
     {index, _remainder} = Integer.parse(id)
 
     updated_comments =
@@ -184,7 +205,6 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     }
   end
 
-
   def handle_event("start", %{"parameters" => replication_params}, socket) do
     socket =
       replication_params
@@ -193,8 +213,8 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
         {:error, changeset} ->
           socket
           |> assign(:form, to_form(changeset))
-        {:ok, parameters} ->
 
+        {:ok, parameters} ->
           FieldPublication.Replication.start(
             parameters,
             socket.assigns.replication_log_channel
@@ -203,16 +223,19 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
           socket
           |> assign(:replication_running, true)
           |> assign(:replication_logs, [])
-    end
+      end
+
     {:noreply, socket}
   end
 
   def add_comment() do
-
   end
 
   @impl true
-  def handle_info({:replication_log, %LogEntry{} = log_entry}, %{assigns: %{replication_logs: existing_entries}} = socket) do
+  def handle_info(
+        {:replication_log, %LogEntry{} = log_entry},
+        %{assigns: %{replication_logs: existing_entries}} = socket
+      ) do
     socket =
       socket
       |> assign(:replication_logs, existing_entries ++ [log_entry])
@@ -221,7 +244,6 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
   end
 
   def handle_info({:replication_result, {:error, error}}, socket) do
-
     socket =
       socket
       |> assign(:replication_running, false)
@@ -231,8 +253,7 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     {:noreply, socket}
   end
 
-  def handle_info({:replication_result, {:ok, _report}},  %{assigns: %{project: project}} = socket) do
-
+  def handle_info({:replication_result, {:ok, _report}}, %{assigns: %{project: project}} = socket) do
     socket =
       socket
       |> put_flash(:info, "Draft successfully created")
@@ -241,23 +262,38 @@ defmodule FieldPublicationWeb.PublicationLive.NewDraft do
     {:noreply, socket}
   end
 
-  def handle_info({:file_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
+  def handle_info({:file_processing, %{counter: counter, overall: overall}}, socket)
+      when counter == overall do
     {:noreply, assign(socket, :file_replication_status, nil)}
   end
 
   def handle_info({:file_processing, state}, socket) do
-    {:noreply, assign(socket, :file_replication_status, Map.put(state, :percentage, (state.counter / state.overall * 100)))}
+    {:noreply,
+     assign(
+       socket,
+       :file_replication_status,
+       Map.put(state, :percentage, state.counter / state.overall * 100)
+     )}
   end
 
-  def handle_info({:document_processing, %{counter: counter, overall: overall}}, socket) when counter == overall do
+  def handle_info({:document_processing, %{counter: counter, overall: overall}}, socket)
+      when counter == overall do
     {:noreply, assign(socket, :document_replication_status, nil)}
   end
 
   def handle_info({:document_processing, state}, socket) do
-    {:noreply, assign(socket, :document_replication_status, Map.put(state, :percentage, (state.counter / state.overall * 100)))}
+    {:noreply,
+     assign(
+       socket,
+       :document_replication_status,
+       Map.put(state, :percentage, state.counter / state.overall * 100)
+     )}
   end
 
-  defp create_error_feedback(%{assigns: %{form: %{params: params}}} = socket, %Mint.TransportError{} = error) do
+  defp create_error_feedback(
+         %{assigns: %{form: %{params: params}}} = socket,
+         %Mint.TransportError{} = error
+       ) do
     changeset =
       %Parameters{}
       |> Parameters.changeset(params)

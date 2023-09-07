@@ -16,13 +16,13 @@
 
         <%= if FieldPublication.User.is_admin?(@current_user) do %>
           <a>
-           <.link
-            href={~p"/admin/users"}
-            method="get"
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Users
-          </.link>
+            <.link
+              href={~p"/admin/users"}
+              method="get"
+              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Users
+            </.link>
           </a>
         <% end %>
         <a>

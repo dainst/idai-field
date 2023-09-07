@@ -26,7 +26,6 @@ defmodule FieldPublicationWeb.UserLoginLive do
   end
 
   def mount(_params, _session, socket) do
-
     name = live_flash(socket.assigns.flash, :name)
     form = to_form(%{"name" => name}, as: "user")
     {:ok, assign(socket, form: form), temporary_assigns: [form: form]}

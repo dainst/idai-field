@@ -7,7 +7,7 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   def mount(_params, _session, socket) do
     projects =
       Project.list_projects()
-      |> Enum.filter(fn(%Project{} = project) ->
+      |> Enum.filter(fn %Project{} = project ->
         Project.has_project_access?(project.id, socket.assigns.current_user)
       end)
 
@@ -59,17 +59,17 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
     %{
       draft_count:
         publications
-        |> Enum.filter(fn(pub) -> is_nil(pub.publication_date) end)
+        |> Enum.filter(fn pub -> is_nil(pub.publication_date) end)
         |> Enum.count(),
       publication_scheduled_count:
         publications
-        |> Enum.filter(fn(pub) -> not is_nil(pub.publication_date) end)
-        |> Enum.filter(fn(pub) -> pub.publication_date < Date.utc_today() end)
+        |> Enum.filter(fn pub -> not is_nil(pub.publication_date) end)
+        |> Enum.filter(fn pub -> pub.publication_date < Date.utc_today() end)
         |> Enum.count(),
       published_count:
         publications
-        |> Enum.filter(fn(pub) -> not is_nil(pub.publication_date) end)
-        |> Enum.filter(fn(pub) -> pub.publication_date > Date.utc_today() end)
+        |> Enum.filter(fn pub -> not is_nil(pub.publication_date) end)
+        |> Enum.filter(fn pub -> pub.publication_date > Date.utc_today() end)
         |> Enum.count()
     }
   end

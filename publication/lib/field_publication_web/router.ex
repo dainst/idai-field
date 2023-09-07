@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.Router do
-
   use FieldPublicationWeb, :router
 
   import FieldPublicationWeb.UserAuth
@@ -49,9 +48,9 @@ defmodule FieldPublicationWeb.Router do
         {FieldPublicationWeb.UserAuth, :ensure_authenticated},
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
-        live "/:project_id", ProjectLive.Show, :show
-        live "/:project_id/publication/new", PublicationLive.NewDraft, :new
-        live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
+      live "/:project_id", ProjectLive.Show, :show
+      live "/:project_id/publication/new", PublicationLive.NewDraft, :new
+      live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
     end
   end
 
@@ -61,7 +60,6 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_administrator,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-
       live "/users", AdminLive.UserManagement, :index
       live "/users/new", AdminLive.UserManagement, :new
       live "/users/:name/new_password", AdminLive.UserManagement, :new_password

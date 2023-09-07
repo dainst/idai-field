@@ -1,5 +1,4 @@
 defmodule FieldPublication.User do
-
   alias FieldPublication.CouchService
 
   defmodule InputSchema do
@@ -10,7 +9,7 @@ defmodule FieldPublication.User do
     @derive Jason.Encoder
     @primary_key {:name, :string, autogenerate: false}
     embedded_schema do
-      field :password, :string, redact: true
+      field(:password, :string, redact: true)
     end
 
     def changeset(%__MODULE__{} = user, attrs \\ %{}) do
@@ -23,7 +22,6 @@ defmodule FieldPublication.User do
   @moduledoc """
   Bundles (CouchDB) user related functions.
   """
-
 
   @doc """
 
@@ -61,6 +59,7 @@ defmodule FieldPublication.User do
     |> case do
       {:error, _changeset} = error ->
         error
+
       {:ok, %{name: name, password: password} = user_struct} ->
         CouchService.create_user(name, password)
         |> case do
@@ -111,6 +110,7 @@ defmodule FieldPublication.User do
     |> case do
       {:error, _changeset} = error ->
         error
+
       {:ok, %{name: name, password: password} = user_struct} ->
         CouchService.update_password(name, password)
         |> case do
@@ -146,8 +146,8 @@ defmodule FieldPublication.User do
         body
         |> Jason.decode!()
         |> Map.get("rows", [])
-        |> Enum.filter(fn(doc) -> String.starts_with?(doc["id"], "org.couchdb.user:") end)
-        |> Enum.map(fn(%{"id" => id}) ->
+        |> Enum.filter(fn doc -> String.starts_with?(doc["id"], "org.couchdb.user:") end)
+        |> Enum.map(fn %{"id" => id} ->
           "org.couchdb.user:" <> without_prefix = id
           %{name: without_prefix}
         end)

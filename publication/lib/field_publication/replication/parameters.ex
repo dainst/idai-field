@@ -6,13 +6,13 @@ defmodule FieldPublication.Replication.Parameters do
 
   @primary_key false
   embedded_schema do
-    field :source_url, :string
-    field :source_project_name, :string
-    field :source_user, :string
-    field :source_password, :string, redact: true
-    field :local_project_name, :string
-    field :local_delete_existing, :boolean, default: false
-    embeds_many :comments, Translation
+    field(:source_url, :string)
+    field(:source_project_name, :string)
+    field(:source_user, :string)
+    field(:source_password, :string, redact: true)
+    field(:local_project_name, :string)
+    field(:local_delete_existing, :boolean, default: false)
+    embeds_many(:comments, Translation)
   end
 
   @doc false
@@ -57,7 +57,8 @@ defmodule FieldPublication.Replication.Parameters do
     |> Map.put(:action, :insert)
   end
 
-  def create(params) do # TODO: Move out of this module
+  # TODO: Move out of this module
+  def create(params) do
     changeset(%FieldPublication.Replication.Parameters{}, params)
     |> apply_action(:create)
   end

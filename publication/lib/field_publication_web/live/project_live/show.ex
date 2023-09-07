@@ -25,9 +25,14 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
     |> assign(:project, Project.get_project!(id))
   end
 
-  defp apply_action(socket, :edit_publication, %{"project_id" => project_id, "draft_date" => draft_date}) do
+  defp apply_action(socket, :edit_publication, %{
+         "project_id" => project_id,
+         "draft_date" => draft_date
+       }) do
     project = Project.get_project!(project_id)
-    publication = Enum.find(project.publications, fn(pub) -> Date.to_string(pub.draft_date) == draft_date end)
+
+    publication =
+      Enum.find(project.publications, fn pub -> Date.to_string(pub.draft_date) == draft_date end)
 
     {
       :noreply,
@@ -43,7 +48,10 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   end
 
   @impl true
-  def handle_info({FieldPublicationWeb.PublicationLive.FormComponent, {:updated_publication, publication}}, socket) do
+  def handle_info(
+        {FieldPublicationWeb.PublicationLive.FormComponent, {:updated_publication, publication}},
+        socket
+      ) do
     {:ok, updated_project} = Project.add_publication(socket.assigns.project, publication)
 
     {:noreply, assign(socket, :project, updated_project)}
@@ -51,7 +59,10 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
 
   @impl true
   def handle_event("delete_publication", %{"date" => date}, socket) do
-    deleted = Enum.find(socket.assigns.project.publications, fn(publication) -> Date.to_string(publication.draft_date) == date end)
+    deleted =
+      Enum.find(socket.assigns.project.publications, fn publication ->
+        Date.to_string(publication.draft_date) == date
+      end)
 
     {:ok, updated_project} = Project.remove_publication(socket.assigns.project, deleted)
 

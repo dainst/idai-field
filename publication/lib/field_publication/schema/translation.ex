@@ -5,8 +5,8 @@ defmodule FieldPublication.Schema.Translation do
   @derive Jason.Encoder
   @primary_key false
   embedded_schema do
-    field :text, :string, primary_key: true
-    field :language, :string, primary_key: true
+    field(:text, :string, primary_key: true)
+    field(:language, :string, primary_key: true)
   end
 
   def changeset(translation, attrs \\ %{}) do

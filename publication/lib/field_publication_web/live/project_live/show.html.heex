@@ -30,59 +30,89 @@
           <th>Actions</th>
         </tr>
       </thead>
-    <%= for publication <- @project.publications do %>
-      <tr class="pt-9">
-        <%= case publication.publication_date do %>
-          <% nil -> %>
-            <td class="bg-yellow-300 rounded border-spacing-y-2 p-2">Draft</td>
-          <% date when date > @today -> %>
-            <td class="bg-green-300 rounded border-spacing-y-2 p-2">Scheduled</td>
-          <% _date -> %>
-            <td class="bg-green-600 rounded border-spacing-y-2 p-2">Published</td>
-        <% end %>
-        <td><%= publication.draft_date %></td>
-        <td>
-          <%= if publication.publication_date do %>
-            <%= publication.publication_date %>
-          <% else %>
-            -
+      <%= for publication <- @project.publications do %>
+        <tr class="pt-9">
+          <%= case publication.publication_date do %>
+            <% nil -> %>
+              <td class="bg-yellow-300 rounded border-spacing-y-2 p-2">Draft</td>
+            <% date when date > @today -> %>
+              <td class="bg-green-300 rounded border-spacing-y-2 p-2">Scheduled</td>
+            <% _date -> %>
+              <td class="bg-green-600 rounded border-spacing-y-2 p-2">Published</td>
           <% end %>
-        </td>
-        <td>
-          <a target="blank" class="font-semibold text-zinc-900 hover:text-zinc-700 flex" href={publication.source_url}>         
-            <div class="w-6">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-24 h-24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </div>
-            <div>
-              Project '<%= publication.source_project_name %>'
-            </div>
-          </a>
-        </td>
-        <td><%= List.first(publication.comments, %{text: "No comment provided."}) |> then(fn(%{text: text}) -> text end) %></td>
-        <td>
-          <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-            <.link navigate={~p"/edit/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"}>
-              Edit
-            </.link>
-          </span>
-          <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-            <.link phx-click={JS.push("delete_publication", value: %{date: publication.draft_date}) |> hide("##{publication.draft_date}")}
-              data-confirm="Are you sure?">
-              Delete
-            </.link>
-          </span>
-        </td>
-      </tr>
-    <% end %>
+          <td><%= publication.draft_date %></td>
+          <td>
+            <%= if publication.publication_date do %>
+              <%= publication.publication_date %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td>
+            <a
+              target="blank"
+              class="font-semibold text-zinc-900 hover:text-zinc-700 flex"
+              href={publication.source_url}
+            >
+              <div class="w-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-24 h-24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                  />
+                </svg>
+              </div>
+              <div>
+                Project '<%= publication.source_project_name %>'
+              </div>
+            </a>
+          </td>
+          <td>
+            <%= List.first(publication.comments, %{text: "No comment provided."})
+            |> then(fn %{text: text} -> text end) %>
+          </td>
+          <td>
+            <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+              <.link navigate={
+                ~p"/edit/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"
+              }>
+                Edit
+              </.link>
+            </span>
+            <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+              <.link
+                phx-click={
+                  JS.push("delete_publication", value: %{date: publication.draft_date})
+                  |> hide("##{publication.draft_date}")
+                }
+                data-confirm="Are you sure?"
+              >
+                Delete
+              </.link>
+            </span>
+          </td>
+        </tr>
+      <% end %>
     </table>
   </:item>
 </.list>
 
 <.back navigate={~p"/edit"}>Back to projects</.back>
 
-<.modal :if={@live_action == :edit} id="project-modal" show on_cancel={JS.patch(~p"/edit/#{@project}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="project-modal"
+  show
+  on_cancel={JS.patch(~p"/edit/#{@project}")}
+>
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
     id={@project.id}
@@ -93,7 +123,12 @@
   />
 </.modal>
 
-<.modal :if={@live_action in [:edit_publication]} id="publication-modal" show on_cancel={JS.patch(~p"/edit/#{@project}")}>
+<.modal
+  :if={@live_action in [:edit_publication]}
+  id="publication-modal"
+  show
+  on_cancel={JS.patch(~p"/edit/#{@project}")}
+>
   <.live_component
     module={FieldPublicationWeb.PublicationLive.FormComponent}
     id={Date.to_string(@publication_to_edit.draft_date)}

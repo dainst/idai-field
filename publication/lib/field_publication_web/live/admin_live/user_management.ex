@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
     </.header>
 
     <table class="w-[40rem] mt-11 sm:w-full">
-      <thead  class="text-sm text-left leading-6 text-zinc-500">
+      <thead class="text-sm text-left leading-6 text-zinc-500">
         <tr>
           <th>Username</th>
           <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th>
@@ -24,29 +24,36 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
       </thead>
       <tbody class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700">
         <%= for user <- @users do %>
-        <tr class="group hover:bg-zinc-50">
-          <td><%= user.name %></td>
-          <td>
-            <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-              <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                <.link navigate={~p"/admin/users/#{user.name}/new_password"}>New password</.link>
-              </span>
-              <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                <.link phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
-                  data-confirm="Are you sure?">
-                  Delete
-                </.link>
-              </span>
-            </div>
-          </td>
-        </tr>
+          <tr class="group hover:bg-zinc-50">
+            <td><%= user.name %></td>
+            <td>
+              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
+                <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+                  <.link navigate={~p"/admin/users/#{user.name}/new_password"}>New password</.link>
+                </span>
+                <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+                  <.link
+                    phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
+                    data-confirm="Are you sure?"
+                  >
+                    Delete
+                  </.link>
+                </span>
+              </div>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>
 
     <.back navigate={~p"/"}>To projects</.back>
 
-    <.modal :if={@live_action in [:new, :new_password]} id="user-modal" show on_cancel={JS.patch(~p"/admin/users")}>
+    <.modal
+      :if={@live_action in [:new, :new_password]}
+      id="user-modal"
+      show
+      on_cancel={JS.patch(~p"/admin/users")}
+    >
       <.live_component
         module={FieldPublicationWeb.AdminLive.UserFormComponent}
         id={@user.name || :new}
@@ -78,7 +85,6 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
   end
 
   defp apply_action(socket, :new_password, %{"name" => name}) do
-
     socket
     |> assign(:page_title, "Edit User '#{name}'")
     |> assign(:user, User.get(name))
@@ -93,6 +99,7 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
   @impl true
   def handle_event("delete", %{"name" => name}, socket) do
     User.delete(name)
+
     {
       :noreply,
       socket |> assign(:users, User.list())

@@ -1,5 +1,4 @@
 defmodule FieldPublication.Worker.ImageProcessing do
-
   alias FieldPublication.{
     FileService
   }
@@ -18,7 +17,7 @@ defmodule FieldPublication.Worker.ImageProcessing do
     create_target_directory(target_folder)
 
     source_files
-    |> Stream.map(fn(source_file) ->
+    |> Stream.map(fn source_file ->
       {source_file, "#{target_folder}/#{Path.basename(source_file)}.jp2"}
     end)
     |> Enum.map(&convert_file/1)
@@ -27,8 +26,10 @@ defmodule FieldPublication.Worker.ImageProcessing do
   defp create_target_directory(target_path) do
     if @dev_mode do
       target_path = String.replace(target_path, "#{@web_images_directory}/", "")
+
       System.cmd(
-        "docker", [
+        "docker",
+        [
           "exec",
           "field_publication_cantaloupe",
           "mkdir",
@@ -47,7 +48,8 @@ defmodule FieldPublication.Worker.ImageProcessing do
       target_file_path = String.replace(target_file_path, "#{@web_images_directory}/", "")
 
       System.cmd(
-        "docker", [
+        "docker",
+        [
           "exec",
           "field_publication_cantaloupe",
           "convert",

@@ -40,7 +40,7 @@ defmodule FieldPublication.CouchService do
         Logger.info("Created system database `_replicator`.")
     end
 
-    {_, %Finch.Response{status:  status_code_core_database}} = create_database(@core_database)
+    {_, %Finch.Response{status: status_code_core_database}} = create_database(@core_database)
 
     case status_code_core_database do
       412 ->
@@ -80,7 +80,6 @@ defmodule FieldPublication.CouchService do
   - `password` the user's password.
   """
   def authenticate(name, password) do
-
     Finch.build(
       :head,
       "#{local_url()}/",
@@ -139,7 +138,6 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-
   @doc """
   Deletes a CouchDB user.
 
@@ -161,12 +159,12 @@ defmodule FieldPublication.CouchService do
           body
           |> Jason.decode!()
 
-          Finch.build(
-            :delete,
-            "#{local_url()}/_users/org.couchdb.user:#{name}",
-            headers() ++ [{"If-Match", rev}]
-          )
-          |> Finch.request(FieldPublication.Finch)
+        Finch.build(
+          :delete,
+          "#{local_url()}/_users/org.couchdb.user:#{name}",
+          headers() ++ [{"If-Match", rev}]
+        )
+        |> Finch.request(FieldPublication.Finch)
 
       {:ok, %{status: 404}} = response ->
         # User was not found
@@ -205,13 +203,12 @@ defmodule FieldPublication.CouchService do
               Jason.encode!(%{name: name, password: new_password, roles: [], type: "user"})
             )
             |> Finch.request(FieldPublication.Finch)
-          end
+        end
 
       {:ok, %{status: 404}} = res ->
         res
     end
   end
-
 
   def update_database_members(database_name, member_names) do
     Finch.build(
@@ -224,14 +221,15 @@ defmodule FieldPublication.CouchService do
       {:ok, %{status: 200, body: body}} ->
         %{"admins" => existing_admins} = Jason.decode!(body)
 
-        payload = %{
-          admins: existing_admins,
-          members: %{
-            names: member_names,
-            roles: []
+        payload =
+          %{
+            admins: existing_admins,
+            members: %{
+              names: member_names,
+              roles: []
+            }
           }
-        }
-        |> Jason.encode!()
+          |> Jason.encode!()
 
         Finch.build(
           :put,
@@ -251,7 +249,7 @@ defmodule FieldPublication.CouchService do
       :post,
       "#{local_url()}/#{database_name}/_find",
       headers(),
-      %{ selector: %{ doc_type: type } }
+      %{selector: %{doc_type: type}}
       |> Jason.encode!()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -313,15 +311,14 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-
   def run_find_query(query, database_name \\ @core_database) do
-   Finch.build(
-    :post,
-    "#{local_url()}/#{database_name}/_find",
-    headers(),
-    Jason.encode!(query)
-   )
-   |> Finch.request(FieldPublication.Finch)
+    Finch.build(
+      :post,
+      "#{local_url()}/#{database_name}/_find",
+      headers(),
+      Jason.encode!(query)
+    )
+    |> Finch.request(FieldPublication.Finch)
   end
 
   def add_application_user(project_identifier) do

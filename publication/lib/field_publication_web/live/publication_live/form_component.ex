@@ -18,20 +18,20 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input type="hidden" field={@form[:draft_date]}/>
-        <.input type="hidden" field={@form[:source_url]}/>
-        <.input type="hidden" field={@form[:source_project_name]}/>
-        <.input type="hidden" field={@form[:configuration_doc]}/>
-        <.input type="hidden" field={@form[:database]}/>
-        <.input type="date" label="Publication date" field={@form[:publication_date]}/>
+        <.input type="hidden" field={@form[:draft_date]} />
+        <.input type="hidden" field={@form[:source_url]} />
+        <.input type="hidden" field={@form[:source_project_name]} />
+        <.input type="hidden" field={@form[:configuration_doc]} />
+        <.input type="hidden" field={@form[:database]} />
+        <.input type="date" label="Publication date" field={@form[:publication_date]} />
 
         <.label>Publication comments</.label>
         <.live_component
           module={FieldPublicationWeb.TranslationLive.FormComponent}
           id={@form[:comments]}
           form_field={@form[:comments]}
-          add={"add_comment"}
-          remove={"remove_comment"}
+          add="add_comment"
+          remove="remove_comment"
           target={@myself}
         />
         <:actions>
@@ -64,12 +64,13 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{ "publication" => publication_form_params}, socket) do
+  def handle_event("save", %{"publication" => publication_form_params}, socket) do
     socket.assigns.publication
     |> Publication.update(publication_form_params)
     |> case do
       {:ok, updated_publication} ->
         notify_parent({:updated_publication, updated_publication})
+
         {
           :noreply,
           socket
@@ -87,7 +88,11 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
     current_comments = Ecto.Changeset.get_field(changeset, :comments)
 
     changeset =
-      Ecto.Changeset.put_embed(changeset, :comments, current_comments ++ [%{text: "", language: ""}])
+      Ecto.Changeset.put_embed(
+        changeset,
+        :comments,
+        current_comments ++ [%{text: "", language: ""}]
+      )
 
     {
       :noreply,
@@ -97,7 +102,11 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
   end
 
   @impl true
-  def handle_event("remove_comment", %{"id" => "publication_comments_" <> id}, %{assigns: %{form: %{source: changeset}}} = socket) do
+  def handle_event(
+        "remove_comment",
+        %{"id" => "publication_comments_" <> id},
+        %{assigns: %{form: %{source: changeset}}} = socket
+      ) do
     {index, _remainder} = Integer.parse(id)
 
     updated_comments =

@@ -20,7 +20,8 @@ defmodule FieldPublication.FileService do
     |> File.ls()
     |> case do
       {:ok, files} ->
-        Enum.map(files, fn(file) -> "#{root_path}/original_image/#{file}" end)
+        Enum.map(files, fn file -> "#{root_path}/original_image/#{file}" end)
+
       error ->
         error
     end

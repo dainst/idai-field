@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.PublicationLive.ReplicationStart do
+defmodule FieldPublicationWeb.PublicationLive.Replication do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schema.Project

@@ -34,13 +34,10 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
     publication =
       Enum.find(project.publications, fn pub -> Date.to_string(pub.draft_date) == draft_date end)
 
-    {
-      :noreply,
-      socket
-      |> assign(:page_title, page_title(socket.assigns.live_action))
-      |> assign(:project, project)
-      |> assign(:publication_to_edit, publication)
-    }
+    socket
+    |> assign(:page_title, page_title(socket.assigns.live_action))
+    |> assign(:project, project)
+    |> assign(:publication_to_edit, publication)
   end
 
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do

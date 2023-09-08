@@ -51,23 +51,6 @@ defmodule FieldPublication.CouchService do
       code when 199 < code and code < 300 ->
         Logger.info("Created application database `#{@core_database}`.")
     end
-
-    app_user = Application.get_env(:field_publication, :couchdb_user_name)
-
-    create_user(
-      app_user,
-      Application.get_env(:field_publication, :couchdb_user_password)
-    )
-    |> then(fn {:ok, %Finch.Response{status: status_code}} -> status_code end)
-    |> case do
-      201 ->
-        Logger.info("Created application user '#{app_user}'.")
-
-      409 ->
-        Logger.warning("Application user '#{app_user}' already exists.")
-    end
-
-    add_application_user(@core_database)
   end
 
   @doc """
@@ -319,45 +302,6 @@ defmodule FieldPublication.CouchService do
       Jason.encode!(query)
     )
     |> Finch.request(FieldPublication.Finch)
-  end
-
-  def add_application_user(project_identifier) do
-    Finch.build(
-      :get,
-      "#{local_url()}/#{project_identifier}/_security",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-    |> case do
-      {:ok, %{body: body, status: 200}} ->
-        %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-        updated_names =
-          (Map.get(existing_members, "names", []) ++
-             [Application.get_env(:field_publication, :couchdb_user_name)])
-          |> Enum.uniq()
-
-        updated_payload =
-          %{
-            admins: existing_admins,
-            members: %{
-              names: updated_names,
-              roles: existing_members["roles"]
-            }
-          }
-          |> Jason.encode!()
-
-        Finch.build(
-          :put,
-          "#{local_url()}/#{project_identifier}/_security",
-          headers(),
-          updated_payload
-        )
-        |> Finch.request(FieldPublication.Finch)
-
-      {:ok, %{status: 404}} = res ->
-        {:unknown_project, res}
-    end
   end
 
   def headers() do

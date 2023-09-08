@@ -1,10 +1,5 @@
 defmodule FieldPublication.CouchService do
   @system_databases ["_users", "_replicator"]
-  @application_databases ["field_users"]
-
-  # TODO: Should probably be defined by Api.Publication module
-  @publication_suffix ~r".*_publication-\d{4}-\d{2}-\d{2}.*"
-
   @core_database Application.compile_env(:field_publication, :core_database)
 
   require Logger

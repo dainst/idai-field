@@ -19,6 +19,8 @@ defmodule FieldPublication.Replication do
 
   require Logger
 
+  @log_cache Application.get_env(:field_publication, :replication_log_cache_name)
+
   def start(%Parameters{project_key: project_key} = params, broadcast_channel) do
     publication = MetadataGeneration.create_publication(params)
 
@@ -127,6 +129,8 @@ defmodule FieldPublication.Replication do
          %Publication{} = publication,
          channel
        ) do
+    Cachex.del(@log_cache, channel)
+
     replication_stop =
       CouchReplication.stop_replication(publication.database)
       |> case do
@@ -191,6 +195,8 @@ defmodule FieldPublication.Replication do
     |> replicate_files(parameters, publication)
     |> reconstruct_configuration_doc(publication)
     |> then(fn result_or_error ->
+      Cachex.del(@log_cache, channel)
+
       broadcast(channel, {:result, result_or_error})
     end)
   end
@@ -237,7 +243,7 @@ defmodule FieldPublication.Replication do
   end
 
   defp replicate_files(
-         {:ok, %{broadcast_channel: channel} = replication_state} ,
+         {:ok, %{broadcast_channel: channel} = replication_state},
          %Parameters{} = params,
          %Publication{} = publication
        ) do
@@ -294,6 +300,14 @@ defmodule FieldPublication.Replication do
 
       _ ->
         Logger.debug(msg)
+    end
+
+    case Cachex.get(@log_cache, channel) do
+      {:ok, nil} ->
+        Cachex.put(@log_cache, channel, [log_entry], ttl: :timer.hours(5))
+
+      {:ok, entries} ->
+        Cachex.put(@log_cache, channel, entries ++ [log_entry])
     end
 
     PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})

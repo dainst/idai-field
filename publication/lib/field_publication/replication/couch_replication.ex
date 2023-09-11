@@ -2,10 +2,9 @@ defmodule FieldPublication.Replication.CouchReplication do
   @fix_source_url Application.compile_env(:field_publication, :dev_routes)
   @poll_frequency 1000
 
-  alias Phoenix.PubSub
-
   alias FieldPublication.{
     CouchService,
+    Replication,
     Replication.LogEntry,
     Replication.Parameters
   }
@@ -139,16 +138,14 @@ defmodule FieldPublication.Replication.CouchReplication do
             {:ok, :completed}
 
           %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
-            PubSub.broadcast(
-              FieldPublication.PubSub,
+            Replication.broadcast(
               channel,
-              {:replication_log,
-               %LogEntry{
-                 name: :document_replication_crashed,
-                 severity: :error,
-                 timestamp: DateTime.utc_now(),
-                 msg: "Experienced error while replicating documents, stopping replication."
-               }}
+              %LogEntry{
+                name: :document_replication_crashed,
+                severity: :error,
+                timestamp: DateTime.utc_now(),
+                msg: "Experienced error while replicating documents, stopping replication."
+              }
             )
 
             Logger.error(error)
@@ -189,17 +186,12 @@ defmodule FieldPublication.Replication.CouchReplication do
               {:ok, update_seq}
           end
 
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          channel,
-          {:replication_log,
-           %LogEntry{
-             name: :document_count,
-             severity: :ok,
-             timestamp: DateTime.utc_now(),
-             msg: "#{count} database documents need replication."
-           }}
-        )
+        Replication.broadcast(channel, %LogEntry{
+          name: :document_count,
+          severity: :ok,
+          timestamp: DateTime.utc_now(),
+          msg: "#{count} database documents need replication."
+        })
 
         result
 

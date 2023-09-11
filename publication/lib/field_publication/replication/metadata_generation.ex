@@ -11,7 +11,7 @@ defmodule FieldPublication.Replication.MetadataGeneration do
         project_key: project_key,
         comments: comments
       }) do
-    draft_date = Date.utc_today() |> Date.to_string()
+    draft_date = Date.utc_today()
 
     %Publication{
       source_url: source_url,

@@ -119,7 +119,7 @@ defmodule FieldPublication.Schema.Project do
     filtered =
       project.publications
       |> Enum.reject(fn %Publication{} = existing ->
-        existing.draft_date == new_publication.draft_date
+        Date.compare(existing.draft_date, new_publication.draft_date) == :eq
       end)
 
     updated =
@@ -134,7 +134,7 @@ defmodule FieldPublication.Schema.Project do
     filtered =
       project.publications
       |> Enum.reject(fn %Publication{} = existing ->
-        existing.draft_date == removed_publication.draft_date
+        Date.compare(existing.draft_date, removed_publication.draft_date) == :eq
       end)
 
     removed_publication.database

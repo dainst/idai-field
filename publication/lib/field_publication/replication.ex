@@ -168,15 +168,18 @@ defmodule FieldPublication.Replication do
     |> replicate_files(parameters, publication)
     |> reconstruct_configuration_doc(publication)
     |> then(fn result_or_error ->
+
+      {:ok, logs} = Cachex.get(@log_cache, channel)
+
       {:ok, final_publication} =
-        Publication.update(publication, %{logs: Cachex.get(@log_cache, channel)})
+        Publication.update(Map.replace!(publication, :replication_logs, logs))
 
       Cachex.del(@log_cache, channel)
 
       {:ok, _updated_project} =
         project_key
         |> Project.get_project!()
-        |> Project.add_publication(publication)
+        |> Project.add_publication(final_publication)
 
       broadcast(channel, {:result, result_or_error})
     end)
@@ -196,7 +199,7 @@ defmodule FieldPublication.Replication do
         log(channel, :info, "Database replication has finished.")
         {:ok, Map.put(replication_state, :database_result, :replicated)}
 
-      {:error, name} = error ->
+      {:error, _} = error ->
         log(channel, :error, "Database replication has failed.")
         error
     end

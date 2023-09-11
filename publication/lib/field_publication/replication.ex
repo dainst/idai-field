@@ -197,6 +197,11 @@ defmodule FieldPublication.Replication do
     |> then(fn result_or_error ->
       Cachex.del(@log_cache, channel)
 
+      {:ok, updated_project} =
+        project_key
+        |> Project.get_project!()
+        |> Project.add_publication(publication)
+
       broadcast(channel, {:result, result_or_error})
     end)
   end

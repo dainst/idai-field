@@ -2,6 +2,8 @@ defmodule FieldPublication.Replication.CouchReplication do
   @fix_source_url Application.compile_env(:field_publication, :dev_routes)
   @poll_frequency 1000
 
+  alias Phoenix.PubSub
+
   alias FieldPublication.{
     CouchService,
     Replication,

@@ -147,7 +147,7 @@ defmodule FieldPublication.Schema.Project do
       CouchService.delete_document(id, rev)
     end)
 
-    FileService.delete_publication("#{project.id}_publication_#{removed_publication.draft_date}")
+    FileService.delete_publication(project.id, removed_publication.draft_date)
 
     Map.replace(project, :publications, filtered)
     |> update_project()

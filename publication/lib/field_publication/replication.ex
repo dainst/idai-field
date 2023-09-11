@@ -168,7 +168,6 @@ defmodule FieldPublication.Replication do
     |> replicate_files(parameters, publication)
     |> reconstruct_configuration_doc(publication)
     |> then(fn result_or_error ->
-
       {:ok, logs} = Cachex.get(@log_cache, channel)
 
       {:ok, final_publication} =
@@ -244,8 +243,10 @@ defmodule FieldPublication.Replication do
     case severity do
       :error ->
         Logger.error(msg)
+
       :warning ->
         Logger.error(msg)
+
       _ ->
         Logger.debug(msg)
     end
@@ -254,7 +255,7 @@ defmodule FieldPublication.Replication do
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),
-        message: msg,
+        message: msg
       })
 
     case Cachex.get(@log_cache, channel) do

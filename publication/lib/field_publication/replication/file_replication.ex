@@ -3,6 +3,7 @@ defmodule FieldPublication.Replication.FileReplication do
   alias FieldPublication.FileService
   alias FieldPublication.Schema.Publication
   alias FieldPublication.Replication
+
   alias FieldPublication.Replication.{
     Parameters
   }

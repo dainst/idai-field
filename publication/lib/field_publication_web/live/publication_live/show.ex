@@ -53,7 +53,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   defp apply_action(socket, nil, %{"project_id" => id, "draft_date" => draft_date}) do
-    publication = Project.find_publication_by_draft_date(socket.assigns.project, Date.from_iso8601!(draft_date))
+    publication =
+      Project.find_publication_by_draft_date(
+        socket.assigns.project,
+        Date.from_iso8601!(draft_date)
+      )
 
     socket
     |> assign(:page_title, "Publication for '#{id}' drafted #{draft_date}.")

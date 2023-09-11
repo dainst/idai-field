@@ -51,6 +51,8 @@ defmodule FieldPublicationWeb.Router do
       live "/:project_id", ProjectLive.Show, :show
       live "/:project_id/publication/new", PublicationLive.Replication, :new
       live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
+
+      live "/:project_id/publication/:draft_date", PublicationLive.Show
     end
   end
 

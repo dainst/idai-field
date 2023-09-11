@@ -142,7 +142,9 @@ defmodule FieldPublication.Replication.CouchReplication do
             Logger.error(error)
 
             Replication.log(
-              channel, :error, "Experienced error while replicating documents, stopping replication."
+              channel,
+              :error,
+              "Experienced error while replicating documents, stopping replication."
             )
 
             {:error, :couchdb_replication_error}

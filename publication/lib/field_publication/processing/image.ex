@@ -1,24 +1,24 @@
-defmodule FieldPublication.Worker.ImageProcessing do
-  alias FieldPublication.{
-    FileService
-  }
+defmodule FieldPublication.Processing.Image do
+  alias FieldPublication.FileService
 
   @web_images_directory Application.compile_env(:field_publication, :web_images_directory_root)
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
   @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
-  def prepare_publication(publication_name) do
-    source_files =
-      publication_name
-      |> FileService.get_image_list()
+  def prepare_publication(project_key, publication_name) do
+    {:ok, source_files} =
+      project_key
+      |> FileService.list_publication_files(publication_name)
 
     target_folder = "#{@web_images_directory}/#{publication_name}"
 
     create_target_directory(target_folder)
 
+    source_directory = FileService.get_publication_path(project_key, publication_name)
+
     source_files
     |> Stream.map(fn source_file ->
-      {source_file, "#{target_folder}/#{Path.basename(source_file)}.jp2"}
+      {"#{source_directory}/#{source_file}", "#{target_folder}/#{Path.basename(source_file)}.jp2"}
     end)
     |> Enum.map(&convert_file/1)
   end

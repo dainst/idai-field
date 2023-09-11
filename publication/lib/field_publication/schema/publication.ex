@@ -4,7 +4,8 @@ defmodule FieldPublication.Schema.Publication do
   import Ecto.Changeset
 
   alias FieldPublication.Schema.{
-    Translation, LogEntry
+    Translation,
+    LogEntry
   }
 
   @derive Jason.Encoder
@@ -17,6 +18,7 @@ defmodule FieldPublication.Schema.Publication do
     field(:database, :string)
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
+    embeds_many(:processing_logs, LogEntry, on_replace: :delete)
   end
 
   def changeset(publication, attrs \\ %{}) do
@@ -31,6 +33,7 @@ defmodule FieldPublication.Schema.Publication do
     ])
     |> cast_embed(:comments)
     |> cast_embed(:replication_logs)
+    |> cast_embed(:processing_logs)
     |> validate_required([
       :source_url,
       :source_project_name,

@@ -1,0 +1,29 @@
+<.header>
+  Publication draft '<%= @publication.draft_date %>' for project '<%= @project.id %>'
+  <:actions>
+    <.button phx-click="start_processing">Process raw data</.button>
+  </:actions>
+</.header>
+
+<div>
+  <.list>
+    <:item title="Source URL"><%= @publication.source_url %></:item>
+    <:item title="Source project name"><%= @publication.source_project_name %></:item>
+    <:item title="Draft date"><%= @publication.draft_date %></:item>
+    <:item title="Publication date">
+      <%= if @publication.publication_date, do: @publication.publication_date, else: "-" %>
+    </:item>
+    <:item title="Replication logs">
+      <LogComponent.list logs={@publication.replication_logs} />
+    </:item>
+    <:item title="Processing logs">
+      <%= if @publication.processing_logs != [] do %>
+        <LogComponent.list logs={@publication.processing_logs} />
+      <% else %>
+        -
+      <% end %>
+    </:item>
+  </.list>
+</div>
+
+<.back navigate={~p"/edit/#{@project.id}"}>Back to project</.back>

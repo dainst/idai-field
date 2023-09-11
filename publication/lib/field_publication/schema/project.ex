@@ -153,6 +153,13 @@ defmodule FieldPublication.Schema.Project do
     |> update_project()
   end
 
+  def find_publication_by_draft_date(project, date) do
+    project.publications
+    |> Enum.find(fn pub ->
+      Date.compare(pub.draft_date, date) == :eq
+    end)
+  end
+
   def has_project_access?(_project_name, nil) do
     false
   end

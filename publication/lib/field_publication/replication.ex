@@ -243,7 +243,7 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  defp replicate_files({:error, _} = error) do
+  defp replicate_files({:error, _} = error, _, _) do
     error
   end
 
@@ -271,7 +271,7 @@ defmodule FieldPublication.Replication do
     {:ok, Map.put(replication_state, :file_results, file_results)}
   end
 
-  defp reconstruct_configuration_doc({:error, _} = error) do
+  defp reconstruct_configuration_doc({:error, _} = error, _) do
     error
   end
 

@@ -59,8 +59,8 @@ import { I18N } from '../../../src/tools/i18n';
         inputType: 'text'
     };
 
-    const complexField: Field = {
-        name: 'testComplexField',
+    const compositeField: Field = {
+        name: 'testCompositeField',
         subfields: [
             {
                 name: 'testSubfield',
@@ -71,7 +71,7 @@ import { I18N } from '../../../src/tools/i18n';
                 inputType: 'text'
             }
         ],
-        inputType: 'complex'
+        inputType: 'composite'
     };
 
     const relation: Field = {
@@ -146,7 +146,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Altes Label',
@@ -176,17 +176,17 @@ import { I18N } from '../../../src/tools/i18n';
             editedLabel,
             editedDescription,
             category,
-            complexField,
-            complexField.subfields[0]
+            compositeField,
+            compositeField.subfields[0]
         );
 
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .label).toBe('Neues Label');
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .description).toBe('Neue Beschreibung');
-        expect(customLanguageConfigurations.en.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.en.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .label).toBe('New label');
-        expect(customLanguageConfigurations.en.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.en.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .description).toBe('New description');
     });
 
@@ -355,7 +355,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Altes Label',
@@ -371,7 +371,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Old label',
@@ -396,13 +396,13 @@ import { I18N } from '../../../src/tools/i18n';
             editedLabel,
             editedDescription,
             category,
-            complexField,
-            complexField.subfields[0]
+            compositeField,
+            compositeField.subfields[0]
         );
 
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .label).toBe('Altes Label');
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField.subfields.testSubfield
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField.subfields.testSubfield
             .description).toBeUndefined();
         expect(customLanguageConfigurations.en).toBeUndefined();
     });
@@ -567,7 +567,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Altes Label',
@@ -594,8 +594,8 @@ import { I18N } from '../../../src/tools/i18n';
             editedLabel,
             editedDescription,
             category,
-            complexField,
-            complexField.subfields[0]
+            compositeField,
+            compositeField.subfields[0]
         );
 
         expect(customLanguageConfigurations.de).toBeUndefined();
@@ -753,7 +753,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Label 1',
@@ -761,7 +761,7 @@ import { I18N } from '../../../src/tools/i18n';
                                     }
                                 }
                             },
-                            testComplexField2: {
+                            testCompositeField2: {
                                 subfields: {
                                     testSubfield2: {
                                         label: 'Label 2',
@@ -777,7 +777,7 @@ import { I18N } from '../../../src/tools/i18n';
                 categories: {
                     testCategory: {
                         fields: {
-                            testComplexField: {
+                            testCompositeField: {
                                 subfields: {
                                     testSubfield: {
                                         label: 'Label',
@@ -796,14 +796,14 @@ import { I18N } from '../../../src/tools/i18n';
             {},
             {},
             category,
-            complexField,
-            complexField.subfields[0]
+            compositeField,
+            compositeField.subfields[0]
         );
 
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField).toBeUndefined();
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField2.subfields.testSubfield2
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField).toBeUndefined();
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField2.subfields.testSubfield2
             .label).toBe('Label 2');
-        expect(customLanguageConfigurations.de.categories.testCategory.fields.testComplexField2.subfields.testSubfield2
+        expect(customLanguageConfigurations.de.categories.testCategory.fields.testCompositeField2.subfields.testSubfield2
             .description).toBe('Beschreibung 2');
         expect(customLanguageConfigurations.en).toBeUndefined();
     });

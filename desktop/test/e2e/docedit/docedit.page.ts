@@ -159,9 +159,9 @@ export class DoceditPage {
     }
 
 
-    public static clickCreateComplexEntry(fieldName: string) {
+    public static clickCreateCompositeEntry(fieldName: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .create-complex-entry-button');
+        return click('#edit-form-element-' + fieldName + ' .create-composite-entry-button');
     }
 
 

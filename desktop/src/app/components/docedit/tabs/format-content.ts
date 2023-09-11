@@ -1,5 +1,5 @@
 import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
-import { Complex, Dating, Dimension, Field, I18N, Labels, Literature, OptionalRange, Resource,
+import { Composite, Dating, Dimension, Field, I18N, Labels, Literature, OptionalRange, Resource,
     Valuelist } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { DifferingField } from './field-diff';
@@ -81,8 +81,8 @@ const convertArray = (field: DifferingField, languages: Map<Language>, getTransl
 
     return fieldContent.map(element => {
 
-        if (field.inputType === Field.InputType.COMPLEX) {
-            const label: string|null = Complex.generateLabel(element, field.subfields, getTranslation,
+        if (field.inputType === Field.InputType.COMPOSITE) {
+            const label: string|null = Composite.generateLabel(element, field.subfields, getTranslation,
                 (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId));

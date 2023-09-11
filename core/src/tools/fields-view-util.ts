@@ -42,7 +42,7 @@ export interface FieldsViewSubfield {
 }
 
 
-export type FieldsViewFieldType = 'default'|'relation'|'url'|'complex';
+export type FieldsViewFieldType = 'default'|'relation'|'url'|'composite';
 
 
 export module FieldsViewGroup {
@@ -176,7 +176,7 @@ function getFieldValue(fieldContent: any, field: Field, labels: Labels,
     return isArray(fieldContent)
         ? fieldContent.map((fieldContent: any) =>
             field.subfields && isObject(fieldContent)
-                ? getComplexFieldValue(fieldContent, labels, field.subfields)
+                ? getCompositeFieldValue(fieldContent, labels, field.subfields)
                 : getValue(fieldContent, labels, field.valuelist)
             
         )
@@ -191,8 +191,8 @@ function getFieldType(inputType: Field.InputType): FieldsViewFieldType {
     switch (inputType) {
         case Field.InputType.URL:
             return 'url';
-        case Field.InputType.COMPLEX:
-            return 'complex';
+        case Field.InputType.COMPOSITE:
+            return 'composite';
         default:
             return 'default';
     }  
@@ -209,7 +209,7 @@ function getValue(fieldContent: any, labels: Labels, valuelist?: Valuelist): any
 }
 
 
-function getComplexFieldValue(fieldContent: any, labels: Labels, subfields: Array<Subfield>): any {
+function getCompositeFieldValue(fieldContent: any, labels: Labels, subfields: Array<Subfield>): any {
 
     return Object.keys(fieldContent).reduce((result, subfieldName) => {
         const subfield: Subfield = subfields.find(on(Named.NAME, is(subfieldName)));

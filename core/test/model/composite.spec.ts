@@ -1,11 +1,11 @@
-import { Complex } from '../../src/model/complex';
+import { Composite } from '../../src/model/composite';
 import { Subfield } from '../../src/model/configuration/field';
 
 
 /**
  * @author Thomas Kleinke
  */
-describe('Complex', () => {
+describe('Composite', () => {
 
     it('check boolean condition', () => {
 
@@ -24,9 +24,9 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: false }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: true }, subfields[1], subfields)).toBe(false);
-        expect(Complex.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({ subfield1: false }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: true }, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
     });
 
 
@@ -47,9 +47,9 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: 'value1' }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: 'value2' }, subfields[1], subfields)).toBe(false);
-        expect(Complex.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({ subfield1: 'value1' }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: 'value2' }, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
     });
 
 
@@ -70,10 +70,10 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: ['value1'] }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value1', 'value2'] }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value2', 'value3'] }, subfields[1], subfields)).toBe(false);
-        expect(Complex.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value1'] }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value1', 'value2'] }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value2', 'value3'] }, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
     });
 
 
@@ -94,10 +94,10 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: 'value1' }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: 'value2' }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: 'value3' }, subfields[1], subfields)).toBe(false);
-        expect(Complex.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({ subfield1: 'value1' }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: 'value2' }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: 'value3' }, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
     });
 
 
@@ -118,13 +118,13 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: ['value1', 'values2'] }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value1', 'values2', 'value3'] }, subfields[1], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: ['value1', 'values2'] }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value1', 'values2', 'value3'] }, subfields[1], subfields))
             .toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value2', 'values3'] }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value2'] }, subfields[1], subfields)).toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: ['value3', 'values4'] }, subfields[1], subfields)).toBe(false);
-        expect(Complex.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value2', 'values3'] }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value2'] }, subfields[1], subfields)).toBe(true);
+        expect(Composite.isConditionFulfilled({ subfield1: ['value3', 'values4'] }, subfields[1], subfields)).toBe(false);
+        expect(Composite.isConditionFulfilled({}, subfields[1], subfields)).toBe(false);
     });
 
     
@@ -153,15 +153,15 @@ describe('Complex', () => {
             }
         ];
 
-        expect(Complex.isConditionFulfilled({ subfield1: true, subfield2: false }, subfields[2], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: true, subfield2: false }, subfields[2], subfields))
             .toBe(true);
-        expect(Complex.isConditionFulfilled({ subfield1: true, subfield2: true }, subfields[2], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: true, subfield2: true }, subfields[2], subfields))
             .toBe(false);
-        expect(Complex.isConditionFulfilled({ subfield1: false }, subfields[2], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: false }, subfields[2], subfields))
             .toBe(false);
-        expect(Complex.isConditionFulfilled({ subfield1: false, subfield2: false }, subfields[2], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: false, subfield2: false }, subfields[2], subfields))
             .toBe(false);
-        expect(Complex.isConditionFulfilled({ subfield1: false, subfield2: true }, subfields[2], subfields))
+        expect(Composite.isConditionFulfilled({ subfield1: false, subfield2: true }, subfields[2], subfields))
             .toBe(false);
     });
 });

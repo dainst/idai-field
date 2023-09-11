@@ -43,8 +43,8 @@
 <form-field-literature *ngIf="field.inputType === 'literature'"
     [fieldContainer]="fieldContainer" [field]="field"></form-field-literature>
 
-<form-field-complex *ngIf="field.inputType === 'complex'"
-    [resource]="resource" [field]="field" [languages]="languages"></form-field-complex>
+<form-field-composite *ngIf="field.inputType === 'composite'"
+    [resource]="resource" [field]="field" [languages]="languages"></form-field-composite>
 
 <form-field-geometry *ngIf="field.inputType === 'geometry'"
     [fieldContainer]="fieldContainer"></form-field-geometry>

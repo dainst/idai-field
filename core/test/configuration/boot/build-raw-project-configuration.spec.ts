@@ -2676,7 +2676,7 @@ describe('buildRawProjectConfiguration', () => {
             'A': {
                 fields: {
                     field1: {
-                        inputType: Field.InputType.COMPLEX,
+                        inputType: Field.InputType.COMPOSITE,
                         subfields: [
                             {
                                 name: 'subfield1-1',
@@ -2711,7 +2711,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {
                     field2: {
-                        inputType: Field.InputType.COMPLEX,
+                        inputType: Field.InputType.COMPOSITE,
                         subfields: [
                             {
                                 name: 'subfield2-1',
@@ -2809,7 +2809,7 @@ describe('buildRawProjectConfiguration', () => {
             languageConfigurations
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toEqual(Field.InputType.COMPLEX);
+        expect(result['A'].groups[0].fields[0].inputType).toEqual(Field.InputType.COMPOSITE);
         expect(result['A'].groups[0].fields[0].subfields.length).toBe(2);
         expect(result['A'].groups[0].fields[0].subfields[0].name).toEqual('subfield1-1');
         expect(result['A'].groups[0].fields[0].subfields[0].inputType).toEqual(Field.InputType.INPUT);
@@ -2818,7 +2818,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[0].subfields[1].name).toEqual('subfield1-2');
         expect(result['A'].groups[0].fields[0].subfields[1].inputType).toEqual(Field.InputType.DROPDOWN);
         expect(result['A'].groups[0].fields[0].subfields[1].valuelist?.id).toEqual('valuelist-1');
-        expect(result['A'].groups[0].fields[1].inputType).toEqual(Field.InputType.COMPLEX);
+        expect(result['A'].groups[0].fields[1].inputType).toEqual(Field.InputType.COMPOSITE);
         expect(result['A'].groups[0].fields[1].subfields.length).toBe(3);
         expect(result['A'].groups[0].fields[1].subfields[0].name).toEqual('subfield2-1');
         expect(result['A'].groups[0].fields[1].subfields[0].inputType).toEqual(Field.InputType.TEXT);

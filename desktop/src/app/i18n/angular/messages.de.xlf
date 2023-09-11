@@ -1421,7 +1421,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.complex" datatype="html">
+      <trans-unit id="config.inputType.composite" datatype="html">
         <source>Kompositfeld</source>
         <target state="final">Kompositfeld</target>
         <context-group purpose="location">
@@ -1741,7 +1741,7 @@
         <source>Eintrag anlegen</source>
         <target state="final">Eintrag anlegen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">105,110</context>
         </context-group>
       </trans-unit>
@@ -1749,23 +1749,23 @@
         <source>Eintrag bearbeiten</source>
         <target state="final">Eintrag bearbeiten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">128,132</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.add" datatype="html">
+      <trans-unit id="docedit.forms.composite.add" datatype="html">
         <source>Hinzufügen...</source>
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">52,63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.invalidData" datatype="html">
+      <trans-unit id="docedit.forms.composite.invalidData" datatype="html">
         <source>Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</source>
         <target state="final">Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">80,89</context>
         </context-group>
       </trans-unit>
@@ -6806,7 +6806,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
@@ -7218,7 +7218,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">

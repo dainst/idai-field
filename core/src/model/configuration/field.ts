@@ -101,7 +101,7 @@ export module Field {
         |'default'
         |'category'
         |'identifier'
-        |'complex';
+        |'composite';
 
     export module InputType {
 
@@ -129,7 +129,7 @@ export module Field {
         export const RELATION = 'relation';
         export const CATEGORY = 'category';
         export const IDENTIFIER = 'identifier';
-        export const COMPLEX = 'complex';
+        export const COMPOSITE = 'composite';
         export const NONE = 'none';
         export const DEFAULT = 'default';
 

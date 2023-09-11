@@ -4,7 +4,7 @@ import { click, getLocator, getText } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class DoceditComplexEntryModalPage {
+export class DoceditCompositeEntryModalPage {
 
     // click
 
@@ -19,7 +19,7 @@ export class DoceditComplexEntryModalPage {
     public static async getSubfieldLabel(fieldIndex: number) {
 
         const element = await getLocator('.subfield-section').nth(fieldIndex);
-        return getText(await element.locator('.complex-entry-modal-subfield-label'));
+        return getText(await element.locator('.composite-entry-modal-subfield-label'));
     }
 
     

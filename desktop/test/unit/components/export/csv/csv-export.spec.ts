@@ -14,7 +14,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('literature')) inputType = 'literature';
         if (fieldName.startsWith('period')) inputType = 'dropdownRange';
         if (fieldName.startsWith('relation')) inputType = 'relation';
-        if (fieldName.startsWith('complex')) inputType = 'complex';
+        if (fieldName.startsWith('composite')) inputType = 'composite';
 
         return { name: fieldName, inputType: inputType };
     }) as Array<Field>;
@@ -528,9 +528,9 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand complex fields', () => {
+    it('expand composite fields', () => {
 
-        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
             { name: 'subfield1', inputType: 'int' },
             { name: 'subfield2', inputType: 'input' },
@@ -543,30 +543,30 @@ describe('CSVExport', () => {
             ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
-        resources[0]['complex'] = [
+        resources[0]['composite'] = [
             { 
                 subfield1: 1, subfield2: { en: 'Test content 1', de: 'Testinhalt 1' }, subfield3: true,
                 subfield4: ['value1', 'value2']
             },
             { subfield3: false }
         ];
-        resources[1]['complex'] = [
+        resources[1]['composite'] = [
             { subfield1: 2, subfield2: { en: 'Test content 2', de: 'Testinhalt 2' } }
         ];
 
         const result = CSVExport.createExportable(resources, fieldDefinitions, [], ['de', 'en'])
             .csvData.map(row => row.split(','));
 
-        expect(result[0][1]).toBe('"complex.0.subfield1"');
-        expect(result[0][2]).toBe('"complex.0.subfield2.de"');
-        expect(result[0][3]).toBe('"complex.0.subfield2.en"');
-        expect(result[0][4]).toBe('"complex.0.subfield3"');
-        expect(result[0][5]).toBe('"complex.0.subfield4"');
-        expect(result[0][6]).toBe('"complex.1.subfield1"');
-        expect(result[0][7]).toBe('"complex.1.subfield2.de"');
-        expect(result[0][8]).toBe('"complex.1.subfield2.en"');
-        expect(result[0][9]).toBe('"complex.1.subfield3"');
-        expect(result[0][10]).toBe('"complex.1.subfield4"');
+        expect(result[0][1]).toBe('"composite.0.subfield1"');
+        expect(result[0][2]).toBe('"composite.0.subfield2.de"');
+        expect(result[0][3]).toBe('"composite.0.subfield2.en"');
+        expect(result[0][4]).toBe('"composite.0.subfield3"');
+        expect(result[0][5]).toBe('"composite.0.subfield4"');
+        expect(result[0][6]).toBe('"composite.1.subfield1"');
+        expect(result[0][7]).toBe('"composite.1.subfield2.de"');
+        expect(result[0][8]).toBe('"composite.1.subfield2.en"');
+        expect(result[0][9]).toBe('"composite.1.subfield3"');
+        expect(result[0][10]).toBe('"composite.1.subfield4"');
 
         expect(result[1][1]).toBe('"1"');
         expect(result[1][2]).toBe('"Testinhalt 1"');
@@ -603,9 +603,9 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one complex field even if no values present', () => {
+    it('expand one composite field even if no values present', () => {
 
-        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
             { name: 'subfield1', inputType: 'int' },
             { name: 'subfield2', inputType: 'input' }
@@ -618,16 +618,16 @@ describe('CSVExport', () => {
         const result = CSVExport.createExportable(resources, fieldDefinitions, [], ['en'])
             .csvData.map(row => row.split(','));
 
-        expect(result[0][1]).toBe('"complex.0.subfield1"');
-        expect(result[0][2]).toBe('"complex.0.subfield2.en"');
+        expect(result[0][1]).toBe('"composite.0.subfield1"');
+        expect(result[0][2]).toBe('"composite.0.subfield2.en"');
 
         expect(result[1][1]).toBe('""');
     });
 
 
-    it('expand one complex field even if no values present, in header only mode', () => {
+    it('expand one composite field even if no values present, in header only mode', () => {
 
-        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'complex']);
+        const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
             { name: 'subfield1', inputType: 'int' },
             { name: 'subfield2', inputType: 'input' }
@@ -636,8 +636,8 @@ describe('CSVExport', () => {
         const result = CSVExport.createExportable([], fieldDefinitions, [], ['en'])
             .csvData.map(row => row.split(','));
 
-        expect(result[0][1]).toBe('"complex.0.subfield1"');
-        expect(result[0][2]).toBe('"complex.0.subfield2.en"');
+        expect(result[0][1]).toBe('"composite.0.subfield1"');
+        expect(result[0][2]).toBe('"composite.0.subfield2.en"');
     });
 
 

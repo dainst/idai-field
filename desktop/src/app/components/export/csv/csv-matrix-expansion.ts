@@ -23,10 +23,10 @@ export module CSVMatrixExpansion {
     const expandLiteratureItems = (_: string[]) => CSVExpansion.expandHomogeneousItems(
         rowsWithLiteratureElementsExpanded, 5
     );
-    const expandComplexItems = (languages: string[], subfields: Array<Subfield>) =>
+    const expandCompositeItems = (languages: string[], subfields: Array<Subfield>) =>
         CSVExpansion.expandHomogeneousItems(
-            rowsWithComplexElementsExpanded(languages, subfields),
-            getNumberOfColumnsForComplexElements(languages, subfields)
+            rowsWithCompositeElementsExpanded(languages, subfields),
+            getNumberOfColumnsForCompositeElements(languages, subfields)
         );
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
 
@@ -154,21 +154,21 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandComplex(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+    export function expandComposite(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
             return flow(
                 headingsAndMatrix,
                 left,
-                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.COMPLEX),
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.COMPOSITE),
                 reverse,
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
                     undefined,
-                    CSVHeadingsExpansion.expandComplexHeadings,
-                    expandComplexItems
+                    CSVHeadingsExpansion.expandCompositeHeadings,
+                    expandCompositeItems
                 )
             );
         }
@@ -262,7 +262,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithComplexElementsExpanded(languages: string[], subfields: Array<Subfield>) {
+    function rowsWithCompositeElementsExpanded(languages: string[], subfields: Array<Subfield>) {
         
         return (object: any): string[] => {
 
@@ -282,7 +282,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    function getNumberOfColumnsForComplexElements(languages: string[], subfields: Array<Subfield>): number {
+    function getNumberOfColumnsForCompositeElements(languages: string[], subfields: Array<Subfield>): number {
 
         if (!subfields) return undefined;
 

@@ -9,7 +9,7 @@ import { DoceditPage } from '../docedit/docedit.page';
 import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
-import { DoceditComplexEntryModalPage } from '../docedit/docedit-complex-entry-modal.page';
+import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -754,14 +754,14 @@ test.describe('configuration --', () => {
     });
 
 
-    test('create complex field', async () => {
+    test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
-        await AddFieldModalPage.typeInSearchFilterInput('complexField');
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
         await AddFieldModalPage.clickCreateNewField();
 
-        await EditConfigurationPage.clickInputTypeSelectOption('complex', 'field');
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await EditConfigurationPage.typeInTranslation(0, 0, 'Kompositfeld', 'field');
         
         await EditConfigurationPage.typeInNewSubfield('subfield1');
@@ -782,13 +782,13 @@ test.describe('configuration --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.performCreateResource('P1', 'place');
         await ResourcesPage.openEditByDoubleClickResource('P1');
-        await DoceditPage.clickCreateComplexEntry('test-complexField');
-        expect(await DoceditComplexEntryModalPage.getSubfieldLabel(0)).toEqual('Unterfeld 1');
-        expect(await DoceditComplexEntryModalPage.getSubfieldLabel(1)).toEqual('Unterfeld 2');
-        waitForExist(await DoceditComplexEntryModalPage.getSubfieldInputElement(0, 'boolean'));
-        waitForExist(await DoceditComplexEntryModalPage.getSubfieldInputElement(1, 'input'));
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(0)).toEqual('Unterfeld 1');
+        expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(1)).toEqual('Unterfeld 2');
+        waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
+        waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'input'));
 
-        await DoceditComplexEntryModalPage.clickCancel();
+        await DoceditCompositeEntryModalPage.clickCancel();
         await DoceditPage.clickCloseEdit();
     });
 });

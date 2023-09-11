@@ -13,7 +13,7 @@
 
 	<div *ngIf="!entryLabels[i]" class="input-group mb-2">
 		<input value="Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt."
-			   i18n-value="@@docedit.forms.complex.invalidData"
+			   i18n-value="@@docedit.forms.composite.invalidData"
 			   type="text" disabled class="form-control invalid-data">
 		<div class="input-group-append">
             <button class="btn btn-danger" (click)="removeEntryAtIndex(i)">
@@ -24,10 +24,10 @@
 </div>
 
 <div class="input-group">
-	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.complex.add"
+	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.composite.add"
            type="text" disabled class="form-control">
 	<div class="input-group-append">
-        <button class="btn btn-success create-complex-entry-button" (click)="createEntry()">
+        <button class="btn btn-success create-composite-entry-button" (click)="createEntry()">
             <span class="mdi mdi-plus-circle"></span>
         </button>
     </div>

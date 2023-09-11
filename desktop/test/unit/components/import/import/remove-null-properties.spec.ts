@@ -36,7 +36,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('complex field - collapse if deletions not permitted', () => {
+    it('composite field - collapse if deletions not permitted', () => {
 
         const resource = { aField: { aSubfield: null }};
 
@@ -82,7 +82,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('complex field - array - empty string not allowed', () => {
+    it('composite field - array - empty string not allowed', () => {
 
         const resource = { aField: [''] };
 
@@ -95,7 +95,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('complex field - empty string not allowed', () => {
+    it('composite field - empty string not allowed', () => {
 
         const resource = { aField: { aSubfield: ''}};
 

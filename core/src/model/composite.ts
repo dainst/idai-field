@@ -7,7 +7,7 @@ import { Field, Subfield } from './configuration/field';
 /**
  * @author Thomas Kleinke
  */
-export module Complex {
+export module Composite {
 
     export function isConditionFulfilled(entry: any, subfieldToCheck: Subfield, subfields: Array<Subfield>): boolean {
 

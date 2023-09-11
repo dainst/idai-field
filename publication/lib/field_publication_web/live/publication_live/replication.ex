@@ -15,7 +15,7 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
 
   alias Phoenix.PubSub
 
-  @log_cache Application.get_env(:field_publication, :replication_log_cache_name)
+  @log_cache Application.compile_env(:field_publication, :replication_log_cache_name)
 
   require Logger
 
@@ -150,7 +150,7 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     {:noreply, socket}
   end
 

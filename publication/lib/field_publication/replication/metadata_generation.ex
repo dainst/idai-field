@@ -2,7 +2,6 @@ defmodule FieldPublication.Replication.MetadataGeneration do
   alias FieldPublication.{
     CouchService,
     Schema.Publication,
-    Schema.Project,
     Replication.Parameters
   }
 

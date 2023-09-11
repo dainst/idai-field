@@ -22,7 +22,7 @@ defmodule FieldPublication.Replication.FileReplication do
           source_user: source_user,
           source_password: source_password,
           project_key: project_key
-        } = parameters,
+        },
         %Publication{
           draft_date: draft_date
         },

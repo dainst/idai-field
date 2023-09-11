@@ -19,7 +19,7 @@ defmodule FieldPublication.Replication do
 
   require Logger
 
-  @log_cache Application.get_env(:field_publication, :replication_log_cache_name)
+  @log_cache Application.compile_env(:field_publication, :replication_log_cache_name)
 
   def start(%Parameters{project_key: project_key} = params, broadcast_channel) do
     publication = MetadataGeneration.create_publication(params)
@@ -197,7 +197,7 @@ defmodule FieldPublication.Replication do
     |> then(fn result_or_error ->
       Cachex.del(@log_cache, channel)
 
-      {:ok, updated_project} =
+      {:ok, _updated_project} =
         project_key
         |> Project.get_project!()
         |> Project.add_publication(publication)

@@ -1,10 +1,7 @@
 defmodule FieldPublication.Replication.FileReplication do
   alias Phoenix.PubSub
   alias FieldPublication.FileService
-  alias FieldPublication.Schema.{
-    LogEntry,
-    Publication
-  }
+  alias FieldPublication.Schema.Publication
   alias FieldPublication.Replication
   alias FieldPublication.Replication.{
     Parameters

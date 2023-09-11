@@ -6,7 +6,6 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   alias FieldPublication.{
     CouchService,
-    Schema.LogEntry,
     Replication,
     Replication.Parameters
   }

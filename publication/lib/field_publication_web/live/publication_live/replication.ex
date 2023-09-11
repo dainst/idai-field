@@ -105,18 +105,6 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
     """
   end
 
-  def translation(assigns) do
-    ~H"""
-    <.inputs_for :let={translation} field={@form_field}>
-      <.input type="text" field={translation[:language]} />
-      <.input type="text" field={translation[:text]} />
-      <span phx-click={@remove} phx-value-id={translation.id}>X</span>
-    </.inputs_for>
-
-    <.button phx-click={@add} type="button">Add comment</.button>
-    """
-  end
-
   @impl true
   def mount(%{"project_id" => project_id}, _session, socket) do
     replication_channel = "replication-#{project_id}"

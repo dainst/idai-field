@@ -1,10 +1,12 @@
 defmodule FieldPublication.Replication.FileReplication do
   alias Phoenix.PubSub
   alias FieldPublication.FileService
-  alias FieldPublication.Schema.Publication
-
-  alias FieldPublication.Replication.{
+  alias FieldPublication.Schema.{
     LogEntry,
+    Publication
+  }
+  alias FieldPublication.Replication
+  alias FieldPublication.Replication.{
     Parameters
   }
 
@@ -63,12 +65,7 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    FieldPublication.Replication.broadcast(channel, %LogEntry{
-      name: :overall_files,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "#{overall_file_count} files need replication."
-    })
+    Replication.log(channel, :info, "#{overall_file_count} files need replication.")
 
     file_processing_parameters = {project_key, draft_date, counter_pid, channel}
 

@@ -1,16 +1,12 @@
 defmodule FieldPublication.Replication do
   alias Phoenix.PubSub
 
-  defmodule LogEntry do
-    @enforce_keys [:name, :severity, :timestamp, :msg]
-    defstruct [:name, :severity, :timestamp, :msg]
-  end
-
   alias FieldPublication.{
     CouchService,
     FileService,
     Schema.Project,
     Schema.Publication,
+    Schema.LogEntry,
     Replication.CouchReplication,
     Replication.FileReplication,
     Replication.Parameters,
@@ -26,12 +22,7 @@ defmodule FieldPublication.Replication do
 
     with {:ok, :connection_successful} <- check_source_connection(params),
          {:ok, _} <- ensure_no_existing_publication(params, publication, broadcast_channel) do
-      broadcast(broadcast_channel, %LogEntry{
-        name: :start,
-        severity: :ok,
-        timestamp: DateTime.utc_now(),
-        msg: "Starting replication for #{project_key}."
-      })
+      log(broadcast_channel, :info, "Starting replication for #{project_key}.")
 
       Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
         replicate(params, publication, broadcast_channel)
@@ -135,13 +126,7 @@ defmodule FieldPublication.Replication do
       CouchReplication.stop_replication(publication.database)
       |> case do
         {:ok, :deleted} = result ->
-          broadcast(channel, %LogEntry{
-            name: :started,
-            severity: :ok,
-            timestamp: DateTime.utc_now(),
-            msg: "Removed existing replication document."
-          })
-
+          log(channel, :info, "Removed existing replication document.")
           result
 
         result ->
@@ -152,13 +137,7 @@ defmodule FieldPublication.Replication do
       CouchService.delete_database(publication.database)
       |> case do
         {:ok, %{status: 200}} ->
-          broadcast(channel, %LogEntry{
-            name: :started,
-            severity: :ok,
-            timestamp: DateTime.utc_now(),
-            msg: "Removed existing publication database."
-          })
-
+          log(channel, :info, "Removed existing publication database.")
           {:ok, :deleted}
 
         {:ok, %{status: 404}} ->
@@ -172,13 +151,7 @@ defmodule FieldPublication.Replication do
           {:ok, :already_deleted}
 
         {:ok, _list_of_deleted_files} ->
-          broadcast(channel, %LogEntry{
-            name: :started,
-            severity: :ok,
-            timestamp: DateTime.utc_now(),
-            msg: "Removed existing publication files."
-          })
-
+          log(channel, :info, "Removed existing publication files.")
           {:ok, :deleted}
       end
 
@@ -195,6 +168,9 @@ defmodule FieldPublication.Replication do
     |> replicate_files(parameters, publication)
     |> reconstruct_configuration_doc(publication)
     |> then(fn result_or_error ->
+      {:ok, final_publication} =
+        Publication.update(publication, %{logs: Cachex.get(@log_cache, channel)})
+
       Cachex.del(@log_cache, channel)
 
       {:ok, _updated_project} =
@@ -211,34 +187,17 @@ defmodule FieldPublication.Replication do
          %Parameters{} = params,
          %Publication{} = publication
        ) do
-    broadcast(channel, %LogEntry{
-      name: :db_start,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "Starting database replication."
-    })
+    log(channel, :info, "Starting database replication.")
 
     params
     |> CouchReplication.start(publication.database, channel)
     |> case do
       {:ok, :completed} ->
-        broadcast(channel, %LogEntry{
-          name: :database_replication_finished,
-          severity: :ok,
-          timestamp: DateTime.utc_now(),
-          msg: "Database replication has finished."
-        })
-
+        log(channel, :info, "Database replication has finished.")
         {:ok, Map.put(replication_state, :database_result, :replicated)}
 
       {:error, name} = error ->
-        broadcast(channel, %LogEntry{
-          name: name,
-          severity: :error,
-          timestamp: DateTime.utc_now(),
-          msg: "Database replication has failed."
-        })
-
+        log(channel, :error, "Database replication has failed.")
         error
     end
   end
@@ -252,21 +211,11 @@ defmodule FieldPublication.Replication do
          %Parameters{} = params,
          %Publication{} = publication
        ) do
-    broadcast(channel, %LogEntry{
-      name: :start_file_replication,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "Starting file replication."
-    })
+    log(channel, :info, "Starting file replication.")
 
     {:ok, file_results} = FileReplication.start(params, publication, channel)
 
-    broadcast(channel, %LogEntry{
-      name: :file_replication_finished,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "File replication has finished."
-    })
+    log(channel, :info, "File replication has finished.")
 
     {:ok, Map.put(replication_state, :file_results, file_results)}
   end
@@ -279,33 +228,31 @@ defmodule FieldPublication.Replication do
          {:ok, %{broadcast_channel: channel} = replication_state},
          %Publication{} = publication
        ) do
-    broadcast(channel, %LogEntry{
-      name: :publication_configuration_recreated,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "Creating publication metadata."
-    })
+    log(channel, :info, "Creating publication metadata.")
 
     {:ok, result} = MetadataGeneration.reconstruct_project_konfiguraton(publication)
 
-    broadcast(channel, %LogEntry{
-      name: :publication_configuration_recreated,
-      severity: :ok,
-      timestamp: DateTime.utc_now(),
-      msg: "Publication metadata created."
-    })
+    log(channel, :info, "Publication metadata created.")
 
     {:ok, Map.put(replication_state, :project_configuration_recreation, result)}
   end
 
-  def broadcast(channel, %LogEntry{severity: severity, msg: msg} = log_entry) do
+  def log(channel, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
-
+      :warning ->
+        Logger.error(msg)
       _ ->
         Logger.debug(msg)
     end
+
+    {:ok, log_entry} =
+      LogEntry.create(%{
+        severity: severity,
+        timestamp: DateTime.utc_now(),
+        message: msg,
+      })
 
     case Cachex.get(@log_cache, channel) do
       {:ok, nil} ->

@@ -6,8 +6,8 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   alias FieldPublication.{
     CouchService,
+    Schema.LogEntry,
     Replication,
-    Replication.LogEntry,
     Replication.Parameters
   }
 
@@ -140,17 +140,11 @@ defmodule FieldPublication.Replication.CouchReplication do
             {:ok, :completed}
 
           %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
-            Replication.broadcast(
-              channel,
-              %LogEntry{
-                name: :document_replication_crashed,
-                severity: :error,
-                timestamp: DateTime.utc_now(),
-                msg: "Experienced error while replicating documents, stopping replication."
-              }
-            )
-
             Logger.error(error)
+
+            Replication.log(
+              channel, :error, "Experienced error while replicating documents, stopping replication."
+            )
 
             {:error, :couchdb_replication_error}
         end
@@ -188,12 +182,7 @@ defmodule FieldPublication.Replication.CouchReplication do
               {:ok, update_seq}
           end
 
-        Replication.broadcast(channel, %LogEntry{
-          name: :document_count,
-          severity: :ok,
-          timestamp: DateTime.utc_now(),
-          msg: "#{count} database documents need replication."
-        })
+        Replication.log(channel, :info, "#{count} database documents need replication.")
 
         result
 

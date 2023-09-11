@@ -1,10 +1,12 @@
 defmodule FieldPublicationWeb.PublicationLive.Replication do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Schema.Project
+  alias FieldPublication.Schema.{
+    LogEntry,
+    Project
+  }
 
   alias FieldPublication.Replication.{
-    LogEntry,
     Parameters
   }
 

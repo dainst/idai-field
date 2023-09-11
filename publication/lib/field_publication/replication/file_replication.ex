@@ -1,6 +1,7 @@
 defmodule FieldPublication.Replication.FileReplication do
   alias Phoenix.PubSub
   alias FieldPublication.FileService
+  alias FieldPublication.Schema.Publication
 
   alias FieldPublication.Replication.{
     LogEntry,
@@ -19,13 +20,14 @@ defmodule FieldPublication.Replication.FileReplication do
           source_url: source_url,
           source_project_name: source_project_name,
           source_user: source_user,
-          source_password: source_password
+          source_password: source_password,
+          project_key: project_key
+        } = parameters,
+        %Publication{
+          draft_date: draft_date
         },
-        publication_name,
-        broadcast_channel
+        channel
       ) do
-    Logger.debug("Replicating images of #{source_url} as #{publication_name}")
-
     headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}
@@ -33,9 +35,7 @@ defmodule FieldPublication.Replication.FileReplication do
 
     base_file_url = "#{source_url}/files/#{source_project_name}"
 
-    target_path = FileService.get_publication_path(publication_name)
-
-    File.mkdir_p!(target_path)
+    FileService.initialize_publication(project_key, draft_date)
 
     file_lists_by_variant =
       @file_variants_to_replicate
@@ -45,7 +45,7 @@ defmodule FieldPublication.Replication.FileReplication do
         filtered =
           result
           |> Enum.reject(fn {uuid, _} ->
-            File.exists?("#{target_path}/#{variant}/#{uuid}")
+            FileService.file_exists?(project_key, draft_date, uuid)
           end)
 
         {variant, filtered}
@@ -60,20 +60,20 @@ defmodule FieldPublication.Replication.FileReplication do
         sum + val
       end)
 
-    {:ok, file_counter_pid} =
+    {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    FieldPublication.Replication.broadcast(broadcast_channel, %LogEntry{
+    FieldPublication.Replication.broadcast(channel, %LogEntry{
       name: :overall_files,
       severity: :ok,
       timestamp: DateTime.utc_now(),
       msg: "#{overall_file_count} files need replication."
     })
 
+    file_processing_parameters = {project_key, draft_date, counter_pid, channel}
+
     file_lists_by_variant
-    |> Enum.map(
-      &copy_files(&1, base_file_url, headers, target_path, file_counter_pid, broadcast_channel)
-    )
+    |> Enum.map(&copy_files(&1, base_file_url, headers, file_processing_parameters))
 
     {:ok, :successful}
   end
@@ -108,9 +108,7 @@ defmodule FieldPublication.Replication.FileReplication do
          {variant, file_list},
          base_file_url,
          headers,
-         target_path,
-         file_counter_pid,
-         channel
+         parameters
        ) do
     file_list
     |> Stream.chunk_every(100)
@@ -118,7 +116,7 @@ defmodule FieldPublication.Replication.FileReplication do
       chunk
       |> Stream.map(
         &Task.async(fn ->
-          copy_file(&1, variant, base_file_url, headers, target_path, file_counter_pid, channel)
+          copy_file(&1, variant, base_file_url, headers, parameters)
         end)
       )
       |> Enum.map(&Task.await(&1, 30000))
@@ -126,16 +124,17 @@ defmodule FieldPublication.Replication.FileReplication do
   end
 
   defp copy_file(
-         {uuid, _},
+         {uuid, _metadata},
          variant,
          base_url,
          headers,
-         project_directory,
-         file_counter_pid,
-         broadcast_channel
+         {
+           project_key,
+           draft_date,
+           counter_pid,
+           channel
+         }
        ) do
-    file_path = "#{project_directory}/#{variant}/#{uuid}"
-
     Finch.build(
       :get,
       "#{base_url}/#{uuid}?type=#{variant}",
@@ -144,18 +143,17 @@ defmodule FieldPublication.Replication.FileReplication do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
-        File.mkdir_p!("#{project_directory}/#{variant}")
-        File.write!(file_path, data)
+        FileService.write_file(project_key, draft_date, uuid, data)
     end
 
-    Agent.update(file_counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
+    Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
 
     PubSub.broadcast(
       FieldPublication.PubSub,
-      broadcast_channel,
+      channel,
       {
         :file_processing,
-        Agent.get(file_counter_pid, fn state -> state end)
+        Agent.get(counter_pid, fn state -> state end)
       }
     )
   end

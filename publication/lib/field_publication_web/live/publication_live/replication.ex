@@ -120,11 +120,15 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
   @impl true
   def mount(%{"project_id" => project_id}, _session, socket) do
     replication_channel = "replication-#{project_id}"
+
+    project = Project.get_project!(project_id)
+
     PubSub.subscribe(FieldPublication.PubSub, replication_channel)
 
     {
       :ok,
       socket
+      |> assign(:page_title, "Create new publication")
       |> assign(:project, Project.get_project!(project_id))
       |> assign(:initialization_error, nil)
       |> assign(:replication_running, false)
@@ -132,32 +136,13 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
       |> assign(:replication_logs, [])
       |> assign(:document_replication_status, nil)
       |> assign(:file_replication_status, nil)
+      |> assign(:form, to_form(changeset))
     }
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(%{assigns: %{project: project}} = socket, :new, _params) do
-    changeset =
-      %Parameters{}
-      |> Parameters.changeset(%{
-        local_project_name: project.id,
-        source_url: "http://localhost:4000",
-        source_project_name: project.id,
-        source_user: project.id,
-        source_password: "test",
-        comments: [
-          %{language: "de", text: "Ein Kommentar zur Veröffentlichung."},
-          %{language: "en", text: "A comment concerning the publication."}
-        ]
-      })
-
-    socket
-    |> assign(:page_title, "Create new publication")
-    |> assign(:form, to_form(changeset))
+    {:noreply, socket}
   end
 
   @impl true

@@ -3,27 +3,37 @@ defmodule FieldPublication.FileService do
 
   require Logger
 
-  def get_publication_path(publication_name) do
-    "#{@root_path}/publications/#{publication_name}"
+  def get_publication_path(project_name, publication_date) do
+    "#{@root_path}/#{project_name}/#{publication_date}"
   end
 
-  def delete_publication(publication_name) do
-    publication_name
-    |> get_publication_path()
+  def initialize_publication(project_name, publication_date) do
+    get_publication_path(project_name, publication_date)
+    |> File.mkdir_p!()
+  end
+
+  def delete_publication(project_name, publication_date) do
+    get_publication_path(project_name, publication_date)
     |> File.rm_rf()
   end
 
-  def get_image_list(publication_name) do
-    root_path = get_publication_path(publication_name)
+  def write_file(project_name, publication_date, uuid, data) do
+    "#{get_publication_path(project_name, publication_date)}/#{uuid}"
+    |> File.write!(data)
+  end
 
-    "#{root_path}/original_image"
+  def read_file(project_name, publication_date, uuid) do
+    "#{get_publication_path(project_name, publication_date)}/#{uuid}"
+    |> File.read!()
+  end
+
+  def file_exists?(project_name, publication_date, uuid) do
+    "#{get_publication_path(project_name, publication_date)}/#{uuid}"
+    |> File.exists?()
+  end
+
+  def list_publication_files(project_name, publication_date) do
+    get_publication_path(project_name, publication_date)
     |> File.ls()
-    |> case do
-      {:ok, files} ->
-        Enum.map(files, fn file -> "#{root_path}/original_image/#{file}" end)
-
-      error ->
-        error
-    end
   end
 end

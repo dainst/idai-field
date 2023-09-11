@@ -12,18 +12,22 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   require Logger
 
-  def start(%Parameters{} = parameters, publication_name, channel) do
+  def start(%Parameters{} = parameters, target_database_name, channel) do
     # The replication document will get added to CouchDB's internal database '_replicator' in order to trigger the replication.
-    replication_doc = create_replication_doc(parameters, publication_name)
+    replication_doc =
+      create_replication_doc(
+        parameters,
+        target_database_name
+      )
 
     with {:ok, source_doc_count} <- source_doc_count(parameters, channel),
-         {:ok, %{status: 201}} <- put_replication_doc(publication_name, replication_doc) do
+         {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
-      poll_replication_status(parameters, publication_name, source_doc_count, channel)
+      poll_replication_status(target_database_name, source_doc_count, channel)
     else
       {:error, :error_count_exceeded} ->
-        CouchService.delete_document(publication_name, "_replicator")
-        CouchService.delete_database(publication_name)
+        CouchService.delete_document(target_database_name, "_replicator")
+        CouchService.delete_database(target_database_name)
         {:error, :couchdb_error_count_exceeded}
 
       error ->
@@ -38,10 +42,10 @@ defmodule FieldPublication.Replication.CouchReplication do
            source_user: source_user,
            source_password: source_password
          },
-         publication_name
+         target_database
        ) do
     %{
-      _id: publication_name,
+      _id: target_database,
       create_target: true,
       winning_revs_only: true,
       source: %{
@@ -51,14 +55,15 @@ defmodule FieldPublication.Replication.CouchReplication do
       },
       target: %{
         # This URL is relative to the CouchDB application context, which is not necessarily the same as FieldPublication's.
-        url: "http://127.0.0.1:5984/#{publication_name}",
+        url: "http://127.0.0.1:5984/#{target_database}",
         headers: CouchService.headers() |> Enum.into(%{})
       }
     }
   end
 
-  def get_replication_doc(name) do
-    CouchService.get_document(name, "_replicator")
+  def get_replication_doc(database_name) do
+    database_name
+    |> CouchService.get_document("_replicator")
     |> then(fn {:ok, %{body: body}} ->
       body
     end)
@@ -72,8 +77,9 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  def stop_replication(name) do
-    get_replication_doc(name)
+  def stop_replication(database_name) do
+    database_name
+    |> get_replication_doc()
     |> case do
       {:error, :not_found} ->
         {:ok, :not_found}
@@ -85,22 +91,23 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp put_replication_doc(name, replication_doc) do
-    CouchService.store_document(name, replication_doc, "_replicator")
+  defp put_replication_doc(database_name, replication_doc) do
+    database_name
+    |> CouchService.store_document(replication_doc, "_replicator")
     |> case do
       {:ok, %{status: 409}} ->
         # If another replication doc of the same name is encountered, the function will replace
         # the old document with the new one without asking.
-        stop_replication(name)
-        CouchService.store_document(name, replication_doc, "_replicator")
+        stop_replication(database_name)
+        CouchService.store_document(database_name, replication_doc, "_replicator")
 
       {:ok, %{status: 201}} = result ->
         result
     end
   end
 
-  defp poll_replication_status(parameters, name, source_doc_count, channel) do
-    CouchService.get_document(name, "/_scheduler/docs/_replicator")
+  defp poll_replication_status(database_name, source_doc_count, channel) do
+    CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body
@@ -114,13 +121,13 @@ defmodule FieldPublication.Replication.CouchReplication do
             )
 
             Process.sleep(@poll_frequency)
-            poll_replication_status(parameters, name, source_doc_count, channel)
+            poll_replication_status(database_name, source_doc_count, channel)
 
           %{"state" => state}
           when state == nil or state == "initializing" or state == "running" ->
             # Different cases shortly after the replication document has been committed.
             Process.sleep(@poll_frequency)
-            poll_replication_status(parameters, name, source_doc_count, channel)
+            poll_replication_status(database_name, source_doc_count, channel)
 
           %{"state" => "completed"} ->
             PubSub.broadcast(

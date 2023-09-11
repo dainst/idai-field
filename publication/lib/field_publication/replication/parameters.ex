@@ -10,8 +10,8 @@ defmodule FieldPublication.Replication.Parameters do
     field(:source_project_name, :string)
     field(:source_user, :string)
     field(:source_password, :string, redact: true)
-    field(:local_project_name, :string)
-    field(:local_delete_existing, :boolean, default: false)
+    field(:project_key, :string)
+    field(:delete_existing_publication, :boolean, default: false)
     embeds_many(:comments, Translation)
   end
 
@@ -23,17 +23,17 @@ defmodule FieldPublication.Replication.Parameters do
       :source_project_name,
       :source_user,
       :source_password,
-      :local_project_name,
-      :local_delete_existing
+      :project_key,
+      :delete_existing_publication
     ])
     |> validate_required([
       :source_url,
       :source_project_name,
       :source_user,
       :source_password,
-      :local_project_name
+      :project_key
     ])
-    |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid FieldHub.")
+    |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid http(s) URL.")
     |> cast_embed(:comments)
   end
 

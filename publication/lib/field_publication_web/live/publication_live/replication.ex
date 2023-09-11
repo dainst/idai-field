@@ -39,10 +39,10 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
                 <.input field={@form[:source_project_name]} type="text" label="Source project name" />
                 <.input field={@form[:source_user]} type="text" label="Source user name" />
                 <.input field={@form[:source_password]} type="password" label="Source user password" />
-                <.input field={@form[:local_project_name]} type="hidden" />
+                <.input field={@form[:project_key]} type="hidden" />
                 <div class="pt-5">
                   <.input
-                    field={@form[:local_delete_existing]}
+                    field={@form[:delete_existing_publication]}
                     type="checkbox"
                     label="Delete existing publication"
                   />
@@ -124,6 +124,16 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
     project = Project.get_project!(project_id)
 
     PubSub.subscribe(FieldPublication.PubSub, replication_channel)
+
+    changeset =
+      %Parameters{}
+      |> Parameters.changeset(%{
+        source_project_name: project.id,
+        source_user: project.id,
+        project_key: project.id,
+        comments: [
+        ]
+      })
 
     {
       :ok,

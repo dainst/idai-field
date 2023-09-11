@@ -15,6 +15,8 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
 
   alias Phoenix.PubSub
 
+  @log_cache Application.get_env(:field_publication, :replication_log_cache_name)
+
   require Logger
 
   @impl true
@@ -109,6 +111,16 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
   def mount(%{"project_id" => project_id}, _session, socket) do
     replication_channel = "replication-#{project_id}"
 
+    running_process_logs =
+      Cachex.get(@log_cache, replication_channel)
+      |> case do
+        {:ok, nil} ->
+          []
+
+        {:ok, entries} ->
+          entries
+      end
+
     project = Project.get_project!(project_id)
 
     PubSub.subscribe(FieldPublication.PubSub, replication_channel)
@@ -119,8 +131,7 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
         source_project_name: project.id,
         source_user: project.id,
         project_key: project.id,
-        comments: [
-        ]
+        comments: []
       })
 
     {
@@ -131,7 +142,7 @@ defmodule FieldPublicationWeb.PublicationLive.Replication do
       |> assign(:initialization_error, nil)
       |> assign(:replication_running, false)
       |> assign(:replication_log_channel, replication_channel)
-      |> assign(:replication_logs, [])
+      |> assign(:replication_logs, running_process_logs)
       |> assign(:document_replication_status, nil)
       |> assign(:file_replication_status, nil)
       |> assign(:form, to_form(changeset))

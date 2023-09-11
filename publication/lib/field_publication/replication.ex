@@ -186,7 +186,7 @@ defmodule FieldPublication.Replication do
   end
 
   defp replicate(
-         %Parameters{} = parameters,
+         %Parameters{project_key: project_key} = parameters,
          %Publication{} = publication,
          channel
        ) do

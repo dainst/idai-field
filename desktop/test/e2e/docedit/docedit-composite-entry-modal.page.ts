@@ -1,4 +1,4 @@
-import { click, getLocator, getText } from '../app';
+import { click, getLocator, getSearchableSelectOption, getText } from '../app';
 
 
 /**
@@ -29,5 +29,12 @@ export class DoceditCompositeEntryModalPage {
 
         const element = await getLocator('.subfield-section').nth(fieldIndex);
         return element.locator('form-field-' + inputType);
+    }
+
+
+    public static async getSubfieldSelectOption(fieldIndex: number, optionValueLabel: string) {
+
+        const element = await getLocator('.subfield-section').nth(fieldIndex);
+        return getSearchableSelectOption(element, optionValueLabel);
     }
 }

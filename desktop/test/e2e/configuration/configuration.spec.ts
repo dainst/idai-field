@@ -785,10 +785,77 @@ test.describe('configuration --', () => {
         await DoceditPage.clickCreateCompositeEntry('test-compositeField');
         expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(0)).toEqual('Unterfeld 1');
         expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(1)).toEqual('Unterfeld 2');
-        waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
-        waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'input'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'input'));
 
         await DoceditCompositeEntryModalPage.clickCancel();
         await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('create and edit valuelists via composite field editor', async () => {
+
+        const createSubfieldAndValuelist = async (subfieldName: string, valuelistName: string, valueName: string) => {
+
+            await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+            await EditConfigurationPage.typeInNewSubfield(subfieldName);
+            await EditConfigurationPage.clickCreateSubfield();
+            await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+    
+            await EditConfigurationPage.clickAddValuelist();
+            await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+            await ManageValuelistsModalPage.clickCreateNewValuelist();
+            await EditConfigurationPage.typeInNewValue(valueName);
+            await EditConfigurationPage.clickAddValue();
+            await EditConfigurationPage.clickConfirmValue();
+            await EditConfigurationPage.clickConfirmValuelist();
+            await EditConfigurationPage.clickConfirmSubfield();
+        };
+
+        const addValueToValuelist = async (subfieldIndex: number, newValueName: string) => {
+
+            await EditConfigurationPage.clickEditSubfield(subfieldIndex);
+            await EditConfigurationPage.clickEditValuelist();
+            await EditConfigurationPage.typeInNewValue(newValueName);
+            await EditConfigurationPage.clickAddValue();
+            await EditConfigurationPage.clickConfirmValue();
+            await EditConfigurationPage.clickConfirmValuelist();
+            await EditConfigurationPage.clickConfirmSubfield();
+        };
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await createSubfieldAndValuelist('subfield1', 'new-valuelist-1', 'value1a');
+        await createSubfieldAndValuelist('subfield2', 'new-valuelist-2', 'value2a');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1a'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2a'));
+        
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField('test-compositeField');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await addValueToValuelist(0, 'value1b');
+        await addValueToValuelist(1, 'value2b');
+        await EditConfigurationPage.clickCancel();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P2', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P2');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1b'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2b'));
     });
 });

@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectOptionFromSearchableSelect } from '../app';
+    selectSearchableSelectOption } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -133,7 +133,7 @@ export class DoceditPage {
 
     public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
-        return selectOptionFromSearchableSelect('#edit-form-element-' + fieldName, optionValueLabel);
+        return selectSearchableSelectOption('#edit-form-element-' + fieldName, optionValueLabel);
     }
 
 

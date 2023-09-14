@@ -6,7 +6,6 @@ import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { CategoryEditorModalComponent } from '../../editor/category/category-editor-modal.component';
 import { Modals } from '../../../../services/modals';
-import { ApplyChangesResult } from '../../configuration.component';
 import { SwapCategoryFormModalComponent } from './swap-category-form-modal.component';
 import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
@@ -33,7 +32,7 @@ export class AddCategoryFormModalComponent {
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;

@@ -4,7 +4,6 @@ import { clone, is, isArray, on, subsetOf } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, SubfieldCondition,
     Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
-import { ApplyChangesResult } from '../../configuration.component';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { Menus } from '../../../../services/menus';
@@ -43,7 +42,7 @@ export class SubfieldEditorModalComponent {
     public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ApplyChangesResult>;
+        Promise<ConfigurationDocument>;
 
     public data: SubfieldEditorData;
     

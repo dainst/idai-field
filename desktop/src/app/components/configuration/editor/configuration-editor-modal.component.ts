@@ -5,7 +5,6 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { Messages } from '../../messages/messages';
 import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.component';
-import { ApplyChangesResult } from '../configuration.component';
 import { Modals } from '../../../services/modals';
 import { AngularUtility } from '../../../angular/angular-utility';
 
@@ -26,7 +25,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
 
     public applyingChanges: boolean;
     public escapeKeyPressed: boolean = false;
@@ -101,11 +100,11 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         try {
-            const result: ApplyChangesResult = await this.applyChanges(
+            const changedConfigurationDocument: ConfigurationDocument = await this.applyChanges(
                 this.clonedConfigurationDocument,
                 reindexConfiguration
             );
-            this.activeModal.close(result);
+            this.activeModal.close(changedConfigurationDocument);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);

@@ -5,7 +5,6 @@ import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortU
     Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
-import { ApplyChangesResult } from '../../configuration.component';
 import { ManageValuelistsModalComponent } from './manage-valuelists-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
@@ -68,16 +67,16 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistResult(applyChangesResult: ApplyChangesResult, newValuelistId: string) {
+    protected applyNewValuelistResult(changedConfigurationDocument: ConfigurationDocument, newValuelistId: string) {
 
-        ConfigurationUtil.updateValuelists(this.configurationDocument, applyChangesResult.configurationDocument);
-        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, applyChangesResult.configurationDocument);
+        ConfigurationUtil.updateValuelists(this.configurationDocument, changedConfigurationDocument);
+        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, changedConfigurationDocument);
 
         const valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[newValuelistId]);
         valuelist.id = newValuelistId;
         
         this.addValuelist(valuelist);
-        this.activeModal.close(applyChangesResult);
+        this.activeModal.close(changedConfigurationDocument);
     }
 
 

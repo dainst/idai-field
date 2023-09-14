@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, sameset } from 'tsfun';
 import { ConfigurationDocument } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
-import { ApplyChangesResult } from '../configuration.component';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 
@@ -22,7 +21,7 @@ export class ProjectLanguagesModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
 
     public languages: { [languageCode: string]: Language };
     public selectedLanguages: string[];

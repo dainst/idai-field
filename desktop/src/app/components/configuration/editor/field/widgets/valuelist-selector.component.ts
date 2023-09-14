@@ -5,7 +5,6 @@ import { AddValuelistModalComponent } from '../../../add/valuelist/add-valuelist
 import { Modals } from '../../../../../services/modals';
 import { MenuContext } from '../../../../../services/menu-context';
 import { ConfigurationIndex } from '../../../../../services/configuration/index/configuration-index';
-import { ApplyChangesResult } from '../../../configuration.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { ValuelistEditorModalComponent } from '../../valuelist/valuelist-editor-modal.component';
 import { SubfieldEditorData } from '../subfield-editor-modal.component';
@@ -28,7 +27,7 @@ export class ValuelistSelectorComponent {
     @Input() clonedField?: Field;
     @Input() subfieldData?: SubfieldEditorData;
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ApplyChangesResult>;
+        Promise<ConfigurationDocument>;
     @Input() disabled: boolean;
 
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -77,10 +76,7 @@ export class ValuelistSelectorComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
+            nop,
             nop
         );
 
@@ -108,10 +104,8 @@ export class ValuelistSelectorComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => {
-                this.configurationIndex = applyChangesResult.configurationIndex;
-                this.updateEditedValuelist(applyChangesResult.configurationDocument);
-            },
+            (changedConfigurationDocument: ConfigurationDocument) =>
+                this.updateEditedValuelist(changedConfigurationDocument),
             nop
         );
 

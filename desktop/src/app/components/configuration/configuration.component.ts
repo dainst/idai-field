@@ -37,13 +37,6 @@ import { ImportConfigurationModalComponent } from './import/import-configuration
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
 
 
-export type ApplyChangesResult = {
-    
-    configurationDocument: ConfigurationDocument,
-    configurationIndex: ConfigurationIndex
-};
-
-
 @Component({
     templateUrl: './configuration.html',
     host: {
@@ -111,7 +104,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     ];
 
     public applyChanges = (configurationDocument: ConfigurationDocument,
-                           reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
+                           reindexConfiguration?: boolean): Promise<ConfigurationDocument> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
@@ -614,10 +607,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
+            (changedConfigurationDocument?: ConfigurationDocument) => {
+                if (!changedConfigurationDocument) return;
+                this.configurationDocument = changedConfigurationDocument;
             },
             nop
         );
@@ -638,10 +630,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
+            (changedConfigurationDocument?: ConfigurationDocument) => {
+                if (!changedConfigurationDocument) return;
+                this.configurationDocument = changedConfigurationDocument;
             },
             nop
         );
@@ -660,10 +651,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
+            (changedConfigurationDocument?: ConfigurationDocument) => {
+                if (!changedConfigurationDocument) return;
+                this.configurationDocument = changedConfigurationDocument;
             },
             nop
         );
@@ -691,7 +681,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
-                                             reindexConfiguration?: boolean): Promise<ApplyChangesResult> {
+                                             reindexConfiguration?: boolean): Promise<ConfigurationDocument> {
 
         this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
         this.configurationDocument = configurationDocument;
@@ -705,10 +695,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.changed = true;
 
-        return {
-            configurationDocument: this.configurationDocument,
-            configurationIndex: this.configurationIndex
-        };
+        return this.configurationDocument;
     }
 
 

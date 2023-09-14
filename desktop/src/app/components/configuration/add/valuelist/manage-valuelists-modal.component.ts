@@ -6,7 +6,6 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from '../../context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../../../component-helpers';
@@ -35,7 +34,7 @@ export class ManageValuelistsModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -157,7 +156,8 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => this.applyResult(applyChangesResult, valuelist.id),
+            (changedConfigurationDocument: ConfigurationDocument) =>
+                this.applyResult(changedConfigurationDocument, valuelist.id),
             nop
         );
     }
@@ -192,7 +192,8 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => this.applyNewValuelistResult(applyChangesResult, newValuelistId),
+            (changedConfigurationDocument: ConfigurationDocument) =>
+                this.applyNewValuelistResult(changedConfigurationDocument, newValuelistId),
             nop
         );
     }
@@ -254,17 +255,15 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistResult(applyChangesResult: ApplyChangesResult, newValuelistId: string) {
+    protected applyNewValuelistResult(changedConfigurationDocument: ConfigurationDocument, newValuelistId: string) {
 
-        this.applyResult(applyChangesResult, newValuelistId);
+        this.applyResult(changedConfigurationDocument, newValuelistId);
     }
 
 
-    private applyResult(applyChangesResult: ApplyChangesResult, editedValuelistId?: string) {
+    private applyResult(changedConfigurationDocument: ConfigurationDocument, editedValuelistId?: string) {
 
-        this.configurationDocument = applyChangesResult.configurationDocument;
-        this.configurationIndex = applyChangesResult.configurationIndex;
-
+        this.configurationDocument = changedConfigurationDocument;
         this.applyValuelistSearch();
 
         if (editedValuelistId) {

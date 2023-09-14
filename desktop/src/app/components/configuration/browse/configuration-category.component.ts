@@ -10,7 +10,6 @@ import { AddGroupModalComponent } from '../add/group/add-group-modal.component';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { MenuContext } from '../../../services/menu-context';
 import { Modals } from '../../../services/modals';
-import { ApplyChangesResult } from '../configuration.component';
 import { ConfigurationState } from '../configuration-state';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 
@@ -32,7 +31,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ApplyChangesResult>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ConfigurationDocument>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();

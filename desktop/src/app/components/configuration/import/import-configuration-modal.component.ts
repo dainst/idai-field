@@ -4,7 +4,6 @@ import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
-import { ApplyChangesResult } from '../configuration.component';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -24,7 +23,7 @@ export class ImportConfigurationModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
 
     public selectedProject: string;
 
@@ -58,7 +57,7 @@ export class ImportConfigurationModalComponent {
     }
 
 
-    private async performImport(): Promise<ApplyChangesResult> {
+    private async performImport(): Promise<ConfigurationDocument> {
 
         const configurationDocumentToImport: ConfigurationDocument
             = await this.fetchConfigurationDocument(this.selectedProject);

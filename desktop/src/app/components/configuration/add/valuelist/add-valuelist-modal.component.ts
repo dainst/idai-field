@@ -11,6 +11,7 @@ import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { SubfieldEditorData } from '../../editor/field/subfield-editor-modal.component';
+import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({
@@ -69,11 +70,8 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
 
     protected applyNewValuelistResult(applyChangesResult: ApplyChangesResult, newValuelistId: string) {
 
-        this.configurationDocument = applyChangesResult.configurationDocument;
-        this.clonedConfigurationDocument._rev = this.configurationDocument._rev;
-        this.clonedConfigurationDocument.created = this.configurationDocument.created;
-        this.clonedConfigurationDocument.modified = this.configurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = this.configurationDocument.resource.valuelists;
+        ConfigurationUtil.updateValuelists(this.configurationDocument, applyChangesResult.configurationDocument);
+        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, applyChangesResult.configurationDocument);
 
         const valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[newValuelistId]);
         valuelist.id = newValuelistId;

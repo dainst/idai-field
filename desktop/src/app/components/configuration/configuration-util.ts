@@ -1,5 +1,5 @@
 import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 import { validateReferences } from './validation/validate-references';
 
 
@@ -102,5 +102,15 @@ export module ConfigurationUtil {
             : [];
 
         return !equal(originalReferences)(editedReferences);
+    }
+
+
+    export function updateValuelists(configurationDocument: ConfigurationDocument,
+                                     changedConfigurationDocument: ConfigurationDocument) {
+
+        configurationDocument._rev = changedConfigurationDocument._rev;
+        configurationDocument.created = changedConfigurationDocument.created;
+        configurationDocument.modified = changedConfigurationDocument.modified;
+        configurationDocument.resource.valuelists = changedConfigurationDocument.resource.valuelists;
     }
 }

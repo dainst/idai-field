@@ -9,6 +9,7 @@ import { ApplyChangesResult } from '../../../configuration.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { ValuelistEditorModalComponent } from '../../valuelist/valuelist-editor-modal.component';
 import { SubfieldEditorData } from '../subfield-editor-modal.component';
+import { ConfigurationUtil } from '../../../configuration-util';
 
 
 @Component({
@@ -78,7 +79,6 @@ export class ValuelistSelectorComponent {
             result,
             (applyChangesResult?: ApplyChangesResult) => {
                 if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
                 this.configurationIndex = applyChangesResult.configurationIndex;
             },
             nop
@@ -109,9 +109,8 @@ export class ValuelistSelectorComponent {
         await this.modals.awaitResult(
             result,
             (applyChangesResult: ApplyChangesResult) => {
-                this.configurationDocument = applyChangesResult.configurationDocument;
                 this.configurationIndex = applyChangesResult.configurationIndex;
-                this.updateEditedValuelist(this.configurationDocument);
+                this.updateEditedValuelist(applyChangesResult.configurationDocument);
             },
             nop
         );
@@ -122,10 +121,8 @@ export class ValuelistSelectorComponent {
 
     private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
 
-        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
-        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
-        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+        ConfigurationUtil.updateValuelists(this.configurationDocument, newConfigurationDocument);
+        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, newConfigurationDocument);
 
         const valuelistId: string = this.getSelectedValuelistId();
         let valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);

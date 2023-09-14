@@ -19,6 +19,36 @@ const { test, expect } = require('@playwright/test');
  */
 test.describe('configuration --', () => {
 
+    async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await EditConfigurationPage.typeInNewSubfield(subfieldName);
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue(valueName);
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirmSubfield();
+    }
+
+
+    async function addValueToValuelist(subfieldIndex: number, newValueName: string) {
+
+        await EditConfigurationPage.clickEditSubfield(subfieldIndex);
+        await EditConfigurationPage.clickEditValuelist();
+        await EditConfigurationPage.typeInNewValue(newValueName);
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirmSubfield();
+    };
+
+
     test.beforeAll(async () => {
 
         await start();
@@ -795,34 +825,6 @@ test.describe('configuration --', () => {
 
     test('create and edit valuelists via composite field editor', async () => {
 
-        const createSubfieldAndValuelist = async (subfieldName: string, valuelistName: string, valueName: string) => {
-
-            await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
-            await EditConfigurationPage.typeInNewSubfield(subfieldName);
-            await EditConfigurationPage.clickCreateSubfield();
-            await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
-    
-            await EditConfigurationPage.clickAddValuelist();
-            await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
-            await ManageValuelistsModalPage.clickCreateNewValuelist();
-            await EditConfigurationPage.typeInNewValue(valueName);
-            await EditConfigurationPage.clickAddValue();
-            await EditConfigurationPage.clickConfirmValue();
-            await EditConfigurationPage.clickConfirmValuelist();
-            await EditConfigurationPage.clickConfirmSubfield();
-        };
-
-        const addValueToValuelist = async (subfieldIndex: number, newValueName: string) => {
-
-            await EditConfigurationPage.clickEditSubfield(subfieldIndex);
-            await EditConfigurationPage.clickEditValuelist();
-            await EditConfigurationPage.typeInNewValue(newValueName);
-            await EditConfigurationPage.clickAddValue();
-            await EditConfigurationPage.clickConfirmValue();
-            await EditConfigurationPage.clickConfirmValuelist();
-            await EditConfigurationPage.clickConfirmSubfield();
-        };
-
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput('compositeField');
@@ -857,5 +859,34 @@ test.describe('configuration --', () => {
         await DoceditPage.clickCreateCompositeEntry('test-compositeField');
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1b'));
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2b'));
+    });
+
+
+    test('show updated valuelist after editing it via editor of another subfield', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await createSubfieldAndValuelist('subfield1', 'new-valuelist', 'value1');
+        
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('new-valuelist');
+        await ManageValuelistsModalPage.clickSelectValuelist('test:new-valuelist');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await addValueToValuelist(0, 'value2');
+        await EditConfigurationPage.clickEditSubfield(1);
+        const values = await ConfigurationPage.getValues();
+        expect(await values.count()).toBe(2);
+        expect(await ConfigurationPage.getValue(0)).toEqual('value1');
+        expect(await ConfigurationPage.getValue(1)).toEqual('value2');
+
+        await EditConfigurationPage.clickConfirmSubfield();
+        await EditConfigurationPage.clickCancel();
     });
 });

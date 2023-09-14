@@ -859,6 +859,10 @@ test.describe('configuration --', () => {
         await DoceditPage.clickCreateCompositeEntry('test-compositeField');
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1b'));
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2b'));
+
+        await DoceditCompositeEntryModalPage.selectSubfieldSelectOption(0, 'value1b');
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
     });
 
 

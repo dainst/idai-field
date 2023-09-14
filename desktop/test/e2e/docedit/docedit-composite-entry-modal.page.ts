@@ -14,6 +14,12 @@ export class DoceditCompositeEntryModalPage {
     }
 
 
+    public static async selectSubfieldSelectOption(fieldIndex: number, optionValueLabel: string) {
+
+        return click(await this.getSubfieldSelectOption(fieldIndex, optionValueLabel));
+    }
+
+
     // get text
 
     public static async getSubfieldLabel(fieldIndex: number) {

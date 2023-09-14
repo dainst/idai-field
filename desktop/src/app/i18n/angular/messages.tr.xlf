@@ -12,6 +12,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
+        <target state="translated">Sayfası <x id="INTERPOLATION" equiv-text="lse);   private"/> / <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -148,6 +149,7 @@
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="eturn this._max"/></source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="eturn this._max"/>%</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">28</context>
@@ -155,6 +157,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
         <source>Increment hours</source>
+        <target state="translated">Saati ileri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">67</context>
@@ -162,6 +165,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.HH" datatype="html">
         <source>HH</source>
+        <target state="translated">SS</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">40</context>
@@ -169,6 +173,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.hours" datatype="html">
         <source>Hours</source>
+        <target state="translated">Saat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">47</context>
@@ -176,6 +181,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
         <source>Decrement hours</source>
+        <target state="translated">Saati geri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">74</context>
@@ -183,6 +189,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
         <source>Increment minutes</source>
+        <target state="translated">Dakika ileri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">82</context>
@@ -190,6 +197,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.MM" datatype="html">
         <source>MM</source>
+        <target state="translated">DD</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">55</context>
@@ -197,6 +205,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.minutes" datatype="html">
         <source>Minutes</source>
+        <target state="translated">Dakika</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">61</context>
@@ -204,6 +213,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-minutes" datatype="html">
         <source>Decrement minutes</source>
+        <target state="translated">Dakika geri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">89</context>
@@ -211,6 +221,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-seconds" datatype="html">
         <source>Increment seconds</source>
+        <target state="translated">Saniye ileri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">115</context>
@@ -218,6 +229,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.SS" datatype="html">
         <source>SS</source>
+        <target state="translated">SS</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">95</context>
@@ -225,6 +237,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.seconds" datatype="html">
         <source>Seconds</source>
+        <target state="translated">Saniye</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">103</context>
@@ -232,6 +245,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-seconds" datatype="html">
         <source>Decrement seconds</source>
+        <target state="translated">Saniye geri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">143</context>
@@ -239,6 +253,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="tring;    disab"/></source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="tring;    disab"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">112</context>
@@ -246,6 +261,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="r(step) ? step"/></source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="r(step) ? step"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">137</context>
@@ -253,6 +269,7 @@
       </trans-unit>
       <trans-unit id="ngb.toast.close-aria" datatype="html">
         <source>Close</source>
+        <target state="translated">Kapat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/toast/toast.ts</context>
           <context context-type="linenumber">70</context>
@@ -260,6 +277,7 @@
       </trans-unit>
       <trans-unit id="boolean.yes" datatype="html">
         <source>Ja</source>
+        <target state="translated">Evet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/boolean.component.ts</context>
           <context context-type="linenumber">33</context>
@@ -287,6 +305,7 @@
       </trans-unit>
       <trans-unit id="boolean.no" datatype="html">
         <source>Nein</source>
+        <target state="translated">Hayır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/boolean.component.ts</context>
           <context context-type="linenumber">33</context>
@@ -314,6 +333,7 @@
       </trans-unit>
       <trans-unit id="components.documents.documentTeaser.newResource" datatype="html">
         <source>Neue Ressource</source>
+        <target state="translated">Yeni Kaynak</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-teaser.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -337,7 +357,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
         <source>Polyline</source>
-        <target state="needs-translation">Devamlı çizgi</target>
+        <target state="translated">Çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -345,7 +365,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
         <source>Multipolyline</source>
-        <target state="needs-translation">Çoklu devamlı çizgi</target>
+        <target state="translated">Çoklu çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -377,6 +397,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben</source>
+        <target state="translated">Arama kriteri belirtilmedi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -384,6 +405,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
         <source>Keine Ziele gefunden</source>
+        <target state="translated">Hedef bulunamadı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -407,6 +429,7 @@
       </trans-unit>
       <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
         <source>Nach Kategorie filtern:</source>
+        <target state="translated">Kategoriye göre filtrele:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
           <context context-type="linenumber">72</context>
@@ -418,6 +441,7 @@
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
         <source>Alle Kategorien</source>
+        <target state="translated">Tüm kategoriler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -425,6 +449,7 @@
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
+        <target state="translated">Veri setlerini içe aktarıyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/upload-modal.component.ts</context>
           <context context-type="linenumber">16</context>
@@ -432,6 +457,7 @@
       </trans-unit>
       <trans-unit id="import.startImport" datatype="html">
         <source>Import starten</source>
+        <target state="translated">İçe aktarmayı başlat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">56</context>
@@ -487,6 +513,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <target state="translated">Desteklenen veri formatları: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Görüntü formatları<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> ile içe aktarılabilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -494,6 +521,7 @@
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
         <source>Neue Ressourcen importieren</source>
+        <target state="translated">Yeni girdileri içe aktar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">71</context>
@@ -501,6 +529,7 @@
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
         <source>Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
+        <target state="translated">Mevcut olan girdiler <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>tanımlayıcı<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> alanı ile tespit edilip, gözardı edildi. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -508,6 +537,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
         <source>Nicht konfigurierte Felder ignorieren</source>
+        <target state="translated">Konfigure edilmemiş alanları gözardı et</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">101,104</context>
@@ -515,6 +545,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen.</source>
+        <target state="translated">Bu seçenek etkinleştirilirse, içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında göz ardı edilecektir. Aksi takdirde içe aktarma iptal edilecektir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">112,120</context>
@@ -522,6 +553,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>Vorhandene Ressource ergänzen</source>
+        <target state="translated">Mevcut girdileri güncelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -529,6 +561,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">Bu seçenek etkinse, zaten var olan girdiler içe aktarma dosyasının verileriyle birleştirilir. İçe aktarma kaydının alanları, mevcut kaydın ilgili alanlarının üzerine yazacaktır. İçe aktarma kaydının geometrileri, mevcut kaydın geometrilerinin üzerine yazılacaktır. İçe aktarma kaydında tanımlanmamış orijinal kayıtlara dokunulmaz. Kategori değiştirilemez. Atanan kayıtlar <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>tanımlayıcı<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> alanına göre gerçekleştirilir. Bir kaynağa atanamayan içe aktarma dosyasındaki kayıtlar gözardı edilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">136</context>
@@ -536,6 +569,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">Bu seçenek etkinse, mevcut girdiler içe aktarma dosyasının verileriyle birleştirilecektir. İçe aktarma kaydının alanları, mevcut kaydın karşılık gelen alanlarının üzerine yazılacaktır. Orijinal kayıtta bulunan ve içe aktarma kaydında tanımlanmayan alanlara dokunulmadan kalacaktır. Kategori değiştirilemez. Kayıtların atanması, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>tanımlayıcı<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> sütununa göre gerçekleştirilir. İçe aktarma dosyasındaki bir girdiye atanamayan kayıtlar gözardı edilecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">119</context>
@@ -543,6 +577,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
         <source>Löschen erlauben</source>
+        <target state="translated">Silme işlemlerine izin ver</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">122</context>
@@ -550,6 +585,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
+        <target state="translated">Bu seçenek etkinleştirilirse alanlar ve ilişkiler yalnızca güncellenmekle kalmaz aynı zamanda kaldırılabilir. Atanan <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> değerine sahip tüm alanlar ve ilişkiler silinecek. Tanımsız alanlar ve ilişkiler hiçbir şekilde değiştirilmez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">138</context>
@@ -557,6 +593,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert.</source>
+        <target state="translated">Bu seçenek etkinleştirilirse alanlar ve ilişkiler yalnızca güncellenmekle kalmaz aynı zamanda kaldırılabilir. İçe aktarma dosyasındaki karşılık gelen alan boşsa bir alan veya ilişki silinir. CSV tablosunun sütunu olarak belirtilmeyen alanlar ve ilişkiler hiçbir şekilde değiştirilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">142</context>
@@ -580,6 +617,7 @@
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
         <source>Daten einer Maßnahme zuordnen</source>
+        <target state="translated">Bir işleme veri ata</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">191</context>
@@ -587,6 +625,7 @@
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
         <source>Keine Zuordnung</source>
+        <target state="translated">Atama yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">203</context>
@@ -602,6 +641,7 @@
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
         <source>Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">GeoJSON içe aktarımı yeni girdiler oluşturmaz. Bunun yerine geometriler mevcut girdilere eklenir. Bu süreçte mevcut geometrilerin üzerine yazıldığını lütfen unutmayın. Kayıtların atanması, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>tanımlayıcı<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> nesnesinin <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>özellikleri<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> alanına göre gerçekleştirilir. İçe aktarma dosyasındaki bir girdiye atanamayan kayıtlar yok sayılacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -609,6 +649,7 @@
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
         <source>Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich.</source>
+        <target state="translated">Shapefile dosyasını içe aktarma işlemini gerçekleştirmek için Java 8 veya üzerinin yüklenmesi gerekir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">207</context>
@@ -616,6 +657,7 @@
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source>Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
+        <target state="translated">Shapefile içe aktarımı yeni girdiler oluşturmaz. Bunun yerine geometriler mevcut girdilere eklenir. Bu süreçte mevcut geometrilerin üzerine yazıldığını lütfen unutmayın. Kayıtların atanması, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> alanına göre gerçekleştirilir. Shapefile dosyasındaki bir kaynağa atanamayan kayıtlar göz ardı edilecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -623,6 +665,7 @@
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
         <source>Nicht importierte Ressourcen</source>
+        <target state="translated">İçe aktarılmayan girdiler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">218</context>
@@ -646,6 +689,7 @@
       </trans-unit>
       <trans-unit id="export.invalidFields.resource" datatype="html">
         <source>(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</source>
+        <target state="translated">(Girdi <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -653,6 +697,7 @@
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
         <source>Daten werden exportiert...</source>
+        <target state="translated">Veriler dışa aktarılıyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export-modal.component.ts</context>
           <context context-type="linenumber">12</context>
@@ -660,6 +705,7 @@
       </trans-unit>
       <trans-unit id="export.startExport" datatype="html">
         <source>Export starten</source>
+        <target state="translated">Dışa aktarmayı başlat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -667,6 +713,7 @@
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
         <source>Kontext</source>
+        <target state="translated">Kontekst</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">251</context>
@@ -674,6 +721,7 @@
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
         <source>Keine Einschränkung</source>
+        <target state="translated">Kısıtlama yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">270</context>
@@ -681,6 +729,7 @@
       </trans-unit>
       <trans-unit id="export.catalogSelect.label" datatype="html">
         <source>Katalog</source>
+        <target state="translated">Katalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">297</context>
@@ -696,6 +745,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations" datatype="html">
         <source>Hierarchische Relationen zusammenfassen (empfohlen)</source>
+        <target state="translated">Hiyerarşik ilişkileri birleştirin (önerilir)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
@@ -703,6 +753,7 @@
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
         <source>Format</source>
+        <target state="translated">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -726,6 +777,7 @@
       </trans-unit>
       <trans-unit id="export.formats.catalog" datatype="html">
         <source>Katalog</source>
+        <target state="translated">Katalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">174</context>
@@ -733,6 +785,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
         <source>Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
+        <target state="translated">Bu seçenek etkinleştirilirse hiyerarşik ilişkiler, doğrudan üst kaynağı <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> "isChildOf" <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> belirten basitleştirilmiş ilişkide birleştirilir. Bu seçenek normalde etkin kalmalıdır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">365</context>
@@ -756,6 +809,7 @@
       </trans-unit>
       <trans-unit id="export.csvimportmode.schema" datatype="html">
         <source>Nur Schema</source>
+        <target state="translated">Yalnızca şema</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">225</context>
@@ -763,6 +817,7 @@
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
         <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Girdi bulunamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">109</context>
@@ -770,6 +825,7 @@
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source>Keine Kataloge gefunden.</source>
+        <target state="translated">Katalog bulunamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">124</context>
@@ -777,6 +833,7 @@
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">Dışa aktarılan veriler geometrileri ve ilgili girdilerin <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> alan tanımlayıcısını <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>kısa açıklamasını <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) ve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> kategorisini <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) içerir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">147</context>
@@ -784,6 +841,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
         <source>Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich.</source>
+        <target state="translated">Shapefile dışa aktarımı gerçekleştirmek için Java JDK 8 veya daha üst sürümünün yüklenmesi gerekir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">131</context>
@@ -791,6 +849,7 @@
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
         <source>Nicht exportierte Felder:</source>
+        <target state="translated">Dışa aktarılmayan alanlar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">143</context>
@@ -798,6 +857,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">Dışa aktarılan veriler ilgili girdilerin geometrilerini ve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> alan tanımlayıcısını<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier),<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> kısa açıklamasını <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) ve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> kategorisini <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) içerir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -805,6 +865,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
         <source>Datenbank wird gesichert.</source>
+        <target state="translated">Veritabanı kaydediliyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation-modal.component.ts</context>
           <context context-type="linenumber">14</context>
@@ -812,6 +873,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.createBackup" datatype="html">
         <source>Backup erstellen</source>
+        <target state="translated">Yedek oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">47</context>

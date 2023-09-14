@@ -16,7 +16,7 @@ export class AddCategoryFormModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-category-form-selection-button');
     }
 
 

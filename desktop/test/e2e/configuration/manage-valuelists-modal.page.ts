@@ -28,7 +28,7 @@ export class ManageValuelistsModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-valuelist-selection-button');
     }
 
 

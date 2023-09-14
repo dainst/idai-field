@@ -16,7 +16,7 @@ export class AddFieldModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-field-selection-button');
     }
 
 

@@ -22,7 +22,7 @@ export class AddGroupModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-group-selection-button');
     }
 
 

@@ -103,14 +103,4 @@ export module ConfigurationUtil {
 
         return !equal(originalReferences)(editedReferences);
     }
-
-
-    export function updateValuelists(configurationDocument: ConfigurationDocument,
-                                     changedConfigurationDocument: ConfigurationDocument) {
-
-        configurationDocument._rev = changedConfigurationDocument._rev;
-        configurationDocument.created = changedConfigurationDocument.created;
-        configurationDocument.modified = changedConfigurationDocument.modified;
-        configurationDocument.resource.valuelists = changedConfigurationDocument.resource.valuelists;
-    }
 }

@@ -42,7 +42,7 @@ export class SubfieldEditorModalComponent {
     public configurationDocument: ConfigurationDocument;
     public clonedConfigurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ConfigurationDocument>;
+        Promise<void>;
 
     public data: SubfieldEditorData;
     

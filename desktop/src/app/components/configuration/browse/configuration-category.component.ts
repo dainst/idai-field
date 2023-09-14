@@ -31,7 +31,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
 
-    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ConfigurationDocument>;
+    @Input() applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     @Output() onEditCategory: EventEmitter<void> = new EventEmitter<void>();
     @Output() onEditGroup: EventEmitter<Group> = new EventEmitter<Group>();

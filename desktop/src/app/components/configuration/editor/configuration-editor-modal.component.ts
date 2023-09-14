@@ -25,7 +25,7 @@ export abstract class ConfigurationEditorModalComponent {
     public clonedConfigurationDocument: ConfigurationDocument;
 
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public applyingChanges: boolean;
     public escapeKeyPressed: boolean = false;
@@ -100,11 +100,8 @@ export abstract class ConfigurationEditorModalComponent {
         this.updateCustomLanguageConfigurations();
 
         try {
-            const changedConfigurationDocument: ConfigurationDocument = await this.applyChanges(
-                this.clonedConfigurationDocument,
-                reindexConfiguration
-            );
-            this.activeModal.close(changedConfigurationDocument);
+            await this.applyChanges(this.clonedConfigurationDocument, reindexConfiguration);
+            this.activeModal.close();
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);

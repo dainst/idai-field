@@ -32,7 +32,7 @@ export class SubfieldsSectionComponent {
     @Input() clonedConfigurationDocument: ConfigurationDocument;
     @Input() subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ConfigurationDocument>;
+        Promise<void>;
 
     @Output() onDrag: EventEmitter<boolean> = new EventEmitter<boolean>();
 

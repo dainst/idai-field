@@ -34,7 +34,7 @@ export class ManageValuelistsModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -156,8 +156,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (changedConfigurationDocument: ConfigurationDocument) =>
-                this.applyResult(changedConfigurationDocument, valuelist.id),
+            () => this.applyResult(valuelist.id),
             nop
         );
     }
@@ -192,8 +191,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (changedConfigurationDocument: ConfigurationDocument) =>
-                this.applyNewValuelistResult(changedConfigurationDocument, newValuelistId),
+            () => this.applyNewValuelistResult(newValuelistId),
             nop
         );
     }
@@ -246,7 +244,8 @@ export class ManageValuelistsModalComponent {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteValuelist(
                 this.configurationDocument, valuelist
             );
-            this.applyResult(await this.applyChanges(changedConfigurationDocument, true));
+            await this.applyChanges(changedConfigurationDocument, true)
+            this.applyResult();
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -255,15 +254,14 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistResult(changedConfigurationDocument: ConfigurationDocument, newValuelistId: string) {
+    protected applyNewValuelistResult(newValuelistId: string) {
 
-        this.applyResult(changedConfigurationDocument, newValuelistId);
+        this.applyResult(newValuelistId);
     }
 
 
-    private applyResult(changedConfigurationDocument: ConfigurationDocument, editedValuelistId?: string) {
+    private applyResult(editedValuelistId?: string) {
 
-        this.configurationDocument = changedConfigurationDocument;
         this.applyValuelistSearch();
 
         if (editedValuelistId) {

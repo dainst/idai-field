@@ -21,7 +21,7 @@ export class ProjectLanguagesModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public languages: { [languageCode: string]: Language };
     public selectedLanguages: string[];

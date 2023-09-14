@@ -26,7 +26,7 @@ export class AddGroupModalComponent {
     public configurationDocument: ConfigurationDocument;
     public category: CategoryForm;
     public permanentlyHiddenFields: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ConfigurationDocument>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
     public selectedGroup: GroupEntry|undefined;

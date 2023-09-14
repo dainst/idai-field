@@ -67,16 +67,15 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistResult(changedConfigurationDocument: ConfigurationDocument, newValuelistId: string) {
+    protected applyNewValuelistResult(newValuelistId: string) {
 
-        ConfigurationUtil.updateValuelists(this.configurationDocument, changedConfigurationDocument);
-        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, changedConfigurationDocument);
+        this.clonedConfigurationDocument.resource.valuelists = clone(this.configurationDocument.resource.valuelists);
 
         const valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[newValuelistId]);
         valuelist.id = newValuelistId;
         
         this.addValuelist(valuelist);
-        this.activeModal.close(changedConfigurationDocument);
+        this.activeModal.close();
     }
 
 

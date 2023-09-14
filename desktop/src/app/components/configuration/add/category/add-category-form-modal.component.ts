@@ -32,7 +32,7 @@ export class AddCategoryFormModalComponent {
     public categoryFormToReplace?: CategoryForm;
     public projectCategoryNames?: string[];
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public searchTerm: string = '';
     public selectedForm: CategoryForm|undefined;

@@ -23,7 +23,7 @@ export class ImportConfigurationModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ConfigurationDocument>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public selectedProject: string;
 
@@ -50,14 +50,15 @@ export class ImportConfigurationModalComponent {
         if (!this.selectedProject) return;
 
         try {
-            this.activeModal.close(await this.performImport());
+            await this.performImport();
+            this.activeModal.close();
         } catch (err) {
             this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
         }
     }
 
 
-    private async performImport(): Promise<ConfigurationDocument> {
+    private async performImport(): Promise<void> {
 
         const configurationDocumentToImport: ConfigurationDocument
             = await this.fetchConfigurationDocument(this.selectedProject);

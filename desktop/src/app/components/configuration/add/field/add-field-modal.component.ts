@@ -28,7 +28,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ConfigurationDocument>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
     public selectedField: Field|undefined;

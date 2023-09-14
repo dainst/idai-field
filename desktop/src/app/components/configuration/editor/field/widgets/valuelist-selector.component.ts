@@ -27,7 +27,7 @@ export class ValuelistSelectorComponent {
     @Input() clonedField?: Field;
     @Input() subfieldData?: SubfieldEditorData;
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ConfigurationDocument>;
+        Promise<void>;
     @Input() disabled: boolean;
 
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -104,8 +104,7 @@ export class ValuelistSelectorComponent {
 
         await this.modals.awaitResult(
             result,
-            (changedConfigurationDocument: ConfigurationDocument) =>
-                this.updateEditedValuelist(changedConfigurationDocument),
+            () => this.updateEditedValuelist(),
             nop
         );
 
@@ -113,10 +112,9 @@ export class ValuelistSelectorComponent {
     }
 
 
-    private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
+    private updateEditedValuelist() {
 
-        ConfigurationUtil.updateValuelists(this.configurationDocument, newConfigurationDocument);
-        ConfigurationUtil.updateValuelists(this.clonedConfigurationDocument, newConfigurationDocument);
+        this.clonedConfigurationDocument.resource.valuelists = clone(this.configurationDocument.resource.valuelists);
 
         const valuelistId: string = this.getSelectedValuelistId();
         let valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);

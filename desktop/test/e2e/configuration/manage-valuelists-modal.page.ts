@@ -34,7 +34,7 @@ export class ManageValuelistsModalPage {
 
     public static clickCreateNewValuelist() {
 
-        return click('.new-entry-button');
+        return click('#new-valuelist-button');
     }
 
 

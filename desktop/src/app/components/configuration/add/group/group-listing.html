@@ -9,6 +9,7 @@
                 class="search-result-label"> ({{getSearchResultLabel(group)}})</span>
     </li>
     <li *ngIf="isNewGroupOptionShown()"
+        id="new-group-button"
         class="new-entry-button btn btn-success"
         (click)="select(emptyGroup)">
         <span class="mdi mdi-plus-circle"></span>

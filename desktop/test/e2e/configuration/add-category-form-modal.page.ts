@@ -22,7 +22,7 @@ export class AddCategoryFormModalPage {
 
     public static clickCreateNewCategory() {
 
-        return click('.new-entry-button');
+        return click('#new-category-button');
     }
 
 

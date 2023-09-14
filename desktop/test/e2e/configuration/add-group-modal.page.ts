@@ -16,7 +16,7 @@ export class AddGroupModalPage {
 
     public static clickCreateNewGroup() {
 
-        return click('.new-entry-button');
+        return click('#new-group-button');
     }
 
 

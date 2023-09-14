@@ -9,6 +9,7 @@
                 class="search-result-label"> ({{getSearchResultLabel(field)}})</span>
     </li>
     <li *ngIf="isNewFieldOptionShown()"
+        id="new-field-button"
         class="new-entry-button btn btn-success"
         (click)="select(emptyField)">
         <span class="mdi mdi-plus-circle"></span>

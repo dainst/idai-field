@@ -42,7 +42,7 @@ export class AddFieldModalPage {
 
     public static getCreateNewFieldButton() {
 
-        return getLocator('.new-entry-button');
+        return getLocator('#new-field-button');
     }
 
 

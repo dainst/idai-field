@@ -142,7 +142,7 @@ export class SettingsService {
         if (!SettingsService.isSynchronizationAllowed(settings.selectedProject)) return;
 
         this.synchronizationService.init(
-            syncTarget?.address,
+            SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
             SettingsService.checkDatabaseExistence

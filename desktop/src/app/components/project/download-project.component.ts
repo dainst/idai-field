@@ -15,6 +15,7 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
@@ -39,8 +40,8 @@ export class DownloadProjectComponent {
     public syncOriginalImages: boolean = false;
     public overwriteProject: boolean = false;
     public loadingImagesSize: boolean = false;
-    public originalImagesSize = '';
-    public thumbnailImagesSize = '';
+    public originalImagesSize: string = '';
+    public thumbnailImagesSize: string = '';
 
     private cancelling: boolean = false;
     private fileDownloadPromises: Array<Promise<void>> = [];
@@ -347,7 +348,12 @@ export class DownloadProjectComponent {
 
     private getUrl(): string {
 
-        return this.url?.trim();
+        const url: string = this.url?.trim();
+
+        // Prevent trying to download project from own database
+        return url.includes(address.ip())
+            ? '.'
+            : url;
     }
 
 

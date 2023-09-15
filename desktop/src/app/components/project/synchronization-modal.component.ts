@@ -298,7 +298,7 @@ export class SynchronizationModalComponent implements OnInit {
                 [variant]
             ),
             this.remoteImageStore.getFileInfosUsingCredentials(
-                this.syncTarget.address.trim(),
+                SyncTarget.getAddress(this.syncTarget).trim(),
                 this.syncTarget.password.trim(),
                 this.settings.selectedProject,
                 [variant]

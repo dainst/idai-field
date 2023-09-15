@@ -1,15 +1,7 @@
-import { FileSyncPreference, I18N } from 'idai-field-core';
+import { I18N } from 'idai-field-core';
+import { SyncTarget } from './sync-target';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
-
-export interface SyncTarget {
-
-    address: string;
-    password: string;
-    isSyncActive: boolean;
-    fileSyncPreferences: FileSyncPreference[];
-}
 
 
 export interface Settings {

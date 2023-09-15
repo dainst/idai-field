@@ -154,7 +154,7 @@
   },
   "glass-decorationTechnique-default": {
     "values": {
-      "Bemalung": "Tablo",
+      "Bemalung": "Bezeme",
       "Diatretdekor": "",
       "Emaille": "Emaye",
       "Facettschliffdekor": "",
@@ -331,7 +331,7 @@
   },
   "Brick-decorationTechnique-default": {
     "values": {
-      "Bemalung": "",
+      "Bemalung": "Bezeme",
       "Fingerabdruck": "",
       "Kammritzung": "",
       "Reliefdekor": "",
@@ -1051,7 +1051,7 @@
   "Pottery-coatInsideType-default": {
     "values": {
       "Andere": "",
-      "Bemalung": "",
+      "Bemalung": "Bezeme",
       "Geglättet": "",
       "Glasur": "",
       "Poliert": "",
@@ -1061,7 +1061,7 @@
   },
   "Pottery-decorationTechnique-default": {
     "values": {
-      "Bemalung": "",
+      "Bemalung": "Bezeme",
       "Fadendekor (aufgelegt)": "",
       "Reliefdekor": "",
       "Riefeldekor": "",
@@ -2025,7 +2025,7 @@
   },
   "Metal-decorationTechnique-default": {
     "values": {
-      "Bemalung": "",
+      "Bemalung": "Bezeme",
       "Beschläge": "",
       "Emaille": "",
       "Nielloverzierung": "",

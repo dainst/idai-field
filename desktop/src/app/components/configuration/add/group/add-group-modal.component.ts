@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Labels, SortUtil, Document, GroupDefinition } from 'idai-field-core';
 import { GroupEntry } from '../../../../services/configuration/index/group-index';
-import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { Menus } from '../../../../services/menus';
@@ -27,7 +26,7 @@ export class AddGroupModalComponent {
     public configurationDocument: ConfigurationDocument;
     public category: CategoryForm;
     public permanentlyHiddenFields: string[];
-    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<ApplyChangesResult>;
+    public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
     public selectedGroup: GroupEntry|undefined;

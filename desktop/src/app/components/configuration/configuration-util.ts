@@ -1,5 +1,5 @@
 import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, Field, Group, Groups, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 import { validateReferences } from './validation/validate-references';
 
 

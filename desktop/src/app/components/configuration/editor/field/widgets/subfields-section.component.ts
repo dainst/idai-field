@@ -10,7 +10,6 @@ import { SubfieldEditorData, SubfieldEditorModalComponent } from '../subfield-ed
 import { MenuContext } from '../../../../../services/menu-context';
 import { Naming } from '../../../add/naming';
 import { Modals } from '../../../../../services/modals';
-import { ApplyChangesResult } from '../../../configuration.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 
 
@@ -33,7 +32,7 @@ export class SubfieldsSectionComponent {
     @Input() clonedConfigurationDocument: ConfigurationDocument;
     @Input() subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ApplyChangesResult>;
+        Promise<void>;
 
     @Output() onDrag: EventEmitter<boolean> = new EventEmitter<boolean>();
 

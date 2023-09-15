@@ -16,7 +16,7 @@ export class AddFieldModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-field-selection-button');
     }
 
 
@@ -42,7 +42,7 @@ export class AddFieldModalPage {
 
     public static getCreateNewFieldButton() {
 
-        return getLocator('.new-entry-button');
+        return getLocator('#new-field-button');
     }
 
 

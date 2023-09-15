@@ -56,10 +56,22 @@ export class EditConfigurationPage {
         return click('#swap-valuelist-button');
     }
 
+
+    public static clickEditValuelist() {
+
+        return click('#edit-valuelist-button');
+    }
+
     
     public static clickConfirm() {
 
         return click('#confirm-button');
+    }
+
+
+    public static clickCancel() {
+
+        return click('#cancel-button');
     }
 
 
@@ -90,6 +102,13 @@ export class EditConfigurationPage {
     public static clickCreateSubfield() {
 
         return click('#create-subfield-button');
+    }
+
+
+    public static async clickEditSubfield(subfieldIndex: number) {
+
+        const subfieldElement = await getLocator('.subfield-container').nth(subfieldIndex);
+        return click(await subfieldElement.locator('.edit-subfield-button'));
     }
 
 

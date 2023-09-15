@@ -3,6 +3,7 @@ import { ImageVariant, RemoteImageStoreInterface, FileInfo, base64Encode } from 
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
+import { SyncTarget } from '../settings/sync-target';
 
 const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
 
@@ -28,9 +29,9 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const settings = this.settingsProvider.getSettings();
 
-        const syncSource = settings.syncTargets[project];
-        const address = syncSource.address;
-        const password = syncSource.password;
+        const syncTarget = settings.syncTargets[project];
+        const address = SyncTarget.getAddress(syncTarget);
+        const password = syncTarget.password;
 
         const params = type ? { type } : {};
 
@@ -67,9 +68,9 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const settings = this.settingsProvider.getSettings();
 
-        const syncSource = settings.syncTargets[project];
-        const address = syncSource.address;
-        const password = syncSource.password;
+        const syncTarget = settings.syncTargets[project];
+        const address = SyncTarget.getAddress(syncTarget);
+        const password = syncTarget.password;
 
         await axios({
             method: 'delete',
@@ -92,9 +93,9 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const settings = this.settingsProvider.getSettings();
 
-        const syncSource = settings.syncTargets[project];
-        const url = syncSource.address;
-        const password = syncSource.password;
+        const syncTarget = settings.syncTargets[project];
+        const url = SyncTarget.getAddress(syncTarget);
+        const password = syncTarget.password;
 
         return this.runFileInfoQuery(url, password, project, types);
     }
@@ -133,9 +134,9 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const settings = this.settingsProvider.getSettings();
 
-        const syncSource = settings.syncTargets[project];
-        const url = syncSource.address;
-        const password = syncSource.password;
+        const syncTarget = settings.syncTargets[project];
+        const url = SyncTarget.getAddress(syncTarget);
+        const password = syncTarget.password;
 
         return this.runDataQuery(url, password, project, uuid, type);
     }

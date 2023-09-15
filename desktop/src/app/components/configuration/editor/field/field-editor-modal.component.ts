@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, FieldResource } from 'idai-field-core';
+    CustomLanguageConfigurations } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';

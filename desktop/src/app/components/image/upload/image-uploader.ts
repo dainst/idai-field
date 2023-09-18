@@ -277,7 +277,6 @@ export class ImageUploader {
                 draughtsmen: extendedMetadata.draughtsmen,
                 width: extendedMetadata.width,
                 height: extendedMetadata.height,
-                imageRights: extendedMetadata.copyright,
                 relations: {
                     depicts: []
                 }

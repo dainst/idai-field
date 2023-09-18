@@ -9,8 +9,7 @@ export type ImageMetadata = {
     height?: number,
     width?: number
     draughtsmen: string[],
-    creationDate?: Date,
-    copyright?: string,
+    creationDate?: Date
 }
 
 /**
@@ -31,7 +30,7 @@ export async function extendMetadataByFileData(existingMetadata: ImageMetadata, 
         const creator = getCreator(internalMetadata);
         if(creator) existingMetadata.draughtsmen.push(creator);
     }
-    existingMetadata.copyright = getCopyright(internalMetadata);
+
     return existingMetadata;
 }
 
@@ -83,22 +82,6 @@ function getCreationDate(tags: ExifReader.ExpandedTags): Date {
 
         let parsed = new Date(`${date} ${time}`);
         if(parsed.toString() !== 'Invalid Date') return parsed;
-    }
-
-    return undefined;
-}
-
-function getCopyright(tags: ExifReader.ExpandedTags): string {
-    if(tags.exif && tags.exif.Copyright) {
-        return tags.exif.Copyright.description;
-    }
-
-    if(tags.iptc && tags.iptc.Copyright) {
-        return tags.iptc.Copyright.description
-    }
-
-    if(tags.iptc && 'Copyright Notice' in tags.iptc) {
-        return tags.iptc['Copyright Notice'].description
     }
 
     return undefined;

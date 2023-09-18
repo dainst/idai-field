@@ -25,6 +25,7 @@ export class ImageUploadMetadataModalComponent {
     public depictsRelationTarget: Document;
     public imageCategory: CategoryForm;
     public projectStaff: string[];
+    public draughtsmenFromMetadata: boolean;
     public metadata: ImageMetadata;
 
     constructor(public activeModal: NgbActiveModal,
@@ -37,7 +38,8 @@ export class ImageUploadMetadataModalComponent {
         this.projectStaff = [];
         this.metadata = {
             category: "Image",
-            draughtsmen: []
+            draughtsmen: [],
+            draughtsmenFromMetadata: false
         }
 
         this.loadProjectDocumentData();
@@ -57,12 +59,16 @@ export class ImageUploadMetadataModalComponent {
         this.metadata.category = category;
     }
 
-    public toggleCreator(person: string) {
+    public toggleDraughtsman(person: string) {
         if(person in this.metadata.draughtsmen) {
             this.metadata.draughtsmen = this.metadata.draughtsmen.filter((selected) => selected !== person);
         } else {
             this.metadata.draughtsmen.push(person);
         }
+    }
+    public toggleDraughtsmenFromMetadata() {
+        this.metadata.draughtsmen = [];
+        this.metadata.draughtsmenFromMetadata = !this.metadata.draughtsmenFromMetadata;
     }
 
     private async loadProjectDocumentData() {
@@ -71,5 +77,6 @@ export class ImageUploadMetadataModalComponent {
         if ('staff' in projectDoc.resource) {
             this.projectStaff = projectDoc.resource['staff'];
         }
+        console.log(this.projectStaff);
     }
 }

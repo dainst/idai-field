@@ -9,7 +9,8 @@ export type ImageMetadata = {
     height?: number,
     width?: number
     draughtsmen: string[],
-    creationDate?: Date
+    creationDate?: Date,
+    draughtsmenFromMetadata: boolean
 }
 
 /**
@@ -26,7 +27,7 @@ export async function extendMetadataByFileData(existingMetadata: ImageMetadata, 
     existingMetadata.width = width;
     existingMetadata.height = height;
     existingMetadata.creationDate = getCreationDate(internalMetadata);
-    if(existingMetadata.draughtsmen.length == 0) {
+    if(existingMetadata.draughtsmenFromMetadata) {
         const creator = getCreator(internalMetadata);
         if(creator) existingMetadata.draughtsmen.push(creator);
     }

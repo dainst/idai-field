@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="needs-translation">Sayfasının <x id="INTERPOLATION" equiv-text="lse);   private"/>  <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <target state="needs-translation">Sayfasının <x id="INTERPOLATION" equiv-text="lse);   private"/> <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -2313,6 +2313,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
         <source>Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">İçe aktarılan görsel <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisine bağlanacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -2320,6 +2321,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
         <source>Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">İçe aktarılan görseller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisine bağlanacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2327,6 +2329,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
         <source>Bitte wählen Sie die gewünschte Kategorie aus.</source>
+        <target state="translated">Lütfen istediğiniz kategoriyi seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2334,6 +2337,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
         <source>Konflikt behandeln</source>
+        <target state="translated">Uyumsuzlukları yönetin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2341,6 +2345,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source>Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
+        <target state="translated">Geçerli girdi başka bir kullanıcı tarafından silindi. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Kaydet'i<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> seçerek girdiyi yeniden oluşturabilirsiniz. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>İptal'e<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> tıklandığında girdi atılacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2348,6 +2353,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
         <source>Zurück zur Editieransicht</source>
+        <target state="translated">Formu düzenlemeye geri dön</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -2355,6 +2361,7 @@
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">53</context>
@@ -2390,6 +2397,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.single" datatype="html">
         <source>Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden.</source>
+        <target state="translated">Projenin bu kategorisinde, silme işleminden sonra artık görünmeyecek bir girdi var. Kategoriyi daha sonra tekrar eklerseniz girdi tekrar görünür olacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2397,6 +2405,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.multiple" datatype="html">
         <source>Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
+        <target state="translated">Projede, silme işleminden sonra artık görünmeyecek olan bu kategoriye ait <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> girdiler bulunmaktadır. Kategoriyi daha sonra tekrar eklerseniz girdiler tekrar görünür olacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2404,6 +2413,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.changes" datatype="html">
         <source>An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen.</source>
+        <target state="translated">Bu kategoride, silindiğinde kaybolacak değişiklikler yapıldı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
@@ -2411,6 +2421,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
         <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
+        <target state="translated">Alt kategorileri olduğu sürece <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kategorisi silinemez. Lütfen önce alt kategorileri kaldırın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
@@ -2418,6 +2429,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.header" datatype="html">
         <source>Feld löschen?</source>
+        <target state="translated">Alan silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -2425,6 +2437,7 @@
       </trans-unit>
       <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> alanını gerçekten silmek istiyor musunuz?</target>
         <note priority="1" from="description">configuration.deleteField.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
@@ -2433,6 +2446,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.header" datatype="html">
         <source>Gruppe löschen?</source>
+        <target state="translated">Grup silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -2440,6 +2454,7 @@
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
         <source>Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> grubunu gerçekten silmek istiyor musunuz? </target>
         <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
@@ -2448,6 +2463,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
         <source>Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> grubu, kendisine alanlar atandığı sürece silinemez. Lütfen alanları önce başka bir gruba taşıyın veya silin. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
           <context context-type="linenumber">27,11</context>
@@ -2455,6 +2471,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.header" datatype="html">
         <source>Werteliste löschen?</source>
+        <target state="translated">Değer listesi silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -2462,6 +2479,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
         <source>Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> değer listesini gerçekten silmek istiyor musunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -2469,6 +2487,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner der Werteliste ein, um den Löschvorgang zu bestätigen.</source>
+        <target state="translated">Silmeyi onaylamak için lütfen değer listesinin tanımlayıcısını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2476,6 +2495,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
         <source>Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> değer listesi alanlara atandığı sürece silinemez. Lütfen öncelikle bu alanlara farklı bir değer listesi atayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46</context>
@@ -2483,6 +2503,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
         <source>Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/> değer listesi bir alana atandığı sürece silinemez. Lütfen öncelikle bu alana farklı bir değer listesi atayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46,24</context>
@@ -2490,6 +2511,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -2497,6 +2519,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
         <source>Verknüpfungen entfernen</source>
+        <target state="translated">Bağlantıları kaldır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">83</context>
@@ -2504,6 +2527,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
         <source>Verknüpfen</source>
+        <target state="translated">Bağlantı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">110</context>
@@ -2511,6 +2535,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
+        <target state="translated">Seçimi kaldır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">133</context>
@@ -2518,6 +2543,7 @@
       </trans-unit>
       <trans-unit id="widgets.searchBar.imageCategoryFilter" datatype="html">
         <source>Nach Bildkategorie filtern:</source>
+        <target state="translated">Görsel kategorisine göre filtrele:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.component.ts</context>
           <context context-type="linenumber">27</context>
@@ -2525,6 +2551,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">
         <source>Suchkriterien</source>
+        <target state="translated">Arama kriteri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">45</context>
@@ -2536,6 +2563,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
         <source>Feld wählen</source>
+        <target state="translated">Alan seç</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2547,6 +2575,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
         <source>Suchbegriff</source>
+        <target state="translated">Arama terimi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2582,6 +2611,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
         <source>Beliebiger Wert</source>
+        <target state="translated">Herhangi bir değer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2593,6 +2623,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
         <source>Kein Wert</source>
+        <target state="translated">Değer yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2604,6 +2635,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
         <source>Suchbegriff eingeben</source>
+        <target state="translated">Arama terimini gir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2615,6 +2647,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.anyValue" datatype="html">
         <source>- Beliebiger Wert -</source>
+        <target state="translated">- Herhangi bir değer -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2634,6 +2667,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
         <source>- Kein Wert -</source>
+        <target state="translated">-Değer yok-</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -3001,6 +3035,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3245,6 +3280,7 @@
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">218</context>
@@ -3548,6 +3584,7 @@
       </trans-unit>
       <trans-unit id="configuration.contextMenu.delete" datatype="html">
         <source>Löschen</source>
+        <target state="translated">Sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
           <context context-type="linenumber">81</context>

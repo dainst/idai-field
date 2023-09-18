@@ -1,4 +1,4 @@
-import { click, getLocator, getText, selectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectOption, typeIn, waitForExist } from '../app';
 
 
 type ModalContext = 'field'|'subfield'|'value'|'group'|'category';
@@ -115,6 +115,24 @@ export class EditConfigurationPage {
     public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
 
         return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);
+    }
+
+
+    public static async clickSelectConditionSubfield(subfieldName: string) {
+
+        const element = (await getLocator('#condition-subfield-select'));
+        return selectOption(element, subfieldName);
+    }
+
+
+    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number) {
+
+        const elementId = '#' + (
+            type === 'boolean' ? 'boolean-condition-radio-buttons' : 'valuelist-condition-checkboxes'
+        );
+        await waitForExist(elementId);
+        const element = (await getLocator(elementId + ' input')).nth(valueIndex);
+        return click(element);
     }
 
 

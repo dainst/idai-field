@@ -351,7 +351,7 @@ export class DownloadProjectComponent {
         const url: string = this.url?.trim();
 
         // Prevent trying to download project from own database
-        return url.includes(address.ip())
+        return url.replace('http://', '').replace(':3000', '') === address.ip()
             ? '.'
             : url;
     }

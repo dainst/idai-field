@@ -80,19 +80,19 @@
     },
     "date": {
       "label": "Tarih",
-      "description": ""
+      "description": "Kayıt/uygulama tarihi"
     },
     "orientation": {
       "label": "Yönü",
-      "description": ""
+      "description": "Pusula yönüne göre yönlendirme"
     },
     "spatialLocation": {
       "label": "Konum bilgisi",
-      "description": ""
+      "description": "Buluntu yeri, açma veya buluntu konumunun açıklaması"
     },
     "provenance": {
       "label": "Menşei",
-      "description": ""
+      "description": "Kaynak yeri"
     },
     "literature": {
       "label": "Atıf kaynağı"
@@ -104,27 +104,27 @@
       "label": "Notlar"
     },
     "damage": {
-      "label": ""
+      "label": "Yüzde cinsinden tahribat oranı"
     },
     "archaeoDox:documentationUnit": {
-      "label": ""
+      "label": "Belgeleme birimi"
     },
     "webGisId": {
       "label": "Web-GIS-ID"
     },
     "shortDescriptionAddendum": {
-      "label": ""
+      "label": "Kısa açıklama (ek)"
     },
     "phase": {
-      "label": ""
+      "label": "Dönem"
     }
   },
   "categories": {
     "Level": {
-      "label": "",
+      "label": "Seviye",
       "fields": {
         "material": {
-          "label": ""
+          "label": "Malzeme"
         }
       }
     },
@@ -145,10 +145,10 @@
       }
     },
     "InnerWall": {
-      "label": ""
+      "label": "İç duvar"
     },
     "OuterWall": {
-      "label": ""
+      "label": "Dış duvar"
     },
     "RoomCeiling": {
       "label": "Tavan",
@@ -167,43 +167,43 @@
       }
     },
     "Stairs": {
-      "label": "",
+      "label": "Basamak",
       "fields": {
         "material": {
-          "label": ""
+          "label": "Malzeme"
         }
       }
     },
     "Opening": {
-      "label": "",
+      "label": "Açıklık",
       "fields": {
         "material": {
-          "label": ""
+          "label": "Malzeme"
         }
       }
     },
     "Window": {
-      "label": ""
+      "label": "Pencere"
     },
     "Door": {
-      "label": ""
+      "label": "Kapı"
     },
     "Damage": {
-      "label": "",
+      "label": "Tahribat",
       "fields": {
         "condition": {
           "label": "Durum"
         },
         "damageType": {
-          "label": ""
+          "label": "Tahribat türü"
         }
       }
     },
     "DesignElement": {
-      "label": "",
+      "label": "Dekorasyon ögeleri",
       "fields": {
         "material": {
-          "label": ""
+          "label": "Malzeme"
         }
       }
     },
@@ -212,11 +212,11 @@
       "fields": {
         "researchQuestion": {
           "label": "Araştırma sorunsalı",
-          "description": ""
+          "description": "Alanı açığa çıkarmak için sorunsal veya arka plan, örn. B. 'Manyetogramda keşfedilen bir yapının özellikleri ve tarihlenmesi...'"
         },
         "trenchComment": {
           "label": "Açma açıklama",
-          "description": ""
+          "description": "Değerlendirme ve belgeleme için açma açıklama, kazı yönetimi için rapor"
         }
       }
     },
@@ -228,38 +228,38 @@
       "fields": {
         "decorationDescription": {
           "label": "Bezeme açıklama",
-          "description": ""
+          "description": "Bezemenin diğer ayrıntıları için ek açıklama alanı"
         },
         "color": {
           "label": "Rengi ve tonu",
-          "description": ""
+          "description": "Görüldüğü haliyle renk"
         },
         "decorationTechnique": {
           "label": "Yüzeye uygulanan işlem veya bezeme tekniği",
-          "description": ""
+          "description": "Bezemenin cama uygulanma tekniği"
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması"
         },
         "manufacturingMethod": {
           "label": "Üretim yöntemi",
-          "description": ""
+          "description": "Nesneyi oluşturmak için kullanılan teknik; görünür işleme izleri"
         },
         "objectType": {
           "label": "Nesnenin tanımı veya türü"
         },
         "transparency": {
           "label": "Şeffaflık",
-          "description": ""
+          "description": "Nesne ne kadar şeffaf?"
         },
         "vesselForm": {
           "label": "Temel kap formu",
-          "description": ""
+          "description": "Kapların esas formu"
         },
         "vesselFormSpecific": {
           "label": "Özel kap formu",
-          "description": ""
+          "description": "Kapların spesifik formu"
         }
       }
     },
@@ -301,7 +301,7 @@
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması"
         },
         "manufacturing": {
           "label": "Üretim"
@@ -311,11 +311,11 @@
         },
         "specificType": {
           "label": "Biçim",
-          "description": ""
+          "description": "Tanınabilidiği kadarıyla taş ve tuğlaların formu"
         },
         "temper": {
-          "label": "Temper",
-          "description": ""
+          "label": "Katkı",
+          "description": "Katkının temel durumu"
         }
       }
     },
@@ -339,7 +339,7 @@
         },
         "gazId": {
           "label": "Gazetteer ID",
-          "description": ""
+          "description": "Yer adları sözlüğü kimlik numarası"
         },
         "institution": {
           "label": "Kurum",
@@ -347,18 +347,18 @@
         },
         "latitude": {
           "label": "Enlem",
-          "description": ""
+          "description": "Giriş ondalık sayı olarak yapılır, negatif değer girilebilir"
         },
         "longitude": {
           "label": "Boylam",
-          "description": ""
+          "description": "Giriş ondalık sayı olarak yapılır, negatif değer girilebilir"
         },
         "license": {
           "label": "Lisans bilgisi"
         },
         "projectURI": {
           "label": "Proje URL",
-          "description": ""
+          "description": "Daha fazla bilgi içeren dış bir proje (web) sayfasına referans"
         },
         "staff": {
           "label": "Ekip"
@@ -599,7 +599,7 @@
         },
         "materialForm": {
           "label": "Malzeme formu",
-          "description": ""
+          "description": "Tuğla/taş vb. hakkında daha fazla açıklama."
         },
         "muralCrown": {
           "label": "Harpuşta",
@@ -607,19 +607,19 @@
         },
         "publicationDatingFinds": {
           "label": "Tarihleme (buluntular)",
-          "description": ""
+          "description": "Örn: bkz. ortaya çıkarılmış mezar kalıntıları: mezar hediyeleri (MS 2./3. yüzyıl)"
         },
         "publicationDatingScientific": {
           "label": "Tarihleme (bilimsel)",
-          "description": ""
+          "description": "Yayının açıklaması, mevcut tarihlere atıf"
         },
         "publicationDatingStratigraphy": {
           "label": "Tarihleme (stratigrafik)",
-          "description": ""
+          "description": "Örn.: bkz. Mezar Yapısı 1: C-14 (MÖ 20-MS 65) tarihli Mezar 28 ile kesişir"
         },
         "publicationRemark": {
           "label": "Yayın görüşü",
-          "description": ""
+          "description": "Yayınla ilgili not"
         },
         "blockProcessing": {
           "label": "Taş blok türü"
@@ -745,7 +745,7 @@
         },
         "soilType": {
           "label": "Toprak tipi",
-          "description": ""
+          "description": "Toprağın, toprak haritalama talimatlarına göre tanımlanması"
         }
       }
     },
@@ -754,23 +754,23 @@
       "fields": {
         "comparison": {
           "label": "Karşılaştırma(lar)",
-          "description": ""
+          "description": "Benzer buluntular, objeler, yazıtlar vb. ile kaynak gösterilerek karşılaştırılması"
         },
         "hasDisturbance": {
           "label": "Tahribat",
-          "description": ""
+          "description": "Buluntularda bir tahribat var mı?"
         },
         "color": {
           "label": "Rengi ve tonu",
-          "description": ""
+          "description": "Görüldüğü haliyle renk"
         },
         "featureBorders": {
           "label": "Stratigrafik birim sınırları",
-          "description": ""
+          "description": "Sınırların belirtilmesi"
         },
         "featureForm": {
           "label": "Stratigrafik birimin şekli",
-          "description": ""
+          "description": "Alan veya profildeki stratigrafik birimin formu: Hangi belirgin form tanımlanabilir?"
         }
       }
     },
@@ -1032,22 +1032,22 @@
           "description": ""
         },
         "vesselpart": {
-          "label": ""
+          "label": "Kap parçası"
         },
         "Firing": {
-          "label": ""
+          "label": "Çanak çömlek fırınlama"
         },
         "FormComparisonCompendia": {
-          "label": ""
+          "label": "Form karşılaştırma özeti"
         },
         "FormComparisonCompendiadetail": {
-          "label": ""
+          "label": "Form karşılaştırma özetinin detayı"
         },
         "DecorationComparisonCompendia": {
-          "label": ""
+          "label": "Bezeme karşılaştırma özeti"
         },
         "DecorationComparisonCompendiadetail": {
-          "label": ""
+          "label": "Bezeme karşılaştırma özeti ayrıntısı"
         },
         "ApplicationComparisonCompendia": {
           "label": ""
@@ -1056,7 +1056,7 @@
           "label": ""
         },
         "Drawing": {
-          "label": ""
+          "label": "Mevcut çizim"
         }
       }
     },
@@ -1087,7 +1087,7 @@
         },
         "publicationRemark": {
           "label": "Yayın görüşü",
-          "description": ""
+          "description": "Yayınla ilgili not"
         },
         "condition": {
           "label": "Durumu",
@@ -1109,7 +1109,7 @@
         },
         "soilType": {
           "label": "Toprak tipi",
-          "description": ""
+          "description": "Toprağın, toprak haritalama talimatlarına göre tanımlanması"
         },
         "tombBuilding": {
           "label": "Mezar yapısı"
@@ -1196,7 +1196,7 @@
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması"
         },
         "manufacturingMethod": {
           "label": "Üretim yöntemi"
@@ -1244,7 +1244,7 @@
         },
         "soilType": {
           "label": "Toprak tipi",
-          "description": ""
+          "description": "Toprağın, toprak haritalama talimatlarına göre tanımlanması"
         }
       }
     },
@@ -1344,11 +1344,11 @@
         },
         "color": {
           "label": "Renk ve tonu",
-          "description": ""
+          "description": "Görüldüğü haliyle renk"
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması"
         },
         "material": {
           "label": "Malzeme"
@@ -1438,15 +1438,15 @@
         },
         "publicationRemark": {
           "label": "Yayın görüşü",
-          "description": ""
+          "description": "Yayınla ilgili not"
         },
         "hasRestoration": {
           "label": "Restorasyon",
-          "description": ""
+          "description": "Restorasyon ve konservasyon tedbirleri alındı mı?"
         },
         "storageInventoryNumber": {
           "label": "Envanter numarası",
-          "description": ""
+          "description": "Bir koleksiyon veya depodaki envanter sırasında atanan numara"
         },
         "weight": {
           "label": "Ağırlık (gr.)",
@@ -1498,7 +1498,7 @@
         },
         "color": {
           "label": "Rengi ve tonu",
-          "description": ""
+          "description": "Görüldüğü haliyle renk"
         },
         "plasterComponents": {
           "label": "Alçı bileşenleri"
@@ -1531,7 +1531,7 @@
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması"
         },
         "manufacturingMethod": {
           "label": "Üretim yöntemi"
@@ -1606,7 +1606,7 @@
           "label": "Kısa açıklama (Sınıflandırma)"
         },
         "archaeoDox:material": {
-          "label": ""
+          "label": "Malzeme"
         },
         "archaeoDox:typeOfWare": {
           "label": ""

@@ -676,7 +676,7 @@
   },
   "Wood-objectType-default": {
     "values": {
-      "Architektur": "",
+      "Architektur": "Mimari",
       "Altar": "",
       "Anhänger": "",
       "Gefäß": "",
@@ -870,7 +870,7 @@
       "Felsabarbeitung": "",
       "Funderfassung": "",
       "Fundsammlung": "",
-      "Grab": "",
+      "Grab": "Gömüt",
       "Nekropole": "",
       "Spolie in rezenter Mauer": "",
       "Steinbruch": "",
@@ -917,7 +917,7 @@
   },
   "Layer-distinguishingCriteria-default": {
     "values": {
-      "Farbe": "",
+      "Farbe": "Rengi",
       "Form": "",
       "Grenzen": "",
       "Konsistenz": "",
@@ -2146,7 +2146,7 @@
   "TypeCatalog-criterion-default": {
     "values": {
       "Form": "",
-      "Material": "",
+      "Material": "Malzeme",
       "Dekoration": "",
       "Spuren": ""
     }
@@ -2213,7 +2213,7 @@
       "Analog": "",
       "Dia": "",
       "S/W": "",
-      "Farbe": ""
+      "Farbe": "Rengi"
     }
   }
 }

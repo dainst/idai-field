@@ -41,41 +41,50 @@
 
     <hr/>
 
-    <div i18n="@@imageUpload.imageMetadataModal.chooseDraughtsmen">
-        Bitte wählen Sie den/die Bildersteller/-in aus.
+    <div class="radio form-check form-check-inline">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio"    
+                   [value]="false"
+                   (click)="setParseFileMetadata(false)"
+                   [checked]="metadata.parseFileMetadata === false">
+            <span i18n="@@boolean.yes">Metadaten für alle Bilder setzen</span>
+        </label>
+    </div>
+    <div class="radio form-check form-check-inline">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio"    
+                   [value]="true"
+                   (click)="setParseFileMetadata(true)"
+                   [checked]="metadata.parseFileMetadata === true">
+            <span i18n="@@boolean.no">Metadaten pro Bild auslesen</span>
+        </label>
     </div>
 
-    <div *ngIf="projectStaff.length > 0">
-        <div class="small-info-text"  i18n="@@imageUpload.imageMetadataModal.chooseDraughtsmeInfo">
-            Es können explizit Mitarbeitende des Projekts als Bildersteller/-innen ausgewählt werden. Diese Auswahl gilt für alle zum Einlesen
-            ausgewählte Bilder.
+    <div *ngIf="!metadata.parseFileMetadata" class="container">
+        <div class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
+            <div i18n="@@imageUpload.imageMetadataModal.chooseDraughtsmen" class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
+                Urheber/-in
+            </div>
+            <div *ngIf="projectStaff.length > 0" class="col">
+                <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleDraughtsman(person)"
+                            [checked]="metadata.draughtsmen.includes(person)">
+                        {{person}}
+                    </label>
+                </div>
+            </div>
         </div>
-        <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleDraughtsman(person)" [disabled]="metadata.draughtsmenFromMetadata"
-                    [checked]="metadata.draughtsmen.includes(person)">
-                {{person}}
-            </label>
+        <div *ngIf="projectStaff.length == 0" class="row">
+            <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.noStaffWarning">
+                Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die
+                Projekteigenschaften angepasst werden.
+            </div>
         </div>
     </div>
-    <div *ngIf="projectStaff.length == 0">
+    <div *ngIf="metadata.parseFileMetadata">
         <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.noStaffWarning">
-            Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die
-            Projekteigenschaften angepasst werden.
-        </div>
-    </div>
-    <div>
-        <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.draughtsmenFromMetadataInfo">
-            Alternativ kann die Anwendung die Bildersteller/-innen  aus den EXIF, IPTC oder XMP Metadaten der Bilddatei zu auslesen. Dies geschieht individuell
-            für jedes Bild, eignet sich also eventuell besser beim Einlesen von vielen Bildern von verschiedenen Mitarbeitenden. Nach Möglichkeit sollten
-            die im Bild hinterlegte Namensschreibweise der in den Projekteigenschaften entsprechen (siehe obige Liste).
-        </div>
-        <div class="checkbox form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" value="{{metadata.draughtsmenFromMetadata}}" type="checkbox" (click)="toggleDraughtsmenFromMetadata()"
-                        [checked]="metadata.draughtsmenFromMetadata">
-                Bildmetadaten auslesen
-            </label>
+            Liest EXIF, IPTC oder XMP Daten, sofern diese extern konfiguriert wurden.
         </div>
     </div>
 </div>

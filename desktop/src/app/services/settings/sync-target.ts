@@ -19,7 +19,7 @@ export module SyncTarget {
         if (!syncTarget) return undefined;
 
         // Prevent trying to synchronize with own database
-        return syncTarget.address.includes(address.ip())
+        return syncTarget.address.trim().replace('http://', '').replace(':3000', '') === address.ip()
             ? '.'
             : syncTarget.address;
     }

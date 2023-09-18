@@ -823,6 +823,69 @@ test.describe('configuration --', () => {
     });
 
 
+    test('set conditions for subfield of composite field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await EditConfigurationPage.typeInNewSubfield('subfield1');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'subfield');
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickSelectConditionSubfield('subfield1');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0);
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield3');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
+        await EditConfigurationPage.clickSelectConditionSubfield('subfield2');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3);
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4);
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickSubfieldBooleanRadioButton(0, 0);
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Eisenzeitlich');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Geometrisch');
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Frühbronzezeitlich');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickSubfieldBooleanRadioButton(0, 1);
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+    });
+
+
     test('create and edit valuelists via composite field editor', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -860,7 +923,7 @@ test.describe('configuration --', () => {
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1b'));
         await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2b'));
 
-        await DoceditCompositeEntryModalPage.selectSubfieldSelectOption(0, 'value1b');
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(0, 'value1b');
         await DoceditCompositeEntryModalPage.clickCancel();
         await DoceditPage.clickCloseEdit();
     });

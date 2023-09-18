@@ -1,4 +1,4 @@
-import { click, getLocator, getSearchableSelectOption, getText } from '../app';
+import { click, getLocator, getSearchableSelectOption, getText, waitForExist } from '../app';
 
 
 /**
@@ -14,9 +14,18 @@ export class DoceditCompositeEntryModalPage {
     }
 
 
-    public static async selectSubfieldSelectOption(fieldIndex: number, optionValueLabel: string) {
+    public static async clickSelectSubfieldSelectOption(fieldIndex: number, optionValueLabel: string) {
 
         return click(await this.getSubfieldSelectOption(fieldIndex, optionValueLabel));
+    }
+
+
+    public static async clickSubfieldBooleanRadioButton(fieldIndex: number, radioButtonIndex: number) {
+
+        const inputElement = await this.getSubfieldInputElement(fieldIndex, 'boolean');
+        await waitForExist(inputElement);
+        const radioButtonElement = await (await inputElement.locator('input')).nth(radioButtonIndex);
+        return click(radioButtonElement);
     }
 
 

@@ -8,13 +8,15 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
             Bedingung für Anzeige des Unterfelds
         </div>
-        <select [(ngModel)]="data.condition.subfieldName" (change)="resetConditionValues()" class="form-control">
+        <select id="condition-subfield-select" [(ngModel)]="data.condition.subfieldName"
+                (change)="resetConditionValues()" class="form-control">
             <option value="" i18n="@@configuration.subfieldCondition.none">- Keine -</option>
             <option *ngFor="let subfield of getConditionSubfields()" [value]="subfield.name">
                 {{getSubfieldLabel(subfield)}}
             </option>
         </select>
-        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'valuelist'">
+        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'valuelist'"
+             id="valuelist-condition-checkboxes">
             <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
                 <label class="form-check-label">
                     <input class="form-check-input" [value]="value" type="checkbox"
@@ -24,7 +26,8 @@
                 </label>
             </div>
         </div>
-        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'boolean'">
+        <div *ngIf="data.condition.subfieldName && this.getConditionType() === 'boolean'"
+             id="boolean-condition-radio-buttons">
             <div class="radio form-check form-check-inline">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio"    

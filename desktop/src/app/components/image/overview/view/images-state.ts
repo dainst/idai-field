@@ -12,6 +12,7 @@ export class ImagesState {
     private customConstraints: { [name: string]: string } = {};
     private gridSize: number = 4;
     private expandAllGroups: boolean = false;
+    private parseFileMetadata: boolean = false;
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
@@ -62,6 +63,16 @@ export class ImagesState {
     public setExpandAllGroups(expandAllGroups: boolean) {
 
         this.expandAllGroups = expandAllGroups;
+    }
+
+    public getParseFileMetadata(): boolean {
+
+        return this.parseFileMetadata;
+    }
+
+    public setParseFileMetadata(val: boolean) {
+
+        this.parseFileMetadata = val;
     }
 
 

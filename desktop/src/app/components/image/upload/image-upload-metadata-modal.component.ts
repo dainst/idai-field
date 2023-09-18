@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 'idai-field-core';
+import { ImagesState } from '../overview/view/images-state';
 
 
 /**
@@ -27,7 +28,8 @@ export class ImageUploadMetadataModalComponent {
     public projectStaff: string[];
     public metadata: ImageMetadata;
 
-    constructor(public activeModal: NgbActiveModal,
+    constructor(private imagesState: ImagesState,
+                public activeModal: NgbActiveModal,
                 projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private labels: Labels) {
@@ -37,8 +39,7 @@ export class ImageUploadMetadataModalComponent {
         this.projectStaff = [];
         this.metadata = {
             category: "Image",
-            draughtsmen: [],
-            parseFileMetadata: false
+            draughtsmen: []
         }
 
         this.loadProjectDocumentData();
@@ -66,9 +67,9 @@ export class ImageUploadMetadataModalComponent {
         }
     }
 
-    public setParseFileMetadata(value: boolean) {
-        this.metadata.parseFileMetadata = value;
-    }
+    public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
+
+    public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
 
     private async loadProjectDocumentData() {
         const projectDoc: Document = await this.datastore.get('project');

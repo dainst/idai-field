@@ -15,6 +15,7 @@ import { ImageManipulationErrors } from '../../../services/imagestore/image-mani
 import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
+import { ImagesState } from '../overview/view/images-state';
 
 
 export interface ImageUploadResult {
@@ -37,7 +38,8 @@ export class ImageUploader {
         = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw', 'tifw', 'tiffw', 'tfw'];
 
 
-    public constructor(private imagestore: ImageStore,
+    public constructor(private imagesState: ImagesState,
+                       private imagestore: ImageStore,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
@@ -264,9 +266,9 @@ export class ImageUploader {
 
     private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
                                       depictsRelationTarget?: Document): Promise<any> {
-
+                                        
         // Try to extend metadata set explicitely by the user with metadata contained within the image file itself (exif/xmp/iptc).
-        const extendedMetadata = await extendMetadataByFileData(metadata, buffer)
+        const extendedMetadata = await extendMetadataByFileData(metadata, buffer, this.imagesState.getParseFileMetadata())
 
         const document: NewImageDocument = {
             resource: {

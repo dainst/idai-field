@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="translated">Sayfası <x id="INTERPOLATION" equiv-text="lse);   private"/> / <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <target state="needs-translation">Sayfasının <x id="INTERPOLATION" equiv-text="lse);   private"/>  <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -513,7 +513,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="translated">Desteklenen veri formatları: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Görüntü formatları<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> ile içe aktarılabilir. </target>
+        <target state="translated">Desteklenen veri formatları: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Görüntü formatları <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>ile<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> içe aktarılabilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -1745,6 +1745,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.multiple" datatype="html">
         <source>Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
+        <target state="translated">Bu kategorinin <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> girdileri zaten oluşturulmuş. Lütfen önekin mevcut tanımlayıcılar için otomatik olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ayarlanmayacağını<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unutmayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">88,83</context>
@@ -1752,6 +1753,7 @@
       </trans-unit>
       <trans-unit id="configuration.description" datatype="html">
         <source>Beschreibung</source>
+        <target state="translated">Açıklama</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -1763,6 +1765,7 @@
       </trans-unit>
       <trans-unit id="configuration.color" datatype="html">
         <source>Farbe</source>
+        <target state="translated">Rengi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
           <context context-type="linenumber">95</context>
@@ -1770,6 +1773,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificField" datatype="html">
         <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
+        <target state="translated">Alanı düzenle <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">21</context>
@@ -1777,6 +1781,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
+        <target state="translated">Uyumsuzluk</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -1784,6 +1789,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
         <source>Projektkonfiguration</source>
+        <target state="translated">Proje konfigürasyonu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
           <context context-type="linenumber">81</context>
@@ -1791,6 +1797,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
         <source>Es werden Daten hochgeladen.</source>
+        <target state="translated">Yükleme devam ediyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -1798,6 +1805,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
         <source>Es werden Daten heruntergeladen.</source>
+        <target state="translated">İndirme devam ediyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1805,6 +1813,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.connecting" datatype="html">
         <source>Synchronisationsverbindung wird hergestellt...</source>
+        <target state="translated">Senkronizasyon bağlantısı kuruluyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1812,6 +1821,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
         <source>Synchronisation ist deaktiviert.</source>
+        <target state="translated">Senkronizasyon devre dışı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1819,6 +1829,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
         <source>Synchronisation abgeschlossen.</source>
+        <target state="translated">Senkronizasyon tamamlandı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1826,6 +1837,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
         <source>Synchronisation fehlgeschlagen</source>
+        <target state="translated">Senkronizasyon başarısız</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1841,6 +1853,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
         <source>Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen Ihres Systems und des Zielsystems.</source>
+        <target state="translated">Belirtilen adresin doğru olduğundan ve senkronizasyon hedefine ağ bağlantısı olduğundan emin olun. Gerekirse sisteminizin ve hedef sistemin güvenlik duvarı ayarlarını kontrol edin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1848,6 +1861,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
         <source>Stellen Sie sicher, dass das Projekt am Synchronisationsziel existiert und prüfen Sie das Passwort.</source>
+        <target state="translated">Projenin senkronizasyon hedefinde olduğundan emin olun ve şifreyi kontrol edin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1855,6 +1869,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
         <source>Sie besitzen nicht die nötigen Rechte.</source>
+        <target state="translated">İzin reddedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1862,6 +1877,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
+        <target state="translated">Versiyon <x id="INTERPOLATION" equiv-text="{{version}}"/> indiriliyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -1873,6 +1889,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
+        <target state="translated">Versiyon <x id="INTERPOLATION" equiv-text="{{version}}"/> indirildi ve yeniden başlatmada kurulacak</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">28</context>
@@ -1880,6 +1897,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
         <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
+        <target state="translated">Versiyon <x id="INTERPOLATION" equiv-text="{{version}}"/> indirmesi yarıda kesildi. Lütfen uygulamayı yeniden başlatıp tekrar deneyin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">37</context>
@@ -1887,6 +1905,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
         <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
+        <target state="translated">Versiyon <x id="INTERPOLATION" equiv-text="{{version}}"/> indirilirken bir hata oluştu. Lütfen https://field.idai.world/download adresinden en yeni sürümü indirin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">46</context>
@@ -1894,6 +1913,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.header" datatype="html">
         <source>Download abbrechen?</source>
+        <target state="translated">İndirme iptal edilsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1901,6 +1921,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.info" datatype="html">
         <source>Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen.</source>
+        <target state="translated">İndirmeyi iptal ederseniz daha sonra projeyi indirmek için tekrar baştan başlayacağınızı lütfen unutmayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1908,6 +1929,7 @@
       </trans-unit>
       <trans-unit id="project.download.abort" datatype="html">
         <source>Abbrechen</source>
+        <target state="translated">İptal et</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1927,6 +1949,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.header" datatype="html">
         <source>Neues Projekt erstellen</source>
+        <target state="translated">Yeni proje oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -1934,6 +1957,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName" datatype="html">
         <source>Projektname:</source>
+        <target state="translated">Proje adı:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">60</context>
@@ -1941,6 +1965,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source>Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
+        <target state="translated">İsteğe bağlı olarak her dil için bir proje adı belirleyebilirsiniz. Herhangi bir karakter içerebilir ve en fazla <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> karakter uzunluğunda olabilir. Proje özellikleri menüsünde herhangi bir zaman değiştirilebilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -1948,6 +1973,7 @@
       </trans-unit>
       <trans-unit id="buttons.next" datatype="html">
         <source>Weiter</source>
+        <target state="translated">İleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -1955,6 +1981,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration" datatype="html">
         <source>Konfiguration:</source>
+        <target state="translated">Konfigürasyon:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">108</context>
@@ -1962,6 +1989,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.configuration.info" datatype="html">
         <source>Die ausgewählte Startkonfiguration bestimmt, welche Kategorien, Formulare und Felder für das neue Projekt zunächst zur Verfügung stehen. Die Konfiguration kann anschließend beliebig angepasst werden.</source>
+        <target state="translated">Seçilen başlangıç konfigürasyonu, yeni proje için başlangıçta hangi kategorilerin, formların ve alanların kullanılabileceğini belirler. Konfigürasyon daha sonra istenildiği gibi özelleştirilebilir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -1969,6 +1997,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages" datatype="html">
         <source>Projektsprachen:</source>
+        <target state="translated">Proje dilleri:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -1976,6 +2005,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source>Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus.</source>
+        <target state="translated">Projeye verilerin girileceği dilleri buradan seçin. Lütfen en az bir dil seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1983,6 +2013,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
+        <target state="translated">Proje tanımlayıcı:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1990,6 +2021,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source>Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
+        <target state="translated">Buraya yeni proje için benzersiz bir tanımlayıcı girin. İzin verilen karakterler Latin alfabesinin küçük harfleri, rakamlar, alt çizgiler ve kısa çizgilerdir. Tanımlayıcı her zaman bir harfle başlamalı ve en fazla <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> karakter uzunluğunda olabilir. Daha sonra <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>değiştirilemez<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -1997,6 +2029,7 @@
       </trans-unit>
       <trans-unit id="buttons.create" datatype="html">
         <source>Erstellen</source>
+        <target state="translated">Oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -2004,6 +2037,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
         <source>Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="translated">Proje <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> silinsin mi? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -2011,6 +2045,7 @@
       </trans-unit>
       <trans-unit id="settings.deleteModal.deleteFiles" datatype="html">
         <source>Bilder löschen</source>
+        <target state="translated">Görselleri sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -2018,6 +2053,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source>Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen.</source>
+        <target state="translated">Silme işlemini onaylamak için lütfen proje tanımlayıcısını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -2025,6 +2061,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.files" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% görsel yüklendi... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">33</context>
@@ -2032,6 +2069,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.databaseFinished" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% proje verisi yüklendi. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -2039,6 +2077,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.cancelling" datatype="html">
         <source>Download wird abgebrochen...</source>
+        <target state="translated">İndirme işlemi iptal ediliyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2050,6 +2089,7 @@
       </trans-unit>
       <trans-unit id="project.download.connecting" datatype="html">
         <source>Verbindung wird hergestellt...</source>
+        <target state="translated">Bağlantı kuruluyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -2057,6 +2097,7 @@
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% proje verisi yüklendi... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -2064,6 +2105,7 @@
       </trans-unit>
       <trans-unit id="project.download.connect" datatype="html">
         <source>Download starten</source>
+        <target state="translated">İndirmeye başla</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -2079,6 +2121,7 @@
       </trans-unit>
       <trans-unit id="project.download.address.info" datatype="html">
         <source>Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden.</source>
+        <target state="translated">Adres olarak bir Field sunucusunun URL'si veya başka bir Field Desktop kurulumunun ağ adresi girilebilir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">98</context>
@@ -2094,6 +2137,7 @@
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
         <source>Vorschaubilder herunterladen</source>
+        <target state="translated">Küçük resimleri indir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">167</context>
@@ -2101,6 +2145,7 @@
       </trans-unit>
       <trans-unit id="project.download.originalImageFiles" datatype="html">
         <source>Originalbilder herunterladen</source>
+        <target state="translated">Orijinal görselleri indirin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">191</context>
@@ -2108,6 +2153,7 @@
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
         <source>Existierendes Projekt gleicher Kennung überschreiben</source>
+        <target state="translated">Aynı tanımlayıcıda mevcut projenin üzerine yaz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">230</context>
@@ -2115,6 +2161,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
         <source>Projektdatenübersicht</source>
+        <target state="translated">Proje verilerine genel bakış</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -2122,6 +2169,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.info" datatype="html">
         <source>Auf diesem Computer gespeicherte Daten für das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </source>
+        <target state="needs-translation">Proje için bu bilgisayarda depolanan veriler <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectIdentifier()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">104</context>
@@ -2129,6 +2177,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount" datatype="html">
         <source>Ressourcen:</source>
+        <target state="translated">Girdiler:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">25</context>
@@ -2136,6 +2185,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.total" datatype="html">
         <source>Gesamtanzahl: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </source>
+        <target state="translated">Toplam miktar: <x id="INTERPOLATION" equiv-text="{{totalDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">43</context>
@@ -2143,6 +2193,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.images" datatype="html">
         <source>Davon Bilder: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </source>
+        <target state="translated">Görseller: <x id="INTERPOLATION" equiv-text="{{imageDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">33</context>
@@ -2150,6 +2201,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.types" datatype="html">
         <source>Davon Typen und Kataloge: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </source>
+        <target state="translated">Tipler ve kataloglar: <x id="INTERPOLATION" equiv-text="{{typeDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">35</context>
@@ -2157,6 +2209,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.lastChangedResource" datatype="html">
         <source>Letzte bearbeitete Ressource:</source>
+        <target state="translated">Son değiştirilen girdi:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">37</context>
@@ -2164,6 +2217,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.date" datatype="html">
         <source>Zeitpunkt: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </source>
+        <target state="translated">Zaman: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentDate}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">58</context>
@@ -2171,6 +2225,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.deletedResource" datatype="html">
         <source>Gelöschte Ressource</source>
+        <target state="translated">Silinen girdi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">61,68</context>
@@ -2178,6 +2233,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.editedBy" datatype="html">
         <source>Bearbeitet von: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </source>
+        <target state="translated">Tarafından düzenlendi: <x id="INTERPOLATION" equiv-text="{{lastChangedDocumentUser}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2185,6 +2241,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
         <source>Vorschau-Bilddateien:</source>
+        <target state="translated">Küçük resim dosyaları:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">73</context>
@@ -2192,6 +2249,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileSize" datatype="html">
         <source>Belegter Festplattenspeicher: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </source>
+        <target state="translated">Kullanılan disk alanı: <x id="INTERPOLATION" equiv-text="{{originalFileSize}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">70</context>
@@ -2207,6 +2265,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
         <source>Original-Bilddateien:</source>
+        <target state="translated">Orijinal görsel dosyaları:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2214,6 +2273,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
         <source>Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
+        <target state="translated">Küçük resimleri senkronize et <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">227</context>
@@ -2221,6 +2281,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesUpload" datatype="html">
         <source>Originalbilder hochladen <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/> </source>
+        <target state="translated">Orijinal görselleri yükleyin <x id="INTERPOLATION" equiv-text="{{originalImageUploadSizeMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.html</context>
           <context context-type="linenumber">63</context>
@@ -2228,6 +2289,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesDownload" datatype="html">
         <source>Originalbilder herunterladen <x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/> </source>
+        <target state="translated">Orijinal görselleri indirin <x id="INTERPOLATION" equiv-text="{{originalImageDownloadSizeMsg}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.html</context>
           <context context-type="linenumber">83</context>
@@ -2235,6 +2297,7 @@
       </trans-unit>
       <trans-unit id="project.synchronization" datatype="html">
         <source>Projekt synchronisieren</source>
+        <target state="translated">Projeyi senkronize et</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">45</context>
@@ -2242,6 +2305,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source>Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
+        <target state="translated">Görsel <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> dosyalarının içe aktarılmasının biraz zaman alabileceğini lütfen unutmayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.component.ts</context>
           <context context-type="linenumber">39</context>
@@ -5910,6 +5974,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.configuration" datatype="html">
         <source>Projektkonfiguration</source>
+        <target state="translated">Proje konfigürasyonu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>

@@ -1947,7 +1947,7 @@ describe('buildRawProjectConfiguration', () => {
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
                     { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4', 'field5'] }
-                ],
+                ]
             }
         };
 

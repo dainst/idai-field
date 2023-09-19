@@ -2,8 +2,8 @@
 
 This is a monorepo containing five packages:
 
-* [Field Desktop](desktop): The Field Desktop application based on AngularJS and Electron
-* [Field Mobile](mobile): The Field Mobile application based on React Native, early development, no release yet
+* [Field Desktop](desktop): The Field Desktop application based on Angular and Electron
+* [Field Mobile](mobile): The Field Mobile application based on React Native (early development, no release yet)
 * [FieldHub](server): The (optional) synchronisation server application.
 * [Field Core](core): Shared TypeScript modules
 * [iDAI.field Web](web): The iDAI.field Web publication platform

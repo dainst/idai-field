@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, FieldResource } from 'idai-field-core';
+    CustomLanguageConfigurations } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -59,7 +59,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.getClonedFieldDefinition()?.inputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
 
-    public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPLEX;
+    public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
     public isCustomField = () => this.field.source === 'custom';
 
@@ -113,7 +113,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!this.isValuelistSectionVisible() && this.getInputType() !== Field.InputType.COMPLEX
+        if (!this.isValuelistSectionVisible() && this.getInputType() !== Field.InputType.COMPOSITE
                 && this.getClonedFormDefinition().valuelists) {
             delete this.getClonedFormDefinition().valuelists[this.field.name];
         }

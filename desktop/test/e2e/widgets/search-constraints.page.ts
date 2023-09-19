@@ -1,4 +1,4 @@
-import { click, getLocator, selectOption, selectOptionFromSearchableSelect, typeIn } from '../app';
+import { click, getLocator, selectOption, selectSearchableSelectOption, typeIn } from '../app';
 
 
 /**
@@ -22,19 +22,19 @@ export class SearchConstraintsPage {
 
     public static clickSelectBooleanValue(value: boolean) {
 
-        return selectOptionFromSearchableSelect('#constraint-search-term-boolean-select', value ? 'Ja' : 'Nein');
+        return selectSearchableSelectOption('#constraint-search-term-boolean-select', value ? 'Ja' : 'Nein');
     }
 
 
     public static clickSelectDropdownValue(valueLabel: string) {
 
-        return selectOptionFromSearchableSelect('#constraint-search-term-select', valueLabel);
+        return selectSearchableSelectOption('#constraint-search-term-select', valueLabel);
     }
 
 
     public static clickSelectExistsDropdownValue(exists: boolean) {
 
-        return selectOptionFromSearchableSelect('#constraint-search-term-exists-select', exists ? 'Ja' : 'Nein');
+        return selectSearchableSelectOption('#constraint-search-term-exists-select', exists ? 'Ja' : 'Nein');
     }
 
 

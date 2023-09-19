@@ -1,24 +1,24 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Map, clone } from 'tsfun';
-import { Field, Labels, Resource, Complex, I18N, Valuelist} from 'idai-field-core';
+import { Field, Labels, Resource, Composite, I18N, Valuelist} from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
 import { UtilTranslations } from '../../../../../util/util-translations';
 import { Messages } from '../../../../messages/messages';
 import { Modals } from '../../../../../services/modals';
-import { ComplexEntryModalComponent } from './complex-entry-modal.component';
+import { CompositeEntryModalComponent as CompositeEntryModalComponent } from './composite-entry-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { Menus } from '../../../../../services/menus';
 
 
 @Component({
-    selector: 'form-field-complex',
-    templateUrl: './complex.html'
+    selector: 'form-field-composite',
+    templateUrl: './composite.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class ComplexComponent implements OnInit, OnChanges {
+export class CompositeComponent implements OnInit, OnChanges {
 
     @Input() resource: Resource;
     @Input() field: Field;
@@ -62,10 +62,10 @@ export class ComplexComponent implements OnInit, OnChanges {
 
     public editEntry(entry: any, isNew: boolean = false) {
 
-        const [result, componentInstance] = this.modals.make<ComplexEntryModalComponent>(
-            ComplexEntryModalComponent,
+        const [result, componentInstance] = this.modals.make<CompositeEntryModalComponent>(
+            CompositeEntryModalComponent,
             MenuContext.MODAL,
-            undefined, 'complex-entry-modal', false
+            undefined, 'composite-entry-modal', false
         );
 
         componentInstance.entry = clone(entry);
@@ -112,7 +112,7 @@ export class ComplexComponent implements OnInit, OnChanges {
 
     private generateEntryLabel(entry: any): string {
 
-        return Complex.generateLabel(
+        return Composite.generateLabel(
             entry,
             this.field.subfields,
             (key: string) => this.utilTranslations.getTranslation(key),

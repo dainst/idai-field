@@ -1,7 +1,7 @@
-<div *ngIf="field.type === 'complex' && field.value.length > 0" class="field complex-field">
+<div *ngIf="field.type === 'composite' && field.value.length > 0" class="field composite-field">
     <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
     <ul>
-        <li *ngFor="let entry of field.value" class="field-value complex-field-entry">
+        <li *ngFor="let entry of field.value" class="field-value composite-field-entry">
             <ul>
                 <li *ngFor="let subfield of getSubfields(field, entry)" class="subfield-section">
                     <h4 class="subfield-label field-label">{{subfield.label}}</h4>

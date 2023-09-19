@@ -1,7 +1,14 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
-import { Document, Field, Labels } from 'idai-field-core';
+import { Document, Field, Labels, ProjectConfiguration, Relation } from 'idai-field-core';
 import { Language } from '../../../services/languages';
+
+
+type StratigraphicalRelationInfo = {
+    imageName: 'above'|'below'|'same'|'none',
+    tooltip: string
+};
 
 
 @Component({
@@ -24,7 +31,9 @@ export class EditFormGroup implements OnChanges {
     public descriptions: { [name: string]: string };
 
 
-    constructor(private labelsService: Labels) {}
+    constructor(private labelsService: Labels,
+                private projectConfiguration: ProjectConfiguration,
+                private i18n: I18n) {}
 
 
     ngOnChanges() {
@@ -39,6 +48,44 @@ export class EditFormGroup implements OnChanges {
     public shouldShow(field: Field): boolean {
 
         return field !== undefined && field.editable === true;
+    }
+
+
+    public getStratigraphicalRelationInfo(field: Field): StratigraphicalRelationInfo|undefined {
+        
+        if (!this.projectConfiguration.isSubcategory(this.document.resource.category, 'Feature')) return undefined;
+
+        switch (field.name) {
+            case Relation.Position.ABOVE:
+            case Relation.Position.CUTS:
+            case Relation.Position.ABUTS:
+            case Relation.Position.FILLS:
+                return {
+                    imageName: 'above',
+                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.aboveBelow', value: 'Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.' })
+                };
+            case Relation.Position.BELOW:
+            case Relation.Position.CUTBY:
+            case Relation.Position.ABUTTEDBY:
+            case Relation.Position.FILLEDBY:
+                return {
+                    imageName: 'below',
+                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.aboveBelow', value: 'Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.' })
+                };
+            case Relation.SAME_AS:
+            case Relation.Position.BONDSWITH:
+                return {
+                    imageName: 'same',
+                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.above', value: 'Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.' })
+                };
+            case Relation.Position.BORDERS:
+                return {
+                    imageName: 'none',
+                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.none', value: 'Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.' })
+                };
+            default:
+                return undefined;
+        }
     }
 
     

@@ -13,7 +13,7 @@
 @import 'core/forms/dimension';
 @import 'core/forms/dating';
 @import 'core/forms/literature';
-@import 'core/forms/complex/complex-entry-modal';
+@import 'core/forms/composite/composite-entry-modal';
 @import 'core/forms/input';
 @import 'core/forms/multi-input';
 @import 'core/forms/identifier';
@@ -133,7 +133,7 @@
 }
 
 #document-edit-wrapper,
-.complex-entry-modal {
+.composite-entry-modal {
   searchable-select {
     .ng-select {
       .ng-select-container {

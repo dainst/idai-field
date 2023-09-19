@@ -5,7 +5,8 @@ import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationN
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
-import { Settings, SyncTarget } from './settings';
+import { Settings } from './settings';
+import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
@@ -141,7 +142,7 @@ export class SettingsService {
         if (!SettingsService.isSynchronizationAllowed(settings.selectedProject)) return;
 
         this.synchronizationService.init(
-            syncTarget?.address,
+            SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
             SettingsService.checkDatabaseExistence

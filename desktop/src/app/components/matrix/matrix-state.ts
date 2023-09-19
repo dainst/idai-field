@@ -15,7 +15,7 @@ export type MatrixClusterMode = 'periods'|'none';
 export class MatrixState {
 
     private selectedOperationId: string = 't2'; // this is the test projects second trench. if it does not exist in other projects, the app handles that
-    private relationsMode: MatrixRelationsMode = 'temporal';
+    private relationsMode: MatrixRelationsMode = 'spatial';
     private lineMode: MatrixLineMode = 'ortho';
     private clusterMode: MatrixClusterMode = 'periods';
 

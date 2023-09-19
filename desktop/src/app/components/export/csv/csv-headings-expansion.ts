@@ -112,7 +112,7 @@ export module CSVHeadingsExpansion {
     }
 
 
-    export function expandComplexHeadings(languages: string[], subfields: Array<Subfield>) {
+    export function expandCompositeHeadings(languages: string[], subfields: Array<Subfield>) {
         
         return (n: number) => {
 

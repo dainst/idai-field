@@ -5,7 +5,7 @@ import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
-type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'complex' | 'radio'
+type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'composite' | 'radio'
     | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'int' | 'unsignedInt' | 'float' | 'unsignedFloat'
     | 'checkboxes' | 'identifier'; // | 'geometry'
 
@@ -62,7 +62,7 @@ function convertTypeDependent(container: any, fieldName: string, inputType: Fiel
     if (inputType === 'checkboxes') convertCheckboxes(container, fieldName);
     if (inputType === 'int' || inputType === 'unsignedInt') convertInt(container, fieldName);
     if (inputType === 'float' || inputType === 'unsignedFloat') convertFloat(container, fieldName);
-    if (inputType === 'complex') convertComplex(container, fieldName, field);
+    if (inputType === 'composite') convertComposite(container, fieldName, field);
 }
 
 
@@ -114,10 +114,10 @@ function convertDating(container: any, fieldName: string) {
 }
 
 
-function convertComplex(resource: Resource, fieldName: string, field: Field) {
+function convertComposite(resource: Resource, fieldName: string, field: Field) {
 
     resource[fieldName].forEach(element => {
-        if (element === undefined) throw 'Undefined complex object found';
+        if (element === undefined) throw 'Undefined composite object found';
         if (element === null) return;
 
         Object.keys(element).forEach(subfieldName => {

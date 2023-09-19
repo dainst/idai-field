@@ -52,8 +52,8 @@ field-view {
       bottom: 1px;
     }
 
-    &.complex-field {
-      .complex-field-entry:not(:last-child) {
+    &.composite-field {
+      .composite-field-entry:not(:last-child) {
         margin-bottom: 15px;
       }
 

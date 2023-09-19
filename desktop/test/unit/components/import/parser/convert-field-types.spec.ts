@@ -162,13 +162,13 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type complex', () => {
+    it('field type composite', () => {
 
         const category = {
             name: 'Category',
             groups: [{ fields: [{
-                name: 'complex',
-                inputType: 'complex',
+                name: 'composite',
+                inputType: 'composite',
                 subfields: [
                     { name: 'subfield1', inputType: 'boolean' },
                     { name: 'subfield2', inputType: 'unsignedInt' },
@@ -179,7 +179,7 @@ describe('convertFieldTypes', () => {
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                complex: [{
+            composite: [{
                     subfield1: 'true',
                     subfield2: '7',
                     subfield3: 'value1;value2',
@@ -188,21 +188,21 @@ describe('convertFieldTypes', () => {
                 relations: {}
             } as unknown as Resource);
 
-        const complex: any = resource.complex[0];
-        expect(complex.subfield1).toBe(true);
-        expect(complex.subfield2).toBe(7);
-        expect(complex.subfield3).toEqual(['value1', 'value2']);
-        expect(complex.subfield4).toBe('text');
+        const composite: any = resource.composite[0];
+        expect(composite.subfield1).toBe(true);
+        expect(composite.subfield2).toBe(7);
+        expect(composite.subfield3).toEqual(['value1', 'value2']);
+        expect(composite.subfield4).toBe('text');
     });
 
 
-    it('field type complex - leave nulls unconverted', () => {
+    it('field type composite - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
             groups: [{ fields: [{
-                name: 'complex',
-                inputType: 'complex',
+                name: 'composite',
+                inputType: 'composite',
                 subfields: [
                     { name: 'subfield1', inputType: 'boolean' },
                     { name: 'subfield2', inputType: 'unsignedInt' }
@@ -211,11 +211,11 @@ describe('convertFieldTypes', () => {
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-            complex: [null],
+            composite: [null],
             relations: {}
         } as unknown as Resource);
 
-        expect(resource['complex']).toEqual([null]);
+        expect(resource['composite']).toEqual([null]);
     });
 
 

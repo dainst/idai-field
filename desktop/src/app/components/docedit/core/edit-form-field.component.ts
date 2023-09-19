@@ -16,7 +16,7 @@ export class EditFormFieldComponent {
 
     @Input() resource: Resource;
     
-    // In most cases the resource is used as the field container. For fields of input type "complex", the
+    // In most cases the resource is used as the field container. For fields of input type "composite", the
     // field container is an entry object of the field data array.
     @Input() fieldContainer: any;
     

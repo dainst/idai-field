@@ -5,7 +5,7 @@
 
 <div class="modal-body bg-light">
     <div *ngFor="let subfield of getSubfields()" class="subfield-section">
-        <label class="complex-entry-modal-subfield-label">{{getSubfieldLabel(subfield)}}</label>
+        <label class="composite-entry-modal-subfield-label">{{getSubfieldLabel(subfield)}}</label>
         <span *ngIf="getSubfieldDescription(subfield)"
                 placement="left"
                 container="body"

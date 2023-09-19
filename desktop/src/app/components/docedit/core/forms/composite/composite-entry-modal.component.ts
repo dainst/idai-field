@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, is, isEmpty, on } from 'tsfun';
-import { Complex, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
+import { Composite, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
     validateUnsignedInt, validateUrl } from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
 import { Menus } from '../../../../../services/menus';
@@ -11,7 +11,7 @@ import { Messages } from '../../../../messages/messages';
 
 
 @Component({
-    templateUrl: './complex-entry-modal.html',
+    templateUrl: './composite-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -19,7 +19,7 @@ import { Messages } from '../../../../messages/messages';
 /**
  * @author Thomas Kleinke
  */
-export class ComplexEntryModalComponent {
+export class CompositeEntryModalComponent {
 
     @Input() entry: any;
     @Input() subfields: Array<Subfield>;
@@ -57,7 +57,7 @@ export class ComplexEntryModalComponent {
         
         return this.subfields?.filter(subfield => {
             return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType)
-                && Complex.isConditionFulfilled(this.entry, subfield, this.subfields);
+                && Composite.isConditionFulfilled(this.entry, subfield, this.subfields);
         });
     }
 

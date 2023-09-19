@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { to } from 'tsfun';
+import { flatten, to } from 'tsfun';
 import { CategoryForm, Field, Labels, Named } from 'idai-field-core';
 import { getSearchResultLabel } from '../getSearchResultLabel';
 
@@ -29,9 +29,18 @@ export class FieldListingComponent {
 
     public getLabel = (value: any) => this.labels.get(value);
 
-    public isNewFieldOptionShown = (): boolean => this.emptyField !== undefined
-        && !this.fields.map(field => field.name).includes(this.emptyField.name)
-        && !CategoryForm.getFields(this.category).map(to(Named.NAME)).includes(this.emptyField.name);
-
     public getSearchResultLabel = (field: Field) => getSearchResultLabel(field, this.searchTerm, this.getLabel);
+
+
+    public isNewFieldOptionShown(): boolean {
+
+        const existingFieldsNames: string[] = flatten(
+            this.category.children.map(subcategory => CategoryForm.getFields(subcategory))
+        ).concat(CategoryForm.getFields(this.category))
+            .map(to(Named.NAME));
+
+        return this.emptyField !== undefined
+            && !this.fields.map(to(Named.NAME)).includes(this.emptyField.name)
+            && !existingFieldsNames.includes(this.emptyField.name);
+    };
 }

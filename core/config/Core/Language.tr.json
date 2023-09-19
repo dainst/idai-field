@@ -1,103 +1,112 @@
 {
   "fields": {
     "category": {
-      "label": ""
+      "label": "Kategori"
     },
     "identifier": {
-      "label": "",
-      "description": ""
+      "label": "Tanımlayıcı",
+      "description": "Girdinin eşsiz tanımlayıcı kodu"
     },
     "shortDescription": {
-      "label": ""
+      "label": "Kısa açıklama"
     }
   },
   "categories": {
     "Project": {
-      "label": "",
+      "label": "Proje",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": ""
+          "label": "Koordinat referans sistemi"
         },
         "shortName": {
-          "label": ""
+          "label": "Proje adı"
         }
       }
     },
     "Image": {
-      "label": "",
+      "label": "Görüntü",
       "fields": {
         "height": {
-          "label": ""
+          "label": "Boyu"
         },
         "width": {
-          "label": ""
+          "label": "Eni"
         }
       }
     }
   },
   "relations": {
     "isRecordedIn": {
-      "label": ""
+      "label": "Çalışmada kaydedildi"
     },
     "liesWithin": {
-      "label": ""
+      "label": "İçinde bulunur"
     },
     "includes": {
-      "label": ""
+      "label": "İçerir"
     },
     "isPresentIn": {
-      "label": ""
+      "label": "Profil/alanda bulunur"
     },
     "isAbove": {
-      "label": ""
+      "label": "Üstünde"
     },
     "isBelow": {
-      "label": ""
+      "label": "Altında"
     },
     "isSameAs": {
-      "label": ""
+      "label": "Benzer"
     },
     "cuts": {
-      "label": ""
+      "label": "Kes(iş)mektedir"
     },
     "isCutBy": {
-      "label": ""
+      "label": "tarafından kesilmektedir"
     },
     "fills": {
-      "label": ""
+      "label": "Doldurur"
     },
     "isFilledBy": {
-      "label": ""
+      "label": "tarafından doldurulmaktadır"
     },
     "borders": {
-      "label": ""
+      "label": "Sınırında"
     },
     "isAfter": {
-      "label": ""
+      "label": "Sonra"
     },
     "isBefore": {
-      "label": ""
+      "label": "Önce"
     },
     "isContemporaryWith": {
-      "label": ""
+      "label": "ile çağdaş"
     },
     "depicts": {
-      "label": ""
+      "label": "Tasvir"
     },
     "isDepictedIn": {
-      "label": ""
+      "label": "Tasvir edilen"
     },
     "isMapLayerOf": {
-      "label": ""
+      "label": "Harita katmanı"
     },
     "hasMapLayer": {
-      "label": ""
+      "label": "Harita katmanı var"
     },
     "isInstanceOf": {
-      "label": ""
+      "label": "Tipolojik sınıflandırma"
     },
     "hasInstance": {
-      "label": ""
+      "label": "İlişkili buluntular"
+    },
+    "abuts": {
+      "label": "ile bitişik"
+    },
+    "isAbuttedBy": {
+      "label": "ile bitiştirilmiş"
+    },
+    "bondsWith": {
+      "label": "ile bağlı"
     }
   }
 }

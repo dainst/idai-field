@@ -978,7 +978,7 @@
         <target state="final">Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.addGroup" datatype="html">
@@ -1421,7 +1421,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.complex" datatype="html">
+      <trans-unit id="config.inputType.composite" datatype="html">
         <source>Kompositfeld</source>
         <target state="final">Kompositfeld</target>
         <context-group purpose="location">
@@ -1741,32 +1741,32 @@
         <source>Eintrag anlegen</source>
         <target state="final">Eintrag anlegen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
+          <context context-type="linenumber">105,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.editEntry" datatype="html">
         <source>Eintrag bearbeiten</source>
         <target state="final">Eintrag bearbeiten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
+          <context context-type="linenumber">128,132</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.add" datatype="html">
+      <trans-unit id="docedit.forms.composite.add" datatype="html">
         <source>Hinzufügen...</source>
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
+          <context context-type="linenumber">52,63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.invalidData" datatype="html">
+      <trans-unit id="docedit.forms.composite.invalidData" datatype="html">
         <source>Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</source>
         <target state="final">Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
+          <context context-type="linenumber">80,89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
@@ -4415,7 +4415,7 @@
         <target state="final">Bearbeitungsmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -4423,7 +4423,7 @@
         <target state="final">Einzelauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -4431,7 +4431,7 @@
         <target state="final">Gruppenauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -4439,7 +4439,7 @@
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -4447,7 +4447,7 @@
         <target state="final">Matrix aus Auswahl erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -4455,7 +4455,7 @@
         <target state="final">Matrix neu laden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
@@ -4463,7 +4463,7 @@
         <target state="final"> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
@@ -4471,7 +4471,7 @@
         <target state="final"> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">239</context>
+          <context context-type="linenumber">273</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
@@ -4759,6 +4759,34 @@
         <target state="final">Die Werteliste wurde geändert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.aboveBelow" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.</source>
+        <target state="final">Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.above" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.</source>
+        <target state="final">Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.none" datatype="html">
+        <source>Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.</source>
+        <target state="final">Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -6802,8 +6830,8 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -7214,8 +7242,8 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>

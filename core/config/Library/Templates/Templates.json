@@ -514,7 +514,7 @@
           "color": "#ff00ff"
         },
         "Feature:archaeoDox": {
-          "hidden": [],
+          "hidden": ["borders"],
           "fields": {},
           "identifierPrefix": "B",
           "color": "#ffff00"

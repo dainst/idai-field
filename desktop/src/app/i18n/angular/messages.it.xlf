@@ -4342,8 +4342,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
-        <source> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </source>
-        <target state="translated">Per questo progetto non è stata configurata alcuna categoria di operazioni adatta alla rappresentazione del matrix.</target>
+        <source>Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind.</source>
+        <target state="translated">Per questo progetto non è stata configurata alcuna categoria di operazioni adatta alla rappresentazione del diagramma stratigrafico (matrix).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">228,243</context>
@@ -7282,15 +7282,15 @@
         <source>Eintrag bearbeiten</source>
         <target state="translated">Modificare voce</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">128,132</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.add" datatype="html">
+      <trans-unit id="docedit.forms.composite.add" datatype="html">
         <source>Hinzufügen...</source>
         <target state="translated">Aggiungere...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">52,63</context>
         </context-group>
       </trans-unit>
@@ -7330,7 +7330,7 @@
         <source>Eintrag anlegen</source>
         <target state="translated">Creare voce</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex-entry-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite-entry-modal.component.ts</context>
           <context context-type="linenumber">105,110</context>
         </context-group>
       </trans-unit>
@@ -7366,19 +7366,47 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.complex.invalidData" datatype="html">
+      <trans-unit id="docedit.forms.composite.invalidData" datatype="html">
         <source>Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</source>
         <target state="translated">Dati non validi. Adattare la configurazione o cancellare l'oggetto.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/complex/complex.component.ts</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">80,89</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.complex" datatype="html">
+      <trans-unit id="config.inputType.composite" datatype="html">
         <source>Kompositfeld</source>
         <target state="translated">Campo composito</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.above" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.</source>
+        <target state="translated">Le risorse sono equiparate nel diagramma stratigrafico (matrix).</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.aboveBelow" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.</source>
+        <target state="translated">Le risorse vengono visualizzate una sopra l'altra nel diagramma stratigrafico (matrix).</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.none" datatype="html">
+        <source>Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.</source>
+        <target state="translated">Non esiste una relazione stratigrafica diretta tra le risorse. La relazione non viene presa in considerazione nel diagramma stratigrafico (matrix).</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

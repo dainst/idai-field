@@ -59,6 +59,7 @@ export class ImageUploadMetadataModalComponent {
         this.metadata.category = category;
     }
 
+
     public toggleDraughtsman(person: string) {
         if(person in this.metadata.draughtsmen) {
             this.metadata.draughtsmen = this.metadata.draughtsmen.filter((selected) => selected !== person);
@@ -67,9 +68,12 @@ export class ImageUploadMetadataModalComponent {
         }
     }
 
+
     public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
 
+
     public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
+
 
     private async loadProjectDocumentData() {
         const projectDoc: Document = await this.datastore.get('project');

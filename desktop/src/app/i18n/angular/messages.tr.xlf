@@ -1417,7 +1417,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.changed" datatype="html">
         <source>Es wurden bereits Konflikte gelöst.</source>
-        <target state="translated">Bazı uyumsuzlular zaten çözüldü.</target>
+        <target state="translated">Bazı çakışmalar zaten çözüldü.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1781,7 +1781,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
-        <target state="translated">Uyumsuzluklar</target>
+        <target state="translated">Çakışmalar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -2337,7 +2337,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
         <source>Konflikt behandeln</source>
-        <target state="translated">Uyumsuzlukları yönetin</target>
+        <target state="translated">Çakışmaları yönetin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2883,6 +2883,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
         <source>Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
+        <target state="translated">Bu girdiye ait silinecek başka <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> girdiler var. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -2890,6 +2891,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.multiple" datatype="html">
         <source>Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.</source>
+        <target state="translated">Bu girdilere ait bir girdi daha silinecek.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">30</context>
@@ -2897,6 +2899,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
         <source>Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
+        <target state="translated">Bu girdilere ait silinecek başka <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> girdiler var. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">54</context>
@@ -2904,6 +2907,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
         <source>Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
+        <target state="translated">Bu içe aktarılmış bir katalogdur. Bu kataloğun türleri ile buluntular arasındaki ilişkilerin de kaldırılacağını lütfen unutmayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">42</context>
@@ -2911,6 +2915,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
         <source>Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
+        <target state="translated">Bir kataloğun silinmesinin, o katalogda yer alan tüm türlerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak katalog türleri ile buluntular arasındaki tüm ilişkiler de kaldırılacak.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">72</context>
@@ -2918,6 +2923,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source>Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden.</source>
+        <target state="translated">Bir türün silinmesinin tüm alt türlerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak buluntular ve türler (buluntular ile alt türler) arasındaki tüm ilişkiler kaldırılacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2925,6 +2931,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
         <source>Verknüpfte Bilder löschen, bei denen keine Verknüpfungen zu anderen Ressourcen bestehen</source>
+        <target state="translated">Diğer girdilere bağlantısı olmayan bağlantılı görselleri silin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2932,6 +2939,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
         <source>(Ein Bild)</source>
+        <target state="translated">(Bir görsel)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2939,6 +2947,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
         <source>(<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder) </source>
+        <target state="translated">(<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> görseller) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2946,6 +2955,7 @@
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.single" datatype="html">
         <source>Ressource wird gelöscht...</source>
+        <target state="translated">Girdi siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>
@@ -2953,6 +2963,7 @@
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.multiple" datatype="html">
         <source>Ressourcen werden gelöscht...</source>
+        <target state="translated">Girdiler siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>
@@ -2960,6 +2971,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
         <source>Eine Ressource gefunden</source>
+        <target state="translated">Bir girdi bulundu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -2967,6 +2979,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> girdi bulundu </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -2974,6 +2987,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
         <source>Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> girdilerle sınırlandırıldı </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">24</context>
@@ -2981,6 +2995,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemove" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
+        <target state="translated">Çok büyük arama sonuçlarının görüntülenmesi, cihaza ve kayıt sayısına bağlı olarak uzun zaman alabilir. Bu nedenle mevcut gösterim başlangıçta <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> girdilerle sınırlıydı. Sonucun tamamını yüklemek için burayı tıklayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">33</context>
@@ -2988,6 +3003,7 @@
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.map" datatype="html">
         <source>Kartendarstellung</source>
+        <target state="translated">Harita görünümü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">35</context>
@@ -2995,6 +3011,7 @@
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
         <source>Listendarstellung</source>
+        <target state="translated">Liste görünümü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">50</context>
@@ -3010,6 +3027,7 @@
       </trans-unit>
       <trans-unit id="resources.map.addPolygon" datatype="html">
         <source>Polygon hinzufügen</source>
+        <target state="translated">Poligon ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">93</context>
@@ -3017,6 +3035,7 @@
       </trans-unit>
       <trans-unit id="resources.map.addPolyline" datatype="html">
         <source>Polyline hinzufügen</source>
+        <target state="translated">Çizgi ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -3024,6 +3043,7 @@
       </trans-unit>
       <trans-unit id="resources.map.addPoint" datatype="html">
         <source>Punkt hinzufügen</source>
+        <target state="translated">Nokta ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">154</context>
@@ -3031,6 +3051,7 @@
       </trans-unit>
       <trans-unit id="resources.map.drag" datatype="html">
         <source>Verschieben</source>
+        <target state="translated">Sürükle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -3038,6 +3059,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
         <source>Bitte wählen Sie eine Kategorie aus.</source>
+        <target state="translated">Lütfen bir kategori seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -3045,6 +3067,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
         <source>Bearbeiten</source>
+        <target state="translated">Düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -3052,6 +3075,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
         <source>Verschieben</source>
+        <target state="translated">Taşı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">104</context>
@@ -3067,6 +3091,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.header" datatype="html">
         <source>Kategorie löschen?</source>
+        <target state="translated">Kategori silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -3074,6 +3099,7 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kategoriyi gerçekten silmek istiyor musunuz?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -3082,6 +3108,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen.</source>
+        <target state="translated">Silme işlemini onaylamak için lütfen kategori adını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">17</context>
@@ -3089,6 +3116,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.images" datatype="html">
         <source>Bilder verknüpfen</source>
+        <target state="translated">Görselleri bağlayın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -3096,6 +3124,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
         <source>Polygon anlegen</source>
+        <target state="translated">Poligon oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3103,6 +3132,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
         <source>Polyline anlegen</source>
+        <target state="translated">Çizgi oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3110,6 +3140,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
         <source>Punkt anlegen</source>
+        <target state="translated">Nokta oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3117,6 +3148,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
         <source>Polygon bearbeiten</source>
+        <target state="translated">Poligon düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3124,6 +3156,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
         <source>Multipolygon bearbeiten</source>
+        <target state="translated">Çoklu poligon düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3131,6 +3164,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
         <source>Polyline bearbeiten</source>
+        <target state="translated">Çizgi düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3138,6 +3172,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
         <source>Multipolyline bearbeiten</source>
+        <target state="translated">Çoklu çizgi düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3145,6 +3180,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
         <source>Punkt bearbeiten</source>
+        <target state="translated">Nokta düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3152,6 +3188,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
         <source>Multipunkt bearbeiten</source>
+        <target state="translated">Çoklu nokta düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3159,6 +3196,7 @@
       </trans-unit>
       <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
         <source>Alle Gruppen ausklappen</source>
+        <target state="translated">Tüm grupları genişlet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -3166,6 +3204,7 @@
       </trans-unit>
       <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
         <source>Übergeordnete Ressource</source>
+        <target state="translated">Ana girdi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
           <context context-type="linenumber">90</context>
@@ -3173,6 +3212,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
         <source>Bitte wählen Sie einen Geometrietyp aus.</source>
+        <target state="translated">Lütfen bir geometri türü seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -3180,6 +3220,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
         <source>Polygon</source>
+        <target state="translated">Poligon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">131</context>
@@ -3187,6 +3228,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
         <source>Polyline</source>
+        <target state="translated">Çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">161</context>
@@ -3194,6 +3236,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
         <source>Punkt</source>
+        <target state="translated">Nokta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">183</context>
@@ -3201,6 +3244,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
         <source>Keine Geometriedaten</source>
+        <target state="translated">Geometri verisi yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">208</context>
@@ -3208,6 +3252,7 @@
       </trans-unit>
       <trans-unit id="resources.typeGrid.types" datatype="html">
         <source>Typen</source>
+        <target state="translated">Tipler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -3215,6 +3260,7 @@
       </trans-unit>
       <trans-unit id="resources.typeGrid.subtypes" datatype="html">
         <source>Untertypen</source>
+        <target state="translated">Alt tipler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -3222,6 +3268,7 @@
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Zugeordnete Funde </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ilgili buluntular </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
           <context context-type="linenumber">109</context>
@@ -3229,6 +3276,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
         <source>Kategorie</source>
+        <target state="translated">Kategori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -3236,6 +3284,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.identifier" datatype="html">
         <source>Bezeichner</source>
+        <target state="translated">Tanımlayıcı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -3243,6 +3292,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.shortDescription" datatype="html">
         <source>Kurzbeschreibung</source>
+        <target state="translated">Kısa açıklama</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">93</context>
@@ -3250,6 +3300,7 @@
       </trans-unit>
       <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen ansehen</source>
+        <target state="translated">Alt girdileri göster</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -3257,6 +3308,7 @@
       </trans-unit>
       <trans-unit id="resources.showInContext.tooltip" datatype="html">
         <source>Im Kontext anzeigen</source>
+        <target state="translated">Kontekstte göster</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -3268,6 +3320,7 @@
       </trans-unit>
       <trans-unit id="resources.showInOperationContext.tooltip" datatype="html">
         <source>Im Kontext der Maßnahme anzeigen</source>
+        <target state="translated">Operasyon kontekstinde göster</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">100</context>
@@ -3279,6 +3332,7 @@
       </trans-unit>
       <trans-unit id="resources.jumpToView.tooltip" datatype="html">
         <source>Zur Maßnahme wechseln</source>
+        <target state="translated">Operasyona geç</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -3290,6 +3344,7 @@
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
         <source>Bearbeiten</source>
+        <target state="translated">Düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">169</context>
@@ -3297,6 +3352,7 @@
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
         <source>Verschieben</source>
+        <target state="translated">Sürükle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">195</context>
@@ -3312,6 +3368,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
+        <target state="translated">Çok büyük arama sonuçlarının görüntülenmesi, cihaza ve kayıt sayısına bağlı olarak uzun zaman alabilir. Bu nedenle mevcut gösterim başlangıçta <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> girdilerle sınırlıydı. Sonucun tamamını yüklemek için burayı tıklayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -3492,6 +3549,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
         <source>Alle Konflikte wurden gelöst.</source>
+        <target state="translated">Tüm çakışmalar çözüldü.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -3584,6 +3642,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.resolveConflict" datatype="html">
         <source>Konflikt lösen</source>
+        <target state="translated">Çakışmayı çöz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
@@ -3595,6 +3654,7 @@
       </trans-unit>
       <trans-unit id="configuration.contextMenu.edit" datatype="html">
         <source>Bearbeiten</source>
+        <target state="translated">Düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -3687,6 +3747,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
         <source>v. Chr.</source>
+        <target state="translated">M.Ö.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -3694,6 +3755,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.ce" datatype="html">
         <source>n. Chr.</source>
+        <target state="translated">M.S.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">67</context>
@@ -3701,6 +3763,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bp" datatype="html">
         <source>BP</source>
+        <target state="translated">G.Ö.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -3736,6 +3799,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.before" datatype="html">
         <source>Vor</source>
+        <target state="translated">Önce</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3743,6 +3807,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.after" datatype="html">
         <source>Nach</source>
+        <target state="translated">Sonra</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3898,6 +3963,7 @@
       </trans-unit>
       <trans-unit id="geometry.polyline" datatype="html">
         <source>Polyline</source>
+        <target state="translated">Çizgi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3912,6 +3978,7 @@
       </trans-unit>
       <trans-unit id="geometry.polygon" datatype="html">
         <source>Polygon</source>
+        <target state="translated">Poligon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3919,6 +3986,7 @@
       </trans-unit>
       <trans-unit id="geometry.multiPolygon" datatype="html">
         <source>Multipolygon</source>
+        <target state="translated">Çoklu poligon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3926,6 +3994,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidIdentifier" datatype="html">
         <source>Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
+        <target state="translated">Girilen tanımlayıcı <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, yapılandırılan tanımlayıcı önekiyle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> başlamıyor. Lütfen yeni bir tanımlayıcı girin. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/identifier.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -3933,6 +4002,7 @@
       </trans-unit>
       <trans-unit id="settings.applySettings" datatype="html">
         <source>Einstellungen übernehmen</source>
+        <target state="translated">Ayarları uygula</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">77</context>
@@ -3944,6 +4014,7 @@
       </trans-unit>
       <trans-unit id="settings.general" datatype="html">
         <source>Allgemeine Einstellungen</source>
+        <target state="translated">Genel ayarlar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -3951,6 +4022,7 @@
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
         <source>Sprachen</source>
+        <target state="translated">Diller</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3958,6 +4030,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source>Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein.</source>
+        <target state="translated">Diller önceliğe göre sıralanabilir. Kalın harflerle yazılan diller için çevrilmiş bir kullanıcı arayüzü mevcuttur. Ayrıca proje konfigürasyonunda diğer diller için kategori ve alan adlarının yanı sıra değer listelerinin çevirileri de mevcut olabilir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3965,6 +4038,7 @@
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source>Name des Bearbeiters/der Bearbeiterin</source>
+        <target state="translated">Düzenleyenin adı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3972,6 +4046,7 @@
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
         <source>Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
+        <target state="translated">Veri seti değişikliklerinin bir kişiyle ilişkilendirilebilmesini sağlamak için düzenleyici adı düzenleme geçmişine kaydedilir. Bu ayar, sistemin olası çakışmaları ilişkilendirmesine ve çözmesine olanak tanıdığından, kullanıcılar arasında veya bir Field Server ile veri senkronize edilirken <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>çok önemlidir<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bu nedenle bir proje üzerinde çalışmaya başlamadan önce ayarlanması gerekir. Bu uygulamayla çalışan kullanıcının tam adının girilmesi önerilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3979,6 +4054,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
         <source>Synchronisation</source>
+        <target state="translated">Senkronizasyon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">59</context>
@@ -3986,6 +4062,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
         <source>Synchronisation aktivieren</source>
+        <target state="translated">Senkronizasyonu etkinleştir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">187</context>
@@ -4025,6 +4102,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads" datatype="html">
         <source>Originalbilder empfangen</source>
+        <target state="translated">Orijinal görselleri alın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">126</context>
@@ -4032,6 +4110,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
         <source>Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind.</source>
+        <target state="translated">Orijinal görüntülerin alınması varsayılan olarak devre dışıdır çünkü boyutları nedeniyle çok fazla sabit disk alanı kaplayabilirler ve uygulamayı kullanmak için zorunlu değildirler.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">144</context>
@@ -4039,6 +4118,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
         <source>Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann.</source>
+        <target state="translated">Bu bilgisayarın senkronizasyon hedefi olarak ayarlanabilmesi için bu adres ve parolanın diğer Field Desktop kurulumlarına girilmesi gerekir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">105</context>
@@ -4046,6 +4126,7 @@
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
         <source>Bilder</source>
+        <target state="translated">Görüntüler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4061,6 +4142,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source>Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</source>
+        <target state="translated">Bu yol genellikle varsayılan ayarında bırakılabilir. Field Desktop tarafından kullanılan görüntü dizini farklı kullanıcılar tarafından paylaşılan bir ağ cihazında (NAS) bulunuyorsa bunu değiştirmek gerekebilir. Uygulama bu yolun altındaki her proje için bir alt dizin oluşturur. Bu dizinlerde saklanan görüntü dosyaları tamamen Field Desktop tarafından yönetilir. Görüntü dosyaları oraya elle yerleştirilmemeli, resim genel görünümüne veya kaynak görünümünün resimler sekmesine aktarılmalıdır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4068,6 +4150,7 @@
       </trans-unit>
       <trans-unit id="settings.showAdvanced" datatype="html">
         <source>Erweiterte Optionen</source>
+        <target state="translated">Gelişmiş ayarlar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4075,6 +4158,7 @@
       </trans-unit>
       <trans-unit id="settings.hideAdvanced" datatype="html">
         <source>Erweiterte Optionen ausblenden</source>
+        <target state="translated">Gelişmiş ayarları gizle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4090,6 +4174,7 @@
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
         <source>Automatische Prüfung auf Updates aktivieren</source>
+        <target state="translated">Otomatik güncelleme denetlemeyi etkinleştir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -4097,6 +4182,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">
         <source>Ansicht</source>
+        <target state="translated">Görüntüle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -4104,6 +4190,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.modal-edit" datatype="html">
         <source>Bearbeiten</source>
+        <target state="translated">Düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">30</context>
@@ -4111,6 +4198,7 @@
       </trans-unit>
       <trans-unit id="settings.addLanguage" datatype="html">
         <source>Sprache hinzufügen</source>
+        <target state="translated">Dil ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -4126,6 +4214,7 @@
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
         <source>Sprache entfernen</source>
+        <target state="translated">Dili kaldır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -4137,6 +4226,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
         <source>Bearbeitungsmodus</source>
+        <target state="translated">Düzenleme modu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -4144,6 +4234,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
         <source>Einzelauswahlmodus</source>
+        <target state="translated">Tek seçim modu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -4151,6 +4242,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
         <source>Gruppenauswahlmodus</source>
+        <target state="translated">Grup seçim modu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">110</context>
@@ -4158,6 +4250,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
+        <target state="translated">Seçimi kaldır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">144</context>
@@ -4165,6 +4258,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
         <source>Matrix aus Auswahl erstellen</source>
+        <target state="translated">Seçimden matris oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">174</context>
@@ -4172,6 +4266,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
         <source>Matrix neu laden</source>
+        <target state="translated">Matrisi yeniden yükle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">195</context>
@@ -4179,6 +4274,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
         <source>Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind.</source>
+        <target state="translated">Bu proje için matris görünümüne uygun hiçbir işlem kategorisi yapılandırılmadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">228,243</context>
@@ -4186,6 +4282,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
         <source>Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="translated">Burada çalışabilmek için lütfen "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" kategorisinde (<x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Genel bakış menüsünde<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>) bir işlem oluşturun. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">268</context>
@@ -4193,6 +4290,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
         <source>Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
+        <target state="translated">Burada çalışabilmek için lütfen "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" veya "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" kategorisinde (<x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Genel bakış menüsünde<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>) bir işlem oluşturun. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">150,138</context>
@@ -4200,6 +4298,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
         <source>Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
+        <target state="translated">Lütfen seçilen operasyon için kazı görünümünde "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" kategorisindeki girdileri oluşturun ve bunları zamansal veya konumsal ilişkiler kullanarak bağlayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">157</context>
@@ -4207,6 +4306,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
         <source>Relationen:</source>
+        <target state="translated">İlişkiler:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">39</context>
@@ -4214,6 +4314,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
         <source>Zeitlich</source>
+        <target state="translated">Zamansal</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4221,6 +4322,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.spatial" datatype="html">
         <source>Räumlich</source>
+        <target state="translated">Konumsal</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4228,6 +4330,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.label" datatype="html">
         <source>Kanten:</source>
+        <target state="translated">Kenarlar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4235,6 +4338,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.straight" datatype="html">
         <source>Gerade</source>
+        <target state="translated">Düz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4242,6 +4346,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.curved" datatype="html">
         <source>Gebogen</source>
+        <target state="translated">Kavisli</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4249,6 +4354,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.clusterOption" datatype="html">
         <source>Gruppierung nach Grobdatierung</source>
+        <target state="translated">Döneme göre gruplandır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -4256,6 +4362,7 @@
       </trans-unit>
       <trans-unit id="util.dating.bce" datatype="html">
         <source>v. Chr.</source>
+        <target state="translated">M.Ö.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4263,6 +4370,7 @@
       </trans-unit>
       <trans-unit id="util.dating.ce" datatype="html">
         <source>n. Chr.</source>
+        <target state="translated">M.S.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4270,6 +4378,7 @@
       </trans-unit>
       <trans-unit id="util.dating.bp" datatype="html">
         <source>BP</source>
+        <target state="translated">G.Ö.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4277,6 +4386,7 @@
       </trans-unit>
       <trans-unit id="util.dating.before" datatype="html">
         <source>Vor</source>
+        <target state="translated">Önce</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4284,6 +4394,7 @@
       </trans-unit>
       <trans-unit id="util.dating.after" datatype="html">
         <source>Nach</source>
+        <target state="translated">Sonra</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4291,6 +4402,7 @@
       </trans-unit>
       <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
         <source>gemessen an</source>
+        <target state="translated">ölçüldüğü gibi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4298,6 +4410,7 @@
       </trans-unit>
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
+        <target state="translated">Zenon ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4305,7 +4418,7 @@
       </trans-unit>
       <trans-unit id="util.literature.doi" datatype="html">
         <source>DOI</source>
-        <target state="translated">DOİ</target>
+        <target state="translated">DOI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4321,6 +4434,7 @@
       </trans-unit>
       <trans-unit id="util.literature.figure" datatype="html">
         <source>Abbildung</source>
+        <target state="translated">Şekil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4328,6 +4442,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.from" datatype="html">
         <source>Von:</source>
+        <target state="translated">-den:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4335,6 +4450,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.to" datatype="html">
         <source>, bis:</source>
+        <target state="translated">, -e kadar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4342,6 +4458,7 @@
       </trans-unit>
       <trans-unit id="util.includesStratigraphicalUnits" datatype="html">
         <source>Umfasst stratigraphische Einheiten</source>
+        <target state="translated">Stratigrafik birimleri içerir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4349,6 +4466,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.all" datatype="html">
         <source>Alle</source>
+        <target state="translated">Tümü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4372,7 +4490,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.building" datatype="html">
         <source>Bauwerk</source>
-        <target state="translated">Bina</target>
+        <target state="translated">Yapı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4380,7 +4498,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.survey" datatype="html">
         <source>Survey</source>
-        <target state="translated">Yüzey araştırma</target>
+        <target state="translated">Yüzey araştırması</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4388,6 +4506,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.images" datatype="html">
         <source>Bilderverwaltung</source>
+        <target state="translated">Görüntü yönetimi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4395,6 +4514,7 @@
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.types" datatype="html">
         <source>Typenverwaltung</source>
+        <target state="translated">Tip yönetimi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4402,6 +4522,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
+        <target state="translated">Proje kategorisindeki alanlar için alana özel arama yapılması mümkün değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4409,6 +4530,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForInputType" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</source>
+        <target state="translated">Bu giriş tipindeki alanlar için alana özel arama mümkün değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4416,6 +4538,7 @@
       </trans-unit>
       <trans-unit id="configuration.i18nOption.changingNotAllowed" datatype="html">
         <source>Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.</source>
+        <target state="translated">Bu giriş türündeki alanlar için birden çok dilde giriş her zaman etkinleştirilir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4423,6 +4546,7 @@
       </trans-unit>
       <trans-unit id="configuration.groupChanged" datatype="html">
         <source>Die Gruppe wurde geändert.</source>
+        <target state="translated">Grup değiştirildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4430,6 +4554,7 @@
       </trans-unit>
       <trans-unit id="configuration.newValue" datatype="html">
         <source>Neuer Wert</source>
+        <target state="translated">Yeni değer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4437,6 +4562,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistChanged" datatype="html">
         <source>Die Werteliste wurde geändert.</source>
+        <target state="translated">Değer listesi değiştirildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4479,6 +4605,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.header" datatype="html">
         <source>Konflikte in der Projektkonfiguration</source>
+        <target state="translated">Proje yapılandırmasındaki çakışmalar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -4486,7 +4613,7 @@
       </trans-unit>
       <trans-unit id="docedit.group.conflicts" datatype="html">
         <source>Konflikte</source>
-        <target state="translated">Uyumsuzluklar</target>
+        <target state="translated">Çakışmalar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4601,7 +4728,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.filter.zip" datatype="html">
         <source>ZIP-Archiv</source>
-        <target state="translated">ZİP Arşiv</target>
+        <target state="translated">ZIP Arşiv</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5975,6 +6102,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.images" datatype="html">
         <source>Bilder</source>
+        <target state="translated">Görüntüler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6700,6 +6828,7 @@
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
         <source>Bilder</source>
+        <target state="translated">Görüntüler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">54</context>
@@ -6728,6 +6857,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html">
         <source>Verknüpfungen löschen</source>
+        <target state="translated">Bağlantıları kaldır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -6742,6 +6872,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source>Möchten Sie das markierte Bild wirklich löschen?</source>
+        <target state="translated">Seçilen resmi gerçekten silmek istiyor musunuz?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -6749,6 +6880,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">
         <source>Bild wird gelöscht...</source>
+        <target state="translated">Görüntü silinecek...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>
@@ -6756,6 +6888,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.multiple" datatype="html">
         <source>Bilder werden gelöscht...</source>
+        <target state="translated">Görüntüler silinecek...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>
@@ -6855,6 +6988,42 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">80,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.above" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.</source>
+        <target state="translated">Girdiler matris görünümünde eşitlenir.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.newSubfield" datatype="html">
+        <source>Neues Unterfeld</source>
+        <target state="translated">Yeni alt alan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.aboveBelow" datatype="html">
+        <source>Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.</source>
+        <target state="translated">Girdiler matris görünümünde üst üste görüntülenir.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.stratigraphicalRelationInfo.none" datatype="html">
+        <source>Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.</source>
+        <target state="translated">Girdiler arasında doğrudan bir stratigrafik ilişki yoktur. İlişki matris görünümünde dikkate alınmaz.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
     </body>

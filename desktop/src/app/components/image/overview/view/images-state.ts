@@ -5,6 +5,8 @@ import { Named, Query, ProjectConfiguration } from 'idai-field-core';
 @Injectable()
 /**
  * @author Thomas Kleinke
+ * 
+ * Can be injected to save/load image ui related user preferences for the application.
  */
 export class ImagesState {
 
@@ -65,11 +67,22 @@ export class ImagesState {
         this.expandAllGroups = expandAllGroups;
     }
 
+
+    /**
+     * Does the user prefer to parse image metadata from each individual file? Otherwise, metadata is set using the application
+     * interface.
+     * 
+     * @returns `true` if preference is set to parsing the data from exif, iptc and xmp.
+     */
     public getParseFileMetadata(): boolean {
 
         return this.parseFileMetadata;
     }
 
+
+    /**
+     * Set user preference for image metadata source.
+     */
     public setParseFileMetadata(val: boolean) {
 
         this.parseFileMetadata = val;

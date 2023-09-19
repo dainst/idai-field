@@ -56,14 +56,14 @@
                    [value]="true"
                    (click)="setParseFileMetadata(true)"
                    [checked]="getParseFileMetadata() === true">
-            <span i18n="@@imageUpload.imageMetadataModal.chooseReadMetadata">Metadaten pro Bild auslesen</span>
+            <span i18n="@@imageUpload.imageMetadataModal.chooseReadMetadata">Metadaten aus Bildern auslesen</span>
         </label>
     </div>
 
     <div *ngIf="!getParseFileMetadata()" class="container">
         <div class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
             <div i18n="@@imageUpload.imageMetadataModal.draughtsmen" class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
-                Urheber/-in
+                Bildersteller/Bilderstellerin
             </div>
             <div *ngIf="projectStaff.length > 0" class="col">
                 <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">

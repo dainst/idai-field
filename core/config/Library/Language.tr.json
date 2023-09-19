@@ -734,7 +734,7 @@
           "description": "Tabaka doğal mı? ('Evet' örn. erozyon sebebiyle)"
         },
         "consistency": {
-          "label": "Süreklilik"
+          "label": "Sağlamlığı"
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
@@ -819,7 +819,7 @@
           "description": "Esas haline kıyasla korunmuşluk oranı"
         },
         "consistency": {
-          "label": "Süreklilik"
+          "label": "Sağlamlığı"
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
@@ -1220,7 +1220,7 @@
           "label": "Temel kap tipi"
         },
         "vesselFormSpecific": {
-          "label": "Özel kap tipi",
+          "label": "Özel kap formu",
           "description": ""
         }
       }
@@ -1233,7 +1233,7 @@
           "description": ""
         },
         "consistency": {
-          "label": "Süreklilik"
+          "label": "Sağlamlığı"
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
@@ -1636,7 +1636,7 @@
           "label": ""
         },
         "archaeoDox:consistency": {
-          "label": ""
+          "label": "Sağlamlığı"
         },
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": ""

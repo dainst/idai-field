@@ -60,30 +60,28 @@
         </label>
     </div>
 
-    <div *ngIf="!getParseFileMetadata()" class="container">
-        <div class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
-            <div i18n="@@imageUpload.imageMetadataModal.draughtsmen" class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
-                Bildersteller/Bilderstellerin
-            </div>
-            <div *ngIf="projectStaff.length > 0" class="col">
-                <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleDraughtsman(person)"
-                            [checked]="metadata.draughtsmen.includes(person)">
-                        {{person}}
-                    </label>
+    <div class="container">
+        <div *ngIf="!getParseFileMetadata()">
+            <div *ngIf="projectStaff.length > 0" class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
+                <div i18n="@@imageUpload.imageMetadataModal.draughtsmen" class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
+                    Bildersteller/Bilderstellerin
+                </div>
+                <div class="col">
+                    <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" value="{{person}}" type="checkbox" (click)="toggleDraughtsman(person)"
+                                [checked]="metadata.draughtsmen.includes(person)">
+                            {{person}}
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div *ngIf="projectStaff.length == 0" class="row">
-            <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.noStaffWarning">
+            <div *ngIf="projectStaff.length == 0" class="small-info-text" i18n="@@imageUpload.imageMetadataModal.noStaffWarning">
                 Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die
                 Projekteigenschaften angepasst werden.
             </div>
         </div>
-    </div>
-    <div *ngIf="getParseFileMetadata()">
-        <div class="small-info-text" i18n="@@imageUpload.imageMetadataModal.metadataFormatsInfo">
+        <div *ngIf="getParseFileMetadata()" class="small-info-text" i18n="@@imageUpload.imageMetadataModal.metadataFormatsInfo">
             Liest EXIF, IPTC oder XMP Daten, sofern diese extern konfiguriert wurden.
         </div>
     </div>

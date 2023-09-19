@@ -123,6 +123,8 @@ export class ImageUploader {
             return await modal.result;
         } catch (err) {
             return undefined;
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 

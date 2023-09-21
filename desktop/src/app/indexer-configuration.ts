@@ -1,5 +1,6 @@
 import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfiguration, Tree } from 'idai-field-core';
 
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -27,9 +28,11 @@ export module IndexerConfiguration {
         }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
+        const createdValdidationIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
+            createdValdidationIndex,
             projectConfiguration,
             showWarnings
         );

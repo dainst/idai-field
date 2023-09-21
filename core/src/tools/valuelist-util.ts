@@ -11,19 +11,17 @@ import { ValuelistValue, Valuelist } from '../model';
  */
 export module ValuelistUtil {
 
-    export function getValuesNotIncludedInValuelist(resource: Resource|undefined,
-                                                    fieldName: string|undefined,
-                                                    valuelist: Valuelist): string[]|undefined {
+    export function getValuesNotIncludedInValuelist(fieldContent: any, valuelist: Valuelist): string[]|undefined {
 
-        if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
+        if (!fieldContent || !valuelist) return undefined;
 
-        const itemsNotIncludedInValueList = isArray(resource[fieldName])
-            ? resource[fieldName].filter(isNot(includedIn(Object.keys(valuelist.values))))
-            : isNot(includedIn(Object.keys(valuelist.values)))(resource[fieldName])
-                ? [resource[fieldName]]
+        const itemsNotIncludedInValuelist = isArray(fieldContent)
+            ? fieldContent.filter(isNot(includedIn(Object.keys(valuelist.values))))
+            : isNot(includedIn(Object.keys(valuelist.values)))(fieldContent)
+                ? [fieldContent]
                 : [];
 
-        return itemsNotIncludedInValueList.length > 0 ? itemsNotIncludedInValueList : undefined;
+        return itemsNotIncludedInValuelist.length > 0 ? itemsNotIncludedInValuelist : undefined;
     }
 
 

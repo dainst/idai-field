@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
+import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values, Map } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
@@ -9,7 +9,7 @@ import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
 import { adjustIsChildOf } from './adjust-is-child-of';
-import { ConstraintIndex } from './constraint-index';
+import { ConstraintIndex, InvalidDataInfo } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
 import { getSortedIds } from './get-sorted-ids';
@@ -118,6 +118,12 @@ export class IndexFacade {
         return ConstraintIndex.getWithDescendants(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
+
+    public getInvalidFields(): Map<InvalidDataInfo> {
+
+        return this.constraintIndex.invalidDataIndex;
+    }
+
     
     public addConstraintIndexDefinitionsForField(field: Field) {
 
@@ -155,7 +161,9 @@ export class IndexFacade {
             IndexFacade.createAssociatedTypeItem(this.indexItems, doc);
         }
 
-        ConstraintIndex.put(this.constraintIndex, doc, skipRemoval);
+        ConstraintIndex.put(
+            this.constraintIndex, doc, this.projectConfiguration.getCategory(doc.resource.category), skipRemoval
+        );
         FulltextIndex.put(
             this.fulltextIndex, doc,
             getFieldsToIndex(

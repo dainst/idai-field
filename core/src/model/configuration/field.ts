@@ -68,6 +68,7 @@ export module Field {
     export const CONSTRAINTINDEXED = 'constraintIndexed';
     export const GROUP = 'group';
 
+
     export module Source {
 
         export const BUILTIN = 'builtIn';
@@ -75,6 +76,7 @@ export module Field {
         export const CUSTOM = 'custom';
         export const COMMON = 'common';
     }
+
 
     export type InputType = 'input'
         |'simpleInput'
@@ -102,6 +104,7 @@ export module Field {
         |'category'
         |'identifier'
         |'composite';
+
 
     export module InputType {
 

@@ -227,7 +227,10 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
     await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await db.info()).doc_count);
 
-    await Indexer.reindex(serviceLocator.indexFacade, db, documentCache,
+    await Indexer.reindex(
+        serviceLocator.indexFacade,
+        db,
+        documentCache,
         new CategoryConverter(serviceLocator.projectConfiguration),
         false,
         (count) => progress.setIndexedDocuments(count),

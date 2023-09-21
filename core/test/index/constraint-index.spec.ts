@@ -1,24 +1,11 @@
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexItem } from '../../src/index/index-item';
 import { Field } from '../../src/model/configuration/field';
-import { Groups } from '../../src/model/configuration/group';
 import { doc as helpersDoc } from '../test-helpers';
 
 
 const doc = (id: string, category: string = 'category') =>
     helpersDoc('sd', 'identifier' + id, category, id);
-
-const categoryDefinition: any = {
-    groups: [
-        {
-            name: Groups.STEM,
-            fields: [
-                { name: 'identifier', inputType: 'identifier' },
-                { name: 'shortDescription', inputType: 'input' }
-            ]
-        }
-    ]
-};
 
 
 /**
@@ -62,8 +49,8 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.get(ci,
             'isChildOf:contain', '1')).toEqual(['2', '3']);
@@ -85,7 +72,7 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
         return docs;
     }
 
@@ -116,7 +103,7 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
         return docs;
     }
 
@@ -153,7 +140,7 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
 
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '3')).toEqual([]);
     });
@@ -165,7 +152,7 @@ describe('ConstraintIndex', () => {
             'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
         const d = doc('1');
-        ConstraintIndex.put(ci, d, categoryDefinition);
+        ConstraintIndex.put(ci, d);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual(['1']);
     });
 
@@ -176,7 +163,7 @@ describe('ConstraintIndex', () => {
             'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
         const d = doc('1');
-        ConstraintIndex.put(ci, d, categoryDefinition);
+        ConstraintIndex.put(ci, d);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'Identifier1')).toEqual(['1']);
     });
 
@@ -188,7 +175,7 @@ describe('ConstraintIndex', () => {
         }, categories);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
-        ConstraintIndex.put(ci, doc0, categoryDefinition);
+        ConstraintIndex.put(ci, doc0);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
     });
 
@@ -200,7 +187,7 @@ describe('ConstraintIndex', () => {
         }, categories);
         const d = doc('1');
         const ie = IndexItem.from(d);
-        ConstraintIndex.put(ci, d, categoryDefinition);
+        ConstraintIndex.put(ci, d);
         ConstraintIndex.clear(ci);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
     });
@@ -246,7 +233,7 @@ describe('ConstraintIndex', () => {
         doc.resource.relations['isChildOf'] = ['4'];
         doc.resource.relations['liesWithin'] = ['5'];
         doc.resource.identifier = 'identifier2';
-        ConstraintIndex.put(ci, doc, categoryDefinition);
+        ConstraintIndex.put(ci, doc);
 
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
         expect(ConstraintIndex.get(ci, 'isChildOf:contain', '2')).toEqual([]);
@@ -273,8 +260,8 @@ describe('ConstraintIndex', () => {
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.get(ci, 'conflicts:exist', 'KNOWN')).toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'conflicts:exist', 'UNKNOWN')).toEqual(['2']);
@@ -308,8 +295,8 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'KNOWN')).toEqual(['2']);
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'UNKNOWN')).toEqual(['1']);
@@ -332,7 +319,7 @@ describe('ConstraintIndex', () => {
             en: 'English',
             it: 'Italiano'
         };
-        ConstraintIndex.put(ci, document, categoryDefinition);
+        ConstraintIndex.put(ci, document);
 
         expect(ConstraintIndex.get(ci, 'shortDescription:match', 'Deutsch')).toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'shortDescription:match', 'English')).toEqual(['1']);
@@ -359,16 +346,16 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
 
         expect(ConstraintIndex.get(ci, 'isDepictedIn:links', '1')).toEqual(['2']);
 
         docs[0].resource.relations['isDepictedIn'] = ['2', '3'];
         docs[2].resource.relations['depicts'] = ['1'];
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[2]);
 
         expect(ConstraintIndex.get(ci, 'isDepictedIn:links', '1')).toEqual(['2', '3']);
     });
@@ -400,10 +387,10 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
-        ConstraintIndex.put(ci, docs[3], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+        ConstraintIndex.put(ci, docs[3]);
 
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'KNOWN')).toEqual(['3', '4']);
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'UNKNOWN')).toEqual(['1', '2']);
@@ -433,10 +420,10 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
-        ConstraintIndex.put(ci, docs[3], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+        ConstraintIndex.put(ci, docs[3]);
 
         expect(ConstraintIndex.get(ci, 'depicts:contain', ['1', '2']))
             .toEqual(['3', '4']);
@@ -465,7 +452,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({}, categories);
 
-        ConstraintIndex.put(ci, docs[0], categories[0]);
+        ConstraintIndex.put(ci, docs[0]);
 
         expect(ConstraintIndex.get(ci, 'customField1:match', 'testValue')).toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'customField2:match', 'false')).toEqual(['1']);
@@ -500,7 +487,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({}, categories);
 
-        ConstraintIndex.put(ci, docs[0], categories[0]);
+        ConstraintIndex.put(ci, docs[0]);
 
         expect(ConstraintIndex.get(ci, 'field1:contain', 'Testwert 1')).toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'field1:contain', 'Testwert 2')).toEqual(['1']);
@@ -534,8 +521,8 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({}, categories);
 
-        ConstraintIndex.put(ci, docs[0], categories[0]);
-        ConstraintIndex.put(ci, docs[1], categories[1]);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.get(ci, 'field:match', 'value')).toEqual(['1']);
         expect(ConstraintIndex.get(ci, 'field:contain', 'value')).toEqual(['2']);
@@ -561,8 +548,8 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
 
         expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '1')).toBe(2);
         expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '2')).toBe(0);
@@ -593,11 +580,11 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
-        ConstraintIndex.put(ci, docs[3], categoryDefinition);
-        ConstraintIndex.put(ci, docs[4], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+        ConstraintIndex.put(ci, docs[3]);
+        ConstraintIndex.put(ci, docs[4]);
 
         expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '1'))
            .toEqual(['2', '3', '4', '5']);
@@ -640,12 +627,12 @@ describe('ConstraintIndex', () => {
         const ie5 = IndexItem.from(docs[4]);
         const ie6 = IndexItem.from(docs[5]);
 
-        ConstraintIndex.put(ci, docs[0], categoryDefinition);
-        ConstraintIndex.put(ci, docs[1], categoryDefinition);
-        ConstraintIndex.put(ci, docs[2], categoryDefinition);
-        ConstraintIndex.put(ci, docs[3], categoryDefinition);
-        ConstraintIndex.put(ci, docs[4], categoryDefinition);
-        ConstraintIndex.put(ci, docs[5], categoryDefinition);
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+        ConstraintIndex.put(ci, docs[3]);
+        ConstraintIndex.put(ci, docs[4]);
+        ConstraintIndex.put(ci, docs[5]);
 
         expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', ['1', '4']))
             .toEqual(['2', '3', '5', '6']);
@@ -671,64 +658,10 @@ describe('ConstraintIndex', () => {
         const docs = [doc('1'), doc('2')];
         docs[0].resource.period = { value: 'a1' };
         ci = ConstraintIndex.make({}, categories);
-        ConstraintIndex.put(ci, docs[0], categories[0]);
+        ConstraintIndex.put(ci, docs[0]);
 
         const result = ConstraintIndex.get(ci, 'period.value:match', 'a1');
         expect(result[0]).toBe('1');
-    });
-
-
-    it('create invalid data index', () => {
-
-        categories = [{
-            name: 'category',
-            groups: [
-                    {
-                        fields: [
-                            {
-                                name: 'identifier',
-                                inputType: Field.InputType.IDENTIFIER
-                            },
-                            {
-                                name: 'shortDescription',
-                                inputType: Field.InputType.INPUT
-                            },
-                            {
-                                name: 'number',
-                                inputType: Field.InputType.FLOAT
-                            },
-                            {
-                                name: 'dropdown',
-                                inputType: Field.InputType.DROPDOWN,
-                                valuelist: {
-                                    values: { 'value': {} }
-                                }
-                            }
-                        ]
-                    }
-                ]
-        }];
-
-        const docs = [doc('1'), doc('2')];
-        docs[0].resource.identifier = '1';
-        docs[0].resource.number = 'text';
-        docs[0].resource.dropdown = 'invalidValue';
-        docs[0].resource.unconfiguredField = 'text';
-        docs[1].resource.identifier = '2';
-        docs[1].resource.number = 1;
-        docs[1].resource.dropdown = 'value';
-
-        ci = ConstraintIndex.make({}, categories);
-        ConstraintIndex.put(ci, docs[0], categories[0]);
-        ConstraintIndex.put(ci, docs[1], categories[0]);
-
-        expect(ci.invalidDataIndex).toEqual({
-            '1': {
-                unconfiguredFields: ['unconfiguredField'],
-                invalidFields: ['number'],
-                outlierValuesFields: ['dropdown'] 
-            }
-        });
     });
 
 
@@ -744,7 +677,7 @@ describe('ConstraintIndex', () => {
             }
         }, categories);
 
-        ConstraintIndex.put(ci, doc('1'), categoryDefinition);
+        ConstraintIndex.put(ci, doc('1'));
 
         expect(() => ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '1'))
             .toThrow();

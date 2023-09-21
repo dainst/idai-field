@@ -9,12 +9,13 @@ import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
 import { adjustIsChildOf } from './adjust-is-child-of';
-import { ConstraintIndex, InvalidDataInfo } from './constraint-index';
+import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
 import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
+import { ValidationIndex, ValidationInfo } from './validation-index';
 
 
 const CONFIGURATION = 'Configuration';
@@ -34,6 +35,7 @@ export class IndexFacade {
 
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
+                private validationIndex: ValidationIndex,
                 private projectConfiguration: ProjectConfiguration,
                 private showWarnings: boolean) {}
 
@@ -119,9 +121,9 @@ export class IndexFacade {
     }
 
 
-    public getInvalidFields(): Map<InvalidDataInfo> {
+    public getInvalidFields(): Map<ValidationInfo> {
 
-        return this.constraintIndex.invalidDataIndex;
+        return this.validationIndex;
     }
 
     
@@ -161,9 +163,7 @@ export class IndexFacade {
             IndexFacade.createAssociatedTypeItem(this.indexItems, doc);
         }
 
-        ConstraintIndex.put(
-            this.constraintIndex, doc, this.projectConfiguration.getCategory(doc.resource.category), skipRemoval
-        );
+        ConstraintIndex.put(this.constraintIndex, doc, skipRemoval);
         FulltextIndex.put(
             this.fulltextIndex, doc,
             getFieldsToIndex(
@@ -171,6 +171,9 @@ export class IndexFacade {
                 doc.resource.category
             ),
             skipRemoval
+        );
+        ValidationIndex.put(
+            this.validationIndex, doc, this.projectConfiguration.getCategory(doc.resource.category), skipRemoval
         );
 
         if (notify) ObserverUtil.notify(this.observers, doc);

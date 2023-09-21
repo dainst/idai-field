@@ -1,11 +1,9 @@
 import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
-    subtract, clone, isObject, on, is } from 'tsfun';
+    subtract, clone, isObject } from 'tsfun';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
-import { Named } from '../tools/named';
-import { ValuelistUtil } from '../tools';
 
 
 export interface IndexDefinition {
@@ -14,14 +12,6 @@ export interface IndexDefinition {
     pathArray: string[];
     type: string;
     recursivelySearchable?: boolean;
-}
-
-
-export interface InvalidDataInfo {
-
-    unconfiguredFields: string[];
-    invalidFields: string[];
-    outlierValuesFields: string[];
 }
 
 
@@ -51,8 +41,6 @@ export interface ConstraintIndex {
         }
     };
 
-    invalidDataIndex: { [resourceId: string]: InvalidDataInfo };
-
     allIndex: { [resourceId: string]: true };
 }
 
@@ -72,7 +60,6 @@ export module ConstraintIndex {
             existIndex: {},
             matchIndex: {},
             linksIndex: {},
-            invalidDataIndex: {},
             allIndex: {}
         };
 
@@ -92,15 +79,13 @@ export module ConstraintIndex {
     export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(index: ConstraintIndex, document: Document, categoryDefinition: CategoryForm,
-                        skipRemoval: boolean = false) {
+    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
         for (let key in index.indexDefinitions) {
             putFor(index, index.indexDefinitions[key], document);
         }
         addToAllIndex(index.allIndex, document);
-        addToInvalidDataIndex(index.invalidDataIndex, document, categoryDefinition);
     }
 
 
@@ -485,37 +470,6 @@ export module ConstraintIndex {
     function addToAllIndex(index: any, document: Document) {
 
         index[document.resource.id] = true;
-    }
-
-
-    function addToInvalidDataIndex(index: any, document: Document, categoryDefinition: CategoryForm) {
-
-        const entry: InvalidDataInfo = {
-            unconfiguredFields: [],
-            invalidFields: [],
-            outlierValuesFields: []
-        };
-
-        const fieldDefinitions: Array<Field> = CategoryForm.getFields(categoryDefinition);
-
-        Object.keys(document.resource)
-            .filter(fieldName => ![Resource.ID, Resource.CATEGORY, Resource.RELATIONS].includes(fieldName))
-            .forEach(fieldName => {
-                const fieldContent: any = document.resource[fieldName];
-                const fieldDefinition: Field = fieldDefinitions.find(on(Named.NAME, is(fieldName)));
-
-                if (!fieldDefinition) {
-                    entry.unconfiguredFields.push(fieldName);
-                } else if (!Field.InputType.isValidFieldData(fieldContent, fieldDefinition.inputType)) {
-                    entry.invalidFields.push(fieldName);
-                } else if (ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, fieldDefinition.valuelist)) {
-                    entry.outlierValuesFields.push(fieldName);
-                }
-            });
-
-        if (entry.unconfiguredFields.length || entry.invalidFields.length || entry.outlierValuesFields.length) {
-            index[document.resource.id] = entry;
-        }
     }
 
 

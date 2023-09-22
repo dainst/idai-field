@@ -19,11 +19,11 @@ export class DocumentConverter {
     public convert(document: Document): Document {
 
         const convertedDocument = Migrator.migrate(document);
-        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-        DocumentConverter.updateWarnings(document, category);
 
-        if (document.resource.category !== 'Configuration' && !category) {
-            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
+        if (document.resource.category !== 'Configuration') {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            if (!category) throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
+            DocumentConverter.updateWarnings(document, category); 
         }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');

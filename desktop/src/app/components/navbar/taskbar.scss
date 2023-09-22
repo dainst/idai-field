@@ -1,4 +1,4 @@
-@import 'taskbar-conflicts';
+@import 'taskbar-warnings';
 @import 'taskbar-update';
 @import 'taskbar-sync-status';
 
@@ -13,7 +13,7 @@
     z-index: 2;
   }
 
-  #conflicts {
+  #warnings {
     z-index: 1;
   }
 

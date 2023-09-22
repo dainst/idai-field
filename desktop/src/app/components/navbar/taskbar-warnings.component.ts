@@ -11,17 +11,17 @@ import { ProjectModalLauncher } from '../../services/project-modal-launcher';
 
 
 @Component({
-    selector: 'taskbar-conflicts',
-    templateUrl: './taskbar-conflicts.html'
+    selector: 'taskbar-warnings',
+    templateUrl: './taskbar-warnings.html'
 })
 /**
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class TaskbarConflictsComponent {
+export class TaskbarWarningsComponent {
 
-    public conflicts: Array<Document> = [];
+    public warnings: Array<Document> = [];
 
     private cancelClickListener: Function;
 
@@ -37,10 +37,10 @@ export class TaskbarConflictsComponent {
                 private menus: Menus,
                 private zone: NgZone) {
 
-        this.fetchConflicts();
+        this.updateWarnings();
         this.indexFacade.changesNotifications().subscribe(() => {
             this.zone.run(() => {
-                this.fetchConflicts();
+                this.updateWarnings();
             });
         });
     }
@@ -71,14 +71,14 @@ export class TaskbarConflictsComponent {
     }
 
 
-    private async fetchConflicts() {
+    private async updateWarnings() {
 
-        const result = await this.datastore.find({ constraints: { 'conflicts:exist': 'KNOWN' } });
-        this.conflicts = result.documents;
+        const result = await this.datastore.find({ constraints: { 'warnings:exist': 'KNOWN' } });
+        this.warnings = result.documents;
 
         try {
-            const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
-            if (configurationDocument._conflicts) this.conflicts = [configurationDocument].concat(this.conflicts);
+            const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
+            if (configurationDocument._conflicts) this.warnings = [configurationDocument].concat(this.warnings);
         } catch (_) {
             // No configuration document in database
         }
@@ -112,8 +112,8 @@ export class TaskbarConflictsComponent {
     private handleClick(event: any) {
 
         if (!ComponentHelpers.isInside(event.target, target =>
-               target.id === 'taskbar-conflicts-button-icon'
-                    || target.id === 'taskbar-conflicts-button-pill'
+               target.id === 'taskbar-warnings-button-icon'
+                    || target.id === 'taskbar-warnings-button-pill'
                     || target.id === 'ngb-popover-1')) {
 
             this.closePopover();

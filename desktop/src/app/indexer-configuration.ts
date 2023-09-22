@@ -24,6 +24,7 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
+            'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
             'invalidFields:exist': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'exist' },
             'unconfiguredFields:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
             'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },

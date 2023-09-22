@@ -1,0 +1,26 @@
+<div id="taskbar-warnings-container" *ngIf="warnings.length">
+    <ng-template #popContent>
+        <ul class="list-group warnings-popover-content">
+            <li *ngFor="let document of warnings" class="list-group-item"
+                [id]="'taskbar-conflict-' + document.resource.identifier"
+                (click)="openConflictResolver(document)">
+                <document-teaser *ngIf="document.resource.category !== 'Configuration'" [document]="document"></document-teaser>
+                <span *ngIf="document.resource.category === 'Configuration'"
+                      i18n="@@navbar.taskbar.warnings.projectConfiguration">
+                    Projektkonfiguration
+                </span>
+            </li>
+        </ul>
+    </ng-template>
+
+    <a id="taskbar-warnings-button"
+       [ngbPopover]="popContent" [autoClose]="false"
+       popoverTitle="Warnungen" i18n-popoverTitle="@@navbar.taskbar.warnings"
+       #popover="ngbPopover" placement="bottom" container="body" popoverClass="warnings-popover"
+       triggers="manual" (click)="togglePopover()">
+        <span id="taskbar-warnings-button-icon" class="mdi mdi-alert-outline"></span>
+        <span id="taskbar-warnings-button-pill" class="badge-pill badge-danger taskbar-badge">
+            {{warnings.length}}
+        </span>
+    </a>
+</div>

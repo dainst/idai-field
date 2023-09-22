@@ -46,7 +46,7 @@ import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsComponent } from './navbar/projects.component';
-import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
+import { TaskbarWarningsComponent } from './navbar/taskbar-warnings.component';
 import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
 import { TaskbarUpdateComponent } from './navbar/taskbar-update.component';
 import { TaskbarComponent } from './navbar/taskbar.component';
@@ -98,7 +98,7 @@ registerLocaleData(localeUk, 'uk');
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
-        TaskbarConflictsComponent,
+        TaskbarWarningsComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,

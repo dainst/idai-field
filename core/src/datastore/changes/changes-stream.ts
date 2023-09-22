@@ -3,7 +3,7 @@ import { IndexFacade } from '../../index/index-facade';
 import { Action } from '../../model/action';
 import { Document } from '../../model/document';
 import { ObserverUtil } from '../../tools/observer-util';
-import { CategoryConverter } from '../category-converter';
+import { DocumentConverter } from '../document-converter';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
@@ -23,7 +23,7 @@ export class ChangesStream {
     constructor(datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
                 private getUsername: () => string) {
 
         datastore.deletedNotifications().subscribe(document => {
@@ -35,7 +35,7 @@ export class ChangesStream {
         datastore.changesNotifications().subscribe(async document => {
 
             if (isProjectDocument(document)) {
-                ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
+                ObserverUtil.notify(this.projectDocumentObservers, this.documentConverter.convert(document));
             }
 
             const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document,this.getUsername());
@@ -64,7 +64,7 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        const convertedDocument = this.categoryConverter.convert(document);
+        const convertedDocument = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
         // explicitly assign by value in order for changes to be detected by angular

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, CategoryConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
+import { AppConfigurator, DocumentConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
     PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
@@ -81,7 +81,7 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
-            new CategoryConverter(this.projectConfiguration),
+            new DocumentConverter(this.projectConfiguration),
             false
         );
 

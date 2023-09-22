@@ -1,6 +1,6 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
-import { CategoryConverter, DatastoreErrors, DocumentCache } from '../datastore';
+import { DocumentConverter, DatastoreErrors, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
 
 
@@ -12,7 +12,7 @@ import { Document } from '../model/document';
  export module Indexer {
  
     export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
-                                  converter: CategoryConverter, keepCachedInstances: boolean,
+                                  converter: DocumentConverter, keepCachedInstances: boolean,
                                   setIndexedDocuments?: (count: number) => Promise<void>,
                                   setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
 
@@ -61,7 +61,7 @@ import { Document } from '../model/document';
     }
 
 
-    function convertDocuments(documents: Array<Document>, converter: CategoryConverter): Array<Document> {
+    function convertDocuments(documents: Array<Document>, converter: DocumentConverter): Array<Document> {
 
         return documents.map(doc => {
             try {

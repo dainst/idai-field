@@ -11,7 +11,7 @@ import { CategoryForm } from '../model/configuration/category-form';
 import { Warnings } from './warnings';
 
 
-export class CategoryConverter {
+export class DocumentConverter {
 
     constructor(private projectConfiguration: ProjectConfiguration) { }
 
@@ -20,7 +20,7 @@ export class CategoryConverter {
 
         const convertedDocument = Migrator.migrate(document);
         const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-        CategoryConverter.updateWarnings(document, category);
+        DocumentConverter.updateWarnings(document, category);
 
         if (document.resource.category !== 'Configuration' && !category) {
             throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];

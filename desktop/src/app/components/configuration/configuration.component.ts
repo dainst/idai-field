@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -132,7 +132,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private i18n: I18n) {}
@@ -782,7 +782,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            this.categoryConverter,
+            this.documentConverter,
             true
         );
     }

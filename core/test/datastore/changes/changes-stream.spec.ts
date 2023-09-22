@@ -10,7 +10,7 @@ describe('RemoteChangesStream', () => {
     let doc;
     let datastore;
     let indexFacade;
-    let categoryConverter;
+    let documentConverter;
     let documentCache;
     let getUsername;
     let fun;
@@ -39,11 +39,11 @@ describe('RemoteChangesStream', () => {
         spyOn(console, 'warn'); // suppress console.warn
 
         indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);
-        categoryConverter = jasmine.createSpyObj('MockCategoryConverter', ['convert']);
+        documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
 
         getUsername = () => 'localuser';
-        categoryConverter.convert.and.returnValue(doc);
+        documentConverter.convert.and.returnValue(doc);
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
 
@@ -58,7 +58,7 @@ describe('RemoteChangesStream', () => {
             datastore,
             indexFacade,
             documentCache,
-            categoryConverter,
+            documentConverter,
             getUsername);
     });
 
@@ -75,14 +75,14 @@ describe('RemoteChangesStream', () => {
     it('send through category converter', async done => {
 
         await fun(doc);
-        expect(categoryConverter.convert).toHaveBeenCalledWith(doc);
+        expect(documentConverter.convert).toHaveBeenCalledWith(doc);
         done();
     });
 
 
     it('detect that it is remote change', async done => {
 
-        categoryConverter.convert.and.returnValue(doc);
+        documentConverter.convert.and.returnValue(doc);
 
         await fun(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
@@ -97,7 +97,7 @@ describe('RemoteChangesStream', () => {
             date: new Date('2018-02-08T01:00:00.00Z')
         };
 
-        categoryConverter.convert.and.returnValue(doc);
+        documentConverter.convert.and.returnValue(doc);
 
         await fun(doc);
         expect(indexFacade.put).not.toHaveBeenCalled();
@@ -128,7 +128,7 @@ describe('RemoteChangesStream', () => {
         datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
-        categoryConverter.convert.and.returnValue(doc);
+        documentConverter.convert.and.returnValue(doc);
 
         await fun(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
@@ -159,7 +159,7 @@ describe('RemoteChangesStream', () => {
         datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
-        categoryConverter.convert.and.returnValue(doc);
+        documentConverter.convert.and.returnValue(doc);
 
         await fun(doc);
         expect(indexFacade.put).toHaveBeenCalled();

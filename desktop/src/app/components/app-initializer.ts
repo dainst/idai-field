@@ -1,5 +1,5 @@
 import { Map, to } from 'tsfun';
-import { CategoryConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
+import { DocumentConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
     ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
@@ -231,7 +231,7 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
         serviceLocator.indexFacade,
         db,
         documentCache,
-        new CategoryConverter(serviceLocator.projectConfiguration),
+        new DocumentConverter(serviceLocator.projectConfiguration),
         false,
         (count) => progress.setIndexedDocuments(count),
         () => progress.setPhase('indexingDocuments'),

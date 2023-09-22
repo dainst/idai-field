@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { DocumentConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { ExpressServer } from '../express-server';
 
@@ -18,7 +18,7 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: CategoryConverter,
+                                 documentConverter: DocumentConverter,
                                  settingsProvider: SettingsProvider
             ): ChangesStream {
 
@@ -27,14 +27,14 @@ const PouchDB = window.require('pouchdb-browser');
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
         },
         ExpressServer,
         {
-            provide: CategoryConverter,
+            provide: DocumentConverter,
             useFactory: function(projectConfiguration: ProjectConfiguration) {
 
-                return new CategoryConverter(projectConfiguration);
+                return new DocumentConverter(projectConfiguration);
             },
             deps: [ProjectConfiguration]
         },
@@ -58,7 +58,7 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: CategoryConverter,
+                                 documentConverter: DocumentConverter,
                                  settingsProvider: SettingsProvider
             ): Datastore {
                 return new Datastore(
@@ -68,7 +68,7 @@ const PouchDB = window.require('pouchdb-browser');
                     documentConverter,
                     () => settingsProvider.getSettings().username);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
         }
     ]
 })

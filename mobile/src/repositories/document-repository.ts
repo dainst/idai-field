@@ -1,5 +1,5 @@
 import {
-    basicIndexConfiguration, CategoryConverter, CategoryForm, ChangesStream,
+    basicIndexConfiguration, DocumentConverter, CategoryForm, ChangesStream,
     ConstraintIndex, Datastore, Document, DocumentCache,
     Forest, Indexer, IndexFacade, NewDocument,
     PouchdbDatastore, ProjectConfiguration, Query, SyncService, Tree
@@ -93,7 +93,7 @@ const buildDatastore = async (
 
     const indexFacade = buildIndexFacade(projectConfiguration);
     const documentCache = new DocumentCache();
-    const converter = new CategoryConverter(projectConfiguration);
+    const converter = new DocumentConverter(projectConfiguration);
 
     await Indexer.reindex(indexFacade, db, documentCache, converter, false);
 

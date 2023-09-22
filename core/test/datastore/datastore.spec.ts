@@ -1,4 +1,4 @@
-import { CategoryConverter } from '../../src/datastore/category-converter';
+import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
@@ -29,7 +29,7 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new CategoryConverter(projectConfiguration),
+            new DocumentConverter(projectConfiguration),
             () => 'username'
         );
     }

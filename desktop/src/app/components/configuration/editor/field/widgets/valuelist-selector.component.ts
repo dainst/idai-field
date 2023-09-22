@@ -1,11 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { clone, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Valuelist } from 'idai-field-core';
 import { AddValuelistModalComponent } from '../../../add/valuelist/add-valuelist-modal.component';
 import { Modals } from '../../../../../services/modals';
 import { MenuContext } from '../../../../../services/menu-context';
 import { ConfigurationIndex } from '../../../../../services/configuration/index/configuration-index';
-import { ApplyChangesResult } from '../../../configuration.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { ValuelistEditorModalComponent } from '../../valuelist/valuelist-editor-modal.component';
 import { SubfieldEditorData } from '../subfield-editor-modal.component';
@@ -18,7 +17,7 @@ import { SubfieldEditorData } from '../subfield-editor-modal.component';
 /**
  * @author Thomas Kleinke
  */
-export class ValuelistSelectorComponent {
+export class ValuelistSelectorComponent implements OnChanges {
 
     @Input() inputType: Field.InputType;
     @Input() configurationDocument: ConfigurationDocument;
@@ -27,7 +26,7 @@ export class ValuelistSelectorComponent {
     @Input() clonedField?: Field;
     @Input() subfieldData?: SubfieldEditorData;
     @Input() applyChanges: (configurationDocument: ConfigurationDocument, reindexConfiguration?: boolean) =>
-        Promise<ApplyChangesResult>;
+        Promise<void>;
     @Input() disabled: boolean;
 
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -35,6 +34,12 @@ export class ValuelistSelectorComponent {
   
     constructor(private modals: Modals,
                 private configurationIndex: ConfigurationIndex) {}
+
+    
+    ngOnChanges() {
+    
+        this.updateValuelist();
+    }
 
     
     public isEditValuelistButtonVisible(): boolean {
@@ -76,11 +81,7 @@ export class ValuelistSelectorComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
+            nop,
             nop
         );
 
@@ -108,10 +109,10 @@ export class ValuelistSelectorComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => {
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-                this.updateEditedValuelist(this.configurationDocument);
+            () => {
+                this.clonedConfigurationDocument.resource.valuelists
+                    = clone(this.configurationDocument.resource.valuelists);
+                this.updateValuelist();
             },
             nop
         );
@@ -120,14 +121,11 @@ export class ValuelistSelectorComponent {
     }
 
 
-    private updateEditedValuelist(newConfigurationDocument: ConfigurationDocument) {
-
-        this.clonedConfigurationDocument._rev = newConfigurationDocument._rev;
-        this.clonedConfigurationDocument.created = newConfigurationDocument.created;
-        this.clonedConfigurationDocument.modified = newConfigurationDocument.modified;
-        this.clonedConfigurationDocument.resource.valuelists = newConfigurationDocument.resource.valuelists;
+    private updateValuelist() {
 
         const valuelistId: string = this.getSelectedValuelistId();
+        if (!valuelistId) return;
+        
         let valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
         valuelist.id = valuelistId;
 

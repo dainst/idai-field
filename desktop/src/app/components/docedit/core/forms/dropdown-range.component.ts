@@ -75,4 +75,10 @@ export class DropdownRangeComponent {
             this.fieldContainer[this.field.name][OptionalRange.ENDVALUE] = value;
         }
     }
+
+
+    public hasEmptyValuelist(): boolean {
+
+        return this.valuelist && Object.keys(this.valuelist.values).length === 0;
+    }
 }

@@ -1,4 +1,3 @@
-
 const { _electron: electron } = require('playwright');
 import { isString } from 'tsfun';
 
@@ -166,7 +165,13 @@ export async function selectOption(element, optionValue) {
 }
 
 
-export async function selectOptionFromSearchableSelect(element, optionValueLabel) {
+export async function selectSearchableSelectOption(element, optionValueLabel) {
+
+    return click(await getSearchableSelectOption(element, optionValueLabel));
+}
+
+
+export async function getSearchableSelectOption(element, optionValueLabel) {
 
     if (isString(element)) element = await getLocator(element);
     element = await element.locator('.ng-arrow-wrapper');
@@ -174,7 +179,7 @@ export async function selectOptionFromSearchableSelect(element, optionValueLabel
     await scrollTo(element);
     await click(element);
     
-    return click('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
+    return getLocator('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
 }
 
 

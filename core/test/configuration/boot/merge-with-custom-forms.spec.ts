@@ -302,7 +302,7 @@ describe('mergeWithCustomForms', () => {
                 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f1'] }
+                        { name: 'group1', fields: ['f1'] }
                     ]
                 }
             }
@@ -325,7 +325,7 @@ describe('mergeWithCustomForms', () => {
 
         const customForms: Map<CustomFormDefinition> = {
             A: {
-                fields: {}
+                fields: {}
             },
             NewCategory: {
                 parent: 'A',
@@ -335,7 +335,7 @@ describe('mergeWithCustomForms', () => {
                     }
                 },
                 groups: [
-                    { name: 'group1', fields: ['c1', 'f2', 'f3'] }
+                    { name: 'group1', fields: ['c1', 'f2', 'f3'] }
                 ]
             }
         };

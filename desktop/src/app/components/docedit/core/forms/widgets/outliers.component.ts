@@ -25,8 +25,12 @@ export class OutliersComponent {
 
     public remove(outlier: string) {
 
-        if (Array.isArray(this.fieldContainer[this.fieldName])) {
+        const fieldContent: any = this.fieldContainer[this.fieldName];
+
+        if (Array.isArray(fieldContent)) {
             this.removeFromArray(outlier);
+        } else if (fieldContent.endValue === outlier) {
+            delete fieldContent.endValue;
         } else {
             delete this.fieldContainer[this.fieldName];
         }

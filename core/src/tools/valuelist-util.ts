@@ -1,8 +1,14 @@
 import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
 import { Document } from '../model/document';
+<<<<<<< HEAD
 import { Field, OptionalRange } from '../model';
+=======
+>>>>>>> master
 import { Resource } from '../model/resource';
-import { ValuelistValue, Valuelist } from '../model';
+import { Valuelist } from '../model/configuration/valuelist';
+import { OptionalRange } from '../model/optional-range';
+import { ValuelistValue } from '../model/configuration/valuelist-value';
+import { Field } from '../model/configuration/field';
 
 
 /**

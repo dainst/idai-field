@@ -27,7 +27,8 @@ import { sortStructArray } from '../../tools/sort-struct-array';
 import { withDissoc } from '../../tools/utils';
 import { linkParentAndChildInstances } from '../category-forest';
 import { Field } from '../../model/configuration/field';
-import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm, applyLanguagesToRelations } from './apply-languages-configurations';
+import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm,
+    applyLanguagesToRelations } from './apply-languages-configurations';
 import { Category } from '../../model/configuration/category';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { mergeValuelists } from './merge-valuelists';

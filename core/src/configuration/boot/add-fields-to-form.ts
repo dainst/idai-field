@@ -101,12 +101,6 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
 function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
                           parentForm?: CustomFormDefinition, extendedForm?: CustomFormDefinition) {
 
-    if (parentForm?.fields) {
-        Object.keys(parentForm.fields).forEach(fieldName => {
-            applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
-        });
-    }
-
     if (extendedForm?.fields) {
         Object.keys(extendedForm.fields).forEach(fieldName => {
             applyFieldChanges(clonedForm.fields[fieldName], extendedForm.fields[fieldName]);
@@ -116,6 +110,12 @@ function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFo
     if (form.fields) {
         Object.keys(form.fields).forEach(fieldName => {
             applyFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName]);
+        });
+    }
+
+    if (parentForm?.fields) {
+        Object.keys(parentForm.fields).forEach(fieldName => {
+            applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
         });
     }
 }

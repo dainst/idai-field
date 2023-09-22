@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter, OnInit,
-    Renderer2 } from '@angular/core';
+    Renderer2, OnChanges } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ComponentHelpers } from '../component-helpers';
 import { AngularUtility } from '../../angular/angular-utility';
@@ -12,7 +12,7 @@ import { AngularUtility } from '../../angular/angular-utility';
 /**
  * @author Thomas Kleinke
  */
-export class SearchableSelectComponent implements OnInit, OnDestroy {
+export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() selectedValue: string;
     @Input() values: string[];
@@ -43,6 +43,14 @@ export class SearchableSelectComponent implements OnInit, OnDestroy {
         if (this.initiallyOpened) {
             await AngularUtility.refresh();
             this.selectElement.open();
+        }
+    }
+
+
+    ngOnChanges() {
+
+        if (this.values?.length && !this.values.includes(this.selectedValue)) {
+            this.selectedValue = '';
         }
     }
 

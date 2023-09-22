@@ -1,7 +1,7 @@
 import { Geometry } from 'geojson';
 import { isObject, to } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, I18N } from 'idai-field-core';
-import { getLabel, getTranslation } from '../shared/languages';
+import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
 
 
@@ -117,7 +117,7 @@ export function getDocumentImages(document: Document): ResultDocument[]|undefine
     const group: FieldGroup = document.resource.groups
         .find(group => group.fields.map(to('name')).includes('isDepictedIn'));
 
-    return getTranslation(group
+    return group
         ? group.fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets
-        : undefined as undefined);
+        : undefined as undefined;
 }

@@ -3,8 +3,9 @@ import { ImageStore, ImageVariant, ImageSyncService } from 'idai-field-core';
 import { FsAdapter } from '../../src/app/services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../../src/app/services/imagestore/remote-image-store';
 import { ThumbnailGenerator } from '../../src/app/services/imagestore/thumbnail-generator';
-import { Settings, SyncTarget } from '../../src/app/services/settings/settings';
+import { Settings } from '../../src/app/services/settings/settings';
 import { SettingsProvider } from '../../src/app/services/settings/settings-provider';
+import { SyncTarget } from '../../src/app/services/settings/sync-target';
 
 import schema from 'idai-field-core/api-schemas/files-list.json';
 
@@ -17,6 +18,7 @@ const execSync = require('child_process').execSync;
  */
 
 describe('ImageSyncService', () => {
+
     let imageStore: ImageStore;
     let remoteImageStore: RemoteImageStore;
 
@@ -109,7 +111,6 @@ describe('ImageSyncService', () => {
     it('locally added images are evaluated correctly by diff function', async done => {
 
         try {
-
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
@@ -141,7 +142,6 @@ describe('ImageSyncService', () => {
     it('remotely added images are evaluated correctly by diff function', async done => {
 
         try {
-
             await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
             await remoteImageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 
@@ -170,11 +170,9 @@ describe('ImageSyncService', () => {
     });
 
 
-
     it('locally deleted images are evaluated correctly by diff function', async done => {
 
         try {
-
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
             await imageStore.remove('some_uuid', testProjectIdentifier);
@@ -206,10 +204,10 @@ describe('ImageSyncService', () => {
         }
     });
 
+
     it('remotely deleted images are evaluated correctly by diff function', async done => {
 
         try {
-
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.THUMBNAIL);
 

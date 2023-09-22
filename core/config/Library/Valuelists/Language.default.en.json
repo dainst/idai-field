@@ -87,7 +87,14 @@
   },
   "provenance-default-1": {
     "values": {
-      "Anatolien": "Anatolia"
+      "Anatolien": "Anatolia",
+      "Athen": "Athens",
+      "Ägypten": "Egypt",
+      "Britannien": "Britain",
+      "Deutschland": "Germany",
+      "Irland": "Ireland",
+      "Italien": "Italy",
+      "Palästina": "Palestine"
     }
   },
   "periods-default-1": {

@@ -90,11 +90,15 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
+        delete document.warnings;
+
         return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
+
+        documents.forEach(document => delete document.warnings);
 
         return (await this.datastore.bulkUpdate(documents, this.getUser())).map(document => {
             return this.updateIndex(document);

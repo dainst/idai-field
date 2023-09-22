@@ -333,7 +333,7 @@
       </trans-unit>
       <trans-unit id="components.documents.documentTeaser.newResource" datatype="html">
         <source>Neue Ressource</source>
-        <target state="translated">Yeni Kaynak</target>
+        <target state="translated">Yeni Girdi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-teaser.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -1737,7 +1737,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.single" datatype="html">
         <source>Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="translated">Bu kategoride bir kaynak zaten oluşturuldu. Lütfen mevcut tanımlayıcılar için önekin otomatik olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ayarlanmayacağını<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unutmayın. </target>
+        <target state="translated">Bu kategoride bir girdi zaten oluşturuldu. Lütfen mevcut tanımlayıcılar için önekin otomatik olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ayarlanmayacağını<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unutmayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.html</context>
           <context context-type="linenumber">79,77</context>
@@ -3836,7 +3836,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.exact" datatype="html">
         <source>Exakt</source>
-        <target state="translated">Kesin</target>
+        <target state="translated">Mutlak tarihleme</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -5272,7 +5272,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidOperationResource" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.</source>
-        <target state="translated">İçe aktarma sırasında bir hata oluştu: Kategori [0] kaynakları, kategori [1]'in seçilen işlemine atanamadı.</target>
+        <target state="translated">İçe aktarma sırasında bir hata oluştu: Kategori [0] girdileri, kategori [1]'in seçilen işlemine atanamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5368,7 +5368,7 @@
       </trans-unit>
       <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
         <source>Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</source>
-        <target state="translated">'[0]' içeren kaynakta hata. 'üst' ilişki bir dizi (array) olmamalıdır.</target>
+        <target state="translated">'[0]' içeren girdide hata. 'üst' ilişki bir dizi (array) olmamalıdır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5456,7 +5456,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
         <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="translated">'[0]' kategorisindeki girdiler diğer kaynakların içine yerleştirilmelidir. Girdinin tanımlayıcısı: '[1]'.</target>
+        <target state="translated">'[0]' kategorisindeki girdiler diğer girdilerin içine yerleştirilmelidir. Girdinin tanımlayıcısı: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

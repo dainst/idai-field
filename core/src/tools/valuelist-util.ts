@@ -1,9 +1,5 @@
 import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
 import { Document } from '../model/document';
-<<<<<<< HEAD
-import { Field, OptionalRange } from '../model';
-=======
->>>>>>> master
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/optional-range';

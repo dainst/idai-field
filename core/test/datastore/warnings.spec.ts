@@ -43,6 +43,7 @@ describe('Warnings', () => {
             createDocument('1'),
             createDocument('2')
         ];
+        documents[0]._conflicts = ['123'];
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
         documents[0].resource.dropdown = 'invalidValue';
@@ -55,7 +56,8 @@ describe('Warnings', () => {
         expect(Warnings.getWarnings(documents[0], categoryDefinition)).toEqual({
             unconfigured: ['unconfiguredField'],
             invalid: ['number'],
-            outlierValues: ['dropdown'] 
+            outlierValues: ['dropdown'],
+            conflicts: true
         });
         expect(Warnings.getWarnings(documents[1], categoryDefinition)).toBeUndefined();
     });

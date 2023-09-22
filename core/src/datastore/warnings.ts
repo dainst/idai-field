@@ -23,7 +23,8 @@ export module Warnings {
 
         const warnings: FieldWarnings = createWarnings(document, category);
 
-        if (warnings.unconfigured.length || warnings.invalid.length || warnings.outlierValues.length) {
+        if (warnings.unconfigured.length || warnings.invalid.length || warnings.outlierValues.length
+                || warnings.conflicts) {
             return warnings;
         } else {
             return undefined;
@@ -38,7 +39,8 @@ export module Warnings {
         const warnings: FieldWarnings = {
             unconfigured: [],
             invalid: [],
-            outlierValues: []
+            outlierValues: [],
+            conflicts: document._conflicts !== undefined
         };
 
         return Object.keys(document.resource)

@@ -25,6 +25,7 @@ export interface FieldWarnings {
     unconfigured: string[];
     invalid: string[];
     outlierValues: string[];
+    conflicts: boolean;
 }
 
 

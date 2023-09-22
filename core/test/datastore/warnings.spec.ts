@@ -1,4 +1,4 @@
-import { ValidationIndex } from '../../src/index/validation-index';
+import { Warnings } from '../../src/datastore/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 
@@ -10,19 +10,15 @@ const createDocument = (id: string, category: string = 'category') =>
 /**
  * @author Thomas Kleinke
  */
-describe('ValidationIndex', () => {
+describe('Warnings', () => {
 
-    it('create validation index', () => {
+    it('create field warnings', () => {
 
         const categoryDefinition = {
             name: 'category',
             groups: [
                 {
                     fields: [
-                        {
-                            name: 'identifier',
-                            inputType: Field.InputType.IDENTIFIER
-                        },
                         {
                             name: 'shortDescription',
                             inputType: Field.InputType.INPUT
@@ -51,20 +47,16 @@ describe('ValidationIndex', () => {
         documents[0].resource.number = 'text';
         documents[0].resource.dropdown = 'invalidValue';
         documents[0].resource.unconfiguredField = 'text';
+
         documents[1].resource.identifier = '2';
         documents[1].resource.number = 1;
         documents[1].resource.dropdown = 'value';
 
-        const validationIndex = {};
-        ValidationIndex.put(validationIndex, documents[0], categoryDefinition);
-        ValidationIndex.put(validationIndex, documents[1], categoryDefinition);
-
-        expect(validationIndex).toEqual({
-            '1': {
-                unconfiguredFields: ['unconfiguredField'],
-                invalidFields: ['number'],
-                outlierValuesFields: ['dropdown'] 
-            }
+        expect(Warnings.getWarnings(documents[0], categoryDefinition)).toEqual({
+            unconfigured: ['unconfiguredField'],
+            invalid: ['number'],
+            outlierValues: ['dropdown'] 
         });
+        expect(Warnings.getWarnings(documents[1], categoryDefinition)).toBeUndefined();
     });
 });

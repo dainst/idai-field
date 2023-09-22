@@ -15,7 +15,6 @@ import { getFieldsToIndex } from './get-fields-to-index';
 import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
-import { ValidationIndex, ValidationInfo } from './validation-index';
 
 
 const CONFIGURATION = 'Configuration';
@@ -35,7 +34,6 @@ export class IndexFacade {
 
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
-                private validationIndex: ValidationIndex,
                 private projectConfiguration: ProjectConfiguration,
                 private showWarnings: boolean) {}
 
@@ -121,12 +119,6 @@ export class IndexFacade {
     }
 
 
-    public getInvalidFields(): Map<ValidationInfo> {
-
-        return this.validationIndex;
-    }
-
-    
     public addConstraintIndexDefinitionsForField(field: Field) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
@@ -171,9 +163,6 @@ export class IndexFacade {
                 doc.resource.category
             ),
             skipRemoval
-        );
-        ValidationIndex.put(
-            this.validationIndex, doc, this.projectConfiguration.getCategory(doc.resource.category), skipRemoval
         );
 
         if (notify) ObserverUtil.notify(this.observers, doc);

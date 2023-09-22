@@ -24,15 +24,16 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
+            'invalidFields:exist': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'exist' },
+            'unconfiguredFields:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
+            'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
-        const createdValdidationIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            createdValdidationIndex,
             projectConfiguration,
             showWarnings
         );

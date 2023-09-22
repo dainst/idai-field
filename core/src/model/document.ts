@@ -1,4 +1,4 @@
-import { filter, to, isAssociative, isPrimitive, map, flow, isEmpty, keys, isUndefinedOrEmpty } from 'tsfun';
+import { filter, to, isAssociative, isPrimitive, map, flow, keys, isUndefinedOrEmpty } from 'tsfun';
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
@@ -19,6 +19,15 @@ export module NewDocument {
     export const hasId = (doc: NewDocument) => doc.resource.id !== undefined;
 }
 
+
+export interface FieldWarnings {
+
+    unconfigured: string[];
+    invalid: string[];
+    outlierValues: string[];
+}
+
+
 /**
  * Document =
  *   | FieldDocument             // Category: Inscriptions, Operations, Finds, Features, Types, TypeCatalogs, 
@@ -36,9 +45,10 @@ export interface Document extends NewDocument {
     _id: DocumentId;
     _rev?: RevisionId; // we could take out the ? later, too
     _conflicts?: Array<RevisionId>;
-    resource : Resource;
+    resource: Resource;
     modified: Array<Action>;
     created: Action;
+    warnings?: FieldWarnings;
     project?: string; // if set, it means that the document belongs to another project
 }
 

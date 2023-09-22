@@ -1,6 +1,5 @@
-import { to } from 'tsfun';
 import { Relation } from '../model/configuration/relation';
-import { Document } from '../model/document';
+import { Document, FieldWarnings } from '../model/document';
 import { Resource } from '../model/resource';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Tree } from '../tools/forest';
@@ -8,6 +7,8 @@ import { InPlace } from '../tools/in-place';
 import { Named } from '../tools/named';
 import { DatastoreErrors } from './datastore-errors';
 import { Migrator } from './migrator';
+import { CategoryForm } from '../model/configuration/category-form';
+import { Warnings } from './warnings';
 
 
 export class CategoryConverter {
@@ -18,10 +19,10 @@ export class CategoryConverter {
     public convert(document: Document): Document {
 
         const convertedDocument = Migrator.migrate(document);
+        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+        CategoryConverter.updateWarnings(document, category);
 
-        if (document.resource.category !== 'Configuration'
-                && !Tree.flatten(this.projectConfiguration.getCategories()).map(to(Named.NAME))
-                    .includes(document.resource.category)) {
+        if (document.resource.category !== 'Configuration' && !category) {
             throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
         }
 
@@ -46,5 +47,12 @@ export class CategoryConverter {
         }
 
         return convertedDocument;
+    }
+
+
+    private static updateWarnings(document: Document, category: CategoryForm) {
+
+        const warnings: FieldWarnings = Warnings.getWarnings(document, category);
+        if (warnings) document.warnings = warnings;
     }
 }

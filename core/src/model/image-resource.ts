@@ -14,7 +14,10 @@ export interface ImageResource extends Resource, ImageResourceBase {
 }
 
 
-export namespace ImageResource {
+export module ImageResource {
+
+    export const GEOREFERENCE = 'georeference';
+    export const ORIGINAL_FILENAME = 'originalFilename';
 
     export interface Relations extends Resource.Relations {
 

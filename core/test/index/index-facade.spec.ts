@@ -26,11 +26,9 @@ describe('IndexFacade', () => {
         }, Tree.flatten(projectConfiguration.getCategories()));
 
         const createdFulltextIndex = {};
-        const createdValidationIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            createdValidationIndex,
             projectConfiguration,
             true
         );

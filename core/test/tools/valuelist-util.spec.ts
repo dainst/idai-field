@@ -1,5 +1,5 @@
-import { Valuelist } from '../../src/model';
-import { ValuelistUtil } from '../../src/tools';
+import { Valuelist } from '../../src/model/configuration/valuelist';
+import { ValuelistUtil } from '../../src/tools/valuelist-util';
 
 /**
  * @author Thomas Kleinke

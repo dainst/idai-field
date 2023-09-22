@@ -67,12 +67,10 @@ import { Document } from '../model/document';
             try {
                 return converter.convert(doc);
             } catch (err) {
-                if (err.length > 0) {
-                    if (err[0] !== DatastoreErrors.UNKNOWN_CATEGORY) {
-                        console.warn('Error while converting document: ', err);
-                    }
-                    return undefined;
+                if (!err.length || err[0] !== DatastoreErrors.UNKNOWN_CATEGORY) {
+                    console.warn('Error while converting document: ', err);
                 }
+                return undefined;
             }
         }).filter(not(isUndefined));
     }

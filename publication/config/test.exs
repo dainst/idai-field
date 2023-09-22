@@ -11,7 +11,11 @@ config :field_publication, FieldPublicationWeb.Endpoint,
 config :field_publication, FieldPublication.Mailer, adapter: Swoosh.Adapters.Test
 
 config :field_publication,
-  development_mode: true
+  development_mode: true,
+  couchdb_url: "http://localhost:5985",
+  couchdb_admin_name: "couch_admin",
+  couchdb_admin_password: "couch_admin_password",
+  core_database: "field_publication_test"
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

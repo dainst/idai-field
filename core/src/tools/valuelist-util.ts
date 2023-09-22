@@ -1,8 +1,10 @@
-import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
+import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
 import { Document } from '../model/document';
-import { Field } from '../model';
 import { Resource } from '../model/resource';
-import { ValuelistValue, Valuelist } from '../model';
+import { Valuelist } from '../model/configuration/valuelist';
+import { OptionalRange } from '../model/optional-range';
+import { ValuelistValue } from '../model/configuration/valuelist-value';
+import { Field } from '../model/configuration/field';
 
 
 /**
@@ -17,13 +19,19 @@ export module ValuelistUtil {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 
-        const itemsNotIncludedInValueList = isArray(resource[fieldName])
-            ? resource[fieldName].filter(isNot(includedIn(Object.keys(valuelist.values))))
-            : isNot(includedIn(Object.keys(valuelist.values)))(resource[fieldName])
-                ? [resource[fieldName]]
-                : [];
+        const fieldContent = resource[fieldName];
 
-        return itemsNotIncludedInValueList.length > 0 ? itemsNotIncludedInValueList : undefined;
+        const valuesToCheck: string[] = isArray(fieldContent)
+            ? fieldContent
+            : fieldContent[OptionalRange.VALUE]
+                ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
+                : [fieldContent];
+
+        const itemsNotIncludedInValuelist = valuesToCheck
+            .filter(isDefined)
+            .filter(isNot(includedIn(Object.keys(valuelist.values))));
+
+        return itemsNotIncludedInValuelist.length > 0 ? itemsNotIncludedInValuelist : undefined;
     }
 
 

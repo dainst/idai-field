@@ -22,12 +22,14 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() filterOptions: Array<CategoryForm>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
+    @Input() limit: number = 50;
+    @Input() waitForUserInput: boolean = true;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     public documents: Array<FieldDocument>;
 
-    private query: Query = { limit: 50 };
+    private query: Query = {};
     private currentQueryId: string;
 
 
@@ -89,7 +91,9 @@ export class DocumentPickerComponent implements OnChanges {
     private async updateResultList() {
 
         this.documents = [];
-        if (this.isQuerySpecified()) await this.fetchDocuments();
+        if (!this.waitForUserInput || this.isQuerySpecified()) {
+            await this.fetchDocuments();
+        }
     }
 
 
@@ -98,6 +102,7 @@ export class DocumentPickerComponent implements OnChanges {
         this.loading.start('documentPicker');
         await AngularUtility.refresh();
 
+        this.query.limit = this.limit;
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
         const constraints = this.getConstraints ? await this.getConstraints() : undefined;

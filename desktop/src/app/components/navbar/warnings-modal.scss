@@ -1,0 +1,15 @@
+.warnings-modal-body {
+  height: calc(100vh - 110px);
+
+  #document-picker #document-picker-list {
+    max-height: calc(100vh - 250px);
+  }
+
+  label {
+    font-size: 13px;
+  }
+
+  #warning-filter-select {
+    margin-bottom: 1rem;
+  }
+}

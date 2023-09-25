@@ -1,13 +1,20 @@
-import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { nop } from 'tsfun';
-import { Document, Datastore, IndexFacade, ConfigurationDocument } from 'idai-field-core';
-import { ComponentHelpers } from '../component-helpers';
+import { Document, Datastore, IndexFacade, ConfigurationDocument, ProjectConfiguration, Tree } from 'idai-field-core';
 import { Routing } from '../../services/routing';
 import { Modals } from '../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { WarningsModalComponent } from './warnings-modal.component';
+
+
+export type WarningFilter = {
+    label: string;
+    constraintName: string;
+    count: number;
+};
 
 
 @Component({
@@ -21,34 +28,68 @@ import { ProjectModalLauncher } from '../../services/project-modal-launcher';
  */
 export class TaskbarWarningsComponent {
 
-    public warnings: Array<Document> = [];
-
-    private cancelClickListener: Function;
-
-    @ViewChild('popover', { static: false }) private popover: any;
+    public warningFilters: Array<WarningFilter>;
 
 
     constructor(private routingService: Routing,
-                private renderer: Renderer2,
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private projectModalLauncher: ProjectModalLauncher,
+                private projectConfiguration: ProjectConfiguration,
                 private modals: Modals,
                 private menus: Menus,
                 private zone: NgZone) {
 
-        this.updateWarnings();
+        this.updateWarningFilters();
+
         this.indexFacade.changesNotifications().subscribe(() => {
             this.zone.run(() => {
-                this.updateWarnings();
+                this.updateWarningFilters();
             });
         });
     }
 
 
-    public async openConflictResolver(document: Document) {
+    public getTotalWarningsCount = () => this.warningFilters ? this.warningFilters[0]?.count : 0;
 
-        if (this.popover.isOpen()) this.popover.close();
+
+    public async openModal() {
+
+        this.modals.initialize(this.menus.getContext());
+        const [result, componentInstance] = this.modals.make<WarningsModalComponent>(
+            WarningsModalComponent,
+            MenuContext.MODAL,
+            'lg'
+        );
+
+        componentInstance.warningFilters = this.warningFilters;
+        componentInstance.categoryFilters = Tree.flatten(this.projectConfiguration.getCategories())
+            .filter(category => !category.parentCategory);
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async updateWarningFilters() {
+
+        const hasConfigurationConflict: boolean = await this.hasConfigurationConflict();
+
+        const filters: Array<WarningFilter> = [
+            { label: 'Alle', constraintName: 'warnings:exist', count: hasConfigurationConflict ? 1 : 0 },
+            { label: 'Konflikte', constraintName: 'conflicts:exist', count: hasConfigurationConflict ? 1 : 0 },
+            { label: 'Unkonfigurierte Felder', constraintName: 'unconfiguredFields:exist', count: 0 },
+            { label: 'Ungültige Felddaten', constraintName: 'invalidFields:exist', count: 0 },
+            { label: 'Nicht in Werteliste enthaltene Werte', constraintName: 'outlierValues:exist', count: 0 }
+        ];
+
+        filters.forEach(filter => filter.count += this.indexFacade.getCount(filter.constraintName, 'KNOWN'));
+
+        this.warningFilters = filters.filter(filter => filter.count > 0);;
+    }
+
+
+    public async openConflictResolver(document: Document) {
 
         if (document.resource.category === 'Configuration') {
             await this.openConfigurationConflictsModal(document);
@@ -59,37 +100,16 @@ export class TaskbarWarningsComponent {
         }
     };
 
-
-    public togglePopover() {
-
-        if (this.popover.isOpen()) {
-            this.closePopover();
-        } else {
-            this.popover.open();
-            this.cancelClickListener = this.startClickListener();
-        }
-    }
-
-
-    private async updateWarnings() {
-
-        const result = await this.datastore.find({ constraints: { 'warnings:exist': 'KNOWN' } });
-        this.warnings = result.documents;
+    
+    private async hasConfigurationConflict(): Promise<boolean> {
 
         try {
             const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
-            if (configurationDocument._conflicts) this.warnings = [configurationDocument].concat(this.warnings);
+            return configurationDocument._conflicts !== undefined;
         } catch (_) {
             // No configuration document in database
+            return false;
         }
-    }
-
-
-    private closePopover() {
-
-        if (this.cancelClickListener) this.cancelClickListener();
-        this.cancelClickListener = undefined as any;
-        this.popover.close();
     }
 
 
@@ -106,25 +126,5 @@ export class TaskbarWarningsComponent {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
-    }
-
-
-    private handleClick(event: any) {
-
-        if (!ComponentHelpers.isInside(event.target, target =>
-               target.id === 'taskbar-warnings-button-icon'
-                    || target.id === 'taskbar-warnings-button-pill'
-                    || target.id === 'ngb-popover-1')) {
-
-            this.closePopover();
-        }
-    }
-
-
-    private startClickListener(): Function {
-
-        return this.renderer.listen('document', 'click', (event: any) => {
-            this.handleClick(event);
-        });
     }
 }

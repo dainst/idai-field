@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h5 class="modal-title"
+        i18n="@@navbar.taskbar.warnings.header">Warnungen</h5>
+    <button id="close-warnings-modal-button"
+            class="btn btn-primary btn-square" 
+            (click)="close()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+
+<div class="modal-body warnings-modal-body row bg-light">
+    <div class="col-md-6">
+        <select id="warning-filter-select" class="form-control"
+                (change)="selectWarningFilter($event.target.value)">
+            <option *ngFor="let warningFilter of warningFilters"
+                    [value]="warningFilter.constraintName"
+                    [selected]="selectedWarningFilter === warningFilter">
+                {{warningFilter.label}} ({{warningFilter.count}})
+            </option>
+        </select>
+
+       <document-picker [filterOptions]="categoryFilters"
+                        [getConstraints]="getConstraints"
+                        [limit]="20000"
+                        [waitForUserInput]="false"></document-picker>
+    </div>
+    <div class="col-md-6">
+        
+    </div>
+</div>

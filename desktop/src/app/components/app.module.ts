@@ -62,6 +62,7 @@ import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { ProjectModalLauncher } from '../services/project-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
+import { WarningsModalComponent } from './navbar/warnings-modal.component';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -99,6 +100,7 @@ registerLocaleData(localeUk, 'uk');
         NavbarComponent,
         TaskbarComponent,
         TaskbarWarningsComponent,
+        WarningsModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,

@@ -80,7 +80,8 @@ export class TaskbarWarningsComponent {
             { label: 'Konflikte', constraintName: 'conflicts:exist', count: hasConfigurationConflict ? 1 : 0 },
             { label: 'Unkonfigurierte Felder', constraintName: 'unconfiguredFields:exist', count: 0 },
             { label: 'Ungültige Felddaten', constraintName: 'invalidFields:exist', count: 0 },
-            { label: 'Nicht in Werteliste enthaltene Werte', constraintName: 'outlierValues:exist', count: 0 }
+            { label: 'Nicht in Werteliste enthaltene Werte', constraintName: 'outlierValues:exist', count: 0 },
+            { label: 'Fehlendes Bezeichner-Präfix', constraintName: 'missingIdentifierPrefix:exist', count: 0 }
         ];
 
         filters.forEach(filter => filter.count += this.indexFacade.getCount(filter.constraintName, 'KNOWN'));

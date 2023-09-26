@@ -24,7 +24,7 @@ export module Warnings {
         const warnings: FieldWarnings = createWarnings(document, category);
 
         if (warnings.unconfigured.length || warnings.invalid.length || warnings.outlierValues.length
-                || warnings.conflicts) {
+                || warnings.missingIdentifierPrefix || warnings.conflicts) {
             return warnings;
         } else {
             return undefined;
@@ -39,9 +39,11 @@ export module Warnings {
         const warnings: FieldWarnings = {
             unconfigured: [],
             invalid: [],
-            outlierValues: [],
-            conflicts: document._conflicts !== undefined
+            outlierValues: []
         };
+
+        if (document._conflicts) warnings.conflicts = true;
+        if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
 
         return Object.keys(document.resource)
             .filter(fieldName => !FIELDS_TO_SKIP.includes(fieldName))
@@ -51,6 +53,14 @@ export module Warnings {
                 updateWarningsForField(warnings, fieldName, field, fieldContent);
                 return result;
             }, warnings);
+    }
+
+
+    function isIdentifierPrefixMissing(document: Document, category: CategoryForm): boolean {
+
+        if (!document.resource.identifier) return false;
+
+        return category.identifierPrefix && !document.resource.identifier.startsWith(category.identifierPrefix);
     }
 
 

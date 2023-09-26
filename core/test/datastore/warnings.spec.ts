@@ -16,6 +16,7 @@ describe('Warnings', () => {
 
         const categoryDefinition = {
             name: 'category',
+            identifierPrefix: 'C',
             groups: [
                 {
                     fields: [
@@ -49,7 +50,7 @@ describe('Warnings', () => {
         documents[0].resource.dropdown = 'invalidValue';
         documents[0].resource.unconfiguredField = 'text';
 
-        documents[1].resource.identifier = '2';
+        documents[1].resource.identifier = 'C2';
         documents[1].resource.number = 1;
         documents[1].resource.dropdown = 'value';
 
@@ -57,7 +58,8 @@ describe('Warnings', () => {
             unconfigured: ['unconfiguredField'],
             invalid: ['number'],
             outlierValues: ['dropdown'],
-            conflicts: true
+            conflicts: true,
+            missingIdentifierPrefix: true
         });
         expect(Warnings.getWarnings(documents[1], categoryDefinition)).toBeUndefined();
     });

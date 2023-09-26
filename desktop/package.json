@@ -142,6 +142,7 @@
     "pouchdb-replication-stream": "1.2.9",
     "pouchdb-server": "4.2.0",
     "qrcode": "^1.5.3",
+    "qr-scanner": "^1.4.2",
     "reflect-metadata": "0.1.12",
     "rxjs": "~6.5.4",
     "sharp": "0.32.0",

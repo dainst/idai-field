@@ -1,5 +1,5 @@
 import { Relation } from '../model/configuration/relation';
-import { Document, FieldWarnings } from '../model/document';
+import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Tree } from '../tools/forest';

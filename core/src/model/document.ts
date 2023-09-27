@@ -3,6 +3,7 @@ import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
 import { Labels } from '../services';
+import { Warnings } from './warnings';
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -17,29 +18,6 @@ export interface NewDocument {
 export module NewDocument {
 
     export const hasId = (doc: NewDocument) => doc.resource.id !== undefined;
-}
-
-
-export interface FieldWarnings {
-
-    unconfigured: string[];
-    invalid: string[];
-    outlierValues: string[];
-    missingIdentifierPrefix?: boolean;
-    conflicts?: boolean;
-}
-
-
-export module FieldWarnings {
-
-    export function hasWarnings(warnings: FieldWarnings): boolean {
-
-        return warnings.unconfigured.length > 0
-            || warnings.invalid.length > 0
-            || warnings.outlierValues.length > 0
-            || warnings.missingIdentifierPrefix
-            || warnings.conflicts;
-    }
 }
 
 
@@ -63,7 +41,7 @@ export interface Document extends NewDocument {
     resource: Resource;
     modified: Array<Action>;
     created: Action;
-    warnings?: FieldWarnings;
+    warnings?: Warnings;
     project?: string; // if set, it means that the document belongs to another project
 }
 

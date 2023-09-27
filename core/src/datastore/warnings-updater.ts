@@ -1,11 +1,12 @@
 import { is, on } from 'tsfun';
-import { Document, FieldWarnings } from '../model/document';
+import { Document } from '../model/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
 import { Resource } from '../model/resource';
 import { ImageResource } from '../model/image-resource';
+import { Warnings } from '../model/warnings';
 
 
 /**
@@ -23,8 +24,8 @@ export module WarningsUpdater {
 
         if (document.resource.category === 'Configuration') return;
 
-        const warnings: FieldWarnings = createWarnings(document, category);
-        if (FieldWarnings.hasWarnings(warnings)) {
+        const warnings: Warnings = createWarnings(document, category);
+        if (Warnings.hasWarnings(warnings)) {
             document.warnings = warnings;
         } else {
             delete document.warnings;
@@ -32,11 +33,11 @@ export module WarningsUpdater {
     }
 
 
-    function createWarnings(document: Document, category: CategoryForm): FieldWarnings {
+    function createWarnings(document: Document, category: CategoryForm): Warnings {
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
 
-        const warnings: FieldWarnings = {
+        const warnings: Warnings = {
             unconfigured: [],
             invalid: [],
             outlierValues: []
@@ -64,7 +65,7 @@ export module WarningsUpdater {
     }
 
 
-    function updateWarningsForField(warnings: FieldWarnings, fieldName: string, field: Field, fieldContent: any) {
+    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
 
         if (!field) {
             warnings.unconfigured.push(fieldName);

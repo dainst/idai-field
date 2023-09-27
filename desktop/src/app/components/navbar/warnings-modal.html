@@ -22,9 +22,21 @@
        <document-picker [filterOptions]="categoryFilters"
                         [getConstraints]="getConstraints"
                         [limit]="20000"
-                        [waitForUserInput]="false"></document-picker>
+                        [waitForUserInput]="false"
+                        [markSelected]="true"
+                        [autoSelect]="true"
+                        (documentSelected)="selectDocument($event)"></document-picker>
     </div>
     <div class="col-md-6">
-        
+        <div *ngIf="selectedDocument">
+            <div *ngFor="let section of sections" class="card bg-light">
+                <div class="card-header h4">
+                    <span class="card-title">{{getWarningTypeLabel(section)}}</span>
+                </div>
+                <div class="card-block">
+                    <b *ngIf="section.type !== 'conflicts'" i18n="@@taskbar.warnings.field">Feld:</b>
+                    {{getFieldLabel(section)}}
+                </div>
+        </div>
     </div>
 </div>

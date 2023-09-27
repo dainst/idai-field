@@ -12,4 +12,15 @@
   #warning-filter-select {
     margin-bottom: 1rem;
   }
+
+  .card {
+    .card-title,
+    .card-block {
+      font-size: 15px !important;
+    }
+
+    b {
+        font-weight: 600;
+    }
+  }
 }

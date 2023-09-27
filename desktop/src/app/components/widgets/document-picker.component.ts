@@ -24,10 +24,13 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() showProjectOption: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
+    @Input() markSelected: boolean = false;
+    @Input() autoSelect: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     public documents: Array<FieldDocument>;
+    public selectedDocument: FieldDocument|undefined;
 
     private query: Query = {};
     private currentQueryId: string;
@@ -46,6 +49,13 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();
+    }
+
+
+    public select(document: FieldDocument) {
+
+        this.selectedDocument = document;
+        this.documentSelected.emit(document);
     }
 
 
@@ -93,6 +103,9 @@ export class DocumentPickerComponent implements OnChanges {
         this.documents = [];
         if (!this.waitForUserInput || this.isQuerySpecified()) {
             await this.fetchDocuments();
+            if (this.autoSelect) {
+                this.select(this.documents.length > 0 ? this.documents[0] : undefined);
+            }
         }
     }
 

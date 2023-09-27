@@ -30,6 +30,19 @@ export interface FieldWarnings {
 }
 
 
+export module FieldWarnings {
+
+    export function hasWarnings(warnings: FieldWarnings): boolean {
+
+        return warnings.unconfigured.length > 0
+            || warnings.invalid.length > 0
+            || warnings.outlierValues.length > 0
+            || warnings.missingIdentifierPrefix
+            || warnings.conflicts;
+    }
+}
+
+
 /**
  * Document =
  *   | FieldDocument             // Category: Inscriptions, Operations, Finds, Features, Types, TypeCatalogs, 

@@ -1,4 +1,4 @@
-import { Warnings } from '../../src/datastore/warnings';
+import { WarningsUpdater } from '../../src/datastore/warnings-updater';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 
@@ -10,9 +10,9 @@ const createDocument = (id: string, category: string = 'category') =>
 /**
  * @author Thomas Kleinke
  */
-describe('Warnings', () => {
+describe('WarningsUpdater', () => {
 
-    it('create field warnings', () => {
+    it('update warnings', () => {
 
         const categoryDefinition = {
             name: 'category',
@@ -53,14 +53,17 @@ describe('Warnings', () => {
         documents[1].resource.identifier = 'C2';
         documents[1].resource.number = 1;
         documents[1].resource.dropdown = 'value';
-
-        expect(Warnings.getWarnings(documents[0], categoryDefinition)).toEqual({
+        
+        WarningsUpdater.updateWarnings(documents[0], categoryDefinition);
+        WarningsUpdater.updateWarnings(documents[1], categoryDefinition);
+        
+        expect(documents[0].warnings).toEqual({
             unconfigured: ['unconfiguredField'],
             invalid: ['number'],
             outlierValues: ['dropdown'],
             conflicts: true,
             missingIdentifierPrefix: true
         });
-        expect(Warnings.getWarnings(documents[1], categoryDefinition)).toBeUndefined();
+        expect(documents[1].warnings).toBeUndefined();
     });
 });

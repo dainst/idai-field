@@ -8,7 +8,7 @@ import { Named } from '../tools/named';
 import { DatastoreErrors } from './datastore-errors';
 import { Migrator } from './migrator';
 import { CategoryForm } from '../model/configuration/category-form';
-import { Warnings } from './warnings';
+import { WarningsUpdater } from './warnings-updater';
 
 
 export class DocumentConverter {
@@ -23,7 +23,7 @@ export class DocumentConverter {
         if (document.resource.category !== 'Configuration') {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
             if (!category) throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
-            DocumentConverter.updateWarnings(document, category); 
+            WarningsUpdater.updateWarnings(document, category);
         }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
@@ -47,12 +47,5 @@ export class DocumentConverter {
         }
 
         return convertedDocument;
-    }
-
-
-    private static updateWarnings(document: Document, category: CategoryForm) {
-
-        const warnings: FieldWarnings = Warnings.getWarnings(document, category);
-        if (warnings) document.warnings = warnings;
     }
 }

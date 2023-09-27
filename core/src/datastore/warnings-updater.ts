@@ -11,7 +11,7 @@ import { ImageResource } from '../model/image-resource';
 /**
  * @author Thomas Kleinke
  */
-export module Warnings {
+export module WarningsUpdater {
 
     const FIELDS_TO_SKIP = [
         Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, ImageResource.GEOREFERENCE,
@@ -19,15 +19,15 @@ export module Warnings {
     ];
 
 
-    export function getWarnings(document: Document, category: CategoryForm): FieldWarnings|undefined {
+    export function updateWarnings(document: Document, category: CategoryForm) {
+
+        if (document.resource.category === 'Configuration') return;
 
         const warnings: FieldWarnings = createWarnings(document, category);
-
-        if (warnings.unconfigured.length || warnings.invalid.length || warnings.outlierValues.length
-                || warnings.missingIdentifierPrefix || warnings.conflicts) {
-            return warnings;
+        if (FieldWarnings.hasWarnings(warnings)) {
+            document.warnings = warnings;
         } else {
-            return undefined;
+            delete document.warnings;
         }
     }
 

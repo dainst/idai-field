@@ -2,6 +2,9 @@ import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
 import { DocumentConverter, DatastoreErrors, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
+import { CategoryForm } from '../model/configuration/category-form';
+import { WarningsUpdater } from '../datastore/warnings-updater';
+import { ProjectConfiguration } from '../services';
 
 
 /**
@@ -12,8 +15,8 @@ import { Document } from '../model/document';
  export module Indexer {
  
     export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
-                                  converter: DocumentConverter, keepCachedInstances: boolean,
-                                  setIndexedDocuments?: (count: number) => Promise<void>,
+                                  converter: DocumentConverter, projectConfiguration: ProjectConfiguration,
+                                  keepCachedInstances: boolean, setIndexedDocuments?: (count: number) => Promise<void>,
                                   setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
 
         indexFacade.clear();
@@ -37,6 +40,12 @@ import { Document } from '../model/document';
             documents.forEach(doc => documentCache.set(doc));
 
             if (keepCachedInstances) {
+                documentCache.getAll().forEach(document => {
+                    if (document.resource.category !== 'Configuration') {
+                        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+                        if (category) WarningsUpdater.updateWarnings(document, category);
+                    }
+                });
                 documents = documents.concat(documentCache.getAll());
             }
 

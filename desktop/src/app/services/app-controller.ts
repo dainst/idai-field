@@ -82,6 +82,7 @@ export class AppController {
             db,
             this.documentCache,
             new DocumentConverter(this.projectConfiguration),
+            this.projectConfiguration,
             false
         );
 

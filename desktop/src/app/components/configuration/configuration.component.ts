@@ -747,6 +747,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.pouchdbDatastore.getDb(),
             this.documentCache,
             this.documentConverter,
+            this.projectConfiguration,
             true
         );
     }

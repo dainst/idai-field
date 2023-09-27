@@ -38,7 +38,7 @@ export class IndexFacade {
                 private showWarnings: boolean) {}
 
 
-    public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+    public changesNotifications = (): Observable<Document|undefined> => ObserverUtil.register(this.observers);
 
 
     public find(query: Query): Array<string /*resourceId*/> {
@@ -50,7 +50,7 @@ export class IndexFacade {
 
     /**
      * @param document:
-     *   document.resource.identifier needs to be present, otherwise document gets not indexed
+     *   document.resource.identifier needs to be present, otherwise document does not get indexed
      */
     public put(document: Document) {
 
@@ -84,6 +84,8 @@ export class IndexFacade {
                 await setIndexedDocuments(count);
             }
         }
+
+        ObserverUtil.notify(this.observers, undefined);
     }
 
 

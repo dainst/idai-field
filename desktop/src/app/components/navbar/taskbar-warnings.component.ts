@@ -1,4 +1,5 @@
 import { Component, NgZone } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop } from 'tsfun';
 import { Document, Datastore, IndexFacade, ConfigurationDocument, ProjectConfiguration, Tree } from 'idai-field-core';
 import { Routing } from '../../services/routing';
@@ -38,7 +39,8 @@ export class TaskbarWarningsComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private modals: Modals,
                 private menus: Menus,
-                private zone: NgZone) {
+                private zone: NgZone,
+                private i18n: I18n) {
 
         this.updateWarningFilters();
 
@@ -76,17 +78,41 @@ export class TaskbarWarningsComponent {
         const hasConfigurationConflict: boolean = await this.hasConfigurationConflict();
 
         const filters: Array<WarningFilter> = [
-            { label: 'Alle', constraintName: 'warnings:exist', count: hasConfigurationConflict ? 1 : 0 },
-            { label: 'Konflikte', constraintName: 'conflicts:exist', count: hasConfigurationConflict ? 1 : 0 },
-            { label: 'Unkonfigurierte Felder', constraintName: 'unconfiguredFields:exist', count: 0 },
-            { label: 'Ungültige Felddaten', constraintName: 'invalidFields:exist', count: 0 },
-            { label: 'Nicht in Werteliste enthaltene Werte', constraintName: 'outlierValues:exist', count: 0 },
-            { label: 'Fehlendes Bezeichner-Präfix', constraintName: 'missingIdentifierPrefix:exist', count: 0 }
+            {
+                label: this.i18n({ id: 'taskbar.warnings.all', value: 'Alle' }),
+                constraintName: 'warnings:exist',
+                count: hasConfigurationConflict ? 1 : 0
+            },
+            {
+                label: this.i18n({ id: 'taskbar.warnings.conflicts.multiple', value: 'Konflikte' }),
+                constraintName: 'conflicts:exist',
+                count: hasConfigurationConflict ? 1 : 0
+            },
+            {
+                label: this.i18n({ id: 'taskbar.warnings.unconfigured.multiple', value: 'Unkonfigurierte Felder' }),
+                constraintName: 'unconfiguredFields:exist',
+                count: 0
+            },
+            {
+                label: this.i18n({ id: 'taskbar.warnings.invalidFieldData', value: 'Ungültige Felddaten' }),
+                constraintName: 'invalidFields:exist',
+                count: 0
+            },
+            {
+                label: this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' }),
+                constraintName: 'outlierValues:exist',
+                count: 0
+            },
+            {
+                label: this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' }),
+                constraintName: 'missingIdentifierPrefix:exist',
+                count: 0
+            }
         ];
 
         filters.forEach(filter => filter.count += this.indexFacade.getCount(filter.constraintName, 'KNOWN'));
 
-        this.warningFilters = filters.filter(filter => filter.count > 0);;
+        this.warningFilters = filters.filter(filter => filter.count > 0);
     }
 
 

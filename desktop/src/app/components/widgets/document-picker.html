@@ -1,4 +1,4 @@
-<div id="document-picker">
+<div id="document-picker" [class.has-search-results]="documents?.length > 0">
     <search-bar [filterOptions]="filterOptions"
                 [categories]="getQueryCategories()"
                 (onQueryStringChanged)="setQueryString($event)"

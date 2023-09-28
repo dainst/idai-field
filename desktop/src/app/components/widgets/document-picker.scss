@@ -4,6 +4,13 @@
     top: 1px;
   }
 
+  &.has-search-results {
+    .search-filter {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 19px;
+    }
+  }
+
   #document-picker-list {
     max-height: calc(100vh - 350px);
     width: calc(100% - 1px);

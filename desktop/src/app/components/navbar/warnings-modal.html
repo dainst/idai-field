@@ -41,7 +41,14 @@
                     </span>
                 </div>
                 <div class="card-block">
+                    <span *ngIf="section.type === 'conflicts'">
+                        <button class="btn btn-primary" (click)="openConflictResolver()">
+                            <span class="button-label"
+                                  i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
+                        </button>
+                    </span>
                 </div>
+            </div>
         </div>
     </div>
 </div>

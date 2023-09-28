@@ -4,6 +4,9 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray } from 'tsfun';
 import { CategoryForm, FieldDocument, Labels, ProjectConfiguration, WarningType } from 'idai-field-core';
 import { WarningFilter } from './taskbar-warnings.component';
+import { DoceditLauncher } from '../resources/service/docedit-launcher';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 type WarningSection = {
@@ -34,6 +37,8 @@ export class WarningsModalComponent {
 
     constructor(private activeModal: NgbActiveModal,
                 private projectConfiguration: ProjectConfiguration,
+                private doceditLauncher: DoceditLauncher,
+                private menuServices: Menus,
                 private labels: Labels,
                 private i18n: I18n) {}
 
@@ -46,7 +51,9 @@ export class WarningsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.close();
+        if (event.key === 'Escape' && this.menuServices.getContext() === MenuContext.MODAL) {
+            this.close();
+        }
     }
 
 
@@ -85,11 +92,7 @@ export class WarningsModalComponent {
     public selectWarningFilter(constraintName: string) {
 
         this.selectedWarningFilter = this.warningFilters.find(filter => filter.constraintName === constraintName);
-        this.getConstraints = () => {
-            const constraints: Map<string> = {};
-            constraints[this.selectedWarningFilter.constraintName] = 'KNOWN';
-            return constraints;
-        };
+        this.updateDocumentsList();
     }
 
 
@@ -100,9 +103,26 @@ export class WarningsModalComponent {
     }
 
 
+    public async openConflictResolver() {
+
+        await this.doceditLauncher.editDocument(this.selectedDocument, 'conflicts');
+        this.updateDocumentsList();
+    }
+
+
     public close() {
 
         this.activeModal.dismiss('cancel');
+    }
+
+
+    private updateDocumentsList() {
+
+        this.getConstraints = () => {
+            const constraints: Map<string> = {};
+            constraints[this.selectedWarningFilter.constraintName] = 'KNOWN';
+            return constraints;
+        };
     }
 
 

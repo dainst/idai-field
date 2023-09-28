@@ -9,13 +9,8 @@ import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { ProjectModalLauncher } from '../../services/project-modal-launcher';
 import { WarningsModalComponent } from './warnings-modal.component';
-
-
-export type WarningFilter = {
-    label: string;
-    constraintName: string;
-    count: number;
-};
+import { WarningFilter, WarningFilters } from './warning-filters';
+import { UtilTranslations } from '../../util/util-translations';
 
 
 @Component({
@@ -40,7 +35,7 @@ export class TaskbarWarningsComponent {
                 private modals: Modals,
                 private menus: Menus,
                 private zone: NgZone,
-                private i18n: I18n) {
+                private utilTranslations: UtilTranslations) {
 
         this.updateWarningFilters();
 
@@ -73,49 +68,6 @@ export class TaskbarWarningsComponent {
     }
 
 
-    private async updateWarningFilters() {
-
-        const hasConfigurationConflict: boolean = await this.hasConfigurationConflict();
-
-        const filters: Array<WarningFilter> = [
-            {
-                label: this.i18n({ id: 'taskbar.warnings.all', value: 'Alle' }),
-                constraintName: 'warnings:exist',
-                count: hasConfigurationConflict ? 1 : 0
-            },
-            {
-                label: this.i18n({ id: 'taskbar.warnings.conflicts.multiple', value: 'Konflikte' }),
-                constraintName: 'conflicts:exist',
-                count: hasConfigurationConflict ? 1 : 0
-            },
-            {
-                label: this.i18n({ id: 'taskbar.warnings.unconfigured.multiple', value: 'Unkonfigurierte Felder' }),
-                constraintName: 'unconfiguredFields:exist',
-                count: 0
-            },
-            {
-                label: this.i18n({ id: 'taskbar.warnings.invalidFieldData', value: 'Ungültige Felddaten' }),
-                constraintName: 'invalidFields:exist',
-                count: 0
-            },
-            {
-                label: this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' }),
-                constraintName: 'outlierValues:exist',
-                count: 0
-            },
-            {
-                label: this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' }),
-                constraintName: 'missingIdentifierPrefix:exist',
-                count: 0
-            }
-        ];
-
-        filters.forEach(filter => filter.count += this.indexFacade.getCount(filter.constraintName, 'KNOWN'));
-
-        this.warningFilters = filters.filter(filter => filter.count > 0);
-    }
-
-
     public async openConflictResolver(document: Document) {
 
         if (document.resource.category === 'Configuration') {
@@ -126,18 +78,6 @@ export class TaskbarWarningsComponent {
             await this.routingService.jumpToConflictResolver(document);
         }
     };
-
-    
-    private async hasConfigurationConflict(): Promise<boolean> {
-
-        try {
-            const configurationDocument: Document = await this.datastore.get('configuration', { conflicts: true });
-            return configurationDocument._conflicts !== undefined;
-        } catch (_) {
-            // No configuration document in database
-            return false;
-        }
-    }
 
 
     private async openConfigurationConflictsModal(configurationDocument: Document) {
@@ -153,5 +93,13 @@ export class TaskbarWarningsComponent {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async updateWarningFilters() {
+
+        this.warningFilters = await WarningFilters.getWarningFilters(
+            this.indexFacade, this.datastore, this.utilTranslations
+        );
     }
 }

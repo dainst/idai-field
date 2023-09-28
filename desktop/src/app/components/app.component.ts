@@ -123,6 +123,29 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'false', this.i18n({ id: 'boolean.no', value: 'Nein' })
         );
+        this.utilTranslations.addTranslation(
+            'warnings.all', this.i18n({ id: 'util.warnings.all', value: 'Alle' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.conflicts',
+            this.i18n({ id: 'util.warnings.conflicts', value: 'Konflikte' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unconfigured',
+            this.i18n({ id: 'util.warnings.unconfigured', value: 'Unkonfigurierte Felder' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidFieldData',
+            this.i18n({ id: 'util.warnings.invalidFieldData', value: 'Ungültige Felddaten' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.outlierValues',
+            this.i18n({ id: 'util.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingIdentifierPrefix',
+            this.i18n({ id: 'util.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' })
+        );
     }
 
 

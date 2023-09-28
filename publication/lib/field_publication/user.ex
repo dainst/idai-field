@@ -123,7 +123,6 @@ defmodule FieldPublication.User do
               user
               |> FieldPublication.User.InputSchema.changeset()
               |> Ecto.Changeset.add_error(:name, "name not found.")
-              |> IO.inspect()
             }
         end
     end

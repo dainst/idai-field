@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map } from 'tsfun';
-import { CategoryForm, FieldDocument, Labels, ProjectConfiguration } from 'idai-field-core';
+import { Map, isArray } from 'tsfun';
+import { CategoryForm, FieldDocument, Labels, ProjectConfiguration, WarningType } from 'idai-field-core';
 import { WarningFilter } from './taskbar-warnings.component';
-
-
-type WarningType = 'conflicts'|'unconfigured'|'invalid'|'missingIdentifierPrefix'|'outlierValues';
 
 
 type WarningSection = {
@@ -70,13 +67,20 @@ export class WarningsModalComponent {
             case 'unconfigured':
                 return this.i18n({ id: 'taskbar.warnings.unconfigured.single', value: 'Unkonfiguriertes Feld' });
             case 'invalid':
-                return this.i18n({ id: 'taskbar.warnings.invalidFieldData', value: 'Ungültige Felddaten' });
+                return this.i18n({ id: 'taskbar.warnings.invalidFieldData', value: 'Ungültige Daten im Feld' });
             case 'outlierValues':
-                return this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' });
+                return this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Ungültiger Wert im Feld' });
             case 'missingIdentifierPrefix':
                 return this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' });
         }
     }
+
+
+    public isFieldLabelVisible(section: WarningSection): boolean {
+
+        return ['unconfigured', 'invalid', 'outlierValues'].includes(section.type);
+    }
+
 
     public selectWarningFilter(constraintName: string) {
 
@@ -106,24 +110,16 @@ export class WarningsModalComponent {
 
         if (!document.warnings) return;
 
-        let sections: Array<WarningSection> = [];
-
-        if (document.warnings.conflicts) {
-            sections.push({ type: 'conflicts' });
-        }
-        if (document.warnings.missingIdentifierPrefix) {
-            sections.push({ type: 'missingIdentifierPrefix', fieldName: 'identifier' });
-        }
-        ['unconfigured', 'invalid', 'outlierValues'].forEach(warningType => {
-            if (document.warnings[warningType]) {
-                sections = sections.concat(
+        this.sections = Object.keys(document.warnings).reduce((sections, warningType) => {
+            if (isArray(document.warnings[warningType])) {
+                return sections.concat(
                     document.warnings[warningType].map(fieldName => {
                         return { type: warningType, fieldName };
                     })
                 );
+            } else {
+                return sections.concat([{ type: warningType }]);
             }
-        });
-
-        this.sections = sections;
+        }, []);
     }
 }

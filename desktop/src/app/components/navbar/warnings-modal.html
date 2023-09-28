@@ -31,11 +31,13 @@
         <div *ngIf="selectedDocument">
             <div *ngFor="let section of sections" class="card bg-light">
                 <div class="card-header h4">
-                    <span class="card-title">{{getWarningTypeLabel(section)}}</span>
+                    <span class="card-title">
+                        {{getWarningTypeLabel(section)}}
+                        <span *ngIf="isFieldLabelVisible(section)"
+                              class="field-label">{{getFieldLabel(section)}}</span>
+                    </span>
                 </div>
                 <div class="card-block">
-                    <b *ngIf="section.type !== 'conflicts'" i18n="@@taskbar.warnings.field">Feld:</b>
-                    {{getFieldLabel(section)}}
                 </div>
         </div>
     </div>

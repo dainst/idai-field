@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray } from 'tsfun';
-import { CategoryForm, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
-    WarningType } from 'idai-field-core';
-import { DoceditLauncher } from '../../resources/service/docedit-launcher';
+import { Map, isArray, nop } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, Document, IndexFacade, Labels,
+    ProjectConfiguration, WarningType } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
 import { UtilTranslations } from '../../../util/util-translations';
+import { ProjectModalLauncher } from '../../../services/project-modal-launcher';
+import { Modals } from '../../../services/modals';
+import { ConfigurationConflictsModalComponent } from '../../configuration/conflicts/configuration-conflicts-modal.component';
+import { DoceditComponent } from '../../docedit/docedit.component';
 
 
 type WarningSection = {
@@ -39,10 +42,11 @@ export class WarningsModalComponent {
 
     constructor(private activeModal: NgbActiveModal,
                 private projectConfiguration: ProjectConfiguration,
-                private doceditLauncher: DoceditLauncher,
-                private menuServices: Menus,
+                private projectModalLauncher: ProjectModalLauncher,
+                private menus: Menus,
                 private indexFacade: IndexFacade,
                 private datastore: Datastore,
+                private modals: Modals,
                 private utilTranslations: UtilTranslations,
                 private labels: Labels,
                 private i18n: I18n) {}
@@ -56,7 +60,7 @@ export class WarningsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuServices.getContext() === MenuContext.MODAL) {
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
             this.close();
         }
     }
@@ -110,9 +114,16 @@ export class WarningsModalComponent {
 
     public async openConflictResolver() {
 
-        await this.doceditLauncher.editDocument(this.selectedDocument, 'conflicts');
+        if (this.selectedDocument.resource.category === 'Configuration') {
+            await this.openConfigurationConflictsModal(this.selectedDocument);
+        } else if (this.selectedDocument.resource.category === 'Project') {
+            await this.projectModalLauncher.editProject('conflicts');
+        } else {
+            await this.openResourceConflictsModal(this.selectedDocument)
+        }
+
         await this.update();
-    }
+    };
 
 
     public close() {
@@ -155,5 +166,35 @@ export class WarningsModalComponent {
                 return sections.concat([{ type: warningType }]);
             }
         }, []);
+    }
+
+
+    private async openConfigurationConflictsModal(configurationDocument: Document) {
+
+        const [result, componentInstance] = this.modals.make<ConfigurationConflictsModalComponent>(
+            ConfigurationConflictsModalComponent,
+            MenuContext.DOCEDIT,
+            'lg'
+        );
+
+        componentInstance.configurationDocument = configurationDocument as ConfigurationDocument;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async openResourceConflictsModal(document: FieldDocument) {
+
+        const [result, componentInstance] = this.modals.make<DoceditComponent>(
+            DoceditComponent,
+            MenuContext.DOCEDIT,
+            'lg'
+        );
+
+        componentInstance.setDocument(document);
+        componentInstance.activeGroup = 'conflicts';
+
+        await this.modals.awaitResult(result, nop, nop);
     }
 }

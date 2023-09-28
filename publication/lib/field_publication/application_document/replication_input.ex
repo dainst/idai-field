@@ -1,5 +1,5 @@
-defmodule FieldPublication.Replication.Parameters do
-  alias FieldPublication.Schema.Translation
+defmodule FieldPublication.Schemas.ReplicationInput do
+  alias FieldPublication.Schemas.Translation
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -10,20 +10,20 @@ defmodule FieldPublication.Replication.Parameters do
     field(:source_project_name, :string)
     field(:source_user, :string)
     field(:source_password, :string, redact: true)
-    field(:project_key, :string)
+    field(:project_name, :string)
     field(:delete_existing_publication, :boolean, default: false)
     embeds_many(:comments, Translation)
   end
 
   @doc false
-  def changeset(parameters, attrs \\ %{}) do
-    parameters
+  def changeset(input_struct, attrs \\ %{}) do
+    input_struct
     |> cast(attrs, [
       :source_url,
       :source_project_name,
       :source_user,
       :source_password,
-      :project_key,
+      :project_name,
       :delete_existing_publication
     ])
     |> validate_required([
@@ -31,7 +31,7 @@ defmodule FieldPublication.Replication.Parameters do
       :source_project_name,
       :source_user,
       :source_password,
-      :project_key
+      :project_name
     ])
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid http(s) URL.")
     |> cast_embed(:comments)

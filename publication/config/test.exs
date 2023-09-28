@@ -15,7 +15,8 @@ config :field_publication,
   couchdb_url: "http://localhost:5985",
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",
-  core_database: "field_publication_test"
+  core_database: "field_publication_test",
+  file_store_directory_root: "data/file_store_test"
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

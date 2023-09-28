@@ -3,13 +3,13 @@ defmodule FieldPublication.FileService do
 
   require Logger
 
-  def get_publication_path(project_name, publication_date) do
-    "#{@root_path}/#{project_name}/#{publication_date}"
+  def get_publication_path(project_name, draft_date) do
+    "#{@root_path}/#{project_name}/#{draft_date}"
   end
 
-  def initialize_publication(project_name, publication_date) do
-    get_publication_path(project_name, publication_date)
-    |> File.mkdir_p!()
+  def initialize_publication(project_name, draft_date) do
+    get_publication_path(project_name, draft_date)
+    |> File.mkdir_p()
   end
 
   def delete_publication(project_name, publication_date) do

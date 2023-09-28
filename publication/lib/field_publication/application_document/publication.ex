@@ -157,7 +157,34 @@ defmodule FieldPublication.Schemas.Publication do
     end
   end
 
-  def put(%__MODULE__{} = publication, params \\ %{}) do
+  @doc """
+  Creates a new publication or updates an existing one.
+
+  __Parameters__
+  - `publication`, a Publication schema struct
+  - `params`, a map containing updated values that have not been evaluated yet.
+
+  If `publication` has a valid _rev only the publication document gets updated (used for setting updating the publication date, comments etc. after creation).
+  Without a _rev it is assumed this is a new publication and the application will first try to create a corresponding database.
+  """
+  def put(publication, params \\ %{})
+
+  def put(%__MODULE__{_rev: rev} = publication, params) when not is_nil(rev) do
+    changeset = changeset(publication, params)
+    with {:ok, publication} <- apply_action(changeset, :create),
+      doc_id <- get_doc_id(publication),
+      {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
+        %{"rev" => rev} = Jason.decode!(body)
+        {:ok, Map.put(publication, :_rev, rev)}
+    else
+      {:error, %Ecto.Changeset{}} = error ->
+        error
+      {:ok, %{status: 409}} ->
+        {:error, Schemas.add_duplicate_doc_error(changeset)}
+    end
+  end
+
+  def put(%__MODULE__{} = publication, params) do
     changeset = changeset(publication, params)
 
     with {:ok, publication} <- apply_action(changeset, :create),
@@ -175,6 +202,14 @@ defmodule FieldPublication.Schemas.Publication do
 
       {:ok, %{status: 409}} ->
         {:error, Schemas.add_duplicate_doc_error(changeset)}
+
+
+      {:ok, %{status: 412}} ->
+        {:error, add_error(
+        changeset,
+        :database_exists,
+        "A publication database '#{get_field(changeset, :database)}' already exists."
+        )}
 
       {:error, posix} when is_atom(posix) ->
         {:error,

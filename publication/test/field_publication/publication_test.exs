@@ -38,6 +38,24 @@ defmodule FieldPublication.PublicationTest do
       {:ok, %Publication{}} = Publication.put(%Publication{}, @publication_params_fixture)
     end
 
+    test "can update publication" do
+      {:ok, %Publication{_rev: rev, publication_date: nil, draft_date: draft_date} = initial} =
+        Publication.put(%Publication{}, @publication_params_fixture)
+
+      {:ok, %Publication{_rev: rev_updated, publication_date: publication_date}} =
+        Publication.put(initial, %{publication_date: Date.add(draft_date, 7)})
+
+      assert rev != rev_updated
+      assert ^publication_date = Date.add(draft_date, 7)
+    end
+
+    test "trying to update/override a publication without rev results in error" do
+      {:ok, %Publication{}} = Publication.put(%Publication{}, @publication_params_fixture)
+      {:error, changeset} = Publication.put(%Publication{}, @publication_params_fixture)
+
+      assert %{errors: [database_exists: {_msg, _}]} = changeset
+    end
+
     test "can delete publication" do
       {:ok, publication} = Publication.put(%Publication{}, @publication_params_fixture)
       {:ok, :deleted} = Publication.delete(publication)

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
-import { FieldDocument, CategoryForm, Query, Datastore, Constraint } from 'idai-field-core';
+import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
 import { Loading } from './loading';
 import { AngularUtility } from '../../angular/angular-utility';
 import { Messages } from '../messages/messages';
@@ -22,15 +22,16 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() filterOptions: Array<CategoryForm>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
+    @Input() showConfigurationOption: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
 
-    @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
+    @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
 
-    public documents: Array<FieldDocument>;
-    public selectedDocument: FieldDocument|undefined;
+    public documents: Array<Document>;
+    public selectedDocument: Document|undefined;
 
     private query: Query = {};
     private currentQueryId: string;
@@ -52,7 +53,7 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    public select(document: FieldDocument) {
+    public select(document: Document) {
 
         this.selectedDocument = document;
         this.documentSelected.emit(document);
@@ -122,7 +123,8 @@ export class DocumentPickerComponent implements OnChanges {
         const query = tsfun.update('constraints', constraints, this.query);
         try {
             const documents = await getDocumentSuggestions(this.datastore, query);
-            if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents as Array<FieldDocument>);
+            if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents as Array<Document>);
+            console.log('documents:', this.documents);
 
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -142,7 +144,7 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private getProjectOption(): FieldDocument {
+    private getProjectOption(): Document {
 
         return {
             resource: {
@@ -154,23 +156,55 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private isProjectOptionVisible(): boolean {
+    private getConfigurationOption(): ConfigurationDocument {
 
-        return this.showProjectOption
-            && ((this.query.q !== undefined && this.query.q.length > 0
-                && this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
-                    .toLowerCase().startsWith(this.query.q.toLowerCase()))
-                || (this.query.categories !== undefined && this.query.categories.includes('Project')));
+        return {
+            resource: {
+                id: 'configuration',
+                identifier: this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' }),
+                category: 'Configuration'
+            }
+        } as any;
     }
 
 
-    private filterDocuments(documents: Array<FieldDocument>): Array<FieldDocument> {
+    private isProjectOptionVisible(): boolean {
 
-        return this.isProjectOptionVisible()
-            ? [this.getProjectOption()].concat(
-                documents
-                    .filter(document => document.resource.category !== 'Project')
-            )
-            : documents;
+        return this.showProjectOption
+            && this.isCategoryOptionVisible(
+                'Project',
+                this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
+            );
+    }
+
+
+    private isConfigurationOptionVisible(): boolean {
+
+        return this.showConfigurationOption
+            && this.isCategoryOptionVisible(
+                'Configuration',
+                this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' })
+            );
+    }
+
+
+    private isCategoryOptionVisible(categoryName: string, categoryLabel: string): boolean {
+
+        return (!this.query.q?.length || categoryLabel.toLowerCase().startsWith(this.query.q.toLowerCase()))
+            && (!this.query.categories || this.query.categories.includes(categoryName));
+    }
+
+
+    private filterDocuments(documents: Array<Document>): Array<Document> {
+
+        const result: Array<Document> = [];
+        if (this.isConfigurationOptionVisible()) result.push(this.getConfigurationOption());
+        if (this.isProjectOptionVisible()) result.push(this.getProjectOption());
+
+        return result.concat(
+            documents.filter(document => {
+                return !this.showProjectOption || !['Project'].includes(document.resource.category);
+            })
+        );
     }
 }

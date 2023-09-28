@@ -14,11 +14,8 @@ export type WarningFilter = {
  */
 export module WarningFilters {
 
-    export async function getWarningFilters(indexFacade: IndexFacade,
-                                            datastore: Datastore,
-                                            translations: UtilTranslations): Promise<Array<WarningFilter>> {
-
-        const configurationConflict: boolean = await hasConfigurationConflict(datastore);
+    export async function getWarningFilters(indexFacade: IndexFacade, translations: UtilTranslations,
+                                            configurationConflict: boolean): Promise<Array<WarningFilter>> {
 
         const filters: Array<WarningFilter> = [
             {
@@ -59,7 +56,7 @@ export module WarningFilters {
     }
 
 
-    async function hasConfigurationConflict(datastore: Datastore): Promise<boolean> {
+    export async function hasConfigurationConflict(datastore: Datastore): Promise<boolean> {
 
         try {
             const configurationDocument: Document = await datastore.get('configuration', { conflicts: true });

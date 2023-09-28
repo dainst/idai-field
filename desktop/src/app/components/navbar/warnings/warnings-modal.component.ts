@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, Document, IndexFacade, Labels,
-    ProjectConfiguration, WarningType } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
@@ -12,6 +12,8 @@ import { ProjectModalLauncher } from '../../../services/project-modal-launcher';
 import { Modals } from '../../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../../configuration/conflicts/configuration-conflicts-modal.component';
 import { DoceditComponent } from '../../docedit/docedit.component';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
+import { Settings } from '../../../services/settings/settings';
 
 
 type WarningSection = {
@@ -38,6 +40,7 @@ export class WarningsModalComponent {
     public selectedWarningFilter: WarningFilter;
     public selectedDocument: FieldDocument|undefined;
     public sections: Array<WarningSection> = [];
+    public hasConfigurationConflict: boolean;
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -48,6 +51,8 @@ export class WarningsModalComponent {
                 private datastore: Datastore,
                 private modals: Modals,
                 private utilTranslations: UtilTranslations,
+                private settingsProvider: SettingsProvider,
+                private configReader: ConfigReader,
                 private labels: Labels,
                 private i18n: I18n) {}
 
@@ -115,7 +120,7 @@ export class WarningsModalComponent {
     public async openConflictResolver() {
 
         if (this.selectedDocument.resource.category === 'Configuration') {
-            await this.openConfigurationConflictsModal(this.selectedDocument);
+            await this.openConfigurationConflictsModal();
         } else if (this.selectedDocument.resource.category === 'Project') {
             await this.projectModalLauncher.editProject('conflicts');
         } else {
@@ -132,10 +137,19 @@ export class WarningsModalComponent {
     }
 
 
+    public isConfigurationOptionVisible(): boolean {
+
+        return this.hasConfigurationConflict
+            && (this.selectedWarningFilter.constraintName === 'warnings:exist'
+                || this.selectedWarningFilter.constraintName === 'conflicts:exist');
+    }
+
+
     private async update() {
 
+        this.hasConfigurationConflict = await WarningFilters.hasConfigurationConflict(this.datastore);
         this.warningFilters = await WarningFilters.getWarningFilters(
-            this.indexFacade, this.datastore, this.utilTranslations
+            this.indexFacade, this.utilTranslations, this.hasConfigurationConflict
         );
         this.updateDocumentsList();
     }
@@ -153,23 +167,27 @@ export class WarningsModalComponent {
 
     private updateSections(document: FieldDocument) {
 
-        if (!document.warnings) return;
-
-        this.sections = Object.keys(document.warnings).reduce((sections, warningType) => {
-            if (isArray(document.warnings[warningType])) {
-                return sections.concat(
-                    document.warnings[warningType].map(fieldName => {
-                        return { type: warningType, fieldName };
-                    })
-                );
-            } else {
-                return sections.concat([{ type: warningType }]);
-            }
-        }, []);
+        if (document.resource.category === 'Configuration') {
+            this.sections = [{ type: 'conflicts'} ];
+        } else if (!document?.warnings) {
+            this.sections = [];
+        } else {
+            this.sections = Object.keys(document.warnings).reduce((sections, warningType) => {
+                if (isArray(document.warnings[warningType])) {
+                    return sections.concat(
+                        document.warnings[warningType].map(fieldName => {
+                            return { type: warningType, fieldName };
+                        })
+                    );
+                } else {
+                    return sections.concat([{ type: warningType }]);
+                }
+            }, []);
+        }
     }
 
 
-    private async openConfigurationConflictsModal(configurationDocument: Document) {
+    private async openConfigurationConflictsModal() {
 
         const [result, componentInstance] = this.modals.make<ConfigurationConflictsModalComponent>(
             ConfigurationConflictsModalComponent,
@@ -177,7 +195,14 @@ export class WarningsModalComponent {
             'lg'
         );
 
-        componentInstance.configurationDocument = configurationDocument as ConfigurationDocument;
+        const settings: Settings = this.settingsProvider.getSettings();
+
+        componentInstance.configurationDocument = await ConfigurationDocument.getConfigurationDocument(
+            id => this.datastore.get(id),
+            this.configReader,
+            settings.selectedProject,
+            settings.username
+        );
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);

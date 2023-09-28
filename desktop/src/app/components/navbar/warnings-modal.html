@@ -28,8 +28,10 @@
                         (documentSelected)="selectDocument($event)"></document-picker>
     </div>
     <div id="document-warnings-container" class="col-md-6">
-        <div *ngIf="selectedDocument" id="document-warnings">
+        <div id="document-warnings-header">
             <document-teaser [document]="selectedDocument"></document-teaser>
+        </div>
+        <div *ngIf="selectedDocument" id="document-warnings-content">
             <div *ngFor="let section of sections" class="card">
                 <div class="card-header h4">
                     <span class="card-title">

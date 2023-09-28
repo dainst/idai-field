@@ -35,7 +35,7 @@ defmodule FieldPublication.ProjectTest do
     end
 
     test "trying to update/override a project without rev results in error" do
-      {:ok, %Project{_rev: rev}} = Project.put(%Project{}, @project_fixture)
+      {:ok, %Project{}} = Project.put(%Project{}, @project_fixture)
       {:error, changeset} = Project.put(%Project{}, @project_fixture)
 
       assert %{errors: [duplicate_document: {_msg, _}]} = changeset

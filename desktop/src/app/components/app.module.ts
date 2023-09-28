@@ -46,7 +46,7 @@ import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsComponent } from './navbar/projects.component';
-import { TaskbarWarningsComponent } from './navbar/taskbar-warnings.component';
+import { TaskbarWarningsComponent } from './navbar/warnings/taskbar-warnings.component';
 import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
 import { TaskbarUpdateComponent } from './navbar/taskbar-update.component';
 import { TaskbarComponent } from './navbar/taskbar.component';
@@ -62,7 +62,7 @@ import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { ProjectModalLauncher } from '../services/project-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
-import { WarningsModalComponent } from './navbar/warnings-modal.component';
+import { WarningsModalComponent } from './navbar/warnings/warnings-modal.component';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

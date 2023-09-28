@@ -1,16 +1,15 @@
 import { Component, NgZone } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { nop } from 'tsfun';
 import { Document, Datastore, IndexFacade, ConfigurationDocument, ProjectConfiguration, Tree } from 'idai-field-core';
-import { Routing } from '../../services/routing';
-import { Modals } from '../../services/modals';
-import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
-import { MenuContext } from '../../services/menu-context';
-import { Menus } from '../../services/menus';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { Routing } from '../../../services/routing';
+import { Modals } from '../../../services/modals';
+import { ConfigurationConflictsModalComponent } from '../../configuration/conflicts/configuration-conflicts-modal.component';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus';
+import { ProjectModalLauncher } from '../../../services/project-modal-launcher';
 import { WarningsModalComponent } from './warnings-modal.component';
 import { WarningFilter, WarningFilters } from './warning-filters';
-import { UtilTranslations } from '../../util/util-translations';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 @Component({

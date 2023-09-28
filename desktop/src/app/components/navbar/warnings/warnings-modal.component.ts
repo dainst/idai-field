@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray } from 'tsfun';
-import { CategoryForm, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration, WarningType } from 'idai-field-core';
-import { DoceditLauncher } from '../resources/service/docedit-launcher';
-import { Menus } from '../../services/menus';
-import { MenuContext } from '../../services/menu-context';
+import { CategoryForm, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
+    WarningType } from 'idai-field-core';
+import { DoceditLauncher } from '../../resources/service/docedit-launcher';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
-import { UtilTranslations } from '../../util/util-translations';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 type WarningSection = {

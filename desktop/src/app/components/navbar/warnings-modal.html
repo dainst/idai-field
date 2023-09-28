@@ -27,9 +27,10 @@
                         [autoSelect]="true"
                         (documentSelected)="selectDocument($event)"></document-picker>
     </div>
-    <div class="col-md-6">
-        <div *ngIf="selectedDocument">
-            <div *ngFor="let section of sections" class="card bg-light">
+    <div id="document-warnings-container" class="col-md-6">
+        <div *ngIf="selectedDocument" id="document-warnings">
+            <document-teaser [document]="selectedDocument"></document-teaser>
+            <div *ngFor="let section of sections" class="card">
                 <div class="card-header h4">
                     <span class="card-title">
                         {{getWarningTypeLabel(section)}}

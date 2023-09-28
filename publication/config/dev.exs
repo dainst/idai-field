@@ -20,6 +20,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   ]
 
 config :field_publication,
+  dev_routes: true,
   couchdb_url: "http://localhost:5985",
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",
@@ -59,9 +60,6 @@ config :field_publication, FieldPublicationWeb.Endpoint,
       ~r"lib/field_publication_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
-
-# Enable dev routes for dashboard and mailbox
-config :field_publication, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

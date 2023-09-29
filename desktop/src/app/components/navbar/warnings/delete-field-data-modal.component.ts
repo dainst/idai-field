@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, WarningType } from 'idai-field-core';
 
 
 @Component({
@@ -18,7 +18,9 @@ export class DeleteFieldDataModalComponent {
     public fieldName: string;
     public fieldLabel: string|undefined;
     public category: CategoryForm;
+    public warningType: WarningType;
 
+    public deleteAll: boolean;
     public confirmFieldName: string;
 
 
@@ -45,14 +47,33 @@ export class DeleteFieldDataModalComponent {
 
         if (!this.checkConfirmFieldName()) return;
         
-        await this.deleteFieldData();
+        if (this.deleteAll) {
+            await this.deleteMultiple();
+        } else {
+            await this.deleteSingle();
+        }
         this.activeModal.close();
     }
 
 
-    private async deleteFieldData() {
+    private async deleteSingle() {
 
         delete this.document.resource[this.fieldName];
         await this.datastore.update(this.document);
+    }
+
+
+    private async deleteMultiple() {
+
+        const documents = (await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { [this.warningType + ':contain']: this.fieldName }
+        })).documents;
+
+        documents.forEach(document => {
+            delete document.resource[this.fieldName];
+        });
+
+        await this.datastore.bulkUpdate(documents);
     }
 }

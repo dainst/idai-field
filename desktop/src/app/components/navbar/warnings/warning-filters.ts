@@ -30,12 +30,12 @@ export module WarningFilters {
             },
             {
                 label: translations.getTranslation('warnings.unconfigured'),
-                constraintName: 'unconfiguredFields:exist',
+                constraintName: 'unconfigured:exist',
                 count: 0
             },
             {
                 label: translations.getTranslation('warnings.invalidFieldData'),
-                constraintName: 'invalidFields:exist',
+                constraintName: 'invalid:exist',
                 count: 0
             },
             {

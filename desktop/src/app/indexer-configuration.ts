@@ -25,8 +25,9 @@ export module IndexerConfiguration {
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
             'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
-            'invalidFields:exist': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'exist' },
-            'unconfiguredFields:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
+            'invalid:exist': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'exist' },
+            'unconfigured:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
+            'unconfigured:contain': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'contain' },
             'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },
             'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.

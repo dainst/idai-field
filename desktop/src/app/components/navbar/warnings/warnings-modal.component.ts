@@ -145,6 +145,7 @@ export class WarningsModalComponent {
         componentInstance.fieldName = section.fieldName;
         componentInstance.fieldLabel = this.labels.getFieldLabel(category, section.fieldName);
         componentInstance.category = category;
+        componentInstance.warningType = section.type;
 
         await this.modals.awaitResult(
             result,

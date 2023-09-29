@@ -10,6 +10,18 @@
     <span *ngIf="!fieldLabel" i18n="configuration.deleteField.body.name">
         Möchten Sie die im Feld <code>{{fieldName}}</code> eingetragenen Daten wirklich löschen?
     </span>
+
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@navbar.taskbar.deleteFieldData.all">Bei allen Ressourcen dieser Kategorie löschen</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="deleteAll" (change)="deleteAll = !deleteAll">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
     
     <span i18n="@@navbar.taskbar.deleteFieldData.confirmInfo">
         Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.

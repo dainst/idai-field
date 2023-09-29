@@ -1,27 +1,7 @@
 defmodule FieldPublication.Replication.MetadataGeneration do
-  alias FieldPublication.{
-    CouchService,
-    Schema.Publication,
-    Replication.Parameters
-  }
+  alias FieldPublication.CouchService
 
-  def create_publication(%Parameters{
-        source_url: source_url,
-        source_project_name: source_project_name,
-        project_key: project_key,
-        comments: comments
-      }) do
-    draft_date = Date.utc_today()
-
-    %Publication{
-      source_url: source_url,
-      source_project_name: source_project_name,
-      configuration_doc: "configuration_#{project_key}_#{draft_date}",
-      database: "publication_#{project_key}_#{draft_date}",
-      draft_date: draft_date,
-      comments: comments
-    }
-  end
+  alias FieldPublication.Schemas.Publication
 
   def reconstruct_project_konfiguraton(%Publication{
         database: database_name,

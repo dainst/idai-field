@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, WarningType } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, Labels, WarningType } from 'idai-field-core';
 
 
 @Component({
@@ -25,7 +25,10 @@ export class DeleteFieldDataModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private labels: Labels) {}
+
+    public getCategoryLabel = () => this.labels.get(this.category);
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
@@ -36,16 +39,17 @@ export class DeleteFieldDataModalComponent {
     }
 
 
-    public checkConfirmFieldName(): boolean {
+    public isDeletionAllowed(): boolean {
 
-        return this.fieldName === this.confirmFieldName
+        return !this.deleteAll
+            || this.fieldName === this.confirmFieldName
             || (this.fieldLabel && this.fieldLabel === this.confirmFieldName);
     }
 
 
     public async performDeletion() {
 
-        if (!this.checkConfirmFieldName()) return;
+        if (!this.isDeletionAllowed()) return;
         
         if (this.deleteAll) {
             await this.deleteMultiple();

@@ -23,20 +23,28 @@
         </div>
     </div>
     
-    <span i18n="@@navbar.taskbar.deleteFieldData.confirmInfo">
-        Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.
-    </span>
-    <div>
-        <input type="text"
-               class="form-control"
-               [(ngModel)]="confirmFieldName"
-               (keydown)="$event.key !== 'Enter' || performDeletion()" />
+    <div *ngIf="deleteAll">
+        <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.deleteFieldData.all.info">
+            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten im
+            Feld <code>{{fieldName}}</code> gelöscht.
+        </div>
+        <span i18n="@@navbar.taskbar.deleteFieldData.all.confirmInfo">
+            Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.
+        </span>
+        <div>
+            <input type="text"
+                class="form-control"
+                [(ngModel)]="confirmFieldName"
+                (keydown)="$event.key !== 'Enter' || performDeletion()" />
+        </div>
     </div>
 </div>
 
 <div class="modal-footer">
     <div class="btn btn-primary"
-         [ngClass]="{ 'disabled': !checkConfirmFieldName() }"
+         [ngClass]="{ 'disabled': !isDeletionAllowed() }"
          (click)="performDeletion()">
         <span i18n="@@buttons.ok">OK</span>
     </div>

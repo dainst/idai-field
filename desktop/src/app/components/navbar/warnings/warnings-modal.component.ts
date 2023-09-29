@@ -106,7 +106,8 @@ export class WarningsModalComponent {
 
     public selectWarningFilter(constraintName: string) {
 
-        this.selectedWarningFilter = this.warningFilters.find(filter => filter.constraintName === constraintName);
+        this.selectedWarningFilter = this.warningFilters.find(filter => filter.constraintName === constraintName)
+            ?? this.warningFilters[0];
         this.updateDocumentsList();
     }
 
@@ -175,7 +176,7 @@ export class WarningsModalComponent {
         this.warningFilters = await WarningFilters.getWarningFilters(
             this.indexFacade, this.utilTranslations, this.hasConfigurationConflict
         );
-        this.updateDocumentsList();
+        this.selectWarningFilter(this.selectedWarningFilter.constraintName);
     }
 
 

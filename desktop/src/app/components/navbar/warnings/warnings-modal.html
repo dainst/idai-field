@@ -48,6 +48,12 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'unconfigured'">
+                        <button class="btn btn-primary" (click)="openDeleteFieldDataModal(section)">
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>

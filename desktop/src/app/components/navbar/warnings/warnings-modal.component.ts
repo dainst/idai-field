@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, Document, IndexFacade, Labels,
+import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -14,6 +14,7 @@ import { ConfigurationConflictsModalComponent } from '../../configuration/confli
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Settings } from '../../../services/settings/settings';
+import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
 
 
 type WarningSection = {
@@ -65,7 +66,7 @@ export class WarningsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.WARNINGS) {
             this.close();
         }
     }
@@ -129,6 +130,28 @@ export class WarningsModalComponent {
 
         await this.update();
     };
+
+
+    public async openDeleteFieldDataModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<DeleteFieldDataModalComponent>(
+            DeleteFieldDataModalComponent,
+            MenuContext.MODAL
+        );
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.selectedDocument.resource.category);
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.fieldName = section.fieldName;
+        componentInstance.fieldLabel = this.labels.getFieldLabel(category, section.fieldName);
+        componentInstance.category = category;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+    }
 
 
     public close() {

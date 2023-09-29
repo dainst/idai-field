@@ -63,6 +63,7 @@ import { ConfigurationIndex } from '../services/configuration/index/configuratio
 import { ProjectModalLauncher } from '../services/project-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 import { WarningsModalComponent } from './navbar/warnings/warnings-modal.component';
+import { DeleteFieldDataModalComponent } from './navbar/warnings/delete-field-data-modal.component';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -101,6 +102,7 @@ registerLocaleData(localeUk, 'uk');
         TaskbarComponent,
         TaskbarWarningsComponent,
         WarningsModalComponent,
+        DeleteFieldDataModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,

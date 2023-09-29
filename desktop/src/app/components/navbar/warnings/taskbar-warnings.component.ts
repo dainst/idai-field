@@ -52,7 +52,7 @@ export class TaskbarWarningsComponent {
         this.modals.initialize(this.menus.getContext());
         const [result, componentInstance] = this.modals.make<WarningsModalComponent>(
             WarningsModalComponent,
-            MenuContext.MODAL,
+            MenuContext.WARNINGS,
             'lg'
         );
 

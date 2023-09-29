@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.deleteFieldData.header">Felddaten löschen?</h5>
+</div>
+
+<div class="modal-body">
+    <span *ngIf="fieldLabel" i18n="configuration.deleteField.body.label">
+        Möchten Sie die im Feld <b>{{fieldLabel}}</b> (<code>{{fieldName}}</code>) eingetragenen
+        Daten wirklich löschen?
+    </span>
+    <span *ngIf="!fieldLabel" i18n="configuration.deleteField.body.name">
+        Möchten Sie die im Feld <code>{{fieldName}}</code> eingetragenen Daten wirklich löschen?
+    </span>
+    
+    <span i18n="@@navbar.taskbar.deleteFieldData.confirmInfo">
+        Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.
+    </span>
+    <div>
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="confirmFieldName"
+               (keydown)="$event.key !== 'Enter' || performDeletion()" />
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="btn btn-primary"
+         [ngClass]="{ 'disabled': !checkConfirmFieldName() }"
+         (click)="performDeletion()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

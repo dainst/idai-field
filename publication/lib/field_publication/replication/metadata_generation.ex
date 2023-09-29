@@ -25,17 +25,6 @@ defmodule FieldPublication.Replication.MetadataGeneration do
         Jason.decode!(full_configuration)
       end)
 
-    CouchService.get_document(configuration_doc_name)
-    |> case do
-      {:ok, %{status: 404}} ->
-        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
-
-      {:ok, %{status: 200, body: body}} ->
-        %{"_rev" => rev} = Jason.decode!(body)
-        CouchService.delete_document(configuration_doc_name, rev)
-        CouchService.put_document(%{id: configuration_doc_name, data: full_config})
-    end
-
-    {:ok, :configuration_reconstructed}
+    CouchService.put_document(configuration_doc_name, full_config)
   end
 end

@@ -145,6 +145,10 @@ const categoryLabelStyle: CSSProperties = {
 };
 
 
+// https://stackoverflow.com/a/17485300
+const urlDecode = (param: string) => decodeURIComponent( param.replace(/\+/g, '%20') );
+
+
 const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
     searchParams
         .toString()
@@ -154,5 +158,6 @@ const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>
         .filter(param => !param.startsWith('parent')) // TODO we probably also need to add 'r='
         .filter(param => !param.startsWith('q'))
         .map(param => param.split('='))
+        .map(([k, v]) => [k, urlDecode(v)])
         // .filter is a hack for as of yet not further investigated problem
         .filter(([k, v]) => !(k === '' && v === undefined)) as undefined as [string, string][];

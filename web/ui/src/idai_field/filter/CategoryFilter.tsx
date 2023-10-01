@@ -54,7 +54,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
     return <div onMouseLeave={ () => onMouseLeave && onMouseLeave([]) }>
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
-                renderFilterValue(filter.name, bucket, searchParams, filters, category, projectId, projectView,
+                RenderFilterValue(filter.name, bucket, searchParams, filters, category, projectId, projectView,
                     !category ? onMouseEnter : identity)) }
 
         { projectId && projectView && inProjectPopover && category
@@ -82,17 +82,20 @@ const buildParams = (params: URLSearchParams, key: string, bucket: FilterBucketT
 };
 
 
-const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
+const RenderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: URLSearchParams,
         filters: [string, string][], category: string|undefined, projectId?: string, projectView?: ProjectView,
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     const key_ = key === 'resource.category.name' ? 'category' : key;
+    const [onHoover, setOnHoover] = useState<boolean>(false);
 
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
                 as={ Link }
-                style={ filterValueStyle(level, bucket.item.value.name, category ) }
+                style={ filterValueStyle(level, bucket.item.value.name, category, onHoover ) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
+                onMouseEnter={ () => setOnHoover(true) }
+                onMouseLeave={ () => setOnHoover(false) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
                             + (isFilterValueInParams(params, key_, bucket.item.value.name)
                                 ? deleteFilterFromParams(params, key_, bucket.item.value.name)
@@ -110,7 +113,7 @@ const renderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                 }
             </Row>
         </Dropdown.Item>        { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
-            renderFilterValue(key_, b, params, filters, category, projectId, projectView,
+            RenderFilterValue(key_, b, params, filters, category, projectId, projectView,
                 onMouseEnter, level + 1))
         }
     </React.Fragment>;
@@ -125,7 +128,7 @@ const getCategoryAndSubcategoryNames = (bucket: FilterBucketTreeNode): string[] 
 };
 
 
-const filterValueStyle = (level: number, name: string, category: string|undefined): CSSProperties => {
+const filterValueStyle = (level: number, name: string, category: string|undefined, onHoover: boolean): CSSProperties => {
     const style = { paddingLeft: `${level * 1.2}em` } as CSSProperties;
     // By default if you click a category, it gets color #eceeef
     // If you reload the page or come from outside to a route
@@ -133,7 +136,7 @@ const filterValueStyle = (level: number, name: string, category: string|undefine
     // Since it is not clear to me, by which magic it gets the color when you click the category,
     // I set it here manually if the category is selected. (ET)
     const isSelected = category === name;
-    style.backgroundColor = isSelected ? '#eceeef' : 'white';
+    style.backgroundColor = isSelected || onHoover ? '#eceeef' : 'white';
     // -
     return style;
 };

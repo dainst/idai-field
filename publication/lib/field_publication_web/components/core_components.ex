@@ -662,4 +662,24 @@ defmodule FieldPublicationWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  @doc """
+  Component for displaying progress bar
+  """
+  attr :state, :map, required: true
+
+  def progress_bar(assigns) do
+    ~H"""
+    <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
+      <div
+        class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
+        style={"width: #{@state.percentage}%"}
+      >
+      </div>
+      <div class="w-full absolute text-center">
+        <%= @state.counter %> / <%= @state.overall %>
+      </div>
+    </div>
+    """
+  end
 end

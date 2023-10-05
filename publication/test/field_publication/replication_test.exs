@@ -1,13 +1,9 @@
 defmodule FieldPublication.ReplicationTest do
   use ExUnit.Case
-  alias Phoenix.PubSub
 
   alias FieldPublication.FileService
   alias FieldPublication.CouchService
-
   alias FieldPublication.Replication
-
-
 
   alias FieldPublication.Schemas.{
     Project,
@@ -82,9 +78,9 @@ defmodule FieldPublication.ReplicationTest do
                  configuration_doc: configuration_doc,
                  database: publication_database,
                  comments: [
-                  %FieldPublication.Schemas.Translation{text: "ein test", language: "de"},
-                  %FieldPublication.Schemas.Translation{text: "a test", language: "en"}
-                ],
+                   %FieldPublication.Schemas.Translation{text: "ein test", language: "de"},
+                   %FieldPublication.Schemas.Translation{text: "a test", language: "en"}
+                 ],
                  replication_logs: [
                    %FieldPublication.Schemas.LogEntry{
                      severity: :info,
@@ -141,6 +137,8 @@ defmodule FieldPublication.ReplicationTest do
              ] = Publication.list(%Project{name: @project_name})
 
       assert {:ok, %{status: 200}} = CouchService.get_document(configuration_doc)
+
+      # The "project" document should always be present in the database for any replicated project.
       assert {:ok, %{status: 200}} = CouchService.get_document("project", publication_database)
     end
   end

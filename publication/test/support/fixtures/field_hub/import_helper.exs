@@ -1,26 +1,11 @@
 project_identifier = "test"
-user_name = "fieldhub_integration_test"
+user_name = "fieldhub_integration_test_admin"
 user_password = "pw"
 
-encoded =
-  "#{user_name}:#{user_password}"
-  |> Base.encode64()
-
-
-Finch.build(
-  :put,
-  "http://localhost:5986/#{project_identifier}",
-  [
-    {"Content-Type", "application/json"},
-    {"Authorization", "Basic #{encoded}"}
-  ]
-)
-|> Finch.request(FieldPublication.Finch)
-
-fixtures_directory = "../server/test/fixtures/complete_project"
+[jsonl_path] = System.argv()
 
 docs =
-  "#{fixtures_directory}/project_export.jsonl"
+  jsonl_path
   |> File.read!()
   |> String.split("\n")
   |> Enum.reject(fn value ->
@@ -56,4 +41,3 @@ Finch.build(
   payload
 )
 |> Finch.request(FieldPublication.Finch)
-|> IO.inspect()

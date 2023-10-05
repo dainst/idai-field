@@ -4,7 +4,7 @@ services:
   couchdb:
     image: couchdb:3.2.1
     environment:
-      - COUCHDB_USER=fieldhub_integration_test
+      - COUCHDB_USER=fieldhub_integration_test_admin
       - COUCHDB_PASSWORD=pw
     volumes:
       - ./db_data:/opt/couchdb/data

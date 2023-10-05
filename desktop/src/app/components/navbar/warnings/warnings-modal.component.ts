@@ -15,6 +15,7 @@ import { DoceditComponent } from '../../docedit/docedit.component';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Settings } from '../../../services/settings/settings';
 import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 type WarningSection = {
@@ -129,6 +130,7 @@ export class WarningsModalComponent {
             await this.openResourceConflictsModal(this.selectedDocument)
         }
 
+        AngularUtility.blurActiveElement();
         await this.update();
     };
 
@@ -153,6 +155,8 @@ export class WarningsModalComponent {
             () => this.update(),
             nop
         );
+
+        AngularUtility.blurActiveElement();
     }
 
 

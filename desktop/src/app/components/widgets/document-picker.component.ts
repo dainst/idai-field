@@ -105,7 +105,10 @@ export class DocumentPickerComponent implements OnChanges {
         if (!this.waitForUserInput || this.isQuerySpecified()) {
             await this.fetchDocuments();
             if (this.autoSelect) {
-                this.select(this.documents.length > 0 ? this.documents[0] : undefined);
+                const selectedDocument: Document = this.selectedDocument
+                    ? this.documents.find(document => document.resource.id === this.selectedDocument.resource.id)
+                    : undefined;
+                this.select(selectedDocument ?? (this.documents.length > 0 ? this.documents[0] : undefined));
             }
         }
     }

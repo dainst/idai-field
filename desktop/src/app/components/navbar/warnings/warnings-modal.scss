@@ -59,6 +59,15 @@
         .field-label {
             font-weight: 600;
         }
+
+        button {
+          height: 34px;
+          padding: 0 14px 0 10px;
+
+          .button-label {
+            font-size: 14px;
+          }
+        }
       }
     }
   }

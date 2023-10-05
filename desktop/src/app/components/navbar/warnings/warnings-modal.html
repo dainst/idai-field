@@ -44,18 +44,21 @@
                 <div class="card-block">
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary" (click)="openConflictResolver()">
+                            <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
                     <span *ngIf="section.type === 'unconfigured'">
-                        <button class="btn btn-primary" (click)="openDeleteFieldDataModal(section)">
+                        <button class="btn btn-danger" (click)="openDeleteFieldDataModal(section)">
+                            <span class="mdi mdi-delete"></span>
                             <span class="button-label"
                                   i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>
                     </span>
                     <span *ngIf="section.type === 'invalid'">
-                        <button class="btn btn-primary" (click)="openDeleteFieldDataModal(section)">
+                        <button class="btn btn-danger" (click)="openDeleteFieldDataModal(section)">
+                            <span class="mdi mdi-delete"></span>
                             <span class="button-label"
                                   i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>

@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Schema.Project
+  alias FieldPublication.Schemas.Project
   alias FieldPublication.User
 
   @impl true
@@ -20,13 +20,12 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:_rev]} type="hidden" />
-        <.input field={@form[:doc_type]} type="hidden" />
 
         <%= case @action do %>
           <% :edit -> %>
-            <h1><%= @project.id %></h1>
+            <h1><%= @project.name %></h1>
           <% :new -> %>
-            <.input field={@form[:id]} type="text" label="Project key" />
+            <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
         <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
@@ -95,7 +94,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :edit, project_params) do
-    case Project.update_project(socket.assigns.project, project_params) do
+    case Project.put(socket.assigns.project, project_params) do
       {:ok, updated_project} ->
         notify_parent({:saved, updated_project})
 
@@ -112,7 +111,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :new, project_params) do
-    case Project.create_project(project_params) do
+    case Project.put(%Project{}, project_params) do
       {:ok, project} ->
         notify_parent({:saved, project})
 

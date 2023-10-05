@@ -1,11 +1,11 @@
 <.header>
-  Project '<%= @project.id %>' <%= if @project.hidden, do: "(currently hidden)" %>
+  Project '<%= @project.name %>' <%= if @project.hidden, do: "(currently hidden)" %>
   <:actions>
-    <.link navigate={~p"/edit/#{@project}/publication/new"}>
+    <.link navigate={~p"/edit/#{@project.name}/publication/new"}>
       <.button>Draft new publication</.button>
     </.link>
     <%= if FieldPublication.User.is_admin?(@current_user) do %>
-      <.link navigate={~p"/admin/projects/#{@project}/show/edit"} phx-click={JS.push_focus()}>
+      <.link navigate={~p"/admin/projects/#{@project.name}/show/edit"} phx-click={JS.push_focus()}>
         <.button>Edit project</.button>
       </.link>
     <% end %>
@@ -13,95 +13,10 @@
 </.header>
 
 <.list>
-  <:item title="Project key"><%= @project.id %></:item>
+  <:item title="Project key"><%= @project.name %></:item>
   <:item title="Editors">
     <% combined = Enum.join(@project.editors, ", ") %>
     <%= if combined != "", do: combined, else: "-" %>
-  </:item>
-  <:item title="Publications">
-    <table class="border-spacing-2 border-spacing-x-4 border-separate">
-      <thead>
-        <tr>
-          <th>State</th>
-          <th>Draft date</th>
-          <th>Publication date</th>
-          <th>Data source</th>
-          <th>Comment</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <%= for publication <- @project.publications do %>
-        <tr class="pt-9">
-          <%= case publication.publication_date do %>
-            <% nil -> %>
-              <td class="bg-yellow-300 rounded border-spacing-y-2 p-2">Draft</td>
-            <% date when date > @today -> %>
-              <td class="bg-green-300 rounded border-spacing-y-2 p-2">Scheduled</td>
-            <% _date -> %>
-              <td class="bg-green-600 rounded border-spacing-y-2 p-2">Published</td>
-          <% end %>
-          <td><%= publication.draft_date %></td>
-          <td>
-            <%= if publication.publication_date do %>
-              <%= publication.publication_date %>
-            <% else %>
-              -
-            <% end %>
-          </td>
-          <td>
-            <a
-              target="blank"
-              class="font-semibold text-zinc-900 hover:text-zinc-700 flex"
-              href={publication.source_url}
-            >
-              <div class="w-6">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-24 h-24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                  />
-                </svg>
-              </div>
-              <div>
-                Project '<%= publication.source_project_name %>'
-              </div>
-            </a>
-          </td>
-          <td>
-            <%= List.first(publication.comments, %{text: "No comment provided."})
-            |> then(fn %{text: text} -> text end) %>
-          </td>
-          <td>
-            <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-              <.link navigate={
-                ~p"/edit/#{@project}/publication/#{Date.to_string(publication.draft_date)}/edit"
-              }>
-                Edit
-              </.link>
-            </span>
-            <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-              <.link
-                phx-click={
-                  JS.push("delete_publication", value: %{date: publication.draft_date})
-                  |> hide("##{publication.draft_date}")
-                }
-                data-confirm="Are you sure?"
-              >
-                Delete
-              </.link>
-            </span>
-          </td>
-        </tr>
-      <% end %>
-    </table>
   </:item>
 </.list>
 
@@ -115,25 +30,23 @@
 >
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
-    id={@project.id}
+    id={@project.name}
     title={@page_title}
     action={@live_action}
     project={@project}
-    patch={~p"/edit/#{@project}"}
+    patch={~p"/edit/#{@project.name}"}
   />
 </.modal>
 
 <.modal
-  :if={@live_action in [:edit_publication]}
-  id="publication-modal"
+  :if={@live_action in [:draft_publication]}
+  id="draft-modal"
   show
-  on_cancel={JS.patch(~p"/edit/#{@project}")}
+  on_cancel={JS.patch(~p"/edit/#{@project.name}")}
 >
   <.live_component
-    module={FieldPublicationWeb.PublicationLive.FormComponent}
-    id={Date.to_string(@publication_to_edit.draft_date)}
-    title={@page_title}
-    publication={@publication_to_edit}
-    patch={~p"/edit/#{@project}"}
+    module={FieldPublicationWeb.PublicationLive.ReplicationFormComponent}
+    id={@project.name}
+    patch={~p"/edit/#{@project.name}"}
   />
 </.modal>

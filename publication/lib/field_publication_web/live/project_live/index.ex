@@ -1,14 +1,14 @@
 defmodule FieldPublicationWeb.ProjectLive.Index do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Schema.Project
+  alias FieldPublication.Schemas.Project
 
   @impl true
   def mount(_params, _session, socket) do
     projects =
-      Project.list_projects()
+      Project.list()
       |> Enum.filter(fn %Project{} = project ->
-        Project.has_project_access?(project.id, socket.assigns.current_user)
+        Project.has_project_access?(project.name, socket.assigns.current_user)
       end)
 
     {
@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
   defp apply_action(socket, :edit, %{"project_id" => id}) do
     socket
     |> assign(:page_title, "Edit Project")
-    |> assign(:project, Project.get_project!(id))
+    |> assign(:project, Project.get!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -44,15 +44,15 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
 
   @impl true
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, _project}}, socket) do
-    {:noreply, assign(socket, :projects, Project.list_projects())}
+    {:noreply, assign(socket, :projects, Project.list())}
   end
 
   @impl true
   def handle_event("delete", %{"project_id" => id}, socket) do
-    project = Project.get_project!(id)
-    {:ok, _} = Project.delete_project(project)
+    project = Project.get!(id)
+    {:ok, _} = Project.delete(project)
 
-    {:noreply, assign(socket, :projects, Project.list_projects())}
+    {:noreply, assign(socket, :projects, Project.list())}
   end
 
   def publication_stats(publications) do

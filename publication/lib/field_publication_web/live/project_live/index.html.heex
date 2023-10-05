@@ -22,35 +22,17 @@
     <tbody class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700">
       <%= for project <- @projects do %>
         <tr class="group hover:bg-zinc-50">
-          <td><%= project.id %></td>
+          <td><%= project.name %></td>
           <td><%= project.hidden %></td>
-          <td>
-            <% publication_stats = publication_stats(project.publications) %>
-            <%= if publication_stats[:draft_count] > 0 do %>
-              <span class="bg-yellow-300 rounded border-spacing-y-2 p-2">
-                <%= publication_stats[:draft_count] %> Draft
-              </span>
-            <% end %>
-            <%= if publication_stats[:publication_scheduled_count] > 0 do %>
-              <span class="bg-green-300 rounded border-spacing-y-2 p-2 ml-1">
-                <%= publication_stats[:publication_scheduled_count] %> Scheduled
-              </span>
-            <% end %>
-            <%= if publication_stats[:published_count] > 0 do %>
-              <span class="bg-green-600 rounded border-spacing-y-2 p-2 ml-1">
-                <%= publication_stats[:published_count] %> Published
-              </span>
-            <% end %>
-          </td>
           <td>
             <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
               <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                <.link navigate={~p"/edit/#{project}"}>Show</.link>
+                <.link navigate={~p"/edit/#{project.name}"}>Show</.link>
               </span>
               <%= if FieldPublication.User.is_admin?(@current_user) do %>
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
                   <.link
-                    navigate={~p"/admin/projects/#{project}/edit"}
+                    navigate={~p"/admin/projects/#{project.name}/edit"}
                     phx-click={JS.push_focus()}
                   >
                     Edit
@@ -59,8 +41,8 @@
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
                   <.link
                     phx-click={
-                      JS.push("delete", value: %{project_id: project.id})
-                      |> hide("##{project.id}")
+                      JS.push("delete", value: %{project_id: project.name})
+                      |> hide("##{project.name}")
                     }
                     data-confirm="Are you sure?"
                   >
@@ -87,7 +69,7 @@
   <%= if FieldPublication.User.is_admin?(@current_user) do %>
     <.live_component
       module={FieldPublicationWeb.ProjectLive.FormComponent}
-      id={@project.id || :new}
+      id={@project.name || :new}
       title={@page_title}
       action={@live_action}
       project={@project}

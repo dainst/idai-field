@@ -20,8 +20,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
 config :field_publication,
   core_database: "field_publication",
   file_variants_to_replicate: ["original_image"],
-  user_tokens_cache_name: :user_tokens,
-  replication_log_cache_name: :replication_logs
+  user_tokens_cache_name: :user_tokens
 
 # Configures the mailer
 #

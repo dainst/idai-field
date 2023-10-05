@@ -24,17 +24,15 @@
         <% end %>
       <% end %>
     </:item>
-    <:item title="Images processed">
-      <!--
-      <.progress_bar state={@task_states[:image_processing].state} />
+
+    <:item :if={ @publication.replication_finished} title="Data processing">
       <button
-        class="absolute right-10 font-semibold font-mono"
+        class="font-semibold font-mono"
         type="button"
         phx-click="start_processing"
       >
-        (re-)start processing
+        Start
       </button>
-      -->
     </:item>
   </.list>
 </div>

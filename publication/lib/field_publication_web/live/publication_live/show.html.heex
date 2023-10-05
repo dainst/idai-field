@@ -1,11 +1,9 @@
 <.header>
-  Publication draft '<%= @publication.draft_date %>' for project '<%= @project.id %>'
-  <:actions>
-    <.button phx-click="start_processing">Process raw data</.button>
-  </:actions>
+  Publication draft '<%= @publication.draft_date %>' for project '<%= @publication.project_name %>'
 </.header>
 
 <div>
+  <.label>Data source</.label>
   <.list>
     <:item title="Source URL"><%= @publication.source_url %></:item>
     <:item title="Source project name"><%= @publication.source_project_name %></:item>
@@ -13,17 +11,24 @@
     <:item title="Publication date">
       <%= if @publication.publication_date, do: @publication.publication_date, else: "-" %>
     </:item>
-    <:item title="Replication logs">
-      <LogComponent.list logs={@publication.replication_logs} />
+    <:item title="Replication">
+      <%= List.last(@publication.replication_logs, %{message: ""})
+      |> then(fn %{message: message} -> message end) %>
+      <!-- <LogComponent.list logs={@task_states[:replication].logs} />-->
     </:item>
-    <:item title="Processing logs">
-      <%= if @publication.processing_logs != [] do %>
-        <LogComponent.list logs={@publication.processing_logs} />
-      <% else %>
-        -
-      <% end %>
+    <:item title="Images processed">
+      <!--
+      <.progress_bar state={@task_states[:image_processing].state} />
+      <button
+        class="absolute right-10 font-semibold font-mono"
+        type="button"
+        phx-click="start_processing"
+      >
+        (re-)start processing
+      </button>
+      -->
     </:item>
   </.list>
 </div>
 
-<.back navigate={~p"/edit/#{@project.id}"}>Back to project</.back>
+<.back navigate={~p"/edit/#{@publication.project_name}"}>Back to project</.back>

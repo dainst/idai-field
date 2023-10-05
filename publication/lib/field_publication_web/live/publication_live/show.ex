@@ -3,80 +3,97 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   alias Phoenix.PubSub
 
-  alias FieldPublication.Schema.Project
-  alias FieldPublication.Processing
-  alias FieldPublicationWeb.PublicationLive.LogComponent
+  alias FieldPublication.Schemas.{
+    Project,
+    Publication,
+    LogEntry
+  }
 
-  @log_cache Application.compile_env(:field_publication, :replication_log_cache_name)
+  alias FieldPublication.Processing.{
+    Image
+  }
+
+  @cache_name :publication_task_states
 
   require Logger
 
   @impl true
-  def mount(%{"project_id" => project_id} = params, _session, socket) do
-    replication_channel = "replication-#{project_id}"
+  def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
+    channel = "publication_#{project_id}"
 
-    running_process_logs =
-      Cachex.get(@log_cache, replication_channel)
-      |> case do
-        {:ok, nil} ->
-          []
+    PubSub.subscribe(FieldPublication.PubSub, channel)
 
-        {:ok, entries} ->
-          entries
-      end
-
-    PubSub.subscribe(FieldPublication.PubSub, replication_channel)
+    publication = Publication.get!(project_id, draft_date_string)
 
     {
       :ok,
       socket
-      |> assign(:page_title, "Create new publication")
-      |> assign(:project, Project.get_project!(project_id))
-      |> assign(:initialization_error, nil)
-      |> assign(:replication_running, false)
-      |> assign(:replication_log_channel, replication_channel)
-      |> assign(:replication_logs, running_process_logs)
-      |> assign(:document_replication_status, nil)
-      |> assign(:file_replication_status, nil)
-      |> apply_action(socket.assigns.live_action, params)
+      |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
+      |> assign(:publication, publication)
+      |> assign(:channel, channel)
     }
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :new, %{"project_id" => id}) do
-    socket
-    |> assign(:page_title, "New publication for '#{id}'.")
-  end
-
-  defp apply_action(socket, nil, %{"project_id" => id, "draft_date" => draft_date}) do
-    publication =
-      Project.find_publication_by_draft_date(
-        socket.assigns.project,
-        Date.from_iso8601!(draft_date)
-      )
-
-    socket
-    |> assign(:page_title, "Publication for '#{id}' drafted #{draft_date}.")
-    |> assign(:publication, publication)
-  end
-
-  defp apply_action(socket, :edit, %{"project_id" => id, "draft_date" => draft_date}) do
-    socket
-    |> assign(:page_title, "Edit publication for '#{id}' drafted #{draft_date}.")
-    |> assign(:project, Project.get_project!(id))
+  def handle_params(_params, _url, socket) do
+    {:noreply, socket}
   end
 
   @impl true
   def handle_event("start_processing", _, socket) do
-    Processing.prepare_publication(
-      socket.assigns.project.id,
-      Date.to_string(socket.assigns.publication.draft_date)
-    )
+    Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
+      Image.process_raw_images(
+        socket.assigns.project.id,
+        Date.to_string(socket.assigns.publication.draft_date),
+        socket.assigns.channel
+      )
+    end)
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info(
+        {:log_update, source, %LogEntry{} = log_entry},
+        %{assigns: %{project: project, publication: publication}} = socket
+      ) do
+    updated_publication =
+      Map.update!(publication, source, fn existing_logs ->
+        existing_logs ++ [log_entry]
+      end)
+      |> Publication.update()
+
+    updated_project = Project.add_publication(project, updated_publication)
+
+    {
+      :noreply,
+      socket
+      |> assign(:project, updated_project)
+      |> assign(:publication, updated_publication)
+    }
+  end
+
+  def handle_info(
+        {:state_update, source, %{counter: counter, overall: overall} = state},
+        socket
+      ) do
+    state = Map.put(state, :percentage, counter / overall * 100)
+
+    updated =
+      socket.assigns.task_states
+      |> Map.update(source, %{state: state}, fn task ->
+        Map.put(task, :state, state)
+      end)
+
+    {:noreply, assign(socket, :task_states, updated)}
+  end
+
+  def handle_info({:task_finished, source, _error_or_success}, socket) do
+    # TODO: Differentiate between error/success?
+    updated =
+      socket.assigns.task_states
+      |> Map.delete(source)
+
+    {:noreply, assign(socket, :task_states, updated)}
   end
 end

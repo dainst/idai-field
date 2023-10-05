@@ -192,7 +192,9 @@ export class WarningsModalComponent {
 
     private updateSections(document: FieldDocument) {
 
-        if (document.resource.category === 'Configuration') {
+        if (!document) {
+            this.sections = [];
+        } else if (document.resource.category === 'Configuration') {
             this.sections = [{ type: 'conflicts'} ];
         } else if (!document?.warnings) {
             this.sections = [];

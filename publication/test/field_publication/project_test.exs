@@ -53,7 +53,7 @@ defmodule FieldPublication.ProjectTest do
 
     test "can get/1 by name" do
       Project.put(%Project{}, @project_fixture)
-      assert {:ok, %Project{} = project} = Project.get(Map.get(@project_fixture, "name"))
+      assert {:ok, %Project{}} = Project.get(Map.get(@project_fixture, "name"))
     end
 
     test "get/1 for unknown project returns error" do

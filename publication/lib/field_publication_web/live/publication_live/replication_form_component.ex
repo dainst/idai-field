@@ -84,7 +84,6 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
       %ReplicationInput{}
       |> ReplicationInput.changeset(replication_params)
       |> Map.put(:action, :validate)
-      |> IO.inspect()
 
     {
       :noreply,

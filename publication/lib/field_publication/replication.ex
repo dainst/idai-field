@@ -89,15 +89,16 @@ defmodule FieldPublication.Replication do
 
     with {:ok, updated_state} <- replicate_database(setup_state),
          {:ok, updated_state} <- replicate_files(updated_state),
-         {:ok, %{publication: publication } = updated_state} <-
+         {:ok, %{publication: publication, channel: channel } = updated_state} <-
            reconstruct_configuration_doc(updated_state) do
       log(updated_state, :info, "Replication finished.")
 
-      broadcast(updated_state.channel, {:result, updated_state})
+      {:ok, final_publication} =
+        publication
+        |> Publication.get!()
+        |> Publication.put(%{"replication_finished" => DateTime.utc_now()})
 
-      publication
-      |> Publication.get!()
-      |> Publication.put(%{"replication_finished" => DateTime.utc_now()})
+      PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, final_publication})
     else
       error ->
         {:noreply, error}
@@ -163,10 +164,6 @@ defmodule FieldPublication.Replication do
     |> Map.update(:replication_logs, [], fn(existing) -> existing ++ [log_entry] end)
     |> Publication.put(%{})
 
-    PubSub.broadcast(FieldPublication.PubSub, channel, {:log, :replication_logs, log_entry})
-  end
-
-  def broadcast(channel, {:result, result}) do
-    PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, result})
+    PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})
   end
 end

@@ -19,18 +19,16 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
-    channel = "publication_#{project_id}"
-
-    PubSub.subscribe(FieldPublication.PubSub, channel)
-
     publication = Publication.get!(project_id, draft_date_string)
+    PubSub.subscribe(FieldPublication.PubSub, Publication.get_doc_id(publication))
 
     {
       :ok,
       socket
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
-      |> assign(:channel, channel)
+      |> assign(:last_replication_log, List.last(publication.replication_logs))
+      |> assign(:replication_progress_state, nil)
     }
   end
 
@@ -52,48 +50,34 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, socket}
   end
 
-  @impl true
-  def handle_info(
-        {:log_update, source, %LogEntry{} = log_entry},
-        %{assigns: %{project: project, publication: publication}} = socket
-      ) do
-    updated_publication =
-      Map.update!(publication, source, fn existing_logs ->
-        existing_logs ++ [log_entry]
-      end)
-      |> Publication.update()
-
-    updated_project = Project.add_publication(project, updated_publication)
-
+  def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {
       :noreply,
       socket
-      |> assign(:project, updated_project)
-      |> assign(:publication, updated_publication)
+      |> assign(:last_replication_log, log_entry)
     }
   end
 
-  def handle_info(
-        {:state_update, source, %{counter: counter, overall: overall} = state},
-        socket
-      ) do
-    state = Map.put(state, :percentage, counter / overall * 100)
 
-    updated =
-      socket.assigns.task_states
-      |> Map.update(source, %{state: state}, fn task ->
-        Map.put(task, :state, state)
-      end)
-
-    {:noreply, assign(socket, :task_states, updated)}
+  def handle_info({source, %{counter: counter, overall: overall}}, socket) when source in [:file_processing, :document_processing] and
+      counter == overall do
+    {:noreply, assign(socket, :replication_progress_state, nil)}
   end
 
-  def handle_info({:task_finished, source, _error_or_success}, socket) do
-    # TODO: Differentiate between error/success?
-    updated =
-      socket.assigns.task_states
-      |> Map.delete(source)
+  def handle_info({source, state}, socket) when source in [:file_processing, :document_processing] do
+    {:noreply,
+     assign(
+       socket,
+       :replication_progress_state,
+       Map.put(state, :percentage, state.counter / state.overall * 100)
+     )}
+  end
 
-    {:noreply, assign(socket, :task_states, updated)}
+  def handle_info({:replication_result, publication}, socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:publication, publication)
+    }
   end
 end

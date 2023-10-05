@@ -11,10 +11,19 @@
     <:item title="Publication date">
       <%= if @publication.publication_date, do: @publication.publication_date, else: "-" %>
     </:item>
-    <:item title="Replication">
-      <%= List.last(@publication.replication_logs, %{message: ""})
-      |> then(fn %{message: message} -> message end) %>
-      <!-- <LogComponent.list logs={@task_states[:replication].logs} />-->
+    <:item title="Data replication">
+      <%= if @publication.replication_finished do %>
+        <div>Replication finished <%= @publication.replication_finished %>.</div>
+      <% else %>
+        <%= if @last_replication_log do %>
+          <div><%= @last_replication_log.message %></div>
+        <% else %>
+          <div>No data.</div>
+        <% end %>
+        <%= if @replication_progress_state do %>
+            <.progress_bar state={@replication_progress_state} />
+        <% end %>
+      <% end %>
     </:item>
     <:item title="Images processed">
       <!--

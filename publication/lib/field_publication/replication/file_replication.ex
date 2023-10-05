@@ -1,11 +1,11 @@
 defmodule FieldPublication.Replication.FileReplication do
   alias Phoenix.PubSub
   alias FieldPublication.FileService
-  alias FieldPublication.Schema.Publication
   alias FieldPublication.Replication
 
-  alias FieldPublication.Replication.{
-    Parameters
+  alias FieldPublication.Schemas.{
+    ReplicationInput,
+    Publication
   }
 
   require Logger
@@ -16,17 +16,18 @@ defmodule FieldPublication.Replication.FileReplication do
                               )
 
   def start(
-        %Parameters{
-          source_url: source_url,
-          source_project_name: source_project_name,
-          source_user: source_user,
-          source_password: source_password,
-          project_key: project_key
-        },
-        %Publication{
-          draft_date: draft_date
-        },
-        channel
+        %{
+          parameters: %ReplicationInput{
+            source_url: source_url,
+            source_project_name: source_project_name,
+            source_user: source_user,
+            source_password: source_password,
+            project_name: project_key
+          },
+          publication: %Publication{
+            draft_date: draft_date
+          }
+        } = state
       ) do
     headers = [
       {"Content-Type", "application/json"},
@@ -34,8 +35,6 @@ defmodule FieldPublication.Replication.FileReplication do
     ]
 
     base_file_url = "#{source_url}/files/#{source_project_name}"
-
-    FileService.initialize_publication(project_key, draft_date)
 
     file_lists_by_variant =
       @file_variants_to_replicate
@@ -63,9 +62,9 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    Replication.log(channel, :info, "#{overall_file_count} files need replication.")
+    Replication.log(state, :info, "#{overall_file_count} files need replication.")
 
-    file_processing_parameters = {project_key, draft_date, counter_pid, channel}
+    file_processing_parameters = {counter_pid, state}
 
     file_lists_by_variant
     |> Enum.map(&copy_files(&1, base_file_url, headers, file_processing_parameters))
@@ -124,10 +123,11 @@ defmodule FieldPublication.Replication.FileReplication do
          base_url,
          headers,
          {
-           project_key,
-           draft_date,
            counter_pid,
-           channel
+           %{
+             channel: channel,
+             publication: %{project_name: project_key, draft_date: draft_date} = _state
+           }
          }
        ) do
     Finch.build(

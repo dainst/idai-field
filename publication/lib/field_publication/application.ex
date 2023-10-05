@@ -18,13 +18,9 @@ defmodule FieldPublication.Application do
         {Cachex, name: Application.get_env(:field_publication, :user_tokens_cache_name)},
         id: :user_tokens_cache
       ),
-      Supervisor.child_spec(
-        {Cachex, name: Application.get_env(:field_publication, :replication_log_cache_name)},
-        id: :replication_log_cache
-      ),
       # Start the Endpoint (http/https)
       FieldPublicationWeb.Endpoint,
-      {Task.Supervisor, name: FieldPublication.Replication.Supervisor}
+      {Task.Supervisor, name: FieldPublication.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

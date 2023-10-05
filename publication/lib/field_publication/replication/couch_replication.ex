@@ -6,13 +6,14 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   alias FieldPublication.{
     CouchService,
-    Replication,
-    Replication.Parameters
+    Replication
   }
+
+  alias FieldPublication.Schemas.ReplicationInput
 
   require Logger
 
-  def start(%Parameters{} = parameters, target_database_name, channel) do
+  def start(%{parameters: parameters, publication: %{database: target_database_name}} = state) do
     # The replication document will get added to CouchDB's internal database '_replicator' in order to trigger the replication.
     replication_doc =
       create_replication_doc(
@@ -20,10 +21,10 @@ defmodule FieldPublication.Replication.CouchReplication do
         target_database_name
       )
 
-    with {:ok, source_doc_count} <- source_doc_count(parameters, channel),
+    with {:ok, source_doc_count} <- source_doc_count(parameters, state),
          {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
-      poll_replication_status(target_database_name, source_doc_count, channel)
+      poll_replication_status(target_database_name, source_doc_count, state)
     else
       {:error, :error_count_exceeded} ->
         CouchService.delete_document(target_database_name, "_replicator")
@@ -36,7 +37,7 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp create_replication_doc(
-         %Parameters{
+         %ReplicationInput{
            source_url: source_url,
            source_project_name: source_project_name,
            source_user: source_user,
@@ -46,7 +47,6 @@ defmodule FieldPublication.Replication.CouchReplication do
        ) do
     %{
       _id: target_database,
-      create_target: true,
       winning_revs_only: true,
       source: %{
         # This URL is relative to the CouchDB application context, which is not necessarily the same as FieldPublication's.
@@ -93,20 +93,20 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   defp put_replication_doc(database_name, replication_doc) do
     database_name
-    |> CouchService.store_document(replication_doc, "_replicator")
+    |> CouchService.put_document(replication_doc, "_replicator")
     |> case do
       {:ok, %{status: 409}} ->
         # If another replication doc of the same name is encountered, the function will replace
         # the old document with the new one without asking.
         stop_replication(database_name)
-        CouchService.store_document(database_name, replication_doc, "_replicator")
+        CouchService.put_document(database_name, replication_doc, "_replicator")
 
       {:ok, %{status: 201}} = result ->
         result
     end
   end
 
-  defp poll_replication_status(database_name, source_doc_count, channel) do
+  defp poll_replication_status(database_name, source_doc_count, %{channel: channel} = state) do
     CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
     |> case do
       {:ok, %{status: 200, body: body}} ->
@@ -121,13 +121,13 @@ defmodule FieldPublication.Replication.CouchReplication do
             )
 
             Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, channel)
+            poll_replication_status(database_name, source_doc_count, state)
 
-          %{"state" => state}
-          when state == nil or state == "initializing" or state == "running" ->
+          %{"state" => couch_state}
+          when couch_state == nil or couch_state == "initializing" or couch_state == "running" ->
             # Different cases shortly after the replication document has been committed.
             Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, channel)
+            poll_replication_status(database_name, source_doc_count, state)
 
           %{"state" => "completed"} ->
             PubSub.broadcast(
@@ -142,7 +142,7 @@ defmodule FieldPublication.Replication.CouchReplication do
             Logger.error(error)
 
             Replication.log(
-              channel,
+              state,
               :error,
               "Experienced error while replicating documents, stopping replication."
             )
@@ -153,13 +153,13 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp source_doc_count(
-         %Parameters{
+         %ReplicationInput{
            source_url: url,
            source_project_name: project_name,
            source_user: user,
            source_password: password
          },
-         channel
+         state
        ) do
     Finch.build(
       :get,
@@ -183,7 +183,7 @@ defmodule FieldPublication.Replication.CouchReplication do
               {:ok, update_seq}
           end
 
-        Replication.log(channel, :info, "#{count} database documents need replication.")
+        Replication.log(state, :info, "#{count} database documents need replication.")
 
         result
 
@@ -197,7 +197,7 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   @dialyzer {:nowarn_function, source_url_fix: 1}
   defp source_url_fix(url) do
-    # If we want to connect to FieldHub running at localhost:4000 in development
+    # If we want to connect to FieldHub running at localhost:4000 in development or test
     # we have to use host.docker.internal as url for the FieldPublication CouchDB. This is
     # necessary because calling localhost within the container would otherwise resolve to the container itself.
 

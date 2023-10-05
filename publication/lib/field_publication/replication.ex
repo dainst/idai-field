@@ -1,82 +1,50 @@
 defmodule FieldPublication.Replication do
+  require Logger
+
   alias Phoenix.PubSub
 
   alias FieldPublication.{
     CouchService,
-    FileService,
-    Schema.Project,
-    Schema.Publication,
-    Schema.LogEntry,
     Replication.CouchReplication,
     Replication.FileReplication,
-    Replication.Parameters,
     Replication.MetadataGeneration
   }
 
-  require Logger
+  alias FieldPublication.Schemas.{
+    ReplicationInput,
+    Publication,
+    LogEntry
+  }
 
-  @log_cache Application.compile_env(:field_publication, :replication_log_cache_name)
+  def start(%ReplicationInput{} = params) do
+    with {:ok, publication} <- Publication.create_from_replication_input(params),
+         {:ok, :connection_successful} <- check_source_connection(params),
+         channel <- Publication.get_doc_id(publication) do
+      {:ok, log_cache_pid} = Agent.start_link(fn -> [] end, name: String.to_atom(channel))
 
-  def start(%Parameters{project_key: project_key} = params, broadcast_channel) do
-    publication = MetadataGeneration.create_publication(params)
+      state = %{
+        parameters: params,
+        publication: publication,
+        channel: channel,
+        log_cache: log_cache_pid
+      }
 
-    with {:ok, :connection_successful} <- check_source_connection(params),
-         {:ok, _} <- ensure_no_existing_publication(params, publication, broadcast_channel) do
-      log(broadcast_channel, :info, "Starting replication for #{project_key}.")
+      {:ok, replication_pid} =
+        Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
+          replicate(state)
+        end)
 
-      Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
-        replicate(params, publication, broadcast_channel)
-      end)
-
-      {:ok, :started}
+      {:ok, state, replication_pid}
     else
+      {:error, %{errors: [duplicate_document: {msg, _}]}} ->
+        {:error, msg}
+
       error ->
         error
     end
   end
 
-  defp ensure_no_existing_publication(
-         %Parameters{
-           delete_existing_publication: true
-         } = parameters,
-         %Publication{} = publication,
-         channel
-       ) do
-    delete_existing_publication(parameters, publication, channel)
-
-    {:ok, :deleted_existing}
-  end
-
-  defp ensure_no_existing_publication(
-         %Parameters{} = parameters,
-         %Publication{} = publication,
-         _channel
-       ) do
-    project = Project.get_project!(parameters.project_key)
-
-    project.publications
-    |> Enum.any?(fn p -> p.draft_date == publication.draft_date end)
-    |> case do
-      true ->
-        {:error, :existing_publication}
-
-      false ->
-        parameters
-        |> CouchReplication.get_replication_doc()
-        |> case do
-          {:ok, %{"_replication_state" => "completed"}} ->
-            {:ok, :no_publication}
-
-          {:ok, _} ->
-            {:error, :active_replication}
-
-          {:error, :not_found} ->
-            {:ok, :no_publication}
-        end
-    end
-  end
-
-  defp check_source_connection(%Parameters{
+  defp check_source_connection(%ReplicationInput{
          source_url: url,
          source_project_name: project_name,
          source_user: user,
@@ -115,131 +83,69 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  defp delete_existing_publication(
-         %Parameters{} = parameters,
-         %Publication{} = publication,
-         channel
-       ) do
-    Cachex.del(@log_cache, channel)
-
-    replication_stop =
-      CouchReplication.stop_replication(publication.database)
-      |> case do
-        {:ok, :deleted} = result ->
-          log(channel, :info, "Removed existing replication document.")
-          result
-
-        result ->
-          result
-      end
-
-    publication_deletion =
-      CouchService.delete_database(publication.database)
-      |> case do
-        {:ok, %{status: 200}} ->
-          log(channel, :info, "Removed existing publication database.")
-          {:ok, :deleted}
-
-        {:ok, %{status: 404}} ->
-          {:ok, :already_deleted}
-      end
-
-    file_deletion =
-      FileService.delete_publication(parameters.project_key, publication.draft_date)
-      |> case do
-        {:ok, []} ->
-          {:ok, :already_deleted}
-
-        {:ok, _list_of_deleted_files} ->
-          log(channel, :info, "Removed existing publication files.")
-          {:ok, :deleted}
-      end
-
-    {replication_stop, publication_deletion, file_deletion}
-  end
-
   defp replicate(
-         %Parameters{project_key: project_key} = parameters,
-         %Publication{} = publication,
-         channel
+         %{publication: %{project_name: project_name} = publication} =
+           state
        ) do
-    {:ok, %{broadcast_channel: channel}}
-    |> replicate_database(parameters, publication)
-    |> replicate_files(parameters, publication)
-    |> reconstruct_configuration_doc(publication)
-    |> then(fn result_or_error ->
-      {:ok, logs} = Cachex.get(@log_cache, channel)
+    log(state, :info, "Starting replication for #{project_name}.")
+
+    with {:ok, updated_state} <- replicate_database(state),
+         {:ok, updated_state} <- replicate_files(updated_state),
+         {:ok, %{log_cache: log_cache_pid} = state} <-
+           reconstruct_configuration_doc(updated_state) do
+      log(state, :info, "Replication finished.")
+
+      logs = Agent.get(log_cache_pid, fn values -> values end)
+
+      Agent.stop(log_cache_pid)
 
       {:ok, final_publication} =
-        Publication.update(Map.replace!(publication, :replication_logs, logs))
+        Publication.put(Map.put(publication, :replication_logs, logs))
 
-      Cachex.del(@log_cache, channel)
-
-      {:ok, _updated_project} =
-        project_key
-        |> Project.get_project!()
-        |> Project.add_publication(final_publication)
-
-      broadcast(channel, {:result, result_or_error})
-    end)
+      broadcast(state.channel, {:result, state})
+      {:noreply, %{state | publication: final_publication}}
+    else
+      error ->
+        {:noreply, error}
+    end
   end
 
-  defp replicate_database(
-         {:ok, %{broadcast_channel: channel} = replication_state},
-         %Parameters{} = params,
-         %Publication{} = publication
-       ) do
-    log(channel, :info, "Starting database replication.")
+  defp replicate_database(state) do
+    log(state, :info, "Starting database replication.")
 
-    params
-    |> CouchReplication.start(publication.database, channel)
+    CouchReplication.start(state)
     |> case do
       {:ok, :completed} ->
-        log(channel, :info, "Database replication has finished.")
-        {:ok, Map.put(replication_state, :database_result, :replicated)}
+        log(state, :info, "Database replication has finished.")
+        {:ok, Map.put(state, :database_result, :replicated)}
 
       {:error, _} = error ->
-        log(channel, :error, "Database replication has failed.")
+        log(state, :error, "Database replication has failed.")
         error
     end
   end
 
-  defp replicate_files({:error, _} = error, _, _) do
-    error
+  defp replicate_files(state) do
+    log(state, :info, "Starting file replication.")
+
+    {:ok, file_results} = FileReplication.start(state)
+
+    log(state, :info, "File replication has finished.")
+
+    {:ok, Map.put(state, :file_results, file_results)}
   end
 
-  defp replicate_files(
-         {:ok, %{broadcast_channel: channel} = replication_state},
-         %Parameters{} = params,
-         %Publication{} = publication
-       ) do
-    log(channel, :info, "Starting file replication.")
-
-    {:ok, file_results} = FileReplication.start(params, publication, channel)
-
-    log(channel, :info, "File replication has finished.")
-
-    {:ok, Map.put(replication_state, :file_results, file_results)}
-  end
-
-  defp reconstruct_configuration_doc({:error, _} = error, _) do
-    error
-  end
-
-  defp reconstruct_configuration_doc(
-         {:ok, %{broadcast_channel: channel} = replication_state},
-         %Publication{} = publication
-       ) do
-    log(channel, :info, "Creating publication metadata.")
+  defp reconstruct_configuration_doc(%{publication: publication} = state) do
+    log(state, :info, "Creating publication metadata.")
 
     {:ok, result} = MetadataGeneration.reconstruct_project_konfiguraton(publication)
 
-    log(channel, :info, "Publication metadata created.")
+    log(state, :info, "Publication metadata created.")
 
-    {:ok, Map.put(replication_state, :project_configuration_recreation, result)}
+    {:ok, Map.put(state, :project_configuration_recreation, result)}
   end
 
-  def log(channel, severity, msg) do
+  def log(%{channel: channel, log_cache: pid}, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
@@ -258,15 +164,8 @@ defmodule FieldPublication.Replication do
         message: msg
       })
 
-    case Cachex.get(@log_cache, channel) do
-      {:ok, nil} ->
-        Cachex.put(@log_cache, channel, [log_entry], ttl: :timer.hours(5))
-
-      {:ok, entries} ->
-        Cachex.put(@log_cache, channel, entries ++ [log_entry])
-    end
-
-    PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})
+    Agent.update(pid, fn existing_list -> existing_list ++ [log_entry] end)
+    PubSub.broadcast(FieldPublication.PubSub, channel, {:log, :replication_logs, log_entry})
   end
 
   def broadcast(channel, {:result, result}) do

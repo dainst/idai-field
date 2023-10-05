@@ -133,6 +133,10 @@ defmodule FieldPublication.Schemas.Publication do
     publication
   end
 
+  def get!(%__MODULE__{project_name: project_name, draft_date: draft_date}) do
+    get!(project_name, draft_date)
+  end
+
   def list() do
     run_search(%{selector: %{doc_type: @doc_type}})
   end

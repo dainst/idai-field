@@ -20,21 +20,18 @@ defmodule FieldPublication.Replication do
     with {:ok, publication} <- Publication.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params),
          channel <- Publication.get_doc_id(publication) do
-      {:ok, log_cache_pid} = Agent.start_link(fn -> [] end, name: String.to_atom(channel))
-
-      state = %{
+      setup_state = %{
         parameters: params,
         publication: publication,
-        channel: channel,
-        log_cache: log_cache_pid
+        channel: channel
       }
 
       {:ok, replication_pid} =
         Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
-          replicate(state)
+          replicate(setup_state)
         end)
 
-      {:ok, state, replication_pid}
+      {:ok, setup_state, replication_pid}
     else
       {:error, %{errors: [duplicate_document: {msg, _}]}} ->
         {:error, msg}
@@ -84,26 +81,21 @@ defmodule FieldPublication.Replication do
   end
 
   defp replicate(
-         %{publication: %{project_name: project_name} = publication} =
-           state
+         %{publication: %{project_name: project_name}} =
+           setup_state
        ) do
-    log(state, :info, "Starting replication for #{project_name}.")
 
-    with {:ok, updated_state} <- replicate_database(state),
+    log(setup_state, :info, "Starting replication for #{project_name}.")
+
+    with {:ok, updated_state} <- replicate_database(setup_state),
          {:ok, updated_state} <- replicate_files(updated_state),
-         {:ok, %{log_cache: log_cache_pid} = state} <-
+         {:ok, %{publication: publication } = updated_state} <-
            reconstruct_configuration_doc(updated_state) do
-      log(state, :info, "Replication finished.")
+      log(updated_state, :info, "Replication finished.")
 
-      logs = Agent.get(log_cache_pid, fn values -> values end)
-
-      Agent.stop(log_cache_pid)
-
-      {:ok, final_publication} =
-        Publication.put(Map.put(publication, :replication_logs, logs))
-
-      broadcast(state.channel, {:result, state})
-      {:noreply, %{state | publication: final_publication}}
+      final_state =  %{updated_state | publication: Publication.get!(publication)}
+      broadcast(final_state.channel, {:result, final_state})
+      {:noreply, final_state}
     else
       error ->
         {:noreply, error}
@@ -145,7 +137,7 @@ defmodule FieldPublication.Replication do
     {:ok, Map.put(state, :project_configuration_recreation, result)}
   end
 
-  def log(%{channel: channel, log_cache: pid}, severity, msg) do
+  def log(%{publication: %Publication{} = publication, channel: channel}, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
@@ -164,7 +156,11 @@ defmodule FieldPublication.Replication do
         message: msg
       })
 
-    Agent.update(pid, fn existing_list -> existing_list ++ [log_entry] end)
+    publication
+    |> Publication.get!()
+    |> Map.update(:replication_logs, [], fn(existing) -> existing ++ [log_entry] end)
+    |> Publication.put(%{})
+
     PubSub.broadcast(FieldPublication.PubSub, channel, {:log, :replication_logs, log_entry})
   end
 

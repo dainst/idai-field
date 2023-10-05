@@ -93,9 +93,11 @@ defmodule FieldPublication.Replication do
            reconstruct_configuration_doc(updated_state) do
       log(updated_state, :info, "Replication finished.")
 
-      final_state =  %{updated_state | publication: Publication.get!(publication)}
-      broadcast(final_state.channel, {:result, final_state})
-      {:noreply, final_state}
+      broadcast(updated_state.channel, {:result, updated_state})
+
+      publication
+      |> Publication.get!()
+      |> Publication.put(%{"replication_finished" => DateTime.utc_now()})
     else
       error ->
         {:noreply, error}

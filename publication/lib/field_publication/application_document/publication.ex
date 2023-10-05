@@ -25,6 +25,7 @@ defmodule FieldPublication.Schemas.Publication do
     field(:source_url, :string)
     field(:source_project_name, :string)
     field(:draft_date, :date, primary_key: true)
+    field(:replication_finished, :utc_datetime)
     field(:publication_date, :date)
     field(:configuration_doc, :string)
     field(:database, :string)
@@ -41,6 +42,7 @@ defmodule FieldPublication.Schemas.Publication do
       :source_url,
       :source_project_name,
       :draft_date,
+      :replication_finished,
       :publication_date,
       :configuration_doc,
       :database

@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.PublicationLive.LogComponent do
   use Phoenix.Component
 
-  alias FieldPublication.Schema.LogEntry
+  alias FieldPublication.Schemas.LogEntry
 
   attr :logs, :list, required: true
 

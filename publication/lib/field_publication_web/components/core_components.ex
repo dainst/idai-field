@@ -663,6 +663,32 @@ defmodule FieldPublicationWeb.CoreComponents do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 
+  alias FieldPublication.Schemas.LogEntry
+
+  @doc """
+  Component for displaying lists of LogEntry schemas.
+  """
+  attr :logs, :list, required: true
+  def log_entry_list(assigns) do
+    ~H"""
+    <div>
+      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg} <- @logs do %>
+        <div class="flex">
+          <%= case severity do %>
+            <% :error -> %>
+              <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-red-500 rounded-2xl"></div>
+            <% :warning -> %>
+              <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-yellow-500 rounded-2xl"></div>
+            <% :info -> %>
+              <div class="mt-2 ml-1 mr-2 h-2 w-2 bg-green-500 rounded-2xl"></div>
+          <% end %>
+          <div class="font-mono"><%= timestamp %> | <%= msg %></div>
+        </div>
+      <% end %>
+    </div>
+    """
+  end
+
   @doc """
   Component for displaying progress bar
   """

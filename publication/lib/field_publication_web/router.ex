@@ -49,9 +49,7 @@ defmodule FieldPublicationWeb.Router do
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
       live "/:project_id", ProjectLive.Show, :show
-      live "/:project_id/publication/new", PublicationLive.Replication, :new
-      live "/:project_id/publication/:draft_date/edit", ProjectLive.Show, :edit_publication
-
+      live "/:project_id/publication/new", ProjectLive.Show, :draft_publication
       live "/:project_id/publication/:draft_date", PublicationLive.Show
     end
   end

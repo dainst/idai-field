@@ -58,7 +58,7 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
 
   @impl true
   def update(%{user: user} = assigns, socket) do
-    changeset = User.InputSchema.changeset(user) |> IO.inspect()
+    changeset = User.InputSchema.changeset(user)
 
     {
       :ok,
@@ -91,7 +91,7 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
   end
 
   defp save_user(socket, :new_password, form_params) do
-    User.update(socket.assigns.user, form_params |> IO.inspect())
+    User.update(socket.assigns.user, form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
@@ -109,11 +109,9 @@ defmodule FieldPublicationWeb.AdminLive.UserFormComponent do
   end
 
   defp save_user(socket, :new, form_params) do
-    User.create(form_params |> IO.inspect())
+    User.create(form_params)
     |> case do
       {:error, changeset} ->
-        IO.inspect(changeset)
-
         {:noreply, assign(socket, :form, to_form(changeset))}
 
       %{name: name} ->

@@ -3,11 +3,11 @@
 </div>
 
 <div id="delete-field-data-modal-body" class="modal-body">
-    <span *ngIf="fieldLabel" i18n="configuration.deleteField.body.label">
+    <span *ngIf="fieldLabel" i18n="@@navbar.taskbar.deleteFieldData.confirmation.withLabel">
         Möchten Sie die im Feld <b>{{fieldLabel}}</b> (<code>{{fieldName}}</code>) eingetragenen
         Daten wirklich löschen?
     </span>
-    <span *ngIf="!fieldLabel" i18n="configuration.deleteField.body.name">
+    <span *ngIf="!fieldLabel" i18n="@@navbar.taskbar.deleteFieldData.confirmation.withoutLabel">
         Möchten Sie die im Feld <code>{{fieldName}}</code> eingetragenen Daten wirklich löschen?
     </span>
 

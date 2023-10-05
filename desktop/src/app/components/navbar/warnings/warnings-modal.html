@@ -63,6 +63,13 @@
                                   i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'missingIdentifierPrefix'">
+                        <button class="btn btn-primary" (click)="openDoceditModal(section)">
+                            <span class="mdi mdi-pencil"></span>
+                            <span class="button-label"
+                                  i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>

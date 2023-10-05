@@ -28,6 +28,7 @@ export class DeleteFieldDataModalComponent {
                 private datastore: Datastore,
                 private labels: Labels) {}
 
+
     public getCategoryLabel = () => this.labels.get(this.category);
 
     public cancel = () => this.activeModal.dismiss('cancel');
@@ -56,6 +57,7 @@ export class DeleteFieldDataModalComponent {
         } else {
             await this.deleteSingle();
         }
+
         this.activeModal.close();
     }
 

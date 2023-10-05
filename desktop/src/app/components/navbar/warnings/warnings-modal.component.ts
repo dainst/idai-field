@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
@@ -20,6 +20,7 @@ import { AngularUtility } from '../../../angular/angular-utility';
 
 type WarningSection = {
     type: WarningType;
+    category?: CategoryForm;
     fieldName?: string;
 }
 
@@ -135,6 +136,31 @@ export class WarningsModalComponent {
     };
 
 
+    public async openDoceditModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<DoceditComponent>(
+            DoceditComponent,
+            MenuContext.DOCEDIT,
+            'lg'
+        );
+
+        const group: Group = section.category.groups.find(group => {
+            return group.fields.find(field => field.name === section.fieldName) !== undefined;
+        });
+
+        componentInstance.setDocument(this.selectedDocument);
+        if (group) componentInstance.activeGroup = group.name;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
     public async openDeleteFieldDataModal(section: WarningSection) {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldDataModalComponent>(
@@ -142,12 +168,10 @@ export class WarningsModalComponent {
             MenuContext.MODAL
         );
 
-        const category: CategoryForm = this.projectConfiguration.getCategory(this.selectedDocument.resource.category);
-
         componentInstance.document = this.selectedDocument;
         componentInstance.fieldName = section.fieldName;
-        componentInstance.fieldLabel = this.labels.getFieldLabel(category, section.fieldName);
-        componentInstance.category = category;
+        componentInstance.fieldLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.category = section.category;
         componentInstance.warningType = section.type;
 
         await this.modals.awaitResult(
@@ -199,22 +223,40 @@ export class WarningsModalComponent {
         if (!document) {
             this.sections = [];
         } else if (document.resource.category === 'Configuration') {
-            this.sections = [{ type: 'conflicts'} ];
+            this.sections = [{ type: 'conflicts' }];
         } else if (!document?.warnings) {
             this.sections = [];
         } else {
-            this.sections = Object.keys(document.warnings).reduce((sections, warningType) => {
-                if (isArray(document.warnings[warningType])) {
+            this.sections = Object.keys(document.warnings).reduce((sections, type: WarningType) => {
+                if (isArray(document.warnings[type])) {
                     return sections.concat(
-                        document.warnings[warningType].map(fieldName => {
-                            return { type: warningType, fieldName };
+                        (document.warnings[type] as string[]).map(fieldName => {
+                            return this.createSection(type, document, fieldName);
                         })
                     );
                 } else {
-                    return sections.concat([{ type: warningType }]);
+                    return sections.concat([this.createSection(type, document)]);
                 }
             }, []);
         }
+    }
+
+
+    private createSection(type: WarningType, document: FieldDocument, fieldName?: string): WarningSection {
+
+        const section: WarningSection = { type };
+        
+        if (type === 'missingIdentifierPrefix') {
+            section.fieldName = Resource.IDENTIFIER;
+        } else if (fieldName) {
+            section.fieldName = fieldName;
+        }
+        
+        if (document.resource.category !== 'Configuration') {
+            section.category = this.projectConfiguration.getCategory(document.resource.category);
+        };
+
+        return section;
     }
 
 

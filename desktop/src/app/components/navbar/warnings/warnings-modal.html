@@ -49,25 +49,18 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfigured'">
-                        <button class="btn btn-danger" (click)="openDeleteFieldDataModal(section)">
-                            <span class="mdi mdi-delete"></span>
-                            <span class="button-label"
-                                  i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
-                        </button>
-                    </span>
-                    <span *ngIf="section.type === 'invalid'">
-                        <button class="btn btn-danger" (click)="openDeleteFieldDataModal(section)">
-                            <span class="mdi mdi-delete"></span>
-                            <span class="button-label"
-                                  i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
-                        </button>
-                    </span>
-                    <span *ngIf="section.type === 'missingIdentifierPrefix'">
+                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'">
                         <button class="btn btn-primary" (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfigured' || section.type === 'invalid'">
+                        <button class="btn btn-danger" (click)="openDeleteFieldDataModal(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>
                     </span>
                 </div>

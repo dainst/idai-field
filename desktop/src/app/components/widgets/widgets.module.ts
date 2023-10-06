@@ -18,7 +18,7 @@ import { DocumentInfoComponent } from './document-info/document-info.component';
 import { GeoreferenceViewComponent } from './document-info/georeference-view.component';
 import { DepictsRelationsViewComponent } from './document-info/depicts-relations-view.component';
 import { ThumbnailComponent } from './document-info/thumbnail.component';
-import { IdaiMessagesModule } from '../messages/idai-messages.module';
+import { MessagesModule } from '../messages/messages.module';
 import { PagingButtonsComponent } from './paging-buttons.component';
 import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
@@ -35,7 +35,7 @@ import { SearchableSelectComponent } from './searchable-select.component';
         NgbModule,
         FormsModule,
         RouterModule,
-        IdaiMessagesModule,
+        MessagesModule,
         DragDropModule,
         NgSelectModule
     ],

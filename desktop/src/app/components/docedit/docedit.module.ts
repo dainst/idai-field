@@ -10,7 +10,7 @@ import { Validator } from '../../model/validator';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageRowModule } from '../image/row/image-row.module';
-import { IdaiMessagesModule } from '../messages/idai-messages.module';
+import { MessagesModule } from '../messages/messages.module';
 import { DeleteModalComponent } from '../resources/deletion/delete-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { EditFormFieldComponent } from './core/edit-form-field.component';
@@ -75,7 +75,7 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         NgbModule,
         FormsModule,
         RouterModule,
-        IdaiMessagesModule,
+        MessagesModule,
         WidgetsModule,
         ImageGridModule,
         ImageRowModule

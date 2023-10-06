@@ -38,7 +38,7 @@ import { ImageOverviewModule } from './image/overview/image-overview.module';
 import { ImportModule } from './import/import-module';
 import { MatrixModule } from './matrix/matrix.module';
 import { Menus } from '../services/menus';
-import { IdaiMessagesModule } from './messages/idai-messages.module';
+import { MessagesModule } from './messages/messages.module';
 import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
@@ -78,7 +78,7 @@ registerLocaleData(localeUk, 'uk');
         HttpClientModule,
         NgbModule,
         // NgbModule.forRoot(),
-        IdaiMessagesModule,
+        MessagesModule,
         routing,
         WidgetsModule,
         ImportModule,

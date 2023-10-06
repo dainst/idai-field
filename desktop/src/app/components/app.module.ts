@@ -35,7 +35,7 @@ import { ConfigurationModule } from './configuration/configuration.module';
 import { ExportModule } from './export/export.module';
 import { HelpComponent } from './help/help.component';
 import { ImageOverviewModule } from './image/overview/image-overview.module';
-import { ImportModule } from './import/import-module';
+import { ImportModule } from './import/import.module';
 import { MatrixModule } from './matrix/matrix.module';
 import { Menus } from '../services/menus';
 import { MessagesModule } from './messages/messages.module';

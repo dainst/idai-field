@@ -26,7 +26,7 @@ defmodule Api.Documents.Filter do
 
   def split_off_multilanguage_filters_and_add_name_suffixes(filters, project_conf, languages) do
     unless has_exactly_one_category_filter? filters do
-      {filters, []}
+      {filters, [], []}
     else
       category_name = get_category_name filters
       category_definition = CategoryTreeList.find_by_name category_name, project_conf
@@ -45,7 +45,9 @@ defmodule Api.Documents.Filter do
         end
         {name, value}
       end
-      {filters, (preprocess_multilanguage_filters multilanguage_filters, languages)}
+      {filters,
+       (preprocess_multilanguage_filters multilanguage_filters, languages),
+       Enum.map(dropdown_fields, fn field_name -> "resource." <> field_name <> ".name" end)}
     end
   end
 

@@ -4,14 +4,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   alias Phoenix.PubSub
 
   alias FieldPublication.Schemas.{
-    Project,
     Publication,
     LogEntry
   }
 
-  alias FieldPublication.Processing.{
-    Image
-  }
+  alias FieldPublication.Processing
 
   @cache_name :publication_task_states
 
@@ -20,15 +17,24 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
     publication = Publication.get!(project_id, draft_date_string)
-    PubSub.subscribe(FieldPublication.PubSub, Publication.get_doc_id(publication))
+    channel = Publication.get_doc_id(publication)
+
+    PubSub.subscribe(FieldPublication.PubSub, channel)
+
+    %{
+      images: web_image_processing_progress
+    } = Processing.evaluate_processing_state(publication)
 
     {
       :ok,
       socket
+      |> assign(:channel, channel)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
       |> assign(:last_replication_log, List.last(publication.replication_logs))
       |> assign(:replication_progress_state, nil)
+      |> assign(:last_web_image_processing_log, nil)
+      |> assign(:web_image_processing_progress, web_image_processing_progress)
     }
   end
 
@@ -38,18 +44,17 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  def handle_event("start_processing", _, socket) do
-    Task.Supervisor.start_child(FieldPublication.Replication.Supervisor, fn ->
-      Image.process_raw_images(
-        socket.assigns.project.id,
-        Date.to_string(socket.assigns.publication.draft_date),
-        socket.assigns.channel
-      )
-    end)
+  def handle_event("process_images", _, socket) do
+    Processing.start(%Processing.Context{
+      publication: socket.assigns.publication,
+      channel: socket.assigns.channel,
+      task_list: [:web_images]
+    })
 
     {:noreply, socket}
   end
 
+  @impl true
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {
       :noreply,
@@ -58,17 +63,27 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
-
-  def handle_info({source, %{counter: counter, overall: overall}}, socket) when source in [:file_processing, :document_processing] and
-      counter == overall do
+  def handle_info({source, %{counter: counter, overall: overall}}, socket)
+      when source in [:file_processing, :document_processing] and
+             counter == overall do
     {:noreply, assign(socket, :replication_progress_state, nil)}
   end
 
-  def handle_info({source, state}, socket) when source in [:file_processing, :document_processing] do
+  def handle_info({source, state}, socket)
+      when source in [:file_processing, :document_processing] do
     {:noreply,
      assign(
        socket,
        :replication_progress_state,
+       Map.put(state, :percentage, state.counter / state.overall * 100)
+     )}
+  end
+
+  def handle_info({source, state}, socket) when source == :web_image_processing do
+    {:noreply,
+     assign(
+       socket,
+       :web_image_processing_progress,
        Map.put(state, :percentage, state.counter / state.overall * 100)
      )}
   end

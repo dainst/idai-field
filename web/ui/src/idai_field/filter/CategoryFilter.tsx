@@ -149,7 +149,7 @@ const categoryLabelStyle: CSSProperties = {
 
 
 // https://stackoverflow.com/a/17485300
-const urlDecode = (param: string) => decodeURIComponent( param.replace(/\+/g, '%20') );
+const urlDecode = (param: string) => param ? decodeURIComponent( param.replace(/\+/g, '%20') ) : undefined;
 
 
 const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>

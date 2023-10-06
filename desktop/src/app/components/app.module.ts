@@ -44,12 +44,6 @@ import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ProjectsComponent } from './navbar/projects.component';
-import { TaskbarWarningsComponent } from './navbar/warnings/taskbar-warnings.component';
-import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
-import { TaskbarUpdateComponent } from './navbar/taskbar-update.component';
-import { TaskbarComponent } from './navbar/taskbar.component';
 import { ResourcesModule } from './resources/resources.module';
 import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
@@ -62,8 +56,7 @@ import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { ProjectModalLauncher } from '../services/project-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
-import { WarningsModalComponent } from './navbar/warnings/warnings-modal.component';
-import { DeleteFieldDataModalComponent } from './navbar/warnings/delete-field-data-modal.component';
+import { NavbarModule } from './navbar/navbar.module';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -94,18 +87,11 @@ registerLocaleData(localeUk, 'uk');
         DatastoreModule,
         MatrixModule,
         ConfigurationModule,
-        ProjectModule
+        ProjectModule,
+        NavbarModule
     ],
     declarations: [
         AppComponent,
-        NavbarComponent,
-        TaskbarComponent,
-        TaskbarWarningsComponent,
-        WarningsModalComponent,
-        DeleteFieldDataModalComponent,
-        TaskbarSyncStatusComponent,
-        TaskbarUpdateComponent,
-        ProjectsComponent,
         HelpComponent,
     ],
     providers: [

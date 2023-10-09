@@ -141,7 +141,9 @@ export class WarningsModalComponent {
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
             DoceditComponent,
             MenuContext.DOCEDIT,
-            'lg'
+            'lg',
+            undefined,
+            false
         );
 
         const group: Group = section.category.groups.find(group => {

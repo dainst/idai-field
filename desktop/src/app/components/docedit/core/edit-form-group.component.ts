@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { Document, Field, Labels, ProjectConfiguration, Relation } from 'idai-field-core';
 import { Language } from '../../../services/languages';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 type StratigraphicalRelationInfo = {
@@ -26,6 +27,7 @@ export class EditFormGroup implements OnChanges {
     @Input() document: Document;
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
+    @Input() scrollTargetField: string;
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
@@ -33,12 +35,14 @@ export class EditFormGroup implements OnChanges {
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
+                private elementRef: ElementRef,
                 private i18n: I18n) {}
 
 
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+        if (this.scrollTargetField) this.scrollToField(this.scrollTargetField);
     }
 
 
@@ -120,5 +124,20 @@ export class EditFormGroup implements OnChanges {
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });
+    }
+
+
+    private async scrollToField(fieldName: string) {
+
+        await AngularUtility.refresh();
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
+
+        const field: Field = this.fieldDefinitions.find(fieldDefinition => fieldDefinition.name === fieldName);
+        const element: HTMLElement|null = document.getElementById(this.getFieldId(field));
+        if (!element) return;
+
+        await AngularUtility.refresh();
+        const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.parentElement.scrollTo(0, scrollY);
     }
 }

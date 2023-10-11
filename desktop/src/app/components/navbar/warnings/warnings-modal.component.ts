@@ -151,6 +151,7 @@ export class WarningsModalComponent {
         });
 
         componentInstance.setDocument(this.selectedDocument);
+        componentInstance.scrollTargetField = section.fieldName;
         if (group) componentInstance.activeGroup = group.name;
 
         await this.modals.awaitResult(

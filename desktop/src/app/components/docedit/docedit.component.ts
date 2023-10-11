@@ -41,6 +41,7 @@ export class DoceditComponent {
     public fieldDefinitions: Array<Field>|undefined;
     public groups: Array<Group>|undefined;
     public identifierPrefix: string|undefined;
+    public scrollTargetField: string;
 
     public parentLabel: string|undefined = undefined;
     public resourceLabel: string;

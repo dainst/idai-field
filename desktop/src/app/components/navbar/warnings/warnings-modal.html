@@ -49,7 +49,8 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'">
+                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outlierValues'">
                         <button class="btn btn-primary" (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"

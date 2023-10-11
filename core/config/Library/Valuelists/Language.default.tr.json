@@ -1489,12 +1489,12 @@
     "values": {
       "Befliegung": "",
       "Begehung": "",
-      "Geoelektrik": "",
-      "Geomagnetik": "",
-      "Georadar": "",
-      "LIDAR": "",
-      "Luft- oder Satellitenbilder": "",
-      "Quadratisch": "",
+      "Geoelektrik": "Jeoelektrik",
+      "Geomagnetik": "Jeomanyetik",
+      "Georadar": "Jeoradar",
+      "LIDAR": "LIDAR",
+      "Luft- oder Satellitenbilder": "Hava veya uydu görüntüsü",
+      "Quadratisch": "Plankare",
       "Regelmäßig": "Düzenli",
       "Seismik": "Sismik"
     }

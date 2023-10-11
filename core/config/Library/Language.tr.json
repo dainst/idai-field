@@ -626,14 +626,14 @@
         },
         "blockTreatment": {
           "label": "Taş blok işlemi",
-          "description": ""
+          "description": "Blok işleme/işlem izleri"
         },
         "brickwork": {
           "label": "Duvarcılık"
         },
         "condition": {
           "label": "Durumu",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
           "label": "Koruma değerlendirme",
@@ -641,15 +641,15 @@
         },
         "construction": {
           "label": "Konstrüksiyon",
-          "description": ""
+          "description": "Ne tür duvar konstrüksiyonu yapılmaktadır?"
         },
         "mark": {
           "label": "Duvarcı damga(lar)ı",
-          "description": ""
+          "description": "Olası taş ustası işaretlerinin listesi"
         },
         "mortarBinder": {
           "label": "Harç agregası",
-          "description": ""
+          "description": "Agregadaki katkı maddesi ne kadar fazla?"
         },
         "mortarColor": {
           "label": "Harç rengi"
@@ -662,7 +662,7 @@
         },
         "wallType": {
           "label": "Duvar tipi",
-          "description": ""
+          "description": "Duvar işçilik tipi"
         }
       }
     },
@@ -671,7 +671,7 @@
       "fields": {
         "diaryAbstract": {
           "label": "Günlük özet",
-          "description": ""
+          "description": "Proje veya kazı sürecinin anlatımı, gerekiyorsa günlüğün özeti"
         },
         "supervisor": {
           "label": "Yönetici",
@@ -684,11 +684,11 @@
       "fields": {
         "gazId": {
           "label": "Gazetteer ID",
-          "description": ""
+          "description": "Yer sözlüğündeki ID numarası"
         },
         "placeName": {
           "label": "Yer adı",
-          "description": ""
+          "description": "Mahalle veya ilçenin adı"
         },
         "buildingHistory": {
           "label": "Yapı araştırma tarihçesi",
@@ -696,7 +696,7 @@
         },
         "buildingResearchHistory": {
           "label": "Araştırma tarihçesi",
-          "description": ""
+          "description": "Kazılar da dahil olmak üzere yapı üzerinde yürütülen tüm araştırmaların tarihçesi"
         },
         "description": {
           "label": "Açıklama",
@@ -704,7 +704,7 @@
         },
         "excavationHistory": {
           "label": "Kazı tarihçesi",
-          "description": ""
+          "description": "Alandaki kazı projelerine ilişkin inceleme"
         },
         "findSituation": {
           "label": "Keşif koşulları",
@@ -712,7 +712,7 @@
         },
         "modernIntervention": {
           "label": "Modern dönem izleri",
-          "description": ""
+          "description": "Alanın yakın zamanda hasara maruz kalıp kalmadığının açıklaması (örn.: taş ocağı/ocak/maden, bina geliştirme, dolgu, kaçak kazı, tarım, ağaçlandırma, atık depolama alanları)"
         },
         "findspotClassification": {
           "label": "Buluntu yeri sınıflandırması"
@@ -738,7 +738,7 @@
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
-          "description": ""
+          "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "layerClassification": {
           "label": "Tabaka açıklaması veya sınıflandırması"
@@ -766,7 +766,7 @@
         },
         "featureBorders": {
           "label": "Stratigrafik birim sınırları",
-          "description": "Sınırların belirtilmesi"
+          "description": "Stratigrafik birim sınırlarının belirtilmesi"
         },
         "featureForm": {
           "label": "Stratigrafik birimin şekli",
@@ -775,11 +775,11 @@
       }
     },
     "FeatureGroup": {
-      "label": "",
+      "label": "Stratigrafik birim grubu",
       "fields": {
         "comparison": {
-          "label": "",
-          "description": ""
+          "label": "Karşılaştırma(lar)",
+          "description": "Benzer buluntular, objeler, yazıtlar vb. ile kaynak gösterilerek karşılaştırılması"
         }
       }
     },
@@ -787,11 +787,11 @@
       "label": "",
       "fields": {
         "comparison": {
-          "label": "",
-          "description": ""
+          "label": "Karşılaştırma(lar)",
+          "description": "Benzer buluntular, objeler, yazıtlar vb. ile kaynak gösterilerek karşılaştırılması"
         },
         "hasDisturbance": {
-          "label": "",
+          "label": "Tahribat",
           "description": ""
         },
         "featureSegmentBorders": {
@@ -842,14 +842,14 @@
       "fields": {
         "comparison": {
           "label": "Karşılaştırma(lar)",
-          "description": ""
+          "description": "Benzer buluntular, objeler, yazıtlar vb. ile kaynak gösterilerek karşılaştırılması"
         },
         "conditionComment": {
           "label": "Durum açıklama"
         },
         "condition": {
           "label": "Durumu",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "language": {
           "label": "Dili"
@@ -1091,7 +1091,7 @@
         },
         "condition": {
           "label": "Durumu",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
           "label": "Koruma değerlendirme",
@@ -1153,7 +1153,7 @@
         },
         "condition": {
           "label": "Koruma değerlendirme",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
           "label": "",
@@ -1423,7 +1423,7 @@
         },
         "comparison": {
           "label": "Karşılaştırma(lar)",
-          "description": ""
+          "description": "Benzer buluntular, objeler, yazıtlar vb. ile kaynak gösterilerek karşılaştırılması"
         },
         "conditionComment": {
           "label": "Durum açıklama"

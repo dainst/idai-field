@@ -21,7 +21,7 @@ defmodule Api.Documents.Index do
   must_not - pass nil to set no must_not filters
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
-    {filters, multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
+    {filters, multilanguage_filters, must_not, project_conf, dropdown_fields} = preprocess(filters, must_not)
 
     query = create_search_query q, size, from, filters, must_not, exists,
       not_exists, sort, vector_query, readable_projects, multilanguage_filters
@@ -29,8 +29,9 @@ defmodule Api.Documents.Index do
     result = query |> build_post_atomize |> Mapping.map(project_conf)
 
     multilanguage_filters = []
-    filters = Enum.filter filters, fn {k, _v} -> k != "resource.category.name" end
-    # TODO remove dropdown filters and any other field specific filters here
+    filters = filters
+     |> Enum.filter(fn {k, _v} -> k != "resource.category.name" end)
+     |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
 
     query2 = create_search_query q, size, from, filters, must_not, exists,
       not_exists, sort, vector_query, readable_projects, multilanguage_filters
@@ -45,7 +46,7 @@ defmodule Api.Documents.Index do
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do
-    {filters, _multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
+    {filters, _multilanguage_filters, must_not, project_conf, _} = preprocess(filters, must_not)
     Query.init(q, @max_geometries)
     |> Query.add_filters(filters)
     |> Query.add_must_not(must_not)
@@ -100,7 +101,7 @@ defmodule Api.Documents.Index do
     project = get_project(filters)
     project_conf = ProjectConfigLoader.get project
     languages = ProjectConfigLoader.get_languages project
-    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters_and_add_name_suffixes filters, project_conf, languages
+    {filters, multilanguage_filters, dropdown_fields} = Filter.split_off_multilanguage_filters_and_add_name_suffixes filters, project_conf, languages
 
     filters =
       filters
@@ -112,7 +113,7 @@ defmodule Api.Documents.Index do
       |> Filter.wrap_values_as_singletons
       |> Filter.expand_categories(project_conf)
 
-    {filters, multilanguage_filters, must_not, project_conf}
+    {filters, multilanguage_filters, must_not, project_conf, dropdown_fields}
   end
 
   defp get_project(nil), do: "default"

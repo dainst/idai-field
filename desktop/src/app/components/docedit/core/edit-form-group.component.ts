@@ -42,7 +42,7 @@ export class EditFormGroup implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
-        if (this.scrollTargetField) this.scrollToField(this.scrollTargetField);
+        if (this.scrollTargetField) this.scrollToTargetField();
     }
 
 
@@ -127,17 +127,34 @@ export class EditFormGroup implements OnChanges {
     }
 
 
-    private async scrollToField(fieldName: string) {
+    private async scrollToTargetField() {
 
         await AngularUtility.refresh();
-        const containerElement: HTMLElement = this.elementRef.nativeElement;
 
-        const field: Field = this.fieldDefinitions.find(fieldDefinition => fieldDefinition.name === fieldName);
+        const field: Field = this.fieldDefinitions.find(fieldDefinition => {
+            return fieldDefinition.name === this.scrollTargetField;
+        });
         const element: HTMLElement|null = document.getElementById(this.getFieldId(field));
         if (!element) return;
+
+        await this.scrollToElement(element);
+        await this.focusField(element);
+    }
+
+
+    private async scrollToElement(element: HTMLElement) {
+
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
 
         await AngularUtility.refresh();
         const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
         containerElement.parentElement.scrollTo(0, scrollY);
+    }
+
+
+    private focusField(fieldElement: HTMLElement) {
+
+        const inputElements = fieldElement.getElementsByTagName('input');
+        if (inputElements.length > 0) inputElements[0].focus();
     }
 }

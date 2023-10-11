@@ -48,7 +48,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     async ngAfterViewInit() {
 
         await AngularUtility.refresh();
-        this.focusFirstInputElement();
+        if (!this.scrollTargetField) this.focusFirstInputElement();
     }
 
 

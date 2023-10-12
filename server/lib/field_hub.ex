@@ -1,8 +1,5 @@
 defmodule FieldHub do
   @moduledoc """
-  FieldHub and all its submodules keep the contexts that define your domain and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  FieldHub and all its submodules keep the internal modules, that define FieldHub's domain and business logic.
   """
 end

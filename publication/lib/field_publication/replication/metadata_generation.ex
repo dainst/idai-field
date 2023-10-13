@@ -7,6 +7,14 @@ defmodule FieldPublication.Replication.MetadataGeneration do
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
+
+    configuration_doc =
+      configuration_doc_name
+      |> CouchService.get_document()
+      |> then(fn({:ok, %{body: body}}) ->
+        Jason.decode!(body)
+      end)
+
     full_config =
       System.cmd(
         "node",
@@ -22,7 +30,7 @@ defmodule FieldPublication.Replication.MetadataGeneration do
         ]
       )
       |> then(fn {full_configuration, 0} ->
-        Jason.decode!(full_configuration)
+        Map.put(configuration_doc, :config, Jason.decode!(full_configuration))
       end)
 
     CouchService.put_document(configuration_doc_name, full_config)

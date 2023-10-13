@@ -2,10 +2,8 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
   alias FieldPublication.Replication
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Schemas.{
-    Project,
-    ReplicationInput
-  }
+  alias FieldPublication.Projects
+  alias FieldPublication.Schemas.ReplicationInput
 
   @impl true
   def render(assigns) do
@@ -56,7 +54,7 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
 
   @impl true
   def update(%{id: project_id, patch: patch_route}, socket) do
-    project = Project.get!(project_id)
+    project = Projects.get!(project_id)
 
     changeset =
       %ReplicationInput{}

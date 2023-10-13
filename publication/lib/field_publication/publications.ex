@@ -1,66 +1,16 @@
-defmodule FieldPublication.Schemas.Publication do
-  use Ecto.Schema
-
+defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
   alias FieldPublication.{
     Schemas,
-    CouchService,
-    FileService
+    CouchService
   }
 
   alias FieldPublication.Schemas.{
     ReplicationInput,
     Project,
-    Translation,
-    LogEntry
+    Publication
   }
-
-  @doc_type "publication"
-  @primary_key false
-  embedded_schema do
-    field(:_rev, :string)
-    field(:doc_type, :string, default: @doc_type)
-    field(:project_name, :string, primary_key: true)
-    field(:source_url, :string)
-    field(:source_project_name, :string)
-    field(:draft_date, :date, primary_key: true)
-    field(:replication_finished, :utc_datetime)
-    field(:publication_date, :date)
-    field(:configuration_doc, :string)
-    field(:database, :string)
-    embeds_many(:comments, Translation, on_replace: :delete)
-    embeds_many(:replication_logs, LogEntry, on_replace: :delete)
-    embeds_many(:processing_logs, LogEntry, on_replace: :delete)
-  end
-
-  def changeset(publication, attrs \\ %{}) do
-    publication
-    |> cast(attrs, [
-      :_rev,
-      :project_name,
-      :source_url,
-      :source_project_name,
-      :draft_date,
-      :replication_finished,
-      :publication_date,
-      :configuration_doc,
-      :database
-    ])
-    |> cast_embed(:comments)
-    |> cast_embed(:replication_logs)
-    |> cast_embed(:processing_logs)
-    |> validate_required([
-      :project_name,
-      :source_url,
-      :source_project_name,
-      :draft_date,
-      :configuration_doc,
-      :database
-    ])
-    |> validate_project_exists()
-    |> Schemas.validate_doc_type(@doc_type)
-  end
 
   def create_from_replication_input(%ReplicationInput{
         source_url: source_url,
@@ -72,7 +22,7 @@ defmodule FieldPublication.Schemas.Publication do
     draft_date = Date.utc_today()
 
     changeset =
-      %__MODULE__{
+      %Publication{
         project_name: project_name,
         source_url: source_url,
         source_project_name: source_project_name,
@@ -81,7 +31,7 @@ defmodule FieldPublication.Schemas.Publication do
         draft_date: draft_date,
         comments: comments
       }
-      |> changeset()
+      |> Publication.changeset()
 
     case apply_action(changeset, :create) do
       {:ok, publication} ->
@@ -109,10 +59,10 @@ defmodule FieldPublication.Schemas.Publication do
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
-    %__MODULE__{
+    %Publication{
       project_name: project_name,
       draft_date: draft_date,
-      doc_type: @doc_type
+      doc_type: Publication.doc_type()
     }
     |> get_doc_id()
     |> CouchService.get_document()
@@ -122,7 +72,7 @@ defmodule FieldPublication.Schemas.Publication do
 
         {
           :ok,
-          apply_changes(changeset(%__MODULE__{}, json_doc))
+          apply_changes(Publication.changeset(%Publication{}, json_doc))
         }
 
       {:ok, %{status: 404}} ->
@@ -135,16 +85,16 @@ defmodule FieldPublication.Schemas.Publication do
     publication
   end
 
-  def get!(%__MODULE__{project_name: project_name, draft_date: draft_date}) do
+  def get!(%Publication{project_name: project_name, draft_date: draft_date}) do
     get!(project_name, draft_date)
   end
 
   def list() do
-    run_search(%{selector: %{doc_type: @doc_type}})
+    run_search(%{selector: %{doc_type: Publication.doc_type()}})
   end
 
   def list(%Project{name: name}) do
-    run_search(%{selector: %{doc_type: @doc_type, project_name: name}})
+    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: name}})
   end
 
   defp run_search(query) do
@@ -157,7 +107,7 @@ defmodule FieldPublication.Schemas.Publication do
           docs
         end)
         |> Enum.map(fn doc ->
-          changeset(%__MODULE__{}, doc)
+          Publication.changeset(%Publication{}, doc)
           |> apply_changes()
         end)
     end
@@ -175,8 +125,8 @@ defmodule FieldPublication.Schemas.Publication do
   """
   def put(publication, params \\ %{})
 
-  def put(%__MODULE__{_rev: rev} = publication, params) when not is_nil(rev) do
-    changeset = changeset(publication, params)
+  def put(%Publication{_rev: rev} = publication, params) when not is_nil(rev) do
+    changeset = Publication.changeset(publication, params)
 
     with {:ok, publication} <- apply_action(changeset, :create),
          doc_id <- get_doc_id(publication),
@@ -192,15 +142,13 @@ defmodule FieldPublication.Schemas.Publication do
     end
   end
 
-  def put(%__MODULE__{} = publication, params) do
-    changeset = changeset(publication, params)
+  def put(%Publication{} = publication, params) do
+    changeset = Publication.changeset(publication, params)
 
     with {:ok, publication} <- apply_action(changeset, :create),
          doc_id <- get_doc_id(publication),
          {:ok, %{status: 201}} <- CouchService.create_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
-         :ok <-
-           FileService.initialize_publication(publication.project_name, publication.draft_date),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
@@ -230,11 +178,9 @@ defmodule FieldPublication.Schemas.Publication do
   end
 
   def delete(
-        %__MODULE__{
+        %Publication{
           _rev: rev,
-          database: database,
-          project_name: project_name,
-          draft_date: draft_date
+          database: database
         } = publication
       ) do
     doc_id = get_doc_id(publication)
@@ -244,8 +190,8 @@ defmodule FieldPublication.Schemas.Publication do
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database),
-         {:ok, _} = FileService.delete_publication(project_name, draft_date) do
+           CouchService.delete_database(database)
+          do
       {:ok, :deleted}
     else
       error ->
@@ -253,7 +199,7 @@ defmodule FieldPublication.Schemas.Publication do
     end
   end
 
-  defp delete_configuration_doc(%__MODULE__{configuration_doc: doc_id}) do
+  defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
       {:ok, %{status: 404}} = response ->
@@ -274,19 +220,6 @@ defmodule FieldPublication.Schemas.Publication do
   end
 
   def get_doc_id(publication) do
-    Schemas.construct_doc_id(publication, __MODULE__)
-  end
-
-  defp validate_project_exists(changeset) do
-    name = get_field(changeset, :project_name)
-
-    Project.get(name)
-    |> case do
-      {:ok, _project} ->
-        changeset
-
-      {:error, :not_found} ->
-        add_error(changeset, :project_name, "Project #{name} document not found.")
-    end
+    Schemas.construct_doc_id(publication, Publication)
   end
 end

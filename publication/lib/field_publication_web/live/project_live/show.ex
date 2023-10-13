@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.ProjectLive.Show do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Schemas.Project
+  alias FieldPublication.Projects
 
   @impl true
   def mount(_params, _session, socket) do
@@ -16,25 +16,26 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   defp apply_action(socket, :show, %{"project_id" => id}) do
     socket
     |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:project, Project.get!(id))
+    |> assign(:project, Projects.get!(id))
   end
 
   defp apply_action(socket, :edit, %{"project_id" => id}) do
     socket
     |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:project, Project.get!(id))
+    |> assign(:project, Projects.get!(id))
   end
 
   defp apply_action(socket, :draft_publication, %{
          "project_id" => project_id
        }) do
-    project = Project.get!(project_id)
+    project = Projects.get!(project_id)
 
     socket
     |> assign(:page_title, page_title(socket.assigns.live_action))
     |> assign(:project, project)
   end
 
+  @impl true
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
     {:noreply, assign(socket, :project, project)}
   end

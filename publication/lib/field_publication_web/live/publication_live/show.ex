@@ -3,21 +3,20 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   alias Phoenix.PubSub
 
+  alias FieldPublication.Publications
+
   alias FieldPublication.Schemas.{
-    Publication,
     LogEntry
   }
 
   alias FieldPublication.Processing
 
-  @cache_name :publication_task_states
-
   require Logger
 
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
-    publication = Publication.get!(project_id, draft_date_string)
-    channel = Publication.get_doc_id(publication)
+    publication = Publications.get!(project_id, draft_date_string)
+    channel = Publications.get_doc_id(publication)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 

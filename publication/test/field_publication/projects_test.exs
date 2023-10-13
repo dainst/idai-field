@@ -1,61 +1,69 @@
-defmodule FieldPublication.ProjectsTest do
-  use FieldPublication.DataCase
+defmodule FieldPublication.ProjectTest do
+  use ExUnit.Case
 
+  alias FieldPublication.CouchService
+  alias FieldPublication.Schemas.Project
   alias FieldPublication.Projects
 
+  @core_database Application.compile_env(:field_publication, :core_database)
+  @project_fixture %{"name" => "test"}
+
+  setup do
+    CouchService.create_database(@core_database)
+
+    on_exit(fn ->
+      CouchService.delete_database(@core_database)
+    end)
+
+    :ok
+  end
+
   describe "projects" do
-    alias FieldPublication.Projects.Project
+    test "can create a new project" do
+      {:ok, %Project{_rev: rev}} = Projects.put(%Project{}, @project_fixture)
 
-    import FieldPublication.ProjectsFixtures
-
-    @invalid_attrs %{name: nil, description: nil}
-
-    test "list_projects/0 returns all projects" do
-      project = project_fixture()
-      assert Projects.list_projects() == [project]
+      assert is_binary(rev)
     end
 
-    test "get_project!/1 returns the project with given id" do
-      project = project_fixture()
-      assert Projects.get_project!(project.id) == project
+    test "can update project" do
+      {:ok, %Project{_rev: rev, hidden: true} = initial} =
+        Projects.put(%Project{}, @project_fixture)
+
+      {:ok, %Project{_rev: rev_updated, hidden: false}} =
+        Projects.put(initial, %{"hidden" => false})
+
+      assert rev != rev_updated
     end
 
-    test "create_project/1 with valid data creates a project" do
-      valid_attrs = %{name: "some name", description: "some description"}
+    test "trying to update/override a project without rev results in error" do
+      {:ok, %Project{}} = Projects.put(%Project{}, @project_fixture)
+      {:error, changeset} = Projects.put(%Project{}, @project_fixture)
 
-      assert {:ok, %Project{} = project} = Projects.create_project(valid_attrs)
-      assert project.name == "some name"
-      assert project.description == "some description"
+      assert %{errors: [duplicate_document: {_msg, _}]} = changeset
     end
 
-    test "create_project/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Projects.create_project(@invalid_attrs)
+    test "can list projects" do
+      first_name = Map.get(@project_fixture, "name")
+      second_name = "test2"
+
+      Projects.put(%Project{}, @project_fixture)
+      Projects.put(%Project{}, Map.put(@project_fixture, "name", second_name))
+
+      [%Project{name: ^first_name}, %Project{name: ^second_name}] = Projects.list()
     end
 
-    test "update_project/2 with valid data updates the project" do
-      project = project_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description"}
-
-      assert {:ok, %Project{} = project} = Projects.update_project(project, update_attrs)
-      assert project.name == "some updated name"
-      assert project.description == "some updated description"
+    test "can get/1 by name" do
+      Projects.put(%Project{}, @project_fixture)
+      assert {:ok, %Project{}} = Projects.get(Map.get(@project_fixture, "name"))
     end
 
-    test "update_project/2 with invalid data returns error changeset" do
-      project = project_fixture()
-      assert {:error, %Ecto.Changeset{}} = Projects.update_project(project, @invalid_attrs)
-      assert project == Projects.get_project!(project.id)
+    test "get/1 for unknown project returns error" do
+      assert {:error, :not_found} = Projects.get(Map.get(@project_fixture, "name"))
     end
 
-    test "delete_project/1 deletes the project" do
-      project = project_fixture()
-      assert {:ok, %Project{}} = Projects.delete_project(project)
-      assert_raise Ecto.NoResultsError, fn -> Projects.get_project!(project.id) end
-    end
-
-    test "change_project/1 returns a project changeset" do
-      project = project_fixture()
-      assert %Ecto.Changeset{} = Projects.change_project(project)
+    test "can get!/1 by name" do
+      Projects.put(%Project{}, @project_fixture)
+      assert %Project{} = Projects.get!(Map.get(@project_fixture, "name"))
     end
   end
 end

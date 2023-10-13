@@ -669,6 +669,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   Component for displaying lists of LogEntry schemas.
   """
   attr :logs, :list, required: true
+
   def log_entry_list(assigns) do
     ~H"""
     <div>

@@ -21,12 +21,9 @@ defmodule FieldPublication.Replication.FileReplication do
             source_url: source_url,
             source_project_name: source_project_name,
             source_user: source_user,
-            source_password: source_password,
-            project_name: project_key
+            source_password: source_password
           },
-          publication: %Publication{
-            draft_date: draft_date
-          }
+          publication: %Publication{} = publication
         } = state
       ) do
     headers = [
@@ -44,7 +41,7 @@ defmodule FieldPublication.Replication.FileReplication do
         filtered =
           result
           |> Enum.reject(fn {uuid, _} ->
-            FileService.file_exists?(project_key, draft_date, uuid)
+            FileService.raw_data_file_exists?(publication.project_name, uuid, :image)
           end)
 
         {variant, filtered}
@@ -126,7 +123,7 @@ defmodule FieldPublication.Replication.FileReplication do
            counter_pid,
            %{
              channel: channel,
-             publication: %{project_name: project_key, draft_date: draft_date} = _state
+             publication: %{} = publication
            }
          }
        ) do
@@ -138,7 +135,7 @@ defmodule FieldPublication.Replication.FileReplication do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
-        FileService.write_file(project_key, draft_date, uuid, data)
+        FileService.write_raw_data(publication.project_name, uuid, data, :image)
     end
 
     Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)

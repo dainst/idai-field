@@ -7,7 +7,8 @@ defmodule FieldPublication.Replication do
     CouchService,
     Replication.CouchReplication,
     Replication.FileReplication,
-    Replication.MetadataGeneration
+    Replication.MetadataGeneration,
+    Publications
   }
 
   alias FieldPublication.Schemas.{
@@ -17,9 +18,9 @@ defmodule FieldPublication.Replication do
   }
 
   def start(%ReplicationInput{} = params) do
-    with {:ok, publication} <- Publication.create_from_replication_input(params),
+    with {:ok, publication} <- Publications.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params),
-         channel <- Publication.get_doc_id(publication) do
+         channel <- Publications.get_doc_id(publication) do
       setup_state = %{
         parameters: params,
         publication: publication,
@@ -84,19 +85,18 @@ defmodule FieldPublication.Replication do
          %{publication: %{project_name: project_name}} =
            setup_state
        ) do
-
     log(setup_state, :info, "Starting replication for #{project_name}.")
 
     with {:ok, updated_state} <- replicate_database(setup_state),
          {:ok, updated_state} <- replicate_files(updated_state),
-         {:ok, %{publication: publication, channel: channel } = updated_state} <-
+         {:ok, %{publication: publication, channel: channel} = updated_state} <-
            reconstruct_configuration_doc(updated_state) do
       log(updated_state, :info, "Replication finished.")
 
       {:ok, final_publication} =
         publication
-        |> Publication.get!()
-        |> Publication.put(%{"replication_finished" => DateTime.utc_now()})
+        |> Publications.get!()
+        |> Publications.put(%{"replication_finished" => DateTime.utc_now()})
 
       PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, final_publication})
     else
@@ -160,9 +160,9 @@ defmodule FieldPublication.Replication do
       })
 
     publication
-    |> Publication.get!()
-    |> Map.update(:replication_logs, [], fn(existing) -> existing ++ [log_entry] end)
-    |> Publication.put(%{})
+    |> Publications.get!()
+    |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
+    |> Publications.put(%{})
 
     PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})
   end

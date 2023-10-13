@@ -1,15 +1,17 @@
 defmodule FieldPublication.ReplicationTest do
   use ExUnit.Case
 
-  alias FieldPublication.FileService
   alias FieldPublication.CouchService
   alias FieldPublication.Replication
+  alias FieldPublication.Projects
+  alias FieldPublication.Publications
 
   alias FieldPublication.Schemas.{
     Project,
     Publication,
     ReplicationInput,
-    Translation
+    Translation,
+    LogEntry
   }
 
   @fieldhub_fixture_dir "test/support/fixtures/field_hub"
@@ -32,14 +34,14 @@ defmodule FieldPublication.ReplicationTest do
   describe "tests running against field hub instance" do
     setup do
       CouchService.create_database(@core_database)
-      Project.put(%Project{}, %{"name" => @project_name})
+      {:ok, project} = Projects.put(%Project{}, %{"name" => @project_name})
 
       on_exit(fn ->
         CouchService.delete_database(@core_database)
 
         # Ugly, this assumes the tests and on the same day they are started, which is not guaranteed.
         CouchService.delete_database("publication_test_#{Date.utc_today()}")
-        FileService.delete_publication(@project_name, Date.utc_today())
+        Projects.delete(project)
       end)
 
       :ok
@@ -64,10 +66,8 @@ defmodule FieldPublication.ReplicationTest do
       # Should the replication task crash for any reason, a different message will be received.
       assert_receive {:DOWN, ^ref, :process, _object, :normal}, 20_000
 
-      Publication.list(%Project{name: @project_name})
-
       assert [
-               %FieldPublication.Schemas.Publication{
+               %Publication{
                  _rev: _,
                  doc_type: "publication",
                  project_name: "test",
@@ -78,63 +78,63 @@ defmodule FieldPublication.ReplicationTest do
                  configuration_doc: configuration_doc,
                  database: publication_database,
                  comments: [
-                   %FieldPublication.Schemas.Translation{text: "ein test", language: "de"},
-                   %FieldPublication.Schemas.Translation{text: "a test", language: "en"}
+                   %Translation{text: "ein test", language: "de"},
+                   %Translation{text: "a test", language: "en"}
                  ],
                  replication_logs: [
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Starting replication for test."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Starting database replication."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "21 database documents need replication."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Database replication has finished."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Starting file replication."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "2 files need replication."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "File replication has finished."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Creating publication metadata."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Publication metadata created."
                    },
-                   %FieldPublication.Schemas.LogEntry{
+                   %LogEntry{
                      severity: :info,
                      timestamp: _,
                      message: "Replication finished."
                    }
                  ]
                }
-             ] = Publication.list(%Project{name: @project_name})
+             ] = Publications.list(%Project{name: @project_name})
 
       assert {:ok, %{status: 200}} = CouchService.get_document(configuration_doc)
 

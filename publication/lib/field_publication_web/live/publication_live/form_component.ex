@@ -1,7 +1,8 @@
 defmodule FieldPublicationWeb.PublicationLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Schema.Publication
+  alias FieldPublication.Publications
+  alias FieldPublication.Schemas.Publication
 
   @impl true
   def render(assigns) do
@@ -66,7 +67,7 @@ defmodule FieldPublicationWeb.PublicationLive.FormComponent do
 
   def handle_event("save", %{"publication" => publication_form_params}, socket) do
     socket.assigns.publication
-    |> Publication.update(publication_form_params)
+    |> Publications.put(publication_form_params)
     |> case do
       {:ok, updated_publication} ->
         notify_parent({:updated_publication, updated_publication})

@@ -3,6 +3,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
   alias FieldPublication.Schemas.Project
   alias FieldPublication.User
+  alias FieldPublication.Projects
 
   @impl true
   def render(assigns) do
@@ -94,7 +95,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :edit, project_params) do
-    case Project.put(socket.assigns.project, project_params) do
+    case Projects.put(socket.assigns.project, project_params) do
       {:ok, updated_project} ->
         notify_parent({:saved, updated_project})
 
@@ -111,7 +112,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   end
 
   defp save_project(socket, :new, project_params) do
-    case Project.put(%Project{}, project_params) do
+    case Projects.put(%Project{}, project_params) do
       {:ok, project} ->
         notify_parent({:saved, project})
 

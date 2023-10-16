@@ -1,58 +1,105 @@
 defmodule FieldPublication.Processing.Image do
+  alias FieldPublication.CouchService
   alias Phoenix.PubSub
 
   alias FieldPublication.FileService
+  alias FieldPublication.Publications
+
   alias FieldPublication.Schemas.{
     Publication
   }
 
-  @web_images_directory Application.compile_env(:field_publication, :web_images_directory_root)
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
   @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
-  def evaluate_unprocessed_images(project_id, publication_date) do
-    {:ok, raw_files} = FileService.list_publication_files(project_id, publication_date)
+  def evaluate_web_images_state(%Publication{project_name: project_name, database: database} = publication) do
+    %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 
-    processed_files =
-      project_id
-      |> get_publication_dir(publication_date)
-      |> File.ls()
-      |> case do
-        {:ok, list} ->
-          list
-          |> Enum.map(fn file_name -> String.replace_suffix(file_name, ".jp2", "") end)
+    current_web_files = FileService.list_web_image_files(project_name)
 
-        _ ->
-          []
-      end
+    publication_image_categories = Publications.list_with_all_child_categories(publication, "Image")
+    {existing, missing} =
+      CouchService.get_document_stream(%{
+        selector: %{
+          "$or":
+            Enum.map(publication_image_categories, fn category ->
+              [
+                %{"resource.category" => category},
+                %{"resource.type" => category}
+              ]
+            end)
+            |> List.flatten()
+        }
+      }, database)
+      |> Stream.map(fn(%{"_id" => uuid}) ->
+        uuid
+      end)
+      |> Enum.split_with(fn(uuid) ->
+        "#{uuid}.jp2" in current_web_files
+      end)
 
-    counter = Enum.count(processed_files)
-    overall = Enum.count(raw_files)
+    missing_raw_files = missing -- current_raw_files
+    existing_raw_files = missing -- missing_raw_files
 
-    %{overall: overall, counter: counter, percentage: counter / overall * 100}
+    overall_count = Enum.count(existing) + Enum.count(missing)
+    existing_count = Enum.count(existing)
+
+    %{
+      processed: existing,
+      existing_raw_files: existing_raw_files,
+      missing_raw_files: missing_raw_files,
+      summary: %{overall: overall_count, counter: existing_count, percentage: existing_count / overall_count * 100}
+    }
+  end
+
+  def start_web_image_processing(%Publication{project_name: project_name} = publication) do
+
+    %{existing_raw_files: existing_raw_files, summary: summary} = evaluate_web_images_state(publication)
+
+    raw_root = FileService.get_raw_data_path(project_name)
+    web_root = FileService.get_web_images_path(project_name)
+
+    # TODO: Log missing raw files
+
+    {:ok, counter_pid} =
+      Agent.start_link(fn ->summary end)
+
+    existing_raw_files
+    |> Enum.map(fn(uuid) ->
+      convert_file(
+        "#{raw_root}/image/#{uuid}",
+        "#{web_root}/#{uuid}.jp2",
+        counter_pid,
+        Publications.get_doc_id(publication)
+      )
+    end)
   end
 
 
-  @dialyzer {:nowarn_function, create_web_view_images: 1}
-  def create_web_view_images(%{publication: %Publication{project_name: project_key, draft_date: draft_date}, channel: channel}) do
-    {:ok, source_files} = FileService.list_publication_files(project_key, draft_date)
+  @dialyzer {:nowarn_function, convert_file: 4}
+  defp convert_file(input_file_path, target_file_path, counter_pid, channel) do
+    if @dev_mode do
+      input_file_path = String.replace(input_file_path, "#{@filestore_root}/raw/", "")
+      target_file_path = String.replace(target_file_path, "#{@filestore_root}/web_images/", "")
 
-    current_state = evaluate_unprocessed_images(project_key, draft_date)
+      {"", 0} =
+        System.shell(
+          "docker exec -u root:root field_publication_cantaloupe convert /source_images/#{input_file_path} /image_root/#{target_file_path}"
+        )
+    else
+      System.cmd("convert", [input_file_path, target_file_path])
+    end
 
-    {:ok, counter_pid} =
-      Agent.start_link(fn -> current_state end)
+    Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
 
-    target_folder = get_publication_dir(project_key, draft_date)
-
-    create_target_directory(target_folder)
-
-    source_directory = FileService.get_publication_path(project_key, draft_date)
-
-    source_files
-    |> Stream.map(fn source_file ->
-      {"#{source_directory}/#{source_file}", "#{target_folder}/#{Path.basename(source_file)}.jp2"}
-    end)
-    |> Enum.map(&convert_file(&1, counter_pid, channel))
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      channel,
+      {
+        :web_image_processing,
+        Agent.get(counter_pid, fn state -> state end)
+      }
+    )
   end
 
   @dialyzer {:nowarn_function, create_target_directory: 1}
@@ -73,38 +120,6 @@ defmodule FieldPublication.Processing.Image do
     else
       File.mkdir_p!(target_path)
     end
-  end
-
-  @dialyzer {:nowarn_function, convert_file: 3}
-  defp convert_file({input_file_path, target_file_path}, counter_pid, channel) do
-    if @dev_mode do
-      input_file_path = String.replace(input_file_path, "#{@filestore_root}/", "")
-      target_file_path = String.replace(target_file_path, "#{@web_images_directory}/", "")
-
-      System.cmd(
-        "docker",
-        [
-          "exec",
-          "field_publication_cantaloupe",
-          "convert",
-          "/source_images/#{input_file_path}",
-          "/image_root/#{target_file_path}"
-        ]
-      )
-    else
-      System.cmd("convert", [input_file_path, target_file_path])
-    end
-
-    Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
-
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      channel,
-      {
-        :web_image_processing,
-        Agent.get(counter_pid, fn state -> state end)
-      }
-    )
   end
 
   defp get_publication_dir(project_id, publication_name) do

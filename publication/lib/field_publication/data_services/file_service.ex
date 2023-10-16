@@ -1,15 +1,14 @@
 defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
-  @web_images_directory Application.compile_env(:field_publication, :web_images_directory_root)
 
   require Logger
 
   def get_raw_data_path(project_name) when is_binary(project_name) do
-    "#{@file_store_path}/#{project_name}/raw"
+    "#{@file_store_path}/raw/#{project_name}"
   end
 
   def get_web_images_path(project_name) do
-    "#{@file_store_path}/#{project_name}/web_images"
+    "#{@file_store_path}/web_images/#{project_name}"
   end
 
   def initialize(project_name) do
@@ -45,22 +44,26 @@ defmodule FieldPublication.FileService do
   end
 
   def write_raw_data(project_name, uuid, data, :image) do
-    File.write!("#{get_raw_data_path(project_name)}/#{uuid}", data)
+    File.write!("#{get_raw_data_path(project_name)}/image/#{uuid}", data)
   end
 
   def read_raw_data(project_name, uuid, :image) do
-    File.read!("#{get_raw_data_path(project_name)}/#{uuid}")
+    File.read!("#{get_raw_data_path(project_name)}/image/#{uuid}")
   end
 
   def raw_data_file_exists?(project_name, uuid, :image) do
-    File.exists?("#{get_raw_data_path(project_name)}/#{uuid}")
+    File.exists?("#{get_raw_data_path(project_name)}/image/#{uuid}")
   end
 
   def list_raw_data_files(project_name) do
     File.ls!(get_raw_data_path(project_name))
     |> Enum.map(fn directory ->
-      {directory, File.ls!(directory)}
+      {String.to_existing_atom(directory), File.ls!("#{get_raw_data_path(project_name)}/#{directory}")}
     end)
     |> Enum.into(%{})
+  end
+
+  def list_web_image_files(project_name) do
+    File.ls!( get_web_images_path(project_name))
   end
 end

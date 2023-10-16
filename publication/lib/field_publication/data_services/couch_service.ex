@@ -222,6 +222,53 @@ defmodule FieldPublication.CouchService do
     end
   end
 
+  def get_document_stream(query, database \\ @core_database) do
+    batch_size = 500
+
+    Stream.resource(
+      fn ->
+        query
+        |> Map.put(:limit, batch_size)
+      end,
+      fn payload ->
+        Finch.build(
+          :post,
+          "#{local_url()}/#{database}/_find",
+          headers(),
+          Jason.encode!(payload)
+        )
+        |> Finch.request(FieldPublication.Finch)
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            body
+            |> Jason.decode!()
+            |> case do
+              %{"docs" => []} ->
+                {:halt, :ok}
+
+              %{"docs" => docs, "bookmark" => bookmark} ->
+                {
+                  docs,
+                  Map.put(payload, :bookmark, bookmark)
+                }
+            end
+
+          error ->
+            {:halt, {:error, error}}
+        end
+      end,
+      fn final_payload ->
+        case final_payload do
+          {:error, error} ->
+            throw(error)
+
+          _ ->
+            :ok
+        end
+      end
+    )
+  end
+
   def find_documents(%{type: type}, database_name \\ @core_database) do
     Finch.build(
       :post,

@@ -30,8 +30,8 @@ services:
     ports:
       - "8182:8182"
     volumes:
-      - "./data/cantaloupe:/image_root"
-      - "./data/file_store:/source_images"
+      - "./data/file_store/web_images:/image_root"
+      - "./data/file_store/raw:/source_images"
       - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties"
 
   couchdb:

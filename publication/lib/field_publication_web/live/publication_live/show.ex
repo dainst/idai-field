@@ -21,8 +21,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
     %{
-      images: web_image_processing_progress
-    } = Processing.evaluate_processing_state(publication)
+      summary: web_image_processing_progress
+    } = Processing.Image.evaluate_web_images_state(publication)
 
     {
       :ok,
@@ -44,11 +44,13 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   @impl true
   def handle_event("process_images", _, socket) do
-    Processing.start(%Processing.Context{
-      publication: socket.assigns.publication,
-      channel: socket.assigns.channel,
-      task_list: [:web_images]
-    })
+    Processing.Image.start_web_image_processing(socket.assigns.publication)
+
+    # Processing.start(%Processing.Context{
+    #   publication: socket.assigns.publication,
+    #   channel: socket.assigns.channel,
+    #   task_list: [:web_images]
+    # })
 
     {:noreply, socket}
   end

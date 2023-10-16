@@ -25,11 +25,12 @@ defmodule FieldPublication.PublicationsTest do
 
   setup do
     CouchService.create_database(@core_database)
-    Projects.put(%Project{}, %{"name" => @local_project_name})
+    {:ok, project} = Projects.put(%Project{}, %{"name" => @local_project_name})
 
     on_exit(fn ->
       CouchService.delete_database(@core_database)
       CouchService.delete_database(@publication_params_fixture.database)
+      Projects.delete(project)
     end)
 
     :ok
@@ -106,6 +107,11 @@ defmodule FieldPublication.PublicationsTest do
              ] = Publications.list(other_project)
 
       CouchService.delete_database(other_project_database_name)
+
+      # Cleanup after test.
+      on_exit(fn ->
+        Projects.delete(other_project)
+      end)
     end
   end
 

@@ -38,3 +38,5 @@ npm-debug.log
 data/
 !data/cantaloupe/.gitignore
 !data/files/.gitignore
+
+test/file_store

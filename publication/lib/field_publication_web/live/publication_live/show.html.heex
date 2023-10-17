@@ -37,9 +37,9 @@
         <tbody>
           <tr class="border-2">
             <td class="text-center">Web images</td>
-            <td><.progress_bar state={@web_image_processing_progress} /></td>
+            <td><.progress_bar state={@web_image_processing_progress}>Evaluating...</.progress_bar></td>
             <td class="text-center">
-              <button class="font-semibold font-mono" type="button" phx-click="process_images">
+              <button class="font-semibold font-mono" type="button" phx-click="process_web_images">
                 Start
               </button>
             </td>

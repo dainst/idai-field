@@ -20,10 +20,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
-    %{
-      summary: web_image_processing_progress
-    } = Processing.Image.evaluate_web_images_state(publication)
-
+    Process.send(self(), :run_evaluations, [])
     {
       :ok,
       socket
@@ -33,7 +30,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:last_replication_log, List.last(publication.replication_logs))
       |> assign(:replication_progress_state, nil)
       |> assign(:last_web_image_processing_log, nil)
-      |> assign(:web_image_processing_progress, web_image_processing_progress)
+      |> assign(:web_image_processing_progress, nil)
     }
   end
 
@@ -43,19 +40,31 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  def handle_event("process_images", _, socket) do
+  def handle_event("process_web_images", _, socket) do
     Processing.Image.start_web_image_processing(socket.assigns.publication)
-
-    # Processing.start(%Processing.Context{
-    #   publication: socket.assigns.publication,
-    #   channel: socket.assigns.channel,
-    #   task_list: [:web_images]
-    # })
 
     {:noreply, socket}
   end
 
   @impl true
+  @doc """
+  This function gets scheduled on mount, put longer running evaluations here. This will ensure that
+  the socket connection does not have to wait for the evaluations but is instead established quickly.
+  """
+  def handle_info(:run_evaluations, %{assigns: %{publication: publication}} = socket) do
+
+    %{
+      summary: web_image_processing_progress
+    } = Processing.Image.evaluate_web_images_state(publication)
+
+    {
+      :noreply,
+      socket
+      |> assign(:web_image_processing_progress, web_image_processing_progress)
+    }
+  end
+
+
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {
       :noreply,

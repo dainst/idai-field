@@ -259,7 +259,7 @@
         },
         "vesselFormSpecific": {
           "label": "Özel kap formu",
-          "description": "Kapların spesifik formu"
+          "description": "Kabın spesifik formu"
         }
       }
     },
@@ -315,7 +315,7 @@
         },
         "temper": {
           "label": "Katkı",
-          "description": "Katkının temel durumu"
+          "description": "Katkının esas durumu"
         }
       }
     },
@@ -812,7 +812,7 @@
         },
         "condition": {
           "label": "Durumu",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
           "label": "Koruma değerlendirme",
@@ -823,7 +823,7 @@
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
-          "description": ""
+          "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "floorClassification": {
           "label": "Zemin sınıflandırması"
@@ -833,7 +833,7 @@
         },
         "mortarBinder": {
           "label": "Harç agregası",
-          "description": ""
+          "description": "Agregadaki katkı maddesi ne kadar fazla?"
         }
       }
     },
@@ -916,7 +916,7 @@
         },
         "amountSherdsPercent": {
           "label": "Yüzde olarak miktar",
-          "description": ""
+          "description": "Giriş ondalık sayı olarak yapılır; negatif değerler mümkün değildir"
         },
         "amountSherdsLid": {
           "label": "Kapak sayısı"
@@ -935,23 +935,23 @@
         },
         "decorationDescription": {
           "label": "Bezeme açıklama",
-          "description": ""
+          "description": "Bezemenin diğer ayrıntıları için ek açıklama alanı"
         },
         "breakStructure": {
           "label": "Parçaya ilişkin notlar (Yapı, gözeneklilik vb.)",
-          "description": ""
+          "description": "Parçanın yapısının ve gözenekliliğinin tanımı"
         },
         "residueAnalysis": {
           "label": "Kalıntı analizi",
-          "description": ""
+          "description": "Kalıntı analizine ilişkin bilgiler"
         },
         "sample": {
           "label": "Numune",
-          "description": ""
+          "description": "Alınan numuneye ilişkin bilgiler"
         },
         "purpose": {
           "label": "Kullanım amacı",
-          "description": ""
+          "description": "Nesnenin amacı veya kullanımı"
         },
         "typeNumber": {
           "label": "Tip numarası",
@@ -992,7 +992,7 @@
         },
         "formDescription": {
           "label": "Form açıklama",
-          "description": ""
+          "description": "Genel formun detaylı açıklaması (yüksek oval vb.)"
         },
         "manufacturing": {
           "label": "Üretim"
@@ -1002,7 +1002,7 @@
         },
         "materialType": {
           "label": "Malzeme tipi",
-          "description": ""
+          "description": "Bulunan nesnenin malzemesi nedir?"
         },
         "objectType": {
           "label": "Obje tipi"
@@ -1012,7 +1012,7 @@
         },
         "temper": {
           "label": "Katkı",
-          "description": ""
+          "description": "Esas katkı türü, örn. 'Organik parçacıklar'"
         },
         "temperAmount": {
           "label": "Katkı miktarı"
@@ -1029,7 +1029,7 @@
         },
         "vesselFormSpecific": {
           "label": "Özel kap formu",
-          "description": ""
+          "description": "Kabın spesifik formu"
         },
         "vesselpart": {
           "label": "Kap parçası"
@@ -1047,7 +1047,7 @@
           "label": "Bezeme karşılaştırma özeti"
         },
         "DecorationComparisonCompendiadetail": {
-          "label": "Bezeme karşılaştırma özeti ayrıntısı"
+          "label": "Bezeme karşılaştırma özetinin detayı"
         },
         "ApplicationComparisonCompendia": {
           "label": ""
@@ -1075,15 +1075,15 @@
         },
         "publicationDatingFinds": {
           "label": "Tarihleme (buluntu)",
-          "description": ""
+          "description": "Örn: bkz. bozulmuş mezar kalıntıları: mezar hediyeleri (MS 2./3. yüzyıl)"
         },
         "publicationDatingScientific": {
           "label": "Tarihleme (bilimsel)",
-          "description": ""
+          "description": "Yayının açıklaması, mevcut tarihlere atıf"
         },
         "publicationDatingStratigraphy": {
           "label": "Tarihleme (stratigrafik)",
-          "description": ""
+          "description": "Örn: bkz. Mezar Yapısı 1: C-14 (MÖ 20-MS 65) tarihli Mezar 28 ile kesişir"
         },
         "publicationRemark": {
           "label": "Yayın görüşü",
@@ -1099,7 +1099,7 @@
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
-          "description": ""
+          "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "graveType": {
           "label": "Gömüt tipi"
@@ -1134,14 +1134,14 @@
         },
         "sex": {
           "label": "Cinsiyet",
-          "description": ""
+          "description": "İnsan veya hayvanın cinsiyeti"
         },
         "objectType": {
           "label": "Nesnenin tanımı veya türü"
         },
         "species": {
           "label": "Canlı türü",
-          "description": ""
+          "description": "Mevcut hayvan türleri"
         }
       }
     },
@@ -1156,7 +1156,7 @@
           "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
-          "label": "",
+          "label": "Koruma değerlendirme",
           "description": "Esas haline kıyasla korunmuşluk oranı"
         }
       }
@@ -1183,7 +1183,7 @@
         },
         "clayStructure": {
           "label": "Yapısı",
-          "description": ""
+          "description": "Pişmiş toprak yapısal türü nedir?"
         },
         "coatColorInside": {
           "label": "Astar (iç): Rengi ve tonu"
@@ -1203,11 +1203,11 @@
         },
         "surfaceCondition": {
           "label": "Yüzey durumu",
-          "description": ""
+          "description": "Yüzeyin durumu hakkında bilgi"
         },
         "temper": {
           "label": "Katkı",
-          "description": ""
+          "description": "Katkının esas durumu"
         },
         "temperAmount": {
           "label": "Katkı miktarı"
@@ -1217,11 +1217,11 @@
           "description": "Katkı parçacıklarının büyüklüğü"
         },
         "vesselForm": {
-          "label": "Temel kap tipi"
+          "label": "Temel kap formu"
         },
         "vesselFormSpecific": {
           "label": "Özel kap formu",
-          "description": ""
+          "description": "Kabın spesifik formu"
         }
       }
     },
@@ -1230,14 +1230,14 @@
       "fields": {
         "isNatural": {
           "label": "Doğal",
-          "description": ""
+          "description": "Tabaka doğal mı? ('Evet' örn. erozyon sebebiyle)"
         },
         "consistency": {
           "label": "Sağlamlığı"
         },
         "distinguishingCriteria": {
           "label": "Ayırt edici özellikleri",
-          "description": ""
+          "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "otherClassification": {
           "label": "Diğer Sınıflandırma"
@@ -1253,7 +1253,7 @@
       "fields": {
         "labNumber": {
           "label": "Laboratuvar numarası",
-          "description": ""
+          "description": "İnceleme laboratuvarında atanan numune numarası"
         },
         "weight": {
           "label": "Ağırlık (gr.)",
@@ -1261,7 +1261,7 @@
         },
         "sampleType": {
           "label": "Numune tipi",
-          "description": ""
+          "description": "Hangi örnek alınacak? Hangi tetkik yapılacak?"
         },
         "storagePlace": {
           "label": "Depolandığı yer"
@@ -1320,7 +1320,7 @@
       "fields": {
         "researchMethod": {
           "label": "Araştırma yöntemi",
-          "description": ""
+          "description": "Hangi yüzey araştırma yöntemi kullanılıyor?"
         }
       }
     },
@@ -1329,15 +1329,15 @@
       "fields": {
         "purpose": {
           "label": "Kullanım amacı",
-          "description": ""
+          "description": "Nesnenin amacı veya kullanımı"
         },
         "treatment": {
           "label": "İşlem",
-          "description": ""
+          "description": "Antik işleme izlerine ilişkin açıklama alanı (örn.: 'Kaidedeki taş ustasının işareti')"
         },
         "workmanship": {
           "label": "İş gücü",
-          "description": ""
+          "description": "İşlenmiş bir taşın niteliği, örn. bir yazıt için taşıyıcı olarak kullanıldı"
         },
         "architectureElement": {
           "label": "Mimari eleman"
@@ -1358,7 +1358,7 @@
         },
         "origin": {
           "label": "Malzeme kaynağı",
-          "description": ""
+          "description": "Malzemenin kaynak yeri"
         },
         "temperAmount": {
           "label": "Kalıntı miktarı"
@@ -1370,7 +1370,7 @@
       "fields": {
         "frontSideDescription": {
           "label": "Ön yüz açıklama",
-          "description": ""
+          "description": "Sikke ön yüzünün açıklaması"
         },
         "preservedDiameter": {
           "label": "Korunan çap",
@@ -1378,7 +1378,7 @@
         },
         "reverseSideDescription": {
           "label": "Arka yüz açıklama",
-          "description": ""
+          "description": "Sikke arka yüzünün açıklaması"
         },
         "denomination": {
           "label": "Değer birimi",
@@ -1412,14 +1412,14 @@
         },
         "amount": {
           "label": "Adet (toplam)",
-          "description": ""
+          "description": "Sayılan veya envanteri tutulan buluntu sayısı"
         },
         "bibliography": {
           "label": "Kaynakça"
         },
         "catalogueNumber": {
           "label": "Katalog numarası",
-          "description": ""
+          "description": "Bulunan öğe bir kataloğa dahil edildiğinde atanan numara"
         },
         "comparison": {
           "label": "Karşılaştırma(lar)",
@@ -1430,11 +1430,11 @@
         },
         "conditionPercent": {
           "label": "Yüzde olarak durum",
-          "description": ""
+          "description": "Yüzde cinsinden oran"
         },
         "publicationMaterialSummary": {
           "label": "Malzeme özeti",
-          "description": ""
+          "description": "Yayından detaylı açıklama"
         },
         "publicationRemark": {
           "label": "Yayın görüşü",
@@ -1454,7 +1454,7 @@
         },
         "condition": {
           "label": "Durumu",
-          "description": ""
+          "description": "Koruma durumunun açıklaması"
         },
         "conditionAmount": {
           "label": "Koruma değerlendirme",
@@ -1462,16 +1462,16 @@
         },
         "storagePlace": {
           "label": "Depolandığı yer",
-          "description": ""
+          "description": "Buluntuların depolandığı yer"
         }
       }
     },
     "FindCollection": {
-      "label": "",
+      "label": "Buluntu koleksiyonu",
       "fields": {
         "amount": {
-          "label": "",
-          "description": ""
+          "label": "Adet (toplam)",
+          "description": "Sayılan veya envanteri tutulan buluntu sayısı"
         },
         "bibliography": {
           "label": "Kaynakça"
@@ -1482,7 +1482,7 @@
         },
         "storagePlace": {
           "label": "Depolandığı yer",
-          "description": ""
+          "description": "Buluntu koleksiyonunun depolandığı yer"
         }
       }
     },
@@ -1491,7 +1491,7 @@
       "fields": {
         "composition": {
           "label": "Alçının yapısı",
-          "description": ""
+          "description": "Alçı yapısının tanımı"
         },
         "hasDecoration": {
           "label": "Bezeme"
@@ -1524,7 +1524,7 @@
       "fields": {
         "materialDescription": {
           "label": "Malzeme açıklama",
-          "description": ""
+          "description": "Kullanılan malzemenin açıklaması; örn. metal veya alaşımın tam tanımı"
         },
         "decorationTechnique": {
           "label": "Yüzeye uygulanan işlem veya bezeme tekniği"
@@ -1547,7 +1547,7 @@
         },
         "vesselFormSpecific": {
           "label": "Özel kap formu",
-          "description": ""
+          "description": "Kabın spesifik formu"
         }
       }
     },
@@ -1609,7 +1609,7 @@
           "label": "Malzeme"
         },
         "archaeoDox:typeOfWare": {
-          "label": ""
+          "label": "Seramik (mal) tipi"
         }
       }
     },
@@ -1627,19 +1627,19 @@
           "label": "Kısa açıklama (Sınıflandırma)"
         },
         "archaeoDox:distinguishingCriterium": {
-          "label": ""
+          "label": "Ayırt edici özellikleri"
         },
         "archaeoDox:isNatural": {
-          "label": ""
+          "label": "Doğal"
         },
         "archaeoDox:soilType": {
-          "label": ""
+          "label": "Toprak tipi"
         },
         "archaeoDox:consistency": {
           "label": "Sağlamlığı"
         },
         "archaeoDox:isArchaeologicallyIrrelevant": {
-          "label": ""
+          "label": "Arkeolojik ilgisi olmayan"
         }
       }
     },

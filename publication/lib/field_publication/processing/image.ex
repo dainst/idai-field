@@ -101,28 +101,4 @@ defmodule FieldPublication.Processing.Image do
       }
     )
   end
-
-  @dialyzer {:nowarn_function, create_target_directory: 1}
-  defp create_target_directory(target_path) do
-    if @dev_mode do
-      target_path = String.replace(target_path, "#{@web_images_directory}/", "")
-
-      System.cmd(
-        "docker",
-        [
-          "exec",
-          "field_publication_cantaloupe",
-          "mkdir",
-          "-p",
-          "/image_root/#{target_path}"
-        ]
-      )
-    else
-      File.mkdir_p!(target_path)
-    end
-  end
-
-  defp get_publication_dir(project_id, publication_name) do
-    "#{@web_images_directory}/#{project_id}/#{publication_name}"
-  end
 end

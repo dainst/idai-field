@@ -65,14 +65,23 @@ defmodule FieldPublication.Processing.Image do
       Agent.start_link(fn ->summary end)
 
     existing_raw_files
-    |> Enum.map(fn(uuid) ->
-      convert_file(
-        "#{raw_root}/image/#{uuid}",
-        "#{web_root}/#{uuid}.jp2",
-        counter_pid,
-        Publications.get_doc_id(publication)
-      )
+    |> Enum.chunk_every(5)
+    |> Enum.map(fn (batch) ->
+      # For each item in the batch start an async task for the conversion...
+      Enum.map(batch, fn(uuid) ->
+        Task.async(fn() ->
+          convert_file(
+            "#{raw_root}/image/#{uuid}",
+            "#{web_root}/#{uuid}.jp2",
+            counter_pid,
+            Publications.get_doc_id(publication)
+          )
+        end)
+      end)
+      # ...then wait until all tasks in the batch succeeded.
+      |> Enum.map(&Task.await(&1, 30_000))
     end)
+    |> List.flatten()
   end
 
 

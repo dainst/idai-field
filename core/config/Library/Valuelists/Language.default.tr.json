@@ -8,26 +8,26 @@
   },
   "position-values-expansion-default": {
     "values": {
-      "Maximale Ausdehnung": "",
-      "Minimale Ausdehnung": ""
+      "Maximale Ausdehnung": "Maksimum genişleme",
+      "Minimale Ausdehnung": "Minimum genişleme"
     }
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "",
-      "Unterkante": ""
+      "Oberkante": "Üst kenar",
+      "Unterkante": "Alt kenar"
     }
   },
   "orientation-default-1": {
     "values": {
-      "N-S": "",
-      "NNO - SSW": "",
-      "NNW-SSO": "",
-      "NO-SW": "",
-      "NW-SO": "",
-      "W-O": "",
-      "WNW-OSO": "",
-      "WSW-ONO": ""
+      "N-S": "Kuzey-Güney",
+      "NNO - SSW": "KKD-GGB",
+      "NNW-SSO": "KKB-GGD",
+      "NO-SW": "KD-GB",
+      "NW-SO": "KB-GD",
+      "W-O": "Batı-Doğu",
+      "WNW-OSO": "BKB-DGD",
+      "WSW-ONO": "BGB-DKD"
     }
   },
   "provenance-default-1": {
@@ -94,7 +94,7 @@
       "Neuzeitlich": "Yakın Çağ",
       "Osmanisch": "Osmanlı Dönemi",
       "Pleistozän": "Pleistosen",
-      "Rezent": "",
+      "Rezent": "Yakın tarih (Holosenden itibaren)",
       "Römisch": "Roma Dönemi",
       "Spätantik": "Geç Antik",
       "Spätbronzezeitlich": "Geç Tunç Çağı",
@@ -482,30 +482,30 @@
   "Building-buildingCategory-default": {
     "values": {
       "Altar": "Altar",
-      "Amphitheater": "",
-      "Basilika": "",
-      "Bogen": "",
-      "Brücke": "",
-      "Circus": "",
-      "Grabbau": "",
-      "Gymnasium": "",
+      "Amphitheater": "Amfitiyatro",
+      "Basilika": "Bazilika",
+      "Bogen": "Kemer",
+      "Brücke": "Köprü",
+      "Circus": "Sirk",
+      "Grabbau": "Mezar yapısı",
+      "Gymnasium": "Gymnasium",
       "Mauerkurtine": "",
-      "Nymphäum": "",
+      "Nymphäum": "Nymphaeum",
       "Odeion": "Odeion",
       "Strasse": "Cadde",
       "Stützmauer": "İstinat duvarı",
-      "Säulenhalle": "",
+      "Säulenhalle": "Sütunlu giriş",
       "Tempel": "Tapınak",
       "Theater": "Tiyatro",
       "Therme": "Ilıca",
-      "Toranlage": "",
+      "Toranlage": "Giriş",
       "Turm": "Kule",
       "Wohnbau": "Konut yapısı"
     }
   },
   "Building-buildingCategorySpecific-default": {
     "values": {
-      "Aediculabau": "",
+      "Aediculabau": "Aedikula",
       "Atriumhaus": "",
       "Bogen": "Kemer",
       "Dipteros": "Dipteros",
@@ -521,7 +521,7 @@
       "Pseudo-Peripteros": "Pseudo peripteros",
       "Rednertribüne": "",
       "Rundbau": "Yuvarlak planlı yapı",
-      "Schatzhaus": "",
+      "Schatzhaus": "Hazine binası",
       "Terassenheiligtum": "",
       "Tholos": "Tholos",
       "Torbogen": "",

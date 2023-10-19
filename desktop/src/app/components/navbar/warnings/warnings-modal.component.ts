@@ -4,8 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil,
-    FieldsViewSubfield } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
+    Field } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
@@ -18,6 +18,7 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Settings } from '../../../services/settings/settings';
 import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { getInputTypeLabel } from '../../../util/get-input-type-label';
 
 
 type WarningSection = {
@@ -77,6 +78,12 @@ export class WarningsModalComponent {
     }
 
 
+    public getCategoryLabel(section: WarningSection): string {
+
+        return this.labels.get(section.category);
+    }
+
+
     public getFieldLabel(section: WarningSection): string {
         
         return this.labels.getFieldLabel(
@@ -112,6 +119,25 @@ export class WarningsModalComponent {
     }
 
 
+    public getInputTypeLabel(section: WarningSection): string {
+
+        const inputType: Field.InputType = CategoryForm.getField(section.category, section.fieldName).inputType;
+        return getInputTypeLabel(inputType, this.utilTranslations);
+    }
+
+
+    public getValuelistId(section: WarningSection): string {
+
+        return CategoryForm.getField(section.category, section.fieldName)?.valuelist?.id;
+    }
+
+
+    public getIdentifierPrefix(section: WarningSection): string {
+
+        return section.category.identifierPrefix;
+    }
+
+
     public getWarningTypeLabel(section: WarningSection): string {
 
         switch(section.type) {
@@ -124,14 +150,14 @@ export class WarningsModalComponent {
             case 'outlierValues':
                 return this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Ungültiger Wert im Feld' });
             case 'missingIdentifierPrefix':
-                return this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' });
+                return this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Präfix im Feld' });
         }
     }
 
 
     public isFieldLabelVisible(section: WarningSection): boolean {
 
-        return ['unconfigured', 'invalid', 'outlierValues'].includes(section.type);
+        return ['unconfigured', 'invalid', 'outlierValues', 'missingIdentifierPrefix'].includes(section.type);
     }
 
 

@@ -42,7 +42,34 @@
                     </span>
                 </div>
                 <div class="card-block">
-                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid'" class="data-info">
+                    <div class="warning-info">
+                        <span *ngIf="section.type === 'unconfigured'"
+                              i18n="@@navbar.taskbar.warnings.info.unconfigured">
+                            Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
+                            Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                        </span>
+                        <span *ngIf="section.type === 'invalid'"
+                              i18n="@@navbar.taskbar.warnings.info.invalid">
+                            Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
+                            Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues'"
+                              i18n="@@navbar.taskbar.warnings.info.outlierValues">
+                            Für dieses Feld wurden Werte ausgewählt, die nicht in der Werteliste
+                            <i>{{getValuelistId(section)}}</i> enthalten sind.
+                        </span>
+                        <span *ngIf="section.type === 'conflicts'"
+                              i18n="@@navbar.taskbar.warnings.info.conflicts">
+                            Bei dieser Ressource ist ein Konflikt aufgetreten. 
+                        </span>
+                        <span *ngIf="section.type === 'missingIdentifierPrefix'"
+                              i18n="@@navbar.taskbar.warnings.info.missingIdentifierPrefix">
+                            Der Bezeichner dieser Ressource beginnt nicht mit dem konfigurierten Präfix
+                            <i>{{getIdentifierPrefix(section)}}</i>.
+                        </span>
+                    </div>
+                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
+                         class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
                         <div>{{getDataLabel(section)}}</div>
                     </div>

@@ -191,7 +191,7 @@ export class WarningsModalComponent {
     };
 
 
-    public async openDoceditModal(section: WarningSection) {
+    public async openDoceditModal(section?: WarningSection) {
 
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
             DoceditComponent,
@@ -201,13 +201,15 @@ export class WarningsModalComponent {
             false
         );
 
-        const group: Group = section.category.groups.find(group => {
-            return group.fields.find(field => field.name === section.fieldName) !== undefined;
-        });
-
         componentInstance.setDocument(this.selectedDocument);
-        componentInstance.scrollTargetField = section.fieldName;
-        if (group) componentInstance.activeGroup = group.name;
+
+        if (section) {
+            componentInstance.scrollTargetField = section.fieldName;
+            const group: Group = section.category.groups.find(group => {
+                return group.fields.find(field => field.name === section.fieldName) !== undefined;
+            });
+            if (group) componentInstance.activeGroup = group.name;
+        }        
 
         await this.modals.awaitResult(
             result,

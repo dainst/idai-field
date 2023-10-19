@@ -26,7 +26,8 @@
                         [markSelected]="true"
                         [autoSelect]="true"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
-                        (documentSelected)="selectDocument($event)"></document-picker>
+                        (documentSelected)="selectDocument($event)"
+                        (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>
     <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-6">
         <div id="document-warnings-header">

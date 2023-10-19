@@ -29,6 +29,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() autoSelect: boolean = false;
 
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
+    @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
     public documents: Array<Document>;
     public selectedDocument: Document|undefined;
@@ -57,6 +58,12 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.selectedDocument = document;
         this.documentSelected.emit(document);
+    }
+
+
+    public doubleClick(document: Document) {
+
+        this.documentDoubleClicked.emit(document);
     }
 
 

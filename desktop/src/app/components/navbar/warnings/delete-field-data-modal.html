@@ -24,11 +24,17 @@
     </div>
     
     <div *ngIf="deleteAll">
-        <div class="text-center alert alert-warning"
-             i18n="@@navbar.taskbar.deleteFieldData.all.info">
+        <div *ngIf="warningType === 'unconfigured'" class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.deleteFieldData.all.info.unconfigured">
             Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten im
             Feld <code>{{fieldName}}</code> gelöscht.
+        </div>
+        <div *ngIf="warningType === 'invalid'" class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.deleteFieldData.all.info.invalid">
+            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Kategorie <b>{{getCategoryLabel()}}</b> sämtliche ungültigen Daten im
+            Feld <code>{{fieldName}}</code> gelöscht. Gültige Daten bleiben erhalten.
         </div>
         <span i18n="@@navbar.taskbar.deleteFieldData.all.confirmInfo">
             Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.

@@ -56,8 +56,8 @@
                         </span>
                         <span *ngIf="section.type === 'outlierValues'"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues">
-                            Für dieses Feld wurden Werte ausgewählt, die nicht in der Werteliste
-                            <i>{{getValuelistId(section)}}</i> enthalten sind.
+                            Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
+                            <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.info.conflicts">
@@ -73,6 +73,17 @@
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
                         <div>{{getDataLabel(section)}}</div>
+                    </div>
+                    <div *ngIf="section.type === 'outlierValues'" class="data-info">
+                        <div *ngIf="getOutlierValues(section).length === 1">
+                            <b i18n="@@navbar.taskbar.warnings.outlierValues.single">Ungültiger Wert:</b>
+                        </div>
+                        <div *ngIf="getOutlierValues(section).length > 1">
+                            <b i18n="@@navbar.taskbar.warnings.outlierValues.multiple">Ungültige Werte:</b>
+                        </div>
+                        <div *ngFor="let outlierValue of getOutlierValues(section)">
+                            {{outlierValue}}
+                        </div>
                     </div>
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary" (click)="openConflictResolver()">

@@ -5,7 +5,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field } from 'idai-field-core';
+    Field, ValuelistUtil, Valuelist } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
@@ -135,6 +135,16 @@ export class WarningsModalComponent {
     public getIdentifierPrefix(section: WarningSection): string {
 
         return section.category.identifierPrefix;
+    }
+
+
+    public getOutlierValues(section: WarningSection): string[] {
+
+        const valuelist: Valuelist = CategoryForm.getField(section.category, section.fieldName).valuelist;
+        
+        return ValuelistUtil.getValuesNotIncludedInValuelist(
+            this.selectedDocument.resource[section.fieldName], valuelist
+        );
     }
 
 

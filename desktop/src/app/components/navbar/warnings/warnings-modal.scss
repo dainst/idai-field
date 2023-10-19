@@ -34,6 +34,8 @@
       display: block;
       width: 100%;
       height: calc(100% - 58px);
+      overflow-x: hidden;
+      overflow-y: auto;
       background-color: white;
       border: 1px solid #ccc;
       border-bottom-left-radius: 10px;

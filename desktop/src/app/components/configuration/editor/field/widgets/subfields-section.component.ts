@@ -11,6 +11,8 @@ import { MenuContext } from '../../../../../services/menu-context';
 import { Naming } from '../../../add/naming';
 import { Modals } from '../../../../../services/modals';
 import { AngularUtility } from '../../../../../angular/angular-utility';
+import { getInputTypeLabel } from '../../../../../util/get-input-type-label';
+import { UtilTranslations } from '../../../../../util/util-translations';
 
 
 @Component({
@@ -45,6 +47,7 @@ export class SubfieldsSectionComponent {
   
     constructor(private labels: Labels,
                 private modals: Modals,
+                private utilTranslations: UtilTranslations,
                 private i18n: I18n) {}
 
 
@@ -83,7 +86,7 @@ export class SubfieldsSectionComponent {
 
     public getInputTypeLabel(subfield: CustomSubfieldDefinition): string {
 
-        return this.availableInputTypes.find(on(Named.NAME, is(subfield.inputType))).label;
+        return getInputTypeLabel(subfield.inputType, this.utilTranslations);
     }
 
     

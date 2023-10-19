@@ -67,6 +67,7 @@ export class WarningsModalComponent {
     public initialize() {
 
         this.selectWarningFilter(this.warningFilters[0].constraintName);
+        AngularUtility.blurActiveElement();
     }
 
 
@@ -141,7 +142,7 @@ export class WarningsModalComponent {
     public getOutlierValues(section: WarningSection): string[] {
 
         const valuelist: Valuelist = CategoryForm.getField(section.category, section.fieldName).valuelist;
-        
+
         return ValuelistUtil.getValuesNotIncludedInValuelist(
             this.selectedDocument.resource[section.fieldName], valuelist
         );

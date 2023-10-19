@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray, nop } from 'tsfun';
+import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil,
+    FieldsViewSubfield } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from './warning-filters';
@@ -56,6 +58,7 @@ export class WarningsModalComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
+                private decimalPipe: DecimalPipe,
                 private labels: Labels,
                 private i18n: I18n) {}
 
@@ -74,12 +77,38 @@ export class WarningsModalComponent {
     }
 
 
-    public getFieldLabel(section: WarningSection) {
+    public getFieldLabel(section: WarningSection): string {
         
         return this.labels.getFieldLabel(
             this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
             section.fieldName
         ) ?? section.fieldName;
+    }
+
+
+    public getDataLabel(section: WarningSection): string {
+
+        const field: FieldsViewSubfield = {
+            name: section.fieldName,
+            valuelist: CategoryForm.getField(section.category, section.fieldName)?.valuelist
+        } as FieldsViewSubfield;
+
+        const data: any = this.selectedDocument.resource[section.fieldName];
+        const entries: any = isArray(data) ? data : [data];
+
+        return entries.map(entry => {
+            if (isObject(entry)) {
+                return FieldsViewUtil.getObjectLabel(
+                    entry,
+                    field,
+                    (key: string) => this.utilTranslations.getTranslation(key),
+                    (value: number) => this.decimalPipe.transform(value),
+                    this.labels
+                );
+            } else {
+                return entry;
+            }
+        }).join(', ');
     }
 
 
@@ -248,7 +277,7 @@ export class WarningsModalComponent {
     private createSection(type: WarningType, document: FieldDocument, fieldName?: string): WarningSection {
 
         const section: WarningSection = { type };
-        
+
         if (type === 'missingIdentifierPrefix') {
             section.fieldName = Resource.IDENTIFIER;
         } else if (fieldName) {

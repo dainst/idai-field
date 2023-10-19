@@ -42,6 +42,10 @@
                     </span>
                 </div>
                 <div class="card-block">
+                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
+                        <div>{{getDataLabel(section)}}</div>
+                    </div>
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary" (click)="openConflictResolver()">
                             <span class="mdi mdi-pencil"></span>

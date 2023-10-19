@@ -68,6 +68,11 @@
                             Der Bezeichner dieser Ressource beginnt nicht mit dem konfigurierten Präfix
                             <i>{{getIdentifierPrefix(section)}}</i>.
                         </span>
+                        <span *ngIf="section.type === 'nonUniqueIdentifier'"
+                              i18n="@@navbar.taskbar.warnings.info.nonUniqueIdentifier">
+                            Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es
+                            können dadurch Fehler beim Import und Export von Daten auftreten.
+                        </span>
                     </div>
                     <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
@@ -93,7 +98,7 @@
                         </button>
                     </span>
                     <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outlierValues'">
+                            || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary" (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"

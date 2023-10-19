@@ -1,4 +1,9 @@
-export type WarningType = 'unconfigured'|'invalid'|'outlierValues'|'conflicts'|'missingIdentifierPrefix';
+export type WarningType = 'unconfigured'
+    |'invalid'
+    |'outlierValues'
+    |'conflicts'
+    |'missingIdentifierPrefix'
+    |'nonUniqueIdentifier';
 
 
 export interface Warnings {
@@ -8,6 +13,7 @@ export interface Warnings {
     outlierValues: string[];
     conflicts?: boolean;
     missingIdentifierPrefix?: boolean;
+    nonUniqueIdentifier?: boolean;
 }
 
 
@@ -22,6 +28,17 @@ export module Warnings {
             || warnings.invalid.length > 0
             || warnings.outlierValues.length > 0
             || warnings.conflicts
-            || warnings.missingIdentifierPrefix;
+            || warnings.missingIdentifierPrefix
+            || warnings.nonUniqueIdentifier;
+    }
+
+
+    export function createDefault(): Warnings {
+
+        return {
+            unconfigured: [],
+            invalid: [],
+            outlierValues: []
+        };
     }
 }

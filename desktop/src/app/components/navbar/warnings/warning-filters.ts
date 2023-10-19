@@ -47,6 +47,11 @@ export module WarningFilters {
                 label: translations.getTranslation('warnings.missingIdentifierPrefix'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0
+            },
+            {
+                label: translations.getTranslation('warnings.nonUniqueIdentifier'),
+                constraintName: 'nonUniqueIdentifier:exist',
+                count: 0
             }
         ];
 

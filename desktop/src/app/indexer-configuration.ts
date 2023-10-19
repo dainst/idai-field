@@ -30,6 +30,7 @@ export module IndexerConfiguration {
             'unconfigured:contain': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'contain' },
             'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },
             'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
+            'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));
 

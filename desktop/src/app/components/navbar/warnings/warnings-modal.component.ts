@@ -162,6 +162,8 @@ export class WarningsModalComponent {
                 return this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Ungültiger Wert im Feld' });
             case 'missingIdentifierPrefix':
                 return this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Präfix im Feld' });
+            case 'nonUniqueIdentifier':
+                return this.i18n({ id: 'taskbar.warnings.nonUniqueIdentifier', value: 'Nicht eindeutiger Bezeichner' });
         }
     }
 
@@ -317,7 +319,7 @@ export class WarningsModalComponent {
 
         const section: WarningSection = { type };
 
-        if (type === 'missingIdentifierPrefix') {
+        if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
         } else if (fieldName) {
             section.fieldName = fieldName;

@@ -147,6 +147,10 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' })
         );
         this.utilTranslations.addTranslation(
+            'warnings.nonUniqueIdentifier',
+            this.i18n({ id: 'util.warnings.nonUniqueIdentifier', value: 'Nicht eindeutiger Bezeichner' })
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.input',
             this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
         );

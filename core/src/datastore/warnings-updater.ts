@@ -36,12 +36,7 @@ export module WarningsUpdater {
     function createWarnings(document: Document, category: CategoryForm): Warnings {
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
-
-        const warnings: Warnings = {
-            unconfigured: [],
-            invalid: [],
-            outlierValues: []
-        };
+        const warnings: Warnings = Warnings.createDefault();
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;

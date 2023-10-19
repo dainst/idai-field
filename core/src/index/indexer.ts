@@ -5,6 +5,7 @@ import { Document } from '../model/document';
 import { CategoryForm } from '../model/configuration/category-form';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
+import { Warnings } from '../model';
 
 
 /**
@@ -50,6 +51,7 @@ import { ProjectConfiguration } from '../services';
             }
 
             await indexFacade.putMultiple(documents, setIndexedDocuments);
+            addNonUniqueIdentifierWarnings(indexFacade, documentCache);
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
@@ -82,6 +84,18 @@ import { ProjectConfiguration } from '../services';
                 return undefined;
             }
         }).filter(not(isUndefined));
+    }
+
+
+    function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache) {
+
+        documentCache.getAll().forEach(document => {
+            if (indexFacade.getCount('identifier:match', document.resource.identifier) > 1) {
+                if (!document.warnings) document.warnings = Warnings.createDefault();
+                document.warnings.nonUniqueIdentifier = true;
+                indexFacade.put(document);
+            }
+        });
     }
 
 

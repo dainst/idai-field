@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
-import { Document, Field, Labels, ProjectConfiguration, Relation } from 'idai-field-core';
+import { Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 
@@ -101,7 +101,7 @@ export class EditFormGroup implements OnChanges {
         const isFieldDataValid: boolean = this.validateFieldData(fieldData, field.inputType);
         
         return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType) || field.inputType === Field.InputType.URL
-            ? isFieldDataValid || fieldData !== originalFieldData
+            ? isFieldDataValid || !compare(fieldData, originalFieldData)
             : isFieldDataValid;
     }
 

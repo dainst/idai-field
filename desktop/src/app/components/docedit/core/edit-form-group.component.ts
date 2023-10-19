@@ -139,6 +139,8 @@ export class EditFormGroup implements OnChanges {
 
         await this.scrollToElement(element);
         await this.focusField(element);
+
+        this.scrollTargetField = undefined;
     }
 
 

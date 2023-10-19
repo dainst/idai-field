@@ -1,3 +1,17 @@
+.warnings-modal-header {
+  height: 54px;
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  user-select: none;
+  background-color: $modal-header-background-color;
+
+  .modal-title {
+    position: relative;
+    top: 5px;
+    left: 9px;
+  }
+}
+
 .warnings-modal-body {
   height: calc(100vh - 127px);
 
@@ -44,7 +58,7 @@
 
       .card {
         background-color: unset;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
 
         .card-title,
         .card-block {

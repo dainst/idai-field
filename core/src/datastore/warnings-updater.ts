@@ -7,6 +7,8 @@ import { ValuelistUtil } from '../tools/valuelist-util';
 import { Resource } from '../model/resource';
 import { ImageResource } from '../model/image-resource';
 import { Warnings } from '../model/warnings';
+import { IndexFacade } from '../index';
+import { Datastore } from './datastore';
 
 
 /**
@@ -29,6 +31,47 @@ export module WarningsUpdater {
             document.warnings = warnings;
         } else {
             delete document.warnings;
+        }
+    }
+
+
+    export async function updateNonUniqueIdentifierWarning(document: Document, indexFacade: IndexFacade,
+                                                           datastore?: Datastore, previousIdentifier?: string,
+                                                           updateAll: boolean = false) {
+
+        if (indexFacade.getCount('identifier:match', document.resource.identifier) > 1) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            if (!document.warnings.nonUniqueIdentifier) {
+                document.warnings.nonUniqueIdentifier = true;
+                indexFacade.put(document);
+                if (updateAll) {
+                    await updateNonUniqueIdentifierWarnings(
+                        datastore, indexFacade, document.resource.identifier
+                    );
+                }
+            }
+        } else if (document.warnings) {
+            document.warnings.nonUniqueIdentifier = false;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            indexFacade.put(document);   
+        }
+        
+        if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
+                && indexFacade.getCount('identifier:match', previousIdentifier) > 0) {
+            await updateNonUniqueIdentifierWarnings(datastore, indexFacade, previousIdentifier);
+        }
+    }
+
+
+    async function updateNonUniqueIdentifierWarnings(datastore: Datastore, indexFacade: IndexFacade,
+                                                     identifier: string) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'identifier:match': identifier }
+        })).documents;
+
+        for (let document of documents) {
+            await updateNonUniqueIdentifierWarning(document, indexFacade);
         }
     }
 

@@ -16,6 +16,7 @@ const PouchDB = window.require('pouchdb-browser');
         {
             provide: ChangesStream,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 datastore: Datastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  documentConverter: DocumentConverter,
@@ -23,11 +24,11 @@ const PouchDB = window.require('pouchdb-browser');
             ): ChangesStream {
 
                 return new ChangesStream(
-                    pouchdbDatastore, indexFacade, documentCache, documentConverter,
+                    pouchdbDatastore, datastore, indexFacade, documentCache, documentConverter,
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
+            deps: [PouchdbDatastore, Datastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
         },
         ExpressServer,
         {

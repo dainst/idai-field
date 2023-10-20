@@ -8,6 +8,7 @@ describe('RemoteChangesStream', () => {
 
     let rcs;
     let doc;
+    let pouchdbDatastore;
     let datastore;
     let indexFacade;
     let documentConverter;
@@ -38,23 +39,28 @@ describe('RemoteChangesStream', () => {
 
         spyOn(console, 'warn'); // suppress console.warn
 
-        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);
+        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove', 'getCount']);
         documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
 
         getUsername = () => 'localuser';
         documentConverter.convert.and.returnValue(doc);
         indexFacade.put.and.returnValue(doc);
-        documentCache.get.and.returnValue(1); // just to trigger reassignment
+        indexFacade.getCount.and.returnValue(0);
+        documentCache.get.and.returnValue({ resource: { id: '1', identifier: '1' } });
 
-        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications',
-            'fetch', 'fetchRevision']);
-        datastore.fetch.and.returnValue(Promise.resolve(doc));
+        pouchdbDatastore = jasmine.createSpyObj('MockPouchdbDatastore',
+            ['changesNotifications', 'deletedNotifications', 'fetch', 'fetchRevision']);
+        pouchdbDatastore.fetch.and.returnValue(Promise.resolve(doc));
 
-        datastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
-        datastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
+        pouchdbDatastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
+        pouchdbDatastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
+
+        datastore = jasmine.createSpyObj('MockDatastore', ['find'])
+        datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
         rcs = new ChangesStream(
+            pouchdbDatastore,
             datastore,
             indexFacade,
             documentCache,
@@ -125,8 +131,8 @@ describe('RemoteChangesStream', () => {
             ]
         };
 
-        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
-        datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
+        pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
+        pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
         documentConverter.convert.and.returnValue(doc);
 
@@ -156,8 +162,8 @@ describe('RemoteChangesStream', () => {
             ]
         };
 
-        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
-        datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
+        pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
+        pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
         documentConverter.convert.and.returnValue(doc);
 

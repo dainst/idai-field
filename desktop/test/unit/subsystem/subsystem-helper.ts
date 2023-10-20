@@ -135,6 +135,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
+        datastore,
         createdIndexFacade,
         documentCache,
         documentConverter,

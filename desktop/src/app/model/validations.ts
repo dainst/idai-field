@@ -218,7 +218,7 @@ export module Validations {
             document.resource, projectConfiguration, inputType, isValid
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: string[] = getNewInvalidFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 

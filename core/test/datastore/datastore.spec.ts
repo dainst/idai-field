@@ -44,9 +44,9 @@ describe('Datastore', () => {
     beforeEach(() => {
 
         mockdb = jasmine.createSpyObj('mockdb',
-                ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
+            ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
-            ['find', 'put', 'remove']);
+            ['find', 'put', 'remove', 'getCount']);
 
         mockdb.update.and.callFake(function(document) {
             // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
@@ -62,6 +62,7 @@ describe('Datastore', () => {
         mockIndexFacade.put.and.callFake(function(document) {
             return Promise.resolve(document);
         });
+        mockIndexFacade.getCount.and.returnValue(0);
         mockdb.create.and.callFake(function(document) {
             return Promise.resolve(document);
         });

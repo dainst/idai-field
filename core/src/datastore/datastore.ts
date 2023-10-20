@@ -7,6 +7,7 @@ import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
+import { WarningsUpdater } from './warnings-updater';
 
 
 /**
@@ -68,9 +69,12 @@ export class Datastore {
 
     public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        return (await this.datastore.bulkCreate(documents, this.getUser())).map(document => {
-            return this.updateIndex(document);
-        });
+        const resultDocuments: Array<Document> = [];
+        for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
+            resultDocuments.push(await this.updateIndex(document));
+        }
+
+        return resultDocuments;
     }
 
 
@@ -100,20 +104,32 @@ export class Datastore {
 
         documents.forEach(document => delete document.warnings);
 
-        return (await this.datastore.bulkUpdate(documents, this.getUser())).map(document => {
-            return this.updateIndex(document);
-        });
+        const resultDocuments: Array<Document> = [];
+        for (let document of await this.datastore.bulkUpdate(documents, this.getUser())) {
+            resultDocuments.push(await this.updateIndex(document));
+        }
+
+        return resultDocuments;
     }
 
 
-    private updateIndex(document: Document) {
+    private async updateIndex(document: Document): Promise<Document> {
 
         const convertedDocument = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
-        return !this.documentCache.get(document.resource.id as any)
+        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        document = !previousVersion
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);
+
+        await WarningsUpdater.updateNonUniqueIdentifierWarning(
+            document, this.indexFacade, this, previousIdentifier, true
+        );
+
+        return document;
     }
 
 

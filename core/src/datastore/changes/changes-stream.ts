@@ -7,6 +7,8 @@ import { DocumentConverter } from '../document-converter';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
+import { WarningsUpdater } from '../warnings-updater';
+import { Datastore } from '../datastore';
 
 
 /**
@@ -20,19 +22,20 @@ export class ChangesStream {
     private projectDocumentObservers: Array<Observer<Document>> = [];
 
 
-    constructor(datastore: PouchdbDatastore,
+    constructor(pouchDbDatastore: PouchdbDatastore,
+                private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
                 private documentConverter: DocumentConverter,
                 private getUsername: () => string) {
 
-        datastore.deletedNotifications().subscribe(document => {
+        pouchDbDatastore.deletedNotifications().subscribe(document => {
 
             this.documentCache.remove(document.resource.id);
             this.indexFacade.remove(document);
         });
 
-        datastore.changesNotifications().subscribe(async document => {
+        pouchDbDatastore.changesNotifications().subscribe(async document => {
 
             if (isProjectDocument(document)) {
                 ObserverUtil.notify(this.projectDocumentObservers, this.documentConverter.convert(document));
@@ -64,13 +67,20 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        const convertedDocument = this.documentConverter.convert(document);
+        const convertedDocument: Document = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
-        // explicitly assign by value in order for changes to be detected by angular
-        if (this.documentCache.get(convertedDocument.resource.id)) {
+        
+        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        if (previousVersion) {
+            // Explicitly assign by value in order for changes to be detected by Angular
             this.documentCache.reassign(convertedDocument);
         }
+        
+        await WarningsUpdater.updateNonUniqueIdentifierWarning(
+            document, this.indexFacade, this.datastore, previousIdentifier, true
+        );
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
     }

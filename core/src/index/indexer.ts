@@ -90,11 +90,7 @@ import { Warnings } from '../model';
     function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache) {
 
         documentCache.getAll().forEach(document => {
-            if (indexFacade.getCount('identifier:match', document.resource.identifier) > 1) {
-                if (!document.warnings) document.warnings = Warnings.createDefault();
-                document.warnings.nonUniqueIdentifier = true;
-                indexFacade.put(document);
-            }
+            WarningsUpdater.updateNonUniqueIdentifierWarning(document, indexFacade);
         });
     }
 

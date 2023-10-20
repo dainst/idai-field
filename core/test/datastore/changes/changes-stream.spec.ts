@@ -1,4 +1,6 @@
 import { ChangesStream } from '../../../src/datastore/changes/changes-stream';
+import { Document } from '../../../src/model';
+
 
 /**
  * @author Thomas Kleinke
@@ -14,7 +16,7 @@ describe('RemoteChangesStream', () => {
     let documentConverter;
     let documentCache;
     let getUsername;
-    let fun;
+    let onChange;
 
 
     beforeEach(() => {
@@ -22,6 +24,7 @@ describe('RemoteChangesStream', () => {
         doc = {
             resource: {
                 id: 'id1',
+                identifier: '1',
                 category: 'Object',
                 relations: {}
             },
@@ -53,8 +56,8 @@ describe('RemoteChangesStream', () => {
             ['changesNotifications', 'deletedNotifications', 'fetch', 'fetchRevision']);
         pouchdbDatastore.fetch.and.returnValue(Promise.resolve(doc));
 
-        pouchdbDatastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
-        pouchdbDatastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
+        pouchdbDatastore.changesNotifications.and.returnValue({ subscribe: (func: Function) => onChange = func });
+        pouchdbDatastore.deletedNotifications.and.returnValue({ subscribe: (func: Function) => undefined });
 
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
@@ -71,7 +74,7 @@ describe('RemoteChangesStream', () => {
 
     it('should put to index facade and reassign to cache', async done => {
 
-        await fun(doc);
+        await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         expect(documentCache.reassign).toHaveBeenCalledWith(doc);
         done();
@@ -80,7 +83,7 @@ describe('RemoteChangesStream', () => {
 
     it('send through category converter', async done => {
 
-        await fun(doc);
+        await onChange(doc);
         expect(documentConverter.convert).toHaveBeenCalledWith(doc);
         done();
     });
@@ -90,7 +93,7 @@ describe('RemoteChangesStream', () => {
 
         documentConverter.convert.and.returnValue(doc);
 
-        await fun(doc);
+        await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         done();
     });
@@ -105,7 +108,7 @@ describe('RemoteChangesStream', () => {
 
         documentConverter.convert.and.returnValue(doc);
 
-        await fun(doc);
+        await onChange(doc);
         expect(indexFacade.put).not.toHaveBeenCalled();
         done();
     });
@@ -136,7 +139,7 @@ describe('RemoteChangesStream', () => {
 
         documentConverter.convert.and.returnValue(doc);
 
-        await fun(doc);
+        await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         done();
     });
@@ -167,8 +170,46 @@ describe('RemoteChangesStream', () => {
 
         documentConverter.convert.and.returnValue(doc);
 
-        await fun(doc);
+        await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalled();
+        done();
+    });
+
+
+    it('update non-unique identifier warnings', async done => {
+
+        const doc2: Document = {
+            resource: {
+                id: 'id2', identifier: '1', category: 'Object', relations: {}
+            },
+            created: {
+                user: 'remoteuser',
+                date: new Date('2018-01-01T01:00:00.00Z')
+            },
+            modified: [
+                {
+                    user: 'remoteuser',
+                    date: new Date('2018-01-02T07:00:00.00Z')
+                }
+            ]
+        } as Document;
+
+        indexFacade.getCount.and.returnValue(2);
+        datastore.find.and.returnValue(Promise.resolve({ documents: [doc2] }));
+
+        await onChange(doc);
+        expect(doc.warnings.nonUniqueIdentifier).toBe(true);
+        expect(doc2.warnings.nonUniqueIdentifier).toBe(true);
+
+        doc2.resource.identifier = '2';
+        documentCache.get.and.returnValue({ resource: { id: 'id2', identifier: '1' } });
+        indexFacade.getCount.and.returnValue(1);
+        datastore.find.and.returnValue(Promise.resolve({ documents: [doc] }));
+
+        await onChange(doc2);
+        expect(doc.warnings).toBeUndefined();
+        expect(doc2.warnings).toBeUndefined();
+
         done();
     });
 });

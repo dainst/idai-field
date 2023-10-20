@@ -41,7 +41,7 @@ export class ChangesStream {
                 ObserverUtil.notify(this.projectDocumentObservers, this.documentConverter.convert(document));
             }
 
-            const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document,this.getUsername());
+            const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document, this.getUsername());
 
             if (isRemoteChange || !this.documentCache.get(document.resource.id)
                     || document._conflicts !== undefined) {
@@ -70,7 +70,6 @@ export class ChangesStream {
         const convertedDocument: Document = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
-        
         const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
         if (previousVersion) {

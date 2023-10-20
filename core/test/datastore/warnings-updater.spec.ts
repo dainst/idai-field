@@ -1,4 +1,5 @@
 import { WarningsUpdater } from '../../src/datastore/warnings-updater';
+import { Warnings } from '../../src/model';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 
@@ -65,5 +66,62 @@ describe('WarningsUpdater', () => {
             missingIdentifierPrefix: true
         });
         expect(documents[1].warnings).toBeUndefined();
+    });
+
+    
+    it('set non-unique identifier warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'getCount']);
+        mockIndexFacade.getCount.and.returnValue(2);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+
+        await WarningsUpdater.updateNonUniqueIdentifierWarning(
+            documents[0], mockIndexFacade, mockDatastore, undefined, true
+        );
+
+        expect(documents[0].warnings?.nonUniqueIdentifier).toBe(true);
+        expect(documents[1].warnings?.nonUniqueIdentifier).toBe(true);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
+    });
+
+
+    it('remove non-unique identifier warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.nonUniqueIdentifier = true;
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.nonUniqueIdentifier = true;
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'getCount']);
+        mockIndexFacade.getCount.and.returnValue(1);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+
+        await WarningsUpdater.updateNonUniqueIdentifierWarning(
+            documents[0], mockIndexFacade, mockDatastore, 'previousIdentifier', true
+        );
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
     });
 });

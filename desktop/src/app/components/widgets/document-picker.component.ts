@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
 import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
@@ -32,6 +32,8 @@ export class DocumentPickerComponent implements OnChanges {
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
+    @ViewChild('documentsList', { static: false }) private documentsListElement: ElementRef;
+
     public documents: Array<Document>;
     public selectedDocument: Document|undefined;
 
@@ -46,6 +48,8 @@ export class DocumentPickerComponent implements OnChanges {
 
 
     public isLoading = () => this.loading.isLoading();
+
+    public getElementId = (document: Document) => 'document-picker-resource-' + document.resource.identifier;
 
 
     async ngOnChanges() {
@@ -112,24 +116,40 @@ export class DocumentPickerComponent implements OnChanges {
         this.documents = [];
         if (!this.waitForUserInput || this.isQuerySpecified()) {
             await this.fetchDocuments();
-            if (this.autoSelect) this.performAutoSelection();
+            if (this.autoSelect) await this.performAutoSelection();
         }
     }
 
 
-    private performAutoSelection() {
+    private async performAutoSelection() {
 
         const selectedDocumentId: string|undefined = this.selectedDocument
                     ? this.selectedDocument.resource.id
                     : this.preselectedDocumentId;
 
-        const selectedDocument: Document = selectedDocumentId
+        const documentToSelect: Document = selectedDocumentId
             ? this.documents.find(document => document.resource.id === selectedDocumentId)
-            : undefined;
+            : this.documents.length > 0
+                ? this.documents[0]
+                : undefined
+
+        this.select(documentToSelect);
+        if (documentToSelect) await this.scrollToDocument(documentToSelect);
 
         this.preselectedDocumentId = undefined;
+    }
 
-        this.select(selectedDocument ?? (this.documents.length > 0 ? this.documents[0] : undefined));
+
+    private async scrollToDocument(scrollTarget: Document) {
+
+        await AngularUtility.refresh();
+        const containerElement: HTMLElement = this.documentsListElement.nativeElement;
+        const element: HTMLElement|null = document.getElementById(this.getElementId(scrollTarget));        
+        if (!element) return;
+
+        await AngularUtility.refresh();
+        const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.scrollTo(0, scrollY);
     }
 
 

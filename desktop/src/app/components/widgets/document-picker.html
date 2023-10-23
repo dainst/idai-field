@@ -4,13 +4,13 @@
                 (onQueryStringChanged)="setQueryString($event)"
                 (onCategoriesChanged)="setQueryCategories($event)"></search-bar>
 
-    <ul *ngIf="documents?.length > 0" class="list-group" id="document-picker-list">
+    <ul #documentsList *ngIf="documents?.length > 0" class="list-group" id="document-picker-list">
         <li *ngFor="let document of documents; let index = index"
             (click)="select(document)"
             (dblclick)="doubleClick(document)"
             class="list-group-item"
             [class.selected]="selectedDocument === document"
-            [id]="'document-picker-resource-' + document.resource.identifier">
+            [id]="getElementId(document)">
             <document-teaser [document]="document"></document-teaser>
         </li>
     </ul>

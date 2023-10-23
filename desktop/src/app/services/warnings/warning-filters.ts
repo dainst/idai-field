@@ -1,5 +1,5 @@
 import { Datastore, Document, IndexFacade } from 'idai-field-core';
-import { UtilTranslations } from '../../../util/util-translations';
+import { UtilTranslations } from '../../util/util-translations';
 
 
 export type WarningFilter = {

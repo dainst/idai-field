@@ -25,6 +25,7 @@
                         [waitForUserInput]="false"
                         [markSelected]="true"
                         [autoSelect]="true"
+                        [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>

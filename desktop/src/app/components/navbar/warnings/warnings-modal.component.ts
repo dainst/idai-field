@@ -5,10 +5,10 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field, ValuelistUtil, Valuelist } from 'idai-field-core';
+    Field, ValuelistUtil, Valuelist, Tree } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
-import { WarningFilter, WarningFilters } from './warning-filters';
+import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
 import { UtilTranslations } from '../../../util/util-translations';
 import { ProjectModalLauncher } from '../../../services/project-modal-launcher';
 import { Modals } from '../../../services/modals';
@@ -40,9 +40,10 @@ type WarningSection = {
 export class WarningsModalComponent {
 
     public warningFilters: Array<WarningFilter>;
-    public categoryFilters: Array<CategoryForm>;
     public getConstraints: () => Map<string>;
+    public preselectedDocumentId: string|undefined;
 
+    public categoryFilters: Array<CategoryForm>;
     public selectedWarningFilter: WarningFilter;
     public selectedDocument: FieldDocument|undefined;
     public sections: Array<WarningSection> = [];
@@ -66,6 +67,7 @@ export class WarningsModalComponent {
     
     public initialize() {
 
+        this.categoryFilters = this.getCategoryFilters();
         this.selectWarningFilter(this.warningFilters[0].constraintName);
         AngularUtility.blurActiveElement();
     }
@@ -268,6 +270,29 @@ export class WarningsModalComponent {
         return this.hasConfigurationConflict
             && (this.selectedWarningFilter.constraintName === 'warnings:exist'
                 || this.selectedWarningFilter.constraintName === 'conflicts:exist');
+    }
+
+
+    private getCategoryFilters(): Array<CategoryForm> {
+
+        const result: Array<CategoryForm> = Tree.flatten(this.projectConfiguration.getCategories())
+            .filter(category => !category.parentCategory);
+
+        return this.hasConfigurationConflict
+            ? [this.getConfigurationCategory()].concat(result)
+            : result
+    }
+
+
+    private getConfigurationCategory(): CategoryForm {
+
+        return {
+            name: 'Configuration',
+            label: this.i18n({
+                id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
+            }),
+            children: []
+        } as any;
     }
 
 

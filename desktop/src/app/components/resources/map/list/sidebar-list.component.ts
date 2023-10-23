@@ -11,6 +11,7 @@ import { ResourcesContextMenu } from '../../widgets/resources-context-menu';
 import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
+import { WarningsService } from '../../../../services/warnings/warnings-service';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
 
     constructor(private navigationService: NavigationService,
+                private warningsService: WarningsService,
                 resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
@@ -147,6 +149,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(this.getSelection());
+                break;
+            case 'warnings':
+                await this.warningsService.openModal(this.selectedDocument);
                 break;
             case 'edit-images':
                 await this.resourcesComponent.editImages(this.selectedDocument);

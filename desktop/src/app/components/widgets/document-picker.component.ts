@@ -27,6 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() preselectedDocumentId: string;
 
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
@@ -111,13 +112,24 @@ export class DocumentPickerComponent implements OnChanges {
         this.documents = [];
         if (!this.waitForUserInput || this.isQuerySpecified()) {
             await this.fetchDocuments();
-            if (this.autoSelect) {
-                const selectedDocument: Document = this.selectedDocument
-                    ? this.documents.find(document => document.resource.id === this.selectedDocument.resource.id)
-                    : undefined;
-                this.select(selectedDocument ?? (this.documents.length > 0 ? this.documents[0] : undefined));
-            }
+            if (this.autoSelect) this.performAutoSelection();
         }
+    }
+
+
+    private performAutoSelection() {
+
+        const selectedDocumentId: string|undefined = this.selectedDocument
+                    ? this.selectedDocument.resource.id
+                    : this.preselectedDocumentId;
+
+        const selectedDocument: Document = selectedDocumentId
+            ? this.documents.find(document => document.resource.id === selectedDocumentId)
+            : undefined;
+
+        this.preselectedDocumentId = undefined;
+
+        this.select(selectedDocument ?? (this.documents.length > 0 ? this.documents[0] : undefined));
     }
 
 

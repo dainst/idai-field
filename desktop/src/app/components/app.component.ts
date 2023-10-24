@@ -147,7 +147,7 @@ export class AppComponent {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                UpdateEditorComponent, { animation: false }
+                UpdateEditorComponent, { animation: false, backdrop: 'static', keyboard: false }
             );
             
             //await modalRef.result;

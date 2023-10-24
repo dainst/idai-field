@@ -1,3 +1,9 @@
-<a id="projects-badge" class="nav-link px-1" type="button" (click)="openModal()">
+<p
+    id="projects-badge"
+    class="nav-link px-1"
+    type="button"
+    (click)="openModal()"
+>
     {{getProjectName()}}
-</a>
+</p>
+<p id="name" class="px-2" type="button" (click)="openEditorModal()"> {{currentEditor}}</p>

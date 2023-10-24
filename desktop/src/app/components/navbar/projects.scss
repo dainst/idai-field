@@ -1,9 +1,26 @@
 #projects-badge {
-  padding: 0.5em !important;
-  max-width: 400px;
+  padding: 0 !important;
+  max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: small;
+  position: relative;
+  text-align: right;
+  right: -7px;
+
+
+  &:hover {
+    color: #777;
+  }
+}
+#name {
+  position: relative;
+  top: -15px;
+  font-size: small;
+  cursor: default;
+  text-align: right;
+  right: -15px;
 
   &:hover {
     color: #777;

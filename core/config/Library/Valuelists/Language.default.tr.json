@@ -186,9 +186,9 @@
       "kugelförmig": "",
       "quadratisch": "",
       "rechteckig": "",
-      "rund": "",
+      "rund": "yuvarlak",
       "schlank": "",
-      "schmal": "",
+      "schmal": "dar",
       "spindelförmig": "",
       "tonnenförmig": "",
       "zylinderförmig": ""
@@ -215,12 +215,12 @@
       "Gefäß": "Kap",
       "Gemme": "",
       "Gerät": "Alet",
-      "Glasschlacke": "",
-      "Lampe": "",
-      "Löffel": "",
-      "Perle": "",
+      "Glasschlacke": "cam cürufu",
+      "Lampe": "kandil",
+      "Löffel": "kaşık",
+      "Perle": "inci",
       "Produktionsfragment": "",
-      "Ring": "",
+      "Ring": "yüzük",
       "Rohglas": "",
       "Rührstab": "",
       "Scheiben": "",
@@ -234,8 +234,8 @@
   "glass-transparency-default": {
     "values": {
       "durchscheinend": "",
-      "durchsichtig": "",
-      "opak": "",
+      "durchsichtig": "şeffaf",
+      "opak": "opak",
       "versintert": ""
     }
   },
@@ -243,18 +243,18 @@
     "values": {
       "Aschenurne": "",
       "Becher": "",
-      "Deckel": "",
+      "Deckel": "kapak",
       "Deckelgefäß": "",
-      "Flasche": "",
+      "Flasche": "şişe",
       "Krug": "",
       "Napf": "",
       "Schale": "",
       "Schüssel": "",
       "Tasse": "",
-      "Teller": "",
+      "Teller": "tabak",
       "Topf": "",
-      "Unbestimmt": "",
-      "Vorratsgefäß": ""
+      "Unbestimmt": "belirsiz",
+      "Vorratsgefäß": "saklama kabı"
     }
   },
   "glass-vesselFormSpecific-default": {
@@ -301,26 +301,26 @@
   "Brick-brickForm-default": {
     "values": {
       "Bodenziegel": "",
-      "Dachziegel": "",
+      "Dachziegel": "(çatı) kiremit",
       "Flachziegel": "",
       "Formziegel": "",
       "Hypokaustziegel": "",
-      "Imbrex": "",
+      "Imbrex": "İmbrex",
       "Kalyptere": "Kalypter",
-      "Later": "",
+      "Later": "Later",
       "Leistenziegel": "",
       "Lochziegel/Hohlziegel": "",
-      "Stroter": "",
-      "Tegula": "",
-      "Tonrohr": "",
+      "Stroter": "Stroter",
+      "Tegula": "Tegula",
+      "Tonrohr": "künk",
       "Wandziegel": ""
     }
   },
   "Brick-brickUsage-default": {
     "values": {
-      "Dach": "",
+      "Dach": "çatı",
       "Decke": "",
-      "Fenster": "",
+      "Fenster": "pencere",
       "Fussboden": "",
       "Gewölbedecke": "",
       "Klosterformat": "",
@@ -338,8 +338,8 @@
       "Riefeldekor": "",
       "Ritzungen": "",
       "Sonstige Abdrücke": "",
-      "Stempel": "",
-      "Stempeldekor": "",
+      "Stempel": "damga",
+      "Stempeldekor": "damga bezeme",
       "Tupfendekor": "",
       "Wischzeichen": "",
       "Überzug/Glasur": ""
@@ -373,13 +373,13 @@
       "Bodenziegel": "",
       "Bruchstein": "",
       "Dachziegel": "",
-      "Geröll": "",
+      "Geröll": "kayşat",
       "Hohlziegel": "",
       "Hypokaustziegel": "",
       "Kanalziegel": "",
       "Platten": "",
       "Quader": "",
-      "Tonrohr": "",
+      "Tonrohr": "künk",
       "Variierend": "",
       "Wandziegel": "",
       "Ziegelbruch": ""

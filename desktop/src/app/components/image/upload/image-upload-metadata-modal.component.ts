@@ -11,7 +11,7 @@ import { ImagesState } from '../overview/view/images-state';
  * 
  * This modal lets the user select some {@link ImageMetadata} explicitly:
  * - category, defaults to "Image"
- * - draughtsmen
+ * - draughtsmen, alternatively the user can choose to load the data from internal image metadata (EXIF etc.)
  */
 @Component({
     selector: 'image-upload-metadata-modal',

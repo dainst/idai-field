@@ -55,8 +55,13 @@
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
                         </span>
-                        <span *ngIf="section.type === 'outlierValues'"
-                              i18n="@@navbar.taskbar.warnings.info.outlierValues">
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
+                            Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste
+                            <i>{{getValuelistId(section)}}</i> nicht enthalten ist.
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.outlierValues.multiple">
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
                         </span>

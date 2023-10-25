@@ -38,9 +38,34 @@
             <div *ngFor="let section of sections" class="card">
                 <div class="card-header h4">
                     <span class="card-title">
-                        {{getWarningTypeLabel(section)}}
-                        <span *ngIf="isFieldLabelVisible(section)"
-                              class="field-label">{{getFieldLabel(section)}}</span>
+                        <span *ngIf="section.type === 'unconfigured'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfigured">
+                            Unkonfiguriertes Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalid'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalid">
+                            Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
+                            Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues'  && getOutlierValues(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
+                            Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'conflicts'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
+                            Konflikt
+                        </span>
+                        <span *ngIf="section.type === 'missingIdentifierPrefix'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingIdentifierPrefix">
+                              Fehlendes Präfix im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'nonUniqueIdentifier'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier">
+                              Uneindeutiger <b>Bezeichner</b>
+                        </span>
                     </span>
                 </div>
                 <div class="card-block">
@@ -66,7 +91,7 @@
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
-                              i18n="@@navbar.taskbar.warnings.info.conflicts">
+                              i18n="@@navbar.taskbar.warnings.info.conflict">
                             Bei dieser Ressource ist ein Konflikt aufgetreten. 
                         </span>
                         <span *ngIf="section.type === 'missingIdentifierPrefix'"

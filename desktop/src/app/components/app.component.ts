@@ -143,12 +143,12 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' })
         );
         this.utilTranslations.addTranslation(
-            'warnings.missingIdentifierPrefix',
-            this.i18n({ id: 'util.warnings.missingIdentifierPrefix', value: 'Fehlendes Bezeichner-Präfix' })
+            'warnings.missingIdentifierPrefixes',
+            this.i18n({ id: 'util.warnings.missingIdentifierPrefixes', value: 'Fehlende Bezeichner-Präfixe' })
         );
         this.utilTranslations.addTranslation(
-            'warnings.nonUniqueIdentifier',
-            this.i18n({ id: 'util.warnings.nonUniqueIdentifier', value: 'Nicht eindeutiger Bezeichner' })
+            'warnings.nonUniqueIdentifiers',
+            this.i18n({ id: 'util.warnings.nonUniqueIdentifiers', value: 'Uneindeutige Bezeichner' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.input',

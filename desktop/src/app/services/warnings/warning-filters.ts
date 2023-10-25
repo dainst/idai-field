@@ -44,12 +44,12 @@ export module WarningFilters {
                 count: 0
             },
             {
-                label: translations.getTranslation('warnings.missingIdentifierPrefix'),
+                label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0
             },
             {
-                label: translations.getTranslation('warnings.nonUniqueIdentifier'),
+                label: translations.getTranslation('warnings.nonUniqueIdentifiers'),
                 constraintName: 'nonUniqueIdentifier:exist',
                 count: 0
             }

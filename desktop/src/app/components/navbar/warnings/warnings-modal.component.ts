@@ -151,31 +151,6 @@ export class WarningsModalComponent {
     }
 
 
-    public getWarningTypeLabel(section: WarningSection): string {
-
-        switch(section.type) {
-            case 'conflicts':
-                return this.i18n({ id: 'taskbar.warnings.conflicts.single', value: 'Konflikt' });
-            case 'unconfigured':
-                return this.i18n({ id: 'taskbar.warnings.unconfigured.single', value: 'Unkonfiguriertes Feld' });
-            case 'invalid':
-                return this.i18n({ id: 'taskbar.warnings.invalidFieldData', value: 'Ungültige Daten im Feld' });
-            case 'outlierValues':
-                return this.i18n({ id: 'taskbar.warnings.outlierValues', value: 'Ungültiger Wert im Feld' });
-            case 'missingIdentifierPrefix':
-                return this.i18n({ id: 'taskbar.warnings.missingIdentifierPrefix', value: 'Fehlendes Präfix im Feld' });
-            case 'nonUniqueIdentifier':
-                return this.i18n({ id: 'taskbar.warnings.nonUniqueIdentifier', value: 'Nicht eindeutiger Bezeichner' });
-        }
-    }
-
-
-    public isFieldLabelVisible(section: WarningSection): boolean {
-
-        return ['unconfigured', 'invalid', 'outlierValues', 'missingIdentifierPrefix'].includes(section.type);
-    }
-
-
     public selectWarningFilter(constraintName: string) {
 
         this.selectedWarningFilter = this.warningFilters.find(filter => filter.constraintName === constraintName)

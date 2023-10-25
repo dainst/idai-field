@@ -67,9 +67,10 @@
 
         .card-header {
           padding-top: 6px;
-          border-radius: 0 !important;
-          border-top-left-radius: 7px !important;
-          border-top-right-radius: 7px !important;
+        }
+
+        &:not(:first-child) .card-header {
+          border-top: 1px solid rgba(0, 0, 0, 0.125);
         }
     
         .field-label,
@@ -77,9 +78,20 @@
             font-weight: 600;
         }
         
-        .warning-info,
-        .data-info {
+        .warning-info {
           margin-bottom: 10px;
+        }
+
+        .data-info {
+          margin-bottom: 14px;
+        }
+
+        .data-info-content {
+          margin-top: 10px;
+          padding: 7px; 
+          background-color: rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(0, 0, 0, 0.125);
+          border-radius: 10px;
         }
 
         button {

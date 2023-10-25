@@ -78,7 +78,7 @@
                     <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div>{{getDataLabel(section)}}</div>
+                        <div class="data-info-content">{{getDataLabel(section)}}</div>
                     </div>
                     <div *ngIf="section.type === 'outlierValues'" class="data-info">
                         <div *ngIf="getOutlierValues(section).length === 1">
@@ -87,8 +87,10 @@
                         <div *ngIf="getOutlierValues(section).length > 1">
                             <b i18n="@@navbar.taskbar.warnings.outlierValues.multiple">Ungültige Werte:</b>
                         </div>
-                        <div *ngFor="let outlierValue of getOutlierValues(section)">
-                            {{outlierValue}}
+                        <div class="data-info-content">
+                            <div *ngFor="let outlierValue of getOutlierValues(section)">
+                                {{outlierValue}}
+                            </div>
                         </div>
                     </div>
                     <span *ngIf="section.type === 'conflicts'">

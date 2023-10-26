@@ -21,6 +21,13 @@ defimpl Jason.Encoder,
     do: FieldPublication.Schemas.Publication
 end
 
+# This tells phoenix how to use date fields (like those of the Publication schema) as part of URLs in path helpers (~p sigils etc. used in templates).
+defimpl Phoenix.Param, for: Date do
+  def to_param(date) do
+    Date.to_string(date)
+  end
+end
+
 defmodule FieldPublication.Schemas do
   import Ecto.Changeset
 

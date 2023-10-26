@@ -18,6 +18,11 @@
     <% combined = Enum.join(@project.editors, ", ") %>
     <%= if combined != "", do: combined, else: "-" %>
   </:item>
+  <:item title="Publications">
+    <.publication_list :let={publication} entries={@publications} date={@today}>
+      <.link navigate={~p"/edit/#{@project.name}/publication/#{publication.draft_date}"}><%= publication.draft_date %></.link>
+    </.publication_list>
+  </:item>
 </.list>
 
 <.back navigate={~p"/edit"}>Back to projects</.back>
@@ -26,7 +31,7 @@
   :if={@live_action == :edit}
   id="project-modal"
   show
-  on_cancel={JS.patch(~p"/edit/#{@project}")}
+  on_cancel={JS.patch(~p"/edit/#{@project.name}")}
 >
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}

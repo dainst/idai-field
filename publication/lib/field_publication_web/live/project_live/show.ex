@@ -1,38 +1,29 @@
 defmodule FieldPublicationWeb.ProjectLive.Show do
+  alias FieldPublication.Publications
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :today, Date.utc_today())}
+  def mount(%{"project_id" => id}, _session, socket) do
+
+    project = Projects.get!(id)
+    publications = Publications.list(project)
+
+    {
+      :ok,
+      socket
+      |> assign(:today, Date.utc_today())
+      |> assign(:publications, [])
+      |> assign(:page_title, page_title(socket.assigns.live_action))
+      |> assign(:project, project)
+      |> assign(:publications, publications)
+    }
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :show, %{"project_id" => id}) do
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:project, Projects.get!(id))
-  end
-
-  defp apply_action(socket, :edit, %{"project_id" => id}) do
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:project, Projects.get!(id))
-  end
-
-  defp apply_action(socket, :draft_publication, %{
-         "project_id" => project_id
-       }) do
-    project = Projects.get!(project_id)
-
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:project, project)
+  def handle_params(_params, _url, socket) do
+    {:noreply, socket}
   end
 
   @impl true

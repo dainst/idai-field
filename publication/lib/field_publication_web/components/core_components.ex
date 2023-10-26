@@ -714,4 +714,31 @@ defmodule FieldPublicationWeb.CoreComponents do
     </div>
     """
   end
+
+  @doc """
+
+  """
+  attr :entries, :list, default: []
+  attr :date, :any, required: true
+  slot :inner_block, required: true
+  def publication_list(assigns) do
+    ~H"""
+    <%= for publication <- @entries do %>
+      <% color =
+        case publication.publication_date do
+          nil ->
+            "bg-yellow-200"
+          date when date < @today ->
+            "bg-green-300"
+          _ ->
+            "bg-green-500"
+        end
+      %>
+
+      <div class={"m-1 p-2 #{color}"}>
+        <%= render_slot(@inner_block, publication) %>
+      </div>
+    <% end %>
+    """
+  end
 end

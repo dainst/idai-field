@@ -20,7 +20,7 @@
           <div>No data.</div>
         <% end %>
         <%= if @replication_progress_state do %>
-          <.progress_bar state={@replication_progress_state} />
+          <.progress_bar state={@replication_progress_state}></.progress_bar>
         <% end %>
       <% end %>
     </:item>
@@ -29,12 +29,21 @@
       <table class="w-full">
         <thead class="bg-slate-700">
           <tr class="text-slate-50">
-            <th>Type</th>
-            <th>Progress</th>
-            <th>Actions</th>
+            <th class="w-1/6">Type</th>
+            <th class="w-4/6">Info</th>
+            <th class="w-1/6">Actions</th>
           </tr>
         </thead>
         <tbody>
+          <tr class="border-2 text-center">
+            <td>Missing raw files</td>
+            <td><%= if @missing_raw_image_files, do: Enum.count(@missing_raw_image_files), else: "Evaluating..." %></td>
+            <td>
+              <.link  class="font-semibold font-mono" navigate={~p"/edit/#{@publication.project_name}/publication/new"}>
+                Reload
+              </.link>
+            </td>
+          </tr>
           <tr class="border-2">
             <td class="text-center">Web images</td>
             <td><.progress_bar state={@web_image_processing_progress}>Evaluating...</.progress_bar></td>

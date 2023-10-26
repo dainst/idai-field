@@ -6,7 +6,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   alias FieldPublication.Publications
 
   alias FieldPublication.Schemas.{
-    LogEntry
+    LogEntry,
+    Publication
   }
 
   alias FieldPublication.Processing
@@ -31,6 +32,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:replication_progress_state, nil)
       |> assign(:last_web_image_processing_log, nil)
       |> assign(:web_image_processing_progress, nil)
+      |> assign(:missing_raw_image_files, nil)
     }
   end
 
@@ -51,25 +53,30 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   This function gets scheduled on mount, put longer running evaluations here. This will ensure that
   the socket connection does not have to wait for the evaluations but is instead established quickly.
   """
+  def handle_info(:run_evaluations, %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket) do
+    # Do not run data evaluations while the replication is still ongoing.
+    {:noreply, socket}
+  end
+
   def handle_info(:run_evaluations, %{assigns: %{publication: publication}} = socket) do
 
     %{
-      summary: web_image_processing_progress
+      summary: web_image_processing_progress,
+      missing_raw_files: missing_raw_image_files
     } = Processing.Image.evaluate_web_images_state(publication)
 
     {
       :noreply,
       socket
       |> assign(:web_image_processing_progress, web_image_processing_progress)
+      |> assign(:missing_raw_image_files, missing_raw_image_files)
     }
   end
 
 
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {
-      :noreply,
-      socket
-      |> assign(:last_replication_log, log_entry)
+      :noreply, assign(socket, :last_replication_log, log_entry)
     }
   end
 
@@ -99,6 +106,9 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_info({:replication_result, publication}, socket) do
+
+    Process.send(self(), :run_evaluations, [])
+
     {
       :noreply,
       socket

@@ -79,7 +79,7 @@ defmodule FieldPublication.Processing.Image do
         end)
       end)
       # ...then wait until all tasks in the batch succeeded.
-      |> Enum.map(&Task.await(&1, 30_000))
+      |> Enum.map(&Task.await(&1, 60_000))
     end)
     |> List.flatten()
   end

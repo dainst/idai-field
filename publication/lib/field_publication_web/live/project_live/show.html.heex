@@ -44,14 +44,16 @@
 </.modal>
 
 <.modal
-  :if={@live_action in [:draft_publication]}
+  :if={@live_action == :draft_publication}
   id="draft-modal"
   show
   on_cancel={JS.patch(~p"/edit/#{@project.name}")}
 >
   <.live_component
     module={FieldPublicationWeb.PublicationLive.ReplicationFormComponent}
-    id={@project.name}
+    id="publication_draft"
+    action={:new}
+    project_name={@project.name}
     patch={~p"/edit/#{@project.name}"}
   />
 </.modal>

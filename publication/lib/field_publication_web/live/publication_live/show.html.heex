@@ -39,9 +39,9 @@
             <td>Missing raw files</td>
             <td><%= if @missing_raw_image_files, do: Enum.count(@missing_raw_image_files), else: "Evaluating..." %></td>
             <td>
-              <.link  class="font-semibold font-mono" navigate={~p"/edit/#{@publication.project_name}/publication/new"}>
+              <button class="font-semibold font-mono" phx-click="reload_raw_files">
                 Reload
-              </.link>
+              </button>
             </td>
           </tr>
           <tr class="border-2">
@@ -57,6 +57,20 @@
       </table>
     </:item>
   </.list>
+
+  <.modal
+    :if={@reload_raw_files}
+    id="draft-modal"
+    show
+  >
+    <.live_component
+      module={FieldPublicationWeb.PublicationLive.ReplicationFormComponent}
+      id="reload_raw_files"
+      project_name={@publication.project_name}
+      draft_date={@publication.draft_date}
+      action={:edit}
+    />
+  </.modal>
 </div>
 
 <.back navigate={~p"/edit/#{@publication.project_name}"}>Back to project</.back>

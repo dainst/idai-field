@@ -7,7 +7,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   alias FieldPublication.Schemas.{
     LogEntry,
-    Publication
+    Publication,
+    ReplicationInput
   }
 
   alias FieldPublication.Processing
@@ -33,12 +34,19 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:last_web_image_processing_log, nil)
       |> assign(:web_image_processing_progress, nil)
       |> assign(:missing_raw_image_files, nil)
+      |> assign(:reload_raw_files, false)
     }
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
     {:noreply, socket}
+  end
+
+  def handle_event("reload_raw_files", _, socket) do
+    {
+      :noreply, assign(socket, :reload_raw_files, true)
+    }
   end
 
   @impl true
@@ -49,10 +57,15 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  @doc """
-  This function gets scheduled on mount, put longer running evaluations here. This will ensure that
-  the socket connection does not have to wait for the evaluations but is instead established quickly.
-  """
+  def handle_info({FieldPublicationWeb.PublicationLive.ReplicationFormComponent,{%ReplicationInput{} = params}}, %{assigns: %{publication: publication}} = socket) do
+    FieldPublication.Replication.FileReplication.start(%{parameters: params, publication: publication, channel: Publications.get_doc_id(publication)})
+
+    {
+      :noreply,
+      assign(socket,:reload_raw_files, false)
+    }
+  end
+
   def handle_info(:run_evaluations, %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket) do
     # Do not run data evaluations while the replication is still ongoing.
     {:noreply, socket}

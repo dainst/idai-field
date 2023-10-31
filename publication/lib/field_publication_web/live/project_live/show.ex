@@ -1,8 +1,11 @@
 defmodule FieldPublicationWeb.ProjectLive.Show do
-  alias FieldPublication.Publications
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
+  alias FieldPublication.Publications
+
+  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.Schemas.ReplicationInput
 
   @impl true
   def mount(%{"project_id" => id}, _session, socket) do
@@ -30,6 +33,23 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
     {:noreply, assign(socket, :project, project)}
   end
+
+
+  @impl true
+  def handle_info({FieldPublicationWeb.PublicationLive.ReplicationFormComponent,{%ReplicationInput{} = params, %Publication{} = publication}}, socket) do
+    FieldPublication.Replication.start_replication(params, publication, Publications.get_doc_id(publication))
+
+    {
+      :noreply,
+      socket
+      |> put_flash(:info, "Publication created")
+      |> push_navigate(
+        to:
+          ~p"/edit/#{publication.project_name}/publication/#{publication.draft_date}"
+      )
+    }
+  end
+
 
   # @impl true
   # def handle_info(

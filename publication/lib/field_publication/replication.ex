@@ -17,22 +17,11 @@ defmodule FieldPublication.Replication do
     LogEntry
   }
 
-  def start(%ReplicationInput{} = params) do
+  def initialize(%ReplicationInput{} = params) do
+
     with {:ok, publication} <- Publications.create_from_replication_input(params),
-         {:ok, :connection_successful} <- check_source_connection(params),
-         channel <- Publications.get_doc_id(publication) do
-      setup_state = %{
-        parameters: params,
-        publication: publication,
-        channel: channel
-      }
-
-      {:ok, replication_pid} =
-        Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
-          replicate(setup_state)
-        end)
-
-      {:ok, setup_state, replication_pid}
+         {:ok, :connection_successful} <- check_source_connection(params) do
+          {:ok, publication}
     else
       {:error, %{errors: [duplicate_document: {msg, _}]}} ->
         {:error, msg}
@@ -42,7 +31,22 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  defp check_source_connection(%ReplicationInput{
+  def start_replication(%ReplicationInput{} = params, %Publication{} = publication, channel) do
+    setup_state = %{
+      parameters: params,
+      publication: publication,
+      channel: channel
+    }
+
+    {:ok, replication_pid} =
+      Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
+        replicate(setup_state)
+      end)
+
+    {:ok, setup_state, replication_pid}
+  end
+
+  def check_source_connection(%ReplicationInput{
          source_url: url,
          source_project_name: project_name,
          source_user: user,

@@ -40,7 +40,7 @@
             <td><%= if @missing_raw_image_files, do: Enum.count(@missing_raw_image_files), else: "Evaluating..." %></td>
             <td>
               <.link  class="font-semibold font-mono" navigate={~p"/edit/#{@publication.project_name}/publication/new"}>
-                Reload
+                Redraft publication
               </.link>
             </td>
           </tr>

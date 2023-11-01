@@ -1,6 +1,5 @@
 const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
-import ExifReader from 'exifreader';
 
 export module ImageManipulationErrors {
 

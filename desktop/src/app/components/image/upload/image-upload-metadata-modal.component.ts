@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, ProjectConfiguration, CategoryForm, Datastore } from 'idai-field-core';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 /**
@@ -20,7 +21,7 @@ import { ImagesState } from '../overview/view/images-state';
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
-export class ImageUploadMetadataModalComponent {
+export class ImageUploadMetadataModalComponent implements OnInit {
 
     public fileCount: number;
     public depictsRelationTarget: Document;
@@ -53,6 +54,12 @@ export class ImageUploadMetadataModalComponent {
     public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
 
     public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
+
+
+    ngOnInit() {
+        
+        AngularUtility.blurActiveElement();
+    }
 
 
     public onKeyDown(event: KeyboardEvent) {

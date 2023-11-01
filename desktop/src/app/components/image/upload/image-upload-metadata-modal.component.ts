@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
-import { Document, ProjectConfiguration, CategoryForm, Labels, Datastore } from 'idai-field-core';
+import { Document, ProjectConfiguration, CategoryForm, Datastore } from 'idai-field-core';
 import { ImagesState } from '../overview/view/images-state';
 
 
@@ -24,17 +24,16 @@ export class ImageUploadMetadataModalComponent {
 
     public fileCount: number;
     public depictsRelationTarget: Document;
-    public imageCategory: CategoryForm;
+    public topLevelCategories: Array<CategoryForm>;
     public projectStaff: string[];
     public metadata: ImageMetadata;
 
     constructor(private imagesState: ImagesState,
                 public activeModal: NgbActiveModal,
                 projectConfiguration: ProjectConfiguration,
-                private datastore: Datastore,
-                private labels: Labels) {
+                private datastore: Datastore) {
 
-        this.imageCategory = projectConfiguration.getCategory('Image');
+        this.topLevelCategories = [projectConfiguration.getCategory('Image')];
 
         this.projectStaff = [];
         this.metadata = {
@@ -46,7 +45,9 @@ export class ImageUploadMetadataModalComponent {
     }
 
 
-    public getImageCategoryLabel = (category: CategoryForm) => this.labels.get(category);
+    public hasImageChildCategories = () => this.topLevelCategories[0].children.length > 0;
+
+    public getSelectedCategoryNames = () => [this.metadata.category];
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -55,8 +56,9 @@ export class ImageUploadMetadataModalComponent {
     }
 
 
-    public setCategory(category: string) {
-        this.metadata.category = category;
+    public setCategory(category: CategoryForm) {
+
+        this.metadata.category = category.name;
     }
 
 

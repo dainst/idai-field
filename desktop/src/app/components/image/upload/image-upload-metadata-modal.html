@@ -18,27 +18,14 @@
             verknüpft.
         </span>
     </div>
-    <p *ngIf="imageCategory.children && imageCategory.children.length > 0">
+    <p *ngIf="hasImageChildCategories()">
         <span i18n="@@imageUpload.imageMetadataModal.chooseCategory">
             Bitte wählen Sie die gewünschte Kategorie aus.
         </span>
     </p>
-    <ul *ngIf="imageCategory.children && imageCategory.children.length > 0" class="list-group">
-        <li [ngClass]="{ 'abstract-category': imageCategory.isAbstract, 'selected': (imageCategory.name == metadata.category) }" class="list-group-item popover-item" 
-            id="choose-image-supercategory" (click)="!imageCategory.isAbstract && setCategory(imageCategory.name)">
-            <category-icon [category]="imageCategory.name" size="30"></category-icon>
-            <span class="image-category-label">{{getImageCategoryLabel(imageCategory)}}</span>
-            <span *ngIf="(imageCategory.name == metadata.category)" class="mdi mdi-check-bold checked-category-icon"></span>
-        </li>
-            <li *ngFor="let childCategory of imageCategory.children; let index = index"
-                id="choose-image-subcategory-option-{{index}}" class="list-group-item popover-item" [ngClass]="{ 'selected': (childCategory.name == metadata.category)}"
-                (click)="setCategory(childCategory.name)">
-                <category-icon class="child-image-icon" [category]="childCategory.name" size="30"></category-icon>
-                <span class="image-category-label">{{getImageCategoryLabel(childCategory)}}</span>
-                <span *ngIf="(childCategory.name == metadata.category)" class="mdi mdi-check-bold checked-category-icon"></span>
-            </li>
-    </ul>
-
+    <category-picker [topLevelCategoriesArray]="topLevelCategories"
+                     [selectedCategories]="getSelectedCategoryNames()"
+                     (onCategoryPicked)="setCategory($event)"></category-picker>
     <hr/>
 
     <div class="radio form-check form-check-inline">

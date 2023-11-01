@@ -1,29 +1,7 @@
 #image-upload-metadata-modal {
-  ul {
-    li {
-      &.list-group-item {
-        border: 1px solid #eee;
-      }
+  user-select: none;
 
-
-      &.selected {
-        box-shadow: inset 0 0 2px 1px #898989
-      }
-
-      category-icon.child-image-icon {
-        margin-left: 10px;
-      }
-
-      .checked-category-icon {
-        float: right
-      }
-    }
-  }
-
-  .image-category-label {
-    position: relative;
-    left: 10px;
-    bottom: 4px;
-    user-select: none;
+  category-picker .list-group-item {
+    border-top: none !important;
   }
 }

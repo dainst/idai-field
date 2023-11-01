@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { Document, ProjectConfiguration, CategoryForm, Datastore } from 'idai-field-core';
+import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
 
 
@@ -28,16 +28,17 @@ export class ImageUploadMetadataModalComponent {
     public projectStaff: string[];
     public metadata: ImageMetadata;
 
-    constructor(private imagesState: ImagesState,
-                public activeModal: NgbActiveModal,
-                projectConfiguration: ProjectConfiguration,
+
+    constructor(projectConfiguration: ProjectConfiguration,
+                public activeModal: NgbActiveModal,        
+                private imagesState: ImagesState,
                 private datastore: Datastore) {
 
         this.topLevelCategories = [projectConfiguration.getCategory('Image')];
 
         this.projectStaff = [];
         this.metadata = {
-            category: "Image",
+            category: 'Image',
             draughtsmen: []
         }
 
@@ -48,6 +49,10 @@ export class ImageUploadMetadataModalComponent {
     public hasImageChildCategories = () => this.topLevelCategories[0].children.length > 0;
 
     public getSelectedCategoryNames = () => [this.metadata.category];
+
+    public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
+
+    public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -63,7 +68,8 @@ export class ImageUploadMetadataModalComponent {
 
 
     public toggleDraughtsman(person: string) {
-        if(person in this.metadata.draughtsmen) {
+
+        if (person in this.metadata.draughtsmen) {
             this.metadata.draughtsmen = this.metadata.draughtsmen.filter((selected) => selected !== person);
         } else {
             this.metadata.draughtsmen.push(person);
@@ -71,17 +77,12 @@ export class ImageUploadMetadataModalComponent {
     }
 
 
-    public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
-
-
-    public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
-
-
     private async loadProjectDocumentData() {
-        const projectDoc: Document = await this.datastore.get('project');
 
-        if ('staff' in projectDoc.resource) {
-            this.projectStaff = projectDoc.resource['staff'];
+        const projectDocument: Document = await this.datastore.get('project');
+
+        if ('staff' in projectDocument.resource) {
+            this.projectStaff = projectDocument.resource['staff'];
         }
     }
 }

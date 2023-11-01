@@ -1,6 +1,7 @@
 import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageManipulation } from './image-manipulation';
 
+
 /**
  * @author Thomas Kleinke
  * 
@@ -20,14 +21,17 @@ export async function createDisplayVariant(document: ImageDocument, imagestore: 
         width * height, fileExtension, sharpImageHandle
     );
 
-    const resize: boolean = (width > ImageManipulation.MAX_DISPLAY_WIDTH  || height > ImageManipulation.MAX_DISPLAY_HEIGHT);
+    const resize: boolean = width > ImageManipulation.MAX_DISPLAY_WIDTH 
+        || height > ImageManipulation.MAX_DISPLAY_HEIGHT;
 
     if (!convertToJpeg && !resize) {
         await imagestore.addUseOriginalMarker(imageId);
         return undefined;
     }
 
-    const displayVariantData: Buffer = await ImageManipulation.createDisplayImage(sharpImageHandle, convertToJpeg, resize);
+    const displayVariantData: Buffer = await ImageManipulation.createDisplayImage(
+        sharpImageHandle, convertToJpeg, resize
+    );
 
     await imagestore.store(imageId, displayVariantData, undefined, ImageVariant.DISPLAY);
     return displayVariantData;

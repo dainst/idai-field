@@ -108,13 +108,15 @@ export class ImageUploader {
     }
 
 
-    private async selectMetadata(fileCount: number, depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
+    private async selectMetadata(fileCount: number,
+                                 depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
+
         this.projectConfiguration.getCategory('Image');
 
         this.menuService.setContext(MenuContext.MODAL);
         const modal: NgbModalRef = this.modalService.open(
             ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-        )
+        );
 
         modal.componentInstance.fileCount = fileCount;
         modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
@@ -269,8 +271,11 @@ export class ImageUploader {
     private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
                                       depictsRelationTarget?: Document): Promise<any> {
                                         
-        // Try to extend metadata set explicitely by the user with metadata contained within the image file itself (exif/xmp/iptc).
-        const extendedMetadata = await extendMetadataByFileData(metadata, buffer, this.imagesState.getParseFileMetadata())
+        // Try to extend metadata set explicitely by the user with metadata contained within the image file
+        // itself (exif/xmp/iptc).
+        const extendedMetadata = await extendMetadataByFileData(
+            metadata, buffer, this.imagesState.getParseFileMetadata()
+        );
 
         const document: NewImageDocument = {
             resource: {

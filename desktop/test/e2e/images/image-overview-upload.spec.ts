@@ -32,6 +32,7 @@ test.describe('images/upload --', () => {
         await stop();
     });
 
+
     test('image upload should create a JSON document, which in turn gets displayed in the grid', async () => {
 
         await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
@@ -55,10 +56,11 @@ test.describe('images/upload --', () => {
     });
 
 
-    test('explicitely selected draughtsman is displayed in resource view', async () => {
+    test('display explicitly selected draughtsman in resource view', async () => {
+
         await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
 
-        const staffName = "Person 1";
+        const staffName = 'Person 1';
 
         await ImageOverviewPage.selectStaffAsDraughtsmen(staffName);
         await ImageOverviewPage.clickUploadConfirm();

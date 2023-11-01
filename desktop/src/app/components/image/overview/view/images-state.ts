@@ -83,9 +83,9 @@ export class ImagesState {
     /**
      * Set user preference for image metadata source.
      */
-    public setParseFileMetadata(val: boolean) {
+    public setParseFileMetadata(value: boolean) {
 
-        this.parseFileMetadata = val;
+        this.parseFileMetadata = value;
     }
 
 

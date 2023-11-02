@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       ) do
     Processing.start(publication, :web_images)
 
-    { :noreply, socket}
+    {:noreply, socket}
   end
 
   def handle_event(
@@ -61,7 +61,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       ) do
     Processing.stop(publication, :web_images)
 
-    { :noreply, socket }
+    {:noreply, socket}
   end
 
   @impl true
@@ -133,7 +133,10 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
-  def handle_info({:processing_started, :web_images}, %{assigns: %{publication: publication}} = socket) do
+  def handle_info(
+        {:processing_started, :web_images},
+        %{assigns: %{publication: publication}} = socket
+      ) do
     {
       :noreply,
       socket
@@ -141,7 +144,10 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
-  def handle_info({:processing_stopped, :web_images}, %{assigns: %{publication: publication}} = socket) do
+  def handle_info(
+        {:processing_stopped, :web_images},
+        %{assigns: %{publication: publication}} = socket
+      ) do
     {
       :noreply,
       socket

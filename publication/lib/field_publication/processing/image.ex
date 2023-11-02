@@ -4,6 +4,7 @@ defmodule FieldPublication.Processing.Image do
 
   alias FieldPublication.FileService
   alias FieldPublication.Publications
+  alias FieldPublication.PublicationsData
 
   alias FieldPublication.Schemas.{
     Publication
@@ -19,25 +20,11 @@ defmodule FieldPublication.Processing.Image do
 
     current_web_files = FileService.list_web_image_files(project_name)
 
-    publication_image_categories =
-      Publications.list_with_all_child_categories(publication, "Image")
+    image_categories =
+      PublicationsData.get_all_subcategories(publication, "Image")
 
     {existing, missing} =
-      CouchService.get_document_stream(
-        %{
-          selector: %{
-            "$or":
-              Enum.map(publication_image_categories, fn category ->
-                [
-                  %{"resource.category" => category},
-                  %{"resource.type" => category}
-                ]
-              end)
-              |> List.flatten()
-          }
-        },
-        database
-      )
+      PublicationsData.get_doc_stream_for_categories(publication, image_categories)
       |> Stream.map(fn %{"_id" => uuid} ->
         uuid
       end)

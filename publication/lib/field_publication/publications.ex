@@ -190,8 +190,7 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database)
-          do
+           CouchService.delete_database(database) do
       {:ok, :deleted}
     else
       error ->
@@ -201,24 +200,25 @@ defmodule FieldPublication.Publications do
 
   def list_with_all_child_categories(%Publication{configuration_doc: config_name}, category) do
     CouchService.get_document(config_name)
-    |> then(fn({:ok, %{body: body}}) ->
+    |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
     |> Map.get("config", [])
-    |> Enum.find(fn(%{"item" => item}) ->
+    |> Enum.find(fn %{"item" => item} ->
       category == item["name"]
     end)
-    |> then(fn(entry) ->
+    |> then(fn entry ->
       flatten_category_tree(entry)
     end)
   end
 
   defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_category_items}) do
-    [name] ++ Enum.map(child_category_items, &flatten_category_tree/1)
+    ([name] ++ Enum.map(child_category_items, &flatten_category_tree/1))
     |> List.flatten()
   end
 
-  def get_doc_stream_for_categories(%Publication{database: database}, categories) when is_list(categories) do
+  def get_doc_stream_for_categories(%Publication{database: database}, categories)
+      when is_list(categories) do
     query =
       %{
         selector: %{

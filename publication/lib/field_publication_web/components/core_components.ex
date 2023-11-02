@@ -699,18 +699,18 @@ defmodule FieldPublicationWeb.CoreComponents do
   def progress_bar(assigns) do
     ~H"""
     <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
-        <div
-          class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
-          style={"width: #{if @state != nil, do: @state.percentage, else: 0}%"}
-        >
-        </div>
-        <div class="w-full absolute text-center">
-          <%= if @state do %>
-            <%= @state.counter %> / <%= @state.overall %>
-          <% else %>
-            <%= render_slot(@inner_block) %>
-          <% end %>
-        </div>
+      <div
+        class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
+        style={"width: #{if @state != nil, do: @state.percentage, else: 0}%"}
+      >
+      </div>
+      <div class="w-full absolute text-center">
+        <%= if @state do %>
+          <%= @state.counter %> / <%= @state.overall %>
+        <% else %>
+          <%= render_slot(@inner_block) %>
+        <% end %>
+      </div>
     </div>
     """
   end
@@ -721,6 +721,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   attr :entries, :list, default: []
   attr :date, :any, required: true
   slot :inner_block, required: true
+
   def publication_list(assigns) do
     ~H"""
     <%= for publication <- @entries do %>
@@ -728,12 +729,13 @@ defmodule FieldPublicationWeb.CoreComponents do
         case publication.publication_date do
           nil ->
             "bg-yellow-200"
+
           date when date < @today ->
             "bg-green-300"
+
           _ ->
             "bg-green-500"
-        end
-      %>
+        end %>
 
       <div class={"m-1 p-2 #{color}"}>
         <%= render_slot(@inner_block, publication) %>

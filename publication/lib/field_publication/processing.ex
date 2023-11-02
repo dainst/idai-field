@@ -53,16 +53,23 @@ defmodule FieldPublication.Processing do
   ## GenServer functions that are triggered by the API functions above.
 
   def handle_call({:start, %Publication{} = publication, :web_images}, _from, running_tasks) do
-
     publication_id = Publications.get_doc_id(publication)
 
-    Enum.any?(running_tasks, fn({_task, :web_images, context}) ->
+    Enum.any?(running_tasks, fn {_task, :web_images, context} ->
       publication_id == context
     end)
     |> case do
       false ->
-        task = Task.Supervisor.async_nolink(FieldPublication.ProcessingSupervisor, Image, :start_web_image_processing, [publication])
+        task =
+          Task.Supervisor.async_nolink(
+            FieldPublication.ProcessingSupervisor,
+            Image,
+            :start_web_image_processing,
+            [publication]
+          )
+
         {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
+
       true ->
         {:reply, :already_running, running_tasks}
     end
@@ -74,7 +81,7 @@ defmodule FieldPublication.Processing do
 
   def handle_call({:show, %Publication{} = publication}, _from, running_tasks) do
     publication_tasks =
-      Enum.filter(running_tasks, fn({_task, _type, context}) ->
+      Enum.filter(running_tasks, fn {_task, _type, context} ->
         context == Publications.get_doc_id(publication)
       end)
 
@@ -83,7 +90,7 @@ defmodule FieldPublication.Processing do
 
   def handle_call({:show, %Publication{} = publication, requested_type}, _from, running_tasks) do
     requested_task =
-      Enum.find(running_tasks, fn({_task, type, context}) ->
+      Enum.find(running_tasks, fn {_task, type, context} ->
         context == Publications.get_doc_id(publication) and type == requested_type
       end)
 
@@ -93,7 +100,7 @@ defmodule FieldPublication.Processing do
   def handle_call(:stop, _from, running_tasks) do
     Logger.debug("Stopping all processing for all publications.")
 
-    Enum.each(running_tasks, fn({task, _type, _context}) ->
+    Enum.each(running_tasks, fn {task, _type, _context} ->
       Process.exit(task.pid, :stopped)
     end)
 
@@ -101,14 +108,16 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call({:stop, %Publication{} = publication}, _from, running_tasks) do
-    Logger.debug("Stopping all processing for publication #{Publications.get_doc_id(publication)}.")
+    Logger.debug(
+      "Stopping all processing for publication #{Publications.get_doc_id(publication)}."
+    )
 
     {publication_tasks, remaining_tasks} =
-       Enum.split_with(running_tasks, fn({_task, _type, context}) ->
+      Enum.split_with(running_tasks, fn {_task, _type, context} ->
         context == Publications.get_doc_id(publication)
       end)
 
-    Enum.each(publication_tasks, fn({task, _type, _context}) ->
+    Enum.each(publication_tasks, fn {task, _type, _context} ->
       Process.exit(task.pid, :stopped)
     end)
 
@@ -116,14 +125,16 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call({:stop, %Publication{} = publication, requested_type}, _from, running_tasks) do
-    Logger.debug("Stopping '#{requested_type}' processing for publication #{Publications.get_doc_id(publication)}.")
+    Logger.debug(
+      "Stopping '#{requested_type}' processing for publication #{Publications.get_doc_id(publication)}."
+    )
 
     {publication_tasks, remaining_tasks} =
-       Enum.split_with(running_tasks, fn({_task, type, context}) ->
+      Enum.split_with(running_tasks, fn {_task, type, context} ->
         context == Publications.get_doc_id(publication) and type == requested_type
       end)
 
-    Enum.each(publication_tasks, fn({task, _type, _context}) ->
+    Enum.each(publication_tasks, fn {task, _type, _context} ->
       Process.exit(task.pid, :stopped)
     end)
 
@@ -147,16 +158,16 @@ defmodule FieldPublication.Processing do
   end
 
   defp cleanup(ref, task_list) do
-    Enum.split_with(task_list, fn({task, _type, _context}) ->
+    Enum.split_with(task_list, fn {task, _type, _context} ->
       task.ref == ref
     end)
     |> case do
       {[{_task, type, context}], rest} ->
         Logger.debug("Removing task '#{type}' for '#{context}' from task list.")
         rest
+
       {[], rest} ->
         rest
     end
   end
-
 end

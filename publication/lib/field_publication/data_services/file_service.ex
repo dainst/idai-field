@@ -58,12 +58,13 @@ defmodule FieldPublication.FileService do
   def list_raw_data_files(project_name) do
     File.ls!(get_raw_data_path(project_name))
     |> Enum.map(fn directory ->
-      {String.to_existing_atom(directory), File.ls!("#{get_raw_data_path(project_name)}/#{directory}")}
+      {String.to_existing_atom(directory),
+       File.ls!("#{get_raw_data_path(project_name)}/#{directory}")}
     end)
     |> Enum.into(%{})
   end
 
   def list_web_image_files(project_name) do
-    File.ls!( get_web_images_path(project_name))
+    File.ls!(get_web_images_path(project_name))
   end
 end

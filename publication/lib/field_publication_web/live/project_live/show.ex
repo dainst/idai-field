@@ -6,7 +6,6 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
 
   @impl true
   def mount(%{"project_id" => id}, _session, socket) do
-
     project = Projects.get!(id)
     publications = Publications.list(project)
 

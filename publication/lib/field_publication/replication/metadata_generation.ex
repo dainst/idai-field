@@ -7,11 +7,10 @@ defmodule FieldPublication.Replication.MetadataGeneration do
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
-
     configuration_doc =
       configuration_doc_name
       |> CouchService.get_document()
-      |> then(fn({:ok, %{body: body}}) ->
+      |> then(fn {:ok, %{body: body}} ->
         Jason.decode!(body)
       end)
 

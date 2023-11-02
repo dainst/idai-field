@@ -31,11 +31,11 @@ defmodule FieldPublication.Processing do
   end
 
   def show(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:show, publication})
+    GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication)})
   end
 
   def show(%Publication{} = publication, type) when type in [:web_images] do
-    GenServer.call(__MODULE__, {:show, publication, type})
+    GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
   end
 
   def stop() do
@@ -43,11 +43,11 @@ defmodule FieldPublication.Processing do
   end
 
   def stop(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:stop, publication})
+    GenServer.call(__MODULE__, {:stop,  Publications.get_doc_id(publication)})
   end
 
   def stop(%Publication{} = publication, type) when type in [:web_images] do
-    GenServer.call(__MODULE__, {:stop, publication, type})
+    GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
   ## GenServer functions that are triggered by the API functions above.
@@ -79,19 +79,19 @@ defmodule FieldPublication.Processing do
     {:reply, running_tasks, running_tasks}
   end
 
-  def handle_call({:show, %Publication{} = publication}, _from, running_tasks) do
+  def handle_call({:show, requested_context}, _from, running_tasks) do
     publication_tasks =
       Enum.filter(running_tasks, fn {_task, _type, context} ->
-        context == Publications.get_doc_id(publication)
+        context == requested_context
       end)
 
     {:reply, publication_tasks, running_tasks}
   end
 
-  def handle_call({:show, %Publication{} = publication, requested_type}, _from, running_tasks) do
+  def handle_call({:show, requested_context, requested_type}, _from, running_tasks) do
     requested_task =
       Enum.find(running_tasks, fn {_task, type, context} ->
-        context == Publications.get_doc_id(publication) and type == requested_type
+        context == requested_context and type == requested_type
       end)
 
     {:reply, requested_task, running_tasks}
@@ -107,14 +107,14 @@ defmodule FieldPublication.Processing do
     {:reply, :ok, []}
   end
 
-  def handle_call({:stop, %Publication{} = publication}, _from, running_tasks) do
+  def handle_call({:stop, requested_context}, _from, running_tasks) do
     Logger.debug(
-      "Stopping all processing for publication #{Publications.get_doc_id(publication)}."
+      "Stopping all processing for #{requested_context}."
     )
 
     {publication_tasks, remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, _type, context} ->
-        context == Publications.get_doc_id(publication)
+        context == requested_context
       end)
 
     Enum.each(publication_tasks, fn {task, _type, _context} ->
@@ -124,14 +124,14 @@ defmodule FieldPublication.Processing do
     {:reply, :ok, remaining_tasks}
   end
 
-  def handle_call({:stop, %Publication{} = publication, requested_type}, _from, running_tasks) do
+  def handle_call({:stop, requested_context, requested_type}, _from, running_tasks) do
     Logger.debug(
-      "Stopping '#{requested_type}' processing for publication #{Publications.get_doc_id(publication)}."
+      "Stopping '#{requested_type}' processing for #{requested_context}."
     )
 
     {publication_tasks, remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, type, context} ->
-        context == Publications.get_doc_id(publication) and type == requested_type
+        context == requested_context and type == requested_type
       end)
 
     Enum.each(publication_tasks, fn {task, _type, _context} ->

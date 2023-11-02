@@ -26,6 +26,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {
       :ok,
       socket
+      |> assign(:today, Date.utc_today())
       |> assign(:channel, channel)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
@@ -62,6 +63,12 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     Processing.stop(publication, :web_images)
 
     {:noreply, socket}
+  end
+
+  def handle_event("publication_date_selected", %{"publication-date" => date_string}, %{assigns: %{publication: publication}} = socket) do
+    {:ok, updated_publication} = Publications.put(publication, %{"publication_date" => date_string})
+
+    {:noreply, assign(socket, :publication, updated_publication)}
   end
 
   @impl true

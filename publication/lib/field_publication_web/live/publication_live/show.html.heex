@@ -8,7 +8,13 @@
     <:item title="Source project name"><%= @publication.source_project_name %></:item>
     <:item title="Draft date"><%= @publication.draft_date %></:item>
     <:item title="Publication date">
-      <%= if @publication.publication_date, do: @publication.publication_date, else: "-" %>
+      <%= if @publication.publication_date do %>
+        <%= @publication.publication_date  %>
+      <% else %>
+        <.form id="publication_date_form">
+          <.input form="publication_date_form" type="date" id="start" name="publication-date" value={@publication.publication_date} phx-change="publication_date_selected" min={@today} />
+        </.form>
+      <% end %>
     </:item>
     <:item title="Data replication">
       <%= if @publication.replication_finished do %>

@@ -4,6 +4,8 @@ defmodule FieldPublication.Processing do
   alias FieldPublication.Schemas.Publication
   alias FieldPublication.Publications
 
+  alias Phoenix.PubSub
+
   require Logger
 
   def start_link(_opts) do
@@ -43,14 +45,14 @@ defmodule FieldPublication.Processing do
   end
 
   def stop(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:stop,  Publications.get_doc_id(publication)})
+    GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication)})
   end
 
   def stop(%Publication{} = publication, type) when type in [:web_images] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
-  ## GenServer functions that are triggered by the API functions above.
+  ## Starting, monitoring and stopping tasks as requested through the API functions above.
 
   def handle_call({:start, %Publication{} = publication, :web_images}, _from, running_tasks) do
     publication_id = Publications.get_doc_id(publication)
@@ -67,6 +69,8 @@ defmodule FieldPublication.Processing do
             :start_web_image_processing,
             [publication]
           )
+
+        broadcast(publication_id, :web_images, :processing_started)
 
         {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
 
@@ -104,15 +108,13 @@ defmodule FieldPublication.Processing do
       Process.exit(task.pid, :stopped)
     end)
 
-    {:reply, :ok, []}
+    {:reply, :ok, running_tasks}
   end
 
   def handle_call({:stop, requested_context}, _from, running_tasks) do
-    Logger.debug(
-      "Stopping all processing for #{requested_context}."
-    )
+    Logger.debug("Stopping all processing for #{requested_context}.")
 
-    {publication_tasks, remaining_tasks} =
+    {publication_tasks, _remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, _type, context} ->
         context == requested_context
       end)
@@ -121,15 +123,13 @@ defmodule FieldPublication.Processing do
       Process.exit(task.pid, :stopped)
     end)
 
-    {:reply, :ok, remaining_tasks}
+    {:reply, :ok, running_tasks}
   end
 
   def handle_call({:stop, requested_context, requested_type}, _from, running_tasks) do
-    Logger.debug(
-      "Stopping '#{requested_type}' processing for #{requested_context}."
-    )
+    Logger.debug("Stopping '#{requested_type}' processing for #{requested_context}.")
 
-    {publication_tasks, remaining_tasks} =
+    {publication_tasks, _remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, type, context} ->
         context == requested_context and type == requested_type
       end)
@@ -138,8 +138,10 @@ defmodule FieldPublication.Processing do
       Process.exit(task.pid, :stopped)
     end)
 
-    {:reply, :ok, remaining_tasks}
+    {:reply, :ok, running_tasks}
   end
+
+  # Handling of finished, stopped or crashed tasks
 
   def handle_info({ref, _answer}, running_tasks) do
     Logger.debug("A processing task has completed successfully.")
@@ -164,10 +166,18 @@ defmodule FieldPublication.Processing do
     |> case do
       {[{_task, type, context}], rest} ->
         Logger.debug("Removing task '#{type}' for '#{context}' from task list.")
+        broadcast(context, type, :processing_stopped)
         rest
 
       {[], rest} ->
         rest
     end
+  end
+
+  # PubSub interaction
+
+  defp broadcast(channel, processing_type, msg)
+       when msg in [:processing_started, :processing_stopped] do
+    PubSub.broadcast!(FieldPublication.PubSub, channel, {msg, processing_type})
   end
 end

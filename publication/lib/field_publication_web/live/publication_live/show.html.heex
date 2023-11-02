@@ -57,9 +57,23 @@
               <.progress_bar state={@web_image_processing_progress}>Evaluating...</.progress_bar>
             </td>
             <td class="text-center">
-              <button class="font-semibold font-mono" type="button" phx-click="process_web_images">
-                Start
-              </button>
+              <%= if @web_images_processing? do %>
+                <button
+                  class="font-semibold font-mono"
+                  type="button"
+                  phx-click="stop_web_images_processing"
+                >
+                  Stop
+                </button>
+              <% else %>
+                <button
+                  class="font-semibold font-mono"
+                  type="button"
+                  phx-click="start_web_images_processing"
+                >
+                  Start
+                </button>
+              <% end %>
             </td>
           </tr>
         </tbody>

@@ -34,6 +34,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:last_web_image_processing_log, nil)
       |> assign(:web_image_processing_progress, nil)
       |> assign(:missing_raw_image_files, nil)
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
     }
   end
 
@@ -43,14 +44,24 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  def handle_event("process_web_images", _, socket) do
-    Processing.start(socket.assigns.publication, :web_images)
-    {:noreply, socket}
+  def handle_event(
+        "start_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :web_images)
+
+    { :noreply, socket}
   end
 
-  def handle_event("stop_processing_web_images", _, socket) do
-    Processing.stop(socket.assigns.publication, :web_images)
-    {:noreply, socket}
+  def handle_event(
+        "stop_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :web_images)
+
+    { :noreply, socket }
   end
 
   @impl true
@@ -120,5 +131,29 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       socket
       |> assign(:publication, publication)
     }
+  end
+
+  def handle_info({:processing_started, :web_images}, %{assigns: %{publication: publication}} = socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
+    }
+  end
+
+  def handle_info({:processing_stopped, :web_images}, %{assigns: %{publication: publication}} = socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
+    }
+  end
+
+  defp processing?(publication, processing_type) do
+    publication
+    |> Processing.show()
+    |> Enum.any?(fn {_task_ref, type, _publication_id} ->
+      type == processing_type
+    end)
   end
 end

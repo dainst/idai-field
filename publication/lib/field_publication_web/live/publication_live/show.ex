@@ -43,7 +43,9 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   @impl true
   def handle_event("process_web_images", _, socket) do
-    Processing.Image.start_web_image_processing(socket.assigns.publication)
+    Processing.start(socket.assigns.publication, :web_images)
+    {:noreply, socket}
+  end
 
     {:noreply, socket}
   end

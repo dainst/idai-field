@@ -20,7 +20,9 @@ defmodule FieldPublication.Application do
       ),
       # Start the Endpoint (http/https)
       FieldPublicationWeb.Endpoint,
-      {Task.Supervisor, name: FieldPublication.TaskSupervisor}
+      {Task.Supervisor, name: FieldPublication.TaskSupervisor},
+      {Task.Supervisor, name: FieldPublication.ProcessingSupervisor},
+      {FieldPublication.Processing, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

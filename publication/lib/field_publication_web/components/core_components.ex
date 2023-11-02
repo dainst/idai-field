@@ -730,7 +730,7 @@ defmodule FieldPublicationWeb.CoreComponents do
           nil ->
             "bg-yellow-200"
 
-          date when date < @today ->
+          date when date > @date ->
             "bg-green-300"
 
           _ ->

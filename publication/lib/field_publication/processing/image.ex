@@ -76,7 +76,7 @@ defmodule FieldPublication.Processing.Image do
       Agent.start_link(fn -> summary end)
 
     existing_raw_files
-    |> Enum.chunk_every(5)
+    |> Stream.chunk_every(System.schedulers_online())
     |> Enum.map(fn batch ->
       # For each item in the batch start an async task for the conversion...
       Enum.map(batch, fn uuid ->
@@ -90,7 +90,7 @@ defmodule FieldPublication.Processing.Image do
         end)
       end)
       # ...then wait until all tasks in the batch succeeded.
-      |> Enum.map(&Task.await(&1, 30_000))
+      |> Enum.map(&Task.await(&1, 1000 * 60 * 5))
     end)
     |> List.flatten()
   end

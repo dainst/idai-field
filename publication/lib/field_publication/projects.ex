@@ -74,9 +74,8 @@ defmodule FieldPublication.Projects do
     with {:ok, _deleted_paths} = FileService.delete(name),
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
-          publications <- Publications.list(project)
-          do
-        Enum.each(publications, &Publications.delete(&1))
+         publications <- Publications.list(project) do
+      Enum.each(publications, &Publications.delete(&1))
 
       {:ok, :deleted}
     else

@@ -12,9 +12,7 @@ defmodule FieldPublication.Processing.Image do
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
   @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
-  def evaluate_web_images_state(
-        %Publication{project_name: project_name} = publication
-      ) do
+  def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 
     current_web_files = FileService.list_web_image_files(project_name)
@@ -44,7 +42,7 @@ defmodule FieldPublication.Processing.Image do
       summary: %{
         overall: overall_count,
         counter: existing_count,
-        percentage: (if overall_count > 0, do: existing_count / overall_count * 100, else: 0)
+        percentage: if(overall_count > 0, do: existing_count / overall_count * 100, else: 0)
       }
     }
   end

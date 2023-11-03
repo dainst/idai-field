@@ -65,7 +65,8 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
       |> assign(:page_title, "Create new publication draft")
       |> assign(assigns)
       |> assign(:initialization_error, nil)
-      |> assign(:form,
+      |> assign(
+        :form,
         assigns
         |> create_changeset()
         |> to_form()
@@ -131,7 +132,6 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
   end
 
   def handle_event("start", %{"replication_input" => replication_params}, socket) do
-
     socket =
       replication_params
       |> ReplicationInput.create()
@@ -151,12 +151,11 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
     publication = Publications.get!(project_name, draft_date)
 
     ReplicationInput.changeset(%ReplicationInput{}, %{
-        source_url: publication.source_url,
-        source_project_name: publication.source_project_name,
-        source_user: publication.source_project_name,
-        project_name: publication.project_name
-      }
-    )
+      source_url: publication.source_url,
+      source_project_name: publication.source_project_name,
+      source_user: publication.source_project_name,
+      project_name: publication.project_name
+    })
   end
 
   defp create_changeset(%{project_name: project_name, action: :new}) do

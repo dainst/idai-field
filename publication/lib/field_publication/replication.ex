@@ -18,10 +18,9 @@ defmodule FieldPublication.Replication do
   }
 
   def initialize(%ReplicationInput{} = params) do
-
     with {:ok, publication} <- Publications.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params) do
-          {:ok, publication}
+      {:ok, publication}
     else
       {:error, %{errors: [duplicate_document: {msg, _}]}} ->
         {:error, msg}
@@ -47,11 +46,11 @@ defmodule FieldPublication.Replication do
   end
 
   def check_source_connection(%ReplicationInput{
-         source_url: url,
-         source_project_name: project_name,
-         source_user: user,
-         source_password: password
-       }) do
+        source_url: url,
+        source_project_name: project_name,
+        source_user: user,
+        source_password: password
+      }) do
     Finch.build(
       :head,
       "#{url}/db/#{project_name}",

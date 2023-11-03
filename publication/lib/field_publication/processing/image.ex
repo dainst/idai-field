@@ -99,7 +99,7 @@ defmodule FieldPublication.Processing.Image do
       FieldPublication.PubSub,
       channel,
       {
-        :web_image_processing,
+        :web_image_processing_count,
         Agent.get(counter_pid, fn state -> state end)
       }
     )

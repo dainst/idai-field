@@ -144,7 +144,7 @@ defmodule FieldPublication.Replication.FileReplication do
       FieldPublication.PubSub,
       channel,
       {
-        :file_processing,
+        :file_replication_count,
         Agent.get(counter_pid, fn state -> state end)
       }
     )

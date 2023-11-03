@@ -23,6 +23,13 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
     Process.send(self(), :run_evaluations, [])
 
+    web_images_processing? =
+      publication
+      |> Processing.show()
+      |> Enum.any?(fn {_task_ref, type, _publication_id} ->
+        type == :web_images
+      end)
+
     {
       :ok,
       socket
@@ -31,25 +38,18 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
       |> assign(:last_replication_log, List.last(publication.replication_logs))
-      |> assign(:replication_progress_state, nil)
+      |> assign(:replication_progress, nil)
       |> assign(:data_evaluations_done, false)
-      |> assign(:last_web_image_processing_log, nil)
       |> assign(:web_image_processing_progress, nil)
       |> assign(:missing_raw_image_files, nil)
       |> assign(:reload_raw_files, false)
-      |> assign(:web_images_processing?, processing?(publication, :web_images))
+      |> assign(:web_images_processing?, web_images_processing?)
     }
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
     {:noreply, socket}
-  end
-
-  def handle_event("reload_raw_files", _, socket) do
-    {
-      :noreply, assign(socket, :reload_raw_files, true)
-    }
   end
 
   @impl true
@@ -73,17 +73,18 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, socket}
   end
 
-  def handle_event("publication_date_selected", %{"publication-date" => date_string}, %{assigns: %{publication: publication}} = socket) do
-    {:ok, updated_publication} = Publications.put(publication, %{"publication_date" => date_string})
+  def handle_event(
+        "publication_date_selected",
+        %{"publication-date" => date_string},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    {:ok, updated_publication} =
+      Publications.put(publication, %{"publication_date" => date_string})
 
     {:noreply, assign(socket, :publication, updated_publication)}
   end
 
   @impl true
-  @doc """
-  This function gets scheduled on mount, put longer running evaluations here. This will ensure that
-  the socket connection does not have to wait for the evaluations but is instead established quickly.
-  """
   def handle_info(
         :run_evaluations,
         %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket
@@ -108,35 +109,31 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
-    {
-      :noreply,
-      assign(socket, :last_replication_log, log_entry)
-    }
+    # Only the last replication log is displayed in the interface, we just replace the previous assign.
+    {:noreply, assign(socket, :last_replication_log, log_entry)}
   end
 
   def handle_info({source, %{counter: counter, overall: overall}}, socket)
-      when source in [:file_processing, :document_processing] and
+      when source in [:file_replication_count, :document_replication_count] and
              counter == overall do
+    # Document and file replication share the same interface element, using the same assign.
+    # Once either is finished, the corresponding progress bar is being hidden by setting the
+    # state variable back to nil.
     {:noreply, assign(socket, :replication_progress_state, nil)}
   end
 
   def handle_info({source, state}, socket)
-      when source in [:file_processing, :document_processing] do
-    {:noreply,
-     assign(
-       socket,
-       :replication_progress_state,
-       Map.put(state, :percentage, state.counter / state.overall * 100)
-     )}
+      when source in [:file_replication_count, :document_replication_count] do
+    # Document and file replication share the same interface element, using the same assign.
+    state = Map.put(state, :percentage, state.counter / state.overall * 100)
+    {:noreply, assign(socket, :replication_progress_state, state)}
   end
 
-  def handle_info({source, state}, socket) when source == :web_image_processing do
-    {:noreply,
-     assign(
-       socket,
-       :web_image_processing_progress,
-       Map.put(state, :percentage, state.counter / state.overall * 100)
-     )}
+  def handle_info({:web_image_processing_count, state}, socket) do
+    #
+    state = Map.put(state, :percentage, state.counter / state.overall * 100)
+
+    {:noreply, assign(socket, :web_image_processing_progress, state)}
   end
 
   def handle_info({:replication_result, publication}, socket) do
@@ -149,33 +146,17 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
-  def handle_info(
-        {:processing_started, :web_images},
-        %{assigns: %{publication: publication}} = socket
-      ) do
+  def handle_info({:processing_started, :web_images}, socket) do
     {
       :noreply,
-      socket
-      |> assign(:web_images_processing?, processing?(publication, :web_images))
+      assign(socket, :web_images_processing?, true)
     }
   end
 
-  def handle_info(
-        {:processing_stopped, :web_images},
-        %{assigns: %{publication: publication}} = socket
-      ) do
+  def handle_info({:processing_stopped, :web_images}, socket) do
     {
       :noreply,
-      socket
-      |> assign(:web_images_processing?, processing?(publication, :web_images))
+      assign(socket, :web_images_processing?, false)
     }
-  end
-
-  defp processing?(publication, processing_type) do
-    publication
-    |> Processing.show()
-    |> Enum.any?(fn {_task_ref, type, _publication_id} ->
-      type == processing_type
-    end)
   end
 end

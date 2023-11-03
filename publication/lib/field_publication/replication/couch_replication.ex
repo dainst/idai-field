@@ -117,7 +117,7 @@ defmodule FieldPublication.Replication.CouchReplication do
             PubSub.broadcast(
               FieldPublication.PubSub,
               channel,
-              {:document_processing, %{counter: docs_written, overall: source_doc_count}}
+              {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
             )
 
             Process.sleep(@poll_frequency)
@@ -133,7 +133,8 @@ defmodule FieldPublication.Replication.CouchReplication do
             PubSub.broadcast(
               FieldPublication.PubSub,
               channel,
-              {:document_processing, %{counter: source_doc_count, overall: source_doc_count}}
+              {:document_replication_count,
+               %{counter: source_doc_count, overall: source_doc_count}}
             )
 
             {:ok, :completed}

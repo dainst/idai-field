@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
       |> assign(:last_replication_log, List.last(publication.replication_logs))
-      |> assign(:replication_progress, nil)
+      |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
     }

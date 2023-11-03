@@ -123,20 +123,28 @@ export class DocumentPickerComponent implements OnChanges {
 
     private async performAutoSelection() {
 
-        const selectedDocumentId: string|undefined = this.selectedDocument
-                    ? this.selectedDocument.resource.id
-                    : this.preselectedDocumentId;
-
-        const documentToSelect: Document = selectedDocumentId
-            ? this.documents.find(document => document.resource.id === selectedDocumentId)
-            : this.documents.length > 0
-                ? this.documents[0]
-                : undefined
+        const documentToSelect: Document = this.getAutoSelectionTargetDocument();
 
         this.select(documentToSelect);
         if (documentToSelect) await this.scrollToDocument(documentToSelect);
 
         this.preselectedDocumentId = undefined;
+    }
+
+
+    private getAutoSelectionTargetDocument(): Document {
+
+        const selectedDocumentId: string|undefined = this.selectedDocument
+            ? this.selectedDocument.resource.id
+            : this.preselectedDocumentId;
+
+        let documentToSelect: Document = undefined;
+        if (selectedDocumentId) {
+            documentToSelect = this.documents.find(document => document.resource.id === selectedDocumentId);
+        }
+        if (!documentToSelect && this.documents.length > 0) documentToSelect = this.documents[0];
+
+        return documentToSelect;
     }
 
 

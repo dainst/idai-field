@@ -87,6 +87,27 @@ export module FieldsViewUtil {
     }
 
 
+    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels,
+                             getTranslation: (key: string) => string, formatDecimal: (value: number) => string) {
+
+        const entries: any = isArray(fieldContent) ? fieldContent : [fieldContent];
+
+        return entries.map(entry => {
+            if (isObject(entry)) {
+                return FieldsViewUtil.getObjectLabel(
+                    entry,
+                    field,
+                    getTranslation,
+                    formatDecimal,
+                    labels
+                );
+            } else {
+                return entry;
+            }
+        }).join(', ');
+    }
+
+
     export function getObjectLabel(object: any, 
                                    field: FieldsViewSubfield,
                                    getTranslation: (key: string) => string,

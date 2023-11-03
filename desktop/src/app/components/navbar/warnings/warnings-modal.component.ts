@@ -103,22 +103,13 @@ export class WarningsModalComponent {
             valuelist: CategoryForm.getField(section.category, section.fieldName)?.valuelist
         } as FieldsViewSubfield;
 
-        const data: any = this.selectedDocument.resource[section.fieldName];
-        const entries: any = isArray(data) ? data : [data];
-
-        return entries.map(entry => {
-            if (isObject(entry)) {
-                return FieldsViewUtil.getObjectLabel(
-                    entry,
-                    field,
-                    (key: string) => this.utilTranslations.getTranslation(key),
-                    (value: number) => this.decimalPipe.transform(value),
-                    this.labels
-                );
-            } else {
-                return entry;
-            }
-        }).join(', ');
+        return FieldsViewUtil.getLabel(
+            field,
+            this.selectedDocument.resource[section.fieldName],
+            this.labels,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (value: number) => this.decimalPipe.transform(value),
+        );
     }
 
 

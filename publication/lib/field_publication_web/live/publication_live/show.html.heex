@@ -11,7 +11,7 @@
       <%= if @publication.publication_date && @publication.publication_date <= @today do %>
         <%= @publication.publication_date  %>
       <% else %>
-        <.form id="publication_date_form">
+        <.form for={nil} id="publication_date_form">
           <.input form="publication_date_form" type="date" id="start" name="publication-date" value={@publication.publication_date} phx-change="publication_date_selected" min={@today} />
         </.form>
       <% end %>

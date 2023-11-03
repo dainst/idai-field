@@ -8,7 +8,7 @@
     <:item title="Source project name"><%= @publication.source_project_name %></:item>
     <:item title="Draft date"><%= @publication.draft_date %></:item>
     <:item title="Publication date">
-      <%= if @publication.publication_date do %>
+      <%= if @publication.publication_date && @publication.publication_date <= @today do %>
         <%= @publication.publication_date  %>
       <% else %>
         <.form id="publication_date_form">

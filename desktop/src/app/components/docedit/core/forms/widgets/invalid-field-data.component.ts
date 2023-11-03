@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Map } from 'tsfun';
-import { Field, FieldsViewField, FieldsViewUtil, ProjectConfiguration, Document, Resource,
-    Datastore, Labels } from 'idai-field-core';
+import { DecimalPipe } from '@angular/common';
+import { UtilTranslations } from '../../../../../util/util-translations';
+import { Field, FieldsViewField, FieldsViewUtil, ProjectConfiguration, Resource, CategoryForm,
+    FieldsViewSubfield, Labels } from 'idai-field-core';
 
 
 @Component({
@@ -17,29 +18,42 @@ export class InvalidFieldDataComponent implements OnChanges {
     @Input() field: Field;
 
     public fieldsViewField: FieldsViewField;
+    public fieldDataLabel: string;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private utilTranslations: UtilTranslations,
+                private decimalPipe: DecimalPipe) {}
 
 
     async ngOnChanges() {
 
-        const relationTargets: Map<Document[]> = await Resource.getRelationTargetDocuments(
-            this.resource, this.datastore
-        );
-
-        this.fieldsViewField = FieldsViewUtil.makeField(
-            this.projectConfiguration,
-            relationTargets,
-            this.labels
-        )([this.field, this.resource[this.field.name]]);
+        this.fieldDataLabel = this.createFieldDataLabel();
     }
 
 
     public delete() {
 
         delete this.resource[this.field.name];
+    }
+
+
+    private createFieldDataLabel(): string {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.resource.category);
+
+        const field: FieldsViewSubfield = {
+            name: this.field.name,
+            valuelist: CategoryForm.getField(category, this.field.name)?.valuelist
+        } as FieldsViewSubfield;
+    
+        return FieldsViewUtil.getLabel(
+            field,
+            this.resource[this.field.name],
+            this.labels,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (value: number) => this.decimalPipe.transform(value),
+        );
     }
 }

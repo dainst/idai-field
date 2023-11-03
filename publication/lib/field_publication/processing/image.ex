@@ -45,7 +45,7 @@ defmodule FieldPublication.Processing.Image do
       summary: %{
         overall: overall_count,
         counter: existing_count,
-        percentage: existing_count / overall_count * 100
+        percentage: (if overall_count > 0, do: existing_count / overall_count * 100, else: 0)
       }
     }
   end

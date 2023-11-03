@@ -31,6 +31,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:publication, publication)
       |> assign(:last_replication_log, List.last(publication.replication_logs))
       |> assign(:replication_progress_state, nil)
+      |> assign(:data_evaluations_done, false)
       |> assign(:last_web_image_processing_log, nil)
       |> assign(:web_image_processing_progress, nil)
       |> assign(:missing_raw_image_files, nil)
@@ -56,16 +57,6 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, socket}
   end
 
-  @impl true
-  def handle_info({FieldPublicationWeb.PublicationLive.ReplicationFormComponent,{%ReplicationInput{} = params}}, %{assigns: %{publication: publication}} = socket) do
-    FieldPublication.Replication.FileReplication.start(%{parameters: params, publication: publication, channel: Publications.get_doc_id(publication)})
-
-    {
-      :noreply,
-      assign(socket,:reload_raw_files, false)
-    }
-  end
-
   def handle_info(:run_evaluations, %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket) do
     # Do not run data evaluations while the replication is still ongoing.
     {:noreply, socket}
@@ -81,11 +72,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {
       :noreply,
       socket
+      |> assign(:data_evaluations_done, true)
       |> assign(:web_image_processing_progress, web_image_processing_progress)
       |> assign(:missing_raw_image_files, missing_raw_image_files)
     }
   end
-
 
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {

@@ -26,51 +26,47 @@
     </:item>
 
     <:item :if={@publication.replication_finished} title="Data processing">
-      <table class="w-full">
-        <thead class="bg-slate-700">
-          <tr class="text-slate-50">
-            <th class="w-1/6">Type</th>
-            <th class="w-4/6">Info</th>
-            <th class="w-1/6">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-2 text-center">
-            <td>Missing raw files</td>
-            <td><%= if @missing_raw_image_files, do: Enum.count(@missing_raw_image_files), else: "Evaluating..." %></td>
-            <td>
-              <button class="font-semibold font-mono" phx-click="reload_raw_files">
-                Reload
-              </button>
-            </td>
-          </tr>
-          <tr class="border-2">
-            <td class="text-center">Web images</td>
-            <td><.progress_bar state={@web_image_processing_progress}>Evaluating...</.progress_bar></td>
-            <td class="text-center">
-              <button class="font-semibold font-mono" type="button" phx-click="process_web_images">
-                Start
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <%= if @data_evaluations_done do %>
+        <table class="w-full">
+          <thead class="bg-slate-700">
+            <tr class="text-slate-50">
+              <th class="w-1/6">Type</th>
+              <th class="w-4/6">Info</th>
+              <th class="w-1/6">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-2 text-center">
+              <td>Missing image files</td>
+              <td><%= Enum.count(@missing_raw_image_files) %></td>
+                <td>
+                <.link class="font-semibold font-mono" navigate={~p"/edit/#{@publication.project_name}/publication/new"}>
+                    Redraft publication
+                </.link>
+              </td>
+            </tr>
+            <tr class="border-2">
+              <td class="text-center">Web images</td>
+              <td><.progress_bar state={@web_image_processing_progress}></.progress_bar></td>
+              <td class="text-center">
+                <button class="font-semibold font-mono" type="button" phx-click="process_web_images">
+                  Start
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <% else %>
+      <div class="inline-flex items-center">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Evaluating data...
+      </div>
+      <% end %>
     </:item>
   </.list>
-
-  <.modal
-    :if={@reload_raw_files}
-    id="draft-modal"
-    show
-  >
-    <.live_component
-      module={FieldPublicationWeb.PublicationLive.ReplicationFormComponent}
-      id="reload_raw_files"
-      project_name={@publication.project_name}
-      draft_date={@publication.draft_date}
-      action={:edit}
-    />
-  </.modal>
 </div>
 
 <.back navigate={~p"/edit/#{@publication.project_name}"}>Back to project</.back>

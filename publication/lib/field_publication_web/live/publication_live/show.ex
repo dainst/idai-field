@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.PublicationLive.Show do
+  alias FieldPublication.Processing.Image
   use FieldPublicationWeb, :live_view
 
   alias Phoenix.PubSub
@@ -6,8 +7,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   alias FieldPublication.Publications
 
   alias FieldPublication.Schemas.{
-    LogEntry,
-    Publication
+    Publication,
+    LogEntry
   }
 
   alias FieldPublication.Processing
@@ -21,8 +22,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
-    Process.send(self(), :run_evaluations, [])
+    if publication.replication_finished do
+      start_data_state_evaluation(publication)
+    end
 
+    # Check if web images are currently processed for the publication.
     web_images_processing? =
       publication
       |> Processing.show()
@@ -39,10 +43,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:publication, publication)
       |> assign(:last_replication_log, List.last(publication.replication_logs))
       |> assign(:replication_progress, nil)
-      |> assign(:data_evaluations_done, false)
-      |> assign(:web_image_processing_progress, nil)
-      |> assign(:missing_raw_image_files, nil)
-      |> assign(:reload_raw_files, false)
+      |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
     }
   end
@@ -53,6 +54,9 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
+  @doc """
+  The function `handle_event/3` reacts to events (clicks and input changes) coming from the user's browser.
+  """
   def handle_event(
         "start_web_images_processing",
         _,
@@ -85,27 +89,15 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  def handle_info(
-        :run_evaluations,
-        %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket
-      ) do
-    # Do not run data evaluations while the replication is still ongoing.
-    {:noreply, socket}
-  end
+  @doc """
+  The function `handle_info/2` handles messages sent directly to the socket-process from the within the server application.
+  """
+  def handle_info({ref, {:data_state_evaluation, data_state}}, socket) do
+    # Handles the result of the async Task started in the `mount/3` function above.
 
-  def handle_info(:run_evaluations, %{assigns: %{publication: publication}} = socket) do
-    %{
-      summary: web_image_processing_progress,
-      missing_raw_files: missing_raw_image_files
-    } = Processing.Image.evaluate_web_images_state(publication)
-
-    {
-      :noreply,
-      socket
-      |> assign(:data_evaluations_done, true)
-      |> assign(:web_image_processing_progress, web_image_processing_progress)
-      |> assign(:missing_raw_image_files, missing_raw_image_files)
-    }
+    # We don't care about the processes DOWN message now, so let's demonitor and flush it.
+    Process.demonitor(ref, [:flush])
+    {:noreply, assign(socket, :data_state, data_state)}
   end
 
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
@@ -129,15 +121,21 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, assign(socket, :replication_progress_state, state)}
   end
 
-  def handle_info({:web_image_processing_count, state}, socket) do
-    #
-    state = Map.put(state, :percentage, state.counter / state.overall * 100)
+  def handle_info(
+        {:web_image_processing_count, summary},
+        %{assigns: %{data_state: data_state}} = socket
+      ) do
+    updated_data_state =
+      Map.update!(data_state, :images, fn old_image_state ->
+        Map.put(old_image_state, :summary, summary)
+      end)
 
-    {:noreply, assign(socket, :web_image_processing_progress, state)}
+    {:noreply, assign(socket, :data_state, updated_data_state)}
   end
 
   def handle_info({:replication_result, publication}, socket) do
-    Process.send(self(), :run_evaluations, [])
+    # Replication has finished, now check for data consistency and necessary processing tasks.
+    start_data_state_evaluation(publication)
 
     {
       :noreply,
@@ -158,5 +156,18 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       :noreply,
       assign(socket, :web_images_processing?, false)
     }
+  end
+
+  defp start_data_state_evaluation(%Publication{} = publication) do
+    # The result of the async task will get picked up by a `handle_info/2` above.
+    Task.async(fn ->
+      {
+        :data_state_evaluation,
+        %{
+          images: Image.evaluate_web_images_state(publication)
+        }
+        # TODO: Add elastic search and tiling state evaluation.
+      }
+    end)
   end
 end

@@ -93,14 +93,22 @@ defmodule FieldPublication.Processing.Image do
       System.cmd("convert", [input_file_path, target_file_path])
     end
 
-    Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
+    updated_state =
+      Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+        state =
+          state
+          |> Map.put(:counter, counter + 1)
+          |> Map.put(:percentage, (counter + 1) / overall * 100)
+
+        {state, state}
+      end)
 
     PubSub.broadcast(
       FieldPublication.PubSub,
       channel,
       {
         :web_image_processing_count,
-        Agent.get(counter_pid, fn state -> state end)
+        updated_state
       }
     )
   end

@@ -40,7 +40,7 @@
     </:item>
 
     <:item :if={@publication.replication_finished} title="Data processing">
-      <%= if @data_evaluations_done do %>
+      <%= if @data_state do %>
         <table class="w-full">
           <thead class="bg-slate-700">
             <tr class="text-slate-50">
@@ -52,11 +52,7 @@
           <tbody>
             <tr class="border-2 text-center">
               <td>Missing raw files</td>
-              <td>
-                <%= if @missing_raw_image_files,
-                  do: Enum.count(@missing_raw_image_files),
-                  else: "Evaluating..." %>
-              </td>
+              <td><%= Enum.count(@data_state.images.missing_raw_files) %></td>
               <td>
                 <.link
                   class="font-semibold font-mono"
@@ -69,9 +65,7 @@
             <tr class="border-2">
               <td class="text-center">Web images</td>
               <td>
-                <.progress_bar state={@web_image_processing_progress}>
-                  Evaluating...
-                </.progress_bar>
+                <.progress_bar state={@data_state.images.summary}></.progress_bar>
               </td>
               <td class="text-center">
                 <%= if @web_images_processing? do %>

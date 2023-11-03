@@ -1,5 +1,4 @@
 defmodule FieldPublication.Processing.Image do
-  alias FieldPublication.CouchService
   alias Phoenix.PubSub
 
   alias FieldPublication.FileService
@@ -14,7 +13,7 @@ defmodule FieldPublication.Processing.Image do
   @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
   def evaluate_web_images_state(
-        %Publication{project_name: project_name, database: database} = publication
+        %Publication{project_name: project_name} = publication
       ) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 

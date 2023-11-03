@@ -7,8 +7,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   alias FieldPublication.Schemas.{
     LogEntry,
-    Publication,
-    ReplicationInput
+    Publication
   }
 
   alias FieldPublication.Processing

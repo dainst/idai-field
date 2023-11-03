@@ -2,7 +2,6 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
   alias FieldPublication.Replication
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Projects
   alias FieldPublication.Publications
   alias FieldPublication.Schemas.Publication
   alias FieldPublication.Schemas.ReplicationInput
@@ -131,7 +130,7 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
     }
   end
 
-  def handle_event("start", %{"replication_input" => replication_params}, %{assigns: assigns} = socket) do
+  def handle_event("start", %{"replication_input" => replication_params}, socket) do
 
     socket =
       replication_params

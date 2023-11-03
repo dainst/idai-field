@@ -143,9 +143,14 @@ defmodule FieldPublication.Processing do
 
   # Handling of finished, stopped or crashed tasks
 
-  def handle_info({ref, _answer}, running_tasks) do
+  def handle_info({_ref, _answer}, running_tasks) do
+    # Handles successfull tasks, we currently do not extract data contained in the answer. Instead
+    # we just reply with the running tasks and let the appropriate {:DOWN, _, _, _,} message, see below.
+    {:noreply, running_tasks}
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_tasks) do
     Logger.debug("A processing task has completed successfully.")
-    Process.demonitor(ref, [:flush])
     {:noreply, cleanup(ref, running_tasks)}
   end
 

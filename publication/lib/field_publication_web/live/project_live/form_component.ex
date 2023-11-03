@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project updated successfully")
-          |> push_patch(to: socket.assigns.patch)
+          |> push_navigate(to: ~p"/edit")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -113,14 +113,14 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
   defp save_project(socket, :new, project_params) do
     case Projects.put(%Project{}, project_params) do
-      {:ok, project} ->
-        notify_parent({:saved, project})
+      {:ok, created_project} ->
+        notify_parent({:saved, created_project})
 
         {
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_patch(to: socket.assigns.patch)
+          |> push_navigate(to: ~p"/edit/#{created_project.name}")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

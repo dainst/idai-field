@@ -20,7 +20,9 @@
   </:item>
   <:item title="Publications">
     <.publication_list :let={publication} entries={@publications} date={@today}>
-      <.link navigate={~p"/edit/#{@project.name}/publication/#{publication.draft_date}"}><%= publication.draft_date %></.link>
+      <.link navigate={~p"/edit/#{@project.name}/publication/#{publication.draft_date}"}>
+        <%= publication.draft_date %>
+      </.link>
     </.publication_list>
   </:item>
 </.list>

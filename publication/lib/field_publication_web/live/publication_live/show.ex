@@ -23,9 +23,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
     Process.send(self(), :run_evaluations, [])
+
     {
       :ok,
       socket
+      |> assign(:today, Date.utc_today())
       |> assign(:channel, channel)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
@@ -36,6 +38,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:web_image_processing_progress, nil)
       |> assign(:missing_raw_image_files, nil)
       |> assign(:reload_raw_files, false)
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
     }
   end
 
@@ -51,19 +54,46 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   @impl true
-  def handle_event("process_web_images", _, socket) do
-    Processing.Image.start_web_image_processing(socket.assigns.publication)
+  def handle_event(
+        "start_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :web_images)
 
     {:noreply, socket}
   end
 
-  def handle_info(:run_evaluations, %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket) do
+  def handle_event(
+        "stop_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :web_images)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("publication_date_selected", %{"publication-date" => date_string}, %{assigns: %{publication: publication}} = socket) do
+    {:ok, updated_publication} = Publications.put(publication, %{"publication_date" => date_string})
+
+    {:noreply, assign(socket, :publication, updated_publication)}
+  end
+
+  @impl true
+  @doc """
+  This function gets scheduled on mount, put longer running evaluations here. This will ensure that
+  the socket connection does not have to wait for the evaluations but is instead established quickly.
+  """
+  def handle_info(
+        :run_evaluations,
+        %{assigns: %{publication: %Publication{replication_finished: nil}}} = socket
+      ) do
     # Do not run data evaluations while the replication is still ongoing.
     {:noreply, socket}
   end
 
   def handle_info(:run_evaluations, %{assigns: %{publication: publication}} = socket) do
-
     %{
       summary: web_image_processing_progress,
       missing_raw_files: missing_raw_image_files
@@ -80,7 +110,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
     {
-      :noreply, assign(socket, :last_replication_log, log_entry)
+      :noreply,
+      assign(socket, :last_replication_log, log_entry)
     }
   end
 
@@ -110,7 +141,6 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_info({:replication_result, publication}, socket) do
-
     Process.send(self(), :run_evaluations, [])
 
     {
@@ -118,5 +148,35 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       socket
       |> assign(:publication, publication)
     }
+  end
+
+  def handle_info(
+        {:processing_started, :web_images},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    {
+      :noreply,
+      socket
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
+    }
+  end
+
+  def handle_info(
+        {:processing_stopped, :web_images},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    {
+      :noreply,
+      socket
+      |> assign(:web_images_processing?, processing?(publication, :web_images))
+    }
+  end
+
+  defp processing?(publication, processing_type) do
+    publication
+    |> Processing.show()
+    |> Enum.any?(fn {_task_ref, type, _publication_id} ->
+      type == processing_type
+    end)
   end
 end

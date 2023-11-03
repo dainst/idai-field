@@ -4,6 +4,7 @@ defmodule FieldPublication.Processing.Image do
 
   alias FieldPublication.FileService
   alias FieldPublication.Publications
+  alias FieldPublication.PublicationsData
 
   alias FieldPublication.Schemas.{
     Publication
@@ -12,29 +13,22 @@ defmodule FieldPublication.Processing.Image do
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
   @dev_mode Application.compile_env(:field_publication, :dev_routes)
 
-  def evaluate_web_images_state(%Publication{project_name: project_name, database: database} = publication) do
+  def evaluate_web_images_state(
+        %Publication{project_name: project_name, database: database} = publication
+      ) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 
     current_web_files = FileService.list_web_image_files(project_name)
 
-    publication_image_categories = Publications.list_with_all_child_categories(publication, "Image")
+    image_categories =
+      PublicationsData.get_all_subcategories(publication, "Image")
+
     {existing, missing} =
-      CouchService.get_document_stream(%{
-        selector: %{
-          "$or":
-            Enum.map(publication_image_categories, fn category ->
-              [
-                %{"resource.category" => category},
-                %{"resource.type" => category}
-              ]
-            end)
-            |> List.flatten()
-        }
-      }, database)
-      |> Stream.map(fn(%{"_id" => uuid}) ->
+      PublicationsData.get_doc_stream_for_categories(publication, image_categories)
+      |> Stream.map(fn %{"_id" => uuid} ->
         uuid
       end)
-      |> Enum.split_with(fn(uuid) ->
+      |> Enum.split_with(fn uuid ->
         "#{uuid}.jp2" in current_web_files
       end)
 
@@ -48,13 +42,17 @@ defmodule FieldPublication.Processing.Image do
       processed: existing,
       existing_raw_files: existing_raw_files,
       missing_raw_files: missing_raw_files,
-      summary: %{overall: overall_count, counter: existing_count, percentage: existing_count / overall_count * 100}
+      summary: %{
+        overall: overall_count,
+        counter: existing_count,
+        percentage: existing_count / overall_count * 100
+      }
     }
   end
 
   def start_web_image_processing(%Publication{project_name: project_name} = publication) do
-
-    %{existing_raw_files: existing_raw_files, summary: summary} = evaluate_web_images_state(publication)
+    %{existing_raw_files: existing_raw_files, summary: summary} =
+      evaluate_web_images_state(publication)
 
     raw_root = FileService.get_raw_data_path(project_name)
     web_root = FileService.get_web_images_path(project_name)
@@ -62,14 +60,14 @@ defmodule FieldPublication.Processing.Image do
     # TODO: Log missing raw files
 
     {:ok, counter_pid} =
-      Agent.start_link(fn ->summary end)
+      Agent.start_link(fn -> summary end)
 
     existing_raw_files
-    |> Enum.chunk_every(5)
-    |> Enum.map(fn (batch) ->
+    |> Stream.chunk_every(System.schedulers_online())
+    |> Enum.map(fn batch ->
       # For each item in the batch start an async task for the conversion...
-      Enum.map(batch, fn(uuid) ->
-        Task.async(fn() ->
+      Enum.map(batch, fn uuid ->
+        Task.async(fn ->
           convert_file(
             "#{raw_root}/image/#{uuid}",
             "#{web_root}/#{uuid}.jp2",
@@ -79,11 +77,10 @@ defmodule FieldPublication.Processing.Image do
         end)
       end)
       # ...then wait until all tasks in the batch succeeded.
-      |> Enum.map(&Task.await(&1, 60_000))
+      |> Enum.map(&Task.await(&1, 1000 * 60 * 5))
     end)
     |> List.flatten()
   end
-
 
   @dialyzer {:nowarn_function, convert_file: 4}
   defp convert_file(input_file_path, target_file_path, counter_pid, channel) do

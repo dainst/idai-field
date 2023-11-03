@@ -6,6 +6,7 @@ defmodule FieldPublication.Projects do
   alias FieldPublication.CouchService
   alias FieldPublication.User
   alias FieldPublication.FileService
+  alias FieldPublication.Publications
 
   def get(name) do
     %Project{
@@ -72,8 +73,12 @@ defmodule FieldPublication.Projects do
 
     with {:ok, _deleted_paths} = FileService.delete(name),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_document(doc_id, rev) do
-      {:ok, :deleted}
+           CouchService.delete_document(doc_id, rev),
+          publications <- Publications.list(project)
+          do
+        publications_deletion = Enum.map(publications, &Publications.delete(&1))
+
+      {:ok, :deleted, publications_deletion}
     else
       error ->
         error

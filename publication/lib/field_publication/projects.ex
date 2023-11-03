@@ -76,9 +76,9 @@ defmodule FieldPublication.Projects do
            CouchService.delete_document(doc_id, rev),
           publications <- Publications.list(project)
           do
-        publications_deletion = Enum.map(publications, &Publications.delete(&1))
+        Enum.each(publications, &Publications.delete(&1))
 
-      {:ok, :deleted, publications_deletion}
+      {:ok, :deleted}
     else
       error ->
         error

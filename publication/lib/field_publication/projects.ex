@@ -53,11 +53,10 @@ defmodule FieldPublication.Projects do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(project, :_rev, rev)}
     else
-      {:error, %Ecto.Changeset{}} = error ->
-        error
-
       {:ok, %{status: 409}} ->
         {:error, Schemas.add_duplicate_doc_error(changeset)}
+      error ->
+        error
     end
   end
 

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray, isObject, nop } from 'tsfun';
+import { Map, isArray, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
     Field, ValuelistUtil, Valuelist, Tree } from 'idai-field-core';
@@ -64,7 +64,10 @@ export class WarningsModalComponent {
                 private labels: Labels,
                 private i18n: I18n) {}
 
+        
+    public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
     
+
     public initialize() {
 
         this.categoryFilters = this.getCategoryFilters();
@@ -236,6 +239,14 @@ export class WarningsModalComponent {
         return this.hasConfigurationConflict
             && (this.selectedWarningFilter.constraintName === 'warnings:exist'
                 || this.selectedWarningFilter.constraintName === 'conflicts:exist');
+    }
+
+
+    private isSectionVisible(section: WarningSection): boolean {
+        
+        const type: WarningType|undefined = this.selectedWarningFilter?.type;
+
+        return !type || type === section.type;
     }
 
 

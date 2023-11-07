@@ -1,4 +1,4 @@
-import { Datastore, Document, IndexFacade } from 'idai-field-core';
+import { Datastore, Document, IndexFacade, WarningType } from 'idai-field-core';
 import { UtilTranslations } from '../../util/util-translations';
 
 
@@ -6,6 +6,7 @@ export type WarningFilter = {
     label: string;
     constraintName: string;
     count: number;
+    type?: WarningType;
 };
 
 
@@ -26,32 +27,38 @@ export module WarningFilters {
             {
                 label: translations.getTranslation('warnings.conflicts'),
                 constraintName: 'conflicts:exist',
-                count: configurationConflict ? 1 : 0
+                count: configurationConflict ? 1 : 0,
+                type: 'conflicts'
             },
             {
                 label: translations.getTranslation('warnings.unconfigured'),
                 constraintName: 'unconfigured:exist',
-                count: 0
+                count: 0,
+                type: 'unconfigured'
             },
             {
                 label: translations.getTranslation('warnings.invalidFieldData'),
                 constraintName: 'invalid:exist',
-                count: 0
+                count: 0,
+                type: 'invalid'
             },
             {
                 label: translations.getTranslation('warnings.outlierValues'),
                 constraintName: 'outlierValues:exist',
-                count: 0
+                count: 0,
+                type: 'outlierValues'
             },
             {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
-                count: 0
+                count: 0,
+                type: 'missingIdentifierPrefix'
             },
             {
                 label: translations.getTranslation('warnings.nonUniqueIdentifiers'),
                 constraintName: 'nonUniqueIdentifier:exist',
-                count: 0
+                count: 0,
+                type: 'nonUniqueIdentifier'
             }
         ];
 

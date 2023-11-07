@@ -35,7 +35,7 @@
             <document-teaser [document]="selectedDocument"></document-teaser>
         </div>
         <div id="document-warnings-content">
-            <div *ngFor="let section of sections" class="card">
+            <div *ngFor="let section of getSections()" class="card">
                 <div class="card-header h4">
                     <span class="card-title">
                         <span *ngIf="section.type === 'unconfigured'"
@@ -60,11 +60,11 @@
                         </span>
                         <span *ngIf="section.type === 'missingIdentifierPrefix'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingIdentifierPrefix">
-                              Fehlendes Präfix im Feld <b>{{getFieldLabel(section)}}</b>
+                            Fehlendes Präfix im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'nonUniqueIdentifier'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier">
-                              Uneindeutiger <b>Bezeichner</b>
+                            Uneindeutiger <b>Bezeichner</b>
                         </span>
                     </span>
                 </div>

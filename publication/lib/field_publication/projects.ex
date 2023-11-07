@@ -35,19 +35,12 @@ defmodule FieldPublication.Projects do
   end
 
   def list() do
-    CouchService.run_find_query(%{selector: %{doc_type: Project.doc_type()}})
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> then(fn %{"docs" => docs} ->
-          docs
-        end)
-        |> Enum.map(fn doc ->
-          Project.changeset(%Project{}, doc)
-          |> apply_changes()
-        end)
-    end
+    CouchService.get_document_stream(%{selector: %{doc_type: Project.doc_type()}})
+    |> Enum.to_list()
+    |> Enum.map(fn doc ->
+      Project.changeset(%Project{}, doc)
+      |> apply_changes()
+    end)
   end
 
   def put(%Project{} = struct, params \\ %{}) do

@@ -98,19 +98,12 @@ defmodule FieldPublication.Publications do
   end
 
   defp run_search(query) do
-    CouchService.run_find_query(query)
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> then(fn %{"docs" => docs} ->
-          docs
-        end)
-        |> Enum.map(fn doc ->
-          Publication.changeset(%Publication{}, doc)
-          |> apply_changes()
-        end)
-    end
+    CouchService.get_document_stream(query)
+    |> Enum.to_list()
+    |> Enum.map(fn(doc) ->
+      Publication.changeset(%Publication{}, doc)
+      |> apply_changes()
+      end)
   end
 
   @doc """

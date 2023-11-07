@@ -188,40 +188,6 @@ defmodule FieldPublication.CouchService do
     end
   end
 
-  def update_database_members(database_name, member_names) do
-    Finch.build(
-      :get,
-      "#{local_url()}/#{database_name}/_security",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        %{"admins" => existing_admins} = Jason.decode!(body)
-
-        payload =
-          %{
-            admins: existing_admins,
-            members: %{
-              names: member_names,
-              roles: []
-            }
-          }
-          |> Jason.encode!()
-
-        Finch.build(
-          :put,
-          "#{local_url()}/#{database_name}/_security",
-          headers(),
-          payload
-        )
-        |> Finch.request(FieldPublication.Finch)
-
-      {:ok, %{status: 404}} = res ->
-        {:unknown_project, res}
-    end
-  end
-
   def get_document_stream(query, database \\ @core_database) do
     batch_size = 500
 
@@ -267,17 +233,6 @@ defmodule FieldPublication.CouchService do
         end
       end
     )
-  end
-
-  def find_documents(%{type: type}, database_name \\ @core_database) do
-    Finch.build(
-      :post,
-      "#{local_url()}/#{database_name}/_find",
-      headers(),
-      %{selector: %{doc_type: type}}
-      |> Jason.encode!()
-    )
-    |> Finch.request(FieldPublication.Finch)
   end
 
   def create_database(name) do
@@ -332,16 +287,6 @@ defmodule FieldPublication.CouchService do
       :delete,
       "#{local_url()}/#{database_name}/#{id}?rev=#{rev}",
       headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
-
-  def run_find_query(query, database_name \\ @core_database) do
-    Finch.build(
-      :post,
-      "#{local_url()}/#{database_name}/_find",
-      headers(),
-      Jason.encode!(query)
     )
     |> Finch.request(FieldPublication.Finch)
   end

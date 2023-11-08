@@ -50,7 +50,7 @@ export module WarningsUpdater {
                     );
                 }
             }
-        } else if (document.warnings) {
+        } else if (document.warnings?.nonUniqueIdentifier) {
             delete document.warnings.nonUniqueIdentifier;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             indexFacade.put(document);   

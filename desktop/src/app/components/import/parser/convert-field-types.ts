@@ -134,6 +134,7 @@ function convertComposite(resource: Resource, fieldName: string, field: Field) {
 
 function convertCheckboxes(container: any, fieldName: string) {
 
+    if (!container[fieldName]) return;
     container[fieldName] = container[fieldName].split(';');
 }
 

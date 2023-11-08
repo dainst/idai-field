@@ -140,7 +140,7 @@ defmodule FieldPublication.Publications do
 
     with {:ok, publication} <- apply_action(changeset, :create),
          doc_id <- get_doc_id(publication),
-         {:ok, %{status: 201}} <- CouchService.create_database(publication.database),
+         {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
       %{"rev" => rev} = Jason.decode!(body)

@@ -24,7 +24,7 @@ defmodule FieldPublication.PublicationsTest do
   }
 
   setup do
-    CouchService.create_database(@core_database)
+    CouchService.put_database(@core_database)
     {:ok, project} = Projects.put(%Project{}, %{"name" => @local_project_name})
 
     on_exit(fn ->

@@ -10,7 +10,7 @@ defmodule FieldPublication.ProjectTest do
   @project_fixture %{"name" => "test"}
 
   setup do
-    CouchService.create_database(@core_database)
+    CouchService.put_database(@core_database)
 
     on_exit(fn ->
       CouchService.delete_database(@core_database)
@@ -49,7 +49,9 @@ defmodule FieldPublication.ProjectTest do
       second_name = "test2"
 
       Projects.put(%Project{}, @project_fixture)
-      {:ok, second_project} = Projects.put(%Project{}, Map.put(@project_fixture, "name", second_name))
+
+      {:ok, second_project} =
+        Projects.put(%Project{}, Map.put(@project_fixture, "name", second_name))
 
       [%Project{name: ^first_name}, %Project{name: ^second_name}] = Projects.list()
 

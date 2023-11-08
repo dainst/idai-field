@@ -33,7 +33,7 @@ defmodule FieldPublication.ReplicationTest do
 
   describe "tests running against field hub instance" do
     setup do
-      CouchService.create_database(@core_database)
+      CouchService.put_database(@core_database)
       {:ok, project} = Projects.put(%Project{}, %{"name" => @project_name})
 
       on_exit(fn ->

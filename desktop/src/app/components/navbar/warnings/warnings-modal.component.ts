@@ -279,7 +279,12 @@ export class WarningsModalComponent {
         this.warningFilters = await WarningFilters.getWarningFilters(
             this.indexFacade, this.utilTranslations, this.hasConfigurationConflict
         );
-        this.selectWarningFilter(this.selectedWarningFilter.constraintName);
+
+        if (this.warningFilters.length > 0) {
+            this.selectWarningFilter(this.selectedWarningFilter.constraintName);
+        } else {
+            this.close();
+        }
     }
 
 

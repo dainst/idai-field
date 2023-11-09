@@ -36,7 +36,6 @@ defmodule FieldPublication.Projects do
 
   def list() do
     CouchService.get_document_stream(%{selector: %{doc_type: Project.doc_type()}})
-    |> Enum.to_list()
     |> Enum.map(fn doc ->
       Project.changeset(%Project{}, doc)
       |> apply_changes()

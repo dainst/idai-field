@@ -99,7 +99,6 @@ defmodule FieldPublication.Publications do
 
   defp run_search(query) do
     CouchService.get_document_stream(query)
-    |> Enum.to_list()
     |> Enum.map(fn(doc) ->
       Publication.changeset(%Publication{}, doc)
       |> apply_changes()

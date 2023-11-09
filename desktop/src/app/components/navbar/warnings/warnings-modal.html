@@ -35,7 +35,7 @@
             <document-teaser [document]="selectedDocument"></document-teaser>
         </div>
         <div id="document-warnings-content">
-            <div *ngFor="let section of getSections()" class="card">
+            <div *ngFor="let section of getSections()" class="card warnings-section">
                 <div class="card-header h4">
                     <span class="card-title">
                         <span *ngIf="section.type === 'unconfigured'"
@@ -132,7 +132,7 @@
                     </span>
                     <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
                             || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
-                        <button class="btn btn-primary" (click)="openDoceditModal(section)">
+                        <button class="btn btn-primary edit-button" (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>

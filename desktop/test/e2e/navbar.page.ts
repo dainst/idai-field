@@ -17,9 +17,9 @@ export class NavbarPage {
     }
 
 
-    public static clickConflictsButton() {
+    public static clickWarningsButton() {
 
-        return click('#taskbar-conflicts-button');
+        return click('#taskbar-warnings-button');
     }
 
 
@@ -67,6 +67,12 @@ export class NavbarPage {
     }
 
 
+    public static getWarnings() {
+
+        return getLocator('#taskbar-warnings-container');
+    }
+
+
     // get text
 
     public static async getMessageText() {
@@ -84,5 +90,11 @@ export class NavbarPage {
     public static async getTabLabel(routeName: string, resourceIdentifier?: string) {
 
         return getText(await this.getTab(routeName, resourceIdentifier));
+    }
+
+
+    public static async getNumberOfWarnings() {
+
+        return getText('#taskbar-warnings-button-pill');
     }
 }

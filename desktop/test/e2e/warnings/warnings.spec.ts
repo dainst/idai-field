@@ -100,9 +100,31 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteFieldDataModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
+        await waitForExist(await WarningsModalPage.getResource('2'));
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
+    test('solve multiple warnings for unconfigured fields via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredFieldWarning('1', 'field');
+        await createUnconfiguredFieldWarning('2', 'field');
+        
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteFieldDataModalPage.clickDeleteAllSwitch();
+        await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
+        await DeleteFieldDataModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+        await waitForNotExist(await WarningsModalPage.getResource('2'));
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
     });
 
 

@@ -41,9 +41,10 @@
         </span>
         <div>
             <input type="text"
-                class="form-control"
-                [(ngModel)]="confirmFieldName"
-                (keydown)="$event.key !== 'Enter' || performDeletion()" />
+                   id="confirm-field-name-input"
+                   class="form-control"
+                   [(ngModel)]="confirmFieldName"
+                   (keydown)="$event.key !== 'Enter' || performDeletion()" />
         </div>
     </div>
 </div>

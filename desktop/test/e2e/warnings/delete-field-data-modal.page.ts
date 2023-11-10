@@ -1,4 +1,4 @@
-import { click } from '../app';
+import { click, typeIn } from '../app';
 
 
 /**
@@ -11,5 +11,19 @@ export class DeleteFieldDataModalPage {
     public static async clickConfirmButton() {
 
         return click('#confirm-deletion-button');
+    }
+
+
+    public static async clickDeleteAllSwitch() {
+
+        return click('#delete-all-switch label');
+    }
+
+
+    // Type
+
+    public static async typeInConfirmFieldName(fieldName: string) {
+
+        return typeIn('#confirm-field-name-input', fieldName);
     }
 }

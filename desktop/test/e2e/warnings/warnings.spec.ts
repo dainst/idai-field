@@ -291,6 +291,29 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+        const sections = await WarningsModalPage.getSections();
+        expect(await sections.count()).toBe(1);
+        const sectionTitle: string = await WarningsModalPage.getSectionTitle(0);
+        expect(sectionTitle).toContain('Ungültiger Wert im Feld');
+        expect(sectionTitle).toContain('test:field');
+
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing identifier prefix via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

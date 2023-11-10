@@ -133,6 +133,14 @@ test.describe('warnings --', () => {
     };
 
 
+    async function createNonUniqueIdentifierWarnings() {
+
+        await navigateTo('settings');
+        await sendMessageToAppController('createNonUniqueIdentifierWarning');
+        await NavbarPage.clickCloseNonResourcesTab();
+    }
+
+
     async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string) {
         
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -382,10 +390,24 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warnings for non-unique identifiers via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createNonUniqueIdentifierWarnings();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await ResourcesPage.openEditByDoubleClickResource('1', 0);
+        await DoceditPage.typeInInputField('identifier', '2');
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warnings for non-unique identifiers via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await sendMessageToAppController('createNonUniqueIdentifierWarning');
+        await createNonUniqueIdentifierWarnings();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();

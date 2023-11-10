@@ -119,10 +119,14 @@ export class ResourcesPage {
     };
 
 
-    public static openEditByDoubleClickResource(identifier: string) {
+    public static async openEditByDoubleClickResource(identifier: string, index?: number) {
 
-        return doubleClick('//*[@id="sidebar"]//div[@class="title" and ' +
+        let locator = await getLocator('//*[@id="sidebar"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]');
+
+        if (index !== undefined) locator = await locator.nth(index);
+
+        return doubleClick(locator);
     }
 
 

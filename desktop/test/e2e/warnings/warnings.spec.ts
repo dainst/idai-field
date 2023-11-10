@@ -195,6 +195,27 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve single warning for invalid field data via deletion in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1', '2'], 'field');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+        await waitForExist(await WarningsModalPage.getResource('2'));
+
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteFieldDataModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+        await waitForExist(await WarningsModalPage.getResource('2'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
     test('solve warning for missing identifier prefix via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

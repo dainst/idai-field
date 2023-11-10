@@ -49,7 +49,7 @@
 </div>
 
 <div class="modal-footer">
-    <div class="btn btn-primary"
+    <div id="confirm-deletion-button" class="btn btn-primary"
          [ngClass]="{ 'disabled': !isDeletionAllowed() }"
          (click)="performDeletion()">
         <span i18n="@@buttons.ok">OK</span>

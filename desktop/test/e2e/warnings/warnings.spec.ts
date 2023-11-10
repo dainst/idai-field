@@ -6,6 +6,8 @@ import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { WarningsModalPage } from './warnings-modal.page';
+import { AddFieldModalPage } from '../configuration/add-field-modal.page';
+import { DeleteFieldDataModalPage } from './delete-field-data-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -13,8 +15,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('configuration --', () => {
-
+test.describe('warnings --', () => {
 
     test.beforeAll(async () => {
 
@@ -37,7 +38,7 @@ test.describe('configuration --', () => {
     });
 
 
-    const createMissingIdentifierPrefixWarning = async (resourceIdentifier: string) => {
+    async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
         await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
 
@@ -50,6 +51,59 @@ test.describe('configuration --', () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
     };
+
+
+    async function createUnconfiguredFieldWarning(resourceIdentifier: string, fieldName: string) {
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(fieldName);
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource(resourceIdentifier, 'place', completeFieldName, 'Text');
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.clickConfirmFieldDeletionButton();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
+    test('solve single warning for unconfigured field via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredFieldWarning('1', 'field');
+        await createUnconfiguredFieldWarning('2', 'field');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+        await waitForExist(await WarningsModalPage.getResource('2'));
+        
+        const sections = await WarningsModalPage.getSections();
+        expect(await sections.count()).toBe(1);
+        const sectionTitle: string = await WarningsModalPage.getSectionTitle(0);
+        expect(sectionTitle).toContain('Unkonfiguriertes Feld');
+        expect(sectionTitle).toContain('test:field');
+
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteFieldDataModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
 
 
     test('solve warning for missing identifier prefix via resources view', async () => {

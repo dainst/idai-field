@@ -19,6 +19,19 @@ export class WarningsModalPage {
         const section = await this.getSection(sectionIndex);
         return click(section.locator('.edit-button'));
     }
+
+
+    public static async clickDeleteFieldDataButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.delete-field-data-button'));
+    }
+
+
+    public static async clickCloseButton() {
+
+        return click('#close-warnings-modal-button');
+    }
     
 
     // get

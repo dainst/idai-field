@@ -1,3 +1,4 @@
+import { Field } from 'idai-field-core';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
 import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
@@ -8,6 +9,7 @@ import { DoceditPage } from '../docedit/docedit.page';
 import { WarningsModalPage } from './warnings-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DeleteFieldDataModalPage } from './delete-field-data-modal.page';
+import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -46,8 +48,8 @@ test.describe('warnings --', () => {
         const completeFieldName: string =  'test:' + fieldName;
 
         await NavbarPage.clickCloseNonResourcesTab();
-        for (let identifer of resourceIdentifiers) {
-            await ResourcesPage.performCreateResource(identifer, 'place', completeFieldName, 'Text');
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place', completeFieldName, 'Text');
         }
 
         await navigateTo('configuration');
@@ -85,6 +87,36 @@ test.describe('warnings --', () => {
     };
 
 
+    async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+
+        await navigateTo('configuration');
+        await createField(fieldName, 'checkboxes', 'Wood-color-default');
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+            await ResourcesPage.openEditByDoubleClickResource(identifier);
+            await DoceditPage.clickCheckbox(completeFieldName, 0);
+            await DoceditPage.clickSaveDocument();
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-objectType-default');
+        await ManageValuelistsModalPage.clickSelectValuelist('Wood-objectType-default');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
     async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
         await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
@@ -100,12 +132,21 @@ test.describe('warnings --', () => {
     };
 
 
-    async function createField(fieldName: string) {
+    async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string) {
         
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput(fieldName);
         await AddFieldModalPage.clickCreateNewField();
+
+        if (inputType) await EditConfigurationPage.clickInputTypeSelectOption(inputType, 'field');
+        if (valuelistName) {
+            await EditConfigurationPage.clickAddValuelist();
+            await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+            await ManageValuelistsModalPage.clickSelectValuelist(valuelistName);
+            await ManageValuelistsModalPage.clickConfirmSelection();
+        }
+
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
     }
@@ -228,6 +269,24 @@ test.describe('warnings --', () => {
         await DeleteFieldDataModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        const outlierValues = await DoceditPage.getOutlierValues('test:field');
+        expect(await outlierValues.count()).toBe(1);
+
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        expect(await outlierValues.count()).toBe(0);
+
+        await DoceditPage.clickSaveDocument();
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 

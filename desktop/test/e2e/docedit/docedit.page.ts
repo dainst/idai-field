@@ -139,16 +139,20 @@ export class DoceditPage {
 
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
-        await waitForExist('#edit-form-element-' + fieldName);
-        const element = ((await this.getField(fieldName)).locator('.checkbox')).nth(checkboxIndex);
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.checkbox')).nth(checkboxIndex);
         return click(element);
     }
 
 
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
-        await waitForExist('#edit-form-element-' + fieldName);
-        const element = ((await this.getField(fieldName)).locator('input')).nth(radioButtonIndex);
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('input')).nth(radioButtonIndex);
         return click(element);
     }
 
@@ -168,6 +172,14 @@ export class DoceditPage {
     public static async clickCreateCompositeEntry(fieldName: string) {
 
         return click((await this.getField(fieldName)).locator('.create-composite-entry-button'));
+    }
+
+
+    public static async clickRemoveOutlierValue(fieldName: string, outlierValueIndex: number) {
+
+        const outlierValues = await this.getOutlierValues(fieldName);
+        const valueToRemove = await outlierValues.nth(outlierValueIndex);
+        return click(valueToRemove.locator('.remove-outlier-button'));
     }
 
 
@@ -254,6 +266,12 @@ export class DoceditPage {
     public static async getInvalidIdentifierInfo() {
 
         return (await getLocator('.invalid-identifier-info')).nth(0);
+    }
+
+
+    public static async getOutlierValues(fieldName: string) {
+
+        return (await this.getField(fieldName)).locator('.outlier');
     }
 
 

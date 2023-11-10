@@ -38,30 +38,10 @@ test.describe('warnings --', () => {
     });
 
 
-    async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
-
-        await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
-
-        await navigateTo('configuration');
-        await CategoryPickerPage.clickOpenContextMenu('Place');
-        await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.typeInIdentifierPrefix('P');
-        await EditConfigurationPage.clickConfirm();
-        await ConfigurationPage.save();
-
-        await NavbarPage.clickCloseNonResourcesTab();
-    };
-
-
     async function createUnconfiguredFieldWarning(resourceIdentifier: string, fieldName: string) {
 
         await navigateTo('configuration');
-        await CategoryPickerPage.clickSelectCategory('Place');
-        await ConfigurationPage.clickAddFieldButton();
-        await AddFieldModalPage.typeInSearchFilterInput(fieldName);
-        await AddFieldModalPage.clickCreateNewField();
-        await EditConfigurationPage.clickConfirm();
-        await ConfigurationPage.save();
+        await createField(fieldName);
 
         const completeFieldName: string =  'test:' + fieldName;
 
@@ -77,6 +57,54 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
     };
+
+
+    async function createInvalidFieldDataWarning(resourceIdentifier: string, fieldName: string) {
+
+        await navigateTo('configuration');
+        await createField(fieldName);
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource(resourceIdentifier, 'place', completeFieldName, 'Text');
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickInputTypeSelectOption('int', 'field');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
+    async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
+
+        await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInIdentifierPrefix('P');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
+    async function createField(fieldName: string) {
+        
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(fieldName);
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
 
 
     test('solve single warning for unconfigured field via warnings modal', async () => {
@@ -124,6 +152,20 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getResource('2'));
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for invalid field data via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarning('1', 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickDeleteInvalidFieldDataButton('test:field');
+        await DoceditPage.clickSaveDocument();
+
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 

@@ -153,6 +153,12 @@ export class DoceditPage {
     }
 
 
+    public static async clickDeleteInvalidFieldDataButton(fieldName: string) {
+
+        return click((await this.getField(fieldName).locator('.delete-invalid-field-data-button')));
+    }
+
+
     public static async clickLanguageTab(fieldName: string, language: string) {
 
         return click((await this.getField(fieldName)).locator('.language-tab-' + language));

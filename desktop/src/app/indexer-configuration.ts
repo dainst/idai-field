@@ -26,6 +26,7 @@ export module IndexerConfiguration {
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
             'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
             'invalid:exist': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'exist' },
+            'invalid:contain': { path: 'warnings.invalid', pathArray: ['warnings', 'invalid'], type: 'contain' },
             'unconfigured:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
             'unconfigured:contain': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'contain' },
             'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },

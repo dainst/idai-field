@@ -133,14 +133,14 @@ export class DoceditPage {
 
     public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
-        return selectSearchableSelectOption('#edit-form-element-' + fieldName, optionValueLabel);
+        return selectSearchableSelectOption((await this.getField(fieldName)), optionValueLabel);
     }
 
 
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
         await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getLocator('#edit-form-element-' + fieldName + ' .checkbox')).nth(checkboxIndex);
+        const element = ((await this.getField(fieldName)).locator('.checkbox')).nth(checkboxIndex);
         return click(element);
     }
 
@@ -148,20 +148,20 @@ export class DoceditPage {
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
         await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getLocator('#edit-form-element-' + fieldName + ' input')).nth(radioButtonIndex);
+        const element = ((await this.getField(fieldName)).locator('input')).nth(radioButtonIndex);
         return click(element);
     }
 
 
-    public static clickLanguageTab(fieldName: string, language: string) {
+    public static async clickLanguageTab(fieldName: string, language: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .language-tab-' + language);
+        return click((await this.getField(fieldName)).locator('.language-tab-' + language));
     }
 
 
-    public static clickCreateCompositeEntry(fieldName: string) {
+    public static async clickCreateCompositeEntry(fieldName: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .create-composite-entry-button');
+        return click((await this.getField(fieldName)).locator('.create-composite-entry-button'));
     }
 
 
@@ -209,9 +209,9 @@ export class DoceditPage {
     }
 
 
-    public static getCheckboxes(fieldName: string) {
+    public static async getCheckboxes(fieldName: string) {
 
-        return getLocator('#edit-form-element-' + fieldName + ' .checkbox');
+        return (await this.getField(fieldName)).locator('.checkbox');
     }
 
 
@@ -239,9 +239,9 @@ export class DoceditPage {
     }
 
 
-    public static getLanguageTabs(fieldName: string) {
+    public static async getLanguageTabs(fieldName: string) {
 
-        return getLocator('#edit-form-element-' + fieldName + ' .language-tab');
+        return (await this.getField(fieldName)).locator('.language-tab');
     }
 
 
@@ -253,15 +253,15 @@ export class DoceditPage {
 
     // type in
 
-    public static typeInInputField(fieldName: string, text: string) {
+    public static async typeInInputField(fieldName: string, text: string) {
 
-        return typeIn('#edit-form-element-' + fieldName + ' input', text);
+        return typeIn((await this.getField(fieldName)).locator('input'), text);
     }
 
 
-    public static removeTextFromInputField(fieldName: string) {
+    public static async removeTextFromInputField(fieldName: string) {
 
-        return clearText('#edit-form-element-' + fieldName + ' input');
+        return clearText((await this.getField(fieldName)).locator('input'));
     }
 
 

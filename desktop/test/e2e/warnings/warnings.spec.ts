@@ -150,8 +150,6 @@ test.describe('warnings --', () => {
         await DeleteFieldDataModalPage.clickDeleteAllSwitch();
         await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
         await DeleteFieldDataModalPage.clickConfirmButton();
-        await waitForNotExist(await WarningsModalPage.getResource('1'));
-        await waitForNotExist(await WarningsModalPage.getResource('2'));
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

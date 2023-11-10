@@ -10,6 +10,7 @@ import { WarningsModalPage } from './warnings-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DeleteFieldDataModalPage } from './delete-field-data-modal.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -270,6 +271,38 @@ test.describe('warnings --', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('only delete invalid data while solving multiple invalid field data warnings', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1'], 'field');
+
+        await ResourcesPage.performCreateResource('2', 'place', 'test:field', '10');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteFieldDataModalPage.clickDeleteAllSwitch();
+        await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
+        await DeleteFieldDataModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        // Check that invalid field data has been deleted
+        await ResourcesPage.clickSelectResource('1', 'info');
+        let fields = await FieldsViewPage.getFields(0);
+        expect(await fields.count()).toBe(1);
+        expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
+
+        // Check that valid field data has not been deleted
+        await ResourcesPage.clickSelectResource('2', 'info');
+        fields = await FieldsViewPage.getFields(0);
+        expect(await fields.count()).toBe(2);
+        expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');
+        expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('10');
     });
 
 

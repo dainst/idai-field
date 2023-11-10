@@ -38,8 +38,14 @@ export async function navigateTo(menu) {
 
 export async function resetApp() {
 
-    await window.evaluate(() => require('@electron/remote').getCurrentWindow().webContents.send('resetApp'));
-    return waitForExist("//span[@class='message-content' and contains(text(), 'erfolgreich zurückgesetzt')]", 120000);
+    await sendMessageToAppController('resetApp');
+}
+
+
+export async function sendMessageToAppController(message: string) {
+
+    await window.evaluate(value => require('@electron/remote').getCurrentWindow().webContents.send(value), message);
+    return waitForExist("//span[@class='message-content' and contains(text(), 'Erfolgreich ausgeführt')]", 120000);
 }
 
 

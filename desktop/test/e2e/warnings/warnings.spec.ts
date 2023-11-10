@@ -1,7 +1,7 @@
 import { Field } from 'idai-field-core';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { navigateTo, resetApp, sendMessageToAppController, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
@@ -375,6 +375,28 @@ test.describe('warnings --', () => {
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.typeInInputField('identifier', '1');
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warnings for non-unique identifiers via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await sendMessageToAppController('createNonUniqueIdentifierWarning');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        expect(await (await WarningsModalPage.getResource('1')).count()).toBe(2);
+        const sections = await WarningsModalPage.getSections();
+        expect(await sections.count()).toBe(1);
+        const sectionTitle = await WarningsModalPage.getSectionTitle(0);
+        expect(sectionTitle).toContain('Uneindeutiger Bezeichner');
+
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());

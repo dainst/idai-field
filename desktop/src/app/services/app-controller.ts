@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppConfigurator, DocumentConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
-    PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+    PouchdbDatastore, ProjectConfiguration, Document } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
 import { ImagesState } from '../components/image/overview/view/images-state';
@@ -22,6 +22,9 @@ const ipcRenderer = typeof window !== 'undefined'
 @Injectable()
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ * 
+ * Called from e2e tests
  */
 export class AppController {
 
@@ -46,8 +49,45 @@ export class AppController {
 
         ipcRenderer.on('resetApp', async () => {
             await this.reset();
-            this.messages.add([M.APP_RESET_SUCCESS]);
+            this.messages.add([M.APP_CONTROLLER_SUCCESS]);
         });
+
+        ipcRenderer.on('createNonUniqueIdentifierWarning', async () => {
+            await this.createNonUniqueIdentifierWarning();
+            this.messages.add([M.APP_CONTROLLER_SUCCESS]);
+        });
+    }
+
+
+    private async createNonUniqueIdentifierWarning() {
+
+        const document: Document = {
+            _id: '1',
+            resource: {
+                id: '1',
+                identifier: '1',
+                category: 'Place',
+                relations: {}
+            },
+            created: { date: new Date(), user: 'test' },
+            modified: []
+        };
+
+        await this.pouchdbDatastore.create(document, 'test');
+
+        document._id = '2';
+        document.resource.id = '2';
+
+        await this.pouchdbDatastore.create(document, 'test');
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            new DocumentConverter(this.projectConfiguration),
+            this.projectConfiguration,
+            false
+        );
     }
 
 

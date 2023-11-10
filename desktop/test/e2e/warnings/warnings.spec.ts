@@ -38,7 +38,7 @@ test.describe('warnings --', () => {
     });
 
 
-    async function createUnconfiguredFieldWarning(resourceIdentifier: string, fieldName: string) {
+    async function createUnconfiguredFieldWarnings(resourceIdentifiers: string[], fieldName: string) {
 
         await navigateTo('configuration');
         await createField(fieldName);
@@ -46,7 +46,9 @@ test.describe('warnings --', () => {
         const completeFieldName: string =  'test:' + fieldName;
 
         await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.performCreateResource(resourceIdentifier, 'place', completeFieldName, 'Text');
+        for (let identifer of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifer, 'place', completeFieldName, 'Text');
+        }
 
         await navigateTo('configuration');
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -59,7 +61,7 @@ test.describe('warnings --', () => {
     };
 
 
-    async function createInvalidFieldDataWarning(resourceIdentifier: string, fieldName: string) {
+    async function createInvalidFieldDataWarnings(resourceIdentifiers: string[], fieldName: string) {
 
         await navigateTo('configuration');
         await createField(fieldName);
@@ -67,7 +69,9 @@ test.describe('warnings --', () => {
         const completeFieldName: string =  'test:' + fieldName;
 
         await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.performCreateResource(resourceIdentifier, 'place', completeFieldName, 'Text');
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place', completeFieldName, 'Text');
+        }
 
         await navigateTo('configuration');
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -110,8 +114,7 @@ test.describe('warnings --', () => {
     test('solve single warning for unconfigured field via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createUnconfiguredFieldWarning('1', 'field');
-        await createUnconfiguredFieldWarning('2', 'field');
+        await createUnconfiguredFieldWarnings(['1', '2'], 'field');
 
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
@@ -138,8 +141,7 @@ test.describe('warnings --', () => {
     test('solve multiple warnings for unconfigured fields via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createUnconfiguredFieldWarning('1', 'field');
-        await createUnconfiguredFieldWarning('2', 'field');
+        await createUnconfiguredFieldWarnings(['1', '2'], 'field');
         
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
@@ -159,7 +161,7 @@ test.describe('warnings --', () => {
     test('solve warning for invalid field data via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarning('1', 'field');
+        await createInvalidFieldDataWarnings(['1'], 'field');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await ResourcesPage.openEditByDoubleClickResource('1');
@@ -173,7 +175,7 @@ test.describe('warnings --', () => {
     test('solve warning for invalid field data via editing in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarning('1', 'field');
+        await createInvalidFieldDataWarnings(['1'], 'field');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
@@ -191,7 +193,6 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });
-
 
 
     test('solve warning for missing identifier prefix via resources view', async () => {

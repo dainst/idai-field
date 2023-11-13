@@ -227,7 +227,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
-            || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
+            || !equal(this.getCustomFormDefinition().hidden ?? [])(this.getClonedFormDefinition().hidden ?? [])
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || this.isSubfieldsChanged()

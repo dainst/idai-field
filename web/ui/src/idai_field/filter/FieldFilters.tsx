@@ -45,17 +45,15 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
           dropdownMap={ dropdownMap } />
         { filterValuesCount > 0 &&
         <InputGroup>
-            <div>
-                <DropdownButton
-                    id="field-filters-dropdown"
-                    title={ shortenString(currentFilter[0] ? currentFilter[1] : t('fieldFilters.select')) }>
-                        <DropdownItems
-                            fields={ fields }
-                            searchParams={ searchParams }
-                            currentFilter={ currentFilter[0] }
-                            setCurrentFilter={ setCurrentFilter } />
-                </DropdownButton>
-            </div>
+            <DropdownButton
+                id="field-filters-dropdown"
+                title={ shortenString(currentFilter[0] ? currentFilter[1] : t('fieldFilters.select')) }>
+                    <DropdownItems
+                        fields={ fields }
+                        searchParams={ searchParams }
+                        currentFilter={ currentFilter[0] }
+                        setCurrentFilter={ setCurrentFilter } />
+            </DropdownButton>
             { currentFilter[0] && <>
                 { dropdownMap[currentFilter[0]]
                     ? <InnerDropdown

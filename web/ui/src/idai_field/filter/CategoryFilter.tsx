@@ -55,7 +55,7 @@ export default function CategoryFilter({ filter, searchParams = new URLSearchPar
         { filterValues
             .map((bucket: FilterBucketTreeNode) =>
                 RenderFilterValue(filter.name, bucket, searchParams, filters, category, projectId, projectView,
-                    !category ? onMouseEnter : identity)) }
+                    onMouseEnter)) }
 
         { projectId && projectView && inProjectPopover && category
             &&

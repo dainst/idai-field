@@ -46,6 +46,8 @@ export class DoceditComponent {
     public resourceLabel: string;
     public resourceSubLabel: string;
 
+    public maxNumberOfDuplicates: number;
+
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
     private escapeKeyPressed = false;
 
@@ -98,8 +100,10 @@ export class DoceditComponent {
         return this.documentHolder.clonedDocument !== undefined
             && this.documentHolder.clonedDocument.resource.category !== 'Project'
             && !this.projectConfiguration.isSubcategory(
-                this.documentHolder.clonedDocument.resource.category, 'Image'
-            );
+                this.documentHolder.clonedDocument.resource.category, 'Image')
+            && (this.documentHolder.isNewDocument()
+                ? this.maxNumberOfDuplicates > 1
+                : this.maxNumberOfDuplicates > 0);
     }
 
 
@@ -136,6 +140,7 @@ export class DoceditComponent {
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFields();
+        this.maxNumberOfDuplicates = await this.computeMaxNumberOfDuplicates();
     }
 
 
@@ -167,7 +172,8 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 DuplicateModalComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
+            modalRef.componentInstance.initialize(this.documentHolder.isNewDocument());
+            modalRef.componentInstance.maxNumberOfDuplicates = this.maxNumberOfDuplicates;
             numberOfDuplicates = await modalRef.result;
         } catch (err) {
             // DuplicateModal has been canceled
@@ -363,6 +369,21 @@ export class DoceditComponent {
         } finally {
             this.documentHolder.makeClonedDocAppearNew();
             this.menuService.setContext(MenuContext.DOCEDIT);
+        }
+    }
+
+
+    private async computeMaxNumberOfDuplicates(): Promise<number> {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.documentHolder.clonedDocument.resource.category
+        );
+
+        if (category.resourceLimit) {
+            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            return Math.max(0, category.resourceLimit - resourcesCount);
+        } else {
+            return 100;
         }
     }
 

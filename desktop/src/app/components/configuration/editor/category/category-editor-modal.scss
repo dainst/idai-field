@@ -16,11 +16,13 @@
     margin-left: 10px;
   }
 
-  #identifier-prefix {
+  #identifier-prefix,
+  #resource-limit {
     width: 200px;  
   }
 
-  #identifier-prefix-warning {
+  #identifier-prefix-warning,
+  #resource-limit-warning {
     margin-top: 15px;
     font-size: 14px;
   }

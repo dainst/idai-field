@@ -195,6 +195,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
             : category.color
         );
         category.identifierPrefix = formDefinition.identifierPrefix;
+        category.resourceLimit = formDefinition.resourceLimit;
         category.createdBy = formDefinition.createdBy;
         category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
         category.references = formDefinition.references;

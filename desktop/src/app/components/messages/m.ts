@@ -250,6 +250,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
     public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
+    public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
+    public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW = 'configuration.error.invalidResourceLimit.tooLow';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
 
@@ -2004,6 +2006,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.invalidReference',
                 value: '"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER] = {
+            content: i18n({
+                id: 'messages.configuration.error.invalidResourceLimit.notANumber',
+                value: 'Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW] = {
+            content: i18n({
+                id: 'messages.configuration.error.invalidResourceLimit.tooLow',
+                value: 'Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.'
             }),
             level: 'danger',
             params: [],

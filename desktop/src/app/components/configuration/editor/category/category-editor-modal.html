@@ -67,7 +67,7 @@
             Bezeichner-Präfix
         </div>
         <input type="text" id="identifier-prefix"
-               class="form-control reference-input"
+               class="form-control"
                [(ngModel)]="getClonedFormDefinition().identifierPrefix">
         <div *ngIf="isIdentifierPrefixWarningShown() && numberOfCategoryResources === 1"
              id="identifier-prefix-warning"
@@ -82,6 +82,21 @@
              i18n="@@configuration.identifierPrefix.warning.multiple">
             Es wurden bereits {{numberOfCategoryResources}} Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass
             das Präfix <b>nicht</b> automatisch für schon existierende Bezeichner gesetzt wird.
+        </div>
+    </div>
+    <div *ngIf="isResourceLimitAvailable()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.resourceLimit">
+            Ressourcenlimit
+        </div>
+        <input type="text" id="resource-limit"
+               class="form-control"
+               [(ngModel)]="getClonedFormDefinition().resourceLimit">
+        <div *ngIf="isResourceLimitWarningShown()"
+             id="resource-limit-warning"
+             class="alert alert-warning"
+             i18n="@@configuration.resourceLimit.warning">
+            Es wurden bereits {{numberOfCategoryResources}} Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass
+            bereits angelegte Ressourcen <b>nicht</b> automatisch entfernt werden.
         </div>
     </div>
 </div>

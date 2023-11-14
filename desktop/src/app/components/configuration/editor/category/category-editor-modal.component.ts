@@ -8,6 +8,7 @@ import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { ConfigurationUtil } from '../../configuration-util';
 import { Modals } from '../../../../services/modals';
+import { M } from '../../../messages/m';
 
 
 @Component({
@@ -76,11 +77,17 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public async confirm() {
 
+        let resourceLimit: number|undefined;
         try {
+            resourceLimit = CategoryEditorModalComponent.cleanUpAndValidateResourceLimit(
+                this.getClonedFormDefinition().resourceLimit
+            );
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
+
+        this.getClonedFormDefinition().resourceLimit = resourceLimit;
 
         if (this.getClonedFormDefinition().color ===
                 CategoryEditorModalComponent.getHexColor(this.category.defaultColor)
@@ -89,7 +96,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         }
 
         this.getClonedFormDefinition().identifierPrefix =
-            CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix);
+            CategoryEditorModalComponent.cleanUpInputText(this.getClonedFormDefinition().identifierPrefix);
 
         if (this.new) {
             this.clonedConfigurationDocument = ConfigurationDocument.addToCategoriesOrder(
@@ -109,6 +116,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description)(I18N.removeEmpty(this.clonedDescription))
             || this.hasIdentifierPrefixChanged()
+            || this.hasResourceLimitChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
@@ -141,6 +149,28 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public isResourceLimitAvailable(): boolean {
+        
+        return !this.category.isAbstract
+            && (this.category.name === 'Place' || this.category.parentCategory?.name === 'Operation');
+    }
+
+
+    public isResourceLimitWarningShown() {
+        
+        if (!this.hasResourceLimitChanged()) return false;
+        
+        try {
+            const resourceLimit: number|undefined = CategoryEditorModalComponent.cleanUpAndValidateResourceLimit(
+                this.getClonedFormDefinition().resourceLimit
+            );
+            return this.numberOfCategoryResources > resourceLimit;
+        } catch (_) {
+            return false;
+        }
+    }
+
+
     protected getLabel(): I18N.String {
 
         return this.category.label;
@@ -163,17 +193,49 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     private hasIdentifierPrefixChanged(): boolean {
 
-        return CategoryEditorModalComponent.cleanUpIdentifierPrefix(this.getClonedFormDefinition().identifierPrefix)
+        return CategoryEditorModalComponent.cleanUpInputText(this.getClonedFormDefinition().identifierPrefix)
             !== this.getCustomFormDefinition()?.identifierPrefix;
     }
 
 
-    private static cleanUpIdentifierPrefix(identifierPrefix: string|undefined): string|undefined {
+    private hasResourceLimitChanged(): boolean {
 
-        if (!identifierPrefix) return undefined;
+        return CategoryEditorModalComponent.cleanUpResourceLimit(this.getClonedFormDefinition().resourceLimit)
+            !== this.getCustomFormDefinition()?.resourceLimit;
+    }
 
-        const result: string|undefined = identifierPrefix.trim();
+
+    private static cleanUpInputText(inputText: string|undefined): string|undefined {
+
+        if (!inputText) return undefined;
+
+        const result: string|undefined = inputText.trim();
         return result.length > 0 ? result : undefined;
+    }
+
+
+    private static cleanUpResourceLimit(resourceLimit: string|number): number|undefined {
+
+        const cleanedUpText: string|undefined = this.cleanUpInputText(resourceLimit?.toString());
+        if (!cleanedUpText) return undefined;
+
+        return parseInt(cleanedUpText);
+    }
+
+
+    private static cleanUpAndValidateResourceLimit(resourceLimit: string|number): number|undefined {
+
+        const cleanedUpResourceLimit = this.cleanUpResourceLimit(resourceLimit);
+
+        if (cleanedUpResourceLimit === undefined) {
+            return undefined;
+        } else if (isNaN(cleanedUpResourceLimit)) {
+            throw [M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER];
+        } else if (cleanedUpResourceLimit < 1) {
+            throw [M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW];
+        }
+
+        return cleanedUpResourceLimit;
     }
 
 

@@ -104,5 +104,17 @@
       "Spätmittelalter": "Late Middle Ages",
       "Hochmittelalter": "High Middle Ages"
     }
+  },
+  "colors-default-2": {
+    "values": {
+      "ocker": "ochre",
+      "orange": "orange",
+      "orangerot": "orange-red",
+      "rosa": "rose/pink",
+      "rot": "red",
+      "rotbraun": "red-brown",
+      "schwarz": "black",
+      "weiß": "white"
+    }
   }
 }

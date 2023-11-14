@@ -1,0 +1,1664 @@
+{
+  "groups": {
+    "stem": "",
+    "properties": "",
+    "time": "",
+    "position": "",
+    "dimension": "",
+    "identification": "",
+    "other": ""
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionWidth": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionHeight": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionDepth": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionThickness": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionVerticalExtent": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionDiameter": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionPerimeter": {
+      "label": "",
+      "description": ""
+    },
+    "dimensionOther": {
+      "label": "",
+      "description": ""
+    },
+    "area": {
+      "label": "",
+      "description": ""
+    },
+    "description": {
+      "label": "",
+      "description": ""
+    },
+    "beginningDate": {
+      "label": "",
+      "description": ""
+    },
+    "endDate": {
+      "label": "",
+      "description": ""
+    },
+    "processor": {
+      "label": "",
+      "description": ""
+    },
+    "campaign": {
+      "label": ""
+    },
+    "period": {
+      "label": ""
+    },
+    "dating": {
+      "label": ""
+    },
+    "diary": {
+      "label": "",
+      "description": ""
+    },
+    "date": {
+      "label": "",
+      "description": ""
+    },
+    "orientation": {
+      "label": "",
+      "description": ""
+    },
+    "spatialLocation": {
+      "label": "",
+      "description": ""
+    },
+    "provenance": {
+      "label": "",
+      "description": ""
+    },
+    "literature": {
+      "label": ""
+    },
+    "geometry": {
+      "label": ""
+    },
+    "notes": {
+      "label": ""
+    },
+    "damage": {
+      "label": ""
+    },
+    "archaeoDox:documentationUnit": {
+      "label": ""
+    },
+    "webGisId": {
+      "label": ""
+    },
+    "shortDescriptionAddendum": {
+      "label": ""
+    },
+    "phase": {
+      "label": ""
+    }
+  },
+  "categories": {
+    "Level": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "RoomFloor": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "RoomWall": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "InnerWall": {
+      "label": ""
+    },
+    "OuterWall": {
+      "label": ""
+    },
+    "RoomCeiling": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Roof": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Stairs": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Opening": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Window": {
+      "label": ""
+    },
+    "Door": {
+      "label": ""
+    },
+    "Damage": {
+      "label": "",
+      "fields": {
+        "condition": {
+          "label": ""
+        },
+        "damageType": {
+          "label": ""
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Trench": {
+      "label": "",
+      "fields": {
+        "researchQuestion": {
+          "label": "",
+          "description": ""
+        },
+        "trenchComment": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "ExcavationArea": {
+      "label": ""
+    },
+    "Glass": {
+      "label": "",
+      "fields": {
+        "decorationDescription": {
+          "label": "",
+          "description": ""
+        },
+        "color": {
+          "label": "",
+          "description": ""
+        },
+        "decorationTechnique": {
+          "label": "",
+          "description": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturingMethod": {
+          "label": "",
+          "description": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "transparency": {
+          "label": "",
+          "description": ""
+        },
+        "vesselForm": {
+          "label": "",
+          "description": ""
+        },
+        "vesselFormSpecific": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "",
+      "fields": {
+        "classification": {
+          "label": ""
+        }
+      }
+    },
+    "Planum": {
+      "label": ""
+    },
+    "Brick": {
+      "label": "",
+      "fields": {
+        "featureText": {
+          "label": "",
+          "description": ""
+        },
+        "brickForm": {
+          "label": ""
+        },
+        "brickUsage": {
+          "label": ""
+        },
+        "clayColorOutside": {
+          "label": ""
+        },
+        "coatColorInside": {
+          "label": ""
+        },
+        "coatColorOutside": {
+          "label": ""
+        },
+        "decorationTechnique": {
+          "label": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturing": {
+          "label": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "specificType": {
+          "label": "",
+          "description": ""
+        },
+        "temper": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Project": {
+      "fields": {
+        "contactMail": {
+          "label": "",
+          "description": ""
+        },
+        "contactPerson": {
+          "label": "",
+          "description": ""
+        },
+        "epsgId": {
+          "label": "",
+          "description": ""
+        },
+        "externalReference": {
+          "label": "",
+          "description": ""
+        },
+        "gazId": {
+          "label": "",
+          "description": ""
+        },
+        "institution": {
+          "label": "",
+          "description": ""
+        },
+        "latitude": {
+          "label": "",
+          "description": ""
+        },
+        "longitude": {
+          "label": "",
+          "description": ""
+        },
+        "license": {
+          "label": ""
+        },
+        "projectURI": {
+          "label": "",
+          "description": ""
+        },
+        "staff": {
+          "label": ""
+        },
+        "campaigns": {
+          "label": ""
+        },
+        "projectSupervisor": {
+          "label": "",
+          "description": ""
+        },
+        "bibliographicReferences": {
+          "label": ""
+        }
+      }
+    },
+    "Burial": {
+      "label": "",
+      "fields": {
+        "ageDetermination": {
+          "label": ""
+        },
+        "ageDeterminationBasis": {
+          "label": ""
+        },
+        "bodyHeightAndRobustness": {
+          "label": ""
+        },
+        "burialRite": {
+          "label": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "dietReconstruction": {
+          "label": ""
+        },
+        "findingPlace": {
+          "label": "",
+          "description": ""
+        },
+        "palaeopathologicalReport": {
+          "label": ""
+        },
+        "publicationDatingFinds": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingStratigraphy": {
+          "label": "",
+          "description": ""
+        },
+        "sexDetermination": {
+          "label": ""
+        },
+        "sexDeterminationBasis": {
+          "label": ""
+        },
+        "amountIndividuals": {
+          "label": ""
+        },
+        "burialCharacteristic": {
+          "label": ""
+        },
+        "burialDocumentation": {
+          "label": "",
+          "description": ""
+        },
+        "graveFeature": {
+          "label": ""
+        },
+        "positionArms": {
+          "label": ""
+        },
+        "positionLegs": {
+          "label": ""
+        },
+        "positioningIndividuals": {
+          "label": ""
+        }
+      }
+    },
+    "Building": {
+      "label": "",
+      "fields": {
+        "buildingHistory": {
+          "label": "",
+          "description": ""
+        },
+        "buildingResearchHistory": {
+          "label": "",
+          "description": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "excavationHistory": {
+          "label": "",
+          "description": ""
+        },
+        "history": {
+          "label": "",
+          "description": ""
+        },
+        "hasRestoration": {
+          "label": "",
+          "description": ""
+        },
+        "architecturalOrders": {
+          "label": "",
+          "description": ""
+        },
+        "buildingCategory": {
+          "label": ""
+        },
+        "buildingCategorySpecific": {
+          "label": ""
+        },
+        "buildingTechnique": {
+          "label": "",
+          "description": ""
+        },
+        "buildingType": {
+          "label": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        },
+        "context": {
+          "label": "",
+          "description": ""
+        },
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": ""
+    },
+    "Wood": {
+      "label": "",
+      "fields": {
+        "color": {
+          "label": "",
+          "description": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "typeOfWood": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "colorOutside": {
+          "label": ""
+        },
+        "colorInside": {
+          "label": ""
+        },
+        "colorOutsideMunsell": {
+          "label": ""
+        },
+        "colorInsideMunsell": {
+          "label": ""
+        },
+        "colorBreak": {
+          "label": ""
+        },
+        "colorBreakMunsell": {
+          "label": ""
+        },
+        "surfaceCondition": {
+          "label": ""
+        },
+        "decorationTechnique": {
+          "label": ""
+        },
+        "paintColor": {
+          "label": ""
+        },
+        "paintColorMunsell": {
+          "label": ""
+        },
+        "paintCondition": {
+          "label": ""
+        }
+      }
+    },
+    "Architecture": {
+      "label": "",
+      "fields": {
+        "bibliography": {
+          "label": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "constructionDetailsDescription": {
+          "label": "",
+          "description": ""
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "",
+          "description": ""
+        },
+        "findingPlace": {
+          "label": "",
+          "description": ""
+        },
+        "hasGrouting": {
+          "label": "",
+          "description": ""
+        },
+        "layerAmount": {
+          "label": "",
+          "description": ""
+        },
+        "layerHeight": {
+          "label": "",
+          "description": ""
+        },
+        "markDescription": {
+          "label": "",
+          "description": ""
+        },
+        "materialCharacteristic": {
+          "label": "",
+          "description": ""
+        },
+        "materialForm": {
+          "label": "",
+          "description": ""
+        },
+        "muralCrown": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingFinds": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingScientific": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingStratigraphy": {
+          "label": "",
+          "description": ""
+        },
+        "publicationRemark": {
+          "label": "",
+          "description": ""
+        },
+        "blockProcessing": {
+          "label": ""
+        },
+        "blockTreatment": {
+          "label": "",
+          "description": ""
+        },
+        "brickwork": {
+          "label": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        },
+        "construction": {
+          "label": "",
+          "description": ""
+        },
+        "mark": {
+          "label": "",
+          "description": ""
+        },
+        "mortarBinder": {
+          "label": "",
+          "description": ""
+        },
+        "mortarColor": {
+          "label": ""
+        },
+        "mortarConsistency": {
+          "label": ""
+        },
+        "wallClassification": {
+          "label": ""
+        },
+        "wallType": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Operation": {
+      "label": "",
+      "fields": {
+        "diaryAbstract": {
+          "label": "",
+          "description": ""
+        },
+        "supervisor": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Place": {
+      "label": "",
+      "fields": {
+        "gazId": {
+          "label": "",
+          "description": ""
+        },
+        "placeName": {
+          "label": "",
+          "description": ""
+        },
+        "buildingHistory": {
+          "label": "",
+          "description": ""
+        },
+        "buildingResearchHistory": {
+          "label": "",
+          "description": ""
+        },
+        "description": {
+          "label": "",
+          "description": ""
+        },
+        "excavationHistory": {
+          "label": "",
+          "description": ""
+        },
+        "findSituation": {
+          "label": "",
+          "description": ""
+        },
+        "modernIntervention": {
+          "label": "",
+          "description": ""
+        },
+        "findspotClassification": {
+          "label": ""
+        },
+        "siteClassification": {
+          "label": ""
+        }
+      }
+    },
+    "Layer": {
+      "label": "",
+      "fields": {
+        "appearance": {
+          "label": "",
+          "description": ""
+        },
+        "isNatural": {
+          "label": "",
+          "description": ""
+        },
+        "consistency": {
+          "label": ""
+        },
+        "distinguishingCriteria": {
+          "label": "",
+          "description": ""
+        },
+        "layerClassification": {
+          "label": ""
+        },
+        "soilType": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Feature": {
+      "label": "",
+      "fields": {
+        "comparison": {
+          "label": "",
+          "description": ""
+        },
+        "hasDisturbance": {
+          "label": "",
+          "description": ""
+        },
+        "color": {
+          "label": "",
+          "description": ""
+        },
+        "featureBorders": {
+          "label": "",
+          "description": ""
+        },
+        "featureForm": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "FeatureGroup": {
+      "label": "",
+      "fields": {
+        "comparison": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "FeatureSegment": {
+      "label": "",
+      "fields": {
+        "comparison": {
+          "label": "",
+          "description": ""
+        },
+        "hasDisturbance": {
+          "label": "",
+          "description": ""
+        },
+        "featureSegmentBorders": {
+          "label": "",
+          "description": ""
+        },
+        "featureSegmentForm": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Floor": {
+      "label": "",
+      "fields": {
+        "conditionComment": {
+          "label": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        },
+        "consistency": {
+          "label": ""
+        },
+        "distinguishingCriteria": {
+          "label": "",
+          "description": ""
+        },
+        "floorClassification": {
+          "label": ""
+        },
+        "layerClassification": {
+          "label": ""
+        },
+        "mortarBinder": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Inscription": {
+      "label": "",
+      "fields": {
+        "comparison": {
+          "label": "",
+          "description": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "language": {
+          "label": ""
+        },
+        "content": {
+          "label": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "",
+          "description": ""
+        },
+        "processor": {
+          "label": "",
+          "description": ""
+        },
+        "imageRights": {
+          "label": ""
+        }
+      }
+    },
+    "Pottery": {
+      "label": "",
+      "fields": {
+        "amountSherdsWall": {
+          "label": ""
+        },
+        "amountSherdsRim": {
+          "label": ""
+        },
+        "amountSherdsBase": {
+          "label": ""
+        },
+        "amountSherdsHandles": {
+          "label": ""
+        },
+        "amountSherdsLip": {
+          "label": ""
+        },
+        "amountSherdsPedestal": {
+          "label": ""
+        },
+        "amountSherdsRimBase": {
+          "label": ""
+        },
+        "amountSherdsRimShoulder": {
+          "label": ""
+        },
+        "amountSherdsShoulder": {
+          "label": ""
+        },
+        "amountSherdsOther": {
+          "label": ""
+        },
+        "amountSherdsPercent": {
+          "label": "",
+          "description": ""
+        },
+        "amountSherdsLid": {
+          "label": ""
+        },
+        "clayColorBreakMunsell": {
+          "label": ""
+        },
+        "clayColorInsideMunsell": {
+          "label": ""
+        },
+        "clayColorOutsideMunsell": {
+          "label": ""
+        },
+        "hasCoat": {
+          "label": ""
+        },
+        "decorationDescription": {
+          "label": "",
+          "description": ""
+        },
+        "breakStructure": {
+          "label": "",
+          "description": ""
+        },
+        "residueAnalysis": {
+          "label": "",
+          "description": ""
+        },
+        "sample": {
+          "label": "",
+          "description": ""
+        },
+        "purpose": {
+          "label": "",
+          "description": ""
+        },
+        "typeNumber": {
+          "label": "",
+          "description": ""
+        },
+        "clayColorBreak": {
+          "label": ""
+        },
+        "clayColorInside": {
+          "label": ""
+        },
+        "clayColorOutside": {
+          "label": ""
+        },
+        "clayHardness": {
+          "label": ""
+        },
+        "coatColorInside": {
+          "label": ""
+        },
+        "coatColorOutside": {
+          "label": ""
+        },
+        "coatInside": {
+          "label": ""
+        },
+        "coatInsideType": {
+          "label": ""
+        },
+        "coatOutside": {
+          "label": ""
+        },
+        "coatOutsideType": {
+          "label": ""
+        },
+        "decorationTechnique": {
+          "label": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturing": {
+          "label": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "materialType": {
+          "label": "",
+          "description": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "specificType": {
+          "label": ""
+        },
+        "temper": {
+          "label": "",
+          "description": ""
+        },
+        "temperAmount": {
+          "label": ""
+        },
+        "temperParticles": {
+          "label": "",
+          "description": ""
+        },
+        "temperTypeClay": {
+          "label": ""
+        },
+        "vesselForm": {
+          "label": ""
+        },
+        "vesselFormSpecific": {
+          "label": "",
+          "description": ""
+        },
+        "vesselpart": {
+          "label": ""
+        },
+        "Firing": {
+          "label": ""
+        },
+        "FormComparisonCompendia": {
+          "label": ""
+        },
+        "FormComparisonCompendiadetail": {
+          "label": ""
+        },
+        "DecorationComparisonCompendia": {
+          "label": ""
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": ""
+        },
+        "ApplicationComparisonCompendia": {
+          "label": ""
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": ""
+        },
+        "Drawing": {
+          "label": ""
+        }
+      }
+    },
+    "Grave": {
+      "label": "",
+      "fields": {
+        "bibliography": {
+          "label": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "findingPlace": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingFinds": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingScientific": {
+          "label": "",
+          "description": ""
+        },
+        "publicationDatingStratigraphy": {
+          "label": "",
+          "description": ""
+        },
+        "publicationRemark": {
+          "label": "",
+          "description": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        },
+        "distinguishingCriteria": {
+          "label": "",
+          "description": ""
+        },
+        "graveType": {
+          "label": ""
+        },
+        "specificType": {
+          "label": ""
+        },
+        "soilType": {
+          "label": "",
+          "description": ""
+        },
+        "tombBuilding": {
+          "label": ""
+        }
+      }
+    },
+    "Bone": {
+      "label": "",
+      "fields": {
+        "biologicalAge": {
+          "label": "",
+          "description": ""
+        },
+        "boneClassification": {
+          "label": ""
+        },
+        "boneType": {
+          "label": ""
+        },
+        "burningGrade": {
+          "label": ""
+        },
+        "sex": {
+          "label": "",
+          "description": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "species": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Room": {
+      "label": "",
+      "fields": {
+        "conditionComment": {
+          "label": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "",
+      "fields": {
+        "operationClassification": {
+          "label": ""
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "",
+      "fields": {
+        "clayColorBreak": {
+          "label": ""
+        },
+        "clayColorInside": {
+          "label": ""
+        },
+        "clayColorOutside": {
+          "label": ""
+        },
+        "clayStructure": {
+          "label": "",
+          "description": ""
+        },
+        "coatColorInside": {
+          "label": ""
+        },
+        "coatColorOutside": {
+          "label": ""
+        },
+        "decorationTechnique": {
+          "label": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "surfaceCondition": {
+          "label": "",
+          "description": ""
+        },
+        "temper": {
+          "label": "",
+          "description": ""
+        },
+        "temperAmount": {
+          "label": ""
+        },
+        "temperParticles": {
+          "label": "",
+          "description": ""
+        },
+        "vesselForm": {
+          "label": ""
+        },
+        "vesselFormSpecific": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Other": {
+      "label": "",
+      "fields": {
+        "isNatural": {
+          "label": "",
+          "description": ""
+        },
+        "consistency": {
+          "label": ""
+        },
+        "distinguishingCriteria": {
+          "label": "",
+          "description": ""
+        },
+        "otherClassification": {
+          "label": ""
+        },
+        "soilType": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Sample": {
+      "label": "",
+      "fields": {
+        "labNumber": {
+          "label": "",
+          "description": ""
+        },
+        "weight": {
+          "label": "",
+          "description": ""
+        },
+        "sampleType": {
+          "label": "",
+          "description": ""
+        },
+        "storagePlace": {
+          "label": ""
+        }
+      }
+    },
+    "Drawing": {
+      "label": "",
+      "fields": {
+        "drawingMaterial": {
+          "label": "",
+          "description": ""
+        },
+        "drawingTool": {
+          "label": "",
+          "description": ""
+        },
+        "drawingType": {
+          "label": ""
+        },
+        "scale": {
+          "label": ""
+        }
+      }
+    },
+    "FindDrawing": {
+      "label": "",
+      "fields": {
+        "scale": {
+          "label": ""
+        },
+        "sheetNumberFrom": {
+          "label": ""
+        },
+        "sheetNumberTo": {
+          "label": ""
+        }
+      }
+    },
+    "PlanDrawing": {
+      "label": "",
+      "fields": {
+        "scale": {
+          "label": ""
+        },
+        "sheetNumberFrom": {
+          "label": ""
+        },
+        "sheetNumberTo": {
+          "label": ""
+        }
+      }
+    },
+    "Survey": {
+      "label": "",
+      "fields": {
+        "researchMethod": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Stone": {
+      "label": "",
+      "fields": {
+        "purpose": {
+          "label": "",
+          "description": ""
+        },
+        "treatment": {
+          "label": "",
+          "description": ""
+        },
+        "workmanship": {
+          "label": "",
+          "description": ""
+        },
+        "architectureElement": {
+          "label": ""
+        },
+        "color": {
+          "label": "",
+          "description": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "material": {
+          "label": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "origin": {
+          "label": "",
+          "description": ""
+        },
+        "temperAmount": {
+          "label": ""
+        }
+      }
+    },
+    "Coin": {
+      "label": "",
+      "fields": {
+        "frontSideDescription": {
+          "label": "",
+          "description": ""
+        },
+        "preservedDiameter": {
+          "label": "",
+          "description": ""
+        },
+        "reverseSideDescription": {
+          "label": "",
+          "description": ""
+        },
+        "denomination": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "metalMaterial": {
+          "label": ""
+        },
+        "mint": {
+          "label": "",
+          "description": ""
+        },
+        "mintingRuler": {
+          "label": "",
+          "description": ""
+        },
+        "stampPositioning": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "Find": {
+      "label": "",
+      "fields": {
+        "instanceOf": {
+          "label": ""
+        },
+        "amount": {
+          "label": "",
+          "description": ""
+        },
+        "bibliography": {
+          "label": ""
+        },
+        "catalogueNumber": {
+          "label": "",
+          "description": ""
+        },
+        "comparison": {
+          "label": "",
+          "description": ""
+        },
+        "conditionComment": {
+          "label": ""
+        },
+        "conditionPercent": {
+          "label": "",
+          "description": ""
+        },
+        "publicationMaterialSummary": {
+          "label": "",
+          "description": ""
+        },
+        "publicationRemark": {
+          "label": "",
+          "description": ""
+        },
+        "hasRestoration": {
+          "label": "",
+          "description": ""
+        },
+        "storageInventoryNumber": {
+          "label": "",
+          "description": ""
+        },
+        "weight": {
+          "label": "",
+          "description": ""
+        },
+        "condition": {
+          "label": "",
+          "description": ""
+        },
+        "conditionAmount": {
+          "label": "",
+          "description": ""
+        },
+        "storagePlace": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "FindCollection": {
+      "label": "",
+      "fields": {
+        "amount": {
+          "label": "",
+          "description": ""
+        },
+        "bibliography": {
+          "label": ""
+        },
+        "weight": {
+          "label": "",
+          "description": ""
+        },
+        "storagePlace": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "",
+      "fields": {
+        "composition": {
+          "label": "",
+          "description": ""
+        },
+        "hasDecoration": {
+          "label": ""
+        },
+        "color": {
+          "label": "",
+          "description": ""
+        },
+        "plasterComponents": {
+          "label": ""
+        }
+      }
+    },
+    "Photo": {
+      "label": "",
+      "fields": {
+        "viewingDirection": {
+          "label": ""
+        },
+        "originalFormat": {
+          "label": ""
+        }
+      }
+    },
+    "Profile": {
+      "label": ""
+    },
+    "Metal": {
+      "label": "",
+      "fields": {
+        "materialDescription": {
+          "label": "",
+          "description": ""
+        },
+        "decorationTechnique": {
+          "label": ""
+        },
+        "formDescription": {
+          "label": "",
+          "description": ""
+        },
+        "manufacturingMethod": {
+          "label": ""
+        },
+        "metalMaterial": {
+          "label": ""
+        },
+        "objectType": {
+          "label": ""
+        },
+        "vesselForm": {
+          "label": ""
+        },
+        "vesselFormSpecific": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "BuildingPart": {
+      "label": "",
+      "fields": {
+        "material": {
+          "label": ""
+        }
+      }
+    },
+    "Area": {
+      "label": ""
+    },
+    "Excavation": {
+      "label": "",
+      "fields": {
+        "isIllegal": {
+          "label": ""
+        }
+      }
+    },
+    "Type": {
+      "label": ""
+    },
+    "TypeCatalog": {
+      "label": "",
+      "fields": {
+        "criterion": {
+          "label": ""
+        }
+      }
+    }
+  },
+  "forms": {
+    "Project:archaeoDox": {
+      "label": ""
+    },
+    "Place:archaeoDox": {
+      "label": ""
+    },
+    "Planum:archaeoDox": {
+      "label": ""
+    },
+    "Profile:archaeoDox": {
+      "label": "",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": ""
+        }
+      }
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": ""
+        },
+        "archaeoDox:material": {
+          "label": ""
+        },
+        "archaeoDox:typeOfWare": {
+          "label": ""
+        }
+      }
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": ""
+        }
+      }
+    },
+    "Feature:archaeoDox": {
+      "label": "",
+      "fields": {
+        "shortDescription": {
+          "label": ""
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": ""
+        },
+        "archaeoDox:isNatural": {
+          "label": ""
+        },
+        "archaeoDox:soilType": {
+          "label": ""
+        },
+        "archaeoDox:consistency": {
+          "label": ""
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": ""
+        }
+      }
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": ""
+        }
+      }
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": ""
+        },
+        "archaeoDox:soilProperties": {
+          "label": ""
+        }
+      }
+    }
+  }
+}

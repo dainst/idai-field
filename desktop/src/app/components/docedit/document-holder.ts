@@ -63,6 +63,12 @@ export class DocumentHolder {
     };
 
 
+    public isNewDocument(): boolean {
+
+        return this.clonedDocument && !this.clonedDocument.resource.id;
+    }
+
+
     /**
      * @throws [DoceditErrors.NOT_FOUND]
      */

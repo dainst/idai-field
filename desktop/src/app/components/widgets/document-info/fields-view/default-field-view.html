@@ -4,9 +4,9 @@
 </div>
 <div *ngIf="isArray(value)">
     <ul>
-        <li *ngFor="let label of getObjectLabels(value)" class="field-value">
-            {{label}}
-        </li>
+        <li *ngFor="let label of getObjectLabels(value)"
+            class="field-value" 
+            [innerHTML]="label"></li>
     </ul>
 </div>
 <div *ngIf="!isBoolean(value) && !isArray(value)"

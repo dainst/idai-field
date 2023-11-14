@@ -2661,6 +2661,47 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow setting resource limit', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                resourceLimit: 2
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].resourceLimit).toBe(2);
+    });
+
+
     it('set subfields', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

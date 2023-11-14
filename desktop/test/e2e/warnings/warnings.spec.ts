@@ -202,19 +202,12 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        await waitForExist(await WarningsModalPage.getResource('2'));
-        
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        const sectionTitle: string = await WarningsModalPage.getSectionTitle(0);
-        expect(sectionTitle).toContain('Unkonfiguriertes Feld');
-        expect(sectionTitle).toContain('test:field');
+        await expectResourcesInWarningsModal(['1', '2']);
+        await expectSectionTitles(['Unkonfiguriertes Feld test:field']);
 
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteFieldDataModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
-        await waitForExist(await WarningsModalPage.getResource('2'));
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
@@ -260,12 +253,8 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        const sectionTitle: string = await WarningsModalPage.getSectionTitle(0);
-        expect(sectionTitle).toContain('Ungültige Daten im Feld');
-        expect(sectionTitle).toContain('test:field');
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültige Daten im Feld test:field']);
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.clickDeleteInvalidFieldDataButton('test:field');
@@ -284,13 +273,11 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        await waitForExist(await WarningsModalPage.getResource('2'));
+        await expectResourcesInWarningsModal(['1', '2']);
 
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteFieldDataModalPage.clickConfirmButton();
-        await waitForNotExist(await WarningsModalPage.getResource('1'));
-        await waitForExist(await WarningsModalPage.getResource('2'));
+        await waitForExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
@@ -372,12 +359,8 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        const sectionTitle: string = await WarningsModalPage.getSectionTitle(0);
-        expect(sectionTitle).toContain('Ungültiger Wert im Feld');
-        expect(sectionTitle).toContain('test:field');
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültiger Wert im Feld test:field']);
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.clickRemoveOutlierValue('test:field', 0);
@@ -409,10 +392,8 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        expect(await WarningsModalPage.getSectionTitle(0)).toContain('Fehlendes Präfix');
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Fehlendes Präfix im Feld Bezeichner']);
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.typeInInputField('identifier', '1');
@@ -444,11 +425,9 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
+        expect(await (await WarningsModalPage.getResources()).count()).toBe(2);
         expect(await (await WarningsModalPage.getResource('1')).count()).toBe(2);
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        const sectionTitle = await WarningsModalPage.getSectionTitle(0);
-        expect(sectionTitle).toContain('Uneindeutiger Bezeichner');
+        await expectSectionTitles(['Uneindeutiger Bezeichner']);
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.typeInInputField('identifier', '2');
@@ -481,10 +460,8 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
-        const sections = await WarningsModalPage.getSections();
-        expect(await sections.count()).toBe(1);
-        expect(await WarningsModalPage.getSectionTitle(0)).toEqual('Konflikt');
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Konflikt']);
 
         await WarningsModalPage.clickSolveConflictButton(0);
         await DoceditPage.clickSolveConflictButton();

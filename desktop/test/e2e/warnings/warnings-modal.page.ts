@@ -1,4 +1,4 @@
-import { click, getLocator, getText } from '../app';
+import { click, getLocator, getText, selectOption } from '../app';
 
 
 /**
@@ -39,6 +39,12 @@ export class WarningsModalPage {
 
         return click('#close-warnings-modal-button');
     }
+
+
+    public static async clickFilterOption(optionValue: string) {
+
+        return selectOption('#warning-filter-select', optionValue);
+    }
     
 
     // get
@@ -55,6 +61,12 @@ export class WarningsModalPage {
     }
 
 
+    public static getResources() {
+
+        return getLocator('#document-picker .list-group-item');
+    }
+
+
     public static async getSection(index: number) {
 
         return (await this.getSections()).nth(index);
@@ -67,11 +79,36 @@ export class WarningsModalPage {
     }
 
 
+    public static async getFilterOption(index: number) {
+
+        const options = await this.getFilterOptions();
+        return options.nth(index);
+    }
+
+
+    public static async getFilterOptions() {
+
+        return await getLocator('#warning-filter-select option');
+    }
+
+
     // get text
 
     public static async getSectionTitle(index: number) {
 
         const section = await this.getSection(index);
         return getText(await section.locator('.card-title'));
+    }
+
+
+    public static async getFilterOptionText(index: number) {
+
+        return getText(await this.getFilterOption(index));
+    }
+
+
+    public static async getSelectedResourceIdentifier() {
+
+        return getText(await getLocator('#document-warnings-header .document-teaser .title'));
     }
 }

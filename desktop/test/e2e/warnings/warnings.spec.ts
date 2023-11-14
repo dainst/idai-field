@@ -161,6 +161,39 @@ test.describe('warnings --', () => {
     }
 
 
+    async function expectWarningFilterOptions(optionLabels: string[]) {
+
+        const filterOptions = await WarningsModalPage.getFilterOptions();
+        expect(await filterOptions.count()).toBe(optionLabels.length);
+
+        for (let i = 0; i < optionLabels.length; i++) {
+            expect(await WarningsModalPage.getFilterOptionText(i)).toEqual(optionLabels[i]);
+        }
+    }
+
+
+    async function expectResourcesInWarningsModal(identifiers: string[]) {
+        
+        const resources = await WarningsModalPage.getResources();
+        expect(await resources.count()).toBe(identifiers.length);
+
+        for (let identifier of identifiers) {
+            await waitForExist(await WarningsModalPage.getResource(identifier));
+        }
+    }
+
+
+    async function expectSectionTitles(sectionTitles: string[]) {
+
+        const sections = await WarningsModalPage.getSections();
+        expect(await sections.count()).toBe(sectionTitles.length);
+
+        for (let i = 0; i < sectionTitles.length; i++) {
+            expect(await WarningsModalPage.getSectionTitle(i)).toEqual(sectionTitles[i]);
+        }
+    }
+
+
     test('solve single warning for unconfigured field via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -460,4 +493,73 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });
+
+
+    test('filter resources in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1'], 'invalidField');
+        await createUnconfiguredFieldWarnings(['2', '3'], 'unconfiguredField');
+        await createOutlierValuesWarnings(['4', '5', '6'], 'outliersField');
+        await createMissingIdentifierPrefixWarning('7');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('7');
+
+        await NavbarPage.clickWarningsButton();
+        await expectWarningFilterOptions([
+            'Alle (7)',
+            'Unkonfigurierte Felder (2)',
+            'Ungültige Felddaten (1)',
+            'Nicht in Werteliste enthaltene Werte (3)',
+            'Fehlende Bezeichner-Präfixe (7)'
+        ]);
+        
+        await expectResourcesInWarningsModal(['1', '2', '3', '4', '5', '6', '7']);
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
+        await expectSectionTitles([
+            'Ungültige Daten im Feld test:invalidField',
+            'Fehlendes Präfix im Feld Bezeichner'
+        ]);
+
+        await WarningsModalPage.clickResource('2');
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('2');
+        await expectSectionTitles([
+            'Unkonfiguriertes Feld test:unconfiguredField',
+            'Fehlendes Präfix im Feld Bezeichner'
+        ]);
+
+        await WarningsModalPage.clickFilterOption('unconfigured:exist');
+        await expectResourcesInWarningsModal(['2', '3']);
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('2');
+        await expectSectionTitles(['Unkonfiguriertes Feld test:unconfiguredField']);
+
+        await WarningsModalPage.clickFilterOption('outlierValues:exist');
+        await expectResourcesInWarningsModal(['4', '5', '6']);
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('4');
+        await expectSectionTitles(['Ungültiger Wert im Feld test:outliersField']);
+
+        await WarningsModalPage.clickFilterOption('invalid:exist');
+        await expectResourcesInWarningsModal(['1']);
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
+        await expectSectionTitles(['Ungültige Daten im Feld test:invalidField']);
+        
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.clickDeleteInvalidFieldDataButton('test:invalidField');
+        await DoceditPage.clickSaveDocument();
+
+        await expectWarningFilterOptions([
+            'Alle (7)',
+            'Unkonfigurierte Felder (2)',
+            'Nicht in Werteliste enthaltene Werte (3)',
+            'Fehlende Bezeichner-Präfixe (7)'
+        ]);
+
+        await expectResourcesInWarningsModal(['1', '2', '3', '4', '5', '6', '7']);
+        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
+        await expectSectionTitles([
+            'Fehlendes Präfix im Feld Bezeichner'
+        ]);
+
+        await WarningsModalPage.clickCloseButton();
+    });
+
 });

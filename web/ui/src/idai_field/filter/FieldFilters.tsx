@@ -47,7 +47,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
-                title={ currentFilter[0] ? currentFilter[1] : t('fieldFilters.select') }>
+                title={ shortenString(currentFilter[0] ? currentFilter[1] : t('fieldFilters.select')) }>
                     <DropdownItems
                         fields={ fields }
                         searchParams={ searchParams }
@@ -82,7 +82,9 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
 
     const [selected, setSelected] = useState<string>('');
 
-    return <><DropdownButton id="field-filters-inner-dropdown" title={ selected || t('fieldFilters.select') }>
+    return <><DropdownButton 
+            id="field-filters-inner-dropdown" 
+            title={ shortenString(selected || t('fieldFilters.select')) }>
         { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
             <Dropdown.Item
                 key={ k }
@@ -187,4 +189,13 @@ const findFilterBucket = (match: string, t: (FilterBucketTreeNode|FilterBucket)[
     const result: FilterBucketTreeNode = Tree.find(t as undefined as Forest<FilterBucket>,
         item => item.value.name === match );
     return result ? result.item : undefined;
+};
+
+const shortenString = (s: string) => {
+
+    const maxLength = 15;
+    if (s.length > maxLength) {
+        return s.substring(0, maxLength) + "…";
+    } 
+    return s;
 };

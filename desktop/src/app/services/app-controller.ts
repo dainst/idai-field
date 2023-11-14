@@ -56,22 +56,17 @@ export class AppController {
             await this.createNonUniqueIdentifierWarning();
             this.messages.add([M.APP_CONTROLLER_SUCCESS]);
         });
+
+        ipcRenderer.on('createConflict', async () => {
+            await this.createConflict();
+            this.messages.add([M.APP_CONTROLLER_SUCCESS]);
+        });
     }
 
 
     private async createNonUniqueIdentifierWarning() {
 
-        const document: Document = {
-            _id: '1',
-            resource: {
-                id: '1',
-                identifier: '1',
-                category: 'Place',
-                relations: {}
-            },
-            created: { date: new Date(), user: 'test' },
-            modified: []
-        };
+        const document: Document = this.createDocument();
 
         await this.pouchdbDatastore.create(document, 'test');
 
@@ -79,6 +74,32 @@ export class AppController {
         document.resource.id = '2';
 
         await this.pouchdbDatastore.create(document, 'test');
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            new DocumentConverter(this.projectConfiguration),
+            this.projectConfiguration,
+            false
+        );
+    }
+
+
+    private async createConflict() {
+
+        let document: Document = this.createDocument();
+        
+        document = await this.pouchdbDatastore.create(document, 'test');
+        
+        try {
+            document.resource.shortDescription = 'A';
+            await this.pouchdbDatastore.update(document, 'test');
+            document.resource.shortDescription = 'B';
+            await this.pouchdbDatastore.update(document, 'test');
+        } catch (err) {
+            // Ignore conflict errors
+        }
 
         await Indexer.reindex(
             this.indexFacade,
@@ -127,5 +148,21 @@ export class AppController {
         );
 
         await this.configurationIndex.rebuild(configurationDocument);
+    }
+
+
+    private createDocument(): Document {
+
+        return {
+            _id: '1',
+            resource: {
+                id: '1',
+                identifier: '1',
+                category: 'Place',
+                relations: {}
+            },
+            created: { date: new Date(), user: 'test' },
+            modified: []
+        };
     }
 }

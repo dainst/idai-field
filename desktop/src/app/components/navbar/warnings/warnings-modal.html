@@ -124,7 +124,8 @@
                         </div>
                     </div>
                     <span *ngIf="section.type === 'conflicts'">
-                        <button class="btn btn-primary" (click)="openConflictResolver()">
+                        <button class="btn btn-primary solve-conflict-button"
+                                (click)="openConflictResolver()">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>

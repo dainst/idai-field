@@ -21,6 +21,13 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickSolveConflictButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.solve-conflict-button'));
+    }
+
+
     public static async clickDeleteFieldDataButton(sectionIndex: number) {
 
         const section = await this.getSection(sectionIndex);

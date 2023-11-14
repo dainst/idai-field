@@ -133,10 +133,10 @@ test.describe('warnings --', () => {
     };
 
 
-    async function createNonUniqueIdentifierWarnings() {
+    async function createWarningViaAppController(message: string) {
 
         await navigateTo('settings');
-        await sendMessageToAppController('createNonUniqueIdentifierWarning');
+        await sendMessageToAppController(message);
         await NavbarPage.clickCloseNonResourcesTab();
     }
 
@@ -393,7 +393,7 @@ test.describe('warnings --', () => {
     test('solve warnings for non-unique identifiers via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createNonUniqueIdentifierWarnings();
+        await createWarningViaAppController('createNonUniqueIdentifierWarning');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await ResourcesPage.openEditByDoubleClickResource('1', 0);
@@ -407,7 +407,7 @@ test.describe('warnings --', () => {
     test('solve warnings for non-unique identifiers via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createNonUniqueIdentifierWarnings();
+        await createWarningViaAppController('createNonUniqueIdentifierWarning');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
@@ -419,6 +419,42 @@ test.describe('warnings --', () => {
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.typeInInputField('identifier', '2');
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve conflict via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createWarningViaAppController('createConflict');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickSelectGroup('conflicts');
+        await DoceditPage.clickSolveConflictButton();
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve conflict via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createWarningViaAppController('createConflict');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+        const sections = await WarningsModalPage.getSections();
+        expect(await sections.count()).toBe(1);
+        expect(await WarningsModalPage.getSectionTitle(0)).toEqual('Konflikt');
+
+        await WarningsModalPage.clickSolveConflictButton(0);
+        await DoceditPage.clickSolveConflictButton();
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());

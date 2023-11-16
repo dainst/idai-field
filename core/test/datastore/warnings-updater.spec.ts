@@ -124,4 +124,69 @@ describe('WarningsUpdater', () => {
 
         done();
     });
+
+
+    it('set resource limit warnings', async done => {
+
+        const categoryDefinition = {
+            name: 'category',
+            resourceLimit: 1
+        } as any;
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'find']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
+
+        await WarningsUpdater.updateResourceLimitWarning(
+            documents[0], categoryDefinition, mockIndexFacade, mockDatastore, true
+        );
+
+        expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
+        expect(documents[1].warnings?.resourceLimitExceeded).toBe(true);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
+    });
+
+
+    it('remove resource limit warnings', async done => {
+
+        const categoryDefinition = {
+            name: 'category',
+            resourceLimit: 2
+        } as any;
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.resourceLimitExceeded = true;
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.resourceLimitExceeded = true;
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'find']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
+
+        await WarningsUpdater.updateResourceLimitWarnings(mockDatastore, mockIndexFacade, categoryDefinition);
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
+    });
 });

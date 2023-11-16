@@ -1,4 +1,4 @@
-import { duplicates, size, to, update } from 'tsfun';
+import { duplicates, size, to, update, Map } from 'tsfun';
 import { RESOURCE_DOT_IDENTIFIER, Document } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { ImportValidator } from './import-validator';
@@ -16,7 +16,7 @@ export function processDocuments(documents: Array<Document>,
     const mergeMode = size(mergeDocs) > 0;
     if (!mergeMode) assertNoDuplicates(documents);
 
-    const finalDocuments = {};
+    const finalDocuments: Map<Document> = {};
 
     for (const document of documents) {
         if (!mergeMode) validator.assertIsKnownCategory(document);
@@ -47,7 +47,10 @@ export function processDocuments(documents: Array<Document>,
         validator.assertIsWellformed(finalDocument);
     }
 
-    return Object.values(finalDocuments);
+    const result: Array<Document> = Object.values(finalDocuments);
+    validator.assertResourceLimitNotExceeded(result);
+
+    return result;
 }
 
 

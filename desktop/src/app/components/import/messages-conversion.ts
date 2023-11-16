@@ -92,6 +92,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) replacement = M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES;
         if (msg === ImportErrors.EMPTY_OBJECT_IN_RESOURCE) replacement = M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE;
         if (msg === ImportErrors.INVALID_IDENTIFIER_PREFIX) replacement = M.MODEL_VALIDATION_INVALID_IDENTIFIER_PREFIX;
+        if (msg === ImportErrors.RESOURCE_LIMIT_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED;
 
         if (msg === ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH) replacement = M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH;
         if (msg === ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG) replacement = M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG;

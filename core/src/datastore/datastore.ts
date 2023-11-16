@@ -8,6 +8,8 @@ import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { CategoryForm } from '../model/configuration/category-form';
 
 
 /**
@@ -40,6 +42,7 @@ export class Datastore {
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
                 private documentConverter: DocumentConverter,
+                private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {
     }
 
@@ -124,10 +127,12 @@ export class Datastore {
         document = !previousVersion
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);
+        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
         await WarningsUpdater.updateNonUniqueIdentifierWarning(
             document, this.indexFacade, this, previousIdentifier, true
         );
+        await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this, true);
 
         return document;
     }
@@ -154,6 +159,12 @@ export class Datastore {
 
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
+
+        await WarningsUpdater.updateResourceLimitWarnings(
+            this,
+            this.indexFacade,
+            this.projectConfiguration.getCategory(document.resource.category)
+        );
     }
 
 

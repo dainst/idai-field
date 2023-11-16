@@ -3,7 +3,8 @@ export type WarningType = 'unconfigured'
     |'outlierValues'
     |'conflicts'
     |'missingIdentifierPrefix'
-    |'nonUniqueIdentifier';
+    |'nonUniqueIdentifier'
+    |'resourceLimitExceeded';
 
 
 export interface Warnings {
@@ -14,6 +15,7 @@ export interface Warnings {
     conflicts?: boolean;
     missingIdentifierPrefix?: boolean;
     nonUniqueIdentifier?: boolean;
+    resourceLimitExceeded?: boolean;
 }
 
 
@@ -29,7 +31,8 @@ export module Warnings {
             || warnings.outlierValues.length > 0
             || warnings.conflicts
             || warnings.missingIdentifierPrefix
-            || warnings.nonUniqueIdentifier;
+            || warnings.nonUniqueIdentifier
+            || warnings.resourceLimitExceeded;
     }
 
 

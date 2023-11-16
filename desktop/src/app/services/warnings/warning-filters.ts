@@ -59,6 +59,12 @@ export module WarningFilters {
                 constraintName: 'nonUniqueIdentifier:exist',
                 count: 0,
                 type: 'nonUniqueIdentifier'
+            },
+            {
+                label: translations.getTranslation('warnings.resourceLimitExceeded'),
+                constraintName: 'resourceLimitExceeded:exist',
+                count: 0,
+                type: 'resourceLimitExceeded'
             }
         ];
 

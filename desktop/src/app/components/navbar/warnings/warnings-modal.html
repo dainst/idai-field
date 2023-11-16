@@ -66,6 +66,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier">
                             Uneindeutiger <b>Bezeichner</b>
                         </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
+                            Ressourcenlimit für Kategorie <b>{{getCategoryLabel(section)}}</b> überschritten
+                        </span>
                     </span>
                 </div>
                 <div class="card-block">
@@ -103,6 +107,11 @@
                               i18n="@@navbar.taskbar.warnings.info.nonUniqueIdentifier">
                             Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es
                             können dadurch Fehler beim Import und Export von Daten auftreten.
+                        </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded'"
+                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded">
+                            Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
+                            <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
                     </div>
                     <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"

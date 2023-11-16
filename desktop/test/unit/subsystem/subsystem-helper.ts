@@ -130,8 +130,13 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
     const documentConverter = new DocumentConverter(projectConfiguration);
 
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, documentConverter,
-        () => settingsProvider.getSettings().username);
+        pouchdbDatastore,
+        createdIndexFacade,
+        documentCache,
+        documentConverter,
+        projectConfiguration,
+        () => settingsProvider.getSettings().username
+    );
 
     const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
@@ -139,7 +144,9 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         createdIndexFacade,
         documentCache,
         documentConverter,
-        () => settingsProvider.getSettings().username);
+        projectConfiguration,
+        () => settingsProvider.getSettings().username
+    );
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
     stateSerializer.load.and.returnValue(Promise.resolve({}));

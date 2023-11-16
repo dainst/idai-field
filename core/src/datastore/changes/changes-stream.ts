@@ -9,6 +9,8 @@ import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from '../warnings-updater';
 import { Datastore } from '../datastore';
+import { ProjectConfiguration } from '../../services/project-configuration';
+import { CategoryForm } from '../../model/configuration/category-form';
 
 
 /**
@@ -27,6 +29,7 @@ export class ChangesStream {
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
                 private documentConverter: DocumentConverter,
+                private projectConfiguration: ProjectConfiguration,
                 private getUsername: () => string) {
 
         pouchDbDatastore.deletedNotifications().subscribe(document => {
@@ -76,10 +79,13 @@ export class ChangesStream {
             // Explicitly assign by value in order for changes to be detected by Angular
             this.documentCache.reassign(convertedDocument);
         }
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(convertedDocument.resource.category);
         
         await WarningsUpdater.updateNonUniqueIdentifierWarning(
             document, this.indexFacade, this.datastore, previousIdentifier, true
         );
+        await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this.datastore, true);
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
     }

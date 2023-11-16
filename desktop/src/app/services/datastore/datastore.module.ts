@@ -20,15 +20,16 @@ const PouchDB = window.require('pouchdb-browser');
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  documentConverter: DocumentConverter,
-                                 settingsProvider: SettingsProvider
+                                 settingsProvider: SettingsProvider,
+                                 projectConfiguration: ProjectConfiguration
             ): ChangesStream {
 
                 return new ChangesStream(
-                    pouchdbDatastore, datastore, indexFacade, documentCache, documentConverter,
+                    pouchdbDatastore, datastore, indexFacade, documentCache, documentConverter, projectConfiguration,
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, Datastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
+            deps: [PouchdbDatastore, Datastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider, ProjectConfiguration]
         },
         ExpressServer,
         {
@@ -60,16 +61,19 @@ const PouchDB = window.require('pouchdb-browser');
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  documentConverter: DocumentConverter,
-                                 settingsProvider: SettingsProvider
+                                 settingsProvider: SettingsProvider,
+                                 projectConfiguration: ProjectConfiguration
             ): Datastore {
                 return new Datastore(
                     pouchdbDatastore,
                     indexFacade,
                     documentCache,
                     documentConverter,
-                    () => settingsProvider.getSettings().username);
+                    projectConfiguration,
+                    () => settingsProvider.getSettings().username
+                );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, DocumentConverter, SettingsProvider, ProjectConfiguration]
         }
     ]
 })

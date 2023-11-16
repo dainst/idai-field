@@ -15,6 +15,7 @@ describe('RemoteChangesStream', () => {
     let indexFacade;
     let documentConverter;
     let documentCache;
+    let projectConfiguration;
     let getUsername;
     let onChange;
 
@@ -62,12 +63,16 @@ describe('RemoteChangesStream', () => {
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
+        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'], ['getCategory']);
+        projectConfiguration.getCategory.and.returnValue({ name: 'Object' });
+
         rcs = new ChangesStream(
             pouchdbDatastore,
             datastore,
             indexFacade,
             documentCache,
             documentConverter,
+            projectConfiguration,
             getUsername);
     });
 

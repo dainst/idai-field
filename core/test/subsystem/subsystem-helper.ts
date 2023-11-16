@@ -98,7 +98,13 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
 
     const documentConverter = new DocumentConverter(projectConfiguration);
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, documentConverter, () => user);
+        pouchdbDatastore,
+        createdIndexFacade,
+        documentCache,
+        documentConverter,
+        projectConfiguration,
+        () => user
+    );
     
     const relationsManager = new RelationsManager(datastore, projectConfiguration);
 

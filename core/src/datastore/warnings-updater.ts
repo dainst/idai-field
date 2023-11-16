@@ -7,8 +7,9 @@ import { ValuelistUtil } from '../tools/valuelist-util';
 import { Resource } from '../model/resource';
 import { ImageResource } from '../model/image-resource';
 import { Warnings } from '../model/warnings';
-import { IndexFacade } from '../index';
+import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
+import { Query } from '../model/query';
 
 
 /**
@@ -59,6 +60,38 @@ export module WarningsUpdater {
         if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
                 && indexFacade.getCount('identifier:match', previousIdentifier) > 0) {
             await updateNonUniqueIdentifierWarnings(datastore, indexFacade, previousIdentifier);
+        }
+    }
+
+
+    export async function updateResourceLimitWarning(document: Document, category: CategoryForm,
+                                                     indexFacade: IndexFacade, datastore?: Datastore,
+                                                     updateAll: boolean = false) {
+    
+        if (!category) return;
+
+        const query: Query = { categories: [category.name] };
+
+        if (category.resourceLimit && indexFacade.find(query).length  > category.resourceLimit) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.resourceLimitExceeded = true;
+            indexFacade.put(document);
+            if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, category);
+        } else if (document.warnings?.resourceLimitExceeded) {
+            delete document.warnings.resourceLimitExceeded;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            indexFacade.put(document);
+        }
+    }
+
+
+    export async function updateResourceLimitWarnings(datastore: Datastore, indexFacade: IndexFacade,
+                                                      category: CategoryForm) {
+
+        const documents: Array<Document> = (await datastore.find({ categories: [category.name] })).documents;
+
+        for (let document of documents) {
+            await updateResourceLimitWarning(document, category, indexFacade);
         }
     }
 

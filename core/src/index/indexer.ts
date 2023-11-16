@@ -51,7 +51,7 @@ import { Warnings } from '../model';
             }
 
             await indexFacade.putMultiple(documents, setIndexedDocuments);
-            addNonUniqueIdentifierWarnings(indexFacade, documentCache);
+            addNonUniqueIdentifierWarnings(indexFacade, documentCache, projectConfiguration);
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
@@ -87,10 +87,13 @@ import { Warnings } from '../model';
     }
 
 
-    function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache) {
+    function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache,
+                                            projectConfiguration: ProjectConfiguration) {
 
         documentCache.getAll().forEach(document => {
+            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
             WarningsUpdater.updateNonUniqueIdentifierWarning(document, indexFacade);
+            WarningsUpdater.updateResourceLimitWarning(document, category, indexFacade);
         });
     }
 

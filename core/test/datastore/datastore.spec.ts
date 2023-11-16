@@ -30,6 +30,7 @@ describe('Datastore', () => {
             mockIndexFacade,
             documentCache,
             new DocumentConverter(projectConfiguration),
+            projectConfiguration,
             () => 'username'
         );
     }

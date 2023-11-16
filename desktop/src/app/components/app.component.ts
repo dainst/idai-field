@@ -151,6 +151,10 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.nonUniqueIdentifiers', value: 'Uneindeutige Bezeichner' })
         );
         this.utilTranslations.addTranslation(
+            'warnings.resourceLimitExceeded',
+            this.i18n({ id: 'util.warnings.resourceLimitExceeded', value: 'Ressourcenlimit überschritten' })
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.input',
             this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
         );

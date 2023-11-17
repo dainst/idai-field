@@ -133,6 +133,24 @@ test.describe('warnings --', () => {
     };
 
 
+    async function createResourceLimitWarnings(resourceIdentifiers: string[]) {
+
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        const resourceLimit: string = (resourceIdentifiers.length - 1).toString();
+        await EditConfigurationPage.typeInResourceLimit(resourceLimit);
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
     async function createWarningViaAppController(message: string) {
 
         await navigateTo('settings');
@@ -468,6 +486,21 @@ test.describe('warnings --', () => {
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warnings for exceeded resource limit via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createResourceLimitWarnings(['1', '2']);
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await ResourcesPage.clickOpenContextMenu('1');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
+        await ResourcesPage.clickConfirmDeleteInModal();
+
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 

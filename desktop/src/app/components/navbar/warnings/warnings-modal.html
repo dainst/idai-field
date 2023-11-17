@@ -27,6 +27,7 @@
                         [autoSelect]="true"
                         [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
+                        [showNoQueryMessage]="false"
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>

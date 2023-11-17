@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, Output,
+    ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
 import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
@@ -27,6 +28,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() showNoQueryMessage: boolean = true;
     @Input() preselectedDocumentId: string;
 
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
@@ -44,10 +46,14 @@ export class DocumentPickerComponent implements OnChanges {
     constructor(private datastore: Datastore,
                 private loading: Loading,
                 private messages: Messages,
+                private changeDetectorRef: ChangeDetectorRef,
                 private i18n: I18n) {}
 
 
     public isLoading = () => this.loading.isLoading('documentPicker');
+
+    public isLoadingIconVisible = () => this.isLoading()
+        && this.loading.getLoadingTimeInMilliseconds('documentPicker') > 250;
 
     public getElementId = (document: Document) => 'document-picker-resource-' + document.resource.identifier;
 
@@ -164,6 +170,7 @@ export class DocumentPickerComponent implements OnChanges {
     private async fetchDocuments() {
 
         this.loading.start('documentPicker');
+        this.detectChangesWhileLoading();
         await AngularUtility.refresh();
 
         this.query.limit = this.limit;
@@ -254,5 +261,13 @@ export class DocumentPickerComponent implements OnChanges {
                 return !this.showProjectOption || !['Project'].includes(document.resource.category);
             })
         );
+    }
+
+
+    private detectChangesWhileLoading() {
+
+        this.changeDetectorRef.detectChanges();
+
+        if (this.isLoading()) setTimeout(() => this.detectChangesWhileLoading(), 100);
     }
 }

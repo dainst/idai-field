@@ -15,12 +15,12 @@
         </li>
     </ul>
 
-    <div *ngIf="isLoading()" id="document-picker-loading-icon-container">
+    <div *ngIf="isLoadingIconVisible()" id="document-picker-loading-icon-container">
         <loading-icon [context]="'documentPicker'"></loading-icon>
     </div>
 
     <div *ngIf="!isLoading() && !documents?.length" id="document-picker-placeholder">
-        <div *ngIf="!isQuerySpecified()"
+        <div *ngIf="!isQuerySpecified() && showNoQueryMessage"
              class="no-results-info"
              i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben.</div>
         <div *ngIf="isQuerySpecified() && !isLoading()"

@@ -1,10 +1,10 @@
-<div id="document-picker" [class.has-search-results]="documents?.length > 0">
+<div id="document-picker" [class.has-search-results]="documents?.length">
     <search-bar [filterOptions]="filterOptions"
                 [categories]="getQueryCategories()"
                 (onQueryStringChanged)="setQueryString($event)"
                 (onCategoriesChanged)="setQueryCategories($event)"></search-bar>
 
-    <ul #documentsList *ngIf="documents?.length > 0" class="list-group" id="document-picker-list">
+    <ul #documentsList *ngIf="documents?.length" id="document-picker-list" class="list-group">
         <li *ngFor="let document of documents; let index = index"
             (click)="select(document)"
             (dblclick)="doubleClick(document)"
@@ -15,12 +15,16 @@
         </li>
     </ul>
 
-    <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
-        <br>
+    <div *ngIf="isLoading()" id="document-picker-loading-icon-container">
         <loading-icon [context]="'documentPicker'"></loading-icon>
-        <span *ngIf="!isQuerySpecified()"
-              i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben</span>
-        <span *ngIf="isQuerySpecified() && !isLoading()"
-              i18n="@@widgets.documentPicker.noSearchResults">Keine Ziele gefunden</span>
+    </div>
+
+    <div *ngIf="!isLoading() && !documents?.length" id="document-picker-placeholder">
+        <div *ngIf="!isQuerySpecified()"
+             class="no-results-info"
+             i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben.</div>
+        <div *ngIf="isQuerySpecified() && !isLoading()"
+             class="no-results-info"
+             i18n="@@widgets.documentPicker.noSearchResults">Keine Ressourcen gefunden.</div>
     </div>
 </div>

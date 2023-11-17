@@ -101,7 +101,7 @@ export class DoceditPage {
 
     public static async clickConfirmDuplicateInModal() {
 
-        await click('#duplicate-confirm');
+        await click(await this.getConfirmDuplicateButton());
         return waitForNotExist('#document-edit-wrapper');
     }
 
@@ -248,6 +248,15 @@ export class DoceditPage {
     public static async getInvalidIdentifierInfo() {
 
         return (await getLocator('.invalid-identifier-info')).nth(0);
+    }
+
+
+    public static getConfirmDuplicateButton(disabled: boolean = false) {
+
+        let locatorString: string = '#duplicate-confirm';
+        if (disabled) locatorString += '.disabled';
+
+        return getLocator(locatorString);
     }
 
 

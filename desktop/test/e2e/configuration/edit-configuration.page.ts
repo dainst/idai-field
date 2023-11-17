@@ -169,6 +169,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static async typeInResourceLimit(resourceLimit: string) {
+
+        return typeIn('#resource-limit', resourceLimit);
+    }
+
+
     public static typeInNewValue(valueId: string) {
 
         return typeIn('#new-value-input', valueId);

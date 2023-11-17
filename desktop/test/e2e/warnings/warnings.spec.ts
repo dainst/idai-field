@@ -505,6 +505,20 @@ test.describe('warnings --', () => {
     });
 
 
+    test('show warnings for exceeded resource limit in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createResourceLimitWarnings(['1', '2']);
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+        await expectSectionTitles(['Ressourcenlimit für Kategorie Ort überschritten']);
+
+        await WarningsModalPage.clickCloseButton();
+    });
+
+
     test('filter resources in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

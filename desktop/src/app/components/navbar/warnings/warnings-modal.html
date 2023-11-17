@@ -108,8 +108,13 @@
                             Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es
                             können dadurch Fehler beim Import und Export von Daten auftreten.
                         </span>
-                        <span *ngIf="section.type === 'resourceLimitExceeded'"
-                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded">
+                        <span *ngIf="section.type === 'resourceLimitExceeded' && section.category.resourceLimit === 1"
+                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded.single">
+                            Es darf nur <b>eine</b> Ressource der Kategorie <i>{{getCategoryLabel(section)}}</i>
+                            angelegt werden.
+                        </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded' && section.category.resourceLimit > 1"
+                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded.multiple">
                             Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>

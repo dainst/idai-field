@@ -47,7 +47,7 @@ export class DocumentPickerComponent implements OnChanges {
                 private i18n: I18n) {}
 
 
-    public isLoading = () => this.loading.isLoading();
+    public isLoading = () => this.loading.isLoading('documentPicker');
 
     public getElementId = (document: Document) => 'document-picker-resource-' + document.resource.identifier;
 
@@ -174,7 +174,6 @@ export class DocumentPickerComponent implements OnChanges {
         try {
             const documents = await getDocumentSuggestions(this.datastore, query);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents as Array<Document>);
-
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {

@@ -82,7 +82,7 @@ export class CategoryIconComponent implements OnChanges {
 
         this.character = this.i18n({
             id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
-        })[1];
+        })[0];
         this.color = 'black';
         this.textColor = 'white';
     }

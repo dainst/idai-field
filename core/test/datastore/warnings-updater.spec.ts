@@ -189,4 +189,101 @@ describe('WarningsUpdater', () => {
 
         done();
     });
+
+
+    it('set relation target warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].resource.relations['relation1'] = ['2'];
+        documents[0].resource.relations['relation2'] = ['missing1'];
+        documents[0].resource.relations['relation3'] = ['missing2'];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        await WarningsUpdater.updateRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
+
+        expect(documents[0].warnings?.missingRelationTargets).toEqual({
+            relationNames: ['relation2', 'relation3'],
+            targetIds: ['missing1', 'missing2']
+        });
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+
+        done();
+    });
+
+
+    it('remove relation target warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.missingRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['missing']
+        };
+
+        documents[0].resource.relations['relation'] = ['2'];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        await WarningsUpdater.updateRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+
+        done();
+    });
+
+
+    it('remove relation target warnings in linking resources', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.missingRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['1']
+        };
+
+        documents[1].resource.relations['relation'] = ['1'];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+    
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+
+        await WarningsUpdater.updateRelationTargetWarning(
+            documents[0], mockIndexFacade, mockDocumentCache, mockDatastore, true
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
+    });
 });

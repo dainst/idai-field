@@ -19,6 +19,7 @@ import { Settings } from '../../../services/settings/settings';
 import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
+import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
 
 
 type WarningSection = {
@@ -147,9 +148,9 @@ export class WarningsModalComponent {
 
     public getMissingRelationTargetIds(section: WarningSection): string[] {
 
-        return this.selectedDocument.resource.relations[section.fieldName].filter(targetId => {
+        return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
             return this.selectedDocument.warnings.missingRelationTargets.targetIds.includes(targetId);
-        });
+        }) ?? [];
     }
 
 
@@ -225,6 +226,28 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.labels.getFieldLabel(section.category, section.fieldName);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openCleanUpRelationModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<CleanUpRelationModalComponent>(
+            CleanUpRelationModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.relationName = section.fieldName;
+        componentInstance.relationLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
 
         await this.modals.awaitResult(
             result,

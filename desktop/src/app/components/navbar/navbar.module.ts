@@ -11,6 +11,7 @@ import { TaskbarSyncStatusComponent } from './taskbar-sync-status.component';
 import { TaskbarUpdateComponent } from './taskbar-update.component';
 import { ProjectsComponent } from './projects.component';
 import { WidgetsModule } from '../widgets/widgets.module';
+import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-modal.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
         TaskbarWarningsComponent,
         WarningsModalComponent,
         DeleteFieldDataModalComponent,
+        CleanUpRelationModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

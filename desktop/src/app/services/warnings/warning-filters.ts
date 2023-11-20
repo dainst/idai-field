@@ -49,6 +49,12 @@ export module WarningFilters {
                 type: 'outlierValues'
             },
             {
+                label: translations.getTranslation('warnings.missingRelationTargets'),
+                constraintName: 'missingRelationTargets:exist',
+                count: 0,
+                type: 'missingRelationTargets'
+            },
+            {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0,

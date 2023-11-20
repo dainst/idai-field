@@ -30,6 +30,7 @@ export module IndexerConfiguration {
             'unconfigured:exist': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'exist' },
             'unconfigured:contain': { path: 'warnings.unconfigured', pathArray: ['warnings', 'unconfigured'], type: 'contain' },
             'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },
+            'missingRelationTargets:exist': { path: 'warnings.missingRelationTargets', pathArray: ['warnings', 'missingRelationTargets'], type: 'exist' },
             'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
             'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
             'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },

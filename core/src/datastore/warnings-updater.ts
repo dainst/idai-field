@@ -6,10 +6,11 @@ import { Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
 import { Resource } from '../model/resource';
 import { ImageResource } from '../model/image-resource';
-import { Warnings } from '../model/warnings';
+import { MissingRelationTargetWarnings, Warnings } from '../model/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/query';
+import { DocumentCache } from './document-cache';
 
 
 /**
@@ -96,6 +97,37 @@ export module WarningsUpdater {
     }
 
 
+    export async function updateRelationTargetWarning(document: Document, indexFacade: IndexFacade,
+                                                      documentCache: DocumentCache, datastore?: Datastore,
+                                                      updateRelationTargets: boolean = false) {
+    
+        const warnings: MissingRelationTargetWarnings = { relationNames: [], targetIds: [] };
+
+        for (let relationName of Object.keys(document.resource.relations)) {
+            for (let targetId of document.resource.relations[relationName]) {
+                if (!documentCache.get(targetId)) {
+                    if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
+                    if (!warnings.targetIds.includes(targetId)) warnings.targetIds.push(targetId);
+                }
+            }
+        }
+
+        if (warnings.relationNames.length > 0) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.missingRelationTargets = warnings;
+            indexFacade.put(document);
+        } else if (document.warnings?.missingRelationTargets) {
+            delete document.warnings.missingRelationTargets;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            indexFacade.put(document);
+        }
+
+        if (updateRelationTargets) {
+            await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.identifier);
+        }
+    }
+
+
     async function updateNonUniqueIdentifierWarnings(datastore: Datastore, indexFacade: IndexFacade,
                                                      identifier: string) {
 
@@ -105,6 +137,19 @@ export module WarningsUpdater {
 
         for (let document of documents) {
             await updateNonUniqueIdentifierWarning(document, indexFacade);
+        }
+    }
+
+
+    async function updateRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                indexFacade: IndexFacade, identifier: string) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'missingRelationTargetIds:contain': identifier }
+        })).documents;
+
+        for (let document of documents) {
+            await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
         }
     }
 

@@ -86,6 +86,9 @@ export class ChangesStream {
             document, this.indexFacade, this.datastore, previousIdentifier, true
         );
         await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this.datastore, true);
+        await WarningsUpdater.updateRelationTargetWarning(
+            document, this.indexFacade, this.documentCache, this.datastore, true
+        );
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
     }

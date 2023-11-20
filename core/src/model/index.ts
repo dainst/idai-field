@@ -24,7 +24,7 @@ export { OptionalRange } from './optional-range';
 export { Query, Constraints } from './query';
 export { Relation } from './configuration/relation';
 export { Resource } from './resource';
-export { Warnings, WarningType } from './warnings';
+export { Warnings, WarningType, MissingRelationTargetWarnings } from './warnings';
 export { Valuelist } from './configuration/valuelist';
 export { Valuelists } from './configuration/valuelist';
 export { ValuelistValue } from './configuration/valuelist-value';

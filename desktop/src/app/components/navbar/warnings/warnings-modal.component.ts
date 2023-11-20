@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray, nop } from 'tsfun';
+import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field, ValuelistUtil, Valuelist, Tree } from 'idai-field-core';
+    Field, ValuelistUtil, Valuelist, Tree, MissingRelationTargetWarnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -142,6 +142,14 @@ export class WarningsModalComponent {
         return ValuelistUtil.getValuesNotIncludedInValuelist(
             this.selectedDocument.resource[section.fieldName], valuelist
         );
+    }
+
+
+    public getMissingRelationTargetIds(section: WarningSection): string[] {
+
+        return this.selectedDocument.resource.relations[section.fieldName].filter(targetId => {
+            return this.selectedDocument.warnings.missingRelationTargets.targetIds.includes(targetId);
+        });
     }
 
 
@@ -309,16 +317,27 @@ export class WarningsModalComponent {
         } else {
             this.sections = Object.keys(document.warnings).reduce((sections, type: WarningType) => {
                 if (isArray(document.warnings[type])) {
-                    return sections.concat(
-                        (document.warnings[type] as string[]).map(fieldName => {
-                            return this.createSection(type, document, fieldName);
-                        })
+                    return this.addSections(sections, type, document, document.warnings[type] as string[]);
+                } else if (isObject(document.warnings[type])) {
+                    return this.addSections(
+                        sections, type, document, (document.warnings[type] as MissingRelationTargetWarnings).relationNames
                     );
                 } else {
                     return sections.concat([this.createSection(type, document)]);
                 }
             }, []);
         }
+    }
+
+
+    private addSections(sections: Array<WarningSection>, type: WarningType, document: FieldDocument,
+                        fieldNames: string[]): Array<WarningSection> {
+
+        return sections.concat(
+            fieldNames.map(fieldName => {
+                return this.createSection(type, document, fieldName);
+            })
+        );
     }
 
 

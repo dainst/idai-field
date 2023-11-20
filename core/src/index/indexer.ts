@@ -94,6 +94,7 @@ import { Warnings } from '../model';
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
             WarningsUpdater.updateNonUniqueIdentifierWarning(document, indexFacade);
             WarningsUpdater.updateResourceLimitWarning(document, category, indexFacade);
+            WarningsUpdater.updateRelationTargetWarning(document, indexFacade, documentCache);
         });
     }
 

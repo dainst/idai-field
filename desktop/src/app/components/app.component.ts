@@ -143,6 +143,10 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' })
         );
         this.utilTranslations.addTranslation(
+            'warnings.missingRelationTargets',
+            this.i18n({ id: 'util.warnings.missingRelationTargets', value: 'Fehlende Zielressourcen von Relationen' })
+        );
+        this.utilTranslations.addTranslation(
             'warnings.missingIdentifierPrefixes',
             this.i18n({ id: 'util.warnings.missingIdentifierPrefixes', value: 'Fehlende Bezeichner-Präfixe' })
         );

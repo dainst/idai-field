@@ -51,9 +51,17 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'outlierValues'  && getOutlierValues(section).length > 1"
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
                             Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single">
+                            Fehlende Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
+                            Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
@@ -94,6 +102,18 @@
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.multiple">
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.single">
+                            Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden.
+                            Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
+                            vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.multiple">
+                            Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
+                            Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
+                            vollständig abgeschlossen.
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.info.conflict">

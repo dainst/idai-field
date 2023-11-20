@@ -133,6 +133,7 @@ export class Datastore {
             document, this.indexFacade, this, previousIdentifier, true
         );
         await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this, true);
+        await WarningsUpdater.updateRelationTargetWarning(document, this.indexFacade, this.documentCache, this, true);
 
         return document;
     }
@@ -343,7 +344,6 @@ export class Datastore {
     private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
-
         (await this.datastore.bulkFetch(ids)).forEach(document => {
 
             try {

@@ -22,5 +22,6 @@ export const basicIndexConfiguration = {
     'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
     'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
     'isChildOf:contain': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'contain', recursivelySearchable: true },
-    'isChildOf:exist': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'exist' }
+    'isChildOf:exist': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'exist' },
+    'missingRelationTargetIds:contain': { path: 'warnings.missingRelationTargets.targetIds', pathArray: ['warnings', 'missingRelationTargets', 'targetIds'], type: 'contain' }
 };

@@ -35,6 +35,19 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickCleanUpRelationButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.clean-up-relation-button'));
+    }
+
+
+    public static clickConfirmCleanUpInModalButton() {
+
+        return click('#confirm-clean-up-button');
+    }
+
+
     public static async clickCloseButton() {
 
         return click('#close-warnings-modal-button');

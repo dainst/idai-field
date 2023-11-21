@@ -389,6 +389,24 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for missing relation targets via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createWarningViaAppController('createMissingRelationTargetWarning');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Fehlende Zielressource der Relation liesWithin']);
+
+        await WarningsModalPage.clickCleanUpRelationButton(0);
+        await WarningsModalPage.clickConfirmCleanUpInModalButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing identifier prefix via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

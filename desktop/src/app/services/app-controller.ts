@@ -61,6 +61,11 @@ export class AppController {
             await this.createConflict();
             this.messages.add([M.APP_CONTROLLER_SUCCESS]);
         });
+
+        ipcRenderer.on('createMissingRelationTargetWarning', async () => {
+            await this.createMissingRelationTargetWarning();
+            this.messages.add([M.APP_CONTROLLER_SUCCESS]);
+        });
     }
 
 
@@ -100,6 +105,23 @@ export class AppController {
         } catch (err) {
             // Ignore conflict errors
         }
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            new DocumentConverter(this.projectConfiguration),
+            this.projectConfiguration,
+            false
+        );
+    }
+
+
+    private async createMissingRelationTargetWarning() {
+
+        let document: Document = this.createDocument();
+        document.resource.relations.liesWithin = ['missing'];
+        await this.pouchdbDatastore.create(document, 'test');
 
         await Indexer.reindex(
             this.indexFacade,

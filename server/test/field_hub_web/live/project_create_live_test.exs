@@ -203,6 +203,19 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       assert html =~ "Please provide a valid project identifier."
     end
 
+    test "project identifier longer than 30 characters throws a warning", %{
+      conn: conn
+    } do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
+
+      html =
+        view
+        |> element("form")
+        |> render_change(%{identifier: "asdfasdfasdfasdfasdfasdfffffffggggf"})
+
+      assert html =~ "Please provide a valid project identifier."
+    end
+
     test "using an existing project identifier results in warning", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
 

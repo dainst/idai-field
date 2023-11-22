@@ -33,11 +33,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
     end
   end
 
-  def handle_event(
-        "update",
-        %{"identifier" => identifier, "password" => password} = _values,
-        socket
-      ) do
+  def handle_event("update", %{"identifier" => identifier, "password" => password}, socket) do
     {:noreply, evaluate_inputs(socket, identifier, password)}
   end
 
@@ -51,7 +47,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   def handle_event(
         "create",
-        %{"identifier" => identifier, "password" => password} = _values,
+        %{"identifier" => identifier, "password" => password},
         %{assigns: %{current_user: user_name}} = socket
       ) do
     socket =
@@ -88,6 +84,9 @@ defmodule FieldHubWeb.ProjectCreateLive do
       cond do
         identifier == "" ->
           :identifier_empty
+
+        String.length(identifier) > 30 ->
+          :identifier_invalid
 
         not String.match?(identifier, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
           :identifier_invalid
@@ -128,7 +127,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
   defp format_issue(:identifier_invalid),
     do: """
     Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
-    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /.
+    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /. The maximum length is 30 characters.
     """
 
   defp format_issue(:identifier_taken),

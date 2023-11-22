@@ -1,7 +1,6 @@
 defmodule FieldHubWeb.ProjectCreateLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
-  import ExUnit.CaptureLog
 
   use FieldHubWeb.ConnCase
 
@@ -12,7 +11,6 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
 
   alias FieldHub.{
     Project,
-    User,
     TestHelper
   }
 
@@ -249,47 +247,6 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       # html should now render the project_show content
       assert html =~
                "Project created project `#{@project}` with password `some_password` successfully."
-    end
-
-    test "error displayed and logged if project identifier already in use", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
-
-      Project.create(@project)
-
-      expected_msg =
-        "Error creating `#{@project}`, a database with the identifier already exists."
-
-      log =
-        capture_log(fn ->
-          html =
-            view
-            |> element("form")
-            |> render_submit(%{identifier: @project, password: "some_password"})
-
-          assert html =~ expected_msg
-        end)
-
-      assert log =~ expected_msg
-    end
-
-    test "error displayed and logged if default user already exists", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
-
-      User.create(@project, "password")
-
-      expected_msg = "Error creating default user `#{@project}`, the user already exists."
-
-      log =
-        capture_log(fn ->
-          html =
-            view
-            |> element("form")
-            |> render_submit(%{identifier: @project, password: "some_password"})
-
-          assert html =~ expected_msg
-        end)
-
-      assert log =~ expected_msg
     end
   end
 

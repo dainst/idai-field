@@ -1,6 +1,8 @@
 defmodule Api.Router do
   use Plug.Router
 
+  alias Api.Project
+
   plug :match
   plug Corsica, origins: "*"
 
@@ -18,6 +20,30 @@ defmodule Api.Router do
   forward("/api/statistics", to: Api.Statistics.Router)
   forward("/api/worker", to: Api.Worker.Router)
 
+  get "/api/public" do
+    send_resp(conn, 200, "Public route")
+  end
+
+  get "/api/project" do
+    conn =
+      conn
+      |> Api.UserAuth.api_require_user_authentication(%{})
+
+    user_projects =
+      conn.assigns.current_user
+      |> Project.index()
+
+    conn
+    |> send_resp(200, Jason.encode!(user_projects))
+  end
+
+  get "/api/project/:project" do
+    conn
+    |> Api.UserAuth.api_require_user_authentication(%{})
+    |> Api.UserAuth.api_require_project_authorization(%{})
+    |> send_resp(200, Jason.encode!(Project.get_publications(project) |> then(fn({:ok, data}) -> data end)))
+  end
+
   match _ do
     send_resp(conn, 404, "Requested page not found!")
   end
@@ -31,6 +57,6 @@ defmodule Api.Router do
 
   def start_link(_opts) do
     :ets.new(:indexing, [:set, :public, :named_table]) # TODO make it protected or private
-    Plug.Cowboy.http(__MODULE__, [])
+    Plug.Cowboy.http(__MODULE__, [], port: Application.get_env(:api, :port))
   end
 end

@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.8.0"
+    container_name: "field_publication_elasticsearch"
+    environment:
+      - "bootstrap.memory_lock=true"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms640m -Xmx640m"
+      - "discovery.type=single-node"
+      - "cluster.name=field.dainst.org"
+      - "cluster.routing.allocation.disk.watermark.low=2gb"
+      - "cluster.routing.allocation.disk.watermark.high=1gb"
+      - "cluster.routing.allocation.disk.watermark.flood_stage=500mb"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+
+  cantaloupe:
+    image: "ghcr.io/dainst/field_publication_cantaloupe:latest"
+    container_name: "field_publication_cantaloupe"
+    environment:
+      LOG_APPLICATION_LEVEL: warn
+      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
+    ports:
+      - "8182:8182"
+    volumes:
+      - "./data/file_store/web_images:/image_root"
+      - "./data/file_store/raw:/source_images"
+      - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties"
+
+  couchdb:
+    image: couchdb:3.3.2
+    container_name: "field_publication_couchdb"
+    ports:
+      - "5985:5984"
+    environment:
+      - 'COUCHDB_USER=couch_admin' # see dev.exs
+      - 'COUCHDB_PASSWORD=couch_admin_password' # see dev.exs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

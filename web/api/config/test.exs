@@ -3,6 +3,7 @@ import Config
 config :logger, level: :error
 
 config :api,
+  port: 4003,
   projects: ["a", "b"],
   image_dir: "test/resources/images",
   rights: %{

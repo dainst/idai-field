@@ -4,6 +4,7 @@ ENV CANTALOUPE_VERSION=4.1.6
 
 EXPOSE 8182
 
+VOLUME /source_images
 VOLUME /imageroot
 
 # Update packages and install tools
@@ -27,4 +28,8 @@ RUN curl --silent --fail -OL https://github.com/medusa-project/cantaloupe/releas
 COPY policy.xml /usr/share/ImageMagick-6
 
 USER cantaloupe
+
+RUN chown cantaloupe /source_images
+RUN chown cantaloupe /imageroot
+
 CMD ["sh", "-c", "java -Dcantaloupe.config=/cantaloupe/cantaloupe.properties.sample -jar /cantaloupe/cantaloupe-$CANTALOUPE_VERSION.war"]

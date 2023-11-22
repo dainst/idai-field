@@ -110,7 +110,7 @@ defmodule FieldPublication.Replication.FileReplication do
           copy_file(&1, variant, base_file_url, headers, parameters)
         end)
       )
-      |> Enum.map(&Task.await(&1, 30000))
+      |> Enum.map(&Task.await(&1, 1000 * 60 * 5))
     end)
   end
 
@@ -132,7 +132,7 @@ defmodule FieldPublication.Replication.FileReplication do
       "#{base_url}/#{uuid}?type=#{variant}",
       headers
     )
-    |> Finch.request(FieldPublication.Finch)
+    |> Finch.request(FieldPublication.Finch, [receive_timeout: 1000 * 60 * 5])
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
         FileService.write_raw_data(publication.project_name, uuid, data, :image)

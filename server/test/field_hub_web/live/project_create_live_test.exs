@@ -17,8 +17,9 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
   @endpoint FieldHubWeb.Endpoint
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
-  @project "test_project"
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
+  @project "test_project"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
     assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
@@ -201,7 +202,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       assert html =~ "Please provide a valid project identifier."
     end
 
-    test "project identifier longer than 30 characters throws a warning", %{
+    test "project identifier longer than the maximum characters throws a warning", %{
       conn: conn
     } do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
@@ -209,7 +210,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       html =
         view
         |> element("form")
-        |> render_change(%{identifier: "asdfasdfasdfasdfasdfasdfffffffggggf"})
+        |> render_change(%{identifier: String.duplicate("a", @identifier_length + 1)})
 
       assert html =~ "Please provide a valid project identifier."
     end

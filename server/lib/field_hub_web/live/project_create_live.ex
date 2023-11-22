@@ -14,6 +14,8 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   require Logger
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
   def mount(_params, %{"user_token" => user_token} = _session, socket) do
     user_name =
       user_token
@@ -85,7 +87,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
         identifier == "" ->
           :identifier_empty
 
-        String.length(identifier) > 30 ->
+        String.length(identifier) > @identifier_length ->
           :identifier_invalid
 
         not String.match?(identifier, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
@@ -127,7 +129,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
   defp format_issue(:identifier_invalid),
     do: """
     Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
-    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /. The maximum length is 30 characters.
+    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /. The maximum length is #{@identifier_length} characters.
     """
 
   defp format_issue(:identifier_taken),

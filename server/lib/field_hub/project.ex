@@ -9,6 +9,7 @@ defmodule FieldHub.Project do
   require Logger
 
   @variant_types Application.compile_env(:field_hub, :valid_file_variants)
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
   @moduledoc """
   Bundles functions concerning Field projects in FieldHub.
@@ -29,7 +30,7 @@ defmodule FieldHub.Project do
   - `project_identifier` the project's name
   """
   def create(project_identifier) do
-    if String.length(project_identifier) > 30 do
+    if String.length(project_identifier) > @identifier_length do
       :invalid_name
     else
       project_identifier

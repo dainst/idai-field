@@ -95,14 +95,11 @@ defmodule FieldHub.CLI do
       :invalid_name ->
         Logger.error("Invalid project name '#{project_identifier}'.")
 
-      %{database: database, file_store: file_store} ->
-        case database do
-          :already_exists ->
-            Logger.warning("Project database '#{project_identifier}' already exists.")
+      :already_exists ->
+        Logger.warning("Project database '#{project_identifier}' already exists.")
 
-          :created ->
-            Logger.info("Created project database '#{project_identifier}'.")
-        end
+      %{database: :created, file_store: file_store} ->
+        Logger.info("Created project database '#{project_identifier}'.")
 
         file_store
         |> Enum.map(fn result ->

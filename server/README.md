@@ -14,6 +14,10 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 * [docker-compose](https://docs.docker.com/compose/)
 * [Elixir](https://elixir-lang.org/) >= 1.13
 
+For Linux make sure to install `inotify-tools`.
+
+For Ubuntu make sure to install `erlang-dev` and `erlang-xmerl`.
+
 Create an `.env` file:
 
 ```
@@ -27,6 +31,12 @@ Start a dockerized CouchDB:
 
 ```bash
 docker-compose up
+```
+
+Or, if you want to run docker in the background:
+
+```bash
+docker-compose up -d
 ```
 
 ### Phoenix Server

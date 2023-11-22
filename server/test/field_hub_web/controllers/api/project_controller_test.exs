@@ -139,7 +139,24 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
       response = Jason.decode!(conn.resp_body)
 
       assert %{
-               "reason" => "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+               "reason" => "Invalid project name: Identifier can have 30 characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+             } = response
+    end
+
+    test "POST /projects/:project with project identifier longer that 30 characters returns :bad_request", %{
+      conn: conn
+    } do
+      conn =
+        conn
+        |> put_req_header("authorization", TestHelper.get_admin_basic_auth())
+        |> post("/projects/asdfasdfasdfasdfasdfdfasdfasdfasfdasfdasdf")
+
+      assert conn.status == 400
+
+      response = Jason.decode!(conn.resp_body)
+
+      assert %{
+               "reason" => "Invalid project name: Identifier can have 30 characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
              } = response
     end
   end

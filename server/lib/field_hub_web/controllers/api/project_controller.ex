@@ -60,7 +60,7 @@ defmodule FieldHubWeb.Api.ProjectController do
             |> put_status(:bad_request)
             |> put_view(StatusView)
             |> render(%{
-              error: "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+              error: "Invalid project name: Identifier can have 30 characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
             })
 
           _ ->

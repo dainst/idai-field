@@ -157,7 +157,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
       %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
         Project.update_user(identifier, identifier, :member)
 
-      %{database: :already_exists} ->
+      :already_exists ->
         {:error, "Error creating `#{identifier}`, a database with the identifier already exists."}
     end
     |> case do

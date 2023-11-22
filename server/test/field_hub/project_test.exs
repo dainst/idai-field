@@ -54,7 +54,16 @@ defmodule FieldHub.ProjectTest do
     assert %{database: :unknown_project, file_store: []} = Project.delete(identifier)
   end
 
-    assert %{database: :unknown_project, file_store: []} = Project.delete("Проект")
+  test "can not create project with more than 30 characters in name" do
+    long_project_identifier = "aasdfasdfasdfasdfasdfasdfsadfsadfasdfasdfasdfdfsad"
+
+    on_exit(fn ->
+      Project.delete(long_project_identifier)
+    end)
+
+    assert :invalid_name = Project.create(long_project_identifier)
+
+    assert %{database: :unknown_project, file_store: []} = Project.delete(long_project_identifier)
   end
 
   test "evaluate_project/1 on unknown project returns the expected response" do

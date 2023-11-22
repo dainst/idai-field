@@ -15,23 +15,35 @@ defmodule FieldHub.Project do
   """
 
   @doc """
-  Create a project and a default user with the given name.
+  Create a project and a default user with the given identifier.
 
-  Returns `:invalid_name` if the requested project name falls outside of CouchDB's constraints for
-  database names. See https://docs.couchdb.org/en/stable/api/database/common.html#put--db. Otherwise the function
-  returns `%{database: :already_exists | :created, file_store: <file store response>}}` where the file store response
+  Returns
+  - `:invalid_name` if the requested project identifier falls outside of CouchDB's constraints for
+  database names or if the identifier is longer than 30 characters.
+  See https://docs.couchdb.org/en/stable/api/database/common.html#put--db.
+  - `:already_exists` if a database with the given project identifier already exists in the CouchDB.
+  - Otherwise the function returns `%{database: :created, file_store: <file store response>}}` where the file store response
   is the return value of FileStore.create_directories/1.
 
   __Parameters__
   - `project_identifier` the project's name
   """
   def create(project_identifier) do
-    couch_result =
+    if String.length(project_identifier) > 30 do
+      :invalid_name
+    else
       project_identifier
       |> CouchService.create_database()
       |> case do
         %{status_code: 201} ->
-          :created
+          update_user(
+            Application.get_env(:field_hub, :couchdb_user_name),
+            project_identifier,
+            :member
+          )
+
+          file_store_response = FileStore.create_directories(project_identifier)
+          %{database: :created, file_store: file_store_response}
 
         %{status_code: 400} ->
           :invalid_name
@@ -39,20 +51,6 @@ defmodule FieldHub.Project do
         %{status_code: 412} ->
           :already_exists
       end
-
-    case couch_result do
-      :invalid_name ->
-        :invalid_name
-
-      val ->
-        update_user(
-          Application.get_env(:field_hub, :couchdb_user_name),
-          project_identifier,
-          :member
-        )
-
-        file_store_response = FileStore.create_directories(project_identifier)
-        %{database: val, file_store: file_store_response}
     end
   end
 

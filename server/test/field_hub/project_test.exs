@@ -44,7 +44,15 @@ defmodule FieldHub.ProjectTest do
   end
 
   test "can not create project with invalid characters in name" do
-    assert :invalid_name = Project.create("Проект")
+    identifier = "Проект"
+
+    on_exit(fn ->
+      Project.delete(identifier)
+    end)
+
+    assert :invalid_name = Project.create(identifier)
+    assert %{database: :unknown_project, file_store: []} = Project.delete(identifier)
+  end
 
     assert %{database: :unknown_project, file_store: []} = Project.delete("Проект")
   end

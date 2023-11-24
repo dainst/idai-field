@@ -113,4 +113,51 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
     assert %{ de: "Eine Abmessung", en: "A dimension" } == (List.first resource.dimensionField).measurementComment
     assert %{ unspecifiedLanguage: "Eine Abmessung" } == (List.first resource.legacyDimensionField).measurementComment
   end
+
+  test "convert composite field" do
+    category_definition_groups =
+      [
+        %{
+          fields: [
+            %{
+              inputType: "composite",
+              name: "compositeField",
+              subfields: [
+                %{
+                  inputType: "text",
+                  name: "textSubfield"
+                },
+                %{
+                  inputType: "text",
+                  name: "legacyTextSubfield"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    change = %{
+        doc: %{
+          resource: %{
+            category: %{
+              name: "Trench"
+            },
+            compositeField: [
+              %{
+                "textSubfield" => %{
+                  "de" => "Beispiel",
+                  "en" => "Example"
+                },
+                "legacyTextSubfield" => "Beispiel"
+              }
+            ]
+          }
+        },
+      }
+
+    resource = (I18NFieldConverter.convert_category change, category_definition_groups).doc.resource
+
+    assert %{ "de" => "Beispiel", "en" => "Example" } == (List.first resource.compositeField)["textSubfield"]
+    assert %{ "unspecifiedLanguage" => "Beispiel" } == (List.first resource.compositeField)["legacyTextSubfield"]
+  end
 end

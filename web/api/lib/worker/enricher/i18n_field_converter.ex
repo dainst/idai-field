@@ -37,6 +37,8 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
               or field_definition.inputType == "text" ->
             convert_string resource, field_name, field_value
 
+          field_definition.inputType == "composite" ->
+            convert_composite_field(resource, field_name, field_value, field_definition)
           true ->
             resource
         end
@@ -44,14 +46,14 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     end
   end
 
-  defp convert_string(resource, field_name, field_value) when not is_map(field_value) do  # this is from legacy project then
-    put_in(resource, [field_name], %{ "unspecifiedLanguage" => field_value })
+  defp convert_string(container, field_name, field_value) when not is_map(field_value) do
+    put_in(container, [field_name], %{ "unspecifiedLanguage" => field_value })
   end
-  defp convert_string resource, _field_name, _field_value do
-    resource
+  defp convert_string container, field_name, field_value do
+    put_in(container, [field_name], field_value)
   end
 
-  defp convert_string_array_item(item) when not is_map(item) do # legacy
+  defp convert_string_array_item(item) when not is_map(item) do
     %{ "unspecifiedLanguage" => item }
   end
   defp convert_string_array_item item do
@@ -62,7 +64,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     put_in(resource, [field_name], Enum.map(field_value, &convert_string_array_item/1))
   end
 
-  defp convert_dating_source(dating_item_source) when not is_map(dating_item_source) do # from legacy project
+  defp convert_dating_source(dating_item_source) when not is_map(dating_item_source) do
     # TODO review, here we use keyword, above we use string
     %{ unspecifiedLanguage: dating_item_source }
   end
@@ -91,5 +93,30 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   defp convert_dimension resource, field_name, field_value do
     put_in(resource, [field_name], Enum.map(field_value, &convert_dimension_item/1))
+  end
+
+  defp convert_composite_field(resource, field_name, field_value, field_definition) do
+    put_in(resource, [field_name], Enum.map(field_value, convert_composite_field_item(field_definition)))
+  end
+
+  defp convert_composite_field_item(field_definition) do
+    fn composite_field_item ->
+      Enum.reduce(composite_field_item, %{}, convert_composite_field_item_subfield(field_definition))
+      |> Enum.into(%{})
+    end
+  end
+
+  defp convert_composite_field_item_subfield(field_definition) do
+    fn { subfield_name, subfield_value }, field_item ->
+      subfield_definition = Utils.get_subfield_definition(field_definition, subfield_name)
+      cond do
+        subfield_definition.inputType == "input"
+            or subfield_definition.inputType == "simpleInput"
+            or subfield_definition.inputType == "text" ->
+          convert_string(field_item, subfield_name, subfield_value)
+        true ->
+          put_in(field_item, [subfield_name], subfield_value)
+      end
+    end
   end
 end

@@ -32,16 +32,6 @@
               "inputType": "category"
             },
             {
-              "editable": false,
-              "visible": false,
-              "group": "stem",
-              "source": "builtin",
-              "name": "id",
-              "label": {},
-              "description": {},
-              "inputType": "input"
-            },
-            {
               "name": "shortDescription",
               "inputType": "input",
               "label": {

@@ -65,13 +65,6 @@ defmodule Api.Core.LayoutTest do
             inputType: "category"
            },
            %{
-             name: "id",
-             value: "42",
-             label: %{},
-             inputType: "input",
-             description: %{}
-           },
-           %{
               name: "color",
               value: [
                 %{

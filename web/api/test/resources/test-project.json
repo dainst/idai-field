@@ -62,13 +62,13 @@
                 },
                 "values": {
                   "Blau": {
-                    "labels": {
+                    "label": {
                       "en": "Blue",
                       "de": "Blau"
                     }
                   },
                   "Gelb": {
-                    "labels": {
+                    "label": {
                       "en": "Yellow",
                       "de": "Gelb"
                     }
@@ -124,13 +124,13 @@
                     "description": {},
                     "values": {
                       "Blau": {
-                        "labels": {
+                        "label": {
                           "en": "Blue",
                           "de": "Blau"
                         }
                       },
                       "Gelb": {
-                        "labels": {
+                        "label": {
                           "en": "Yellow",
                           "de": "Gelb"
                         }
@@ -149,13 +149,13 @@
                   "valuelist": {
                     "values": {
                       "Konvex": {
-                        "labels": {
+                        "label": {
                           "de": "Konvex",
                           "en": "Convex"
                         }
                       },
                       "Konkav": {
-                        "labels": {
+                        "label": {
                           "de": "Konkav",
                           "en": "Concave"
                         }
@@ -224,13 +224,13 @@
                 "description": {},
                 "values": {
                   "Maximale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Maximale Ausdehnung",
                       "en": "Maximum expansion"
                     }
                   },
                   "Minimale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Minimale Ausdehnung",
                       "en": "Minimum expansion"
                     }
@@ -253,13 +253,13 @@
                 "description": {},
                 "values": {
                   "Maximale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Maximale Ausdehnung",
                       "en": "Maximum expansion"
                     }
                   },
                   "Minimale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Minimale Ausdehnung",
                       "en": "Minimum expansion"
                     }
@@ -291,13 +291,13 @@
                 },
                 "values": {
                   "Old Babylonian": {
-                    "labels": {
+                    "label": {
                       "de": "Altbabylonisch",
                       "en": "Old Babylonian"
                     }
                   },
                   "New Babylonian": {
-                    "labels": {
+                    "label": {
                       "de": "Neubabylonisch",
                       "en": "New Babylonian"
                     }

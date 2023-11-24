@@ -132,6 +132,6 @@ defmodule Api.Worker.Enricher.Labels do
      end
   end
 
-  defp get_labels_object(%{ "labels" => labels }), do: labels
+  defp get_labels_object(%{ "label" => labels }), do: labels
   defp get_labels_object(_), do: %{}
 end

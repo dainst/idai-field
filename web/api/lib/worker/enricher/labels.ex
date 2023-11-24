@@ -79,6 +79,10 @@ defmodule Api.Worker.Enricher.Labels do
     |> put_labels_in_subfields(field_name, "value", category_definition, field_definition)
     |> put_labels_in_subfields(field_name, "endValue", category_definition, field_definition)
   end
+  defp get_value_with_label(field_name, composite_value, category_definition, field_definition = %{ inputType: "composite" }) do
+    Enum.reduce(composite_value, %{}, put_labels_in_composite_subfields(field_name, category_definition, field_definition))
+    |> Enum.into(%{})
+  end
   defp get_value_with_label(field_name, field_value, category_definition, field_definition) do
     label = get_label(field_name, field_value, category_definition, field_definition)
     if !is_nil(label) do
@@ -88,12 +92,31 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
+  defp get_subfield_value_with_label(subfield_name, subfield_value, category_definition, subfield_definition) do
+    label = get_label(subfield_name, subfield_value, category_definition, subfield_definition)
+    if !is_nil(label) do
+      %{ name: subfield_value, label: label }
+    else
+      subfield_value
+    end
+  end
+
   defp put_labels_in_subfields(field_value, field_name, field_value_subfield, category_definition, field_definition) do
     label = get_label(field_name, field_value[field_value_subfield], category_definition, field_definition)
     if !is_nil(label) do
       put_in(field_value[field_value_subfield], %{ name: field_value[field_value_subfield], label: label })
     else
       field_value
+    end
+  end
+
+  defp put_labels_in_composite_subfields(field_name, category_definition, field_definition) do
+    fn { subfield_name, subfield_value }, field_value ->
+      subfield_definition = Utils.get_subfield_definition(field_definition, subfield_name)
+      case subfield_value do
+        [_|_] -> put_in(field_value[subfield_name], Enum.map(subfield_value, &get_subfield_value_with_label(subfield_name, &1, category_definition, subfield_definition)))
+        _ -> put_in(field_value[subfield_name], get_subfield_value_with_label(subfield_name, subfield_value, category_definition, subfield_definition))
+      end
     end
   end
 

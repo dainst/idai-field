@@ -115,6 +115,80 @@
               "description": {}
             },
             {
+              "inputType": "composite",
+              "subfields": [
+                {
+                  "name": "color",
+                  "inputType": "checkboxes",
+                  "valuelist": {
+                    "description": {},
+                    "values": {
+                      "Blau": {
+                        "labels": {
+                          "en": "Blue",
+                          "de": "Blau"
+                        }
+                      },
+                      "Gelb": {
+                        "labels": {
+                          "en": "Yellow",
+                          "de": "Gelb"
+                        }
+                      },
+                      "Grün": {}
+                    }
+                  },
+                  "label": {
+                    "de": "Farbe"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "shape",
+                  "inputType": "dropdown",
+                  "valuelist": {
+                    "values": {
+                      "Konvex": {
+                        "labels": {
+                          "de": "Konvex",
+                          "en": "Convex"
+                        }
+                      },
+                      "Konkav": {
+                        "labels": {
+                          "de": "Konkav",
+                          "en": "Concave"
+                        }
+                      }
+                    },
+                    "description": {},
+                    "id": "shape"
+                  },
+                  "label": {
+                    "de": "Form",
+                    "en": "Shape"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "description",
+                  "inputType": "text",
+                  "label": {
+                    "de": "Beschreibung",
+                    "en": "Description"
+                  },
+                  "description": {}
+                }
+              ],
+              "source": "custom",
+              "name": "test-project:compositeField",
+              "label": {
+                "de": "Kompositfeld",
+                "en": "Composite field"
+              },
+              "description": {}
+            },
+            {
               "inputType": "relation",
               "source": "builtin",
               "name": "liesWithin",

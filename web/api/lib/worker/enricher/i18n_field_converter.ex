@@ -11,7 +11,37 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
   def convert change, configuration do
     name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
     category_definition = CategoryTreeList.find_by_name(name, configuration)
-    convert_category change, category_definition.groups
+    convert_category(change, category_definition.groups)
+  end
+
+  defp convert_resource_field category_definition_groups do
+    fn {field_name, field_value}, resource ->
+      field_definition = Utils.get_field_definition category_definition_groups, Atom.to_string(field_name)
+
+      if is_nil(field_definition[:inputType]) do
+        resource
+      else
+        cond do
+          field_definition.inputType == "dating" ->
+            convert_dating resource, field_name, field_value
+
+          field_definition.inputType == "dimension" ->
+            convert_dimension resource, field_name, field_value
+
+          field_definition.inputType == "multiInput"
+            or field_definition.inputType == "simpleMultiInput" ->
+              convert_string_array resource, field_name, field_value
+
+          field_definition.inputType == "input"
+              or field_definition.inputType == "simpleInput"
+              or field_definition.inputType == "text" ->
+            convert_string resource, field_name, field_value
+
+          true ->
+            resource
+        end
+      end
+    end
   end
 
   defp convert_string(resource, field_name, field_value) when not is_map(field_value) do  # this is from legacy project then
@@ -61,35 +91,5 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   defp convert_dimension resource, field_name, field_value do
     put_in(resource, [field_name], Enum.map(field_value, &convert_dimension_item/1))
-  end
-
-  defp convert_resource_field category_definition_groups do
-    fn {field_name, field_value}, resource ->
-      field_definition = Utils.get_field_definition category_definition_groups, Atom.to_string(field_name)
-
-      if is_nil(field_definition[:inputType]) do
-        resource
-      else
-        cond do
-          field_definition.inputType == "dating" ->
-            convert_dating resource, field_name, field_value
-
-          field_definition.inputType == "dimension" ->
-            convert_dimension resource, field_name, field_value
-
-          field_definition.inputType == "multiInput"
-            or field_definition.inputType == "simpleMultiInput" ->
-              convert_string_array resource, field_name, field_value
-
-          field_definition.inputType == "input"
-              or field_definition.inputType == "simpleInput"
-              or field_definition.inputType == "text" ->
-            convert_string resource, field_name, field_value
-
-          true ->
-            resource
-        end
-      end
-    end
   end
 end

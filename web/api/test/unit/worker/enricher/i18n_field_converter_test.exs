@@ -124,11 +124,11 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               name: "compositeField",
               subfields: [
                 %{
-                  inputType: "text",
+                  "inputType" => "text",
                   name: "textSubfield"
                 },
                 %{
-                  inputType: "text",
+                  "inputType" => "text",
                   name: "legacyTextSubfield"
                 }
               ]

@@ -110,9 +110,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     fn { subfield_name, subfield_value }, field_item ->
       subfield_definition = Utils.get_subfield_definition(field_definition, subfield_name)
       cond do
-        subfield_definition.inputType == "input"
-            or subfield_definition.inputType == "simpleInput"
-            or subfield_definition.inputType == "text" ->
+        subfield_definition["inputType"] == "input"
+            or subfield_definition["inputType"] == "simpleInput"
+            or subfield_definition["inputType"] == "text" ->
           convert_string(field_item, subfield_name, subfield_value)
         true ->
           put_in(field_item, [subfield_name], subfield_value)

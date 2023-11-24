@@ -36,6 +36,7 @@ defmodule Api.Core.Layout do
         name: config_item.name,
         label: config_item.label,
         description: config_item.description,
+        inputType: inputType,
         targets: targets
       }]
   end
@@ -47,6 +48,7 @@ defmodule Api.Core.Layout do
           name: config_item.name,
           label: config_item.label,
           description: config_item.description,
+          inputType: config_item.inputType,
           value: Api.Core.Utils.atomize(value)
       }]
   end

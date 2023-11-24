@@ -61,12 +61,14 @@ defmodule Api.Core.LayoutTest do
             description: %{
               de: "Typ der Ressource",
               en: "Type of resource"
-            }
+            },
+            inputType: "category"
            },
            %{
              name: "id",
              value: "42",
              label: %{},
+             inputType: "input",
              description: %{}
            },
            %{
@@ -91,7 +93,8 @@ defmodule Api.Core.LayoutTest do
                 de: "Farbe",
                 en: "Color"
               },
-              description: %{}
+              description: %{},
+              inputType: "checkboxes"
            },
            %{
               name: "liesWithin",
@@ -100,7 +103,8 @@ defmodule Api.Core.LayoutTest do
                 de: "Liegt in",
                 en: "Lies within"
               },
-              description: %{}
+              description: %{},
+              inputType: "relation"
           }
         ]
        },
@@ -126,7 +130,8 @@ defmodule Api.Core.LayoutTest do
                de: "Breite",
                en: "Width"
              },
-             description: %{}
+             description: %{},
+             inputType: "dimension"
            }
          ]
        },

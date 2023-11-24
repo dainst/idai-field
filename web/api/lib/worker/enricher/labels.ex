@@ -61,22 +61,26 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp get_value_with_label(field_name, dimension = %{ "inputValue" => _ }, category_definition) do
+  defp get_value_with_label(field_name, field_value, category_definition) do
+    field_definition = Utils.get_field_definition(category_definition.groups, field_name)
+    get_value_with_label(field_name, field_value, category_definition, field_definition)
+  end
+  defp get_value_with_label(field_name, dimension, category_definition, field_definition = %{ inputType: "dimension" }) do
     position = dimension["measurementPosition"]
-    label = if is_nil(position) do nil else get_label(field_name, position, category_definition) end
+    label = if is_nil(position) do nil else get_label(field_name, position, category_definition, field_definition) end
     if !is_nil(label) do
       put_in(dimension["measurementPosition"], %{ name: position, label: label })
     else
       dimension
     end
   end
-  defp get_value_with_label(field_name, period = %{ "value" => value }, category_definition) when is_binary(value) do
-    period
-    |> put_labels_in_subfields(field_name, "value", category_definition)
-    |> put_labels_in_subfields(field_name, "endValue", category_definition)
+  defp get_value_with_label(field_name, range_value = %{ "value" => value }, category_definition, field_definition = %{ inputType: "dropdownRange" }) when is_binary(value) do
+    range_value
+    |> put_labels_in_subfields(field_name, "value", category_definition, field_definition)
+    |> put_labels_in_subfields(field_name, "endValue", category_definition, field_definition)
   end
-  defp get_value_with_label(field_name, field_value, category_definition) do
-    label = get_label(field_name, field_value, category_definition)
+  defp get_value_with_label(field_name, field_value, category_definition, field_definition) do
+    label = get_label(field_name, field_value, category_definition, field_definition)
     if !is_nil(label) do
       %{ name: field_value, label: label }
     else
@@ -84,8 +88,8 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp put_labels_in_subfields(field_value, field_name, field_value_subfield, category_definition) do
-    label = get_label(field_name, field_value[field_value_subfield], category_definition)
+  defp put_labels_in_subfields(field_value, field_name, field_value_subfield, category_definition, field_definition) do
+    label = get_label(field_name, field_value[field_value_subfield], category_definition, field_definition)
     if !is_nil(label) do
       put_in(field_value[field_value_subfield], %{ name: field_value[field_value_subfield], label: label })
     else
@@ -93,9 +97,8 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp get_label(_, nil, _), do: nil
-  defp get_label(field_name, field_value, category_definition) do
-     field_definition = Utils.get_field_definition(category_definition.groups, field_name)
+  defp get_label(_, nil, _, _), do: nil
+  defp get_label(field_name, field_value, category_definition, field_definition) do
      cond do
       is_nil(field_definition) -> raise "No field definition found for field #{field_name} of category "
         <> category_definition.name

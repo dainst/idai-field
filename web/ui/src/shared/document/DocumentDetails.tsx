@@ -257,9 +257,12 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
 const renderFieldValueArray = (values: FieldValue[], inputType: FieldDefinition.InputType, t: TFunction): ReactNode =>
     inputType === 'composite' || values.length > 1
         ? <ul>
-            { values.map((value, i) => <li key={ `${value}_${i}` }>
-                { renderFieldValue(value, inputType, t, true) }
-            </li>) }
+            { values.map((value, i) => {
+                return <li key={ `${value}_${i}` }
+                           style={ getListItemStyle(inputType) }>
+                    { renderFieldValue(value, inputType, t, true) }
+                </li>;
+            }) }
         </ul>
         : renderFieldValue(values[0], inputType, t);
 
@@ -410,6 +413,14 @@ const getDecimalValue = (value: number): string => {
 };
 
 
+const getListItemStyle = (inputType: FieldDefinition.InputType): CSSProperties => {
+
+    return inputType === 'composite'
+        ? compositeListItemStyle
+        : {};
+};
+
+
 const multiLanguageTextStyle: CSSProperties = {
     display: 'inline-block',
     textDecorationLine: 'underline',
@@ -419,6 +430,15 @@ const multiLanguageTextStyle: CSSProperties = {
 
 const listStyle: CSSProperties = {
     marginBottom: '0'
+};
+
+
+const compositeListItemStyle: CSSProperties = {
+    listStyle: 'none',
+    borderLeft: '2px solid #b2b2b2',
+    marginBottom: '20px',
+    marginLeft: '-12px',
+    paddingLeft: '12px'
 };
 
 

@@ -29,6 +29,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
 
     const selectCurrentFilter = (k: string, v: string) => {
+        setCurrentFilterText('');
         setFilters(filters.concat([[k, v]]));
         navigateTo(k, v);
         setCurrentFilter(['', '']);
@@ -60,7 +61,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                         dropdownMap={ dropdownMap }
                         currentFilter={ currentFilter }
                         selectCurrentFilter={ selectCurrentFilter } />
-                    : <><Form.Control aria-label="Text input with dropdown button"
+                    : <><Form.Control
                         value={ currentFilterText }
                         onChange={ e => setCurrentFilterText(e.target.value.replace(/[^a-zA-Z0-9]*/g, '')) } />
                         <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>
@@ -82,8 +83,8 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
 
     const [selected, setSelected] = useState<string>('');
 
-    return <><DropdownButton 
-            id="field-filters-inner-dropdown" 
+    return <><DropdownButton
+            id="field-filters-inner-dropdown"
             title={ shortenString(selected || t('fieldFilters.select')) }>
         { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
             <Dropdown.Item

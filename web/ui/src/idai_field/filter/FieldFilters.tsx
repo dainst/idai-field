@@ -191,13 +191,14 @@ const findFilterBucket = (match: string, t: (FilterBucketTreeNode|FilterBucket)[
     return result ? result.item : undefined;
 };
 
+
 const shortenString = (s: string) => {
 
-    const maxLength = 15;
-    if (s.length > maxLength) {
-        return s.substring(0, maxLength) + "…";
-    } 
-    return s;
+    const maxLength = 14;
+
+    return s.length > maxLength
+        ? s.substring(0, maxLength) + '…'
+        : s;
 };
 
 

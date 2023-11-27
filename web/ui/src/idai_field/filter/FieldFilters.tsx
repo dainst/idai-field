@@ -1,6 +1,6 @@
 import { mdiCloseCircle } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { useState, ReactElement } from 'react';
+import React, { useState, ReactElement, CSSProperties } from 'react';
 import { Dropdown, DropdownButton, Button, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Tree, Forest } from 'idai-field-core';
@@ -116,15 +116,15 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                     : v;
                 return <Row
                         key={ 'existing-filter::' + k }
-                        style={ { position: 'relative', left: '-22px' } }>
-                    <Col>
-                    { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ': "' + fieldValue + '"'}
+                        style={ existingFilterRowStyle }>
+                    <Col style={ existingFilterColumnStyle }>
+                        <i>{fieldName}:</i> <span>{fieldValue}</span>
                     </Col>
                     <Col xs={ 1 }
-                        style={ { margin: '3px' } }>
+                        style={ closeButtonContainerStyle }>
                         <span
                             className="float-right"
-                            style={ { color: 'red' } }
+                            style={ closeButtonStyle }
                             onClick={ () => {
                                 setFilters(filters.filter(f => filterName !== f[0]));
                                 navigateTo(k, v);
@@ -198,4 +198,32 @@ const shortenString = (s: string) => {
         return s.substring(0, maxLength) + "…";
     } 
     return s;
+};
+
+
+const existingFilterRowStyle: CSSProperties = {
+    position: 'relative',
+    left: '-22px',
+    marginBottom: '10px'
+};
+
+
+const existingFilterColumnStyle: CSSProperties = {
+    width: '327px'
+};
+
+
+const closeButtonContainerStyle: CSSProperties = {
+    position: 'relative',
+    margin: '3px'
+};
+
+
+const closeButtonStyle: CSSProperties = {
+    color: 'red',
+    position: 'absolute',
+    top: '50%',
+    marginTop: '-12px',
+    right: '15px',
+    cursor: 'pointer'
 };

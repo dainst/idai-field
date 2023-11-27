@@ -351,5 +351,7 @@
   "page": "Seite",
   "figure": "Abbildung",
   "from": "Von: ",
-  "to": ", bis: "
+  "to": ", bis: ",
+  "yes": "Ja",
+  "no": "Nein"
 }

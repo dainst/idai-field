@@ -238,7 +238,7 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
     } else {
         switch (inputType) {
             case 'boolean':
-                return renderFieldValueBoolean(value as boolean);
+                return renderFieldValueBoolean(value as boolean, t);
             case 'dropdownRange':
                 return renderOptionalRange(value as OptionalRange<LabeledValue>, t);
             case 'dating':
@@ -357,11 +357,11 @@ const renderOptionalRange = (optionalRange: OptionalRange<LabeledValue>, t: TFun
 };
 
 
-const renderFieldValueBoolean = (value: boolean): ReactNode => {
+const renderFieldValueBoolean = (value: boolean, t: TFunction): ReactNode => {
     
     if (typeof value !== 'boolean') return value;
     
-    return value ? 'yes' : 'no';
+    return value ? t('yes') : t('no');
 };
 
 

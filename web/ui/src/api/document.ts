@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { isObject, to } from 'tsfun';
+import { isObject, to, clone } from 'tsfun';
 import { Dating, Dimension, Literature, OptionalRange, I18N, Field as FieldDefinition } from 'idai-field-core';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
@@ -48,12 +48,14 @@ export interface DimensionWithLabeledMeasurementPosition extends Omit<Dimension,
 
 export function convertMeasurementPosition(dimension: Dimension): Dimension {
     
-    if (!isObject(dimension)) return dimension;
+    if (!isObject(dimension) || !dimension.measurementPosition) return dimension;
 
-    const clone: Dimension = JSON.parse(JSON.stringify(dimension));
-    clone[Dimension.MEASUREMENTPOSITION] = isLabeledValue(dimension) ? getLabel(dimension) : undefined;
+    const result: Dimension = clone(dimension);
+    result.measurementPosition = isLabeledValue(dimension.measurementPosition)
+        ? getLabel(dimension.measurementPosition)
+        : undefined;
 
-    return clone;
+    return result;
 }
 
 

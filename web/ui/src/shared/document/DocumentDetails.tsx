@@ -293,18 +293,16 @@ const renderDating = (dating: Dating, t: TFunction) => {
 
 const renderDimension = (dimension: Dimension, t: TFunction) => {
 
+    dimension = convertMeasurementPosition(dimension);
+
     if (!Dimension.isDimension(dimension)) return undefined;
     if (isLabeled(dimension)) return dimension.label;
-
-    const labeledPosition = dimension.measurementPosition;
-    dimension = convertMeasurementPosition(dimension);
 
     return Dimension.generateLabel(
         dimension, getDecimalValue, t,
         // eslint-disable-next-line
-        (value: any) => getLabel({ label: value, name: undefined }),
+        (value: any) => getLabel({ label: value, name: undefined })
         // eslint-disable-next-line
-        labeledPosition ? getLabel(labeledPosition as any) : undefined
     );
 };
 

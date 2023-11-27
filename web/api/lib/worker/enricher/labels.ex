@@ -2,7 +2,7 @@ defmodule Api.Worker.Enricher.Labels do
   require Logger
   alias Api.Core
   alias Api.Core.CategoryTreeList
-  alias Api.Worker.Enricher.Utils
+  alias Api.Core.ProjectConfig
 
   @core_properties [:id, :identifier, :shortDescription, :geometry, :geometry_wgs84, :georeference,
     :gazId, :parentId, :featureVectors, :license, :shortName, :originalFilename]
@@ -50,7 +50,7 @@ defmodule Api.Worker.Enricher.Labels do
     cond do
       Enum.member?(@core_properties, field_name) -> put_in(resource, [field_name], field_value)
 
-      Utils.get_field_definition(category_definition.groups, field_name) == nil ->
+      ProjectConfig.get_field_definition(category_definition.groups, field_name) == nil ->
         Logger.warn "Label not found: field \"#{field_name}\" of category \"#{category_definition.name}\""
         resource
       true ->
@@ -62,7 +62,7 @@ defmodule Api.Worker.Enricher.Labels do
   end
 
   defp get_value_with_label(field_name, field_value, category_definition) do
-    field_definition = Utils.get_field_definition(category_definition.groups, field_name)
+    field_definition = ProjectConfig.get_field_definition(category_definition.groups, field_name)
     get_value_with_label(field_name, field_value, category_definition, field_definition)
   end
   defp get_value_with_label(field_name, dimension, category_definition, field_definition = %{ inputType: "dimension" }) do
@@ -112,7 +112,7 @@ defmodule Api.Worker.Enricher.Labels do
 
   defp put_labels_in_composite_subfields(field_name, category_definition, field_definition) do
     fn { subfield_name, subfield_value }, field_value ->
-      subfield_definition = Utils.get_subfield_definition(field_definition, subfield_name)
+      subfield_definition = ProjectConfig.get_subfield_definition(field_definition, subfield_name)
       case subfield_value do
         [_|_] -> put_in(field_value[subfield_name], Enum.map(subfield_value, &get_subfield_value_with_label(subfield_name, &1, category_definition, subfield_definition)))
         _ -> put_in(field_value[subfield_name], get_subfield_value_with_label(subfield_name, subfield_value, category_definition, subfield_definition))

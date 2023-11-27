@@ -1,7 +1,6 @@
 defmodule Api.Worker.Enricher.I18NFieldConverter do
-
   alias Api.Core.CategoryTreeList
-  alias Api.Worker.Enricher.Utils
+  alias Api.Core.ProjectConfig
 
   def convert(change, configuration) do
     name = change.doc.resource.category.name # TODO review category.name, maybe document the expectation
@@ -16,7 +15,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   defp convert_resource_field(category_definition_groups) do
     fn {field_name, field_value}, resource ->
-      field_definition = Utils.get_field_definition(category_definition_groups, Atom.to_string(field_name))
+      field_definition = ProjectConfig.get_field_definition(category_definition_groups, Atom.to_string(field_name))
 
       if is_nil(field_definition[:inputType]) do
         resource
@@ -108,7 +107,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
 
   defp convert_composite_field_item_subfield(field_definition) do
     fn { subfield_name, subfield_value }, field_item ->
-      subfield_definition = Utils.get_subfield_definition(field_definition, subfield_name)
+      subfield_definition = ProjectConfig.get_subfield_definition(field_definition, subfield_name)
       cond do
         subfield_definition["inputType"] == "input"
             or subfield_definition["inputType"] == "simpleInput"

@@ -3,21 +3,21 @@ import Icon from '@mdi/react';
 import React, { useState, ReactElement, CSSProperties } from 'react';
 import { Dropdown, DropdownButton, Button, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { flatten, Map } from 'tsfun';
 import { Tree, Forest } from 'idai-field-core';
 import { Field } from '../../api/document';
-import { flatten, Map } from 'tsfun';
 import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/result';
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
 import { getTranslation } from '../../shared/languages';
-import { useTranslation } from 'react-i18next';
 
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter, filters,
-    setFilters, filterValuesCount }: {
-    projectId: string, projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter,
-    filterValuesCount: number,
-    filters: [string, string][], setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
+        setFilters, filterValuesCount }: { projectId: string, projectView: ProjectView,
+        searchParams: URLSearchParams, filter: ResultFilter, filterValuesCount: number,
+        filters: [string, string][],
+        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
 
     const { t } = useTranslation();
     
@@ -76,7 +76,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
 
 function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
-    { dropdownMap: unknown, currentFilter: [string, string],
+        { dropdownMap: unknown, currentFilter: [string, string],
         selectCurrentFilter: (k: string, v: string) => void }): ReactElement {
 
     const { t } = useTranslation();
@@ -101,8 +101,8 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
 
 
 function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap }: { filters: [string, string][],
-    setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>, navigateTo: (k: string, v: string) => void,
-    fields: Field[], dropdownMap: Map<Field> }) {
+        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
+        navigateTo: (k: string, v: string) => void, fields: Field[], dropdownMap: Map<Field> }) {
 
     return <><hr></hr><ul>
             { filters.map(([k, v]) => {
@@ -139,8 +139,8 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
 
 
 function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: Field[],
-    searchParams: URLSearchParams, currentFilter: string,
-    setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
+        searchParams: URLSearchParams, currentFilter: string,
+        setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
 
     return <>{ fields
         .filter(field => !searchParams.has(field.name))

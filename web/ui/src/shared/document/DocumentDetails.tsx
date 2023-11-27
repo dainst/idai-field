@@ -226,10 +226,15 @@ const renderRelationList = (relations: Field[], project: string, t: TFunction, b
 };
 
 
-const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputType, t: TFunction): ReactNode => {
+const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputType, t: TFunction,
+                          isArrayElement: boolean = false): ReactNode => {
 
     if (Array.isArray(value)) {
-        return renderFieldValueArray(value, inputType, t);
+        if (inputType === 'composite' && isArrayElement) {
+            return renderFieldList(value as Field[], t);
+        } else {
+            return renderFieldValueArray(value, inputType, t);
+        }
     } else {
         switch (inputType) {
             case 'boolean':
@@ -250,9 +255,11 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
 
 
 const renderFieldValueArray = (values: FieldValue[], inputType: FieldDefinition.InputType, t: TFunction): ReactNode =>
-    values.length > 1
+    inputType === 'composite' || values.length > 1
         ? <ul>
-            { values.map((value, i) => <li key={ `${value}_${i}` }>{ renderFieldValue(value, inputType, t) }</li>) }
+            { values.map((value, i) => <li key={ `${value}_${i}` }>
+                { renderFieldValue(value, inputType, t, true) }
+            </li>) }
         </ul>
         : renderFieldValue(values[0], inputType, t);
 

@@ -68,6 +68,7 @@ export type FieldValue =
     | Dating
     | Literature
     | OptionalRange<LabeledValue>
+    | Field[] // composite field
     | FieldValue[];
 
 

@@ -129,7 +129,8 @@
                     }
                   },
                   "label": {
-                    "de": "Farbe"
+                    "de": "Farbe",
+                    "en": "Color"
                   },
                   "description": {}
                 },
@@ -166,6 +167,15 @@
                   "label": {
                     "de": "Beschreibung",
                     "en": "Description"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "number",
+                  "inputType": "number",
+                  "label": {
+                    "de": "Nummer",
+                    "en": "number"
                   },
                   "description": {}
                 }

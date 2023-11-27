@@ -14,6 +14,8 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   require Logger
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
   def mount(_params, %{"user_token" => user_token} = _session, socket) do
     user_name =
       user_token
@@ -33,11 +35,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
     end
   end
 
-  def handle_event(
-        "update",
-        %{"identifier" => identifier, "password" => password} = _values,
-        socket
-      ) do
+  def handle_event("update", %{"identifier" => identifier, "password" => password}, socket) do
     {:noreply, evaluate_inputs(socket, identifier, password)}
   end
 
@@ -51,7 +49,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
 
   def handle_event(
         "create",
-        %{"identifier" => identifier, "password" => password} = _values,
+        %{"identifier" => identifier, "password" => password},
         %{assigns: %{current_user: user_name}} = socket
       ) do
     socket =
@@ -88,6 +86,9 @@ defmodule FieldHubWeb.ProjectCreateLive do
       cond do
         identifier == "" ->
           :identifier_empty
+
+        String.length(identifier) > @identifier_length ->
+          :identifier_invalid
 
         not String.match?(identifier, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
           :identifier_invalid
@@ -128,7 +129,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
   defp format_issue(:identifier_invalid),
     do: """
     Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
-    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /.
+    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /. The maximum length is #{@identifier_length} characters.
     """
 
   defp format_issue(:identifier_taken),
@@ -157,7 +158,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
       %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
         Project.update_user(identifier, identifier, :member)
 
-      %{database: :already_exists} ->
+      :already_exists ->
         {:error, "Error creating `#{identifier}`, a database with the identifier already exists."}
     end
     |> case do

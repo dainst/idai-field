@@ -13,6 +13,7 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
   @independent_user_password "test_password"
   @independent_user_auth "Basic #{Base.encode64("#{@independent_user_name}:#{@independent_user_password}")}"
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
   setup_all %{} do
     TestHelper.create_user(@independent_user_name, @independent_user_password)
 
@@ -138,8 +139,34 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
 
       response = Jason.decode!(conn.resp_body)
 
+      expected_reason =
+        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+
       assert %{
-               "reason" => "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+               "reason" => ^expected_reason
+             } = response
+    end
+
+    test "POST /projects/:project with a project identifier exceeding the maximum characters returns :bad_request",
+         %{
+           conn: conn
+         } do
+      long_project_identifier = String.duplicate("a", @identifier_length + 1)
+
+      conn =
+        conn
+        |> put_req_header("authorization", TestHelper.get_admin_basic_auth())
+        |> post("/projects/#{long_project_identifier}")
+
+      assert conn.status == 400
+
+      response = Jason.decode!(conn.resp_body)
+
+      expected_reason =
+        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+
+      assert %{
+               "reason" => ^expected_reason
              } = response
     end
   end

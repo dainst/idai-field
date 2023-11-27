@@ -106,8 +106,7 @@ const RenderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                     { getLabel(bucket.item.value) }
                 </Col>
                 {
-                    <Col xs={ 1 }
-                        style={ { margin: '3px' } }>
+                    <Col xs={ 1 } style={ categoryCountStyle }>
                         <span className="float-right"><em>{ bucket.item.count }</em></span>
                     </Col>
                 }
@@ -128,7 +127,8 @@ const getCategoryAndSubcategoryNames = (bucket: FilterBucketTreeNode): string[] 
 };
 
 
-const filterValueStyle = (level: number, name: string, category: string|undefined, onHoover: boolean): CSSProperties => {
+const filterValueStyle = (level: number, name: string, category: string|undefined,
+                          onHoover: boolean): CSSProperties => {
     const style = { paddingLeft: `${level * 1.2}em` } as CSSProperties;
     // By default if you click a category, it gets color #eceeef
     // If you reload the page or come from outside to a route
@@ -144,7 +144,14 @@ const filterValueStyle = (level: number, name: string, category: string|undefine
 
 const categoryLabelStyle: CSSProperties = {
     margin: '3px 10px',
+    paddingTop: '2px',
     whiteSpace: 'normal'
+};
+
+
+const categoryCountStyle: CSSProperties = {
+    margin: '3px',
+    paddingTop: '2px'
 };
 
 

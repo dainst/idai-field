@@ -16,6 +16,7 @@ defmodule Api.Worker.Enricher.LabelsTest do
           "width" => [%{ "inputValue" => 10, "inputUnit" => "cm", "measurementPosition" => "Maximale Ausdehnung" }],
           "height" => [%{ "inputValue" => 20, "inputUnit" => "cm" }],
           "period" => %{ "value" => "Old Babylonian", "endValue" => "New Babylonian" },
+          "test-project:compositeField" => [%{ "color" => ["Gelb", "Grün"], "shape" => "Konkav", "description" => %{ "de" => "Test" } }],
           :id => "42",
           :relations => %{
             "liesWithin" => [%{
@@ -89,6 +90,16 @@ defmodule Api.Worker.Enricher.LabelsTest do
               }
             }
           },
+          "test-project:compositeField": [
+            %{
+              color: [
+                %{ name: "Gelb", label: %{ de: "Gelb", en: "Yellow" } },
+                %{ name: "Grün", label: %{} }
+              ],
+              shape: %{ name: "Konkav", label: %{ de: "Konkav", en: "Concave" } },
+              description: %{ de: "Test" }
+            }
+          ],
           relations: %{
             liesWithin: [%{
               resource: %{

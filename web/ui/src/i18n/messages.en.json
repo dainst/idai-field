@@ -352,5 +352,7 @@
   "page": "Page",
   "figure": "Figure",
   "from": "From: ",
-  "to": ", to: "
+  "to": ", to: ",
+  "yes": "Yes",
+  "no": "No"
 }

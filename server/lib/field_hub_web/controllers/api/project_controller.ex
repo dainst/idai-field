@@ -10,6 +10,8 @@ defmodule FieldHubWeb.Api.ProjectController do
 
   alias FieldHubWeb.Api.StatusView
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
     render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
   end
@@ -60,7 +62,8 @@ defmodule FieldHubWeb.Api.ProjectController do
             |> put_status(:bad_request)
             |> put_view(StatusView)
             |> render(%{
-              error: "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+              error:
+                "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
             })
 
           _ ->

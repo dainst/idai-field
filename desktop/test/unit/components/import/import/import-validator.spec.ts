@@ -1,4 +1,4 @@
-import { Forest, Field, ProjectConfiguration } from 'idai-field-core';
+import { Forest, Field, ProjectConfiguration, Document } from 'idai-field-core';
 import { ImportValidator } from '../../../../../src/app/components/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
 import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
@@ -47,6 +47,11 @@ describe('ImportValidator', () => {
                 name: 'T4',
                 identifierPrefix: 'T4-'
          }, []
+        ],
+            [ {
+                name: 'T5',
+                resourceLimit: 3
+        }, []
         ]] as any),
         categories: {},
         relations: [
@@ -453,8 +458,8 @@ describe('ImportValidator', () => {
 
         try {
             await validator.assertIdentifierPrefixIsValid(document1);
-        } catch (expected) {
-            console.error(expected);
+        } catch (err) {
+            console.error(err);
             fail();
         }
 
@@ -466,5 +471,32 @@ describe('ImportValidator', () => {
         }
         
         done();
+    });
+
+
+    it('resource limit exceeded', () => {
+
+        const datastore = jasmine.createSpyObj('MockDatastore', ['findIds']);
+        datastore.findIds.and.returnValue({ ids: ['1', '2'] });
+        
+        const validator: ImportValidator = new ImportValidator(projectConfiguration, datastore);
+
+        const documents = [{ resource: { id: '3', category: 'T5' } }] as Array<Document>;
+
+        try {
+            validator.assertResourceLimitNotExceeded(documents);
+        } catch (err) {
+            console.error(err);
+            fail();
+        }
+
+        documents.push({ resource: { id: '4', category: 'T5' } } as Document);
+
+        try {
+            validator.assertResourceLimitNotExceeded(documents);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.RESOURCE_LIMIT_EXCEEDED, 'T5', 3]);
+        }
     });
 });

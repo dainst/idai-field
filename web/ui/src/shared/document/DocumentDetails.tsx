@@ -1,7 +1,7 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Dimension, I18N, Literature, OptionalRange } from 'idai-field-core';
+import { Dating, Dimension, I18N, Literature, OptionalRange, Field as FieldDefinition } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -198,7 +198,7 @@ const renderFieldList = (fields: Field[], t: TFunction): ReactNode => {
     const fieldElements = fields
         .filter(field => !HIDDEN_FIELDS.includes(field.name))
         .map(field => {
-            const valueElements = renderFieldValue(field.value, t);
+            const valueElements = renderFieldValue(field.value, field.inputType, t);
             return valueElements ? [
                 <dt key={ `${field.name}_dt` }>{ renderMultiLanguageText(field, t) }</dt>,
                 <dd style={ valueElementsStyle } key={ `${field.name}_dd` }>{ valueElements }</dd>
@@ -226,48 +226,54 @@ const renderRelationList = (relations: Field[], project: string, t: TFunction, b
 };
 
 
-const renderFieldValue = (value: FieldValue, t: TFunction): ReactNode => {
+const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputType, t: TFunction,
+                          isArrayElement: boolean = false): ReactNode => {
 
-    if (Array.isArray(value)) return renderFieldValueArray(value, t);
-    if (typeof value === 'object') return renderFieldValueObject(value, t);
-    if (typeof value === 'boolean') return renderFieldValueBoolean(value);
-    return value;
+    if (Array.isArray(value)) {
+        if (inputType === 'composite' && isArrayElement) {
+            return renderFieldList(value as Field[], t);
+        } else {
+            return renderFieldValueArray(value, inputType, t);
+        }
+    } else {
+        switch (inputType) {
+            case 'boolean':
+                return renderFieldValueBoolean(value as boolean, t);
+            case 'dropdownRange':
+                return renderOptionalRange(value as OptionalRange<LabeledValue>, t);
+            case 'dating':
+                return renderDating(value as Dating, t);
+            case 'dimension':
+                return renderDimension(value as Dimension, t);
+            case 'literature':
+                return renderLiterature(value as Literature, t);
+            default:
+                return renderTextValue(value, t);
+        }
+    }
 };
 
 
-const renderFieldValueArray = (values: FieldValue[], t: TFunction): ReactNode =>
-    values.length > 1
-        ? <ul>{ values.map((value, i) => <li key={ `${value}_${i}` }>{ renderFieldValue(value, t) }</li>) }</ul>
-        : renderFieldValue(values[0], t);
+const renderFieldValueArray = (values: FieldValue[], inputType: FieldDefinition.InputType, t: TFunction): ReactNode =>
+    inputType === 'composite' || values.length > 1
+        ? <ul>
+            { values.map((value, i) => {
+                return <li key={ `${value}_${i}` }
+                           style={ getListItemStyle(inputType) }>
+                    { renderFieldValue(value, inputType, t, true) }
+                </li>;
+            }) }
+        </ul>
+        : renderFieldValue(values[0], inputType, t);
 
 
-const renderFieldValueObject = (object: FieldValue, t: TFunction): ReactNode | undefined => {
+const renderTextValue = (value: FieldValue, t: TFunction) => {
 
-    if (isLabeledValue(object)) return renderMultiLanguageText(object, t);
-    if (isLabeled(object)) return object.label;
-    if (Dating.isDating(object)) return Dating.generateLabel(object, t,
-        // eslint-disable-next-line
-        (value: any) => getLabel({ label: value, name: undefined }));
-    if (Literature.isLiterature(object)) return renderLiterature(object, t);
-
-    const isOptionalRange = OptionalRange.buildIsOptionalRange(isLabeledValue);
-    if (isOptionalRange(object) && OptionalRange.isValid(object)) return renderOptionalRange(object, t);
-    const object1 = convertMeasurementPosition(object);
-    if (Dimension.isDimension(object1)) {
-        const labeledPosition =
-            (object as Dimension).measurementPosition;
-        return Dimension.generateLabel(
-            object1, getDecimalValue, t,
-                // eslint-disable-next-line
-                (value: any) => getLabel({ label: value, name: undefined }), labeledPosition
-                // eslint-disable-next-line
-                ? getLabel(labeledPosition as any)
-                : undefined
-        );
-    }
-    
-    // We assume it is a multi language value then
-    return getTranslation(object as undefined as I18N.String);
+    return typeof value === 'object'
+        ? isLabeledValue(value)
+            ? renderMultiLanguageText(value, t)
+            : getTranslation(value as undefined as I18N.String)
+        : value;
 };
 
 
@@ -283,7 +289,37 @@ const renderMultiLanguageText = (object: LabeledValue, t: TFunction): ReactNode 
 };
 
 
+const renderDating = (dating: Dating, t: TFunction) => {
+
+    if (!Dating.isDating(dating)) return undefined;
+    if (isLabeled(dating)) return dating.label;
+
+    return Dating.generateLabel(dating, t,
+        // eslint-disable-next-line
+        (value: any) => getLabel({ label: value, name: undefined })
+    );
+};
+
+
+const renderDimension = (dimension: Dimension, t: TFunction) => {
+
+    dimension = convertMeasurementPosition(dimension);
+
+    if (!Dimension.isDimension(dimension)) return undefined;
+    if (isLabeled(dimension)) return dimension.label;
+
+    return Dimension.generateLabel(
+        dimension, getDecimalValue, t,
+        // eslint-disable-next-line
+        (value: any) => getLabel({ label: value, name: undefined })
+        // eslint-disable-next-line
+    );
+};
+
+
 const renderLiterature = (literature: Literature, t: TFunction): ReactNode => {
+
+    if (!Literature.isLiterature(literature)) return undefined;
 
     const label: string = Literature.generateLabel(literature as Literature, t, false);
 
@@ -305,6 +341,11 @@ const renderLiterature = (literature: Literature, t: TFunction): ReactNode => {
 
 const renderOptionalRange = (optionalRange: OptionalRange<LabeledValue>, t: TFunction): ReactNode => {
 
+    const isOptionalRange = OptionalRange.buildIsOptionalRange(isLabeledValue);
+    if (!isOptionalRange(optionalRange) || !OptionalRange.isValid(optionalRange)) {
+        return undefined;
+    }
+
     return optionalRange.endValue
         ? <div>
             { t('from') }
@@ -316,7 +357,12 @@ const renderOptionalRange = (optionalRange: OptionalRange<LabeledValue>, t: TFun
 };
 
 
-const renderFieldValueBoolean = (value: boolean): ReactNode => value ? 'yes' : 'no';
+const renderFieldValueBoolean = (value: boolean, t: TFunction): ReactNode => {
+    
+    if (typeof value !== 'boolean') return value;
+    
+    return value ? t('yes') : t('no');
+};
 
 
 const renderDocumentLink = (project: string, doc: ResultDocument, baseUrl: string): ReactNode =>
@@ -342,6 +388,7 @@ const renderPopover = (object: LabeledValue, t: TFunction): ReactElement => {
     );
 };
 
+
 const loadChildren = async (resourceId: string, project: string, from: number, size: number,
                             token: string): Promise<Result> => {
 
@@ -359,9 +406,18 @@ const loadChildren = async (resourceId: string, project: string, from: number, s
     return search(childQuery, token);
 };
 
+
 const getDecimalValue = (value: number): string => {
 
     return value.toString().replace('.', ',');
+};
+
+
+const getListItemStyle = (inputType: FieldDefinition.InputType): CSSProperties => {
+
+    return inputType === 'composite'
+        ? compositeListItemStyle
+        : {};
 };
 
 
@@ -377,6 +433,15 @@ const listStyle: CSSProperties = {
 };
 
 
+const compositeListItemStyle: CSSProperties = {
+    listStyle: 'none',
+    borderLeft: '2px solid #b2b2b2',
+    marginBottom: '20px',
+    marginLeft: '-12px',
+    paddingLeft: '12px'
+};
+
+
 const linkIconContainerStyle: CSSProperties = {
     position: 'relative',
     bottom: '1px'
@@ -386,6 +451,7 @@ const linkIconContainerStyle: CSSProperties = {
 const valueElementsStyle: CSSProperties = {
     whiteSpace: 'pre-line'
 };
+
 
 const childCountTextStyle: CSSProperties = {
     fontWeight: '400',

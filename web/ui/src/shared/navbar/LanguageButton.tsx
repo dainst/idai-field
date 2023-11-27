@@ -5,6 +5,7 @@ import React, { CSSProperties, ReactElement, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
+import { I18N } from 'idai-field-core';
 import { getUserInterfaceLanguage, LANGUAGES, USER_INTERFACE_LANGUAGES } from '../languages';
 
 
@@ -44,11 +45,17 @@ const renderLanguageModal = (modalOpened: boolean, setModalOpened: (opened: bool
         <div style={ paragraphStyle }>
             <div>{ t('navbar.languageModal.configurationLanguages') }</div>
             <ol style={ languageListStyle }>
-                { LANGUAGES.map(language => <li key={ language }>{ t('languages.' + language) }</li>) }
+                { getDataLanguages().map(language => <li key={ language }>{ t('languages.' + language) }</li>) }
             </ol>
         </div>
     </Modal>
 );
+
+
+const getDataLanguages = () => {
+    
+    return LANGUAGES.filter(language => language !== I18N.UNSPECIFIED_LANGUAGE);
+};
 
 
 const languageButtonStyle: CSSProperties = {

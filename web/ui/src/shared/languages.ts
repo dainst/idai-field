@@ -32,7 +32,7 @@ function initializeLanguages(): string[] {
         window.navigator.languages
             .map(getBasicLanguageCode)
             .filter(language => language.length === 2)
-            .concat(USER_INTERFACE_LANGUAGES.concat('unspecifiedLanguage'))
+            .concat(USER_INTERFACE_LANGUAGES.concat(I18N.UNSPECIFIED_LANGUAGE))
     );
 }
 

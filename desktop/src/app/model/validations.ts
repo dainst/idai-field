@@ -160,9 +160,7 @@ export module Validations {
             projectConfiguration,
             Field.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
-            (dating: any) =>
-                Dating.isValid_deprecated(dating)
-                || (Dating.isDating(dating) && Dating.isValid(dating)),
+            (dating: any) => Dating.isDating(dating) && Dating.isValid(dating),
             previousDocumentVersion
         );
     }
@@ -178,8 +176,7 @@ export module Validations {
             Field.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) =>
-                Dimension.isValid_deprecated(dimension)
-                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)),
+                Dimension.isDimension(dimension) && Dimension.isValid(dimension, options),
             previousDocumentVersion
         );
     }

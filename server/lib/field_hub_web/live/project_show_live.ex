@@ -42,6 +42,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
+          |> assign(:deletion_dialog_started, false)
+          |> assign(:confirm_project_name,"")
           |> read_project_doc()
         }
 
@@ -111,6 +113,31 @@ defmodule FieldHubWeb.ProjectShowLive do
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
   end
+
+  def handle_event("display_delete_dialogue", _values, socket) do
+    {:noreply,assign(socket,:deletion_dialog_started, true)}
+  end
+
+  def handle_event("update", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
+    {:noreply, assign(socket, :confirm_project_name, confirm_project_name)}
+  end
+
+
+  def handle_event("delete_the_project", _values, socket) do
+
+    identifier = socket.assigns.stats.name
+    CouchService.delete_database(identifier)
+
+    socket = put_flash(
+      socket,
+      :info,
+       "Project `#{identifier}` has been deleted successfully."
+    )
+
+    {:noreply,redirect(socket, to: "/")}
+
+  end
+
 
   def handle_event("generate_password", _values, socket) do
     {:noreply, assign(socket, :new_password, CouchService.create_password())}

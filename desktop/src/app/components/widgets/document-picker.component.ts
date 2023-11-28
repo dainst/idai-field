@@ -57,6 +57,10 @@ export class DocumentPickerComponent implements OnChanges {
 
     public getElementId = (document: Document) => 'document-picker-resource-' + document.resource.identifier;
 
+    public trackDocument = (_: number, document: Document) => document.resource.id;
+
+    public getHeight = () => this.documents.length * 58;
+
 
     async ngOnChanges() {
 

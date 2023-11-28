@@ -4,16 +4,19 @@
                 (onQueryStringChanged)="setQueryString($event)"
                 (onCategoriesChanged)="setQueryCategories($event)"></search-bar>
 
-    <ul #documentsList *ngIf="documents?.length" id="document-picker-list" class="list-group">
-        <li *ngFor="let document of documents; let index = index"
-            (click)="select(document)"
-            (dblclick)="doubleClick(document)"
-            class="list-group-item"
-            [class.selected]="selectedDocument === document"
-            [id]="getElementId(document)">
-            <document-teaser [document]="document"></document-teaser>
-        </li>
-    </ul>
+    <cdk-virtual-scroll-viewport *ngIf="documents?.length" id="document-picker-viewport" itemSize="58"
+                                 [style]="'height: ' + getHeight() + 'px'">
+        <ul #documentsList id="document-picker-list" class="list-group">
+            <li *cdkVirtualFor="let document of documents; trackBy: trackDocument"
+                (click)="select(document)"
+                (dblclick)="doubleClick(document)"
+                class="list-group-item"
+                [class.selected]="selectedDocument === document"
+                [id]="getElementId(document)">
+                <document-teaser [document]="document"></document-teaser>
+            </li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
 
     <div *ngIf="isLoadingIconVisible()" id="document-picker-loading-icon-container">
         <loading-icon [context]="'documentPicker'"></loading-icon>

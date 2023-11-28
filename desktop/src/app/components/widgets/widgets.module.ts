@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DocumentPickerComponent } from './document-picker.component';
@@ -37,7 +38,8 @@ import { SearchableSelectComponent } from './searchable-select.component';
         RouterModule,
         MessagesModule,
         DragDropModule,
-        NgSelectModule
+        NgSelectModule,
+        ScrollingModule,
     ],
     declarations: [
         DocumentPickerComponent,

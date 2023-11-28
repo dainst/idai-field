@@ -145,7 +145,7 @@
                     </button>
                 </div>
                 <div class="column">
-                    <button type="button" class="button" phx-click="set_password" disabled={@new_password == ""} style="width:100%">
+                    <button type="button" class="button" phx-click="set_password" disabled={@new_password == {@project}} style="width:100%">
                         Set new password
                     </button>
                 </div>
@@ -153,5 +153,34 @@
         </form>
 
         <hr>
+        <%!-- <h2>Delete project</h2> --%>
+        <form phx-change="update">
+            <div class="row">
+                <div class="column column">                            
+                    <button type="button" class="button button-outline" phx-click="display_delete_dialogue" style="width:100%">
+                        Click here to delete the project
+                    </button>
+                </div>
+            </div>
+
+        <%= if @deletion_dialog_started == true do %>
+            <div class="row">
+                <div class="column column"> 
+                 <input 
+                    type="text" 
+                    placeholder="To confirm the deletion type the name of the project."
+                    id="confirm_project_name"
+                    name="confirm_project_name"
+                    value={@confirm_project_name}                    
+                /> 
+                </div>                
+                <div class="column">
+                    <button type="button" class="button"  phx-click="delete_the_project" disabled={@confirm_project_name != @project} style="width:100%">
+                       Delete
+                    </button>
+                </div>                          
+            </div>
+        <% end %>
+        </form>
     <% end %>
 </div>

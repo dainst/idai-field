@@ -58,7 +58,7 @@ export class IndexFacade {
     }
 
 
-    public async putMultiple(documents: Array<Document>, setIndexedDocuments?: (count: number) => Promise<void>) {
+    public async putMultiple(documents: Array<Document>, setProgress?: (count: number) => Promise<void>) {
 
         const [typeDocuments, nonTypeDocuments] = separate(
             on(
@@ -73,15 +73,15 @@ export class IndexFacade {
         for (let document of typeDocuments) {
             this._put(document, true, false);
             count++;
-            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
-                await setIndexedDocuments(count);
+            if (setProgress && (count % 250 === 0 || count === documents.length)) {
+                await setProgress(count * 0.75);
             }
         }
         for (let document of nonTypeDocuments) {
             this._put(document, true, false);
             count++;
-            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
-                await setIndexedDocuments(count);
+            if (setProgress && (count % 250 === 0 || count === documents.length)) {
+                await setProgress(count * 0.75);
             }
         }
 

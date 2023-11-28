@@ -17,7 +17,7 @@ import { Warnings } from '../model';
  
     export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
                                   converter: DocumentConverter, projectConfiguration: ProjectConfiguration,
-                                  keepCachedInstances: boolean, setIndexedDocuments?: (count: number) => Promise<void>,
+                                  keepCachedInstances: boolean, setProgress?: (progress: number) => Promise<void>,
                                   setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
 
         indexFacade.clear();
@@ -50,8 +50,8 @@ import { Warnings } from '../model';
                 documents = documents.concat(documentCache.getAll());
             }
 
-            await indexFacade.putMultiple(documents, setIndexedDocuments);
-            addNonUniqueIdentifierWarnings(indexFacade, documentCache, projectConfiguration);
+            await indexFacade.putMultiple(documents, setProgress);
+            await addNonUniqueIdentifierWarnings(indexFacade, documentCache, projectConfiguration, setProgress);
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
@@ -87,15 +87,23 @@ import { Warnings } from '../model';
     }
 
 
-    function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache,
-                                            projectConfiguration: ProjectConfiguration) {
+    async function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache,
+                                                  projectConfiguration: ProjectConfiguration,
+                                                  setProgress?: (progress: number) => Promise<void>) {
 
-        documentCache.getAll().forEach(document => {
+        const documents: Array<Document> = documentCache.getAll();
+
+        for (let i = 0; i < documents.length; i++) {
+            const document: Document = documents[i];
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
             WarningsUpdater.updateNonUniqueIdentifierWarning(document, indexFacade);
             WarningsUpdater.updateResourceLimitWarning(document, category, indexFacade);
             WarningsUpdater.updateRelationTargetWarning(document, indexFacade, documentCache);
-        });
+
+            if (setProgress && (i % 250 === 0 || i === documents.length)) {
+                await setProgress(documents.length * 0.75 + i * 0.25);
+            }
+        };
     }
 
 

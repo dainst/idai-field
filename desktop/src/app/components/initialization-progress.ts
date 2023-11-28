@@ -26,8 +26,8 @@ export class InitializationProgress {
     private phase: InitializationPhase = 'settingUpServer';
     private imagesToProcess: number;
     private processedImages: number = 0;
-    private documentsToIndex: number;
-    private indexedDocuments: number = 0;
+    private maxIndexingProgress: number;
+    private indexingProgress: number = 0;
     private locale: string = 'en';
     private error: boolean = false;
 
@@ -56,15 +56,15 @@ export class InitializationProgress {
     }
 
 
-    public setDocumentsToIndex(documentsToIndex: number) {
+    public setMaxIndexingProgress(maxIndexingProgress: number) {
 
-        this.documentsToIndex = documentsToIndex;
+        this.maxIndexingProgress = maxIndexingProgress;
     }
 
 
-    public async setIndexedDocuments(indexedDocuments: number) {
+    public async setIndexingProgress(indexingProgress: number) {
 
-        this.indexedDocuments = indexedDocuments;
+        this.indexingProgress = indexingProgress;
         await this.updateProgressBar();
     }
 
@@ -242,9 +242,9 @@ export class InitializationProgress {
             case 'loadingConfiguration':
                 return 35;
             case 'loadingDocuments':
-                return this.documentsToIndex - this.indexedDocuments < 1000 ? 100 : 45;
+                return this.maxIndexingProgress - this.indexingProgress < 1000 ? 100 : 45;
             case 'indexingDocuments':
-                return this.documentsToIndex - this.indexedDocuments < 1000 ? 100 : 50 + this.getIndexingProgress();
+                return this.maxIndexingProgress - this.indexingProgress < 1000 ? 100 : 50 + this.getIndexingProgress();
         }
     }
 
@@ -259,8 +259,8 @@ export class InitializationProgress {
 
     private getIndexingProgress(): number {
 
-        return this.indexedDocuments > 0
-            ? Math.round(50 * (this.indexedDocuments / this.documentsToIndex))
+        return this.indexingProgress > 0
+            ? Math.round(50 * (this.indexingProgress / this.maxIndexingProgress))
             : 0;
     }
 

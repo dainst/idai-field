@@ -225,7 +225,7 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
                              progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
-    progress.setDocumentsToIndex((await db.info()).doc_count);
+    progress.setMaxIndexingProgress((await db.info()).doc_count);
 
     await Indexer.reindex(
         serviceLocator.indexFacade,
@@ -234,7 +234,7 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
         new DocumentConverter(serviceLocator.projectConfiguration),
         serviceLocator.projectConfiguration,
         false,
-        (count) => progress.setIndexedDocuments(count),
+        (count) => progress.setIndexingProgress(count),
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)
     );

@@ -5,7 +5,6 @@ import { Document } from '../model/document';
 import { CategoryForm } from '../model/configuration/category-form';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
-import { Warnings } from '../model';
 
 
 /**
@@ -51,7 +50,7 @@ import { Warnings } from '../model';
             }
 
             await indexFacade.putMultiple(documents, setProgress);
-            await addNonUniqueIdentifierWarnings(indexFacade, documentCache, projectConfiguration, setProgress);
+            await addIndexDependentWarnings(indexFacade, documentCache, projectConfiguration, setProgress);
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
@@ -87,9 +86,9 @@ import { Warnings } from '../model';
     }
 
 
-    async function addNonUniqueIdentifierWarnings(indexFacade: IndexFacade, documentCache: DocumentCache,
-                                                  projectConfiguration: ProjectConfiguration,
-                                                  setProgress?: (progress: number) => Promise<void>) {
+    async function addIndexDependentWarnings(indexFacade: IndexFacade, documentCache: DocumentCache,
+                                             projectConfiguration: ProjectConfiguration,
+                                             setProgress?: (progress: number) => Promise<void>) {
 
         const documents: Array<Document> = documentCache.getAll();
 

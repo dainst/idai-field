@@ -188,7 +188,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+    public trackDocument = (_: number, document: FieldDocument) => document.resource.id;
 
 
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {

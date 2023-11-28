@@ -126,7 +126,7 @@
     <%= if User.is_admin?(@current_user) do %>
         <hr>
         <h2>Password change</h2>
-        <form phx-change="update">
+        <form id="pwd_form" phx-change="update">
             <div class="row">
                 <div class="column">
                         <input
@@ -154,7 +154,7 @@
 
         <hr>
         <%!-- <h2>Delete project</h2> --%>
-        <form phx-change="update">
+        <form id="del_form" phx-change="delete">
             <div class="row">
                 <div class="column column">                            
                     <button type="button" class="button button-outline" phx-click="display_delete_dialogue" style="width:100%">

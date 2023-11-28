@@ -118,7 +118,15 @@ defmodule FieldHubWeb.ProjectShowLive do
     {:noreply,assign(socket,:deletion_dialog_started, true)}
   end
 
-  def handle_event("update", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
+  # def handle_event("display_delete_dialogue", _values, socket) do
+  #   if %{"confirm_project_name" => confirm_project_name} =_values do
+  #     assign(socket, :confirm_project_name, confirm_project_name)
+  #   end
+  #   {:noreply,assign(socket,:deletion_dialog_started, true)}
+  # end
+
+  def handle_event("delete", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
+  # def handle_event("update", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
     {:noreply, assign(socket, :confirm_project_name, confirm_project_name)}
   end
 

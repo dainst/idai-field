@@ -362,7 +362,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       html =
         view
-        |> element("form")
+        |> element("#pwd_form")
         |> render_change(%{password: "typed_in_password"})
 
       assert html =~
@@ -397,7 +397,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       new_password = "updated_password"
 
       view
-      |> element("form")
+      |> element("#pwd_form")
       |> render_change(%{password: new_password})
 
       html =
@@ -430,7 +430,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       User.delete(@user_name)
 
       view
-      |> element("form")
+      |> element("#pwd_form")
       |> render_change(%{password: "updated_password"})
 
       html =

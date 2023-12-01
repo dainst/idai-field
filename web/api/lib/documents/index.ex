@@ -46,7 +46,7 @@ defmodule Api.Documents.Index do
         original_query_result
       end
     else
-      original_query_result
+      postprocess_search_result original_query_result, original_query_result
     end
   end
 

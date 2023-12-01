@@ -23,31 +23,24 @@ defmodule Api.Documents.Index do
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
     {filters, multilanguage_filters, must_not, project_conf, dropdown_fields} = preprocess(filters, must_not)
 
-    original_query = create_search_query q, size, from, filters, must_not, exists,
-      not_exists, sort, vector_query, readable_projects, multilanguage_filters
+    original_query_result = create_search_query(q, size, from, filters, must_not, exists,
+      not_exists, sort, vector_query, readable_projects, multilanguage_filters)
+      |> build_post_atomize
+      |> Mapping.map(project_conf)
 
-    original_query_result = original_query |> build_post_atomize |> Mapping.map(project_conf)
-
-    multilanguage_filters = []
     filters_without_category_filters = Enum.filter(filters, fn {k, _v} -> k != "resource.category.name" end)
-
-    if filters_without_category_filters != filters do
+    replacement_query_result = if filters_without_category_filters != filters do
       filtered_filters = filters_without_category_filters
         |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
-      unfiltered_query = create_search_query q, size, from, filtered_filters, must_not, exists,
-        not_exists, sort, vector_query, readable_projects, multilanguage_filters
-      unfiltered_query_result = unfiltered_query
+      create_search_query(
+          q, size, from, filtered_filters, must_not, exists,
+          not_exists, sort, vector_query, readable_projects, [])
         |> build_post_atomize
         |> Mapping.map(project_conf)
-
-      if Map.has_key? unfiltered_query_result, :filters do # TODO why do we need this if?
-        postprocess_search_result original_query_result, unfiltered_query_result
-      else
-        original_query_result
-      end
     else
-      postprocess_search_result original_query_result, original_query_result
+      original_query_result
     end
+    postprocess_search_result original_query_result, replacement_query_result
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do

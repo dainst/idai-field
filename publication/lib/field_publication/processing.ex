@@ -8,26 +8,61 @@ defmodule FieldPublication.Processing do
 
   require Logger
 
+  @moduledoc """
+  This GenServer module starts, stops and tracks processing tasks.
+
+  GenServers are a core building block in Elixir (or rather the whole Erlang ecosystem).
+  Basically this defines a child process that gets started when the application is started
+  (see application.ex) and waits for requests from other processes within the system.
+  It holds an internal state (a list of running tasks) and provides some API functions
+  that let other part sof the application start/stop or monitor the running tasks.
+
+  See also https://hexdocs.pm/elixir/1.15.7/GenServer.htm
+
+  Each item in the internal state is a tuple of the pattern `{task, processing_type, processing_context}`,
+  where `task` is a reference to the Elixir Task that got initiated, processing_type is an atom that identifies the
+  type of processing (for example `:web_images`) and `processing_context` identifies the context within FieldPublication
+  that is being processed (for example the document id of a certain `FieldPublication.Schemas.Publication`). The
+  `processing_context` value is also used to broadcast PubSub messages.
+
+  Use the API functions below to interact with the module.
+  """
+
   def start_link(_opts) do
     Logger.debug("Starting Processing GenServer")
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init(_) do
-    Logger.debug("Initializing Processing GenServer")
+    Logger.debug("Initializing Processing GenServer state to empty list")
     {:ok, []}
   end
 
-  ## API Functions to be called from the rest of the application
+  #########################################################################
+  ## Start of API functions to be called from the rest of the application.
 
+  @doc """
+  Start one or several processing tasks.
+  """
   def start(%Publication{} = publication) do
+    # Starts all processing tasks for the given publication.
+    #
+    # Currently only one processing step is implemented, additional start calls can be added one
+    # by one. You still need to implement the appropriate `handle_call/3` below.
     GenServer.call(__MODULE__, {:start, publication, :web_images})
   end
 
   def start(%Publication{} = publication, type) when type in [:web_images] do
+    # Start a specific processing task for the given publication.
+    #
+    # Extend the list of atoms in the guard above to support additional processing steps. You
+    # still need to implement the  appropriate `handle_call/3` below.
     GenServer.call(__MODULE__, {:start, publication, type})
   end
 
+  @doc """
+  Get information about one or several active processing tasks.
+  """
   def show() do
     GenServer.call(__MODULE__, :show)
   end
@@ -40,6 +75,9 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
   end
 
+  @doc """
+  Stop one or several processing tasks.
+  """
   def stop() do
     GenServer.call(__MODULE__, :stop)
   end
@@ -52,30 +90,38 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
-  ## Starting, monitoring and stopping tasks as requested through the API functions above.
+  # End of API function definitions.
+  ###################################
 
+  @doc """
+  These `handle_call/3` implementations handle messages sent by other processes to
+  the GenServer. These calls will in general originate from the API functions defined above or from the
+  asynchronous tasks started by the GenServer itself (reporting that the processing task has finished/crashed...).
+  """
   def handle_call({:start, %Publication{} = publication, :web_images}, _from, running_tasks) do
     publication_id = Publications.get_doc_id(publication)
 
     Enum.any?(running_tasks, fn {_task, :web_images, context} ->
       publication_id == context
     end)
-    |> case do
-      false ->
-        task =
-          Task.Supervisor.async_nolink(
-            FieldPublication.ProcessingSupervisor,
-            Image,
-            :start_web_image_processing,
-            [publication]
-          )
+    |> if do
+      # The `:web_images` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      # Start the `:web_images` task for the given publication, broadcast the event to the publication's PubSub channel,
+      # update the state and return an `:ok` atom to the caller.
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          Image, # Module that implements the actual task.
+          :start_web_image_processing, # Function within the module to start the task.
+          [publication] # Parameters for the function.
+        )
 
-        broadcast(publication_id, :web_images, :processing_started)
+      broadcast(publication_id, :web_images, :processing_started)
 
-        {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
-
-      true ->
-        {:reply, :already_running, running_tasks}
+      {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
     end
   end
 
@@ -102,7 +148,7 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call(:stop, _from, running_tasks) do
-    Logger.debug("Stopping all processing for all publications.")
+    Logger.debug("Stopping all processing tasks.")
 
     Enum.each(running_tasks, fn {task, _type, _context} ->
       Process.exit(task.pid, :stopped)
@@ -112,7 +158,7 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call({:stop, requested_context}, _from, running_tasks) do
-    Logger.debug("Stopping all processing for #{requested_context}.")
+    Logger.debug("Stopping all processing tasks for #{requested_context}.")
 
     {publication_tasks, _remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, _type, context} ->
@@ -127,7 +173,7 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call({:stop, requested_context, requested_type}, _from, running_tasks) do
-    Logger.debug("Stopping '#{requested_type}' processing for #{requested_context}.")
+    Logger.debug("Stopping '#{requested_type}' processing  task for #{requested_context}.")
 
     {publication_tasks, _remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, type, context} ->
@@ -145,7 +191,8 @@ defmodule FieldPublication.Processing do
 
   def handle_info({_ref, _answer}, running_tasks) do
     # Handles successfull tasks, we currently do not extract data contained in the answer. Instead
-    # we just reply with the running tasks and let the appropriate {:DOWN, _, _, _,} message, see below.
+    # we just reply with the running tasks and let the appropriate {:DOWN, _, _, _,} message update the
+    # internal state, see below.
     {:noreply, running_tasks}
   end
 

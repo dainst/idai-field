@@ -9,24 +9,25 @@ defmodule Api.Documents.Mapping do
     |> map_document
   end
 
-  def map(elasticsearch_result, default_config), do: map(elasticsearch_result, default_config, Filters.get_filters())
-  def map(elasticsearch_result, default_config, filters) do
+  def map(elasticsearch_result, default_config), do: map(elasticsearch_result, default_config, nil)
+  def map(elasticsearch_result, default_config, filters), do: map(elasticsearch_result, default_config, filters, [])
+  def map(elasticsearch_result, default_config, filters, categories) do
     %{
       size: elasticsearch_result.hits.total.value,
       documents: elasticsearch_result.hits.hits
                  |> Enum.map(&map_document/1)
     }
-    |> map_aggregations(elasticsearch_result, default_config, filters)
+    |> map_aggregations(elasticsearch_result, default_config, filters || Filters.get_filters(), categories)
   end
 
-  defp map_aggregations(result, %{ aggregations: aggregations }, default_config, filters) do
-    filters = Enum.map(filters, map_aggregation(aggregations, default_config))
+  defp map_aggregations(result, %{ aggregations: aggregations }, default_config, filters, categories) do
+    filters = Enum.map(filters, map_aggregation(aggregations, default_config, categories))
               |> Enum.reject(&is_nil/1)
     put_in(result, [:filters], filters)
   end
-  defp map_aggregations(result, _, _, _), do: result
+  defp map_aggregations(result, _, _, _, _), do: result
 
-  defp map_aggregation(aggregations, default_config) do
+  defp map_aggregation(aggregations, default_config, _categories) do
     fn filter ->
       with buckets when not is_nil(buckets) <- get_in(
         aggregations,

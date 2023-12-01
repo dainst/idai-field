@@ -31,7 +31,7 @@ defmodule Api.Documents.Index do
     multilanguage_filters = []
     filters_without_category_filters = Enum.filter(filters, fn {k, _v} -> k != "resource.category.name" end)
 
-    if filters_without_category_filters do
+    if filters_without_category_filters != filters do
       filtered_filters = filters_without_category_filters
         |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
       unfiltered_query = create_search_query q, size, from, filtered_filters, must_not, exists,

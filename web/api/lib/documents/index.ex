@@ -22,29 +22,29 @@ defmodule Api.Documents.Index do
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
     {filters, multilanguage_filters, must_not, project_conf, dropdown_fields} = preprocess(filters, must_not)
+    filters_without_category_filters = Enum.filter(filters, fn {k, _v} -> k != "resource.category.name" end)
 
     original_query_result = create_search_query(q, size, from, filters, must_not, exists,
       not_exists, sort, vector_query, readable_projects, multilanguage_filters)
       |> build_post_atomize
       |> Mapping.map(project_conf)
 
-    filters_without_category_filters = Enum.filter(filters, fn {k, _v} -> k != "resource.category.name" end)
-    replacement_query_result = if filters_without_category_filters != filters do
+    if filters_without_category_filters == filters do
+      original_query_result
+    else # a category filter has been set, i.e. a (single) category has been "selected"
       {_, categories} = filters
         |> Enum.filter(fn {k, _v} -> k == "resource.category.name" end)
         |> List.first
       category = List.first categories
       filtered_filters = filters_without_category_filters
         |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
-      create_search_query(
+      replacement_query_result = create_search_query(
           q, size, from, filtered_filters, must_not, exists,
           not_exists, sort, vector_query, readable_projects, [])
         |> build_post_atomize
         |> Mapping.map(project_conf, nil, category)
-    else
-      original_query_result
+      postprocess_search_result original_query_result, replacement_query_result
     end
-    postprocess_search_result original_query_result, replacement_query_result
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do
@@ -68,7 +68,7 @@ defmodule Api.Documents.Index do
 
     result_category_filters = Enum.map original_query_result.filters, fn filter ->
       if filter.name == "resource.category.name" do
-        put_in filter[:unfilteredValues], unfiltered_values
+        put_in filter[:values], unfiltered_values
       else
         filter
       end

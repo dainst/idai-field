@@ -33,13 +33,14 @@ defmodule Api.Documents.Index do
       {_, categories} = filters
         |> Enum.filter(fn {k, _v} -> k == "resource.category.name" end)
         |> List.first
+      category = List.first categories
       filtered_filters = filters_without_category_filters
         |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
       create_search_query(
           q, size, from, filtered_filters, must_not, exists,
           not_exists, sort, vector_query, readable_projects, [])
         |> build_post_atomize
-        |> Mapping.map(project_conf, nil, categories)
+        |> Mapping.map(project_conf, nil, category)
     else
       original_query_result
     end

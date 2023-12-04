@@ -9,24 +9,25 @@ defmodule Api.Documents.Mapping do
     |> map_document
   end
 
-  def map(elasticsearch_result, default_config), do: map(elasticsearch_result, default_config, Filters.get_filters())
-  def map(elasticsearch_result, default_config, filters) do
+  def map(elasticsearch_result, default_config), do: map(elasticsearch_result, default_config, nil)
+  def map(elasticsearch_result, default_config, filters), do: map(elasticsearch_result, default_config, filters, nil)
+  def map(elasticsearch_result, default_config, filters, category) do
     %{
       size: elasticsearch_result.hits.total.value,
       documents: elasticsearch_result.hits.hits
                  |> Enum.map(&map_document/1)
     }
-    |> map_aggregations(elasticsearch_result, default_config, filters)
+    |> map_aggregations(elasticsearch_result, default_config, filters || Filters.get_filters(), category)
   end
 
-  defp map_aggregations(result, %{ aggregations: aggregations }, default_config, filters) do
-    filters = Enum.map(filters, map_aggregation(aggregations, default_config))
+  defp map_aggregations(result, %{ aggregations: aggregations }, default_config, filters, category) do
+    filters = Enum.map(filters, map_aggregation(aggregations, default_config, category))
               |> Enum.reject(&is_nil/1)
     put_in(result, [:filters], filters)
   end
-  defp map_aggregations(result, _, _, _), do: result
+  defp map_aggregations(result, _, _, _, _), do: result
 
-  defp map_aggregation(aggregations, default_config) do
+  defp map_aggregation(aggregations, default_config, category) do
     fn filter ->
       with buckets when not is_nil(buckets) <- get_in(
         aggregations,
@@ -36,8 +37,7 @@ defmodule Api.Documents.Mapping do
           %{
             name: Filters.get_filter_name(filter),
             label: filter.label,
-            groups: filter["groups"],
-            values: build_values(buckets, filter, default_config)
+            values: build_values(buckets, filter, default_config, category)
           }
         end
     end
@@ -52,7 +52,7 @@ defmodule Api.Documents.Mapping do
     end
   end
 
-  defp build_values(buckets, filter = %{ field: "resource.category" }, default_config) do
+  defp build_values(buckets, filter = %{ field: "resource.category" }, default_config, category) do
     children_of_image = get_children_of_image default_config
     buckets = map_buckets(buckets, filter)
     default_config
@@ -62,13 +62,20 @@ defmodule Api.Documents.Mapping do
       |> Tree.map_tree_list(
         fn %{ name: name, label: label, groups: groups } ->
           bucket = Enum.find(buckets, fn bucket -> bucket.value.name == name end)
-          %{ value: %{ name: name, label: label, groups: groups }, count: (if bucket, do: bucket.count, else: 0) }
+          %{
+            value: %{
+              name: name,
+              label: label,
+              groups: if name == category do groups else nil end
+            },
+            count: (if bucket, do: bucket.count, else: 0)
+          }
         end
       )
       |> Enum.map(&add_children_count/1)
       |> Tree.filter_tree_list(fn %{ count: count } -> count > 0 end)
   end
-  defp build_values(buckets, filter, _) do
+  defp build_values(buckets, filter, _, _) do
     map_buckets(buckets, filter)
   end
 

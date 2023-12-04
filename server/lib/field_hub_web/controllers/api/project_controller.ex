@@ -85,17 +85,8 @@ defmodule FieldHubWeb.Api.ProjectController do
     end
   end
 
-  def delete(conn, %{"project" => id}) do
-    project = Project.delete(id)
-    user = User.delete(id)
-
-    response_payload = %{
-      status_project: project,
-      status_user: user
-    }
-
-    conn
-    |> put_view(StatusView)
-    |> render(%{info: response_payload})
+  def delete(_conn, %{"project" => id}) do
+    Project.delete(id)
+    User.delete(id)
   end
 end

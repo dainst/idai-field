@@ -1,4 +1,7 @@
 defmodule FieldHubWeb.ProjectShowLive do
+  # alias FieldHubWeb.Api.ProjectController
+  alias FieldHubWeb.Api.ProjectController
+
   alias FieldHubWeb.{
     Router.Helpers,
     UserAuth,
@@ -43,7 +46,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
           |> assign(:deletion_dialog_started, false)
-          |> assign(:confirm_project_name,"")
+          |> assign(:confirm_project_name, "")
           |> read_project_doc()
         }
 
@@ -115,37 +118,39 @@ defmodule FieldHubWeb.ProjectShowLive do
   end
 
   def handle_event("display_delete_dialogue", _values, socket) do
-    {:noreply,assign(socket,:deletion_dialog_started, true)}
+    {:noreply, assign(socket, :deletion_dialog_started, true)}
   end
 
-  # def handle_event("display_delete_dialogue", _values, socket) do
-  #   if %{"confirm_project_name" => confirm_project_name} =_values do
-  #     assign(socket, :confirm_project_name, confirm_project_name)
-  #   end
-  #   {:noreply,assign(socket,:deletion_dialog_started, true)}
-  # end
-
   def handle_event("delete", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
-  # def handle_event("update", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
     {:noreply, assign(socket, :confirm_project_name, confirm_project_name)}
   end
 
+  def handle_event(
+        "delete_the_project",
+        _values,
+        %{assigns: %{project: project, current_user: user_name}} = socket
+      ) do
+    socket =
+      case User.is_admin?(user_name) do
+        true ->
+          ProjectController.delete(socket, %{"project" => project})
+          {:ok, "Project `#{project}` has been deleted successfully."}
 
-  def handle_event("delete_the_project", _values, socket) do
+        false ->
+          {:error, "You are not authorized to delete the project."}
+      end
+      |> case do
+        {:ok, msg} ->
+          socket
+          |> put_flash(:info, msg)
 
-    identifier = socket.assigns.stats.name
-    CouchService.delete_database(identifier)
+        {:error, msg} ->
+          socket
+          |> put_flash(:error, msg)
+      end
 
-    socket = put_flash(
-      socket,
-      :info,
-       "Project `#{identifier}` has been deleted successfully."
-    )
-
-    {:noreply,redirect(socket, to: "/")}
-
+    {:noreply, redirect(socket, to: "/")}
   end
-
 
   def handle_event("generate_password", _values, socket) do
     {:noreply, assign(socket, :new_password, CouchService.create_password())}

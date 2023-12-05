@@ -1,6 +1,5 @@
 defmodule FieldHubWeb.ProjectShowLive do
-  # alias FieldHubWeb.Api.ProjectController
-  alias FieldHubWeb.Api.ProjectController
+  alias FieldHub.Project
 
   alias FieldHubWeb.{
     Router.Helpers,
@@ -45,8 +44,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
-          |> assign(:deletion_dialog_started, false)
           |> assign(:confirm_project_name, "")
+          |> assign(:delete_files, false)
           |> read_project_doc()
         }
 
@@ -117,24 +116,45 @@ defmodule FieldHubWeb.ProjectShowLive do
     {:noreply, assign(socket, :new_password, password)}
   end
 
-  def handle_event("display_delete_dialogue", _values, socket) do
-    {:noreply, assign(socket, :deletion_dialog_started, true)}
-  end
+  def handle_event(
+        "delete_form_change",
+        %{
+          "repeat_project_name_input" => repeated_project_name,
+          "delete_files_radio" => delete_files
+        } = _values,
+        socket
+      ) do
+    delete_files =
+      case delete_files do
+        "delete_files" ->
+          true
 
-  def handle_event("delete", %{"confirm_project_name" => confirm_project_name} = _values, socket) do
-    {:noreply, assign(socket, :confirm_project_name, confirm_project_name)}
+        "keep_files" ->
+          false
+      end
+
+    socket = assign(socket, :confirm_project_name, repeated_project_name)
+    socket = assign(socket, :delete_files, delete_files)
+    {:noreply, socket}
   end
 
   def handle_event(
-        "delete_the_project",
+        "delete",
         _values,
-        %{assigns: %{project: project, current_user: user_name}} = socket
+        %{assigns: %{project: project, current_user: user_name, delete_files: delete_files}} =
+          socket
       ) do
     socket =
       case User.is_admin?(user_name) do
         true ->
-          ProjectController.delete(socket, %{"project" => project})
-          {:ok, "Project `#{project}` has been deleted successfully."}
+          %{database: :deleted} = Project.delete(project, delete_files)
+          :deleted = User.delete(project)
+
+          if delete_files == false do
+            {:ok, "Project database`#{project}` has been deleted successfully."}
+          else
+            {:ok, "Project database`#{project}` and images have been deleted successfully."}
+          end
 
         false ->
           {:error, "You are not authorized to delete the project."}
@@ -148,6 +168,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           socket
           |> put_flash(:error, msg)
       end
+
+    IO.inspect(delete_files)
 
     {:noreply, redirect(socket, to: "/")}
   end

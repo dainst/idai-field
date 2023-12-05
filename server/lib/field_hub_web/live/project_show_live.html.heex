@@ -132,7 +132,6 @@
                         <input
                             type="text"
                             placeholder="New password"
-                            id="password"
                             name="password"
                             value={@new_password}
                         />
@@ -153,34 +152,35 @@
         </form>
 
         <hr>
-        <%!-- <h2>Delete project</h2> --%>
-        <form id="del_form" phx-change="delete">
+        <h2>Delete project</h2>
+        <form id="del_form" phx-change="delete_form_change">         
             <div class="row">
-                <div class="column column">                            
-                    <button type="button" class="button button-outline" phx-click="display_delete_dialogue" style="width:100%">
-                        Click here to delete the project
-                    </button>
+                <div class="column"> 
+                 <input 
+                    type="text" 
+                    placeholder="Repeat the project name to delete"
+                    name="repeat_project_name_input"
+                    value={@confirm_project_name}                    
+                /> 
                 </div>
             </div>
 
-        <%= if @deletion_dialog_started == true do %>
             <div class="row">
-                <div class="column column"> 
-                 <input 
-                    type="text" 
-                    placeholder="To confirm the deletion type the name of the project."
-                    id="confirm_project_name"
-                    name="confirm_project_name"
-                    value={@confirm_project_name}                    
-                /> 
-                </div>                
                 <div class="column">
-                    <button type="button" class="button"  phx-click="delete_the_project" disabled={@confirm_project_name != @project} style="width:100%">
+                    <input type="radio" name="delete_files_radio" id="delete_database" value="keep_files" checked={not @delete_files}>
+                    <label for="delete_database">Delete database only</label><br>
+                    <input type="radio" name="delete_files_radio" id="delete_database_and_files" value="delete_files" checked={@delete_files}>
+                    <label for="delete_database_and_files">Delete database and image files</label>
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="button" phx-click="delete" disabled={@confirm_project_name != @project} style="width:100%">
                        Delete
                     </button>
-                </div>                          
+                </div>   
             </div>
-        <% end %>
         </form>
     <% end %>
 </div>

@@ -12,6 +12,10 @@ defmodule FieldHubWeb.Api.ProjectController do
 
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
+  @moduledoc """
+  This API controller module handles the HTTP requests for listing, creating or deleting projects.
+  """
+
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
     render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
   end
@@ -85,8 +89,17 @@ defmodule FieldHubWeb.Api.ProjectController do
     end
   end
 
-  def delete(_conn, %{"project" => id}) do
-    Project.delete(id)
-    User.delete(id)
+  def delete(conn, %{"project" => id}) do
+    project_deletion_result = Project.delete(id)
+    user_deletion_result = User.delete(id)
+
+    response_payload = %{
+      status_project: project_deletion_result,
+      status_user: user_deletion_result
+    }
+
+    conn
+    |> put_view(StatusView)
+    |> render(%{info: response_payload})
   end
 end

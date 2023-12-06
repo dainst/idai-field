@@ -341,7 +341,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, %{conn: conn}}
     end
 
-    test "admin has passwort setting interface", %{conn: conn} do
+    test "admin has password setting interface", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       html = render(view)

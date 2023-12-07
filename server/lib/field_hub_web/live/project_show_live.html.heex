@@ -151,7 +151,17 @@
                 </div>
             </div>
         </form>
-
+        <hr>
+        <h2>Cache (XX ko - last update AAAA-MM-DD-00:00:00)</h2>
+        
+        <button type="button" class="button" phx-click="delete_cache" >Delete/Update cache </button>
+         
+                <pre>
+                 <%=
+                 "Project: " <> @project
+                   @cache
+                   %>
+                </pre>
         <hr>
         <h2>Delete project</h2>
         <form id="del_form" phx-change="delete_form_change">         

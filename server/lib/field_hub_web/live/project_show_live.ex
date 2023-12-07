@@ -122,6 +122,7 @@ defmodule FieldHubWeb.ProjectShowLive do
     new_cache = "Delete or update cache in this handle_event"
     cache_index = FieldHub.FileStore.file_index(project)
 
+
     IO.inspect(cache_index)
     {:noreply, assign(socket, :cache, new_cache)}
     # {:noreply, assign(socket, :cache, inspect(cache_index))}

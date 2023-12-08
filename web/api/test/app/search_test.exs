@@ -28,7 +28,7 @@ defmodule Api.AppTest.SearchTest do
   end
 
   @tag path: @documents_path, login: @user1
-  test "search", context do
+  test "search - removal of created and modified fields from top level", context do
     assert [
       %{
         project: "a",

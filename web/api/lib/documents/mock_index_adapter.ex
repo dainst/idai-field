@@ -7,7 +7,9 @@ defmodule Api.Documents.MockIndexAdapter do
       identifier: "ident1",
       category: %{"name" => "Operation"},
       groups: []
-    }
+    },
+    created: "2023-11-15",
+    modified: []
   }
   @doc_b %{
     project: "b",
@@ -15,8 +17,10 @@ defmodule Api.Documents.MockIndexAdapter do
       id: "2",
       identifier: "ident2",
       category: %{"name" => "Operation"},
-      groups: []
-    }
+      groups: [],
+    },
+    created: "2023-11-15",
+    modified: []
   }
   @project_doc %{
     resource: %{

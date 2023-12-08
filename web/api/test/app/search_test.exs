@@ -45,7 +45,7 @@ defmodule Api.AppTest.SearchTest do
   end
 
   @tag path: @documents_path, login: @user1
-  test "filters search with no category selected", context do
+  test "filters - search with no category selected", context do
     assert nil == get_bucket(context, "Operation")
       |> get_in([:item, :value, :groups])
     assert nil == get_bucket(context, "Find")

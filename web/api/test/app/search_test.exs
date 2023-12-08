@@ -46,25 +46,22 @@ defmodule Api.AppTest.SearchTest do
 
   @tag path: @documents_path, login: @user1
   test "filters - search with no category selected", context do
-    assert nil == get_bucket(context, "Operation")
-      |> get_in([:item, :value, :groups])
-    assert nil == get_bucket(context, "Find")
-      |> get_in([:item, :value, :groups])
+    assert nil == get_groups(context, "Operation")
+    assert nil == get_groups(context, "Find")
   end
 
   @tag path: @documents_path, login: @user1, selected_category: "Operation"
   test "filters - search with category selected (when exactly one category selected, it will add groups to the filter value for that category)", context do
-    assert ["stem", "parent", "dimension", "position"] == get_bucket(context, "Operation")
-      |> get_in([:item, :value, :groups])
+    assert ["stem", "parent", "dimension", "position"] == get_groups(context, "Operation")
       |> Enum.map(&(&1.name))
-    assert nil == get_bucket(context, "Find")
-      |> get_in([:item, :value, :groups])
+    assert nil == get_groups(context, "Find")
   end
 
-  defp get_bucket context, category do
+  defp get_groups context, category do
     context.body.filters
       |> Enum.find(&(&1.name == "resource.category.name"))
       |> get_in([:values])
       |> Enum.find(&(category == &1.item.value.name))
+      |> get_in([:item, :value, :groups])
   end
 end

@@ -11,7 +11,7 @@ $border-radius: 4px;
 .navbar {
   -webkit-app-region: drag;
   padding: 0 10px;
-  height: 45px;
+  height: $navbar-height;
 
   .nav-item {
     -webkit-app-region: no-drag;
@@ -87,6 +87,7 @@ $border-radius: 4px;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
     position: relative;
+    height: $navbar-height - 3px;
 
     &:before,
     &:after {
@@ -111,8 +112,10 @@ $border-radius: 4px;
     }
 
     .mdi-home {
+      position: relative;
+      top: 1px;
       font-size: 22px;
-      line-height: 22px;
+      line-height: 25px;
 
       &:hover {
         color: inherit;
@@ -199,11 +202,12 @@ $border-radius: 4px;
     }
 
     a.nav-link {
-      height: $navbar-height - 3px;
       padding-right: 9px !important;
 
       .closable-tab-label {
         display: inline-block;
+        position: relative;
+        top: 1px;
         margin-left: 5px;
         margin-right: 5px;
         max-width: 425px;
@@ -214,7 +218,7 @@ $border-radius: 4px;
 
       .mdi-close {
         position: relative;
-        top: -7px;
+        top: -6px;
         border-radius: 5px;
         padding-left: 1px;
         width: 16px;
@@ -223,7 +227,7 @@ $border-radius: 4px;
       category-icon {
         position: relative;
         left: -4px;
-        top: -6px;
+        top: -5px;
       }
     }
   }

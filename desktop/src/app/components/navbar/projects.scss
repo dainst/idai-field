@@ -1,28 +1,27 @@
-#projects-badge {
-  padding: 0 !important;
+#projects-badge,
+#editor-name {
+  position: relative;
   max-width: 300px;
+  padding: 0 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: small;
-  position: relative;
   text-align: right;
-  right: -7px;
-
 
   &:hover {
     color: #777;
   }
 }
-#name {
-  position: relative;
-  top: -15px;
-  font-size: small;
-  cursor: default;
-  text-align: right;
-  right: -15px;
 
-  &:hover {
-    color: #777;
-  }
+#projects-badge {
+  top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+#editor-name {
+  top: 3px;
+  font-size: 13px;
+  line-height: 16px;
 }

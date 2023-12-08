@@ -1,9 +1,11 @@
-<p
-    id="projects-badge"
-    class="nav-link px-1"
-    type="button"
-    (click)="openModal()"
->
-    {{getProjectName()}}
-</p>
-<p id="name" class="px-2" type="button" (click)="openEditorModal()"> {{currentEditor}}</p>
+<div id="projects-badge"
+     class="nav-link"
+     (click)="openModal()">
+   {{getProjectName()}}
+</div>
+
+<div id="editor-name"
+     class="nav-link"
+     (click)="openEditorModal()">
+    {{currentEditor}}
+</div>

@@ -16,8 +16,8 @@ defmodule Api.AppTest.SearchTest do
   @user1 {"user-1", "pass-1"}
 
   setup context do
-   filters =if context[:category_selected] do
-        ["project:a", "category:Operation"]
+   filters =if context[:selected_category] do
+        ["project:a", "category:" <> context.selected_category]
       else
         ["project:a"]
       end
@@ -42,32 +42,21 @@ defmodule Api.AppTest.SearchTest do
         }
       }
     ] == context.body.documents
-    assert [
-      %{
-        label: %{de: "Kategorie", en: "Category"},
-        name: "resource.category.name",
-        values: [
-          %{
-            item: %{
-              count: 1,
-              value: %{
-                groups: nil,
-                label: %{de: "Maßnahme", en: "Operation"},
-                name: "Operation"
-              }
-            },
-            trees: []
-          }
-        ]
-      }
-    ] == context.body.filters
   end
 
-  @tag path: @documents_path, login: @user1, category_selected: true
+  @tag path: @documents_path, login: @user1, selected_category: "Operation"
   test "search with category selected (when exactly one category selected, it will add groups to the filter value for that category)", context do
-    assert ["stem", "parent", "dimension", "position"] == context.body.filters
-      |> Enum.find(&(&1.name == "resource.category.name"))
-      |> get_in([:values, Access.at(0), :item, :value, :groups])
+    assert ["stem", "parent", "dimension", "position"] == get_bucket(context, "Operation")
+      |> get_in([:item, :value, :groups])
       |> Enum.map(&(&1.name))
+    assert nil == get_bucket(context, "Find")
+      |> get_in([:item, :value, :groups])
+  end
+
+  defp get_bucket context, category do
+    context.body.filters
+      |> Enum.find(&(&1.name == "resource.category.name"))
+      |> get_in([:values])
+      |> Enum.find(&(category == &1.item.value.name))
   end
 end

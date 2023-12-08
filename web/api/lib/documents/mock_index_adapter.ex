@@ -72,6 +72,26 @@ defmodule Api.Documents.MockIndexAdapter do
                     ]
                   }
                 }
+              },
+              # this won't have anything to do with the actual search result, but we want to know whether the code which sets the groups for only the selected category works properly
+              %{
+                key: "Find",
+                doc_count: 1,
+                data: %{
+                  hits: %{
+                    hits: [
+                      %{ _source: %{
+                        "resource.category": [%{
+                        name: "Find",
+                          label: %{
+                              de: "Fund",
+                              en: "Find"
+                          }
+                      }]
+                      }}
+                    ]
+                  }
+                }
               }
             ]
           }

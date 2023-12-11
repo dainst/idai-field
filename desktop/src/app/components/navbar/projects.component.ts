@@ -33,7 +33,7 @@ export class ProjectsComponent implements OnInit {
 
     public openModal = () => this.projectModalLauncher.editProject();
 
-    public openEditorModal = () => this.appComponent.promptEditorName();
+    public openEditorModal = () => this.appComponent.openUpdateEditorNameModal();
 
 
     ngOnInit() {

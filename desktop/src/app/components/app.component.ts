@@ -68,7 +68,7 @@ export class AppComponent {
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
 
-        if (!Settings.hasUsername(settingsProvider.getSettings())) this.promptEditorName();
+        if (!Settings.hasUsername(settingsProvider.getSettings())) this.openUpdateEditorNameModal();
     }
 
 
@@ -141,9 +141,14 @@ export class AppComponent {
     }
 
 
-    public async promptEditorName() {
+    public async openUpdateEditorNameModal() {
 
-        this.menus.setContext(MenuContext.MODAL);
+        const menuContext: MenuContext = this.menus.getContext(); 
+        this.menus.setContext(
+            menuContext === MenuContext.CONFIGURATION
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
+        );
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
@@ -153,7 +158,7 @@ export class AppComponent {
         } catch (_) {
             // Modal has been canceled
         } finally {
-            this.menus.setContext(MenuContext.DEFAULT);
+            this.menus.setContext(menuContext);
         }
     }
 }

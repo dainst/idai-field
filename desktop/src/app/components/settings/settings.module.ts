@@ -7,7 +7,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { SettingsComponent } from './settings.component';
 import { LanguageSettingsComponent } from './language-settings.component';
 import { LanguagePickerModalComponent } from '../widgets/languages/language-picker-modal.component';
-import { UpdateEditorNameModalComponent } from './update-editor-name-modal.component';
+import { UpdateUsernameModalComponent } from './update-username-modal.component';
 
 
 
@@ -23,7 +23,7 @@ import { UpdateEditorNameModalComponent } from './update-editor-name-modal.compo
         SettingsComponent,
         LanguageSettingsComponent,
         LanguagePickerModalComponent,
-        UpdateEditorNameModalComponent
+        UpdateUsernameModalComponent
     ],
     providers: [],
     entryComponents: [

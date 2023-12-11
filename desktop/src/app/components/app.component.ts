@@ -11,7 +11,7 @@ import { UtilTranslations } from '../util/util-translations';
 import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
-import { UpdateEditorNameModalComponent } from './settings/update-editor-name-modal.component';
+import { UpdateUsernameModalComponent } from './settings/update-username-modal.component';
 import { MenuContext } from '../services/menu-context';
 import { Menus } from '../services/menus';
 
@@ -68,7 +68,7 @@ export class AppComponent {
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
 
-        if (!Settings.hasUsername(settingsProvider.getSettings())) this.openUpdateEditorNameModal();
+        if (!Settings.hasUsername(settingsProvider.getSettings())) this.openUpdateUsernameModal();
     }
 
 
@@ -141,7 +141,7 @@ export class AppComponent {
     }
 
 
-    public async openUpdateEditorNameModal() {
+    public async openUpdateUsernameModal() {
 
         const menuContext: MenuContext = this.menus.getContext(); 
         this.menus.setContext(
@@ -152,7 +152,7 @@ export class AppComponent {
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
-                UpdateEditorNameModalComponent, { animation: false, backdrop: 'static', keyboard: false }
+                UpdateUsernameModalComponent, { animation: false, backdrop: 'static', keyboard: false }
             );
             await modalRef.result;
         } catch (_) {

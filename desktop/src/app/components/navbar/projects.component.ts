@@ -16,7 +16,7 @@ import { AppComponent } from '../app.component';
 export class ProjectsComponent implements OnInit {
 
     public selectedProject: string;
-    public currentEditor: string;
+    public username: string;
 
 
     constructor(private settingsProvider: SettingsProvider,
@@ -24,16 +24,16 @@ export class ProjectsComponent implements OnInit {
                 private appComponent: AppComponent,
                 private labels: Labels) {
 
-        this.currentEditor = this.settingsProvider.getSettings().username;
+        this.username = this.settingsProvider.getSettings().username;
         this.settingsProvider.settingsChangesNotifications().subscribe((settings) => {
-            this.currentEditor = settings.username;
+            this.username = settings.username;
         });
     }
 
 
     public openModal = () => this.projectModalLauncher.editProject();
 
-    public openEditorModal = () => this.appComponent.openUpdateEditorNameModal();
+    public openUsernameModal = () => this.appComponent.openUpdateUsernameModal();
 
 
     ngOnInit() {

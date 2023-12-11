@@ -6,7 +6,7 @@ import { Settings } from '../../services/settings/settings';
 
 
 @Component({
-    templateUrl: './update-editor-name-modal.html',
+    templateUrl: './update-username-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -14,16 +14,16 @@ import { Settings } from '../../services/settings/settings';
 /**
  * @author Danilo Guzzo
  */
-export class UpdateEditorNameModalComponent {
+export class UpdateUsernameModalComponent {
 
-    public editorName: string;
+    public username: string;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private settingsProvider: SettingsProvider) {
 
-        this.editorName = this.settingsProvider.getSettings().username;
+        this.username = this.settingsProvider.getSettings().username;
     }
 
 
@@ -39,7 +39,7 @@ export class UpdateEditorNameModalComponent {
     public confirm() {
 
         const settings: Settings = this.settingsProvider.getSettings();
-        settings.username = this.editorName;  
+        settings.username = this.username;  
 
         this.settingsService.updateSettings(settings);
         this.activeModal.close();

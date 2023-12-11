@@ -37,7 +37,11 @@ export class UpdateUsernameModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Enter') this.confirm();
+        if (event.key === 'Enter') {
+            this.confirm();
+        } else if (event.key === 'Escape' && !this.welcomeMode) {
+            this.cancel();
+        }
     }
 
 

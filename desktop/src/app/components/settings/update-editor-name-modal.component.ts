@@ -6,7 +6,7 @@ import { Settings } from '../../services/settings/settings';
 
 
 @Component({
-    templateUrl: './update-editor.html',
+    templateUrl: './update-editor-name-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -14,7 +14,7 @@ import { Settings } from '../../services/settings/settings';
 /**
  * @author Danilo Guzzo
  */
-export class UpdateEditorComponent {
+export class UpdateEditorNameModalComponent {
 
     public editorName: string;
 

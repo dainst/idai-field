@@ -313,7 +313,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ERROR_MALFORMED_ADDRESS] = {
             content: i18n({
                 id: 'messages.settings.error.malformedAddress',
-                value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
+                value: 'Bitte geben Sie als Adresse eine gültige URL ein.'
             }),
             level: 'danger',
             params: [],

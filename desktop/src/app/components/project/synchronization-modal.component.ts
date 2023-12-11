@@ -6,6 +6,9 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { Settings, SyncTarget } from '../../services/settings/settings';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
+import { Messages } from '../messages/messages';
+import { M } from '../messages/m';
+import { SettingsErrors } from '../../services/settings/settings-errors';
 
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
@@ -43,7 +46,8 @@ export class SynchronizationModalComponent implements OnInit {
                 private remoteImageStore: RemoteImageStore,
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
-                private decimalPipe: DecimalPipe) {}
+                private decimalPipe: DecimalPipe,
+                private messages: Messages) {}
 
 
     async ngOnInit() {
@@ -209,9 +213,14 @@ export class SynchronizationModalComponent implements OnInit {
     public async apply() {
 
         try {
-            this.settings = await this.settingsService.updateSettings(this.settings);
+            this.settings = await this.settingsService.updateSettings(this.settings, 'synchronization');
         } catch (err) {
-            return console.error(err);
+            if (err === SettingsErrors.MALFORMED_ADDRESS) {
+                this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
+            } else {
+                console.error(err);
+            }
+            return; 
         }
 
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];

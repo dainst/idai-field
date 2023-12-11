@@ -9,6 +9,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { SettingsService } from '../../services/settings/settings-service';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { SettingsErrors } from '../../services/settings/settings-errors';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -97,13 +98,13 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
             = !equal(this.settings.languages)(this.settingsProvider.getSettings().languages);
 
         try {
-            await this.settingsService.updateSettings(this.settings);
+            await this.settingsService.updateSettings(this.settings, 'settings');
         } catch (err) {
             this.saving = false;
-            if (err === 'malformedAddress') {
-                this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
-            } else if (err === 'missingUsername') {
+            if (err === SettingsErrors.MISSING_USERNAME) {
                 this.messages.add([M.SETTINGS_ERROR_MISSING_USERNAME]);
+            } else {
+                console.error(err);
             }
             return;
         }

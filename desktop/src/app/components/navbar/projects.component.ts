@@ -18,20 +18,21 @@ export class ProjectsComponent implements OnInit {
     public selectedProject: string;
     public currentEditor: string;
 
+
     constructor(private settingsProvider: SettingsProvider,
                 private projectModalLauncher: ProjectModalLauncher,
                 private appComponent: AppComponent,
                 private labels: Labels) {
-                    this.currentEditor = this.settingsProvider.getSettings().username;
-                    this.settingsProvider
-            .settingsChangesNotifications()
-            .subscribe((settings) => {
-                this.currentEditor = settings.username;
-            })
-                }
+
+        this.currentEditor = this.settingsProvider.getSettings().username;
+        this.settingsProvider.settingsChangesNotifications().subscribe((settings) => {
+            this.currentEditor = settings.username;
+        });
+    }
 
 
     public openModal = () => this.projectModalLauncher.editProject();
+
     public openEditorModal = () => this.appComponent.promptEditorName();
 
 

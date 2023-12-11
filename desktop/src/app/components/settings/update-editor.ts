@@ -8,40 +8,40 @@ import { Settings } from '../../services/settings/settings';
 @Component({
     templateUrl: './update-editor.html',
     host: {
-        '(window:keydown)': 'clickEnter($event)'
+        '(window:keydown)': 'onKeyDown($event)'
     }
 })
 /**
  * @author Danilo Guzzo
  */
 export class UpdateEditorComponent {
-    public currentEditor: string;
+
+    public editorName: string;
 
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        private settingsService: SettingsService,
-        private settingsProvider: SettingsProvider
-    ) {
-        this.currentEditor = this.settingsProvider.getSettings().username;
-    }
+    constructor(public activeModal: NgbActiveModal,
+                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider) {
 
-
-    public confirm = () => {
-        let oldSettings: Settings = this.settingsProvider.getSettings();
-        oldSettings.username = this.currentEditor;  
-
-        this.settingsService.updateSettings(oldSettings);
-        this.activeModal.close();
+        this.editorName = this.settingsProvider.getSettings().username;
     }
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
     
 
-    public clickEnter(event: KeyboardEvent){
-        if(event.key === 'Enter'){
-            this.confirm();
-        }
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Enter') this.confirm();
+    }
+
+
+    public confirm() {
+
+        const settings: Settings = this.settingsProvider.getSettings();
+        settings.username = this.editorName;  
+
+        this.settingsService.updateSettings(settings);
+        this.activeModal.close();
     }
 }

@@ -68,9 +68,7 @@ export class AppComponent {
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
 
-        if (settingsProvider.getSettings()["username"] == "anonymous") {
-            this.promptEditorName()
-        }
+        if (!Settings.hasUsername(settingsProvider.getSettings())) this.promptEditorName();
     }
 
 
@@ -142,23 +140,20 @@ export class AppComponent {
         document.addEventListener('drop', event => event.preventDefault());
     }
 
+
     public async promptEditorName() {
+
         this.menus.setContext(MenuContext.MODAL);
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
                 UpdateEditorComponent, { animation: false, backdrop: 'static', keyboard: false }
             );
-            
-            //await modalRef.result;
-            return true;
+            await modalRef.result;
         } catch (_) {
-            return false;
+            // Modal has been canceled
         } finally {
             this.menus.setContext(MenuContext.DEFAULT);
         }
-        
-        
-        //router.navigate(["settings"])
     }
 }

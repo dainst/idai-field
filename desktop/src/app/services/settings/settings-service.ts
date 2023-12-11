@@ -66,16 +66,18 @@ export class SettingsService {
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      */
-    public async updateSettings(settingsParam: Settings): Promise<Settings> {
+    public async updateSettings(newSettings: Settings, validate: boolean = true): Promise<Settings> {
 
-        this.settingsProvider.setSettings(settingsParam);
-        const settings = this.settingsProvider.getSettings();
+        if (validate && !Settings.hasUsername(newSettings)) throw 'missingUsername';
+
+        this.settingsProvider.setSettings(newSettings);
+        const settings: Settings = this.settingsProvider.getSettings();
 
         Object.values(settings.syncTargets).forEach(syncTarget => {
             if (syncTarget.address) {
                 syncTarget.address = syncTarget.address.trim();
-                if (!SettingsService.validateAddress(syncTarget.address)) {
-                    throw Error('malformed_address');
+                if (validate && !SettingsService.validateAddress(syncTarget.address)) {
+                    throw 'malformedAddress';
                 }
             }
             if (syncTarget.password) syncTarget.password = syncTarget.password.trim();

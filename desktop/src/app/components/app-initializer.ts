@@ -139,7 +139,7 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 
     await progress.setPhase('loadingSettings');
     
-    const settings = await settingsService.updateSettings(await (new SettingsSerializer()).load());    
+    const settings = await settingsService.updateSettings(await (new SettingsSerializer()).load(), false);    
 
     return settings;
 };

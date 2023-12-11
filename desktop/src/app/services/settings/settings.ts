@@ -41,7 +41,7 @@ export module Settings {
     
     export function hasUsername(settings: Settings): boolean {
 
-        return settings.username !== undefined
+        return settings.username?.length
             && settings.username !== 'anonymous';
     }
 }

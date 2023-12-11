@@ -87,7 +87,6 @@ export class SettingsProvider {
 
         const settings = ObjectUtils.jsonClone(settings_);
 
-        if (!settings.username) settings.username = 'anonymous';
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
         if (settings.hostPassword === undefined) settings.hostPassword = SettingsProvider.generatePassword();

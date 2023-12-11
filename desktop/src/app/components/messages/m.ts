@@ -28,6 +28,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
+    public static SETTINGS_ERROR_MISSING_USERNAME = 'settings.error.missingUsername';
 
     // Projects Package
     public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
@@ -313,6 +314,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.settings.error.malformedAddress',
                 value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
+            content: i18n({
+                id: 'messages.settings.error.missingUsername',
+                value: 'Bitte geben Sie Ihren Namen im Feld "Name des Bearbeiters/der Bearbeiterin" ein.'
             }),
             level: 'danger',
             params: [],

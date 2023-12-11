@@ -100,7 +100,11 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
             await this.settingsService.updateSettings(this.settings);
         } catch (err) {
             this.saving = false;
-            this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
+            if (err === 'malformedAddress') {
+                this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
+            } else if (err === 'missingUsername') {
+                this.messages.add([M.SETTINGS_ERROR_MISSING_USERNAME]);
+            }
             return;
         }
 

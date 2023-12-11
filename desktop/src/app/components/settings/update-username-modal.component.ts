@@ -17,7 +17,7 @@ import { Settings } from '../../services/settings/settings';
  */
 export class UpdateUsernameModalComponent {
 
-    public allowCancelling: boolean = true;
+    public welcomeMode: boolean;
     
     public username: string;
 

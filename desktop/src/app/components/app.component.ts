@@ -69,7 +69,7 @@ export class AppComponent {
         this.listenToSettingsChangesFromMenu();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
-            this.openUpdateUsernameModal(false);
+            this.openUpdateUsernameModal(true);
         }
     }
 
@@ -143,7 +143,7 @@ export class AppComponent {
     }
 
 
-    public async openUpdateUsernameModal(allowCancelling: boolean = true) {
+    public async openUpdateUsernameModal(welcomeMode: boolean = false) {
 
         const menuContext: MenuContext = this.menus.getContext(); 
         this.menus.setContext(
@@ -156,7 +156,7 @@ export class AppComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 UpdateUsernameModalComponent, { animation: false, backdrop: 'static', keyboard: false }
             );
-            modalRef.componentInstance.allowCancelling = allowCancelling;
+            modalRef.componentInstance.welcomeMode = welcomeMode;
             await modalRef.result;
         } catch (_) {
             // Modal has been canceled

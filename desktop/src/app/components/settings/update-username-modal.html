@@ -20,7 +20,7 @@
         <span class="mdi mdi-content-save"></span>
         <span class="button-label" i18n="@@buttons.save">Speichern</span>
     </button>
-    <div class="btn btn-secondary" (click)="cancel()">
+    <div *ngIf="allowCancelling" class="btn btn-secondary" (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>
 </div>

@@ -13,9 +13,12 @@ import { Settings } from '../../services/settings/settings';
 })
 /**
  * @author Danilo Guzzo
+ * @author Thomas Kleinke
  */
 export class UpdateUsernameModalComponent {
 
+    public allowCancelling: boolean = true;
+    
     public username: string;
 
 

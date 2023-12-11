@@ -1,18 +1,18 @@
-<div id="update-username-modal-header" class="modal-header">
-    <h5 *ngIf="allowCancelling" i18n="@@settings.updateUserNameModal.heading.change">
+<div *ngIf="allowCancelling" id="update-username-modal-header" class="modal-header">
+    <h5 i18n="@@settings.updateUserNameModal.heading.change">
         Name des Bearbeiters/der Bearbeiterin ändern
-    </h5>
-    <h5 *ngIf="!allowCancelling" i18n="@@settings.updateUserNameModal.heading.welcome">
-        Willkommen
     </h5>
 </div>
 
-<div class="modal-body">
+<div id="update-username-modal-body" class="modal-body">
     <div *ngIf="allowCancelling" i18n="@@settings.updateUserNameModal.body.request.change">
         Bitte geben Sie Ihren Namen ein.
     </div>
     <div *ngIf="!allowCancelling">
-        <p i18n="@@settings.updateUserNameModal.body.welcome">Herzlich Willkommen bei <b>Field Desktop</b>!</p>
+        <img src="img/logo.png" >
+        <p id="welcome-text" i18n="@@settings.updateUserNameModal.body.welcome">
+            Herzlich Willkommen bei <b>Field Desktop</b>!
+        </p>
         <p i18n="@@settings.updateUserNameModal.body.request.initial">Bitte geben Sie zunächst Ihren Namen ein.</p>
         <p i18n="@@settings.updateUserNameModal.body.info">
             Anhand dieser Angabe können Änderungen, die Sie an den Datensätzen eines Projekts vornehmen,

@@ -16,9 +16,8 @@
 </div>
 
 <div class="modal-footer">
-    <button id="confirm-button" class="btn btn-success" (click)="confirm()">
-        <span class="mdi mdi-content-save"></span>
-        <span class="button-label" i18n="@@buttons.save">Speichern</span>
+    <button id="confirm-button" class="btn btn-primary" (click)="confirm()">
+        <span i18n="@@buttons.apply">Übernehmen</span>
     </button>
     <div *ngIf="allowCancelling" class="btn btn-secondary" (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>

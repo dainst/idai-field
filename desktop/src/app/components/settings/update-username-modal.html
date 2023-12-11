@@ -28,10 +28,15 @@
 </div>
 
 <div class="modal-footer">
-    <button id="confirm-button" class="btn btn-primary" (click)="confirm()">
+    <button id="confirm-button"
+            class="btn btn-primary"
+            [ngClass]="{ 'disabled': !this.isValidUsername() }"
+            (click)="confirm()">
         <span i18n="@@buttons.apply">Übernehmen</span>
     </button>
-    <div *ngIf="allowCancelling" class="btn btn-secondary" (click)="cancel()">
+    <div *ngIf="allowCancelling"
+         class="btn btn-secondary"
+         (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>
 </div>

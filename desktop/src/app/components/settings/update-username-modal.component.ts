@@ -26,11 +26,13 @@ export class UpdateUsernameModalComponent {
                 private settingsService: SettingsService,
                 private settingsProvider: SettingsProvider) {
 
-        this.username = this.settingsProvider.getSettings().username;
+        this.username = this.getUsernameFromSettings();
     }
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
+
+    public isValidUsername = () => this.username?.length > 0 && this.username !== 'anonymous';
     
 
     public onKeyDown(event: KeyboardEvent) {
@@ -41,10 +43,19 @@ export class UpdateUsernameModalComponent {
 
     public confirm() {
 
+        if (!this.isValidUsername()) return;
+
         const settings: Settings = this.settingsProvider.getSettings();
         settings.username = this.username;  
 
         this.settingsService.updateSettings(settings);
         this.activeModal.close();
+    }
+
+
+    private getUsernameFromSettings(): string {
+
+        const username: string = this.settingsProvider.getSettings().username;
+        return username === 'anonymous' ? '' : username;
     }
 }

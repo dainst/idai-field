@@ -41,7 +41,20 @@ export module Settings {
     
     export function hasUsername(settings: Settings): boolean {
 
-        return settings.username?.length
-            && settings.username !== 'anonymous';
+        return isUsername(settings.username);
+    }
+
+
+    export function isUsername(username: string): boolean {
+
+        return username
+            && username.trim().length > 0
+            && username !== 'anonymous';
+    }
+
+
+    export function validateUsername(username: string): boolean {
+
+        return username.trim().split(' ').length > 1;
     }
 }

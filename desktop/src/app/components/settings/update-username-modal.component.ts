@@ -3,6 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsService } from '../../services/settings/settings-service';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Settings } from '../../services/settings/settings';
+import { Messages } from '../messages/messages';
+import { M } from '../messages/m';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class UpdateUsernameModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
-                private settingsProvider: SettingsProvider) {
+                private settingsProvider: SettingsProvider,
+                private messages: Messages) {
 
         this.username = this.getUsernameFromSettings();
     }
@@ -32,7 +35,7 @@ export class UpdateUsernameModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
-    public isValidUsername = () => this.username?.length > 0 && this.username !== 'anonymous';
+    public isUsernameSet = () => Settings.isUsername(this.username);
     
 
     public onKeyDown(event: KeyboardEvent) {
@@ -47,7 +50,11 @@ export class UpdateUsernameModalComponent {
 
     public confirm() {
 
-        if (!this.isValidUsername()) return;
+        if (!this.isUsernameSet()) return;
+
+        if (!Settings.validateUsername(this.username)) {
+            return this.messages.add([M.SETTINGS_ERROR_INVALID_USERNAME]);
+        }
 
         const settings: Settings = this.settingsProvider.getSettings();
         settings.username = this.username;  

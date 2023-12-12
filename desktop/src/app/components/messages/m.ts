@@ -29,6 +29,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
     public static SETTINGS_ERROR_MISSING_USERNAME = 'settings.error.missingUsername';
+    public static SETTINGS_ERROR_INVALID_USERNAME = 'settings.error.invalidUsername';
 
     // Projects Package
     public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
@@ -322,7 +323,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
             content: i18n({
                 id: 'messages.settings.error.missingUsername',
-                value: 'Bitte geben Sie Ihren Namen im Feld "Name des Bearbeiters/der Bearbeiterin" ein.'
+                value: 'Bitte geben Sie Ihren Vor- und Nachnamen im Feld "Name des Bearbeiters/der Bearbeiterin" ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.SETTINGS_ERROR_INVALID_USERNAME] = {
+            content: i18n({
+                id: 'messages.settings.error.invalidUsername',
+                value: 'Bitte geben Sie Ihren Vor- und Nachnamen ein.'
             }),
             level: 'danger',
             params: [],

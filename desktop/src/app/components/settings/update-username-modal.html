@@ -31,7 +31,7 @@
 <div class="modal-footer">
     <button id="confirm-button"
             class="btn btn-primary"
-            [ngClass]="{ 'disabled': !this.isValidUsername() }"
+            [ngClass]="{ 'disabled': !this.isUsernameSet() }"
             (click)="confirm()">
         <span i18n="@@buttons.apply">Übernehmen</span>
     </button>

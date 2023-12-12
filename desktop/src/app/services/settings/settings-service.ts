@@ -73,7 +73,9 @@ export class SettingsService {
      */
     public async updateSettings(newSettings: Settings, validate: validationMode = 'none'): Promise<Settings> {
 
-        if (validate === 'settings' && !Settings.hasUsername(newSettings)) throw SettingsErrors.MISSING_USERNAME;
+        if (validate === 'settings' && !SettingsService.validateUsername(newSettings)) {
+            throw SettingsErrors.MISSING_USERNAME;
+        }
 
         this.settingsProvider.setSettings(newSettings);
         const settings: Settings = this.settingsProvider.getSettings();
@@ -304,10 +306,17 @@ export class SettingsService {
     }
 
 
-    private static validateAddress(address: any) {
+    private static validateAddress(address: any): boolean {
 
         return (address === '')
             ? true
             : validateUrl(address);
+    }
+
+
+    private static validateUsername(settings: Settings): boolean {
+
+        return Settings.hasUsername(settings)
+            && Settings.validateUsername(settings.username);
     }
 }

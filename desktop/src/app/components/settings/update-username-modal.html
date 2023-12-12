@@ -10,12 +10,14 @@
         <p id="welcome-text" i18n="@@settings.updateUserNameModal.body.welcome">
             Herzlich Willkommen bei <b>Field Desktop</b>!
         </p>
-        <p i18n="@@settings.updateUserNameModal.body.request.initial">Bitte geben Sie Ihren Namen ein.</p>
+        <p i18n="@@settings.updateUserNameModal.body.request">
+            Bitte geben Sie Ihren Namen ein.
+        </p>
         <p i18n="@@settings.updateUserNameModal.body.info">
             Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.
         </p>
     </div>
-    <div *ngIf="!welcomeMode" i18n="@@settings.updateUserNameModal.body.request.change">
+    <div *ngIf="!welcomeMode" i18n="@@settings.updateUserNameModal.body.request">
         Bitte geben Sie Ihren Namen ein.
     </div>
 

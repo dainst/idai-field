@@ -15,9 +15,11 @@ import { SettingsService } from './settings/settings-service';
 
 @Injectable()
 /**
- * @author Thomas Kleinke
+  * Used for opening modals from the menu or navbar
+  * 
+  * @author Thomas Kleinke
  */
-export class ProjectModalLauncher {
+export class MenuModalLauncher {
 
     private projectPropertiesObservers: Array<Observer<void>> = [];
 
@@ -33,7 +35,7 @@ export class ProjectModalLauncher {
         ObserverUtil.register(this.projectPropertiesObservers);
 
 
-   public async createProject() {
+    public async createProject() {
 
         const menuContext: MenuContext = this.menuService.getContext();
         this.setModalContext(menuContext);

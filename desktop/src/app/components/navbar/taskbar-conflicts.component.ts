@@ -7,7 +7,7 @@ import { Modals } from '../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../configuration/conflicts/configuration-conflicts-modal.component';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class TaskbarConflictsComponent {
                 private renderer: Renderer2,
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
-                private projectModalLauncher: ProjectModalLauncher,
+                private menuModalLauncher: MenuModalLauncher,
                 private modals: Modals,
                 private menus: Menus,
                 private zone: NgZone) {
@@ -53,7 +53,7 @@ export class TaskbarConflictsComponent {
         if (document.resource.category === 'Configuration') {
             await this.openConfigurationConflictsModal(document);
         } else if (document.resource.category === 'Project') {
-            await this.projectModalLauncher.editProject('conflicts');
+            await this.menuModalLauncher.editProject('conflicts');
         } else {
             await this.routingService.jumpToConflictResolver(document);
         }

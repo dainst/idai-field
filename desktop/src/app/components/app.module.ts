@@ -60,7 +60,7 @@ import { ProjectModule } from './project/project.module';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
-import { ProjectModalLauncher } from '../services/project-modal-launcher';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 
 
@@ -267,7 +267,7 @@ registerLocaleData(localeUk, 'uk');
         Menus,
         MenuNavigator,
         UtilTranslations,
-        ProjectModalLauncher,
+        MenuModalLauncher,
         ViewModalLauncher
     ],
     bootstrap: [AppComponent]

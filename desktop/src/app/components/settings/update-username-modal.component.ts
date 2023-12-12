@@ -52,10 +52,6 @@ export class UpdateUsernameModalComponent {
 
         if (!this.isUsernameSet()) return;
 
-        if (!Settings.validateUsername(this.username)) {
-            return this.messages.add([M.SETTINGS_ERROR_INVALID_USERNAME]);
-        }
-
         const settings: Settings = this.settingsProvider.getSettings();
         settings.username = this.username;  
 

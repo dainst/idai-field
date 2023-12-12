@@ -51,10 +51,4 @@ export module Settings {
             && username.trim().length > 0
             && username !== 'anonymous';
     }
-
-
-    export function validateUsername(username: string): boolean {
-
-        return username.trim().split(' ').length > 1;
-    }
 }

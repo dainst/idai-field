@@ -329,7 +329,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
             content: i18n({
                 id: 'messages.settings.error.missingUsername',
-                value: 'Bitte geben Sie Ihren Namen im Feld "Name des Bearbeiters/der Bearbeiterin" ein.'
+                value: 'Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.'
             }),
             level: 'danger',
             params: [],

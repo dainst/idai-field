@@ -17,7 +17,7 @@ import { Routing } from '../../../services/routing';
     selector: 'resources-search-constraints',
     templateUrl: '../../widgets/search-constraints.html',
     host: {
-        '(document:click)': 'handleClick($event)',
+        '(document:click)': 'handleClick($event)'
     }
 })
 /**
@@ -139,7 +139,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             this.menus.setContext(MenuContext.MODAL);
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeScannerModalComponent,
-                { animation: false }
+                { animation: false, backdrop: 'static' }
             );
 
             this.openDocument(await modalRef.result);
@@ -154,9 +154,9 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
     
     // to open the scanned document
     private async openDocument(scannedCode: string) {
-        // split the scanned code with an '@'
+       
         console.log(scannedCode);
-
+        // split the scanned code with an '@'
         const [uuid, projectName] = scannedCode.split('@');
         const document = (await this.datastore.get(uuid) as FieldDocument);
 

@@ -68,13 +68,12 @@ export class DoceditComponent {
             this.menus.setContext(MenuContext.MODAL);
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeScannerModalComponent,
-                { animation: false }
+                { animation: false, backdrop: 'static' }
             );
 
             const scannedCode = await modalRef.result;
             this.documentHolder.clonedDocument.resource.id = scannedCode;
             console.log(scannedCode);
-            // TODO: Set id in documentholder clone gedöns
 
             return true;
         } catch (_) {

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Routing } from '../../services/routing';
-import { Datastore, FieldDocument } from 'idai-field-core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FieldDocument } from 'idai-field-core';
 import QrScanner from 'qr-scanner'; 
 
 @Component({

@@ -6,11 +6,12 @@
 >
     Scanner
 </h1>
+<hr />
 <div>
     <video style="max-width: 100%"></video>
 </div>
 
-<h2 *ngIf="!hasCamera" style="text-align: center; color: red;">
+<h2 *ngIf="!hasCamera" style="text-align: center; color: red">
     <span
         class="mdi mdi-emoticon-sad-outline"
         style="
@@ -21,5 +22,11 @@
             color: red;
         "
     ></span>
-    Sorry <br> Camera not found
+    Sorry <br />
+    Camera not found
 </h2>
+<div class="modal-footer">
+    <div type="button" class="btn btn-secondary" (click)="close()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

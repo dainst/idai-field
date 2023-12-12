@@ -79,7 +79,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
          this.menus.setContext(MenuContext.MODAL);
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeScannerModalComponent,
-                { animation: false }
+                { animation: false, backdrop: 'static' }
             );
 
             const qrCode = await modalRef.result;

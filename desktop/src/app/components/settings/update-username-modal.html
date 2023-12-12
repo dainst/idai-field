@@ -1,0 +1,42 @@
+<div *ngIf="!welcomeMode" id="update-username-modal-header" class="modal-header">
+    <h5 i18n="@@settings.updateUserNameModal.heading.change">
+        Name der Benutzerin/des Benutzers ändern
+    </h5>
+</div>
+
+<div id="update-username-modal-body" class="modal-body">
+    <div *ngIf="welcomeMode">
+        <img src="img/logo.png" >
+        <p id="welcome-text" i18n="@@settings.updateUserNameModal.body.welcome">
+            Herzlich Willkommen bei <b>Field Desktop</b>!
+        </p>
+        <p i18n="@@settings.updateUserNameModal.body.request.initial">Bitte geben Sie Ihren Namen ein.</p>
+        <p i18n="@@settings.updateUserNameModal.body.info">
+            Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.
+        </p>
+    </div>
+    <div *ngIf="!welcomeMode" i18n="@@settings.updateUserNameModal.body.request.change">
+        Bitte geben Sie Ihren Namen ein.
+    </div>
+
+    <div class="form-group" style="margin-bottom: 0; margin-top: 15px">
+        <input id="username-modal-input"
+               [ngModel]="username"
+               (ngModelChange)="username = $event"
+               class="form-control"/>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="confirm-button"
+            class="btn btn-primary"
+            [ngClass]="{ 'disabled': !this.isUsernameSet() }"
+            (click)="confirm()">
+        <span i18n="@@buttons.apply">Übernehmen</span>
+    </button>
+    <div *ngIf="!welcomeMode"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

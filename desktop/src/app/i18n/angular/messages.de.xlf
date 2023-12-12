@@ -5003,8 +5003,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
-        <source>Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</source>
-        <target state="final">Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</target>
+        <source>Bitte geben Sie als Adresse eine gültige URL ein.</source>
+        <target state="final">Bitte geben Sie als Adresse eine gültige URL ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

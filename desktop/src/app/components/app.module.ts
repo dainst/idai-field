@@ -102,7 +102,7 @@ registerLocaleData(localeUk, 'uk');
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        HelpComponent,
+        HelpComponent
     ],
     providers: [
         Modals,

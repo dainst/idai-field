@@ -29,4 +29,18 @@ export module Settings {
             ? remote.getGlobal('getLocale')()
             : 'de'; // Return default locale if remote is not accessible (in unit tests)
     }
+
+    
+    export function hasUsername(settings: Settings): boolean {
+
+        return isUsername(settings.username);
+    }
+
+
+    export function isUsername(username: string): boolean {
+
+        return username
+            && username.trim().length > 0
+            && username !== 'anonymous';
+    }
 }

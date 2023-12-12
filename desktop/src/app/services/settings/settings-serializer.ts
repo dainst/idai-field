@@ -21,7 +21,7 @@ export class SettingsSerializer {
 
     public store(settings: Settings): Promise<void> {
 
-        if (!settings || !remote) return Promise.resolve(undefined);
+        if (!settings || !remote) return Promise.resolve(undefined);
 
         let configToWrite: any = {};
 

@@ -10,6 +10,7 @@ let window;
 
 export async function start() {
 
+    resetConfigJson();
     electronApp = await electron.launch({ args: ['.', 'test'] });
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
@@ -44,16 +45,14 @@ export async function resetApp() {
 }
 
 
-export async function resetConfigJson() {
+export function resetConfigJson() {
+    
+    const config = {
+        'dbs': ['test'],
+        'username': 'Test-User'
+    };
 
-    const configPath = await getGlobal('configPath');
-
-    return new Promise(resolve => {
-        fs.writeFile(configPath, '', err => {
-            if (err) console.error('Failure while resetting config.json', err);
-            resolve(undefined);
-        });
-    });
+    fs.writeFileSync('test/config/config.test.json', JSON.stringify(config));
 }
 
 
@@ -192,3 +191,4 @@ function getGlobal(globalName: string): Promise<any> {
 
     return window.evaluate(value => require('@electron/remote').getGlobal(value), globalName);
 }
+

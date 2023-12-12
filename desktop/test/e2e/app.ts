@@ -8,9 +8,15 @@ let electronApp;
 let window;
 
 
-export async function start() {
+const defaultConfig = {
+    'dbs': ['test'],
+    'username': 'Test-User'
+};
 
-    resetConfigJson();
+
+export async function start(config?) {
+
+    resetConfigJson(config);
     electronApp = await electron.launch({ args: ['.', 'test'] });
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
@@ -45,12 +51,7 @@ export async function resetApp() {
 }
 
 
-export function resetConfigJson() {
-    
-    const config = {
-        'dbs': ['test'],
-        'username': 'Test-User'
-    };
+export function resetConfigJson(config = defaultConfig) {
 
     fs.writeFileSync('test/config/config.test.json', JSON.stringify(config));
 }

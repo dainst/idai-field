@@ -8,6 +8,7 @@ import { DeleteProjectModalComponent } from '../components/project/delete-projec
 import { ProjectInformationModalComponent } from '../components/project/project-information-modal.component';
 import { SynchronizationModalComponent } from '../components/project/synchronization-modal.component';
 import { ViewModalLauncher } from '../components/viewmodal/view-modal-launcher';
+import { UpdateUsernameModalComponent } from '../components/settings/update-username-modal.component';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
 import { SettingsService } from './settings/settings-service';
@@ -90,7 +91,6 @@ export class MenuModalLauncher {
             DeleteProjectModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
-
         modalRef.componentInstance.projectIdentifier = projectIdentifier;
 
         try {
@@ -148,6 +148,31 @@ export class MenuModalLauncher {
         await this.viewModalLauncher.openImageViewModal(
             await this.datastore.get('project'), 'view'
         );
+    }
+
+
+    public async openUpdateUsernameModal(welcomeMode: boolean = false) {
+
+        const menuContext: MenuContext = this.menuService.getContext(); 
+        this.menuService.setContext(
+            menuContext === MenuContext.CONFIGURATION
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
+        );
+
+        const modalRef = this.modalService.open(
+            UpdateUsernameModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.welcomeMode = welcomeMode;
+
+        try {
+            await modalRef.result;
+        } catch (_) {
+            // Update username modal has been canceled
+        } finally {
+            this.menuService.setContext(menuContext);
+        }
     }
     
 

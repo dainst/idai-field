@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
@@ -11,9 +10,7 @@ import { UtilTranslations } from '../util/util-translations';
 import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
-import { UpdateUsernameModalComponent } from './settings/update-username-modal.component';
-import { MenuContext } from '../services/menu-context';
-import { Menus } from '../services/menus';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -38,13 +35,12 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
-                private menus: Menus,
-                private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
-                private changeDetectorRef: ChangeDetectorRef) {
+                private changeDetectorRef: ChangeDetectorRef,
+                private menuModalLauncher: MenuModalLauncher) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -69,7 +65,7 @@ export class AppComponent {
         this.listenToSettingsChangesFromMenu();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
-            this.openUpdateUsernameModal(true);
+            this.menuModalLauncher.openUpdateUsernameModal(true);
         }
     }
 
@@ -140,28 +136,5 @@ export class AppComponent {
 
         document.addEventListener('dragover', event => event.preventDefault());
         document.addEventListener('drop', event => event.preventDefault());
-    }
-
-
-    public async openUpdateUsernameModal(welcomeMode: boolean = false) {
-
-        const menuContext: MenuContext = this.menus.getContext(); 
-        this.menus.setContext(
-            menuContext === MenuContext.CONFIGURATION
-                ? MenuContext.CONFIGURATION_MODAL
-                : MenuContext.MODAL
-        );
-
-        try {
-            const modalRef: NgbModalRef = this.modalService.open(
-                UpdateUsernameModalComponent, { animation: false, backdrop: 'static', keyboard: false }
-            );
-            modalRef.componentInstance.welcomeMode = welcomeMode;
-            await modalRef.result;
-        } catch (_) {
-            // Modal has been canceled
-        } finally {
-            this.menus.setContext(menuContext);
-        }
     }
 }

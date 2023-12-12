@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Labels } from 'idai-field-core';
 import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 import { SettingsProvider } from '../../services/settings/settings-provider';
-import { AppComponent } from '../app.component';
 
 
 @Component({
@@ -21,7 +20,6 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private settingsProvider: SettingsProvider,
                 private menuModalLauncher: MenuModalLauncher,
-                private appComponent: AppComponent,
                 private labels: Labels) {
 
         this.username = this.settingsProvider.getSettings().username;
@@ -33,7 +31,7 @@ export class ProjectsComponent implements OnInit {
 
     public openModal = () => this.menuModalLauncher.editProject();
 
-    public openUsernameModal = () => this.appComponent.openUpdateUsernameModal();
+    public openUsernameModal = () => this.menuModalLauncher.openUpdateUsernameModal();
 
 
     ngOnInit() {

@@ -539,11 +539,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: '[0] Ressourcen wurden erfolgreich importiert.'
             }),
             level: 'success',
-            params: [
-                i18n({
-                    id: 'messages.import.success.multiple.defaultParameter',
-                    value: 'Mehrere'
-                })],
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_EMPTY] = {

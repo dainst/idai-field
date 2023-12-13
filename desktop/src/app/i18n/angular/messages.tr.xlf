@@ -4103,16 +4103,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
-        <source>Name des Bearbeiters/der Bearbeiterin</source>
-        <target state="translated">Düzenleyenin adı</target>
+        <source> Name der Benutzerin/des Benutzers </source>
+        <target state="needs-translation"> Name der Benutzerin/des Benutzers </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
-        <source>Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
-        <target state="translated">Veri seti değişikliklerinin bir kişiyle ilişkilendirilebilmesini sağlamak için düzenleyici adı düzenleme geçmişine kaydedilir. Bu ayar, sistemin olası çakışmaları ilişkilendirmesine ve çözmesine olanak tanıdığından, kullanıcılar arasında veya bir Field Server ile veri senkronize edilirken <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>çok önemlidir<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bu nedenle bir proje üzerinde çalışmaya başlamadan önce ayarlanması gerekir. Bu uygulamayla çalışan kullanıcının tam adının girilmesi önerilir. </target>
+        <source>Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. </source>
+        <target state="needs-translation">Veri seti değişikliklerinin bir kişiyle ilişkilendirilebilmesini sağlamak için düzenleyici adı düzenleme geçmişine kaydedilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -4871,8 +4871,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
-        <source>Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</source>
-        <target state="translated">Belirtilen sunucu adresi beklenen formata uymuyor.</target>
+        <source>Bitte geben Sie als Adresse eine gültige URL ein.</source>
+        <target state="needs-translation">Bitte geben Sie als Adresse eine gültige URL ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

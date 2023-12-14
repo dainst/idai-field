@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, Output,
-    ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
 import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
@@ -7,6 +7,7 @@ import { Loading } from './loading';
 import { AngularUtility } from '../../angular/angular-utility';
 import { Messages } from '../messages/messages';
 import { getDocumentSuggestions } from './get-document-suggestions';
+import { scrollTo } from '../../angular/scrolling';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
-    @ViewChild('documentsList', { static: false }) private documentsListElement: ElementRef;
+    @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
     public documents: Array<Document>;
     public selectedDocument: Document|undefined;
@@ -161,13 +162,8 @@ export class DocumentPickerComponent implements OnChanges {
     private async scrollToDocument(scrollTarget: Document) {
 
         await AngularUtility.refresh();
-        const containerElement: HTMLElement = this.documentsListElement.nativeElement;
-        const element: HTMLElement|null = document.getElementById(this.getElementId(scrollTarget));        
-        if (!element) return;
-
-        await AngularUtility.refresh();
-        const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
-        containerElement.scrollTo(0, scrollY);
+        const index: number = this.documents.indexOf(scrollTarget);
+        await scrollTo(index, this.getElementId(scrollTarget), this.scrollViewport);
     }
 
 

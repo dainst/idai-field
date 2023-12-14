@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { SyncService, SyncStatus, ImageSyncService } from 'idai-field-core';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class TaskbarSyncStatusComponent {
     constructor(private pouchSyncService: SyncService,
                 private imageSyncService: ImageSyncService,
                 private changeDetectorRef: ChangeDetectorRef,
-                private projectModalLauncher: ProjectModalLauncher) {
+                private menuModalLauncher: MenuModalLauncher) {
 
         this.pouchSyncService.statusNotifications().subscribe(() => {
             this.changeDetectorRef.detectChanges();
@@ -53,5 +53,5 @@ export class TaskbarSyncStatusComponent {
         return SyncStatus.InSync;
     }
 
-    public openSynchronizationModal = () => this.projectModalLauncher.openSynchronizationModal();
+    public openSynchronizationModal = () => this.menuModalLauncher.openSynchronizationModal();
 }

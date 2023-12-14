@@ -10,7 +10,6 @@ import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
 import { UtilTranslations } from '../../../util/util-translations';
-import { ProjectModalLauncher } from '../../../services/project-modal-launcher';
 import { Modals } from '../../../services/modals';
 import { ConfigurationConflictsModalComponent } from '../../configuration/conflicts/configuration-conflicts-modal.component';
 import { DoceditComponent } from '../../docedit/docedit.component';
@@ -20,6 +19,7 @@ import { DeleteFieldDataModalComponent } from './delete-field-data-modal.compone
 import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
 import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
+import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 
 
 type WarningSection = {
@@ -53,7 +53,7 @@ export class WarningsModalComponent {
 
     constructor(private activeModal: NgbActiveModal,
                 private projectConfiguration: ProjectConfiguration,
-                private projectModalLauncher: ProjectModalLauncher,
+                private menuModalLauncher: MenuModalLauncher,
                 private menus: Menus,
                 private indexFacade: IndexFacade,
                 private datastore: Datastore,
@@ -174,7 +174,7 @@ export class WarningsModalComponent {
         if (this.selectedDocument.resource.category === 'Configuration') {
             await this.openConfigurationConflictsModal();
         } else if (this.selectedDocument.resource.category === 'Project') {
-            await this.projectModalLauncher.editProject('conflicts');
+            await this.menuModalLauncher.editProject('conflicts');
         } else {
             await this.openResourceConflictsModal(this.selectedDocument)
         }

@@ -10,6 +10,7 @@ import { UtilTranslations } from '../util/util-translations';
 import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -38,7 +39,8 @@ export class AppComponent {
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
-                private changeDetectorRef: ChangeDetectorRef) {
+                private changeDetectorRef: ChangeDetectorRef,
+                private menuModalLauncher: MenuModalLauncher) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -61,6 +63,10 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+
+        if (!Settings.hasUsername(settingsProvider.getSettings())) {
+            this.menuModalLauncher.openUpdateUsernameModal(true);
+        }
     }
 
 

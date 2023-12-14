@@ -29,6 +29,12 @@ export class NavbarPage {
     }
 
 
+    public static async clickUsernameButton() {
+
+        return click(await this.getUsernameButton());
+    }x
+
+
     public static async clickSelectProject(option) {
 
         await waitForExist('#projectSelectBox');
@@ -73,6 +79,12 @@ export class NavbarPage {
     }
 
 
+    public static getUsernameButton() {
+
+        return getLocator('#username');
+    }
+
+
     // get text
 
     public static async getMessageText() {
@@ -96,5 +108,11 @@ export class NavbarPage {
     public static async getNumberOfWarnings() {
 
         return getText('#taskbar-warnings-button-pill');
+    }
+
+    
+    public static async getUsername() {
+
+        return getText(await this.getUsernameButton());
     }
 }

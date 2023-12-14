@@ -1,4 +1,4 @@
-import { click, getLocator } from '../app';
+import { click, getLocator, typeIn } from '../app';
 
 
 /**
@@ -22,4 +22,10 @@ export class SettingsPage {
 
         return getLocator('#imagestorepath-input');
     };
+
+
+    public static typeInUsername(username: string) {
+
+        return typeIn('#username-input', username);
+    }
 }

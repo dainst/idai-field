@@ -54,7 +54,7 @@ import { ProjectModule } from './project/project.module';
 import { FsAdapter } from '../services/imagestore/fs-adapter';
 import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
-import { ProjectModalLauncher } from '../services/project-modal-launcher';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
@@ -93,7 +93,7 @@ registerLocaleData(localeUk, 'uk');
     ],
     declarations: [
         AppComponent,
-        HelpComponent,
+        HelpComponent
     ],
     providers: [
         Modals,
@@ -258,9 +258,9 @@ registerLocaleData(localeUk, 'uk');
         Menus,
         MenuNavigator,
         UtilTranslations,
-        ProjectModalLauncher,
-        ViewModalLauncher,
-        WarningsService
+        WarningsService,
+        MenuModalLauncher,
+        ViewModalLauncher
     ],
     bootstrap: [AppComponent]
 })

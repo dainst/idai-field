@@ -213,10 +213,7 @@ const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     const institution: string = getTranslation(getFieldValue(projectDocument, 'institution') as undefined);
     const projectSupervisor: string = getTranslation(getFieldValue(projectDocument, 'projectSupervisor') as undefined);
     const contactPerson: string = getTranslation(getFieldValue(projectDocument, 'contactPerson') as undefined);
-    const staff: string =
-        (getFieldValue(projectDocument, 'staff') as undefined[])
-            .map(staff => getTranslation(staff))
-            .join(', ');
+    const staff: string = getStaffInfo(projectDocument);
 
     return <dl>
         <dt>{ t('projectHome.institution') }</dt>
@@ -312,6 +309,15 @@ const getProjectTitle = (projectDocument: Document): I18N.String => {
     return projectDocument.resource.shortDescription
         ?? projectDocument.resource.shortName
         ?? projectDocument.resource.identifier;
+};
+
+
+const getStaffInfo = (projectDocument: Document): string => {
+
+    const staffValues: I18N.String[]|string[] = getFieldValue(projectDocument, 'staff') as I18N.String[]|string[];
+    return staffValues
+        ? staffValues.map(staff => getTranslation(staff)).join(', ')
+        : '';
 };
 
 

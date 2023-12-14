@@ -8,6 +8,7 @@ import { DeleteProjectModalComponent } from '../components/project/delete-projec
 import { ProjectInformationModalComponent } from '../components/project/project-information-modal.component';
 import { SynchronizationModalComponent } from '../components/project/synchronization-modal.component';
 import { ViewModalLauncher } from '../components/viewmodal/view-modal-launcher';
+import { UpdateUsernameModalComponent } from '../components/settings/update-username-modal.component';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
 import { SettingsService } from './settings/settings-service';
@@ -15,9 +16,11 @@ import { SettingsService } from './settings/settings-service';
 
 @Injectable()
 /**
- * @author Thomas Kleinke
+  * Used for opening modals from the menu or navbar
+  * 
+  * @author Thomas Kleinke
  */
-export class ProjectModalLauncher {
+export class MenuModalLauncher {
 
     private projectPropertiesObservers: Array<Observer<void>> = [];
 
@@ -33,7 +36,7 @@ export class ProjectModalLauncher {
         ObserverUtil.register(this.projectPropertiesObservers);
 
 
-   public async createProject() {
+    public async createProject() {
 
         const menuContext: MenuContext = this.menuService.getContext();
         this.setModalContext(menuContext);
@@ -88,7 +91,6 @@ export class ProjectModalLauncher {
             DeleteProjectModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
-
         modalRef.componentInstance.projectIdentifier = projectIdentifier;
 
         try {
@@ -146,6 +148,31 @@ export class ProjectModalLauncher {
         await this.viewModalLauncher.openImageViewModal(
             await this.datastore.get('project'), 'view'
         );
+    }
+
+
+    public async openUpdateUsernameModal(welcomeMode: boolean = false) {
+
+        const menuContext: MenuContext = this.menuService.getContext(); 
+        this.menuService.setContext(
+            menuContext === MenuContext.CONFIGURATION
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
+        );
+
+        const modalRef = this.modalService.open(
+            UpdateUsernameModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.welcomeMode = welcomeMode;
+
+        try {
+            await modalRef.result;
+        } catch (_) {
+            // Update username modal has been canceled
+        } finally {
+            this.menuService.setContext(menuContext);
+        }
     }
     
 

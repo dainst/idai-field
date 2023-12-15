@@ -1,6 +1,9 @@
-@import 'taskbar-conflicts';
 @import 'taskbar-update';
 @import 'taskbar-sync-status';
+@import 'warnings/taskbar-warnings';
+@import 'warnings/warnings-modal';
+@import 'warnings/delete-field-data-modal';
+@import 'warnings/clean-up-relation-modal';
 
 .taskbar {
   margin-top: 2px;
@@ -13,7 +16,7 @@
     z-index: 2;
   }
 
-  #conflicts {
+  #warnings {
     z-index: 1;
   }
 

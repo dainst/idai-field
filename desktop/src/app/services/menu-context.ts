@@ -1,6 +1,6 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
     |'georeferenceEdit'|'configurationEdit'|'configurationValuelistEdit'|'configurationSubfieldEdit'
-    |'configurationModal'|'configurationManagement';
+    |'configurationModal'|'configurationManagement'|'warnings';
 
     
 /**
@@ -20,4 +20,5 @@ export module MenuContext {
     export const CONFIGURATION_SUBFIELD_EDIT = 'configurationSubfieldEdit';
     export const CONFIGURATION_MODAL = 'configurationModal';
     export const CONFIGURATION_MANAGEMENT = 'configurationManagement';
+    export const WARNINGS = 'warnings';
 }

@@ -23,6 +23,7 @@ export class DoceditLauncher {
     public async editDocument(document: Document|NewDocument,
                               activeGroup?: string): Promise<FieldDocument|undefined> {
 
+        const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
@@ -39,7 +40,7 @@ export class DoceditLauncher {
             if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
         }
 
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.menuService.setContext(menuContext);
 
         return result;
     }

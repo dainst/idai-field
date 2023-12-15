@@ -14,4 +14,4 @@ import { MessagesComponent } from './messages.component';
         MessagesComponent
     ]
 })
-export class IdaiMessagesModule {}
+export class MessagesModule {}

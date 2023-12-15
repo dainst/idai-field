@@ -1,6 +1,6 @@
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexItem } from '../../src/index/index-item';
-import { Field } from '../../src/model';
+import { Field } from '../../src/model/configuration/field';
 import { doc as helpersDoc } from '../test-helpers';
 
 
@@ -650,11 +650,12 @@ describe('ConstraintIndex', () => {
                                 name: 'period',
                                 inputType: Field.InputType.DROPDOWNRANGE,
                                 constraintIndexed: true
-                            }]
+                            }
+                        ]
                     }
                 ]
         }];
-        const docs = [doc('1'),doc('2')];
+        const docs = [doc('1'), doc('2')];
         docs[0].resource.period = { value: 'a1' };
         ci = ConstraintIndex.make({}, categories);
         ConstraintIndex.put(ci, docs[0]);

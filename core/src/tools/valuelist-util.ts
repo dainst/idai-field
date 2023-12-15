@@ -13,14 +13,10 @@ import { Field } from '../model/configuration/field';
  */
 export module ValuelistUtil {
 
-    export function getValuesNotIncludedInValuelist(resource: Resource|undefined,
-                                                    fieldName: string|undefined,
-                                                    valuelist: Valuelist): string[]|undefined {
+    export function getValuesNotIncludedInValuelist(fieldContent: any, valuelist: Valuelist): string[]|undefined {
 
-        if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
-
-        const fieldContent = resource[fieldName];
-
+        if (!fieldContent || !valuelist) return undefined;
+        
         const valuesToCheck: string[] = isArray(fieldContent)
             ? fieldContent
             : fieldContent[OptionalRange.VALUE]

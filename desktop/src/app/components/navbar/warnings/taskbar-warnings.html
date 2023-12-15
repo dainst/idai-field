@@ -1,0 +1,8 @@
+<div id="taskbar-warnings-container" *ngIf="getTotalWarningsCount()">
+    <a id="taskbar-warnings-button" (click)="openModal()">
+        <span id="taskbar-warnings-button-icon" class="mdi mdi-alert-outline"></span>
+        <span id="taskbar-warnings-button-pill" class="badge-pill badge-danger taskbar-badge">
+            {{getTotalWarningsCount()}}
+        </span>
+    </a>
+</div>

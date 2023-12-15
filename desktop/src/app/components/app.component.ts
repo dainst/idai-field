@@ -129,6 +129,133 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'false', this.i18n({ id: 'boolean.no', value: 'Nein' })
         );
+        this.utilTranslations.addTranslation(
+            'warnings.all', this.i18n({ id: 'util.warnings.all', value: 'Alle' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.conflicts',
+            this.i18n({ id: 'util.warnings.conflicts', value: 'Konflikte' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unconfigured',
+            this.i18n({ id: 'util.warnings.unconfigured', value: 'Unkonfigurierte Felder' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidFieldData',
+            this.i18n({ id: 'util.warnings.invalidFieldData', value: 'Ungültige Felddaten' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.outlierValues',
+            this.i18n({ id: 'util.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingRelationTargets',
+            this.i18n({ id: 'util.warnings.missingRelationTargets', value: 'Fehlende Zielressourcen von Relationen' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingIdentifierPrefixes',
+            this.i18n({ id: 'util.warnings.missingIdentifierPrefixes', value: 'Fehlende Bezeichner-Präfixe' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.nonUniqueIdentifiers',
+            this.i18n({ id: 'util.warnings.nonUniqueIdentifiers', value: 'Uneindeutige Bezeichner' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.resourceLimitExceeded',
+            this.i18n({ id: 'util.warnings.resourceLimitExceeded', value: 'Ressourcenlimit überschritten' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.input',
+            this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.multiInput',
+            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.text',
+            this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.int',
+            this.i18n({ id: 'config.inputType.int', value: 'Ganzzahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.unsignedInt',
+            this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.float',
+            this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.unsignedFloat',
+            this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.url',
+            this.i18n({ id: 'config.inputType.url', value: 'URL' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.dropdown',
+            this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.dropdownRange',
+            this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.radio',
+            this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.boolean',
+            this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.checkboxes',
+            this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.dating',
+            this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.date',
+            this.i18n({ id: 'config.inputType.date', value: 'Datum' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.dimension',
+            this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.literature',
+            this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.composite',
+            this.i18n({ id: 'config.inputType.composite', value: 'Kompositfeld' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.geometry',
+            this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.instanceOf',
+            this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.relation',
+            this.i18n({ id: 'config.inputType.relation', value: 'Relation' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.category',
+            this.i18n({ id: 'config.inputType.category', value: 'Kategorie' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.identifier',
+            this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' })
+        );
     }
 
 

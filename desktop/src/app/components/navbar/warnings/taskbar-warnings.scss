@@ -1,24 +1,24 @@
-#conflicts {
+#warnings {
   position: relative;
   height: 40px;
   margin-right: 12px;
 
-  #taskbar-conflicts-container {
+  #taskbar-warnings-container {
     margin-left: 18px;
 
     &:hover {
-      #taskbar-conflicts-button-icon {
+      #taskbar-warnings-button-icon {
         color: $link-hover-color;
       }
     }
 
-    #taskbar-conflicts-button-icon {
+    #taskbar-warnings-button-icon {
       color: $navbar-link-color;
     }
   }
 }
 
-.conflicts-popover {
+.warnings-popover {
   border-top: none !important;
   box-shadow: none !important;
 
@@ -65,7 +65,7 @@
         transition: background-color .5s ease;
       }
 
-      #taskbar-conflict-Configuration {
+      #taskbar-warning-Configuration {
         padding-top: 21px;
         padding-left: 14px;
         font-size: 14px;

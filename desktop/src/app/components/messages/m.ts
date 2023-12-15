@@ -23,7 +23,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // App Package
     public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
-    public static APP_RESET_SUCCESS = 'app.resetAppSuccess';
+    public static APP_CONTROLLER_SUCCESS = 'app.appControllerSuccess';
 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
@@ -353,10 +353,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.APP_RESET_SUCCESS] = {
+        this.msgs[M.APP_CONTROLLER_SUCCESS] = {
             content: i18n({
-                id: 'messages.app.resetSuccess',
-                value: 'Die Anwendung wurde erfolgreich zurückgesetzt.'
+                id: 'messages.app.appControllerSuccess',
+                value: 'Erfolgreich ausgeführt.'
             }),
             level: 'success',
             params: [],

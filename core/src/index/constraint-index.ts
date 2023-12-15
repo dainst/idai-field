@@ -45,7 +45,6 @@ export interface ConstraintIndex {
 }
 
 
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -80,22 +79,20 @@ export module ConstraintIndex {
     export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(index: ConstraintIndex,
-                        doc: Document,
-                        skipRemoval: boolean = false) {
+    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false) {
 
-        if (!skipRemoval) remove(index, doc);
+        if (!skipRemoval) remove(index, document);
         for (let key in index.indexDefinitions) {
-            putFor(index, index.indexDefinitions[key], doc);
+            putFor(index, index.indexDefinitions[key], document);
         }
-        addToAllIndex(index.allIndex, doc);
+        addToAllIndex(index.allIndex, document);
     }
 
 
-    export function remove(index: ConstraintIndex, doc: Document) {
+    export function remove(index: ConstraintIndex, document: Document) {
 
-        Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, doc));
-        if (index.allIndex[doc.resource.id]) delete index.allIndex[doc.resource.id];
+        Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, document));
+        if (index.allIndex[document.resource.id]) delete index.allIndex[document.resource.id];
     }
 
 
@@ -152,32 +149,32 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
+    function putFor(index: ConstraintIndex, definition: IndexDefinition, document: Document) {
 
-        const contentAtPath = getOn(definition.pathArray, doc);
+        const contentAtPath = getOn(definition.pathArray, document);
         const elements: any[] = getElements(contentAtPath);
 
         for (let element of elements) {
             switch(definition.type) {
                 case 'exist':
-                    if (!isMissing(element)) addToExistIndex(index.existIndex, doc, definition.path);
+                    if (!isMissing(element)) addToExistIndex(index.existIndex, document, definition.path);
                     break;
     
                 case 'match':
                     if ((!element && element !== false) || Array.isArray(element)) break;
-                    addToIndex(index.matchIndex, doc, definition.path, element.toString());
+                    addToIndex(index.matchIndex, document, definition.path, element.toString());
                     break;
     
                 case 'contain':
                     if (!element || !Array.isArray(element)) break;
                     for (let target of element) {
-                        addToIndex(index.containIndex, doc, definition.path, target);
+                        addToIndex(index.containIndex, document, definition.path, target);
                     }
                     break;
     
                 case 'links':
                     if (!element || !Array.isArray(element)) break;
-                    addToLinksIndex(index.linksIndex, doc, definition.path, element);
+                    addToLinksIndex(index.linksIndex, document, definition.path, element);
                     break;
             }
         }
@@ -447,32 +444,32 @@ export module ConstraintIndex {
     }
 
 
-    function addToIndex(index: any, doc: Document, path: string, target: string) {
+    function addToIndex(index: any, document: Document, path: string, target: string) {
 
         target = target.toLowerCase();
         if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id] = true;
+        index[path][target][document.resource.id] = true;
     }
 
 
-    function addToExistIndex(index: any, doc: Document, path: string) {
+    function addToExistIndex(index: any, document: Document, path: string) {
 
         if (!index[path]) index[path] = {};
-        index[path][doc.resource.id] = true;
+        index[path][document.resource.id] = true;
     }
 
 
-    function addToLinksIndex(index: any, doc: Document, path: string, targets: Array<Resource.Id>) {
+    function addToLinksIndex(index: any, document: Document, path: string, targets: Array<Resource.Id>) {
 
         const ts = {};
         for (let t of targets) ts[t] = true;
-        index[path][doc.resource.id] = ts;
+        index[path][document.resource.id] = ts;
     }
 
 
-    function addToAllIndex(index: any, doc: Document) {
+    function addToAllIndex(index: any, document: Document) {
 
-        index[doc.resource.id] = true;
+        index[document.resource.id] = true;
     }
 
 

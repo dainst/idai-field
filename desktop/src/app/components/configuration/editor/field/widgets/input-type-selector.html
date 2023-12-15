@@ -7,7 +7,7 @@
         <option *ngFor="let inputType of getAvailableInputTypes()"
                 value="{{inputType.name}}"
                 [selected]="isSelectedInputType(inputType.name)">
-            {{inputType.label}}
+            {{getLabel(inputType.name)}}
         </option>
     </select>
 </div>

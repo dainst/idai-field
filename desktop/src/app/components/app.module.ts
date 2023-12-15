@@ -35,21 +35,15 @@ import { ConfigurationModule } from './configuration/configuration.module';
 import { ExportModule } from './export/export.module';
 import { HelpComponent } from './help/help.component';
 import { ImageOverviewModule } from './image/overview/image-overview.module';
-import { ImportModule } from './import/import-module';
+import { ImportModule } from './import/import.module';
 import { MatrixModule } from './matrix/matrix.module';
 import { Menus } from '../services/menus';
-import { IdaiMessagesModule } from './messages/idai-messages.module';
+import { MessagesModule } from './messages/messages.module';
 import { M } from './messages/m';
 import { MD } from './messages/md';
 import { Messages } from './messages/messages';
 import { Modals } from '../services/modals';
 import { Languages } from '../services/languages';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ProjectsComponent } from './navbar/projects.component';
-import { TaskbarConflictsComponent } from './navbar/taskbar-conflicts.component';
-import { TaskbarSyncStatusComponent } from './navbar/taskbar-sync-status.component';
-import { TaskbarUpdateComponent } from './navbar/taskbar-update.component';
-import { TaskbarComponent } from './navbar/taskbar.component';
 import { ResourcesModule } from './resources/resources.module';
 import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
@@ -62,6 +56,8 @@ import { RemoteImageStore } from '../services/imagestore/remote-image-store';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
+import { NavbarModule } from './navbar/navbar.module';
+import { WarningsService } from '../services/warnings/warnings-service';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -83,7 +79,7 @@ registerLocaleData(localeUk, 'uk');
         HttpClientModule,
         NgbModule,
         // NgbModule.forRoot(),
-        IdaiMessagesModule,
+        MessagesModule,
         routing,
         WidgetsModule,
         ImportModule,
@@ -92,16 +88,11 @@ registerLocaleData(localeUk, 'uk');
         DatastoreModule,
         MatrixModule,
         ConfigurationModule,
-        ProjectModule
+        ProjectModule,
+        NavbarModule
     ],
     declarations: [
         AppComponent,
-        NavbarComponent,
-        TaskbarComponent,
-        TaskbarConflictsComponent,
-        TaskbarSyncStatusComponent,
-        TaskbarUpdateComponent,
-        ProjectsComponent,
         HelpComponent
     ],
     providers: [
@@ -267,9 +258,10 @@ registerLocaleData(localeUk, 'uk');
         Menus,
         MenuNavigator,
         UtilTranslations,
+        WarningsService,
         MenuModalLauncher,
         ViewModalLauncher
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

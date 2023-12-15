@@ -1,4 +1,3 @@
-import { to } from 'tsfun';
 import { Relation } from '../model/configuration/relation';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
@@ -8,9 +7,11 @@ import { InPlace } from '../tools/in-place';
 import { Named } from '../tools/named';
 import { DatastoreErrors } from './datastore-errors';
 import { Migrator } from './migrator';
+import { CategoryForm } from '../model/configuration/category-form';
+import { WarningsUpdater } from './warnings-updater';
 
 
-export class CategoryConverter {
+export class DocumentConverter {
 
     constructor(private projectConfiguration: ProjectConfiguration) { }
 
@@ -19,10 +20,10 @@ export class CategoryConverter {
 
         const convertedDocument = Migrator.migrate(document);
 
-        if (document.resource.category !== 'Configuration'
-                && !Tree.flatten(this.projectConfiguration.getCategories()).map(to(Named.NAME))
-                    .includes(document.resource.category)) {
-            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
+        if (document.resource.category !== 'Configuration') {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            if (!category) throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
+            WarningsUpdater.updateIndexIndependentWarnings(document, category);
         }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');

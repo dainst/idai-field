@@ -43,7 +43,7 @@ import { ProjectConfiguration } from '../services';
                 documentCache.getAll().forEach(document => {
                     if (document.resource.category !== 'Configuration') {
                         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-                        if (category) WarningsUpdater.updateWarnings(document, category);
+                        if (category) WarningsUpdater.updateIndexIndependentWarnings(document, category);
                     }
                 });
                 documents = documents.concat(documentCache.getAll());

@@ -23,7 +23,7 @@ export class DocumentConverter {
         if (document.resource.category !== 'Configuration') {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
             if (!category) throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
-            WarningsUpdater.updateWarnings(document, category);
+            WarningsUpdater.updateIndexIndependentWarnings(document, category);
         }
 
         InPlace.takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');

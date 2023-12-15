@@ -1,5 +1,5 @@
 import { WarningsUpdater } from '../../src/datastore/warnings-updater';
-import { Warnings } from '../../src/model';
+import { Warnings } from '../../src/model/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 
@@ -13,7 +13,7 @@ const createDocument = (id: string, category: string = 'category') =>
  */
 describe('WarningsUpdater', () => {
 
-    it('update warnings', () => {
+    it('update index independent warnings', () => {
 
         const categoryDefinition = {
             name: 'category',
@@ -55,8 +55,8 @@ describe('WarningsUpdater', () => {
         documents[1].resource.number = 1;
         documents[1].resource.dropdown = 'value';
         
-        WarningsUpdater.updateWarnings(documents[0], categoryDefinition);
-        WarningsUpdater.updateWarnings(documents[1], categoryDefinition);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[0], categoryDefinition);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[1], categoryDefinition);
         
         expect(documents[0].warnings).toEqual({
             unconfigured: ['unconfiguredField'],

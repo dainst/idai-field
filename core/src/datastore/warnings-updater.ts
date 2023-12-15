@@ -24,7 +24,10 @@ export module WarningsUpdater {
     ];
 
 
-    export function updateWarnings(document: Document, category: CategoryForm) {
+    /**
+     * Updates all warnings for whose determination the index is not required
+     */
+    export function updateIndexIndependentWarnings(document: Document, category: CategoryForm) {
 
         if (document.resource.category === 'Configuration') return;
 

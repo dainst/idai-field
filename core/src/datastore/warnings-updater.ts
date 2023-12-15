@@ -40,6 +40,20 @@ export module WarningsUpdater {
     }
 
 
+    /**
+     * Updates all warnings for whose determination the documents must have been previously indexed
+     */
+    export async function updateIndexDependentWarnings(document: Document, indexFacade: IndexFacade,
+                                                       documentCache: DocumentCache, category: CategoryForm,
+                                                       datastore?: Datastore, previousIdentifier?: string,
+                                                       updateAll: boolean = false) {
+
+        await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
+        await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
+        await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+    }
+
+
     export async function updateNonUniqueIdentifierWarning(document: Document, indexFacade: IndexFacade,
                                                            datastore?: Datastore, previousIdentifier?: string,
                                                            updateAll: boolean = false) {

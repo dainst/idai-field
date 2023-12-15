@@ -95,9 +95,7 @@ import { ProjectConfiguration } from '../services';
         for (let i = 0; i < documents.length; i++) {
             const document: Document = documents[i];
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-            WarningsUpdater.updateNonUniqueIdentifierWarning(document, indexFacade);
-            WarningsUpdater.updateResourceLimitWarning(document, category, indexFacade);
-            WarningsUpdater.updateRelationTargetWarning(document, indexFacade, documentCache);
+            WarningsUpdater.updateIndexDependentWarnings(document, indexFacade, documentCache, category);
 
             if (setProgress && (i % 250 === 0 || i === documents.length)) {
                 await setProgress(documents.length * 0.75 + i * 0.25);

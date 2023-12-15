@@ -82,12 +82,8 @@ export class ChangesStream {
 
         const category: CategoryForm = this.projectConfiguration.getCategory(convertedDocument.resource.category);
         
-        await WarningsUpdater.updateNonUniqueIdentifierWarning(
-            document, this.indexFacade, this.datastore, previousIdentifier, true
-        );
-        await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this.datastore, true);
-        await WarningsUpdater.updateRelationTargetWarning(
-            document, this.indexFacade, this.documentCache, this.datastore, true
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, category, this.datastore, previousIdentifier, true
         );
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);

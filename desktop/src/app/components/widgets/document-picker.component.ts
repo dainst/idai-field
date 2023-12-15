@@ -25,6 +25,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
     @Input() showConfigurationOption: boolean = false;
+    @Input() showLoadingIcon: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
@@ -53,8 +54,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     public isLoading = () => this.loading.isLoading('documentPicker');
 
-    public isLoadingIconVisible = () => this.isLoading()
-        && this.loading.getLoadingTimeInMilliseconds('documentPicker') > 250;
+    public isLoadingIconVisible = () => this.showLoadingIcon && this.isLoading();
 
     public getElementId = (document: Document) => 'document-picker-resource-' + document.resource.identifier;
 
@@ -170,7 +170,6 @@ export class DocumentPickerComponent implements OnChanges {
     private async fetchDocuments() {
 
         this.loading.start('documentPicker');
-        this.detectChangesWhileLoading();
         await AngularUtility.refresh();
 
         this.query.limit = this.limit;
@@ -261,13 +260,5 @@ export class DocumentPickerComponent implements OnChanges {
                 return !this.showProjectOption || !['Project'].includes(document.resource.category);
             })
         );
-    }
-
-
-    private detectChangesWhileLoading() {
-
-        this.changeDetectorRef.detectChanges();
-
-        if (this.isLoading()) setTimeout(() => this.detectChangesWhileLoading(), 100);
     }
 }

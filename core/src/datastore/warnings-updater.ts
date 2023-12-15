@@ -25,7 +25,8 @@ export module WarningsUpdater {
 
 
     /**
-     * Updates all warnings for whose determination the index is not required
+     * Updates all warnings for whose determination the index is not required. These warnings do no rely on
+     * analyzing the document in the context of other documents.
      */
     export function updateIndexIndependentWarnings(document: Document, category: CategoryForm) {
 
@@ -41,7 +42,7 @@ export module WarningsUpdater {
 
 
     /**
-     * Updates all warnings for whose determination the documents must have been previously indexed
+     * Updates all warnings for whose determination the documents must have been previously indexed.
      */
     export async function updateIndexDependentWarnings(document: Document, indexFacade: IndexFacade,
                                                        documentCache: DocumentCache, category: CategoryForm,

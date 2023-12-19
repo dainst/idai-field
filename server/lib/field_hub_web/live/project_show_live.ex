@@ -1,4 +1,6 @@
 defmodule FieldHubWeb.ProjectShowLive do
+  alias FieldHub.Project
+
   alias FieldHubWeb.{
     Router.Helpers,
     UserAuth,
@@ -42,6 +44,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
+          |> assign(:confirm_project_name, "")
+          |> assign(:delete_files, false)
           |> read_project_doc()
         }
 
@@ -110,6 +114,62 @@ defmodule FieldHubWeb.ProjectShowLive do
 
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
+  end
+
+  def handle_event(
+        "delete_form_change",
+        %{
+          "repeat_project_name_input" => repeated_project_name,
+          "delete_files_radio" => delete_files
+        } = _values,
+        socket
+      ) do
+    delete_files =
+      case delete_files do
+        "delete_files" ->
+          true
+
+        "keep_files" ->
+          false
+      end
+
+    socket = assign(socket, :confirm_project_name, repeated_project_name)
+    socket = assign(socket, :delete_files, delete_files)
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "delete",
+        _values,
+        %{assigns: %{project: project, current_user: user_name, delete_files: delete_files}} =
+          socket
+      ) do
+    socket =
+      case User.is_admin?(user_name) do
+        true ->
+          %{database: :deleted} = Project.delete(project, delete_files)
+          :deleted = User.delete(project)
+
+          if delete_files == false do
+            {:ok, "Project database`#{project}` has been deleted successfully."}
+          else
+            {:ok, "Project database`#{project}` and images have been deleted successfully."}
+          end
+
+        false ->
+          {:error, "You are not authorized to delete the project."}
+      end
+      |> case do
+        {:ok, msg} ->
+          socket
+          |> put_flash(:info, msg)
+
+        {:error, msg} ->
+          socket
+          |> put_flash(:error, msg)
+      end
+
+    {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("generate_password", _values, socket) do

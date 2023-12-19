@@ -126,7 +126,7 @@
     <%= if User.is_admin?(@current_user) do %>
         <hr>
         <h2>Password change</h2>
-        <form phx-change="update">
+        <form id="pwd_form" phx-change="update">
             <div class="row">
                 <div class="column">
                         <input
@@ -153,5 +153,35 @@
         </form>
 
         <hr>
+        <h2>Delete project</h2>
+        <form id="del_form" phx-change="delete_form_change">         
+            <div class="row">
+                <div class="column"> 
+                 <input 
+                    type="text" 
+                    placeholder="Repeat the project name to delete"
+                    name="repeat_project_name_input"
+                    value={@confirm_project_name}                    
+                /> 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <input type="radio" name="delete_files_radio" id="delete_database" value="keep_files" checked={not @delete_files}>
+                    <label for="delete_database">Delete database only</label><br>
+                    <input type="radio" name="delete_files_radio" id="delete_database_and_files" value="delete_files" checked={@delete_files}>
+                    <label for="delete_database_and_files">Delete database and image files</label>
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="button" phx-click="delete" disabled={@confirm_project_name != @project} style="width:100%">
+                       Delete
+                    </button>
+                </div>   
+            </div>
+        </form>
     <% end %>
 </div>

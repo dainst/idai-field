@@ -321,7 +321,7 @@ defmodule FieldHub.FileStore do
     end
   end
 
-  defp clear_cache(project) do
+  def clear_cache(project) do
     Cachex.del(@index_cache_name, project)
   end
 end

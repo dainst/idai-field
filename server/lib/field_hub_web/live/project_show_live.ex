@@ -46,7 +46,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:new_password, "")
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
-          |> assign(:cache,"")
+          |> assign(:hide_cache_cleared_message, true)
           |> read_project_doc()
         }
 
@@ -117,15 +117,10 @@ defmodule FieldHubWeb.ProjectShowLive do
     {:noreply, assign(socket, :new_password, password)}
   end
 
-  # def handle_event("delete_cache", %{"project" => project} = _values, socket) do
-  def handle_event("delete_cache", _values, %{assigns: %{project: project}}=socket) do
-    new_cache = "Delete or update cache in this handle_event"
-    cache_index = FieldHub.FileStore.file_index(project)
+  def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
+    {:ok, true} = FieldHub.FileStore.clear_cache(project)
 
-
-    IO.inspect(cache_index)
-    {:noreply, assign(socket, :cache, new_cache)}
-    # {:noreply, assign(socket, :cache, inspect(cache_index))}
+    {:noreply, assign(socket, :hide_cache_cleared_message, false)}
   end
 
   def handle_event(
@@ -181,7 +176,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> put_flash(:error, msg)
       end
 
-    IO.inspect(delete_files)
+    # IO.inspect(delete_files)
 
     {:noreply, redirect(socket, to: "/")}
   end

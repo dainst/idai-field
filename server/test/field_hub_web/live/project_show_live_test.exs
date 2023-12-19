@@ -24,7 +24,6 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
   @user_password "test_password"
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
-  # @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
 
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
@@ -422,19 +421,6 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                  password: new_password
                })
     end
-
-    # test "file index cache can be deleted through the interface", %{conn: conn} do
-    #   assert {:ok, nil } = Cachex.get(@index_cache_name, @project)
-
-    #   {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
-
-    #   html =
-    #     view
-    #     |> element("button", "Clear cache")
-    #     |> render_click()
-    #     |> IO.inspect()
-
-    # end
 
     test "admin is able to delete a project's database", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")

@@ -130,7 +130,8 @@ defmodule FieldHub.Project do
   __Parameters__
   - `project_identifier` the project's name.
   """
-  def exists?(project_identifier) do
+  def exists?(project_identifier)
+      when project_identifier != "" and not is_nil(project_identifier) do
     CouchService.get_db_infos(project_identifier)
     |> case do
       %{status_code: 200} ->

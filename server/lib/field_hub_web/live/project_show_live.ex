@@ -169,8 +169,6 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> put_flash(:error, msg)
       end
 
-    IO.inspect(delete_files)
-
     {:noreply, redirect(socket, to: "/")}
   end
 

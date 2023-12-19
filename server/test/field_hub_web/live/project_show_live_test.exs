@@ -24,6 +24,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
   @user_password "test_password"
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
+  @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
 
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
@@ -420,6 +421,97 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                  name: @project,
                  password: new_password
                })
+    end
+
+    # test "file index cache can be deleted through the interface", %{conn: conn} do
+    #   assert {:ok, nil } = Cachex.get(@index_cache_name, @project)
+
+    #   {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+    #   html =
+    #     view
+    #     |> element("button", "Clear cache")
+    #     |> render_click()
+    #     |> IO.inspect()
+
+    # end
+
+    test "admin is able to delete a project's database", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      # Check if the system knows the project currently
+      assert true == FieldHub.Project.exists?(@project)
+
+      assert FieldHub.FileStore.file_index(@project) |> Enum.count() > 0
+
+      # Simulate the repeated project name input
+      view
+      |> element("#del_form")
+      |> render_change(%{repeat_project_name_input: @project})
+
+      # Check if we are beeing redirected to the landing page
+      {:error, {:redirect, %{to: "/"}}} =
+        view
+        |> element("button", "Delete")
+        |> render_click()
+
+      # Check if the project got deleted.
+      assert false == FieldHub.Project.exists?(@project)
+
+      assert FieldHub.FileStore.file_index(@project) |> Enum.count() > 0
+    end
+
+    test "admin is able to delete a project's database and its files", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      # Check if the system knows the project.
+      assert true == FieldHub.Project.exists?(@project)
+
+      # Check if the project's file directory exists.
+      assert File.exists?("test/tmp/#{@project}/")
+
+      # Simulate the repeated project name input
+      view
+      |> element("#del_form")
+      |> render_change(%{repeat_project_name_input: @project})
+
+      html =
+        view
+        |> element("#del_form")
+        |> render_change(%{delete_files_radio: "delete_files"})
+
+      assert html =~ "value=\"delete_files\" checked"
+
+      # Check if we are beeing redirected to the landing page
+      {:error, {:redirect, %{to: "/"}}} =
+        view
+        |> element("button", "Delete")
+        |> render_click()
+
+      # Check if the project got deleted.
+      assert false == FieldHub.Project.exists?(@project)
+
+      # Check if files have been deleted.
+      assert not File.exists?("test/tmp/#{@project}/")
+    end
+
+    test "project deletion button is disabled until project name is repeated", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert true == FieldHub.Project.exists?(@project)
+
+      html = render(view)
+
+      # The "Delete" button should be disabled as long as the repeated project name does not match.
+      assert html =~ "phx-click=\"delete\" disabled=\"disabled\""
+
+      html =
+        view
+        |> element("#del_form")
+        |> render_change(%{repeat_project_name_input: @project})
+
+      # The "Delete" button should be enabled now.
+      assert not (html =~ "phx-click=\"delete\" disabled=\"disabled\"")
     end
 
     test "throws warning if default user is missing", %{conn: conn} do

@@ -427,7 +427,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
       # TODO: evaluate why we have to do this
-      html = render(view)
+      render(view)
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 
       html =

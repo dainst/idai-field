@@ -437,6 +437,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       assert html =~ "Cache <small><i>cleared</i></small>"
       assert {:ok, nil} = Cachex.get(@index_cache_name, @project)
+    end
 
     test "admin is able to delete a project's database", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")

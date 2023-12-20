@@ -87,6 +87,27 @@ export module FieldsViewUtil {
     }
 
 
+    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels,
+                             getTranslation: (key: string) => string, formatDecimal: (value: number) => string) {
+
+        const entries: any = isArray(fieldContent) ? fieldContent : [fieldContent];
+
+        return entries.map(entry => {
+            if (isObject(entry)) {
+                return FieldsViewUtil.getObjectLabel(
+                    entry,
+                    field,
+                    getTranslation,
+                    formatDecimal,
+                    labels
+                );
+            } else {
+                return entry;
+            }
+        }).join(', ');
+    }
+
+
     export function getObjectLabel(object: any, 
                                    field: FieldsViewSubfield,
                                    getTranslation: (key: string) => string,
@@ -101,7 +122,7 @@ export module FieldsViewUtil {
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value)
             );
-        } else if (object.inputUnit) {
+        } else if (object.inputUnit && field.valuelist) {
             return Dimension.generateLabel(
                 object,
                 formatDecimal,
@@ -113,7 +134,7 @@ export module FieldsViewUtil {
             return Literature.generateLabel(
                 object, getTranslation
             );
-        } else if (object.value) {
+        } else if (object.value && field.valuelist) {
             return OptionalRange.generateLabel(
                 object,
                 getTranslation,

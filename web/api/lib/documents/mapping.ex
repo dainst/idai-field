@@ -107,6 +107,8 @@ defmodule Api.Documents.Mapping do
     Api.Core.CorePropertiesAtomizing.format_document(document)
     |> add_parent_id
     |> add_grandparent_id
+    |> Map.delete(:created)
+    |> Map.delete(:modified)
   end
 
   defp add_parent_id(document) do

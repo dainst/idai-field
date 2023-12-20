@@ -1,4 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isString } from 'tsfun';
 import { CategoryForm, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
@@ -29,39 +30,43 @@ export class CategoryIconComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {}
+                private labels: Labels,
+                private i18n: I18n) {}
 
 
     ngOnChanges() {
 
-        this.determineCharacterForCategory();
-        this.determineColorForCategory();
-        this.textColor = CategoryForm.isBrightColor(this.color)
-            ? 'black'
-            : 'white';
+        if (this.category === 'Configuration') {
+            this.setValuesForConfigurationCategory();
+        } else {
+            this.determineCharacterForCategory();
+            this.determineColorForCategory();
+            this.textColor = CategoryForm.isBrightColor(this.color)
+                ? 'black'
+                : 'white';
+        }
+        
         this.pxSize = this.size + 'px';
     }
 
 
     private determineCharacterForCategory() {
 
-        this.character =
-            StringUtils.first(
-                isString(this.category)
-                    ? this.labels.get(this.getCategory(this.category))
-                    : this.labels.get(this.category));
+        this.character = StringUtils.first(
+            isString(this.category)
+                ? this.labels.get(this.getCategory(this.category))
+                : this.labels.get(this.category)
+        );
     }
 
 
     private determineColorForCategory() {
 
-        this.color =
-            (
-                isString(this.category)
-                    ? this.getCategory(this.category)
-                    : this.category
-            )
-            .color;
+        this.color = (
+            isString(this.category)
+                ? this.getCategory(this.category)
+                : this.category
+        ).color;
     }
 
 
@@ -70,5 +75,15 @@ export class CategoryIconComponent implements OnChanges {
         return this.customProjectConfiguration
             ? this.customProjectConfiguration.getCategory(categoryName)
             : this.projectConfiguration.getCategory(categoryName);
+    }
+
+
+    private setValuesForConfigurationCategory() {
+
+        this.character = this.i18n({
+            id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
+        })[0];
+        this.color = 'black';
+        this.textColor = 'white';
     }
 }

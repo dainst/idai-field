@@ -61,25 +61,6 @@ export module Dating {
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';
 
 
-    // This is to replicate behaviour of Dating.isValid before the change
-    // regarding typeguards and valiation
-    export function isValid_deprecated(dating: any) {
-        for (const fieldName in dating) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.begin) for (const fieldName in dating.begin) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.end) for (const fieldName in dating.end) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-        if (dating.label) return true;
-        return false;
-    }
-
-
     export function isDating(dating: any): dating is Dating {
 
         if (!isObject(dating)) return false;
@@ -93,6 +74,7 @@ export module Dating {
         if (dating.end) for (const fieldName in dating.end) {
             if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
         }
+        if (dating.label) return true; // Support datings in deprecated format
         if (!dating.type || !['range', 'exact', 'after', 'before', 'scientific'].includes(dating.type)) {
             return false;
         }
@@ -102,6 +84,7 @@ export module Dating {
 
     export function isValid(dating: Dating) {
 
+        if (dating.label) return true; // Support datings in deprecated format
         if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
         if (['range', 'exact', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
         if (dating.type === 'scientific' && !dating.margin) return false;

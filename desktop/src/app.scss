@@ -246,10 +246,6 @@ html [type='button'],
   border-radius: 0 !important;
   border: none !important;
   background-color: #eee;
-
-  &.bg-warning {
-    background-color: $custom-highlight-color !important;
-  }
 }
 
 .card-header {

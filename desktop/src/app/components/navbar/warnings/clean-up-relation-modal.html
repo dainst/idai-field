@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h5 class="modal-title"
+        i18n="@@navbar.taskbar.cleanUpRelation.header">Relation bereinigen?</h5>
+</div>
+
+<div id="clean-up-relation-modal-body" class="modal-body">
+    <span *ngIf="relationLabel" i18n="@@navbar.taskbar.cleanUpRelation.confirmation.withLabel">
+        Möchten Sie die Relation <b>{{relationLabel}}</b> (<code>{{relationName}}</code>) wirklich bereinigen?
+        Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.
+    </span>
+    <span *ngIf="!relationLabel"
+          i18n="@@navbar.taskbar.cleanUpRelation.confirmation.withoutLabel">
+        Möchten Sie die Relation <code>{{relationName}}</code> wirklich bereinigen?
+        Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.
+    </span>
+</div>
+
+<div class="modal-footer">
+    <div id="confirm-clean-up-button" class="btn btn-primary"
+         (click)="cleanUp()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

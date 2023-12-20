@@ -23,11 +23,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // App Package
     public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
-    public static APP_RESET_SUCCESS = 'app.resetAppSuccess';
+    public static APP_CONTROLLER_SUCCESS = 'app.appControllerSuccess';
 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
+    public static SETTINGS_ERROR_MISSING_USERNAME = 'settings.error.missingUsername';
 
     // Projects Package
     public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
@@ -319,7 +320,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ERROR_MALFORMED_ADDRESS] = {
             content: i18n({
                 id: 'messages.settings.error.malformedAddress',
-                value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
+                value: 'Bitte geben Sie als Adresse eine gültige URL ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
+            content: i18n({
+                id: 'messages.settings.error.missingUsername',
+                value: 'Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.'
             }),
             level: 'danger',
             params: [],
@@ -343,10 +353,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.APP_RESET_SUCCESS] = {
+        this.msgs[M.APP_CONTROLLER_SUCCESS] = {
             content: i18n({
-                id: 'messages.app.resetSuccess',
-                value: 'Die Anwendung wurde erfolgreich zurückgesetzt.'
+                id: 'messages.app.appControllerSuccess',
+                value: 'Erfolgreich ausgeführt.'
             }),
             level: 'success',
             params: [],
@@ -529,11 +539,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: '[0] Ressourcen wurden erfolgreich importiert.'
             }),
             level: 'success',
-            params: [
-                i18n({
-                    id: 'messages.import.success.multiple.defaultParameter',
-                    value: 'Mehrere'
-                })],
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_EMPTY] = {

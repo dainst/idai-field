@@ -12,11 +12,12 @@ describe('performQuery', () => {
     let constraintIndex;
     let fulltextIndex;
     let categoriesMap;
+    let projectConfiguration;
 
 
     beforeEach(() => {
 
-        const projectConfiguration = createMockProjectConfiguration();
+        projectConfiguration = createMockProjectConfiguration();
 
 
         const createdConstraintIndex = ConstraintIndex.make({
@@ -34,7 +35,7 @@ describe('performQuery', () => {
 
     function put(document: Document) {
 
-        ConstraintIndex.put(constraintIndex, document);
+        ConstraintIndex.put(constraintIndex, document, projectConfiguration.getCategory(document.resource.category));
         FulltextIndex.put(fulltextIndex, document, getFieldsToIndex(categoriesMap, document.resource.category));
     }
 

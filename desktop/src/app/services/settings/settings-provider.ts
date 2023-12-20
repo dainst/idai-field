@@ -79,15 +79,15 @@ export class SettingsProvider {
 
 
     /**
-     * initializes settings to default values
-     * @param settings_ provided settings
+     * Initializes settings to default values
+     * @param newSettings provided settings
      * @returns {Settings} settings with added default settings
      */
-    public setSettings(settings_: Settings) {
+    public setSettings(newSettings: Settings) {
 
-        const settings = ObjectUtils.jsonClone(settings_);
+        const settings = ObjectUtils.jsonClone(newSettings);
 
-        if (!settings.username) settings.username = 'anonymous';
+        if (settings.username) settings.username = settings.username.replace(/ +/g, ' ').trim();
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
         if (settings.hostPassword === undefined) settings.hostPassword = SettingsProvider.generatePassword();

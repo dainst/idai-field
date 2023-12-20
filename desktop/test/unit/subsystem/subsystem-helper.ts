@@ -1,5 +1,5 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader,
+import { AppConfigurator, DocumentConverter, ChangesStream, ConfigLoader,
     ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource,
     SyncService, ImageStore, ImageSyncService } from 'idai-field-core';
@@ -127,18 +127,26 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
     await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 
     const documentCache = new DocumentCache();
-    const categoryConverter = new CategoryConverter(projectConfiguration);
+    const documentConverter = new DocumentConverter(projectConfiguration);
 
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter,
-        () => settingsProvider.getSettings().username);
-
-    const remoteChangesStream = new ChangesStream(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
-        categoryConverter,
-        () => settingsProvider.getSettings().username);
+        documentConverter,
+        projectConfiguration,
+        () => settingsProvider.getSettings().username
+    );
+
+    const remoteChangesStream = new ChangesStream(
+        pouchdbDatastore,
+        datastore,
+        createdIndexFacade,
+        documentCache,
+        documentConverter,
+        projectConfiguration,
+        () => settingsProvider.getSettings().username
+    );
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
     stateSerializer.load.and.returnValue(Promise.resolve({}));

@@ -115,6 +115,8 @@ export class TabManager {
 
     private async updateTabLabels(document: Document) {
 
+        if (!document) return;
+
         this.tabs.filter(tab => tab.operationId === document.resource.id)
             .forEach(tab => {
                 tab.label = TabManager.getLabel(tab.routeName, document.resource.identifier);

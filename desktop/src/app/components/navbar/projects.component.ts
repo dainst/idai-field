@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Labels } from 'idai-field-core';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
 
@@ -15,14 +15,23 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 export class ProjectsComponent implements OnInit {
 
     public selectedProject: string;
+    public username: string;
 
 
     constructor(private settingsProvider: SettingsProvider,
-                private projectModalLauncher: ProjectModalLauncher,
-                private labels: Labels) {}
+                private menuModalLauncher: MenuModalLauncher,
+                private labels: Labels) {
+
+        this.username = this.settingsProvider.getSettings().username;
+        this.settingsProvider.settingsChangesNotifications().subscribe((settings) => {
+            this.username = settings.username;
+        });
+    }
 
 
-    public openModal = () => this.projectModalLauncher.editProject();
+    public openModal = () => this.menuModalLauncher.editProject();
+
+    public openUsernameModal = () => this.menuModalLauncher.openUpdateUsernameModal();
 
 
     ngOnInit() {
@@ -33,8 +42,8 @@ export class ProjectsComponent implements OnInit {
 
     public getProjectName(): string {
 
-        return this.labels.getFromI18NString(
+         return this.labels.getFromI18NString(
             this.settingsProvider.getSettings().projectNames[this.selectedProject]
         ) ?? this.selectedProject;
-    }
+    } 
 }

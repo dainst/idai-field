@@ -1,11 +1,10 @@
 import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { CategoryForm, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
     name: string;
-    label: string;
     searchable?: boolean;
     customFields?: boolean;
 };
@@ -40,14 +39,6 @@ export module ConfigurationUtil {
             if (category.children) order = order.concat(category.children.map(to(Named.NAME)));
             return order;
         }, []);
-    }
-
-
-    export function getInputTypeLabel(inputTypeName: string, availableInputTypes: Array<InputType>): string {
-
-        return availableInputTypes
-            .find(inputType => inputType.name === inputTypeName)
-            .label;
     }
 
 

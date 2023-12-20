@@ -19,7 +19,7 @@ export class OutliersComponent {
 
     public getOutliers(): string[]|undefined {
 
-        return ValuelistUtil.getValuesNotIncludedInValuelist(this.fieldContainer, this.fieldName, this.valuelist);
+        return ValuelistUtil.getValuesNotIncludedInValuelist(this.fieldContainer[this.fieldName], this.valuelist);
     }
 
 

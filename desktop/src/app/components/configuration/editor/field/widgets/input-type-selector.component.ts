@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { not, isUndefined } from 'tsfun';
 import { Field } from 'idai-field-core';
 import { InputType } from '../../../configuration-util';
+import { getInputTypeLabel } from '../../../../../util/get-input-type-label';
+import { UtilTranslations } from '../../../../../util/util-translations';
 
 
 @Component({
@@ -23,10 +25,12 @@ export class InputTypeSelectorComponent {
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
 
   
-    constructor() {}
+    constructor(private utilTranslations: UtilTranslations) {}
 
 
     public setInputType = (inputType: string) => this.onChanged.emit(inputType);
+
+    public getLabel = (inputType: string) => getInputTypeLabel(inputType, this.utilTranslations);
 
 
     public getAvailableInputTypes(): Array<InputType> {

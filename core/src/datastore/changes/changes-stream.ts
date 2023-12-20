@@ -3,10 +3,14 @@ import { IndexFacade } from '../../index/index-facade';
 import { Action } from '../../model/action';
 import { Document } from '../../model/document';
 import { ObserverUtil } from '../../tools/observer-util';
-import { CategoryConverter } from '../category-converter';
+import { DocumentConverter } from '../document-converter';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
+import { WarningsUpdater } from '../warnings-updater';
+import { Datastore } from '../datastore';
+import { ProjectConfiguration } from '../../services/project-configuration';
+import { CategoryForm } from '../../model/configuration/category-form';
 
 
 /**
@@ -20,25 +24,27 @@ export class ChangesStream {
     private projectDocumentObservers: Array<Observer<Document>> = [];
 
 
-    constructor(datastore: PouchdbDatastore,
+    constructor(pouchDbDatastore: PouchdbDatastore,
+                private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
+                private projectConfiguration: ProjectConfiguration,
                 private getUsername: () => string) {
 
-        datastore.deletedNotifications().subscribe(document => {
+        pouchDbDatastore.deletedNotifications().subscribe(document => {
 
             this.documentCache.remove(document.resource.id);
             this.indexFacade.remove(document);
         });
 
-        datastore.changesNotifications().subscribe(async document => {
+        pouchDbDatastore.changesNotifications().subscribe(async document => {
 
             if (isProjectDocument(document)) {
-                ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
+                ObserverUtil.notify(this.projectDocumentObservers, this.documentConverter.convert(document));
             }
 
-            const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document,this.getUsername());
+            const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document, this.getUsername());
 
             if (isRemoteChange || !this.documentCache.get(document.resource.id)
                     || document._conflicts !== undefined) {
@@ -64,13 +70,21 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        const convertedDocument = this.categoryConverter.convert(document);
+        const convertedDocument: Document = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
-        // explicitly assign by value in order for changes to be detected by angular
-        if (this.documentCache.get(convertedDocument.resource.id)) {
+        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        if (previousVersion) {
+            // Explicitly assign by value in order for changes to be detected by Angular
             this.documentCache.reassign(convertedDocument);
         }
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(convertedDocument.resource.category);
+        
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, category, this.datastore, previousIdentifier, true
+        );
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
     }

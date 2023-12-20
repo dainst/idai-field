@@ -32,7 +32,7 @@ export module Naming {
     export function getValuelistId(searchTerm: string, projectIdentifier: string): string {
 
         if (searchTerm.startsWith(projectIdentifier + ':')) searchTerm = searchTerm.replace(projectIdentifier + ':', '');
-        const id: string = searchTerm.split('-')
+        const id: string = searchTerm.split('-')
             .map(segment => removeSpecialCharacters(segment))
             .join('-');
 

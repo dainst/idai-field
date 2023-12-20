@@ -3,6 +3,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
+import { UtilTranslations } from '../../../util/util-translations';
+import { getInputTypeLabel } from '../../../util/get-input-type-label';
 
 
 @Component({
@@ -35,6 +37,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
 
     constructor(private labels: Labels,
+                private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider) {}
 
 
@@ -60,8 +63,8 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 
-    public getInputTypeLabel = () => ConfigurationUtil.getInputTypeLabel(
-        this.field.inputType, this.availableInputTypes
+    public getInputTypeLabel = () => getInputTypeLabel(
+        this.field.inputType, this.utilTranslations
     );
 
 

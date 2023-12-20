@@ -1,0 +1,28 @@
+#update-username-modal-header {
+  h5 {
+    margin-bottom: 0;
+  }
+}
+
+#update-username-modal-body {
+  img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    margin-top: 10px;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  #welcome-text {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: center;
+
+    b {
+      font-weight: 600;
+    }
+  }
+}

@@ -4122,16 +4122,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
-        <source> Name des Bearbeiters/der Bearbeiterin </source>
-        <target state="translated">Ім'я редактора/редакторші</target>
+        <source> Name der Benutzerin/des Benutzers </source>
+        <target state="needs-translation"> Name der Benutzerin/des Benutzers </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
-        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum Field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
-        <target state="translated">Це ім’я зберігається в історії редагування, щоб зміни в записах можна було приписати окремій особі. Цей параметр дуже важливий <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/> важливо <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> для синхронізації бази даних як між користувачами, так і з польовим сервером, оскільки він дозволяє системі краще розподіляти та вирішувати будь-які конфлікти. Тому його в будь-якому випадку слід налаштувати перед введенням в експлуатацію. Рекомендується вводити повне ім'я актуального користувача бази даних. </target>
+        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. </source>
+        <target state="needs-translation">Це ім’я зберігається в історії редагування, щоб зміни в записах можна було приписати окремій особі. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -4890,8 +4890,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
-        <source>Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</source>
-        <target state="translated">Вказана адреса сервера не відповідає вказаному формату.</target>
+        <source>Bitte geben Sie als Adresse eine gültige URL ein.</source>
+        <target state="needs-translation">Bitte geben Sie als Adresse eine gültige URL ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5080,14 +5080,6 @@
       <trans-unit id="messages.import.success.multiple" datatype="html">
         <source>[0] Ressourcen wurden erfolgreich importiert.</source>
         <target state="translated">[0] Ресурси успішно імпортовано.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.success.multiple.defaultParameter" datatype="html">
-        <source>Mehrere</source>
-        <target state="translated">Декілька</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7407,6 +7399,90 @@
         <target state="translated">Між ресурсами немає прямого стратиграфічного зв'язку. Цей зв'язок не враховується в матричному зображенні.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.resourceLimitExceeded" datatype="html">
+        <source>In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</source>
+        <target state="needs-translation">In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.updateUserNameModal.heading.change" datatype="html">
+        <source>Name der Benutzerin/des Benutzers ändern</source>
+        <target state="needs-translation">Name der Benutzerin/des Benutzers ändern</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/update-username-modal.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.updateUserNameModal.body.welcome" datatype="html">
+        <source>Herzlich Willkommen bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Field Desktop<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>! </source>
+        <target state="needs-translation">Herzlich Willkommen bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Field Desktop<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>! </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/update-username-modal.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.updateUserNameModal.body.request" datatype="html">
+        <source>Bitte geben Sie Ihren Namen ein.</source>
+        <target state="needs-translation">Bitte geben Sie Ihren Namen ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.invalidResourceLimit.notANumber" datatype="html">
+        <source>Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</source>
+        <target state="needs-translation">Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.settings.error.missingUsername" datatype="html">
+        <source>Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.</source>
+        <target state="needs-translation">Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.resourceLimit" datatype="html">
+        <source>Ressourcenlimit</source>
+        <target state="needs-translation">Ressourcenlimit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">97,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.resourceLimit.warning" datatype="html">
+        <source>Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass bereits angelegte Ressourcen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch entfernt werden. </source>
+        <target state="needs-translation">Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass bereits angelegte Ressourcen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch entfernt werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">103,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.updateUserNameModal.body.info" datatype="html">
+        <source>Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.</source>
+        <target state="needs-translation">Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.invalidResourceLimit.tooLow" datatype="html">
+        <source>Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</source>
+        <target state="needs-translation">Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

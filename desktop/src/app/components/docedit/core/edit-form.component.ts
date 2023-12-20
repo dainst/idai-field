@@ -25,6 +25,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() identifierPrefix: string|undefined;
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
+    @Input() scrollTargetField: string;
 
     public extraGroups: Array<Group> = [{ name: 'conflicts', fields: [] }];
     public groups: Array<Group> = [];
@@ -47,7 +48,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     async ngAfterViewInit() {
 
         await AngularUtility.refresh();
-        this.focusFirstInputElement();
+        if (!this.scrollTargetField) this.focusFirstInputElement();
     }
 
 

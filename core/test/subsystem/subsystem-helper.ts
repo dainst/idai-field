@@ -2,7 +2,7 @@ import { Document } from '../../src/model/document';
 import { AppConfigurator } from '../../src/configuration/app-configurator';
 import { ConfigLoader } from '../../src/configuration/boot/config-loader';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
-import { CategoryConverter } from '../../src/datastore/category-converter';
+import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { PouchdbDatastore } from '../../src/datastore/pouchdb/pouchdb-datastore';
@@ -96,9 +96,15 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         false
     );
 
-    const categoryConverter = new CategoryConverter(projectConfiguration);
+    const documentConverter = new DocumentConverter(projectConfiguration);
     const datastore = new Datastore(
-        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter, () => user);
+        pouchdbDatastore,
+        createdIndexFacade,
+        documentCache,
+        documentConverter,
+        projectConfiguration,
+        () => user
+    );
     
     const relationsManager = new RelationsManager(datastore, projectConfiguration);
 

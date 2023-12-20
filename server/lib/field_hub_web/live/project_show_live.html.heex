@@ -151,7 +151,14 @@
                 </div>
             </div>
         </form>
+        <hr>
+        <h2>
+           <div class="row">
+               <div class="column column-80">Cache <small hidden={@hide_cache_cleared_message}><i>cleared</i></small>  </div>
 
+               <button type="button" class="button column" phx-click="delete_cache">Clear cache</button>
+           </div>
+        </h2>
         <hr>
         <h2>Delete project</h2>
         <form id="del_form" phx-change="delete_form_change">         

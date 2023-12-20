@@ -46,6 +46,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:new_password, "")
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
+          |> assign(:hide_cache_cleared_message, true)
           |> read_project_doc()
         }
 
@@ -114,6 +115,12 @@ defmodule FieldHubWeb.ProjectShowLive do
 
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
+  end
+
+  def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
+    {:ok, true} = FieldHub.FileStore.clear_cache(project)
+
+    {:noreply, assign(socket, :hide_cache_cleared_message, false)}
   end
 
   def handle_event(

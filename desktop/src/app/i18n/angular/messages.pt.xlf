@@ -1342,14 +1342,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
-        <source>Konflikte</source>
-        <target state="translated">Conflitos</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
         <source> Projektkonfiguration </source>
         <target state="translated">Configuração de projeto</target>
@@ -4774,15 +4766,6 @@
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
-        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="needs-translation">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</target>
-        <note priority="1" from="description">configuration.deleteField.body</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
         <source>Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
         <target state="needs-translation">Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </target>
@@ -6454,14 +6437,6 @@
       <trans-unit id="messages.app.error.genericSaveError" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
         <target state="needs-translation">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.app.resetSuccess" datatype="html">
-        <source>Die Anwendung wurde erfolgreich zurückgesetzt.</source>
-        <target state="needs-translation">Die Anwendung wurde erfolgreich zurückgesetzt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

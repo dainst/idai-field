@@ -1779,14 +1779,6 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
-        <source>Konflikte</source>
-        <target state="translated">Конфлікти</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.component.ts</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts.projectConfiguration" datatype="html">
         <source> Projektkonfiguration </source>
         <target state="translated">Конфігурація проекту</target>
@@ -2446,15 +2438,6 @@
       <trans-unit id="configuration.deleteField.header" datatype="html">
         <source>Feld löschen?</source>
         <target state="translated">Видалити поле?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="32820add8357812575446cb4f6b8b35ecc51f00f" datatype="html">
-        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="translated">Ви хочете поле <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/> <x id="INTERPOLATION" equiv-text="{{field.name}}"/> <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> видалити? </target>
-        <note priority="1" from="description">configuration.deleteField.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -4908,14 +4891,6 @@
       <trans-unit id="messages.app.error.genericSaveError" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
         <target state="translated">Під час збереження ресурсу сталася помилка.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.app.resetSuccess" datatype="html">
-        <source>Die Anwendung wurde erfolgreich zurückgesetzt.</source>
-        <target state="translated">Програму було успішно повернуто до початкової.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

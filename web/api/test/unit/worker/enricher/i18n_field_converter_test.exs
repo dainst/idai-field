@@ -57,6 +57,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
           fields: [
             %{ inputType: "dating", name: "datingField" },
             %{ inputType: "dating", name: "legacyDatingField" },
+            %{ inputType: "dating", name: "noSourceDatingField" }
           ]
         }
       ]
@@ -71,6 +72,9 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
             }],
             legacyDatingField: [%{
               source: "Eine Datierung"
+            }],
+            noSourceDatingField: [%{
+              type: "exact"
             }]
           }
         },
@@ -80,6 +84,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     assert %{ de: "Eine Datierung", en: "A Dating" } == (List.first resource.datingField).source
     assert %{ unspecifiedLanguage: "Eine Datierung" } == (List.first resource.legacyDatingField).source
+    assert "exact" == (List.first resource.noSourceDatingField).type
   end
 
   test "convert dimension" do

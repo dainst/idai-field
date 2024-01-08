@@ -22,6 +22,7 @@ defmodule FieldPublication.Application do
       FieldPublicationWeb.Endpoint,
       {Task.Supervisor, name: FieldPublication.TaskSupervisor},
       {Task.Supervisor, name: FieldPublication.ProcessingSupervisor},
+      {FieldPublication.Replication, %{}},
       {FieldPublication.Processing, []}
     ]
 

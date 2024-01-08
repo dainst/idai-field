@@ -66,7 +66,7 @@ defmodule FieldPublication.Replication.FileReplication do
     file_lists_by_variant
     |> Enum.map(&copy_files(&1, base_file_url, headers, file_processing_parameters))
 
-    {:ok, :successful}
+    Map.put(state, :file_result, :replicated)
   end
 
   defp get_file_list(file_variant, base_url, headers) do

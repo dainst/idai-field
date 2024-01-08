@@ -137,7 +137,7 @@ defmodule FieldPublication.Replication.CouchReplication do
                %{counter: source_doc_count, overall: source_doc_count}}
             )
 
-            {:ok, :completed}
+            Map.put(state, :database_result, :replicated)
 
           %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
             Logger.error(error)

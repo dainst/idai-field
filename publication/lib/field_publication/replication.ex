@@ -1,4 +1,6 @@
 defmodule FieldPublication.Replication do
+  use GenServer
+
   require Logger
 
   alias Phoenix.PubSub
@@ -17,7 +19,18 @@ defmodule FieldPublication.Replication do
     LogEntry
   }
 
-  def initialize(%ReplicationInput{} = params) do
+  def start_link(_opts) do
+    Logger.debug("Starting Replication GenServer")
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  end
+
+  def init(_) do
+    Logger.debug("Initializing Replication GenServer state to empty map")
+    # TODO: Rework state for each publication
+    {:ok, %{}}
+  end
+
+  def initialize_publication(%ReplicationInput{} = params) do
     with {:ok, publication} <- Publications.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params) do
       {:ok, publication}
@@ -30,27 +43,12 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  def start_replication(%ReplicationInput{} = params, %Publication{} = publication, channel) do
-    setup_state = %{
-      parameters: params,
-      publication: publication,
-      channel: channel
-    }
-
-    {:ok, replication_pid} =
-      Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
-        replicate(setup_state)
-      end)
-
-    {:ok, setup_state, replication_pid}
-  end
-
-  def check_source_connection(%ReplicationInput{
-        source_url: url,
-        source_project_name: project_name,
-        source_user: user,
-        source_password: password
-      }) do
+  defp check_source_connection(%ReplicationInput{
+         source_url: url,
+         source_project_name: project_name,
+         source_user: user,
+         source_password: password
+       }) do
     Finch.build(
       :head,
       "#{url}/db/#{project_name}",
@@ -82,6 +80,82 @@ defmodule FieldPublication.Replication do
       {:error, %Mint.TransportError{reason: :econnrefused}} ->
         {:error, :connection_refused}
     end
+  end
+
+  def start(%ReplicationInput{} = input, %Publication{} = publication) do
+    GenServer.call(__MODULE__, {:start, input, publication})
+  end
+
+  def handle_call({:start, %ReplicationInput{} = input, %Publication{} = publication}, _from, running_replications) do
+    publication_id = Publications.get_doc_id(publication)
+
+    IO.inspect(publication)
+
+    if publication_id in running_replications do
+      {:reply, :already_running, running_replications}
+    else
+      initial_state = %{
+        parameters: input,
+        publication: publication,
+        channel: publication_id
+      }
+
+      log(initial_state, :info, "Starting replication for #{publication_id}, replicating database.")
+      task = Task.Supervisor.async_nolink(
+        FieldPublication.TaskSupervisor,
+        CouchReplication,
+        :start,
+        [initial_state]
+      )
+
+      {:reply, :ok, Map.put(running_replications, publication_id, {task, initial_state})}
+    end
+  end
+
+  def handle_info({ref, %{publication: publication, database_result: :replicated, file_result: :replicated} = state}, running_replications) do
+    publication_id = Publications.get_doc_id(publication)
+    {:ok, state} = reconstruct_configuration_doc(state)
+
+
+    {:ok, final_publication} =
+      publication
+      |> Publications.get!()
+      |> Publications.put(%{"replication_finished" => DateTime.utc_now()})
+
+    PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_result, final_publication})
+    log(state, :info, "Replication finished.")
+
+    {:noreply, running_replications}
+  end
+
+  def handle_info({ref, %{publication: publication, database_result: :replicated} = state}, running_replications) do
+    publication_id = Publications.get_doc_id(publication)
+    log(state, :info, "Replicating files for #{publication_id}.")
+
+    task = Task.Supervisor.async_nolink(
+        FieldPublication.TaskSupervisor,
+        FileReplication,
+        :start,
+        [state]
+      )
+
+    {:noreply, Map.put(running_replications, publication_id, {task, state})}
+  end
+
+
+  def start_replication(%ReplicationInput{} = params, %Publication{} = publication, channel) do
+    setup_state = %{
+      parameters: params,
+      publication: publication,
+      channel: channel
+    }
+
+    {:ok, replication_pid} =
+      Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
+        replicate(setup_state)
+      end)
+
+    {:ok, setup_state, replication_pid}
   end
 
   defp replicate(
@@ -168,5 +242,11 @@ defmodule FieldPublication.Replication do
     |> Publications.put(%{})
 
     PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_tasks) do
+    Logger.debug("A replication task has completed successfully.")
+    # TODO: Remove from running_tasks
+    {:noreply, running_tasks}
   end
 end

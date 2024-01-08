@@ -39,10 +39,9 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
          {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do
-    FieldPublication.Replication.start_replication(
+    FieldPublication.Replication.start(
       params,
-      publication,
-      Publications.get_doc_id(publication)
+      publication
     )
 
     {

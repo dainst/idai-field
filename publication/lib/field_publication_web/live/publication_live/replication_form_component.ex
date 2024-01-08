@@ -168,7 +168,7 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
   end
 
   defp apply_action(%ReplicationInput{} = parameters, %{assigns: %{action: :new}} = socket) do
-    Replication.initialize(parameters)
+    Replication.initialize_publication(parameters)
     |> case do
       {:ok, %Publication{} = publication} ->
         notify_parent({parameters, publication})

@@ -79,8 +79,8 @@ defmodule Api.Worker.Enricher.Labels do
     |> put_labels_in_subfields(field_name, "value", category_definition, field_definition)
     |> put_labels_in_subfields(field_name, "endValue", category_definition, field_definition)
   end
-  defp get_value_with_label(field_name, composite_value, category_definition, field_definition = %{ inputType: "composite" }) do
-    Enum.reduce(composite_value, %{}, put_labels_in_composite_subfields(field_name, category_definition, field_definition))
+  defp get_value_with_label(_field_name, composite_value, category_definition, field_definition = %{ inputType: "composite" }) do
+    Enum.reduce(composite_value, %{}, put_labels_in_composite_subfields(category_definition, field_definition))
     |> Enum.into(%{})
   end
   defp get_value_with_label(field_name, field_value, category_definition, field_definition) do
@@ -110,7 +110,7 @@ defmodule Api.Worker.Enricher.Labels do
     end
   end
 
-  defp put_labels_in_composite_subfields(field_name, category_definition, field_definition) do
+  defp put_labels_in_composite_subfields(category_definition, field_definition) do
     fn { subfield_name, subfield_value }, field_value ->
       subfield_definition = ProjectConfig.get_subfield_definition(field_definition, subfield_name)
       case subfield_value do

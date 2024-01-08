@@ -84,9 +84,10 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     put_in(resource, [field_name], Enum.map(field_value, &convert_dimension_item/1))
   end
 
-  defp convert_dimension_item(dimension_item) do
-    put_in(dimension_item.measurementComment, convert_dimension_measurement_comment(dimension_item.measurementComment))
+  defp convert_dimension_item(dimension_item = %{ measurementComment: measurement_comment }) do
+    put_in(dimension_item.measurementComment, convert_dimension_measurement_comment(measurement_comment))
   end
+  defp convert_dimension_item(dimension_item), do: dimension_item
 
   defp convert_dimension_measurement_comment(dimension_measurement_comment) when not is_map(dimension_measurement_comment) do
     %{ unspecifiedLanguage: dimension_measurement_comment }

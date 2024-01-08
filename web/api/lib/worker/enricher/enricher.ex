@@ -31,8 +31,7 @@ defmodule Api.Worker.Enricher.Enricher do
       |> I18NFieldConverter.convert(configuration)
     rescue
       error ->
-        Logger.error "Enrichment failed for resource #{change.doc.resource.id}: "
-               <> "#{ if Map.has_key?(error, :message) do error.message else inspect(error) end }"
+        Logger.error "Enrichment failed for resource #{change.doc.resource.id}: #{inspect(error)}"
       nil
     end
   end

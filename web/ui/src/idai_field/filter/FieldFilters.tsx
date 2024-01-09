@@ -106,8 +106,7 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
 
     return <><hr></hr><ul>
             { filters.map(([k, v]) => {
-                const filterName = k
-                    .replace('%3A', ':');
+                const filterName = k.replace('%3A', ':');
                 const isDropdown = dropdownMap[filterName];
                 const field = fields.find(field => field.name === filterName);
                 if (!field) return null; // for example for the parent=root param
@@ -127,8 +126,8 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                             className="float-right"
                             style={ closeButtonStyle }
                             onClick={ () => {
-                                setFilters(filters.filter(f => filterName !== f[0]));
-                                navigateTo(k, v);
+                                setFilters(filters.filter(f => k !== f[0]));
+                                navigateTo(filterName, v);
                             } }>
                             <Icon path={ mdiCloseCircle } size={ 0.8 } />
                         </span>

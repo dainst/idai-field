@@ -34,14 +34,16 @@ export default function TypeView(): ReactElement {
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
     const [loading, setLoading] = useState(0);
+    
+    const getChunk = async (newOffset: number) => {
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
+        const result = documentId
+            ? await getChildren(documentId, newOffset, loginData.token, project)
+            : await getCatalogsForProject(searchParams, newOffset, loginData.token, project);
+        setDocuments(oldDocs => oldDocs.concat(result.documents));
+    };
 
-        const promise = documentId
-            ? getChildren(documentId, newOffset, loginData.token, project)
-            : getCatalogsForProject(searchParams, newOffset, loginData.token, project);
-        promise.then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)));
-    });
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     useEffect(() => {
 

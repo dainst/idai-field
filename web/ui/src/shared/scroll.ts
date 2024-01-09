@@ -12,14 +12,19 @@ export function useGetChunkOnScroll(getChunk: GetChunk, size = DEFAULT_CHUNK_SIZ
         : { onScroll: OnScroll, resetScrollOffset: Reset } {
 
     const [offset, setOffset] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const onScroll = (e: React.UIEvent<Element, UIEvent>) => {
+    const onScroll = async (e: React.UIEvent<Element, UIEvent>) => {
+
+        if (loading) return;
 
         const el = e.currentTarget;
         if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+            setLoading(true);
             const newOffset = offset + size;
-            getChunk(newOffset);
             setOffset(newOffset);
+            await getChunk(newOffset);
+            setTimeout(() => setLoading(false), 200);
         }
     };
 

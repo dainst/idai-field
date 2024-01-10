@@ -13,18 +13,18 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   require Logger
 
-  def start(%{parameters: parameters, publication: %{database: target_database_name}} = state) do
+  def start(%{input: input, publication: %{database: target_database_name}} = parameters) do
     # The replication document will get added to CouchDB's internal database '_replicator' in order to trigger the replication.
     replication_doc =
       create_replication_doc(
-        parameters,
+        input,
         target_database_name
       )
 
-    with {:ok, source_doc_count} <- source_doc_count(parameters, state),
+    with {:ok, source_doc_count} <- source_doc_count(input, parameters),
          {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
-      poll_replication_status(target_database_name, source_doc_count, state)
+      poll_replication_status(target_database_name, source_doc_count, parameters)
     else
       {:error, :error_count_exceeded} ->
         CouchService.delete_document(target_database_name, "_replicator")
@@ -106,7 +106,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp poll_replication_status(database_name, source_doc_count, %{channel: channel} = state) do
+  defp poll_replication_status(database_name, source_doc_count, %{id: id} = parameters) do
     CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
     |> case do
       {:ok, %{status: 200, body: body}} ->
@@ -116,39 +116,39 @@ defmodule FieldPublication.Replication.CouchReplication do
           %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
             PubSub.broadcast(
               FieldPublication.PubSub,
-              channel,
+              id,
               {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
             )
 
             Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, state)
+            poll_replication_status(database_name, source_doc_count, parameters)
 
           %{"state" => couch_state}
           when couch_state == nil or couch_state == "initializing" or couch_state == "running" ->
             # Different cases shortly after the replication document has been committed.
             Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, state)
+            poll_replication_status(database_name, source_doc_count, parameters)
 
           %{"state" => "completed"} ->
             PubSub.broadcast(
               FieldPublication.PubSub,
-              channel,
+              id,
               {:document_replication_count,
                %{counter: source_doc_count, overall: source_doc_count}}
             )
 
-            Map.put(state, :database_result, :replicated)
+            {:ok, {id, :couch_replication}}
 
           %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
             Logger.error(error)
 
             Replication.log(
-              state,
+              parameters,
               :error,
               "Experienced error while replicating documents, stopping replication."
             )
 
-            {:error, :couchdb_replication_error}
+            {:error, {id, error}}
         end
     end
   end

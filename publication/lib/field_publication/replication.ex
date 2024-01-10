@@ -86,138 +86,118 @@ defmodule FieldPublication.Replication do
     GenServer.call(__MODULE__, {:start, input, publication})
   end
 
-  def handle_call({:start, %ReplicationInput{} = input, %Publication{} = publication}, _from, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
+  def stop(%Publication{} = publication) do
+    GenServer.call(__MODULE__, {:stop, publication})
+  end
 
-    IO.inspect(publication)
+  def handle_call(
+        {:start, %ReplicationInput{} = input, %Publication{} = publication},
+        _from,
+        running_replications
+      ) do
+    publication_id = Publications.get_doc_id(publication)
 
     if publication_id in running_replications do
       {:reply, :already_running, running_replications}
     else
-      initial_state = %{
-        parameters: input,
+      parameters = %{
+        input: input,
         publication: publication,
-        channel: publication_id
+        id: publication_id
       }
 
-      log(initial_state, :info, "Starting replication for #{publication_id}, replicating database.")
-      task = Task.Supervisor.async_nolink(
-        FieldPublication.TaskSupervisor,
-        CouchReplication,
-        :start,
-        [initial_state]
+      log(
+        parameters,
+        :info,
+        "Starting replication for #{publication_id} by first replicating the database."
       )
 
-      {:reply, :ok, Map.put(running_replications, publication_id, {task, initial_state})}
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.TaskSupervisor,
+          CouchReplication,
+          :start,
+          [parameters]
+        )
+
+      {:reply, :ok, Map.put(running_replications, publication_id, {task, parameters})}
     end
   end
 
-  def handle_info({ref, %{publication: publication, database_result: :replicated, file_result: :replicated} = state}, running_replications) do
+  def handle_call({:stop, %Publication{} = publication}, _from, running_replications) do
     publication_id = Publications.get_doc_id(publication)
-    {:ok, state} = reconstruct_configuration_doc(state)
 
+    case Map.get(running_replications, publication_id) do
+      nil ->
+        {:reply, :not_found}
+
+      {task, _state} ->
+        Process.exit(task.pid, :stopped)
+        # TODO: Cleanup based on replication state?
+        {:reply, :stopped}
+    end
+  end
+
+  # Handle result of CouchReplication task, start file replication next.
+  def handle_info({_ref, {:ok, {publication_id, :couch_replication}}}, running_replications) do
+    {_finished_task, parameters} = Map.get(running_replications, publication_id)
+
+    log(parameters, :info, "Replicating files for #{publication_id}.")
+
+    task =
+      Task.Supervisor.async_nolink(
+        FieldPublication.TaskSupervisor,
+        FileReplication,
+        :start,
+        [parameters]
+      )
+
+    {:noreply, Map.put(running_replications, publication_id, {task, parameters})}
+  end
+
+  # Handle result of FileReplication task.
+  def handle_info({_ref, {:ok, {publication_id, :file_replication}}}, running_replications) do
+    {_finished_task, %{publication: publication} = parameters} =
+      Map.get(running_replications, publication_id)
+
+    {:ok, %{status: 201}} = reconstruct_project_konfiguraton(publication)
 
     {:ok, final_publication} =
       publication
       |> Publications.get!()
       |> Publications.put(%{"replication_finished" => DateTime.utc_now()})
 
-    PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_result, final_publication})
-    log(state, :info, "Replication finished.")
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      publication_id,
+      {:replication_result, final_publication}
+    )
 
-    {:noreply, running_replications}
+    log(parameters, :info, "Replication finished.")
+
+    {:noreply, Map.delete(running_replications, publication_id)}
   end
 
-  def handle_info({ref, %{publication: publication, database_result: :replicated} = state}, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
-    log(state, :info, "Replicating files for #{publication_id}.")
+  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_replications) do
+    Logger.debug("A replication has completed successfully.")
 
-    task = Task.Supervisor.async_nolink(
-        FieldPublication.TaskSupervisor,
-        FileReplication,
-        :start,
-        [state]
-      )
-
-    {:noreply, Map.put(running_replications, publication_id, {task, state})}
+    {:noreply, cleanup(ref, running_replications)}
   end
 
+  def handle_info({:DOWN, ref, :stopped, _pid, :normal}, running_replications) do
+    Logger.debug("A replication has been stopped by a user.")
 
-  def start_replication(%ReplicationInput{} = params, %Publication{} = publication, channel) do
-    setup_state = %{
-      parameters: params,
-      publication: publication,
-      channel: channel
-    }
-
-    {:ok, replication_pid} =
-      Task.Supervisor.start_child(FieldPublication.TaskSupervisor, fn ->
-        replicate(setup_state)
-      end)
-
-    {:ok, setup_state, replication_pid}
+    {:noreply, cleanup(ref, running_replications)}
   end
 
-  defp replicate(
-         %{publication: %{project_name: project_name}} =
-           setup_state
-       ) do
-    log(setup_state, :info, "Starting replication for #{project_name}.")
+  def handle_info({:DOWN, ref, :process, _pid, reason}, running_replications) do
+    Logger.error("A replication failed irregularly.")
+    Logger.error(reason)
 
-    with {:ok, updated_state} <- replicate_database(setup_state),
-         {:ok, updated_state} <- replicate_files(updated_state),
-         {:ok, %{publication: publication, channel: channel} = updated_state} <-
-           reconstruct_configuration_doc(updated_state) do
-      log(updated_state, :info, "Replication finished.")
-
-      {:ok, final_publication} =
-        publication
-        |> Publications.get!()
-        |> Publications.put(%{"replication_finished" => DateTime.utc_now()})
-
-      PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_result, final_publication})
-    else
-      error ->
-        {:noreply, error}
-    end
+    {:noreply, cleanup(ref, running_replications)}
   end
 
-  defp replicate_database(state) do
-    log(state, :info, "Starting database replication.")
-
-    CouchReplication.start(state)
-    |> case do
-      {:ok, :completed} ->
-        log(state, :info, "Database replication has finished.")
-        {:ok, Map.put(state, :database_result, :replicated)}
-
-      {:error, _} = error ->
-        log(state, :error, "Database replication has failed.")
-        error
-    end
-  end
-
-  defp replicate_files(state) do
-    log(state, :info, "Starting file replication.")
-
-    {:ok, file_results} = FileReplication.start(state)
-
-    log(state, :info, "File replication has finished.")
-
-    {:ok, Map.put(state, :file_results, file_results)}
-  end
-
-  defp reconstruct_configuration_doc(%{publication: publication} = state) do
-    log(state, :info, "Creating publication metadata.")
-
-    {:ok, result} = MetadataGeneration.reconstruct_project_konfiguraton(publication)
-
-    log(state, :info, "Publication metadata created.")
-
-    {:ok, Map.put(state, :project_configuration_recreation, result)}
-  end
-
-  def log(%{publication: %Publication{} = publication, channel: channel}, severity, msg) do
+  def log(%{publication: %Publication{} = publication, id: publication_id}, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
@@ -241,12 +221,44 @@ defmodule FieldPublication.Replication do
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
     |> Publications.put(%{})
 
-    PubSub.broadcast(FieldPublication.PubSub, channel, {:replication_log, log_entry})
+    PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_log, log_entry})
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_tasks) do
-    Logger.debug("A replication task has completed successfully.")
-    # TODO: Remove from running_tasks
-    {:noreply, running_tasks}
+  defp reconstruct_project_konfiguraton(%Publication{
+         database: database_name,
+         configuration_doc: configuration_doc_name
+       }) do
+    configuration_doc =
+      configuration_doc_name
+      |> CouchService.get_document()
+      |> then(fn {:ok, %{body: body}} ->
+        Jason.decode!(body)
+      end)
+
+    full_config =
+      System.cmd(
+        "node",
+        [
+          Application.app_dir(
+            :field_publication,
+            "priv/publication_enricher/dist/createFullConfiguration.js"
+          ),
+          database_name,
+          Application.get_env(:field_publication, :couchdb_url),
+          Application.get_env(:field_publication, :couchdb_admin_name),
+          Application.get_env(:field_publication, :couchdb_admin_password)
+        ]
+      )
+      |> then(fn {full_configuration, 0} ->
+        Map.put(configuration_doc, :config, Jason.decode!(full_configuration))
+      end)
+
+    CouchService.put_document(configuration_doc_name, full_config)
+  end
+
+  defp cleanup(ref, running_replications) do
+    Map.reject(running_replications, fn {_publication_id, {task, _replication_state} = _value} ->
+      task.ref == ref
+    end)
   end
 end

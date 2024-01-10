@@ -17,14 +17,15 @@ defmodule FieldPublication.Replication.FileReplication do
 
   def start(
         %{
-          parameters: %ReplicationInput{
+          input: %ReplicationInput{
             source_url: source_url,
             source_project_name: source_project_name,
             source_user: source_user,
             source_password: source_password
           },
-          publication: %Publication{} = publication
-        } = state
+          publication: %Publication{} = publication,
+          id: id
+        } = parameters
       ) do
     headers = [
       {"Content-Type", "application/json"},
@@ -59,14 +60,14 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    Replication.log(state, :info, "#{overall_file_count} files need replication.")
+    Replication.log(parameters, :info, "#{overall_file_count} files need replication.")
 
-    file_processing_parameters = {counter_pid, state}
+    file_processing_parameters = {counter_pid, parameters}
 
     file_lists_by_variant
     |> Enum.map(&copy_files(&1, base_file_url, headers, file_processing_parameters))
 
-    Map.put(state, :file_result, :replicated)
+    {:ok, {id, :file_replication}}
   end
 
   defp get_file_list(file_variant, base_url, headers) do
@@ -114,6 +115,7 @@ defmodule FieldPublication.Replication.FileReplication do
     end)
   end
 
+  # TODO: Refactor messy parameters
   defp copy_file(
          {uuid, _metadata},
          variant,
@@ -122,8 +124,8 @@ defmodule FieldPublication.Replication.FileReplication do
          {
            counter_pid,
            %{
-             channel: channel,
-             publication: %{} = publication
+             id: channel,
+             publication: %Publication{} = publication
            }
          }
        ) do
@@ -132,7 +134,7 @@ defmodule FieldPublication.Replication.FileReplication do
       "#{base_url}/#{uuid}?type=#{variant}",
       headers
     )
-    |> Finch.request(FieldPublication.Finch, [receive_timeout: 1000 * 60 * 5])
+    |> Finch.request(FieldPublication.Finch, receive_timeout: 1000 * 60 * 5)
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
         FileService.write_raw_data(publication.project_name, uuid, data, :image)

@@ -184,18 +184,5 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
     end
   end
 
-  defp apply_action(%ReplicationInput{} = parameters, %{assigns: %{action: :edit}} = socket) do
-    Replication.check_source_connection(parameters)
-    |> case do
-      {:ok, :connection_successful} ->
-        notify_parent({parameters})
-        socket
-
-      {:error, msg} ->
-        socket
-        |> assign(:initialization_error, msg)
-    end
-  end
-
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

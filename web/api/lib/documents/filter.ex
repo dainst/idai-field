@@ -1,13 +1,11 @@
 defmodule Api.Documents.Filter do
-
   alias Api.Core.CategoryTreeList
 
   def parse(nil), do: []
   def parse(filter_strings) do
     Enum.map filter_strings, fn filter_string ->
       [field, value] = String.split(filter_string, ":")
-      field = if field != "project" and not (String.starts_with? filter_string, "resource.relations") do
-
+      field = if field != "project" and not String.starts_with?(filter_string, "resource.relations") do
         "resource." <> (if field in ["category", "period.value"] do
           field <> ".name"
         else
@@ -25,26 +23,26 @@ defmodule Api.Documents.Filter do
   end
 
   def split_off_multilanguage_filters_and_add_name_suffixes(filters, project_conf, languages) do
-    unless has_exactly_one_category_filter? filters do
+    unless has_exactly_one_category_filter?(filters) do
       {filters, [], []}
     else
-      category_name = get_category_name filters
+      category_name = get_category_name(filters)
       category_definition = CategoryTreeList.find_by_name category_name, project_conf
-      input_fields = get_field_names category_definition, "input"
+      input_fields = get_field_names(category_definition, "input")
 
       {filters, multilanguage_filters} = Enum.split_with(filters, fn {name, _value} ->
-        field_name = String.replace name, "resource.", ""
+        field_name = String.replace(name, "resource.", "")
         field_name not in input_fields
       end)
-      dropdown_fields = get_field_names category_definition, "dropdown"
-      filters = Enum.map filters, fn {name, value} ->
+      dropdown_fields = get_field_names(category_definition, "dropdown")
+      filters = Enum.map(filters, fn {name, value} ->
         name = if String.replace(name, "resource.", "") in dropdown_fields do
           name <> ".name"
         else
           name
         end
         {name, value}
-      end
+      end)
       {filters,
        (preprocess_multilanguage_filters multilanguage_filters, languages),
        Enum.map(dropdown_fields, fn field_name -> "resource." <> field_name <> ".name" end)}
@@ -60,6 +58,7 @@ defmodule Api.Documents.Filter do
     end
   end
 
+  defp get_field_names(nil, _), do: []
   defp get_field_names category_definition, field_type do
     category_definition.groups
     |> Enum.map(fn group -> group.fields end)

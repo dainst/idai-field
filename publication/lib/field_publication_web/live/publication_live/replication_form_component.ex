@@ -174,13 +174,11 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
         notify_parent({parameters, publication})
         socket
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        socket
-        |> assign(:form, to_form(changeset))
+      {:error, msg} when is_binary(msg) ->
+        assign(socket, :initialization_error, msg)
 
-      {:error, msg} ->
-        socket
-        |> assign(:initialization_error, msg)
+      {:error, changeset} ->
+        assign(socket, :form, to_form(changeset))
     end
   end
 

@@ -41,4 +41,38 @@ defmodule FieldPublication.Schemas.ReplicationInput do
     changeset(%__MODULE__{}, params)
     |> apply_action(:create)
   end
+
+  def get_connection_error_changeset(%__MODULE__{} = replication_input, error) do
+    replication_input
+    |> changeset(%{})
+    |> add_connection_error(error)
+    |> apply_action(:update)
+  end
+
+  defp add_connection_error(changeset, 401) do
+    changeset
+    |> add_error(:source_user, "Failed to authenticate with provided credentials.")
+    |> add_error(:source_password, "Failed to authenticate with provided credentials.")
+  end
+
+  defp add_connection_error(changeset, 403) do
+    add_error(changeset, :source_user, "User not authorized to access source project.")
+  end
+
+  defp add_connection_error(changeset, 404) do
+    changeset
+    |> add_error(:source_url, "Specified source not found, wrong URL?")
+    |> add_error(
+      :source_project_name,
+      "Specified source not found, wrong project name?"
+    )
+  end
+
+  defp add_connection_error(changeset, :nxdomain) do
+    add_error(changeset, :source_url, "Could not resolve provided source domain.")
+  end
+
+  defp add_connection_error(changeset, :econnrefused) do
+    add_error(changeset, :source_url, "Connection refused by provided source")
+  end
 end

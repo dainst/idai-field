@@ -25,7 +25,7 @@ defmodule FieldPublication.Replication do
 
   def init(_) do
     Logger.debug("Initializing Replication GenServer state to empty map")
-    # TODO: Rework state for each publication
+
     {:ok, %{}}
   end
 
@@ -37,17 +37,22 @@ defmodule FieldPublication.Replication do
       {:error, %{errors: [duplicate_document: {msg, _}]}} ->
         {:error, msg}
 
+      {:error, %{errors: [database_exists: {msg, _}]}} ->
+        {:error, msg}
+
       error ->
         error
     end
   end
 
-  defp check_source_connection(%ReplicationInput{
-         source_url: url,
-         source_project_name: project_name,
-         source_user: user,
-         source_password: password
-       }) do
+  defp check_source_connection(
+         %ReplicationInput{
+           source_url: url,
+           source_project_name: project_name,
+           source_user: user,
+           source_password: password
+         } = input
+       ) do
     Finch.build(
       :head,
       "#{url}/db/#{project_name}",
@@ -67,17 +72,13 @@ defmodule FieldPublication.Replication do
             {:ok, :connection_successful}
         end
 
-      {:ok, %{status: 404}} ->
-        {:error, :not_found}
+      {:error, %Mint.TransportError{reason: reason}} ->
+        # Unable to establish any connection. Create an appropriate changeset for displaying error messages.
+        ReplicationInput.get_connection_error_changeset(input, reason)
 
-      {:ok, %{status: 401}} ->
-        {:error, :not_authorized}
-
-      {:error, %Mint.TransportError{reason: :nxdomain}} ->
-        {:error, :non_existent_domain}
-
-      {:error, %Mint.TransportError{reason: :econnrefused}} ->
-        {:error, :connection_refused}
+      {:ok, %{status: status}} ->
+        # Connection was established, but recieved error status code. Create an appropriate changeset for displaying error messages.
+        ReplicationInput.get_connection_error_changeset(input, status)
     end
   end
 

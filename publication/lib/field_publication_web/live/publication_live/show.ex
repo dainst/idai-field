@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   alias Phoenix.PubSub
 
   alias FieldPublication.Publications
+  alias FieldPublication.Replication
 
   alias FieldPublication.Schemas.{
     Publication,
@@ -57,6 +58,14 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   @doc """
   The function `handle_event/3` reacts to events (clicks and input changes) coming from the user's browser.
   """
+  def handle_event("stop_replication", _, %{assigns: %{publication: publication}} = socket) do
+    # The Replication module will broadcast a message to all connected users that will get picked up by
+    # a handle_info/2 function defined below.
+    Replication.stop(publication)
+
+    {:noreply, socket}
+  end
+
   def handle_event(
         "start_web_images_processing",
         _,
@@ -121,16 +130,10 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, assign(socket, :replication_progress_state, state)}
   end
 
-  def handle_info(
-        {:web_image_processing_count, summary},
-        %{assigns: %{data_state: data_state}} = socket
-      ) do
-    updated_data_state =
-      Map.update!(data_state, :images, fn old_image_state ->
-        Map.put(old_image_state, :summary, summary)
-      end)
-
-    {:noreply, assign(socket, :data_state, updated_data_state)}
+  def handle_info({:replication_stopped}, %{assigns: %{publication: publication}} = socket) do
+    # Replication was stopped prematurely by a user, the publication got deleted so we redirect the connected
+    # user to the parent project.
+    {:noreply, push_navigate(socket, to: ~p"/edit/#{publication.project_name}")}
   end
 
   def handle_info({:replication_result, publication}, socket) do
@@ -149,6 +152,18 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       :noreply,
       assign(socket, :web_images_processing?, true)
     }
+  end
+
+  def handle_info(
+        {:web_image_processing_count, summary},
+        %{assigns: %{data_state: data_state}} = socket
+      ) do
+    updated_data_state =
+      Map.update!(data_state, :images, fn old_image_state ->
+        Map.put(old_image_state, :summary, summary)
+      end)
+
+    {:noreply, assign(socket, :data_state, updated_data_state)}
   end
 
   def handle_info({:processing_stopped, :web_images}, socket) do

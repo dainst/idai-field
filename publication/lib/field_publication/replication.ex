@@ -133,8 +133,22 @@ defmodule FieldPublication.Replication do
 
       {task, _state} ->
         Process.exit(task.pid, :stopped)
-        # TODO: Cleanup based on replication state?
-        {:reply, :stopped}
+
+        # Delete the replication document for this publication database in case the couch replication got killed by the exit command above.
+        CouchReplication.stop_replication(publication.database)
+
+        # Get the latest document revision (in case the publication passed as a parameter is not matching the
+        # latest one), and use it to delete all data.
+        Publications.get!(publication.project_name, publication.draft_date)
+        |> Publications.delete()
+
+        PubSub.broadcast(
+          FieldPublication.PubSub,
+          publication_id,
+          {:replication_stopped}
+        )
+
+        {:reply, :stopped, running_replications}
     end
   end
 
@@ -179,19 +193,19 @@ defmodule FieldPublication.Replication do
   end
 
   def handle_info({:DOWN, ref, :process, _pid, :normal}, running_replications) do
-    Logger.debug("A replication has completed successfully.")
+    Logger.debug("A replication task has completed successfully.")
 
     {:noreply, cleanup(ref, running_replications)}
   end
 
-  def handle_info({:DOWN, ref, :stopped, _pid, :normal}, running_replications) do
-    Logger.debug("A replication has been stopped by a user.")
+  def handle_info({:DOWN, ref, :process, _pid, :stopped}, running_replications) do
+    Logger.debug("A replication task has been stopped by a user.")
 
     {:noreply, cleanup(ref, running_replications)}
   end
 
   def handle_info({:DOWN, ref, :process, _pid, reason}, running_replications) do
-    Logger.error("A replication failed irregularly.")
+    Logger.error("A replication task failed irregularly.")
     Logger.error(reason)
 
     {:noreply, cleanup(ref, running_replications)}

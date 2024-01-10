@@ -337,6 +337,24 @@ defmodule FieldHub.CouchService do
     )
   end
 
+  def get_last_update_infos(project_identifier) do
+    infos = get_update_infos(project_identifier)
+    IO.inspect(infos)
+
+    project_identifier
+  end
+
+  defp get_update_infos(project_identifier) do
+    # TODO move with private functions
+    # in a terminal: curl --user new -X GET http://127.0.0.1:5984/new/_changes
+    HTTPoison.get!(
+     "#{base_url()}/#{project_identifier}/_changes",
+     get_user_credentials()
+      |> headers()
+    )
+  end
+
+
   @doc """
   Returns the result of a `_all_docs` CouchDB query for the provided list of ids.
 

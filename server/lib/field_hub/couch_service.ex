@@ -338,10 +338,12 @@ defmodule FieldHub.CouchService do
   end
 
   def get_last_update_infos(project_identifier) do
-    infos = get_update_infos(project_identifier)
+    infos = (get_update_infos(project_identifier).body
+             |> Jason.decode!())["last_seq"]
+            #
     IO.inspect(infos)
-
-    project_identifier
+    infos
+    # project_identifier
   end
 
   defp get_update_infos(project_identifier) do

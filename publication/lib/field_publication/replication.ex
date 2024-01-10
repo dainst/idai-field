@@ -169,12 +169,12 @@ defmodule FieldPublication.Replication do
     {:noreply, Map.put(running_replications, publication_id, {task, parameters})}
   end
 
-  # Handle result of FileReplication task.
+  # Handle result of FileReplication task, finish up by reconstructing the project configuration.
   def handle_info({_ref, {:ok, {publication_id, :file_replication}}}, running_replications) do
     {_finished_task, %{publication: publication} = parameters} =
       Map.get(running_replications, publication_id)
 
-    {:ok, %{status: 201}} = reconstruct_project_konfiguraton(publication)
+    {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
 
     {:ok, final_publication} =
       publication
@@ -238,7 +238,7 @@ defmodule FieldPublication.Replication do
     PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_log, log_entry})
   end
 
-  defp reconstruct_project_konfiguraton(%Publication{
+  defp reconstruct_project_configuraton(%Publication{
          database: database_name,
          configuration_doc: configuration_doc_name
        }) do

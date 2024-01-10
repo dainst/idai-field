@@ -9,7 +9,6 @@ defmodule FieldPublication.Replication do
     CouchService,
     Replication.CouchReplication,
     Replication.FileReplication,
-    Replication.MetadataGeneration,
     Publications
   }
 

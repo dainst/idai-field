@@ -114,9 +114,12 @@ defmodule FieldPublication.Processing do
       task =
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
-          Image, # Module that implements the actual task.
-          :start_web_image_processing, # Function within the module to start the task.
-          [publication] # Parameters for the function.
+          # Module that implements the actual task.
+          Image,
+          # Function within the module to start the task.
+          :start_web_image_processing,
+          # Parameters for the function.
+          [publication]
         )
 
       broadcast(publication_id, :web_images, :processing_started)

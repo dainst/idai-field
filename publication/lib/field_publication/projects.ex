@@ -54,6 +54,7 @@ defmodule FieldPublication.Projects do
     else
       {:ok, %{status: 409}} ->
         {:error, Schemas.add_duplicate_doc_error(changeset)}
+
       error ->
         error
     end

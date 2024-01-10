@@ -10,7 +10,7 @@ defmodule FieldPublication.CouchService do
     [
       {_, %Finch.Response{status: status_code_user}},
       {_, %Finch.Response{status: status_code_replicator}}
-    ] = Enum.map( ["_users", "_replicator"], &put_database/1)
+    ] = Enum.map(["_users", "_replicator"], &put_database/1)
 
     case status_code_user do
       412 ->
@@ -202,7 +202,8 @@ defmodule FieldPublication.CouchService do
   - `query`, a `Map` describing a valid Mango query.
   - `database` (optional), name of the database to query.
   """
-  def get_document_stream(query, database \\ @core_database) when is_map(query) and is_binary(database) do
+  def get_document_stream(query, database \\ @core_database)
+      when is_map(query) and is_binary(database) do
     batch_size = 500
 
     Stream.resource(

@@ -337,25 +337,47 @@ defmodule FieldHub.CouchService do
     )
   end
 
-  def get_last_update_infos(project_identifier) do
-    infos = (get_update_infos(project_identifier).body
-             |> Jason.decode!())["last_seq"]
-            #
-    IO.inspect(infos)
-    infos
-    # project_identifier
+  def get_last_change_id(project_identifier) do
+    last_change_id =
+      Enum.at(
+        (get_change_infos(project_identifier).body
+         |> Jason.decode!())["results"],
+        0
+      )["id"]
+
+    last_change_id
   end
 
-  defp get_update_infos(project_identifier) do
+  def get_last_change_date(project_identifier) do
+    last_change_date =
+      HTTPoison.get!(
+        "#{base_url()}/#{project_identifier}/#{get_last_change_id(project_identifier)}",
+        get_user_credentials()
+        |> headers()
+      )
+
+    d = last_change_date.headers
+    # |>Jason.decode()
+    IO.inspect(d)
+
+    "TODO"
+  end
+
+  # def get_last_change_infos(project_identifier) do
+  #   infos = (get_change_infos(project_identifier).body
+  #            |> Jason.decode!())["last_seq"]
+  #   infos
+  # end
+
+  defp get_change_infos(project_identifier) do
     # TODO move with private functions
     # in a terminal: curl --user new -X GET http://127.0.0.1:5984/new/_changes
     HTTPoison.get!(
-     "#{base_url()}/#{project_identifier}/_changes",
-     get_user_credentials()
+      "#{base_url()}/#{project_identifier}/_changes",
+      get_user_credentials()
       |> headers()
     )
   end
-
 
   @doc """
   Returns the result of a `_all_docs` CouchDB query for the provided list of ids.

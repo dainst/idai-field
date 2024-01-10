@@ -60,7 +60,9 @@
                         } -> %>
                             <section>Database documents: <%= db_doc_count %></section>
                             <%!-- <section>Last update: <%= "TODO: indicate here when the last update took place and an id ???" %></section> --%>
-                            <section>Last change seq: <%= @last_update %>
+                            <section>Last change id: <%= @last_update_id %>
+                                    <br/>
+                                    Date of last change:  <%= @last_update_date %>
                                 <%!-- TODO Better display and retriev infos --%>
                                 <%!-- <table>
                                     <tr><td>seq:</td><td>17</td></tr>

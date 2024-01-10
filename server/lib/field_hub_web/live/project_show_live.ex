@@ -47,7 +47,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
-          |> assign(:last_update, CouchService.get_last_update_infos(project))
+          |> assign(:last_update_date, CouchService.get_last_change_date(project))
+          |> assign(:last_update_id, CouchService.get_last_change_id(project))
           |> read_project_doc()
         }
 

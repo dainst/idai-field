@@ -337,6 +337,12 @@ defmodule FieldHub.CouchService do
     )
   end
 
+   @doc """
+  Get CouchDB's info for the last change of a given project.
+
+  __Parameters__
+  - `project_identifier` the project's name.
+  """
   def get_last_change_id(project_identifier) do
     last_change_id =
       Enum.at(
@@ -356,22 +362,12 @@ defmodule FieldHub.CouchService do
         |> headers()
       )
 
-    d = last_change_date.headers
-    # |>Jason.decode()
-    IO.inspect(d)
-
-    "TODO"
+    List.keyfind(last_change_date.headers,"Date",0)
+      |>Tuple.to_list()
+      |>Enum.at(1)
   end
 
-  # def get_last_change_infos(project_identifier) do
-  #   infos = (get_change_infos(project_identifier).body
-  #            |> Jason.decode!())["last_seq"]
-  #   infos
-  # end
-
   defp get_change_infos(project_identifier) do
-    # TODO move with private functions
-    # in a terminal: curl --user new -X GET http://127.0.0.1:5984/new/_changes
     HTTPoison.get!(
       "#{base_url()}/#{project_identifier}/_changes",
       get_user_credentials()

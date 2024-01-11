@@ -60,15 +60,10 @@
                         } -> %>
                             <section>Database documents: <%= db_doc_count %></section>
                             <%!-- <section>Last update: <%= "TODO: indicate here when the last update took place and an id ???" %></section> --%>
-                            <section>Last change id: <%= @last_update_id %>
+                            <section>Last change id: <%= @last_update_id %>,
                                     <br/>
-                                    Date of last change:  <%= @last_update_date %>
-                                <%!-- TODO Better display and retriev infos --%>
-                                <%!-- <table>
-                                    <tr><td>seq:</td><td>17</td></tr>
-                                    <tr><td>id:</td><td>e54ce645-43a1-49f5-bc3b-e634ed50c4f0</td></tr>
-                                    <tr><td>changes:</td><td>[{"rev":"1-fd94749d65793d803f86ccf0aa009d25"}]</td></tr>
-                                </table> --%>
+                                    Last change date:  <%= @last_update_date %>
+                                
                             </section>
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>

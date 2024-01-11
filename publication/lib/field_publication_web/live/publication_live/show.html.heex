@@ -29,8 +29,9 @@
         <div>Replication finished <%= @publication.replication_finished %>.</div>
       <% else %>
         <.log_entry_list logs={@replication_logs} />
-        <.progress_bar state={@replication_progress_state}></.progress_bar>
-
+        <%= if @replication_progress_state do %>
+          <.progress_bar state={@replication_progress_state}></.progress_bar>
+        <% end %>
         <button class="font-bold font-mono float-right" type="button" phx-click="stop_replication">
           Stop replication
         </button>

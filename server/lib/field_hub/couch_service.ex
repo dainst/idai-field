@@ -337,39 +337,50 @@ defmodule FieldHub.CouchService do
     )
   end
 
-   @doc """
+  @doc """
   Get CouchDB's info for the last change of a given project.
 
   __Parameters__
   - `project_identifier` the project's name.
   """
   def get_last_change_id(project_identifier) do
-    last_change_id =
-      Enum.at(
-        (get_change_infos(project_identifier).body
-         |> Jason.decode!())["results"],
-        0
-      )["id"]
-
-    last_change_id
+    Enum.at(
+      (get_change_infos(project_identifier).body
+       |> Jason.decode!())["results"],
+      0
+    )["id"]
   end
 
   def get_last_change_date(project_identifier) do
-    last_change_date =
+    IO.inspect(get_last_change_id(project_identifier))
+    last_change =
       HTTPoison.get!(
         "#{base_url()}/#{project_identifier}/#{get_last_change_id(project_identifier)}",
         get_user_credentials()
         |> headers()
       )
 
-    List.keyfind(last_change_date.headers,"Date",0)
-      |>Tuple.to_list()
-      |>Enum.at(1)
+      last_change.body
+         |>Jason.decode()
+         |> case do
+           {:ok, result} ->
+            result
+              |> Map.fetch("modified")
+              |> case do
+                {:ok, time_stamp } ->
+                  time_stamp
+                  |> List.last()
+                  |> Map.fetch("date")
+                  |> Tuple.to_list()
+                  |> List.last()
+                  # |> IO.inspect()
+              end
+         end
   end
 
   defp get_change_infos(project_identifier) do
     HTTPoison.get!(
-      "#{base_url()}/#{project_identifier}/_changes",
+      "#{base_url()}/#{project_identifier}/_changes?descending=true",
       get_user_credentials()
       |> headers()
     )

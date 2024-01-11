@@ -4,18 +4,39 @@ import { isString } from 'tsfun';
 
 const fs = require('fs');
 
+let baseArgs = ['.', 'test']
 let electronApp;
 let window;
 
 
-export async function start() {
+/**
+ * Use Playwright to start the Electron application for running e2e tests.
+ * 
+ * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
+ * @returns Promise<any> that will resolve once the application is started.
+ */
+export async function start(fakeVideoPath?: string) {
 
-    electronApp = await electron.launch({ args: ['.', 'test'] });
+    let finalArgs = baseArgs;
+
+    if(fakeVideoPath) {
+        finalArgs = baseArgs.concat([
+            '--use-fake-device-for-media-stream',
+            `--use-file-for-fake-video-capture=${fakeVideoPath}`
+        ])
+    }
+
+    electronApp = await electron.launch({ args: finalArgs });
+
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
 }
 
-
+/**
+ * Stop the Electron application started by Playwright.
+ * 
+ * @returns Promise<any> that will resolve once the application is stopped.
+ */
 export function stop() {
 
     return electronApp.close();
@@ -68,8 +89,15 @@ export function getLocator(selector: string) {
     return window.locator(selector);
 }
 
-
-export async function click(element, x?, y?) {
+/**
+ * Use Playwright to simulate a click on a specified element.
+ * 
+ * @param element either a selector (`string`) for the element or an already existing reference to an element.
+ * @param x (optional) position relative to the top left corner of the element padding box.
+ * @param y (optional) position relative to the top left corner of the element padding box.
+ * @returns Promise<any> that will resolve after the click happened.
+ */
+export async function click(element, x?: number, y?: number) {
 
     if (isString(element)) element = await getLocator(element);
     const options = x && y ? { position: { x, y } } : {};

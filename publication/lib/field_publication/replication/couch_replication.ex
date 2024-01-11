@@ -110,8 +110,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     {:ok, %{status: 200, body: body}} =
       CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
 
-    body
-    |> Jason.decode!()
+    Jason.decode!(body)
     |> case do
       %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
         PubSub.broadcast(
@@ -123,8 +122,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         Process.sleep(@poll_frequency)
         poll_replication_status(database_name, source_doc_count, parameters)
 
-      %{"state" => couch_state}
-      when couch_state == nil or couch_state == "initializing" or couch_state == "running" ->
+      %{"state" => couch_state} when couch_state in [nil, "initializing", "running"] ->
         # Different cases shortly after the replication document has been committed.
         Process.sleep(@poll_frequency)
         poll_replication_status(database_name, source_doc_count, parameters)
@@ -154,8 +152,8 @@ defmodule FieldPublication.Replication.CouchReplication do
 
         {:ok, {id, :couch_replication}}
 
-      %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
-        Logger.error(error)
+      %{"state" => "crashing"} = error ->
+        Logger.error(inspect(error))
 
         Replication.log(
           parameters,

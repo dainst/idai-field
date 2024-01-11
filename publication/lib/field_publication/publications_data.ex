@@ -43,7 +43,7 @@ defmodule FieldPublication.PublicationsData do
   def get_doc_stream_for_all(%Publication{database: database}) do
     run_query(
       %{
-        selector: {}
+        selector: %{}
       },
       database
     )

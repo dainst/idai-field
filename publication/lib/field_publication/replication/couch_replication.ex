@@ -107,65 +107,63 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp poll_replication_status(database_name, source_doc_count, %{id: id} = parameters) do
-    CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
+    {:ok, %{status: 200, body: body}} =
+      CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
+
+    body
+    |> Jason.decode!()
     |> case do
-      {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> case do
-          %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
-            PubSub.broadcast(
-              FieldPublication.PubSub,
-              id,
-              {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
-            )
+      %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
+        PubSub.broadcast(
+          FieldPublication.PubSub,
+          id,
+          {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
+        )
 
-            Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, parameters)
+        Process.sleep(@poll_frequency)
+        poll_replication_status(database_name, source_doc_count, parameters)
 
-          %{"state" => couch_state}
-          when couch_state == nil or couch_state == "initializing" or couch_state == "running" ->
-            # Different cases shortly after the replication document has been committed.
-            Process.sleep(@poll_frequency)
-            poll_replication_status(database_name, source_doc_count, parameters)
+      %{"state" => couch_state}
+      when couch_state == nil or couch_state == "initializing" or couch_state == "running" ->
+        # Different cases shortly after the replication document has been committed.
+        Process.sleep(@poll_frequency)
+        poll_replication_status(database_name, source_doc_count, parameters)
 
-          %{"state" => "completed"} ->
-            PubSub.broadcast(
-              FieldPublication.PubSub,
-              id,
-              {:document_replication_count,
-               %{counter: source_doc_count, overall: source_doc_count}}
-            )
+      %{"state" => "completed"} ->
+        PubSub.broadcast(
+          FieldPublication.PubSub,
+          id,
+          {:document_replication_count, %{counter: source_doc_count, overall: source_doc_count}}
+        )
 
-            Replication.log(
-              parameters,
-              :info,
-              "Transforming legacy data..."
-            )
+        Replication.log(
+          parameters,
+          :info,
+          "Transforming legacy data..."
+        )
 
-            %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
+        %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
 
-            Enum.map(errors, fn error ->
-              Replication.log(
-                parameters,
-                :error,
-                error
-              )
-            end)
+        Enum.map(errors, fn error ->
+          Replication.log(
+            parameters,
+            :error,
+            error
+          )
+        end)
 
-            {:ok, {id, :couch_replication}}
+        {:ok, {id, :couch_replication}}
 
-          %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
-            Logger.error(error)
+      %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
+        Logger.error(error)
 
-            Replication.log(
-              parameters,
-              :error,
-              "Experienced error while replicating documents, stopping replication."
-            )
+        Replication.log(
+          parameters,
+          :error,
+          "Experienced error while replicating documents, stopping replication."
+        )
 
-            {:error, {id, error}}
-        end
+        {:error, {id, error}}
     end
   end
 

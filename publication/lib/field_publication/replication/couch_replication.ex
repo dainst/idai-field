@@ -145,19 +145,13 @@ defmodule FieldPublication.Replication.CouchReplication do
 
             %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
 
-            Enum.each(errors, fn error ->
+            Enum.map(errors, fn error ->
               Replication.log(
                 parameters,
                 :error,
                 error
               )
             end)
-
-            Replication.log(
-              parameters,
-              :info,
-              "Legacy data transformed."
-            )
 
             {:ok, {id, :couch_replication}}
 
@@ -220,54 +214,9 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   defp transform_legacy_data(database_name) do
     CouchService.get_document_stream(%{selector: %{}}, database_name)
-    |> Stream.map(fn doc ->
-      doc
-      |> case do
-        # Replace deprecated "type" key with "category".
-        %{
-          "resource" =>
-            %{
-              "type" => type_value
-            } = resource
-        } ->
-          resource =
-            resource
-            |> Map.put("category", type_value)
-            |> Map.delete("type")
-
-          Map.put(doc, "resource", resource)
-
-        not_applicable_doc ->
-          not_applicable_doc
-      end
-      |> case do
-        # Restructure deprecated period.
-        %{"resource" => %{"period" => period} = resource} when not is_map(period) ->
-          updated_period =
-            case resource["periodEnd"] do
-              nil ->
-                %{"value" => period}
-
-              value ->
-                %{"value" => period, "endValue" => value}
-            end
-
-          resource = Map.put(resource, "period", updated_period)
-
-          Map.put(doc, "resource", resource)
-
-        not_applicable_doc ->
-          not_applicable_doc
-      end
-      |> case do
-        # Remove attachment (in older Field Desktop versions this was where thumbnails were stored)
-        %{"_attachments" => _} ->
-          Map.delete(doc, "_attachments")
-
-        not_applicable_doc ->
-          not_applicable_doc
-      end
-    end)
+    |> Stream.map(&legacy_replace_type/1)
+    |> Stream.map(&legacy_fix_period/1)
+    |> Stream.map(&legacy_remove_attachment/1)
     |> Task.async_stream(
       # Put the documents back into the CouchDB
       fn %{"_id" => id} = doc ->
@@ -290,6 +239,46 @@ defmodule FieldPublication.Replication.CouchReplication do
           Map.put(acc, :errors, acc[:errors] ++ [inspect(val)])
       end
     end)
+  end
+
+  defp legacy_replace_type(%{"resource" => %{"type" => type_value} = resource} = doc) do
+    updated_resource =
+      resource
+      |> Map.put("category", type_value)
+      |> Map.delete("type")
+
+    Map.put(doc, "resource", updated_resource)
+  end
+
+  defp legacy_replace_type(doc) do
+    doc
+  end
+
+  defp legacy_fix_period(%{"resource" => %{"period" => period} = resource} = doc)
+       when not is_map(period) do
+    updated_period =
+      if resource["periodEnd"] == nil do
+        %{"value" => period}
+      else
+        %{"value" => period, "endValue" => resource["periodEnd"]}
+      end
+
+    updated_resource = Map.put(resource, "period", updated_period)
+
+    Map.put(doc, "resource", updated_resource)
+  end
+
+  defp legacy_fix_period(doc) do
+    doc
+  end
+
+  defp legacy_remove_attachment(%{"_attachments" => _} = doc) do
+    # In older Field Desktop versions the image thumbnails were saved as attachments.
+    Map.delete(doc, "_attachments")
+  end
+
+  defp legacy_remove_attachment(doc) do
+    doc
   end
 
   @dialyzer {:nowarn_function, source_url_fix: 1}

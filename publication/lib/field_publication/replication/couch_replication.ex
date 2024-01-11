@@ -137,7 +137,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         Replication.log(
           parameters,
           :info,
-          "Transforming legacy data..."
+          "Checking and transforming legacy data."
         )
 
         %{ok: _successes, errors: errors} = transform_legacy_data(database_name)

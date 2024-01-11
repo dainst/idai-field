@@ -129,7 +129,7 @@ defmodule FieldPublication.Replication do
 
     case Map.get(running_replications, publication_id) do
       nil ->
-        {:reply, :not_found}
+        {:reply, :not_found, running_replications}
 
       {task, _state} ->
         Process.exit(task.pid, :stopped)

@@ -137,6 +137,28 @@ defmodule FieldPublication.Replication.CouchReplication do
                %{counter: source_doc_count, overall: source_doc_count}}
             )
 
+            Replication.log(
+              parameters,
+              :info,
+              "Transforming legacy data..."
+            )
+
+            %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
+
+            Enum.each(errors, fn error ->
+              Replication.log(
+                parameters,
+                :error,
+                error
+              )
+            end)
+
+            Replication.log(
+              parameters,
+              :info,
+              "Legacy data transformed."
+            )
+
             {:ok, {id, :couch_replication}}
 
           %{"state" => "crashing", "info" => %{"error" => _message}} = error ->
@@ -194,6 +216,80 @@ defmodule FieldPublication.Replication.CouchReplication do
       {:error, %Mint.TransportError{} = reason} ->
         {:error, reason}
     end
+  end
+
+  defp transform_legacy_data(database_name) do
+    CouchService.get_document_stream(%{selector: %{}}, database_name)
+    |> Stream.map(fn doc ->
+      doc
+      |> case do
+        # Replace deprecated "type" key with "category".
+        %{
+          "resource" =>
+            %{
+              "type" => type_value
+            } = resource
+        } ->
+          resource =
+            resource
+            |> Map.put("category", type_value)
+            |> Map.delete("type")
+
+          Map.put(doc, "resource", resource)
+
+        not_applicable_doc ->
+          not_applicable_doc
+      end
+      |> case do
+        # Restructure deprecated period.
+        %{"resource" => %{"period" => period} = resource} when not is_map(period) ->
+          updated_period =
+            case resource["periodEnd"] do
+              nil ->
+                %{"value" => period}
+
+              value ->
+                %{"value" => period, "endValue" => value}
+            end
+
+          resource = Map.put(resource, "period", updated_period)
+
+          Map.put(doc, "resource", resource)
+
+        not_applicable_doc ->
+          not_applicable_doc
+      end
+      |> case do
+        # Remove attachment (in older Field Desktop versions this was where thumbnails were stored)
+        %{"_attachments" => _} ->
+          Map.delete(doc, "_attachments")
+
+        not_applicable_doc ->
+          not_applicable_doc
+      end
+    end)
+    |> Task.async_stream(
+      # Put the documents back into the CouchDB
+      fn %{"_id" => id} = doc ->
+        CouchService.put_document(id, doc, database_name)
+      end,
+      max_concurrency: 100
+    )
+    |> Enum.reduce(%{ok: 0, errors: []}, fn response, acc ->
+      case response do
+        {:ok, {:ok, %{status: 201}}} ->
+          # Document was successfully updated
+          Map.put(acc, :ok, acc[:ok] + 1)
+
+        {:ok, {:ok, %{body: body}}} ->
+          # Keep the CouchDB response as error message.
+          Map.put(acc, :errors, acc[:errors] ++ [body])
+
+        val ->
+          # Use inspect/1 to create string from all other arbitrary error cases.
+          Map.put(acc, :errors, acc[:errors] ++ [inspect(val)])
+      end
+    end)
   end
 
   @dialyzer {:nowarn_function, source_url_fix: 1}

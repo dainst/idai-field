@@ -28,33 +28,12 @@
       <%= if @publication.replication_finished do %>
         <div>Replication finished <%= @publication.replication_finished %>.</div>
       <% else %>
-        <table class="w-full">
-          <thead class="bg-slate-700">
-            <tr class="text-slate-50">
-              <th class="w-5/6">Status</th>
-              <th class="w-1/6">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <%= if @last_replication_log do %>
-                  <div><%= @last_replication_log.message %></div>
-                <% else %>
-                  <div>No replication logs.</div>
-                <% end %>
-                <%= if @replication_progress_state do %>
-                  <.progress_bar state={@replication_progress_state}></.progress_bar>
-                <% end %>
-              </td>
-              <td class="text-center">
-                <button class="font-semibold font-mono" type="button" phx-click="stop_replication">
-                  Stop
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <.log_entry_list logs={@replication_logs} />
+        <.progress_bar state={@replication_progress_state}></.progress_bar>
+
+        <button class="font-bold font-mono float-right" type="button" phx-click="stop_replication">
+          Stop replication
+        </button>
       <% end %>
     </:item>
 

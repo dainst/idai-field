@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:channel, channel)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
-      |> assign(:last_replication_log, List.last(publication.replication_logs))
+      |> assign(:replication_logs, publication.replication_logs)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
@@ -109,9 +109,12 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     {:noreply, assign(socket, :data_state, data_state)}
   end
 
-  def handle_info({:replication_log, %LogEntry{} = log_entry}, socket) do
-    # Only the last replication log is displayed in the interface, we just replace the previous assign.
-    {:noreply, assign(socket, :last_replication_log, log_entry)}
+  def handle_info(
+        {:replication_log, %LogEntry{} = log_entry},
+        %{assigns: %{replication_logs: previous}} = socket
+      ) do
+    # Append the new log to the list of existing ones.
+    {:noreply, assign(socket, :replication_logs, previous ++ [log_entry])}
   end
 
   def handle_info({source, %{counter: counter, overall: overall}}, socket)

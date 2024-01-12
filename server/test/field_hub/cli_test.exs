@@ -20,16 +20,6 @@ defmodule FieldHub.CLITest do
     end)
   end
 
-  test "setup/1 works without error" do
-    log =
-      capture_log(fn ->
-        assert :ok = CLI.setup()
-      end)
-
-    assert log =~ "Running initial CouchDB setup for single node"
-    assert log =~ "Setup done."
-  end
-
   test "create_project/1" do
     log =
       capture_log(fn ->

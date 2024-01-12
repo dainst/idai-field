@@ -18,56 +18,6 @@ defmodule FieldHub.CLI do
   """
 
   @doc """
-  Run basic setup for the whole application.
-  """
-  def setup() do
-    HTTPoison.start()
-
-    Logger.info("Running setup.")
-
-    Logger.info("Running initial CouchDB setup for single node at #{CouchService.base_url()}...")
-    # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
-
-    {users, replicator} = CouchService.initial_setup()
-
-    case users do
-      %{status_code: 412} ->
-        Logger.warning(
-          "System database '_users' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
-
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created system database `_users`.")
-    end
-
-    case replicator do
-      %{status_code: 412} ->
-        Logger.warning(
-          "System database '_replicator' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
-
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created system database `_replicator`.")
-    end
-
-    app_user = Application.get_env(:field_hub, :couchdb_user_name)
-
-    User.create(
-      app_user,
-      Application.get_env(:field_hub, :couchdb_user_password)
-    )
-    |> case do
-      :created ->
-        Logger.info("Created application user '#{app_user}'.")
-
-      :already_exists ->
-        Logger.warning("Application user '#{app_user}' already exists.")
-    end
-
-    Logger.info("Setup done.")
-  end
-
-  @doc """
   Creates a new project and its default user of the same name. Generates a random password for the user.
 
   __Parameters__

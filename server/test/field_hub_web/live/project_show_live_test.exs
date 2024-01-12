@@ -417,9 +417,11 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     test "file index cache can be deleted through the interface", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
+      # We wait until the overview task has completed, because the overview evaluation will
+      # create a cached index.
       :erlang.trace(:all, true, [:receive])
-
       assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
+
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 
       html =

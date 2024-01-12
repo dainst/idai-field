@@ -28,3 +28,6 @@ jobs:
       - name: Run FieldHub tests
         run: mix test
         working-directory: server
+      - name: Stop CouchDB
+        run: docker-compose -f docker-compose.yml --env-file .env_template down -v
+        working-directory: server

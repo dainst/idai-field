@@ -26,5 +26,5 @@ jobs:
         run: mix setup
         working-directory: server
       - name: Run server tests
-        run: mix test
+        run: sudo mix test
         working-directory: server

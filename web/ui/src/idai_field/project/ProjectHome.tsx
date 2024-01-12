@@ -45,7 +45,7 @@ export default function ProjectHome(): ReactElement {
     const [typeCatalogId, setTypeCatalogId] = useState<string>(null);
     
     const [projectDocument, setProjectDocument] = useState<Document>();
-    const [title, setTitle] = useState<I18N.String>({ unspecifiedLanguage: '' });
+    const [title, setTitle] = useState<I18N.String|string>({ unspecifiedLanguage: '' });
     const [images, setImages] = useState<ResultDocument[]>();
     const [highlightedCategories, setHighlightedCategories] = useState<string[]>([]);
     const [predecessors] = useState<ResultDocument[]>([]);
@@ -93,7 +93,7 @@ export default function ProjectHome(): ReactElement {
 }
 
 
-const renderTitle = (title: I18N.String, projectDocument: Document) => {
+const renderTitle = (title: I18N.String|string, projectDocument: Document) => {
 
     const titleStr: string = getTranslation(title);
 
@@ -304,7 +304,7 @@ const checkTypeCatalogs = async (id: string, searchParams: URLSearchParams, toke
 };
 
 
-const getProjectTitle = (projectDocument: Document): I18N.String => {
+const getProjectTitle = (projectDocument: Document): I18N.String|string => {
 
     return projectDocument.resource.shortDescription
         ?? projectDocument.resource.shortName

@@ -21,7 +21,7 @@ export interface ResultDocument {
 export interface ResultResource {
     category: LabeledValue;
     id: string;
-    identifier: I18N.String;
+    identifier: string;
     shortDescription: I18N.String;
     shortName?: I18N.String;
     childrenCount: number;

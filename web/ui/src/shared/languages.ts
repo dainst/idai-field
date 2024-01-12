@@ -44,7 +44,7 @@ function getBasicLanguageCode(language: string): string {
 }
 
 
-export function getTranslation(labels: I18N.String|undefined): string {
+export function getTranslation(labels: I18N.String|string|undefined): string {
 
     if (!labels) return '';
     if (!LANGUAGES) {

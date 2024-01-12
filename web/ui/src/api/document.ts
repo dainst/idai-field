@@ -22,7 +22,7 @@ export interface ChangeEvent {
 export interface Resource {
     category: LabeledValue;
     id: string;
-    identifier: I18N.String;
+    identifier: string;
     shortDescription: I18N.String;
     shortName?: I18N.String;
     groups: FieldGroup[];

@@ -25,9 +25,6 @@ jobs:
       - name: Install depencies
         run: mix deps.get
         working-directory: server
-      - name: Create file directory
-        run: mkdir test/tmp
-        working-directory: server
       - name: Run server tests
         run: mix test
         working-directory: server

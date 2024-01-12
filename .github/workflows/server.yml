@@ -23,8 +23,8 @@ jobs:
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d &
         working-directory: server
       - name: Setup server
-        run: mix setup
+        run: mix deps.get
         working-directory: server
       - name: Run server tests
-        run: sudo mix test
+        run: mix test
         working-directory: server

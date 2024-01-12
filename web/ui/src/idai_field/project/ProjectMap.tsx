@@ -69,7 +69,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
     const [map, setMap] = useState<Map>(null);
     const [vectorLayer, setVectorLayer] = useState<VectorLayer>(null);
     const [select, setSelect] = useState<Select>(null);
-    const [tileLayers, setTileLayers] = useState<TileLayer[]>([]);
+    const [tileLayers, setTileLayers] = useState<TileLayer[]>(null);
  
     const mapClickFunction = useRef<(_: MapBrowserEvent) => void>(null);
 
@@ -103,6 +103,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         getTileLayers(project, loginData, projectDocument, isMiniMap).then((newTileLayers) => {
             if (mounted) {
                 setTileLayers(currentTileLayers => {
+                    if (!currentTileLayers) currentTileLayers = [];
                     if (currentTileLayers.length === 0) {
                         newTileLayers.forEach(layer => map.addLayer(layer));
                         return newTileLayers;
@@ -130,7 +131,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!map || !documents?.length) return;
+        if (!map || !documents?.length || !tileLayers) return;
 
         const featureCollection = createFeatureCollection(documents);
         const newVectorLayer = getGeoJSONLayer(featureCollection);
@@ -187,13 +188,13 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
             <Link to={ `/project/${project}/hierarchy?parent=root` } className="project-link">
                 <Icon path={ mdiRedo } size={ 1.0 } ></Icon>
             </Link> :
-            <LayerControls map={ map }
-                        tileLayers={ tileLayers }
-                        fitOptions={ fitOptions }
-                        selectedDocument={ selectedDocument }
-                        predecessors={ predecessors }
-                        project={ project }
-                        projectDocument={ projectDocument }></LayerControls>)
+            tileLayers && <LayerControls map={ map }
+                                         tileLayers={ tileLayers }
+                                         fitOptions={ fitOptions }
+                                         selectedDocument={ selectedDocument }
+                                         predecessors={ predecessors }
+                                         project={ project }
+                                         projectDocument={ projectDocument }></LayerControls>)
         }
     </>;
 }

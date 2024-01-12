@@ -32,6 +32,9 @@ defmodule FieldHubWeb.ProjectShowLive do
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->
+        # For the overview portion we may have to look up the sizes of all files in the project, which may take some seconds. For this
+        # reason we implement that evaluation asynchronously. This Process.send/3 will get picked up further down by
+        # a handle_info/2.
         Process.send(self(), :update_overview, [])
 
         {
@@ -55,12 +58,21 @@ defmodule FieldHubWeb.ProjectShowLive do
     end
   end
 
-  def handle_info(
-        :update_overview,
-        %{assigns: %{project: project}} = socket
-      ) do
-    stats = Project.evaluate_project(project)
+  def handle_info(:update_overview, %{assigns: %{project: project}} = socket) do
+    # Evaluate the project asynchronously. Once the task finishes, it will get picked up
+    # by another handle_info/2 below.
+    Task.async(fn ->
+      {:overview_task, Project.evaluate_project(project)}
+    end)
 
+    {:noreply, socket}
+  end
+
+  def handle_info({ref, {:overview_task, stats}}, socket) do
+    # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
+    Process.demonitor(ref, [:flush])
+
+    # Reschedule the task to be run again in 10 seconds, see above.
     Process.send_after(self(), :update_overview, 10000)
 
     {
@@ -71,11 +83,9 @@ defmodule FieldHubWeb.ProjectShowLive do
     }
   end
 
-  def handle_info(
-        :update_issues,
-        %{assigns: %{project: project}} = socket
-      ) do
-    issues = Issues.evaluate_all(project)
+  def handle_info({ref, {:issues_task, issues}}, socket) do
+    # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
+    Process.demonitor(ref, [:flush])
 
     grouped =
       issues
@@ -101,7 +111,10 @@ defmodule FieldHubWeb.ProjectShowLive do
       Project.check_project_authorization(project, user_name)
       |> case do
         :granted ->
-          Process.send(self(), :update_issues, [])
+          # Start the issue evaluation asynchronously, this will get picked up by a handle_info/2 above.
+          Task.async(fn ->
+            {:issues_task, Issues.evaluate_all(project)}
+          end)
 
           socket
           |> assign(:issue_status, :evaluating)

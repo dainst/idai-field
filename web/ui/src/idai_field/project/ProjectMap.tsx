@@ -156,7 +156,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!map || !vectorLayer) return;
+        if (!map || !vectorLayer) return;
         
         map.getView().fit(
             getExtent(vectorLayer, predecessors, selectedDocument),
@@ -166,7 +166,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!select || !vectorLayer) return;
+        if (!select || !vectorLayer) return;
 
         select.getFeatures().clear();
 
@@ -509,7 +509,10 @@ const getExtent = (layer: VectorLayer, predecessors: ResultDocument[], selectedD
         .filter(not(isUndefined));
 
     const feature = predecessorFeatures.find(predecessorFeature => {
-        return ['Trench', 'Building', 'Survey'].includes(predecessorFeature.getProperties().category);
+        // TODO Check for Operation supercategory
+        return ['Trench', 'Building', 'Survey', 'ExcavationArea'].includes(
+            predecessorFeature.getProperties().category
+        );
     }) || (selectedDocument && getFeature(selectedDocument, layer));
 
     return feature ? feature.getGeometry().getExtent() : layer.getSource().getExtent();

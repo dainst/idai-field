@@ -22,7 +22,6 @@ jobs:
         working-directory: server
       - name: Wait 10 seconds for CouchDB startup
         run: sleep 10s
-        shell: bash
       - name: Install FieldHub dependencies
         run: mix deps.get
         working-directory: server

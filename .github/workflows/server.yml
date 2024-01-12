@@ -22,8 +22,11 @@ jobs:
       - name: Start CouchDB
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d &
         working-directory: server
-      - name: Setup server
+      - name: Install depencies
         run: mix deps.get
+        working-directory: server
+      - name: Create file directory
+        run: mkdir test/tmp
         working-directory: server
       - name: Run server tests
         run: mix test

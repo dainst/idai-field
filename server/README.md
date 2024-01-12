@@ -47,10 +47,10 @@ FieldHub tries to follow the Elixir and Phoenix conventions when it comes to nam
 
 ### Project setup
 
-Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
+Install dependencies:
 
 ```bash
-mix setup
+mix deps.get
 ```
 
 Start the server:

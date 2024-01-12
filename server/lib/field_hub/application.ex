@@ -55,12 +55,11 @@ defmodule FieldHub.Application do
 
     tmp_file = "#{@file_directory_root}/.field_hub_test_file"
 
-    File.write("#{@file_directory_root}/.field_hub_test_file", [])
-    |> case do
-      :ok ->
-        File.rm(tmp_file)
-        Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
-
+    with :ok <- File.mkdir_p(@file_directory_root),
+         :ok <- File.write("#{@file_directory_root}/.field_hub_test_file", []) do
+      File.rm(tmp_file)
+      Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
+    else
       {:error, posix} ->
         throw(
           "Application got '#{posix}' posix error for write test in directory '#{@file_directory_root}'!"

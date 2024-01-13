@@ -20,8 +20,8 @@ jobs:
       - name: Start CouchDB
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
-      - name: Install inotify-tools
-        run: sudo apt-get install inotify-tools
+      - name: Sleep to wait for CouchDB startup
+        run: sleep 15s
       - name: Install FieldHub dependencies
         run: mix deps.get
         working-directory: server

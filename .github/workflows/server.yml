@@ -20,11 +20,9 @@ jobs:
       - name: Start CouchDB
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
-      - name: Sleep to wait for CouchDB startup
-        run: sleep 15s
       - name: Install FieldHub dependencies
         run: mix deps.get
         working-directory: server
       - name: Run FieldHub tests
-        run: mix test
+        run: sleep 15s && mix test
         working-directory: server

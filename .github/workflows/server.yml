@@ -21,8 +21,8 @@ jobs:
         run: docker-compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
       - name: Install FieldHub dependencies
-        run: mix deps.get
+        run: mix clean && mix deps.get
         working-directory: server
       - name: Run FieldHub tests
-        run: sleep 15s && mix test
+        run: mix test
         working-directory: server

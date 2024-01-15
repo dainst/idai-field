@@ -136,9 +136,10 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "authorized user can see monitoring page", %{conn: conn} do
-      :erlang.trace(:all, true, [:receive])
-
       {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      pid = view.pid
+      :erlang.trace(view.pid, true, [:receive])
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
       assert html_on_mount =~ "No supervisor found in project document."
@@ -149,7 +150,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~
                "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
 
-      assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
+      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
 
       html = render(view)
 
@@ -415,12 +416,11 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "file index cache can be deleted through the interface", %{conn: conn} do
-      :erlang.trace(:all, true, [:receive])
-
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-      # We wait until the overview task has completed, because the overview evaluation will
-      # create a cached index.
+      # We wait until the overview task has completed and the result is received by the view process, because the
+      # overview evaluation will create a cached index.
+      :erlang.trace(view.pid, true, [:receive])
       assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
 
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)

@@ -61,11 +61,21 @@ defmodule FieldHubWeb.ProjectShowLive do
   def handle_info(:update_overview, %{assigns: %{project: project}} = socket) do
     # Evaluate the project asynchronously. Once the task finishes, it will get picked up
     # by another handle_info/2 below.
-    Task.async(fn ->
-      {:overview_task, Project.evaluate_project(project)}
-    end)
+    # Task.async(fn ->
+    stats = Project.evaluate_project(project)
+    # end)
+
+    # Reschedule the task to be run again in 10 seconds, see above.
+    Process.send_after(self(), :update_overview, 10000)
 
     {:noreply, socket}
+
+    {
+      :noreply,
+      socket
+      |> read_project_doc()
+      |> assign(:stats, stats)
+    }
   end
 
   def handle_info({ref, {:overview_task, stats}}, socket) do

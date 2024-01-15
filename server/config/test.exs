@@ -17,7 +17,7 @@ config :logger,
   level: :debug
 
 # ... but show only errors and upwards on the console.
-config :logger, :console, level: :error
+config :logger, :console, level: :info
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

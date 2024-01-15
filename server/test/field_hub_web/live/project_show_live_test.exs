@@ -135,56 +135,56 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       {:ok, %{conn: conn}}
     end
 
-    # test "authorized user can see monitoring page", %{conn: conn} do
-    #   :erlang.trace(:all, true, [:receive])
+    test "authorized user can see monitoring page", %{conn: conn} do
+      :erlang.trace(:all, true, [:receive])
 
-    #   {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-    #   assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
-    #   assert html_on_mount =~ "No supervisor found in project document."
-    #   assert html_on_mount =~ "No contact data found in project document."
-    #   assert html_on_mount =~ "Person 1, Person 2"
-    #   assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
+      assert html_on_mount =~ "No supervisor found in project document."
+      assert html_on_mount =~ "No contact data found in project document."
+      assert html_on_mount =~ "Person 1, Person 2"
+      assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
 
-    #   assert html_on_mount =~
-    #            "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+      assert html_on_mount =~
+               "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
 
-    #   assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
+      assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
 
-    #   html = render(view)
+      html = render(view)
 
-    #   assert html =~ "<h1>Project <i>#{@project}</i></h1>"
+      assert html =~ "<h1>Project <i>#{@project}</i></h1>"
 
-    #   assert html =~ "Database documents: 21"
-    #   assert html =~ "Database size: 48.39 KB (49548 bytes)"
-    #   assert html =~ "Original images: 2, size: 697.78 KB (714528 bytes)"
-    #   assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
-    # end
+      assert html =~ "Database documents: 21"
+      assert html =~ "Database size: 48.39 KB (49548 bytes)"
+      assert html =~ "Original images: 2, size: 697.78 KB (714528 bytes)"
+      assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
+    end
 
-    # test "user can trigger issue evaluation", %{conn: conn} do
-    #   {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+    test "user can trigger issue evaluation", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-    #   pid = view.pid
+      pid = view.pid
 
-    #   :erlang.trace(pid, true, [:receive])
+      :erlang.trace(pid, true, [:receive])
 
-    #   TestHelper.delete_document(@project, "project")
+      TestHelper.delete_document(@project, "project")
 
-    #   html =
-    #     view
-    #     |> element("button")
-    #     |> render_click()
+      html =
+        view
+        |> element("button")
+        |> render_click()
 
-    #   assert html =~ "Evaluating issues, for big projects this may take several minutes..."
+      assert html =~ "Evaluating issues, for big projects this may take several minutes..."
 
-    #   assert_receive {:trace, ^pid, :receive, {_ref, {:issues_task, _list_of_issues}}}
+      assert_receive {:trace, ^pid, :receive, {_ref, {:issues_task, _list_of_issues}}}
 
-    #   html =
-    #     view
-    #     |> render()
+      html =
+        view
+        |> render()
 
-    #   assert html =~ "Issues (4)"
-    # end
+      assert html =~ "Issues (4)"
+    end
 
     test "user without project authorization can not trigger issue evaluation" do
       {:noreply, socket} =
@@ -414,24 +414,24 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                })
     end
 
-    # test "file index cache can be deleted through the interface", %{conn: conn} do
-    #   {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+    test "file index cache can be deleted through the interface", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-    #   # We wait until the overview task has completed, because the overview evaluation will
-    #   # create a cached index.
-    #   :erlang.trace(:all, true, [:receive])
-    #   assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
+      # We wait until the overview task has completed, because the overview evaluation will
+      # create a cached index.
+      :erlang.trace(:all, true, [:receive])
+      assert_receive {:trace, _, :receive, {_ref, {:overview_task, _stats}}}
 
-    #   assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
+      assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 
-    #   html =
-    #     view
-    #     |> element("button", "Clear cache")
-    #     |> render_click()
+      html =
+        view
+        |> element("button", "Clear cache")
+        |> render_click()
 
-    #   assert html =~ "Cache <small><i>cleared</i></small>"
-    #   assert {:ok, nil} = Cachex.get(@index_cache_name, @project)
-    # end
+      assert html =~ "Cache <small><i>cleared</i></small>"
+      assert {:ok, nil} = Cachex.get(@index_cache_name, @project)
+    end
 
     test "admin is able to delete a project's database", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")

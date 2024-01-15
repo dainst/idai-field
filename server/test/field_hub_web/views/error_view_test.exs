@@ -1,8 +1,8 @@
 defmodule FieldHubWeb.ErrorViewTest do
-  use FieldHubWeb.ConnCase, async: true
+  use FieldHubWeb.ConnCase,
 
-  # Bring render/3 and render_to_string/3 for testing custom views
-  import Phoenix.View
+      # Bring render/3 and render_to_string/3 for testing custom views
+      import(Phoenix.View)
 
   test "renders 404.html" do
     assert render_to_string(FieldHubWeb.ErrorView, "404.html", []) == "Not Found"

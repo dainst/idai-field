@@ -65,6 +65,10 @@ defmodule FieldHub.MixProject do
     dev_db_name = "development"
 
     [
+      setup: [
+        "deps.get",
+        "run --eval FieldHub.CLI.setup() --no-start"
+      ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"
       ],

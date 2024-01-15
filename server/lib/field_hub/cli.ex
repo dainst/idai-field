@@ -8,6 +8,8 @@ defmodule FieldHub.CLI do
 
   require Logger
 
+  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
+
   @moduledoc """
   Bundles functions to be called from the command line.
 
@@ -16,6 +18,64 @@ defmodule FieldHub.CLI do
 
   See https://hexdocs.pm/mix/1.12/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc.
   """
+
+  @doc """
+  Run basic setup for the whole application.
+  """
+  def setup() do
+    HTTPoison.start()
+    Logger.info("Starting setup.")
+
+    Logger.info(" Initializing CouchDB in 'single node' mode at '#{CouchService.base_url()}'.")
+    # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
+
+    {users, replicator} = CouchService.initial_setup()
+
+    case users do
+      %{status_code: 412} ->
+        Logger.info(" System database '_users' already exists.")
+
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info(" Created system database `_users`.")
+    end
+
+    case replicator do
+      %{status_code: 412} ->
+        Logger.info(" System database '_replicator' already exists.")
+
+      %{status_code: code} when 199 < code and code < 300 ->
+        Logger.info(" Created system database `_replicator`.")
+    end
+
+    app_user = Application.get_env(:field_hub, :couchdb_user_name)
+
+    User.create(
+      app_user,
+      Application.get_env(:field_hub, :couchdb_user_password)
+    )
+    |> case do
+      :created ->
+        Logger.info(" Created application user '#{app_user}'.")
+
+      :already_exists ->
+        Logger.info(" Application user '#{app_user}' already exists.")
+    end
+
+    tmp_file = "#{@file_directory_root}/.field_hub_test_file"
+
+    with :ok <- File.mkdir_p(@file_directory_root),
+         :ok <- File.write("#{@file_directory_root}/.field_hub_test_file", []) do
+      File.rm(tmp_file)
+      Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
+    else
+      {:error, posix} ->
+        throw(
+          "Application got '#{posix}' posix error for write test in directory '#{@file_directory_root}'!"
+        )
+    end
+
+    Logger.info("Setup finished.")
+  end
 
   @doc """
   Creates a new project and its default user of the same name. Generates a random password for the user.

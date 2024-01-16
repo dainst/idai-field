@@ -15,6 +15,7 @@ import { LoginContext } from '../../shared/login';
 import { useGetChunkOnScroll } from '../../shared/scroll';
 import CONFIGURATION from '../../configuration.json';
 import DocumentCard from '../../shared/document/DocumentCard';
+import { getSupercategoryName } from '../../shared/document/document-utils';
 import './typeView.css';
 
 
@@ -99,7 +100,7 @@ export default function TypeView(): ReactElement {
                                     <DocumentGrid documents={ documents }
                                         getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                                 </Tab>
-                                { document && document.resource.category.name === 'Type' &&
+                                { document && getSupercategoryName(document) === 'Type' &&
                                     <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
                                         <DocumentGrid documents={ finds }
                                             getLinkUrl={

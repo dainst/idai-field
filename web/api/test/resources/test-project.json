@@ -318,7 +318,24 @@
           }
         }
       ]
-    }
+    },
+    "trees": [
+      {
+          "item": {
+            "name": "Trench",
+            "isAbstract": false,
+            "libraryId": "Trench:default",
+            "label": {
+              "de": "Schnitt",
+              "en": "Trench"
+            },
+            "description": {},
+            "groups": [],
+            "color": "blue"
+          },
+          "trees": []
+      }
+    ]
   }
   ]
 }

@@ -1,8 +1,8 @@
 import { ResultDocument } from '../../api/result';
+import { Document } from '../../api/document';
 import CONFIGURATION from '../../configuration.json';
 
 
-const IMAGE_CATEGORIES = ['Image', 'Photo', 'Drawing'];
 const TYPE_CATEGORIES = ['Type', 'TypeCatalog'];
 
 
@@ -24,6 +24,11 @@ export const getDocumentLink = (doc: ResultDocument, projectId: string, currentB
     }
 };
 
+export const getSupercategoryName = (doc: ResultDocument|Document): string => {
+ 
+    return doc.resource.category.parent ?? doc.resource.category.name;
+}
+
 
 export const getHierarchyLink = (doc: ResultDocument): string =>
     `/project/${doc.project}/hierarchy?parent=${doc.resource.id}`;
@@ -39,13 +44,15 @@ const getLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
 const getFieldLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
-    if (IMAGE_CATEGORIES.includes(doc.resource.category.name)) {
+    const supercategoryName: string = getSupercategoryName(doc);
+
+    if (supercategoryName === 'Image') {
         return [CONFIGURATION.fieldUrl, `/image/${projectId}/${doc.resource.id}`];
     }
-    if (TYPE_CATEGORIES.includes(doc.resource.category.name)) {
+    if (TYPE_CATEGORIES.includes(supercategoryName)) {
         return [CONFIGURATION.fieldUrl, `/type/${projectId}/${doc.resource.id}`];
     }
-    if ('Project' === doc.resource.category.name) {
+    if (supercategoryName === 'Project') {
         return [CONFIGURATION.fieldUrl, `/project/${projectId}`];
     }
     return [CONFIGURATION.fieldUrl, `/document/${projectId}/${doc.resource.id}`];
@@ -54,13 +61,15 @@ const getFieldLink = (doc: ResultDocument, projectId: string): [string, string] 
 
 const getShapesLink = (doc: ResultDocument, projectId: string): [string, string] => {
 
-    if (IMAGE_CATEGORIES.includes(doc.resource.category.name)) {
+    const supercategoryName: string = getSupercategoryName(doc);
+
+    if (supercategoryName === 'Image') {
         return [CONFIGURATION.shapesUrl, `/image/${projectId}/${doc.resource.id}`];
     }
-    if (TYPE_CATEGORIES.includes(doc.resource.category.name)) {
+    if (TYPE_CATEGORIES.includes(supercategoryName)) {
         return [CONFIGURATION.shapesUrl, `/document/${doc.resource.id}`];
     }
-    if ('Project' === doc.resource.category.name) {
+    if (supercategoryName === 'Project') {
         return [CONFIGURATION.fieldUrl, `/project/${projectId}`];
     }
     return [CONFIGURATION.fieldUrl, `/document/${projectId}/${doc.resource.id}`];

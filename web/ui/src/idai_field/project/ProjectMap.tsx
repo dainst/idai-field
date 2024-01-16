@@ -495,6 +495,7 @@ const createFeature = (document: ResultDocument): Feature => ({
         id: document.resource.id,
         identifier: document.resource.identifier,
         category: document.resource.category.name,
+        supercategory: document.resource.category.parent,
         project: document.project
     }
 });
@@ -508,10 +509,7 @@ const getExtent = (layer: VectorLayer, predecessors: ResultDocument[], selectedD
         .filter(not(isUndefined));
 
     const feature = predecessorFeatures.find(predecessorFeature => {
-        // TODO Check for Operation supercategory
-        return ['Trench', 'Building', 'Survey', 'ExcavationArea'].includes(
-            predecessorFeature.getProperties().category
-        );
+        return predecessorFeature.getProperties().supercategory === 'Operation';
     }) || (selectedDocument && getFeature(selectedDocument, layer));
 
     return feature ? feature.getGeometry().getExtent() : layer.getSource().getExtent();

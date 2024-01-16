@@ -12,6 +12,7 @@ defmodule FieldPublication.Schemas.ReplicationInput do
     field(:source_password, :string, redact: true)
     field(:project_name, :string)
     field(:delete_existing_publication, :boolean, default: false)
+    field(:processing, :boolean, default: true)
     embeds_many(:comments, Translation)
   end
 
@@ -24,7 +25,8 @@ defmodule FieldPublication.Schemas.ReplicationInput do
       :source_user,
       :source_password,
       :project_name,
-      :delete_existing_publication
+      :delete_existing_publication,
+      :processing
     ])
     |> validate_required([
       :source_url,

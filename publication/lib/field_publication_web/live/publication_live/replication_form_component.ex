@@ -31,24 +31,28 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
         <.input field={@form[:source_password]} type="password" label="Source user password" />
         <.input field={@form[:project_name]} type="hidden" />
 
-        <%= if @action == :new do %>
-          <h2 class="text-2xl">Options</h2>
+        <h2 class="text-2xl">Options</h2>
 
-          <.input
-            field={@form[:delete_existing_publication]}
-            type="checkbox"
-            label="Delete existing publication"
-          />
+        <.input
+          field={@form[:delete_existing_publication]}
+          type="checkbox"
+          label="Delete existing publication"
+        />
 
-          <.live_component
-            module={FieldPublicationWeb.TranslationLive.FormComponent}
-            id={@form[:comments]}
-            form_field={@form[:comments]}
-            add="add_comment"
-            remove="remove_comment"
-            target={@myself}
-          />
-        <% end %>
+        <.input
+          field={@form[:processing]}
+          type="checkbox"
+          label="Start processing once the replication is done"
+        />
+
+        <.live_component
+          module={FieldPublicationWeb.TranslationLive.FormComponent}
+          id={@form[:comments]}
+          form_field={@form[:comments]}
+          add="add_comment"
+          remove="remove_comment"
+          target={@myself}
+        />
         <:actions>
           <.button phx-disable-with="Initializing...">Start replication</.button>
         </:actions>

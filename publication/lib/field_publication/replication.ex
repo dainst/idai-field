@@ -3,6 +3,7 @@ defmodule FieldPublication.Replication do
 
   require Logger
 
+  alias FieldPublication.Processing
   alias Phoenix.PubSub
 
   alias FieldPublication.{
@@ -154,7 +155,8 @@ defmodule FieldPublication.Replication do
 
   # Handle result of CouchReplication task, start file replication next.
   def handle_info({_ref, {:ok, {publication_id, :couch_replication}}}, running_replications) do
-    {_finished_task, parameters} = Map.get(running_replications, publication_id)
+    {_finished_task, parameters} =
+      Map.get(running_replications, publication_id)
 
     log(parameters, :info, "Replicating files for #{publication_id}.")
 
@@ -171,7 +173,8 @@ defmodule FieldPublication.Replication do
 
   # Handle result of FileReplication task, finish up by reconstructing the project configuration.
   def handle_info({_ref, {:ok, {publication_id, :file_replication}}}, running_replications) do
-    {_finished_task, %{publication: publication} = parameters} =
+    {_finished_task,
+     %{publication: publication, input: %{processing: start_processing_immediately}} = parameters} =
       Map.get(running_replications, publication_id)
 
     {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
@@ -188,6 +191,10 @@ defmodule FieldPublication.Replication do
     )
 
     log(parameters, :info, "Replication finished.")
+
+    if start_processing_immediately do
+      Processing.start(final_publication)
+    end
 
     {:noreply, Map.delete(running_replications, publication_id)}
   end

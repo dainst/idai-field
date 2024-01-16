@@ -44,15 +44,6 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
           type="checkbox"
           label="Start processing once the replication is done"
         />
-
-        <.live_component
-          module={FieldPublicationWeb.TranslationLive.FormComponent}
-          id={@form[:comments]}
-          form_field={@form[:comments]}
-          add="add_comment"
-          remove="remove_comment"
-          target={@myself}
-        />
         <:actions>
           <.button phx-disable-with="Initializing...">Start replication</.button>
         </:actions>

@@ -1,6 +1,4 @@
 defmodule FieldPublication.Schemas.ReplicationInput do
-  alias FieldPublication.Schemas.Translation
-
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -13,7 +11,6 @@ defmodule FieldPublication.Schemas.ReplicationInput do
     field(:project_name, :string)
     field(:delete_existing_publication, :boolean, default: false)
     field(:processing, :boolean, default: true)
-    embeds_many(:comments, Translation)
   end
 
   @doc false
@@ -36,7 +33,6 @@ defmodule FieldPublication.Schemas.ReplicationInput do
       :project_name
     ])
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid http(s) URL.")
-    |> cast_embed(:comments)
   end
 
   def create(params) do

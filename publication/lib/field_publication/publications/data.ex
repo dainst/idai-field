@@ -1,24 +1,24 @@
-defmodule FieldPublication.PublicationsData do
+defmodule FieldPublication.Publications.Data do
   alias FieldPublication.CouchService
   alias FieldPublication.Schemas.Publication
 
-  def get_all_subcategories(%Publication{configuration_doc: config_name}, category) do
-    CouchService.get_document(config_name)
-    |> then(fn {:ok, %{body: body}} ->
-      Jason.decode!(body)
-    end)
-    |> Map.get("config", [])
+  def get_all_subcategories(publication, category_name) do
+    publication
+    |> get_configuration()
     |> Enum.find(fn %{"item" => item} ->
-      category == item["name"]
+      category_name == item["name"]
     end)
     |> then(fn entry ->
       flatten_category_tree(entry)
     end)
   end
 
-  defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_category_items}) do
-    ([name] ++ Enum.map(child_category_items, &flatten_category_tree/1))
-    |> List.flatten()
+  def get_configuration(%Publication{configuration_doc: config_name}) do
+    CouchService.get_document(config_name)
+    |> then(fn {:ok, %{body: body}} ->
+      Jason.decode!(body)
+    end)
+    |> Map.get("config", [])
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
@@ -28,12 +28,8 @@ defmodule FieldPublication.PublicationsData do
         selector: %{
           "$or":
             Enum.map(categories, fn category ->
-              [
-                %{"resource.category" => category},
-                %{"resource.type" => category}
-              ]
+              %{"resource.category" => category}
             end)
-            |> List.flatten()
         }
       }
 

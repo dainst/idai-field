@@ -158,6 +158,16 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_info(
+        {:web_image_processing_count, _summary},
+        %{assigns: %{data_state: nil}} = socket
+      ) do
+    # The web image processing state an update, but we just mounted the socket and and have
+    # not yet evaluated the overall data state: Ignore the progress update for now.
+    # TODO: Re-evaluate a better pattern
+    {:noreply, socket}
+  end
+
+  def handle_info(
         {:web_image_processing_count, summary},
         %{assigns: %{data_state: data_state}} = socket
       ) do

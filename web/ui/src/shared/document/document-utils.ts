@@ -27,7 +27,7 @@ export const getDocumentLink = (doc: ResultDocument, projectId: string, currentB
 export const getSupercategoryName = (doc: ResultDocument|Document): string => {
  
     return doc.resource.category.parent ?? doc.resource.category.name;
-}
+};
 
 
 export const getHierarchyLink = (doc: ResultDocument): string =>

@@ -19,7 +19,7 @@ export function useGetChunkOnScroll(getChunk: GetChunk, size = DEFAULT_CHUNK_SIZ
         if (loading) return;
 
         const el = e.currentTarget;
-        if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+        if (Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight) {
             setLoading(true);
             const newOffset = offset + size;
             setOffset(newOffset);

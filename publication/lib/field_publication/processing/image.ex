@@ -58,24 +58,21 @@ defmodule FieldPublication.Processing.Image do
     {:ok, counter_pid} =
       Agent.start_link(fn -> summary end)
 
+    doc_id = Publications.get_doc_id(publication)
+
     existing_raw_files
-    |> Stream.chunk_every(System.schedulers_online())
-    |> Enum.map(fn batch ->
-      # For each item in the batch start an async task for the conversion...
-      Enum.map(batch, fn uuid ->
-        Task.async(fn ->
-          convert_file(
-            "#{raw_root}/image/#{uuid}",
-            "#{web_root}/#{uuid}.jp2",
-            counter_pid,
-            Publications.get_doc_id(publication)
-          )
-        end)
-      end)
-      # ...then wait until all tasks in the batch succeeded.
-      |> Enum.map(&Task.await(&1, 1000 * 60 * 5))
-    end)
-    |> List.flatten()
+    |> Task.async_stream(
+      fn uuid ->
+        convert_file(
+          "#{raw_root}/image/#{uuid}",
+          "#{web_root}/#{uuid}.jp2",
+          counter_pid,
+          doc_id
+        )
+      end,
+      timeout: 1000 * 60 * 5
+    )
+    |> Enum.to_list()
   end
 
   @dialyzer {:nowarn_function, convert_file: 4}

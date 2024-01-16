@@ -149,7 +149,7 @@ export class WarningsModalComponent {
     public getMissingRelationTargetIds(section: WarningSection): string[] {
 
         return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
-            return this.selectedDocument.warnings.missingRelationTargets.targetIds.includes(targetId);
+            return this.selectedDocument.warnings?.missingRelationTargets?.targetIds.includes(targetId);
         }) ?? [];
     }
 

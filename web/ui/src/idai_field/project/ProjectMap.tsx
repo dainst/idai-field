@@ -236,12 +236,10 @@ const createSelect = (map: Map): Select => {
 
 const addToSelect = (select: Select, document: Document|ResultDocument, layer: VectorLayer) => {
 
-    if (document.resource?.geometry) {
-        const feature = (layer.getSource())
-            .getFeatureById(document.resource.id);
-        if (!feature) return;
-        select.getFeatures().push(feature);
-    }
+    const feature = (layer.getSource()).getFeatureById(document.resource.id);
+    if (!feature) return;
+
+    select.getFeatures().push(feature);
 };
 
 

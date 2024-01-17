@@ -129,11 +129,9 @@ export class Datastore {
             : this.documentCache.reassign(convertedDocument);
         const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
-        await WarningsUpdater.updateNonUniqueIdentifierWarning(
-            document, this.indexFacade, this, previousIdentifier, true
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, category, this, previousIdentifier, true
         );
-        await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this, true);
-        await WarningsUpdater.updateRelationTargetWarning(document, this.indexFacade, this.documentCache, this, true);
 
         return document;
     }

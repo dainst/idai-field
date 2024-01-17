@@ -141,7 +141,7 @@ export module WarningsUpdater {
         }
 
         if (updateRelationTargets) {
-            await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.identifier);
+            await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
         }
     }
 
@@ -160,10 +160,10 @@ export module WarningsUpdater {
 
 
     async function updateRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
-                                                indexFacade: IndexFacade, identifier: string) {
+                                                indexFacade: IndexFacade, id: string) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'missingRelationTargetIds:contain': identifier }
+            constraints: { 'missingRelationTargetIds:contain': id }
         })).documents;
 
         for (let document of documents) {

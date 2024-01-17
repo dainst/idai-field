@@ -78,6 +78,8 @@ export class ChangesStream {
         if (previousVersion) {
             // Explicitly assign by value in order for changes to be detected by Angular
             this.documentCache.reassign(convertedDocument);
+        } else {
+            this.documentCache.set(convertedDocument);
         }
 
         const category: CategoryForm = this.projectConfiguration.getCategory(convertedDocument.resource.category);

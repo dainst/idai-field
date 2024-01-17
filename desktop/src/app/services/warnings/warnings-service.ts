@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { nop } from 'tsfun';
-import { Datastore, FieldDocument, IndexFacade } from 'idai-field-core';
+import { Datastore, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
 import { WarningFilter, WarningFilters } from './warning-filters';
 import { UtilTranslations } from '../../util/util-translations';
 import { Modals } from '../modals';
@@ -24,14 +24,24 @@ export class WarningsService {
                 private zone: NgZone,
                 private utilTranslations: UtilTranslations,
                 private modals: Modals,
-                private menus: Menus) {
+                private menus: Menus,
+                private syncService: SyncService) {
 
         this.update();
 
         this.indexFacade.changesNotifications().subscribe(() => {
+            if (SyncStatus.isSyncing(this.syncService.getStatus())) return;
             this.zone.run(() => {
                 this.update();
             });
+        });
+
+        this.syncService.statusNotifications().subscribe((status: SyncStatus) => {
+            if (!SyncStatus.isSyncing(status)) {
+                this.zone.run(() => {
+                    this.update();
+                });
+            }
         });
     }
 

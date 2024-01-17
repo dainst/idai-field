@@ -10,7 +10,8 @@ defmodule Api.Documents.Index do
   @fields_geometries ["resource.category", "resource.geometry", "resource.identifier", "resource.id", "project"]
   @fields_search ["resource.category", "resource.identifier", "resource.shortDescription",
                   "resource.id", "project", "resource.shortName", "resource.geometry_wgs84", "resource.georeference",
-                  "resource.childrenCount", "resource.relations.isDepictedIn"]
+                  "resource.height", "resource.width", "resource.childrenCount", "resource.relations.isDepictedIn",
+                  "resource.relations.hasMapLayer", "resource.relations.hasDefaultMapLayer"]
 
   def get(nil), do: nil
   def get(id) do

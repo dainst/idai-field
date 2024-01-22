@@ -37,6 +37,13 @@ describe('ConnectedDocs', () => {
                 range: [],
                 editable: false,
                 inputType: 'relation'
+            },
+            {
+                name: 'isPresentIn',
+                domain: [],
+                range: [],
+                editable: false,
+                inputType: 'relation'
             }
         ],
         commonFields: {},
@@ -57,7 +64,7 @@ describe('ConnectedDocs', () => {
 
         spyOn(console, 'warn');
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'update', 'convert']);
+        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'update', 'convert', 'findIds']);
         inverseRelationsMap = Relation.makeInverseRelationsMap(projectConfiguration.getRelations());
         relationNames = projectConfiguration.getRelations().map(Named.toName);
 
@@ -65,6 +72,7 @@ describe('ConnectedDocs', () => {
         mockDatastore.get.and.callFake(async id => {
             return id === relatedDoc['resource']['id'] ? relatedDoc : anotherRelatedDoc;
         });
+        mockDatastore.findIds.and.returnValue({ ids: [] });
 
         doc = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
@@ -179,6 +187,19 @@ describe('ConnectedDocs', () => {
         await ConnectedDocs.updateForRemove(mockDatastore, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
+        done();
+    });
+
+
+    it('remove: delete isPresentIn relation pointing to deleted document', async done => {
+
+        relatedDoc.resource.relations['isPresentIn'] = ['1'];
+        mockDatastore.findIds.and.returnValue({ ids: ['2'] });
+
+        await ConnectedDocs.updateForRemove(mockDatastore, relationNames, inverseRelationsMap, doc);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
+        expect(relatedDoc.resource.relations['isPresentIn']).toBe(undefined);
         done();
     });
 });

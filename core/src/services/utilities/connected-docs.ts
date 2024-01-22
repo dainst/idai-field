@@ -27,7 +27,7 @@ export namespace ConnectedDocs {
                                           otherVersions: Array<Document>) {
 
         const connectedDocs = await getExistingConnectedDocs(
-            datastore.get, relationNames, [document].concat(otherVersions)
+            datastore, relationNames, [document].concat(otherVersions)
         );
 
         const docsToUpdate = updateRelations(
@@ -39,7 +39,7 @@ export namespace ConnectedDocs {
 
         for (const doc of connectedDocs) datastore.convert(doc);
 
-        await updateDocs(datastore.update, docsToUpdate);
+        await updateDocs(datastore, docsToUpdate);
     }
 
 
@@ -48,7 +48,7 @@ export namespace ConnectedDocs {
                                           inverseRelationsMap: Relation.InverseRelationsMap,
                                           document: Document) {
 
-        const connectedDocs = await getExistingConnectedDocsForRemove(datastore.get, relationNames, document);
+        const connectedDocs = await getExistingConnectedDocsForRemove(datastore, relationNames, document);
 
         const docsToUpdate = updateRelations(
             document,
@@ -57,41 +57,39 @@ export namespace ConnectedDocs {
             false
         );
 
-        await updateDocs(datastore.update, docsToUpdate);
+        await updateDocs(datastore, docsToUpdate);
     }
 
 
-    async function updateDocs(update: Datastore.Update, docsToUpdate: Array<Document>) {
+    async function updateDocs(datastore: Datastore, docsToUpdate: Array<Document>) {
 
         // Note that this does not update a document for being target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
-            await update(docToUpdate, undefined);
+            await datastore.update(docToUpdate, undefined);
         }
     }
 
 
-    async function getExistingConnectedDocs(get: Datastore.Get, 
-                                            relationNames: Array<Name>, 
+    async function getExistingConnectedDocs(datastore: Datastore, relationNames: Array<Name>, 
                                             documents: Array<Document>) {
 
-        const uniqueConnectedDocIds = getUniqueConnectedDocumentsIds(
-            documents, relationNames);
+        const uniqueConnectedDocIds = getUniqueConnectedDocumentsIds(documents, relationNames, datastore);
 
-        return getDocumentsForIds(get, uniqueConnectedDocIds, id => {
+        return getDocumentsForIds(datastore, uniqueConnectedDocIds, id => {
             console.warn('connected document not found', id);
         })
     }
 
 
-    async function getExistingConnectedDocsForRemove(get: Datastore.Get, relationNames: Array<Name>, document: Document) {
+    async function getExistingConnectedDocsForRemove(datastore: Datastore, relationNames: Array<Name>,
+                                                     document: Document) {
 
-        const uniqueConnectedDocIds = getUniqueConnectedDocumentsIds(
-            [document], relationNames);
+        const uniqueConnectedDocIds = getUniqueConnectedDocumentsIds([document], relationNames, datastore);
 
         const liesWithinTargets = Resource.getRelationTargets(document.resource, ['liesWithin']);
         const recordedInTargets = Resource.getRelationTargets(document.resource, ['isRecordedIn']);
 
-        return getDocumentsForIds(get, uniqueConnectedDocIds, id => {
+        return getDocumentsForIds(datastore, uniqueConnectedDocIds, id => {
             if (liesWithinTargets.includes(id) || recordedInTargets.includes(id)) {
                 // this can happen due to deletion order during deletion with descendants
             } else {
@@ -101,15 +99,13 @@ export namespace ConnectedDocs {
     }
 
 
-    async function getDocumentsForIds(get: Datastore.Get, 
-                                      ids: string[], 
-                                      handleError: (id: string) => void) {
+    async function getDocumentsForIds(datastore: Datastore,  ids: string[], handleError: (id: string) => void) {
 
         const connectedDocuments: Array<Document> = [];
         for (let id of ids) {
 
             try {
-                connectedDocuments.push(await get(id));
+                connectedDocuments.push(await datastore.get(id));
             } catch {
                 handleError(id);
             }
@@ -118,15 +114,26 @@ export namespace ConnectedDocs {
     }
 
 
-    function getUniqueConnectedDocumentsIds(documents: Array<Document>, 
-                                            allowedRelations: string[]) {
+    function getUniqueConnectedDocumentsIds(documents: Array<Document>,  allowedRelations: string[],
+                                            datastore: Datastore) {
 
         const getAllRelationTargetsForDoc = (doc: Document): string[] =>
-            Resource.getRelationTargets(doc.resource, allowedRelations);
+            Resource.getRelationTargets(doc.resource, allowedRelations)
+                .concat(getPresentInDocumentIds(doc, datastore));
 
         return flow(
             documents,
             flatMap(getAllRelationTargetsForDoc),
             subtract(documents.map(toResourceId)));
+    }
+
+
+    function getPresentInDocumentIds(document: Document, datastore: Datastore): string[] {
+
+        return datastore.findIds({
+            constraints: {
+                'isPresentIn:contain': document.resource.id
+            }
+        }).ids;
     }
 }

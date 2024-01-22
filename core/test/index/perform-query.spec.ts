@@ -19,7 +19,6 @@ describe('performQuery', () => {
 
         projectConfiguration = createMockProjectConfiguration();
 
-
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
             'someField:exist': { path: 'resource.someField', pathArray: ['resource', 'someField'], type: 'exist' }

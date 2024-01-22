@@ -13,22 +13,22 @@ import { Name } from '../../tools/named';
  * to a document via relations.
  *
  * Other operations, like correcting documents' isRecordedIn relations
- * or hierarchical deletions is done in persistence manager.
+ * or hierarchical deletions is done in relations manager.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export namespace ConnectedDocs {
 
-    export async function updateForUpdate(update: Datastore.Update,
-                                          get: Datastore.Get,
-                                          convert: Datastore.Convert,
+    export async function updateForUpdate(datastore: Datastore,
                                           relationNames: Array<Name>,
                                           inverseRelationsMap: Relation.InverseRelationsMap, 
                                           document: Document, 
                                           otherVersions: Array<Document>) {
 
-        const connectedDocs = await getExistingConnectedDocs(get, relationNames, [document].concat(otherVersions));
+        const connectedDocs = await getExistingConnectedDocs(
+            datastore.get, relationNames, [document].concat(otherVersions)
+        );
 
         const docsToUpdate = updateRelations(
             document,
@@ -37,19 +37,18 @@ export namespace ConnectedDocs {
             true
         );
 
-        for (const doc of connectedDocs) convert(doc);
+        for (const doc of connectedDocs) datastore.convert(doc);
 
-        await updateDocs(update, docsToUpdate);
+        await updateDocs(datastore.update, docsToUpdate);
     }
 
 
-    export async function updateForRemove(update: Datastore.Update,
-                                          get: Datastore.Get,
+    export async function updateForRemove(datastore: Datastore,
                                           relationNames: Array<Name>,
                                           inverseRelationsMap: Relation.InverseRelationsMap,
                                           document: Document) {
 
-        const connectedDocs = await getExistingConnectedDocsForRemove(get, relationNames, document);
+        const connectedDocs = await getExistingConnectedDocsForRemove(datastore.get, relationNames, document);
 
         const docsToUpdate = updateRelations(
             document,
@@ -58,7 +57,7 @@ export namespace ConnectedDocs {
             false
         );
 
-        await updateDocs(update, docsToUpdate);
+        await updateDocs(datastore.update, docsToUpdate);
     }
 
 

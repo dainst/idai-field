@@ -93,8 +93,9 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await ConnectedDocs.updateForUpdate(
-            this.datastore.update, this.datastore.get, this.datastore.convert,
-            this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
+            this.datastore, this.getRelationNames(), this.getInverseRelationsMap(), updated,
+            [oldVersion].concat(revisionsToSquash)
+        );
         return updated as Document;
     }
 
@@ -102,7 +103,8 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await ConnectedDocs.updateForRemove(
-            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), document);
+            this.datastore, this.getRelationNames(), this.getInverseRelationsMap(), document
+        );
         await this.datastore.remove(document);
     }
 
@@ -154,7 +156,6 @@ export class RelationsManager {
     private getInverseRelationsMap(): Relation.InverseRelationsMap {
 
         return Relation.makeInverseRelationsMap(this.projectConfiguration.getRelations());
-
     }
 
 

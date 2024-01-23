@@ -15,11 +15,11 @@ export module MessagesConversion {
     export function convertMessage(msgWithParams: MsgWithParams, projectConfiguration: ProjectConfiguration,
                                    labels: Labels): MsgWithParams {
 
-        if (msgWithParams.length === 0) return [M.APP_ERROR_GENERIC_SAVE_ERROR];
+        if (msgWithParams.length === 0) return [M.DOCEDIT_ERROR_SAVE];
 
         const msg = msgWithParams[0];
 
-        if (msg === DatastoreErrors.GENERIC_ERROR) msgWithParams[0] = M.APP_ERROR_GENERIC_SAVE_ERROR;
+        if (msg === DatastoreErrors.GENERIC_ERROR) msgWithParams[0] = M.DOCEDIT_ERROR_SAVE;
         if (msg === DatastoreErrors.REMOVE_REVISIONS_ERROR) msgWithParams[0]= M.DOCEDIT_ERROR_RESOLVE_CONFLICT;
         if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;

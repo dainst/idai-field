@@ -22,7 +22,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static ALL_ERROR_FIND = 'all.error.find';
 
     // App Package
-    public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
     public static APP_CONTROLLER_SUCCESS = 'app.appControllerSuccess';
 
     // Settings Package
@@ -341,15 +340,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Das Projekt "[0]" wurde erfolgreich gelöscht.'
             }),
             level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.APP_ERROR_GENERIC_SAVE_ERROR] = {
-            content: i18n({
-                id: 'messages.app.error.genericSaveError',
-                value: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.'
-            }),
-            level: 'danger',
             params: [],
             hidden: false
         };

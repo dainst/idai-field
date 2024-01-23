@@ -390,7 +390,7 @@
         <target state="final">Keine Suchkriterien angegeben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
@@ -398,7 +398,7 @@
         <target state="final">Keine Ressourcen gefunden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -5444,14 +5444,6 @@
       <trans-unit id="messages.projects.deleteSuccess" datatype="html">
         <source>Das Projekt "[0]" wurde erfolgreich gelöscht.</source>
         <target state="final">Das Projekt "[0]" wurde erfolgreich gelöscht.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.app.error.genericSaveError" datatype="html">
-        <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="final">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -4861,14 +4861,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.app.error.genericSaveError" datatype="html">
-        <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="translated">Girdi kaydedilirken bir hata oluştu.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.backup.write.success" datatype="html">
         <source>Die Datenbank wurde erfolgreich gesichert.</source>
         <target state="translated">Veritabanı başarıyla kaydedildi.</target>

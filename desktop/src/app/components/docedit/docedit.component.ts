@@ -243,9 +243,17 @@ export class DoceditComponent {
             return undefined;
         }
 
-        this.messages.add((errorWithParams.length > 0
-            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
-            : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
+        if (errorWithParams.length > 0) {
+            if (errorWithParams[0] === DatastoreErrors.GENERIC_ERROR && errorWithParams.length > 1) {
+                console.error(errorWithParams[1]);
+            }
+            this.messages.add(
+                MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
+            );
+        } else {
+            console.error(errorWithParams);
+            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
     }
 
 

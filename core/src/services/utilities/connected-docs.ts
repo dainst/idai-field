@@ -130,6 +130,8 @@ export namespace ConnectedDocs {
 
     function getPresentInDocumentIds(document: Document, datastore: Datastore): string[] {
 
+        if (!document.resource.id) return [];
+
         return datastore.findIds({
             constraints: {
                 'isPresentIn:contain': document.resource.id

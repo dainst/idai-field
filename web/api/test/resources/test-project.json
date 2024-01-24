@@ -310,6 +310,16 @@
                 "en": "Period"
               },
               "description": {}
+            },
+            {
+              "inputType": "dating",
+              "source": "common",
+              "name": "dating",
+              "label": {
+                "de": "Datierung",
+                "en": "Dating"
+              },
+              "description": {}
             }
           ],
           "label": {

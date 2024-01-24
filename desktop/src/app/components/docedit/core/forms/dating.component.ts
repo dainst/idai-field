@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map } from 'tsfun';
+import { Map } from 'tsfun';
 import { Dating, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';

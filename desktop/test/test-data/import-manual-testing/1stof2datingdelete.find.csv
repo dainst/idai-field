@@ -1,2 +1,2 @@
 "identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","dating.0.margin","dating.0.source","dating.0.isImprecise","dating.0.isUncertain","dating.1.type","dating.1.begin.inputType","dating.1.begin.inputYear","dating.1.end.inputType","dating.1.end.inputYear","dating.1.margin","dating.1.source","dating.1.isImprecise","dating.1.isUncertain"
-"testf1","Test find","","","","","","","","","","exact","","","bce","2002","","","",""
+"testf1","Test find","","","","","","","","","","single","","","bce","2002","","","",""

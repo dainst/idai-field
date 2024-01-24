@@ -74,7 +74,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               source: "Eine Datierung"
             }],
             noSourceDatingField: [%{
-              type: "exact"
+              type: "single"
             }]
           }
         },
@@ -84,7 +84,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     assert %{ de: "Eine Datierung", en: "A Dating" } == (List.first resource.datingField).source
     assert %{ unspecifiedLanguage: "Eine Datierung" } == (List.first resource.legacyDatingField).source
-    assert "exact" == (List.first resource.noSourceDatingField).type
+    assert "single" == (List.first resource.noSourceDatingField).type
   end
 
   test "convert dimension" do

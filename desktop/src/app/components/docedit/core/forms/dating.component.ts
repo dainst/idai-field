@@ -51,7 +51,7 @@ export class DatingComponent {
 
         this.newDating = { type: type };
 
-        if (type !== 'exact' && type !== 'before') {
+        if (type !== 'single' && type !== 'before') {
             this.newDating.begin = { year: 0, inputYear: 0, inputType: 'bce' };
         }
         

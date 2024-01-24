@@ -24,7 +24,7 @@ describe('FieldConverter', () => {
                     value: '1000000'
                 }],
                 dating: [{
-                    type: 'exact',
+                    type: 'single',
                     end: {
                         inputYear: '2000',
                         inputType: 'bce',

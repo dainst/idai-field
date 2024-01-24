@@ -34,7 +34,7 @@
         <div>
             <select class="form-control" (change)="createNewDating($event.target.value)">
                 <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
-                <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
+                <option value="single" i18n="@@docedit.forms.dating.single">Einzelnes Jahr</option>
                 <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
                 <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
                 <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
@@ -56,7 +56,7 @@
                               [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
             </div>
 
-            <div *ngIf="dating.type === 'exact'">
+            <div *ngIf="dating.type === 'single'">
                 <div class="form-group">
                     <div class="form-inline">
                         <ng-container [ngTemplateOutlet]="editDate"

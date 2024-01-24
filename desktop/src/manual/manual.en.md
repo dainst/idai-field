@@ -603,7 +603,7 @@ Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
 ##### Dating
-Specification of one or more datings. Possible dating types are: Period, Exact, Before, After, Scientific.
+Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
 <p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 ##### Date

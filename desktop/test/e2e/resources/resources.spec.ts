@@ -209,10 +209,10 @@ test.describe('resources --', () => {
 
         // docedit
         await ResourcesPage.openEditByDoubleClickResource('1');
-        expect(await DoceditRelationsPage.getRelationButtonText('isAfter')).toEqual('2');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isAfter')).toEqual('2');
         await DoceditPage.clickCloseEdit();
         await ResourcesPage.openEditByDoubleClickResource('2');
-        expect(await DoceditRelationsPage.getRelationButtonText('isBefore')).toEqual('1');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isBefore')).toEqual('1');
 
         // deletion
         await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isBefore');

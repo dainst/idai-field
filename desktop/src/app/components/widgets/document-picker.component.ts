@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
@@ -48,7 +48,6 @@ export class DocumentPickerComponent implements OnChanges {
     constructor(private datastore: Datastore,
                 private loading: Loading,
                 private messages: Messages,
-                private changeDetectorRef: ChangeDetectorRef,
                 private i18n: I18n) {}
 
 

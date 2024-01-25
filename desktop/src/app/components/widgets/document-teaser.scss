@@ -4,6 +4,12 @@
 
   height: 100%;
 
+  category-icon,
+  .teasercontent {
+    position: relative;
+    bottom: 1px;
+  }
+
   category-icon {
     margin-top: 2px;
   }

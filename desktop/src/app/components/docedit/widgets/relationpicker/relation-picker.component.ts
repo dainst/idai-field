@@ -68,9 +68,9 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public onBlur() {
+    public async onBlur() {
 
-        this.updateSelectedTarget();
+        await this.updateSelectedTarget();
         if (!this.selectedTarget) this.deleteRelation();
     }
 

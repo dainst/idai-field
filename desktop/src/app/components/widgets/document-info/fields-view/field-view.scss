@@ -41,17 +41,6 @@ field-view {
       }
     }
 
-    category-icon {
-      position: relative;
-      bottom: 1px;
-    }
-
-    .target-document-identifier {
-      position: relative;
-      left: 5px;
-      bottom: 1px;
-    }
-
     &.composite-field {
       .composite-field-entry:not(:last-child) {
         margin-bottom: 15px;

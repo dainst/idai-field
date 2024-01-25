@@ -1,13 +1,13 @@
 <div *ngIf="!disabled" id="relation-picker">
     <div *ngIf="!selectedTarget && availableTargets">
         <searchable-select [selectedValue]="selectedTarget?.resource.id"
-                            [values]="getAvailableTargetIds()"
-                            [getLabel]="getTargetLabel"
-                            [initiallyOpened]="true"
-                            (onValueSelected)="onTargetSelected($event)"
-                            (onBlur)="onBlur()"
-                            (onScrollToEnd)="loadNextChunk()"
-                            (onSearchTermChanged)="search($event)"></searchable-select>
+                           [values]="getAvailableTargetIds()"
+                           [getLabel]="getTargetLabel"
+                           [initiallyOpened]="true"
+                           (onValueSelected)="onTargetSelected($event)"
+                           (onBlur)="onBlur()"
+                           (onScrollToEnd)="loadNextChunk()"
+                           (onSearchTermChanged)="search($event)"></searchable-select>
     </div>
     <div *ngIf="selectedTarget">
         <document-teaser [document]="selectedTarget" (click)="editTarget()"></document-teaser>

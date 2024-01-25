@@ -71,6 +71,9 @@ describe('ValidationUril', () => {
         
         expect(validateUrl('http://www.example.de')).toBe(true);
         expect(validateUrl('https://www.example.de')).toBe(true);
+        expect(validateUrl('http://localhost:4000')).toBe(true);
+        expect(validateUrl('http://example.de')).toBe(true);
+        expect(validateUrl('http://abc')).toBe(false);
         expect(validateUrl('www.example.de')).toBe(false);
         expect(validateUrl('abc')).toBe(false);
     });

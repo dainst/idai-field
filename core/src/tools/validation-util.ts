@@ -34,7 +34,7 @@ export function validateUnsignedFloat(value: string): boolean {
 export function validateUrl(url: string): boolean {
 
     const urlRegex =
-        /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+        /^https?:\/\/(localhost|(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6})([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
     const result = url.match(urlRegex);
     return result !== null && result[0] === url;

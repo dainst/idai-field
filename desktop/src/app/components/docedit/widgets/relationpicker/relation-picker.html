@@ -13,7 +13,7 @@
         <document-teaser [document]="selectedTarget" (click)="editTarget()"></document-teaser>
     </div>
 
-    <div class="delete-relation small-circular-button red-button" (click)="deleteRelation()">
+    <div *ngIf="selectedTarget" class="delete-relation small-circular-button red-button" (click)="deleteRelation()">
         <span class="mdi mdi-delete"></span>
     </div>
 </div>

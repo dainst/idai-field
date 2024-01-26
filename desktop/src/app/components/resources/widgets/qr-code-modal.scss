@@ -1,0 +1,9 @@
+@media print{
+  body {
+    visibility: hidden;
+  }
+  #qr-code-modal {
+    visibility: visible;
+    width: 100%;
+  }
+} 

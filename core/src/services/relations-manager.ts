@@ -131,7 +131,7 @@ export class RelationsManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
-        if ('created' in document){
+        if ('created' in document) {
             return this.datastore.update(
                 document as Document,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds

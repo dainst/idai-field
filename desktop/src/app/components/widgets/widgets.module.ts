@@ -25,7 +25,7 @@ import { SearchConstraintsComponent } from './search-constraints.component';
 import { EditSaveDialogComponent } from './edit-save-dialog.component';
 import { FieldViewComponent } from './document-info/fields-view/field-view.component';
 import { LanguagesListComponent } from './languages/languages-list.component';
-import { QrCodeScannerModalComponent } from './resources-search-modal-qr';
+import { QrCodeScannerModalComponent } from './qr-code-scanner-modal.component';
 import { DefaultFieldViewComponent } from './document-info/fields-view/default-field-view.component';
 import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 import { SearchableSelectComponent } from './searchable-select.component';

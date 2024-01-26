@@ -6,13 +6,13 @@ import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
-import { QrCodeModalComponent } from './qrcode-modal';
+import { QrCodeModalComponent } from './qr-code-modal.component';
 import { Menus } from '../../../services/menus';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
-export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'create-qrcode'|'edit-images'|'create-polygon'|
-    'create-line-string'|'create-point'|'edit-geometry';
+export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'create-qrcode'|'edit-images'
+    |'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -25,7 +25,6 @@ export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'crea
  * @author Danilo Guzzo
  */
 export class ResourcesContextMenuComponent implements OnChanges {
-    @ViewChild('documentInfo', { static: false }) documentInfoElement: ElementRef;
 
     @Input() contextMenu: ResourcesContextMenu;
     @Input() showViewOption: boolean = false;
@@ -33,7 +32,6 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     @Output() onSelectAction: EventEmitter<ResourcesContextMenuAction>
         = new EventEmitter<ResourcesContextMenuAction>();
-    
 
     public orientation: ContextMenuOrientation = 'top';
     public project: string;
@@ -137,29 +135,22 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public async openQRCodeModal() {
 
         try {
-            // sets the area within which this object acts
             this.menus.setContext(MenuContext.MODAL);
-            // Opens a new modal window with the specified content and supplied options
+
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeModalComponent, { animation: false, backdrop: 'static' }
             );
-            /* "get componentInstance" is a promise that is resolved when the modal is closed and calls 
-                the project, documentID and identifier 
-             */
             modalRef.componentInstance.project = this.project;
             modalRef.componentInstance.documentId = this.document._id;
             modalRef.componentInstance.identifier = this.document.resource.identifier;
-
-            // calls the method render() to generate the Qr-Code
             modalRef.componentInstance.render();
-            return true;
-        } catch (e) {
-            console.error(e)
-            return false;
+        } catch (err) {
+            console.error(err);
         } finally {
             this.menus.setContext(MenuContext.DEFAULT);
         }
     }
+
 
     private isTypeManagementResource(): boolean {
 

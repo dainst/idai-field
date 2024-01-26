@@ -1,93 +1,56 @@
-<div
-    *ngIf="document"
-    class="document-info"
-    [class.transparent-background]="transparentBackground"
->
+<div *ngIf="document" class="document-info" [class.transparent-background]="transparentBackground">
     <div class="document-info-header">
-        <button
-            class="expand-all-groups-button btn btn-light"
-            [class.active]="getExpandAllGroups()"
-            ngbTooltip="Alle Gruppen ausklappen"
-            i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-            #tooltip="ngbTooltip"
-            placement="right"
-            container="body"
-            triggers="manual"
-            (mouseover)="tooltip.open()"
-            (mouseleave)="tooltip.close()"
-            (click)="tooltip.close(); toggleExpandAllGroups();"
-        >
+        <button class="expand-all-groups-button btn btn-light"
+                [class.active]="getExpandAllGroups()"
+                ngbTooltip="Alle Gruppen ausklappen"
+                i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
+                (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+                (click)="tooltip.close(); toggleExpandAllGroups();">
             <span class="mdi mdi-unfold-more-horizontal"></span>
         </button>
         <div class="identifier-label">{{document.resource.identifier}}</div>
-        <button
-            *ngIf="!isReadonly() && !showCloseButton"
-            class="edit-button btn btn-light"
-            (click)="startEdit()"
-        >
+        <button *ngIf="!isReadonly() && !showCloseButton" class="edit-button btn btn-light" (click)="startEdit()">
             <span class="mdi mdi-pencil"></span>
         </button>
-        <button
-            *ngIf="showCloseButton"
-            class="btn btn-light close-button"
-            (click)="close()"
-        >
+        <button *ngIf="showCloseButton" class="btn btn-light close-button" (click)="close()">
             <span class="mdi mdi-close"></span>
         </button>
     </div>
 
-    <div
-        *ngIf="showParent && parentDocument"
-        class="document-info-parent"
-        (click)="jumpToResource(parentDocument)"
-        ngbTooltip="Übergeordnete Ressource"
-        i18n-ngbTooltip="@@resources.sidebarList.parentInfo"
-        #tooltip="ngbTooltip"
-        placement="bottom"
-        container="body"
-    >
+    <div *ngIf="showParent && parentDocument"
+         class="document-info-parent"
+         (click)="jumpToResource(parentDocument)" ngbTooltip="Übergeordnete Ressource"
+         i18n-ngbTooltip="@@resources.sidebarList.parentInfo"
+         #tooltip="ngbTooltip" placement="bottom" container="body">
         <span class="mdi mdi-subdirectory-arrow-left mdi-rotate-90"></span>
-        <category-icon
-            [category]="parentDocument.resource.category"
-            [size]="20"
-        ></category-icon>
+        <category-icon [category]="parentDocument.resource.category" [size]="20"></category-icon>
         {{parentDocument.resource.identifier}}
     </div>
 
-    <thumbnail
-        *ngIf="showThumbnail"
-        [resource]="document.resource"
-        (onClick)="clickThumbnail()"
-    ></thumbnail>
+    <thumbnail *ngIf="showThumbnail"
+               [resource]="document.resource"
+               (onClick)="clickThumbnail()"></thumbnail>
 
-    <div
-        #documentInfo
-        class="info-container"
-        [class.with-thumbnail]="isThumbnailShown()"
-        [class.with-parent-info]="showParent && parentDocument"
-    >
-        <fields-view
-            [resource]="document.resource"
-            [openSection]="openSection"
-            [expandAllGroups]="getExpandAllGroups()"
-            (onSectionToggled)="setOpenSection($event)"
-            (onJumpToResource)="jumpToResource($event)"
-        ></fields-view>
-        <georeference-view
-            *ngIf="isImageDocument()"
-            [document]="document"
-            [openSection]="openSection"
-            [expandAllGroups]="getExpandAllGroups()"
-            [readonly]="isReadonly()"
-            (onSectionToggled)="setOpenSection($event)"
-        ></georeference-view>
-        <depicts-relations-view
-            *ngIf="isImageDocument()"
-            [resource]="document.resource"
-            [openSection]="openSection"
-            [expandAllGroups]="getExpandAllGroups()"
-            (onSectionToggled)="setOpenSection($event)"
-            (onRelationClicked)="jumpToResource($event)"
-        ></depicts-relations-view>
+    <div #documentInfo class="info-container"
+         [class.with-thumbnail]="isThumbnailShown()"
+         [class.with-parent-info]="showParent && parentDocument">
+        <fields-view [resource]="document.resource"
+                     [openSection]="openSection"
+                     [expandAllGroups]="getExpandAllGroups()"
+                     (onSectionToggled)="setOpenSection($event)"
+                     (onJumpToResource)="jumpToResource($event)"></fields-view>
+        <georeference-view *ngIf="isImageDocument()"
+                           [document]="document"
+                           [openSection]="openSection"
+                           [expandAllGroups]="getExpandAllGroups()"
+                           [readonly]="isReadonly()"
+                           (onSectionToggled)="setOpenSection($event)"></georeference-view>
+        <depicts-relations-view *ngIf="isImageDocument()"
+                                [resource]="document.resource"
+                                [openSection]="openSection"
+                                [expandAllGroups]="getExpandAllGroups()"
+                                (onSectionToggled)="setOpenSection($event)"
+                                (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
     </div>
 </div>

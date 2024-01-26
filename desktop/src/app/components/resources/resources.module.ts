@@ -53,6 +53,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
+
 @NgModule({
     imports: [
         BrowserModule,

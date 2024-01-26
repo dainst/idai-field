@@ -16,14 +16,10 @@
         <span class="mdi mdi-image-multiple"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.images">Bilder verknüpfen</span>
     </div>
-    <div
-            id="context-menu-qrcode"
-            class="dropdown-item"
-            (click)="openQRCodeModal()"
-        >
-            <span class="mdi mdi-qrcode-plus"> </span>
-            <span class="dropdown-entry-label">QR Code</span>
-</div>
+    <div id="context-menu-qr-code" class="dropdown-item" (click)="openQRCodeModal()">
+        <span class="mdi mdi-qrcode-plus"> </span>
+        <span class="dropdown-entry-label">QR Code</span>
+    </div>
     <div *ngIf="isMoveOptionAvailable()"
             id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>

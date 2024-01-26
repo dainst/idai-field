@@ -16,7 +16,7 @@ export class ResourcesSearchBarPage {
 
     public static clickOpenQrScanner() {
 
-        return click('#qr-scanner');
+        return click('#qr-code-scanner-button');
     }
 
 

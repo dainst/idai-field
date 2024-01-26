@@ -1,6 +1,7 @@
 import { Document } from 'idai-field-core';
 import { ContextMenu } from '../../widgets/context-menu';
 
+
 /**
  * @author Thomas Kleinke
  */
@@ -16,4 +17,4 @@ import { ContextMenu } from '../../widgets/context-menu';
         super.open(event);
         this.documents = documents;
     }
- }
+}

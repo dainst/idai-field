@@ -28,7 +28,8 @@
     </div>
 </div>
 
-<div *ngIf="status !== 'enabled'" class="circular-button green-button disabled"
+<div *ngIf="toplevelCategoriesArray && status !== 'enabled' && getButtonType() !== 'none'"
+     class="circular-button green-button disabled"
      ngbTooltip="{{getTooltip()}}" [placement]="placement">
     <span class="mdi mdi-plus"></span>
 </div>

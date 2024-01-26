@@ -496,7 +496,8 @@
         "Place:archaeoDox": {
           "hidden": ["gazId"],
           "fields": {},
-          "color": "#9cbde8"
+          "color": "#9cbde8",
+          "resourceLimit": 1
         },
         "Operation:archaeoDox": {
           "hidden": [],
@@ -505,7 +506,8 @@
         "ExcavationArea:archaeoDox": {
           "hidden": [],
           "fields": {},
-          "color": "#0000ff"
+          "color": "#0000ff",
+          "resourceLimit": 1
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],

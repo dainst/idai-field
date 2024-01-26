@@ -156,6 +156,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             case 'edit-images':
                 await this.resourcesComponent.editImages(this.selectedDocument);
                 break;
+            case 'edit-qr-code':
+                await this.resourcesComponent.editQRCode(this.selectedDocument);
+                break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.menuService.setContext(MenuContext.GEOMETRY_EDIT);

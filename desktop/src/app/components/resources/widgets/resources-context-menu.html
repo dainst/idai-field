@@ -7,31 +7,32 @@
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
     <div *ngIf="isEditOptionAvailable()"
-        id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
+         id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
     </div>
     <div *ngIf="isEditImagesOptionAvailable()" id="context-menu-images-button" class="dropdown-item"
-        (click)="selectAction('edit-images')">
+         (click)="selectAction('edit-images')">
         <span class="mdi mdi-image-multiple"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.images">Bilder verknüpfen</span>
     </div>
-    <div id="context-menu-qr-code" class="dropdown-item" (click)="openQRCodeModal()">
+    <div *ngIf="isEditQRCodeOptionAvailable()" id="context-menu-edit-qr-code-button" class="dropdown-item"
+         (click)="selectAction('edit-qr-code')">
         <span class="mdi mdi-qrcode-plus"></span>
         <span class="dropdown-entry-label">QR-Code</span>
     </div>
     <div *ngIf="isMoveOptionAvailable()"
-            id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
+         id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
     </div>
     <div *ngIf="isDeleteOptionAvailable()"
-            id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
+         id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
         <span class="mdi mdi-delete"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
     </div>
     <div *ngIf="isWarningsOptionAvailable()"
-            id="context-menu-warnings-button" class="dropdown-item" (click)="selectAction('warnings')">
+         id="context-menu-warnings-button" class="dropdown-item" (click)="selectAction('warnings')">
         <span class="mdi mdi-alert"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.warnings">Warnungen</span>
     </div>
@@ -39,23 +40,23 @@
     <hr *ngIf="isCreateGeometryOptionAvailable() || isEditGeometryOptionAvailable()">
 
     <div *ngIf="isCreateGeometryOptionAvailable()"
-            id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
+         id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
         <span class="mdi mdi-shape-polygon-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polygon">Polygon anlegen</span>
     </div>
     <div *ngIf="isCreateGeometryOptionAvailable()"
-            id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
+         id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
         <span class="mdi mdi-vector-polyline"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polyline">Polyline anlegen</span>
     </div>
     <div *ngIf="isCreateGeometryOptionAvailable()"
-            id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
+         id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
         <span class="mdi mdi-map-marker-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Punkt anlegen</span>
     </div>
 
     <div *ngIf="isEditGeometryOptionAvailable()"
-            id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
+         id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label">
                 <span *ngIf="contextMenu.documents[0].resource.geometry.type === 'Polygon'"

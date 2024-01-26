@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FieldDocument } from 'idai-field-core';
 
 const QRCode = require('qrcode');
 
@@ -12,9 +13,7 @@ const QRCode = require('qrcode');
  */
 export class QrCodeModalComponent {
    
-    @Input() public project: string;
-    @Input() public documentId: string;
-    @Input() public identifier: string;
+    @Input() public document: FieldDocument;
 
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -29,7 +28,7 @@ export class QrCodeModalComponent {
 
         QRCode.toCanvas(
             container, 
-            `${this.documentId}@${this.project}`, 
+            this.document.resource.id,
             { width: 300 }
         );
     }

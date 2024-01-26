@@ -3,12 +3,11 @@
 </div>
 <div id="qr-code-modal">
     <div class="qr-code-modal-content">
-        <h3 style="text-align: center">{{project}}</h3>
-        <h5 style="margin-left: 10px;">{{identifier}}</h5>
+        <h5 style="margin-left: 10px;">{{document.resource.identifier}}</h5>
     </div>
 
     <canvas id="qr-code-canvas" style="margin-left: 100px"> </canvas>
-    <footer style="text-align: center">{{documentId}}</footer>
+    <footer style="text-align: center">{{document.resource.id}}</footer>
 </div>
 <div class="modal-footer">
     <div id="print-button" type="button" class="btn btn-primary" onclick="window.print()">

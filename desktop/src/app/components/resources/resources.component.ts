@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
@@ -19,6 +19,7 @@ import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
+import { QrCodeModalComponent } from './widgets/qr-code-modal.component';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -174,12 +175,34 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public async editQRCode(document: Document) {
+
+        try {
+            this.menuService.setContext(MenuContext.MODAL);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                QrCodeModalComponent,
+                { animation: false, backdrop: 'static' }
+            );
+            modalRef.componentInstance.document = document;
+            modalRef.componentInstance.render();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
     public async moveDocuments(documents: Array<FieldDocument>) {
 
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(MoveModalComponent, { keyboard: false, animation: false });
+        const modalRef: NgbModalRef = this.modalService.open(
+            MoveModalComponent,
+            { keyboard: false, animation: false }
+        );
         modalRef.componentInstance.initialize(documents);
 
         try {

@@ -83,6 +83,7 @@ import { SearchableSelectComponent } from './searchable-select.component';
         PagingButtonsComponent,
         EditSaveDialogComponent,
         QrCodeScannerModalComponent,
+        LanguagesListComponent,
         SearchableSelectComponent
     ],
     entryComponents: []

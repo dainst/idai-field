@@ -21,27 +21,6 @@ image-overview-search-constraints {
     }
   }
 
-  #qr-scanner {
-    position: absolute;
-    padding-left: 0;
-    top: 0;
-    right: 45px;
-    width: 50px;
-    height: 100%;
-    border-radius: 40%;
-    cursor: default;
-    border: none;
-    background: none;
-    box-shadow: none;
-    outline: none;
-
-    &:hover {
-      border-radius: 100%;
-      background-color: $list-item-hover-color;
-      -webkit-border-radius: 0 0 0 0;
-    }
-  }
-
   #constraints-menu {
     display: inline;
     position: absolute;

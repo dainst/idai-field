@@ -1,16 +1,10 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Datastore, Field, ProjectConfiguration, Labels, FieldDocument } from 'idai-field-core';
+import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
-import { QrCodeScannerModalComponent } from '../../widgets/resources-search-modal-qr';
-import { MenuContext } from '../../../services/menu-context';
-import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Menus } from '../../../services/menus';
-import { Routing } from '../../../services/routing';
-
 
 
 @Component({
@@ -22,7 +16,6 @@ import { Routing } from '../../../services/routing';
 })
 /**
  * @author Thomas Kleinke
- * @author Danilo Guzzo
  */
 export class ResourcesSearchConstraintsComponent extends SearchConstraintsComponent {
 
@@ -34,11 +27,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade,
-                labels: Labels,
-                private menus: Menus,
-                private modalService: NgbModal,
-                private routingService: Routing
-    ) {
+                labels: Labels) {
 
         super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
 
@@ -132,37 +121,5 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.viewFacade.setLimitSearchResults(true);
         return this.viewFacade.setCustomConstraints(constraints);
-    }
-
-    public async openQrCodeScannerModal() {
-        try {
-            this.menus.setContext(MenuContext.MODAL);
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeScannerModalComponent,
-                { animation: false, backdrop: 'static' }
-            );
-
-            this.openDocument(await modalRef.result);
-            return true;
-        } catch (_) {
-            return false;
-        } finally {
-            this.menus.setContext(MenuContext.DEFAULT);
-        }
-    }
-
-    
-    // to open the scanned document
-    private async openDocument(scannedCode: string) {
-       
-        console.log(scannedCode);
-        // split the scanned code with an '@'
-        const [uuid, projectName] = scannedCode.split('@');
-        const document = (await this.datastore.get(uuid) as FieldDocument);
-
-        // open the scanned resource
-        this.routingService.jumpToResource(document);
-        // close the modal window
-        //this.activeModal.close();
     }
 }

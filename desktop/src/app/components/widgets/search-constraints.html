@@ -1,34 +1,21 @@
-<div
-    id="constraints-menu-button"
-    class="btn btn-outline-primary"
-    [class.focused]="searchBarComponent.focused"
-    ngbTooltip="{{getTooltip()}}"
-    placement="left"
-    container="body"
-    triggers="manual"
-    #tooltip="ngbTooltip"
-    (mouseover)="tooltip.open()"
-    (mouseleave)="tooltip.close()"
-    (click)="tooltip.close(); toggleConstraintsMenu();"
->
+<div id="constraints-menu-button"
+     class="btn btn-outline-primary" [class.focused]="searchBarComponent.focused"
+     ngbTooltip="{{getTooltip()}}"
+     placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
+     (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+     (click)="tooltip.close(); toggleConstraintsMenu();" >
     <span *ngIf="constraintListItems.length === 0" class="mdi mdi-plus"></span>
     <span *ngIf="constraintListItems.length > 0" class="badge badge-light">
         {{constraintListItems.length}}
     </span>
 </div>
-<button id="qr-scanner" type="submit" (click)="openQrCodeScannerModal()">
-    <i class="mdi mdi-qrcode-scan" aria-hidden="true"></i>
-</button>
 
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6 i18n="@@resources.searchBar.constraints.header">Suchkriterien</h6>
 
-    <div
-        *ngFor="let constraint of constraintListItems"
-        id="remove-constraint-button-{{constraint.fieldName}}"
-        class="constraint-list-item"
-        (click)="removeConstraint(constraint.name); $event.stopPropagation();"
-    >
+    <div *ngFor="let constraint of constraintListItems"
+         id="remove-constraint-button-{{constraint.fieldName}}" class="constraint-list-item"
+         (click)="removeConstraint(constraint.name); $event.stopPropagation();">
         <div class="constraint-list-item-text">
             <em>{{constraint.label}}:</em> {{getSearchTermLabel(constraint)}}
         </div>
@@ -36,88 +23,40 @@
     </div>
 
     <div *ngIf="fields && fields.length > 0" class="form-inline">
-        <select
-            id="constraint-field-select"
-            (change)="selectField($event.target.value)"
-            class="form-control"
-        >
-            <option
-                value=""
-                [selected]="!selectedField"
-                hidden
-                i18n="@@resources.searchBar.constraints.chooseField"
-            >
-                Feld wählen
-            </option>
+        <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
+            <option value="" [selected]="!selectedField" hidden
+                    i18n="@@resources.searchBar.constraints.chooseField">Feld wählen</option>
             <option value=""></option>
-            <option
-                *ngFor="let field of fields"
-                id="constraint-field-select-option-{{field.name}}"
-                value="{{field.name}}"
-                [selected]="selectedField && selectedField.name === field.name"
-            >
+            <option *ngFor="let field of fields"
+                    id="constraint-field-select-option-{{field.name}}"
+                    value="{{field.name}}"
+                    [selected]="selectedField && selectedField.name === field.name">
                 {{getFieldLabel(field)}}
             </option>
         </select>
 
-        <input
-            *ngIf="getSearchInputType(selectedField) === 'input' && !existIndexForTextField"
-            id="constraint-search-term-input"
-            type="text"
-            placeholder="Suchbegriff"
-            i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
-            [(ngModel)]="searchTerm"
-            class="form-control"
-        />
-        <input
-            *ngIf="getSearchInputType(selectedField) === 'input' && existIndexForTextField"
-            type="text"
-            [ngModel]="getExistIndexSearchTermLabel(searchTerm)"
-            class="form-control"
-            disabled
-        />
-        <div
-            *ngIf="getSearchInputType(selectedField) === 'input'"
-            id="constraint-search-search-term-input-dropdown"
-            class="dropdown"
-            ngbDropdown
-            placement="bottom-right"
-            container="body"
-        >
-            <button
-                class="btn btn-outline-primary dropdown-toggle-split"
-                ngbDropdownToggle
-            ></button>
+        <input *ngIf="getSearchInputType(selectedField) === 'input' && !existIndexForTextField"
+               id="constraint-search-term-input" type="text" placeholder="Suchbegriff"
+               i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
+               [(ngModel)]="searchTerm"
+               class="form-control">
+        <input *ngIf="getSearchInputType(selectedField) === 'input' && existIndexForTextField"
+               type="text" [ngModel]="getExistIndexSearchTermLabel(searchTerm)"
+               class="form-control" disabled>
+        <div *ngIf="getSearchInputType(selectedField) === 'input'"
+             id="constraint-search-search-term-input-dropdown" class="dropdown"
+             ngbDropdown placement="bottom-right" container="body">
+            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
-            <div
-                id="constraints-menu-input-dropdown-menu"
-                class="dropdown-menu"
-                ngbDropdownMenu
-            >
-                <button
-                    class="dropdown-item"
-                    (click)="setExistIndexSearchTermForTextField('KNOWN')"
-                >
-                    <span i18n="@@resources.searchBar.constraints.anyValue"
-                        >Beliebiger Wert</span
-                    >
+            <div id="constraints-menu-input-dropdown-menu" class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item" (click)="setExistIndexSearchTermForTextField('KNOWN')">
+                    <span i18n="@@resources.searchBar.constraints.anyValue">Beliebiger Wert</span>
                 </button>
-                <button
-                    class="dropdown-item"
-                    (click)="setExistIndexSearchTermForTextField('UNKNOWN')"
-                >
-                    <span i18n="@@resources.searchBar.constraints.noValue"
-                        >Kein Wert</span
-                    >
+                <button class="dropdown-item" (click)="setExistIndexSearchTermForTextField('UNKNOWN')">
+                    <span i18n="@@resources.searchBar.constraints.noValue">Kein Wert</span>
                 </button>
-                <button
-                    class="dropdown-item"
-                    (click)="removeExistIndexSearchTermForTextField()"
-                >
-                    <span
-                        i18n="@@resources.searchBar.constraints.enterSearchTerm"
-                        >Suchbegriff eingeben</span
-                    >
+                <button class="dropdown-item" (click)="removeExistIndexSearchTermForTextField()">
+                    <span i18n="@@resources.searchBar.constraints.enterSearchTerm">Suchbegriff eingeben</span>
                 </button>
             </div>
         </div>
@@ -149,12 +88,8 @@
                            i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
                            (onValueSelected)="selectValue($event)"></searchable-select>
 
-        <div
-            *ngIf="searchTerm.length > 0"
-            id="add-constraint-button"
-            class="btn btn-primary btn-square"
-            (click)="addConstraint(); $event.stopPropagation();"
-        >
+        <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary btn-square"
+             (click)="addConstraint(); $event.stopPropagation();">
             <span>✓</span>
         </div>
     </div>

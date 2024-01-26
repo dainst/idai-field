@@ -16,32 +16,31 @@ resources-search-bar {
     }
 
     #qr-scanner {
-      position: absolute;
-      padding-left: 0;
-      top: 0;
-      right: 45px;
-      width: 50px;
-      height: 100%;
-      border-radius: 40%;
-      cursor: default;
-      border: none;
-      background: none;
-      box-shadow: none;
-      outline: none;
-      z-index: 1000;
+      position: relative;
+      right: 1px;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-color: lightgrey;
 
-      &:hover {
-        border-radius: 100%;
-        background-color: $list-item-hover-color;
-        -webkit-border-radius: 0 0 0 0;
+      &.focused {
+        border-color: #7998cb !important;
+      }
+  
+      &:active {
+        border-color: #ced4da !important;
+      }
+
+      &.with-small-search-input:active {
+        box-shadow: inset 3px 3px 11px -7px rgb(0 0 0 / 70%) !important;
       }
     }
 
     .search-bar-input {
-      width: calc(100% - 60px) !important;
+      width: calc(100% - 101px) !important;
 
       &.small-search-input {
-        width: calc(100% - 101px) !important;
+        width: calc(100% - 142px) !important;
       }
 
       &.big-search-input {

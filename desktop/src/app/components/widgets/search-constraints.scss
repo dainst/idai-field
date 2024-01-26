@@ -5,12 +5,13 @@ resources-search-constraints,
 image-overview-search-constraints {
 
   #constraints-menu-button {
+    right: 0;
+    width: 39px;
     border-radius: 0;
     text-align: left;
     border-left-width: 0 !important;
     border-right: 0;
     border-color: lightgrey;
-    right: 40px;
 
     &.focused {
       border-color: #7998cb !important;

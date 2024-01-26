@@ -3,7 +3,6 @@ import { isString } from 'tsfun';
 
 const fs = require('fs');
 
-let baseArgs = ['.', 'test']
 let electronApp;
 let window;
 
@@ -19,20 +18,20 @@ const defaultConfig = {
  * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
  * @returns Promise<any> that will resolve once the application is started.
  */
-export async function start(config?: any, fakeVideoPath?: string) {
+export async function start(config?: any, fakeVideoPath?: string): Promise<any> {
 
     resetConfigJson(config);
 
-    let finalArgs = baseArgs;
+    let args = ['.', 'test'];
 
-    if(fakeVideoPath) {
-        finalArgs = baseArgs.concat([
+    if (fakeVideoPath) {
+        args = args.concat([
             '--use-fake-device-for-media-stream',
             `--use-file-for-fake-video-capture=${fakeVideoPath}`
-        ])
+        ]);
     }
 
-    electronApp = await electron.launch({ args: finalArgs });
+    electronApp = await electron.launch({ args });
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
 }
@@ -42,7 +41,7 @@ export async function start(config?: any, fakeVideoPath?: string) {
  * 
  * @returns Promise<any> that will resolve once the application is stopped.
  */
-export function stop() {
+export function stop(): Promise<any> {
 
     return electronApp.close();
 }

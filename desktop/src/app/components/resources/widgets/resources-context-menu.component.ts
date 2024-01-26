@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { to } from 'tsfun';
 import { FieldDocument, Named, ProjectConfiguration, Document, CategoryForm } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
@@ -37,15 +37,15 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public project: string;
     
 
-    constructor(
-        private projectConfiguration: ProjectConfiguration,
-        private modalService: NgbModal,
-        private menus: Menus,
-        private settingsProvider: SettingsProvider
-   ) {
-    this.project = this.settingsProvider.getSettings().selectedProject;
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private modalService: NgbModal,
+                private menus: Menus,
+                private settingsProvider: SettingsProvider) {
+        
+        this.project = this.settingsProvider.getSettings().selectedProject;
    }
 
+   
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => ResourcesContextMenu.getBottomPosition(yPosition);

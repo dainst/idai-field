@@ -65,17 +65,6 @@
     .sub-label {
       margin-left: 10px;
     }
-    #qr-scanner {
-      cursor: default;
-      border: none;
-      background: none;
-      box-shadow: none;
-      outline: none;
-
-      &:hover {
-        color: $link-hover-color;
-      }
-    }
   }
 
   .mdi-arrow-left {

@@ -48,7 +48,6 @@ import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-lang
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 import { IdentifierComponent } from './core/forms/identifier.component';
-import { QrCodeModalComponent } from '../resources/widgets/qrcode-modal';
 import { CompositeComponent } from './core/forms/composite/composite.component';
 import { CompositeEntryModalComponent } from './core/forms/composite/composite-entry-modal.component';
 
@@ -117,15 +116,13 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         IdentifierComponent,
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
-        QrCodeModalComponent,
         CompositeComponent,
         CompositeEntryModalComponent
     ],
     exports: [
         DoceditComponent,
         RevisionSelectorComponent,
-        MultiLanguageTextFieldComponent,
-        QrCodeModalComponent
+        MultiLanguageTextFieldComponent
     ],
     entryComponents: [
         DoceditComponent,

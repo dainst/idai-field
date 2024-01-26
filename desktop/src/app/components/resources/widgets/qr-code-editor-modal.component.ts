@@ -6,12 +6,12 @@ const QRCode = require('qrcode');
 
 
 @Component({
-    templateUrl: './qr-code-modal.html'
+    templateUrl: './qr-code-editor-modal.html'
 })
 /**
  * @author Danilo Guzzo
  */
-export class QrCodeModalComponent {
+export class QrCodeEditorModalComponent {
    
     @Input() public document: FieldDocument;
 

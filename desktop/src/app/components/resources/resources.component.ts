@@ -19,7 +19,7 @@ import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
-import { QrCodeModalComponent } from './widgets/qr-code-modal.component';
+import { QrCodeEditorModalComponent } from './widgets/qr-code-editor-modal.component';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -181,7 +181,7 @@ export class ResourcesComponent implements OnDestroy {
             this.menuService.setContext(MenuContext.MODAL);
 
             const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeModalComponent,
+                QrCodeEditorModalComponent,
                 { animation: false, backdrop: 'static' }
             );
             modalRef.componentInstance.document = document;

@@ -4,7 +4,6 @@
  * @author Thomas Kleinke
  */
 @import 'plus-button';
-@import 'move-modal';
 @import 'navigation/navigation';
 @import 'map/map/map';
 @import 'map/resources-map';
@@ -12,14 +11,15 @@
 @import 'widgets/popovermenu/children-view';
 @import 'list/list';
 @import 'list/row';
+@import 'modals/deletion/delete-modal';
+@import 'modals/move/move-modal';
+@import 'modals/qr-code/qr-code-editor-modal';
 @import 'types/types';
 @import 'types/type-icon';
 @import 'searchbar/resources-search-bar';
 @import 'searchbar/search-suggestions';
-@import 'deletion/delete-modal';
 @import 'widgets/list-button-group';
 @import 'widgets/popovermenu/popover-menu';
-@import 'widgets/qr-code-editor-modal';
 
 
 $deactivated-button-color: lightgray;

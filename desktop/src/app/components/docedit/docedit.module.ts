@@ -11,7 +11,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageRowModule } from '../image/row/image-row.module';
 import { MessagesModule } from '../messages/messages.module';
-import { DeleteModalComponent } from '../resources/deletion/delete-modal.component';
+import { DeleteModalComponent } from '../resources/modals/deletion/delete-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { EditFormFieldComponent } from './core/edit-form-field.component';
 import { EditFormGroup } from './core/edit-form-group.component';

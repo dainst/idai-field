@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
     Datastore} from 'idai-field-core';
-import { MoveUtility } from '../../components/resources/move-utility';
-import { Messages } from '../messages/messages';
-import { Loading } from '../widgets/loading';
+import { Messages } from '../../../messages/messages';
+import { Loading } from '../../../widgets/loading';
+import { MoveUtility } from './move-utility';
 
 
 @Component({

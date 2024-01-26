@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, Hierarchy } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
-import { ImageRelationsManager } from '../../../services/image-relations-manager';
+import { ImageRelationsManager } from '../../../../services/image-relations-manager';
 
 
 /**

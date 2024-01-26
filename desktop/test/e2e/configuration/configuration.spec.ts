@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -9,6 +9,7 @@ import { DoceditPage } from '../docedit/docedit.page';
 import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
+import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -17,6 +18,36 @@ const { test, expect } = require('@playwright/test');
  * @author Thomas Kleinke
  */
 test.describe('configuration --', () => {
+
+    async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await EditConfigurationPage.typeInNewSubfield(subfieldName);
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+        await ManageValuelistsModalPage.clickCreateNewValuelist();
+        await EditConfigurationPage.typeInNewValue(valueName);
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirmSubfield();
+    }
+
+
+    async function addValueToValuelist(subfieldIndex: number, newValueName: string) {
+
+        await EditConfigurationPage.clickEditSubfield(subfieldIndex);
+        await EditConfigurationPage.clickEditValuelist();
+        await EditConfigurationPage.typeInNewValue(newValueName);
+        await EditConfigurationPage.clickAddValue();
+        await EditConfigurationPage.clickConfirmValue();
+        await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirmSubfield();
+    };
+
 
     test.beforeAll(async () => {
 
@@ -167,7 +198,7 @@ test.describe('configuration --', () => {
         await AddCategoryFormModalPage.typeInSearchFilterInput('NewCategory');
         await AddCategoryFormModalPage.clickCreateNewCategory();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Kategorie', 'category');
         await EditConfigurationPage.clickConfirm();
 
         await waitForExist(await CategoryPickerPage.getCategory('Test:NewCategory', 'Feature'));
@@ -244,7 +275,7 @@ test.describe('configuration --', () => {
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Ort');
         await CategoryPickerPage.clickOpenContextMenu('Place');
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Editierte Kategorie');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Editierte Kategorie', 'category');
         await EditConfigurationPage.clickConfirm();
         expect(await CategoryPickerPage.getCategoryLabel('Place')).toEqual('Editierte Kategorie');
         await ConfigurationPage.save();
@@ -286,7 +317,7 @@ test.describe('configuration --', () => {
     });
 
 
-    test('show warning for invalid identifier after setting identifier prefix', async () => {
+    test('show warning for invalid identifier in docedit modal after setting identifier prefix', async () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickCreateResource();
@@ -312,6 +343,34 @@ test.describe('configuration --', () => {
         await DoceditPage.typeInInputField('identifier', '123');
         await DoceditPage.clickSaveDocument();
         await waitForExist(await ResourcesPage.getListItemEl('PL-123'));
+    });
+
+
+    test('set resource limit', async () => {
+
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInResourceLimit('2');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+        
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('1', 'place');
+
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ResourcesPage.getCategoryOption('place'));
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickDuplicateDocument();
+        await DoceditPage.typeInNumberOfDuplicates('2');
+        await waitForExist(await DoceditPage.getConfirmDuplicateButton(true));
+        await DoceditPage.typeInNumberOfDuplicates('1');
+        await waitForNotExist(await DoceditPage.getConfirmDuplicateButton(true));
+        await DoceditPage.clickConfirmDuplicateInModal();
+
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ResourcesPage.getCategoryOption('operation-trench'));
+        await waitForNotExist(await ResourcesPage.getCategoryOption('place'));
     });
 
 
@@ -347,7 +406,7 @@ test.describe('configuration --', () => {
         await AddFieldModalPage.typeInSearchFilterInput('newField');
         await AddFieldModalPage.clickCreateNewField();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neues Feld', 'field');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(ConfigurationPage.getField('test:newField'));
         await ConfigurationPage.save();
@@ -436,7 +495,7 @@ test.describe('configuration --', () => {
     test('reset custom changes when swapping category form', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
-        await ConfigurationPage.clickAddFieldButton();        
+        await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.clickSelectField('dimensionDiameter');
         await AddFieldModalPage.clickConfirmSelection();
         await waitForExist(ConfigurationPage.getField('identifier'));
@@ -463,6 +522,27 @@ test.describe('configuration --', () => {
     });
 
 
+    test('do not allow creating custom field of same name for child and parent category', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Pottery', 'Find');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('newField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickConfirm();
+        await waitForExist(ConfigurationPage.getField('test:newField'));
+        await ConfigurationPage.save();
+
+        await CategoryPickerPage.clickSelectCategory('Find');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('new');
+        await waitForExist(await AddFieldModalPage.getCreateNewFieldButton());
+        await AddFieldModalPage.typeInSearchFilterInput('newField');
+        await waitForNotExist(await AddFieldModalPage.getCreateNewFieldButton());
+        await AddFieldModalPage.clickCancel();
+    });
+
+
     test('add custom group', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
@@ -470,7 +550,7 @@ test.describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickCreateNewGroup();
 
-        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Neue Gruppe', 'group');
         await EditConfigurationPage.clickConfirm();
         await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
         
@@ -708,13 +788,13 @@ test.describe('configuration --', () => {
         await CategoryPickerPage.clickSelectCategory('Operation');
         await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('dropdown');
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('test-list');
         await ManageValuelistsModalPage.clickCreateNewValuelist();
         await EditConfigurationPage.typeInNewValue('testValue');
         await EditConfigurationPage.clickAddValue();
-        await EditConfigurationPage.typeInTranslation(3, 0, 'Value label');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Value label', 'value');
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.clickConfirmValuelist();
         await EditConfigurationPage.clickConfirm();
@@ -726,8 +806,182 @@ test.describe('configuration --', () => {
         await ResourcesPage.clickSelectCategory('operation-trench');
         await ResourcesPage.clickSelectGeometryType();
         await DoceditPage.typeInInputField('identifier', 'Test trench');
-        await DoceditPage.clickSelectOption('shortDescription', 'testValue');
+        await DoceditPage.clickSelectOption('shortDescription', 'Value label');
         await DoceditPage.clickSaveDocument();
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value label');
+    });
+
+
+    test('create composite field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Kompositfeld', 'field');
+        
+        await EditConfigurationPage.typeInNewSubfield('subfield1');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'subfield');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 1', 'subfield');
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Unterfeld 2', 'subfield');
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(0)).toEqual('Unterfeld 1');
+        expect(await DoceditCompositeEntryModalPage.getSubfieldLabel(1)).toEqual('Unterfeld 2');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('set conditions for subfield of composite field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await EditConfigurationPage.typeInNewSubfield('subfield1');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'subfield');
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickSelectConditionSubfield('subfield1');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0);
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield3');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
+        await EditConfigurationPage.clickSelectConditionSubfield('subfield2');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3);
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4);
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(0, 'boolean'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickSubfieldBooleanRadioButton(0, 0);
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Eisenzeitlich');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Geometrisch');
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'Frühbronzezeitlich');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickSubfieldBooleanRadioButton(0, 1);
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(1, 'dropdown'));
+        await waitForNotExist(await DoceditCompositeEntryModalPage.getSubfieldInputElement(2, 'input'));
+
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('create and edit valuelists via composite field editor', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await createSubfieldAndValuelist('subfield1', 'new-valuelist-1', 'value1a');
+        await createSubfieldAndValuelist('subfield2', 'new-valuelist-2', 'value2a');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1a'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2a'));
+        
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField('test-compositeField');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await addValueToValuelist(0, 'value1b');
+        await addValueToValuelist(1, 'value2b');
+        await EditConfigurationPage.clickCancel();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P2', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P2');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'value1b'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'value2b'));
+
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(0, 'value1b');
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('show updated valuelist after editing it via editor of another subfield', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await createSubfieldAndValuelist('subfield1', 'new-valuelist', 'value1');
+        
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('new-valuelist');
+        await ManageValuelistsModalPage.clickSelectValuelist('test:new-valuelist');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await addValueToValuelist(0, 'value2');
+        await EditConfigurationPage.clickEditSubfield(1);
+        const values = await ConfigurationPage.getValues();
+        expect(await values.count()).toBe(2);
+        expect(await ConfigurationPage.getValue(0)).toEqual('value1');
+        expect(await ConfigurationPage.getValue(1)).toEqual('value2');
+
+        await EditConfigurationPage.clickConfirmSubfield();
+        await EditConfigurationPage.clickCancel();
     });
 });

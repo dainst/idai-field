@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, Hierarchy} from 'idai-field-core';
-import {DeleteModalComponent} from './delete-modal.component';
-import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
-import {ImageRelationsManager} from '../../../services/image-relations-manager';
+import { Injectable } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, Hierarchy } from 'idai-field-core';
+import { DeleteModalComponent } from './delete-modal.component';
+import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
+import { ImageRelationsManager } from '../../../services/image-relations-manager';
 
 
 /**
@@ -70,30 +70,4 @@ export class ResourceDeletion {
                 .includes(document.resource.category)
             && document.project !== undefined;
     }
-
-
-    // private async deleteImageWithImageStore(document: FieldDocument) {
-    //
-    //     if (!this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
-    //         return undefined;
-    //     }
-    //
-    //     if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-    //     try {
-    //         await this.imagestore.remove(document.resource.id);
-    //     } catch {
-    //         throw [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
-    //     }
-    // }
-    //
-    //
-    // private async deleteWithPersistenceManager(document: FieldDocument) {
-    //
-    //     try {
-    //         await this.relationsManager.remove(document);
-    //     } catch (removeError) {
-    //         console.error('removeWithPersistenceManager', removeError);
-    //         if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];
-    //     }
-    // }
 }

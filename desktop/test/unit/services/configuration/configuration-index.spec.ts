@@ -231,6 +231,10 @@ describe('ConfigurationIndex', () => {
             {
                 id: 'valuelist-2',
                 values: {}
+            },
+            {
+                id: 'valuelist-3',
+                values: {}
             }
         ];
 
@@ -242,7 +246,8 @@ describe('ConfigurationIndex', () => {
                     fields: [
                         { name: 'field1-1', valuelist: { id: 'valuelist-1' } },
                         { name: 'field1-2', valuelist: { id: 'valuelist-2' } },
-                        { name: 'field1-3', valuelist: { id: 'valuelist-2' } }
+                        { name: 'field1-3', valuelist: { id: 'valuelist-2' } },
+                        { name: 'field1-4', subfields: [{ name: 'field-1-4-1', valuelist: { id: 'valuelist-3' } }] }
                     ]
                 }
             ]
@@ -273,5 +278,9 @@ describe('ConfigurationIndex', () => {
         expect(result2[0].category).toBe(category1);
         expect(result2[0].fields[0].name).toBe('field1-2');
         expect(result2[0].fields[1].name).toBe('field1-3');
+
+        const result3 = index.getValuelistUsage('valuelist-3');
+        expect(result3[0].category).toBe(category1);
+        expect(result3[0].fields[0].name).toBe('field1-4');
     });
 });

@@ -19,6 +19,11 @@ import IS_ABOVE = Relation.Position.ABOVE;
 import IS_BELOW = Relation.Position.BELOW;
 import IS_CUT_BY = Relation.Position.CUTBY;
 import CUTS = Relation.Position.CUTS;
+import BONDS_WITH = Relation.Position.BONDSWITH;
+import ABUTS = Relation.Position.ABUTS;
+import IS_ABUTTED_BY = Relation.Position.ABUTTEDBY;
+import FILLS = Relation.Position.FILLS;
+import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
 
 const Viz = require('viz.js');
@@ -283,9 +288,9 @@ export class MatrixViewComponent implements OnInit {
                 sameRank: [IS_CONTEMPORARY_WITH, SAME_AS]
             }
             : {
-                above: [IS_ABOVE, CUTS],
-                below: [IS_BELOW, IS_CUT_BY],
-                sameRank: [SAME_AS]
+                above: [IS_ABOVE, CUTS, ABUTS, FILLS],
+                below: [IS_BELOW, IS_CUT_BY, IS_ABUTTED_BY, IS_FILLED_BY],
+                sameRank: [SAME_AS, BONDS_WITH]
             };
     }
 }

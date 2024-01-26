@@ -394,9 +394,9 @@ describe('Validations', () => {
                 // Incomplete range
                 dating4: [{ type: 'range', begin: { inputYear: 10, inputType: 'ce'} }],
                 // No integer value
-                dating5: [{ type: 'exact', end: { inputYear: 10.5, inputType: 'ce'} }],
+                dating5: [{ type: 'single', end: { inputYear: 10.5, inputType: 'ce'} }],
                 // Negative value
-                dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
+                dating6: [{ type: 'single', end: { inputYear: -10, inputType: 'ce'} }],
                 // No array
                 dating7: 'Dating',
                 // Invalid field

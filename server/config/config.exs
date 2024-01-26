@@ -29,10 +29,8 @@ config :field_hub,
   valid_file_variants: [:thumbnail_image, :original_image],
   file_index_cache_name: :file_info,
   file_max_size: 1_000_000_000,
-  user_tokens_cache_name: :user_tokens
-
-# Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
+  user_tokens_cache_name: :user_tokens,
+  max_project_identifier_length: 30
 
 # Configure esbuild (the version is required)
 config :esbuild,

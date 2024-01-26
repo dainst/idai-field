@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map } from 'tsfun';
-import { Resource, Dating, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { Dating, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { UtilTranslations } from '../../../../util/util-translations';
@@ -17,7 +17,7 @@ import { UtilTranslations } from '../../../../util/util-translations';
  */
 export class DatingComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: any;
     @Input() languages: Map<Language>;
 
@@ -34,8 +34,8 @@ export class DatingComponent {
 
     public removeDating(index: number) {
 
-        this.resource[this.field.name].splice(index, 1);
-        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+        this.fieldContainer[this.field.name].splice(index, 1);
+        if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
     }
 
 
@@ -51,7 +51,7 @@ export class DatingComponent {
 
         this.newDating = { type: type };
 
-        if (type !== 'exact' && type !== 'before') {
+        if (type !== 'single' && type !== 'before') {
             this.newDating.begin = { year: 0, inputYear: 0, inputType: 'bce' };
         }
         
@@ -63,8 +63,8 @@ export class DatingComponent {
 
     public addNewDating() {
 
-        if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-        this.resource[this.field.name].push(this.newDating);
+        if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
+        this.fieldContainer[this.field.name].push(this.newDating);
         this.newDating = undefined;
     }
 

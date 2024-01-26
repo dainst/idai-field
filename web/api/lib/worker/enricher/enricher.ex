@@ -5,6 +5,7 @@ defmodule Api.Worker.Enricher.Enricher do
   alias Api.Worker.Enricher.Relations
   alias Api.Worker.Enricher.Labels
   alias Api.Worker.Enricher.Children
+  alias Api.Worker.Enricher.Category
 
   require Logger
 
@@ -29,10 +30,10 @@ defmodule Api.Worker.Enricher.Enricher do
       |> Labels.add_labels(configuration)
       |> put_in([:doc, :project], project)
       |> I18NFieldConverter.convert(configuration)
+      |> Category.add_supercategory_name(configuration)
     rescue
       error ->
-        Logger.error "Enrichment failed for resource #{change.doc.resource.id}: "
-               <> "#{ if Map.has_key?(error, :message) do error.message else inspect(error) end }"
+        Logger.error "Enrichment failed for resource #{change.doc.resource.id}: #{inspect(error)}"
       nil
     end
   end

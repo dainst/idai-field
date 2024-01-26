@@ -43,6 +43,7 @@ export interface CategoryForm {
     defaultColor?: CategoryForm.Color;
 
     identifierPrefix?: string;
+    resourceLimit?: number;
 }
 
 

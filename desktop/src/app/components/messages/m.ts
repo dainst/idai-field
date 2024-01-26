@@ -22,12 +22,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static ALL_ERROR_FIND = 'all.error.find';
 
     // App Package
-    public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
-    public static APP_RESET_SUCCESS = 'app.resetAppSuccess';
+    public static APP_CONTROLLER_SUCCESS = 'app.appControllerSuccess';
 
     // Settings Package
     public static SETTINGS_SUCCESS = 'settings.success';
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
+    public static SETTINGS_ERROR_MISSING_USERNAME = 'settings.error.missingUsername';
 
     // Projects Package
     public static PROJECTS_DELETE_SUCCESS = 'projects.deleteSuccess';
@@ -112,6 +112,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
     public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
+    public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -245,7 +246,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Configuration Package
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
+    public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
+    public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
+    public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
+    public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
+    public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW = 'configuration.error.invalidResourceLimit.tooLow';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
 
@@ -312,7 +319,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ERROR_MALFORMED_ADDRESS] = {
             content: i18n({
                 id: 'messages.settings.error.malformedAddress',
-                value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
+                value: 'Bitte geben Sie als Adresse eine gültige URL ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
+            content: i18n({
+                id: 'messages.settings.error.missingUsername',
+                value: 'Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.'
             }),
             level: 'danger',
             params: [],
@@ -327,19 +343,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.APP_ERROR_GENERIC_SAVE_ERROR] = {
+        this.msgs[M.APP_CONTROLLER_SUCCESS] = {
             content: i18n({
-                id: 'messages.app.error.genericSaveError',
-                value: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.APP_RESET_SUCCESS] = {
-            content: i18n({
-                id: 'messages.app.resetSuccess',
-                value: 'Die Anwendung wurde erfolgreich zurückgesetzt.'
+                id: 'messages.app.appControllerSuccess',
+                value: 'Erfolgreich ausgeführt.'
             }),
             level: 'success',
             params: [],
@@ -522,11 +529,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: '[0] Ressourcen wurden erfolgreich importiert.'
             }),
             level: 'success',
-            params: [
-                i18n({
-                    id: 'messages.import.success.multiple.defaultParameter',
-                    value: 'Mehrere'
-                })],
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_EMPTY] = {
@@ -1154,6 +1157,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.validation.error.maxCharactersExceeded',
                 value: 'Im Feld \'[1]\' der Kategorie \'[0]\' dürfen maximal [2] Zeichen eingetragen werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED] = {
+            content: i18n({
+                id: 'messages.import.validation.error.resourceLimitExceeded',
+                value: 'In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie \'[0]\' angelegt werden.'
             }),
             level: 'danger',
             params: [],
@@ -1960,10 +1972,64 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.CONFIGURATION_ERROR_NO_SUBFIELDS] = {
+            content: i18n({
+                id: 'messages.configuration.error.noSubfields',
+                value: 'Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS] = {
+            content: i18n({
+                id: 'messages.configuration.error.subfieldConditionViolation.valuelists',
+                value: 'Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
+            content: i18n({
+                id: 'messages.configuration.error.subfieldConditionViolation.inputType',
+                value: 'Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION] = {
+            content: i18n({
+                id: 'messages.configuration.error.valueUsedInSubfieldCondition',
+                value: 'Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.CONFIGURATION_ERROR_INVALID_REFERENCE] = {
             content: i18n({
                 id: 'messages.configuration.error.invalidReference',
                 value: '"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER] = {
+            content: i18n({
+                id: 'messages.configuration.error.invalidResourceLimit.notANumber',
+                value: 'Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW] = {
+            content: i18n({
+                id: 'messages.configuration.error.invalidResourceLimit.tooLow',
+                value: 'Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.'
             }),
             level: 'danger',
             params: [],

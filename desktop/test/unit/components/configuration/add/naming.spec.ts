@@ -15,6 +15,17 @@ describe('naming', () => {
     });
 
 
+    it('generate subfield names', () => {
+      
+        expect(Naming.getSubfieldName('subfieldName')).toEqual('subfieldName');
+        expect(Naming.getSubfieldName('subfield-name')).toEqual('subfieldName');
+        expect(Naming.getSubfieldName('subfield name')).toEqual('subfieldName');
+        expect(Naming.getSubfieldName('Subfield_Name')).toEqual('subfieldName');
+        expect(Naming.getSubfieldName('текст')).toEqual('текст');
+        expect(Naming.getSubfieldName('subfieldName!\"§$%&/()=')).toEqual('subfieldName');
+    });
+
+
     it('generate category names', () => {
       
         expect(Naming.getCategoryName('CategoryName', 'project')).toEqual('Project:CategoryName');

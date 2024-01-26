@@ -29,7 +29,8 @@ export class Modals {
      *
      * @param size 'lg' for large
      */
-    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string /* TODO provide own options object, or large?: true*/) {
+    public make<MC, R = any>(modalClass: any, menuContext: MenuContext, size?: string, customCssClass?: string,
+                             centered: boolean = true) {
 
         this.menuService.setContext(menuContext);
         this.menuContextsStack.push(menuContext);
@@ -37,9 +38,11 @@ export class Modals {
         const options: NgbModalOptions = {
             backdrop: 'static',
             keyboard: false,
-            animation: false
-        }
+            animation: false,
+            centered
+        };
         if (size) options.size = size;
+        if (customCssClass) options.windowClass = customCssClass;
 
         const modalReference: NgbModalRef = this.modalService.open(
             modalClass,
@@ -52,14 +55,20 @@ export class Modals {
     public async awaitResult<R = any>(result: Promise<R>, onSuccess: (result: any) => void,
                                       onFinish: () => void) {
 
+        let resultObject: any;
+        let canceled: boolean = false;
+
         try {
-            await onSuccess(await result);
+            resultObject = await result;
         } catch {
             // Modal has been canceled
-        } finally {
-            this.restorePreviousMenuContext();
-            onFinish();
+            canceled = true;
         }
+
+        if (!canceled) await onSuccess(resultObject);
+
+        this.restorePreviousMenuContext();
+        onFinish();
     }
 
 

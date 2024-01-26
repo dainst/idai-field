@@ -1,5 +1,5 @@
 
-const fs = require('fs');
+/*const fs = require('fs');
 
 
 const projectName: string = 'kalapodi';
@@ -19,4 +19,4 @@ Object.values(custom).forEach((val: any) => {
    })
 });
 
-fs.writeFileSync("Config-" + projectName + ".json", JSON.stringify(custom, null, 2));
+fs.writeFileSync("Config-" + projectName + ".json", JSON.stringify(custom, null, 2));*/

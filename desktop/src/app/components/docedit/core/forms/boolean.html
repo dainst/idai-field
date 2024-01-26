@@ -1,21 +1,21 @@
 <div class="form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" type="radio"
-               [checked]="resource[fieldName] === true"
+               [checked]="fieldContainer[fieldName] === true"
                (click)="setValue(true)"> <span i18n="@@boolean.yes">Ja</span>
     </label>
 </div>
 <div class="form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" type="radio"
-               [checked]="resource[fieldName] === false"
+               [checked]="fieldContainer[fieldName] === false"
                (click)="setValue(false)"> <span i18n="@@boolean.no">Nein</span>
     </label>
 </div>
 <div class="form-check form-check-inline disabled">
     <label class="form-check-label">
         <input class="form-check-input" type="radio"
-               [checked]="!resource.hasOwnProperty(fieldName)"
+               [checked]="!fieldContainer.hasOwnProperty(fieldName)"
                (click)="resetValue()"> --
     </label>
 </div>

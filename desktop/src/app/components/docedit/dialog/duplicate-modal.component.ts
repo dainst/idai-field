@@ -15,11 +15,12 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
  */
 export class DuplicateModalComponent {
 
+    public maxNumberOfDuplicates: number;
+
     public numberOfDuplicates: number|undefined;
     public newDocument: boolean;
 
     private readonly minNumberOfDuplicates: number = 1;
-    private readonly maxNumberOfDuplicates: number = 100;
 
 
     constructor(public activeModal: NgbActiveModal) {}

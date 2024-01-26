@@ -66,7 +66,7 @@
       "description": "Виконавець (виконавчиня), який (яка) в першу чергу відповідає за ресурс або об’єкт під час кампанії. Важливо: імена людей, які вводять або редагують запис у базі даних, зберігаються автоматично, тому їх не потрібно вводити тут."
     },
     "campaign": {
-      "label": "Kampagne"
+      "label": "Кампанія / захід"
     },
     "period": {
       "label": "Приблизне датування"
@@ -88,7 +88,7 @@
     },
     "spatialLocation": {
       "label": "Опис просторового розташування",
-      "description": "Опис позиції в межах розрізу знахідки, чи знахідки"
+      "description": "Опис позиції в межах розкопу, шурфу або знахідки"
     },
     "provenance": {
       "label": "Походження",
@@ -110,10 +110,10 @@
       "label": "Підрозділ документації"
     },
     "webGisId": {
-      "label": "Web-GIS/ГІС-ID"
+      "label": "Web/Веб-GIS/ГІС-ID"
     },
     "shortDescriptionAddendum": {
-      "label": "Короткий опис/характеристика(додатково)"
+      "label": "Короткий опис/характеристика (додатково)"
     },
     "phase": {
       "label": "Період/фаза"
@@ -175,7 +175,7 @@
       }
     },
     "Opening": {
-      "label": "Отвір",
+      "label": "Проріз/Отвір",
       "fields": {
         "material": {
           "label": "Матеріал"
@@ -208,7 +208,7 @@
       }
     },
     "Trench": {
-      "label": "Розріз",
+      "label": "Розкопки/розріз",
       "fields": {
         "researchQuestion": {
           "label": "Питання / Завдання",
@@ -221,8 +221,7 @@
       }
     },
     "ExcavationArea": {
-      "label": "Зона обстеження",
-      "fields": {}
+      "label": "Зона обстеження"
     },
     "Glass": {
       "label": "Cкло",
@@ -273,8 +272,7 @@
       }
     },
     "Planum": {
-      "label": "Земляне покриття",
-      "fields": {}
+      "label": "Земляне покриття"
     },
     "Brick": {
       "label": "Цегла",
@@ -504,8 +502,7 @@
       }
     },
     "SurveyUnit": {
-      "label": "Квадрат плану",
-      "fields": {}
+      "label": "Квадрат плану"
     },
     "Wood": {
       "label": "Деревина",
@@ -876,7 +873,8 @@
           "description": "Автор зображення, фотограф або кресляр"
         },
         "processor": {
-          "label": "Виконавчиня/виконавець"
+          "label": "Виконавчиня/виконавець",
+          "description": "Редактор/редакторша зображення на випадок змін після створення ілюстрації"
         },
         "imageRights": {
           "label": "Авторські права на зображення"
@@ -1032,6 +1030,33 @@
         "vesselFormSpecific": {
           "label": "Форма",
           "description": "Особлива форма посудини"
+        },
+        "vesselpart": {
+          "label": "Частина посуду"
+        },
+        "Firing": {
+          "label": "Спосіб випалу кераміки"
+        },
+        "Drawing": {
+          "label": "Креслення в наявності"
+        },
+        "FormComparisonCompendia": {
+          "label": "Посібник з порівняння форм"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "Посібник детальніший з порівняння форм"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "Посібник з порівняння декору"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "Посібник з порівняння деталей декору"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "Посібник з порівняння аплікацій"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "Посібник з порівняння деталей аплікацій"
         }
       }
     },
@@ -1445,7 +1470,8 @@
       "label": "Колекція знахідок",
       "fields": {
         "amount": {
-          "label": "Кількість (загальна)"
+          "label": "Кількість (загальна)",
+          "description": "Кількість розкопаних або інвентаризованих знахідок"
         },
         "bibliography": {
           "label": "Бібліографія"
@@ -1463,10 +1489,6 @@
     "PlasterFragment": {
       "label": "Фрагмент штукатурки",
       "fields": {
-        "area": {
-          "label": "Площа в м2",
-          "description": "Площа в квадратних метрах"
-        },
         "composition": {
           "label": "Структура штукатурки",
           "description": "Опис структури/шарів штукатурки"
@@ -1538,8 +1560,7 @@
       }
     },
     "Area": {
-      "label": "Частина/область",
-      "fields": {}
+      "label": "Частина/область"
     },
     "Excavation": {
       "label": "Розкопки",
@@ -1550,8 +1571,7 @@
       }
     },
     "Type": {
-      "label": "Тип",
-      "fields": {}
+      "label": "Тип"
     },
     "TypeCatalog": {
       "label": "Каталог типів",
@@ -1620,7 +1640,8 @@
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": "Без археологічного значення"
         }
-      }
+      },
+      "label": "Результат дослідження"
     },
     "FeatureSegment:archaeoDox": {
       "fields": {

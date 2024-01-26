@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Resource } from 'idai-field-core';
 
 
 @Component({
     selector: 'form-field-simple-input',
-    template: `<input [(ngModel)]="resource[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
+    template: `<input [(ngModel)]="fieldContainer[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
                       class="form-control">`
 })
 
@@ -15,12 +14,12 @@ import { Resource } from 'idai-field-core';
  */
 export class SimpleInputComponent {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
 
 
     public deleteIfEmpty(value: string) {
 
-        if (value === '') delete this.resource[this.fieldName];
+        if (value === '') delete this.fieldContainer[this.fieldName];
     }
 }

@@ -4,9 +4,8 @@ import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
-import { ValuelistEditorModalComponent } from '../../editor/valuelist-editor-modal.component';
+import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
 import { MenuContext } from '../../../../services/menu-context';
-import { ApplyChangesResult } from '../../configuration.component';
 import { ConfigurationContextMenu } from '../../context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from '../../context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../../../component-helpers';
@@ -35,7 +34,7 @@ export class ManageValuelistsModalComponent {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
-        reindexConfiguration?: boolean) => Promise<ApplyChangesResult>;
+        reindexConfiguration?: boolean) => Promise<void>;
 
     public searchQuery: ValuelistSearchQuery = ValuelistSearchQuery.buildDefaultQuery();
     public selectedValuelist: Valuelist|undefined;
@@ -157,7 +156,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => this.applyResult(applyChangesResult, valuelist.id),
+            () => this.applyResult(valuelist.id),
             nop
         );
     }
@@ -192,7 +191,7 @@ export class ManageValuelistsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            (applyChangesResult: ApplyChangesResult) => this.applyNewValuelistResult(applyChangesResult, newValuelistId),
+            () => this.applyNewValuelistResult(newValuelistId),
             nop
         );
     }
@@ -207,15 +206,18 @@ export class ManageValuelistsModalComponent {
 
         componentInstance.valuelistToExtend = valuelist;
 
+        let newValuelistId: string;
         await this.modals.awaitResult(
             result,
-            (newValuelistId: string) => {
-                this.createNewValuelist(Naming.getValuelistId(
-                    newValuelistId, this.settingsProvider.getSettings().selectedProject
-                ), valuelist);
-            },
+            (id: string) => newValuelistId = id,
             nop
         );
+
+        if (newValuelistId) {
+            this.createNewValuelist(Naming.getValuelistId(
+                newValuelistId, this.settingsProvider.getSettings().selectedProject
+            ), valuelist);
+        }
     }
 
 
@@ -242,7 +244,8 @@ export class ManageValuelistsModalComponent {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteValuelist(
                 this.configurationDocument, valuelist
             );
-            this.applyResult(await this.applyChanges(changedConfigurationDocument, true));
+            await this.applyChanges(changedConfigurationDocument, true)
+            this.applyResult();
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -251,16 +254,13 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    protected applyNewValuelistResult(applyChangesResult: ApplyChangesResult, newValuelistId: string) {
+    protected applyNewValuelistResult(newValuelistId: string) {
 
-        this.applyResult(applyChangesResult, newValuelistId);
+        this.applyResult(newValuelistId);
     }
 
 
-    private applyResult(applyChangesResult: ApplyChangesResult, editedValuelistId?: string) {
-
-        this.configurationDocument = applyChangesResult.configurationDocument;
-        this.configurationIndex = applyChangesResult.configurationIndex;
+    private applyResult(editedValuelistId?: string) {
 
         this.applyValuelistSearch();
 

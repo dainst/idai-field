@@ -399,9 +399,11 @@ describe('ConfigLoader', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             F: {
-                fields: {},
+                fields: {
+                    fieldF1: { inputType: 'input' }
+                },
                 minimalForm: {
-                    groups: []
+                    groups: [{ name: Groups.STEM, fields: ['fieldF1'] }]
                 },
                 userDefinedSubcategoriesAllowed: true,
                 supercategory: true
@@ -434,15 +436,17 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldA1: { inputType: 'text' }
                 },
-                groups: [{ name: Groups.STEM, fields: ['fieldA1'] }]
+                groups: [{ name: Groups.STEM, fields: ['fieldF1', 'fieldA1'] }]
             },
             B: {
                 fields: { fieldB2: { inputType: 'boolean' } },
                 groups: [{ name: Groups.STEM, fields: ['fieldB1', 'fieldB2'] }]
             },
             F: {
-                fields: {},
-                groups: []
+                fields: {
+                    fieldF1: { inputType: 'url' }
+                },
+                groups: [{ name: Groups.STEM, fields: ['fieldF1'] }]
             },
             G: {
                 fields: {},
@@ -462,6 +466,10 @@ describe('ConfigLoader', () => {
                 getConfigurationDocument(customForms)
             );
 
+            expect(pconf.getCategory('F').groups[0].fields.find(field => field.name == 'fieldF1')
+                .inputType).toEqual('url');
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldF1')
+                .inputType).toEqual('url');
             expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldA1')
                 .inputType).toEqual('text');
             expect(pconf.getCategory('B').groups[0].fields.find(field => field.name == 'fieldB1')
@@ -729,7 +737,7 @@ describe('ConfigLoader', () => {
             'A:default': { fields: {} },
             B: { fields: {} },
             'C:default': { fields: {} },
-            D: { fields: {} },
+            D: { fields: {} },
             Parent1: { fields: {} },
             'Parent2:default': { fields: {} }
         };

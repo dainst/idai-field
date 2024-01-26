@@ -113,8 +113,14 @@ export class ConfigurationPage {
 
     public static async getValue(index: number) {
 
-        const elements = await getLocator('configuration-field valuelist-view code');
-        return getText(elements.nth(index));
+        const values = await this.getValues();
+        return getText(values.nth(index));
+    }
+
+
+    public static async getValues() {
+
+        return getLocator('valuelist-view code');
     }
 
 

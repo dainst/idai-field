@@ -1,5 +1,5 @@
-<div *ngIf="resource[fieldName]">
-    <div *ngFor="let entry of resource[fieldName]; let i = index">
+<div *ngIf="fieldContainer[fieldName]">
+    <div *ngFor="let entry of fieldContainer[fieldName]; let i = index">
         <div class="input-group mb-2">
             <multi-language-text-field *ngIf="fieldLanguages"
                                     [fieldData]="entry"

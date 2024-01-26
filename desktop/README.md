@@ -8,7 +8,7 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
    
 ## Development
 
-Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 16 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 
@@ -78,4 +78,3 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-

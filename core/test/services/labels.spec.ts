@@ -1,5 +1,5 @@
-import {Valuelist} from '../../src/model';
-import {Labels} from '../../src/services/labels';
+import { Valuelist } from '../../src/model';
+import { Labels } from '../../src/services/labels';
 
 
 describe('Labels', () => {

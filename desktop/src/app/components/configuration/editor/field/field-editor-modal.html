@@ -1,0 +1,126 @@
+<div class="modal-header configuration-editor-modal-header field-editor-modal-header"
+     [class.dragging]="dragging">
+    <h5 *ngIf="new" class="modal-title" i18n="@@configuration.createSpecificField">
+        Feld <code>{{field.name}}</code> erstellen
+    </h5>
+    <h5 *ngIf="!new" class="modal-title" i18n="@@configuration.editSpecificField">
+        Feld <code>{{field.name}}</code> bearbeiten
+    </h5>
+    <button id="confirm-button" class="btn btn-primary"
+            [ngClass]="{ 'disabled': applyingChanges || !isChanged() }"
+            (click)="applyingChanges || !isChanged() || confirm()">
+        <span class="button-label" i18n="@@buttons.ok">OK</span>
+    </button>
+    <button id="cancel-button" class="btn btn-primary btn-square"
+            [class.disabled]="applyingChanges"
+            (click)="applyingChanges || cancel()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+
+<div class="modal-body configuration-editor-modal-body field-editor-modal-body"
+     [class.dragging]="dragging">
+    <input-type-selector [selectedInputType]="getInputType()"
+                         [availableInputTypes]="availableInputTypes"
+                         [isCustomField]="isCustomField()"
+                         [isFixedInputType]="field.fixedInputType"
+                         [disabled]="hidden"
+                         (onChanged)="setInputType($event)">
+    </input-type-selector>
+    <div class="configuration-editor-section form-group basic-settings">
+        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
+            Grundeinstellungen
+        </div>
+        <div *ngIf="hideable">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.showField">Feld anzeigen</span>
+            </div>
+            <div>
+                <label id="toggle-hidden-slider" class="switch">
+                    <input
+                        type="checkbox"
+                        [checked]="!hidden"
+                        (change)="toggleHidden()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <i18n-switch *ngIf="isI18nCompatible()"
+                     [inputType]="getInputType()"
+                     (onChanged)="setInputType($event)"></i18n-switch>
+        <div id="constraint-indexed-switch"
+             class="field-editor-switch"
+             ngbTooltip="{{getConstraintIndexedTooltip()}}"
+             container="body">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.allowFieldSpecificSearch"
+                      [class.disabled]="!isConstraintIndexOptionEnabled()">Feldspezifische Suche erlauben</span>
+            </div>
+            <div>
+                <label class="switch" [class.disabled]="!isConstraintIndexOptionEnabled()">
+                    <input type="checkbox"
+                        [checked]="isConstraintIndexed()"
+                        [disabled]="!isConstraintIndexOptionEnabled()"
+                        (change)="toggleConstraintIndexed()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
+            Feldbezeichnung
+        </div>
+        <multi-language-input [translations]="clonedLabel"
+            [defaultTranslations]="field.defaultLabel"
+            [projectLanguages]="getClonedProjectLanguages()"
+            [disabled]="hidden"></multi-language-input>
+    </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.description">
+            Beschreibung
+        </div>
+        <multi-language-input [translations]="clonedDescription"
+            [defaultTranslations]="field.defaultDescription ?? {}"
+            [projectLanguages]="getClonedProjectLanguages()"
+            [disabled]="hidden"></multi-language-input>
+    </div>
+    <div *ngIf="isCustomField()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.references">
+            Verweise
+        </div>
+        <references-input [references]="getClonedFieldDefinition().references"></references-input>
+    </div>
+    <div *ngIf="isValuelistSectionVisible()"
+         id="field-editor-valuelist-section"
+         class="configuration-editor-section">
+        <div class="configuration-editor-section-title">
+            <span *ngIf="getInputType() !== 'dimension'" i18n="@@configuration.valuelist">
+                Werteliste
+            </span>
+            <span *ngIf="getInputType() === 'dimension'" i18n="@@configuration.valuelistForDimensionSubfield">
+                Werteliste (Unterfeld "Gemessen an")
+            </span>
+        </div>
+        <valuelist-selector [inputType]="getInputType()"
+                            [configurationDocument]="configurationDocument"
+                            [clonedConfigurationDocument]="clonedConfigurationDocument"
+                            [category]="category"
+                            [clonedField]="clonedField"
+                            [applyChanges]="applyChanges"
+                            [disabled]="hidden"
+        ></valuelist-selector>
+    </div>
+    <subfields-section *ngIf="isSubfieldsSectionVisible()"
+                       [clonedFormDefinition]="getClonedFormDefinition()"
+                       [clonedFieldDefinition]="getClonedFieldDefinition()"
+                       [clonedField]="clonedField"
+                       [category]="category"
+                       [availableInputTypes]="availableInputTypes"
+                       [projectLanguages]="getClonedProjectLanguages()"
+                       [configurationDocument]="configurationDocument"
+                       [clonedConfigurationDocument]="clonedConfigurationDocument"
+                       [subfieldI18nStrings]="subfieldI18nStrings"
+                       [applyChanges]="applyChanges"
+                       (onDrag)="dragging = $event"></subfields-section>
+</div>

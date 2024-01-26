@@ -9,6 +9,7 @@ defmodule Api.Worker.Enricher.RelationsTest do
                 resource: %{
                   id: "1",
                   identifier: "i1",
+                  shortDescription: %{ de: "Text" },
                   type: "Feature",
                   relations: %{
                     isRecordedIn: ["0"]
@@ -31,7 +32,56 @@ defmodule Api.Worker.Enricher.RelationsTest do
     }, get)
 
     assert targets == [
-      %{ resource: %{ category: "Feature", id: "1", identifier: "i1", parentId: "0" }}]
+      %{
+        resource: %{
+          category: "Feature",
+          id: "1",
+          identifier: "i1",
+          shortDescription: %{ de: "Text" },
+          parentId: "0"
+        }
+      }
+    ]
+  end
+
+  test "convert shortDescription string in relation to i18n object when expanding relations" do
+    get = fn _ -> %{
+      resource: %{
+        id: "1",
+        identifier: "i1",
+        shortDescription: "Text",
+        type: "Feature",
+        relations: %{
+          isRecordedIn: ["0"]
+        }
+      }
+    }
+    end
+
+    %{ doc: %{ resource: %{ relations: %{ isAbove: targets } }}} = Relations.expand(%{
+      doc: %{
+        resource: %{
+          id: "2",
+          identifier: "i2",
+          type: "Feature",
+          relations: %{
+            isAbove: ["1"]
+          }
+        }
+      }
+    }, get)
+
+    assert targets == [
+      %{
+        resource: %{
+          category: "Feature",
+          id: "1",
+          identifier: "i1",
+          shortDescription: %{ "unspecifiedLanguage" => "Text" },
+          parentId: "0"
+        }
+      }
+    ]
   end
 
   test "add child_of relation for resource with liesWithin relation" do

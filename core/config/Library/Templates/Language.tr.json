@@ -1,22 +1,22 @@
 {
   "default": {
-    "label": ""
+    "label": "Standart"
   },
   "minimalExcavation": {
-    "label": ""
+    "label": "Temel (Kazı)"
   },
   "minimalBuilding": {
-    "label": ""
+    "label": "Temel (Mimari Araştırma)"
   },
   "minimalSurvey": {
-    "label": ""
+    "label": "Temel (Yüzey Araştırması)"
   },
   "archaeoDox": {
-    "label": "",
+    "label": "archaeoDox",
     "languageConfiguration": {
       "relations": {
         "isPresentIn": {
-          "label": ""
+          "label": "Profil/Plan çiziminde bulunuyor"
         }
       }
     }

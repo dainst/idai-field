@@ -14,6 +14,8 @@ defmodule FieldHub.ProjectTest do
   @user_name "test_user"
   @user_password "test_password"
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
   test "exists?/1 correctly returns false" do
     assert false == Project.exists?(@project)
   end
@@ -44,9 +46,26 @@ defmodule FieldHub.ProjectTest do
   end
 
   test "can not create project with invalid characters in name" do
-    assert :invalid_name = Project.create("Проект")
+    identifier = "Проект"
 
-    assert %{database: :unknown_project, file_store: []} = Project.delete("Проект")
+    on_exit(fn ->
+      Project.delete(identifier)
+    end)
+
+    assert :invalid_name = Project.create(identifier)
+    assert %{database: :unknown_project, file_store: []} = Project.delete(identifier)
+  end
+
+  test "can not create project with more than the maximum characters in identifier" do
+    long_project_identifier = String.duplicate("a", @identifier_length + 1)
+
+    on_exit(fn ->
+      Project.delete(long_project_identifier)
+    end)
+
+    assert :invalid_name = Project.create(long_project_identifier)
+
+    assert %{database: :unknown_project, file_store: []} = Project.delete(long_project_identifier)
   end
 
   test "evaluate_project/1 on unknown project returns the expected response" do

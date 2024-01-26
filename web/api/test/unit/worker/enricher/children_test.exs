@@ -11,7 +11,7 @@ defmodule Api.Worker.Enricher.ChildrenTest do
           resource: %{
             id: "1",
             identifier: "i1",
-            type: "Trench",
+            category: "Trench",
             relations: %{}
           }
         }
@@ -21,7 +21,7 @@ defmodule Api.Worker.Enricher.ChildrenTest do
           resource: %{
             id: "2",
             identifier: "i2",
-            type: "Feature",
+            category: "Feature",
             relations: %{
               isChildOf: [%{ resource: %{ id: "1" } }]
             }
@@ -33,7 +33,7 @@ defmodule Api.Worker.Enricher.ChildrenTest do
           resource: %{
             id: "3",
             identifier: "i3",
-            type: "Feature",
+            category: "Feature",
             relations: %{
               isChildOf: [%{ resource: %{ id: "1" } }]
             }
@@ -45,7 +45,7 @@ defmodule Api.Worker.Enricher.ChildrenTest do
           resource: %{
             id: "4",
             identifier: "i4",
-            type: "Find",
+            category: "Find",
             relations: %{
               isChildOf: [%{ resource: %{ id: "3" } }]
             }

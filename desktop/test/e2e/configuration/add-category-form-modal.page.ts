@@ -16,13 +16,13 @@ export class AddCategoryFormModalPage {
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-category-form-selection-button');
     }
 
 
     public static clickCreateNewCategory() {
 
-        return click('.new-entry-button');
+        return click('#new-category-button');
     }
 
 

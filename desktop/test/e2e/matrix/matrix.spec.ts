@@ -88,11 +88,11 @@ test.describe('matrix --', () => {
     test('edit relations and show updated matrix', async () => {
 
         await MatrixPage.clickNode('si1');
-        await DoceditPage.clickGotoTimeTab();
-        await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isAfter', 1);
+        await DoceditPage.clickGotoPositionTab();
+        await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isAbove', 1);
 
-        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isAfter');
-        await DoceditRelationsPage.typeInRelation('isAfter', 'SE4');
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isAbove');
+        await DoceditRelationsPage.typeInRelation('isAbove', 'SE4');
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
 
@@ -129,11 +129,11 @@ test.describe('matrix --', () => {
         await testDefaultMatrix();
 
         await MatrixPage.clickOptionsButton();
-        await MatrixPage.clickSpatialRelationsRadioButton();
+        await MatrixPage.clickTemporalRelationsRadioButton();
         const edges = await MatrixPage.getEdges();
         expect(await edges.count()).toBe(0);
 
-        await MatrixPage.clickTemporalRelationsRadioButton();
+        await MatrixPage.clickSpatialRelationsRadioButton();
         await testDefaultMatrix();
     });
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Labels, Field, Resource, Valuelist, ValuelistUtil, Hierarchy } from 'idai-field-core';
+import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Hierarchy, Resource } from 'idai-field-core';
 
 
 @Component({
@@ -13,7 +13,8 @@ import { Datastore, Labels, Field, Resource, Valuelist, ValuelistUtil, Hierarchy
  */
 export class DropdownComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() resource: Resource
+    @Input() fieldContainer: any;
     @Input() field: Field;
 
     public valuelist: Valuelist;
@@ -38,9 +39,13 @@ export class DropdownComponent implements OnChanges {
     }
 
 
-    public deleteIfEmpty(value: string) {
+    public updateValue(newValue: string) {
 
-        if (value === '') delete this.resource[this.field.name];
+        if (newValue === '' || newValue === null) {
+            delete this.fieldContainer[this.field.name];
+        } else {
+            this.fieldContainer[this.field.name] = newValue;
+        }
     }
 
 

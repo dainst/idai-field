@@ -13,6 +13,12 @@ export module Naming {
     }
 
 
+    export function getSubfieldName(searchTerm: string): string {
+
+        return removeSpecialCharacters(camelCase(searchTerm));
+    }
+
+
     export function getCategoryName(searchTerm: string, projectIdentifier: string): string {
 
         projectIdentifier = convertFirstCharacterToUpperCase(projectIdentifier);
@@ -26,7 +32,7 @@ export module Naming {
     export function getValuelistId(searchTerm: string, projectIdentifier: string): string {
 
         if (searchTerm.startsWith(projectIdentifier + ':')) searchTerm = searchTerm.replace(projectIdentifier + ':', '');
-        const id: string = searchTerm.split('-')
+        const id: string = searchTerm.split('-')
             .map(segment => removeSpecialCharacters(segment))
             .join('-');
 

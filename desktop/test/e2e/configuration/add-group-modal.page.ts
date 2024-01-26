@@ -16,13 +16,13 @@ export class AddGroupModalPage {
 
     public static clickCreateNewGroup() {
 
-        return click('.new-entry-button');
+        return click('#new-group-button');
     }
 
 
     public static clickConfirmSelection() {
 
-        return click('#confirm-selection-button');
+        return click('#confirm-group-selection-button');
     }
 
 

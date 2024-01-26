@@ -10,14 +10,14 @@ import { ConfigurationFieldComponent } from './browse/configuration-field.compon
 import { MultiLanguageInputComponent } from './editor/widgets/multi-language-input.component';
 import { ConfigurationCategoryComponent } from './browse/configuration-category.component';
 import { AddFieldModalComponent } from './add/field/add-field-modal.component';
-import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field/field-editor-modal.component';
+import { CategoryEditorModalComponent } from './editor/category/category-editor-modal.component';
 import { CategoryPreviewComponent } from './add/category/category-preview.component';
 import { CategoryListingComponent } from './add/category/category-listing.component';
 import { AddCategoryFormModalComponent } from './add/category/add-category-form-modal.component';
 import { ConfigurationFieldDragElement } from './browse/configuration-field-drag-element.component';
 import { AddGroupModalComponent } from './add/group/add-group-modal.component';
-import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
+import { GroupEditorModalComponent } from './editor/group/group-editor-modal.component';
 import { ConfigurationContextMenuComponent } from './context-menu/configuration-context-menu.component';
 import { DeleteFieldModalComponent } from './delete/delete-field-modal.component';
 import { DeleteGroupModalComponent } from './delete/delete-group-modal.component';
@@ -29,8 +29,8 @@ import { ValuelistViewComponent } from './widgets/valuelist-view.component';
 import { ManageValuelistsModalComponent } from './add/valuelist/manage-valuelists-modal.component';
 import { ValuelistListingComponent } from './add/valuelist/valuelist-listing.component';
 import { ValuelistPreviewComponent } from './add/valuelist/valuelist-preview.component';
-import { ValuelistEditorModalComponent } from './editor/valuelist-editor-modal.component';
-import { ValueEditorModalComponent } from './editor/value-editor-modal.component';
+import { ValuelistEditorModalComponent } from './editor/valuelist/valuelist-editor-modal.component';
+import { ValueEditorModalComponent } from './editor/valuelist/value-editor-modal.component';
 import { AddValuelistModalComponent } from './add/valuelist/add-valuelist-modal.component';
 import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.component';
 import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
@@ -48,6 +48,11 @@ import { HierarchicalRelationsInfoComponent } from './browse/hierarchical-relati
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
+import { SubfieldEditorModalComponent } from './editor/field/subfield-editor-modal.component';
+import { InputTypeSelectorComponent } from './editor/field//widgets/input-type-selector.component';
+import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.component';
+import { ValuelistSelectorComponent } from './editor/field/widgets/valuelist-selector.component';
+import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-section.component';
 
 
 @NgModule({
@@ -99,7 +104,12 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
         ConfigurationConflictsModalComponent,
         HierarchicalRelationsInfoComponent,
         ImportConfigurationModalComponent,
-        ProjectLanguagesModalComponent
+        ProjectLanguagesModalComponent,
+        SubfieldEditorModalComponent,
+        InputTypeSelectorComponent,
+        I18nSwitchComponent,
+        ValuelistSelectorComponent,
+        SubfieldsSectionComponent
     ],
     providers: [
         ConfigurationChangeNotifications,
@@ -131,7 +141,8 @@ import { ProjectLanguagesModalComponent } from './languages/project-languages-mo
         ConfigurationChangeNotificationModalComponent,
         ConfigurationConflictsModalComponent,
         ImportConfigurationModalComponent,
-        ProjectLanguagesModalComponent
+        ProjectLanguagesModalComponent,
+        SubfieldEditorModalComponent
     ]
 })
 

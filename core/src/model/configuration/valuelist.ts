@@ -1,11 +1,13 @@
-import { clone } from 'tsfun';
+import { clone, Map } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { ValuelistValue } from './valuelist-value';
 
 
 export type ValuelistId = string;
 
-export type Valuelists = { [fieldName: string]: ValuelistId }
+export type Valuelists = {
+    [fieldName: string]: ValuelistId|Map<ValuelistId>
+}
 
 
 /**

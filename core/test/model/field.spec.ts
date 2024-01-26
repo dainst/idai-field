@@ -33,7 +33,7 @@ import { Field } from '../../src/model/configuration/field';
         )).toBe(true);
 
         expect(Field.InputType.isValidFieldData(
-            [{ type: 'exact', begin: { year: 200, inputYear: 200, inputType: 'ce' } }],
+            [{ type: 'single', begin: { year: 200, inputYear: 200, inputType: 'ce' } }],
             Field.InputType.DATING
         )).toBe(true);
 

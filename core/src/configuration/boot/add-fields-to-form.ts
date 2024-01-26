@@ -25,7 +25,10 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
     if (extendedForm) Object.assign(clonedForm.fields, extendedForm.fields);
 
     clonedForm.fields = fieldNames.reduce((fields, fieldName) => {
-        const field = getField(fieldName, form, categories, builtInFields, commonFields, relations, parentForm);
+        const field = getField(
+            fieldName, form, categories, builtInFields, commonFields, relations,
+            parentForm, extendedForm
+        );
         if (field) fields[fieldName] = field;
         return fields;
     }, clonedForm.fields ?? {});
@@ -37,7 +40,7 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
         }
     }
 
-    applyFormChanges(clonedForm, form, parentForm);
+    applyFormChanges(clonedForm, form, parentForm, extendedForm);
 
     return clonedForm;
 }
@@ -69,7 +72,7 @@ function getFieldNames(form: TransientFormDefinition, categories: Map<TransientC
  */
 function getField(fieldName: string, form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
                   builtInFields: Map<Field>, commonFields: Map<Field>, relations: Array<Relation>,
-                  parentForm?: CustomFormDefinition): Field|undefined {
+                  parentForm?: CustomFormDefinition, extendedForm?: TransientFormDefinition): Field|undefined {
     
     const parentName: string|undefined = form.parent ?? categories[form.categoryName]?.parent;
 
@@ -82,7 +85,8 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         ?? parentCategoryFields[fieldName]
         ?? categories[form.categoryName]?.fields[fieldName] as Field
         ?? (parentForm?.fields ? parentForm.fields[fieldName] as Field : undefined)
-        ?? (form.fields ? form.fields[fieldName] as Field : undefined)
+        ?? (extendedForm?.fields ? extendedForm.fields[fieldName] as Field : undefined)
+        ?? (form.fields ? form.fields[fieldName] as Field : undefined);
 
     if ((!field || !field.inputType) && !relations.find(relation => relation.name === fieldName)) {
         throw [[ConfigurationErrors.FIELD_NOT_FOUND, form.categoryName, fieldName]];
@@ -95,17 +99,23 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
 
 
 function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
-                          parentForm?: CustomFormDefinition) {
+                          parentForm?: CustomFormDefinition, extendedForm?: CustomFormDefinition) {
 
-    if (parentForm?.fields) {
-        Object.keys(parentForm.fields).forEach(fieldName => {
-            applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
+    if (extendedForm?.fields) {
+        Object.keys(extendedForm.fields).forEach(fieldName => {
+            applyFieldChanges(clonedForm.fields[fieldName], extendedForm.fields[fieldName]);
         });
     }
 
     if (form.fields) {
         Object.keys(form.fields).forEach(fieldName => {
             applyFieldChanges(clonedForm.fields[fieldName], form.fields[fieldName]);
+        });
+    }
+
+    if (parentForm?.fields) {
+        Object.keys(parentForm.fields).forEach(fieldName => {
+            applyFieldChanges(clonedForm.fields[fieldName], parentForm.fields[fieldName]);
         });
     }
 }

@@ -1,4 +1,3 @@
-
 const { _electron: electron } = require('playwright');
 import { isString } from 'tsfun';
 
@@ -8,6 +7,11 @@ let baseArgs = ['.', 'test']
 let electronApp;
 let window;
 
+const defaultConfig = {
+    'dbs': ['test'],
+    'username': 'Test-User'
+};
+
 
 /**
  * Use Playwright to start the Electron application for running e2e tests.
@@ -15,7 +19,9 @@ let window;
  * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
  * @returns Promise<any> that will resolve once the application is started.
  */
-export async function start(fakeVideoPath?: string) {
+export async function start(config?: any, fakeVideoPath?: string) {
+
+    resetConfigJson(config);
 
     let finalArgs = baseArgs;
 
@@ -27,7 +33,6 @@ export async function start(fakeVideoPath?: string) {
     }
 
     electronApp = await electron.launch({ args: finalArgs });
-
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
 }
@@ -60,21 +65,20 @@ export async function navigateTo(menu) {
 
 export async function resetApp() {
 
-    await window.evaluate(() => require('@electron/remote').getCurrentWindow().webContents.send('resetApp'));
-    return waitForExist("//span[@class='message-content' and contains(text(), 'erfolgreich zurückgesetzt')]", 120000);
+    await sendMessageToAppController('resetApp');
 }
 
 
-export async function resetConfigJson() {
+export async function sendMessageToAppController(message: string) {
 
-    const configPath = await getGlobal('configPath');
+    await window.evaluate(value => require('@electron/remote').getCurrentWindow().webContents.send(value), message);
+    return waitForExist("//span[@class='message-content' and contains(text(), 'Erfolgreich ausgeführt')]", 120000);
+}
 
-    return new Promise(resolve => {
-        fs.writeFile(configPath, '', err => {
-            if (err) console.error('Failure while resetting config.json', err);
-            resolve(undefined);
-        });
-    });
+
+export function resetConfigJson(config = defaultConfig) {
+
+    fs.writeFileSync('test/config/config.test.json', JSON.stringify(config));
 }
 
 
@@ -140,6 +144,13 @@ export async function hover(element) {
 }
 
 
+export async function scrollTo(element) {
+
+    if (isString(element)) element = await getLocator(element);
+    return element.scrollIntoViewIfNeeded();
+}
+
+
 export async function waitForExist(element, timeout = 30000) {
 
     if (isString(element)) element = await getLocator(element);
@@ -187,6 +198,24 @@ export async function selectOption(element, optionValue) {
 }
 
 
+export async function selectSearchableSelectOption(element, optionValueLabel) {
+
+    return click(await getSearchableSelectOption(element, optionValueLabel));
+}
+
+
+export async function getSearchableSelectOption(element, optionValueLabel) {
+
+    if (isString(element)) element = await getLocator(element);
+    element = await element.locator('.ng-arrow-wrapper');
+
+    await scrollTo(element);
+    await click(element);
+    
+    return getLocator('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
+}
+
+
 export async function getText(element, trim = true) {
 
     if (isString(element)) element = await getLocator(element);
@@ -220,3 +249,4 @@ function getGlobal(globalName: string): Promise<any> {
 
     return window.evaluate(value => require('@electron/remote').getGlobal(value), globalName);
 }
+

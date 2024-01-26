@@ -1,0 +1,29 @@
+.configuration-editor-modal-body {
+  #category-color {
+    width: 38px;
+    height: 38px;
+    padding: 1px 3px;
+    border-radius: 0.3rem !important;
+
+    &.with-restore-default-color-button {
+      float: left;
+    }
+  }
+
+  #restore-color-button {
+    height: 38px !important;
+    width: 38px !important;
+    margin-left: 10px;
+  }
+
+  #identifier-prefix,
+  #resource-limit {
+    width: 200px;  
+  }
+
+  #identifier-prefix-warning,
+  #resource-limit-warning {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+}

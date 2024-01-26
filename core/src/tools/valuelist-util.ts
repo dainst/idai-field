@@ -1,8 +1,10 @@
-import { clone, filter, includedIn, isArray, isNot } from 'tsfun';
+import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
 import { Document } from '../model/document';
-import { Field } from '../model';
 import { Resource } from '../model/resource';
-import { ValuelistValue, Valuelist } from '../model';
+import { Valuelist } from '../model/configuration/valuelist';
+import { OptionalRange } from '../model/optional-range';
+import { ValuelistValue } from '../model/configuration/valuelist-value';
+import { Field } from '../model/configuration/field';
 
 
 /**
@@ -11,19 +13,21 @@ import { ValuelistValue, Valuelist } from '../model';
  */
 export module ValuelistUtil {
 
-    export function getValuesNotIncludedInValuelist(resource: Resource|undefined,
-                                                    fieldName: string|undefined,
-                                                    valuelist: Valuelist): string[]|undefined {
+    export function getValuesNotIncludedInValuelist(fieldContent: any, valuelist: Valuelist): string[]|undefined {
 
-        if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
+        if (!fieldContent || !valuelist) return undefined;
+        
+        const valuesToCheck: string[] = isArray(fieldContent)
+            ? fieldContent
+            : fieldContent[OptionalRange.VALUE]
+                ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
+                : [fieldContent];
 
-        const itemsNotIncludedInValueList = isArray(resource[fieldName])
-            ? resource[fieldName].filter(isNot(includedIn(Object.keys(valuelist.values))))
-            : isNot(includedIn(Object.keys(valuelist.values)))(resource[fieldName])
-                ? [resource[fieldName]]
-                : [];
+        const itemsNotIncludedInValuelist = valuesToCheck
+            .filter(isDefined)
+            .filter(isNot(includedIn(Object.keys(valuelist.values))));
 
-        return itemsNotIncludedInValueList.length > 0 ? itemsNotIncludedInValueList : undefined;
+        return itemsNotIncludedInValuelist.length > 0 ? itemsNotIncludedInValuelist : undefined;
     }
 
 

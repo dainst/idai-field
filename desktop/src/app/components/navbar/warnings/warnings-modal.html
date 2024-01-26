@@ -1,0 +1,199 @@
+<div class="modal-header warnings-modal-header">
+    <h5 class="modal-title"
+        i18n="@@navbar.taskbar.warnings.header">Warnungen</h5>
+    <button id="close-warnings-modal-button"
+            class="btn btn-primary btn-square" 
+            (click)="close()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+
+<div class="modal-body warnings-modal-body row bg-light">
+    <div class="col-md-6">
+        <select id="warning-filter-select" class="form-control"
+                (change)="selectWarningFilter($event.target.value)">
+            <option *ngFor="let warningFilter of warningFilters"
+                    [value]="warningFilter.constraintName"
+                    [selected]="selectedWarningFilter === warningFilter">
+                {{warningFilter.label}} ({{warningFilter.count}})
+            </option>
+        </select>
+
+       <document-picker [filterOptions]="categoryFilters"
+                        [getConstraints]="getConstraints"
+                        [limit]="1000000"
+                        [waitForUserInput]="false"
+                        [markSelected]="true"
+                        [autoSelect]="true"
+                        [preselectedDocumentId]="preselectedDocumentId"
+                        [showConfigurationOption]="isConfigurationOptionVisible()"
+                        [showNoQueryMessage]="false"
+                        [showLoadingIcon]="warningFilters[0].count >= 1000"
+                        (documentSelected)="selectDocument($event)"
+                        (documentDoubleClicked)="openDoceditModal()"></document-picker>
+    </div>
+    <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-6">
+        <div id="document-warnings-header">
+            <document-teaser [document]="selectedDocument"></document-teaser>
+        </div>
+        <div id="document-warnings-content">
+            <div *ngFor="let section of getSections()" class="card warnings-section">
+                <div class="card-header h4">
+                    <span class="card-title">
+                        <span *ngIf="section.type === 'unconfigured'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfigured">
+                            Unkonfiguriertes Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalid'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalid">
+                            Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
+                            Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
+                            Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single">
+                            Fehlende Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
+                            Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'conflicts'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
+                            Konflikt
+                        </span>
+                        <span *ngIf="section.type === 'missingIdentifierPrefix'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingIdentifierPrefix">
+                            Fehlendes Präfix im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'nonUniqueIdentifier'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier">
+                            Uneindeutiger <b>Bezeichner</b>
+                        </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
+                            Ressourcenlimit für Kategorie <b>{{getCategoryLabel(section)}}</b> überschritten
+                        </span>
+                    </span>
+                </div>
+                <div class="card-block">
+                    <div class="warning-info">
+                        <span *ngIf="section.type === 'unconfigured'"
+                              i18n="@@navbar.taskbar.warnings.info.unconfigured">
+                            Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
+                            Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                        </span>
+                        <span *ngIf="section.type === 'invalid'"
+                              i18n="@@navbar.taskbar.warnings.info.invalid">
+                            Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
+                            Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
+                            Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste
+                            <i>{{getValuelistId(section)}}</i> nicht enthalten ist.
+                        </span>
+                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.outlierValues.multiple">
+                            Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
+                            <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.single">
+                            Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden.
+                            Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
+                            vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.multiple">
+                            Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
+                            Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
+                            vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'conflicts'"
+                              i18n="@@navbar.taskbar.warnings.info.conflict">
+                            Bei dieser Ressource ist ein Konflikt aufgetreten. 
+                        </span>
+                        <span *ngIf="section.type === 'missingIdentifierPrefix'"
+                              i18n="@@navbar.taskbar.warnings.info.missingIdentifierPrefix">
+                            Der Bezeichner dieser Ressource beginnt nicht mit dem konfigurierten Präfix
+                            <i>{{getIdentifierPrefix(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'nonUniqueIdentifier'"
+                              i18n="@@navbar.taskbar.warnings.info.nonUniqueIdentifier">
+                            Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es
+                            können dadurch Fehler beim Import und Export von Daten auftreten.
+                        </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded' && section.category.resourceLimit === 1"
+                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded.single">
+                            Es darf nur <b>eine</b> Ressource der Kategorie <i>{{getCategoryLabel(section)}}</i>
+                            angelegt werden.
+                        </span>
+                        <span *ngIf="section.type === 'resourceLimitExceeded' && section.category.resourceLimit > 1"
+                              i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded.multiple">
+                            Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
+                            <i>{{getCategoryLabel(section)}}</i> angelegt werden.
+                        </span>
+                    </div>
+                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
+                         class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
+                        <div class="data-info-content">{{getDataLabel(section)}}</div>
+                    </div>
+                    <div *ngIf="section.type === 'outlierValues'" class="data-info">
+                        <div *ngIf="getOutlierValues(section).length === 1">
+                            <b i18n="@@navbar.taskbar.warnings.outlierValues.single">Ungültiger Wert:</b>
+                        </div>
+                        <div *ngIf="getOutlierValues(section).length > 1">
+                            <b i18n="@@navbar.taskbar.warnings.outlierValues.multiple">Ungültige Werte:</b>
+                        </div>
+                        <div class="data-info-content">
+                            <div *ngFor="let outlierValue of getOutlierValues(section)">
+                                {{outlierValue}}
+                            </div>
+                        </div>
+                    </div>
+                    <span *ngIf="section.type === 'conflicts'">
+                        <button class="btn btn-primary solve-conflict-button"
+                                (click)="openConflictResolver()">
+                            <span class="mdi mdi-pencil"></span>
+                            <span class="button-label"
+                                  i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
+                        <button class="btn btn-primary edit-button"
+                                (click)="openDoceditModal(section)">
+                            <span class="mdi mdi-pencil"></span>
+                            <span class="button-label"
+                                  i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfigured' || section.type === 'invalid'">
+                        <button class="btn btn-danger delete-field-data-button"
+                                (click)="openDeleteFieldDataModal(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type == 'missingRelationTargets'">
+                        <button class="btn btn-danger clean-up-relation-button"
+                                (click)="openCleanUpRelationModal(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteRelation">Relation bereinigen</span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

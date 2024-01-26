@@ -5,7 +5,7 @@ import { ObserverUtil } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
-import { ProjectModalLauncher } from '../services/project-modal-launcher';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 
@@ -23,7 +23,7 @@ export class MenuNavigator {
                 private zone: NgZone,
                 private settingsService: SettingsService,
                 private menuService: Menus,
-                private projectModalLauncher: ProjectModalLauncher) {}
+                private menuModalLauncher: MenuModalLauncher) {}
 
 
     public initialize() {
@@ -42,17 +42,17 @@ export class MenuNavigator {
             await this.settingsService.selectProject(projectIdentifier);
             reloadAndSwitchToHomeRoute();
         } else if (menuItem === 'createProject') {
-            await this.zone.run(() => this.projectModalLauncher.createProject());
+            await this.zone.run(() => this.menuModalLauncher.createProject());
         } else if (menuItem === 'editProject') {
-            await this.zone.run(() => this.projectModalLauncher.editProject());
+            await this.zone.run(() => this.menuModalLauncher.editProject());
         }  else if (menuItem === 'projectInformation') {
-            await this.zone.run(() => this.projectModalLauncher.openInformationModal());
+            await this.zone.run(() => this.menuModalLauncher.openInformationModal());
         } else if (menuItem === 'projectImages') {
-            await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
+            await this.zone.run(() => this.menuModalLauncher.openProjectImageViewModal());
         } else if (menuItem === 'deleteProject') {
-            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectIdentifier));
+            await this.zone.run(() => this.menuModalLauncher.deleteProject(projectIdentifier));
         } else if (menuItem === 'projectSynchronization') {
-            await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
+            await this.zone.run(() => this.menuModalLauncher.openSynchronizationModal());
         } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'
                 || menuItem === 'importConfiguration') {
             await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));

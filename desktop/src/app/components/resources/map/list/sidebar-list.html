@@ -11,7 +11,7 @@
              class="resources-listing-item resources-listing-item-wide"
              (contextmenu)="contextMenu.open($event, getSelection())"
              [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-             [class.conflicted]="document['_conflicts']"
+             [class.has-warnings]="document.warnings"
              [class.selected]="selectedDocument?.resource.id === document.resource.id"
              [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
              [id]="'resource-' + document.resource.identifier">

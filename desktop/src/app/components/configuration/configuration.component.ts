@@ -5,14 +5,14 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
-import { CategoryEditorModalComponent } from './editor/category-editor-modal.component';
+import { CategoryEditorModalComponent } from './editor/category/category-editor-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
-import { FieldEditorModalComponent } from './editor/field-editor-modal.component';
-import { GroupEditorModalComponent } from './editor/group-editor-modal.component';
+import { FieldEditorModalComponent } from './editor/field/field-editor-modal.component';
+import { GroupEditorModalComponent } from './editor/group/group-editor-modal.component';
 import { ConfigurationContextMenu } from './context-menu/configuration-context-menu';
 import { ConfigurationContextMenuAction } from './context-menu/configuration-context-menu.component';
 import { ComponentHelpers } from '../component-helpers';
@@ -35,13 +35,6 @@ import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
-
-
-export type ApplyChangesResult = {
-    
-    configurationDocument: ConfigurationDocument,
-    configurationIndex: ConfigurationIndex
-};
 
 
 @Component({
@@ -83,34 +76,35 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     ];
 
     public availableInputTypes: Array<InputType> = [
-        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'simpleInput', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
-        { name: 'simpleMultiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
-        { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'int', label: this.i18n({ id: 'config.inputType.int', value: 'Ganzzahl' }), searchable: true, customFields: true },
-        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },
-        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true, customFields: true },
-        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true, customFields: true },
-        { name: 'url', label: this.i18n({ id: 'config.inputType.url', value: 'URL' }), searchable: true, customFields: true },
-        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true, customFields: true },
-        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true, customFields: true },
-        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true, customFields: true },
-        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }), searchable: true, customFields: true },
-        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }), searchable: true, customFields: true },
-        { name: 'dating', label: this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' }), customFields: true },
-        { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }), customFields: true },
-        { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }), customFields: true },
-        { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }), customFields: true },
-        { name: 'geometry', label: this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' }) },
-        { name: 'instanceOf', label: this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' }) },
-        { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) },
-        { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) },
-        { name: 'identifier', label: this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' }) }
+        { name: 'input', searchable: true, customFields: true },
+        { name: 'simpleInput', searchable: true, customFields: true },
+        { name: 'multiInput', searchable: true, customFields: true },
+        { name: 'simpleMultiInput', searchable: true, customFields: true },
+        { name: 'text', searchable: true, customFields: true },
+        { name: 'int', searchable: true, customFields: true },
+        { name: 'unsignedInt', searchable: true, customFields: true },
+        { name: 'float', searchable: true, customFields: true },
+        { name: 'unsignedFloat', searchable: true, customFields: true },
+        { name: 'url', searchable: true, customFields: true },
+        { name: 'dropdown',  searchable: true, customFields: true },
+        { name: 'dropdownRange', searchable: true, customFields: true },
+        { name: 'radio', searchable: true, customFields: true },
+        { name: 'boolean', searchable: true, customFields: true },
+        { name: 'checkboxes', searchable: true, customFields: true },
+        { name: 'dating', customFields: true },
+        { name: 'date', customFields: true },
+        { name: 'dimension', customFields: true },
+        { name: 'literature', customFields: true },
+        { name: 'composite', customFields: true },
+        { name: 'geometry'  },
+        { name: 'instanceOf' },
+        { name: 'relation' },
+        { name: 'category' },
+        { name: 'identifier' }
     ];
 
     public applyChanges = (configurationDocument: ConfigurationDocument,
-                           reindexConfiguration?: boolean): Promise<ApplyChangesResult> =>
+                           reindexConfiguration?: boolean): Promise<void> =>
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
@@ -131,7 +125,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private i18n: I18n) {}
@@ -611,15 +605,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
-        await this.modals.awaitResult(
-            result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
-            nop
-        );
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -635,15 +621,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.initialize();
 
-        await this.modals.awaitResult(
-            result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
-            nop
-        );
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -657,15 +635,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.applyChanges = this.applyChanges;
 
-        await this.modals.awaitResult(
-            result,
-            (applyChangesResult?: ApplyChangesResult) => {
-                if (!applyChangesResult) return;
-                this.configurationDocument = applyChangesResult.configurationDocument;
-                this.configurationIndex = applyChangesResult.configurationIndex;
-            },
-            nop
-        );
+        await this.modals.awaitResult(result, nop, nop);
     }
 
 
@@ -690,10 +660,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
 
     private async updateProjectConfiguration(configurationDocument: ConfigurationDocument,
-                                             reindexConfiguration?: boolean): Promise<ApplyChangesResult> {
+                                             reindexConfiguration?: boolean): Promise<void> {
 
         this.clonedProjectConfiguration = await this.buildProjectConfiguration(configurationDocument);
-        this.configurationDocument = configurationDocument;
+        this.configurationDocument.resource = configurationDocument.resource;
         if (reindexConfiguration) {
             await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
         }
@@ -703,11 +673,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         await this.loadCategories();
 
         this.changed = true;
-
-        return {
-            configurationDocument: this.configurationDocument,
-            configurationIndex: this.configurationIndex
-        };
     }
 
 
@@ -781,7 +746,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            this.categoryConverter,
+            this.documentConverter,
+            this.projectConfiguration,
             true
         );
     }

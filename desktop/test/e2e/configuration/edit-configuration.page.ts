@@ -1,4 +1,7 @@
-import { click, getLocator, getText, selectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectOption, typeIn, waitForExist } from '../app';
+
+
+type ModalContext = 'field'|'subfield'|'value'|'group'|'category';
 
 
 /**
@@ -53,10 +56,22 @@ export class EditConfigurationPage {
         return click('#swap-valuelist-button');
     }
 
+
+    public static clickEditValuelist() {
+
+        return click('#edit-valuelist-button');
+    }
+
     
     public static clickConfirm() {
 
         return click('#confirm-button');
+    }
+
+
+    public static clickCancel() {
+
+        return click('#cancel-button');
     }
 
 
@@ -72,15 +87,52 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickConfirmSubfield() {
+
+        return click('#confirm-subfield-button');
+    }
+
+
     public static clickAddValue() {
 
         return click('#add-value-button');
     }
 
 
-    public static clickInputTypeSelectOption(optionValue: string) {
+    public static clickCreateSubfield() {
 
-        return selectOption('#input-type-select', optionValue);
+        return click('#create-subfield-button');
+    }
+
+
+    public static async clickEditSubfield(subfieldIndex: number) {
+
+        const subfieldElement = await getLocator('.subfield-container').nth(subfieldIndex);
+        return click(await subfieldElement.locator('.edit-subfield-button'));
+    }
+
+
+    public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
+
+        return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);
+    }
+
+
+    public static async clickSelectConditionSubfield(subfieldName: string) {
+
+        const element = (await getLocator('#condition-subfield-select'));
+        return selectOption(element, subfieldName);
+    }
+
+
+    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number) {
+
+        const elementId = '#' + (
+            type === 'boolean' ? 'boolean-condition-radio-buttons' : 'valuelist-condition-checkboxes'
+        );
+        await waitForExist(elementId);
+        const element = (await getLocator(elementId + ' input')).nth(valueIndex);
+        return click(element);
     }
 
 
@@ -101,9 +153,11 @@ export class EditConfigurationPage {
 
     // type in
 
-    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string) {
+    public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string,
+                                          modalContext: ModalContext) {
 
-        const inputElement = (await getLocator('multi-language-input')).nth(inputIndex);
+        const inputElement = (await getLocator(this.getModalClass(modalContext) + ' multi-language-input'))
+            .nth(inputIndex);
         const translationElement = (await inputElement.locator('.language-input input')).nth(translationIndex);
         return typeIn(translationElement, text);
     }
@@ -115,8 +169,26 @@ export class EditConfigurationPage {
     }
 
 
+    public static async typeInResourceLimit(resourceLimit: string) {
+
+        return typeIn('#resource-limit', resourceLimit);
+    }
+
+
     public static typeInNewValue(valueId: string) {
 
         return typeIn('#new-value-input', valueId);
+    }
+
+
+    public static typeInNewSubfield(subfieldName: string) {
+
+        return typeIn('#new-subfield-input', subfieldName);
+    }
+
+
+    private static getModalClass(modalContext: ModalContext = 'field') {
+
+        return '.' +  modalContext + '-editor-modal-body';
     }
 }

@@ -1,10 +1,10 @@
 import { compose, cond, filter, flow, identity, includedIn, isDefined, isNot, Map, Mapping,
-    update as updateStruct, curry } from 'tsfun';
+    update as updateStruct, curry, isString } from 'tsfun';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { CustomFormDefinition } from '../model/form/custom-form-definition';
 import { LanguageConfigurations } from '../model/language/language-configurations';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
-import { TransientFieldDefinition } from '../model/field/transient-field-definition';
+import { TransientFieldDefinition, TransientSubfieldDefinition } from '../model/field/transient-field-definition';
 import { RawProjectConfiguration } from '../../services/project-configuration';
 import { addRelations } from './add-relations';
 import { addSourceField } from './add-source-field';
@@ -27,7 +27,8 @@ import { sortStructArray } from '../../tools/sort-struct-array';
 import { withDissoc } from '../../tools/utils';
 import { linkParentAndChildInstances } from '../category-forest';
 import { Field } from '../../model/configuration/field';
-import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm, applyLanguagesToRelations } from './apply-languages-configurations';
+import { applyLanguagesToCategory, applyLanguagesToFields, applyLanguagesToForm,
+    applyLanguagesToRelations } from './apply-languages-configurations';
 import { Category } from '../../model/configuration/category';
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { mergeValuelists } from './merge-valuelists';
@@ -199,7 +200,16 @@ function insertValuelistIds(forms: Map<TransientFormDefinition>): Map<TransientF
 
     iterateOverFields(forms, (_, form: TransientFormDefinition, fieldName, field) => {
         if (form.valuelists && form.valuelists[fieldName]) {
-            field.valuelistId = form.valuelists[fieldName];
+            if (isString(form.valuelists[fieldName])) {
+                field.valuelistId = form.valuelists[fieldName] as string;
+            } else {
+                for (const subfieldName of Object.keys(form.valuelists[fieldName])) {
+                    const subfield: TransientSubfieldDefinition = field.subfields.find(subfield => {
+                        return subfield.name === subfieldName;
+                    });
+                    subfield.valuelistId = form.valuelists[fieldName][subfieldName];
+                }
+            }
         }
     });
 
@@ -215,6 +225,11 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
             if (!form.fields) continue;
             for (const field of Object.values(form.fields)) {
                 replaceValuelistIdWithValuelist(field, valuelists);
+                if (field.subfields) {
+                    for (const subfield of field.subfields) {
+                        replaceValuelistIdWithValuelist(subfield, valuelists);
+                    }
+                }
             }
         }
 

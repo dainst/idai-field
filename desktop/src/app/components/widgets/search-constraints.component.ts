@@ -52,6 +52,30 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           protected i18n: I18n) {}
 
 
+    public getValueLabel = (value: string, existsQuery: boolean = false): string => {
+
+        switch (value) {
+            case 'KNOWN':
+                return existsQuery
+                    ? this.i18n({ id: 'boolean.yes', value: 'Ja' })
+                    : this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
+            case 'UNKNOWN':
+                return existsQuery
+                    ? this.i18n({ id: 'boolean.no', value: 'Nein' })
+                    : this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
+            case 'true':
+                return this.i18n({ id: 'boolean.yes', value: 'Ja' });
+            case 'false':
+                return this.i18n({ id: 'boolean.no', value: 'Nein' });
+            default:
+                return this.labels.getValueLabel(this.selectedField.valuelist, value);
+        }
+    }
+
+
+    public getExistsLabel = (value: string) => this.getValueLabel(value, true);
+
+
     async ngOnChanges() {
 
         await this.removeInvalidConstraints();
@@ -59,10 +83,30 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
+    public getValues() {
+        
+        return ['KNOWN', 'UNKNOWN'].concat(
+            this.labels.orderKeysByLabels(this.selectedField.valuelist)
+        );
+    }
 
-    public getValueLabel = (valuelist: Valuelist, valueId: string) =>
-        this.labels.getValueLabel(valuelist, valueId);
+
+    public getBooleanValues() {
+
+        return ['KNOWN', 'UNKNOWN', 'true', 'false'];
+    }
+
+
+    public getExistsValues() {
+
+        return ['KNOWN', 'UNKNOWN'];
+    }
+
+
+    public selectValue(value: string) {
+
+        this.searchTerm = value ?? '';
+    }
 
 
     public getTooltip() {
@@ -178,7 +222,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         let target: any = event.target;
 
         do {
-            if (target.id && target.id.startsWith('constraints-menu')) return;
+            if (target.id && (target.id.startsWith('constraints-menu')
+                     || target.localName === 'ng-dropdown-panel')) {
+                return;
+            }
             target = target.parentNode;
         } while (target);
 

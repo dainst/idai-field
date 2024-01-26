@@ -10,7 +10,7 @@ describe('DatingUtil', () => {
 
         const dat: Dating = {
 
-            type: 'exact',
+            type: 'single',
             begin: {
                 inputYear: 2000,
                 inputType: 'bce',
@@ -55,7 +55,7 @@ describe('DatingUtil', () => {
 
         const dat: Dating = {
 
-            type: 'exact',
+            type: 'single',
             begin: {
                 inputYear: 2000,
                 inputType: 'bce',

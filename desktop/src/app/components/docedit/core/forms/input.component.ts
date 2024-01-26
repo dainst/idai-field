@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
-import { ProjectConfiguration, Resource } from 'idai-field-core';
+import { ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 
@@ -15,7 +15,7 @@ import { SettingsProvider } from '../../../../services/settings/settings-provide
  */
 export class InputComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() fieldName: string;
     @Input() languages: Map<Language>;
     @Input() multiLine: boolean;
@@ -31,7 +31,7 @@ export class InputComponent implements OnChanges {
     ngOnChanges() {
 
         this.fieldLanguages = Languages.getFieldLanguages(
-            this.resource[this.fieldName],
+            this.fieldContainer[this.fieldName],
             this.languages,
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
@@ -43,9 +43,9 @@ export class InputComponent implements OnChanges {
     public update(fieldData: any) {
 
         if (fieldData) {
-            this.resource[this.fieldName] = fieldData;
+            this.fieldContainer[this.fieldName] = fieldData;
         } else {
-            delete this.resource[this.fieldName];
+            delete this.fieldContainer[this.fieldName];
         }
     }
 }

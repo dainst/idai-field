@@ -69,6 +69,15 @@
     "isFilledBy": {
       "label": "Filled by"
     },
+    "abuts": {
+      "label": "Abuts"
+    },
+    "isAbuttedBy": {
+      "label": "Abutted by"
+    },
+    "bondsWith": {
+      "label": "Bonds with"
+    },
     "borders": {
       "label": "Borders"
     },

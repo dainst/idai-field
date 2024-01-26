@@ -1,0 +1,63 @@
+field-view {
+  .field {
+    margin-bottom: 10px;
+
+    .field-label,
+    .field-value {
+      padding-left: $item-horizontal-padding;
+    }
+
+    .field-label {
+      font-weight: normal;
+      font-size: $font-size-medium;
+      color: gray;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+
+    .field-value {
+      padding-right: $item-horizontal-padding;
+      font-size: $font-size-bigger;
+      color: black;
+    }
+
+    .field-value.relation-value {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      cursor: default;
+    
+      &:hover {
+        background-color: $list-item-hover-color;
+        transition: background-color .5s ease;
+      }
+    }
+
+    ul {
+      padding: 0;
+      margin-bottom: 0;
+
+      li {
+        list-style-type: none;
+      }
+    }
+
+    &.composite-field {
+      .composite-field-entry:not(:last-child) {
+        margin-bottom: 15px;
+      }
+
+      .subfield-section {
+        padding-bottom: 7px;
+        border-left: 1px solid #b2b2b2;
+
+        &:first-child {
+          margin-top: 10px;
+        }
+
+        .subfield-label {
+          font-size: $font-size-smaller;
+        }
+      }
+    }
+  }
+}

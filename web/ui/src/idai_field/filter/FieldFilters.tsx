@@ -1,23 +1,23 @@
 import { mdiCloseCircle } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { useState, ReactElement } from 'react';
+import React, { useState, ReactElement, CSSProperties } from 'react';
 import { Dropdown, DropdownButton, Button, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { flatten, Map } from 'tsfun';
 import { Tree, Forest } from 'idai-field-core';
 import { Field } from '../../api/document';
-import { flatten, Map } from 'tsfun';
 import { ResultFilter, FilterBucket, FilterBucketTreeNode } from '../../api/result';
 import { ProjectView } from '../project/Project';
 import { buildParamsForFilterValue } from './utils';
 import { getTranslation } from '../../shared/languages';
-import { useTranslation } from 'react-i18next';
 
 
 export default function FieldFilters({ projectId, projectView, searchParams, filter, filters,
-    setFilters, filterValuesCount }: {
-    projectId: string, projectView: ProjectView, searchParams: URLSearchParams, filter: ResultFilter,
-    filterValuesCount: number,
-    filters: [string, string][], setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
+        setFilters, filterValuesCount }: { projectId: string, projectView: ProjectView,
+        searchParams: URLSearchParams, filter: ResultFilter, filterValuesCount: number,
+        filters: [string, string][],
+        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>}): ReactElement {
 
     const { t } = useTranslation();
     
@@ -29,6 +29,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
     const [currentFilterText, setCurrentFilterText] = useState<string>('');
 
     const selectCurrentFilter = (k: string, v: string) => {
+        setCurrentFilterText('');
         setFilters(filters.concat([[k, v]]));
         navigateTo(k, v);
         setCurrentFilter(['', '']);
@@ -47,7 +48,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
         <InputGroup>
             <DropdownButton
                 id="field-filters-dropdown"
-                title={ currentFilter[0] ? currentFilter[1] : t('fieldFilters.select') }>
+                title={ shortenString(currentFilter[0] ? currentFilter[1] : t('fieldFilters.select')) }>
                     <DropdownItems
                         fields={ fields }
                         searchParams={ searchParams }
@@ -60,7 +61,7 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
                         dropdownMap={ dropdownMap }
                         currentFilter={ currentFilter }
                         selectCurrentFilter={ selectCurrentFilter } />
-                    : <><Form.Control aria-label="Text input with dropdown button"
+                    : <><Form.Control
                         value={ currentFilterText }
                         onChange={ e => setCurrentFilterText(e.target.value.replace(/[^a-zA-Z0-9]*/g, '')) } />
                         <Button onClick={ () => selectCurrentFilter(currentFilter[0], currentFilterText) }>
@@ -75,14 +76,16 @@ export default function FieldFilters({ projectId, projectView, searchParams, fil
 
 
 function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
-    { dropdownMap: unknown, currentFilter: [string, string],
+        { dropdownMap: unknown, currentFilter: [string, string],
         selectCurrentFilter: (k: string, v: string) => void }): ReactElement {
 
     const { t } = useTranslation();
 
     const [selected, setSelected] = useState<string>('');
 
-    return <><DropdownButton id="field-filters-inner-dropdown" title={ selected || t('fieldFilters.select') }>
+    return <><DropdownButton
+            id="field-filters-inner-dropdown"
+            title={ shortenString(selected || t('fieldFilters.select')) }>
         { Object.keys(dropdownMap[currentFilter[0]].values).map(k =>
             <Dropdown.Item
                 key={ k }
@@ -98,13 +101,12 @@ function InnerDropdown({ dropdownMap, currentFilter, selectCurrentFilter }:
 
 
 function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap }: { filters: [string, string][],
-    setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>, navigateTo: (k: string, v: string) => void,
-    fields: Field[], dropdownMap: Map<Field> }) {
+        setFilters: React.Dispatch<React.SetStateAction<[string, string][]>>,
+        navigateTo: (k: string, v: string) => void, fields: Field[], dropdownMap: Map<Field> }) {
 
     return <><hr></hr><ul>
             { filters.map(([k, v]) => {
-                const filterName = k
-                    .replace('%3A', ':');
+                const filterName = k.replace('%3A', ':');
                 const isDropdown = dropdownMap[filterName];
                 const field = fields.find(field => field.name === filterName);
                 if (!field) return null; // for example for the parent=root param
@@ -114,18 +116,18 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
                     : v;
                 return <Row
                         key={ 'existing-filter::' + k }
-                        style={ { position: 'relative', left: '-22px' } }>
-                    <Col>
-                    { (fieldName.includes(':') ? '\'' + fieldName + '\'' : fieldName) + ': "' + fieldValue + '"'}
+                        style={ existingFilterRowStyle }>
+                    <Col style={ existingFilterColumnStyle }>
+                        <i>{fieldName}:</i> <span>{fieldValue}</span>
                     </Col>
                     <Col xs={ 1 }
-                        style={ { margin: '3px' } }>
+                        style={ closeButtonContainerStyle }>
                         <span
                             className="float-right"
-                            style={ { color: 'red' } }
+                            style={ closeButtonStyle }
                             onClick={ () => {
-                                setFilters(filters.filter(f => filterName !== f[0]));
-                                navigateTo(k, v);
+                                setFilters(filters.filter(f => k !== f[0]));
+                                navigateTo(filterName, v);
                             } }>
                             <Icon path={ mdiCloseCircle } size={ 0.8 } />
                         </span>
@@ -136,8 +138,8 @@ function ExistingFilters({ filters, setFilters, navigateTo, fields, dropdownMap 
 
 
 function DropdownItems({ fields, searchParams, currentFilter, setCurrentFilter }: { fields: Field[],
-    searchParams: URLSearchParams, currentFilter: string,
-    setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
+        searchParams: URLSearchParams, currentFilter: string,
+        setCurrentFilter: React.Dispatch<React.SetStateAction<[string, string]>> }) {
 
     return <>{ fields
         .filter(field => !searchParams.has(field.name))
@@ -155,7 +157,7 @@ const translate = (field: Field) => getTranslation(field.label) || field.name;
 
 const getFieldsForActiveCategory = (searchParams: URLSearchParams, filter: ResultFilter): Field[] => {
 
-    const filterBucket = findFilterBucket(searchParams.get('category'), filter.unfilteredValues);
+    const filterBucket = findFilterBucket(searchParams.get('category'), filter.values);
     if (!filterBucket) return [];
     
     const groups = filterBucket.value.groups;
@@ -187,4 +189,42 @@ const findFilterBucket = (match: string, t: (FilterBucketTreeNode|FilterBucket)[
     const result: FilterBucketTreeNode = Tree.find(t as undefined as Forest<FilterBucket>,
         item => item.value.name === match );
     return result ? result.item : undefined;
+};
+
+
+const shortenString = (s: string) => {
+
+    const maxLength = 14;
+
+    return s.length > maxLength
+        ? s.substring(0, maxLength) + '…'
+        : s;
+};
+
+
+const existingFilterRowStyle: CSSProperties = {
+    position: 'relative',
+    left: '-22px',
+    marginBottom: '10px'
+};
+
+
+const existingFilterColumnStyle: CSSProperties = {
+    width: '327px'
+};
+
+
+const closeButtonContainerStyle: CSSProperties = {
+    position: 'relative',
+    margin: '3px'
+};
+
+
+const closeButtonStyle: CSSProperties = {
+    color: 'red',
+    position: 'absolute',
+    top: '50%',
+    marginTop: '-12px',
+    right: '15px',
+    cursor: 'pointer'
 };

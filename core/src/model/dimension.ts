@@ -59,18 +59,6 @@ export module Dimension {
     export const VALID_INPUT_UNITS = ['mm', 'cm', 'm'];
 
 
-    // This is to replicate behaviour of Dimension.isValid before the change
-    // regarding typeguards and valiation
-    export function isValid_deprecated(dimension: any) {
-
-        for (const fieldName in dimension) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-        if (dimension.label) return true;
-        return false;
-    }
-
-
     export function isDimension(dimension: any): dimension is Dimension {
 
         if (!isObject(dimension)) return false;
@@ -82,6 +70,7 @@ export module Dimension {
             && !isString(dimension.measurementComment)) {
                 return false;
         }
+        if (dimension.label) return true; // Support dimensions in deprecated format
         if (!VALID_INPUT_UNITS.includes(dimension.inputUnit)) return false;
         if (!isNumber(dimension.inputValue)) return false;
         return true;
@@ -97,6 +86,8 @@ export module Dimension {
      * @param options
      */
     export function isValid(dimension: Dimension, options?: any) {
+
+        if (dimension.label) return true; // Support dimensions in deprecated format
 
         if (!dimension.inputValue || !dimension.inputUnit) return false;
 

@@ -53,7 +53,11 @@ export namespace Relation {
         export const FILLS = 'fills';
         export const FILLEDBY = 'isFilledBy';
 
-        export const ALL = [BELOW, ABOVE, BORDERS, CUTS, CUTBY, FILLS, FILLEDBY];
+        export const BONDSWITH = 'bondsWith';
+        export const ABUTS = 'abuts';
+        export const ABUTTEDBY = 'isAbuttedBy';
+
+        export const ALL = [BELOW, ABOVE, BORDERS, CUTS, CUTBY, FILLS, FILLEDBY, BONDSWITH, ABUTS, ABUTTEDBY];
     }
 
 

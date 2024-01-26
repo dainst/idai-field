@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
+import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource } from 'idai-field-core';
 
 @Component({
     selector: 'form-field-checkboxes',
@@ -13,7 +13,8 @@ import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from
  */
 export class CheckboxesComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() resource: Resource
+    @Input() fieldContainer: any;
     @Input() field: any;
 
     public valuelist: Valuelist;
@@ -40,9 +41,9 @@ export class CheckboxesComponent implements OnChanges {
 
     public toggleCheckbox(item: string) {
 
-        if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-        if (!this.removeItem(item)) this.resource[this.field.name].push(item);
-        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+        if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
+        if (!this.removeItem(item)) this.fieldContainer[this.field.name].push(item);
+        if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
     }
 
 
@@ -54,8 +55,8 @@ export class CheckboxesComponent implements OnChanges {
 
     private removeItem(name: string): boolean {
 
-        const index = this.resource[this.field.name].indexOf(name, 0);
-        if (index !== -1) this.resource[this.field.name].splice(index, 1);
+        const index = this.fieldContainer[this.field.name].indexOf(name, 0);
+        if (index !== -1) this.fieldContainer[this.field.name].splice(index, 1);
         return index !== -1;
     }
 }

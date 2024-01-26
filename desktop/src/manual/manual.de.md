@@ -492,6 +492,7 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 * *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
 * *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
+* *Ressourcenlimit*: Geben Sie hier optional eine Zahl ein, um die maximale Anzahl von Ressourcen festzulegen, die für diese Kategorie angelegt werden können. Bleibt das Feld leer, können beliebig viele Ressourcen angelegt werden. Diese Option steht nur für Maßnahmenkategorien und die Kategorie "Ort" zur Verfügung.
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
@@ -629,6 +630,10 @@ Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ei
 Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
 <p align="center"><img src="images/de/configuration/input_type_literature.png" alt="Eingabetyp 'Literaturangabe'"/></p>
 
+##### Kompositfeld
+Kompositfelder können mehrere Einträge enthalten, die jeweils aus einer beliebigen Anzahl von Unterfeldern bestehen. Jedes Unterfeld besitzt einen eigenen Namen und Eingabetyp (siehe Abschnitt *Unterfelder*).
+<p align="center"><img src="images/de/configuration/input_type_composite_field.png" alt="Eingabetyp 'Kompositfeld'"/></p>
+
 
 #### Felder verstecken
 
@@ -650,6 +655,20 @@ Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
 Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden.
+
+
+#### Unterfelder
+
+Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
+
+Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button.  Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
+
+
+##### Bedingungen für die Anzeige von Unterfeldern
+
+Optional lässt sich im Unterfeldeditor eine Bedingung für die Anzeige des Unterfelds festlegen. Ist eine Bedingung gesetzt, steht das Unterfeld bei der Dateneingabe nur dann zur Auswahl, wenn bei einem anderen Unterfeld ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
+
+Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Unterfelds" zunächst ein anderes Unterfeld des gleichen Kompositfelds aus. Zur Auswahl stehen dabei Unterfelder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Unterfelds werden nun angezeigt und können selektiert werden. Das aktuelle Unterfeld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Unterfeld mindestens einer der selektierten Werte gesetzt ist.
 
 
 ### Anpassen der Reihenfolge und der Gruppenzugehörigkeit

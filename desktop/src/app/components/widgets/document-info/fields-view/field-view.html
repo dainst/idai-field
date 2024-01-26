@@ -1,0 +1,36 @@
+<div *ngIf="field.type === 'composite' && field.value.length > 0" class="field composite-field">
+    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
+    <ul>
+        <li *ngFor="let entry of field.value" class="field-value composite-field-entry">
+            <ul>
+                <li *ngFor="let subfield of getSubfields(field, entry)" class="subfield-section">
+                    <h4 class="subfield-label field-label">{{subfield.label}}</h4>
+                    <default-field-view *ngIf="subfield.type === 'default'"
+                                        [value]="entry[subfield.name]"
+                                        [field]="subfield"></default-field-view>
+                    <url-field-view *ngIf="subfield.type === 'url'"
+                                    [value]="entry[subfield.name]"></url-field-view>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="field.type === 'default'" class="field">
+    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
+    <default-field-view [value]="field.value" [field]="field"></default-field-view>
+</div>
+
+<div *ngIf="field.type === 'url'" class="field">
+    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
+    <url-field-view [value]="field.value"></url-field-view>
+</div>
+
+<div *ngIf="field.type === 'relation'" class="field">
+    <h3 *ngIf="showFieldLabel" class="field-label">{{field.label}}</h3>
+    <div *ngFor="let target of field.targets"
+         class="field-value relation-value"
+         (click)="jumpToResource(target)">
+        <document-teaser [document]="target"></document-teaser>
+    </div>
+</div>

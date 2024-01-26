@@ -1,4 +1,5 @@
 import { Field } from '../../../model/configuration/field';
+import { Named } from '../../../tools';
 
 
 export interface BaseFieldDefinition {
@@ -8,6 +9,22 @@ export interface BaseFieldDefinition {
     fulltextIndexed?: boolean;
     source?: Field.SourceType;
     references?: string[];
+    subfields?: Array<BaseSubfieldDefinition>;
+}
+
+
+export interface BaseSubfieldDefinition extends Named {
+
+    inputType?: string;
+    references?: string[];
+    condition?: BaseSubfieldConditionDefinition;
+}
+
+
+export interface BaseSubfieldConditionDefinition {
+
+    subfieldName: string;
+    values: string[]|boolean;
 }
 
 

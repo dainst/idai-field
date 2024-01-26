@@ -1,4 +1,4 @@
-<div *ngFor="let literature of resource[field.name]">
+<div *ngFor="let literature of fieldContainer[field.name]">
     <div class="input-group mb-2" *ngIf="!isInEditing(literature)">
         <input value="{{getLabel(literature)}}" type="text" disabled class="form-control">
 

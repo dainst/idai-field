@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, Document } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, Document, CategoryForm } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
@@ -11,8 +11,9 @@ import { Menus } from '../../../services/menus';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
-export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'create-qrcode'|'edit-images'|'create-polygon'|'create-line-string'
-    |'create-point'|'edit-geometry';
+export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'create-qrcode'|'edit-images'|'create-polygon'|
+    'create-line-string'|'create-point'|'edit-geometry';
+
 
 @Component({
     selector: 'resources-context-menu',
@@ -65,7 +66,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isCreateGeometryOptionAvailable()
             || this.isEditGeometryOptionAvailable()
             || this.isMoveOptionAvailable()
-            || this.isEditImagesOptionAvailable();
+            || this.isEditImagesOptionAvailable()
+            || this.isWarningsOptionAvailable();
     }
 
 
@@ -83,10 +85,16 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        return this.contextMenu.documents.length > 0 &&
-            (!this.isReadonly() || this.projectConfiguration.getTypeCategories()
-                .map(to(Named.NAME))
-                .includes(this.contextMenu.documents[0].resource.category));
+        return this.contextMenu.documents.length > 0
+            && (!this.isReadonly() || this.isTypeResource());
+    }
+
+
+    public isWarningsOptionAvailable(): boolean {
+
+        return this.contextMenu.documents.length === 1
+            && this.contextMenu.documents[0].warnings !== undefined
+            && !this.isTypeManagementResource();
     }
 
 
@@ -151,5 +159,23 @@ export class ResourcesContextMenuComponent implements OnChanges {
         } finally {
             this.menus.setContext(MenuContext.DEFAULT);
         }
+    }
+
+    private isTypeManagementResource(): boolean {
+
+        return this.isCategoryResource(this.projectConfiguration.getTypeManagementCategories());
+    }
+
+
+    private isTypeResource(): boolean {
+
+        return this.isCategoryResource(this.projectConfiguration.getTypeCategories());
+    }
+
+
+    private isCategoryResource(categories: Array<CategoryForm>): boolean {
+
+        return categories.map(to(Named.NAME))
+            .includes(this.contextMenu.documents[0].resource.category);
     }
 }

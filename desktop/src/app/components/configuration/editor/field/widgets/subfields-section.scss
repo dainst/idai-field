@@ -1,0 +1,132 @@
+subfields-section #subfields {
+  .cdk-drag-animating {
+    transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &.cdk-drop-list-dragging .subfield-container:not(.cdk-drag-placeholder) {
+    transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .subfield-container {
+    margin-bottom: 0.5rem !important;
+
+    .subfield-input-group {
+      .btn {
+        width: 34px;
+        height: 55px;
+
+        .mdi {
+          position: relative;
+          bottom: 2px;
+          right: 5px;
+        }
+      }
+
+      .edit-subfield-button {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+
+      .cdk-drag-handle {
+        position: relative;
+        top: 12px;
+        right: 7px;
+        font-size: 20px;
+        cursor: grab;
+      }
+    }
+  }
+}
+
+#create-subfield-button {
+  position: relative;
+  left: 1px;
+  height: 33.5px;
+
+  .mdi {
+    position: relative;
+    bottom: 2px;
+    right: 1px;
+  }
+}
+
+#new-subfield-input {
+  max-width: 350px;
+  border-right: none;
+}
+
+.subfield {
+  height: 55px;
+  max-width: unset;
+  color: #495057;
+  background-color: #e9ecef;
+  user-select: none;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .subfield-base-section {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .subfield-left {
+    padding-top: 1px;
+  }
+
+  .subfield-right {
+    padding-top: 2px;
+  }
+
+  .subfield-label {
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  .subfield-condition {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .subfield-condition-subfield {
+      font-style: italic;
+    }
+  }
+
+  .subfield-condition-header {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .subfield-no-condition {
+    font-size: 12px;
+    font-style: italic;
+  }
+}
+
+.subfield-drag-placeholder {
+  height: 55px;
+  margin-bottom: 0.5rem !important;
+  background: #ccc;
+  border: dotted 3px #999;
+  transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  position: relative;
+  z-index: 1 !important;
+}
+
+.subfield-drag-preview {
+  width: initial;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: none;
+  z-index: 2000 !important;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2),
+              0 9px 11px 2px rgba(0, 0, 0, 0.14),
+              0 3px 14px 3px rgba(0, 0, 0, 0.12);
+}

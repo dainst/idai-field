@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { all } from 'tsfun';
 import { Labels, Valuelist } from 'idai-field-core';

@@ -13,10 +13,9 @@ exports.default = async function performNotarization(context) {
     console.log(`Performing notarization for ${appName} ...`);
 
     return await notarize({
-        appBundleId: 'org.dainst.field',
         appPath: `${appOutDir}/${appName}.app`,
         appleId: process.env.MAC_NOTARIZE_AID,
         appleIdPassword: process.env.MAC_NOTARIZE_PW,
-        ascProvider: process.env.MAC_NOTARIZE_TID
+        teamId: process.env.MAC_NOTARIZE_TEAM_ID
     });
 };

@@ -3,7 +3,7 @@
         <input class="form-check-input" value="{{item}}" type="radio"
                name="{{field.name}}"
                (click)="setValue(item)"
-               [checked]="item === resource[field.name]">
+               [checked]="item === fieldContainer[field.name]">
         {{getLabel(item)}}
     </label>
 </div>
@@ -11,13 +11,13 @@
 <div class="form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="" type="radio"
-               name="{{resource[field.name]}}"
+               name="{{fieldContainer[field.name]}}"
                (click)="resetValue()"
-               [checked]="!resource.hasOwnProperty(field.name)">
+               [checked]="!fieldContainer.hasOwnProperty(field.name)">
         --
     </label>
 </div>
 
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
 
-<outliers [resource]="resource" [fieldName]="field.name" [valuelist]="valuelist"></outliers>
+<outliers [fieldContainer]="fieldContainer" [fieldName]="field.name" [valuelist]="valuelist"></outliers>

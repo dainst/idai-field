@@ -13,6 +13,7 @@
 @import 'core/forms/dimension';
 @import 'core/forms/dating';
 @import 'core/forms/literature';
+@import 'core/forms/composite/composite-entry-modal';
 @import 'core/forms/input';
 @import 'core/forms/multi-input';
 @import 'core/forms/identifier';
@@ -24,7 +25,7 @@
 @import 'dialog/duplicate-modal';
 
 #document-edit-wrapper {
-  height: calc(100vh - 65px);
+  height: calc(100vh - 56px);
   overflow-y: hidden;
 
   .form-group.card {
@@ -139,6 +140,48 @@
     height: 86%;
     padding: 0;
     position: relative;
+  }
+}
+
+#document-edit-wrapper,
+.composite-entry-modal {
+  searchable-select {
+    .ng-select {
+      .ng-select-container {
+        height: 33px !important;
+        min-height: 33px;
+      }
+
+      .ng-value {
+        width: calc(100% - 55px);
+      }
+  
+      &.ng-select-opened,
+      &.ng-select-focused,
+      &.ng-touched,
+      &.ng-dirty {
+        .ng-input {
+          margin-top: -1px !important;
+        }
+  
+        .ng-value {
+          position: absolute;
+          top: 11px;
+        }
+  
+        .ng-clear-wrapper {
+          position: absolute;
+          top: 11.5px;
+          right: 25px;
+        }
+  
+        .ng-arrow-wrapper {
+          position: absolute;
+          right: 0;
+          top: 11px;
+        }
+      }
+    }
   }
 }
 

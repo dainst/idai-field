@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
+import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values, Map } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
@@ -38,7 +38,7 @@ export class IndexFacade {
                 private showWarnings: boolean) {}
 
 
-    public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+    public changesNotifications = (): Observable<Document|undefined> => ObserverUtil.register(this.observers);
 
 
     public find(query: Query): Array<string /*resourceId*/> {
@@ -50,7 +50,7 @@ export class IndexFacade {
 
     /**
      * @param document:
-     *   document.resource.identifier needs to be present, otherwise document gets not indexed
+     *   document.resource.identifier needs to be present, otherwise document does not get indexed
      */
     public put(document: Document) {
 
@@ -58,7 +58,7 @@ export class IndexFacade {
     }
 
 
-    public async putMultiple(documents: Array<Document>, setIndexedDocuments?: (count: number) => Promise<void>) {
+    public async putMultiple(documents: Array<Document>, setProgress?: (count: number) => Promise<void>) {
 
         const [typeDocuments, nonTypeDocuments] = separate(
             on(
@@ -73,17 +73,19 @@ export class IndexFacade {
         for (let document of typeDocuments) {
             this._put(document, true, false);
             count++;
-            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
-                await setIndexedDocuments(count);
+            if (setProgress && (count % 250 === 0 || count === documents.length)) {
+                await setProgress(count * 0.75);
             }
         }
         for (let document of nonTypeDocuments) {
             this._put(document, true, false);
             count++;
-            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
-                await setIndexedDocuments(count);
+            if (setProgress && (count % 250 === 0 || count === documents.length)) {
+                await setProgress(count * 0.75);
             }
         }
+
+        ObserverUtil.notify(this.observers, undefined);
     }
 
 
@@ -118,7 +120,7 @@ export class IndexFacade {
         return ConstraintIndex.getWithDescendants(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
-    
+
     public addConstraintIndexDefinitionsForField(field: Field) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);

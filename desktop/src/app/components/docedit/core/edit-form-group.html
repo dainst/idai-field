@@ -8,10 +8,18 @@
                     container="body"
                     ngbTooltip="{{descriptions[field.name]}}"
                     class="mdi mdi-information-outline float-right"></span>
+
+            <img *ngIf="getStratigraphicalRelationInfo(field)"
+                 class="relation-image"
+                 [src]="'img/matrix-' + getStratigraphicalRelationInfo(field).imageName + '.png'"
+                 placement="left"
+                 container="body"
+                 ngbTooltip="{{getStratigraphicalRelationInfo(field).tooltip}}">
         </div>
 
         <div *ngIf="isValidFieldData(field)" class="card-block">
-            <edit-form-field [resource]="document['resource']"
+            <edit-form-field [resource]="document.resource"
+                             [fieldContainer]="document.resource"
                              [field]="field"
                              [languages]="languages"
                              [identifierPrefix]="identifierPrefix"></edit-form-field>

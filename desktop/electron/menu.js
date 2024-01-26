@@ -336,8 +336,8 @@ const isDefaultContext = context => ['default', 'configuration'].includes(contex
 
 
 const isConfigurationContext = context => [
-    'configuration', 'configurationEdit', 'configurationValuelistEdit', 'configurationModal',
-    'configurationManagement'
+    'configuration', 'configurationEdit', 'configurationValuelistEdit', 'configurationSubfieldEdit',
+    'configurationModal', 'configurationManagement'
 ].includes(context);
 
 

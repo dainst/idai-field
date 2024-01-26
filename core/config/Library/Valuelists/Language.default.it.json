@@ -40,7 +40,8 @@
       "Spanien": "Spagna",
       "Syrien": "Siria",
       "Südtunesisch": "Sud tunisino",
-      "Südägäis": "Sud Egeo"
+      "Südägäis": "Sud Egeo",
+      "Antiochia (Antakya)": "Antiochia (Antakya)"
     }
   },
   "periods-default-1": {
@@ -69,7 +70,11 @@
       "Spätbyzantinisch": "Tardo-bizantino",
       "Späthellenistisch": "Tardo-ellenistico",
       "Spätkaiserzeitlich": "Tardo-imperiale",
-      "Spätklassisch": "Tardo-classico"
+      "Spätklassisch": "Tardo-classico",
+      "Frühmittelalter": "Alto Medioevo",
+      "Hochmittelalter": "Basso Medioevo",
+      "Spätmittelalter": "Tardo Medioevo",
+      "Mittelalter": "Medioevo"
     }
   },
   "colors-default-1": {
@@ -93,7 +98,8 @@
       "türkis": "turchese",
       "violett": "viola",
       "weiß": "bianco"
-    }
+    },
+    "description": "Set di colori 1, diverse applicazioni; Reparto IT, 2019"
   },
   "colors-default-2": {
     "values": {
@@ -112,7 +118,8 @@
       "rotbraun": "rosso-bruno",
       "schwarz": "nero",
       "weiß": "bianco"
-    }
+    },
+    "description": "Set di colori 2, diverse applicazioni"
   },
   "glass-decorationTechnique-default": {
     "values": {
@@ -342,7 +349,8 @@
       "Tonrohr": "Tubo fittile",
       "Variierend": "Vari",
       "Wandziegel": "Mattone da parete",
-      "Ziegelbruch": "frantumi di mattoni"
+      "Ziegelbruch": "frantumi di mattoni",
+      "Abschläge": "Schegge"
     }
   },
   "Brick-temper-default": {
@@ -458,7 +466,9 @@
       "Theater": "Teatro",
       "Therme": "Terme",
       "Turm": "Torre",
-      "Wohnbau": "Abitazione"
+      "Wohnbau": "Abitazione",
+      "Grabbau": "Monumento funerario",
+      "Toranlage": "Porta/Ingresso"
     }
   },
   "Building-buildingCategorySpecific-default": {
@@ -568,7 +578,26 @@
   },
   "Building-material-default-2": {
     "values": {
-      "Ziegel": "Laterizio"
+      "Ziegel": "Laterizio",
+      "Beton": "Calcestruzzo",
+      "Glas": "Vetro",
+      "Mörtel": "Malta",
+      "Fliesen": "Piastrelle/mattonelle",
+      "Blei": "Piombo",
+      "Eisen": "Ferro",
+      "Erde": "Terra",
+      "Gips": "Gesso",
+      "Holz": "Legno",
+      "Kunststoff": "Materia plastica",
+      "Lehm": "Argilla",
+      "Metall": "Metallo",
+      "Naturstein": "Pietra naturale",
+      "Putz": "Intonaco",
+      "Stahl": "Acciaio",
+      "Stahlbeton": "Cemento armato",
+      "Stuck": "Stucco",
+      "Unbekannt/Unerkannt": "Sconosciuto/Non riconosciuto",
+      "Holzwerkstoff": "Derivati del legno"
     }
   },
   "Building-material-default-3": {
@@ -583,7 +612,26 @@
       "Pophyr": "Porfido",
       "Quarz": "Quarzo",
       "Sandstein": "Arenaria",
-      "Ziegel": "Laterizio"
+      "Ziegel": "Laterizio",
+      "Fliesen": "Piastrelle/mattonelle",
+      "Unbekannt/Unerkannt": "Sconosciuto/Non riconosciuto",
+      "Beton": "Calcestruzzo",
+      "Blei": "Piombo",
+      "Eisen": "Ferro",
+      "Erde": "Terra",
+      "Gips": "Gesso",
+      "Glas": "Vetro",
+      "Holz": "Legno",
+      "Kunststoff": "Materia plastica",
+      "Lehm": "Argilla",
+      "Metall": "Metallo",
+      "Mörtel": "Malta",
+      "Naturstein": "Pietra naturale",
+      "Putz": "Intonaco",
+      "Stahl": "Acciaio",
+      "Stahlbeton": "Cemento armato",
+      "Stuck": "Stucco",
+      "Holzwerkstoff": "Derivati del legno"
     }
   },
   "Wood-color-default": {
@@ -948,7 +996,9 @@
       "2 (Fingernagel ritzt)": "2 (scalfibile con l'unghia)",
       "3 (Messerspitze ritzt leicht)": "3 (Facilmente scalfibile con punta di coltello)",
       "4 (Messerspitze ritzt)": "4 (Scalfibile con punta di coltello)",
-      "5 (Messerspitze ritzt schwer)": "5 (Difficilmente scalfibile con punta di coltello)"
+      "5 (Messerspitze ritzt schwer)": "5 (Difficilmente scalfibile con punta di coltello)",
+      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": "6 (difficilmente scalfibile con il vetro della finestra, scalfibile con lima in acciaio)",
+      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": "7-10 (scalfisce il vetro della finestra, l'acciaio fa scintille)"
     }
   },
   "Pottery-coatInside-default": {
@@ -2060,6 +2110,104 @@
       "Material": "Materiale",
       "Dekoration": "Decorazione",
       "Spuren": "Tracce"
+    }
+  },
+  "coordinate-reference-system-default-1": {
+    "values": {
+      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)",
+      "Eigenes Koordinatenbezugssystem": "Sistema di riferimento delle coordinate proprio del progetto"
+    }
+  },
+  "position-values-expansion-default": {
+    "values": {
+      "Minimale Ausdehnung": "Estensione minima",
+      "Maximale Ausdehnung": "Estensione massima"
+    }
+  },
+  "position-values-edge-default": {
+    "values": {
+      "Oberkante": "Spigolo superiore",
+      "Unterkante": "Spigolo inferiore"
+    }
+  },
+  "orientation-default-1": {
+    "values": {
+      "N-S": "Nord-Sud",
+      "NNO - SSW": "NNE-SSO",
+      "NNW-SSO": "NNO-SSE",
+      "NO-SW": "Nordest-Sudovest",
+      "NW-SO": "Nordovest-Sudest",
+      "W-O": "Ovest-Est",
+      "WNW-OSO": "ONO-ESE",
+      "WSW-ONO": "OSO-ENE"
+    }
+  },
+  "damages-default": {
+    "values": {
+      "totalCollapse": "Perdita totale / Crollo",
+      "missingconst": "Elemento costruttivo mancante",
+      "mechanicDamage": "Danno meccanico",
+      "crusting": "Formazione di crosta",
+      "rottingstr": "Danni al legno (strutturalmente problematici)",
+      "partialCollapse": "Crollo parziale",
+      "looseconst": "Elemento costruttivo allentato",
+      "fractures": "Frattura / Rottura",
+      "riss1": "Crepa (<1mm)",
+      "riss2": "Fessura (1mm-5mm)",
+      "riss3": "Fessura (>5mm)",
+      "riss4": "Fessura (>10mm)",
+      "moisture": "Umidità",
+      "fireDamage": "Danni da incendio",
+      "erosion": "Erosione",
+      "corrosion": "Corrosione",
+      "discoloration": "Decolorazione",
+      "vandalizm": "Vandalismo",
+      "deformationSwelling": "Deformazione: rigonfiamento",
+      "delamination": "Delaminazione / distacco delle pareti",
+      "spalling": "Scagliatura",
+      "efflorescence": "Efflorescenza salina",
+      "contamination": "Contaminazione",
+      "fragmentation": "Frammentazione",
+      "ruin": "Decadimento",
+      "rotting": "Danni al legno (strutturalmente innocui)",
+      "fissure": "Crepe nell'intonaco",
+      "weathering": "Degrado causato dagli agenti atmosferici"
+    }
+  },
+  "viewingDirection-default": {
+    "values": {
+      "SE": "Sudest",
+      "W": "Ovest",
+      "N": "Nord",
+      "NE": "Nordest",
+      "E": "Est",
+      "S": "Sud",
+      "SW": "Sudovest",
+      "NW": "Nordovest"
+    }
+  },
+  "Architecture-mark-default": {
+    "values": {
+      "A": ""
+    }
+  },
+  "Damage-condition-default": {
+    "values": {
+      "CCO": "CCO - Nessun sintomo",
+      "CC1": "CC1 - Sintomi minori",
+      "CC2": "CC2 - Sintomi moderatamente forti",
+      "CC3": "CC3 - Sintomi importanti",
+      "CC4": "CC4 - Perdita totale"
+    }
+  },
+  "Photo-originalFormat-default": {
+    "values": {
+      "Digital": "Digitale",
+      "Analog": "Analogico",
+      "Dia": "Diapositiva",
+      "S/W": "B/N",
+      "Farbe": "Colori"
     }
   }
 }

@@ -1909,7 +1909,8 @@ describe('buildRawProjectConfiguration', () => {
             A: {
                 fields: {
                     field1: { inputType: 'text' },
-                    field2: { inputType: 'text' }
+                    field2: { inputType: 'text' },
+                    field3: { inputType: 'text' }
                 },
                 minimalForm: {
                     groups: [
@@ -1923,9 +1924,13 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 categoryName: 'A',
                 valuelists: {},
+                fields: {
+                    field3: { inputType: 'int' },
+                    field4: { inputType: 'text' }
+                },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2'] }
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4'] }
                 ],
                 creationDate: '',
                 createdBy: '',
@@ -1937,12 +1942,12 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {
                     field2: { inputType: 'input' },
-                    field3: { inputType: 'text' }
+                    field5: { inputType: 'boolean' }
                 },
                 groups: [
                     { name: Groups.STEM, fields: ['field1'] },
-                    { name: Groups.PROPERTIES, fields: ['field2', 'field3'] }
-                ],
+                    { name: Groups.PROPERTIES, fields: ['field2', 'field3', 'field4', 'field5'] }
+                ]
             }
         };
 
@@ -1956,7 +1961,9 @@ describe('buildRawProjectConfiguration', () => {
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe('input');
-        expect(result['A'].groups[1].fields[1].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[1].inputType).toBe('int');
+        expect(result['A'].groups[1].fields[2].inputType).toBe('text');
+        expect(result['A'].groups[1].fields[3].inputType).toBe('boolean');
         expect(result['A'].groups[1].name).toBe(Groups.PROPERTIES);
     });
 
@@ -2478,63 +2485,49 @@ describe('buildRawProjectConfiguration', () => {
             inputType: 'relation'
         }];
 
+        const defaultLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    label: 'Default category label',
+                    fields: {
+                        field1: { label: 'Field 1 Default' },
+                        field2: { label: 'Field 2' }
+                    }
+                }
+            },
+            commons: {
+                aCommon: { label: 'Common field A' }
+            },
+            relations: {
+                isRelated: { label: 'Default relation label' }
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    label: 'Custom category label',
+                    fields: {
+                        field1: { label: 'Field 1 Custom' },
+                        field3: { label: 'Field 3' },
+                        aCommon: { label: 'Custom common field label' }
+                    }
+                }
+            },
+            relations: {
+                isRelated: { label: 'Custom relation label' }
+            }
+        };
+
         const languageConfigurations: LanguageConfigurations = {
             complete: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Custom category label',
-                            fields: {
-                                field1: { label: 'Field 1 Custom' },
-                                field2: { label: 'Field 2' },
-                                field3: { label: 'Field 3' },
-                                aCommon: { label: 'Custom common field label' }
-                            }
-                        }
-                    },
-                    commons: {
-                        aCommon: { label: 'Common field A' }
-                    },
-                    relations: {
-                        isRelated: { label: 'Custom relation label' }
-                    }
-                }]
+                en: [customLanguageConfiguration, defaultLanguageConfiguration]
             },
             default: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Default category label',
-                            fields: {
-                                field1: { label: 'Field 1 Default' },
-                                field2: { label: 'Field 2' }
-                            }
-                        }
-                    },
-                    commons: {
-                        aCommon: { label: 'Common field A' }
-                    },
-                    relations: {
-                        isRelated: { label: 'Default relation label' }
-                    }
-                }]
+                en: [defaultLanguageConfiguration]
             },
             custom: {
-                en: [{
-                    categories: {
-                        A: {
-                            label: 'Custom category label',
-                            fields: {
-                                field1: { label: 'Field 1 Custom' },
-                                field3: { label: 'Field 3' },
-                                aCommon: { label: 'Custom common field label' }
-                            }
-                        }
-                    },
-                    relations: {
-                        isRelated: { label: 'Custom relation label' }
-                    }
-                }]
+                en: [customLanguageConfiguration]
             }
         };
 
@@ -2665,5 +2658,219 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].identifierPrefix).toBe('A-');
+    });
+
+
+    it('allow setting resource limit', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                resourceLimit: 2
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].resourceLimit).toBe(2);
+    });
+
+
+    it('set subfields', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []   
+                }
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {
+                    field1: {
+                        inputType: Field.InputType.COMPOSITE,
+                        subfields: [
+                            {
+                                name: 'subfield1-1',
+                                inputType: 'input'
+                            },
+                            {
+                                name: 'subfield1-2',
+                                inputType: 'dropdown',
+                                valuelistId: 'valuelist-1'
+                            }
+                        ]
+                    },
+                },
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1'] }
+                ]
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    field2: {
+                        inputType: Field.InputType.COMPOSITE,
+                        subfields: [
+                            {
+                                name: 'subfield2-1',
+                                inputType: 'text'
+                            },
+                            {
+                                name: 'subfield2-2',
+                                inputType: 'boolean'
+                            },
+                            {
+                                name: 'subfield2-3',
+                                inputType: 'checkboxes',
+                                condition: {
+                                    subfieldName: 'subfield2-2',
+                                    values: true
+                                }
+                            }
+                        ]
+                    }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] }
+                ],
+                valuelists: {
+                    'field2': {
+                        'subfield2-3': 'valuelist-2'
+                    }
+                }
+            }
+        };
+
+        const valuelists : Map<Valuelist> = {
+            'valuelist-1': {
+                values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+            },
+            'valuelist-2': {
+                values: { b: {} }, description: {}, createdBy: '', creationDate: ''
+            }
+        };
+
+        const defaultLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    fields: {
+                        field1: {
+                            subfields: {
+                                'subfield1-1': {
+                                    'label': 'Subfield 1/1 Label',
+                                    'description': 'Subfield 1/1 Description'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            categories: {
+                A: {
+                    fields: {
+                        field2: {
+                            subfields: {
+                                'subfield2-1': {
+                                    'label': 'Subfield 2/1 Label',
+                                    'description': 'Subfield 2/1 Description'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [customLanguageConfiguration, defaultLanguageConfiguration]
+            },
+            default: {
+                en: [defaultLanguageConfiguration]
+            },
+            custom: {
+                en: [customLanguageConfiguration]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            {},
+            valuelists,
+            {}, {}, [],
+            languageConfigurations
+        );
+
+        expect(result['A'].groups[0].fields[0].inputType).toEqual(Field.InputType.COMPOSITE);
+        expect(result['A'].groups[0].fields[0].subfields.length).toBe(2);
+        expect(result['A'].groups[0].fields[0].subfields[0].name).toEqual('subfield1-1');
+        expect(result['A'].groups[0].fields[0].subfields[0].inputType).toEqual(Field.InputType.INPUT);
+        expect(result['A'].groups[0].fields[0].subfields[0].label?.en).toEqual('Subfield 1/1 Label');
+        expect(result['A'].groups[0].fields[0].subfields[0].description?.en).toEqual('Subfield 1/1 Description');
+        expect(result['A'].groups[0].fields[0].subfields[1].name).toEqual('subfield1-2');
+        expect(result['A'].groups[0].fields[0].subfields[1].inputType).toEqual(Field.InputType.DROPDOWN);
+        expect(result['A'].groups[0].fields[0].subfields[1].valuelist?.id).toEqual('valuelist-1');
+        expect(result['A'].groups[0].fields[1].inputType).toEqual(Field.InputType.COMPOSITE);
+        expect(result['A'].groups[0].fields[1].subfields.length).toBe(3);
+        expect(result['A'].groups[0].fields[1].subfields[0].name).toEqual('subfield2-1');
+        expect(result['A'].groups[0].fields[1].subfields[0].inputType).toEqual(Field.InputType.TEXT);
+        expect(result['A'].groups[0].fields[1].subfields[0].label?.en).toEqual('Subfield 2/1 Label');
+        expect(result['A'].groups[0].fields[1].subfields[0].description?.en).toEqual('Subfield 2/1 Description');
+        expect(result['A'].groups[0].fields[1].subfields[1].name).toEqual('subfield2-2');
+        expect(result['A'].groups[0].fields[1].subfields[1].inputType).toEqual(Field.InputType.BOOLEAN);
+        expect(result['A'].groups[0].fields[1].subfields[2].name).toEqual('subfield2-3');
+        expect(result['A'].groups[0].fields[1].subfields[2].inputType).toEqual(Field.InputType.CHECKBOXES);
+        expect(result['A'].groups[0].fields[1].subfields[2].valuelist?.id).toEqual('valuelist-2');
+        expect(result['A'].groups[0].fields[1].subfields[2].condition?.subfieldName).toEqual('subfield2-2');
+        expect(result['A'].groups[0].fields[1].subfields[2].condition?.values).toBe(true);
     });
 });

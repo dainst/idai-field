@@ -7929,7 +7929,7 @@
     }
   },
   "Metal-objectType-kalapodi": {
-    "deprecated": "true",
+    "deprecated": true,
     "createdBy": "Arne Kimmig",
     "creationDate": "2019",
     "values": {
@@ -25837,6 +25837,11 @@
           "http://uri.gbv.de/terminology/amh_befunde/bccc34d4-229c-4c5e-93d4-6a71a36bd9b4"
         ]
       },
+      "94664efc-88fe-419d-804e-d87e4b04d5be": {
+        "references": [
+          "http://uri.gbv.de/terminology/amh_befunde/94664efc-88fe-419d-804e-d87e4b04d5be"
+        ]
+      },
       "c0ca33bc-f6b4-4864-b965-c28625ddd17e": {
         "references": [
           "http://uri.gbv.de/terminology/amh_befunde/c0ca33bc-f6b4-4864-b965-c28625ddd17e"
@@ -25950,6 +25955,11 @@
       "55e3f6b1-5f7c-48be-85ad-b3c352c69b49": {
         "references": [
           "http://uri.gbv.de/terminology/amh_befunde/55e3f6b1-5f7c-48be-85ad-b3c352c69b49"
+        ]
+      },
+      "cb7e83f2-642a-410a-b591-bcf7e0ed9afc": {
+        "references": [
+          "http://uri.gbv.de/terminology/amh_befunde/cb7e83f2-642a-410a-b591-bcf7e0ed9afc"
         ]
       },
       "6e4a3181-bf86-4509-8a25-f81d84a8d062": {

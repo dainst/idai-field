@@ -479,6 +479,7 @@ Via the context menu or by double-clicking on an entry in the category list, the
 * *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
 * *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
 * *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
+* *Resource limit*: Optionally enter a number here to specify the maximum number of resources that can be created for this category. If the input field is left blank, any number of resources can be created. This option is only available for operation categories and the category "Place".
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
@@ -602,7 +603,7 @@ Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
 ##### Dating
-Specification of one or more datings. Possible dating types are: Period, Exact, Before, After, Scientific.
+Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
 <p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 ##### Date
@@ -616,6 +617,10 @@ Specification of one or more dimensions. Either a single value or a range can be
 ##### Bibliographic reference
 Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
 <p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Input type 'Bibliographic reference'"/></p>
+
+##### Composite field
+Composite fields can contain multiple entries, each consisting of any number of subfields. Each subfield has its own name and input type (see section *Subfields*).
+<p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Input type 'Composite field'"/></p>
 
 
 #### Hide fields
@@ -638,6 +643,20 @@ The setting *Allow field specific search* in the field editor determines whether
 The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
 
 If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
+
+
+#### Subfields
+
+This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.
+
+To create a new subfield, enter the desired name in the input field and confirm it by clicking the plus button.  A new editor window will open where you can configure the subfield in a similar way to a normal field (input type, label, description, etc.).
+
+
+##### Subfield conditions
+
+Optionally, a condition for displaying the subfield can be set in the subfield editor. If a condition is set, the subfield will be available during data entry only if another subfield has a specific value (or one of several values) set.
+
+To set a condition, first select another subfield of the same composite field in the dropdown field "Condition for display of subfield". Subfields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes / No" and "Checkboxes" are available for selection. The possible values of the chosen subfield are now displayed and can be selected. The current subfield is only displayed during data entry if at least one of the selected values is set for the subfield selected as a condition field.
 
 
 ### Adjusting order and group assignment

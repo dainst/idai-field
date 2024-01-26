@@ -1,5 +1,5 @@
 import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
-    pause, getValue, selectOption } from '../app';
+    pause, getValue, selectSearchableSelectOption } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
@@ -119,10 +119,14 @@ export class ResourcesPage {
     };
 
 
-    public static openEditByDoubleClickResource(identifier: string) {
+    public static async openEditByDoubleClickResource(identifier: string, index?: number) {
 
-        return doubleClick('//*[@id="sidebar"]//div[@class="title" and ' +
+        let locator = await getLocator('//*[@id="sidebar"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]');
+
+        if (index !== undefined) locator = await locator.nth(index);
+
+        return doubleClick(locator);
     }
 
 
@@ -156,9 +160,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickListSelectOption(identifier: string, optionValue: string) {
+    public static clickListSelectOption(identifier: string, optionLabel: string) {
 
-        return selectOption('#resource-' + identifier + ' .dropdown-input-field select', optionValue);
+        return selectSearchableSelectOption('#resource-' + identifier + ' .dropdown-input-field', optionLabel);
     }
 
 

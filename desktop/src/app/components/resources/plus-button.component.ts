@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree,
-    ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
+    PouchdbDatastore } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ViewFacade } from '../../components/resources/view/view-facade';
 import { M } from '../messages/m';
@@ -50,10 +50,15 @@ export class PlusButtonComponent implements OnChanges {
                 private messages: Messages,
                 private viewFacade: ViewFacade,
                 private datastore: Datastore,
-                private i18n: I18n) {
+                private i18n: I18n,
+                pouchdbDatastore: PouchdbDatastore) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
+        });
+
+        pouchdbDatastore.changesNotifications().subscribe(() => {
+            this.initializeSelectableCategoriesArray(this.projectConfiguration);
         });
     }
 
@@ -153,7 +158,7 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private initializeSelectableCategoriesArray(projectConfiguration: ProjectConfiguration) {
+    private async initializeSelectableCategoriesArray(projectConfiguration: ProjectConfiguration) {
 
         this.toplevelCategoriesArray = [];
 
@@ -166,9 +171,9 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             for (let category of Tree.flatten(projectConfiguration.getCategories())) {
-                if (this.isAllowedCategory(category, projectConfiguration)
+                if (await this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
-                            || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
+                            || !(await this.isAllowedCategory(category.parentCategory, projectConfiguration)))) {
                     this.toplevelCategoriesArray.push(category);
                 }
             }
@@ -188,7 +193,8 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private isAllowedCategory(category: CategoryForm, projectConfiguration: ProjectConfiguration): boolean {
+    private async isAllowedCategory(category: CategoryForm,
+                                    projectConfiguration: ProjectConfiguration): Promise<boolean> {
 
         if (category.name === 'Image') return false;
 
@@ -207,11 +213,19 @@ export class PlusButtonComponent implements OnChanges {
             }
         }
 
-        if (!this.liesWithin) return !category.mustLieWithin;
+        if (!this.liesWithin) {
+            if (category.mustLieWithin) return false;
+        } else if (!projectConfiguration.isAllowedRelationDomainCategory(
+                category.name, this.liesWithin.resource.category, 'liesWithin')) {
+            return false;
+        }
 
-        return projectConfiguration.isAllowedRelationDomainCategory(
-            category.name, this.liesWithin.resource.category, 'liesWithin'
-        );
+        if (category.resourceLimit) {
+            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            if (resourcesCount >= category.resourceLimit) return false;
+        }
+
+        return true;
     }
 
 

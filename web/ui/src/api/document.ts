@@ -1,7 +1,7 @@
 import { Geometry } from 'geojson';
-import { isObject, to } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, I18N } from 'idai-field-core';
-import { getLabel, getTranslation } from '../shared/languages';
+import { isObject, to, clone } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange, I18N, Field as FieldDefinition } from 'idai-field-core';
+import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
 
 
@@ -20,9 +20,9 @@ export interface ChangeEvent {
 
 
 export interface Resource {
-    category: LabeledValue;
+    category: CategoryValue;
     id: string;
-    identifier: I18N.String;
+    identifier: string;
     shortDescription: I18N.String;
     shortName?: I18N.String;
     groups: FieldGroup[];
@@ -46,23 +46,29 @@ export interface DimensionWithLabeledMeasurementPosition extends Omit<Dimension,
 }
 
 
-export function convertMeasurementPosition(element: FieldValue): FieldValue {
+export function convertMeasurementPosition(dimension: Dimension): Dimension {
     
-    if (!isObject(element)) return element;
-    const klone: FieldValue = JSON.parse(JSON.stringify(element));
-    klone[Dimension.MEASUREMENTPOSITION] = isLabeledValue(element) ? getLabel(element) : undefined;
-    return klone;
+    if (!isObject(dimension) || !dimension.measurementPosition) return dimension;
+
+    const result: Dimension = clone(dimension);
+    result.measurementPosition = isLabeledValue(dimension.measurementPosition)
+        ? getLabel(dimension.measurementPosition)
+        : undefined;
+
+    return result;
 }
 
 
 export type FieldValue =
     string
     | LabeledValue
+    | boolean
     | Dimension
     | DimensionWithLabeledMeasurementPosition
     | Dating
     | Literature
     | OptionalRange<LabeledValue>
+    | Field[] // composite field
     | FieldValue[];
 
 
@@ -70,7 +76,7 @@ export interface Field {
     description: I18nString;
     label: I18nString;
     name: string;
-    inputType: string;
+    inputType: FieldDefinition.InputType;
     value?: FieldValue;
     targets?: ResultDocument[];
 }
@@ -102,6 +108,11 @@ export function isLabeledValue(labeledValue: unknown): labeledValue is LabeledVa
 }
 
 
+export interface CategoryValue extends LabeledValue {
+    parent: string;
+}
+
+
 export function getFieldValue(document: Document, fieldName: string): FieldValue|undefined {
     
     const group: FieldGroup = document.resource.groups.find(g => g.fields.map(to('name')).includes(fieldName));
@@ -117,7 +128,7 @@ export function getDocumentImages(document: Document): ResultDocument[]|undefine
     const group: FieldGroup = document.resource.groups
         .find(group => group.fields.map(to('name')).includes('isDepictedIn'));
 
-    return getTranslation(group
+    return group
         ? group.fields.find((rel: Field) => rel.name === 'isDepictedIn')?.targets
-        : undefined as undefined);
+        : undefined as undefined;
 }

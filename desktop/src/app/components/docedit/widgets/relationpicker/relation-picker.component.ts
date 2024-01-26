@@ -1,8 +1,10 @@
-import {Component, ElementRef, Input, OnChanges} from '@angular/core';
-import {Document, Datastore, Resource} from 'idai-field-core';
-import {Relation} from 'idai-field-core';
-import {RelationPicker} from './relation-picker';
-import {DefaultRelationPicker} from './default-relation-picker';
+import { Component, Input, OnChanges } from '@angular/core';
+import { isUndefinedOrEmpty } from 'tsfun';
+import { Document, Datastore, Resource, Relation, Labels, ProjectConfiguration } from 'idai-field-core';
+import { getSuggestions } from './get-suggestions';
+
+
+const SUGGESTIONS_CHUNK_SIZE: number = 20;
 
 
 @Component({
@@ -17,166 +19,154 @@ import {DefaultRelationPicker} from './default-relation-picker';
 export class RelationPickerComponent implements OnChanges {
 
     @Input() resource: Resource;
-
     @Input() relationDefinition: Relation;
     @Input() relationIndex: number;
 
+    public availableTargets: Array<Document>;
+    public selectedTarget: Document|undefined;
     public disabled: boolean = false;
-    public suggestions: Array<Document>;
-    public selectedSuggestionIndex: number = -1;
-    public idSearchString: string;
-    public suggestionsVisible: boolean;
 
-    public relationPicker: RelationPicker;
-
-    // This is to compensate for an issue where it is possible
-    // to call updateSuggestions repeatedly in short time.
-    // It is intended to be only used as guard in updateSuggestions.
-    private updateSuggestionsMode: boolean = false;
+    private searchTerm: string = '';
+    private offset: number = 0;
 
 
-    constructor(private element: ElementRef,
-                private datastore: Datastore) {}
+    constructor(private datastore: Datastore,
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
-
-    public deleteRelation = () => this.relationPicker.deleteRelation();
+    
+    public getAvailableTargetIds = () => this.availableTargets?.map(target => target.resource.id);
 
 
     public async ngOnChanges() {
 
-        this.relationPicker = new DefaultRelationPicker(
-            this.resource, this.relationDefinition, this.datastore, this.relationIndex
-        );
-
-        this.suggestions = [];
-        this.idSearchString = '';
-
         try {
-            await this.relationPicker.updateSelectedTarget();
+            await this.updateSelectedTarget();
         } catch (err) {
             this.disabled = true;
             console.error(err);
         }
 
-        if (!this.relationPicker.selectedTarget) {
-            setTimeout(async () => {
-                await this.updateSuggestions();
-                this.focusInputField();
-            }, 100);
+        this.searchTerm = '';
+        this.offset = 0;
+
+        if (!this.selectedTarget) await this.loadNextChunk();
+    }
+
+
+    public onTargetSelected(targetId: string) {
+
+        const target: Document = targetId
+            ? this.availableTargets.find(t => t.resource.id === targetId)
+            : undefined;
+
+        if (target) {
+            this.createRelation(target);
+        } else {
+            this.deleteRelation();
         }
     }
 
 
-    /**
-     * Creates a relation to the target object.
-     * @param document
-     */
-    public createRelation(document: Document) {
+    public async onBlur() {
 
-        this.relationPicker.createRelation(document);
-        this.idSearchString = '';
-        this.suggestions = [];
+        await this.updateSelectedTarget();
+        if (!this.selectedTarget) this.deleteRelation();
     }
 
 
-    public editTarget() {
+    public getTargetLabel = (targetId: string): string => {
 
-        if (!this.relationPicker.selectedTarget) return;
+        const target: Document = this.availableTargets.find(target => target.resource.id === targetId);
+        let label: string = target?.resource.identifier;
 
-        this.idSearchString = (this.relationPicker.selectedTarget).resource.identifier;
-        this.suggestions = [this.relationPicker.selectedTarget];
-        this.selectedSuggestionIndex = 0;
-        this.relationPicker.selectedTarget = undefined;
+        if (target?.resource.shortDescription) {
+            const shortDescriptionLabel: string = Resource.getShortDescriptionLabel(
+                target.resource, this.labels, this.projectConfiguration
+            );
+            label += ' (' + shortDescriptionLabel + ')';
+        }
 
-        setTimeout(this.focusInputField.bind(this), 100);
+        return label;
     }
 
 
-    public enterSuggestionMode() {
+    public async search(term: string) {
 
-        this.suggestionsVisible = true;
+        this.availableTargets = [];
+        this.offset = 0;
+        this.searchTerm = term;
+
+        await this.loadNextChunk();
     }
 
 
-    public leaveSuggestionMode() {
+    public async loadNextChunk() {
 
-        this.suggestionsVisible = false;
-        this.relationPicker.leaveSuggestionMode();
+        const newTargets: Array<Document> = await this.fetchAvailableTargets();
+
+        if (!this.availableTargets) this.availableTargets = [];
+        this.availableTargets = this.availableTargets.concat(newTargets);
+
+        this.offset += SUGGESTIONS_CHUNK_SIZE;
     }
 
 
-    public focusInputField() {
+    public async editTarget() {
 
-        let elements = this.element.nativeElement.getElementsByTagName('input');
+        this.selectedTarget = undefined;
+        this.availableTargets = await this.fetchAvailableTargets();
+    }
 
-        if (elements.length == 1) {
-            elements.item(0).focus();
+
+    public async updateSelectedTarget(): Promise<void> {
+
+        const relationTargetIdentifier: string = this.getRelationTargetIdentifier();
+
+        if (!isUndefinedOrEmpty(relationTargetIdentifier)) {
+            try {
+                this.selectedTarget = await this.datastore.get(relationTargetIdentifier);
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        } else {
+            this.selectedTarget = undefined;
         }
     }
 
 
-    public keyDown(event: KeyboardEvent) {
+    public createRelation(target: Document) {
 
-        switch(event.key) {
-            case 'ArrowUp':
-                if (this.selectedSuggestionIndex > 0)
-                    this.selectedSuggestionIndex--;
-                else
-                    this.selectedSuggestionIndex = this.suggestions.length - 1;
-                event.preventDefault();
-                break;
-            case 'ArrowDown':
-                if (this.selectedSuggestionIndex < this.suggestions.length - 1)
-                    this.selectedSuggestionIndex++;
-                else
-                    this.selectedSuggestionIndex = 0;
-                event.preventDefault();
-                break;
-            case 'ArrowLeft':
-            case 'ArrowRight':
-                break;
-            case 'Enter':
-                if (this.selectedSuggestionIndex > -1 && this.suggestions.length > 0) {
-                    this.createRelation(this.suggestions[this.selectedSuggestionIndex]);
-                }
-                break;
+        this.resource.relations[this.relationDefinition.name][this.relationIndex] = target.resource.id;
+        this.selectedTarget = target;
+    }
+
+
+    public deleteRelation() {
+
+        this.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
+
+        if (this.resource.relations[this.relationDefinition.name].length === 0) {
+            delete this.resource.relations[this.relationDefinition.name];
         }
     }
 
 
-    public keyUp(event: KeyboardEvent) {
+    private getRelationTargetIdentifier(): string {
 
-        switch(event.key) {
-            case 'ArrowUp':
-            case 'ArrowDown':
-            case 'ArrowLeft':
-            case 'ArrowRight':
-            case 'Enter':
-                break;
-            default:
-                this.selectedSuggestionIndex = 0;
-                setTimeout(() => this.updateSuggestions(), 100);
-                // This is to compensate for
-                // a slight delay where idSearchString takes some time to get updated. The behaviour
-                // was discovered on an occasion where the search string got pasted into the input field.
-                // If one does the keyup quickly after pasting, it wasn't working. If One leaves the command
-                // key somewhat later, it worked.
-                break;
-        }
+        return this.resource.relations[this.relationDefinition.name][this.relationIndex];
     }
 
 
-    private async updateSuggestions() {
-
-        if (this.updateSuggestionsMode) return;
-        this.updateSuggestionsMode = true;
+    private async fetchAvailableTargets(): Promise<Array<Document>> {
 
         try {
-            this.suggestions = await this.relationPicker.getSuggestions(this.idSearchString);
+            return await getSuggestions(
+                this.datastore, this.resource, this.relationDefinition, this.searchTerm, this.offset,
+                SUGGESTIONS_CHUNK_SIZE
+            );
         } catch (err) {
             console.error(err);
-        } finally {
-            this.updateSuggestionsMode = false;
         }
     }
 }

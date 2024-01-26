@@ -12,7 +12,7 @@ export class DoceditRelationsPage {
 
     public static async clickChooseRelationSuggestion(suggestionIndex) {
 
-        const element = (await getLocator('.suggestion')).nth(suggestionIndex);
+        const element = (await getLocator('.ng-option')).nth(suggestionIndex);
         return click(element);
     };
 
@@ -32,11 +32,11 @@ export class DoceditRelationsPage {
 
     // get text
 
-    public static async getRelationButtonText(relationName, pickerIndex = 0) {
+    public static async getRelationButtonIdentifier(relationName, pickerIndex = 0) {
 
         await DoceditPage.clickGotoTimeTab();
         const element = await this.getRelationElementByName(relationName, pickerIndex);
-        return (await element.locator('.badge')).textContent();
+        return (await element.locator('.title')).textContent();
     };
 
 

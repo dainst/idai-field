@@ -209,4 +209,73 @@ describe('makeCategoryForest', () => {
         expect(categoriesMap[T].groups[0].fields[1].name).toEqual('relation');
         expect(categoriesMap[T].groups[0].fields[2].name).toEqual(FieldResource.SHORTDESCRIPTION);
     });
+
+
+    it('put unassigned fields to default groups', () => {
+
+        const categories: Map<TransientCategoryDefinition> = {
+            T: {
+                name: 'T',
+                description: {},
+                fields: {
+                    field1: {
+                        name: 'field1',
+                        inputType: Field.InputType.INPUT
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                } as TransientFormDefinition
+            }
+        };
+
+        const forms: Map<TransientFormDefinition> = {
+            'T:default': {
+                name: 'T:default',
+                categoryName: 'T',
+                description: {},
+                createdBy: '',
+                creationDate: '',
+                fields: {
+                    field1: {
+                        name: 'field1',
+                        inputType: Field.InputType.INPUT,
+                        visible: true
+                    },
+                    field2: {
+                        name: 'field2',
+                        inputType: Field.InputType.INPUT,
+                        visible: true
+                    }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field2'] }
+                ]
+            }
+        };
+
+        const relations: Array<Relation> = [{
+            name: 'isBefore',
+            domain: ['T'],
+            range: ['X'],
+            inputType: 'relation'
+        }];
+
+        const categoriesMap = Named.arrayToMap(
+            Tree.flatten<CategoryForm>(makeCategoryForest(relations, categories)(forms))
+        );
+
+        expect(categoriesMap['T'].groups.length).toBe(3);
+        expect(categoriesMap['T'].groups[0].name).toEqual(Groups.STEM);
+        expect(categoriesMap['T'].groups[0].fields.length).toBe(1);
+        expect(categoriesMap['T'].groups[0].fields[0].name).toEqual('field2');
+        expect(categoriesMap['T'].groups[1].name).toEqual(Groups.OTHER);
+        expect(categoriesMap['T'].groups[1].fields.length).toBe(1);
+        expect(categoriesMap['T'].groups[1].fields[0].name).toEqual('field1');
+        expect(categoriesMap['T'].groups[2].name).toEqual(Groups.TIME);
+        expect(categoriesMap['T'].groups[2].fields.length).toBe(1);
+        expect(categoriesMap['T'].groups[2].fields[0].name).toEqual('isBefore');
+    });
 });

@@ -53,25 +53,34 @@
   }
 
   .dropdown-input-field {
-    padding-top: 7px;
+    padding: 0;
   }
 
-  input,
-  select {
+  input.form-control {
     position: relative;
     top: 1px;
     border: 0;
   }
 
-  select {
+  .ng-select {
     width: 100%;
-    padding-left: 4px;
     font-size: 14px;
     color: #495057;
     outline: none;
 
-    option {
-      padding-bottom: 5px;
+    .ng-select-container {
+      height: 41px !important;
+      border: 0;
+
+      .ng-value {
+        z-index: 1;
+      }
+
+      input {
+        position: relative;
+        top: 6px;
+        z-index: 2;
+      }
     }
   }
 
@@ -91,5 +100,15 @@
 
   .hidden-option {
     opacity: 0;
+  }
+}
+
+.ng-dropdown-panel.row-select-panel {
+  &.ng-select-top {
+    margin-bottom: 1px !important;
+  }
+
+  &.ng-select-bottom {
+    margin-top: 1px !important;
   }
 }

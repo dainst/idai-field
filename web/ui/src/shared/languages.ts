@@ -32,7 +32,7 @@ function initializeLanguages(): string[] {
         window.navigator.languages
             .map(getBasicLanguageCode)
             .filter(language => language.length === 2)
-            .concat(USER_INTERFACE_LANGUAGES.concat('unspecifiedLanguage'))
+            .concat(USER_INTERFACE_LANGUAGES.concat(I18N.UNSPECIFIED_LANGUAGE))
     );
 }
 
@@ -44,7 +44,7 @@ function getBasicLanguageCode(language: string): string {
 }
 
 
-export function getTranslation(labels: I18N.String|undefined): string {
+export function getTranslation(labels: I18N.String|string|undefined): string {
 
     if (!labels) return '';
     if (!LANGUAGES) {

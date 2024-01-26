@@ -10,6 +10,7 @@ services:
       - "ES_JAVA_OPTS=-Xms640m -Xmx640m"
       - "discovery.type=single-node"
       - "cluster.name=field.dainst.org"
+      - "indices.query.bool.max_clause_count=4096"
     ulimits:
       memlock:
         soft: -1

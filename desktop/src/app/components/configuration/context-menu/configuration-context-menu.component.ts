@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { ConfigurationContextMenu } from './configuration-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { ConfigurationUtil } from '../../../components/configuration/configuration-util';
 
 
 export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
@@ -75,6 +74,6 @@ export class ConfigurationContextMenuComponent implements OnChanges {
         return (!this.contextMenu.field
             || this.contextMenu.category.customFields.includes(this.contextMenu.field.name))
         && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
-            || !this.contextMenu.category.required);
+            || !this.contextMenu.category.required);
     }
 }

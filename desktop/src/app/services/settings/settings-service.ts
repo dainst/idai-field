@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N,
+    validateUrl } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
-import { Settings, SyncTarget } from './settings';
+import { Settings } from './settings';
+import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
+import { SettingsErrors } from './settings-errors';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+
+
+type validationMode = 'settings'|'synchronization'|'none';
 
 
 @Injectable()
@@ -66,16 +72,20 @@ export class SettingsService {
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      */
-    public async updateSettings(settingsParam: Settings): Promise<Settings> {
+    public async updateSettings(newSettings: Settings, validate: validationMode = 'none'): Promise<Settings> {
 
-        this.settingsProvider.setSettings(settingsParam);
-        const settings = this.settingsProvider.getSettings();
+        if (validate === 'settings' && !Settings.hasUsername(newSettings)) {
+            throw SettingsErrors.MISSING_USERNAME;
+        }
+
+        this.settingsProvider.setSettings(newSettings);
+        const settings: Settings = this.settingsProvider.getSettings();
 
         Object.values(settings.syncTargets).forEach(syncTarget => {
             if (syncTarget.address) {
                 syncTarget.address = syncTarget.address.trim();
-                if (!SettingsService.validateAddress(syncTarget.address)) {
-                    throw Error('malformed_address');
+                if (validate === 'synchronization' && !SettingsService.validateAddress(syncTarget.address)) {
+                    throw SettingsErrors.MALFORMED_ADDRESS;
                 }
             }
             if (syncTarget.password) syncTarget.password = syncTarget.password.trim();
@@ -141,7 +151,7 @@ export class SettingsService {
         if (!SettingsService.isSynchronizationAllowed(settings.selectedProject)) return;
 
         this.synchronizationService.init(
-            syncTarget?.address,
+            SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
             SettingsService.checkDatabaseExistence
@@ -297,10 +307,10 @@ export class SettingsService {
     }
 
 
-    private static validateAddress(address: any) {
+    private static validateAddress(address: any): boolean {
 
         return (address === '')
             ? true
-            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
+            : validateUrl(address);
     }
 }

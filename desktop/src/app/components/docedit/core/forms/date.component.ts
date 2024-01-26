@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
-import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import { NgbDateParserFormatter, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { isString } from 'tsfun';
-import { Field, parseDate, Resource } from 'idai-field-core';
+import { Field, parseDate } from 'idai-field-core';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { ComponentHelpers } from '../../../component-helpers';
 
 
 @Component({
@@ -11,18 +12,21 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 })
 export class DateComponent implements OnChanges {
 
-    @Input() resource: Resource;
+    @Input() fieldContainer: any;
     @Input() field: Field;
 
     @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
 
     public dateStruct: NgbDateStruct;
+    public onScrollListener: any;
+    public scrollListenerInitialized: boolean = false;
 
 
-    constructor(public dateFormatter: NgbDateParserFormatter) {}
+    constructor(public dateFormatter: NgbDateParserFormatter,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
-    public getFieldData = () => this.resource[this.field.name];
+    public getFieldData = () => this.fieldContainer[this.field.name];
 
     public isDatePickerVisible = () => this.getFieldData() === undefined;
 
@@ -46,9 +50,9 @@ export class DateComponent implements OnChanges {
             : this.dateFormatter.format(this.dateStruct);
 
         if (!isNaN(parseDate(formattedDate)?.getTime())) {
-            this.resource[this.field.name] = formattedDate;
+            this.fieldContainer[this.field.name] = formattedDate;
         } else {
-            delete this.resource[this.field.name];
+            delete this.fieldContainer[this.field.name];
         }
 
         this.updateDateStruct(formattedDate);
@@ -57,7 +61,7 @@ export class DateComponent implements OnChanges {
 
     public async removeFieldData() {
 
-        delete this.resource[this.field.name];
+        delete this.fieldContainer[this.field.name];
         this.dateStruct = {} as NgbDateStruct;
         await this.focusInputField();
     }
@@ -73,8 +77,40 @@ export class DateComponent implements OnChanges {
     }
 
 
+    public listenToScrollEvents(datePicker: NgbInputDatepicker) {
+
+        this.scrollListenerInitialized = false;
+
+        this.onScrollListener = this.onScroll(datePicker).bind(this);
+        window.addEventListener('scroll', this.onScrollListener, true);
+    }
+
+    
+    public stopListeningToScrollEvents() {
+
+        if (!this.onScrollListener) return;
+
+        window.removeEventListener('scroll', this.onScrollListener, true);
+        this.onScrollListener = undefined;
+    }
+
+
     private updateDateStruct(date: string) {
 
         this.dateStruct = this.dateFormatter.parse(date) ?? {} as NgbDateStruct;
+    }
+
+
+    private onScroll = (datePicker: NgbInputDatepicker) => (event: MouseEvent) => {
+
+        if (!this.scrollListenerInitialized) {
+            this.scrollListenerInitialized = true;
+            return;
+        }
+
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ngb-datapicker')) { 
+            datePicker.close();
+            this.changeDetectorRef.detectChanges();
+        }
     }
 }

@@ -169,17 +169,17 @@ test.describe('resources/list --', () => {
         await CategoryPickerPage.clickSelectCategory('Operation');
         await ConfigurationPage.clickOpenContextMenuForField('shortDescription');
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('dropdown');
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('test-list');
         await ManageValuelistsModalPage.clickCreateNewValuelist();
         await EditConfigurationPage.typeInNewValue('testValue1');
         await EditConfigurationPage.clickAddValue();
-        await EditConfigurationPage.typeInTranslation(3, 0, 'Value 1');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Value 1', 'value');
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.typeInNewValue('testValue2');
         await EditConfigurationPage.clickAddValue();
-        await EditConfigurationPage.typeInTranslation(3, 0, 'Value 2');
+        await EditConfigurationPage.typeInTranslation(0, 0, 'Value 2', 'value');
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.clickConfirmValuelist();
         await EditConfigurationPage.clickConfirm();
@@ -189,13 +189,13 @@ test.describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickListModeButton();
         await ResourcesPage.performCreateResourceInList('Trench1', 'operation-trench');
-        await ResourcesPage.clickListSelectOption('Trench1', 'testValue1');
+        await ResourcesPage.clickListSelectOption('Trench1', 'Value 1');
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('Trench1');
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 1');
         
         await ResourcesPage.clickListModeButton();
-        await ResourcesPage.clickListSelectOption('Trench1', 'testValue2');
+        await ResourcesPage.clickListSelectOption('Trench1', 'Value 2');
         await ResourcesPage.clickMapModeButton();
         await ResourcesPage.clickSelectResource('Trench1');
         expect(await ResourcesPage.getSelectedListItemShortDescriptionText()).toEqual('Value 2');    

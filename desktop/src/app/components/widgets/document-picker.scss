@@ -1,70 +1,81 @@
 #document-picker {
-  search-bar {
-    position: relative;
-    top: 1px;
+  &.has-search-results {
+    .search-filter {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 19px;
+    }
   }
 
-  #document-picker-list {
+  #document-picker-viewport {
     max-height: calc(100vh - 350px);
-    width: calc(100% - 1px);
     overflow-x: hidden;
     overflow-y: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0;
 
-    .list-group-item {
-      display: block;
-      height: 58px;
-      min-height: 58px;
-      padding: 10px 5px 10px 10px;
-      font-size: 1em;
-      border-radius: 0;
-      border-top-width: 1px;
-      border-bottom: 0;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: default;
-
-      &:hover {
-        background-color: $list-item-hover-color;
-        transition: background-color .5s ease;
+    #document-picker-list {
+      .list-group-item {
+        display: block;
+        height: 58px;
+        min-height: 58px;
+        padding: 10px 5px 10px 10px;
+        font-size: 1em;
+        border-radius: 0;
+        border-top-width: 1px;
+        border-bottom: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: default;
+  
+        &:first-child {
+          border-top: 0;
+        }
+  
+        &:hover {
+          background-color: $list-item-hover-color;
+          transition: background-color .5s ease;
+        }
       }
-    }
-
-    .selected {
-      background-color: $list-item-hover-color;
-    }
-
-    .title {
-      color: #111;
-    }
-
-    .subtitle {
-      color: #999;
-    }
+  
+      .selected {
+        background-color: $list-item-hover-color;
+      }
+  
+      .title {
+        color: #111;
+      }
+  
+      .subtitle {
+        color: #999;
+      }
+    } 
   }
 
   .search-bar-input {
     height: 39px;
   }
 
-  #searchfilter {
-    position: relative;
-    right: 1px;
-    height: 39px !important;
-  }
-
-  #document-picker-placeholder {
-    height: 51px;
+  #document-picker-loading-icon-container {
+    margin-top: 50px;
+    height: 50px;
 
     loading-icon {
       position: relative;
-      top: 34px;
+      top: 10px;
     }
+  }
 
-    span {
+  #document-picker-placeholder {
+    height: 32px;
+    margin-top: 23px;
+
+    .no-results-info {
+      width: 100%;
+      text-align: center;
+      font-style: italic;
+      font-size: 15px;
       user-select: none;
     }
   }

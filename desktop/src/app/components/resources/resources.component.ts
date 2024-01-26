@@ -7,9 +7,9 @@ import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
-import { MoveModalComponent } from './modals/move/move-modal.component';
+import { MoveModalComponent } from './actions/move/move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
-import { ResourceDeletion } from './modals/deletion/resource-deletion';
+import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../components/resources/view/view-facade';
 import { NavigationService } from './navigation/navigation-service';
@@ -19,7 +19,7 @@ import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
-import { QrCodeEditorModalComponent } from './modals/qr-code/qr-code-editor-modal.component';
+import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 
 
 export type PopoverMenu = 'none'|'info'|'children';

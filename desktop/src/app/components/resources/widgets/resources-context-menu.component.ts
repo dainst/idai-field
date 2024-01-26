@@ -3,7 +3,7 @@ import { to } from 'tsfun';
 import { FieldDocument, Named, ProjectConfiguration, CategoryForm } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { MoveUtility } from '../modals/move/move-utility';
+import { MoveUtility } from '../actions/move/move-utility';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'

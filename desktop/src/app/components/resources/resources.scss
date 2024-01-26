@@ -11,9 +11,9 @@
 @import 'widgets/popovermenu/children-view';
 @import 'list/list';
 @import 'list/row';
-@import 'modals/deletion/delete-modal';
-@import 'modals/move/move-modal';
-@import 'modals/qr-code/qr-code-editor-modal';
+@import 'actions/delete/delete-modal';
+@import 'actions/move/move-modal';
+@import 'actions/edit-qr-code/qr-code-editor-modal';
 @import 'types/types';
 @import 'types/type-icon';
 @import 'searchbar/resources-search-bar';

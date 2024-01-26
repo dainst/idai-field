@@ -28,6 +28,7 @@ resources-search-bar {
       background: none;
       box-shadow: none;
       outline: none;
+      z-index: 1000;
 
       &:hover {
         border-radius: 100%;

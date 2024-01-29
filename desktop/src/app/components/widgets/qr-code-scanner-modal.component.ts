@@ -22,8 +22,6 @@ export class QrCodeScannerModalComponent implements OnInit {
         this.hasCamera = true;
     }
 
-    public cancel = () => this.activeModal.dismiss('cancel');
-
 
     async ngOnInit() {
 
@@ -48,5 +46,12 @@ export class QrCodeScannerModalComponent implements OnInit {
             console.error(err);
             this.hasCamera = false;
         }
+    }
+
+
+    public cancel() {
+        
+        if (this.hasCamera) this.qrScanner.stop();
+        this.activeModal.dismiss('cancel');
     }
 }

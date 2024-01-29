@@ -215,9 +215,9 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public find: Datastore.Find = async (query: Query): Promise<Datastore.FindResult> => {
-
-        const { ids } = this.findIds(query);
+    public find: Datastore.Find = async (query: Query, logic?: 'AND' | 'OR'): Promise<Datastore.FindResult> => {
+        const effectiveLogic = logic || 'AND';
+        const { ids } = this.findIds(query, effectiveLogic);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
 
         return {
@@ -240,15 +240,15 @@ export class Datastore {
      * @param query 
      * @returns 
      */
-    public findIds: Datastore.FindIds = (query: Query): Datastore.FindIdsResult => {
-
-        const orderedResults: string[] = this.getIds(query);
-
+    public findIds: Datastore.FindIds = (query: Query, logic: 'AND' | 'OR' = 'AND'): Datastore.FindIdsResult => {
+        const orderedResults: string[] = this.getIds(query, logic);  // Pass the logic parameter
+    
         return {
             ids: orderedResults,
             totalCount: orderedResults.length
         };
     }
+
 
 
     /**
@@ -272,10 +272,9 @@ export class Datastore {
      *   If two or more documents have the same last modified date, their sort order is unspecified.
      *   The modified date is taken from document.modified[document.modified.length-1].date
      */
-    private getIds(query: Query): string[] {
-
+    private getIds(query: Query, logic: 'AND' | 'OR'): string[] {
         try {
-            return this.indexFacade.find(query);
+            return this.indexFacade.find(query, logic);  // Pass the logic parameter to IndexFacade's find method
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
@@ -381,9 +380,9 @@ export namespace Datastore {
 
     export type Get = (id: string, options?: { skipCache?: boolean, conflicts?: boolean }) => Promise<Document>;
 
-    export type Find = (query: Query) => Promise<FindResult>;
+    export type Find = (query: Query, logic?: 'AND'|'OR') => Promise<FindResult>;
 
-    export type FindIds = (query: Query) => FindIdsResult;
+    export type FindIds = (query: Query, logic?: 'AND'|'OR') => FindIdsResult;
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 

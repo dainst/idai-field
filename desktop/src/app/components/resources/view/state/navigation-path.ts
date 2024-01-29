@@ -170,32 +170,29 @@ export module NavigationPath {
     }
 
 
-    export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath,
-                                           operationId: string|undefined): boolean {
+    export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath, operationId: string|undefined): boolean {
 
-        if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
-                navPath.selectedSegmentId)) {
+        if (navPath.selectedSegmentId && 
+            Document.hasRelationTarget(document, 'liesWithin', navPath.selectedSegmentId) ){
             return true;
         }
 
         return (!navPath.selectedSegmentId && operationId !== undefined
-            && Document.hasRelationTarget(document, 'isRecordedIn',
-                operationId)
+            && Document.hasRelationTarget(document, 'isRecordedIn', operationId)
             && !Document.hasRelations(document, 'liesWithin'));
     }
 
 
-    export async function makeSegments(document: Document, get: (_: string) => Promise<FieldDocument>,
-                                       documentAsContext: boolean = false): Promise<Array<NavigationPathSegment>> {
+    export async function makeSegments(document: Document, get: (_: string) => Promise<FieldDocument>, documentAsContext: boolean = false): Promise<Array<NavigationPathSegment>> {
 
         const segments: Array<NavigationPathSegment> = [];
 
         let currentResourceId: string|undefined = documentAsContext
             ? document.resource.id
-            : ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+            : ModelUtil.getRelationTargetId(document, 'liesWithin', 0) ;
         while (currentResourceId) {
             const currentSegmentDoc = await get(currentResourceId);
-            currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
+            currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0) ;
             segments.unshift( { document: currentSegmentDoc, q: '', categories: [] });
         }
 

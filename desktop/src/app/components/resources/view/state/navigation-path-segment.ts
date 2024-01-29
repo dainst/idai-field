@@ -25,7 +25,7 @@ export module NavigationPathSegment {
 
 
     function hasValidRelation(operationId: string|undefined, segment: NavigationPathSegment,
-                              segments: Array<NavigationPathSegment>): boolean {
+                            segments: Array<NavigationPathSegment>): boolean {
 
         const index = segments.indexOf(segment);
 
@@ -33,8 +33,10 @@ export module NavigationPathSegment {
             ? operationId !== undefined
                 && (Document.hasRelationTarget(segment.document, 'isRecordedIn', operationId)
                     || ['Place', 'TypeCatalog'].includes(segment.document.resource.category))
-            : Document.hasRelationTarget(segment.document,
-                'liesWithin', segments[index - 1].document.resource.id);
+            : (Document.hasRelationTarget(segment.document,
+                'liesWithin', segments[index - 1].document.resource.id)
+                || Document.hasRelationTarget(segment.document,
+                'isPresentIn', segments[index - 1].document.resource.id));
     }
 }
 

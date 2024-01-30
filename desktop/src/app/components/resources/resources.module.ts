@@ -51,6 +51,7 @@ import { StandardStateSerializer } from '../../services/standard-state-serialize
 import { StateSerializer } from '../../services/state-serializer';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
+import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -94,7 +95,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         DeletionInProgressModalComponent,
         ChildrenViewComponent,
         BaseList,
-        QrCodeEditorModalComponent
+        QrCodeEditorModalComponent,
+        DeleteQrCodeModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

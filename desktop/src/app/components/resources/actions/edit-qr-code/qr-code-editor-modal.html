@@ -18,8 +18,12 @@
         </div>
     </div>
 
-    <div *ngIf="hasQrCode()" id="print-button" type="button" class="btn btn-primary" onclick="window.print()">
-        <span>Ausdrucken</span>
+    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary" onclick="window.print()">
+        <span>Drucken</span>
+    </div>
+    <div *ngIf="hasQrCode()" id="delete-qr-code-button" class="btn btn-danger" (click)="deleteCode()">
+        <span class="mdi mdi-delete"></span>
+        <span>Löschen</span>
     </div>
 </div>
 

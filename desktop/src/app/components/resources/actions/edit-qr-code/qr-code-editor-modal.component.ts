@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { Datastore, FieldDocument, IdGenerator } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-modal.component';
+import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 
 const QRCode = require('qrcode');
 
@@ -51,6 +52,21 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         if (code) await this.saveCode(code);
     }
 
+
+    public async deleteCode() {
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                DeleteQrCodeModalComponent,
+                { animation: false, backdrop: 'static', keyboard: false }
+            );
+
+            if (await modalRef.result) await this.saveCode(undefined);
+        } catch (err) {
+            // Delete QR code modal has been cancelled
+        }
+    }
+
     
     private renderCode() {
 
@@ -61,13 +77,18 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         );
     }
 
-    private async saveCode(newCode: string) {
 
-        this.document.resource.scanCode = newCode;
+    private async saveCode(newCode?: string) {
+
+        if (newCode) {
+            this.document.resource.scanCode = newCode;
+        } else {
+            delete this.document.resource.scanCode;
+        }
 
         try {
             await this.datastore.update(this.document);
-            this.renderCode();
+            if (newCode) this.renderCode();
         } catch (errWithParams) {
             this.messages.add(errWithParams);
         }
@@ -83,8 +104,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             );
 
             return await modalRef.result;
-        } catch (err) {
-            console.error(err);
+        } catch (_) {
+            // QR code scanner modal has been cancelled
             return undefined;
         }
     }

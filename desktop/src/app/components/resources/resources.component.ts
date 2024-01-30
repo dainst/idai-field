@@ -182,10 +182,10 @@ export class ResourcesComponent implements OnDestroy {
 
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeEditorModalComponent,
-                { animation: false, backdrop: 'static' }
+                { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.document = document;
-            modalRef.componentInstance.render();
+            AngularUtility.blurActiveElement();
         } catch (err) {
             console.error(err);
         } finally {

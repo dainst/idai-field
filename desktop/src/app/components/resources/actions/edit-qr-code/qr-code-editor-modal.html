@@ -1,19 +1,35 @@
-<div class="modal-header" data-bs-backdrop="static" data-keyboard="false">
-    <h5 class="modal-title">QRCode</h5>
+<div id="view-modal-header" class="modal-header">
+    <div class="text-truncate heading">QR-Code</div>
+    <button class="btn btn-primary btn-square" (click)="cancel()">
+        <span class="mdi mdi-close"></span>
+    </button>
 </div>
-<div id="qr-code-editor-modal">
-    <div class="qr-code-editor-modal-content">
-        <h5 style="margin-left: 10px;">{{document.resource.identifier}}</h5>
+<div id="qr-code-editor-modal-body" class="modal-body">
+    <div id="qr-code-container">
+        <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
+        <div *ngIf="!hasQrCode()" id="qr-code-placeholder">
+            <span id="add-qr-code-button"
+                  class="mdi mdi-48px mdi-plus-circle"
+                  [ngbPopover]="addQrCodePopover"
+                  placement="bottom"
+                  container="body"
+                  popoverClass="add-qr-code-popover">
+            </span>
+        </div>
     </div>
 
-    <canvas id="qr-code-canvas" style="margin-left: 100px"> </canvas>
-    <footer style="text-align: center">{{document.resource.id}}</footer>
-</div>
-<div class="modal-footer">
-    <div id="print-button" type="button" class="btn btn-primary" onclick="window.print()">
+    <div *ngIf="hasQrCode()" id="print-button" type="button" class="btn btn-primary" onclick="window.print()">
         <span>Ausdrucken</span>
     </div>
-    <div type="button" class="btn btn-secondary" (click)="cancel()">
-        <span i18n="@@buttons.cancel">Abbrechen</span>
-    </div>
 </div>
+
+<ng-template #addQrCodePopover>
+    <span id="generate-qr-code-button"
+          class="btn btn-primary"
+          (click)="createNewCode()"
+          i18n="@@resources.qrCodeEditorModal.addQrCode.generate">Neuen Code generieren</span>
+    <span id="set-existing-qr-code-button"
+          class="btn btn-primary"
+          (click)="setExistingCode()"
+          i18n="@@resources.qrCodeEditorModal.addQrCode.setExisting">Existierenden Code übernehmen</span>
+</ng-template>

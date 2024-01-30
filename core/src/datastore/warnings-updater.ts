@@ -11,6 +11,7 @@ import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/query';
 import { DocumentCache } from './document-cache';
+import { FieldResource } from '../model';
 
 
 /**
@@ -19,8 +20,8 @@ import { DocumentCache } from './document-cache';
 export module WarningsUpdater {
 
     const FIELDS_TO_SKIP = [
-        Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, ImageResource.GEOREFERENCE,
-        ImageResource.ORIGINAL_FILENAME
+        Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
+        ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
     ];
 
 

@@ -4,6 +4,7 @@ import { Datastore, FieldDocument, IdGenerator } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-modal.component';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 const QRCode = require('qrcode');
 
@@ -61,6 +62,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.document = this.document;
+            AngularUtility.blurActiveElement();
 
             if (await modalRef.result) await this.saveCode(undefined);
         } catch (err) {

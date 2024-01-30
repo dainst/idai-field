@@ -1,4 +1,6 @@
 #qr-code-editor-modal-body {
+  text-align: center;
+
   #qr-code-container {
     width: 300px;
     height: 300px;
@@ -17,6 +19,10 @@
       line-height: 300px;
       user-select: none;
     }
+  }
+
+  .btn {
+    margin: 16px 5px 0 5px;
   }
 }
 

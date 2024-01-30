@@ -19,11 +19,13 @@
     </div>
 
     <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary" onclick="window.print()">
-        <span>Drucken</span>
+        <span class="mdi mdi-printer"></span>
+        <span class="button-label">Drucken</span>
     </div>
+
     <div *ngIf="hasQrCode()" id="delete-qr-code-button" class="btn btn-danger" (click)="deleteCode()">
         <span class="mdi mdi-delete"></span>
-        <span>Löschen</span>
+        <span class="button-label">Löschen</span>
     </div>
 </div>
 

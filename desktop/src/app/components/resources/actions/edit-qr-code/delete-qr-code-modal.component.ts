@@ -1,18 +1,21 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FieldDocument } from 'idai-field-core';
+
 
 @Component({
-    selector: 'delete-qr-codemodal',
     templateUrl: './delete-qr-code-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
-
 /**
  * @author Thomas Kleinke
  */
 export class DeleteQrCodeModalComponent {
+
+    public document: FieldDocument;
+
 
     constructor(public activeModal: NgbActiveModal) {}
 

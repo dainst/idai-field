@@ -60,6 +60,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 DeleteQrCodeModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }
             );
+            modalRef.componentInstance.document = this.document;
 
             if (await modalRef.result) await this.saveCode(undefined);
         } catch (err) {

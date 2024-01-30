@@ -131,14 +131,11 @@ export class RelationsManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
-        if ('created' in document) {
-            return this.datastore.update(
+        return document.resource.id
+            ? this.datastore.update(
                 document as Document,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds
-            )
-        }
-        
-        return this.datastore.create(document);
+            ) : this.datastore.create(document);
     }
 
 

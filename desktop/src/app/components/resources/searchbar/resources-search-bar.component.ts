@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, FieldDocument } from 'idai-field-core';
+import { Datastore } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -94,12 +94,8 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
                 QrCodeScannerModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }
             );
-
-            const qrCode = await modalRef.result;
-
-            this.openDocument(qrCode);
-            
-            return true;
+            const scannedCode: string = await modalRef.result;
+            await this.openDocument(scannedCode);
         } catch (closeReason) {
             if (closeReason !== 'cancel') {
                 this.messages.add([M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE]);
@@ -113,9 +109,14 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     private async openDocument(scannedCode: string) {
 
-        const [uuid, projectName] = scannedCode.split('@');
-        const document = (await this.datastore.get(uuid) as FieldDocument);
+        const result: Datastore.FindResult = await this.datastore.find(
+            { constraints: { 'scanCode:match': scannedCode } }
+        );
 
-        this.routingService.jumpToResource(document);
+        if (result.documents.length > 0) {
+            this.routingService.jumpToResource(result.documents[0]);
+        } else {
+            this.messages.add([M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND]);
+        }
     }
 }

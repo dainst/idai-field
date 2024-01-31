@@ -235,6 +235,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
     public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
     public static RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE = 'resources.error.qrCodeScanningFailure';
+    public static RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND = 'resources.error.qrCodeResourceNotFound';
 
     // Project identifier validation
     public static PROJECT_CREATION_ERROR_MISSING_IDENTIFIER = 'projectCreation.error.missingIdentifier';
@@ -1878,6 +1879,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.qrCodeScanningFailure',
                 value: 'Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND] = {
+            content: i18n({
+                id: 'messages.resources.error.qrCodeResourceNotFound',
+                value: 'Für diesen QR-Code konnte keine Ressource gefunden werden.'
             }),
             level: 'danger',
             params: [],

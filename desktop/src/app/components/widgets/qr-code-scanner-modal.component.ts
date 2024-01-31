@@ -30,7 +30,7 @@ export class QrCodeScannerModalComponent implements OnInit {
 
     public cancel() {
         
-        if (!this.cameraNotFound) this.qrScanner.stop();
+        if (!this.cameraNotFound) this.stopScanner();
         if (this.loading.isLoading('qrCodeScanner')) this.loading.stop('qrCodeScanner', false);
         this.activeModal.dismiss('cancel');
     }
@@ -45,7 +45,7 @@ export class QrCodeScannerModalComponent implements OnInit {
         this.qrScanner = new QrScanner(
             videoElement,
             result => {
-                this.qrScanner.stop();
+                this.stopScanner();
                 this.activeModal.close(result.data);
             },
             {
@@ -66,5 +66,12 @@ export class QrCodeScannerModalComponent implements OnInit {
         } finally {
             this.loading.stop('qrCodeScanner', false);
         }
+    }
+
+
+    private stopScanner() {
+
+        this.qrScanner.stop();
+        this.qrScanner.destroy();
     }
 }

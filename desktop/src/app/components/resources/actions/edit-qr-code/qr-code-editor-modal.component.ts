@@ -5,6 +5,7 @@ import { Messages } from '../../../messages/messages';
 import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-modal.component';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { M } from '../../../messages/m';
 
 const QRCode = require('qrcode');
 
@@ -107,8 +108,11 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             );
 
             return await modalRef.result;
-        } catch (_) {
-            // QR code scanner modal has been cancelled
+        } catch (closeReason) {
+            if (closeReason !== 'cancel') {
+                this.messages.add([M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE]);
+                console.error(closeReason);
+            }
             return undefined;
         }
     }

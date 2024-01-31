@@ -6,6 +6,9 @@ import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { QrCodeScannerModalComponent } from '../../widgets/qr-code-scanner-modal.component';
 import { Routing } from '../../../services/routing';
+import { Messages } from '../../messages/messages';
+import { M } from '../../messages/m';
+
 
 @Component({
     selector: 'resources-search-bar',
@@ -29,7 +32,8 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
                 private menus: Menus,
                 private modalService: NgbModal,        
                 private datastore: Datastore,
-                private routingService: Routing) {
+                private routingService: Routing,
+                private messages: Messages) {
 
         super();
     }
@@ -96,8 +100,11 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
             this.openDocument(qrCode);
             
             return true;
-        } catch (_) {
-            return false;
+        } catch (closeReason) {
+            if (closeReason !== 'cancel') {
+                this.messages.add([M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE]);
+                console.error(closeReason);
+            }
         } finally {
             this.menus.setContext(MenuContext.DEFAULT);
         }

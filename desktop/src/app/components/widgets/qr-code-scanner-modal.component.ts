@@ -6,24 +6,34 @@ import QrScanner from 'qr-scanner';
 @Component({
     templateUrl: './qr-code-scanner-modal.html'
 })
-
 /**
  * @author Danilo Guzzo
+ * @author Thomas Kleinke
  */
 export class QrCodeScannerModalComponent implements OnInit {
     
-    public hasCamera: boolean;
+    public cameraNotFound: boolean = false;
 
-    private qrScanner: any;
+    private qrScanner: QrScanner;
 
 
-    constructor(public activeModal: NgbActiveModal) { 
-
-        this.hasCamera = true;
-    }
+    constructor(public activeModal: NgbActiveModal) {}
 
 
     async ngOnInit() {
+
+        await this.startScanner();
+    }
+
+
+    public cancel() {
+        
+        if (!this.cameraNotFound) this.qrScanner.stop();
+        this.activeModal.dismiss('cancel');
+    }
+
+
+    private async startScanner() {
 
         const videoElement: HTMLVideoElement = document.querySelector('video');
 
@@ -35,23 +45,19 @@ export class QrCodeScannerModalComponent implements OnInit {
             },
             {
                 returnDetailedScanResult: true,
-                highlightScanRegion: true
+                highlightScanRegion: true,
+                highlightCodeOutline: true
             }
         );
 
         try {
             await this.qrScanner.start();
-            this.hasCamera = true;
         } catch (err) {
-            console.error(err);
-            this.hasCamera = false;
+            if (err === 'Camera not found.') {
+                this.cameraNotFound = true;
+            } else {
+                this.activeModal.dismiss(err);
+            }
         }
-    }
-
-
-    public cancel() {
-        
-        if (this.hasCamera) this.qrScanner.stop();
-        this.activeModal.dismiss('cancel');
     }
 }

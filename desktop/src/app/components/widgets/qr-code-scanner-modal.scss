@@ -1,0 +1,15 @@
+#qr-code-scanner-modal-body {
+  #qr-code-scanner-container {
+    width: 100%;
+    min-height: 263px;
+
+    video {
+      width: 100%;
+    }
+
+    .alert {
+      position: absolute;
+      margin: 20px;
+    }
+  }
+}

@@ -1,18 +1,17 @@
-<h1 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    Scanner
-</h1>
-<hr />
-<div>
-    <video style="max-width: 100%"></video>
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@widgets.qrCodeScanner.header">QR-Code scannen</h5>
 </div>
 
-<h2 *ngIf="!hasCamera" style="text-align: center; color: red">
-    <span class="mdi mdi-emoticon-sad-outline"
-          style="font-size: xxx-large; position: absolute; left: 225px; bottom: 150px; color: red;">
-    </span>
-    Sorry <br />
-    Camera not found
-</h2>
+<div id="qr-code-scanner-modal-body" class="modal-body">
+    <div id="qr-code-scanner-container" class="d-flex align-items-center justify-content-center">
+        <video></video>
+        <div *ngIf="cameraNotFound" class="alert alert-warning" i18n="@@widgets.qrCodeScanner.cameraNotFound">
+            Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen
+            Berechtigungen erteilt sind.
+        </div>
+    </div>
+</div>
+
 <div class="modal-footer">
     <div type="button" class="btn btn-secondary" (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>

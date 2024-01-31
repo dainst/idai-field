@@ -6,7 +6,9 @@ defmodule FieldHub.CouchService do
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
-
+alias Cachex
+alias ExJsonSchema
+alias ElixirLS
   require Logger
 
   @doc """
@@ -343,66 +345,73 @@ defmodule FieldHub.CouchService do
   __Parameters__
   - `project_identifier` the project's name.
   """
-  def get_last_change_id(project_identifier) do
-
-    # The order of the document in the generated list of maps seems to vary, so it is not possible to get the last change.
-    # The geneated Json is also not constant: different according the ids: "configuration", "project", or of "type a4f3767f-0c64-455e-bfbf-2932128fb3df"
-
-
-    get_change_infos(project_identifier)
-    |> Map.get(:body)
-    |> Jason.decode!()
-    |> Map.get("results")
-    |> List.first()
-    |> Map.get("id")
-    # |>IO.inspect()
-
-    # Enum.at(
-    #   (get_change_infos(project_identifier).body
-    #    |> Jason.decode!()
-    #    )["results"],
-    #   0
-    # )["id"]
-
-  end
-
-  def get_last_change_date(project_identifier) do
-    # IO.inspect(get_last_change_id(project_identifier))
-    # last_change =
-      HTTPoison.get!(
-        "#{base_url()}/#{project_identifier}/#{get_last_change_id(project_identifier)}",
-        get_user_credentials()
-        |> headers()
-      )
-
-      # last_change.body
-      #    |>Jason.decode()
-      #    |> case do
-      #      {:ok, result} ->
-      #       result
-      #         |> Map.fetch("modified")
-      #         |> case do
-      #           {:ok, time_stamp } ->
-      #             time_stamp
-      #             |> List.last()
-      #             |> Map.fetch("date")
-      #             |> Tuple.to_list()
-      #             |> List.last()
-      #             # |> IO.inspect()
-      #         end
-      #    end
-
-        # TODO remove the "1" bellow, and adapt and uncomment the previous lines
-        1
-  end
-
-  defp get_change_infos(project_identifier) do
-   HTTPoison.get!(
-      "#{base_url()}/#{project_identifier}/_changes?descending=true",
+  def get_last_change_info(project_identifier) do
+    changes = HTTPoison.get!(
+      "#{base_url()}/#{project_identifier}/_changes",
       get_user_credentials()
       |> headers()
     )
+    |> Map.get(:body)
+    |> Jason.decode!()
+
+    last_sequence = Map.get(changes,"last_seq")
+
+    Map.get(changes,"results")
+      |> Enum.find( fn map -> map["seq"] == last_sequence end)
+
+      # m|> Map.get("id")
+      # |> IO.inspect(label: "*****")
+      # m
   end
+
+  def get_last_change_date(project_identifier) do
+      # IO.inspect(Map.get(get_last_change_info(project_identifier),"id"), label: "*****")
+      case Map.get(get_last_change_info(project_identifier),"id") do
+        :no_changes_found ->
+          :no_changes_found
+        result ->
+          HTTPoison.get!(
+            "#{base_url()}/#{project_identifier}/#{result}",
+            get_user_credentials()
+          |> headers()
+
+        )
+        |> Map.get(:body)
+        |>Jason.decode()
+
+        |> case do
+            {:ok, result} ->
+            #  created_infos = Map.fetch(result,"created")
+            #  created_infos.date
+
+            result
+              |> Map.fetch("modified")
+              |> case do
+                {:ok, time_stamp } ->
+                  time_stamp
+              #     # |> List.last()
+              #     # |> Map.fetch("date")
+              #     # |> Tuple.to_list()
+              #     # |> List.last()
+                |> IO.inspect(label: "---  ---  ---" )
+                end
+              end
+        end
+
+        # TODO remove the "1" bellow, and adapt and uncomment the previous lines
+        # 1
+  end
+
+  # defp get_change_infos(project_identifier) do
+  #  HTTPoison.get!(
+  #     "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=1&include_docs=true",
+  #     # "#{base_url()}/#{project_identifier}/_changes",
+  #     get_user_credentials()
+  #     |> headers()
+  #     |> dbg()
+
+  #   )
+  # end
 
   @doc """
   Returns the result of a `_all_docs` CouchDB query for the provided list of ids.

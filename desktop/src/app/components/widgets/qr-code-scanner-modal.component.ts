@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import QrScanner from 'qr-scanner'; 
+import { Loading } from './loading';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class QrCodeScannerModalComponent implements OnInit {
     private qrScanner: QrScanner;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private loading: Loading) {}
 
 
     async ngOnInit() {
@@ -29,11 +31,14 @@ export class QrCodeScannerModalComponent implements OnInit {
     public cancel() {
         
         if (!this.cameraNotFound) this.qrScanner.stop();
+        if (this.loading.isLoading('qrCodeScanner')) this.loading.stop('qrCodeScanner', false);
         this.activeModal.dismiss('cancel');
     }
 
 
     private async startScanner() {
+
+        this.loading.start('qrCodeScanner', false);
 
         const videoElement: HTMLVideoElement = document.querySelector('video');
 
@@ -58,6 +63,8 @@ export class QrCodeScannerModalComponent implements OnInit {
             } else {
                 this.activeModal.dismiss(err);
             }
+        } finally {
+            this.loading.stop('qrCodeScanner', false);
         }
     }
 }

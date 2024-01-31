@@ -51,7 +51,13 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     public async setExistingCode() {
 
         const code: string = await this.scanExistingCode();
-        if (code) await this.saveCode(code);
+        if (!code) return;
+
+        if (this.isUnassignedCode(code)) {
+            await this.saveCode(code);
+        } else {
+            this.messages.add([M.RESOURCES_ERROR_QR_CODE_ALREADY_ASSIGNED]);
+        }
     }
 
 
@@ -115,5 +121,11 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             }
             return undefined;
         }
+    }
+
+
+    private isUnassignedCode(code: string): boolean {
+
+        return this.datastore.findIds({ constraints: { 'scanCode:match': code } }).totalCount === 0;
     }
 }

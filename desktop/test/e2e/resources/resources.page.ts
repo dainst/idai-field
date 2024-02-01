@@ -45,6 +45,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuAddQrCodeButton() {
+
+        return click('#context-menu-add-qr-code-button');
+    }
+
+
     public static clickHierarchyButton(identifier: string) {
 
         return click('#resource-' + identifier + ' .hierarchy-button');
@@ -327,6 +333,12 @@ export class ResourcesPage {
     public static getContextMenuMoveButton() {
 
         return getLocator('#context-menu-move-button');
+    }
+
+
+    public static getQrCodeScannerModalBody() {
+
+        return getLocator('#qr-code-scanner-modal-body');
     }
 
 

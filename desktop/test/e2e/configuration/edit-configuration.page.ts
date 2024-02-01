@@ -45,6 +45,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleScanCodesSlider() {
+
+        return click('#toggle-scan-codes-slider');
+    }
+
+
     public static clickAddValuelist() {
 
         return click('#add-valuelist-button');

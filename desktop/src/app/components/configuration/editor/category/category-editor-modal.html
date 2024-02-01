@@ -62,7 +62,24 @@
             <span class="mdi mdi-restore"></span>
         </button>
     </div>
-    <div *ngIf="isIdentifierPrefixAvailable()" class="configuration-editor-section">
+    <div *ngIf="isIdentificationCustomizationAvailable()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.qrCodes">
+            QR-Codes
+        </div>
+        <div class="basic-settings-label">
+            <span i18n="@@configuration.useScanCode">QR-Codes zur Identifikation verwenden</span>
+        </div>
+        <div>
+            <label id="toggle-use-scan-code-slider" class="switch">
+                <input
+                    type="checkbox"
+                    [checked]="isUseScanCodeToggled()"
+                    (change)="toggleUseScanCode()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <div *ngIf="isIdentificationCustomizationAvailable()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
             Bezeichner-Präfix
         </div>

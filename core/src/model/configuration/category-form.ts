@@ -25,7 +25,7 @@ export interface CategoryForm {
     required?: boolean;
 
     children: Array<CategoryForm>;
-    parentCategory: CategoryForm|undefined; //  = undefined;
+    parentCategory: CategoryForm|undefined; // = undefined;
     
     groups: Array<Group>;
     
@@ -44,6 +44,7 @@ export interface CategoryForm {
 
     identifierPrefix?: string;
     resourceLimit?: number;
+    useScanCode?: 'qr';
 }
 
 

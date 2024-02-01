@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal } from 'tsfun';
-import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm,
+    CustomFormDefinition } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -45,6 +46,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isCustomCategory = () => this.category.source === 'custom';
 
     public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
+
+    public isUseScanCodeToggled = () => this.getClonedFormDefinition().useScanCode === 'qr';
 
 
     public initialize() {
@@ -118,6 +121,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.hasIdentifierPrefixChanged()
             || this.hasResourceLimitChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
+            || this.getClonedFormDefinition().useScanCode !== this.getCustomFormDefinition().useScanCode
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
@@ -140,7 +144,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    public isIdentifierPrefixAvailable(): boolean {
+    public isIdentificationCustomizationAvailable(): boolean {
         
         return !this.category.isAbstract
             && this.category.name !== 'Project'
@@ -167,6 +171,18 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             return this.numberOfCategoryResources > resourceLimit;
         } catch (_) {
             return false;
+        }
+    }
+
+
+    public toggleUseScanCode() {
+        
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+
+        if (clonedFormDefinition.useScanCode) {
+            delete clonedFormDefinition.useScanCode;
+        } else {
+            clonedFormDefinition.useScanCode = 'qr';
         }
     }
 

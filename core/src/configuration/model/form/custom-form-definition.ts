@@ -18,11 +18,13 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     color?: string;
     identifierPrefix?: string;
     resourceLimit?: number;
+    useScanCode?: 'qr';
 }
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit',
+    'useScanCode'
 ];
 
 

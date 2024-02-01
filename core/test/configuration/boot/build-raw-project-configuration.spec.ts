@@ -2702,6 +2702,47 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow using scan code', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                useScanCode: 'qr'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].useScanCode).toBe('qr');
+    });
+
+
     it('set subfields', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

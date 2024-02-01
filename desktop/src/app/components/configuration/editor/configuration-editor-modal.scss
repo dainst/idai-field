@@ -44,6 +44,10 @@
     margin-bottom: 25px;
   }
 
+  .configuration-editor-section.configuration-editor-switch-section:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
   input {
     height: 33.5px;
     font-size: 13px;
@@ -53,11 +57,6 @@
     height: 33.5px;
     line-height: 19px;
     font-size: 15px;
-  }
-
-  .basic-settings > div:last-child .switch,
-  .basic-settings > i18n-switch:last-child .switch {
-    margin-bottom: -6px;
   }
 
   .basic-settings-label {

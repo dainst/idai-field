@@ -118,4 +118,30 @@ test.describe('resources/qr-codes --', () => {
         expect(await NavbarPage.getMessageText())
             .toContain('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.');
     });
+
+
+    test('Remove QR code from resource', async () => {
+        
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.performCreateResource('P2', 'find-pottery');
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+
+        await QrCodeEditorModalPage.clickDeleteQrCode();
+        await QrCodeEditorModalPage.clickConfirmDeletionInModal();
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
+        await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
+        
+        await QrCodeEditorModalPage.clickCancel();
+        await ResourcesPage.clickSelectResource('P2');
+        await ResourcesSearchBarPage.clickOpenQrScanner();
+
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        expect(await NavbarPage.getMessageText())
+            .toContain('Für diesen QR-Code konnte keine Ressource gefunden werden.');
+    });
 });

@@ -26,6 +26,18 @@ export class QrCodeEditorModalPage {
     }
 
 
+    public static clickDeleteQrCode() {
+
+        return click('#delete-qr-code-button');
+    }
+
+
+    public static clickConfirmDeletionInModal() {
+
+        return click('#delete-qr-code-confirm');
+    }
+
+
     public static clickCancel() {
 
         return click('#qr-code-editor-cancel-button');

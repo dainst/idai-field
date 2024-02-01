@@ -20,7 +20,7 @@ test.describe('settings/username --', () => {
 
     test('enter username in update username modal on startup', async () => {
 
-        await start({ dbs: ['test'] });
+        await start({ config: { dbs: ['test'] } });
         await waitForExist(await UpdateUsernameModalPage.getBody());
 
         await UpdateUsernameModalPage.typeInUsername('ABC');

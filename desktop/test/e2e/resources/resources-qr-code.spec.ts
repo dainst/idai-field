@@ -14,11 +14,11 @@ const { test, expect } = require('@playwright/test');
  * @author Danilo Guzzo
  * @author Thomas Kleinke
  */
-test.describe('resources/qr-code --', () => {
+test.describe.only('resources/qr-code --', () => {
 
     test.beforeAll(async () => {
 
-        await start(undefined, 'test/test-data/qrCode.mjpeg');
+        await start({ fakeVideoPath: 'test/test-data/qrCode.mjpeg' });
     });
 
 

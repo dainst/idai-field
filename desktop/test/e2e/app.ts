@@ -3,6 +3,14 @@ import { isString } from 'tsfun';
 
 const fs = require('fs');
 
+
+export interface StartOptions {
+
+    config?: any;
+    fakeVideoPath?: string;
+};
+
+
 let electronApp;
 let window;
 
@@ -18,16 +26,16 @@ const defaultConfig = {
  * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
  * @returns Promise<any> that will resolve once the application is started.
  */
-export async function start(config?: any, fakeVideoPath?: string): Promise<any> {
+export async function start(options?: StartOptions): Promise<any> {
 
-    resetConfigJson(config);
+    resetConfigJson(options?.config);
 
     let args = ['.', 'test'];
 
-    if (fakeVideoPath) {
+    if (options?.fakeVideoPath) {
         args = args.concat([
             '--use-fake-device-for-media-stream',
-            `--use-file-for-fake-video-capture=${fakeVideoPath}`
+            `--use-file-for-fake-video-capture=${options.fakeVideoPath}`
         ]);
     }
 

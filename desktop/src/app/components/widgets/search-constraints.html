@@ -3,7 +3,7 @@
      ngbTooltip="{{getTooltip()}}"
      placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
      (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
-     (click)="tooltip.close(); toggleConstraintsMenu();" >
+     (click)="tooltip.close(); toggleConstraintsMenu();">
     <span *ngIf="constraintListItems.length === 0" class="mdi mdi-plus"></span>
     <span *ngIf="constraintListItems.length > 0" class="badge badge-light">
         {{constraintListItems.length}}

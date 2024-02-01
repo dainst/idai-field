@@ -115,7 +115,13 @@ export class ResourcesContextMenuComponent implements OnChanges {
     
     public isEditQRCodeOptionAvailable(): boolean {
 
-        return this.isEditOptionAvailable();
+        if (!this.isEditOptionAvailable()) return false;
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.contextMenu.documents[0].resource.category
+        );
+
+        return category.useScanCode === 'qr';
     }
 
 

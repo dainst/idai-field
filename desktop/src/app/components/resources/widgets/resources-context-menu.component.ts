@@ -112,8 +112,22 @@ export class ResourcesContextMenuComponent implements OnChanges {
         ).length > 0;
     }
 
+
+    public isAddQRCodeOptionAvailable(): boolean {
+
+        return this.isQrCodeOptionAvailable()
+            && !this.contextMenu.documents[0].resource.scanCode;
+    }
+
     
     public isEditQRCodeOptionAvailable(): boolean {
+
+        return this.isQrCodeOptionAvailable()
+            && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    private isQrCodeOptionAvailable(): boolean {
 
         if (!this.isEditOptionAvailable()) return false;
 

@@ -59,4 +59,23 @@
   .basic-settings > i18n-switch:last-child .switch {
     margin-bottom: -6px;
   }
+
+  .basic-settings-label {
+    width: 300px;
+    float: left;
+    font-size: 15px;
+    user-select: none;
+  }
+  
+  .configuration-editor-switch {
+    width: 340px;
+    
+    div span {
+      user-select: none;
+  
+      &.disabled {
+        color: grey;
+      }
+    }
+  }  
 }

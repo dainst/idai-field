@@ -121,7 +121,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
             this.contextMenu.documents[0].resource.category
         );
 
-        return category.useScanCode === 'qr';
+        return category.scanCodes !== undefined;
     }
 
 

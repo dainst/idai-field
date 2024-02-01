@@ -67,16 +67,36 @@
             QR-Codes
         </div>
         <div class="basic-settings-label">
-            <span i18n="@@configuration.useScanCode">QR-Codes zur Identifikation verwenden</span>
+            <span i18n="@@configuration.scanCodes">QR-Codes zur Identifikation verwenden</span>
         </div>
         <div>
-            <label id="toggle-use-scan-code-slider" class="switch">
+            <label id="toggle-scan-codes-slider" class="switch">
                 <input
                     type="checkbox"
-                    [checked]="isUseScanCodeToggled()"
-                    (change)="toggleUseScanCode()">
+                    [checked]="isScanCodeUsageEnabled()"
+                    (change)="toggleScanCodes()">
                 <span class="slider round"></span>
             </label>
+        </div>
+        <div class="configuration-editor-switch">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.scanCodes.autoCreate"
+                      [class.disabled]="!isScanCodeUsageEnabled()">
+                    Für neue Ressourcen automatisch erzeugen
+                </span>
+            </div>
+            <div>
+                <label id="toggle-auto-create-scan-codes-slider"
+                       class="switch"
+                       [class.disabled]="!isScanCodeUsageEnabled()">
+                    <input
+                        type="checkbox"
+                        [checked]="isScanCodeAutoCreationEnabled()"
+                        [disabled]="!isScanCodeUsageEnabled()"
+                        (change)="toggleAutoCreateScanCodes()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
     <div *ngIf="isIdentificationCustomizationAvailable()" class="configuration-editor-section">

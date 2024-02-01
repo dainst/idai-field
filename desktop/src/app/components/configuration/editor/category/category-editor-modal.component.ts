@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal } from 'tsfun';
+import { equal, Map } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm,
     CustomFormDefinition } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
@@ -47,7 +47,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
 
-    public isUseScanCodeToggled = () => this.getClonedFormDefinition().useScanCode === 'qr';
+    public isScanCodeUsageEnabled = () => this.getClonedFormDefinition().scanCodes !== undefined;
+
+    public isScanCodeAutoCreationEnabled = () => this.getClonedFormDefinition().scanCodes?.autoCreate;
 
 
     public initialize() {
@@ -121,7 +123,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.hasIdentifierPrefixChanged()
             || this.hasResourceLimitChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
-            || this.getClonedFormDefinition().useScanCode !== this.getCustomFormDefinition().useScanCode
+            || this.hasScanCodesConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
@@ -175,15 +177,27 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    public toggleUseScanCode() {
+    public toggleScanCodes() {
         
         const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
 
-        if (clonedFormDefinition.useScanCode) {
-            delete clonedFormDefinition.useScanCode;
+        if (clonedFormDefinition.scanCodes) {
+            delete clonedFormDefinition.scanCodes;
         } else {
-            clonedFormDefinition.useScanCode = 'qr';
+            clonedFormDefinition.scanCodes = {
+                type: 'qr',
+                autoCreate: false
+            };
         }
+    }
+
+
+    public toggleAutoCreateScanCodes() {
+
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+        if (!clonedFormDefinition.scanCodes) return;
+
+        clonedFormDefinition.scanCodes.autoCreate = !clonedFormDefinition.scanCodes.autoCreate;
     }
 
 
@@ -218,6 +232,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return CategoryEditorModalComponent.cleanUpResourceLimit(this.getClonedFormDefinition().resourceLimit)
             !== this.getCustomFormDefinition()?.resourceLimit;
+    }
+
+
+    private hasScanCodesConfigurationChanged(): boolean {
+
+        const clonedScanCodes = (this.getClonedFormDefinition().scanCodes || {}) as Map<any>;
+        const customScanCodes = (this.getCustomFormDefinition().scanCodes || {}) as Map<any>;
+
+        return !equal(clonedScanCodes)(customScanCodes);
     }
 
 

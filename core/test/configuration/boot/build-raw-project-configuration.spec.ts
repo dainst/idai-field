@@ -2728,7 +2728,10 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {},
                 color: 'red',
-                useScanCode: 'qr'
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true
+                }
             }
         };
 
@@ -2739,7 +2742,7 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].useScanCode).toBe('qr');
+        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
     });
 
 

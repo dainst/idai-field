@@ -144,4 +144,24 @@ test.describe('resources/qr-codes --', () => {
         expect(await NavbarPage.getMessageText())
             .toContain('Für diesen QR-Code konnte keine Ressource gefunden werden.');
     });
+
+
+    test('Automatically create QR code for new resource', async () => {
+        
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickOpenContextMenu('Pottery', 'Find');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickToggleAutoCreateScanCodesSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save()
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuEditQrCodeButton();
+        await waitForExist(await QrCodeEditorModalPage.getCanvas());
+        await waitForNotExist(await QrCodeEditorModalPage.getPlaceholder());
+
+        await QrCodeEditorModalPage.clickCancel();
+    });
 });

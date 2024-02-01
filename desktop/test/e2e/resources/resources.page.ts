@@ -51,6 +51,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuEditQrCodeButton() {
+
+        return click('#context-menu-edit-qr-code-button');
+    }
+
+
     public static clickHierarchyButton(identifier: string) {
 
         return click('#resource-' + identifier + ' .hierarchy-button');

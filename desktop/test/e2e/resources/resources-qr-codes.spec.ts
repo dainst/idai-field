@@ -94,4 +94,28 @@ test.describe('resources/qr-codes --', () => {
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
         expect(await ResourcesPage.getSelectedListItemIdentifierText()).toEqual('P1');
     });
+
+
+    test('prevent assigning the same QR code to multiple resources', async () => {
+        
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.performCreateResource('P2', 'find-pottery');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        await QrCodeEditorModalPage.clickCancel();
+
+        await ResourcesPage.clickOpenContextMenu('P2');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        await QrCodeEditorModalPage.clickCancel();
+
+        expect(await NavbarPage.getMessageText())
+            .toContain('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.');
+    });
 });

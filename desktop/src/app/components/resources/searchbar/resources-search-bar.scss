@@ -38,6 +38,7 @@ resources-search-bar {
 
     .search-bar-input {
       width: calc(100% - 101px) !important;
+      border-right: none;
 
       &.small-search-input {
         width: calc(100% - 142px) !important;

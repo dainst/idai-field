@@ -14,6 +14,12 @@ export class QrCodeEditorModalPage {
     }
 
 
+    public static clickGenerateQrCode() {
+
+        return click('#generate-qr-code-button');
+    }
+
+
     public static clickSetExistingQrCode() {
 
         return click('#set-existing-qr-code-button');

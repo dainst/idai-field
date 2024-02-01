@@ -26,7 +26,7 @@ test.describe('resources/qr-code --', () => {
         
         await navigateTo('settings');
         await resetApp();
-        await NavbarPage.clickCloseNonResourcesTab();
+        await enableQrCodesForPotteryCategory();
         await ResourcesPage.clickHierarchyButton('S1');
     });
 
@@ -50,9 +50,27 @@ test.describe('resources/qr-code --', () => {
     }
 
 
-    test('assign existing QR code to resource and select it via QR code scanner', async () => {
+    test('Generate new QR code for resource', async () => {
+        
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
 
-        await enableQrCodesForPotteryCategory();
+        await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
+        await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
+
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickGenerateQrCode();
+
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        await waitForNotExist(await QrCodeEditorModalPage.getPlaceholder());
+        await waitForExist(await QrCodeEditorModalPage.getCanvas());
+
+        await QrCodeEditorModalPage.clickCancel();
+    });
+
+
+    test('assign existing QR code to resource and reselect it via QR code scanner', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');

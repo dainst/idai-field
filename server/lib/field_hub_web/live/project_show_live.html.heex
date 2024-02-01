@@ -59,12 +59,9 @@
                             files: files
                         } -> %>
                             <section>Database documents: <%= db_doc_count %></section>
-                            <%!-- <section>Last update: <%= "TODO: indicate here when the last update took place and an id ???" %></section> --%>
-                            <section>Last change id: <%= @last_update_id %>,
-                                    <br/>
-                                    Last change date:  <%= @last_update_date %>
-                                
-                            </section>
+                            <section>Last sequence: <%= @last_update_seq %></section>
+                            <section>Last change id: <%= @last_update_id %></section>
+                            <section> Last change date:  <%= @last_update_date %></section>
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>
                                 <% :enoent -> %>

@@ -2,10 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import QrScanner from 'qr-scanner'; 
 import { Loading } from './loading';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({
-    templateUrl: './qr-code-scanner-modal.html'
+    templateUrl: './qr-code-scanner-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Danilo Guzzo
@@ -19,12 +24,21 @@ export class QrCodeScannerModalComponent implements OnInit {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private loading: Loading) {}
+                private loading: Loading,
+                private menus: Menus) {}
 
 
     async ngOnInit() {
 
         await this.startScanner();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.QR_CODE_SCANNER) {
+            this.cancel();
+        }
     }
 
 

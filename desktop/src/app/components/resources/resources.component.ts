@@ -178,7 +178,7 @@ export class ResourcesComponent implements OnDestroy {
     public async editQRCode(document: Document) {
 
         try {
-            this.menuService.setContext(MenuContext.MODAL);
+            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
 
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeEditorModalComponent,
@@ -186,6 +186,7 @@ export class ResourcesComponent implements OnDestroy {
             );
             modalRef.componentInstance.document = document;
             AngularUtility.blurActiveElement();
+            await modalRef.result;
         } catch (err) {
             console.error(err);
         } finally {

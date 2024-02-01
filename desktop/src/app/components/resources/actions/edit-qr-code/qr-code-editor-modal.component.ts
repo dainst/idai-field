@@ -6,12 +6,17 @@ import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-mo
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { M } from '../../../messages/m';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 const QRCode = require('qrcode');
 
 
 @Component({
-    templateUrl: './qr-code-editor-modal.html'
+    templateUrl: './qr-code-editor-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Danilo Guzzo
@@ -28,7 +33,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 private idGenerator: IdGenerator,
                 private datastore: Datastore,
                 private messages: Messages,
-                private modalService: NgbModal) {}
+                private modalService: NgbModal,
+                private menus: Menus) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -39,6 +45,14 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     ngAfterViewInit() {
         
         if (this.hasQrCode()) this.renderCode();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.QR_CODE_EDITOR) {
+            this.cancel();
+        }
     }
 
 
@@ -63,6 +77,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public async deleteCode() {
 
+        this.menus.setContext(MenuContext.MODAL);
+
         try {
             const modalRef: NgbModalRef = this.modalService.open(
                 DeleteQrCodeModalComponent,
@@ -74,6 +90,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             if (await modalRef.result) await this.saveCode(undefined);
         } catch (err) {
             // Delete QR code modal has been cancelled
+        } finally {
+            this.menus.setContext(MenuContext.QR_CODE_EDITOR);
         }
     }
 
@@ -107,6 +125,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     private async scanExistingCode(): Promise<string> {
 
+        this.menus.setContext(MenuContext.QR_CODE_SCANNER);
+
         try {
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeScannerModalComponent,
@@ -120,6 +140,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 console.error(closeReason);
             }
             return undefined;
+        } finally {
+            this.menus.setContext(MenuContext.QR_CODE_EDITOR);
         }
     }
 

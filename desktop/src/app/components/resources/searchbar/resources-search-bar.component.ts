@@ -95,8 +95,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     public async openQrCodeScannerModal() {
        
+        this.menus.setContext(MenuContext.QR_CODE_SCANNER);
+
         try {
-            this.menus.setContext(MenuContext.MODAL);
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeScannerModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }

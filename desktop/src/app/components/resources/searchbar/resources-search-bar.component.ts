@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore } from 'idai-field-core';
+import { Datastore, ProjectConfiguration } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -33,7 +33,8 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
                 private modalService: NgbModal,        
                 private datastore: Datastore,
                 private routingService: Routing,
-                private messages: Messages) {
+                private messages: Messages,
+                private projectConfiguration: ProjectConfiguration) {
 
         super();
     }
@@ -83,6 +84,12 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
         if (!insideFilterMenu && this.popover) this.popover.close();
         if (!insideSearchBarComponent) this.hideSuggestions();
+    }
+
+
+    public isQrCodeScannerButtonVisible(): boolean {
+        
+        return this.projectConfiguration.getQrCodeCategories().length > 0;
     }
 
 

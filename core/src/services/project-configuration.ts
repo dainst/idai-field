@@ -204,6 +204,13 @@ export class ProjectConfiguration {
     }
 
 
+    public getQrCodeCategories(): Array<CategoryForm> {
+
+        return Tree.flatten(this.categoryForms)
+            .filter(categoryForm => categoryForm.useScanCode === 'qr');
+    }
+
+
     public getRelations(): Array<Relation> {
 
         return this.relations;

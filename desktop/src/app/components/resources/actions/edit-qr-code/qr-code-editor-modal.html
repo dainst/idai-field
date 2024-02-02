@@ -10,6 +10,14 @@
 <div id="qr-code-editor-modal-body" class="modal-body">
     <div id="qr-code-container">
         <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
+        <div *ngIf="hasQrCode()" id="qr-code-print-label">
+            <div id="qr-code-identifier">{{document.resource.identifier}}</div>
+            <div *ngIf="document.resource.shortDescription"
+                 id="qr-code-short-description">
+                {{getShortDescriptionLabel()}}
+            </div>
+            <div id="qr-code-category">{{getCategoryLabel()}}</div>
+        </div>
         <div *ngIf="!hasQrCode()" id="qr-code-placeholder">
             <span id="add-qr-code-button"
                   class="mdi mdi-48px mdi-plus-circle"
@@ -21,10 +29,11 @@
         </div>
     </div>
 
-    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary" onclick="window.print()">
+    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary"
+         onclick="window.print()">
         <span class="mdi mdi-printer"></span>
         <span class="button-label" i18n="@@buttons.print">Drucken</span>
-    </div>
+</div>
 
     <div *ngIf="hasQrCode()" id="delete-qr-code-button" class="btn btn-danger" (click)="deleteCode()">
         <span class="mdi mdi-delete"></span>

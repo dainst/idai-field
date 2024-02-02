@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, FieldDocument, IdGenerator } from 'idai-field-core';
+import { Datastore, FieldDocument, IdGenerator, Labels, ProjectConfiguration, Resource } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-modal.component';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
@@ -34,12 +34,20 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 private datastore: Datastore,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private menus: Menus) {}
+                private menus: Menus,
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public cancel = () => this.activeModal.close();
 
     public hasQrCode = () => this.document.resource.scanCode !== undefined;
+
+    public getShortDescriptionLabel = () => Resource.getShortDescriptionLabel(
+        this.document.resource, this.labels, this.projectConfiguration
+    );
+
+    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.document));
 
 
     ngAfterViewInit() {

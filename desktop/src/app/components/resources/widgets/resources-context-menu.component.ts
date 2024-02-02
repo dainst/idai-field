@@ -52,6 +52,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isMoveOptionAvailable()
             || this.isEditImagesOptionAvailable()
             || this.isWarningsOptionAvailable()
+            || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable();
     }
 

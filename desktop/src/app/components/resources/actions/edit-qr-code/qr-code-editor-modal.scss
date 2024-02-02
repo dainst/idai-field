@@ -72,16 +72,17 @@
           display: block !important;
           padding: 5px 15px;
           border-radius: 7px;
+          font-family: serif;
 
           #qr-code-identifier {
-            font-size: 22px !important;
+            font-size: 28px !important;
             font-weight: bold;
           }
 
           #qr-code-short-description,
           #qr-code-category {
             margin-top: 10px;
-            font-size: 18px !important;
+            font-size: 24px !important;
           }
 
           #qr-code-short-description {
@@ -96,15 +97,15 @@
           #qr-code-app {
             position: absolute;
             top: 0;
-            font-size: 16px;
+            font-size: 22px;
           }
 
           #qr-code-project {
-            left: 0;
+            left: 10px;
           }
 
           #qr-code-app {
-            right: 0;
+            right: 10px;
           }
         }
       }

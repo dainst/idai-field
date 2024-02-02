@@ -65,6 +65,7 @@
         visibility: visible;
         width: fit-content !important;
         height: 100% !important;
+        margin-top: 50px;
         border: none !important;
 
         #qr-code-print-label {
@@ -89,6 +90,21 @@
 
           #qr-code-category {
             font-style: italic;
+          }
+
+          #qr-code-project,
+          #qr-code-app {
+            position: absolute;
+            top: 0;
+            font-size: 16px;
+          }
+
+          #qr-code-project {
+            left: 0;
+          }
+
+          #qr-code-app {
+            right: 0;
           }
         }
       }

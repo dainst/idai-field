@@ -11,6 +11,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 
 const QRCode = require('qrcode');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 @Component({
@@ -52,6 +53,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.document));
 
     public getProjectLabel = () => this.projectLabelProvider.getProjectLabel();
+
+    public getAppVersion = () => remote.app.getVersion();
 
 
     ngAfterViewInit() {

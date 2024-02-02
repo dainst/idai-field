@@ -11,6 +11,8 @@
     <div id="qr-code-container">
         <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
         <div *ngIf="hasQrCode()" id="qr-code-print-label">
+            <div id="qr-code-project">{{getProjectLabel()}}</div>
+            <div id="qr-code-app">Field Desktop {{getAppVersion()}}</div>
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>
             <div *ngIf="document.resource.shortDescription"
                  id="qr-code-short-description">
@@ -29,8 +31,7 @@
         </div>
     </div>
 
-    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary"
-         onclick="window.print()">
+    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary" (click)="printCode()">
         <span class="mdi mdi-printer"></span>
         <span class="button-label" i18n="@@buttons.print">Drucken</span>
 </div>

@@ -16,8 +16,7 @@ export module ExportRunner {
 
     const PROJECT_CONTEXT = 'project';
 
-    export const BASE_EXCLUSION = ['Operation', 'Project'];
-    const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
+    export const EXCLUDED_CATEGORIES = ['Operation'];
 
 
     /**
@@ -70,10 +69,7 @@ export module ExportRunner {
                                                                selectedOperationId: string|undefined,
                                                                categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
-        const categories = getCategoriesWithoutExcludedCategories(
-            categoriesList,
-            BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION)
-        );
+        const categories = getCategoriesWithoutExcludedCategories(categoriesList, EXCLUDED_CATEGORIES);
 
         const counts: Array<CategoryCount> = [];
         for (let category of categories) {
@@ -89,7 +85,7 @@ export module ExportRunner {
 
     function determineCategoryCountsForSchema(categoriesList: Array<CategoryForm>) {
 
-        const categories = getCategoriesWithoutExcludedCategories(categoriesList, BASE_EXCLUSION);
+        const categories = getCategoriesWithoutExcludedCategories(categoriesList, EXCLUDED_CATEGORIES);
         return categories.map(pairWith(val(-1))) as Array<CategoryCount>;
     }
 

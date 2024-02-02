@@ -58,6 +58,7 @@ import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
+import { ProjectLabelProvider } from '../services/project-label-provider';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -260,7 +261,8 @@ registerLocaleData(localeUk, 'uk');
         UtilTranslations,
         WarningsService,
         MenuModalLauncher,
-        ViewModalLauncher
+        ViewModalLauncher,
+        ProjectLabelProvider
     ],
     bootstrap: [AppComponent]
 })

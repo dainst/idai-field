@@ -94,9 +94,13 @@ export module Document {
 
     export function getLabel(document: Document, labels: Labels): string {
 
-        return (document.resource.shortDescription)
-            ? labels.getFromI18NString(document.resource.shortDescription) + ' (' + document.resource.identifier + ')'
-            : document.resource.identifier;
+        let label: string = document.resource.identifier;
+
+        if (document.resource.shortDescription) {
+            label += ' (' + labels.getFromI18NString(document.resource.shortDescription) + ')';
+        }
+
+        return label;
     }
 
 

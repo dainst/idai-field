@@ -55,10 +55,12 @@ function convertTypeDependent(container: any, fieldName: string, inputType: Inpu
     if (inputType === InputType.BOOLEAN) convertBoolean(container, fieldName);
     if (inputType === InputType.DATING) convertDating(container, fieldName);
     if (inputType === InputType.DIMENSION) convertDimension(container, fieldName);
-    if (inputType === InputType.CHECKBOXES) convertCheckboxes(container, fieldName);
     if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);
     if (inputType === InputType.FLOAT || inputType === InputType.UNSIGNEDFLOAT) convertFloat(container, fieldName);
     if (inputType === InputType.COMPOSITE) convertComposite(container, fieldName, field);
+    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT) {
+        convertStringArray(container, fieldName)
+    };
 }
 
 
@@ -128,7 +130,7 @@ function convertComposite(resource: Resource, fieldName: string, field: Field) {
 }
 
 
-function convertCheckboxes(container: any, fieldName: string) {
+function convertStringArray(container: any, fieldName: string) {
 
     if (!container[fieldName]) return;
     container[fieldName] = container[fieldName].split(ARRAY_SEPARATOR);

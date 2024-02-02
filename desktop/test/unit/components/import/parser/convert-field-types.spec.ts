@@ -23,7 +23,8 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const result = convertFieldTypes(category)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
+        const result = convertFieldTypes(category)
+            ({ Bool1: 'true', Bool2: 'false', relations: {} } as unknown as Resource);
 
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
@@ -41,18 +42,17 @@ describe('convertFieldTypes', () => {
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                dating: [{
-                    type: 'range',
-                    begin: { inputType: 'bce', inputYear: '0' },
-                    end: { inputType: 'bce', inputYear: '1' },
-                    margin: '1',
-                    source: 'abc',
-                    isImprecise: 'true',
-                    isUncertain: 'false'
-                }],
-                relations: {}
-            } as unknown as Resource);
-
+            dating: [{
+                type: 'range',
+                begin: { inputType: 'bce', inputYear: '0' },
+                end: { inputType: 'bce', inputYear: '1' },
+                margin: '1',
+                source: 'abc',
+                isImprecise: 'true',
+                isUncertain: 'false'
+            }],
+            relations: {}
+        } as unknown as Resource);
 
         const dating: Dating = resource.dating[0];
         expect(dating.type).toBe('range');
@@ -78,9 +78,9 @@ describe('convertFieldTypes', () => {
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                dating: [null],
-                relations: {}
-            } as unknown as Resource);
+            dating: [null],
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['dating']).toEqual([null]);
     });
@@ -112,23 +112,23 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'dimension',
                 inputType: 'dimension'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                dimension: [{
-                    value: '1',
-                    rangeMin: '2',
-                    rangeMax: '3',
-                    inputValue: '4',
-                    inputRangeEndValue: '5',
-                    measurementPosition: 'a',
-                    measurementComment: 'b',
-                    inputUnit: 'mm',
-                    isImprecise: 'true'
-                }],
-                relations: {}
-            } as unknown as Resource);
+            dimension: [{
+                value: '1',
+                rangeMin: '2',
+                rangeMax: '3',
+                inputValue: '4',
+                inputRangeEndValue: '5',
+                measurementPosition: 'a',
+                measurementComment: 'b',
+                inputUnit: 'mm',
+                isImprecise: 'true'
+            }],
+            relations: {}
+        } as unknown as Resource);
 
         const dimension: Dimension = resource['dimension'][0];
         expect(dimension.value).toBe(1);
@@ -207,7 +207,7 @@ describe('convertFieldTypes', () => {
                     { name: 'subfield1', inputType: 'boolean' },
                     { name: 'subfield2', inputType: 'unsignedInt' }
                 ]
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
@@ -226,13 +226,13 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'r',
                 inputType: 'radio'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                r: 'rr',
-                relations: {}
-            } as unknown as Resource);
+            r: 'rr',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['r']).toBe('rr');
     });
@@ -245,13 +245,13 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'd',
                 inputType: 'date'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                d: '10.07.2019',
-                relations: {}
-            } as unknown as Resource);
+            d: '10.07.2019',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['d']).toBe('10.07.2019');
     });
@@ -268,15 +268,15 @@ describe('convertFieldTypes', () => {
             {
                 name: 'dd2',
                 inputType: 'dropdownRange'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                dd1: 'a',
-                dd2: 'b',
-                dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
-                relations: {}
-            } as unknown as Resource);
+            dd1: 'a',
+            dd2: 'b',
+            dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['dd1']).toBe('a');
         expect(resource['dd2']).toBe('b');
@@ -291,13 +291,33 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'CB',
                 inputType: 'checkboxes'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                CB: 'a;b;c',
-                relations: {}
-            } as unknown as Resource);
+            CB: 'a;b;c',
+            relations: {}
+        } as unknown as Resource);
+
+        const cb = resource['CB'];
+        expect(cb).toEqual(['a', 'b', 'c']);
+    });
+
+
+    it('field type simple multi input', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'CB',
+                inputType: 'simpleMultiInput'
+            }] }],
+        } as CategoryForm;
+
+        const resource = convertFieldTypes(category)({
+            CB: 'a;b;c',
+            relations: {}
+        } as unknown as Resource);
 
         const cb = resource['CB'];
         expect(cb).toEqual(['a', 'b', 'c']);
@@ -311,13 +331,13 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'i',
                 inputType: 'int'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                i: '-100',
-                relations: {}
-            } as unknown as Resource);
+            i: '-100',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['i']).toBe(-100);
     });
@@ -330,13 +350,13 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                ui: '100',
-                relations: {}
-            } as unknown as Resource);
+            ui: '100',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['ui']).toBe(100);
     });
@@ -356,15 +376,15 @@ describe('convertFieldTypes', () => {
             {
                 name: 'f3',
                 inputType: 'float'
-            }]}]
+            }] }]
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                f1: '100.1',
-                f2: '100,2',
-                f3: '-100,3',
-                relations: {}
-            } as unknown as Resource);
+            f1: '100.1',
+            f2: '100,2',
+            f3: '-100,3',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['f1']).toBe(100.1);
         expect(resource['f2']).toBe(100.2);
@@ -382,14 +402,14 @@ describe('convertFieldTypes', () => {
             }, {
                 name: 'uf2',
                 inputType: 'unsignedFloat'
-            }]}]
+            }] }]
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                uf1: '100.1',
-                uf2: '100,2',
-                relations: {}
-            } as unknown as Resource);
+            uf1: '100.1',
+            uf2: '100,2',
+            relations: {}
+        } as unknown as Resource);
 
         expect(resource['uf1']).toBe(100.1);
         expect(resource['uf2']).toBe(100.2);
@@ -403,15 +423,15 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         const resource = convertFieldTypes(category)({
-                relations: {
-                    isAbove: 'a;b',
-                    isBelow: 'd'
-                }
-            } as unknown as Resource);
+            relations: {
+                isAbove: 'a;b',
+                isBelow: 'd'
+            }
+        } as unknown as Resource);
 
         expect(resource.relations['isAbove']).toEqual(['a', 'b']);
         expect(resource.relations['isBelow']).toEqual(['d']);
@@ -427,7 +447,7 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         expectNotANumberError(category, 'ui', 'abc');
@@ -441,7 +461,7 @@ describe('convertFieldTypes', () => {
             groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
-            }]}],
+            }] }],
         } as CategoryForm;
 
         expectNotANumberError(category, 'uf', 'a100.0');

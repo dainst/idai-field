@@ -168,6 +168,9 @@ export class TypesComponent extends BaseList implements OnChanges {
                 this.loadImages(await Hierarchy.getAntescendents(
                     id => this.datastore.get(id), document.resource.id) as Array<FieldDocument>, true);
                 break;
+            case 'edit-qr-code':
+                await this.resourcesComponent.editQRCode(document);
+                break;
         }
     }
 

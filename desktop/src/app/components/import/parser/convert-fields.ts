@@ -13,15 +13,15 @@ const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includ
 
 
 /**
- * Converts string values to values of other categories, based on field type information.
+ * Converts string values to values of other categories, based on the respective input type.
  * No validation other than errors resulting from parsing values from strings is handled here.
  *
- * Conversion of resource done by reference, i.e. in place
+ * Conversion of resource done by reference, i. e. in place
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function convertFieldTypes(category: CategoryForm) {
+export function convertFields(category: CategoryForm) {
 
     return (resource: Resource) => {
 

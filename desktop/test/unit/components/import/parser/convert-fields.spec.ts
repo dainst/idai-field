@@ -1,14 +1,14 @@
 import { Dating, Dimension, Resource, CategoryForm } from 'idai-field-core';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
-import { convertFieldTypes } from '../../../../../src/app/components/import/parser/convert-field-types';
+import { convertFields } from '../../../../../src/app/components/import/parser/convert-fields';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('convertFieldTypes', () => {
+describe('convertFields', () => {
 
     it('input type boolean', () => {
 
@@ -23,7 +23,7 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const result = convertFieldTypes(category)
+        const result = convertFields(category)
             ({ Bool1: 'true', Bool2: 'false', relations: {} } as unknown as Resource);
 
         expect(result['Bool1']).toBe(true);
@@ -41,7 +41,7 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             dating: [{
                 type: 'range',
                 begin: { inputType: 'bce', inputYear: '0' },
@@ -77,7 +77,7 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             dating: [null],
             relations: {}
         } as unknown as Resource);
@@ -97,7 +97,7 @@ describe('convertFieldTypes', () => {
         } as CategoryForm;
 
         try {
-            convertFieldTypes(category)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
+            convertFields(category)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
             fail();
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
@@ -115,7 +115,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             dimension: [{
                 value: '1',
                 rangeMin: '2',
@@ -153,7 +153,7 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             dimension: [null],
             relations: {}
         } as unknown as Resource);
@@ -178,7 +178,7 @@ describe('convertFieldTypes', () => {
             }]}],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             composite: [{
                     subfield1: 'true',
                     subfield2: '7',
@@ -210,7 +210,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             composite: [null],
             relations: {}
         } as unknown as Resource);
@@ -229,7 +229,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             r: 'rr',
             relations: {}
         } as unknown as Resource);
@@ -248,7 +248,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             d: '10.07.2019',
             relations: {}
         } as unknown as Resource);
@@ -271,7 +271,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             dd1: 'a',
             dd2: 'b',
             dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
@@ -294,7 +294,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             CB: 'a;b;c',
             relations: {}
         } as unknown as Resource);
@@ -314,7 +314,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             CB: 'a;b;c',
             relations: {}
         } as unknown as Resource);
@@ -334,7 +334,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             i: '-100',
             relations: {}
         } as unknown as Resource);
@@ -353,7 +353,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             ui: '100',
             relations: {}
         } as unknown as Resource);
@@ -379,7 +379,7 @@ describe('convertFieldTypes', () => {
             }] }]
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             f1: '100.1',
             f2: '100,2',
             f3: '-100,3',
@@ -405,7 +405,7 @@ describe('convertFieldTypes', () => {
             }] }]
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             uf1: '100.1',
             uf2: '100,2',
             relations: {}
@@ -426,7 +426,7 @@ describe('convertFieldTypes', () => {
             }] }],
         } as CategoryForm;
 
-        const resource = convertFieldTypes(category)({
+        const resource = convertFields(category)({
             relations: {
                 isAbove: 'a;b',
                 isBelow: 'd'
@@ -473,7 +473,7 @@ describe('convertFieldTypes', () => {
         try {
             const resource: Resource = {} as unknown as Resource;
             (resource as any)[fieldName] = value;
-            convertFieldTypes(category)(resource);
+            convertFields(category)(resource);
 
             fail();
         } catch (msgWithParams) {

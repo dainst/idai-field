@@ -8,6 +8,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 import { M } from '../../../messages/m';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
+import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 
 const QRCode = require('qrcode');
 
@@ -36,7 +37,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 private modalService: NgbModal,
                 private menus: Menus,
                 private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private projectLabelProvider: ProjectLabelProvider) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -48,6 +50,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     );
 
     public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.document));
+
+    public getProjectLabel = () => this.projectLabelProvider.getProjectLabel();
 
 
     ngAfterViewInit() {
@@ -101,6 +105,17 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         } finally {
             this.menus.setContext(MenuContext.QR_CODE_EDITOR);
         }
+    }
+
+
+    public printCode() {
+
+        const defaultTitle: string = document.title;
+        document.title = this.getProjectLabel() + ' ' + this.document.resource.identifier;
+
+        window.print();
+
+        document.title = defaultTitle;
     }
 
     

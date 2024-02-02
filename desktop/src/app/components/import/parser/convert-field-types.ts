@@ -3,11 +3,7 @@ import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Na
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
-
-
-type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'composite' | 'radio'
-    | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'int' | 'unsignedInt' | 'float' | 'unsignedFloat'
-    | 'checkboxes' | 'identifier'; // | 'geometry'
+import InputType = Field.InputType;
 
 
 const UNCHECKED_FIELDS = ['relation', 'geometry', 'category'];
@@ -34,7 +30,7 @@ export function convertFieldTypes(category: CategoryForm) {
             const field = CategoryForm.getFields(category).find(on(Field.NAME, is(fieldName)));
             if (!field) continue;
 
-            const inputType = field.inputType as unknown as FieldType;
+            const inputType: InputType = field.inputType;
             if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType, field);
         }
 
@@ -50,19 +46,19 @@ export function convertFieldTypes(category: CategoryForm) {
 
 // here only string to number, validation in exec
 const convertInt = (container: any, path: Path) => convertNumber(container, path, 'int');
+
 const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
 
+function convertTypeDependent(container: any, fieldName: string, inputType: InputType, field: Field) {
 
-function convertTypeDependent(container: any, fieldName: string, inputType: FieldType, field: Field) {
-
-    if (inputType === 'boolean') convertBoolean(container, fieldName);
-    if (inputType === 'dating') convertDating(container, fieldName);
-    if (inputType === 'dimension') convertDimension(container, fieldName);
-    if (inputType === 'checkboxes') convertCheckboxes(container, fieldName);
-    if (inputType === 'int' || inputType === 'unsignedInt') convertInt(container, fieldName);
-    if (inputType === 'float' || inputType === 'unsignedFloat') convertFloat(container, fieldName);
-    if (inputType === 'composite') convertComposite(container, fieldName, field);
+    if (inputType === InputType.BOOLEAN) convertBoolean(container, fieldName);
+    if (inputType === InputType.DATING) convertDating(container, fieldName);
+    if (inputType === InputType.DIMENSION) convertDimension(container, fieldName);
+    if (inputType === InputType.CHECKBOXES) convertCheckboxes(container, fieldName);
+    if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);
+    if (inputType === InputType.FLOAT || inputType === InputType.UNSIGNEDFLOAT) convertFloat(container, fieldName);
+    if (inputType === InputType.COMPOSITE) convertComposite(container, fieldName, field);
 }
 
 
@@ -121,7 +117,7 @@ function convertComposite(resource: Resource, fieldName: string, field: Field) {
         if (element === null) return;
 
         Object.keys(element).forEach(subfieldName => {
-            const inputType: FieldType = field.subfields?.find(on(Named.NAME, is(subfieldName)))?.inputType as FieldType;
+            const inputType: InputType = field.subfields?.find(on(Named.NAME, is(subfieldName)))?.inputType;
             if (inputType) {
                 convertTypeDependent(element, subfieldName, inputType, field);
             } else {

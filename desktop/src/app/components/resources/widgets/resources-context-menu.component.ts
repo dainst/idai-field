@@ -78,8 +78,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public isWarningsOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length === 1
-            && this.contextMenu.documents[0].warnings !== undefined
-            && !this.isTypeManagementResource();
+            && this.contextMenu.documents[0].warnings !== undefined;
     }
 
 

@@ -21,6 +21,7 @@ import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { TypeImagesUtil } from '../../../util/type-images-util';
 import { Messages } from '../../messages/messages';
+import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
 @Component({
@@ -78,6 +79,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private syncService: SyncService,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
+                private warningsService: WarningsService,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -170,6 +172,8 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(document);
+            case 'warnings':
+                await this.warningsService.openModal(document);
                 break;
         }
     }

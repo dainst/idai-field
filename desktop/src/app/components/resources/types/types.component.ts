@@ -21,6 +21,7 @@ import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { TypeImagesUtil } from '../../../util/type-images-util';
 import { Messages } from '../../messages/messages';
+import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
 @Component({
@@ -78,6 +79,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private syncService: SyncService,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
+                private warningsService: WarningsService,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -167,6 +169,9 @@ export class TypesComponent extends BaseList implements OnChanges {
                 await this.viewModalLauncher.openImageViewModal(document, 'edit');
                 this.loadImages(await Hierarchy.getAntescendents(
                     id => this.datastore.get(id), document.resource.id) as Array<FieldDocument>, true);
+                break;
+            case 'warnings':
+                await this.warningsService.openModal(document);
                 break;
         }
     }

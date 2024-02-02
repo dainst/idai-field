@@ -41,7 +41,7 @@ export function processDocuments(documents: Array<Document>,
             validator.assertFieldsDefined(document);
         }
 
-        if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
+        validator.assertIsAllowedCategory(finalDocument, mergeMode);
 
         validator.assertIdentifierPrefixIsValid(finalDocument);
         validator.assertIsWellformed(finalDocument);

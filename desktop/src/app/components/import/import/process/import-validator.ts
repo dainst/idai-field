@@ -78,17 +78,16 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertIsAllowedCategory(document: Document|NewDocument) {
+    public assertIsAllowedCategory(document: Document|NewDocument, mergeMode: boolean) {
 
-        if (document.resource.category === 'Operation'
-            || document.resource.category === 'Project') {
-
+        if (document.resource.category === 'Operation') {
             throw [E.CATEGORY_NOT_ALLOWED, document.resource.category];
         }
 
-        if (document.resource.category === 'Image' || this.projectConfiguration.isSubcategory(
-                document.resource.category, 'Image')) {
+        if (mergeMode) return;
 
+        if (document.resource.category === 'Project' || document.resource.category === 'Image'
+            || this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
             throw [E.CATEGORY_ONLY_ALLOWED_ON_UPDATE, document.resource.category];
         }
     }

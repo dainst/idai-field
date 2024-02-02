@@ -10,7 +10,7 @@ import { convertFieldTypes } from '../../../../../src/app/components/import/pars
  */
 describe('convertFieldTypes', () => {
 
-    it('field type boolean', () => {
+    it('input type boolean', () => {
 
         const category = {
             name: 'Category',
@@ -31,7 +31,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type dating', () => {
+    it('input type dating', () => {
 
         const category = {
             name: 'Category',
@@ -67,7 +67,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type dating - leave nulls unconverted', () => {
+    it('input type dating - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -105,7 +105,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type dimension', () => {
+    it('input type dimension', () => {
 
         const category = {
             name: 'Category',
@@ -143,7 +143,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type dimension - leave nulls unconverted', () => {
+    it('input type dimension - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -162,7 +162,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type composite', () => {
+    it('input type composite', () => {
 
         const category = {
             name: 'Category',
@@ -196,7 +196,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type composite - leave nulls unconverted', () => {
+    it('input type composite - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -219,7 +219,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type radio', () => {
+    it('input type radio', () => {
 
         const category = {
             name: 'Category',
@@ -238,7 +238,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type date', () => {
+    it('input type date', () => {
 
         const category = {
             name: 'Category',
@@ -257,7 +257,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type dropdown range', () => {
+    it('input type dropdown range', () => {
 
         const category = {
             name: 'Category',
@@ -284,7 +284,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type checkboxes', () => {
+    it('input type checkboxes', () => {
 
         const category = {
             name: 'Category',
@@ -304,7 +304,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type simple multi input', () => {
+    it('input type simple multi input', () => {
 
         const category = {
             name: 'Category',
@@ -324,7 +324,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type int', () => {
+    it('input type int', () => {
 
         const category = {
             name: 'Category',
@@ -343,7 +343,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type unsignedInt', () => {
+    it('input type unsignedInt', () => {
 
         const category = {
             name: 'Category',
@@ -362,7 +362,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type float', () => {
+    it('input type float', () => {
 
         const category = {
             name: 'Category',
@@ -392,7 +392,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type unsignedFloat', () => {
+    it('input type unsignedFloat', () => {
 
         const category = {
             name: 'Category',
@@ -440,7 +440,7 @@ describe('convertFieldTypes', () => {
 
     // err cases
 
-    it('field type unsignedInt - not a number', () => {
+    it('input type unsignedInt - not a number', () => {
 
         const category = {
             name: 'Category',
@@ -454,7 +454,7 @@ describe('convertFieldTypes', () => {
     });
 
 
-    it('field type unsignedFloat - not a number', () => {
+    it('input type unsignedFloat - not a number', () => {
 
         const category = {
             name: 'Category',

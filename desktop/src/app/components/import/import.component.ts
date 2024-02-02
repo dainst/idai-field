@@ -69,7 +69,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
+    public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels, this.projectConfiguration);
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 

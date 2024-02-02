@@ -2,7 +2,7 @@ import { filter, to, isAssociative, isPrimitive, map, flow, keys, isUndefinedOrE
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
-import { Labels } from '../services';
+import { Labels, ProjectConfiguration } from '../services';
 import { Warnings } from './warnings';
 
 export type RevisionId = string;
@@ -92,11 +92,17 @@ export module Document {
     }
 
 
-    export function getLabel(document: Document, labels: Labels): string {
+    export function getLabel(document: Document, labels: Labels, projectConfiguration: ProjectConfiguration): string {
 
-        return (document.resource.shortDescription)
-            ? labels.getFromI18NString(document.resource.shortDescription) + ' (' + document.resource.identifier + ')'
-            : document.resource.identifier;
+        let label: string = document.resource.identifier;
+
+        if (document.resource.shortDescription) {
+            label += ' ('
+                + Resource.getShortDescriptionLabel(document.resource, labels, projectConfiguration)
+                + ')';
+        }
+
+        return label;
     }
 
 

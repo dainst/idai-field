@@ -1,4 +1,5 @@
 #qr-code-editor-modal-body {
+  height: 386px;
   text-align: center;
 
   #qr-code-container {
@@ -18,7 +19,7 @@
       width: 100%;
       height: 100%;
       color: gray;
-      background-color: #efefef;
+      background-color: #fff;
       text-align: center;
       line-height: 300px;
       user-select: none;

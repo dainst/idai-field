@@ -7,7 +7,7 @@
         <span class="mdi mdi-close"></span>
     </button>
 </div>
-<div id="qr-code-editor-modal-body" class="modal-body">
+<div id="qr-code-editor-modal-body" class="modal-body bg-light">
     <div id="qr-code-container">
         <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
         <div *ngIf="hasQrCode()" id="qr-code-print-label">
@@ -31,15 +31,21 @@
         </div>
     </div>
 
-    <div *ngIf="hasQrCode()" id="print-qr-code-button" class="btn btn-primary" (click)="printCode()">
+    <button id="print-qr-code-button"
+            class="btn btn-primary"
+            [class.disabled]="!hasQrCode()"
+            (click)="hasQrCode() && printCode()">
         <span class="mdi mdi-printer"></span>
         <span class="button-label" i18n="@@buttons.print">Drucken</span>
-</div>
+    </button>
 
-    <div *ngIf="hasQrCode()" id="delete-qr-code-button" class="btn btn-danger" (click)="deleteCode()">
+    <button id="delete-qr-code-button"
+            class="btn btn-danger"
+            [class.disabled]="!hasQrCode()"
+            (click)="hasQrCode() && deleteCode()">
         <span class="mdi mdi-delete"></span>
         <span class="button-label" i18n="@@buttons.delete">Löschen</span>
-    </div>
+    </button>
 </div>
 
 <ng-template #addQrCodePopover>

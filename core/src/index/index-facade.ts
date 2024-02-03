@@ -30,20 +30,26 @@ export class IndexFacade {
 
     private observers: Array<Observer<Document>> = [];
     private indexItems: { [resourceId: string]: IndexItem } = {};
+    private defaultLogic: 'AND' | 'OR' = 'OR';
 
 
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
                 private projectConfiguration: ProjectConfiguration,
-                private showWarnings: boolean) {}
+                private showWarnings: boolean,
+                defaultLogic: 'AND' | 'OR' = 'OR'
+            ) {
+                this.defaultLogic = defaultLogic;
+            }
 
 
     public changesNotifications = (): Observable<Document|undefined> => ObserverUtil.register(this.observers);
 
 
-    public find(query: Query): Array<string /*resourceId*/> {
+    public find(query: Query, logic: 'AND' | 'OR' = this.defaultLogic): Array<string /*resourceId*/> {
 
-        const queryResult: Array<Resource.Id> = performQuery(query, this.constraintIndex, this.fulltextIndex);
+        console.log('find', query, logic)
+        const queryResult: Array<Resource.Id> = performQuery(query, this.constraintIndex, this.fulltextIndex, logic);
         return this.getSortedResult(query, queryResult);
     }
 

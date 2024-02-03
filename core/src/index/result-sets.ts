@@ -61,4 +61,8 @@ export module ResultSets {
 
         return union(resultSets.addSets);
     }
+
+    export function unionSets<T>(resultSets: Array<Array<T>>): Array<T> {
+        return tsfun.union(resultSets);
+    }
 }

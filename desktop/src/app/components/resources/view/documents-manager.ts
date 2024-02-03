@@ -104,34 +104,40 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
-                          rebuildNavigationPath: boolean = false) {
+public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
+                      rebuildNavigationPath: boolean = false) {
 
-        try {
-            if (isString(document)) {
-                document = (await this.datastore.get(document)) as FieldDocument;
-            } else if (document) {
-                await this.datastore.get(document.resource.id);
-            }
-        } catch (errWithParams) {
-            throw errWithParams; // Throw error if the resource has been deleted from remote
+    let documentCategory: string | undefined;
+    try {
+        if (isString(document)) {
+            document = (await this.datastore.get(document)) as FieldDocument;
+            documentCategory = document.resource.category;
+        } else if (document) {
+            const fetchedDocument = (await this.datastore.get(document.resource.id)) as FieldDocument;
+            documentCategory = fetchedDocument.resource.category;
         }
-
-        if (rebuildNavigationPath && document) {
-            await this.resourcesStateManager.updateNavigationPathForDocument(document, true);
-        }
-
-        await this.resourcesStateManager.moveInto(document);
-
-        if (resetFiltersAndSelection) {
-            await this.setCategoryFilters([], false);
-            await this.setQueryString('', false);
-            await this.deselect();
-            await this.populateDocumentList();
-        } else {
-            await this.populateAndDeselectIfNecessary();
-        }
+    } catch (errWithParams) {
+        throw errWithParams; // Throw error if the resource has been deleted from remote
     }
+
+    if (rebuildNavigationPath && document) {
+        await this.resourcesStateManager.updateNavigationPathForDocument(document, true);
+    }
+
+    await this.resourcesStateManager.moveInto(document);
+
+    const logic = documentCategory === 'Profile' ? 'OR' : 'AND';
+
+    if (resetFiltersAndSelection) {
+        await this.setCategoryFilters([], false);
+        await this.setQueryString('', false);
+        await this.deselect();
+        await this.populateDocumentList(true, logic); // Pass the OR logic flag
+    } else {
+        await this.populateAndDeselectIfNecessary(); // Pass the OR logic flag
+    }
+}
+
 
 
     public deselect() {
@@ -197,7 +203,7 @@ export class DocumentsManager {
     }
 
 
-    public async populateDocumentList(reset: boolean = true) {
+    public async populateDocumentList(reset: boolean = true, logic?: 'AND' | 'OR') {
 
         this.populateInProgress = true;
         if (this.loading) this.loading.start();
@@ -211,7 +217,8 @@ export class DocumentsManager {
 
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
-        const result = await this.createUpdatedDocumentList();
+        const effectiveLogic = logic || 'AND';
+        const result = await this.createUpdatedDocumentList(effectiveLogic);
 
         await this.updateChildrenCountMap(result.documents as Array<FieldDocument>);
 
@@ -222,6 +229,7 @@ export class DocumentsManager {
         }
 
         this.documents = result.documents as Array<FieldDocument>;
+        console.log('This is',this.documents)
         this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;
@@ -229,24 +237,27 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(): Promise<Datastore.FindResult> {
-
+    public async createUpdatedDocumentList(logic?: 'AND' | 'OR'): Promise<Datastore.FindResult> {
+        
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
             return { documents: [], ids: [], totalCount: 0 };
         }
 
+
         const operationId: string|undefined = this.resourcesStateManager.isInSpecialView()
             ? undefined
             : this.resourcesStateManager.get().view;
+        
 
         const query = DocumentsManager.buildQuery(
             operationId,
             this.resourcesStateManager,
             this.getAllowedTypeNames()
         );
-
-        return (await this.fetchDocuments(query));
+        console.log(query)
+        const effectiveLogic = logic || 'AND';
+        return (await this.fetchDocuments(query, effectiveLogic));
     }
 
 
@@ -345,10 +356,10 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<Datastore.FindResult> {
+    private async fetchDocuments(query: Query, logic: 'AND' | 'OR' = 'AND'): Promise<Datastore.FindResult> {
 
         try {
-            return await this.datastore.find(query);
+            return await this.datastore.find(query, logic);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], ids: [], totalCount: 0 };
@@ -364,14 +375,15 @@ export class DocumentsManager {
         const state = resourcesStateManager.get();
         const categoryFilters = ResourcesState.getCategoryFilters(state);
         const customConstraints = ResourcesState.getCustomConstraints(state);
-
+        const currentView = state.view;                     
         return {
             q: ResourcesState.getQueryString(state),
             constraints: DocumentsManager.buildConstraints(
                 customConstraints,
                 operationId,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                extendedSearchMode
+                extendedSearchMode,
+                currentView
             ),
             categories: (categoryFilters.length > 0)
                 ? categoryFilters
@@ -384,22 +396,32 @@ export class DocumentsManager {
 
 
     private static buildConstraints(customConstraints: Constraints,
-                                    operationId: string|undefined,
-                                    liesWithinId: string|undefined,
-                                    isInExtendedSearchMode: boolean): Constraints {
+                operationId: string|undefined,
+                liesWithinId: string|undefined,
+                isInExtendedSearchMode: boolean,
+                currentView: string): Constraints {
 
         const constraints = clone(customConstraints);
 
-        if (!isInExtendedSearchMode) {
-            if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
-            else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
-            else constraints[CHILDOF_EXIST] = UNKNOWN;
+        if (!isInExtendedSearchMode) { 
+                if (liesWithinId) {
+                    constraints[CHILDOF_CONTAIN] = liesWithinId ;
+                    constraints['isPresentIn:contain'] = liesWithinId;
+                }
+                else if (operationId) {
+                    constraints[CHILDOF_CONTAIN] = operationId as any;
+                } else {
+                    constraints[CHILDOF_EXIST] = UNKNOWN;
+                }
+
         } else {
             if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
         }
         return constraints;
-    }
+        }
 
+
+    
 
     private static handleFindErr(errWithParams: Array<string>, query: Query) {
 

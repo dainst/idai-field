@@ -13,11 +13,13 @@ import { ResultSets } from './result-sets';
  */
 export function performQuery(query: Query,
                              constraintIndex: ConstraintIndex,
-                             fulltextIndex: FulltextIndex): Array<Resource.Id> {
+                             fulltextIndex: FulltextIndex,
+                             logic: 'AND' | 'OR' = 'OR'): Array<Resource.Id> {
 
     let resultSets = performConstraints(
         constraintIndex,
-        query.constraints ? query.constraints : {}
+        query.constraints ? query.constraints : {},
+        logic
     );
 
     resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
@@ -40,21 +42,32 @@ function performFulltext(fulltextIndex: FulltextIndex,
     return resultSets;
 }
 
+//This seems to be the place where the query is actually performed upon the pouchdb.TOMORROW
 
 function performConstraints(constraintIndex: ConstraintIndex,
-                            constraints: { [name: string]: Constraint|string|string[] }): ResultSets<Resource.Id> {
+                            constraints: { [name: string]: Constraint|string|string[] },
+                            logic: 'AND' | 'OR' = 'OR'): ResultSets<Resource.Id> {
+    let resultSets = ResultSets.make<Resource.Id>();
+    if (logic === 'OR') {
 
-    return Object.keys(constraints)
-        .reduce((resultSets, name: string) => {
-
+        let orSets: Array<Array<Resource.Id>> = [];
+        for (let name in constraints) {
             const { subtract, value, searchRecursively } = Constraint.convert(constraints[name]);
-
-            const get = !searchRecursively
-                ? ConstraintIndex.get
-                : ConstraintIndex.getWithDescendants;
-
+            const get = !searchRecursively ? ConstraintIndex.get : ConstraintIndex.getWithDescendants;
             const indexItemIds = get(constraintIndex, name, value);
+            orSets.push(indexItemIds);
+        }
+        resultSets.addSets.push(ResultSets.unionSets(orSets));
+    } else {
+        // Existing AND logic
+        Object.keys(constraints).forEach(name => {
+            const { subtract, value, searchRecursively } = Constraint.convert(constraints[name]);
+            const get = !searchRecursively ? ConstraintIndex.get : ConstraintIndex.getWithDescendants;
+            const indexItemIds = get(constraintIndex, name, value);
+
             ResultSets.combine(resultSets, indexItemIds, subtract);
-            return resultSets;
-        }, ResultSets.make<Resource.Id>());
+        });
+    }
+
+    return resultSets;
 }

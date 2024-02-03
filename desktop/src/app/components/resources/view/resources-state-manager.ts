@@ -49,11 +49,13 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement();
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInSideView();
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
     public isInTypesManagement = () => this.resourcesState.view === 'types';
+
+    public isInSideView = () => this.resourcesState.view === 'sideview';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
@@ -181,6 +183,11 @@ export class ResourcesStateManager {
 
 
     public async moveInto(document: FieldDocument|undefined) {
+        console.log('MoveInto called with document:',document);
+
+        if (document && document.resource.category === 'Profile') {
+            console.log('MoveInto sideview, this view:',this.resourcesState.view);
+        }
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
             this.resourcesState.view,

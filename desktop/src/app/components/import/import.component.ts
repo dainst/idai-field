@@ -19,7 +19,6 @@ import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
-import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
@@ -245,8 +244,9 @@ export class ImportComponent implements OnInit {
     private getCategoriesToExclude() {
 
         return this.importState.mergeMode
-            ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(this.projectConfiguration.getImageCategories().map(Named.toName));
+            ? ExportRunner.EXCLUDED_CATEGORIES
+            : ExportRunner.EXCLUDED_CATEGORIES
+                .concat(this.projectConfiguration.getImageCategories().map(Named.toName));
     }
 
 

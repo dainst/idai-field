@@ -30,6 +30,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     @ViewChild('qrCodeCanvas', { static: false }) canvasElement: ElementRef;
 
+    public saving: boolean = false;
+
 
     constructor(private activeModal: NgbActiveModal,
                 private idGenerator: IdGenerator,
@@ -127,12 +129,17 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         QRCode.toCanvas(
             this.canvasElement.nativeElement, 
             this.document.resource.scanCode,
-            { width: 300 }
+            {
+                width: 240,
+                margin: 0
+            }
         );
     }
 
 
     private async saveCode(newCode?: string) {
+
+        this.saving = true;
 
         if (newCode) {
             this.document.resource.scanCode = newCode;
@@ -145,6 +152,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             if (newCode) this.renderCode();
         } catch (errWithParams) {
             this.messages.add(errWithParams);
+        } finally {
+            this.saving = false;
         }
     }
 

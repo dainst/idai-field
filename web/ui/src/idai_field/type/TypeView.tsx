@@ -73,10 +73,10 @@ export default function TypeView(): ReactElement {
             setBreadcrumb(predecessorsToBreadcrumbItems(project, [], t));
             getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
                 setDocuments(res.documents);
-                resetScrollOffset();
                 setLoading(4);
             });
         }
+        resetScrollOffset();
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams]);
         

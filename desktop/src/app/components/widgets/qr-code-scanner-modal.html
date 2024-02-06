@@ -11,6 +11,17 @@
             die notwendigen Berechtigungen erteilt sind.
         </div>
     </div>
+
+    <div *ngIf="!isLoading() && !cameraNotFound">
+        <select (change)="selectCamera($event.target.value)"
+                class="form-control">
+            <option *ngFor="let camera of cameras"
+                    value="{{camera.id}}"
+                    [selected]="selectedCamera.id === camera.id">
+                {{camera.label}}
+            </option>
+        </select>
+    </div>
 </div>
 
 <div class="modal-footer">

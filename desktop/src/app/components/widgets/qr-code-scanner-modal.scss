@@ -1,11 +1,13 @@
 #qr-code-scanner-modal-body {
+  height: 383px;
+
   #qr-code-scanner-container {
     width: 100%;
     min-height: 274px;
 
     loading-icon {
       position: absolute;
-      top: 172px;
+      top: 216px;
     }
 
     video {
@@ -19,6 +21,15 @@
 
     .scan-region-highlight-svg {
       stroke: #fff !important;
+    }
+  }
+
+  #camera-select {
+    margin-top: 10px;
+    user-select: none;
+
+    select {
+      margin-top: 5px;
     }
   }
 }

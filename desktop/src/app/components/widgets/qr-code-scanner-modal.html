@@ -12,7 +12,8 @@
         </div>
     </div>
 
-    <div *ngIf="!isLoading() && !cameraNotFound">
+    <div *ngIf="!isLoading() && !cameraNotFound" id="camera-select">
+        <div i18n="@@widgets.qrCodeScanner.selectCamera">Kamera auswählen:</div>
         <select (change)="selectCamera($event.target.value)"
                 class="form-control">
             <option *ngFor="let camera of cameras"

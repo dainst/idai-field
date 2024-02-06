@@ -4,6 +4,7 @@ import QrScanner from 'qr-scanner';
 import { Loading } from './loading';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { AppState } from '../../services/app-state';
 
 
 type Camera = {
@@ -33,7 +34,8 @@ export class QrCodeScannerModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal,
                 private loading: Loading,
-                private menus: Menus) {}
+                private menus: Menus,
+                private appState: AppState) {}
 
 
     async ngOnInit() {
@@ -64,7 +66,7 @@ export class QrCodeScannerModalComponent implements OnInit {
     public selectCamera(cameraId: string) {
 
         this.selectedCamera = this.cameras.find(camera => camera.id === cameraId);
-        this.qrScanner.setCamera(this.selectedCamera.id);
+        this.setCamera(this.selectedCamera);
     }
 
 
@@ -74,7 +76,7 @@ export class QrCodeScannerModalComponent implements OnInit {
 
         await this.initializeCameras();
         if (!this.cameraNotFound) await this.startScanner();
-        
+
         this.loading.stop('qrCodeScanner', false);
     }
 
@@ -83,7 +85,7 @@ export class QrCodeScannerModalComponent implements OnInit {
 
         this.cameras = await QrScanner.listCameras(true);
         if (this.cameras.length > 0) {
-            this.selectedCamera = this.cameras[0];
+            this.selectedCamera = this.getCameraFromAppState() ?? this.cameras[0];
         } else {
             this.cameraNotFound = true;
         }
@@ -108,6 +110,8 @@ export class QrCodeScannerModalComponent implements OnInit {
             }
         );
 
+        this.appState.setCodeScannerCameraId(this.selectedCamera.id);
+
         try {
             await this.qrScanner.start();
         } catch (err) {
@@ -124,5 +128,21 @@ export class QrCodeScannerModalComponent implements OnInit {
 
         this.qrScanner.stop();
         this.qrScanner.destroy();
+    }
+
+
+    private setCamera(camera: Camera) {
+
+        this.qrScanner.setCamera(this.selectedCamera.id);
+        this.appState.setCodeScannerCameraId(camera.id);
+    }
+
+
+    private getCameraFromAppState(): Camera|undefined {
+
+        const cameraId: string = this.appState.getCodeScannerCameraId();
+        if (!cameraId) undefined;
+
+        return this.cameras.find(camera => camera.id === cameraId);
     }
 }

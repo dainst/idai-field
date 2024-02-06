@@ -11,6 +11,7 @@ import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
+import { AppState } from '../services/app-state';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -35,6 +36,7 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
+                appState: AppState,
                 private messages: Messages,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
@@ -55,6 +57,7 @@ export class AppComponent {
             }
         });
 
+        appState.load();
         settingsService.setupSync();
         appController.initialize();
         menuNavigator.initialize();

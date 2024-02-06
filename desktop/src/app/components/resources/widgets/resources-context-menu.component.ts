@@ -72,7 +72,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public isDeleteOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length > 0
-            && (!this.isReadonly() || this.isTypeResource());
+            && (!this.isReadonly() || !this.isTypeResource());
     }
 
 
@@ -142,12 +142,6 @@ export class ResourcesContextMenuComponent implements OnChanges {
     private isReadonly(): boolean {
 
         return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
-    }
-
-
-    private isTypeManagementResource(): boolean {
-
-        return this.isCategoryResource(this.projectConfiguration.getTypeManagementCategories());
     }
 
 

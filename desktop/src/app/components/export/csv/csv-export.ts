@@ -9,7 +9,7 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
 const FIELD_NAMES_TO_REMOVE = [Resource.ID, Resource.CATEGORY, FieldResource.GEOMETRY, ImageResource.GEOREFERENCE,
-        ImageResource.ORIGINAL_FILENAME, 'filename', 'featureVectors'];
+    ImageResource.ORIGINAL_FILENAME, 'filename', 'featureVectors'];
 
 
 export type CSVExportResult = {

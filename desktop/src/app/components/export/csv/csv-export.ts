@@ -1,5 +1,5 @@
 import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is } from 'tsfun';
-import { Resource, FieldResource, StringUtils, Relation, Field } from 'idai-field-core';
+import { Resource, FieldResource, StringUtils, Relation, Field, ImageResource } from 'idai-field-core';
 import { CSVMatrixExpansion } from './csv-matrix-expansion';
 import { CsvExportUtils } from './csv-export-utils';
 import { CsvExportConsts, Heading, Headings, HeadingsAndMatrix, Matrix } from './csv-export-consts';
@@ -8,8 +8,8 @@ import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
-const FIELD_NAMES_TO_REMOVE = ['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename',
-    'featureVectors'];
+const FIELD_NAMES_TO_REMOVE = [Resource.ID, Resource.CATEGORY, FieldResource.GEOMETRY, ImageResource.GEOREFERENCE,
+        ImageResource.ORIGINAL_FILENAME, 'filename', 'featureVectors'];
 
 
 export type CSVExportResult = {

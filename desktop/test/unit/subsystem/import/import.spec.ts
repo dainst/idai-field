@@ -147,8 +147,8 @@ describe('Import/Subsystem', () => {
 
         await parseAndImport(
             options,
-            '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear"\n' +
-            '"f1","SD","single","","","bce","5000"'
+            '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","scanCode"\n' +
+            '"f1","SD","single","","","bce","5000","1234567"'
         );
 
         const result = await datastore.find({});
@@ -159,8 +159,9 @@ describe('Import/Subsystem', () => {
         expect(resource.identifier).toEqual('f1');
         expect(resource.category).toEqual('Find');
         expect(resource.shortDescription).toEqual('SD');
-        expect(resource['dating'].length).toBe(1);
-        expect(resource['dating'][0]['end']['year']).toEqual(-5000);
+        expect(resource.dating.length).toBe(1);
+        expect(resource.dating[0].end.year).toEqual(-5000);
+        expect(resource.scanCode).toEqual('1234567');
         done();
     });
 

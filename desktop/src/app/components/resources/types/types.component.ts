@@ -172,6 +172,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(document);
+                break;
             case 'warnings':
                 await this.warningsService.openModal(document);
                 break;

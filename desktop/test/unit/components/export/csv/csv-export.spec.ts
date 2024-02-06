@@ -775,4 +775,14 @@ describe('CSVExport', () => {
 
         expect(result[0][1]).toBe('"input"');
     });
+
+
+    it('export scan code', () => {
+
+        const { t, resource } = makeSimpleCategoryAndResource();
+        resource.scanCode = '1234567';
+        const result = CSVExport.createExportable([resource], t, [], ['en'], true, true).csvData;
+        expect(result[0]).toEqual('"identifier","shortDescription.en","scanCode"');
+        expect(result[1]).toEqual('"identifier1","shortDescription1","1234567"');
+    });
 });

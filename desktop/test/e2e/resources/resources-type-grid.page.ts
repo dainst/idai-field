@@ -48,13 +48,13 @@ export class ResourcesTypeGridPage {
 
     public static getGridElements() {
 
-        return getLocator('.type-grid-element');
+        return getLocator('.grid-item');
     }
 
 
     public static getGridElement(identifier: string) {
 
-        return getLocator('#type-grid-element-' + identifier);
+        return getLocator('#grid-item-' + identifier);
     }
 
 
@@ -68,7 +68,7 @@ export class ResourcesTypeGridPage {
 
     public static getTypeBadgeText(identifier: string) {
 
-        return getText('#type-grid-element-' + identifier + ' .badge');
+        return getText('#grid-item-' + identifier + ' .badge');
     }
 
 

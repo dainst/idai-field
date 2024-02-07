@@ -54,6 +54,9 @@ export module ConfigurationUtil {
                     return category.name === 'Image';
                 case 'types':
                     return ['Type', 'TypeCatalog'].includes(category.name);
+                case 'inventory':
+                    return ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox']
+                        .includes(category.name);
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(
@@ -64,7 +67,8 @@ export module ConfigurationUtil {
                         )
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+                            && !['Image', 'Type', 'TypeCatalog', 'StorageSite', 'StorageRoom', 'StorageShelf',
+                                 'StorageCompartment', 'StorageBox'].includes(category.name);
             }
         });
     }

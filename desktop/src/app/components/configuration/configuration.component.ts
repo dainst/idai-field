@@ -72,7 +72,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
         { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
         { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
-        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
+        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) },
+        { name: 'inventory', label: this.i18n({ id: 'configuration.categoriesFilter.inventory', value: 'Inventarisierung' }) }
     ];
 
     public availableInputTypes: Array<InputType> = [

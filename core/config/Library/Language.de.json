@@ -1585,6 +1585,26 @@
           "label": "Kriterium"
         }
       }
+    },
+    "StorageSite": {
+      "label": "Aufbewahrungsstätte",
+      "fields": {}
+    },
+    "StorageRoom": {
+      "label": "Raum",
+      "fields": {}
+    },
+    "StorageShelf": {
+      "label": "Regal",
+      "fields": {}
+    },
+    "StorageCompartment": {
+      "label": "Fach",
+      "fields": {}
+    },
+    "StorageBox": {
+      "label": "Kiste",
+      "fields": {}
     }
   },
   "forms": {

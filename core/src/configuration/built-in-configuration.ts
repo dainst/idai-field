@@ -594,7 +594,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS, 'isStoredIn']
                     },
                     {
                         name: Groups.IDENTIFICATION,
@@ -683,6 +683,66 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.IDENTIFICATION,
                         fields: ['hasInstance']
+                    }
+                ]
+            }
+        },
+        StorageSite: {
+            supercategory: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
+                    }
+                ]
+            }
+        },
+        StorageRoom: {
+            supercategory: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
+                    }
+                ]
+            }
+        },
+        StorageShelf: {
+            supercategory: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
+                    }
+                ]
+            }
+        },
+        StorageCompartment: {
+            supercategory: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
+                    }
+                ]
+            }
+        },
+        StorageBox: {
+            supercategory: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
                     }
                 ]
             }
@@ -1180,6 +1240,38 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'liesWithin',
+            domain: ['StorageBox'],
+            range: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['StorageCompartment'],
+            range: ['StorageShelf'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['StorageShelf'],
+            range: ['StorageSite', 'StorageRoom'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['StorageRoom'],
+            range: ['StorageSite'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
             name: 'isInstanceOf',
             inverse: 'hasInstance',
             domain: ['Find:inherit'],
@@ -1192,6 +1284,24 @@ export class BuiltInConfiguration {
             name: 'hasInstance',
             inverse: 'isInstanceOf',
             domain: ['Type:inherit'],
+            range: ['Find:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isStoredIn',
+            inverse: 'isStoragePlaceOf',
+            domain: ['Find:inherit'],
+            range: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'],
+            editable: true,
+            visible: true,
+            inputType: 'instanceOf'
+        },
+        {
+            name: 'isStoragePlaceOf',
+            inverse: 'isStoredIn',
+            domain: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'],
             range: ['Find:inherit'],
             editable: true,
             visible: true,

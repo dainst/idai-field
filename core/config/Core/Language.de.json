@@ -107,6 +107,12 @@
     },
     "hasInstance": {
       "label": "Zugeordnete Funde"
+    },
+    "isStoredIn": {
+      "label": "Wird aufbewahrt in"
+    },
+    "isStoragePlaceOf": {
+      "label": "Ist Aufbewahrungsort von"
     }
   }
 }

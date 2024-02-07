@@ -130,6 +130,14 @@ export namespace Relation {
     }
 
 
+    export module Inventory {
+
+        export const ISSTORAGEPLACEOF = 'isStoragePlaceOf';
+        export const ISSTOREDIN = 'isStoredIn';
+        export const ALL = [ISSTORAGEPLACEOF, ISSTOREDIN];
+    }
+
+
     export module Image {
 
         export const DEPICTS = 'depicts';

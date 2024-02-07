@@ -215,6 +215,26 @@
     "Type:default": {
       "hidden": [],
       "fields": {}
+    },
+    "StorageSite:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "StorageRoom:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "StorageShelf:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "StorageCompartment:default": {
+      "hidden": [],
+      "fields": {}
+    },
+    "StorageBox:default": {
+      "hidden": [],
+      "fields": {}
     }
   },
   "order": [
@@ -271,6 +291,11 @@
     "Drawing",
     "Photo",
     "TypeCatalog",
-    "Type"
+    "Type",
+    "StorageSite",
+    "StorageRoom",
+    "StorageShelf",
+    "StorageCompartment",
+    "StorageBox"
   ]
 }

@@ -202,9 +202,8 @@ export class TypeRelationPickerComponent {
         = (documents: Array<FieldDocument>) => map(documents, document => {
             return [
                 document,
-                TypeImagesUtil.getLinkedImageIds(
-                    document, this.datastore, this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
-                ).map(id => ({ imageId: id }))
+                TypeImagesUtil.getLinkedImageIds(document, this.datastore, Relation.Type.INSTANCEOF)
+                    .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
         })
 

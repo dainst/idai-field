@@ -82,6 +82,8 @@
               [documents]="viewFacade.getDocuments()"
               [selectedDocument]="viewFacade.getSelectedDocument()"></list>
         <grid-list *ngIf="viewFacade.getMode() === 'types'"
-                   [documents]="viewFacade.getDocuments()"></grid-list>
+                   [documents]="viewFacade.getDocuments()"
+                   [linkRelationName]="'isInstanceOf'"
+                   [inverseLinkRelationName]="'hasInstance'"></grid-list>
     </div>
 </div>

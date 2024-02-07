@@ -43,6 +43,9 @@ export class GridListComponent extends BaseList implements OnChanges {
      */
     @Input() documents: Array<FieldDocument>;
 
+    @Input() linkRelationName: string;
+    @Input() inverseLinkRelationName: string;
+
     /**
      * Undefined if we are on the top level.
      * If defined, this is the document also represented
@@ -139,7 +142,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public async jumpToResource(document: FieldDocument) {
 
-        try {
+        try {
             await this.routingService.jumpToResource(document);
         } catch (errWithParams) {
             this.messages.add(errWithParams);
@@ -196,7 +199,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
 
-        if (!Document.hasRelations(document, Relation.Type.INSTANCEOF)) return undefined;
+        if (!Document.hasRelations(document, this.linkRelationName)) return undefined;
 
         for (const typeId of document.resource.relations.isInstanceOf) {
             const type = this.subtypes[typeId];
@@ -289,8 +292,8 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(Object.values(this.subtypes)),
-            filter(pipe(Document.hasRelations, Relation.Type.HASINSTANCE)),
-            map(document => document.resource.relations[Relation.Type.HASINSTANCE]),
+            filter(pipe(Document.hasRelations, this.inverseLinkRelationName)),
+            map(document => document.resource.relations[this.inverseLinkRelationName]),
             flatten(),
             set as any // TODO any
         );
@@ -336,16 +339,15 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const getLinkedImageIds = pipe(
-            TypeImagesUtil.getLinkedImageIds,
-            this.datastore,
-            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+        const linkedImageIds: string[] = TypeImagesUtil.getLinkedImageIds(
+            document, this.datastore, this.linkRelationName
         );
 
-        return flow(document,
-            getLinkedImageIds,
+        return flow(
+            linkedImageIds,
             remove(is(PLACEHOLDER)),
-            take(4));
+            take(4)
+        );
     }
 
 

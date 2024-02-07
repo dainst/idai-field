@@ -8,6 +8,7 @@ import { QrCodeScannerModalComponent } from '../../widgets/qr-code-scanner-modal
 import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
@@ -111,6 +112,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
             }
         } finally {
             this.menus.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement(); 
         }
     }
 

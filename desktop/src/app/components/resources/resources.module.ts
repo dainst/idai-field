@@ -38,10 +38,10 @@ import { ResourcesSearchBarComponent } from './searchbar/resources-search-bar.co
 import { ResourcesSearchConstraintsComponent } from './searchbar/resources-search-constraints.component';
 import { SearchSuggestionsComponent } from './searchbar/search-suggestions.component';
 import { DoceditLauncher } from './service/docedit-launcher';
-import { TypeGridElementComponent } from './types/type-grid-element.component';
-import { TypeGridComponent } from './types/type-grid.component';
-import { TypeIconComponent } from './types/type-icon.component';
-import { TypesComponent } from './types/types.component';
+import { GridItemComponent } from './grid-list/grid-item.component';
+import { GridComponent } from './grid-list/grid.component';
+import { GridItemIconComponent } from './grid-list/grid-item-icon.component';
+import { GridListComponent } from './grid-list/grid-list.component';
 import { ResourcesContextMenuComponent } from './widgets/resources-context-menu.component';
 import { ListButtonGroupComponent } from './widgets/list-button-group.component';
 import { ChildrenViewComponent } from './widgets/popovermenu/children-view.component';
@@ -75,10 +75,10 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
-        TypesComponent,
-        TypeGridComponent,
-        TypeGridElementComponent,
-        TypeIconComponent,
+        GridListComponent,
+        GridComponent,
+        GridItemComponent,
+        GridItemIconComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,

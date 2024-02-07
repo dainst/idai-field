@@ -4,14 +4,14 @@ import { CategoryForm } from 'idai-field-core';
 
 
 @Component({
-    selector: 'type-icon',
-    templateUrl: './type-icon.html',
+    selector: 'grid-item-icon',
+    templateUrl: './grid-item-icon.html',
 })
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypeIconComponent {
+export class GridItemIconComponent {
 
     @Input() category: CategoryForm;
     @Input() imageUrls: Array<SafeResourceUrl>;

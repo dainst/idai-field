@@ -4,14 +4,14 @@ import { FieldDocument } from 'idai-field-core';
 
 
 @Component({
-    selector: 'type-grid-element',
-    templateUrl: './type-grid-element.html'
+    selector: 'grid-item',
+    templateUrl: './grid-item.html'
 })
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypeGridElementComponent {
+export class GridItemComponent {
 
     @Input() document: FieldDocument;
     @Input() images: Array<SafeResourceUrl>;

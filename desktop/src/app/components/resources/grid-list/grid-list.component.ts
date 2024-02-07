@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { filter, flatten, flow, is, Map, map, remove, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Named, Hierarchy, SortUtil } from 'idai-field-core';
-import { makeLookup } from '../../../../../../core/src/tools/transformers';
+    Resource, ProjectConfiguration, ImageVariant, Named, Hierarchy, SortUtil, makeLookup } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { PLACEHOLDER } from '../../image/row/image-row';
-import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
-import { ViewFacade } from '../../../components/resources/view/view-facade';
+import { NavigationPath } from '../view/state/navigation-path';
+import { ViewFacade } from '../view/view-facade';
 import { TabManager } from '../../../services/tabs/tab-manager';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
@@ -15,7 +15,6 @@ import { ViewModalLauncher } from '../../viewmodal/view-modal-launcher';
 import { ResourcesContextMenu } from '../widgets/resources-context-menu';
 import { ResourcesContextMenuAction } from '../widgets/resources-context-menu.component';
 import { ComponentHelpers } from '../../component-helpers';
-import { SafeResourceUrl } from '@angular/platform-browser';
 import { Routing } from '../../../services/routing';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -25,8 +24,8 @@ import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
 @Component({
-    selector: 'types',
-    templateUrl: './types.html',
+    selector: 'grid-list',
+    templateUrl: './grid-list.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
@@ -36,7 +35,7 @@ import { WarningsService } from '../../../services/warnings/warnings-service';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypesComponent extends BaseList implements OnChanges {
+export class GridListComponent extends BaseList implements OnChanges {
 
     /**
      * These are the Type documents found at the current level,
@@ -213,7 +212,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!ComponentHelpers.isInside(event.target, target =>
                 target.id === 'context-menu'
-                    || (rightClick && target.id && target.id.startsWith('type-grid-element')))) {
+                    || (rightClick && target.id && target.id.startsWith('grid-item')))) {
 
             this.contextMenu.close();
         }

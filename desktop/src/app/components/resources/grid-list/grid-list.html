@@ -3,7 +3,7 @@
     [showViewOption]="true"
     (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
 
-<div id="type-grid" class="bg-light" (scroll)="contextMenu.close()">
+<div id="grid" class="bg-light" (scroll)="contextMenu.close()">
     <document-info *ngIf="mainDocument"
                    [document]="mainDocument"
                    [getExpandAllGroups]="getExpandAllGroups"
@@ -28,10 +28,10 @@
         </div>
 
         <div *ngIf="isSectionVisible('types')" class="grid-section">
-            <type-grid [documents]="documents"
-                       [images]="images"
-                       (clickDocument)="open($event)"
-                       (contextmenuDocument)="contextMenu.open($event.mouseEvent, [$event.document])"></type-grid>
+            <grid [documents]="documents"
+                  [images]="images"
+                  (clickDocument)="open($event)"
+                  (contextmenuDocument)="contextMenu.open($event.mouseEvent, [$event.document])"></grid>
             <div id="plus-button-container" *ngIf="isSectionVisible('types')">
                 <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"
@@ -56,9 +56,9 @@
         <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('finds')"
              id="linked-documents-grid"
              class="grid-section">
-            <type-grid [documents]="linkedDocuments"
-                       [images]="images"
-                       (clickDocument)="openResourceViewModal($event)"></type-grid>
+            <grid [documents]="linkedDocuments"
+                  [images]="images"
+                  (clickDocument)="openResourceViewModal($event)"></grid>
         </div>
     </div>
 </div>

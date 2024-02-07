@@ -8,7 +8,7 @@ const ELEMENT_WIDTH: number = 208;
 const BUFFER: number = ROW_HEIGHT * 2;
 
 
-export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
+export class GridListVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private index = new Subject<number>();
     private viewport: CdkVirtualScrollViewport | null = null;

@@ -1,0 +1,12 @@
+<cdk-virtual-scroll-viewport>
+    <div *cdkVirtualFor="let document of documents"
+            id="grid-item-{{document.resource.identifier}}"
+            class="grid-item"
+            (click)="clickDocument.emit(document)"
+            (contextmenu)="contextmenuDocument.emit({mouseEvent: $event, document: document})">
+        <grid-item [document]="document"
+                   [subtype]="gridListComponent.getLinkedSubtype(document)"
+                   [images]="images[document.resource.id]">
+        </grid-item>
+    </div>
+</cdk-virtual-scroll-viewport>

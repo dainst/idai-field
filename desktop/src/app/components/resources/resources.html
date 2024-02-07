@@ -81,7 +81,7 @@
         <list *ngIf="viewFacade.getMode() === 'list'"
               [documents]="viewFacade.getDocuments()"
               [selectedDocument]="viewFacade.getSelectedDocument()"></list>
-        <types *ngIf="viewFacade.getMode() === 'types'"
-               [documents]="viewFacade.getDocuments()"></types>
+        <grid-list *ngIf="viewFacade.getMode() === 'types'"
+                   [documents]="viewFacade.getDocuments()"></grid-list>
     </div>
 </div>

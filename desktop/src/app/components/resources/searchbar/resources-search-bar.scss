@@ -16,23 +16,11 @@ resources-search-bar {
     }
 
     #qr-code-scanner-button {
-      position: relative;
-      right: 1px;
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      border-color: lightgrey;
+      width: 50px;
 
-      &.focused {
-        border-color: #7998cb !important;
-      }
-  
-      &:active {
-        border-color: #ced4da !important;
-      }
-
-      &.with-small-search-input:active {
-        box-shadow: inset 3px 3px 11px -7px rgb(0 0 0 / 70%) !important;
+      .mdi {
+        position: relative;
+        left: 2px;
       }
     }
 

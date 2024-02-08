@@ -1296,7 +1296,7 @@ export class BuiltInConfiguration {
             range: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'],
             editable: true,
             visible: true,
-            inputType: 'instanceOf'
+            inputType: 'relation'
         },
         {
             name: 'isStoragePlaceOf',

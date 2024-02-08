@@ -232,7 +232,8 @@ export class ResourcesComponent implements OnDestroy {
                 await this.routingService.jumpToResource(
                     this.viewFacade.isInGridListView()
                         ? result.newParent
-                        : documents[0]
+                        : documents[0],
+                    false
                 );
             } else {
                 await this.viewFacade.populateDocumentList();

@@ -329,7 +329,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, Relation.Image.ISDEPICTEDIN)) {
             return [document.resource.relations[Relation.Image.ISDEPICTEDIN][0]];
-        } else if (this.isCatalogOrType(document)) {
+        } else if (!this.projectConfiguration.isSubcategory(document.resource.category, 'Find') ) {
             return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];
@@ -348,13 +348,5 @@ export class GridListComponent extends BaseList implements OnChanges {
             remove(is(PLACEHOLDER)),
             take(4)
         );
-    }
-
-
-    private isCatalogOrType(document: FieldDocument): boolean {
-
-        return this.projectConfiguration.getTypeManagementCategories()
-            .map(Named.toName)
-            .includes(document.resource.category);
     }
 }

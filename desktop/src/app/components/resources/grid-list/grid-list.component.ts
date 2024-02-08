@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { filter, flatten, flow, is, Map, map, remove, set, take, pipe, to } from 'tsfun';
+import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Named, Hierarchy, SortUtil, makeLookup } from 'idai-field-core';
+    Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../view/state/navigation-path';
@@ -42,9 +42,6 @@ export class GridListComponent extends BaseList implements OnChanges {
      * as given by the current selected segment of the navigation path.
      */
     @Input() documents: Array<FieldDocument>;
-
-    @Input() linkRelationName: string;
-    @Input() inverseLinkRelationName: string;
 
     /**
      * Undefined if we are on the top level.
@@ -201,9 +198,9 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
 
-        if (!Document.hasRelations(document, this.linkRelationName)) return undefined;
+        if (!Document.hasRelations(document, this.getLinkRelationName())) return undefined;
 
-        for (const typeId of document.resource.relations[this.linkRelationName]) {
+        for (const typeId of document.resource.relations[this.getLinkRelationName()]) {
             const type = this.subtypes[typeId];
             if (type) return type;
         }
@@ -306,8 +303,8 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(Object.values(this.subtypes)),
-            filter(pipe(Document.hasRelations, this.inverseLinkRelationName)),
-            map(document => document.resource.relations[this.inverseLinkRelationName]),
+            filter(pipe(Document.hasRelations, this.getInverseLinkRelationName())),
+            map(document => document.resource.relations[this.getInverseLinkRelationName()]),
             flatten(),
             set as any // TODO any
         );
@@ -354,7 +351,7 @@ export class GridListComponent extends BaseList implements OnChanges {
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
         const linkedImageIds: string[] = TypeImagesUtil.getLinkedImageIds(
-            document, this.datastore, this.linkRelationName
+            document, this.datastore, this.getLinkRelationName()
         );
 
         return flow(
@@ -362,5 +359,21 @@ export class GridListComponent extends BaseList implements OnChanges {
             remove(is(PLACEHOLDER)),
             take(4)
         );
+    }
+
+
+    public getLinkRelationName(): string {
+
+        return this.viewFacade.isInTypesManagement()
+            ? Relation.Type.INSTANCEOF
+            : Relation.Inventory.ISSTOREDIN;
+    }
+
+
+    public getInverseLinkRelationName(): string {
+
+        return this.viewFacade.isInTypesManagement()
+            ? Relation.Type.HASINSTANCE
+            : Relation.Inventory.ISSTORAGEPLACEOF;
     }
 }

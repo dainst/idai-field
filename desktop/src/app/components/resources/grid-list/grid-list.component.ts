@@ -68,6 +68,8 @@ export class GridListComponent extends BaseList implements OnChanges {
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
+    public isLowestHierarchyLevel: boolean = false;
+
     private expandAllGroups: boolean = false;
     private visibleSections = ['types'];
 
@@ -227,23 +229,35 @@ export class GridListComponent extends BaseList implements OnChanges {
         if (!this.visibleSections.includes(section)) {
             this.visibleSections.push(section);
         } else {
+            if (section === 'finds' && this.isLowestHierarchyLevel) return;
+
             this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
             if (this.visibleSections.length < 1) {
-                (section === 'types') ? this.toggleSection('finds') : this.toggleSection('types');
+                this.toggleSection(section === 'types' ? 'finds' : 'types');
             }
         }
     }
 
 
-    public isSectionVisible = (section: string) => this.linkedDocuments.length === 0 || this.visibleSections.includes(section);
+    public isSectionVisible(section: string): boolean {
+        
+        if (this.isLowestHierarchyLevel) return section === 'finds';
 
+        return (section === 'types' && this.linkedDocuments.length === 0)
+            || this.visibleSections.includes(section);
+    }
 
+    
     private async update(documents: Array<FieldDocument>) {
 
         const newMainDocument: FieldDocument|undefined = this.getMainDocument();
         if (newMainDocument !== this.mainDocument) {
             this.mainDocument = newMainDocument;
             await this.updateLinkedDocuments();
+            this.isLowestHierarchyLevel = this.mainDocument
+                && this.projectConfiguration.getAllowedRelationDomainCategories(
+                    Relation.Hierarchy.LIESWITHIN, this.mainDocument.resource.category
+                ).length === 0
         }
         if (documents.length > 0
                 && this.syncService.getStatus() !== SyncStatus.Pushing

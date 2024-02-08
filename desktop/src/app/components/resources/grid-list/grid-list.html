@@ -17,7 +17,7 @@
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
 
-        <div *ngIf="linkedDocuments.length > 0"
+        <div *ngIf="linkedDocuments.length > 0 && !isLowestHierarchyLevel"
              class="grid-section-label first-grid-section-label"
              (click)="toggleSection('types')">
             <span [ngClass]="isSectionVisible('types') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>

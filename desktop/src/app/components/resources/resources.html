@@ -1,7 +1,7 @@
 <div class="resources-nav row bg-light">
     <div class="d-flex"
-         [class.col-md-6]="!isInTypesManagement() || isInExtendedSearchMode()"
-         [class.col-md-12]="isInTypesManagement() && !isInExtendedSearchMode()">
+         [class.col-md-6]="!isInGridListView() || isInExtendedSearchMode()"
+         [class.col-md-12]="isInGridListView() && !isInExtendedSearchMode()">
         <navigation></navigation>
         <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
              [class.document-limit-exceeded]="isDocumentLimitExceeded()">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div *ngIf="!isInTypesManagement() || isInExtendedSearchMode()" class="col-md-6 mr-md-auto">
+    <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="col-md-6 mr-md-auto">
         <div class="d-flex row">
             <div id="search-bar-container" class="flex-grow-1">
                 <resources-search-bar [filterOptions]="filterOptions"
@@ -39,7 +39,7 @@
                 </resources-search-bar>
             </div>
 
-            <div *ngIf="!isInTypesManagement()" id="buttons-container">
+            <div *ngIf="!isInGridListView()" id="buttons-container">
                 <div class="resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
@@ -81,9 +81,9 @@
         <list *ngIf="viewFacade.getMode() === 'list'"
               [documents]="viewFacade.getDocuments()"
               [selectedDocument]="viewFacade.getSelectedDocument()"></list>
-        <grid-list *ngIf="viewFacade.getMode() === 'types'"
+        <grid-list *ngIf="viewFacade.getMode() === 'grid'"
                    [documents]="viewFacade.getDocuments()"
-                   [linkRelationName]="'isInstanceOf'"
-                   [inverseLinkRelationName]="'hasInstance'"></grid-list>
+                   [linkRelationName]="getGridListRelationName()"
+                   [inverseLinkRelationName]="getGridListInverseRelationName()"></grid-list>
     </div>
 </div>

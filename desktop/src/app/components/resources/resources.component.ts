@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration, Relation } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
@@ -93,7 +93,7 @@ export class ResourcesComponent implements OnDestroy {
 
     public isReady = () => this.viewFacade.isReady();
 
-    public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
+    public isInGridListView = () => this.viewFacade.isInGridListView();
 
 
     ngOnDestroy() {
@@ -127,15 +127,33 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public getGridListRelationName(): string {
+
+        return this.viewFacade.isInTypesManagement()
+            ? Relation.Type.INSTANCEOF
+            : Relation.Inventory.ISSTOREDIN;
+    }
+
+
+    public getGridListInverseRelationName(): string {
+
+        return this.viewFacade.isInTypesManagement()
+            ? Relation.Type.HASINSTANCE
+            : Relation.Inventory.ISSTORAGEPLACEOF;
+    }
+
+
     private updateFilterOptions() {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? this.projectConfiguration.getConcreteFieldCategories()
+                ? this.projectConfiguration.getFieldCategories()
                     .filter(category => !category.parentCategory)
-                : this.projectConfiguration.getOverviewToplevelCategories();
+                : this.projectConfiguration.getOverviewTopLevelCategories();
         } else if (this.viewFacade.isInTypesManagement()) {
             this.filterOptions = this.projectConfiguration.getTypeManagementCategories();
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            this.filterOptions = this.projectConfiguration.getInventoryCategories();
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
@@ -379,7 +397,7 @@ export class ResourcesComponent implements OnDestroy {
 
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
-        if (this.viewFacade.getMode() === 'types') {
+        if (this.viewFacade.getMode() === 'grid') {
             await this.viewFacade.moveInto(id, false, true);
         } else {
             await this.viewFacade.setSelectedDocument(id);
@@ -388,13 +406,13 @@ export class ResourcesComponent implements OnDestroy {
         try {
             if (menu === 'edit') {
                 await this.editDocument(
-                    this.viewFacade.getMode() === 'types'
+                    this.viewFacade.getMode() === 'grid'
                         ? NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document
                         : this.viewFacade.getSelectedDocument(),
                     group
                 );
             } else {
-                if (this.viewFacade.getMode() !== 'types') this.activePopoverMenu = 'info';
+                if (this.viewFacade.getMode() !== 'grid') this.activePopoverMenu = 'info';
                 await this.viewFacade.setActiveDocumentViewTab(group);
             }
         } catch (e) {

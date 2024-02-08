@@ -32,7 +32,7 @@ export module NavigationPathSegment {
         return index === 0
             ? operationId !== undefined
                 && (Document.hasRelationTarget(segment.document, 'isRecordedIn', operationId)
-                    || ['Place', 'TypeCatalog'].includes(segment.document.resource.category))
+                    || ['Place', 'TypeCatalog', 'StorageSite'].includes(segment.document.resource.category))
             : Document.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id);
     }

@@ -44,11 +44,19 @@ describe('NavigationPathSegment', () => {
 
     it('consider the first segment valid if the corresponding document is of category TypeCatalog', () => {
 
-        const document: FieldDocument = fieldDoc(
-            '', 'TypeCatalog', 'TypeCatalog','tc'
-        );
+        const document: FieldDocument = fieldDoc('', 'TypeCatalog', 'TypeCatalog', 'tc');
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
+        expect(NavigationPathSegment.isValid(
+            'types', segments[0], segments, () => true)
+        ).toBe(true);
+    });
+
+
+    it('consider the first segment valid if the corresponding document is of category StorageSite', () => {
+
+        const document: FieldDocument = fieldDoc('', 'StorageSite', 'StorageSite', 'tc');
+        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
             'types', segments[0], segments, () => true)
@@ -58,8 +66,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a following segment valid if the correct liesWithin relation is existing', () => {
 
-        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [
@@ -75,8 +83,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a following segment invalid if the correct liesWithin relation is not existing', () => {
 
-        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');
         document2.resource.relations.liesWithin = ['f3'];
 
         const segments: Array<NavigationPathSegment> = [
@@ -92,8 +100,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a segment invalid if the corresponding document is not existing', () => {
 
-        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [

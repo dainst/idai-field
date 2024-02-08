@@ -49,11 +49,15 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement();
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement();
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
+    public isInGridListView = () => this.isInTypesManagement() || this.isInInventoryManagement();
+
     public isInTypesManagement = () => this.resourcesState.view === 'types';
+
+    public isInInventoryManagement = () => this.resourcesState.view === 'inventory';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
@@ -61,16 +65,19 @@ export class ResourcesStateManager {
     public getOverviewCategoryNames = (): string[] => this.projectConfiguration
         .getOverviewCategories().map(Named.toName);
 
-    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategories()
+    public getConcreteFieldCategoryNames = (): string[] => this.projectConfiguration.getFieldCategories()
         .map(Named.toName);
 
-    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeManagementCategories()
+    public getTypeManagementCategoryNames = (): string[] => this.projectConfiguration.getTypeManagementCategories()
+        .map(Named.toName);
+
+    public getInventoryCategoryNames = (): string[] => this.projectConfiguration.getInventoryCategories()
         .map(Named.toName);
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 
 
-    public async initialize(viewName: 'project'|'types'|string) {
+    public async initialize(viewName: 'project'|'types'|'inventory'|string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
@@ -78,11 +85,11 @@ export class ResourcesStateManager {
         }
 
         let currentMode: ResourcesViewMode = this.getMode();
-        if (viewName !== 'types' && currentMode === 'types') currentMode = 'map';
+        if (currentMode === 'grid' && !this.isInGridListView()) currentMode = 'map';
 
         this.resourcesState.view = viewName;
 
-        if (viewName !== 'project' && viewName !== 'types') {
+        if (!this.isInSpecialView()) {
             if (!this.resourcesState.operationViewStates[viewName]) {
                 this.resourcesState.operationViewStates[viewName] = ViewState.build();
             }

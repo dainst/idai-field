@@ -44,6 +44,13 @@
             <span i18n="@@resources.navigation.typeCatalogs">Typenkataloge</span>
         </div>
 
+        <div *ngIf="viewFacade.isInInventoryManagement()"
+             id="inventory-navigation-root" type="button" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="!navigationPath.selectedSegmentId"
+             (click)="moveInto(undefined)">
+            <span i18n="@@resources.navigation.storagePlaces">Aufbewahrungsorte</span>
+        </div>
+
         <div *ngFor="let document of getSegments()"
             id="navigation-button-{{document.resource.identifier}}"
             class="btn btn-outline-primary navigation-button"

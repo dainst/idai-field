@@ -144,6 +144,11 @@ const getTemplate = (mainWindow, context, config) => {
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),
             enabled: isDefaultContext(context)
         }, {
+            label: messages.get('menu.tools.inventory'),
+            accelerator: 'CmdOrCtrl+U',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'resources/inventory'),
+            enabled: isDefaultContext(context)
+        }, {
             label: messages.get('menu.tools.matrix'),
             accelerator: 'CmdOrCtrl+Y',
             click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),

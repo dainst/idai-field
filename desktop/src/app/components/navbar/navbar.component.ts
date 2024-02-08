@@ -53,6 +53,9 @@ export class NavbarComponent implements DoCheck {
 
     public getTabRouteArray = (tab: Tab) => TabUtil.getTabRouteArray(tab);
 
+    public isInDefaultResourcesView = () => this.isActiveRoute('/resources')
+        && !this.isActiveRoute('/resources/types') && !this.isActiveRoute('/resources/inventory');
+
 
     ngDoCheck() {
 
@@ -107,6 +110,8 @@ export class NavbarComponent implements DoCheck {
             return this.i18n({ id: 'navbar.tabs.images', value: 'Bilder' });
         } else if (this.activeRoute.startsWith('/resources/types')) {
             return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
+        } else if (this.activeRoute.startsWith('/resources/inventory')) {
+            return this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' });
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/downloadProject')) {

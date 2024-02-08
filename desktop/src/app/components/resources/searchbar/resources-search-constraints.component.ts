@@ -61,10 +61,15 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 id: 'resources.searchBar.constraints.isInstanceOf',
                 value: 'Verknüpfte Typen'
             });
-        } else if (field.name === 'hasInstance') {
+        } else if (field.name === 'hasInstance' || field.name === 'isStoragePlaceOf') {
             return this.i18n({
                 id: 'resources.searchBar.constraints.hasInstance',
                 value: 'Verknüpfte Funde'
+            });
+        } else if (field.name === 'isStoredIn') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.isStoredIn',
+                value: 'Verknüpfter Aufbewahrungsort'
             });
         } else {
             return super.getFieldLabel(field);
@@ -96,9 +101,20 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 inputType: 'default',
                 constraintIndexed: true
             });
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            this.defaultFields.push({
+                name: 'isStoragePlaceOf',
+                inputType: 'default',
+                constraintIndexed: true
+            });
         } else {
             this.defaultFields.push({
                 name: 'isInstanceOf',
+                inputType: 'default',
+                constraintIndexed: true
+            });
+            this.defaultFields.push({
+                name: 'isStoredIn',
                 inputType: 'default',
                 constraintIndexed: true
             });

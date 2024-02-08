@@ -25,7 +25,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
-    // undefined when in overview or type management
+    // undefined when in overview, types management or inventory management
     @Input() isRecordedIn: FieldDocument|undefined;
 
     // undefined when current level is operation
@@ -204,13 +204,12 @@ export class PlusButtonComponent implements OnChanges {
                 return false;
             }
         } else {
-            if (!(this.viewFacade.isInOverview()
-                    ? this.projectConfiguration.getConcreteOverviewCategories()
-                        .map(Named.toName).includes(category.name)
-                    : this.projectConfiguration.getTypeManagementCategories()
-                        .map(Named.toName).includes(category.name))) {
-                return false;
-            }
+            const categories: Array<CategoryForm> = this.viewFacade.isInOverview()
+                ? this.projectConfiguration.getConcreteOverviewCategories()
+                : this.viewFacade.isInTypesManagement()
+                    ? this.projectConfiguration.getTypeManagementCategories()
+                    : this.projectConfiguration.getInventoryCategories();
+            if (!categories.map(Named.toName).includes(category.name)) return false;
         }
 
         if (!this.liesWithin) {

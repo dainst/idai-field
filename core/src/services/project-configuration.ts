@@ -112,16 +112,8 @@ export class ProjectConfiguration {
     public getRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
-            Tree.flatten
-        );
-    }
-
-
-    public getConcreteFieldCategories(): Array<CategoryForm> {
-
-        return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StorageSite', 'StorageRoom', 'StorageShelf',
+            'StorageCompartment', 'StorageBox', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -130,7 +122,8 @@ export class ProjectConfiguration {
     public getFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StorageSite', 'StorageRoom', 'StorageShelf',
+                'StorageCompartment', 'StorageBox'),
             Tree.flatten
         );
     }
@@ -155,7 +148,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getOverviewToplevelCategories(): Array<CategoryForm> {
+    public getOverviewTopLevelCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),
@@ -178,6 +171,15 @@ export class ProjectConfiguration {
 
         return flow(this.categoryForms,
             filterTrees(TYPE),
+            Tree.flatten
+        );
+    }
+
+
+    public getInventoryCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'),
             Tree.flatten
         );
     }

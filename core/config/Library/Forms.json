@@ -1088,7 +1088,8 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs",
+            "isStoredIn"]
         },
         {
           "name": "identification",

@@ -21,10 +21,12 @@
              class="grid-section-label first-grid-section-label"
              (click)="toggleSection('types')">
             <span [ngClass]="isSectionVisible('types') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
-            <span *ngIf="mainDocument?.resource.category === 'TypeCatalog'"
+            <span *ngIf="isInTypesManagement() && mainDocument?.resource.category === 'TypeCatalog'"
                 i18n="@@resources.typeGrid.types">Typen</span>
-            <span *ngIf="mainDocument?.resource.category !== 'TypeCatalog'"
+            <span *ngIf="isInTypesManagement() && mainDocument?.resource.category !== 'TypeCatalog'"
                 i18n="@@resources.typeGrid.subtypes">Untertypen</span>
+            <span *ngIf="isInInventoryManagement()"
+                i18n="@@resources.typeGrid.storageUnits">Lagerungseinheiten</span>
         </div>
 
         <div *ngIf="isSectionVisible('types')" class="grid-section">
@@ -47,10 +49,10 @@
         <div *ngIf="linkedDocuments.length > 0"
              id="toggle-finds-section-button"
              class="grid-section-label"
-             i18n="@@resources.typeGrid.linkedFinds"
              (click)="toggleSection('finds')">
              <span [ngClass]="isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
-             Zugeordnete Funde
+             <span *ngIf="isInTypesManagement()" i18n="@@resources.typeGrid.linkedFinds">Zugeordnete Funde</span>
+             <span *ngIf="isInInventoryManagement()" i18n="@@resources.typeGrid.storedFinds">Enthaltene Funde</span>
         </div>
 
         <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('finds')"

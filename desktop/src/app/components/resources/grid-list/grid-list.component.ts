@@ -98,6 +98,10 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public setExpandAllGroups = (expand: boolean) => this.expandAllGroups = expand;
 
+    public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
+
+    public isInInventoryManagement = () => this.viewFacade.isInInventoryManagement();
+
 
     public isPlusButtonShown(): boolean {
 
@@ -362,17 +366,17 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    public getLinkRelationName(): string {
+    private getLinkRelationName(): string {
 
-        return this.viewFacade.isInTypesManagement()
+        return this.isInTypesManagement()
             ? Relation.Type.INSTANCEOF
             : Relation.Inventory.ISSTOREDIN;
     }
 
 
-    public getInverseLinkRelationName(): string {
+    private getInverseLinkRelationName(): string {
 
-        return this.viewFacade.isInTypesManagement()
+        return this.isInTypesManagement()
             ? Relation.Type.HASINSTANCE
             : Relation.Inventory.ISSTORAGEPLACEOF;
     }

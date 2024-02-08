@@ -201,7 +201,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         if (!Document.hasRelations(document, this.linkRelationName)) return undefined;
 
-        for (const typeId of document.resource.relations.isInstanceOf) {
+        for (const typeId of document.resource.relations[this.linkRelationName]) {
             const type = this.subtypes[typeId];
             if (type) return type;
         }

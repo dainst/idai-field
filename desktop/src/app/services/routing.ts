@@ -112,9 +112,9 @@ export class Routing {
 
     private async jumpToFieldCategoryResource(documentToSelect: Document) {
 
-        const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
+        const viewName: 'project'|'types'|'inventory'|string = this.getViewName(documentToSelect);
 
-        if (!['project', 'types'].includes(viewName)) {
+        if (!['project', 'types', 'inventory'].includes(viewName)) {
             try {
                 await this.datastore.get(viewName);
             } catch (errWithParams) {
@@ -160,14 +160,17 @@ export class Routing {
     }
 
 
-    private getViewName(document: Document): 'project'|'types'|string {
+    private getViewName(document: Document): 'project'|'types'|'inventory'|string {
 
         return this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)
             ? 'project'
             : this.projectConfiguration.getTypeManagementCategories()
                     .map(Named.toName).includes(document.resource.category)
                 ? 'types'
-                : document.resource.relations['isRecordedIn'][0];
+                : this.projectConfiguration.getInventoryCategories()
+                        .map(Named.toName).includes(document.resource.category)
+                    ? 'inventory'
+                    : document.resource.relations['isRecordedIn'][0];
     }
 
 

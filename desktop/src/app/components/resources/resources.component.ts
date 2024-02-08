@@ -7,7 +7,7 @@ import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
-import { MoveModalComponent } from './actions/move/move-modal.component';
+import { MoveModalComponent, MoveResult } from './actions/move/move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -225,13 +225,17 @@ export class ResourcesComponent implements OnDestroy {
         modalRef.componentInstance.initialize(documents);
 
         try {
-            const errors: boolean = await modalRef.result;
+            const result: MoveResult = await modalRef.result;
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
-            if (errors) {
-                await this.viewFacade.populateDocumentList();
+            if (result.success) {
+                await this.routingService.jumpToResource(
+                    this.viewFacade.isInGridListView()
+                        ? result.newParent
+                        : documents[0]
+                );
             } else {
-                await this.routingService.jumpToResource(documents[0]);
+                await this.viewFacade.populateDocumentList();
             }
             
         } catch (msgWithParams) {

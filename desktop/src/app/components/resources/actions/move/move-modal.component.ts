@@ -7,6 +7,12 @@ import { Loading } from '../../../widgets/loading';
 import { MoveUtility } from './move-utility';
 
 
+export interface MoveResult {
+    success: boolean;
+    newParent?: FieldDocument;
+}
+
+
 @Component({
     selector: 'move-modal',
     templateUrl: './move-modal.html',
@@ -66,7 +72,7 @@ export class MoveModalComponent {
         if (this.isLoading()) return;
         this.loading.start('moveModal');
 
-        let errors: boolean = false;
+        const result: MoveResult = { success: false };
 
         for (let document of this.documents) {
             try {
@@ -78,14 +84,15 @@ export class MoveModalComponent {
                     this.projectConfiguration,
                     this.datastore
                 );
+                result.success = true;
+                result.newParent = newParent;
             } catch (msgWithParams) {
                 console.error(msgWithParams);
                 this.messages.add(msgWithParams);
-                errors = true;
             }
         }
 
         this.loading.stop('moveModal');
-        this.activeModal.close(errors);
+        this.activeModal.close(result);
     }
 }

@@ -5,7 +5,7 @@ import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, 
 import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
     ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
 import { ImageRowItem } from '../../../../image/row/image-row';
-import { TypeImagesUtil } from '../../../../../util/type-images-util';
+import { LinkedImagesUtil } from '../../../../../util/linked-images-util';
 
 
 const ALLCATALOGS = 'all-catalogs';
@@ -202,7 +202,7 @@ export class TypeRelationPickerComponent {
         = (documents: Array<FieldDocument>) => map(documents, document => {
             return [
                 document,
-                TypeImagesUtil.getLinkedImageIds(document, this.datastore, Relation.Type.INSTANCEOF)
+                LinkedImagesUtil.getLinkedImageIds(document, this.datastore, Relation.Type.INSTANCEOF)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
         })

@@ -17,24 +17,24 @@
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
 
-        <div *ngIf="linkedDocuments.length > 0 && !isLowestHierarchyLevel"
+        <div *ngIf="linkedFinds.length > 0 && !isLowestHierarchyLevel"
              class="grid-section-label first-grid-section-label"
-             (click)="toggleSection('types')">
-            <span [ngClass]="isSectionVisible('types') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
+             (click)="toggleSection('documents')">
+            <span [ngClass]="isSectionVisible('documents') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
             <span *ngIf="isInTypesManagement() && mainDocument?.resource.category === 'TypeCatalog'"
-                i18n="@@resources.typeGrid.types">Typen</span>
+                i18n="@@resources.gridList.types">Typen</span>
             <span *ngIf="isInTypesManagement() && mainDocument?.resource.category !== 'TypeCatalog'"
-                i18n="@@resources.typeGrid.subtypes">Untertypen</span>
+                i18n="@@resources.gridList.subtypes">Untertypen</span>
             <span *ngIf="isInInventoryManagement()"
-                i18n="@@resources.typeGrid.storageUnits">Lagerungseinheiten</span>
+                i18n="@@resources.gridList.storageUnits">Lagerungseinheiten</span>
         </div>
 
-        <div *ngIf="isSectionVisible('types')" class="grid-section">
+        <div *ngIf="isSectionVisible('documents')" class="grid-section">
             <grid [documents]="documents"
                   [images]="images"
                   (clickDocument)="open($event)"
                   (contextmenuDocument)="contextMenu.open($event.mouseEvent, [$event.document])"></grid>
-            <div id="plus-button-container" *ngIf="isSectionVisible('types')">
+            <div id="plus-button-container" *ngIf="isSectionVisible('documents')">
                 <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"
                              [placement]="'top'"
@@ -46,19 +46,19 @@
             </div>
         </div>
 
-        <div *ngIf="linkedDocuments.length > 0"
+        <div *ngIf="linkedFinds.length > 0"
              id="toggle-finds-section-button"
              class="grid-section-label"
              (click)="toggleSection('finds')">
              <span [ngClass]="isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
-             <span *ngIf="isInTypesManagement()" i18n="@@resources.typeGrid.linkedFinds">Zugeordnete Funde</span>
-             <span *ngIf="isInInventoryManagement()" i18n="@@resources.typeGrid.storedFinds">Enthaltene Funde</span>
+             <span *ngIf="isInTypesManagement()" i18n="@@resources.gridList.linkedFinds">Zugeordnete Funde</span>
+             <span *ngIf="isInInventoryManagement()" i18n="@@resources.gridList.storedFinds">Enthaltene Funde</span>
         </div>
 
-        <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('finds')"
-             id="linked-documents-grid"
+        <div *ngIf="linkedFinds.length > 0 && isSectionVisible('finds')"
+             id="linked-finds-grid"
              class="grid-section">
-            <grid [documents]="linkedDocuments"
+            <grid [documents]="linkedFinds"
                   [images]="images"
                   (clickDocument)="openResourceViewModal($event)"></grid>
         </div>

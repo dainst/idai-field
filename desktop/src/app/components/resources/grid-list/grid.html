@@ -5,7 +5,7 @@
             (click)="clickDocument.emit(document)"
             (contextmenu)="contextmenuDocument.emit({mouseEvent: $event, document: document})">
         <grid-item [document]="document"
-                   [subtype]="gridListComponent.getLinkedSubtype(document)"
+                   [subDocument]="gridListComponent.getLinkedSubDocument(document)"
                    [images]="images[document.resource.id]">
         </grid-item>
     </div>

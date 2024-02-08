@@ -18,9 +18,12 @@ import { ComponentHelpers } from '../../component-helpers';
 import { Routing } from '../../../services/routing';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
-import { TypeImagesUtil } from '../../../util/type-images-util';
+import { LinkedImagesUtil } from '../../../util/linked-images-util';
 import { Messages } from '../../messages/messages';
 import { WarningsService } from '../../../services/warnings/warnings-service';
+
+
+type GridListSection = 'documents'|'finds';
 
 
 @Component({
@@ -38,29 +41,26 @@ import { WarningsService } from '../../../services/warnings/warnings-service';
 export class GridListComponent extends BaseList implements OnChanges {
 
     /**
-     * These are the Type documents found at the current level,
+     * These are the documents found at the current level,
      * as given by the current selected segment of the navigation path.
      */
     @Input() documents: Array<FieldDocument>;
 
     /**
      * Undefined if we are on the top level.
-     * If defined, this is the document also represented
-     * by the current selected segment of the navigation path,
-     * which is either a Type Catalogue, a Type (or a subtype of a Type, which is always also a Type).
+     * If defined, this is the document also represented by the current selected segment of the navigation path.
      */
     public mainDocument: FieldDocument|undefined;
 
     /**
-     * All Types and Subtypes below the mainDocument (see field above).
+     * All documents below the mainDocument.
      */
-    private subtypes: Map<FieldDocument> = {};
+    private subDocuments: Map<FieldDocument> = {};
 
     /**
-     * The 'regular' (meaning non-Type-) documents, which are linked
-     * to all subtypes (see field above).
+     * The finds that are linked to one or more of the subDocuments.
      */
-    public linkedDocuments: Array<FieldDocument> = [];
+    public linkedFinds: Array<FieldDocument> = [];
 
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
@@ -68,7 +68,7 @@ export class GridListComponent extends BaseList implements OnChanges {
     public isLowestHierarchyLevel: boolean = false;
 
     private expandAllGroups: boolean = false;
-    private visibleSections = ['types'];
+    private visibleSections: Array<GridListSection> = ['documents'];
 
 
     constructor(private datastore: Datastore,
@@ -200,13 +200,13 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
+    public getLinkedSubDocument(document: FieldDocument): FieldDocument|undefined {
 
         if (!Document.hasRelations(document, this.getLinkRelationName())) return undefined;
 
-        for (const typeId of document.resource.relations[this.getLinkRelationName()]) {
-            const type = this.subtypes[typeId];
-            if (type) return type;
+        for (const targetId of document.resource.relations[this.getLinkRelationName()]) {
+            const subDocument: FieldDocument = this.subDocuments[targetId];
+            if (subDocument) return subDocument;
         }
         return undefined;
     }
@@ -225,7 +225,7 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    public toggleSection(section: string) {
+    public toggleSection(section: GridListSection) {
 
         if (!this.visibleSections.includes(section)) {
             this.visibleSections.push(section);
@@ -234,17 +234,17 @@ export class GridListComponent extends BaseList implements OnChanges {
 
             this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
             if (this.visibleSections.length < 1) {
-                this.toggleSection(section === 'types' ? 'finds' : 'types');
+                this.toggleSection(section === 'documents' ? 'finds' : 'documents');
             }
         }
     }
 
 
-    public isSectionVisible(section: string): boolean {
+    public isSectionVisible(section: GridListSection): boolean {
         
         if (this.isLowestHierarchyLevel) return section === 'finds';
 
-        return (section === 'types' && this.linkedDocuments.length === 0)
+        return (section === 'documents' && this.linkedFinds.length === 0)
             || this.visibleSections.includes(section);
     }
 
@@ -270,9 +270,9 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     private async updateLinkedDocuments() {
 
-        this.subtypes = await this.getSubtypes();
-        this.linkedDocuments = await this.getLinkedDocuments();
-        await this.loadImages(this.linkedDocuments);
+        this.subDocuments = await this.getSubDocuments();
+        this.linkedFinds = await this.getLinkedDocuments();
+        await this.loadImages(this.linkedFinds);
     }
 
 
@@ -284,11 +284,11 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    private async getSubtypes(): Promise<Map<FieldDocument>> {
+    private async getSubDocuments(): Promise<Map<FieldDocument>> {
 
         if (!this.mainDocument) return {};
 
-        const subtypesArray = (await this.datastore.find({
+        const subDocuments = (await this.datastore.find({
             constraints: {
                 'isChildOf:contain': {
                     value: this.mainDocument.resource.id,
@@ -297,7 +297,7 @@ export class GridListComponent extends BaseList implements OnChanges {
             }
         })).documents as Array<FieldDocument>;
 
-        return makeLookup([Document.RESOURCE, Resource.ID])(subtypesArray);
+        return makeLookup([Document.RESOURCE, Resource.ID])(subDocuments);
     }
 
 
@@ -306,7 +306,7 @@ export class GridListComponent extends BaseList implements OnChanges {
         if (!this.mainDocument) return [];
 
         const linkedResourceIds: string[] = flow(
-            [this.mainDocument].concat(Object.values(this.subtypes)),
+            [this.mainDocument].concat(Object.values(this.subDocuments)),
             filter(pipe(Document.hasRelations, this.getInverseLinkRelationName())),
             map(document => document.resource.relations[this.getInverseLinkRelationName()]),
             flatten(),
@@ -354,7 +354,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const linkedImageIds: string[] = TypeImagesUtil.getLinkedImageIds(
+        const linkedImageIds: string[] = LinkedImagesUtil.getLinkedImageIds(
             document, this.datastore, this.getLinkRelationName()
         );
 

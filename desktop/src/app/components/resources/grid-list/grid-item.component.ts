@@ -15,7 +15,7 @@ export class GridItemComponent {
 
     @Input() document: FieldDocument;
     @Input() images: Array<SafeResourceUrl>;
-    @Input() subtype?: FieldDocument;
+    @Input() subDocument?: FieldDocument;
 
     constructor() {}
 }

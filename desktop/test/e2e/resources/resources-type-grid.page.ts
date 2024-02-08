@@ -40,9 +40,9 @@ export class ResourcesTypeGridPage {
 
     // elements
 
-    public static getLinkedDocumentsGrid() {
+    public static getLinkedFindsGrid() {
 
-        return getLocator('#linked-documents-grid');
+        return getLocator('#linked-finds-grid');
     }
 
 

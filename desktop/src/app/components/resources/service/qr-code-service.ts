@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore } from 'idai-field-core';
+import { Datastore, FieldDocument } from 'idai-field-core';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Menus } from '../../../services/menus';
@@ -45,14 +45,14 @@ export class QrCodeService {
     }
 
 
-    public async getDocumentFromScannedCode(scannedCode: string) {
+    public async getDocumentFromScannedCode(scannedCode: string): Promise<FieldDocument> {
 
         const result: Datastore.FindResult = await this.datastore.find(
             { constraints: { 'scanCode:match': scannedCode } }
         );
 
         if (result.documents.length > 0) {
-            return result.documents[0];
+            return result.documents[0] as FieldDocument;
         } else {
             this.messages.add([M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND]);
             return undefined;

@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../actions/move/move-utility';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -53,7 +53,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isEditImagesOptionAvailable()
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
-            || this.isEditQRCodeOptionAvailable();
+            || this.isEditQRCodeOptionAvailable()
+            || this.isScanStoragePlaceOptionIsAvailable();
     }
 
 
@@ -113,6 +114,14 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
+    public isScanStoragePlaceOptionIsAvailable(): boolean {
+
+        if (this.isReadonly() || !this.containsOnlyFindResources()) return false;
+
+        return this.projectConfiguration.getInventoryCategories().length > 0;
+    }
+
+
     public isAddQRCodeOptionAvailable(): boolean {
 
         return this.isQrCodeOptionAvailable()
@@ -142,6 +151,14 @@ export class ResourcesContextMenuComponent implements OnChanges {
     private isReadonly(): boolean {
 
         return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
+    }
+
+
+    private containsOnlyFindResources(): boolean {
+
+        return this.contextMenu.documents.filter(document => {
+            return !this.projectConfiguration.isSubcategory(document.resource.category, 'Find');
+        }).length === 0;
     }
 
 

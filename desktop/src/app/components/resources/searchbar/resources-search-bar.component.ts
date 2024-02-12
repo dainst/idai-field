@@ -1,10 +1,8 @@
 import { Component, ElementRef, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectConfiguration } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
-import { Menus } from '../../../services/menus';
-import { Messages } from '../../messages/messages';
 import { QrCodeService } from '../service/qr-code-service';
+import { Routing } from '../../../services/routing';
 
 
 @Component({
@@ -27,7 +25,8 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     constructor(private elementRef: ElementRef,
                 private qrCodeService: QrCodeService,
-                private projectConfiguration: ProjectConfiguration) {
+                private projectConfiguration: ProjectConfiguration,
+                private routingService: Routing) {
 
         super();
     }
@@ -89,6 +88,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public async scanQrCode() {
 
         const scannedCode: string = await this.qrCodeService.scanCode();
-        if (scannedCode) await this.qrCodeService.openDocumentFromScannedCode(scannedCode);
+        if (!scannedCode) return;
+
+        const document: Document = await this.qrCodeService.getDocumentFromScannedCode(scannedCode);
+        if (document) this.routingService.jumpToResource(document);
     }
 }

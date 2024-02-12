@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore } from 'idai-field-core';
 import { M } from '../../messages/m';
-import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -17,7 +16,6 @@ import { AngularUtility } from '../../../angular/angular-utility';
 export class QrCodeService {
 
     constructor(private datastore: Datastore,
-                private routingService: Routing,
                 private messages: Messages,
                 private menus: Menus,
                 private modalService: NgbModal) {}
@@ -47,16 +45,17 @@ export class QrCodeService {
     }
 
 
-    public async openDocumentFromScannedCode(scannedCode: string) {
+    public async getDocumentFromScannedCode(scannedCode: string) {
 
         const result: Datastore.FindResult = await this.datastore.find(
             { constraints: { 'scanCode:match': scannedCode } }
         );
 
         if (result.documents.length > 0) {
-            this.routingService.jumpToResource(result.documents[0]);
+            return result.documents[0];
         } else {
             this.messages.add([M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND]);
+            return undefined;
         }
     }
 }

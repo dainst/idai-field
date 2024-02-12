@@ -22,8 +22,8 @@ export namespace ConnectedDocs {
 
     export async function updateForUpdate(datastore: Datastore,
                                           relationNames: Array<Name>,
-                                          inverseRelationsMap: Relation.InverseRelationsMap, 
-                                          document: Document, 
+                                          inverseRelationsMap: Relation.InverseRelationsMap,
+                                          document: Document,
                                           otherVersions: Array<Document>) {
 
         const connectedDocs = await getExistingConnectedDocs(

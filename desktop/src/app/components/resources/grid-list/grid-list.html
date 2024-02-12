@@ -11,12 +11,12 @@
                    [showThumbnail]="true"
                    (onStartEdit)="edit(mainDocument)"
                    (onJumpToResource)="jumpToResource($event)"
-                   (onThumbnailClicked)="openImageViewModal(mainDocument)"></document-info>
+                   (onThumbnailClicked)="openImageViewModal(mainDocument)"
+                   (onHeaderRightClicked)="contextMenu.open($event, [mainDocument])"></document-info>
 
     <loading-icon [class.with-main-document]="mainDocument"></loading-icon>
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
-
         <div *ngIf="linkedFinds.length > 0 && !isLowestHierarchyLevel"
              class="grid-section-label first-grid-section-label"
              (click)="toggleSection('documents')">

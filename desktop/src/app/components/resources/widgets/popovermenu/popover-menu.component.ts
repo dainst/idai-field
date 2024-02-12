@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldDocument } from 'idai-field-core';
 import { PopoverMenu, ResourcesComponent } from '../../resources.component';
 import { ViewFacade } from '../../../../components/resources/view/view-facade';
@@ -18,7 +18,9 @@ import { Messages } from '../../../messages/messages';
 export class PopoverMenuComponent {
 
     @Input() document: FieldDocument;
-    @Input() showThumbnail = true;
+    @Input() showThumbnail: boolean = true;
+
+    @Output() onDocumentInfoHeaderRightClicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
 
     constructor(private resourcesComponent: ResourcesComponent,

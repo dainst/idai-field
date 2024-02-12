@@ -218,8 +218,9 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         if (!ComponentHelpers.isInside(event.target, target =>
                 target.id === 'context-menu'
-                    || (rightClick && target.id && target.id.startsWith('grid-item')))) {
-
+                    || (rightClick
+                        && ((target.id && target.id.startsWith('grid-item'))
+                            || target.classList && target.classList.contains('document-info-header'))))) {
             this.contextMenu.close();
         }
     }

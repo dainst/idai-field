@@ -3,7 +3,8 @@
                         (onSelectAction)="performContextMenuAction($event)">
 </resources-context-menu>
 
-<popover-menu [document]="selectedDocument"></popover-menu>
+<popover-menu [document]="selectedDocument"
+              (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
 <cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
     <ul #sidebar id="sidebar" class="resources-listing"

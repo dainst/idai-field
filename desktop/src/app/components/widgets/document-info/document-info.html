@@ -1,5 +1,7 @@
 <div *ngIf="document" class="document-info" [class.transparent-background]="transparentBackground">
-    <div class="document-info-header">
+    <div [id]="'resource-header-' + document.resource.identifier"
+         class="document-info-header"
+         (contextmenu)="onHeaderRightClicked.emit($event)">
         <button class="expand-all-groups-button btn btn-light"
                 [class.active]="getExpandAllGroups()"
                 ngbTooltip="Alle Gruppen ausklappen"

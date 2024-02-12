@@ -14,6 +14,7 @@
                        [transparentBackground]="true"
                        (onJumpToResource)="jumpToResource($event)"
                        (onThumbnailClicked)="openImageViewModal()"
-                       (onCloseButtonClicked)="closePopover()"></document-info>
+                       (onCloseButtonClicked)="closePopover()"
+                       (onHeaderRightClicked)="onDocumentInfoHeaderRightClicked.emit($event)"></document-info>
     </div>
 </div>

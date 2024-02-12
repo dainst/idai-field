@@ -26,6 +26,11 @@
         <span class="mdi mdi-qrcode-edit"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.editQrCode">QR-Code verwalten</span>
     </div>
+    <div *ngIf="isSetStoragePlaceOptionIsAvailable()" id="context-menu-set-storage-place-button"
+         class="dropdown-item" (click)="selectAction('edit-qr-code')">
+        <span class="mdi mdi-archive"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.setStoragePlace">Aufbewahrungsort setzen</span>
+    </div>
     <div *ngIf="isMoveOptionAvailable()"
          id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>

@@ -2,13 +2,13 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, FieldDocument, IdGenerator, Labels, ProjectConfiguration, Resource } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
-import { QrCodeScannerModalComponent } from '../../../widgets/qr-code-scanner-modal.component';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { M } from '../../../messages/m';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
+import { QrCodeService } from '../../service/qr-code-service';
 
 const QRCode = require('qrcode');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -41,7 +41,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 private menus: Menus,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private projectLabelProvider: ProjectLabelProvider) {}
+                private projectLabelProvider: ProjectLabelProvider,
+                private qrCodeService: QrCodeService) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -81,7 +82,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public async setExistingCode() {
 
-        const code: string = await this.scanExistingCode();
+        const code: string = await this.qrCodeService.scanCode();
         if (!code) return;
 
         if (this.isUnassignedCode(code)) {
@@ -154,29 +155,6 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             this.messages.add(errWithParams);
         } finally {
             this.saving = false;
-        }
-    }
-
-
-    private async scanExistingCode(): Promise<string> {
-
-        this.menus.setContext(MenuContext.QR_CODE_SCANNER);
-
-        try {
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeScannerModalComponent,
-                { animation: false, backdrop: 'static', keyboard: false }
-            );
-
-            return await modalRef.result;
-        } catch (closeReason) {
-            if (closeReason !== 'cancel') {
-                this.messages.add([M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE]);
-                console.error(closeReason);
-            }
-            return undefined;
-        } finally {
-            this.menus.setContext(MenuContext.QR_CODE_EDITOR);
         }
     }
 

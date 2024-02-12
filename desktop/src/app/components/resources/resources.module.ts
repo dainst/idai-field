@@ -52,6 +52,7 @@ import { StateSerializer } from '../../services/state-serializer';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
+import { QrCodeService } from './service/qr-code-service';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -105,6 +106,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerManager,
         LayerImageProvider,
         ResourceDeletion,
+        QrCodeService,
         {
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,

@@ -1,14 +1,10 @@
 import { Component, ElementRef, Input } from '@angular/core';
-import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, ProjectConfiguration } from 'idai-field-core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectConfiguration } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
-import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
-import { QrCodeScannerModalComponent } from '../../widgets/qr-code-scanner-modal.component';
-import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
-import { M } from '../../messages/m';
-import { AngularUtility } from '../../../angular/angular-utility';
+import { QrCodeService } from '../service/qr-code-service';
 
 
 @Component({
@@ -30,11 +26,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                private menus: Menus,
-                private modalService: NgbModal,        
-                private datastore: Datastore,
-                private routingService: Routing,
-                private messages: Messages,
+                private qrCodeService: QrCodeService,
                 private projectConfiguration: ProjectConfiguration) {
 
         super();
@@ -94,39 +86,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    public async openQrCodeScannerModal() {
-       
-        this.menus.setContext(MenuContext.QR_CODE_SCANNER);
+    public async scanQrCode() {
 
-        try {
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeScannerModalComponent,
-                { animation: false, backdrop: 'static', keyboard: false }
-            );
-            const scannedCode: string = await modalRef.result;
-            await this.openDocument(scannedCode);
-        } catch (closeReason) {
-            if (closeReason !== 'cancel') {
-                this.messages.add([M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE]);
-                console.error(closeReason);
-            }
-        } finally {
-            this.menus.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement(); 
-        }
-    }
-
-
-    private async openDocument(scannedCode: string) {
-
-        const result: Datastore.FindResult = await this.datastore.find(
-            { constraints: { 'scanCode:match': scannedCode } }
-        );
-
-        if (result.documents.length > 0) {
-            this.routingService.jumpToResource(result.documents[0]);
-        } else {
-            this.messages.add([M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND]);
-        }
+        const scannedCode: string = await this.qrCodeService.scanCode();
+        if (scannedCode) await this.qrCodeService.openDocumentFromScannedCode(scannedCode);
     }
 }

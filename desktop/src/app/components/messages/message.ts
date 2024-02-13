@@ -4,4 +4,5 @@ export interface Message {
     content: string;
     params: Array<string>;
     hidden: boolean;
+    extendedTimeout?: boolean;
 }

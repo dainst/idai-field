@@ -1813,6 +1813,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'success',
             params: [],
+            extendedTimeout: true,
             hidden: false
         };
         this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE] = {
@@ -1822,6 +1823,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'success',
             params: [],
+            extendedTimeout: true,
             hidden: false
         };
         this.msgs[M.RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME] = {

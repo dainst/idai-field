@@ -117,7 +117,7 @@ export class Messages {
     private startTimeout(message: Message) {
 
         if (this.shouldSetTimeout(message)) {
-            setTimeout(() => message.hidden = true, this.timeout);
+            setTimeout(() => message.hidden = true, this.getTimeout(message));
         }
     }
 
@@ -127,6 +127,15 @@ export class Messages {
         return Messages.TIMEOUT_TYPES.includes(message.level) && this.timeout > 0;
     }
 
+    
+    private getTimeout(message: Message): number {
+
+        let timeout = this.timeout;
+        if (message.extendedTimeout) timeout *= 1.5;
+
+        return timeout;
+    }
+
 
     private static buildFromTemplate(template: Message, params?: Array<string>): Message {
 
@@ -134,6 +143,7 @@ export class Messages {
             content: template.content,
             level: template.level,
             params: params ? params.slice() : template.params,
+            extendedTimeout: template.extendedTimeout,
             hidden: false
         };
     }

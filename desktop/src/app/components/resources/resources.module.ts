@@ -54,6 +54,7 @@ import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-edito
 import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
 import { QrCodeService } from './service/qr-code-service';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
+import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -98,7 +99,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         ChildrenViewComponent,
         BaseList,
         QrCodeEditorModalComponent,
-        DeleteQrCodeModalComponent
+        DeleteQrCodeModalComponent,
+        ScanStoragePlaceModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

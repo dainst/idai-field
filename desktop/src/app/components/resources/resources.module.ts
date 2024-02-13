@@ -53,6 +53,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
 import { QrCodeService } from './service/qr-code-service';
+import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -107,6 +108,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerImageProvider,
         ResourceDeletion,
         QrCodeService,
+        StoragePlaceScanner,
         {
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,

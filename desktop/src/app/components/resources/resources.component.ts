@@ -2,8 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration, Relation,
-    RelationsManager } from 'idai-field-core';
+import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
@@ -21,7 +20,7 @@ import { NavigationPath } from '../../components/resources/view/state/navigation
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
-import { QrCodeService } from './service/qr-code-service';
+import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -65,8 +64,7 @@ export class ResourcesComponent implements OnDestroy {
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
-                private qrCodeService: QrCodeService,
-                private relationsManager: RelationsManager) {
+                private storagePlaceScanner: StoragePlaceScanner) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -98,6 +96,9 @@ export class ResourcesComponent implements OnDestroy {
     public isReady = () => this.viewFacade.isReady();
 
     public isInGridListView = () => this.viewFacade.isInGridListView();
+
+    public scanStoragePlace = (documents: Array<FieldDocument>) =>
+        this.storagePlaceScanner.scanStoragePlace(documents);
 
 
     ngOnDestroy() {
@@ -197,39 +198,6 @@ export class ResourcesComponent implements OnDestroy {
             console.error(err);
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
-        }
-    }
-
-
-    public async scanStoragePlace(documents: Array<FieldDocument>) {
-
-        const scannedCode: string = await this.qrCodeService.scanCode();
-        if (!scannedCode) return;
-
-        const storagePlaceDocument: FieldDocument = await this.qrCodeService.getDocumentFromScannedCode(scannedCode);
-
-        try {
-            for (let document of documents) {
-                await this.setStoragePlace(document, storagePlaceDocument);
-            }
-        } catch (err) {
-            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
-            console.error(err);
-            return;
-        }
-
-        if (documents.length === 1) {
-            this.messages.add([
-                M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE,
-                documents[0].resource.identifier,
-                storagePlaceDocument.resource.identifier
-            ]);
-        } else {
-            this.messages.add([
-                M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE,
-                documents.length.toString(),
-                storagePlaceDocument.resource.identifier
-            ]);
         }
     }
 
@@ -418,16 +386,6 @@ export class ResourcesComponent implements OnDestroy {
             this.additionalSelectedDocuments.push(document);
             this.additionalSelectedDocuments = this.additionalSelectedDocuments.slice();
         }
-    }
-
-
-    private async setStoragePlace(document: FieldDocument, storagePlaceDocument: FieldDocument) {
-
-        const clonedDocument: FieldDocument = Document.clone(document);
-        const oldVersion: FieldDocument = Document.clone(document);
-        clonedDocument.resource.relations[Relation.Inventory.ISSTOREDIN] = [storagePlaceDocument.resource.id];
-        
-        await this.relationsManager.update(clonedDocument, oldVersion);
     }
 
 

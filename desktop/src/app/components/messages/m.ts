@@ -225,6 +225,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE = 'resources.success.storagePlaceSaved.single';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
+    public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE = 'resources.info.storagePlaceAlreadySet.single';
+    public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
     public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
@@ -1478,6 +1480,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Für [0] Ressourcen wurde erfolgreich der Aufenthaltsort [1] gespeichert.'
             }),
             level: 'success',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE] = {
+            content: i18n({
+                id: 'messages.resources.info.storagePlaceAlreadySet.single',
+                value: 'Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.'
+            }),
+            level: 'info',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE] = {
+            content: i18n({
+                id: 'messages.resources.info.storagePlaceAlreadySet.multiple',
+                value: 'Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.'
+            }),
+            level: 'info',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME] = {

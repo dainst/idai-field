@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
-import { FieldDocument, Document, RelationsManager, Relation } from 'idai-field-core';
+import { FieldDocument, Document, RelationsManager, Relation, Resource } from 'idai-field-core';
 import { QrCodeService } from '../../service/qr-code-service';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
+
+
+interface StoragePlaceScannerTask {
+
+    document: FieldDocument,
+    action: StoragePlaceScannerAction
+}
+
+type StoragePlaceScannerAction = 'none'|'new'|'addOrReplace';
 
 
 /**
@@ -21,17 +30,17 @@ export class StoragePlaceScanner {
         const storagePlaceDocument: FieldDocument = await this.scanCode();
         if (!storagePlaceDocument) return;
 
+        const tasks: Array<StoragePlaceScannerTask> = StoragePlaceScanner.getTasks(documents, storagePlaceDocument);
+
         try {
-            for (let document of documents) {
-                await this.setStoragePlace(document, storagePlaceDocument);
-            }
+            this.performTasks(tasks, storagePlaceDocument);
         } catch (err) {
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
             console.error(err);
             return;
         }
 
-        this.showSuccessMessage(documents, storagePlaceDocument);
+        this.showMessages(tasks, storagePlaceDocument);
     }
 
 
@@ -41,6 +50,16 @@ export class StoragePlaceScanner {
         if (!scannedCode) return;
 
         return this.qrCodeService.getDocumentFromScannedCode(scannedCode);
+    }
+
+
+    private async performTasks(tasks: Array<StoragePlaceScannerTask>, storagePlaceDocument) {
+
+        const documents: Array<FieldDocument> = StoragePlaceScanner.getDocuments(tasks, 'new', 'addOrReplace');
+
+        for (let document of documents) {
+            await this.setStoragePlace(document, storagePlaceDocument);
+        }
     }
 
 
@@ -54,6 +73,17 @@ export class StoragePlaceScanner {
     }
 
 
+    private showMessages(tasks: Array<StoragePlaceScannerTask>, storagePlaceDocument: FieldDocument) {
+
+        let documents: Array<FieldDocument> = StoragePlaceScanner.getDocuments(tasks, 'new', 'addOrReplace');
+        if (documents.length > 0) {
+            this.showSuccessMessage(documents, storagePlaceDocument);
+        } else {
+            this.showAlreadySetMessage(StoragePlaceScanner.getDocuments(tasks, 'none'), storagePlaceDocument);
+        }
+    }
+
+
     private showSuccessMessage(documents: Array<FieldDocument>, storagePlaceDocument: FieldDocument) {
 
         if (documents.length === 1) {
@@ -62,7 +92,7 @@ export class StoragePlaceScanner {
                 documents[0].resource.identifier,
                 storagePlaceDocument.resource.identifier
             ]);
-        } else {
+        } else if (documents.length > 1) {
             this.messages.add([
                 M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE,
                 documents.length.toString(),
@@ -70,4 +100,60 @@ export class StoragePlaceScanner {
             ]);
         }
     }
+
+
+    private showAlreadySetMessage(documents: Array<FieldDocument>, storagePlaceDocument: FieldDocument) {
+
+        if (documents.length === 1) {
+            this.messages.add([
+                M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE,
+                documents[0].resource.identifier,
+                storagePlaceDocument.resource.identifier
+            ]);
+        } else if (documents.length > 1) {
+            this.messages.add([
+                M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE,
+                documents.length.toString(),
+                storagePlaceDocument.resource.identifier
+            ]);
+        }
+    }
+
+
+    private static getTasks(documents: Array<FieldDocument>,
+                            storagePlaceDocument: FieldDocument): Array<StoragePlaceScannerTask> {
+
+        return documents.map(document => StoragePlaceScanner.getTask(document, storagePlaceDocument));
+    }
+
+
+    private static getTask(document: FieldDocument, storagePlaceDocument: FieldDocument): StoragePlaceScannerTask {
+
+        return {
+            document,
+            action: StoragePlaceScanner.getAction(document, storagePlaceDocument)
+        };
+    }
+
+
+    private static getAction(document: FieldDocument, storagePlaceDocument: FieldDocument): StoragePlaceScannerAction {
+
+        const relationTargets: string[] = document.resource.relations[Relation.Inventory.ISSTOREDIN];
+
+        if (!relationTargets || relationTargets.length === 0) {
+            return 'new';
+        } else if (relationTargets.includes(storagePlaceDocument.resource.id)) {
+            return 'none';
+        } else {
+            return 'addOrReplace';
+        }
+    }
+
+
+    private static getDocuments(tasks: Array<StoragePlaceScannerTask>,
+                                ...actions: Array<StoragePlaceScannerAction>): Array<FieldDocument> {
+
+        return tasks.filter(task => actions.includes(task.action))
+            .map(task => task.document);
+    } 
 }

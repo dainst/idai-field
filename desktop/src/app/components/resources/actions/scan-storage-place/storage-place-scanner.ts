@@ -18,10 +18,8 @@ export class StoragePlaceScanner {
 
     public async scanStoragePlace(documents: Array<FieldDocument>) {
 
-        const scannedCode: string = await this.qrCodeService.scanCode();
-        if (!scannedCode) return;
-
-        const storagePlaceDocument: FieldDocument = await this.qrCodeService.getDocumentFromScannedCode(scannedCode);
+        const storagePlaceDocument: FieldDocument = await this.scanCode();
+        if (!storagePlaceDocument) return;
 
         try {
             for (let document of documents) {
@@ -34,6 +32,15 @@ export class StoragePlaceScanner {
         }
 
         this.showSuccessMessage(documents, storagePlaceDocument);
+    }
+
+
+    private async scanCode(): Promise<FieldDocument> {
+
+        const scannedCode: string = await this.qrCodeService.scanCode();
+        if (!scannedCode) return;
+
+        return this.qrCodeService.getDocumentFromScannedCode(scannedCode);
     }
 
 

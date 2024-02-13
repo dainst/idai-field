@@ -5,7 +5,6 @@ import { Document, Named, ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
-    selector: 'delete-modal',
     templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

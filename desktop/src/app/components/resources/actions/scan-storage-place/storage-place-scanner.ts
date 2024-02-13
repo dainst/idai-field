@@ -72,7 +72,14 @@ export class StoragePlaceScanner {
         const documents: Array<FieldDocument> = StoragePlaceScanner.getDocuments(tasks, 'edit');
         if (documents.length === 0) return 'add';
 
-        const storagePlaceDocuments: Array<FieldDocument> = await this.fetchStoragePlaceDocuments(documents);
+        const existingStoragePlaceDocuments: Array<FieldDocument> = await this.fetchStoragePlaceDocuments(documents);
+        return this.selectEditModeViaModal(documents, existingStoragePlaceDocuments, newStoragePlaceDocument);
+    }
+
+
+    private async selectEditModeViaModal(documents: Array<FieldDocument>,
+                                         existingStoragePlaceDocuments: Array<FieldDocument>,
+                                         newStoragePlaceDocument: FieldDocument): Promise<StoragePlaceEditMode> {
 
         try {
             this.menuService.setContext(MenuContext.MODAL);
@@ -82,7 +89,7 @@ export class StoragePlaceScanner {
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.documents = documents;
-            modalRef.componentInstance.storagePlaceDocuments = storagePlaceDocuments;
+            modalRef.componentInstance.storagePlaceDocuments = existingStoragePlaceDocuments;
             modalRef.componentInstance.newStoragePlaceDocument = newStoragePlaceDocument;
             AngularUtility.blurActiveElement();
             return await modalRef.result;

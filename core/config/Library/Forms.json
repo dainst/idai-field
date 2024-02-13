@@ -1394,65 +1394,52 @@
         }
       ]
     },
-    "StorageSite:default": {
+    "StoragePlace:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "StorageSite",
+      "categoryName": "StoragePlace",
       "groups": [
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
         }
       ]
+    },
+    "StorageBuilding:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "StorageBuilding",
+      "groups": []
     },
     "StorageRoom:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
       "categoryName": "StorageRoom",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
-        }
-      ]
+      "groups": []
     },
     "StorageShelf:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
       "categoryName": "StorageShelf",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
-        }
-      ]
+      "groups": []
     },
     "StorageCompartment:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
       "categoryName": "StorageCompartment",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
-        }
-      ]
+      "groups": []
     },
     "StorageBox:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
       "categoryName": "StorageBox",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
-        }
-      ]
+      "groups": []
     },
     "Profile:default": {
       "description": {},

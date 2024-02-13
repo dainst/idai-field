@@ -156,11 +156,12 @@ export module NavigationPath {
 
 
     export function findInvalidSegment(operationId: string|undefined, navPath: NavigationPath,
+                                       validNonRecordedInCategories: string[],
                                        exists: (_: string) => boolean): NavigationPathSegment|undefined {
 
         for (let segment of navPath.segments) {
             if (!NavigationPathSegment.isValid(
-                operationId, segment, navPath.segments, exists
+                operationId, segment, navPath.segments, validNonRecordedInCategories, exists
             )) {
                 return segment;
             }

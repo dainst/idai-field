@@ -112,8 +112,7 @@ export class ProjectConfiguration {
     public getRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StorageSite', 'StorageRoom', 'StorageShelf',
-            'StorageCompartment', 'StorageBox', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -122,8 +121,7 @@ export class ProjectConfiguration {
     public getFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StorageSite', 'StorageRoom', 'StorageShelf',
-                'StorageCompartment', 'StorageBox'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
             Tree.flatten
         );
     }
@@ -179,7 +177,7 @@ export class ProjectConfiguration {
     public getInventoryCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'),
+            filterTrees('StoragePlace'),
             Tree.flatten
         );
     }

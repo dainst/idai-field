@@ -687,56 +687,9 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        StorageSite: {
+        StoragePlace: {
             supercategory: true,
-            fields: {},
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
-                    }
-                ]
-            }
-        },
-        StorageRoom: {
-            supercategory: true,
-            fields: {},
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
-                    }
-                ]
-            }
-        },
-        StorageShelf: {
-            supercategory: true,
-            fields: {},
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
-                    }
-                ]
-            }
-        },
-        StorageCompartment: {
-            supercategory: true,
-            fields: {},
-            minimalForm: {
-                groups: [
-                    {
-                        name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
-                    }
-                ]
-            }
-        },
-        StorageBox: {
-            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -1241,32 +1194,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['StorageBox'],
-            range: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'liesWithin',
-            domain: ['StorageCompartment'],
-            range: ['StorageShelf'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'liesWithin',
-            domain: ['StorageShelf'],
-            range: ['StorageSite', 'StorageRoom'],
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        },
-        {
-            name: 'liesWithin',
-            domain: ['StorageRoom'],
-            range: ['StorageSite'],
+            domain: ['StoragePlace:inherit'],
+            range: ['StoragePlace:inherit'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1293,7 +1222,7 @@ export class BuiltInConfiguration {
             name: 'isStoredIn',
             inverse: 'isStoragePlaceOf',
             domain: ['Find:inherit'],
-            range: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'],
+            range: ['StoragePlace:inherit'],
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1301,7 +1230,7 @@ export class BuiltInConfiguration {
         {
             name: 'isStoragePlaceOf',
             inverse: 'isStoredIn',
-            domain: ['StorageSite', 'StorageRoom', 'StorageShelf', 'StorageCompartment', 'StorageBox'],
+            domain: ['StoragePlace:inherit'],
             range: ['Find:inherit'],
             editable: true,
             visible: true,

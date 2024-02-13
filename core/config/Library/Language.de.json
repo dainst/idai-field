@@ -1586,8 +1586,12 @@
         }
       }
     },
-    "StorageSite": {
-      "label": "Aufbewahrungsstätte",
+    "StoragePlace": {
+      "label": "Aufbewahrungsort",
+      "fields": {}
+    },
+    "StorageBuilding": {
+      "label": "Gebäude",
       "fields": {}
     },
     "StorageRoom": {

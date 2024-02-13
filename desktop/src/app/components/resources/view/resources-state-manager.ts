@@ -1,4 +1,5 @@
 import { Observer, Observable } from 'rxjs';
+import { to } from 'tsfun';
 import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named } from 'idai-field-core'
 import { ResourcesState } from './state/resources-state';
 import { StateSerializer } from '../../../services/state-serializer';
@@ -192,6 +193,7 @@ export class ResourcesStateManager {
         const invalidSegment = await NavigationPath.findInvalidSegment(
             this.resourcesState.view,
             ResourcesState.getNavigationPath(this.resourcesState),
+            this.getValidNonRecordedInCategories(),
             (resourceId: string) => {
                 return this.indexFacade.getCount('id:match', resourceId) > 0;
             });
@@ -310,6 +312,12 @@ export class ResourcesStateManager {
             NavigationPath.setSelectedDocument(navigationPath, undefined);
         }
         return navigationPath;
+    }
+
+
+    private getValidNonRecordedInCategories(): string[] {
+
+        return ['Place', 'TypeCatalog'].concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
     }
 
 

@@ -219,7 +219,11 @@
           "hidden": [],
           "fields": {}
         },
-        "StorageSite:default": {
+        "StoragePlace:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "StorageBuilding:default": {
           "hidden": [],
           "fields": {}
         },
@@ -295,7 +299,8 @@
         "Photo",
         "TypeCatalog",
         "Type",
-        "StorageSite",
+        "StoragePlace",
+        "StorageBuilding",
         "StorageRoom",
         "StorageShelf",
         "StorageCompartment",

@@ -14,7 +14,7 @@ describe('NavigationPathSegment', () => {
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
-            't', segments[0], segments, () => true)
+            't', segments[0], segments, [], () => true)
         ).toBe(true);
     });
 
@@ -26,40 +26,18 @@ describe('NavigationPathSegment', () => {
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
-            't1', segments[0], segments, () => true)
+            't1', segments[0], segments, [], () => true)
         ).toBe(false);
     });
 
 
-    it('consider the first segment valid if the corresponding document is of category Place', () => {
-
-        const document: FieldDocument = fieldDoc('', 'Place', 'Place', 'p');
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
-
-        expect(NavigationPathSegment.isValid(
-            'project', segments[0], segments, () => true)
-        ).toBe(true);
-    });
-
-
-    it('consider the first segment valid if the corresponding document is of category TypeCatalog', () => {
+    it('consider the first segment valid if the corresponding document is of specified non isRecordedIn category', () => {
 
         const document: FieldDocument = fieldDoc('', 'TypeCatalog', 'TypeCatalog', 'tc');
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
-            'types', segments[0], segments, () => true)
-        ).toBe(true);
-    });
-
-
-    it('consider the first segment valid if the corresponding document is of category StorageSite', () => {
-
-        const document: FieldDocument = fieldDoc('', 'StorageSite', 'StorageSite', 'tc');
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
-
-        expect(NavigationPathSegment.isValid(
-            'types', segments[0], segments, () => true)
+            'types', segments[0], segments, ['TypeCatalog'], () => true)
         ).toBe(true);
     });
 
@@ -76,7 +54,7 @@ describe('NavigationPathSegment', () => {
         ];
 
         expect(NavigationPathSegment.isValid(
-            't', segments[1], segments, () => true)
+            't', segments[1], segments, [], () => true)
         ).toBe(true);
     });
 
@@ -93,7 +71,7 @@ describe('NavigationPathSegment', () => {
         ];
 
         expect(NavigationPathSegment.isValid(
-            't', segments[1], segments, () => true)
+            't', segments[1], segments, [], () => true)
         ).toBe(false);
     });
 
@@ -110,11 +88,11 @@ describe('NavigationPathSegment', () => {
         ];
 
         expect(NavigationPathSegment.isValid(
-            't', segments[0], segments, () => false)
+            't', segments[0], segments, [], () => false)
         ).toBe(false);
 
         expect(NavigationPathSegment.isValid(
-            't', segments[1], segments, () => false)
+            't', segments[1], segments, [], () => false)
         ).toBe(false);
     });
 });

@@ -142,12 +142,15 @@ export class Messages {
 
     private static buildFromTemplate(template: MessageTemplate, params?: Array<string>): Message {
 
-        return {
+        const message: Message = {
             content: template.content,
             level: template.level,
             params: params ? params.slice() : [],
-            extendedTimeout: template.extendedTimeout,
             hidden: false
         };
+    
+        if (template.extendedTimeout) message.extendedTimeout = true;
+
+        return message;
     }
 }

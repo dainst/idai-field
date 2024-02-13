@@ -1469,7 +1469,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE] = {
             content: i18n({
                 id: 'messages.resources.success.storagePlaceSaved.single',
-                value: 'Für die Ressource [0] wurde erfolgreich der Aufenthaltsort [1] gespeichert.'
+                value: 'Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.'
             }),
             level: 'success',
             extendedTimeout: true
@@ -1477,7 +1477,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE] = {
             content: i18n({
                 id: 'messages.resources.success.storagePlaceSaved.multiple',
-                value: 'Für [0] Ressourcen wurde erfolgreich der Aufenthaltsort [1] gespeichert.'
+                value: 'Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.'
             }),
             level: 'success',
             extendedTimeout: true

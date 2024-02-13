@@ -118,7 +118,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         if (this.isReadonly() || !this.containsOnlyFindResources()) return false;
 
-        return this.projectConfiguration.getInventoryCategories().length > 0;
+        return this.projectConfiguration.getInventoryCategories().filter(category => category.scanCodes).length > 0;
     }
 
 

@@ -223,6 +223,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Resources Package
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
+    public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE = 'resources.success.storagePlaceSaved.single';
+    public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
     public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
@@ -1799,6 +1801,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.success.imagesUploaded',
                 value: '[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE] = {
+            content: i18n({
+                id: 'messages.resources.success.storagePlaceSaved.single',
+                value: 'Für die Ressource [0] wurde erfolgreich der Aufenthaltsort [1] gespeichert.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE] = {
+            content: i18n({
+                id: 'messages.resources.success.storagePlaceSaved.multiple',
+                value: 'Für [0] Ressourcen wurde erfolgreich der Aufenthaltsort [1] gespeichert.'
             }),
             level: 'success',
             params: [],

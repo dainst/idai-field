@@ -33,6 +33,22 @@ export class StoragePlaceScanner {
             return;
         }
 
+        this.showSuccessMessage(documents, storagePlaceDocument);
+    }
+
+
+    private async setStoragePlace(document: FieldDocument, storagePlaceDocument: FieldDocument) {
+
+        const clonedDocument: FieldDocument = Document.clone(document);
+        const oldVersion: FieldDocument = Document.clone(document);
+        clonedDocument.resource.relations[Relation.Inventory.ISSTOREDIN] = [storagePlaceDocument.resource.id];
+        
+        await this.relationsManager.update(clonedDocument, oldVersion);
+    }
+
+
+    private showSuccessMessage(documents: Array<FieldDocument>, storagePlaceDocument: FieldDocument) {
+
         if (documents.length === 1) {
             this.messages.add([
                 M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE,
@@ -46,15 +62,5 @@ export class StoragePlaceScanner {
                 storagePlaceDocument.resource.identifier
             ]);
         }
-    }
-
-
-    private async setStoragePlace(document: FieldDocument, storagePlaceDocument: FieldDocument) {
-
-        const clonedDocument: FieldDocument = Document.clone(document);
-        const oldVersion: FieldDocument = Document.clone(document);
-        clonedDocument.resource.relations[Relation.Inventory.ISSTOREDIN] = [storagePlaceDocument.resource.id];
-        
-        await this.relationsManager.update(clonedDocument, oldVersion);
     }
 }

@@ -26,11 +26,6 @@
         <span class="mdi mdi-qrcode-edit"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.editQrCode">QR-Code verwalten</span>
     </div>
-    <div *ngIf="isScanStoragePlaceOptionIsAvailable()" id="context-menu-scan-storage-place-button"
-         class="dropdown-item" (click)="selectAction('scan-storage-place')">
-        <span class="mdi mdi-qrcode-scan"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
-    </div>
     <div *ngIf="isMoveOptionAvailable()"
          id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>
@@ -88,5 +83,13 @@
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.multipoint">Multipunkt bearbeiten</span>
         </span>
+    </div>
+
+    <hr *ngIf="isScanStoragePlaceOptionIsAvailable()">
+
+    <div *ngIf="isScanStoragePlaceOptionIsAvailable()" id="context-menu-scan-storage-place-button"
+         class="dropdown-item" (click)="selectAction('scan-storage-place')">
+        <span class="mdi mdi-qrcode-scan"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div *ngIf="!disabled" id="relation-picker">
+<div *ngIf="!disabled" class="relation-picker">
     <div *ngIf="!selectedTarget && availableTargets">
         <searchable-select [selectedValue]="selectedTarget?.resource.id"
                            [values]="getAvailableTargetIds()"

@@ -1,13 +1,8 @@
 <div class="type-relation">
-    <div *ngIf="resource.relations['isInstanceOf'] && resource">
-        <div *ngFor="let relationIdentifier of relationIdentifiers; let i = index" class="type-relation-entry">
-            <div class="delete-relation small-circular-button red-button" (click)="deleteRelation(i)">
-                <span class="mdi mdi-delete"></span>
-            </div>
-
-            <div class="relation-identifier">
-                <span class="badge">{{relationIdentifier}}</span>
-            </div>
+    <div *ngFor="let targetDocument of targetDocuments; let i = index" class="relation-picker">
+        <document-teaser [document]="targetDocument"></document-teaser>
+        <div class="delete-relation small-circular-button red-button" (click)="deleteRelation(i)">
+            <span class="mdi mdi-delete"></span>
         </div>
     </div>
 

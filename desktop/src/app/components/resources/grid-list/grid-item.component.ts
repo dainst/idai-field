@@ -15,7 +15,14 @@ export class GridItemComponent {
 
     @Input() document: FieldDocument;
     @Input() images: Array<SafeResourceUrl>;
-    @Input() subDocument?: FieldDocument;
+    @Input() subDocuments: Array<FieldDocument>;
+
 
     constructor() {}
+
+
+    public getSubDocumentsLabel(): string {
+
+        return this.subDocuments.map(subDocument => subDocument.resource.identifier).join(', ');
+    }
 }

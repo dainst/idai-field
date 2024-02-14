@@ -200,15 +200,15 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    public getLinkedSubDocument(document: FieldDocument): FieldDocument|undefined {
+    public getLinkedSubDocuments(document: FieldDocument): Array<FieldDocument> {
 
-        if (!Document.hasRelations(document, this.getLinkRelationName())) return undefined;
+        if (!Document.hasRelations(document, this.getLinkRelationName())) return [];
 
-        for (const targetId of document.resource.relations[this.getLinkRelationName()]) {
+        return document.resource.relations[this.getLinkRelationName()].reduce((result, targetId) => {
             const subDocument: FieldDocument = this.subDocuments[targetId];
-            if (subDocument) return subDocument;
-        }
-        return undefined;
+            if (subDocument && !result.includes(subDocument)) result.push(subDocument);
+            return result;
+        }, []);
     }
 
 

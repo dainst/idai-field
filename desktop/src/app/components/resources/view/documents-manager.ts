@@ -217,7 +217,7 @@ public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndS
 
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
-        const effectiveLogic = logic || 'AND';
+        const effectiveLogic = 'OR';
         const result = await this.createUpdatedDocumentList(effectiveLogic);
 
         await this.updateChildrenCountMap(result.documents as Array<FieldDocument>);

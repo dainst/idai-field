@@ -124,16 +124,11 @@ grid-list {
             top: 5px;
             left: 50%;
             transform: translateX(-50%);
+            padding: 4px 7px;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
+            max-width: calc(100% - 10px);
             cursor: default;
-
-            &:hover {
-              overflow-wrap: break-word;
-              white-space: normal;
-              z-index: 5;
-            }
           }
 
           &:hover {

@@ -601,6 +601,10 @@ export class BuiltInConfiguration {
                         fields: ['isInstanceOf']
                     },
                     {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -622,6 +626,10 @@ export class BuiltInConfiguration {
                         fields: ['isInstanceOf']
                     },
                     {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -636,6 +644,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -695,7 +707,11 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoragePlaceOf']
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoragePlaceOf']
                     }
                 ]
             }

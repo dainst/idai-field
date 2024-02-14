@@ -17,6 +17,7 @@ export module Groups {
     export const TIME = 'time';
     export const POSITION = 'position';
     export const IDENTIFICATION = 'identification';
+    export const INVENTORY = 'inventory';
     export const PROPERTIES = 'properties';
     export const OTHER = 'other';
 }

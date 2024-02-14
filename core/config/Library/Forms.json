@@ -1088,17 +1088,20 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs",
-            "isStoredIn"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
         },
         {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
         {
+          "name": "inventory",
+          "fields": ["isStoredIn", "storagePlace"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "hasRestoration", "catalogueNumber", "amount", "condition",
-            "conditionAmount", "conditionPercent", "conditionComment", "weight", "storagePlace",
+            "conditionAmount", "conditionPercent", "conditionComment", "weight",
             "storageInventoryNumber", "comparison", "bibliography"]
         },
         {
@@ -1169,11 +1172,15 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isStoredIn"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn", "storagePlace"]
         },
         {
           "name": "properties",
-          "fields": ["description", "amount", "weight", "storagePlace", "bibliography"]
+          "fields": ["description", "amount", "weight", "bibliography"]
         },
         {
           "name": "position",
@@ -1304,11 +1311,15 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date", "isStoredIn"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn", "storagePlace"]
         },
         {
           "name": "properties",
-          "fields": ["description", "sampleType", "storagePlace", "labNumber", "weight"]
+          "fields": ["description", "sampleType", "labNumber", "weight"]
         },
         {
           "name": "position",
@@ -1402,7 +1413,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "isStoragePlaceOf"]
+          "fields": ["identifier", "category", "shortDescription"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoragePlaceOf"]
         }
       ]
     },

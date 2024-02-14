@@ -93,7 +93,7 @@ test.describe('resources/types --', () => {
 
         await linkWithFind();
 
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await ResourcesTypeGridPage.clickToggleLinkedDocumentsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
         await ResourcesPage.clickNavigationButton('TC1');
@@ -115,7 +115,7 @@ test.describe('resources/types --', () => {
         const elements = await ResourcesTypeGridPage.getGridElements();
         expect(await elements.count()).toBe(2);
 
-        await waitForNotExist(await ResourcesTypeGridPage.getToggleFindsSectionButton());
+        await waitForNotExist(await ResourcesTypeGridPage.getToggleLinkedDocumentsSectionButton());
         await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
     });
 
@@ -149,7 +149,7 @@ test.describe('resources/types --', () => {
 
         await ResourcesPage.clickNavigationButton('TC1');
 
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await ResourcesTypeGridPage.clickToggleLinkedDocumentsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
         await ResourcesTypeGridPage.clickOpenContextMenu('T1');
@@ -182,7 +182,7 @@ test.describe('resources/types --', () => {
         expect(await FieldsViewPage.getRelationValue(1, 0)).toEqual('T1');
 
         await navigateTo('resources/types');
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await ResourcesTypeGridPage.clickToggleLinkedDocumentsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
     });
 

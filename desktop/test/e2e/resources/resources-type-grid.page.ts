@@ -32,9 +32,9 @@ export class ResourcesTypeGridPage {
     }
 
 
-    public static clickToggleFindsSectionButton() {
+    public static async clickToggleLinkedDocumentsSectionButton() {
 
-        return click('#toggle-finds-section-button');
+        return click(await this.getToggleLinkedDocumentsSectionButton());
     }
 
 
@@ -58,9 +58,9 @@ export class ResourcesTypeGridPage {
     }
 
 
-    public static getToggleFindsSectionButton() {
+    public static getToggleLinkedDocumentsSectionButton() {
 
-        return getLocator('#toggle-finds-section-button');
+        return getLocator('#toggle-linked-documents-section-button');
     }
 
 

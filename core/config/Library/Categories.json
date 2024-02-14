@@ -1642,5 +1642,10 @@
     "parent": "StoragePlace",
     "description": {},
     "fields": {}
+  },
+  "StorageBag": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
   }
 }

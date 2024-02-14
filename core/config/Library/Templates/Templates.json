@@ -242,6 +242,10 @@
         "StorageBox:default": {
           "hidden": [],
           "fields": {}
+        },
+        "StorageBag:default": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -304,7 +308,8 @@
         "StorageRoom",
         "StorageShelf",
         "StorageCompartment",
-        "StorageBox"
+        "StorageBox",
+        "StorageBag"
       ]
     }
   },

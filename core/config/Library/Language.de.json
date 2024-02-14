@@ -1609,6 +1609,10 @@
     "StorageBox": {
       "label": "Kiste",
       "fields": {}
+    },
+    "StorageBag": {
+      "label": "Tüte",
+      "fields": {}
     }
   },
   "forms": {

@@ -1441,6 +1441,13 @@
       "categoryName": "StorageBox",
       "groups": []
     },
+    "StorageBag:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "StorageBag",
+      "groups": []
+    },
     "Profile:default": {
       "description": {},
       "createdBy": "",

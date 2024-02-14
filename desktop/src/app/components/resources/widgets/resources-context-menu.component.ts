@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../actions/move/move-utility';
@@ -116,7 +116,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     public isScanStoragePlaceOptionIsAvailable(): boolean {
 
-        if (this.isReadonly() || !this.containsOnlyFindResources()) return false;
+        if (this.isReadonly() || !this.isStoredInRelationAllowed()) return false;
 
         return this.projectConfiguration.getInventoryCategories().filter(category => category.scanCodes).length > 0;
     }
@@ -154,11 +154,13 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
-    private containsOnlyFindResources(): boolean {
+    private isStoredInRelationAllowed(): boolean {
 
-        return this.contextMenu.documents.filter(document => {
-            return !this.projectConfiguration.isSubcategory(document.resource.category, 'Find');
-        }).length === 0;
+        return this.contextMenu.documents.find(document => {
+            return !this.projectConfiguration.isAllowedRelationDomainCategory(
+                document.resource.category, 'StoragePlace', Relation.Inventory.ISSTOREDIN
+            );
+        }) === undefined;
     }
 
 

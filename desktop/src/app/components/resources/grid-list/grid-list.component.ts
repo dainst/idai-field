@@ -23,7 +23,7 @@ import { Messages } from '../../messages/messages';
 import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
-type GridListSection = 'documents'|'finds';
+type GridListSection = 'documents'|'linkedDocuments';
 
 
 @Component({
@@ -58,9 +58,9 @@ export class GridListComponent extends BaseList implements OnChanges {
     private subDocuments: Map<FieldDocument> = {};
 
     /**
-     * The finds that are linked to one or more of the subDocuments.
+     * The documents that are linked to one or more of the subDocuments.
      */
-    public linkedFinds: Array<FieldDocument> = [];
+    public linkedDocuments: Array<FieldDocument> = [];
 
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
@@ -231,11 +231,11 @@ export class GridListComponent extends BaseList implements OnChanges {
         if (!this.visibleSections.includes(section)) {
             this.visibleSections.push(section);
         } else {
-            if (section === 'finds' && this.isLowestHierarchyLevel) return;
+            if (section === 'linkedDocuments' && this.isLowestHierarchyLevel) return;
 
             this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
             if (this.visibleSections.length < 1) {
-                this.toggleSection(section === 'documents' ? 'finds' : 'documents');
+                this.toggleSection(section === 'documents' ? 'linkedDocuments' : 'documents');
             }
         }
     }
@@ -243,9 +243,9 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public isSectionVisible(section: GridListSection): boolean {
         
-        if (this.isLowestHierarchyLevel) return section === 'finds';
+        if (this.isLowestHierarchyLevel) return section === 'linkedDocuments';
 
-        return (section === 'documents' && this.linkedFinds.length === 0)
+        return (section === 'documents' && this.linkedDocuments.length === 0)
             || this.visibleSections.includes(section);
     }
 
@@ -272,8 +272,8 @@ export class GridListComponent extends BaseList implements OnChanges {
     private async updateLinkedDocuments() {
 
         this.subDocuments = await this.getSubDocuments();
-        this.linkedFinds = await this.getLinkedDocuments();
-        await this.loadImages(this.linkedFinds);
+        this.linkedDocuments = await this.getLinkedDocuments();
+        await this.loadImages(this.linkedDocuments);
     }
 
 
@@ -345,7 +345,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, Relation.Image.ISDEPICTEDIN)) {
             return [document.resource.relations[Relation.Image.ISDEPICTEDIN][0]];
-        } else if (!this.projectConfiguration.isSubcategory(document.resource.category, 'Find') ) {
+        } else if (this.documents.includes(document)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];

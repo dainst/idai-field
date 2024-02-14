@@ -61,10 +61,15 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 id: 'resources.searchBar.constraints.isInstanceOf',
                 value: 'Verknüpfte Typen'
             });
-        } else if (field.name === 'hasInstance' || field.name === 'isStoragePlaceOf') {
+        } else if (field.name === 'hasInstance') {
             return this.i18n({
                 id: 'resources.searchBar.constraints.hasInstance',
                 value: 'Verknüpfte Funde'
+            });
+        } else if (field.name === 'isStoragePlaceOf') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.isStoragePlaceOf',
+                value: 'Verknüpfte Objekte'
             });
         } else if (field.name === 'isStoredIn') {
             return this.i18n({

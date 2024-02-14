@@ -615,7 +615,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
                     },
                     {
                         name: Groups.IDENTIFICATION,
@@ -635,7 +635,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -1221,7 +1221,7 @@ export class BuiltInConfiguration {
         {
             name: 'isStoredIn',
             inverse: 'isStoragePlaceOf',
-            domain: ['Find:inherit'],
+            domain: ['Find:inherit', 'FindCollection:inherit', 'Sample'],
             range: ['StoragePlace:inherit'],
             editable: true,
             visible: true,
@@ -1231,7 +1231,7 @@ export class BuiltInConfiguration {
             name: 'isStoragePlaceOf',
             inverse: 'isStoredIn',
             domain: ['StoragePlace:inherit'],
-            range: ['Find:inherit'],
+            range: ['Find:inherit', 'FindCollection:inherit', 'Sample'],
             editable: true,
             visible: true,
             inputType: 'relation'

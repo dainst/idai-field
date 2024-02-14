@@ -17,7 +17,7 @@
     <loading-icon [class.with-main-document]="mainDocument"></loading-icon>
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
-        <div *ngIf="linkedFinds.length > 0 && !isLowestHierarchyLevel"
+        <div *ngIf="linkedDocuments.length > 0 && !isLowestHierarchyLevel"
              class="grid-section-label first-grid-section-label"
              (click)="toggleSection('documents')">
             <span [ngClass]="isSectionVisible('documents') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
@@ -46,19 +46,26 @@
             </div>
         </div>
 
-        <div *ngIf="linkedFinds.length > 0"
-             id="toggle-finds-section-button"
+        <div *ngIf="linkedDocuments.length > 0"
+             id="toggle-linked-documents-section-button"
              class="grid-section-label"
-             (click)="toggleSection('finds')">
-             <span [ngClass]="isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
-             <span *ngIf="isInTypesManagement()" i18n="@@resources.gridList.linkedFinds">Zugeordnete Funde</span>
-             <span *ngIf="isInInventoryManagement()" i18n="@@resources.gridList.storedFinds">Enthaltene Funde</span>
+             (click)="toggleSection('linkedDocuments')">
+             <span [ngClass]="isSectionVisible('linkedDocuments')
+                ? 'mdi mdi-chevron-down'
+                : 'mdi mdi-chevron-right'">
+            </span>
+             <span *ngIf="isInTypesManagement()" i18n="@@resources.gridList.linkedFinds">
+                Zugeordnete Funde
+            </span>
+             <span *ngIf="isInInventoryManagement()" i18n="@@resources.gridList.storedObjects">
+                Enthaltene Objekte
+            </span>
         </div>
 
-        <div *ngIf="linkedFinds.length > 0 && isSectionVisible('finds')"
-             id="linked-finds-grid"
+        <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('linkedDocuments')"
+             id="linked-documents-grid"
              class="grid-section">
-            <grid [documents]="linkedFinds"
+            <grid [documents]="linkedDocuments"
                   [images]="images"
                   (clickDocument)="openResourceViewModal($event)"></grid>
         </div>

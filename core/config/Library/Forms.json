@@ -1169,7 +1169,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isStoredIn"]
         },
         {
           "name": "properties",
@@ -1304,7 +1304,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "date", "isStoredIn"]
         },
         {
           "name": "properties",

@@ -89,7 +89,7 @@ test.describe('resources/types --', () => {
         await createTypeCatalogAndType();
 
         await ResourcesTypeGridPage.clickGridElement('T1');
-        await waitForNotExist(await ResourcesTypeGridPage.getLinkedFindsGrid());
+        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
 
         await linkWithFind();
 
@@ -116,7 +116,7 @@ test.describe('resources/types --', () => {
         expect(await elements.count()).toBe(2);
 
         await waitForNotExist(await ResourcesTypeGridPage.getToggleFindsSectionButton());
-        await waitForNotExist(await ResourcesTypeGridPage.getLinkedFindsGrid());
+        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
     });
 
 

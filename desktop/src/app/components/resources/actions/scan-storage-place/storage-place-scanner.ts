@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { flatten, set } from 'tsfun';
+import { flatten, set } from 'tsfun';
 import { FieldDocument, Document, RelationsManager, Relation, Datastore } from 'idai-field-core';
 import { QrCodeService } from '../../service/qr-code-service';
 import { Messages } from '../../../messages/messages';
@@ -70,7 +70,7 @@ export class StoragePlaceScanner {
                               newStoragePlaceDocument: FieldDocument): Promise<StoragePlaceEditMode> {
 
         const documents: Array<FieldDocument> = StoragePlaceScanner.getDocuments(tasks, 'edit');
-        if (documents.length === 0) return 'add';
+        if (!documents.find(document => document.resource.category === 'FindCollection')) return 'replace';
 
         const existingStoragePlaceDocuments: Array<FieldDocument> = await this.fetchStoragePlaceDocuments(documents);
         return this.selectEditModeViaModal(documents, existingStoragePlaceDocuments, newStoragePlaceDocument);

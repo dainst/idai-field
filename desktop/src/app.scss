@@ -292,34 +292,6 @@ select.form-control:not([size]):not([multiple]) {
   padding-left: 1.4rem;
 }
 
-/* Relation Picker */
-
-#relation-picker .btn-secondary {
-  margin: 0 0 0 10px !important;
-  padding: 5px 5px 5px 15px!important;
-  border-radius: 2px !important;
-}
-
-#relation-picker .badge {
-  background-color: transparent;
-}
-
-.delete-relation {
-  margin-top: 1px !important;
-  padding-top: 5px !important;
-}
-
-.relation-link:before {
-  color: #333;
-  margin-right: 5px;
-  margin-left: -10px;
-  content: '\2022';
-}
-
-relations-view .fieldvalue:hover {
-  background-color: #ddd;
-}
-
 .fade {
   transition: none;
 }

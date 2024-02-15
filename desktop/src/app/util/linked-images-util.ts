@@ -1,6 +1,5 @@
 import { filter, flow, isDefined, map } from 'tsfun';
 import { Constraints, Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
-import { PLACEHOLDER } from '../components/image/row/image-row';
 
 
 /**
@@ -26,7 +25,7 @@ export module LinkedImagesUtil {
 
 
     function getLinkedImagesForSubResources(resourceId: Resource.Id, datastore: Datastore,
-                                             linkRelationName: string): string[] {
+                                            linkRelationName: string): string[] {
 
         const query: Query = {
             constraints: { 'isChildOf:contain': { value: resourceId } }
@@ -65,7 +64,7 @@ export module LinkedImagesUtil {
 
 
     function getLinkedImagesForResource(resourceId: Resource.Id, datastore: Datastore,
-                                    linkRelationName: string): string[] {
+                                        linkRelationName: string): string[] {
 
         const constraints: Constraints = {};
         constraints[linkRelationName + ':contain'] = resourceId;
@@ -77,7 +76,7 @@ export module LinkedImagesUtil {
 
         for (let id of ids) {
             const imageId: string|undefined = getMainImageId(id, datastore);
-            result.push(imageId ? imageId : PLACEHOLDER);
+            if (imageId) result.push(imageId);
         }
 
         return result;

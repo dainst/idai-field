@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { filter, flatten, flow, is, Map, map, remove, set, take, pipe } from 'tsfun';
+import { filter, flatten, flow, is, Map, map, remove, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup } from 'idai-field-core';
+    Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup,
+    CategoryForm, Named } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
-import { PLACEHOLDER } from '../../image/row/image-row';
 import { NavigationPath } from '../view/state/navigation-path';
 import { ViewFacade } from '../view/view-facade';
 import { TabManager } from '../../../services/tabs/tab-manager';
@@ -319,10 +319,10 @@ export class GridListComponent extends BaseList implements OnChanges {
         for (const document of documents) {
             if (!reload && this.images[document.resource.id]) continue;
 
-            const linkedImageIds = this.getLinkedImageIds(document);
+            const linkedImageIds: string[] = this.getLinkedImageIds(document);
 
             this.images[document.resource.id] = await Promise.all(
-                linkedImageIds.map(async (id): Promise<SafeResourceUrl> => {
+                linkedImageIds.map((id: string): Promise<SafeResourceUrl> => {
                     return this.imageUrlMaker.getUrl(id, ImageVariant.THUMBNAIL);
                 })
             );
@@ -334,7 +334,7 @@ export class GridListComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, Relation.Image.ISDEPICTEDIN)) {
             return [document.resource.relations[Relation.Image.ISDEPICTEDIN][0]];
-        } else if (this.documents.includes(document)) {
+        } else if (this.getCategoryNames().includes(document.resource.category)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];
@@ -349,8 +349,7 @@ export class GridListComponent extends BaseList implements OnChanges {
         );
 
         return flow(
-            linkedImageIds,
-            remove(is(PLACEHOLDER)),
+            set(linkedImageIds),
             take(4)
         );
     }
@@ -369,5 +368,15 @@ export class GridListComponent extends BaseList implements OnChanges {
         return this.isInTypesManagement()
             ? Relation.Type.HASINSTANCE
             : Relation.Inventory.ISSTORAGEPLACEOF;
+    }
+
+
+    private getCategoryNames(): string[] {
+
+        const categories: Array<CategoryForm> = this.isInTypesManagement()
+            ? this.projectConfiguration.getTypeManagementCategories()
+            : this.projectConfiguration.getInventoryCategories();
+
+        return categories.map(to(Named.NAME));
     }
 }

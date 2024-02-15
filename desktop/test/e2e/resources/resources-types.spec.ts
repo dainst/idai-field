@@ -133,9 +133,13 @@ test.describe('resources/types --', () => {
         await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
         await ResourcesPage.clickResourceListItemInMoveModal('TC2');
         await waitForNotExist(await ResourcesPage.getMoveModal());
-
         await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
-        expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
+
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('Typenkataloge');
+        expect(await getText(navigationButtons.nth(1))).toEqual('TC2');
+        expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('TC2');
     });
 
 
@@ -156,9 +160,13 @@ test.describe('resources/types --', () => {
         await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
         await ResourcesPage.clickResourceListItemInMoveModal('TC2');
         await waitForNotExist(await ResourcesPage.getMoveModal());
-
         await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
-        expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
+
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('Typenkataloge');
+        expect(await getText(navigationButtons.nth(1))).toEqual('TC2');
+        expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('TC2');
         
         await ResourcesTypeGridPage.clickGridElement('T1');
         await waitForExist(await ResourcesTypeGridPage.getGridElement('T2'));

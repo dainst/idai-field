@@ -70,10 +70,4 @@ export class ResourcesTypeGridPage {
 
         return getText('#grid-item-' + identifier + ' .badge');
     }
-
-
-    public static getActiveNavigationButtonText() {
-
-        return getText('.navigation-button.root-document');
-    }
 }

@@ -230,6 +230,12 @@ export class ResourcesPage {
     }
 
 
+    public static getActiveNavigationButtonText() {
+
+        return getText('.navigation-button.root-document');
+    }
+
+
     // elements
 
     public static getListItemEl(identifier) {

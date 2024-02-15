@@ -218,12 +218,7 @@ export class ResourcesComponent implements OnDestroy {
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
             if (result.success) {
-                await this.routingService.jumpToResource(
-                    this.viewFacade.isInGridListView()
-                        ? result.newParent
-                        : documents[0],
-                    false
-                );
+                await this.jumpToNewParentAfterMovingResource(result.newParent, documents);
             } else {
                 await this.viewFacade.populateDocumentList();
             }
@@ -481,5 +476,19 @@ export class ResourcesComponent implements OnDestroy {
     private startGeometryEditing() {
 
         this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
+    }
+
+
+    private async jumpToNewParentAfterMovingResource(newParent: FieldDocument, movedDocuments: Array<FieldDocument>) {
+
+        if (this.viewFacade.isInGridListView()) {
+            if (newParent.resource.category === 'Project') {
+                this.viewFacade.moveInto(undefined, false, true);
+            } else {
+                await this.routingService.jumpToResource(newParent, false);
+            }
+        } else {
+            await this.routingService.jumpToResource(movedDocuments[0], false);
+        }
     }
 }

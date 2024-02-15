@@ -25,7 +25,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
-    // undefined when in overview, types management or inventory management
+    // undefined when in overview, type management or inventory management
     @Input() isRecordedIn: FieldDocument|undefined;
 
     // undefined when current level is operation

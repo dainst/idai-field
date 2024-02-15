@@ -196,7 +196,8 @@ export class ResourcesStateManager {
             this.getValidNonRecordedInCategories(),
             (resourceId: string) => {
                 return this.indexFacade.getCount('id:match', resourceId) > 0;
-            });
+            }
+        );
 
         const validatedNavigationPath = invalidSegment
             ? NavigationPath.shorten(ResourcesState.getNavigationPath(this.resourcesState), invalidSegment)
@@ -247,7 +248,10 @@ export class ResourcesStateManager {
         if (segments.length === 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
-            ResourcesState.getNavigationPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
+            ResourcesState.getNavigationPath(this.resourcesState),
+            segments,
+            segments[segments.length - 1].document.resource.id
+        );
 
         ResourcesState.updateNavigationPath(this.resourcesState, navPath);
         this.notifyNavigationPathObservers();

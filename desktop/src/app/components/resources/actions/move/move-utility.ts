@@ -59,6 +59,7 @@ export module MoveUtility {
 
         return documents.filter(document => {
             return !projectConfiguration.getConcreteOverviewCategories()
+                    .concat(projectConfiguration.getInventoryCategories())
                     .map(to(Named.NAME))
                     .includes(document.resource.category)
                 || !Document.hasRelations(document, Relation.Hierarchy.LIESWITHIN);

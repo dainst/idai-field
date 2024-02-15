@@ -45,7 +45,7 @@ export class DoceditRelationsPage {
     public static async getRelationElementByName(relationName, pickerIndex) {
 
         const relationPickerGroupElement = await getLocator('#edit-form-element-' + relationName);
-        return (await relationPickerGroupElement.locator('#relation-picker')).nth(pickerIndex);
+        return (await relationPickerGroupElement.locator('.relation-picker')).nth(pickerIndex);
     };
 
 

@@ -26,6 +26,7 @@ test.describe('resources/types --', () => {
         await navigateTo('settings');
         await resetApp();
         await navigateTo('resources/types');
+        await createTypeCatalogAndType();
     });
 
 
@@ -86,8 +87,6 @@ test.describe('resources/types --', () => {
 
     test('Show linked find for type', async () => {
 
-        await createTypeCatalogAndType();
-
         await ResourcesGridListPage.clickGridElement('T1');
         await waitForNotExist(await ResourcesGridListPage.getLinkedDocumentsGrid());
 
@@ -106,7 +105,6 @@ test.describe('resources/types --', () => {
 
     test('Do not show linked finds in extended search mode', async () => {
 
-        await createTypeCatalogAndType();
         await ResourcesGridListPage.clickGridElement('T1');
         await linkWithFind();
 
@@ -121,8 +119,6 @@ test.describe('resources/types --', () => {
 
 
     test('Move a type without subtypes to another catalog', async () => {
-
-        await createTypeCatalogAndType();
 
         await ResourcesGridListPage.clickNavigationRootButton();
         await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
@@ -144,8 +140,6 @@ test.describe('resources/types --', () => {
 
 
     test('Move a type with subtypes to another catalog', async () => {
-
-        await createTypeCatalogAndType();
 
         await ResourcesGridListPage.clickNavigationRootButton();
         await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
@@ -175,7 +169,6 @@ test.describe('resources/types --', () => {
 
     test('Delete a type', async () => {
 
-        await createTypeCatalogAndType();
         await ResourcesGridListPage.clickGridElement('T1');
         await linkWithFind();
 
@@ -195,8 +188,6 @@ test.describe('resources/types --', () => {
 
 
     test('Link find with type via type relation picker', async () => {
-
-        await createTypeCatalogAndType();
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
@@ -221,7 +212,6 @@ test.describe('resources/types --', () => {
 
     test('Filter types in type relation picker by criterion & catalog', async () => {
 
-        await createTypeCatalogAndType();
         await setCriterion('Dekoration');
 
         await ResourcesGridListPage.clickNavigationRootButton();

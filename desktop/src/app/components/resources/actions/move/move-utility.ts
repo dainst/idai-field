@@ -163,6 +163,8 @@ export module MoveUtility {
                                  datastore: Datastore,): Promise<boolean> {
 
         if (projectConfiguration.getConcreteOverviewCategories()
+                .concat(projectConfiguration.getTypeManagementCategories())
+                .concat(projectConfiguration.getInventoryCategories())
                 .map(to(Named.NAME))
                 .includes(document.resource.category)) {
             return true;
@@ -173,7 +175,7 @@ export module MoveUtility {
         );
 
         const children: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } }
+            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } }
         })).documents;
 
         return children.filter(child => {

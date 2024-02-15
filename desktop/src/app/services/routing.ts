@@ -127,10 +127,11 @@ export class Routing {
         }
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
-        } else if (['types', 'inventory'].includes(viewName)) {
-            await this.viewFacade.moveInto(documentToSelect.resource.id, false, fromLink);
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, fromLink);
+            if (['types', 'inventory'].includes(viewName)) {
+                await this.viewFacade.moveInto(documentToSelect.resource.id, false, fromLink);
+            }
         }
     }
 

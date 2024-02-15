@@ -65,8 +65,6 @@ export class GridListComponent extends BaseList implements OnChanges {
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
-    public isLowestHierarchyLevel: boolean = false;
-
     private expandAllGroups: boolean = false;
     private visibleSections: Array<GridListSection> = ['documents'];
 
@@ -101,13 +99,6 @@ export class GridListComponent extends BaseList implements OnChanges {
     public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
 
     public isInInventoryManagement = () => this.viewFacade.isInInventoryManagement();
-
-
-    public isPlusButtonShown(): boolean {
-
-        return super.isPlusButtonShown()
-            && (!this.mainDocument || this.mainDocument.project === undefined);
-    }
 
 
     async ngOnChanges(changes: SimpleChanges) {
@@ -231,8 +222,6 @@ export class GridListComponent extends BaseList implements OnChanges {
         if (!this.visibleSections.includes(section)) {
             this.visibleSections.push(section);
         } else {
-            if (section === 'linkedDocuments' && this.isLowestHierarchyLevel) return;
-
             this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
             if (this.visibleSections.length < 1) {
                 this.toggleSection(section === 'documents' ? 'linkedDocuments' : 'documents');
@@ -241,25 +230,25 @@ export class GridListComponent extends BaseList implements OnChanges {
     }
 
 
-    public isSectionVisible(section: GridListSection): boolean {
-        
-        if (this.isLowestHierarchyLevel) return section === 'linkedDocuments';
+    public isPlusButtonShown(): boolean {
 
-        return (section === 'documents' && this.linkedDocuments.length === 0)
-            || this.visibleSections.includes(section);
+        return super.isPlusButtonShown()
+            && (!this.mainDocument || this.mainDocument.project === undefined);
     }
 
-    
+
+    public isSectionVisible(section: GridListSection) {
+
+        return this.linkedDocuments.length === 0 || this.visibleSections.includes(section);
+    }
+
+
     private async update(documents: Array<FieldDocument>) {
 
         const newMainDocument: FieldDocument|undefined = this.getMainDocument();
         if (newMainDocument !== this.mainDocument) {
             this.mainDocument = newMainDocument;
             await this.updateLinkedDocuments();
-            this.isLowestHierarchyLevel = this.mainDocument
-                && this.projectConfiguration.getAllowedRelationDomainCategories(
-                    Relation.Hierarchy.LIESWITHIN, this.mainDocument.resource.category
-                ).length === 0
         }
         if (documents.length > 0
                 && this.syncService.getStatus() !== SyncStatus.Pushing

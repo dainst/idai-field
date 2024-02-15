@@ -17,7 +17,7 @@
     <loading-icon [class.with-main-document]="mainDocument"></loading-icon>
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
-        <div *ngIf="linkedDocuments.length > 0 && !isLowestHierarchyLevel"
+        <div *ngIf="linkedDocuments.length > 0"
              class="grid-section-label first-grid-section-label"
              (click)="toggleSection('documents')">
             <span [ngClass]="isSectionVisible('documents') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>

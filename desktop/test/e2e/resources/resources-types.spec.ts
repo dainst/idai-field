@@ -120,13 +120,12 @@ test.describe('resources/types --', () => {
     });
 
 
-    test('Move a type to another catalog', async () => {
+    test('Move a type without subtypes to another catalog', async () => {
 
         await createTypeCatalogAndType();
 
         await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
-        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined,
-            undefined, true, true);
+        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
 
         await ResourcesTypeGridPage.clickGridElement('TC1');
         await ResourcesTypeGridPage.clickOpenContextMenu('T1');
@@ -136,8 +135,33 @@ test.describe('resources/types --', () => {
         await waitForNotExist(await ResourcesPage.getMoveModal());
 
         await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
-
         expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
+    });
+
+
+    test('Move a type with subtypes to another catalog', async () => {
+
+        await createTypeCatalogAndType();
+
+        await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
+
+        await ResourcesTypeGridPage.clickGridElement('TC1');
+        await ResourcesTypeGridPage.clickGridElement('T1');
+        await ResourcesPage.performCreateResource('T2', 'Type', undefined, undefined, true, true);
+        await ResourcesPage.clickNavigationButton('TC1');
+
+        await ResourcesTypeGridPage.clickOpenContextMenu('T1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
+        await ResourcesPage.clickResourceListItemInMoveModal('TC2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
+        expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
+        
+        await ResourcesTypeGridPage.clickGridElement('T1');
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('T2'));
     });
 
 

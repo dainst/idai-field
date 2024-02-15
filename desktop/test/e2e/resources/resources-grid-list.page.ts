@@ -4,7 +4,7 @@ import { click, getLocator, rightClick, getText } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class ResourcesTypeGridPage {
+export class ResourcesGridListPage {
 
     // click
 
@@ -20,9 +20,9 @@ export class ResourcesTypeGridPage {
     }
 
 
-    public static clickTypeCatalogsNavigationButton() {
+    public static clickNavigationRootButton() {
 
-        return click('#types-navigation-root');
+        return click('#grid-list-navigation-root');
     }
 
 
@@ -66,7 +66,7 @@ export class ResourcesTypeGridPage {
 
     // text
 
-    public static getTypeBadgeText(identifier: string) {
+    public static getLinkedDocumentBadgeText(identifier: string) {
 
         return getText('#grid-item-' + identifier + ' .badge');
     }

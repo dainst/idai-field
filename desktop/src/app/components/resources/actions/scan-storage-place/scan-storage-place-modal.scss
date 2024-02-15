@@ -1,4 +1,6 @@
 #scan-storage-place-modal-body {
+  user-select: none;
+  
   div:not(:last-of-type) {
     margin-bottom: 10px;
   }

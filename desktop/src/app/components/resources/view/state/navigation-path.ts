@@ -55,7 +55,7 @@ export module NavigationPath {
      *               V
      * SEGMENT1, SEGMENT2, SEGMENT3
      *
-     * setNewSelectedSegmentDoc(navpah, document4) changes the situation to
+     * setNewSelectedSegmentDoc(navpath, document4) changes the situation to
      *
      *                             V
      * NP: SEGMENT1, SEGMENT2, SEGMENT4
@@ -81,13 +81,13 @@ export module NavigationPath {
                                              newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
         if (newSelectedSegmentDoc) {
-            (navigationPath as any).segments = rebuildElements(
+            navigationPath.segments = rebuildElements(
                 navigationPath.segments,
                 navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
 
-        (navigationPath as any).selectedSegmentId = newSelectedSegmentDoc
+        navigationPath.selectedSegmentId = newSelectedSegmentDoc
             ? newSelectedSegmentDoc.resource.id
             : undefined;
 

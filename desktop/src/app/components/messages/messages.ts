@@ -134,7 +134,7 @@ export class Messages {
     private getTimeout(message: Message): number {
 
         let timeout = this.timeout;
-        if (message.extendedTimeout) timeout *= 1.5;
+        if (message.extendedTimeout) timeout *= 2;
 
         return timeout;
     }

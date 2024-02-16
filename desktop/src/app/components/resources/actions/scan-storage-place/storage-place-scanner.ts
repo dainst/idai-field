@@ -142,12 +142,8 @@ export class StoragePlaceScanner {
 
     private showMessages(tasks: Array<StoragePlaceScannerTask>, storagePlaceDocument: FieldDocument) {
 
-        let documents: Array<FieldDocument> = StoragePlaceScanner.getDocuments(tasks, 'new', 'edit');
-        if (documents.length > 0) {
-            this.showSuccessMessage(documents, storagePlaceDocument);
-        } else {
-            this.showAlreadySetMessage(StoragePlaceScanner.getDocuments(tasks, 'none'), storagePlaceDocument);
-        }
+        this.showSuccessMessage(StoragePlaceScanner.getDocuments(tasks, 'new', 'edit'), storagePlaceDocument);
+        this.showAlreadySetMessage(StoragePlaceScanner.getDocuments(tasks, 'none'), storagePlaceDocument);
     }
 
 

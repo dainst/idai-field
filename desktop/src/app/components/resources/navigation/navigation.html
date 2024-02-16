@@ -42,7 +42,7 @@
               [class.root-document]="!navigationPath.selectedSegmentId"
               (click)="moveInto(undefined)">
             <span *ngIf="viewFacade.isInTypesManagement()" i18n="@@resources.navigation.typeCatalogs">Typenkataloge</span>
-            <span *ngIf="viewFacade.isInInventoryManagement()" i18n="@@resources.navigation.storagePlaces">Aufbewahrungsorte</span>
+            <span *ngIf="viewFacade.isInInventoryManagement()" i18n="@@util.inventoryRegister">Inventarverzeichnis</span>
         </div>
 
         <div *ngFor="let document of getSegments()"

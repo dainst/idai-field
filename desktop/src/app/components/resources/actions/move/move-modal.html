@@ -11,6 +11,7 @@
         <document-picker [filterOptions]="filterOptions"
                          [getConstraints]="getConstraints"
                          [showProjectOption]="showProjectOption"
+                         [showInventoryRegisterOption]="showInventoryRegisterOption"
                          (documentSelected)="moveDocuments($event)"></document-picker>
     </div>
     <div *ngIf="isLoading()" id="move-modal-loading-icon-container">

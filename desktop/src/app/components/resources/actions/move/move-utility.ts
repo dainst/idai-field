@@ -2,6 +2,7 @@ import { flatten, intersection, set, to } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
     FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named, Datastore } from 'idai-field-core';
 import { M } from '../../../messages/m';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 /**
@@ -42,15 +43,23 @@ export module MoveUtility {
 
 
     export function getAllowedTargetCategories(documents: Array<FieldDocument>,
-                                               projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
+                                               projectConfiguration: ProjectConfiguration,
+                                               utilTranslations: UtilTranslations): Array<CategoryForm> {
 
-        const result = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
+        const defaultCategories: Array<CategoryForm> = [];
+        if (isProjectOptionAllowed(documents, projectConfiguration)) {
+            defaultCategories.push(projectConfiguration.getCategory('Project'));
+        }
+        if (isInventoryRegisterOptionAllowed(documents, projectConfiguration)) {
+            defaultCategories.push({
+                name: 'InventoryRegister', label: utilTranslations.getTranslation('inventoryRegister'), children: []
+            } as any);
+        }
+
+        const result: Array<CategoryForm> = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
             .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
 
-        return (isProjectOptionAllowed(documents, projectConfiguration))
-            ? [projectConfiguration.getCategory('Project')]
-                .concat(result)
-            : result;
+        return defaultCategories.concat(result);
     }
 
 
@@ -59,7 +68,17 @@ export module MoveUtility {
 
         return documents.filter(document => {
             return !projectConfiguration.getConcreteOverviewCategories()
-                    .concat(projectConfiguration.getInventoryCategories())
+                    .map(to(Named.NAME))
+                    .includes(document.resource.category)
+                || !Document.hasRelations(document, Relation.Hierarchy.LIESWITHIN);
+        }).length === 0;
+    }
+
+
+    export function isInventoryRegisterOptionAllowed(documents: Array<FieldDocument>, projectConfiguration: ProjectConfiguration): boolean {
+
+        return documents.filter(document => {
+            return !projectConfiguration.getInventoryCategories()
                     .map(to(Named.NAME))
                     .includes(document.resource.category)
                 || !Document.hasRelations(document, Relation.Hierarchy.LIESWITHIN);
@@ -86,7 +105,7 @@ export module MoveUtility {
     function updateRelations(document: FieldDocument, newParent: FieldDocument,
                              isRecordedInTargetCategories: Array<CategoryForm>) {
 
-        if (newParent.resource.category === 'Project') {
+        if (newParent.resource.category === 'Project' || newParent.resource.category === 'InventoryRegister') {
             document.resource.relations['isRecordedIn'] = [];
             document.resource.relations['liesWithin'] = [];
         } else if (isRecordedInTargetCategories.map(category => category.name)

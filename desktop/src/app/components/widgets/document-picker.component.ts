@@ -25,6 +25,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
     @Input() showConfigurationOption: boolean = false;
+    @Input() showInventoryRegisterOption: boolean = false;
     @Input() showLoadingIcon: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
@@ -221,6 +222,18 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
+    private getInventoryRegisterOption(): ConfigurationDocument {
+
+        return {
+            resource: {
+                id: 'inventoryRegister',
+                identifier: this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' }),
+                category: 'InventoryRegister'
+            }
+        } as any;
+    }
+
+
     private isProjectOptionVisible(): boolean {
 
         return this.showProjectOption
@@ -241,6 +254,16 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
+    private isInventoryRegisterOptionVisible(): boolean {
+
+        return this.showInventoryRegisterOption
+            && this.isCategoryOptionVisible(
+                'InventoryRegister',
+                this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+            );
+    }
+
+
     private isCategoryOptionVisible(categoryName: string, categoryLabel: string): boolean {
 
         return (!this.query.q?.length || categoryLabel.toLowerCase().startsWith(this.query.q.toLowerCase()))
@@ -253,6 +276,7 @@ export class DocumentPickerComponent implements OnChanges {
         const result: Array<Document> = [];
         if (this.isConfigurationOptionVisible()) result.push(this.getConfigurationOption());
         if (this.isProjectOptionVisible()) result.push(this.getProjectOption());
+        if (this.isInventoryRegisterOptionVisible()) result.push(this.getInventoryRegisterOption());
 
         return result.concat(
             documents.filter(document => {

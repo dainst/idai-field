@@ -168,6 +168,10 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.resourceLimitExceeded', value: 'Ressourcenlimit überschritten' })
         );
         this.utilTranslations.addTranslation(
+            'inventoryRegister',
+            this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.input',
             this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
         );

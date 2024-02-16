@@ -482,7 +482,7 @@ export class ResourcesComponent implements OnDestroy {
     private async jumpToNewParentAfterMovingResource(newParent: FieldDocument, movedDocuments: Array<FieldDocument>) {
 
         if (this.viewFacade.isInGridListView()) {
-            if (newParent.resource.category === 'Project') {
+            if (newParent.resource.category === 'InventoryRegister') {
                 this.viewFacade.moveInto(undefined, false, true);
             } else {
                 await this.routingService.jumpToResource(newParent, false);

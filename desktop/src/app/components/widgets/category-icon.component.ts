@@ -38,6 +38,8 @@ export class CategoryIconComponent implements OnChanges {
 
         if (this.category === 'Configuration') {
             this.setValuesForConfigurationCategory();
+        } else if (this.category === 'InventoryRegister') {
+            this.setValuesForInventoryRegisterCategory();
         } else {
             this.determineCharacterForCategory();
             this.determineColorForCategory();
@@ -82,6 +84,16 @@ export class CategoryIconComponent implements OnChanges {
 
         this.character = this.i18n({
             id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
+        })[0];
+        this.color = 'black';
+        this.textColor = 'white';
+    }
+
+
+    private setValuesForInventoryRegisterCategory() {
+
+        this.character = this.i18n({
+            id: 'resources.navigation.inventoryRegister', value: 'Inventarverzeichnis'
         })[0];
         this.color = 'black';
         this.textColor = 'white';

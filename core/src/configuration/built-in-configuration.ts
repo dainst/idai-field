@@ -768,7 +768,7 @@ export class BuiltInConfiguration {
                     }
                 ]
             }
-        },
+        }
     };
 
 

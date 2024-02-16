@@ -4,6 +4,7 @@ import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } fr
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../actions/move/move-utility';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
@@ -29,7 +30,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public orientation: ContextMenuOrientation = 'top';
     
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private utilTranslations: UtilTranslations) {}
 
 
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
@@ -109,7 +111,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
         if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
         return MoveUtility.getAllowedTargetCategories(
-            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration
+            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration, this.utilTranslations,
         ).length > 0;
     }
 

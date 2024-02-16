@@ -5,6 +5,7 @@ import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager,
 import { Messages } from '../../../messages/messages';
 import { Loading } from '../../../widgets/loading';
 import { MoveUtility } from './move-utility';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 export interface MoveResult {
@@ -29,6 +30,7 @@ export class MoveModalComponent {
     public filterOptions: Array<CategoryForm> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
     public showProjectOption: boolean = false;
+    public showInventoryRegisterOption: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -37,7 +39,8 @@ export class MoveModalComponent {
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private loading: Loading) {}
+                private loading: Loading,
+                private utilTranslations: UtilTranslations) {}
 
 
     public isLoading = () => this.loading.isLoading('moveModal');
@@ -57,7 +60,12 @@ export class MoveModalComponent {
 
         this.documents = documents;
         this.showProjectOption = MoveUtility.isProjectOptionAllowed(documents, this.projectConfiguration);
-        this.filterOptions = MoveUtility.getAllowedTargetCategories(documents, this.projectConfiguration);
+        this.showInventoryRegisterOption = MoveUtility.isInventoryRegisterOptionAllowed(
+            documents, this.projectConfiguration
+        );
+        this.filterOptions = MoveUtility.getAllowedTargetCategories(
+            documents, this.projectConfiguration, this.utilTranslations
+        );
     }
 
 

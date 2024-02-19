@@ -388,11 +388,11 @@ export class ResourcesPage {
     // sequences
 
     public static async performCreateResource(identifier: string, categoryName?: string, inputFieldName?: string,
-                                              inputFieldText?: string, skipTypeSelect?: boolean, skipGeometry?: boolean,
+                                              inputFieldText?: string, skipCategory?: boolean, skipGeometry?: boolean,
                                               waitForModalToClose: boolean = true) {
 
         await this.clickCreateResource();
-        if (!skipTypeSelect) await this.clickSelectCategory(categoryName);
+        if (!skipCategory) await this.clickSelectCategory(categoryName);
         if (!skipGeometry) await this.clickSelectGeometryType();
         await DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {

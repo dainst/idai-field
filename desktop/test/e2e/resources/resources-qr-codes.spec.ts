@@ -30,7 +30,7 @@ test.describe('resources/qr-codes --', () => {
         
         await navigateTo('settings');
         await resetApp();
-        await enableQrCodesForPotteryCategory();
+        await enableQrCodes();
         await ResourcesPage.clickHierarchyButton('S1');
     });
 
@@ -41,10 +41,11 @@ test.describe('resources/qr-codes --', () => {
     });
 
 
-    async function enableQrCodesForPotteryCategory() {
+    async function enableQrCodes() {
 
         await navigateTo('configuration');
         await ConfigurationPage.enableQRCodes('trench', 'pottery', 'find');
+        await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
         await NavbarPage.clickCloseNonResourcesTab();
     }
 
@@ -148,6 +149,7 @@ test.describe('resources/qr-codes --', () => {
     test('automatically create QR code for new resource', async () => {
         
         await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('trench');
         await CategoryPickerPage.clickOpenContextMenu('Pottery', 'Find');
         await ConfigurationPage.clickContextMenuEditOption();
         await EditConfigurationPage.clickToggleAutoCreateScanCodesSlider();
@@ -166,9 +168,6 @@ test.describe('resources/qr-codes --', () => {
 
 
     test('link storage place via QR code', async () => {
-
-        await navigateTo('configuration');
-        await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
         
         await navigateTo('resources/inventory');
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
@@ -196,9 +195,6 @@ test.describe('resources/qr-codes --', () => {
 
 
     test('replace previously linked storage place for find when linking storage place via QR code', async () => {
-
-        await navigateTo('configuration');
-        await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
         
         await navigateTo('resources/inventory');
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);

@@ -38,10 +38,10 @@ test.describe('resources/types --', () => {
 
     async function createTypeCatalogAndType(typeCatalogIdentifier: string = 'TC1', typeIdentifier: string = 'T1') {
 
-        await ResourcesPage.performCreateResource(typeCatalogIdentifier, 'TypeCatalog', undefined,
+        await ResourcesPage.performCreateResource(typeCatalogIdentifier, undefined, undefined,
             undefined, true, true);
         await ResourcesGridListPage.clickGridElement(typeCatalogIdentifier);
-        return ResourcesPage.performCreateResource(typeIdentifier, 'Type', undefined, undefined, true, true);
+        return ResourcesPage.performCreateResource(typeIdentifier, undefined, undefined, undefined, true, true);
     }
 
 

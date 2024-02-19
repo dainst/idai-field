@@ -2,6 +2,7 @@
   "files.watcherExclude": {
     "**/node_modules/*/**": true
   },
-  "elixirLS.projectDir": "server"
+  "elixirLS.projectDir": "server",
+  "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
 

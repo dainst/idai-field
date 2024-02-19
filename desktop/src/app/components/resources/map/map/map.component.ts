@@ -68,6 +68,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
+
+
     protected createMap(): L.Map {
 
         const mapOptions: L.MapOptions = {
@@ -124,10 +126,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     private setSelectionStyle(document: FieldDocument, selected: boolean) {
-
+        let geometrytype: string;
+        if (this.parentDocument && this.parentDocument.resource.category === 'Profile') {
+            if (!document.resource.sideviewgeometry || !document.resource.sideviewgeometry[this.parentDocument.resource.id]) return;
+            geometrytype = document.resource.sideviewgeometry[this.parentDocument.resource.id].type;
+        } else {
         if (!document.resource.geometry) return;
+        geometrytype = document.resource.geometry.type;
+        }
 
-        switch(document.resource.geometry.type) {
+        switch(geometrytype) {
             case 'Point':
             case 'MultiPoint':
                 if (!this.markers[document.resource.id]) return;
@@ -213,6 +221,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
+
     protected addGeometriesToMap() {
 
         this.bounds = [];
@@ -245,8 +254,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     protected addGeometryToMap(document: FieldDocument) {
+        let geometry: FieldGeometry | undefined;
 
-        const geometry: FieldGeometry|undefined = Helper.getGeometry(document);
+        if (this.parentDocument && this.parentDocument.resource.category === 'Profile') {
+            geometry = Helper.getSideviewGeometry(document, this.parentDocument);
+        } else {
+            geometry = Helper.getGeometry(document);
+        }
         if (!geometry) return;
 
         switch(geometry.type) {

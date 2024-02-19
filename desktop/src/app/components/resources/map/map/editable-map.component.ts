@@ -47,7 +47,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private editablePolylines: Array<L.Polyline>;
     public selectedPolyline: L.Polyline;
 
-    private editablePolygons: Array<L.Polygon>;
+    private editablePolygons: Array<L.Polygon> = [];
     public selectedPolygon: L.Polygon;
 
     public dragging: boolean = false;
@@ -123,6 +123,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.zone.runOutsideAngular(() => {
             if (this.drawMode !== 'None') this.finishDrawing();
             geometry = this.createGeometry();
+            console.log('finishEditing', geometry);
             this.fadeInMapElements();
             this.resetEditing();
         });
@@ -175,7 +176,21 @@ export class EditableMapComponent extends LayerMapComponent {
             || !this.selectedDocument.resource.geometry) {
             return 'none';
         }
+        if (this.parentDocument.resource.category === 'Profile' && this.selectedDocument.resource.sideviewgeometry) {
+            console.log('getEditorType');
+        switch(this.selectedDocument.resource.sideviewgeometry[this.parentDocument.resource.id].type) {
+            case 'Polygon':
+            case 'MultiPolygon':
+                return 'polygon';
 
+            case 'LineString':
+            case 'MultiLineString':
+                return 'polyline';
+
+            case 'Point':
+            case 'MultiPoint':
+                return 'point';
+        } } else {
         switch(this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
             case 'MultiPolygon':
@@ -189,6 +204,7 @@ export class EditableMapComponent extends LayerMapComponent {
             case 'MultiPoint':
                 return 'point';
         }
+    }
     }
 
 
@@ -407,7 +423,7 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.update) return Promise.resolve();
 
         if (!changes['isEditing'] || !this.isEditing
-                || EditableMapComponent.hasGeometry(this.selectedDocument)) {
+                || EditableMapComponent.hasGeometry(this.selectedDocument, this.parentDocument)) {
             await super.updateMap(changes);
         }
 
@@ -517,20 +533,22 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     private setupPolygonCreation() {
+        console.log('setupPolygonCreation');
 
         const mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             const polygon: L.Polygon = <L.Polygon> event.layer;
             const latLngs: Array<any> = polygon.getLatLngs();
             if (latLngs.length == 1 && latLngs[0].length >= 3) {
+                console.log('mapComponent.editablePolygons', this.editablePolygons);
                 mapComponent.editablePolygons.push(polygon);
                 mapComponent.setupEditablePolygon(polygon);
                 mapComponent.setSelectedPolygon(polygon);
             } else {
-                mapComponent.map.removeLayer(polygon);
-                mapComponent.addPolygon();
+                this.map.removeLayer(polygon);
+                this.addPolygon();
             }
-            mapComponent.drawMode = 'None';
+            this.drawMode = 'None';
         });
     }
 
@@ -749,9 +767,15 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private static hasGeometry(document: FieldDocument): boolean {
+    private static hasGeometry(document: FieldDocument, parentDocument?: FieldDocument): boolean {
+        if (parentDocument.resource.category === 'Profile' ) {
+            console.log('hasGeometry');
+            return document !== undefined && document.resource.sideviewgeometry !== undefined
+                && document.resource.sideviewgeometry[parentDocument.resource.id] !== undefined
+                && document.resource.sideviewgeometry[parentDocument.resource.id].coordinates !== undefined;
+        } else {
 
         return document !== undefined && document.resource.geometry !== undefined
             && document.resource.geometry.coordinates !== undefined;
-    }
+    }}
 }

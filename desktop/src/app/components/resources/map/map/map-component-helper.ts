@@ -46,6 +46,17 @@ export module MapComponentHelper {
             : undefined;
     }
 
+    export function getSideviewGeometry(document: FieldDocument, parentDocument: FieldDocument): FieldGeometry | undefined {
+        console.log('getSideviewGeometry', document, parentDocument);
+        if (!document.resource.sideviewgeometry) return undefined;
+        const parentDocumentId = parentDocument.resource.id;
+        if (!document.resource.sideviewgeometry[parentDocumentId]) return undefined;
+        const geometry = document.resource.sideviewgeometry[parentDocumentId];
+
+        return geometry?.coordinates && geometry.coordinates.length > 0
+            ? geometry
+            : undefined;
+    }
 
     export function hasGeometries(documents: Array<FieldDocument>): boolean {
 
@@ -68,7 +79,7 @@ export module MapComponentHelper {
     export function getTooltipText(resource: FieldResource) {
 
         let shortDescription = resource.identifier;
-        if (resource.shortDescription && resource.shortDescription.length > 0) {
+        if (resource.shortDescription && Number(resource.shortDescription.length) > 0) {
             shortDescription += ' | ' + resource.shortDescription;
         }
 

@@ -16,3 +16,9 @@ lerna-debug.log
 **/.clj-kondo
 
 mobile/package-lock.json
+core/package-lock.json
+desktop/package-lock.json
+mobile/package-lock.json
+web/api/assets/js/package-lock.json
+web/ui/package-lock.json
+desktop/package-lock.json

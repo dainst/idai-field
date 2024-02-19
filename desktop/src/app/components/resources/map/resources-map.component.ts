@@ -97,12 +97,19 @@ export class ResourcesMapComponent {
      *   <code>undefined</code> indicates editing operation aborted.
      */
     public async quitEditing(geometry: FieldGeometry|undefined) {
+        console.log('quitEditing in resources-map.comp');
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;
-        if (!selectedDocument.resource.geometry) return;
-
-        if (geometry) {
+        //if (!selectedDocument.resource.geometry) return;
+        if (this.parentDocument.resource.category === 'Profile' && geometry) {
+            console.log('quitEditing', selectedDocument, this.parentDocument);
+            selectedDocument.resource.sideviewgeometry = selectedDocument.resource.sideviewgeometry || {};
+            selectedDocument.resource.sideviewgeometry[this.parentDocument.resource.id] = geometry;
+        } else if (this.parentDocument.resource.category === 'Profile' && geometry === null) {
+            delete selectedDocument.resource.sideviewgeometry[this.parentDocument.resource.id];
+        }
+        else if (this.parentDocument.resource.category !== 'Profile' && geometry) {
             selectedDocument.resource.geometry = geometry;
         } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
                 || selectedDocument.resource.geometry.coordinates.length === 0) {

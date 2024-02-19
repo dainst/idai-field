@@ -13,6 +13,7 @@ export interface FieldResource extends Resource {
 
     shortDescription: I18N.String|string;
     geometry?: FieldGeometry;
+    sideviewgeometry?: { [profileId: string]: FieldGeometry };
     relations: FieldResource.Relations;
 }
 

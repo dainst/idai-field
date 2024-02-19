@@ -173,7 +173,7 @@ export class EditableMapComponent extends LayerMapComponent {
     public getEditorType(): string|undefined {
 
         if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
-            || !this.selectedDocument.resource.geometry) {
+            || ( !this.selectedDocument.resource.geometry && !this.selectedDocument.resource.sideviewgeometry)) {
             return 'none';
         }
         if (this.parentDocument.resource.category === 'Profile' && this.selectedDocument.resource.sideviewgeometry) {

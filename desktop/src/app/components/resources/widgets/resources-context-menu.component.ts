@@ -4,6 +4,8 @@ import { CategoryForm, FieldDocument, Named, ProjectConfiguration } from 'idai-f
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../../components/resources/move-utility';
+import { ViewFacade } from '../view/view-facade';
+import { NavigationPath } from '../view/state/navigation-path';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-images'|'create-polygon'
@@ -29,7 +31,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public orientation: ContextMenuOrientation = 'top';
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration, 
+                private viewFacade: ViewFacade) {}
 
 
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
@@ -87,7 +90,9 @@ export class ResourcesContextMenuComponent implements OnChanges {
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && !this.contextMenu.documents[0].resource.geometry;
+            && ( this.isInProfile() 
+            ? this.contextMenu.documents[0].resource.sideviewgeometry === undefined 
+            : this.contextMenu.documents[0].resource.geometry === undefined )
     }
 
 
@@ -97,7 +102,10 @@ export class ResourcesContextMenuComponent implements OnChanges {
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && this.contextMenu.documents[0].resource.geometry !== undefined;
+            && ( this.isInProfile() 
+                ? this.contextMenu.documents[0].resource.sideviewgeometry !== undefined 
+                : this.contextMenu.documents[0].resource.geometry !== undefined )
+           
     }
 
 
@@ -133,5 +141,11 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         return categories.map(to(Named.NAME))
             .includes(this.contextMenu.documents[0].resource.category);
+    }
+
+    private isInProfile(): boolean {
+        const navpath = this.viewFacade.getNavigationPath()
+        const segment = NavigationPath.getSelectedSegment(navpath)
+        return segment !== undefined && segment.document.resource.category === 'Profile'
     }
 }

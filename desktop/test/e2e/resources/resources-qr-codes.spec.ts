@@ -80,6 +80,16 @@ test.describe('resources/qr-codes --', () => {
     }
 
 
+    async function createStoragePlaces() {
+
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP2', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+    }
+
+
     test('generate new QR code for resource', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
@@ -187,53 +197,40 @@ test.describe('resources/qr-codes --', () => {
 
     test('link storage place via QR code', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP1', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
 
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP1 gespeichert.');
+        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('P1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
-        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 
 
     test('show info message if storage place is already linked when scanning QR code', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP1', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
-        await setStoredInRelation('P1', 'SP1');
+        await setStoredInRelation('P1', 'SP2');
 
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
-        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP1 ist für die Ressource P1 bereits gesetzt.');
+        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
         
         await ResourcesPage.clickSelectResource('P1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
-        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 
 
     test('replace previously linked storage place for find when linking storage place via QR code', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP2', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await setStoredInRelation('P1', 'SP1');
 
@@ -253,12 +250,7 @@ test.describe('resources/qr-codes --', () => {
 
     test('replace previously linked storage place for find collection after confirmation in modal', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP2', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('FC1', 'findcollection');
         await setStoredInRelation('FC1', 'SP1');
 
@@ -278,12 +270,7 @@ test.describe('resources/qr-codes --', () => {
 
     test('keep previously linked storage place for find collection after confirmation in modal', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP2', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('FC1', 'findcollection');
         await setStoredInRelation('FC1', 'SP1');
 
@@ -304,12 +291,7 @@ test.describe('resources/qr-codes --', () => {
 
     test('do not add storage place if scan storage place confirmation modal is canceled', async () => {
         
-        await navigateTo('resources/inventory');
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP2', true);
-        await NavbarPage.clickCloseNonResourcesTab();
-
+        await createStoragePlaces();
         await ResourcesPage.performCreateResource('FC1', 'findcollection');
         await setStoredInRelation('FC1', 'SP1');
 

@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('resources/inventory --', () => {
+test.describe.only('resources/inventory --', () => {
 
     test.beforeAll(async () => {
 
@@ -24,6 +24,7 @@ test.describe('resources/inventory --', () => {
         await navigateTo('settings');
         await resetApp();
         await navigateTo('resources/inventory');
+        await createStoragePlaces();
     });
 
 
@@ -38,6 +39,7 @@ test.describe('resources/inventory --', () => {
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
         await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await ResourcesGridListPage.clickNavigationRootButton();
     }
 
 
@@ -54,7 +56,7 @@ test.describe('resources/inventory --', () => {
 
     test('show linked find for storage place', async () => {
 
-        await createStoragePlaces();
+        await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesGridListPage.clickGridElement('SP2');
         await waitForNotExist(await ResourcesGridListPage.getLinkedDocumentsGrid());
 
@@ -73,7 +75,7 @@ test.describe('resources/inventory --', () => {
 
     test('move storage place resource to inventory root level', async () => {
 
-        await createStoragePlaces();
+        await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseCategoryFilter('inventoryregister', 'modal');

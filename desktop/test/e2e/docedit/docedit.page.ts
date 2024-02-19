@@ -64,6 +64,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoInventoryTab() {
+
+        return click('#edit-form-goto-inventory');
+    }
+
+
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');

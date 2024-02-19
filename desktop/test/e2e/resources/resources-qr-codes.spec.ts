@@ -1,6 +1,8 @@
 import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { DoceditPage } from '../docedit/docedit.page';
 import { NavbarPage } from '../navbar.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
@@ -190,5 +192,46 @@ test.describe('resources/qr-codes --', () => {
 
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+    });
+
+
+    test('replace previously linked storage place for find when linking storage place via QR code', async () => {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await ResourcesGridListPage.clickOpenContextMenu('SP2');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+
+        await waitForExist(await QrCodeEditorModalPage.getCanvas());
+        await QrCodeEditorModalPage.clickCancel();
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickGotoInventoryTab();
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isStoredIn');
+        await DoceditRelationsPage.typeInRelation('isStoredIn', 'SP1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+
+        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 });

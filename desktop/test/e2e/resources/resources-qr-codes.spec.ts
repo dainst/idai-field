@@ -228,4 +228,25 @@ test.describe('resources/qr-codes --', () => {
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
+
+
+    test('show info message if storage place is already linked when scanning QR code', async () => {
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP1', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await setStoredInRelation('P1', 'SP1');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP1 ist für die Ressource P1 bereits gesetzt.');
+        
+        await ResourcesPage.clickSelectResource('P1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+    });
 });

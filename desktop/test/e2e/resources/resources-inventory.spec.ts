@@ -33,6 +33,14 @@ test.describe('resources/inventory --', () => {
     });
 
 
+    async function createStoragePlaces() {
+
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesGridListPage.clickGridElement('SP1');
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+    }
+
+
     async function linkWithFind() {
 
         await ResourcesGridListPage.clickEditButton();
@@ -46,9 +54,7 @@ test.describe('resources/inventory --', () => {
 
     test('show linked find for storage place', async () => {
 
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesGridListPage.clickGridElement('SP1');
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await createStoragePlaces();
         await ResourcesGridListPage.clickGridElement('SP2');
         await waitForNotExist(await ResourcesGridListPage.getLinkedDocumentsGrid());
 
@@ -67,10 +73,7 @@ test.describe('resources/inventory --', () => {
 
     test('move storage place resource to inventory root level', async () => {
 
-        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesGridListPage.clickGridElement('SP1');
-        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        
+        await createStoragePlaces();
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseCategoryFilter('inventoryregister', 'modal');

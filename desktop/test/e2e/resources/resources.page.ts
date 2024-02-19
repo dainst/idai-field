@@ -184,6 +184,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickConfirmReplacingStoragePlace() {
+
+        return click('#replace-storage-place-button');
+    }
+
+
     // get text
 
 

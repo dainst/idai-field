@@ -205,6 +205,27 @@ test.describe('resources/qr-codes --', () => {
     });
 
 
+    test('show info message if storage place is already linked when scanning QR code', async () => {
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP1', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await setStoredInRelation('P1', 'SP1');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP1 ist für die Ressource P1 bereits gesetzt.');
+        
+        await ResourcesPage.clickSelectResource('P1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+    });
+
+
     test('replace previously linked storage place for find when linking storage place via QR code', async () => {
         
         await navigateTo('resources/inventory');
@@ -230,23 +251,27 @@ test.describe('resources/qr-codes --', () => {
     });
 
 
-    test('show info message if storage place is already linked when scanning QR code', async () => {
+    test('replace previously linked storage place for find collection after confirmation in modal', async () => {
         
         await navigateTo('resources/inventory');
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await addExistingQrCode('SP1', true);
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP2', true);
         await NavbarPage.clickCloseNonResourcesTab();
 
-        await ResourcesPage.performCreateResource('P1', 'find-pottery');
-        await setStoredInRelation('P1', 'SP1');
+        await ResourcesPage.performCreateResource('FC1', 'findcollection');
+        await setStoredInRelation('FC1', 'SP1');
 
-        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickOpenContextMenu('FC1');
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
-        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP1 ist für die Ressource P1 bereits gesetzt.');
+        await ResourcesPage.clickConfirmReplacingStoragePlace();
+        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
-        await ResourcesPage.clickSelectResource('P1', 'info');
+        await ResourcesPage.clickSelectResource('FC1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
-        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 });

@@ -50,6 +50,36 @@ test.describe('resources/qr-codes --', () => {
     }
 
 
+    async function setStoredInRelation(identifier: string, storagePlaceIdentifier: string) {
+
+        await ResourcesPage.openEditByDoubleClickResource(identifier);
+        await DoceditPage.clickGotoInventoryTab();
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isStoredIn');
+        await DoceditRelationsPage.typeInRelation('isStoredIn', storagePlaceIdentifier);
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+    }
+
+
+    async function addExistingQrCode(identifier: string, inGridList: boolean = false, cancelModal: boolean = true) {
+
+        if (inGridList) {
+            await ResourcesGridListPage.clickOpenContextMenu(identifier);
+        } else {
+            await ResourcesPage.clickOpenContextMenu(identifier);
+        }
+
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+
+        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
+        await waitForExist(await QrCodeEditorModalPage.getCanvas());
+
+        if (cancelModal) await QrCodeEditorModalPage.clickCancel();
+    }
+
+
     test('generate new QR code for resource', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
@@ -100,13 +130,7 @@ test.describe('resources/qr-codes --', () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
-
-        await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuAddQrCodeButton();
-        await QrCodeEditorModalPage.clickAddQrCode();
-        await QrCodeEditorModalPage.clickSetExistingQrCode();
-        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
-        await QrCodeEditorModalPage.clickCancel();
+        await addExistingQrCode('P1');
 
         await ResourcesPage.clickOpenContextMenu('P2');
         await ResourcesPage.clickContextMenuAddQrCodeButton();
@@ -124,15 +148,9 @@ test.describe('resources/qr-codes --', () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
-        await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuAddQrCodeButton();
-        await QrCodeEditorModalPage.clickAddQrCode();
-        await QrCodeEditorModalPage.clickSetExistingQrCode();
-        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
-
+        await addExistingQrCode('P1', false, false);
         await QrCodeEditorModalPage.clickDeleteQrCode();
         await QrCodeEditorModalPage.clickConfirmDeletionInModal();
-        await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
         await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
         await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
         
@@ -171,13 +189,7 @@ test.describe('resources/qr-codes --', () => {
         
         await navigateTo('resources/inventory');
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
-        await ResourcesGridListPage.clickOpenContextMenu('SP1');
-        await ResourcesPage.clickContextMenuAddQrCodeButton();
-        await QrCodeEditorModalPage.clickAddQrCode();
-        await QrCodeEditorModalPage.clickSetExistingQrCode();
-
-        await waitForExist(await QrCodeEditorModalPage.getCanvas());
-        await QrCodeEditorModalPage.clickCancel();
+        await addExistingQrCode('SP1', true);
         await NavbarPage.clickCloseNonResourcesTab();
 
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
@@ -188,7 +200,6 @@ test.describe('resources/qr-codes --', () => {
         
         await ResourcesPage.clickSelectResource('P1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
-
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
     });
@@ -199,32 +210,19 @@ test.describe('resources/qr-codes --', () => {
         await navigateTo('resources/inventory');
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
         await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
-        await ResourcesGridListPage.clickOpenContextMenu('SP2');
-        await ResourcesPage.clickContextMenuAddQrCodeButton();
-        await QrCodeEditorModalPage.clickAddQrCode();
-        await QrCodeEditorModalPage.clickSetExistingQrCode();
-
-        await waitForExist(await QrCodeEditorModalPage.getCanvas());
-        await QrCodeEditorModalPage.clickCancel();
+        await addExistingQrCode('SP2', true);
         await NavbarPage.clickCloseNonResourcesTab();
 
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
-        await ResourcesPage.openEditByDoubleClickResource('P1');
-        await DoceditPage.clickGotoInventoryTab();
-        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isStoredIn');
-        await DoceditRelationsPage.typeInRelation('isStoredIn', 'SP1');
-        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
-        await DoceditPage.clickSaveDocument();
+        await setStoredInRelation('P1', 'SP1');
 
         await ResourcesPage.clickSelectResource('P1', 'info');
         await FieldsViewPage.clickAccordionTab(1);
-
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
 
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
-
         await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')

@@ -73,7 +73,26 @@ test.describe('resources/inventory --', () => {
     });
 
 
-    test('move storage place resource to inventory root level', async () => {
+    test('move storage place into another storage place', async () => {
+
+        await ResourcesPage.performCreateResource('SP3', 'storageplace', undefined, undefined, false, true);        
+        await ResourcesGridListPage.clickGridElement('SP1');
+        await ResourcesGridListPage.clickOpenContextMenu('SP2');
+        await ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.typeInSearchField('SP3');
+        await ResourcesPage.clickResourceListItemInMoveModal('SP3');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await waitForExist(await ResourcesGridListPage.getGridElement('SP2'));
+
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('Inventarverzeichnis');
+        expect(await getText(navigationButtons.nth(1))).toEqual('SP3');
+        expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('SP3');
+    });
+
+
+    test('move storage place to inventory root level', async () => {
 
         await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesGridListPage.clickOpenContextMenu('SP2');

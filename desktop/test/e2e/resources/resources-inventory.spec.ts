@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe.only('resources/inventory --', () => {
+test.describe('resources/inventory --', () => {
 
     test.beforeAll(async () => {
 
@@ -88,5 +88,26 @@ test.describe.only('resources/inventory --', () => {
         expect(await getText(navigationButtons.nth(0))).toEqual('Inventarverzeichnis');
         expect(await getText(navigationButtons.nth(1))).toEqual('SP1');
         expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('Inventarverzeichnis');
+    });
+
+
+    test('delete a storage place', async () => {
+
+        await ResourcesGridListPage.clickGridElement('SP1');
+        await ResourcesGridListPage.clickGridElement('SP2');
+        await linkWithFind();
+
+        await ResourcesPage.clickNavigationButton('SP1');
+
+        await ResourcesGridListPage.clickToggleLinkedDocumentsSectionButton();
+        await waitForExist(await ResourcesGridListPage.getGridElement('testf1'));
+
+        await ResourcesGridListPage.clickOpenContextMenu('SP2');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SP2');
+        await ResourcesPage.clickConfirmDeleteInModal();
+
+        await waitForNotExist(await ResourcesGridListPage.getGridElement('SP2'));
+        await waitForNotExist(await ResourcesGridListPage.getGridElement('testf1'));
     });
 });

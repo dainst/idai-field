@@ -300,4 +300,28 @@ test.describe('resources/qr-codes --', () => {
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
         expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SP2');
     });
+
+
+    test('do not add storage place if scan storage place confirmation modal is canceled', async () => {
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP2', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('FC1', 'findcollection');
+        await setStoredInRelation('FC1', 'SP1');
+
+        await ResourcesPage.clickOpenContextMenu('FC1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickCancelScanStoragePlaceModal();
+        
+        await ResourcesPage.clickSelectResource('FC1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+    });
 });

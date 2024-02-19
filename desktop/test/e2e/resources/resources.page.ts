@@ -196,6 +196,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickCancelScanStoragePlaceModal() {
+
+        return click('#cancel-scan-storage-place-modal-button');
+    }
+
+
     // get text
 
 

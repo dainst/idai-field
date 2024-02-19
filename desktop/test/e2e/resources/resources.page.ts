@@ -190,6 +190,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickConfirmAddingStoragePlace() {
+
+        return click('#add-storage-place-button');
+    }
+
+
     // get text
 
 

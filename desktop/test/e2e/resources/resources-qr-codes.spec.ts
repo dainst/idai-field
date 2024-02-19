@@ -274,4 +274,30 @@ test.describe('resources/qr-codes --', () => {
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
+
+
+    test('keep previously linked storage place for find collection after confirmation in modal', async () => {
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
+        await addExistingQrCode('SP2', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('FC1', 'findcollection');
+        await setStoredInRelation('FC1', 'SP1');
+
+        await ResourcesPage.clickOpenContextMenu('FC1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickConfirmAddingStoragePlace();
+        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        
+        await ResourcesPage.clickSelectResource('FC1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(2);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
+        expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SP2');
+    });
 });

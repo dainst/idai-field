@@ -3,7 +3,9 @@ import { ConfigurationPage } from '../configuration/configuration.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 import { NavbarPage } from '../navbar.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 import { QrCodeEditorModalPage } from '../widgets/qr-code-editor-modal.page';
+import { ResourcesGridListPage } from './resources-grid-list.page';
 import { ResourcesSearchBarPage } from './resources-search-bar.page';
 import { ResourcesPage } from './resources.page';
 
@@ -40,17 +42,12 @@ test.describe('resources/qr-codes --', () => {
     async function enableQrCodesForPotteryCategory() {
 
         await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('trench');
-        await CategoryPickerPage.clickOpenContextMenu('Pottery', 'Find');
-        await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickToggleScanCodesSlider();
-        await EditConfigurationPage.clickConfirm();
-        await ConfigurationPage.save()
+        await ConfigurationPage.enableQRCodes('trench', 'pottery', 'find');
         await NavbarPage.clickCloseNonResourcesTab();
     }
 
 
-    test('Generate new QR code for resource', async () => {
+    test('generate new QR code for resource', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.clickOpenContextMenu('P1');
@@ -120,7 +117,7 @@ test.describe('resources/qr-codes --', () => {
     });
 
 
-    test('Remove QR code from resource', async () => {
+    test('remove QR code from resource', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
@@ -146,7 +143,7 @@ test.describe('resources/qr-codes --', () => {
     });
 
 
-    test('Automatically create QR code for new resource', async () => {
+    test('automatically create QR code for new resource', async () => {
         
         await navigateTo('configuration');
         await CategoryPickerPage.clickOpenContextMenu('Pottery', 'Find');
@@ -163,5 +160,35 @@ test.describe('resources/qr-codes --', () => {
         await waitForNotExist(await QrCodeEditorModalPage.getPlaceholder());
 
         await QrCodeEditorModalPage.clickCancel();
+    });
+
+
+    test('link storage place via QR code', async () => {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
+        
+        await navigateTo('resources/inventory');
+        await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
+        await ResourcesGridListPage.clickOpenContextMenu('SP1');
+        await ResourcesPage.clickContextMenuAddQrCodeButton();
+        await QrCodeEditorModalPage.clickAddQrCode();
+        await QrCodeEditorModalPage.clickSetExistingQrCode();
+
+        await waitForExist(await QrCodeEditorModalPage.getCanvas());
+        await QrCodeEditorModalPage.clickCancel();
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+
+        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP1 gespeichert.');
+        
+        await ResourcesPage.clickSelectResource('P1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
     });
 });

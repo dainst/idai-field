@@ -57,6 +57,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuScanStoragePlaceButton() {
+
+        return click('#context-menu-scan-storage-place-button');
+    }
+
+
     public static clickHierarchyButton(identifier: string) {
 
         return click('#resource-' + identifier + ' .hierarchy-button');

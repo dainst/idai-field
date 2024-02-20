@@ -6,6 +6,7 @@
 
 <div id="username"
      class="nav-link"
+     [class.high-dpi]="isHighDPIDisplay()"
      (click)="openUsernameModal()">
     {{username}}
 </div>

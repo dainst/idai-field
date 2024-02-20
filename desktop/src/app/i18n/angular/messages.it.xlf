@@ -3225,30 +3225,6 @@
           <context context-type="linenumber">208</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.typeGrid.types" datatype="html">
-        <source>Typen</source>
-        <target state="translated">Tipi</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.typeGrid.subtypes" datatype="html">
-        <source>Untertypen</source>
-        <target state="translated">Sottotipi</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Zugeordnete Funde </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Reperti associati </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/types/types.component.ts</context>
-          <context context-type="linenumber">109</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
         <source>Kategorie</source>
         <target state="translated">Categoria</target>
@@ -7835,6 +7811,366 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.qrCodes.enable" datatype="html">
+        <source>QR-Codes zur Identifikation verwenden</source>
+        <target state="needs-translation">QR-Codes zur Identifikation verwenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">77,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.singleStoragePlace" datatype="html">
+        <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </source>
+        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">36,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.multipleStoragePlaces" datatype="html">
+        <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Aufbewahrungsorte gesetzt. </source>
+        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Aufbewahrungsorte gesetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">39,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.question.multiple" datatype="html">
+        <source>Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </source>
+        <target state="needs-translation">Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">53,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.remove" datatype="html">
+        <source>Entfernen</source>
+        <target state="needs-translation">Entfernen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">53,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.keep" datatype="html">
+        <source>Beibehalten</source>
+        <target state="needs-translation">Beibehalten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.gridList.types" datatype="html">
+        <source>Typen</source>
+        <target state="needs-translation">Typen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
+          <context context-type="linenumber">65,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.gridList.subtypes" datatype="html">
+        <source>Untertypen</source>
+        <target state="needs-translation">Untertypen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
+          <context context-type="linenumber">83,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.navigation.storagePlaces" datatype="html">
+        <source>Aufbewahrungsorte</source>
+        <target state="needs-translation">Aufbewahrungsorte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
+          <context context-type="linenumber">109,123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.gridList.linkedFinds" datatype="html">
+        <source>Zugeordnete Funde</source>
+        <target state="needs-translation">Zugeordnete Funde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
+          <context context-type="linenumber">143,155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.gridList.storedObjects" datatype="html">
+        <source>Enthaltene Objekte</source>
+        <target state="needs-translation">Enthaltene Objekte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
+          <context context-type="linenumber">167,179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.qrCodeEditor.delete.header" datatype="html">
+        <source>QR-Code löschen?</source>
+        <target state="needs-translation">QR-Code löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.qrCodeEditorModal.header" datatype="html">
+        <source>QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
+        <target state="needs-translation">QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.print" datatype="html">
+        <source>Drucken</source>
+        <target state="needs-translation">Drucken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
+          <context context-type="linenumber">15,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.qrCodeEditorModal.addQrCode.generate" datatype="html">
+        <source>Neuen Code generieren</source>
+        <target state="needs-translation">Neuen Code generieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.qrCodeEditorModal.addQrCode.setExisting" datatype="html">
+        <source>Existierenden Code übernehmen</source>
+        <target state="needs-translation">Existierenden Code übernehmen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.qrCodeScanner.tooltip" datatype="html">
+        <source>QR-Code scannen</source>
+        <target state="needs-translation">QR-Code scannen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
+          <context context-type="linenumber">85,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editQrCode" datatype="html">
+        <source>QR-Code verwalten</source>
+        <target state="needs-translation">QR-Code verwalten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">137,150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.scanStoragePlace" datatype="html">
+        <source>Aufbewahrungsort scannen</source>
+        <target state="needs-translation">Aufbewahrungsort scannen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.navigation.inventoryRegister" datatype="html">
+        <source>Inventarverzeichnis</source>
+        <target state="needs-translation">Inventarverzeichnis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/category-icon.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
+        <source>Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
+        <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.info.storagePlaceAlreadySet.single" datatype="html">
+        <source>Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</source>
+        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.info.storagePlaceAlreadySet.multiple" datatype="html">
+        <source>Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
+        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.qrCodeScanningFailure" datatype="html">
+        <source>Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</source>
+        <target state="needs-translation">Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.qrCodeResourceNotFound" datatype="html">
+        <source>Für diesen QR-Code konnte keine Ressource gefunden werden.</source>
+        <target state="needs-translation">Für diesen QR-Code konnte keine Ressource gefunden werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.qrCodeAlreadyAssigned" datatype="html">
+        <source>Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</source>
+        <target state="needs-translation">Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.inventory" datatype="html">
+        <source>Inventarisierung</source>
+        <target state="needs-translation">Inventarisierung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.isStoragePlaceOf" datatype="html">
+        <source>Verknüpfte Objekte</source>
+        <target state="needs-translation">Verknüpfte Objekte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html">
+        <source>Verknüpfter Aufbewahrungsort</source>
+        <target state="needs-translation">Verknüpfter Aufbewahrungsort</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.qrCodeScanner.header" datatype="html">
+        <source>QR-Code scannen</source>
+        <target state="needs-translation">QR-Code scannen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
+          <context context-type="linenumber">53,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
+        <source>Kamera auswählen:</source>
+        <target state="needs-translation">Kamera auswählen:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.qrCodes" datatype="html">
+        <source>QR-Codes</source>
+        <target state="needs-translation">QR-Codes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">57,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.qrCodes.autoCreate" datatype="html">
+        <source>Für neue Ressourcen automatisch erzeugen</source>
+        <target state="needs-translation">Für neue Ressourcen automatisch erzeugen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">100,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.header.single" datatype="html">
+        <source>Bisherigen Aufbewahrungsort ersetzen?</source>
+        <target state="needs-translation">Bisherigen Aufbewahrungsort ersetzen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.header.multiple" datatype="html">
+        <source>Bisherige Aufbewahrungsorte ersetzen?</source>
+        <target state="needs-translation">Bisherige Aufbewahrungsorte ersetzen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace" datatype="html">
+        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </source>
+        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.multipleStoragePlaces" datatype="html">
+        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </source>
+        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">32,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.scanStoragePlaceModal.editMode.question.single" datatype="html">
+        <source>Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </source>
+        <target state="needs-translation">Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
+          <context context-type="linenumber">47,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.qrCodeEditor.delete.question" datatype="html">
+        <source>Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
+        <target state="needs-translation">Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.addQrCode" datatype="html">
+        <source>QR-Code hinzufügen</source>
+        <target state="needs-translation">QR-Code hinzufügen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
+          <context context-type="linenumber">106,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.inventoryRegister" datatype="html">
+        <source>Inventarverzeichnis</source>
+        <target state="needs-translation">Inventarverzeichnis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
+          <context context-type="linenumber">97,105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.categoriesFilter.inventory" datatype="html">
+        <source>Inventarisierung</source>
+        <target state="needs-translation">Inventarisierung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.qrCode" datatype="html">
+        <source>QR-Code</source>
+        <target state="needs-translation">QR-Code</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
+        <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
+        <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
+        <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
+        <target state="needs-translation">Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
+          <context context-type="linenumber">123,149</context>
         </context-group>
       </trans-unit>
     </body>

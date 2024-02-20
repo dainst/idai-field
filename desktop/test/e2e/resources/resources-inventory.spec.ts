@@ -79,7 +79,7 @@ test.describe('resources/inventory --', () => {
         await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.typeInSearchField('SP3');
+        await SearchBarPage.typeInSearchField('SP3');
         await ResourcesPage.clickResourceListItemInMoveModal('SP3');
         await waitForNotExist(await ResourcesPage.getMoveModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('SP2'));
@@ -97,7 +97,7 @@ test.describe('resources/inventory --', () => {
         await ResourcesGridListPage.clickGridElement('SP1');
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseCategoryFilter('inventoryregister', 'modal');
+        await SearchBarPage.clickChooseCategoryFilter('inventoryregister', 'modal');
         await ResourcesPage.clickResourceListItemInMoveModal('Inventarverzeichnis');
         await waitForNotExist(await ResourcesPage.getMoveModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('SP2'));

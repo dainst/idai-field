@@ -93,7 +93,7 @@ export class CategoryIconComponent implements OnChanges {
     private setValuesForInventoryRegisterCategory() {
 
         this.character = this.i18n({
-            id: 'resources.navigation.inventoryRegister', value: 'Inventarverzeichnis'
+            id: 'util.inventoryRegister', value: 'Inventarverzeichnis'
         })[0];
         this.color = 'black';
         this.textColor = 'white';

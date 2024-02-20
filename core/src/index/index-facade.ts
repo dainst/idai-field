@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values, Map } from 'tsfun';
+import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document';
 import { Query } from '../model/query';

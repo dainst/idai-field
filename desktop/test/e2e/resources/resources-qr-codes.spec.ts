@@ -306,4 +306,17 @@ test.describe('resources/qr-codes --', () => {
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
     });
+
+
+    test('prevent adding resource of non storage place category by scanning QR code', async () => {
+        
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.performCreateResource('P2', 'find-pottery');
+        await addExistingQrCode('P2');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        
+        await NavbarPage.awaitAlert('Die Ressource P2 der Kategorie Keramik ist kein gültiger Aufbewahrungsort.');
+    });
 });

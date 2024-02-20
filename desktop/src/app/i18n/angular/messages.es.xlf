@@ -8097,14 +8097,6 @@
           <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.navigation.inventoryRegister" datatype="html">
-        <source>Inventarverzeichnis</source>
-        <target state="needs-translation">Inventarverzeichnis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/category-icon.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
         <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
@@ -8143,6 +8135,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.cleanUpRelaton" datatype="html">
+        <source>Relation bereinigen</source>
+        <target state="needs-translation">Relation bereinigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
+        <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
+        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
     </body>

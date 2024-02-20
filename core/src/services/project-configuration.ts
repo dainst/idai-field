@@ -165,6 +165,14 @@ export class ProjectConfiguration {
     }
 
 
+    public getTypeManagementTopLevelCategories(): Array<CategoryForm> {
+
+        return flow(this.getTypeManagementCategories(),
+            filter(Named.onName(includedIn([TYPE, TYPE_CATALOG]))) as any
+        );
+    }
+
+
     public getTypeCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
@@ -179,6 +187,14 @@ export class ProjectConfiguration {
         return flow(this.categoryForms,
             filterTrees('StoragePlace'),
             Tree.flatten
+        );
+    }
+
+
+    public getInventoryTopLevelCategories(): Array<CategoryForm> {
+
+        return flow(this.getInventoryCategories(),
+            filter(Named.onName(includedIn(['StoragePlace']))) as any
         );
     }
 

@@ -140,9 +140,9 @@ export class ResourcesComponent implements OnDestroy {
                     .filter(category => !category.parentCategory)
                 : this.projectConfiguration.getOverviewTopLevelCategories();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.projectConfiguration.getTypeManagementCategories();
+            this.filterOptions = this.projectConfiguration.getTypeManagementTopLevelCategories();
         } else if (this.viewFacade.isInInventoryManagement()) {
-            this.filterOptions = this.projectConfiguration.getInventoryCategories();
+            this.filterOptions = this.projectConfiguration.getInventoryTopLevelCategories();
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',

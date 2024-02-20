@@ -17,7 +17,8 @@ export interface Category {
 
     isAbstract?: boolean;
     mustLieWithin?: boolean;
-    userDefinedSubcategoriesAllowed?: boolean
+    userDefinedSubcategoriesAllowed?: boolean;
+    scanCodesAllowed?: boolean;
     required?: boolean;
 
     color?: string;

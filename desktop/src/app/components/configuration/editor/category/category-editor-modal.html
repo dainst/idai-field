@@ -62,7 +62,7 @@
             <span class="mdi mdi-restore"></span>
         </button>
     </div>
-    <div *ngIf="isIdentificationCustomizationAvailable()"
+    <div *ngIf="isScanCodesOptionAvailable()"
          class="configuration-editor-section configuration-editor-switch-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.qrCodes">
             QR-Codes
@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isIdentificationCustomizationAvailable()" class="configuration-editor-section">
+    <div *ngIf="isIdentifierPrefixOptionAvailable()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
             Bezeichner-Präfix
         </div>

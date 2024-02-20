@@ -589,6 +589,7 @@ export class BuiltInConfiguration {
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -614,6 +615,7 @@ export class BuiltInConfiguration {
         FindCollection: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -638,6 +640,7 @@ export class BuiltInConfiguration {
         },
         Sample: {
             mustLieWithin: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
@@ -702,6 +705,7 @@ export class BuiltInConfiguration {
         StoragePlace: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [

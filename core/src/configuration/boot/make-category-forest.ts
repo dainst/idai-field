@@ -178,6 +178,7 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
             ? parentCategoryDefinition.mustLieWithin : categoryDefinition.mustLieWithin;
         category.isAbstract = categoryDefinition?.abstract || false;
         category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
+        category.scanCodesAllowed = categoryDefinition?.scanCodesAllowed || false;
         category.required = categoryDefinition?.required || false;
 
         category.libraryId = formDefinition.name;
@@ -196,7 +197,9 @@ function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition
         );
         category.identifierPrefix = formDefinition.identifierPrefix;
         category.resourceLimit = formDefinition.resourceLimit;
-        category.scanCodes = formDefinition.scanCodes;
+        if (category.scanCodesAllowed || parentCategoryDefinition?.scanCodesAllowed) {
+            category.scanCodes = formDefinition.scanCodes;
+        }
         category.createdBy = formDefinition.createdBy;
         category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
         category.references = formDefinition.references;

@@ -146,7 +146,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    public isIdentificationCustomizationAvailable(): boolean {
+    public isScanCodesOptionAvailable(): boolean {
+        
+        return !this.category.isAbstract
+            && (this.category.scanCodesAllowed || this.category.parentCategory?.scanCodesAllowed);
+    }
+
+
+    public isIdentifierPrefixOptionAvailable(): boolean {
         
         return !this.category.isAbstract
             && this.category.name !== 'Project'

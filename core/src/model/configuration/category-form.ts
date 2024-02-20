@@ -22,7 +22,8 @@ export interface CategoryForm {
 
     isAbstract: boolean;
     mustLieWithin: boolean|undefined; // = undefined;
-    userDefinedSubcategoriesAllowed?: boolean
+    userDefinedSubcategoriesAllowed?: boolean;
+    scanCodesAllowed?: boolean;
     required?: boolean;
 
     children: Array<CategoryForm>;

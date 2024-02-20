@@ -5,6 +5,10 @@
     width: 100%;
     min-height: 274px;
 
+    &.no-camera {
+      height: 100%;
+    }
+
     loading-icon {
       position: absolute;
       top: 216px;

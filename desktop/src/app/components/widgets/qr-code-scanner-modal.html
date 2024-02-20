@@ -3,7 +3,9 @@
 </div>
 
 <div id="qr-code-scanner-modal-body" class="modal-body">
-    <div id="qr-code-scanner-container" class="d-flex align-items-center justify-content-center">
+    <div id="qr-code-scanner-container"
+         class="d-flex align-items-center justify-content-center"
+         [class.no-camera]="cameraNotFound">
         <video></video>
         <loading-icon [context]="'qrCodeScanner'"></loading-icon>
         <div *ngIf="cameraNotFound" class="alert alert-warning" i18n="@@widgets.qrCodeScanner.cameraNotFound">

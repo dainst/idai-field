@@ -227,6 +227,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE = 'resources.info.storagePlaceAlreadySet.single';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
+    public static RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY = 'resources.error.noStoragePlaceCategory';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
     public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
@@ -1496,6 +1497,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.'
             }),
             level: 'info',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY] = {
+            content: i18n({
+                id: 'messages.resources.error.noStoragePlaceCategory',
+                value: 'Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.'
+            }),
+            level: 'danger',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME] = {

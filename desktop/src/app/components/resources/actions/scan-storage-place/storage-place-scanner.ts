@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { flatten, set } from 'tsfun';
-import { FieldDocument, Document, RelationsManager, Relation, Datastore } from 'idai-field-core';
+import { flatten, set, to } from 'tsfun';
+import { FieldDocument, Document, RelationsManager, Relation, Datastore, ProjectConfiguration, Named,
+    Labels, CategoryForm } from 'idai-field-core';
 import { QrCodeService } from '../../service/qr-code-service';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
@@ -33,13 +34,17 @@ export class StoragePlaceScanner {
                 private messages: Messages,
                 private modalService: NgbModal,
                 private menuService: Menus,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {}
 
 
     public async scanStoragePlace(documents: Array<FieldDocument>) {
 
         const storagePlaceDocument: FieldDocument = await this.scanCode();
-        if (!storagePlaceDocument) return;
+        if (!this.isValidStoragePlace(storagePlaceDocument)) {
+            return this.showInvalidStoragePlaceMessage(storagePlaceDocument);
+        }
 
         const tasks: Array<StoragePlaceScannerTask> = StoragePlaceScanner.getTasks(documents, storagePlaceDocument);
         const editMode: StoragePlaceEditMode = await this.getEditMode(tasks, storagePlaceDocument);
@@ -147,6 +152,13 @@ export class StoragePlaceScanner {
     }
 
 
+    private isValidStoragePlace(storagePlaceDocument: FieldDocument): boolean {
+
+        return this.projectConfiguration.getInventoryCategories().map(to(Named.NAME))
+            .includes(storagePlaceDocument.resource.category);
+    }
+
+
     private showSuccessMessage(documents: Array<FieldDocument>, storagePlaceDocument: FieldDocument) {
 
         if (documents.length === 1) {
@@ -180,6 +192,18 @@ export class StoragePlaceScanner {
                 storagePlaceDocument.resource.identifier
             ]);
         }
+    }
+
+
+    private showInvalidStoragePlaceMessage(storagePlaceDocument: FieldDocument) {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(storagePlaceDocument.resource.category);
+
+        this.messages.add([
+            M.RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY,
+            storagePlaceDocument.resource.identifier,
+            this.labels.get(category)
+        ]);
     }
 
 

@@ -3,7 +3,6 @@ import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
 import { NavbarPage } from '../navbar.page';
-import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
@@ -114,7 +113,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- save changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('save');
 
@@ -126,7 +125,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- discard changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('discard');
 
@@ -137,7 +136,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- cancel dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('cancel');
         await expect(await DoceditPage.getIdentifierInputFieldValue()).toEqual('2');
@@ -234,7 +233,7 @@ test.describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture');
         await ResourcesPage.performCreateResource('2', 'feature-architecture');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
         await DoceditRelationsPage.typeInRelation('isContemporaryWith', '2');
@@ -376,7 +375,7 @@ test.describe('resources --', () => {
     test('do not reflect changes in list while editing resource', async () => {
 
         await ResourcesPage.performCreateResource('1a');
-        await DetailSidebarPage.doubleClickEditDocument('1a');
+        await ResourcesPage.openEditByDoubleClickResource('1a');
         await DoceditPage.typeInInputField('identifier', '1b');
         const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
         expect(identifier).toBe('1a');
@@ -388,7 +387,7 @@ test.describe('resources --', () => {
 
         // toggleRangeOnOff to child category
         await ResourcesPage.performCreateResource('1', 'feature');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature-architecture');
         await waitForNotExist('#message-0');
@@ -398,7 +397,7 @@ test.describe('resources --', () => {
         expect(categoryLabel).toEqual('Architektur');
 
         // delete invalid fields when changing the category of a resource to its parent category
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
 
         await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('wallType', 'Außenmauer');
@@ -407,7 +406,7 @@ test.describe('resources --', () => {
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getFieldValue(1, 0)).toEqual('Außenmauer');
 
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
         await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +

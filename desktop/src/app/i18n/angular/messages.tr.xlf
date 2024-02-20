@@ -4521,14 +4521,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.types" datatype="html">
-        <source>Typenverwaltung</source>
-        <target state="translated">Tip yönetimi</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
         <target state="translated">Proje kategorisindeki alanlar için alana özel arama yapılması mümkün değildir.</target>
@@ -7673,14 +7665,6 @@
           <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.warnings.deleteRelation" datatype="html">
-        <source>Relation bereinigen</source>
-        <target state="needs-translation">Relation bereinigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">200</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.withLabel" datatype="html">
         <source>Möchten Sie die Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{relationLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>) wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
         <target state="needs-translation">Möchten Sie die Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{relationLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>) wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
@@ -7969,14 +7953,6 @@
           <context context-type="linenumber">97,105</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.navigation.inventoryRegister" datatype="html">
-        <source>Inventarverzeichnis</source>
-        <target state="needs-translation">Inventarverzeichnis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/category-icon.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
         <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
@@ -8129,14 +8105,6 @@
           <context context-type="linenumber">106,115</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.inventory" datatype="html">
-        <source>Inventarisierung</source>
-        <target state="needs-translation">Inventarisierung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.qrCode" datatype="html">
         <source>QR-Code</source>
         <target state="needs-translation">QR-Code</target>
@@ -8167,6 +8135,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
+        <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
+        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.cleanUpRelaton" datatype="html">
+        <source>Relation bereinigen</source>
+        <target state="needs-translation">Relation bereinigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
     </body>

@@ -48,5 +48,6 @@
   "menu.window": "Window",
   "menu.window.minimize": "Minimize",
   "menu.help": "Help",
-  "info.close": "Close"
+  "info.close": "Close",
+  "menu.tools.inventory": "Inventory"
 }

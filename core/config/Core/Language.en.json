@@ -107,6 +107,12 @@
     },
     "hasInstance": {
       "label": "Associated finds"
+    },
+    "isStoredIn": {
+      "label": "Is stored in"
+    },
+    "isStoragePlaceOf": {
+      "label": "Is storage place of"
     }
   }
 }

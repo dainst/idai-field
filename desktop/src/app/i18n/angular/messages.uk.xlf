@@ -4540,14 +4540,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.types" datatype="html">
-        <source>Typenverwaltung</source>
-        <target state="translated">Управління типологією</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
         <target state="translated">Пошук по полю неможливий для полів проектової категорії</target>
@@ -7429,14 +7421,6 @@
           <context context-type="linenumber">41,50</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.warnings.deleteRelation" datatype="html">
-        <source>Relation bereinigen</source>
-        <target state="needs-translation">Relation bereinigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">200</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.contextMenu.warnings" datatype="html">
         <source>Warnungen</source>
         <target state="needs-translation">Warnungen</target>
@@ -7981,27 +7965,11 @@
           <context context-type="linenumber">97,105</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.inventory" datatype="html">
-        <source>Inventarisierung</source>
-        <target state="needs-translation">Inventarisierung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.qrCode" datatype="html">
         <source>QR-Code</source>
         <target state="needs-translation">QR-Code</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.navigation.inventoryRegister" datatype="html">
-        <source>Inventarverzeichnis</source>
-        <target state="needs-translation">Inventarverzeichnis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/category-icon.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -8171,6 +8139,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
+        <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
+        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.cleanUpRelaton" datatype="html">
+        <source>Relation bereinigen</source>
+        <target state="needs-translation">Relation bereinigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
     </body>

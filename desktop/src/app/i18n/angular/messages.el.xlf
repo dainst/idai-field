@@ -4605,14 +4605,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.types" datatype="html">
-        <source>Typenverwaltung</source>
-        <target state="needs-translation">Typenverwaltung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
         <target state="needs-translation">Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</target>
@@ -7613,14 +7605,6 @@
           <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.warnings.deleteRelation" datatype="html">
-        <source>Relation bereinigen</source>
-        <target state="needs-translation">Relation bereinigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">200</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.contextMenu.warnings" datatype="html">
         <source>Warnungen</source>
         <target state="needs-translation">Warnungen</target>
@@ -7989,14 +7973,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.navigation.inventoryRegister" datatype="html">
-        <source>Inventarverzeichnis</source>
-        <target state="needs-translation">Inventarverzeichnis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/category-icon.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
         <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
@@ -8115,14 +8091,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">97,105</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.categoriesFilter.inventory" datatype="html">
-        <source>Inventarisierung</source>
-        <target state="needs-translation">Inventarisierung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">

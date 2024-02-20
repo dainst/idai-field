@@ -34,7 +34,6 @@
       user-select: none;
       cursor: default;
 
-
       button {
         &:hover {
           background-color: $popover-header-hover-bg-color;
@@ -45,8 +44,6 @@
         }
   
         .mdi {
-          position: relative;
-          top: 1px;
           color: #000;
         }
       }

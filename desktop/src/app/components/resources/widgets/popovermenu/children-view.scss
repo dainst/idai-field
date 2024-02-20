@@ -18,6 +18,8 @@ children-view {
   }
 
   #open-child-collection-button {
+    padding: 9px !important;
+
     .mdi-arrow-left {
       padding-right: 4px;
     }
@@ -38,8 +40,6 @@ children-view {
     background-color: $popover-header-bg-color !important;
 
     .mdi-close {
-      position: relative;
-      top: 3px;
       color: #000;
     }
 

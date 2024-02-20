@@ -2707,6 +2707,7 @@ describe('buildRawProjectConfiguration', () => {
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
                 fields: {},
+                scanCodesAllowed: true,
                 minimalForm: {
                     groups: []
                 }
@@ -2743,6 +2744,47 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+    });
+
+
+    it('prevent using scan codes if forbidden for category', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                scanCodes: { type: 'qr', autoCreate: true }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].scanCodes).toBeUndefined();
     });
 
 

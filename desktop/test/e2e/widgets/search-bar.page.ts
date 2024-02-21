@@ -58,23 +58,17 @@ export class SearchBarPage {
 
     // elements
 
-    private static getFilterButton(context: SearchBarContext) {
+    public static async getDefaultFilterIcon(context: SearchBarContext) {
 
-        const prefix: string = context !== 'modal' ? context + '-search-bar-' : '';
-        return getLocator('#' + prefix + 'filter-button');
+        const filterButtonElement = await this.getFilterButton(context);
+        return filterButtonElement.locator('.mdi-filter');
     }
 
 
-    private static async getSelectedCategoryFilterButton(context: SearchBarContext) {
+    public static async getSelectedCategoryFilterButton(context: SearchBarContext) {
 
         const filterButtonElement = await this.getFilterButton(context);
         return filterButtonElement.locator('category-icon');
-    }
-
-
-    private static getSearchBarInputField() {
-
-        return getLocator('.search-bar-input');
     }
 
 
@@ -82,5 +76,18 @@ export class SearchBarPage {
 
         await waitForExist('.category-picker');
         return getLocator('.category-label');
+    }
+
+
+    private static getFilterButton(context: SearchBarContext) {
+
+        const prefix: string = context !== 'modal' ? context + '-search-bar-' : '';
+        return getLocator('#' + prefix + 'filter-button');
+    }
+
+
+    private static getSearchBarInputField() {
+
+        return getLocator('.search-bar-input');
     }
 }

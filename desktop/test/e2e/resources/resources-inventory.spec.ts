@@ -4,6 +4,7 @@ import { ResourcesGridListPage } from './resources-grid-list.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { NavbarPage } from '../navbar.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -128,5 +129,17 @@ test.describe('resources/inventory --', () => {
 
         await waitForNotExist(await ResourcesGridListPage.getGridElement('SP2'));
         await waitForNotExist(await ResourcesGridListPage.getGridElement('testf1'));
+    });
+
+
+    test('update filter icon when leaving inventory view', async () => {
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await waitForExist(await SearchBarPage.getSelectedCategoryFilterButton('resources'));
+        expect(await SearchBarPage.getSelectedCategoryFilterCharacter()).toBe('A');
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForNotExist(await SearchBarPage.getSelectedCategoryFilterButton('resources'));
+        await waitForExist(await SearchBarPage.getDefaultFilterIcon('resources'));
     });
 });

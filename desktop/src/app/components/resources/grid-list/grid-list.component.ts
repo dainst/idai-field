@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { filter, flatten, flow, is, Map, map, remove, set, take, pipe, to } from 'tsfun';
+import { filter, flatten, flow, Map, map, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
     Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup,
     CategoryForm, Named } from 'idai-field-core';

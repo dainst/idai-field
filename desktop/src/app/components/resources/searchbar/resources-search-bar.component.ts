@@ -34,8 +34,8 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     public getSelectedCategory(): string | undefined {
 
-        return this.categories !== undefined && this.categories.length > 0
-            ? this.categories[0]
+        return this.selectedCategories?.length > 0
+            ? this.selectedCategories[0]
             : undefined;
     }
 
@@ -54,7 +54,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     public isCategorySelected(): boolean {
 
-        return this.categories !== undefined && this.categories.length > 0;
+        return this.selectedCategories?.length > 0;
     }
 
 

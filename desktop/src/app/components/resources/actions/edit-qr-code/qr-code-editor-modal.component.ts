@@ -76,7 +76,9 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public async createNewCode() {
 
-        await this.saveCode(this.idGenerator.generateId());
+        if (await this.saveCode(this.idGenerator.generateId())) {
+            this.messages.add([M.RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED]);
+        }
     }
 
 
@@ -86,7 +88,9 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         if (!code) return;
 
         if (this.isUnassignedCode(code)) {
-            await this.saveCode(code);
+            if (await this.saveCode(code)) {
+                this.messages.add([M.RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED]);
+            }
         } else {
             this.messages.add([M.RESOURCES_ERROR_QR_CODE_ALREADY_ASSIGNED]);
         }
@@ -105,7 +109,10 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             modalRef.componentInstance.document = this.document;
             AngularUtility.blurActiveElement();
 
-            if (await modalRef.result) await this.saveCode(undefined);
+            if (!(await modalRef.result)) return;
+            if (await this.saveCode(undefined)) {
+                this.messages.add([M.RESOURCES_SUCCESS_QR_CODE_DELETED]);
+            }
         } catch (err) {
             // Delete QR code modal has been cancelled
         } finally {
@@ -138,7 +145,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private async saveCode(newCode?: string) {
+    private async saveCode(newCode?: string): Promise<boolean> {
 
         this.saving = true;
 
@@ -151,8 +158,10 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         try {
             await this.datastore.update(this.document);
             if (newCode) this.renderCode();
+            return true;
         } catch (errWithParams) {
             this.messages.add(errWithParams);
+            return false;
         } finally {
             this.saving = false;
         }

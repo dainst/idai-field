@@ -225,6 +225,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE = 'resources.success.storagePlaceSaved.single';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
+    public static RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED = 'resources.success.generatedQrCodeSaved';
+    public static RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED = 'resources.success.existingQrCodeSaved';
+    public static RESOURCES_SUCCESS_QR_CODE_DELETED = 'resources.success.qrCodeDeleted';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE = 'resources.info.storagePlaceAlreadySet.single';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
     public static RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY = 'resources.error.noStoragePlaceCategory';
@@ -1482,6 +1485,27 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'success',
             extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED] = {
+            content: i18n({
+                id: 'messages.resources.success.qrCodeSaved',
+                value: 'Der neu generierte QR-Code wurde erfolgreich gespeichert.'
+            }),
+            level: 'success'
+        };
+        this.msgs[M.RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED] = {
+            content: i18n({
+                id: 'messages.resources.success.qrCodeSaved',
+                value: 'Der eingescannte QR-Code wurde erfolgreich gespeichert.'
+            }),
+            level: 'success'
+        };
+        this.msgs[M.RESOURCES_SUCCESS_QR_CODE_DELETED] = {
+            content: i18n({
+                id: 'messages.resources.success.qrCodeDeleted',
+                value: 'Der QR-Code wurde erfolgreich gelöscht.'
+            }),
+            level: 'success',
         };
         this.msgs[M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE] = {
             content: i18n({

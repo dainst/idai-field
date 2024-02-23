@@ -23,6 +23,8 @@ export class ListButtonGroupComponent {
                 private navigationService: NavigationService) {}
 
 
+    public shouldShowQrCodeButton = () => this.document.resource.scanCode !== undefined;
+
     public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
@@ -34,6 +36,8 @@ export class ListButtonGroupComponent {
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
+
+    public openQrCodeEditor = () => this.resourcesComponent.editQRCode(this.document);
 
 
     public moveInto() {

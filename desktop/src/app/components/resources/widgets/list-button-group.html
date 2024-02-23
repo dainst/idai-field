@@ -1,4 +1,16 @@
 <div class="sidebar-list-button-group">
+    <div *ngIf="shouldShowQrCodeButton()"
+         class="btn"
+         (click)="openQrCodeEditor(); $event.stopPropagation();"
+         placement="right"
+         container="body"
+         ngbTooltip="QR-Code verwalten"
+         i18n-ngbTooltip="@@resources.contextMenu.editQrCode"
+         #tooltip="ngbTooltip"
+         (mousedown)="tooltip.close()">
+        <span class="mdi mdi-qrcode"></span>
+    </div>
+
     <div *ngIf="shouldShowArrowBottomRight()"
          class="btn hierarchy-button"
          (click)="moveInto(); $event.stopPropagation();"

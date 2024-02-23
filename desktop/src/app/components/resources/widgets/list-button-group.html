@@ -1,22 +1,7 @@
 <div class="sidebar-list-button-group">
-    <div class="btn info-button"
-         [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'info'"
-         (click)="togglePopoverMenu('info'); $event.stopPropagation();"
-         placement="right"
-         container="body"
-         ngbTooltip="Daten anzeigen"
-         i18n-ngbTooltip="@@resources.showResourceData.tooltip"
-         #tooltip="ngbTooltip"
-         (mousedown)="tooltip.close()">
-        <span
-              class="mdi mdi-information-outline sidebar-list-button-group-inner">
-        </span>
-    </div>
-
     <div *ngIf="shouldShowArrowBottomRight()"
          class="btn hierarchy-button"
-         [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'children'"
-         (click)="togglePopoverMenu('children'); $event.stopPropagation();"
+         (click)="moveInto(); $event.stopPropagation();"
          placement="right"
          container="body"
          ngbTooltip="Untergeordnete Ressourcen anzeigen"

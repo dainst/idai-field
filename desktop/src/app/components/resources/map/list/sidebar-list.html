@@ -3,7 +3,7 @@
                         (onSelectAction)="performContextMenuAction($event)">
 </resources-context-menu>
 
-<popover-menu [document]="selectedDocument"
+<popover-menu *ngIf="selectedDocument" [document]="selectedDocument"
               (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
 <cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
@@ -22,9 +22,7 @@
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
             <list-button-group [document]="document"
-                            [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                            [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
-                            (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
+                               [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id">
             </list-button-group>
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">

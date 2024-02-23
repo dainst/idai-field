@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldDocument } from 'idai-field-core';
-import { PopoverMenu, ResourcesComponent } from '../../resources.component';
-import { ViewFacade } from '../../../../components/resources/view/view-facade';
-import { Routing } from '../../../../services/routing';
-import { ViewModalLauncher } from '../../../viewmodal/view-modal-launcher';
-import { Messages } from '../../../messages/messages';
+import { ResourcesComponent } from '../resources.component';
+import { ViewFacade } from '../view/view-facade';
+import { Routing } from '../../../services/routing';
+import { ViewModalLauncher } from '../../viewmodal/view-modal-launcher';
+import { Messages } from '../../messages/messages';
 
 
 @Component({
@@ -34,9 +34,9 @@ export class PopoverMenuComponent {
 
     public setExpandAllGroups = (expandAllGroups: boolean) => this.viewFacade.setExpandAllGroups(expandAllGroups);
 
-    public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu, this.document);
+    public isPopoverMenuOpened = () => this.resourcesComponent.popoverMenuOpened;
 
-    public closePopover = () => this.resourcesComponent.closePopover();
+    public closePopover = () => this.resourcesComponent.popoverMenuOpened = false;
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 

@@ -44,8 +44,7 @@ import { GridItemIconComponent } from './grid-list/grid-item-icon.component';
 import { GridListComponent } from './grid-list/grid-list.component';
 import { ResourcesContextMenuComponent } from './widgets/resources-context-menu.component';
 import { ListButtonGroupComponent } from './widgets/list-button-group.component';
-import { ChildrenViewComponent } from './widgets/popovermenu/children-view.component';
-import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.component';
+import { PopoverMenuComponent } from './widgets/popover-menu.component';
 import { Routing } from '../../services/routing';
 import { StandardStateSerializer } from '../../services/standard-state-serializer';
 import { StateSerializer } from '../../services/state-serializer';
@@ -96,7 +95,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         ResourcesContextMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent,
-        ChildrenViewComponent,
         BaseList,
         QrCodeEditorModalComponent,
         DeleteQrCodeModalComponent,

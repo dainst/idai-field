@@ -1,8 +1,8 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FieldDocument } from 'idai-field-core';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { NavigationService } from '../navigation/navigation-service';
-import { PopoverMenu, ResourcesComponent } from '../resources.component';
+import { ResourcesComponent } from '../resources.component';
 
 
 @Component({
@@ -16,9 +16,7 @@ import { PopoverMenu, ResourcesComponent } from '../resources.component';
 export class ListButtonGroupComponent {
 
     @Input() document: FieldDocument;
-    @Input() activePopoverMenu: PopoverMenu;
     @Input() isDocumentSelected: boolean;
-    @Output() popoverMenuToggled = new EventEmitter<PopoverMenu>();
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
@@ -37,12 +35,17 @@ export class ListButtonGroupComponent {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public togglePopoverMenu = (popoverMenu: PopoverMenu) => this.popoverMenuToggled.emit(popoverMenu);
+
+    public moveInto() {
+        
+        this.resourcesComponent.popoverMenuOpened = false;
+        this.viewFacade.moveInto(this.document);
+    }
 
 
     public async jumpToResourceFromOverviewToOperation() {
 
-        this.resourcesComponent.closePopover();
+        this.resourcesComponent.popoverMenuOpened = false;
         await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
     }
 }

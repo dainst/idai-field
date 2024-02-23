@@ -51,12 +51,12 @@ export class ResourcesMapComponent {
         });
 
         this.menuService.menuContextNotifications().subscribe(menuContext => {
-            if (this.isEditing(menuContext)) this.resourcesComponent.closePopover();
+            if (this.isEditing(menuContext)) this.resourcesComponent.popoverMenuOpened = false;
         });
     }
 
 
-    public isPopoverMenuOpened = () => this.resourcesComponent.isPopoverMenuOpened();
+    public isPopoverMenuOpened = () => this.resourcesComponent.popoverMenuOpened;
 
     public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
 

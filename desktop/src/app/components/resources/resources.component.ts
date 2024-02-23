@@ -23,9 +23,6 @@ import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-edito
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 
 
-export type PopoverMenu = 'none'|'info'|'children';
-
-
 @Component({
     templateUrl: './resources.html'
 })
@@ -37,7 +34,7 @@ export type PopoverMenu = 'none'|'info'|'children';
  */
 export class ResourcesComponent implements OnDestroy {
 
-    public activePopoverMenu: PopoverMenu = 'none';
+    public popoverMenuOpened: boolean = false;
     public filterOptions: Array<CategoryForm> = [];
     public additionalSelectedDocuments: Array<FieldDocument> = [];
 
@@ -305,7 +302,7 @@ export class ResourcesComponent implements OnDestroy {
 
         if (!document) {
             this.viewFacade.deselect();
-        } else {
+        } else if (document !== this.viewFacade.getSelectedDocument()){
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
         }
     }
@@ -318,50 +315,9 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
+    public async togglePopoverMenu() {
 
-        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
-            this.closePopover();
-        } else {
-            await this.openPopoverMenu(popoverMenu, document);
-        }
-    }
-
-
-    public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
-
-        return this.viewFacade.getSelectedDocument() !== undefined
-            && ((!popoverMenu && this.activePopoverMenu !== 'none')
-                || this.activePopoverMenu === popoverMenu)
-            && (!document
-                || (this.isSelected(document)
-                    && (this.activePopoverMenu !== 'children' ||
-                        this.navigationService.shouldShowArrowBottomRight(document)
-                    )
-                )
-            );
-    }
-
-
-    public closePopover() {
-
-        this.activePopoverMenu = 'none';
-    }
-
-
-    public async navigatePopoverMenus(direction: 'previous'|'next') {
-
-        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-
-        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
-
-        let index = availablePopoverMenus.indexOf(this.activePopoverMenu)
-            + (direction === 'next' ? 1 : -1);
-        if (index < 0) index = availablePopoverMenus.length - 1;
-        if (index >= availablePopoverMenus.length) index = 0;
-
-        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
+        this.popoverMenuOpened = !this.popoverMenuOpened;
     }
 
 
@@ -401,7 +357,7 @@ export class ResourcesComponent implements OnDestroy {
                     group
                 );
             } else {
-                if (this.viewFacade.getMode() !== 'grid') this.activePopoverMenu = 'info';
+                if (this.viewFacade.getMode() !== 'grid') this.popoverMenuOpened = true;
                 await this.viewFacade.setActiveDocumentViewTab(group);
             }
         } catch (e) {
@@ -434,6 +390,7 @@ export class ResourcesComponent implements OnDestroy {
         this.deselectionSubscription =
             this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
                 this.quitGeometryEditing(deselectedDocument);
+                this.popoverMenuOpened = false;
             });
 
         this.populateDocumentsSubscription =
@@ -448,28 +405,12 @@ export class ResourcesComponent implements OnDestroy {
             });
 
         this.selectViaResourceLinkSubscription =
-            this.viewFacade.selectViaResourceLinkNotifications().subscribe(document => {
-                this.openPopoverMenu('info', document as FieldDocument);
+            this.viewFacade.selectViaResourceLinkNotifications().subscribe(async document => {
+                this.popoverMenuOpened = true;
+                if (!this.isSelected(document as FieldDocument)) {
+                    await this.select(document as FieldDocument);
+                }
             });
-    }
-
-
-    private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        this.activePopoverMenu = popoverMenu;
-
-        if (!this.isSelected(document)) await this.select(document);
-    }
-
-
-    private getAvailablePopoverMenus(document: FieldDocument): string[] {
-
-        const availablePopoverMenus: string[] = ['none', 'info'];
-        if (this.navigationService.shouldShowArrowBottomRight(document)) {
-            availablePopoverMenus.push('children');
-        }
-
-        return availablePopoverMenus;
     }
 
 

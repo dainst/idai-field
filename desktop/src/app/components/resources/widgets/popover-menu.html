@@ -1,0 +1,13 @@
+<div *ngIf="isPopoverMenuOpened()" id="popover-menu">
+    <document-info [document]="document"
+                   [getExpandAllGroups]="getExpandAllGroups"
+                   [setExpandAllGroups]="setExpandAllGroups"
+                   [showThumbnail]="true"
+                   [showParent]="isInExtendedSearchMode()"
+                   [showCloseButton]="true"
+                   [transparentBackground]="true"
+                   (onJumpToResource)="jumpToResource($event)"
+                   (onThumbnailClicked)="openImageViewModal()"
+                   (onCloseButtonClicked)="closePopover()"
+                   (onHeaderRightClicked)="onDocumentInfoHeaderRightClicked.emit($event)"></document-info>
+</div>

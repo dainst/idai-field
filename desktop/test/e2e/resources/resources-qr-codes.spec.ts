@@ -149,8 +149,7 @@ test.describe('resources/qr-codes --', () => {
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
         await QrCodeEditorModalPage.clickCancel();
 
-        expect(await NavbarPage.getMessageText())
-            .toContain('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.');
+        expect(await NavbarPage.awaitAlert('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'));
     });
 
 
@@ -169,8 +168,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesSearchBarPage.clickOpenQrScanner();
 
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
-        expect(await NavbarPage.getMessageText())
-            .toContain('Für diesen QR-Code konnte keine Ressource gefunden werden.');
+        expect(await NavbarPage.awaitAlert('Für diesen QR-Code konnte keine Ressource gefunden werden.'));
     });
 
 

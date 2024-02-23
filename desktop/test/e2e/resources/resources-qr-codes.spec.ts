@@ -162,6 +162,7 @@ test.describe('resources/qr-codes --', () => {
         await QrCodeEditorModalPage.clickConfirmDeletionInModal();
         await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
         await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
+        await NavbarPage.clickCloseAllMessages();
         
         await QrCodeEditorModalPage.clickCancel();
         await ResourcesPage.clickSelectResource('P2');

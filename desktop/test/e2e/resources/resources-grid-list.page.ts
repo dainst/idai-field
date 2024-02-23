@@ -48,7 +48,7 @@ export class ResourcesGridListPage {
 
     public static getGridElements() {
 
-        return getLocator('.grid-item');
+        return getLocator('.grid-item-container');
     }
 
 

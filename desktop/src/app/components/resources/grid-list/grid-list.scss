@@ -12,16 +12,12 @@ grid-list {
     }
   }
 
-  #grid {
+  #grid-list {
     height: calc(100vh - #{$navbar-height + $toolbar-height});
     margin-top: 2px;
     margin-left: -15px;
     margin-right: -15px;
     border-top: 1px solid #e9ecef;
-
-    .cdk-virtual-scroll-content-wrapper {
-      padding-bottom: 61px;
-    }
 
     loading-icon {
       position: absolute;
@@ -74,76 +70,6 @@ grid-list {
         flex-direction: column;
         position: relative;
 
-        grid {
-          flex-grow: 1;
-        }
-
-        .cdk-virtual-scroll-viewport {
-          height: 100%;
-          overflow-x: hidden;
-        }
-
-        .cdk-virtual-scroll-content-wrapper {
-          display: flex;
-          flex-wrap: wrap;
-        }
-
-        .grid-item {
-          width: 202px;
-          height: 227px;
-          margin: 3px;
-          background-color: #fff;
-          position: relative;
-
-          .grid-resource-info {
-            position: absolute;
-            height: 25px;
-            width: 192px;
-            line-height: 25px;
-            text-align: center;
-            font-size: 14px;
-            user-select: none;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-
-            &:hover {
-              background-color: rgba(255, 255, 255, 0.8);
-              height: auto;
-              overflow-wrap: break-word;
-              white-space: normal;
-              z-index: 5;
-            }
-          }
-
-          .badge {
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 4px 7px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: calc(100% - 10px);
-            cursor: default;
-          }
-
-          &:hover {
-            box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.3);
-          }
-
-          category-icon {
-            .category-icon {
-              position: relative;
-              left: 71px;
-              top: 71px;
-            }
-          }
-        }
-
         #plus-button-container {
           height: 63px;
           padding-top: 10px;
@@ -160,7 +86,7 @@ grid-list {
           }
         }
 
-        .grid-item + #plus-button-container {
+        .grid-item-container + #plus-button-container {
           padding-top: 9px;
         }
       }

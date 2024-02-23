@@ -1,7 +1,7 @@
 <cdk-virtual-scroll-viewport>
     <div *cdkVirtualFor="let document of documents"
             id="grid-item-{{document.resource.identifier}}"
-            class="grid-item"
+            class="grid-item-container"
             (click)="clickDocument.emit(document)"
             (contextmenu)="contextmenuDocument.emit({mouseEvent: $event, document: document})">
         <grid-item [document]="document"

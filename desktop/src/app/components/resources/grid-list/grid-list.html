@@ -3,7 +3,7 @@
     [showViewOption]="true"
     (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
 
-<div id="grid" class="bg-light" (scroll)="contextMenu.close()">
+<div id="grid-list" class="bg-light" (scroll)="contextMenu.close()">
     <document-info *ngIf="mainDocument"
                    [document]="mainDocument"
                    [getExpandAllGroups]="getExpandAllGroups"

@@ -1,7 +1,6 @@
 $activated-color: #868e96;
 $button-width: 24px;
 
-
 .sidebar-list-button-group {
   height: $item-height;
   color: gray;
@@ -11,40 +10,17 @@ $button-width: 24px;
     border: 0;
     border-radius: 0;
     color: $activated-color;
-  }
-
-  .info-button,
-  .hierarchy-button {
     width: $button-width;
     height: $item-height;
     padding-left: 0;
     padding-right: 0;
     padding-top: 17px;
-  }
 
-  .info-button:hover,
-  .info-button:active,
-  .hierarchy-button:hover,
-  .hierarchy-button:active,
-  .sidebar-list-button-group-active-button {
-    color: darken($activated-color, 10%);
-    background-color: darken($list-item-hover-color, 5%) !important;
-    transition: background-color .2s ease;
-  }
-
-  .info-button {
-    display: none;
-
-    &.sidebar-list-button-group-active-button {
-      display: block !important;
+    &:hover,
+    &:active {
+      color: darken($activated-color, 10%);
+      background-color: darken($list-item-hover-color, 5%) !important;
+      transition: background-color .2s ease;
     }
   }
-
-  .sidebar-list-button-group-active-button {
-    background-color: $list-item-hover-color;
-  }
-}
-
-#sidebar .resources-listing-item:hover .info-button {
-  display: block;
 }

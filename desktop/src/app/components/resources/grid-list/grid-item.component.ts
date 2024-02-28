@@ -1,6 +1,6 @@
 import { Input, Component } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -18,11 +18,19 @@ export class GridItemComponent {
     @Input() subDocuments: Array<FieldDocument>;
 
 
-    constructor() {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public getSubDocumentsLabel(): string {
 
         return this.subDocuments.map(subDocument => subDocument.resource.identifier).join(', ');
+    }
+
+
+    public isQrCodeIconVisible(): boolean {
+
+        if (!this.document.resource.scanCode) return false;
+
+        return this.projectConfiguration.getCategory(this.document.resource.category).scanCodes !== undefined;
     }
 }

@@ -67,34 +67,40 @@
         <div class="configuration-editor-section-title" i18n="@@configuration.qrCodes">
             QR-Codes
         </div>
-        <div class="basic-settings-label">
-            <span i18n="@@configuration.qrCodes.enable">QR-Codes zur Identifikation verwenden</span>
-        </div>
-        <div>
-            <label id="toggle-scan-codes-slider" class="switch">
-                <input
-                    type="checkbox"
-                    [checked]="isScanCodeUsageEnabled()"
-                    (change)="toggleScanCodes()">
-                <span class="slider round"></span>
-            </label>
+        <div class="configuration-editor-switch">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.qrCodes.enable"
+                    [class.disabled]="!isScanCodesOptionEnabled()">
+                    QR-Codes zur Identifikation verwenden
+                </span>
+            </div>
+            <div>
+                <label id="toggle-scan-codes-slider"
+                    class="switch"
+                    [class.disabled]="!isScanCodesOptionEnabled()">
+                    <input type="checkbox"
+                        [checked]="isScanCodeUsageActivated()"
+                        [disabled]="!isScanCodesOptionEnabled()"
+                        (change)="toggleScanCodes()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
         <div class="configuration-editor-switch">
             <div class="basic-settings-label">
                 <span i18n="@@configuration.qrCodes.autoCreate"
-                      [class.disabled]="!isScanCodeUsageEnabled()">
+                      [class.disabled]="!isScanCodeAutoCreationOptionEnabled()">
                     Für neue Ressourcen automatisch erzeugen
                 </span>
             </div>
             <div>
                 <label id="toggle-auto-create-scan-codes-slider"
                        class="switch"
-                       [class.disabled]="!isScanCodeUsageEnabled()">
-                    <input
-                        type="checkbox"
-                        [checked]="isScanCodeAutoCreationEnabled()"
-                        [disabled]="!isScanCodeUsageEnabled()"
-                        (change)="toggleAutoCreateScanCodes()">
+                       [class.disabled]="!isScanCodeAutoCreationOptionEnabled()">
+                    <input type="checkbox"
+                           [checked]="isScanCodeAutoCreationActivated()"
+                           [disabled]="!isScanCodeAutoCreationOptionEnabled()"
+                           (change)="toggleAutoCreateScanCodes()">
                     <span class="slider round"></span>
                 </label>
             </div>

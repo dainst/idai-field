@@ -2702,7 +2702,7 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-    it('allow using scan code', () => {
+    it('allow using scan codes', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -2744,6 +2744,134 @@ describe('buildRawProjectConfiguration', () => {
         );
 
         expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+    });
+
+
+    it('inherit scan codes configuration from parent category', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                scanCodesAllowed: true,
+                minimalForm: {
+                    groups: []
+                }
+            },
+            A1: {
+                parent: 'A',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B: {
+                fields: {},
+                scanCodesAllowed: true,
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B1: {
+                parent: 'B',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B2: {
+                parent: 'B',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B:default': {
+                categoryName: 'B',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'A1:default': {
+                categoryName: 'A1',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B1:default': {
+                categoryName: 'B1',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B2:default': {
+                categoryName: 'B2',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true
+                }
+            },
+            'A1:default': {
+                fields: {}
+            },
+            'B:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: false
+                }
+            },
+            'B1:default': {
+                fields: {}
+            },
+            'B2:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true
+                }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+        expect(result['A1'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+        expect(result['B'].scanCodes).toEqual({ type: 'qr', autoCreate: false });
+        expect(result['B1'].scanCodes).toEqual({ type: 'qr', autoCreate: false });
+        expect(result['B2'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
     });
 
 

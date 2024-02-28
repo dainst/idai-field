@@ -45,12 +45,6 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isCustomCategory = () => this.category.source === 'custom';
 
-    public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
-
-    public isScanCodeUsageEnabled = () => this.getClonedFormDefinition().scanCodes !== undefined;
-
-    public isScanCodeAutoCreationEnabled = () => this.getClonedFormDefinition().scanCodes?.autoCreate;
-
 
     public initialize() {
 
@@ -146,6 +140,39 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public isIdentifierPrefixWarningShown() {
+        
+        return this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
+    }
+
+
+    public isScanCodesOptionEnabled() {
+        
+        return !this.category.parentCategory?.scanCodes;
+    }
+
+    
+    public isScanCodeAutoCreationOptionEnabled(): boolean {
+
+        return this.isScanCodeUsageActivated()
+           && !this.category.parentCategory?.scanCodes?.autoCreate;
+    }
+
+
+    public isScanCodeUsageActivated() {
+        
+        return this.getClonedFormDefinition().scanCodes !== undefined
+            || this.category.parentCategory?.scanCodes !== undefined;
+    }
+
+    
+    public isScanCodeAutoCreationActivated() {
+        
+        return this.getClonedFormDefinition().scanCodes?.autoCreate
+            || this.category.parentCategory?.scanCodes?.autoCreate;   
+    }
+
+
     public isScanCodesOptionAvailable(): boolean {
         
         return !this.category.isAbstract
@@ -202,9 +229,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public toggleAutoCreateScanCodes() {
 
         const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
-        if (!clonedFormDefinition.scanCodes) return;
-
-        clonedFormDefinition.scanCodes.autoCreate = !clonedFormDefinition.scanCodes.autoCreate;
+        if (clonedFormDefinition.scanCodes) {
+            clonedFormDefinition.scanCodes.autoCreate = !clonedFormDefinition.scanCodes.autoCreate;
+        } else if (this.category.parentCategory?.scanCodes) {
+            clonedFormDefinition.scanCodes = {
+                type: this.category.parentCategory.scanCodes.type,
+                autoCreate: true
+            };
+        } 
     }
 
 

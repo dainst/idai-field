@@ -231,6 +231,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
         if (clonedFormDefinition.scanCodes) {
             clonedFormDefinition.scanCodes.autoCreate = !clonedFormDefinition.scanCodes.autoCreate;
+            if (!clonedFormDefinition.scanCodes.autoCreate && this.category.parentCategory.scanCodes) {
+                delete clonedFormDefinition.scanCodes;
+            }
         } else if (this.category.parentCategory?.scanCodes) {
             clonedFormDefinition.scanCodes = {
                 type: this.category.parentCategory.scanCodes.type,

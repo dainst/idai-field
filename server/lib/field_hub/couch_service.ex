@@ -357,8 +357,11 @@ defmodule FieldHub.CouchService do
 
     last_sequence = Map.get(changes, "last_seq")
 
-    Map.get(changes, "results")
-    |> Enum.find(fn map -> map["seq"] == last_sequence end)
+    case changes do
+      %{"results" => []} -> 0
+      %{"results" => result  } ->
+        Enum.find(result,fn map -> map["seq"] == last_sequence end)
+    end
   end
 
   def get_last_change_date(project_identifier) do

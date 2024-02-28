@@ -243,6 +243,25 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public getTooltip(option: 'scanCodes'|'autoCreation'): string {
+
+        if ((option === 'scanCodes' && !this.isScanCodesOptionEnabled()
+                || option === 'autoCreation' && this.category.parentCategory?.scanCodes?.autoCreate)) {
+            return this.i18n({
+                id: 'configuration.cannotDisableParentOption',
+                value: 'Diese Option ist für die Oberkategorie aktiviert und kann nicht ausgeschaltet werden.'
+            });
+        } else if (option === 'autoCreation' && !this.isScanCodeAutoCreationOptionEnabled()) {
+            return this.i18n({
+                id: 'configuration.autoCreationOptionDisabled',
+                value: 'Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.'
+            });
+        } else {
+            return '';
+        }
+    }
+
+
     protected getLabel(): I18N.String {
 
         return this.category.label;

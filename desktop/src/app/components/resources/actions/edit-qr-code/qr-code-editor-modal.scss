@@ -141,6 +141,22 @@
 
           .print-label-field {
             font-size: 22px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+
+            &.print-label-field-large {
+              -webkit-line-clamp: 4;
+            }
+
+            &.print-label-field-medium {
+              -webkit-line-clamp: 2;
+            }
+
+            &.print-label-field-small {
+              -webkit-line-clamp: 1;
+            }
           }
         }
       }

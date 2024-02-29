@@ -13,10 +13,15 @@
         <div *ngIf="hasQrCode() && !saving"
              id="qr-code-string"
              class="badge badge-light">{{document.resource.scanCode}}</div>
-        <div *ngIf="hasQrCode()" id="qr-code-print-label">
+        <div *ngIf="hasQrCode()"
+             id="qr-code-print-label">
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>
-            <div *ngFor="let fieldName of getPrintedFields()" class="print-label-field">
-                <span *ngIf="fieldContentLabels[fieldName]">
+            <div *ngFor="let fieldName of getPrintedFields()">
+                <span *ngIf="fieldContentLabels[fieldName]"
+                      class="print-label-field"
+                      [class.print-label-field-large]="getPrintedFields().length === 1"
+                      [class.print-label-field-medium]="getPrintedFields().length === 2"
+                      [class.print-label-field-small]="getPrintedFields().length === 3">
                     <b>{{getFieldLabel(fieldName)}}:</b> {{fieldContentLabels[fieldName]}}
                 </span>
             </div>

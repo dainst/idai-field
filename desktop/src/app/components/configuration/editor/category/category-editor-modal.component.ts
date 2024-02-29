@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, Map } from 'tsfun';
-import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm,
-    CustomFormDefinition } from 'idai-field-core';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
+    Field, Labels } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -25,6 +25,8 @@ import { M } from '../../../messages/m';
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
     public numberOfCategoryResources: number;
+    public printedFields: string[] = [];
+    public printableFields: string[] = [];
 
     private currentColor: string;
 
@@ -37,13 +39,16 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private i18n: I18n) {
+                private i18n: I18n,
+                private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
     }
 
 
     public isCustomCategory = () => this.category.source === 'custom';
+
+    public getFieldLabel = (fieldName: string) => this.labels.getFieldLabel(this.category, fieldName);
 
 
     public initialize() {
@@ -69,6 +74,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().color = this.currentColor;
             }
         }
+
+        this.printedFields = this.getPrintedFields();
+        this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
     }
@@ -104,6 +112,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.category.parentCategory?.name
             );
         }
+
+        this.updatePrintedFieldsInClonedFormDefinition();
 
         await super.confirm();
     }
@@ -156,6 +166,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return this.isScanCodeUsageActivated()
            && !this.category.parentCategory?.scanCodes?.autoCreate;
+    }
+
+
+    public isPrintedFieldsSlotEnabled(index: number): boolean {
+
+        return this.isScanCodeUsageActivated()
+            && !(this.category.parentCategory?.scanCodes?.printedFields ?? []).includes(this.printedFields[index]);
     }
 
 
@@ -220,7 +237,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         } else {
             clonedFormDefinition.scanCodes = {
                 type: 'qr',
-                autoCreate: false
+                autoCreate: false,
+                printedFields: []
             };
         }
     }
@@ -237,9 +255,35 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         } else if (this.category.parentCategory?.scanCodes) {
             clonedFormDefinition.scanCodes = {
                 type: this.category.parentCategory.scanCodes.type,
-                autoCreate: true
+                autoCreate: true,
+                printedFields: []
             };
-        } 
+        }
+    }
+
+
+    public setPrintedField(fieldName: string, index: number) {
+
+        if (fieldName) {
+            this.printedFields[index] = fieldName;
+        } else {
+            this.printedFields.splice(index, 1);
+        }
+    }
+
+    
+    public isSelectedPrintedField(fieldName: string, index: number) {
+
+        return this.printedFields[index] === fieldName;
+    }
+
+
+    public getPrintableFieldsForSlot(index: number): string[] {
+
+        return this.printableFields.filter(fieldName => {
+            return !this.printedFields.includes(fieldName)
+                || this.isSelectedPrintedField(fieldName, index);
+        });
     }
 
 
@@ -259,6 +303,47 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         } else {
             return '';
         }
+    }
+
+
+    private getPrintedFields(): string[] {
+
+        return (this.category.parentCategory?.scanCodes?.printedFields ?? [])
+            .concat(this.getCustomFormDefinition().scanCodes?.printedFields ?? []);
+    }
+
+
+    private getPrintableFields(): string[] {
+
+        const forbiddenInputTypes: Array<Field.InputType> = [
+            Field.InputType.IDENTIFIER,
+            Field.InputType.GEOMETRY,
+            Field.InputType.INSTANCE_OF,
+            Field.InputType.RELATION,
+            Field.InputType.IDENTIFIER,
+            Field.InputType.NONE
+        ];
+
+        return CategoryForm.getFields(this.category)
+            .filter(field => !forbiddenInputTypes.includes(field.inputType))
+            .map(field => field.name);
+    }
+
+
+    private updatePrintedFieldsInClonedFormDefinition() {
+
+        const parentFields: string[] = this.category.parentCategory?.scanCodes?.printedFields ?? [];
+        const printedFields: string[] = this.printedFields.filter(field => !parentFields.includes(field));
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+        if (clonedFormDefinition.scanCodes) {
+            clonedFormDefinition.scanCodes.printedFields = printedFields;
+        } else {
+            clonedFormDefinition.scanCodes = {
+                type: 'qr',
+                autoCreate: this.category.parentCategory?.scanCodes?.autoCreate ?? false,
+                printedFields: printedFields
+            };
+        } 
     }
 
 
@@ -301,7 +386,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         const clonedScanCodes = (this.getClonedFormDefinition().scanCodes || {}) as Map<any>;
         const customScanCodes = (this.getCustomFormDefinition().scanCodes || {}) as Map<any>;
 
-        return !equal(clonedScanCodes)(customScanCodes);
+        return !equal(clonedScanCodes)(customScanCodes)
+            || !equal(this.printedFields)(this.getPrintedFields());
     }
 
 

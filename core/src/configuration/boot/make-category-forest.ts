@@ -216,13 +216,26 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
 
 
 function buildScanCodeConfiguration(formDefinition: TransientFormDefinition,
-                                     parentCategoryForm?: CategoryForm): ScanCodeConfiguration {
+                                    parentCategoryForm?: CategoryForm): ScanCodeConfiguration {
 
     if (!parentCategoryForm?.scanCodes && !formDefinition.scanCodes) return undefined;
 
     return {
         type: parentCategoryForm?.scanCodes?.type ?? formDefinition.scanCodes?.type,
         autoCreate: parentCategoryForm?.scanCodes?.autoCreate === true
-            || formDefinition.scanCodes?.autoCreate === true
+            || formDefinition.scanCodes?.autoCreate === true,
+        printedFields: buildPrintedFields(formDefinition, parentCategoryForm)
     }
+}
+
+
+function buildPrintedFields(formDefinition: TransientFormDefinition,
+                            parentCategoryForm?: CategoryForm): string[] {
+
+    const parentFields: string[] = parentCategoryForm?.scanCodes?.printedFields ?? [];
+    const formFields: string[] = formDefinition?.scanCodes?.printedFields ?? [];
+
+    const result: string[] = parentFields.concat(formFields);
+
+    return result.length > 3 ? result.slice(0, 3) : result;
 }

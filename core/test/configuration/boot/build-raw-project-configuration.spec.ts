@@ -2731,7 +2731,8 @@ describe('buildRawProjectConfiguration', () => {
                 color: 'red',
                 scanCodes: {
                     type: 'qr',
-                    autoCreate: true
+                    autoCreate: true,
+                    printedFields: []
                 }
             }
         };
@@ -2743,7 +2744,7 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: [] });
     });
 
 
@@ -2835,7 +2836,8 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {},
                 scanCodes: {
                     type: 'qr',
-                    autoCreate: true
+                    autoCreate: true,
+                    printedFields: ['a']
                 }
             },
             'A1:default': {
@@ -2845,7 +2847,8 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {},
                 scanCodes: {
                     type: 'qr',
-                    autoCreate: false
+                    autoCreate: false,
+                    printedFields: ['a', 'b']
                 }
             },
             'B1:default': {
@@ -2855,7 +2858,8 @@ describe('buildRawProjectConfiguration', () => {
                 fields: {},
                 scanCodes: {
                     type: 'qr',
-                    autoCreate: true
+                    autoCreate: true,
+                    printedFields: ['c', 'd']
                 }
             }
         };
@@ -2867,11 +2871,11 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
-        expect(result['A1'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
-        expect(result['B'].scanCodes).toEqual({ type: 'qr', autoCreate: false });
-        expect(result['B1'].scanCodes).toEqual({ type: 'qr', autoCreate: false });
-        expect(result['B2'].scanCodes).toEqual({ type: 'qr', autoCreate: true });
+        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a'] });
+        expect(result['A1'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a'] });
+        expect(result['B'].scanCodes).toEqual({ type: 'qr', autoCreate: false, printedFields: ['a', 'b'] });
+        expect(result['B1'].scanCodes).toEqual({ type: 'qr', autoCreate: false, printedFields: ['a', 'b'] });
+        expect(result['B2'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a', 'b', 'c'] });
     });
 
 
@@ -2901,7 +2905,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': {
                 fields: {},
                 color: 'red',
-                scanCodes: { type: 'qr', autoCreate: true }
+                scanCodes: { type: 'qr', autoCreate: true, printedFields: [] }
             }
         };
 

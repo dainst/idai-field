@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, FieldDocument, IdGenerator, Labels, ProjectConfiguration, Resource } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { CategoryForm, Datastore, Field, FieldDocument, FieldsViewField, FieldsViewUtil, IdGenerator, Labels,
+    ProjectConfiguration, Resource } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -9,6 +12,8 @@ import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 import { QrCodeService } from '../../service/qr-code-service';
+import { UtilTranslations } from '../../../../util/util-translations';
+
 
 const QRCode = require('qrcode');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -25,11 +30,13 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  */
 export class QrCodeEditorModalComponent implements AfterViewInit {
-   
-    @Input() public document: FieldDocument;
 
     @ViewChild('qrCodeCanvas', { static: false }) canvasElement: ElementRef;
 
+    public document: FieldDocument;
+
+    public category: CategoryForm;
+    public fieldContentLabels: Map<string>;
     public saving: boolean = false;
 
 
@@ -42,7 +49,9 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private projectLabelProvider: ProjectLabelProvider,
-                private qrCodeService: QrCodeService) {}
+                private qrCodeService: QrCodeService,
+                private utilTranslations: UtilTranslations,
+                private decimalPipe: DecimalPipe) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -53,7 +62,9 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         this.document.resource, this.labels, this.projectConfiguration
     );
 
-    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.document));
+    public getPrintedFields = () => this.category.scanCodes.printedFields;
+
+    public getFieldLabel = (fieldName: string) => this.labels.getFieldLabel(this.category, fieldName);
 
 
     ngAfterViewInit() {
@@ -67,6 +78,13 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         if (event.key === 'Escape' && this.menus.getContext() === MenuContext.QR_CODE_EDITOR) {
             this.cancel();
         }
+    }
+
+
+    public initialize() {
+
+        this.category = this.projectConfiguration.getCategory(this.document.resource.category);
+        this.fieldContentLabels = this.getFieldContentLabels();
     }
 
 
@@ -125,6 +143,34 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         window.print();
 
         document.title = defaultTitle;
+    }
+
+
+    private getFieldContentLabels(): Map<string> {
+
+        return this.getPrintedFields().reduce((result, fieldName) => {
+            result[fieldName] = this.getFieldContentLabel(fieldName);
+            return result;
+        }, {});
+    }
+
+
+    private getFieldContentLabel(fieldName: string): string {
+
+        if (fieldName === Resource.CATEGORY) return this.labels.get(this.category);
+
+        const field: Field = CategoryForm.getField(this.category, fieldName);
+        const fieldValue: string = this.document.resource[fieldName];
+        const fieldsViewField: FieldsViewField
+            = FieldsViewUtil.makeField(this.projectConfiguration, {}, this.labels)([field, fieldValue]);
+
+        return FieldsViewUtil.getLabel(
+            fieldsViewField,
+            fieldValue,
+            this.labels,
+            (key: string) => this.utilTranslations.getTranslation(key),
+            (value: number) => this.decimalPipe.transform(value)
+        );
     }
 
     

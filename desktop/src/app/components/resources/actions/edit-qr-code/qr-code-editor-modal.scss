@@ -129,6 +129,7 @@
           position: absolute;
           top: 80px;
           left: 550px;
+          width: 550px;
           display: block !important;
           text-align: left;
           padding: 0;
@@ -138,25 +139,8 @@
             font-weight: bold;
           }
 
-          #qr-code-short-description,
-          #qr-code-category {
-            margin-top: 5px;
-            font-size: 24px !important;
-          }
-
-          #qr-code-project,
-          #qr-code-app {
-            position: absolute;
-            top: 0;
+          .print-label-field {
             font-size: 22px;
-          }
-
-          #qr-code-project {
-            left: 10px;
-          }
-
-          #qr-code-app {
-            right: 10px;
           }
         }
       }

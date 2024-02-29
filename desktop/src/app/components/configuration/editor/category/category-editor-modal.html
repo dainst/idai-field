@@ -109,6 +109,18 @@
                 </label>
             </div>
         </div>
+        <div *ngFor="let index of [0, 1, 2]">
+            <select *ngIf="printedFields.length >= index" (change)="setPrintedField($event.target.value, index)"
+                    [disabled]="!isPrintedFieldsSlotEnabled(index)"
+                    class="form-control">
+                <option value=""></option>
+                <option *ngFor="let field of getPrintableFieldsForSlot(index)"
+                        value="{{field}}"
+                        [selected]="isSelectedPrintedField(field, index)">
+                    {{getFieldLabel(field)}}
+                </option>
+            </select>
+        </div>
     </div>
     <div *ngIf="isIdentifierPrefixOptionAvailable()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">

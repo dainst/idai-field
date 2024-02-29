@@ -15,11 +15,11 @@
              class="badge badge-light">{{document.resource.scanCode}}</div>
         <div *ngIf="hasQrCode()" id="qr-code-print-label">
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>
-            <div *ngIf="document.resource.shortDescription"
-                 id="qr-code-short-description">
-                {{getShortDescriptionLabel()}}
+            <div *ngFor="let fieldName of getPrintedFields()" class="print-label-field">
+                <span *ngIf="fieldContentLabels[fieldName]">
+                    <b>{{getFieldLabel(fieldName)}}:</b> {{fieldContentLabels[fieldName]}}
+                </span>
             </div>
-            <div id="qr-code-category">{{getCategoryLabel()}}</div>
         </div>
         <div *ngIf="!hasQrCode()" id="qr-code-placeholder">
             <span id="add-qr-code-button"

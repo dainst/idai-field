@@ -13,6 +13,7 @@ import { BaseGroupDefinition } from '../configuration/model/form/base-form-defin
 import { ConfigReader } from '../configuration/boot/config-reader';
 import { getConfigurationName } from '../configuration/project-configuration-names';
 import { sampleDataLabels } from '../datastore/sampledata/sample-data-labels';
+import { ScanCodeConfiguration } from './configuration/scan-code-configuration';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -141,6 +142,13 @@ export namespace ConfigurationDocument {
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
             .forms[category.libraryId ?? category.name];
         delete clonedCategoryConfiguration.fields[field.name];
+
+        const scanCodeConfiguration: ScanCodeConfiguration = clonedCategoryConfiguration.scanCodes;
+        if (scanCodeConfiguration?.printedFields) {
+            scanCodeConfiguration.printedFields = scanCodeConfiguration.printedFields.filter(printedField => {
+                return printedField !== field.name;
+            });
+        }
 
         removeFieldFromForm(clonedConfigurationDocument, category, field.name);
 

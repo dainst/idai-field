@@ -55,10 +55,6 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.document));
 
-    public getProjectLabel = () => this.projectLabelProvider.getProjectLabel();
-
-    public getAppVersion = () => remote.app.getVersion();
-
 
     ngAfterViewInit() {
         
@@ -124,7 +120,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     public printCode() {
 
         const defaultTitle: string = document.title;
-        document.title = this.getProjectLabel() + ' ' + this.document.resource.identifier;
+        document.title = this.projectLabelProvider.getProjectLabel() + ' ' + this.document.resource.identifier;
 
         window.print();
 

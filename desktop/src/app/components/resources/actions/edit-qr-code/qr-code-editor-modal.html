@@ -10,10 +10,10 @@
 <div id="qr-code-editor-modal-body" class="modal-body bg-light">
     <div id="qr-code-container">
         <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
-        <div *ngIf="hasQrCode() && !saving" class="badge badge-light">{{document.resource.scanCode}}</div>
+        <div *ngIf="hasQrCode() && !saving"
+             id="qr-code-string"
+             class="badge badge-light">{{document.resource.scanCode}}</div>
         <div *ngIf="hasQrCode()" id="qr-code-print-label">
-            <div id="qr-code-project">{{getProjectLabel()}}</div>
-            <div id="qr-code-app">Field Desktop {{getAppVersion()}}</div>
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>
             <div *ngIf="document.resource.shortDescription"
                  id="qr-code-short-description">

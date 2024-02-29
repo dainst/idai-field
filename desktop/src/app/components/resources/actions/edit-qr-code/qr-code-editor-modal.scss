@@ -72,18 +72,37 @@
   }
 }
 
+@page {
+  size: 76mm 25mm;
+  margin: 0;
+}
+
 @media print {
   body {
     visibility: hidden;
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .modal-content {
+      overflow: visible;
+    }
 
     #qr-code-editor-modal-body {
       height: 100%;
 
       #qr-code-container {
+        position: relative;
+        right: 306px;
+        bottom: 167px;
         visibility: visible;
-        width: fit-content !important;
+        zoom: 50%;
+        width: 100% !important;
         height: 100% !important;
-        margin-top: 50px;
+        margin: 0 !important;
+        overflow: visible;
         border: none !important;
 
         .badge {
@@ -94,30 +113,35 @@
           white-space: normal;
         }
 
+        #qr-code-string {
+          position: absolute;
+          top: 40px;
+          left: 550px;
+          width: 550px;
+          padding: 0;
+          white-space: nowrap;
+          font-size: 22px;
+          text-align: left;
+          color: #444;
+        }
+
         #qr-code-print-label {
+          position: absolute;
+          top: 80px;
+          left: 550px;
           display: block !important;
-          padding: 5px 15px;
-          border-radius: 7px;
-          font-family: serif;
+          text-align: left;
+          padding: 0;
 
           #qr-code-identifier {
-            margin-top: 40px;
-            font-size: 28px !important;
+            font-size: 36px !important;
             font-weight: bold;
           }
 
           #qr-code-short-description,
           #qr-code-category {
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 24px !important;
-          }
-
-          #qr-code-short-description {
-            color: #444
-          }
-
-          #qr-code-category {
-            font-style: italic;
           }
 
           #qr-code-project,

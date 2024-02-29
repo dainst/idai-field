@@ -16,7 +16,12 @@ import { UtilTranslations } from '../../../../util/util-translations';
 
 
 const QRCode = require('qrcode');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
+
+type PrintedField = {
+    label: string;
+    contentLabel: string;
+};
 
 
 @Component({
@@ -36,7 +41,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     public document: FieldDocument;
 
     public category: CategoryForm;
-    public fieldContentLabels: Map<string>;
+    public printedFields: Array<PrintedField>;
     public saving: boolean = false;
 
 
@@ -62,10 +67,6 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         this.document.resource, this.labels, this.projectConfiguration
     );
 
-    public getPrintedFields = () => this.category.scanCodes.printedFields;
-
-    public getFieldLabel = (fieldName: string) => this.labels.getFieldLabel(this.category, fieldName);
-
 
     ngAfterViewInit() {
         
@@ -84,7 +85,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     public initialize() {
 
         this.category = this.projectConfiguration.getCategory(this.document.resource.category);
-        this.fieldContentLabels = this.getFieldContentLabels();
+        this.printedFields = this.getPrintedFields();
     }
 
 
@@ -146,12 +147,19 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private getFieldContentLabels(): Map<string> {
+    private getPrintedFields(): Array<PrintedField> {
 
-        return this.getPrintedFields().reduce((result, fieldName) => {
-            result[fieldName] = this.getFieldContentLabel(fieldName);
-            return result;
-        }, {});
+        return this.category.scanCodes.printedFields.map(fieldName => {
+            const contentLabel: string = this.getFieldContentLabel(fieldName);
+            if (contentLabel) {
+                return {
+                    label: this.labels.getFieldLabel(this.category, fieldName),
+                    contentLabel
+                };
+            } else {
+                return undefined;
+            }
+        }).filter(field => field !== undefined);
     }
 
 

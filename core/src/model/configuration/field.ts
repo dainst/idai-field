@@ -103,7 +103,8 @@ export module Field {
         |'default'
         |'category'
         |'identifier'
-        |'composite';
+        |'composite'
+        |'none';
 
 
     export module InputType {

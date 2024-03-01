@@ -367,6 +367,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = category;
         componentInstance.numberOfCategoryResources = await this.datastore.findIds({ categories: [category.name] }).totalCount;
         componentInstance.initialize();

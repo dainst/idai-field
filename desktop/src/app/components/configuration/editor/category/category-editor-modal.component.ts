@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, Map, to } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
-    Field, Labels, PrintedField, Named } from 'idai-field-core';
+    Field, Labels, PrintedField, Named, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -24,6 +24,7 @@ import { M } from '../../../messages/m';
  */
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    public clonedProjectConfiguration: ProjectConfiguration;
     public numberOfCategoryResources: number;
     public printedFields: Array<PrintedField> = [];
     public printableFields: string[] = [];
@@ -47,8 +48,6 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
 
     public isCustomCategory = () => this.category.source === 'custom';
-
-    public getFieldLabel = (fieldName: string) => this.labels.getFieldLabel(this.category, fieldName);
 
 
     public initialize() {
@@ -313,6 +312,17 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public getFieldLabel(fieldName: string) {
+
+        switch (fieldName) {
+            case 'operation':
+                return this.labels.get(this.clonedProjectConfiguration.getCategory('Operation'));
+            default:
+                return this.labels.getFieldLabel(this.category, fieldName);
+        }
+    }
+
+
     public getTooltip(option: 'scanCodes'|'autoCreation'): string {
 
         if ((option === 'scanCodes' && !this.isScanCodesOptionEnabled()
@@ -350,9 +360,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             Field.InputType.NONE
         ];
 
-        return CategoryForm.getFields(this.category)
+        const defaultFields: string[] = ['operation'];
+
+        const categoryFields = CategoryForm.getFields(this.category)
             .filter(field => !forbiddenInputTypes.includes(field.inputType))
             .map(field => field.name);
+
+        return defaultFields.concat(categoryFields);
     }
 
 

@@ -189,7 +189,7 @@ export class ResourcesComponent implements OnDestroy {
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.document = document;
-            modalRef.componentInstance.initialize();
+            await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             await modalRef.result;
         } catch (err) {

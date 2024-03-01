@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Map } from 'tsfun';
 import { CategoryForm, Datastore, Field, FieldDocument, FieldsViewField, FieldsViewUtil, IdGenerator, Labels,
-    ProjectConfiguration, Resource } from 'idai-field-core';
+    ProjectConfiguration, Relation, Resource, Document } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { DeleteQrCodeModalComponent } from './delete-qr-code-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -82,10 +81,10 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    public initialize() {
+    public async initialize() {
 
         this.category = this.projectConfiguration.getCategory(this.document.resource.category);
-        this.printedFields = this.getPrintedFields();
+        this.printedFields = await this.getPrintedFields();
     }
 
 
@@ -147,38 +146,70 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private getPrintedFields(): Array<PrintedField> {
+    private async getPrintedFields(): Promise<Array<PrintedField>> {
 
-        return this.category.scanCodes.printedFields.map(field => {
-            const contentLabel: string = this.getFieldContentLabel(field.name);
+        const printedFields: Array<PrintedField> = [];
+
+        for (let field of this.category.scanCodes.printedFields) {
+            const relationTarget: Document|undefined = await this.getRelationTarget(field.name);
+            const contentLabel: string = this.getFieldContentLabel(field.name, relationTarget);
             if (contentLabel) {
-                return {
-                    label: field.printLabel ? this.labels.getFieldLabel(this.category, field.name) : '',
+                printedFields.push({
+                    label: field.printLabel ? this.getFieldLabel(field.name, relationTarget) : '',
                     contentLabel
-                };
-            } else {
-                return undefined;
+                });
             }
-        }).filter(field => field !== undefined);
+        }
+
+        return printedFields;
     }
 
 
-    private getFieldContentLabel(fieldName: string): string {
+    private getFieldLabel(fieldName: string, relationTarget?: Document): string {
 
-        if (fieldName === Resource.CATEGORY) return this.labels.get(this.category);
+        switch (fieldName) {
+            case 'operation':
+                return relationTarget
+                    ? this.labels.get(this.projectConfiguration.getCategory(relationTarget.resource.category))
+                    : undefined;
+            default:
+                return this.labels.getFieldLabel(this.category, fieldName);
+        }   
+    }
+
+
+    private getFieldContentLabel(fieldName: string, relationTarget?: Document): string|undefined {
+
+        if (fieldName === Resource.CATEGORY) {
+            return this.labels.get(this.category);
+        } else if (fieldName === 'operation' && relationTarget) {
+            return relationTarget.resource.identifier;
+        }
 
         const field: Field = CategoryForm.getField(this.category, fieldName);
-        const fieldValue: string = this.document.resource[fieldName];
+        const fieldContent: any = this.document.resource[fieldName];
         const fieldsViewField: FieldsViewField
-            = FieldsViewUtil.makeField(this.projectConfiguration, {}, this.labels)([field, fieldValue]);
+            = FieldsViewUtil.makeField(this.projectConfiguration, {}, this.labels)([field, fieldContent]);
 
         return FieldsViewUtil.getLabel(
             fieldsViewField,
-            fieldValue,
+            fieldContent,
             this.labels,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value)
         );
+    }
+
+
+    private async getRelationTarget(fieldName: string): Promise<Document|undefined> {
+
+        if (fieldName !== 'operation') return undefined;
+
+        const relationTarget: string = this.document.resource.relations[Relation.Hierarchy.RECORDEDIN]?.[0];
+        
+        return relationTarget
+            ? this.datastore.get(relationTarget)
+            : undefined;
     }
 
     

@@ -168,7 +168,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     private getFieldLabel(fieldName: string, relationTarget?: Document): string {
 
         switch (fieldName) {
-            case 'operation':
+            case 'isRecordedIn':
+            case 'liesWithin':
                 return relationTarget
                     ? this.labels.get(this.projectConfiguration.getCategory(relationTarget.resource.category))
                     : undefined;
@@ -182,8 +183,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         if (fieldName === Resource.CATEGORY) {
             return this.labels.get(this.category);
-        } else if (fieldName === 'operation' && relationTarget) {
-            return relationTarget.resource.identifier;
+        } else if (['isRecordedIn', 'liesWithin'].includes(fieldName)) {
+            return relationTarget?.resource.identifier;
         }
 
         const field: Field = CategoryForm.getField(this.category, fieldName);
@@ -203,9 +204,11 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     private async getRelationTarget(fieldName: string): Promise<Document|undefined> {
 
-        if (fieldName !== 'operation') return undefined;
+        if (!['isRecordedIn', 'liesWithin'].includes(fieldName)) return undefined;
 
-        const relationTarget: string = this.document.resource.relations[Relation.Hierarchy.RECORDEDIN]?.[0];
+        const relationTarget: string = fieldName === 'isRecordedIn'
+            ? this.document.resource.relations[Relation.Hierarchy.RECORDEDIN]?.[0]
+            : this.document.resource.relations[Relation.Hierarchy.LIESWITHIN]?.[0];
         
         return relationTarget
             ? this.datastore.get(relationTarget)

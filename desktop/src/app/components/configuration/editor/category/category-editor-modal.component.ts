@@ -315,8 +315,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public getFieldLabel(fieldName: string) {
 
         switch (fieldName) {
-            case 'operation':
+            case 'isRecordedIn':
                 return this.labels.get(this.clonedProjectConfiguration.getCategory('Operation'));
+            case 'liesWithin':
+                return this.i18n({
+                    id: 'qrCode.printedFields.liesWithin',
+                    value: 'Übergeordnete Ressource'
+                });
             default:
                 return this.labels.getFieldLabel(this.category, fieldName);
         }
@@ -360,7 +365,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             Field.InputType.NONE
         ];
 
-        const defaultFields: string[] = ['operation'];
+        const defaultFields: string[] = ['isRecordedIn', 'liesWithin'];
 
         const categoryFields = CategoryForm.getFields(this.category)
             .filter(field => !forbiddenInputTypes.includes(field.inputType))

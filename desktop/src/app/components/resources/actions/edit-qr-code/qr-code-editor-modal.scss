@@ -136,6 +136,7 @@
 
           #qr-code-identifier {
             position: relative;
+            top: 3px;
             right: 1px;
             font-size: 36px !important;
             line-height: 30px;
@@ -144,20 +145,24 @@
 
           #printed-fields-container {
             position: relative;
-            top: 25px;
-            height: 138px;
-
+            top: 5px;
+            height: 159px;
+          
             #printed-fields {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+
               .print-label-field {
                 font-size: 22px;
-                line-height: 30px;
+                line-height: 29px;
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 text-overflow: ellipsis;
 
                 &:not(:last-child) {
-                  margin-bottom: 10px;
+                  margin-bottom: 7px;
                 }
 
                 &.print-label-field-large {

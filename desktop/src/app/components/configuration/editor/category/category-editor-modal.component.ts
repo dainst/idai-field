@@ -240,6 +240,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         if (clonedFormDefinition.scanCodes) {
             delete clonedFormDefinition.scanCodes;
+            this.printedFields = [];
         } else {
             clonedFormDefinition.scanCodes = {
                 type: 'qr',

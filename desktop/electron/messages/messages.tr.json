@@ -48,5 +48,6 @@
   "menu.window": "Pencere",
   "menu.window.minimize": "Küçült",
   "menu.help": "Yardım",
-  "info.close": "Kapat"
+  "info.close": "Kapat",
+  "menu.tools.inventory": "Envanter"
 }

@@ -115,7 +115,7 @@
 
         #qr-code-string {
           position: absolute;
-          top: 40px;
+          top: 37px;
           left: 550px;
           width: 550px;
           padding: 0;
@@ -127,7 +127,7 @@
 
         #qr-code-print-label {
           position: absolute;
-          top: 80px;
+          top: 77px;
           left: 550px;
           width: 550px;
           display: block !important;
@@ -136,26 +136,42 @@
 
           #qr-code-identifier {
             font-size: 36px !important;
+            line-height: 30px;
             font-weight: bold;
           }
 
-          .print-label-field {
-            font-size: 22px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
+          #printed-fields-container {
+            position: relative;
+            height: 167px;
 
-            &.print-label-field-large {
-              -webkit-line-clamp: 4;
-            }
+            #printed-fields {
+              position: absolute;
+              bottom: 10px;
 
-            &.print-label-field-medium {
-              -webkit-line-clamp: 2;
-            }
+              .print-label-field {
+                font-size: 22px;
+                line-height: 30px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
 
-            &.print-label-field-small {
-              -webkit-line-clamp: 1;
+                &:not(:last-child) {
+                  margin-bottom: 10px;
+                }
+
+                &.print-label-field-large {
+                  -webkit-line-clamp: 4;
+                }
+
+                &.print-label-field-medium {
+                  -webkit-line-clamp: 2;
+                }
+
+                &.print-label-field-small {
+                  -webkit-line-clamp: 1;
+                }
+              }
             }
           }
         }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal, Map } from 'tsfun';
+import { equal, Map, to } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
-    Field, Labels } from 'idai-field-core';
+    Field, Labels, PrintedField, Named } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -25,7 +25,7 @@ import { M } from '../../../messages/m';
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
     public numberOfCategoryResources: number;
-    public printedFields: string[] = [];
+    public printedFields: Array<PrintedField> = [];
     public printableFields: string[] = [];
 
     private currentColor: string;
@@ -190,6 +190,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public isPrintedFieldsSlotActivated(index: number): boolean {
+
+        return this.printedFields.length > index
+    }
+
+
     public isScanCodesOptionAvailable(): boolean {
         
         return !this.category.isAbstract
@@ -265,23 +271,42 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public setPrintedField(fieldName: string, index: number) {
 
         if (fieldName) {
-            this.printedFields[index] = fieldName;
+            if (this.printedFields[index]) {
+                this.printedFields[index].name = fieldName;
+            } else {
+                this.printedFields[index] = {
+                    name: fieldName,
+                    printLabel: true
+                };
+            }
         } else {
             this.printedFields.splice(index, 1);
         }
     }
 
+
+    public isPrintLabelOptionActivated(index: number) {
+
+        return this.printedFields[index]?.printLabel;
+    }
+
+
+    public togglePrintLabelOption(index: number) {
+
+        this.printedFields[index].printLabel = !this.printedFields[index].printLabel;
+    }
+
     
     public isSelectedPrintedField(fieldName: string, index: number) {
 
-        return this.printedFields[index] === fieldName;
+        return this.printedFields[index]?.name === fieldName;
     }
 
 
     public getPrintableFieldsForSlot(index: number): string[] {
 
         return this.printableFields.filter(fieldName => {
-            return !this.printedFields.includes(fieldName)
+            return !this.printedFields.map(to(Named.NAME)).includes(fieldName)
                 || this.isSelectedPrintedField(fieldName, index);
         });
     }
@@ -306,7 +331,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    private getPrintedFields(): string[] {
+    private getPrintedFields(): Array<PrintedField> {
 
         return (this.category.parentCategory?.scanCodes?.printedFields ?? [])
             .concat(this.getCustomFormDefinition().scanCodes?.printedFields ?? []);
@@ -332,18 +357,23 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     private updatePrintedFieldsInClonedFormDefinition() {
 
-        const parentFields: string[] = this.category.parentCategory?.scanCodes?.printedFields ?? [];
-        const printedFields: string[] = this.printedFields.filter(field => !parentFields.includes(field));
+        const parentFieldNames: string[] = this.category.parentCategory?.scanCodes?.printedFields?.map(to(Named.NAME))
+            ?? [];
+        const printedFields: Array<PrintedField>= this.printedFields.filter(field => {
+            return !parentFieldNames.includes(field.name);
+        });
+
         const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+
         if (clonedFormDefinition.scanCodes) {
             clonedFormDefinition.scanCodes.printedFields = printedFields;
-        } else {
+        } else if (printedFields.length > 0) {
             clonedFormDefinition.scanCodes = {
                 type: 'qr',
                 autoCreate: this.category.parentCategory?.scanCodes?.autoCreate ?? false,
                 printedFields: printedFields
             };
-        } 
+        }
     }
 
 

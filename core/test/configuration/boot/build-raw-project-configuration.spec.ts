@@ -2837,7 +2837,7 @@ describe('buildRawProjectConfiguration', () => {
                 scanCodes: {
                     type: 'qr',
                     autoCreate: true,
-                    printedFields: ['a']
+                    printedFields: [{ name: 'a', printLabel: true }]
                 }
             },
             'A1:default': {
@@ -2848,7 +2848,7 @@ describe('buildRawProjectConfiguration', () => {
                 scanCodes: {
                     type: 'qr',
                     autoCreate: false,
-                    printedFields: ['a', 'b']
+                    printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
                 }
             },
             'B1:default': {
@@ -2859,7 +2859,7 @@ describe('buildRawProjectConfiguration', () => {
                 scanCodes: {
                     type: 'qr',
                     autoCreate: true,
-                    printedFields: ['c', 'd']
+                    printedFields: [{ name: 'c', printLabel: true }, { name: 'd', printLabel: true }]
                 }
             }
         };
@@ -2871,11 +2871,32 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a'] });
-        expect(result['A1'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a'] });
-        expect(result['B'].scanCodes).toEqual({ type: 'qr', autoCreate: false, printedFields: ['a', 'b'] });
-        expect(result['B1'].scanCodes).toEqual({ type: 'qr', autoCreate: false, printedFields: ['a', 'b'] });
-        expect(result['B2'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: ['a', 'b', 'c'] });
+        expect(result['A'].scanCodes).toEqual(
+            { type: 'qr', autoCreate: true, printedFields: [{ name: 'a', printLabel: true }] }
+        );
+        expect(result['A1'].scanCodes).toEqual(
+            { type: 'qr', autoCreate: true, printedFields: [{ name: 'a', printLabel: true }] }
+        );
+        expect(result['B'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: false,
+                printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
+            }
+        );
+        expect(result['B1'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: false,
+                printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
+            }
+        );
+        expect(result['B2'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: true,
+                printedFields: [
+                    { name: 'a', printLabel: true }, { name: 'b', printLabel: false }, { name: 'c', printLabel: true }
+                ]
+            }
+        );
     });
 
 

@@ -149,11 +149,11 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     private getPrintedFields(): Array<PrintedField> {
 
-        return this.category.scanCodes.printedFields.map(fieldName => {
-            const contentLabel: string = this.getFieldContentLabel(fieldName);
+        return this.category.scanCodes.printedFields.map(field => {
+            const contentLabel: string = this.getFieldContentLabel(field.name);
             if (contentLabel) {
                 return {
-                    label: this.labels.getFieldLabel(this.category, fieldName),
+                    label: field.printLabel ? this.labels.getFieldLabel(this.category, field.name) : '',
                     contentLabel
                 };
             } else {

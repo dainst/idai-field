@@ -9,7 +9,7 @@ import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { applyHiddenForFields } from './hide-fields';
 import { Named } from '../../tools/named';
-import { ScanCodeConfiguration } from '../../model/configuration/scan-code-configuration';
+import { PrintedField, ScanCodeConfiguration } from '../../model/configuration/scan-code-configuration';
 
 
 const TEMP_FIELDS = 'fields';
@@ -230,12 +230,12 @@ function buildScanCodeConfiguration(formDefinition: TransientFormDefinition,
 
 
 function buildPrintedFields(formDefinition: TransientFormDefinition,
-                            parentCategoryForm?: CategoryForm): string[] {
+                            parentCategoryForm?: CategoryForm): Array<PrintedField> {
 
-    const parentFields: string[] = parentCategoryForm?.scanCodes?.printedFields ?? [];
-    const formFields: string[] = formDefinition?.scanCodes?.printedFields ?? [];
+    const parentFields: Array<PrintedField> = parentCategoryForm?.scanCodes?.printedFields ?? [];
+    const formFields: Array<PrintedField> = formDefinition?.scanCodes?.printedFields ?? [];
 
-    const result: string[] = parentFields.concat(formFields);
+    const result: Array<PrintedField> = parentFields.concat(formFields);
 
     return result.length > 3 ? result.slice(0, 3) : result;
 }

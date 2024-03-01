@@ -26,4 +26,35 @@
     margin-top: 15px;
     font-size: 14px;
   }
+
+  .printed-fields-header {
+    font-size: 15px;
+    user-select: none;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .print-label-option {
+    .switch {
+      float: right;
+    }
+  
+    .print-label-option-info {
+      display: inline-block;
+      width: calc(100% - 50px);
+      margin: 0;
+      font-size: 14px;
+      text-align: right;
+      user-select: none;
+    }
+
+    .switch,
+    .print-label-option-info {
+      position: relative;
+      top: 4px;
+    }
+  }
 }

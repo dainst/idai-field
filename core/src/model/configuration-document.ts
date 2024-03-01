@@ -146,7 +146,7 @@ export namespace ConfigurationDocument {
         const scanCodeConfiguration: ScanCodeConfiguration = clonedCategoryConfiguration.scanCodes;
         if (scanCodeConfiguration?.printedFields) {
             scanCodeConfiguration.printedFields = scanCodeConfiguration.printedFields.filter(printedField => {
-                return printedField !== field.name;
+                return printedField.name !== field.name;
             });
         }
 

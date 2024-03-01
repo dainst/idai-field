@@ -36,4 +36,4 @@ export { updateRelations } from '../services/utilities/update-relations';
 export { RelationsManager } from '../services/relations-manager';
 export { Category } from './configuration/category';
 export { Template } from './configuration/template';
-export { ScanCodeConfiguration } from './configuration/scan-code-configuration';
+export { ScanCodeConfiguration, PrintedField } from './configuration/scan-code-configuration';

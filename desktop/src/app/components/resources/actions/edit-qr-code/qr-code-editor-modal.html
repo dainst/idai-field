@@ -23,7 +23,7 @@
                         [class.print-label-field-large]="printedFields.length === 1"
                         [class.print-label-field-medium]="printedFields.length === 2"
                         [class.print-label-field-small]="printedFields.length === 3">
-                        <b>{{field.label}}:</b> {{field.contentLabel}}
+                        <b *ngIf="field.label">{{field.label}}:</b> {{field.contentLabel}}
                     </div>
                 </div>
             </div>

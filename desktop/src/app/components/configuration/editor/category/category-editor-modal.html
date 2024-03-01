@@ -109,17 +109,35 @@
                 </label>
             </div>
         </div>
+        <label class="printed-fields-header"
+               [class.disabled]="!isScanCodeUsageActivated()"
+               i18n="@@configuration.qrCodes.printedFields">Felder des Drucketiketts:</label>
         <div *ngFor="let index of [0, 1, 2]">
-            <select *ngIf="printedFields.length >= index" (change)="setPrintedField($event.target.value, index)"
-                    [disabled]="!isPrintedFieldsSlotEnabled(index)"
-                    class="form-control">
-                <option value=""></option>
-                <option *ngFor="let field of getPrintableFieldsForSlot(index)"
-                        value="{{field}}"
-                        [selected]="isSelectedPrintedField(field, index)">
-                    {{getFieldLabel(field)}}
-                </option>
-            </select>
+            <div *ngIf="printedFields.length >= index" class="form-group row">
+                <select (change)="setPrintedField($event.target.value, index)"
+                        [disabled]="!isPrintedFieldsSlotEnabled(index)"
+                        class="form-control col-md-9">
+                    <option value=""></option>
+                    <option *ngFor="let field of getPrintableFieldsForSlot(index)"
+                            value="{{field}}"
+                            [selected]="isSelectedPrintedField(field, index)">
+                        {{getFieldLabel(field)}}
+                    </option>
+                </select>
+                <div class="col-md-3 print-label-option">
+                    <label class="print-label-option-info"
+                          [class.disabled]="!isPrintedFieldsSlotActivated(index)"
+                          i18n="@@configuration.qrCodes.printFieldLabels">Feldbezeichnung drucken</label>
+                    <label class="switch"
+                        [class.disabled]="!isPrintedFieldsSlotActivated(index)">
+                        <input type="checkbox"
+                               [checked]="isPrintLabelOptionActivated(index)"
+                               [disabled]="!isPrintedFieldsSlotActivated(index)"
+                               (change)="togglePrintLabelOption(index)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     <div *ngIf="isIdentifierPrefixOptionAvailable()" class="configuration-editor-section">

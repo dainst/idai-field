@@ -135,6 +135,8 @@
           padding: 0;
 
           #qr-code-identifier {
+            position: relative;
+            right: 1px;
             font-size: 36px !important;
             line-height: 30px;
             font-weight: bold;
@@ -142,12 +144,10 @@
 
           #printed-fields-container {
             position: relative;
-            height: 167px;
+            top: 25px;
+            height: 138px;
 
             #printed-fields {
-              position: absolute;
-              bottom: 10px;
-
               .print-label-field {
                 font-size: 22px;
                 line-height: 30px;

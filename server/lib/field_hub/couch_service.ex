@@ -340,15 +340,24 @@ defmodule FieldHub.CouchService do
   end
 
   @doc """
-  Get CouchDB's info for the last change of a given project.
+  Returns the information about the last change for the specified project.
+  Otherwise, it returns a map representing the last change if it exists.
 
   __Parameters__
-  - `project_identifier` the project's name.
+  - `project_identifier` - The name of the project.
+
+  ## Example
+  iex> get_last_change_info("development")
+  %{
+    "seq" => "68-89221cbd0e434ddf10a997c068b293b6",
+    "id" => "project",
+    "changes" => [%{"rev" => "2-ed2a74eb95293ba7be1f66b070fe278e"}]
+  }
   """
   def get_last_change_info(project_identifier) do
     changes =
       HTTPoison.get!(
-        "#{base_url()}/#{project_identifier}/_changes",
+        "#{base_url()}/#{project_identifier}/_changes?style=all_docs",
         get_user_credentials()
         |> headers()
       )
@@ -358,17 +367,32 @@ defmodule FieldHub.CouchService do
     last_sequence = Map.get(changes, "last_seq")
 
     case changes do
-      %{"results" => []} -> 0
-      %{"results" => result  } ->
-        Enum.find(result,fn map -> map["seq"] == last_sequence end)
+      %{"results" => []} ->
+        %{
+          "seq" => last_sequence,
+          "id" => "project",
+          "changes" => []
+        }
+      %{"results" => result} ->
+        Enum.find(result, fn map -> map["seq"] == last_sequence end)
     end
   end
 
+  @doc """
+  Returns a formatted string representing the date and author of the last change in a given project.
+  If the file has been deleted the date and the author can't be identified.
+
+  __Parameters__
+  - `project_identifier` - The name of the project.
+
+  ## Example
+  iex> get_last_change_date("development")
+  "2024-02-29 (edited by André Leroi-Gourhan)"
+
+  """
   def get_last_change_date(project_identifier) do
     case Map.get(get_last_change_info(project_identifier), "id") do
-      :no_changes_found ->
-        :no_changes_found
-
+      nil -> :no_changes_found
       result ->
         HTTPoison.get!(
           "#{base_url()}/#{project_identifier}/#{result}",

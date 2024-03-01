@@ -373,6 +373,7 @@ defmodule FieldHub.CouchService do
           "id" => "project",
           "changes" => []
         }
+
       %{"results" => result} ->
         Enum.find(result, fn map -> map["seq"] == last_sequence end)
     end
@@ -388,11 +389,12 @@ defmodule FieldHub.CouchService do
   ## Example
   iex> get_last_change_date("development")
   "2024-02-29 (edited by André Leroi-Gourhan)"
-
   """
   def get_last_change_date(project_identifier) do
     case Map.get(get_last_change_info(project_identifier), "id") do
-      nil -> :no_changes_found
+      nil ->
+        :no_changes_found
+
       result ->
         HTTPoison.get!(
           "#{base_url()}/#{project_identifier}/#{result}",

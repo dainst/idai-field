@@ -9,6 +9,9 @@
     },
     "shortDescription": {
       "label": "Kurzbeschreibung"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Umfasst stratigraphische Einheiten"
     }
   },
   "categories": {

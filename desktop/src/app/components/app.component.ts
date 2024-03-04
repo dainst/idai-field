@@ -123,10 +123,6 @@ export class AppComponent {
             'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
         );
         this.utilTranslations.addTranslation(
-            'includesStratigraphicalUnits',
-            this.i18n({ id: 'util.includesStratigraphicalUnits', value: 'Umfasst stratigraphische Einheiten' })
-        );
-        this.utilTranslations.addTranslation(
             'true', this.i18n({ id: 'boolean.yes', value: 'Ja' })
         );
         this.utilTranslations.addTranslation(
@@ -254,6 +250,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'inputTypes.relation',
             this.i18n({ id: 'config.inputType.relation', value: 'Relation' })
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.derivedRelation',
+            this.i18n({ id: 'config.inputType.derivedRelation', value: 'Abgeleitete Relation' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.category',

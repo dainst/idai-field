@@ -1,22 +1,20 @@
-import { aFlow, assoc, compose, isEmpty, filter, flatten, is, isArray, isDefined, isObject, isString,
-    L, map, Map, Mapping, on, pairWith, Predicate, R, to, not } from 'tsfun';
+import { aFlow, is, isArray, isObject, isString, Map, Mapping, on } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/dating';
 import { Dimension } from '../model/dimension';
 import { Document } from '../model/document';
-import { BaseGroup, Group, Groups } from '../model/configuration/group';
+import { BaseGroup, Group } from '../model/configuration/group';
 import { Literature } from '../model/literature';
 import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
+import { CategoryForm } from '../model/configuration/category-form';
 import { Field, Subfield } from '../model/configuration/field';
+import { Constraints } from '../model/query';
 import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
-
-
-type FieldContent = any;
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -59,30 +57,18 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-    export const isVisibleField: Predicate<Field> = on(Field.VISIBLE, is(true));
 
-
-    export const shouldBeDisplayed: Predicate<FieldsViewGroup> =
-        on(FieldsViewGroup.FIELDS, not(isEmpty));
-
-
-    export async function getGroupsForResource(resource: Resource,
-                                               projectConfiguration: ProjectConfiguration,
-                                               datastore: Datastore,
-                                               labels: Labels,
-                                               presentInInverseRelationLabel?: string): Promise<Array<FieldsViewGroup>> {
+    export async function getGroupsForResource(resource: Resource, projectConfiguration: ProjectConfiguration,
+                                               datastore: Datastore, labels: Labels): Promise<Array<FieldsViewGroup>> {
 
         const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(resource, datastore);
+        await addDerivedRelationTargetDocuments(relationTargets, projectConfiguration, resource, datastore);
 
         const result = await aFlow(
             projectConfiguration.getCategory(resource.category).groups,
-            putActualResourceFieldsIntoGroups(resource, projectConfiguration, relationTargets, labels),
-            filter(shouldBeDisplayed)
+            createFieldsViewGroups(resource, projectConfiguration, relationTargets, labels)
         );
 
-        if (presentInInverseRelationLabel) {
-            await addPresentInInverseRelation(result, resource, datastore, presentInInverseRelationLabel);
-        }
         return result; 
     }
 
@@ -108,11 +94,8 @@ export module FieldsViewUtil {
     }
 
 
-    export function getObjectLabel(object: any, 
-                                   field: FieldsViewSubfield,
-                                   getTranslation: (key: string) => string,
-                                   formatDecimal: (value: number) => string,
-                                   labels: Labels): string|null {
+    export function getObjectLabel(object: any,  field: FieldsViewSubfield, getTranslation: (key: string) => string,
+                                   formatDecimal: (value: number) => string, labels: Labels): string|null {
 
         if (object.label) {
             return object.label;
@@ -149,21 +132,21 @@ export module FieldsViewUtil {
     }
 
 
-    export function makeField(projectConfiguration: ProjectConfiguration, 
-                              relationTargets: Map<Array<Document>>,
-                              labels: Labels) {
+    export function makeField(field: Field, fieldContent: any, projectConfiguration: ProjectConfiguration,
+                              relationTargets: Map<Array<Document>>, labels: Labels): FieldsViewField {
 
-        return function([field, fieldContent]: [Field, FieldContent]): FieldsViewField {
-
-            return (field.inputType === Field.InputType.RELATION
-                    || field.inputType === Field.InputType.INSTANCE_OF)
-                ? {
+        switch (field.inputType) {
+            case Field.InputType.RELATION:
+            case Field.InputType.INSTANCE_OF:
+            case Field.InputType.DERIVED_RELATION:
+                return {
                     name: field.name,
                     label: labels.get(field),
                     type: 'relation',
                     targets: relationTargets[field.name]
-                }
-                : {
+                };
+            default:
+                return {
                     name: field.name,
                     label: labels.get(field),
                     value: getFieldValue(fieldContent, field, labels, projectConfiguration),
@@ -187,6 +170,22 @@ export module FieldsViewUtil {
                 valuelist: subfield.valuelist
             };
         });
+    }
+}
+
+
+async function addDerivedRelationTargetDocuments(targetDocuments: Map<Array<Document>>,
+                                                 projectConfiguration: ProjectConfiguration, resource: Resource,
+                                                 datastore: Datastore): Promise<void> {
+
+    const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+    const derivedRelationFields: Array<Field> = CategoryForm.getFields(category)
+        .filter(field => field.inputType === Field.InputType.DERIVED_RELATION);
+
+    for (let field of derivedRelationFields) {
+        const constraints: Constraints = {};
+        constraints[field.constraintName] = resource.id;
+        targetDocuments[field.name] = (await datastore.find({ constraints })).documents;
     }
 }
 
@@ -255,56 +254,47 @@ function prepareString(stringValue: string): string {
 }
 
 
-function putActualResourceFieldsIntoGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
-                                           relationTargets: Map<Array<Document>>, labels: Labels): Mapping {
+function createFieldsViewGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
+                                relationTargets: Map<Array<Document>>, labels: Labels): Mapping {
 
-    const fieldContent: Mapping<Field, FieldContent>
-        = compose(to(Named.NAME), getFieldContent(resource));
+    return function(groups: Array<Group>) {
 
-    return map(
-        assoc(Group.FIELDS,
-            compose(
-                map(pairWith(fieldContent)),
-                filter(on(R, value => isDefined(value) && value !== '')),
-                filter(on(L, FieldsViewUtil.isVisibleField)),
-                map(FieldsViewUtil.makeField(projectConfiguration, relationTargets, labels)),
-                filter(field => !field.targets || field.targets.length > 0),
-                flatten() as any /* TODO review typing*/
-            )
-        )
-    );
+        return groups.map(group => {
+            return createFieldsViewGroup(group, resource, projectConfiguration, relationTargets, labels);
+        }).filter(group => group.fields.length);
+    };
 }
 
 
-const getFieldContent = (resource: Resource) => (fieldName: string): any => {
+function createFieldsViewGroup(group: Group, resource: Resource, projectConfiguration: ProjectConfiguration,
+                               relationTargets: Map<Array<Document>>, labels: Labels) {
+
+    const fields: Array<FieldsViewField> = group.fields
+        .filter(field => field.visible)
+        .map(field => {
+            const fieldContent: any = getFieldContent(resource, field.name);
+            if ((fieldContent !== undefined && fieldContent !== '')
+                    || field.inputType === Field.InputType.DERIVED_RELATION) {
+                return FieldsViewUtil.makeField(
+                    field, fieldContent, projectConfiguration, relationTargets, labels
+                );
+            }
+        }).filter(field => field !== undefined && (!field.targets || field.targets.length > 0));
+
+    return {
+        name: group.name,
+        label: group.label,
+        defaultLabel: group.defaultLabel,
+        fields
+    };
+}
+
+
+const getFieldContent = (resource: Resource, fieldName: string): any => {
 
     return resource[fieldName]
         ?? (resource.relations[fieldName] && resource.relations[fieldName].length > 0
             ? resource.relations[fieldName]
             : undefined
         );
-}
-
-
-async function addPresentInInverseRelation(groups: Array<FieldsViewGroup>, resource: Resource, datastore: Datastore,
-                                           presentInInverseRelationLabel: string) {
-
-    if (resource.category !== 'Profile' && resource.category !== 'Planum') return;
-
-    let group = groups.find(group => group.name === Groups.POSITION);
-    if (!group) group = groups.find(group => group.name === Groups.OTHER);
-    if (!group) group = groups[0];
-
-    const targets: Array<Document> = (await datastore.find(
-        { constraints: { 'isPresentIn:contain': resource.id } }
-    )).documents;
-
-    if (targets.length > 0) {
-        group.fields.push({
-            name: 'hasPresent',
-            label: presentInInverseRelationLabel,
-            type: 'relation',
-            targets: targets
-        });
-    }
 }

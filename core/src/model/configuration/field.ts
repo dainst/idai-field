@@ -29,6 +29,7 @@ export interface Field extends BaseField {
     maxCharacters?: number;
     source?: Field.SourceType;
     subfields?: Array<Subfield>;
+    constraintName?: string;            // For input type derivedRelation
 }
 
 
@@ -99,6 +100,7 @@ export module Field {
         |'literature'
         |'geometry'
         |'relation'
+        |'derivedRelation'
         |'instanceOf'
         |'default'
         |'category'
@@ -131,6 +133,7 @@ export module Field {
         export const GEOMETRY = 'geometry';
         export const INSTANCE_OF = 'instanceOf';
         export const RELATION = 'relation';
+        export const DERIVED_RELATION = 'derivedRelation';
         export const CATEGORY = 'category';
         export const IDENTIFIER = 'identifier';
         export const COMPOSITE = 'composite';

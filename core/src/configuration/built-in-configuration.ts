@@ -275,7 +275,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', 'includesStratigraphicalUnits']
                     }
                 ]
             }
@@ -290,7 +290,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', 'includesStratigraphicalUnits']
                     }
                 ]
             }
@@ -796,6 +796,12 @@ export class BuiltInConfiguration {
             mandatory: true,
             fulltextIndexed: true,
             fixedInputType: true
+        },
+        includesStratigraphicalUnits: {
+            inputType: Field.InputType.DERIVED_RELATION,
+            visible: true,
+            editable: false,
+            constraintName: 'isPresentIn:contain'
         }
     };
 

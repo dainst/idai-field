@@ -1484,7 +1484,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "orientation"]
+          "fields": ["geometry", "dimensionVerticalExtent", "orientation", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1515,7 +1515,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     },
@@ -1540,7 +1540,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1564,7 +1564,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     }

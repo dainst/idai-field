@@ -40,8 +40,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (changes['resource']) {
             this.groups = await FieldsViewUtil.getGroupsForResource(
-                this.resource, this.projectConfiguration, this.datastore, this.labels,
-                this.utilTranslations.getTranslation('includesStratigraphicalUnits')
+                this.resource, this.projectConfiguration, this.datastore, this.labels
             );
             if (!this.openSection && this.groups.length > 0) this.openSection = this.groups[0].name;
         }

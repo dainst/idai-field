@@ -495,7 +495,6 @@ test.describe('resources --', () => {
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
@@ -566,7 +565,6 @@ test.describe('resources --', () => {
 
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.clickHierarchyButton('R1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('Floor1', 'roomfloor');
         await ResourcesPage.clickOpenContextMenu('Floor1');
         await ResourcesPage.clickContextMenuMoveButton();
@@ -596,7 +594,7 @@ test.describe('resources --', () => {
         }
 
         await ResourcesPage.clickCancelInMoveModal();
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
@@ -612,9 +610,9 @@ test.describe('resources --', () => {
 
     test('contextMenu/moveModal - do not suggest descendants of current resource', async () => {
 
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.performCreateResource('SE-D1', 'feature');
-        await ResourcesPage.performDescendHierarchy('SE-D1');
+        await ResourcesPage.clickHierarchyButton('SE-D1');
         await ResourcesPage.performCreateResource('SE-D2', 'feature');
 
         await ResourcesPage.clickOperationNavigationButton();
@@ -638,7 +636,6 @@ test.describe('resources --', () => {
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.performCreateResource('BW1', 'buildingpart');
         await ResourcesPage.clickHierarchyButton('BW1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('R2', 'room');
 
         await ResourcesPage.clickOperationNavigationButton();

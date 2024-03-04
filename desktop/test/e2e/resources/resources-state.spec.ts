@@ -474,12 +474,12 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
 
         await ResourcesPage.performCreateResource('c2', 'feature');
-        await ResourcesPage.performDescendHierarchy('c2');
+        await ResourcesPage.clickHierarchyButton('c2');
         await ResourcesPage.performCreateResource('c3', 'feature');
         await click((await ResourcesPage.getNavigationButtons()).nth(0));
 
         await ResourcesPage.performCreateResource('c4', 'feature');
-        await ResourcesPage.performDescendHierarchy('c4');
+        await ResourcesPage.clickHierarchyButton('c4');
         await ResourcesPage.performCreateResource('c5', 'feature');
         await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
 
@@ -501,7 +501,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -525,7 +524,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -551,7 +549,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.performCreateResource('S-New', 'feature');
 
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
         await ResourcesPage.typeInMoveModalSearchBarInput('S-New');
@@ -568,7 +566,7 @@ test.describe('resources/state --', () => {
     test('navpath - update when moving a resource to another operation', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOperationNavigationButton();
 
         await ResourcesPage.clickOpenContextMenu('SE0');
@@ -594,7 +592,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
 
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('testf1');
         await ResourcesPage.clickSwitchHierarchyMode();
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');

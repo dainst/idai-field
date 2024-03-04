@@ -69,12 +69,6 @@ export class ResourcesPage {
     }
 
 
-    public static clickOpenChildCollectionButton() {
-
-        return click('#open-child-collection-button');
-    }
-
-
     public static async clickThumbnail() {
 
         return click(await this.getThumbnail());
@@ -416,13 +410,6 @@ export class ResourcesPage {
             await DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
         await DoceditPage.clickSaveDocument(false, waitForModalToClose);
-    }
-
-
-    public static async performDescendHierarchy(identifier: string) {
-
-        await this.clickHierarchyButton(identifier);
-        return click('#open-child-collection-button');
     }
 
 

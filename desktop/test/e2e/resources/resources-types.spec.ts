@@ -192,7 +192,6 @@ test.describe('resources/types --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
@@ -221,7 +220,6 @@ test.describe('resources/types --', () => {
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();

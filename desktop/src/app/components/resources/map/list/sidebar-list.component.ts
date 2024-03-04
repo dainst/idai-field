@@ -77,9 +77,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-            const popoverMenuOpened: boolean = this.resourcesComponent.popoverMenuOpened;
             await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
-            this.resourcesComponent.popoverMenuOpened = popoverMenuOpened;
             event.preventDefault();
         }
 

@@ -391,7 +391,6 @@ export class ResourcesComponent implements OnDestroy {
         this.deselectionSubscription =
             this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
                 this.quitGeometryEditing(deselectedDocument);
-                this.popoverMenuOpened = false;
             });
 
         this.populateDocumentsSubscription =

@@ -87,8 +87,18 @@ defmodule FieldPublication.Publications do
     get!(project_name, draft_date)
   end
 
+  def get_current_published(project_name) when is_binary(project_name) do
+    project_name
+    |> list()
+    |> List.first(:none)
+  end
+
   def list() do
     run_search(%{selector: %{doc_type: Publication.doc_type()}})
+  end
+
+  def list(name) when is_binary(name) do
+    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: name}})
   end
 
   def list(%Project{name: name}) do

@@ -1,0 +1,34 @@
+<.header>Publications</.header>
+<div>
+  <.link href="/edit">Edit projects</.link>
+</div>
+
+<div class="flex flex-row">
+  <div class="basis-1/3">
+    <h2>Projects</h2>
+    <%= for project <- @published_projects do %>
+      <div class={"rounded #{if @highlighted == project[:identifier] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 mr-2 cursor-pointer"}>
+        <div
+          class="text-center"
+          id={project[:identifier]}
+          phx-hook="OpenLayersFeatureReference"
+          target="project_overview_map"
+          phx-click="project_selected"
+          phx-value-id={project[:identifier]}
+        >
+          <%= project[:name] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="basis-2/3">
+    <h2>Map</h2>
+
+    <.live_component
+      module={FieldPublicationWeb.MapLiveComponent}
+      id="project_overview_map"
+      style="width:100%; height:400px"
+      features={@features}
+    />
+  </div>
+</div>

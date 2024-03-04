@@ -38,6 +38,7 @@ defmodule FieldPublication.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.19.0"},
       {:floki, ">= 0.30.0", only: :test},
+      {:geo, "~> 3.6"},
       {:phoenix_live_dashboard, "~> 0.8.0"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
@@ -69,6 +70,7 @@ defmodule FieldPublication.MixProject do
         "assets.build",
         "cmd npm install --prefix priv/publication_enricher",
         "cmd npm run build --prefix priv/publication_enricher",
+        "cmd npm install --prefix assets",
         "run --eval 'FieldPublication.CouchService.initial_setup()'"
       ],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],

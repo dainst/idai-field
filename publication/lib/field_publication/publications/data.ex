@@ -33,6 +33,13 @@ defmodule FieldPublication.Publications.Data do
     |> Map.get("config", [])
   end
 
+  def get_project_info(%Publication{database: db}) do
+    CouchService.get_document("project", db)
+    |> then(fn {:ok, %{body: body}} ->
+      Jason.decode!(body)
+    end)
+  end
+
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
       when is_list(categories) do
     query =

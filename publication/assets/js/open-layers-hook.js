@@ -9,7 +9,7 @@ import VectorSource from 'ol/source/Vector';
 
 import GeoJSON from 'ol/format/GeoJSON.js';
 
-import { Circle, Fill, Stroke, Style, Icon } from 'ol/style.js';
+import { Style, Icon } from 'ol/style.js';
 
 const styles = {
     homeMarker: new Style({
@@ -41,26 +41,24 @@ export default getOpenLayersHook = () => {
         map: null,
 
         mounted() {
-            this.handleEvent(`map-init-${this.el.id}`, (options) => this.initialize(options));
-            this.handleEvent(`map-set-features-${this.el.id}`, (features) => this.setFeatures(features));
+            this.initialize()
+
+            this.handleEvent(`map-set-features-${this.el.id}`, ({ features: features }) => this.setFeatures(features));
+            this.handleEvent(`map-clear-highlights-${this.el.id}`, () => this.clearHighlight());
             this.handleEvent(`map-highlight-feature-${this.el.id}`, ({ feature_id }) => {
-                const feature = this.map.getAllLayers().filter(function (layer) {
-                    return layer instanceof VectorLayer
-                })[0].getSource().getFeatures().filter(function (feature) {
-                    return feature.getProperties().id == feature_id
-                })[0];
+                const feature = this.map.getAllLayers().find(function (layer) {
+                    // Find first VectorLayer (implicit assumption: there is only one)
+                    return layer instanceof VectorLayer;
+                }).getSource().getFeatures().find(function (feature) {
+                    // Find the first feature whose `id` property matches the requested one.
+                    return feature.getProperties().id == feature_id;
+                });
 
                 this.setHighlight(feature)
             })
-
-            this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
-                this.clearHighlight()
-            })
         },
 
-        initialize(opts) {
-            if (this.map) return;
-
+        initialize() {
             const _this = this;
 
             this.map = new Map({
@@ -68,10 +66,13 @@ export default getOpenLayersHook = () => {
                     new TileLayer({ source: new OSM() }),
                 ],
                 view: new View({
-                    center: opts.center,
-                    zoom: opts.zoom,
+                    center: [
+                        this.el.getAttribute("centerLon"),
+                        this.el.getAttribute("centerLat")
+                    ],
+                    zoom: this.el.getAttribute("zoom"),
                 }),
-                target: opts.target
+                target: this.el.getAttribute("id")
             });
 
             this.map.on('click', function (evt) {
@@ -93,11 +94,13 @@ export default getOpenLayersHook = () => {
         },
 
         setFeatures(features) {
+            if (features.length === 0) return;
+
             const _this = this;
 
             const geojson = new GeoJSON().readFeatures({
                 type: 'FeatureCollection',
-                features: features.features
+                features: features
             }, {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'

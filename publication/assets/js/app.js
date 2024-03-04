@@ -26,15 +26,12 @@ import getOpenLayersHook from "./open-layers-hook"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-// window.addEventListener(`phx:map-init`, (e) => map.initialize(e));
-// window.addEventListener(`phx:map-set-features`, (e) => map.setFeatures(e));
-
 let Hooks = {}
 
 Hooks.OpenLayersMap = getOpenLayersHook()
-Hooks.OpenLayersFeatureReference = {
+Hooks.HoverHighlightMapFeature = {
+    // This hook allows arbitrary DOM elements to trigger highlights on a target open layers map on mousemove events.
     mounted() {
-
         this.el.addEventListener("mousemove", (_) => {
             window.dispatchEvent(new CustomEvent(`phx:map-highlight-feature-${this.el.getAttribute("target")}`, { detail: { feature_id: this.el.id } }));
         });

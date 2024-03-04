@@ -10,9 +10,12 @@
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
       <%= if @current_user do %>
-        <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-          <%= @current_user %>
-        </a>
+        <.link
+          href="/edit"
+          class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+        >
+          Publishing
+        </.link>
 
         <%= if FieldPublication.User.is_admin?(@current_user) do %>
           <a>
@@ -25,6 +28,7 @@
             </.link>
           </a>
         <% end %>
+        <%= @current_user %>
         <a>
           <.link
             href={~p"/log_out"}

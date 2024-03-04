@@ -15,12 +15,26 @@ $button-width: 24px;
     padding-left: 0;
     padding-right: 0;
     padding-top: 17px;
+    transition: background-color .25s ease;
 
-    &:hover,
-    &:active {
-      color: darken($activated-color, 10%);
+    span {
+      transition: color .25s ease;
+    }
+
+    &:hover {
       background-color: darken($list-item-hover-color, 5%) !important;
-      transition: background-color .2s ease;
+
+      .arrow-deactivated {
+        color: darken($activated-color, 1%) !important;
+      }
+    }
+
+    &:active {
+      background-color: darken($list-item-hover-color, 10%) !important;
+
+      .arrow-deactivated {
+        color: darken($activated-color, 3%) !important;
+      }
     }
   }
 }

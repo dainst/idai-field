@@ -1,6 +1,6 @@
 <div class="sidebar-list-button-group">
     <div *ngIf="shouldShowQrCodeButton()"
-         class="btn"
+         class="btn btn-outline-primary"
          (click)="openQrCodeEditor(); $event.stopPropagation();"
          placement="right"
          container="body"
@@ -12,7 +12,7 @@
     </div>
 
     <div *ngIf="shouldShowArrowBottomRight()"
-         class="btn hierarchy-button"
+         class="btn btn-outline-primary hierarchy-button"
          (click)="moveInto(); $event.stopPropagation();"
          placement="right"
          container="body"
@@ -26,16 +26,17 @@
     </div>
 
     <div *ngIf="shouldShowArrowTopRightForSearchMode()"
-         class="btn hierarchy-button hierarchy-button-overview"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
          placement="right"
          container="body"
-         ngbTooltip="Im Kontext der Maßnahme anzeigen"
+         ngbTooltip="Im Kontext der Maßahme anzeigen"
          i18n-ngbTooltip="@@resources.showInOperationContext.tooltip">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowUpForSearchMode()" class="btn hierarchy-button hierarchy-button-overview"
+    <div *ngIf="shouldShowArrowUpForSearchMode()"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceInSameView(); $event.stopPropagation();"
          placement="right"
          container="body"
@@ -45,7 +46,7 @@
     </div>
 
     <div *ngIf="shouldShowArrowTopRight()"
-         class="btn hierarchy-button hierarchy-button-overview"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          ngbTooltip="Zur Maßnahme wechseln"
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
          placement="right"

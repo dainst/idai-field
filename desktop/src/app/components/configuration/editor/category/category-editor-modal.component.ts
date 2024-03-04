@@ -350,7 +350,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     private getPrintedFields(): Array<PrintedField> {
 
         return (this.category.parentCategory?.scanCodes?.printedFields ?? [])
-            .concat(this.getCustomFormDefinition().scanCodes?.printedFields ?? []);
+            .concat(this.getCustomFormDefinition()?.scanCodes?.printedFields ?? []);
     }
 
 
@@ -433,8 +433,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     private hasScanCodesConfigurationChanged(): boolean {
 
-        const clonedScanCodes = (this.getClonedFormDefinition().scanCodes || {}) as Map<any>;
-        const customScanCodes = (this.getCustomFormDefinition().scanCodes || {}) as Map<any>;
+        const clonedScanCodes = (this.getClonedFormDefinition().scanCodes ?? {}) as Map<any>;
+        const customScanCodes = (this.getCustomFormDefinition()?.scanCodes ?? {}) as Map<any>;
 
         return !equal(clonedScanCodes)(customScanCodes)
             || !equal(this.printedFields)(this.getPrintedFields());

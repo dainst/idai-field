@@ -65,6 +65,11 @@ $deactivated-button-color: lightgray;
     .resources-mode-buttons {
       margin-top: 3px;
       margin-right: 8px;
+
+      .btn {
+        width: 38px !important;
+        height: 38px !important;
+      }
     }
   }
 }
@@ -77,7 +82,7 @@ $deactivated-button-color: lightgray;
   top: -2px;
   left: 55px;
   width: 235px;
-  max-height: 39px;
+  max-height: 38px;
   padding: 8px;
   margin-top: 5px;
   font-size: 14px;
@@ -85,6 +90,11 @@ $deactivated-button-color: lightgray;
   cursor: default;
   user-select: none;
   background-color: #fefefe;
+
+  span {
+    position: relative;
+    bottom: 1px;
+  }
 
   &.document-limit-exceeded {
     padding-top: 0;
@@ -100,8 +110,15 @@ $deactivated-button-color: lightgray;
   position: absolute;
   top: 3px;
   left: 303px;
-  height: 39px;
+  width: 38px !important;
+  height: 38px !important;
   white-space: nowrap;
+
+  .mdi {
+    position: relative;
+    top: 6px;
+    left: 1px;
+  }
 }
 
 .resources-listing {

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
-             class="btn btn-warning" (click)="removeLimit()"
+             class="btn btn-warning btn-square" (click)="removeLimit()"
              ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
              i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
             <span class="mdi mdi-reload-alert"></span>

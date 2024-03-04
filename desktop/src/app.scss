@@ -285,6 +285,10 @@ select.form-control:not([size]):not([multiple]) {
   padding-right: 1.5em;
   height: auto;
   user-select: none;
+
+  &:disabled {
+    background-image: url(img/chevron-down-disabled.png);
+  }
 }
 
 .form-check .form-check-label {

@@ -209,14 +209,14 @@ test.describe('resources/state --', () => {
 
         await checkCategoryIcon();
         await createResourceWithPresetCategory('1', false);
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
 
         await ResourcesPage.clickListModeButton();
         await checkCategoryIcon();
         await createResourceWithPresetCategory('2', true);
         await ResourcesPage.clickMapModeButton();
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
     });
 
@@ -483,7 +483,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.performCreateResource('c5', 'feature');
         await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
 
-        await ResourcesPage.clickSelectResource('c5', 'info');
+        await ResourcesPage.clickSelectResource('c5');
         await FieldsViewPage.clickAccordionTab(1);
         await FieldsViewPage.clickRelation(1, 0);
 

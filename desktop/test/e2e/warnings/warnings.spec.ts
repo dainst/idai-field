@@ -338,13 +338,13 @@ test.describe('warnings --', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
 
         // Check that invalid field data has been deleted
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         let fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(1);
         expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
 
         // Check that valid field data has not been deleted
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(2);
         expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');

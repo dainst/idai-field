@@ -79,7 +79,7 @@ test.describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickMapModeButton();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
 
         expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('Changed resource 1');
     });

@@ -200,7 +200,7 @@ test.describe('resources/types --', () => {
         await DoceditTypeRelationsPage.clickType('T1');
         await DoceditPage.clickSaveDocument();
 
-        await ResourcesPage.clickSelectResource('testf1', 'info');
+        await ResourcesPage.clickSelectResource('testf1');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationValue(1, 0)).toEqual('T1');
 

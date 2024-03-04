@@ -81,16 +81,9 @@ export class ResourcesPage {
     }
 
 
-    public static async clickSelectResource(identifier: string, tab?: 'info' | 'children') {
+    public static async clickSelectResource(identifier: string) {
 
-        await hover('#resource-' + identifier);
-
-        let buttonClass = '';
-        if (tab) {
-            if (tab === 'info') buttonClass = '.info-button';
-            if (tab === 'children') buttonClass = '.hierarchy-button';
-        }
-        return click('#resource-' + identifier + ' ' + buttonClass);
+        return click('#resource-' + identifier + ' document-teaser');
     }
 
 

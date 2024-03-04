@@ -203,7 +203,7 @@ test.describe('resources/qr-codes --', () => {
 
         await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
-        await ResourcesPage.clickSelectResource('P1', 'info');
+        await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
@@ -220,7 +220,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
         await NavbarPage.awaitAlert('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
         
-        await ResourcesPage.clickSelectResource('P1', 'info');
+        await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
@@ -233,7 +233,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await setStoredInRelation('P1', 'SP1');
 
-        await ResourcesPage.clickSelectResource('P1', 'info');
+        await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
@@ -258,7 +258,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.clickConfirmReplacingStoragePlace();
         await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
-        await ResourcesPage.clickSelectResource('FC1', 'info');
+        await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
@@ -278,7 +278,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.clickConfirmAddingStoragePlace();
         await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
-        await ResourcesPage.clickSelectResource('FC1', 'info');
+        await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(2);
@@ -298,7 +298,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.clickContextMenuScanStoragePlaceButton();
         await ResourcesPage.clickCancelScanStoragePlaceModal();
         
-        await ResourcesPage.clickSelectResource('FC1', 'info');
+        await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);

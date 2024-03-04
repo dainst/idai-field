@@ -176,7 +176,7 @@ test.describe('resources --', () => {
     test('fields', async () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture', 'diary', '100');
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
 
         const fieldName = await FieldsViewPage.getFieldName(0, 1);
         expect(fieldName).toBe('Tagebuch');
@@ -190,7 +190,7 @@ test.describe('resources --', () => {
     test('relations', async () => {
 
         await ResourcesPage.performCreateLink();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await FieldsViewPage.clickAccordionTab(1);
 
         let relationValue = await FieldsViewPage.getRelationValue(1, 0);
@@ -200,7 +200,7 @@ test.describe('resources --', () => {
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
 
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         relationValue = await FieldsViewPage.getRelationValue(1, 0);
         expect(relationValue).toBe('1');
         relationName = await FieldsViewPage.getRelationName(1, 0);
@@ -216,10 +216,10 @@ test.describe('resources --', () => {
         // deletion
         await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isBefore');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         let tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
     });
@@ -240,7 +240,7 @@ test.describe('resources --', () => {
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickCloseEdit('discard');
 
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await waitForExist('#popover-menu');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
@@ -366,7 +366,7 @@ test.describe('resources --', () => {
         await waitForNotExist(await ResourcesPage.getListItemEl('2'));
 
         // relations
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
     });
@@ -392,7 +392,7 @@ test.describe('resources --', () => {
         await DoceditPage.clickCategorySwitcherOption('feature-architecture');
         await waitForNotExist('#message-0');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const categoryLabel = await FieldsViewPage.getFieldValue(0, 0);
         expect(categoryLabel).toEqual('Architektur');
 
@@ -656,7 +656,7 @@ test.describe('resources --', () => {
 
         // create links for images
         await addTwoImages('SE0');
-        await ResourcesPage.clickSelectResource('SE0', 'info');
+        await ResourcesPage.clickSelectResource('SE0');
         await ResourcesPage.clickThumbnail();
         let images = await ImageRowPage.getImages();
         expect(await images.count()).toBe(2);

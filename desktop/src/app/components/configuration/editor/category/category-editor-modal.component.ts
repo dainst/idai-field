@@ -361,6 +361,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             Field.InputType.GEOMETRY,
             Field.InputType.INSTANCE_OF,
             Field.InputType.RELATION,
+            Field.InputType.DERIVED_RELATION,
             Field.InputType.IDENTIFIER,
             Field.InputType.NONE
         ];

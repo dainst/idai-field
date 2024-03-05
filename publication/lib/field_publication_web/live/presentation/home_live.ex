@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.HomeLive do
+defmodule FieldPublicationWeb.Presentation.HomeLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -56,10 +56,7 @@ defmodule FieldPublicationWeb.HomeLive do
   end
 
   def handle_event("project_selected", %{"id" => project_identifier}, socket) do
-    IO.inspect("#{project_identifier} clicked!")
-
-    # TODO: Navigate accordingly
-    {:noreply, socket}
+    {:noreply, push_navigate(socket, to: "/#{project_identifier}")}
   end
 
   defp create_home_marker(%{longitude: lon, latitude: lat}, id) do

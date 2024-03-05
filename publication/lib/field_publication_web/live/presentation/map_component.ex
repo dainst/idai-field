@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.MapLiveComponent do
+defmodule FieldPublicationWeb.Presentation.MapLiveComponent do
   use FieldPublicationWeb, :live_component
 
   @impl true

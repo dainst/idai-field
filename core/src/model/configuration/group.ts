@@ -19,6 +19,7 @@ export module Groups {
     export const IDENTIFICATION = 'identification';
     export const INVENTORY = 'inventory';
     export const PROPERTIES = 'properties';
+    export const HIERARCHY = 'hierarchy';
     export const OTHER = 'other';
 }
 

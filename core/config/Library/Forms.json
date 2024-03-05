@@ -10,6 +10,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -38,6 +42,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -64,6 +72,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -108,6 +120,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -136,6 +152,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -162,6 +182,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -204,6 +228,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -465,6 +493,10 @@
             "endDate"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "diaryAbstract"]
         },
@@ -489,6 +521,10 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -507,6 +543,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -533,6 +573,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -570,6 +614,10 @@
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
             "endDate", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -638,6 +686,10 @@
             "processor", "date", "diary", "isSameAs"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium", "archaeoDox:isNatural",
             "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
@@ -663,6 +715,10 @@
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
             "endDate", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -706,6 +762,10 @@
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date", "diary", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -937,6 +997,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -963,6 +1027,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -1091,6 +1159,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
@@ -1151,6 +1223,10 @@
             "processor", "date", "isSameAs"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "archaeoDox:material", "archaeoDox:typeOfWare", "amount", "weight"]
         },
@@ -1173,6 +1249,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "inventory",
@@ -1251,6 +1331,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -1269,6 +1353,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "campaign"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -1314,6 +1402,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "date"]
         },
         {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
           "name": "inventory",
           "fields": ["isStoredIn", "storagePlace"]
         },
@@ -1354,6 +1446,10 @@
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
             "processor", "date"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",

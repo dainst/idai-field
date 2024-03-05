@@ -10,6 +10,9 @@
     "shortDescription": {
       "label": "Kurzbeschreibung"
     },
+    "hasChildren": {
+      "label": "Untergeordnete Ressourcen"
+    },
     "includesStratigraphicalUnits": {
       "label": "Umfasst stratigraphische Einheiten"
     }

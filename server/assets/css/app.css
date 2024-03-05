@@ -221,3 +221,25 @@ nav {
     transform: rotate(360deg);
   }
 }
+
+.folder-icon::before{ 
+  content: "";
+  background-image:url(/images/icon_folder.png);
+  background-size: 100% 100%;
+  display: inline-block;
+  height: 25px;
+  width:25px;
+  position:relative;
+  top:5px;
+}
+
+.open-folder-icon::before{
+  content: "";
+  background-image: url(/images/icon_open_folder.png);
+  background-size: 100% 100%;
+  display: inline-block;
+  height: 25px;
+  width:25px;
+  position:relative;
+  top:5px;
+}

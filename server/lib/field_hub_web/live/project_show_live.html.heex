@@ -111,11 +111,11 @@
                 <%= for {{type, severity}, issues} <- issue_groups do %>
                 <section id={"#{type}-issue-group"} class="issue-group hide">
                 <h3 class={issue_classes(severity)}>
-                    <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
-                        🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                    <span class="show-toggle folder-icon" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                     </span>
-                    <span class="hide-toggle" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
-                        🗁 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                    <span class="hide-toggle open-folder-icon" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                     </span>
                 </h3>
 

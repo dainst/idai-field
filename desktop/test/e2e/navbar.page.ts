@@ -32,14 +32,6 @@ export class NavbarPage {
     public static async clickUsernameButton() {
 
         return click(await this.getUsernameButton());
-    }x
-
-
-    public static async clickSelectProject(option) {
-
-        await waitForExist('#projectSelectBox');
-        const element = (await getLocator('#projectSelectBox option')).nth(option);
-        return click(element);
     }
 
 

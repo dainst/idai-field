@@ -718,4 +718,23 @@ test.describe('resources --', () => {
         expect(await FieldsViewPage.getRelationValue(1, 4)).toBe('SE5');
         expect(await FieldsViewPage.getRelationValue(1, 5)).toBe('SE6');
     });
+
+
+    test('show stratigraphical units present in profile', async () => {
+
+        await ResourcesPage.performCreateResource('P1', 'profile');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoHierarchyTab();
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isPresentIn');
+        await DoceditRelationsPage.typeInRelation('isPresentIn', 'P1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Umfasst stratigraphische Einheiten')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
+    });
 });

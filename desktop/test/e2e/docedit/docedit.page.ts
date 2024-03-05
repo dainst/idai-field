@@ -82,6 +82,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoHierarchyTab() {
+
+        return click('#edit-form-goto-hierarchy');
+    }
+
+
     public static async clickSelectGroup(groupName: string) {
 
         return click(await this.getGroup(groupName));

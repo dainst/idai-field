@@ -1,4 +1,4 @@
-import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
+import { click, getLocator, rightClick, waitForNotExist, doubleClick, getText, typeIn, pressKey,
     pause, getValue, selectSearchableSelectOption } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';

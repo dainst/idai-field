@@ -294,8 +294,12 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['includesStratigraphicalUnits']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'includesStratigraphicalUnits']
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -309,8 +313,12 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['includesStratigraphicalUnits']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'includesStratigraphicalUnits']
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -609,7 +617,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.HIERARCHY,
-                        fields: ['hasChildren']
+                        fields: ['hasChildren', 'isPresentIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -635,11 +643,11 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.HIERARCHY,
-                        fields: ['hasChildren']
+                        fields: ['hasChildren', 'isPresentIn']
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', Relation.IS_PRESENT_IN]
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -656,8 +664,12 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren', 'isPresentIn']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', Relation.IS_PRESENT_IN]
+                        fields: ['geometry']
                     }
                 ]
             }

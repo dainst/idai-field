@@ -191,7 +191,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     public isPrintedFieldsSlotActivated(index: number): boolean {
 
-        return this.printedFields.length > index
+        return this.isPrintedFieldsSlotEnabled(index) && this.printedFields.length > index;
     }
 
 

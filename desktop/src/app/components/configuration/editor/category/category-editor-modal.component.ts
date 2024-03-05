@@ -365,13 +365,22 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             Field.InputType.NONE
         ];
 
-        const defaultFields: string[] = ['isRecordedIn', 'liesWithin'];
-
         const categoryFields = CategoryForm.getFields(this.category)
             .filter(field => !forbiddenInputTypes.includes(field.inputType))
             .map(field => field.name);
 
-        return defaultFields.concat(categoryFields);
+        return this.getDefaultPrintableFields().concat(categoryFields);
+    }
+
+
+    private getDefaultPrintableFields(): string[] {
+
+        const defaultFields: string[] = ['liesWithin'];
+        if (this.clonedProjectConfiguration.getRegularCategories().includes(this.category)) {
+            defaultFields.push('isRecordedIn');
+        }
+
+        return defaultFields;
     }
 
 

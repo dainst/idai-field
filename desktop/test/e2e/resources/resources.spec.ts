@@ -693,4 +693,29 @@ test.describe('resources --', () => {
 
         await waitForNotExist(await ResourcesPage.getThumbnail());
     });
+
+
+    test('show children in fields view', async () => {
+
+        await ResourcesPage.clickSelectResource('SE0');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('testf1');
+
+        await NavbarPage.clickTab('project');
+
+        await ResourcesPage.clickSelectResource('S2');
+        await FieldsViewPage.clickAccordionTab(1);
+        relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(6);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE1');
+        expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SE2');
+        expect(await FieldsViewPage.getRelationValue(1, 2)).toBe('SE3');
+        expect(await FieldsViewPage.getRelationValue(1, 3)).toBe('SE4');
+        expect(await FieldsViewPage.getRelationValue(1, 4)).toBe('SE5');
+        expect(await FieldsViewPage.getRelationValue(1, 5)).toBe('SE6');
+    });
 });

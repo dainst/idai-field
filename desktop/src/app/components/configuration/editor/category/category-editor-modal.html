@@ -114,17 +114,23 @@
                i18n="@@configuration.qrCodes.printedFields">Felder des Drucketiketts:</label>
         <div *ngFor="let index of [0, 1, 2]">
             <div *ngIf="printedFields.length >= index" class="form-group row">
-                <select (change)="setPrintedField($event.target.value, index)"
-                        [disabled]="!isPrintedFieldsSlotEnabled(index)"
-                        class="form-control col-md-9">
-                    <option value=""></option>
-                    <option *ngFor="let field of getPrintableFieldsForSlot(index)"
-                            value="{{field}}"
-                            [selected]="isSelectedPrintedField(field, index)">
-                        {{getFieldLabel(field)}}
-                    </option>
-                </select>
-                <div class="col-md-3 print-label-option">
+                <div class="col-md-9"
+                     ngbTooltip="{{getTooltip('printedField', index)}}"
+                     container="body">
+                    <select (change)="setPrintedField($event.target.value, index)"
+                            [disabled]="!isPrintedFieldsSlotEnabled(index)"
+                            class="form-control">
+                        <option value=""></option>
+                        <option *ngFor="let field of getPrintableFieldsForSlot(index)"
+                                value="{{field}}"
+                                [selected]="isSelectedPrintedField(field, index)">
+                            {{getFieldLabel(field)}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 print-label-option"
+                     ngbTooltip="{{getTooltip('printedFieldLabel', index)}}"
+                     container="body">
                     <label class="print-label-option-info"
                           [class.disabled]="!isPrintedFieldsSlotActivated(index)"
                           i18n="@@configuration.qrCodes.printFieldLabels">Feldbezeichnung drucken</label>

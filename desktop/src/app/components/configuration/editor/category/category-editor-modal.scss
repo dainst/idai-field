@@ -35,6 +35,10 @@
   .row {
     margin-left: 0;
     margin-right: 0;
+
+    .col-md-9 {
+      padding: 0;
+    }
   }
   
   .print-label-option {

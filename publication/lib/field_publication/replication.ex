@@ -213,7 +213,7 @@ defmodule FieldPublication.Replication do
 
   def handle_info({:DOWN, ref, :process, _pid, reason}, running_replications) do
     Logger.error("A replication task failed irregularly.")
-    Logger.error(reason)
+    Logger.error(inspect(reason))
 
     {:noreply, cleanup(ref, running_replications)}
   end

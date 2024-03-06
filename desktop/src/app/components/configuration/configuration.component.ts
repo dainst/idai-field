@@ -449,7 +449,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteCategoryModalComponent>(
             DeleteCategoryModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.category = category;
@@ -470,7 +471,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteGroupModalComponent>(
             DeleteGroupModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.group = group;
@@ -486,7 +488,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             DeleteFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.field = field;
@@ -600,7 +603,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ProjectLanguagesModalComponent>(
             ProjectLanguagesModalComponent,
-            MenuContext.CONFIGURATION_MANAGEMENT
+            MenuContext.CONFIGURATION_MANAGEMENT,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
@@ -631,7 +635,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ImportConfigurationModalComponent>(
             ImportConfigurationModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
@@ -695,7 +700,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [, componentInstance] = this.modals.make<SaveProcessModalComponent>(
             SaveProcessModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         try {

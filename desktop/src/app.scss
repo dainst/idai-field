@@ -320,6 +320,10 @@ select.form-control:not([size]):not([multiple]) {
   overflow: hidden;
 }
 
+.modal-dialog:not(.modal-dialog-centered) {
+  top: 14px;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;

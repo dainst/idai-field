@@ -11,6 +11,8 @@ import GeoJSON from 'ol/format/GeoJSON.js';
 
 import { Style, Icon } from 'ol/style.js';
 
+import { fromLonLat } from 'ol/proj';
+
 const styles = {
     homeMarker: new Style({
         image: new Icon({
@@ -123,9 +125,14 @@ export default getOpenLayersHook = () => {
 
             this.map.addLayer(vectorLayer);
 
-            const extent = vectorSource.getExtent();
-
-            this.map.getView().fit(extent, { padding: [50, 50, 50, 50] });
+            if (features.length > 1) {
+                const extent = vectorSource.getExtent();
+                this.map.getView().fit(extent, { padding: [50, 50, 50, 50] });
+            } else if (features.length == 1 && features[0].geometry.type == "Point") {
+                console.log(features[0].geometry.coordinates)
+                this.map.getView().setCenter(fromLonLat(features[0].geometry.coordinates))
+                this.map.getView().setZoom(5)
+            }
         },
 
         clearHighlight() {

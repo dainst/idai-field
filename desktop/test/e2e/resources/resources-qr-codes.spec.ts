@@ -141,6 +141,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
         await addExistingQrCode('P1');
+        await NavbarPage.clickCloseAllMessages();
 
         await ResourcesPage.clickOpenContextMenu('P2');
         await ResourcesPage.clickContextMenuAddQrCodeButton();

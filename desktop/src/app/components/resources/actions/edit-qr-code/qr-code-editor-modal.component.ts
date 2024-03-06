@@ -15,6 +15,7 @@ import { UtilTranslations } from '../../../../util/util-translations';
 
 
 const QRCode = require('qrcode');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 type PrintedField = {
@@ -143,6 +144,24 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         window.print();
 
         document.title = defaultTitle;
+    }
+
+
+    public async printCodeElectron() {
+
+        const defaultTitle: string = document.title;
+        document.title = this.projectLabelProvider.getProjectLabel() + ' ' + this.document.resource.identifier;
+
+        const webContents = remote.getCurrentWindow().webContents;
+        const printers = await webContents.getPrintersAsync();
+        console.log(printers);
+
+        remote.getCurrentWindow().webContents.print({
+            silent: true,
+            color: false,
+            margins: { marginType: 'none' },
+            pageSize: { height: 25000, width: 76000 }
+        }, () => { document.title = defaultTitle; });
     }
 
 

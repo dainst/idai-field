@@ -65,6 +65,8 @@ export class ResourcesMapComponent {
 
     public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
         || this.menuService.getContext() === MenuContext.DOCEDIT;
+    
+    public getPaddingLeft = () => this.resourcesComponent.popoverMenuOpened ? 258 : 0;
 
 
     public async onKeyDown(event: KeyboardEvent) {

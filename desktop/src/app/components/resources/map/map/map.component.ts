@@ -7,6 +7,9 @@ import { FieldMarker } from './field-marker';
 import { MapComponentHelper as Helper } from './map-component-helper';
 
 
+const DEFAULT_PADDING: number = 10;
+
+
 @Component({
     selector: 'map',
     template: '<div id="map-container"></div>'
@@ -22,6 +25,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     @Input() additionalSelectedDocuments: Array<FieldDocument>;
     @Input() parentDocument: FieldDocument;
     @Input() coordinateReferenceSystem: string;
+    @Input() paddingLeft: number;
     @Input() update: boolean;
 
     @Output() onSelectDocument: EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>
@@ -161,7 +165,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         if (Helper.hasGeometries(this.getSelection())) {
             this.focusSelection();
         } else if (this.bounds.length > 1) {
-            this.map.fitBounds(L.latLngBounds(this.bounds));
+            this.map.fitBounds(L.latLngBounds(this.bounds), this.getFitViewOptions());
         } else if (this.bounds.length == 1) {
             this.map.setView(this.bounds[0], 15);
         } else {
@@ -397,7 +401,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             this.markers, this.polygons, this.polylines, selection);
 
         if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
-        else if (bounds.length > 1) this.map.fitBounds(bounds);
+        else if (bounds.length > 1) this.map.fitBounds(bounds, this.getFitViewOptions());
     }
 
 
@@ -504,4 +508,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
             + this.polylinesArray.length
             + this.markersArray.length;
     }
+
+
+    protected getFitViewOptions(): any {
+
+        return {
+            paddingTopLeft: [DEFAULT_PADDING + this.paddingLeft, DEFAULT_PADDING],
+            paddingBottomRight: [DEFAULT_PADDING, DEFAULT_PADDING]
+        };
+    }
+
 }

@@ -99,7 +99,7 @@ export class LayerMapComponent extends MapComponent {
             bounds.push(L.latLng((georeference as any).topRightCoordinates) as never);
             bounds.push(L.latLng((georeference as any).bottomLeftCoordinates) as never);
 
-            this.map.fitBounds(bounds);
+            this.map.fitBounds(bounds, this.getFitViewOptions());
         });
     }
 

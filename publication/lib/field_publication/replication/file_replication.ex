@@ -76,7 +76,7 @@ defmodule FieldPublication.Replication.FileReplication do
       "#{base_url}?types[]=#{file_variant}",
       headers
     )
-    |> Finch.request(FieldPublication.Finch)
+    |> Finch.request(FieldPublication.Finch, receive_timeout: 1000 * 60)
     |> case do
       {:ok, %Finch.Response{body: body, status: 200}} ->
         result =

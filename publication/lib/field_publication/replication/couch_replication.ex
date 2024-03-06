@@ -213,6 +213,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     |> Stream.map(&legacy_replace_type/1)
     |> Stream.map(&legacy_fix_period/1)
     |> Stream.map(&legacy_remove_attachment/1)
+    |> Stream.map(&legacy_resolve_gazetteer_id/1)
     |> Task.async_stream(
       # Put the documents back into the CouchDB
       fn %{"_id" => id} = doc ->
@@ -238,6 +239,8 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp legacy_replace_type(%{"resource" => %{"type" => type_value} = resource} = doc) do
+    # At some point we replaced the key "type" with "category" but continued supporting "type" in
+    # the desktop client for older projects.
     updated_resource =
       resource
       |> Map.put("category", type_value)
@@ -269,11 +272,51 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp legacy_remove_attachment(%{"_attachments" => _} = doc) do
-    # In older Field Desktop versions the image thumbnails were saved as attachments.
+    # In older Field Desktop versions the image thumbnails were saved as attachments, this is deprecated and not used
+    # in the desktop application nor FieldPublication
     Map.delete(doc, "_attachments")
   end
 
   defp legacy_remove_attachment(doc) do
+    doc
+  end
+
+  defp legacy_resolve_gazetteer_id(%{"resource" => %{"latitude" => _, "longitude" => _}} = doc) do
+    # If latitude and longitude are already present, leave the document as is.
+    doc
+  end
+
+  defp legacy_resolve_gazetteer_id(%{"resource" => %{"gazId" => gaz_id} = resource} = doc) do
+    # If we only have a gazetteer ID, resolve that ID and extract the coordinates from the iDAI.gazetteer
+    [lon, lat] =
+      Finch.build(
+        :get,
+        "https://gazetteer.dainst.org/doc/#{gaz_id}.json",
+        [
+          {"Content-Type", "application/json"}
+        ]
+      )
+      |> Finch.request(FieldPublication.Finch)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          Jason.decode!(body)
+          |> Map.get("prefLocation", %{})
+          |> Map.get("coordinates", [nil, nil])
+      end
+
+    if lon != nil and lat != nil do
+      resource =
+        resource
+        |> Map.put("longitude", lon)
+        |> Map.put("latitude", lat)
+
+      Map.put(doc, "resource", resource)
+    else
+      doc
+    end
+  end
+
+  defp legacy_resolve_gazetteer_id(doc) do
     doc
   end
 

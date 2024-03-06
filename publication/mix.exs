@@ -66,16 +66,21 @@ defmodule FieldPublication.MixProject do
     [
       setup: [
         "deps.get",
+        "cmd npm install --prefix assets",
         "assets.setup",
         "assets.build",
         "cmd npm install --prefix priv/publication_enricher",
         "cmd npm run build --prefix priv/publication_enricher",
-        "cmd npm install --prefix assets",
         "run --eval 'FieldPublication.CouchService.initial_setup()'"
       ],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      "assets.build": ["tailwind default", "tailwind open_layers", "esbuild default"],
+      "assets.deploy": [
+        "tailwind default --minify",
+        "tailwind open_layers --minify",
+        "esbuild default --minify",
+        "phx.digest"
+      ],
       "seed-desktop-test": [
         "run --eval 'FieldPublication.Project.create(\"#{seed_project_name}\")'",
         # TODO: Password via config?

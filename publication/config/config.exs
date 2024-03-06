@@ -52,6 +52,13 @@ config :tailwind,
       --output=../priv/static/assets/app.css
     ),
     cd: Path.expand("../assets", __DIR__)
+  ],
+  open_layers: [
+    args: ~w(
+      --input=node_modules/ol/ol.css
+      --output=../priv/static/assets/ol.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger

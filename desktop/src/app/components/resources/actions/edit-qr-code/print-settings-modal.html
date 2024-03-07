@@ -1,0 +1,45 @@
+<div id="view-modal-header" class="modal-header">
+    <div class="text-truncate heading" i18n="@@resources.printSettings">Druckeigenschaften</div>
+</div>
+
+<div id="print-settings-modal-body" class="modal-body bg-light">
+    <div class="mb-3">
+        <label>Etikettgröße</label>
+        <div class="row mb-2">
+            <label class="col-sm-3 col-form-label">Breite (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="settings.pageWidth">
+            </div>
+            <label class="col-sm-3 col-form-label">Höhe (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="settings.pageHeight">
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Abstand vom Rand</label>
+        <div class="row mb-2">
+            <label class="col-sm-3 col-form-label">Links (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="settings.marginLeft">
+            </div>
+            <label class="col-sm-3 col-form-label">Oben (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="settings.marginTop">
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Skalierung (Prozent)</label>
+        <input type="number" class="form-control" [(ngModel)]="settings.scale">
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" id="print-settings-confirm" class="btn btn-primary"
+            (click)="confirm()" i18n="@@buttons.print">Drucken</button>
+    <button type="button" id="print-settings-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

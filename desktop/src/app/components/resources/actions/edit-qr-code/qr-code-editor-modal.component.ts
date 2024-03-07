@@ -12,10 +12,10 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 import { QrCodeService } from '../../service/qr-code-service';
 import { UtilTranslations } from '../../../../util/util-translations';
+import { PrintSettings, PrintSettingsModalComponent } from './print-settings-modal.component';
 
 
 const QRCode = require('qrcode');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 type PrintedField = {
@@ -42,7 +42,10 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public category: CategoryForm;
     public printedFields: Array<PrintedField>;
+    public printSettings: PrintSettings;
     public saving: boolean = false;
+
+    private printStyleElement: HTMLElement;
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -136,7 +139,12 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    public printCode() {
+    public async printCode() {
+
+        this.printSettings = await this.configurePrintSettings();
+        if (!this.printSettings) return;
+
+        this.applyPrintSettings();
 
         const defaultTitle: string = document.title;
         document.title = this.projectLabelProvider.getProjectLabel() + ' ' + this.document.resource.identifier;
@@ -147,21 +155,54 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    public async printCodeElectron() {
+    private async configurePrintSettings(): Promise<PrintSettings|undefined> {
 
-        const defaultTitle: string = document.title;
-        document.title = this.projectLabelProvider.getProjectLabel() + ' ' + this.document.resource.identifier;
+        this.menus.setContext(MenuContext.MODAL);
 
-        const webContents = remote.getCurrentWindow().webContents;
-        const printers = await webContents.getPrintersAsync();
-        console.log(printers);
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                PrintSettingsModalComponent,
+                { animation: false, backdrop: 'static', keyboard: false }
+            );
+            AngularUtility.blurActiveElement();
 
-        remote.getCurrentWindow().webContents.print({
-            silent: true,
-            color: false,
-            margins: { marginType: 'none' },
-            pageSize: { height: 25000, width: 76000 }
-        }, () => { document.title = defaultTitle; });
+            modalRef.componentInstance.initialize();
+            return await modalRef.result;
+        } catch (err) {
+            // Print settings modal has been cancelled
+            return undefined;
+        } finally {
+            this.menus.setContext(MenuContext.QR_CODE_EDITOR);
+        }
+    }
+
+
+    private applyPrintSettings() {
+
+        if (!this.printStyleElement) {
+            this.printStyleElement = document.createElement('style');
+            document.head.appendChild(this.printStyleElement);
+        }
+        
+        this.printStyleElement.innerHTML = this.getPrintStyle();       
+    }
+
+
+    private getPrintStyle(): string {
+
+        return '@page {'
+                + 'size: '
+                    + this.printSettings.pageWidth + 'mm '
+                    + this.printSettings.pageHeight + 'mm; '
+                + 'margin: 0;'
+            + '}'
+            + '@media print {'
+                + '#qr-code-container {'
+                    + 'top: calc(' + this.printSettings.marginTop + 'mm + ' + this.printSettings.autoMarginTop + 'px);'
+                    + 'left: ' + this.printSettings.marginLeft + 'mm;'
+                    + 'transform: scale(' + this.printSettings.scale + ') '
+                + '}'
+        + '}';
     }
 
 

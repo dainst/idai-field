@@ -72,11 +72,6 @@
   }
 }
 
-@page {
-  size: 76mm 25mm;
-  margin: 0;
-}
-
 @media print {
   body {
     visibility: hidden;
@@ -91,19 +86,28 @@
     }
 
     #qr-code-editor-modal-body {
+      position: fixed;
+      top: 0;
+      left: 0;
       height: 100%;
+      width: 100%;
+      padding: 0;
+      text-align: left;
 
       #qr-code-container {
         position: relative;
-        right: 306px;
-        bottom: 167px;
         visibility: visible;
-        zoom: 50%;
         width: 100% !important;
         height: 100% !important;
         margin: 0 !important;
         overflow: visible;
         border: none !important;
+        transform-origin: 0 0;
+
+        canvas {
+          top: 20px;
+          left: 20px;
+        }
 
         .badge {
           max-width: 100% !important;
@@ -115,8 +119,8 @@
 
         #qr-code-string {
           position: absolute;
-          top: 37px;
-          left: 550px;
+          top: 40px;
+          left: 280px;
           width: 550px;
           padding: 0;
           white-space: nowrap;
@@ -127,8 +131,8 @@
 
         #qr-code-print-label {
           position: absolute;
-          top: 77px;
-          left: 550px;
+          top: 70px;
+          left: 280px;
           width: 550px;
           display: block !important;
           text-align: left;

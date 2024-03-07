@@ -1,4 +1,5 @@
 import { clone } from 'tsfun';
+import { validateInt } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../../services/getAsynchronousFs';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -30,9 +31,10 @@ export module PrintSettings {
 
         try {
             const content: string = await getAsynchronousFs().readFile(FILE_PATH, 'utf-8');
-            return parseSerializationObject(JSON.parse(content));
+            const settings: PrintSettings = parseSerializationObject(JSON.parse(content));
+            return validate(settings) ? settings : getDefault();
         } catch (err) {
-            return parseSerializationObject({});
+            return getDefault();
         }
     }
 
@@ -68,6 +70,27 @@ export module PrintSettings {
                     + 'transform: scale(' + processedSettings.scale + ') '
                 + '}'
         + '}';
+    }
+
+
+    export function validate(settings: PrintSettings): boolean {
+
+        return validateValue(settings.pageWidth)
+            && validateValue(settings.pageHeight)
+            && validateValue(settings.scale)
+            && validateValue(settings.marginLeft)
+            && validateValue(settings.marginTop)
+            && settings.pageWidth > 0
+            && settings.pageHeight > 0
+            && settings.scale > 0;
+    }
+
+
+    function validateValue(value: number): boolean {
+
+        return value !== undefined
+            && value !== null
+            && validateInt(value.toString());
     }
 
 
@@ -134,5 +157,11 @@ export module PrintSettings {
             marginLeft: object.scanCodes?.marginLeft ?? 0,
             marginTop: object.scanCodes?.marginTop ?? 0
         }
+    }
+
+
+    function getDefault(): PrintSettings {
+
+        return parseSerializationObject({});
     }
 }

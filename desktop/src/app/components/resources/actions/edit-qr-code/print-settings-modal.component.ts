@@ -39,4 +39,10 @@ export class PrintSettingsModalComponent {
         await PrintSettings.store(this.settings);
         this.activeModal.close(this.settings);
     }
+
+
+    public validate(): boolean {
+
+        return PrintSettings.validate(this.settings);
+    }
 }

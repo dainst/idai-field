@@ -41,9 +41,9 @@
     </div>
 </div>
 
-<div class="modal-footer">
+<div *ngIf="settings" class="modal-footer">
     <button type="button" id="print-settings-confirm" class="btn btn-primary"
-            (click)="confirm()" i18n="@@buttons.ok">OK</button>
+            (click)="confirm()" [disabled]="!validate()" i18n="@@buttons.ok">OK</button>
     <button type="button" id="print-settings-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
 </div>

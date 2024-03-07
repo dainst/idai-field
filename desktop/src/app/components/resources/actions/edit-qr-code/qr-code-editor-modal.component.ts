@@ -12,7 +12,8 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 import { QrCodeService } from '../../service/qr-code-service';
 import { UtilTranslations } from '../../../../util/util-translations';
-import { PrintSettings, PrintSettingsModalComponent } from './print-settings-modal.component';
+import { PrintSettingsModalComponent } from './print-settings-modal.component';
+import { PrintSettings } from './print-settings';
 
 
 const QRCode = require('qrcode');
@@ -71,9 +72,10 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     );
 
 
-    ngAfterViewInit() {
+    async ngAfterViewInit() {
         
         if (this.hasQrCode()) this.renderCode();
+        this.printSettings = await PrintSettings.load();
     }
 
 
@@ -141,9 +143,6 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public async printCode() {
 
-        this.printSettings = await this.configurePrintSettings();
-        if (!this.printSettings) return;
-
         this.applyPrintSettings();
 
         const defaultTitle: string = document.title;
@@ -155,7 +154,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private async configurePrintSettings(): Promise<PrintSettings|undefined> {
+    public async openPrintSettingsModal() {
 
         this.menus.setContext(MenuContext.MODAL);
 
@@ -164,15 +163,13 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
                 PrintSettingsModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }
             );
-            AngularUtility.blurActiveElement();
-
-            modalRef.componentInstance.initialize();
-            return await modalRef.result;
+            await modalRef.componentInstance.initialize();
+            this.printSettings = await modalRef.result;
         } catch (err) {
             // Print settings modal has been cancelled
-            return undefined;
         } finally {
             this.menus.setContext(MenuContext.QR_CODE_EDITOR);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -184,25 +181,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             document.head.appendChild(this.printStyleElement);
         }
         
-        this.printStyleElement.innerHTML = this.getPrintStyle();       
-    }
-
-
-    private getPrintStyle(): string {
-
-        return '@page {'
-                + 'size: '
-                    + this.printSettings.pageWidth + 'mm '
-                    + this.printSettings.pageHeight + 'mm; '
-                + 'margin: 0;'
-            + '}'
-            + '@media print {'
-                + '#qr-code-container {'
-                    + 'top: calc(' + this.printSettings.marginTop + 'mm + ' + this.printSettings.autoMarginTop + 'px);'
-                    + 'left: ' + this.printSettings.marginLeft + 'mm;'
-                    + 'transform: scale(' + this.printSettings.scale + ') '
-                + '}'
-        + '}';
+        this.printStyleElement.innerHTML = PrintSettings.getPrintStyle(this.printSettings);       
     }
 
 

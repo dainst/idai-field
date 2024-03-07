@@ -1,8 +1,8 @@
 <div id="view-modal-header" class="modal-header">
-    <div class="text-truncate heading" i18n="@@resources.printSettings">Druckeigenschaften</div>
+    <div class="text-truncate heading" i18n="@@resources.printSettings">Drucketikett einrichten</div>
 </div>
 
-<div id="print-settings-modal-body" class="modal-body bg-light">
+<div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
     <div class="mb-3">
         <label>Etikettgröße</label>
         <div class="row mb-2">
@@ -39,7 +39,7 @@
 
 <div class="modal-footer">
     <button type="button" id="print-settings-confirm" class="btn btn-primary"
-            (click)="confirm()" i18n="@@buttons.print">Drucken</button>
+            (click)="confirm()" i18n="@@buttons.ok">OK</button>
     <button type="button" id="print-settings-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
 </div>

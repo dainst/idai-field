@@ -137,6 +137,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             // Delete QR code modal has been cancelled
         } finally {
             this.menus.setContext(MenuContext.QR_CODE_EDITOR);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -151,6 +152,8 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         window.print();
 
         document.title = defaultTitle;
+
+        AngularUtility.blurActiveElement();
     }
 
 

@@ -4,13 +4,15 @@
 
 <div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
     <div class="mb-3">
-        <label>Etikettgröße</label>
+        <label i18n="@@resources.printSettingsModal.size">Etikettgröße</label>
         <div class="row mb-2">
-            <label class="col-sm-3 col-form-label">Breite (mm)</label>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.size.width">Breite (mm)</label>
             <div class="col-sm-3">
                 <input type="number" class="form-control" [(ngModel)]="settings.pageWidth">
             </div>
-            <label class="col-sm-3 col-form-label">Höhe (mm)</label>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.size.height">Höhe (mm)</label>
             <div class="col-sm-3">
                 <input type="number" class="form-control" [(ngModel)]="settings.pageHeight">
             </div>
@@ -18,13 +20,15 @@
     </div>
 
     <div class="mb-3">
-        <label>Abstand vom Rand</label>
+        <label i18n="@@resources.printSettingsModal.borderMargin">Abstand vom Rand</label>
         <div class="row mb-2">
-            <label class="col-sm-3 col-form-label">Links (mm)</label>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.borderMargin.left">Links (mm)</label>
             <div class="col-sm-3">
                 <input type="number" class="form-control" [(ngModel)]="settings.marginLeft">
             </div>
-            <label class="col-sm-3 col-form-label">Oben (mm)</label>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.borderMargin.top">Oben (mm)</label>
             <div class="col-sm-3">
                 <input type="number" class="form-control" [(ngModel)]="settings.marginTop">
             </div>
@@ -32,7 +36,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Skalierung (Prozent)</label>
+        <label i18n="@@resources.printSettingsModal.scaling">Skalierung (Prozent)</label>
         <input type="number" class="form-control" [(ngModel)]="settings.scale">
     </div>
 </div>

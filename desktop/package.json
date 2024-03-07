@@ -114,7 +114,7 @@
     "@fontsource/open-sans": "^4.5.8",
     "@geoman-io/leaflet-geoman-free": "2.10.0",
     "@mapbox/geojson-rewind": "0.5.2",
-    "@mdi/font": "6.5.95",
+    "@mdi/font": "7.4.47",
     "@ng-bootstrap/ng-bootstrap": "10.0.0",
     "@ng-select/ng-select": "7.4.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",

@@ -110,7 +110,7 @@
         }
 
         .badge {
-          max-width: 100% !important;
+          max-width: unset !important;
           border: none;
           font-size: 18px;
           line-height: 28px;
@@ -119,14 +119,14 @@
 
         #qr-code-string {
           position: absolute;
-          top: 40px;
+          top: 20px;
           left: 280px;
           width: 550px;
           padding: 0;
           white-space: nowrap;
           font-size: 22px;
+          font-weight: 500;
           text-align: left;
-          color: #444;
         }
 
         #qr-code-print-label {
@@ -140,30 +140,38 @@
 
           #qr-code-identifier {
             position: relative;
-            top: 3px;
+            top: 5px;
             right: 1px;
-            font-size: 36px !important;
+            font-size: 46px !important;
             line-height: 30px;
-            font-weight: bold;
+            font-weight: 600;
           }
 
           #printed-fields-container {
             position: relative;
-            top: 5px;
+            top: 15px;
             height: 159px;
+            width: 100%;
           
             #printed-fields {
               position: absolute;
               top: 50%;
+              width: 100%;
               transform: translateY(-50%);
 
               .print-label-field {
-                font-size: 22px;
+                width: 100%;
+                font-size: 23px;
                 line-height: 29px;
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 text-overflow: ellipsis;
+                word-break: break-word;
+
+                b {
+                  font-weight: 600;
+                }
 
                 &:not(:last-child) {
                   margin-bottom: 7px;

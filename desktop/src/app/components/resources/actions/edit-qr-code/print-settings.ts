@@ -67,7 +67,7 @@ export module PrintSettings {
                     + 'top: calc(' + processedSettings.marginTop + 'mm + '
                         + getAutoMarginTop(processedSettings) + 'px);'
                     + 'left: ' + processedSettings.marginLeft + 'mm;'
-                    + 'transform: scale(' + processedSettings.scale + ') '
+                    + 'transform: scale(' + processedSettings.scale + ');'
                 + '}'
         + '}';
     }

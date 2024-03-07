@@ -98,18 +98,22 @@ export module PrintSettings {
 
         const clonedSettings: PrintSettings = clone(settings);
 
-        if (clonedSettings.pageHeight > clonedSettings.pageWidth) swapPageWidthAndHeight(clonedSettings);
+        if (clonedSettings.pageHeight > clonedSettings.pageWidth) swapWidthAndHeight(clonedSettings);
         clonedSettings.scale = getAutoScale(clonedSettings) * (clonedSettings.scale / 200.0);
         
         return clonedSettings;
     }
     
         
-    function swapPageWidthAndHeight(settings: PrintSettings) {
+    function swapWidthAndHeight(settings: PrintSettings) {
 
         const pageWidth: number = settings.pageWidth;
+        const marginLeft: number = settings.marginLeft;
+
         settings.pageWidth = settings.pageHeight;
         settings.pageHeight = pageWidth;
+        settings.marginLeft = -settings.marginTop;
+        settings.marginTop = marginLeft;
     }
     
     

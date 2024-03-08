@@ -140,28 +140,61 @@
 
           #qr-code-identifier {
             position: relative;
-            top: 5px;
-            right: 1px;
+            top: 9px;
+            right: 2px;
             font-size: 46px !important;
-            line-height: 30px;
+            line-height: 35px;
             font-weight: 600;
           }
 
           #printed-fields-container {
             position: relative;
-            top: 15px;
-            height: 159px;
             width: 100%;
+
+            &.print-label-one-field {
+              top: 13px;
+              height: 140px;
+
+              #printed-fields {
+                top: 50%;
+                transform: translateY(-50%);
+
+                .print-label-field {
+                  -webkit-line-clamp: 3;
+                }
+              }
+            }
+
+            &.print-label-two-fields,
+            &.print-label-three-fields {
+              .print-label-field {
+                -webkit-line-clamp: 1;
+              }  
+            }
+
+            &.print-label-two-fields {
+              top: 45px;
+
+              .print-label-field:not(:last-child) {
+                margin-bottom: 15px;
+              }
+            }
+
+            &.print-label-three-fields {
+              top: 41px;
+
+              .print-label-field:not(:last-child) {
+                margin-bottom: 7px;
+              }
+            }
           
             #printed-fields {
               position: absolute;
-              top: 50%;
               width: 100%;
-              transform: translateY(-50%);
 
               .print-label-field {
                 width: 100%;
-                font-size: 23px;
+                font-size: 24px;
                 line-height: 29px;
                 overflow: hidden;
                 display: -webkit-box;
@@ -171,22 +204,6 @@
 
                 b {
                   font-weight: 600;
-                }
-
-                &:not(:last-child) {
-                  margin-bottom: 7px;
-                }
-
-                &.print-label-field-large {
-                  -webkit-line-clamp: 4;
-                }
-
-                &.print-label-field-medium {
-                  -webkit-line-clamp: 2;
-                }
-
-                &.print-label-field-small {
-                  -webkit-line-clamp: 1;
                 }
               }
             }

@@ -16,13 +16,13 @@
         <div *ngIf="hasQrCode()"
              id="qr-code-print-label">
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>
-            <div id="printed-fields-container">
+            <div id="printed-fields-container"
+                 [class.print-label-one-field]="printedFields.length === 1"
+                 [class.print-label-two-fields]="printedFields.length === 2"
+                 [class.print-label-three-fields]="printedFields.length === 3">
                 <div id="printed-fields">
                     <div *ngFor="let field of printedFields"
-                        class="print-label-field"
-                        [class.print-label-field-large]="printedFields.length === 1"
-                        [class.print-label-field-medium]="printedFields.length === 2"
-                        [class.print-label-field-small]="printedFields.length === 3">
+                        class="print-label-field">
                         <b *ngIf="field.label">{{field.label}}:</b> {{field.contentLabel}}
                     </div>
                 </div>

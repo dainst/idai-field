@@ -90,6 +90,9 @@ defmodule FieldPublication.Publications do
   def get_current_published(project_name) when is_binary(project_name) do
     project_name
     |> list()
+    |> Enum.reject(fn %Publication{publication_date: date} ->
+      date == nil or Date.before?(date, Date.utc_today())
+    end)
     |> List.first(:none)
   end
 

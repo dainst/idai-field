@@ -13,16 +13,18 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       |> Task.async_stream(fn publication ->
         Publications.Data.get_project_info(publication)
       end)
-      |> Enum.map(fn {:ok, %{"resource" => res}} ->
+      |> Enum.map(fn {:ok, %{"resource" => res} = doc} ->
         %{
-          identifier: res["identifier"],
-          name: Map.get(res, "shortName", res["identifier"]),
+          doc: doc,
           coordinates: %{longitude: Map.get(res, "longitude"), latitude: Map.get(res, "latitude")}
         }
       end)
 
     features =
-      Enum.map(published_projects, fn %{coordinates: coordinates, identifier: identifier} ->
+      Enum.map(published_projects, fn %{
+                                        coordinates: coordinates,
+                                        doc: %{"resource" => %{"identifier" => identifier}}
+                                      } ->
         create_home_marker(coordinates, identifier)
       end)
 

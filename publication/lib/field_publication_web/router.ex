@@ -77,7 +77,8 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live "/", Presentation.HomeLive, :show
+      live "/", Presentation.HomeLive
+      live "/:project_id", Presentation.ProjectOverviewLive
     end
 
     delete "/log_out", UserSessionController, :delete

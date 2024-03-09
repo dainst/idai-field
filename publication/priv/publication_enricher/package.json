@@ -5,7 +5,7 @@
     "type": "module",
     "dependencies": {
         "axios": "0.26.0",
-        "idai-field-core": "^1.1.7",
+        "idai-field-core": "^1.2.1",
         "tsfun": "5.5.38"
     },
     "devDependencies": {

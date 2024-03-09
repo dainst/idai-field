@@ -35,7 +35,7 @@ field_publication-*.tar
 npm-debug.log
 /assets/node_modules/
 
-data/
-!data/**/.gitkeep
+/data/
+!/data/**/.gitkeep
 
 test/file_store

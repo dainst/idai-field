@@ -227,6 +227,8 @@ defmodule FieldPublication.Replication do
       {:replication_stopped}
     )
 
+    Publications.delete(parameters.publication)
+
     {:noreply, cleanup(ref, running_replications)}
   end
 

@@ -24,7 +24,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     with {:ok, source_doc_count} <- source_doc_count(input, parameters),
          {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
-      poll_replication_status(target_database_name, source_doc_count, parameters)
+      poll_replication_status!(target_database_name, source_doc_count, parameters)
     else
       {:error, :error_count_exceeded} ->
         CouchService.delete_document(target_database_name, "_replicator")
@@ -106,7 +106,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp poll_replication_status(database_name, source_doc_count, %{id: id} = parameters) do
+  defp poll_replication_status!(database_name, source_doc_count, %{id: id} = parameters) do
     {:ok, %{status: 200, body: body}} =
       CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
 
@@ -120,12 +120,12 @@ defmodule FieldPublication.Replication.CouchReplication do
         )
 
         Process.sleep(@poll_frequency)
-        poll_replication_status(database_name, source_doc_count, parameters)
+        poll_replication_status!(database_name, source_doc_count, parameters)
 
       %{"state" => couch_state} when couch_state in [nil, "initializing", "running"] ->
         # Different cases shortly after the replication document has been committed.
         Process.sleep(@poll_frequency)
-        poll_replication_status(database_name, source_doc_count, parameters)
+        poll_replication_status!(database_name, source_doc_count, parameters)
 
       %{"state" => "completed"} ->
         PubSub.broadcast(
@@ -153,15 +153,13 @@ defmodule FieldPublication.Replication.CouchReplication do
         {:ok, {id, :couch_replication}}
 
       %{"state" => "crashing"} = error ->
-        Logger.error(inspect(error))
-
         Replication.log(
           parameters,
           :error,
           "Experienced error while replicating documents, stopping replication."
         )
 
-        {:error, {id, error}}
+        throw(error)
     end
   end
 

@@ -213,7 +213,19 @@ defmodule FieldPublication.Replication do
 
   def handle_info({:DOWN, ref, :process, _pid, reason}, running_replications) do
     Logger.error("A replication task failed irregularly.")
-    Logger.error(inspect(reason))
+
+    [{publication_id, {_task, parameters}}] =
+      Enum.filter(running_replications, fn {_publication_id, {task, _replication_state} = _value} ->
+        task.ref == ref
+      end)
+
+    log(parameters, :error, inspect(reason))
+
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      publication_id,
+      {:replication_stopped}
+    )
 
     {:noreply, cleanup(ref, running_replications)}
   end

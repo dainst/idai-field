@@ -132,7 +132,7 @@ defmodule FieldPublication.Replication do
       nil ->
         {:reply, :not_found, running_replications}
 
-      {task, _state} ->
+      {task, _parameters} ->
         Process.exit(task.pid, :stopped)
 
         # Delete the replication document for this publication database in case the couch replication got killed by the exit command above.

@@ -91,6 +91,10 @@ defmodule FieldPublication.Replication do
     GenServer.call(__MODULE__, {:stop, publication})
   end
 
+  def show(%Publication{} = publication) do
+    GenServer.call(__MODULE__, {:show, publication})
+  end
+
   def handle_call(
         {:start, %ReplicationInput{} = input, %Publication{} = publication},
         _from,
@@ -150,6 +154,18 @@ defmodule FieldPublication.Replication do
         )
 
         {:reply, :stopped, running_replications}
+    end
+  end
+
+  def handle_call({:show, %Publication{} = publication}, _from, running_replications) do
+    publication_id = Publications.get_doc_id(publication)
+
+    case Map.get(running_replications, publication_id) do
+      nil ->
+        {:reply, :not_found, running_replications}
+
+      {task, parameters} ->
+        {:reply, %{task: task, parameters: parameters}, running_replications}
     end
   end
 

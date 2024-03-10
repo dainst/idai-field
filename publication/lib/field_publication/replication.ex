@@ -190,15 +190,37 @@ defmodule FieldPublication.Replication do
   # Handle result of FileReplication task, finish up by reconstructing the project configuration.
   def handle_info({_ref, {:ok, {publication_id, :file_replication}}}, running_replications) do
     {_finished_task,
-     %{publication: publication, input: %{processing: start_processing_immediately}} = parameters} =
+     %{
+       publication: %Publication{} = publication,
+       input: %{processing: start_processing_immediately}
+     } = parameters} =
       Map.get(running_replications, publication_id)
 
     {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
 
+    # The reconstructed project configuration does not retain a simple list of the languages used for the
+    # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
+    # in our `Publication` document as a shorthand.
+    languages =
+      CouchService.get_document("configuration", publication.database)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("resource", %{})
+          |> Map.get("projectLanguages", [])
+
+        _ ->
+          []
+      end
+
     {:ok, final_publication} =
       publication
       |> Publications.get!()
-      |> Publications.put(%{"replication_finished" => DateTime.utc_now()})
+      |> Publications.put(%{
+        "replication_finished" => DateTime.utc_now(),
+        "languages" => languages
+      })
 
     PubSub.broadcast(
       FieldPublication.PubSub,

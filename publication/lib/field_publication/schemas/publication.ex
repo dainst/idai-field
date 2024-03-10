@@ -24,6 +24,7 @@ defmodule FieldPublication.Schemas.Publication do
     field(:publication_date, :date)
     field(:configuration_doc, :string)
     field(:database, :string)
+    field(:languages, {:array, :string}, default: [])
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
     embeds_many(:processing_logs, LogEntry, on_replace: :delete)
@@ -40,7 +41,8 @@ defmodule FieldPublication.Schemas.Publication do
       :replication_finished,
       :publication_date,
       :configuration_doc,
-      :database
+      :database,
+      :languages
     ])
     |> cast_embed(:comments)
     |> cast_embed(:replication_logs)

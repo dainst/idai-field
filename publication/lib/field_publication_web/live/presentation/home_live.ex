@@ -3,6 +3,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   alias FieldPublication.Projects
   alias FieldPublication.Publications
+  alias FieldPublication.Schemas.Publication
 
   def mount(_assigns, _session, socket) do
     published_projects =
@@ -11,22 +12,23 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       |> Stream.map(&Publications.get_current_published(&1))
       |> Enum.reject(fn val -> val == :none end)
       |> Task.async_stream(fn publication ->
-        Publications.Data.get_project_info(publication)
+        {publication, Publications.Data.get_project_info(publication)}
       end)
-      |> Enum.map(fn {:ok, %{"resource" => res} = doc} ->
+      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, %{"resource" => res} = doc}} ->
         %{
+          name: project_name,
           doc: doc,
           coordinates: %{longitude: Map.get(res, "longitude"), latitude: Map.get(res, "latitude")}
         }
       end)
 
     features =
-      Enum.map(published_projects, fn %{
-                                        coordinates: coordinates,
-                                        doc: %{"resource" => %{"identifier" => identifier}}
-                                      } ->
-        create_home_marker(coordinates, identifier)
-      end)
+      Enum.map(
+        published_projects,
+        fn %{coordinates: coordinates, name: name} ->
+          create_home_marker(coordinates, name)
+        end
+      )
 
     {:ok,
      socket
@@ -61,14 +63,14 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     {:noreply, push_navigate(socket, to: "/#{project_identifier}")}
   end
 
-  defp create_home_marker(%{longitude: lon, latitude: lat}, id) do
+  defp create_home_marker(%{longitude: lon, latitude: lat}, project_name) do
     %{
       type: "Feature",
       properties: %{
         style: "homeMarker",
         hover_event: "home_marker_hover",
         click_event: "project_selected",
-        id: id
+        id: project_name
       },
       geometry: %Geo.Point{
         coordinates: {lon, lat}

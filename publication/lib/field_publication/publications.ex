@@ -91,7 +91,7 @@ defmodule FieldPublication.Publications do
     project_name
     |> list()
     |> Enum.reject(fn %Publication{publication_date: date} ->
-      date == nil or Date.before?(date, Date.utc_today())
+      date == nil or Date.before?(Date.utc_today(), date)
     end)
     |> List.first(:none)
   end

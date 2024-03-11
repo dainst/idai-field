@@ -67,7 +67,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
             if (!this.map) this.map = this.createMap();
 
             // The promise is necessary to make sure the map is updated based on the current map container size
-            Promise.resolve().then(() => this.updateMap(changes));
+            Promise.resolve().then(() => {
+                if (changes['paddingLeft'] && !changes['selectedDocument']) return;
+                this.updateMap(changes);
+            });
         });
     }
 

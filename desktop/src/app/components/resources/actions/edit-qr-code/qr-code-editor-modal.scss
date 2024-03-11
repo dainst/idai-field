@@ -121,7 +121,7 @@
           position: absolute;
           top: 20px;
           left: 280px;
-          width: 565px;
+          width: 570px;
           padding: 0;
           white-space: nowrap;
           font-size: 22px;
@@ -152,8 +152,8 @@
             width: 100%;
 
             &.print-label-one-field {
-              top: 13px;
-              height: 140px;
+              top: 20px;
+              height: 134px;
 
               #printed-fields {
                 top: 50%;
@@ -173,7 +173,7 @@
             }
 
             &.print-label-two-fields {
-              top: 45px;
+              top: 43px;
 
               .print-label-field:not(:last-child) {
                 margin-bottom: 15px;
@@ -194,8 +194,8 @@
 
               .print-label-field {
                 width: 100%;
-                font-size: 24px;
-                line-height: 29px;
+                font-size: 25px;
+                line-height: 31px;
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;

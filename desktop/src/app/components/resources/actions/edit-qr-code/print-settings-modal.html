@@ -1,5 +1,5 @@
 <div id="view-modal-header" class="modal-header">
-    <div class="text-truncate heading" i18n="@@resources.printSettings">Drucketikett einrichten</div>
+    <div class="text-truncate heading" i18n="@@resources.printSettings">Etikettendruck einrichten</div>
 </div>
 
 <div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
@@ -15,14 +15,24 @@
                 </option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-danger" type="button"
-                            (click)="deleteSelectedProfile()">
+                <button class="btn btn-danger"
+                        type="button"
+                        ngbTooltip="Einstellungsprofil löschen"
+                        i18n-ngbTooltip="@@resources.deletePrintSettingsProfile"
+                        container="body"
+                        placement="top"
+                        (click)="deleteSelectedProfile()">
                     <span class="mdi mdi-delete"></span>
                 </button>
             </div>
         </div>
-        <button id="add-new-profile-button" class="btn btn-success btn-square" type="button"
-                    (click)="addNewProfile()">
+        <button id="add-new-profile-button"
+                class="btn btn-success btn-square"
+                ngbTooltip="Neues Einstellungsprofil erstellen"
+                i18n-ngbTooltip="@@resources.createPrintSettingsProfile"
+                container="body"
+                placement="top"
+                (click)="addNewProfile()">
             <span class="mdi mdi-plus"></span>
         </button>
     </div>

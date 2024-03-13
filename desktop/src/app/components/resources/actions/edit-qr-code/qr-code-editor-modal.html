@@ -39,21 +39,20 @@
         </div>
     </div>
 
-    <button id="print-qr-code-button"
-            class="btn btn-primary"
-            [class.disabled]="!hasQrCode()"
-            (click)="hasQrCode() && printCode()">
-        <span class="mdi mdi-printer-pos"></span>
-        <span class="button-label" i18n="@@buttons.print">Drucken</span>
-    </button>
-
-    <button id="print-settings-button"
-            class="btn btn-secondary"
-            [class.disabled]="!hasQrCode()"
-            (click)="hasQrCode() && openPrintSettingsModal()">
-        <span class="mdi mdi-printer-pos-cog"></span>
-        <span class="button-label" i18n="@@resources.printSettings">Drucketikett einrichten</span>
-    </button>
+    <div class="btn-group" id="print-settings-button-group">
+        <button id="print-qr-code-button"
+                class="btn btn-primary"
+                [class.disabled]="!hasQrCode()"
+                (click)="hasQrCode() && printCode()">
+            <span class="mdi mdi-printer-pos"></span>
+            <span class="button-label" i18n="@@buttons.print">Drucken</span>
+        </button>
+        <button id="print-settings-button"
+                class="btn btn-primary"
+                (click)="openPrintSettingsModal()">
+            <span class="mdi mdi-cog"></span>
+        </button>
+    </div>
 
     <button id="delete-qr-code-button"
             class="btn btn-danger"

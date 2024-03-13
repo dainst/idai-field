@@ -43,8 +43,17 @@
     }
   }
 
-  .btn {
+  .btn-group,
+  #delete-qr-code-button {
     margin: 16px 5px 0 5px;
+  }
+  
+  #print-qr-code-button:hover {
+    z-index: 0;
+  }
+
+  #print-settings-button {
+    border-left: 1px solid #f8f9fa;
   }
 }
 

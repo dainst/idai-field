@@ -159,7 +159,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
     public async openPrintSettingsModal() {
 
-        this.menus.setContext(MenuContext.MODAL);
+        this.menus.setContext(MenuContext.PRINT_SETTINGS_MODAL);
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(

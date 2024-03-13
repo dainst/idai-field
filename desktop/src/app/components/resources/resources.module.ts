@@ -55,6 +55,7 @@ import { QrCodeService } from './service/qr-code-service';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings-modal.component';
+import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/create-print-settings-profile-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -99,6 +100,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         BaseList,
         QrCodeEditorModalComponent,
         PrintSettingsModalComponent,
+        CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
         ScanStoragePlaceModalComponent,
     ],

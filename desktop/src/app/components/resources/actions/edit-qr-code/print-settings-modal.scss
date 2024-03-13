@@ -1,4 +1,15 @@
 #print-settings-modal-body {
+  .input-group {
+    width: 415px;
+    height: 39px;
+  }
+
+  #add-new-profile-button {
+    position: relative;
+    bottom: 47px;
+    float: right;
+  }
+
   label {
     user-select: none;
 

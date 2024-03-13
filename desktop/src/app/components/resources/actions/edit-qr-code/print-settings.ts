@@ -1,24 +1,16 @@
-import { clone } from 'tsfun';
-import { validateInt } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../../services/getAsynchronousFs';
+import { PrintSettingsProfile } from './print-settings-profile';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 const FILE_PATH = remote.getGlobal('appDataPath') + '/print-settings.json';
 
-const DEFAULT_PAGE_WIDTH = 76;          // mm
-const DEFAULT_PAGE_HEIGHT = 25;         // mm
-const DEFAULT_SCALE = 100;              // percent
-const DEFAULT_CONTAINER_HEIGHT = 280;   // px
+
 
 
 export interface PrintSettings {
-
-    pageWidth: number;
-    pageHeight: number;
-    scale: number;
-    marginLeft: number;
-    marginTop: number;
+    profiles: Array<PrintSettingsProfile>;
+    selectedProfile: string;
 }
 
 
@@ -52,102 +44,43 @@ export module PrintSettings {
     }
 
 
+    export function getProfile(settings: PrintSettings, profileName: string): PrintSettingsProfile {
+
+        return settings.profiles.find(profile => profile.name === profileName);
+    }
+
+
+    export function deleteProfile(settings: PrintSettings, profileName: string) {
+
+        settings.profiles = settings.profiles.filter(profile => profile.name !== profileName);
+
+        if (!settings.profiles.length) {
+            settings.profiles.push(PrintSettingsProfile.createDefaultProfile());
+        }
+        
+        settings.selectedProfile = settings.profiles[0].name;
+    }
+
+
     export function getPrintStyle(settings: PrintSettings): string {
 
-        const processedSettings: PrintSettings = process(settings);
-
-        return '@page {'
-                + 'size: '
-                    + processedSettings.pageWidth + 'mm '
-                    + processedSettings.pageHeight + 'mm; '
-                + 'margin: 0;'
-            + '}'
-            + '@media print {'
-                + '#qr-code-container {'
-                    + 'top: calc(' + processedSettings.marginTop + 'mm + '
-                        + getAutoMarginTop(processedSettings) + 'px);'
-                    + 'left: ' + processedSettings.marginLeft + 'mm;'
-                    + 'transform: scale(' + processedSettings.scale + ');'
-                + '}'
-        + '}';
+        const profile: PrintSettingsProfile = getProfile(settings, settings.selectedProfile);
+        return PrintSettingsProfile.getPrintStyle(profile);
     }
 
 
     export function validate(settings: PrintSettings): boolean {
 
-        return validateValue(settings.pageWidth)
-            && validateValue(settings.pageHeight)
-            && validateValue(settings.scale)
-            && validateValue(settings.marginLeft)
-            && validateValue(settings.marginTop)
-            && settings.pageWidth > 0
-            && settings.pageHeight > 0
-            && settings.scale > 0;
-    }
-
-
-    function validateValue(value: number): boolean {
-
-        return value !== undefined
-            && value !== null
-            && validateInt(value.toString());
-    }
-
-
-    function process(settings: PrintSettings): PrintSettings {
-
-        const clonedSettings: PrintSettings = clone(settings);
-
-        if (clonedSettings.pageHeight > clonedSettings.pageWidth) swapWidthAndHeight(clonedSettings);
-        clonedSettings.scale = getAutoScale(clonedSettings) * (clonedSettings.scale / 200.0);
-        
-        return clonedSettings;
-    }
-    
-        
-    function swapWidthAndHeight(settings: PrintSettings) {
-
-        const pageWidth: number = settings.pageWidth;
-        const marginLeft: number = settings.marginLeft;
-
-        settings.pageWidth = settings.pageHeight;
-        settings.pageHeight = pageWidth;
-        settings.marginLeft = -settings.marginTop;
-        settings.marginTop = marginLeft;
-    }
-    
-    
-    function getAutoScale(settings: PrintSettings): number {
-
-        return Math.min(
-            settings.pageWidth / DEFAULT_PAGE_WIDTH,
-            settings.pageHeight / DEFAULT_PAGE_HEIGHT
-        );
-    }
-    
-    
-    function getAutoMarginTop(settings: PrintSettings): number {
-
-        const heightScale: number = settings.pageHeight / DEFAULT_PAGE_HEIGHT / 2;
-
-        if (heightScale > settings.scale) {
-            return DEFAULT_CONTAINER_HEIGHT * (heightScale - settings.scale) / 2;
-        } else {
-            return 0;
-        }
+        return settings.profiles?.length
+            && settings.profiles.every(profile => PrintSettingsProfile.validate(profile))
+            && settings.profiles.find(profile => profile.name === settings.selectedProfile) !== undefined;
     }
 
 
     function buildSerializationObject(settings: PrintSettings): any {
 
         return {
-            scanCodes: {
-                pageWidth: settings.pageWidth,
-                pageHeight: settings.pageHeight,
-                scale: settings.scale,
-                marginLeft: settings.marginLeft,
-                marginTop: settings.marginTop
-            }
+            scanCodes: settings
         };
     }
 
@@ -155,11 +88,9 @@ export module PrintSettings {
     function parseSerializationObject(object: any): PrintSettings {
 
         return {
-            pageWidth: object.scanCodes?.pageWidth ?? DEFAULT_PAGE_WIDTH,
-            pageHeight: object.scanCodes?.pageHeight ?? DEFAULT_PAGE_HEIGHT,
-            scale: object.scanCodes?.scale ?? DEFAULT_SCALE,
-            marginLeft: object.scanCodes?.marginLeft ?? 0,
-            marginTop: object.scanCodes?.marginTop ?? 0
+            profiles: object.scanCodes?.profiles?.filter(profile => PrintSettingsProfile.validate(profile))
+                ?? [PrintSettingsProfile.createDefaultProfile()],
+            selectedProfile: object.scanCodes?.selectedProfile ?? ''
         }
     }
 

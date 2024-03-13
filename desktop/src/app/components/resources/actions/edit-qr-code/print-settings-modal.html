@@ -4,17 +4,41 @@
 
 <div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
     <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.settingsProfile">Einstellungsprofil</label>
+        <div class="input-group mb-2">
+            <select [(ngModel)]="settings.selectedProfile"
+                    (change)="updateSelectedProfile()"        
+                    class="form-control">
+                <option *ngFor="let profile of settings.profiles"
+                        [value]="profile.name">
+                    {{getProfileLabel(profile)}}
+                </option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-danger" type="button"
+                            (click)="deleteSelectedProfile()">
+                    <span class="mdi mdi-delete"></span>
+                </button>
+            </div>
+        </div>
+        <button id="add-new-profile-button" class="btn btn-success btn-square" type="button"
+                    (click)="addNewProfile()">
+            <span class="mdi mdi-plus"></span>
+        </button>
+    </div>
+
+    <div class="mb-3">
         <label i18n="@@resources.printSettingsModal.size">Etikettgröße</label>
         <div class="row mb-2">
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.size.width">Breite (mm)</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" [(ngModel)]="settings.pageWidth">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.pageWidth">
             </div>
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.size.height">Höhe (mm)</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" [(ngModel)]="settings.pageHeight">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.pageHeight">
             </div>
         </div>
     </div>
@@ -25,19 +49,19 @@
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.borderMargin.left">Links (mm)</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" [(ngModel)]="settings.marginLeft">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.marginLeft">
             </div>
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.borderMargin.top">Oben (mm)</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" [(ngModel)]="settings.marginTop">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.marginTop">
             </div>
         </div>
     </div>
 
     <div class="mb-3">
         <label i18n="@@resources.printSettingsModal.scaling">Skalierung (Prozent)</label>
-        <input type="number" class="form-control" [(ngModel)]="settings.scale">
+        <input type="number" class="form-control" [(ngModel)]="selectedProfile.scale">
     </div>
 </div>
 

@@ -401,8 +401,8 @@ export class DoceditComponent {
         const conflictsBeforeSave: string[] = documentBeforeSave._conflicts;
         const conflictsAfterSave: string[] = documentAfterSave._conflicts;
 
-        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
+        if (!conflictsBeforeSave && conflictsAfterSave?.length) return true;
 
         return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }

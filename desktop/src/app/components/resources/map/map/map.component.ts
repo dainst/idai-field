@@ -68,8 +68,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
             // The promise is necessary to make sure the map is updated based on the current map container size
             Promise.resolve().then(() => {
-                if (changes['paddingLeft'] && !changes['selectedDocument']) return;
-                this.updateMap(changes);
+                if (MapComponent.isUpdateNecessary(changes)) this.updateMap(changes);
             });
         });
     }
@@ -524,4 +523,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
         };
     }
 
+    private static isUpdateNecessary(changes: SimpleChanges) {
+
+        if (changes['paddingLeft'] && !changes['selectedDocument']) return false;
+
+        if (Object.keys(changes).length === 1
+                && changes['additionalSelectedDocuments']
+                && !changes['additionalSelectedDocuments'].currentValue.length
+                && !changes['additionalSelectedDocuments'].previousValue.length) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -1,27 +1,25 @@
 import { ChangeDetectorRef, Component, OnDestroy, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { Document, FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
-import { MoveModalComponent } from './move-modal.component';
+import { MoveModalComponent, MoveResult } from './actions/move/move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
-import { ResourceDeletion } from './deletion/resource-deletion';
+import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../components/resources/view/view-facade';
-import { NavigationService } from './navigation/navigation-service';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { Messages } from '../messages/messages';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
-
-
-export type PopoverMenu = 'none'|'info'|'children';
+import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
+import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 
 
 @Component({
@@ -35,9 +33,10 @@ export type PopoverMenu = 'none'|'info'|'children';
  */
 export class ResourcesComponent implements OnDestroy {
 
-    public activePopoverMenu: PopoverMenu = 'none';
+    public popoverMenuOpened: boolean = false;
     public filterOptions: Array<CategoryForm> = [];
     public additionalSelectedDocuments: Array<FieldDocument> = [];
+    public mapUpdateAllowed: boolean = true;
 
     private clickEventObservers: Array<any> = [];
 
@@ -59,9 +58,9 @@ export class ResourcesComponent implements OnDestroy {
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
-                private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
-                private menuService: Menus) {
+                private menuService: Menus,
+                private storagePlaceScanner: StoragePlaceScanner) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -92,7 +91,10 @@ export class ResourcesComponent implements OnDestroy {
 
     public isReady = () => this.viewFacade.isReady();
 
-    public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
+    public isInGridListView = () => this.viewFacade.isInGridListView();
+
+    public scanStoragePlace = (documents: Array<FieldDocument>) =>
+        this.storagePlaceScanner.scanStoragePlace(documents);
 
 
     ngOnDestroy() {
@@ -130,11 +132,13 @@ export class ResourcesComponent implements OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? this.projectConfiguration.getConcreteFieldCategories()
+                ? this.projectConfiguration.getFieldCategories()
                     .filter(category => !category.parentCategory)
-                : this.projectConfiguration.getOverviewToplevelCategories();
+                : this.projectConfiguration.getOverviewTopLevelCategories();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.projectConfiguration.getTypeManagementCategories();
+            this.filterOptions = this.projectConfiguration.getTypeManagementTopLevelCategories();
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            this.filterOptions = this.projectConfiguration.getInventoryTopLevelCategories();
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
@@ -157,14 +161,22 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public editDocument(document: Document|undefined,
-                        activeGroup?: string): Promise<FieldDocument|undefined> {
+    public async editDocument(document: Document|undefined,
+                              activeGroup?: string): Promise<FieldDocument|undefined> {
 
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
+        
+        this.mapUpdateAllowed = false;
 
-        return this.doceditLauncher.editDocument(document, activeGroup);
+        try {
+            return await this.doceditLauncher.editDocument(document, activeGroup);
+        } catch (err) {
+            throw err;
+        } finally {
+            this.mapUpdateAllowed = true;
+        }
     }
 
 
@@ -174,22 +186,46 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public async editQRCode(document: Document) {
+
+        try {
+            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                QrCodeEditorModalComponent,
+                { animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.document = document;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
     public async moveDocuments(documents: Array<FieldDocument>) {
 
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef = this.modalService.open(MoveModalComponent, { keyboard: false, animation: false });
+        const modalRef: NgbModalRef = this.modalService.open(
+            MoveModalComponent,
+            { keyboard: false, animation: false }
+        );
         modalRef.componentInstance.initialize(documents);
 
         try {
-            const errors: boolean = await modalRef.result;
+            const result: MoveResult = await modalRef.result;
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
-            if (errors) {
-                await this.viewFacade.populateDocumentList();
+            if (result.success) {
+                await this.jumpToNewParentAfterMovingResource(result.newParent, documents);
             } else {
-                await this.routingService.jumpToResource(documents[0]);
+                await this.viewFacade.populateDocumentList();
             }
             
         } catch (msgWithParams) {
@@ -274,7 +310,7 @@ export class ResourcesComponent implements OnDestroy {
 
         if (!document) {
             this.viewFacade.deselect();
-        } else {
+        } else if (document !== this.viewFacade.getSelectedDocument()){
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
         }
     }
@@ -287,50 +323,9 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
+    public async togglePopoverMenu() {
 
-        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
-            this.closePopover();
-        } else {
-            await this.openPopoverMenu(popoverMenu, document);
-        }
-    }
-
-
-    public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
-
-        return this.viewFacade.getSelectedDocument() !== undefined
-            && ((!popoverMenu && this.activePopoverMenu !== 'none')
-                || this.activePopoverMenu === popoverMenu)
-            && (!document
-                || (this.isSelected(document)
-                    && (this.activePopoverMenu !== 'children' ||
-                        this.navigationService.shouldShowArrowBottomRight(document)
-                    )
-                )
-            );
-    }
-
-
-    public closePopover() {
-
-        this.activePopoverMenu = 'none';
-    }
-
-
-    public async navigatePopoverMenus(direction: 'previous'|'next') {
-
-        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-
-        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
-
-        let index = availablePopoverMenus.indexOf(this.activePopoverMenu)
-            + (direction === 'next' ? 1 : -1);
-        if (index < 0) index = availablePopoverMenus.length - 1;
-        if (index >= availablePopoverMenus.length) index = 0;
-
-        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
+        this.popoverMenuOpened = !this.popoverMenuOpened;
     }
 
 
@@ -355,7 +350,7 @@ export class ResourcesComponent implements OnDestroy {
 
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
-        if (this.viewFacade.getMode() === 'types') {
+        if (this.viewFacade.getMode() === 'grid') {
             await this.viewFacade.moveInto(id, false, true);
         } else {
             await this.viewFacade.setSelectedDocument(id);
@@ -364,13 +359,13 @@ export class ResourcesComponent implements OnDestroy {
         try {
             if (menu === 'edit') {
                 await this.editDocument(
-                    this.viewFacade.getMode() === 'types'
+                    this.viewFacade.getMode() === 'grid'
                         ? NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document
                         : this.viewFacade.getSelectedDocument(),
                     group
                 );
             } else {
-                if (this.viewFacade.getMode() !== 'types') this.activePopoverMenu = 'info';
+                if (this.viewFacade.getMode() !== 'grid') this.popoverMenuOpened = true;
                 await this.viewFacade.setActiveDocumentViewTab(group);
             }
         } catch (e) {
@@ -417,33 +412,31 @@ export class ResourcesComponent implements OnDestroy {
             });
 
         this.selectViaResourceLinkSubscription =
-            this.viewFacade.selectViaResourceLinkNotifications().subscribe(document => {
-                this.openPopoverMenu('info', document as FieldDocument);
+            this.viewFacade.selectViaResourceLinkNotifications().subscribe(async document => {
+                this.popoverMenuOpened = true;
+                if (!this.isSelected(document as FieldDocument)) {
+                    await this.select(document as FieldDocument);
+                }
             });
-    }
-
-
-    private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        this.activePopoverMenu = popoverMenu;
-
-        if (!this.isSelected(document)) await this.select(document);
-    }
-
-
-    private getAvailablePopoverMenus(document: FieldDocument): string[] {
-
-        const availablePopoverMenus: string[] = ['none', 'info'];
-        if (this.navigationService.shouldShowArrowBottomRight(document)) {
-            availablePopoverMenus.push('children');
-        }
-
-        return availablePopoverMenus;
     }
 
 
     private startGeometryEditing() {
 
         this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
+    }
+
+
+    private async jumpToNewParentAfterMovingResource(newParent: FieldDocument, movedDocuments: Array<FieldDocument>) {
+
+        if (this.viewFacade.isInGridListView()) {
+            if (newParent.resource.category === 'InventoryRegister') {
+                this.viewFacade.moveInto(undefined, false, true);
+            } else {
+                await this.routingService.jumpToResource(newParent, false);
+            }
+        } else {
+            await this.routingService.jumpToResource(movedDocuments[0], false);
+        }
     }
 }

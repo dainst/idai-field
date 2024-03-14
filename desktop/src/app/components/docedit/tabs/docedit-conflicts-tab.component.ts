@@ -193,7 +193,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
-                label = this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
+                label = fieldName === 'scanCode'
+                    ? this.i18n({ id: 'docedit.tabs.conflicts.qrCode', value: 'QR-Code' })
+                    : this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
             }
 
             const field: Field = CategoryForm.getFields(projectConfiguration.getCategory(document))

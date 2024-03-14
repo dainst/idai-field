@@ -6,6 +6,8 @@
     "position": "Lage / Kontext",
     "dimension": "Maße",
     "identification": "Bestimmung",
+    "inventory": "Inventarisierung",
+    "hierarchy": "Hierarchie",
     "other": "Andere"
   },
   "commons": {
@@ -1585,6 +1587,34 @@
           "label": "Kriterium"
         }
       }
+    },
+    "StoragePlace": {
+      "label": "Aufbewahrungsort",
+      "fields": {}
+    },
+    "StorageBuilding": {
+      "label": "Gebäude",
+      "fields": {}
+    },
+    "StorageRoom": {
+      "label": "Raum",
+      "fields": {}
+    },
+    "StorageShelf": {
+      "label": "Regal",
+      "fields": {}
+    },
+    "StorageCompartment": {
+      "label": "Fach",
+      "fields": {}
+    },
+    "StorageBox": {
+      "label": "Kiste",
+      "fields": {}
+    },
+    "StorageBag": {
+      "label": "Tüte",
+      "fields": {}
     }
   },
   "forms": {

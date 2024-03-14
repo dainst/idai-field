@@ -1,10 +1,8 @@
 defmodule FieldHubWeb do
   @moduledoc """
 
-  FieldHubWeb and all its submodule organize the web facing functions of FieldHub.
-
-  The entrypoint for defining your web interface, such
-  as controllers, views, channels and so on.
+  FieldHubWeb and all its submodules organize the web facing functions of FieldHub, such
+  as the router, controllers, views, channels and so on.
 
   This can be used in your application as:
 

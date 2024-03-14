@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
-import { Document, Field, Labels, ProjectConfiguration, Relation } from 'idai-field-core';
+import { Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 type StratigraphicalRelationInfo = {
@@ -26,6 +27,7 @@ export class EditFormGroup implements OnChanges {
     @Input() document: Document;
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
+    @Input() scrollTargetField: string;
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
@@ -33,12 +35,14 @@ export class EditFormGroup implements OnChanges {
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
+                private elementRef: ElementRef,
                 private i18n: I18n) {}
 
 
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+        if (this.scrollTargetField) this.scrollToTargetField();
     }
 
 
@@ -97,7 +101,7 @@ export class EditFormGroup implements OnChanges {
         const isFieldDataValid: boolean = this.validateFieldData(fieldData, field.inputType);
         
         return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType) || field.inputType === Field.InputType.URL
-            ? isFieldDataValid || fieldData !== originalFieldData
+            ? isFieldDataValid || !compare(fieldData, originalFieldData)
             : isFieldDataValid;
     }
 
@@ -120,5 +124,39 @@ export class EditFormGroup implements OnChanges {
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });
+    }
+
+
+    private async scrollToTargetField() {
+
+        await AngularUtility.refresh();
+
+        const field: Field = this.fieldDefinitions.find(fieldDefinition => {
+            return fieldDefinition.name === this.scrollTargetField;
+        });
+        const element: HTMLElement|null = document.getElementById(this.getFieldId(field));
+        if (!element) return;
+
+        await this.scrollToElement(element);
+        await this.focusField(element);
+
+        this.scrollTargetField = undefined;
+    }
+
+
+    private async scrollToElement(element: HTMLElement) {
+
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
+
+        await AngularUtility.refresh();
+        const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.parentElement.scrollTo(0, scrollY);
+    }
+
+
+    private focusField(fieldElement: HTMLElement) {
+
+        const inputElements = fieldElement.getElementsByTagName('input');
+        if (inputElements.length > 0) inputElements[0].focus();
     }
 }

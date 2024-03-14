@@ -3,11 +3,22 @@
  * @author Thomas Kleinke
  */
 
-#relation-picker {
-  height: 39px;
+.relation-picker {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+
+  ng-select {
+    position: relative;
+    top: 2px;
+    width: calc(100% - 50px);
+  }
 
   .red-button {
-    left: 13px;
+    top: 50%;
+    right: 0;
+    transform: translateY(calc(-50% - 1px));
     margin-bottom: 0;
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
 
@@ -17,28 +28,13 @@
     }
   }
 
-  .badge {
-    position: relative;
-    background-color: #ccc;
-    color: #333;
-    font-weight: normal;
-    border-radius: 1px;
-
-    &.no-targets-badge {
-      font-style: italic;
-    }
+  document-teaser {
+    display: block;
+    width: calc(100% - 40px);
   }
 
-  ng-select {
-    position: relative;
-    left: 50px;
-    top: 2px;
-    width: calc(100% - 50px);
-  }
-
-  .btn-default {
-    position: relative;
-    left: 35px;
-    bottom: 2px;
+  .delete-relation {
+    margin-top: 1px !important;
+    padding-top: 5px !important;
   }
 }

@@ -64,7 +64,8 @@ describe('importDocuments', () => {
             'assertDropdownRangeComplete',
             'assertSettingIsRecordedInIsPermissibleForCategory',
             'assertNoForbiddenRelations',
-            'assertIdentifierPrefixIsValid'
+            'assertIdentifierPrefixIsValid',
+            'assertResourceLimitNotExceeded'
         ]);
 
         validator.assertHasLiesWithin.and.returnValue();

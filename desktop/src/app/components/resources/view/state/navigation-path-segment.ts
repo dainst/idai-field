@@ -17,22 +17,24 @@ export module NavigationPathSegment {
 
     export function isValid(operationId: string|undefined, segment: NavigationPathSegment,
                             segments: Array<NavigationPathSegment>,
+                            validNonRecordedInCategories: string[],
                             exists: (_: string) => boolean): boolean {
 
         return exists(segment.document.resource.id)
-            && hasValidRelation(operationId, segment, segments);
+            && hasValidRelation(operationId, segment, segments, validNonRecordedInCategories);
     }
 
 
     function hasValidRelation(operationId: string|undefined, segment: NavigationPathSegment,
-                              segments: Array<NavigationPathSegment>): boolean {
+                              segments: Array<NavigationPathSegment>,
+                              validNonRecordedInCategories: string[]): boolean {
 
         const index = segments.indexOf(segment);
 
         return index === 0
             ? operationId !== undefined
                 && (Document.hasRelationTarget(segment.document, 'isRecordedIn', operationId)
-                    || ['Place', 'TypeCatalog'].includes(segment.document.resource.category))
+                    || validNonRecordedInCategories.includes(segment.document.resource.category))
             : Document.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id);
     }

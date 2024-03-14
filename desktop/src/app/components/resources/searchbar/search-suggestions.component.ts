@@ -130,7 +130,9 @@ export class SearchSuggestionsComponent implements OnChanges {
             ? this.viewFacade.getFilterCategories()
             : this.viewFacade.isInTypesManagement()
                 ? this.projectConfiguration.getTypeManagementCategories().map(Named.toName)
-                : this.projectConfiguration.getConcreteFieldCategories().map(Named.toName);
+                : this.viewFacade.isInInventoryManagement()
+                    ? this.projectConfiguration.getInventoryCategories().map(Named.toName)
+                    :  this.projectConfiguration.getFieldCategories().map(Named.toName);
     }
 
 

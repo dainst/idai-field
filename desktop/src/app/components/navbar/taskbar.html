@@ -3,17 +3,15 @@
         <taskbar-update [isSyncStatusShown]="showSyncStatus()"></taskbar-update>
     </li>
 
-    <li id="conflicts" class="nav-item pr-2">
-        <taskbar-conflicts></taskbar-conflicts>
+    <li id="warnings" class="nav-item pr-2">
+        <taskbar-warnings></taskbar-warnings>
     </li>
 
     <li *ngIf="showSyncStatus()" class="nav-item pr-2">
         <taskbar-sync-status></taskbar-sync-status>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item projects-nav-item">
         <projects></projects>
     </li>
 </ul>
-
-

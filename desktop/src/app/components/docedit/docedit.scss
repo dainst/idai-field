@@ -25,7 +25,7 @@
 @import 'dialog/duplicate-modal';
 
 #document-edit-wrapper {
-  height: calc(100vh - 65px);
+  height: calc(100vh - 84px);
   overflow-y: hidden;
 
   .form-group.card {
@@ -119,6 +119,7 @@
 
   #document-edit-button-dropdown {
     margin-left: 1px;
+    border-left: 1px solid #e7e7e7;
 
     &:focus {
       box-shadow: none;

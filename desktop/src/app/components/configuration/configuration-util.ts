@@ -1,11 +1,10 @@
 import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
+import { CategoryForm, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
 import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
     name: string;
-    label: string;
     searchable?: boolean;
     customFields?: boolean;
 };
@@ -43,14 +42,6 @@ export module ConfigurationUtil {
     }
 
 
-    export function getInputTypeLabel(inputTypeName: string, availableInputTypes: Array<InputType>): string {
-
-        return availableInputTypes
-            .find(inputType => inputType.name === inputTypeName)
-            .label;
-    }
-
-
     export function filterTopLevelCategories(topLevelCategories: Array<CategoryForm>,
                                              filter: CategoriesFilter,
                                              projectConfiguration: ProjectConfiguration): Array<CategoryForm> {
@@ -63,6 +54,8 @@ export module ConfigurationUtil {
                     return category.name === 'Image';
                 case 'types':
                     return ['Type', 'TypeCatalog'].includes(category.name);
+                case 'inventory':
+                    return category.name === 'StoragePlace';
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(
@@ -73,7 +66,7 @@ export module ConfigurationUtil {
                         )
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace'].includes(category.name);
             }
         });
     }

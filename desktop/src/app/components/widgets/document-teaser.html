@@ -3,13 +3,8 @@
 
     <div *ngIf="document.resource.identifier || document.resource.shortDescription"
          class="teasercontent media-body ml-2">
-        <div class="title">
-            {{document.resource.identifier}}
-        </div>
-
-        <div class="subtitle">
-            {{getShortDescription()}}
-        </div>
+        <div class="title">{{document.resource.identifier}}</div>
+        <div class="subtitle">{{getShortDescription()}}</div>
     </div>
 
     <div *ngIf="!(document.resource.identifier || document.resource.shortDescription)"

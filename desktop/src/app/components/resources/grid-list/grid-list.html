@@ -1,0 +1,73 @@
+<resources-context-menu *ngIf="contextMenu.isOpen()"
+    [contextMenu]="contextMenu"
+    [showViewOption]="true"
+    (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
+
+<div id="grid-list" class="bg-light" (scroll)="contextMenu.close()">
+    <document-info *ngIf="mainDocument"
+                   [document]="mainDocument"
+                   [getExpandAllGroups]="getExpandAllGroups"
+                   [setExpandAllGroups]="setExpandAllGroups"
+                   [showThumbnail]="true"
+                   (onStartEdit)="edit(mainDocument)"
+                   (onJumpToResource)="jumpToResource($event)"
+                   (onThumbnailClicked)="openImageViewModal(mainDocument)"
+                   (onHeaderRightClicked)="contextMenu.open($event, [mainDocument])"></document-info>
+
+    <loading-icon [class.with-main-document]="mainDocument"></loading-icon>
+
+    <div *ngIf="!isLoading()" id="grid-elements-container">
+        <div *ngIf="linkedDocuments.length > 0"
+             class="grid-section-label first-grid-section-label"
+             (click)="toggleSection('documents')">
+            <span [ngClass]="isSectionVisible('documents') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
+            <span *ngIf="isInTypesManagement() && mainDocument?.resource.category === 'TypeCatalog'"
+                i18n="@@resources.gridList.types">Typen</span>
+            <span *ngIf="isInTypesManagement() && mainDocument?.resource.category !== 'TypeCatalog'"
+                i18n="@@resources.gridList.subtypes">Untertypen</span>
+            <span *ngIf="isInInventoryManagement()"
+                i18n="@@resources.navigation.storagePlaces">Aufbewahrungsorte</span>
+        </div>
+
+        <div *ngIf="isSectionVisible('documents')" class="grid-section">
+            <grid [documents]="documents"
+                  [images]="images"
+                  (clickDocument)="open($event)"
+                  (contextmenuDocument)="contextMenu.open($event.mouseEvent, [$event.document])"></grid>
+            <div id="plus-button-container" *ngIf="isSectionVisible('documents')">
+                <plus-button *ngIf="isPlusButtonShown()"
+                             id="create-document-button"
+                             [placement]="'top'"
+                             [preselectedGeometryType]="'none'"
+                             [preselectedCategory]="getCurrentFilterCategory()"
+                             [liesWithin]="getSelectedSegmentDoc()"
+                             [isRecordedIn]="viewFacade.getCurrentOperation()"
+                             [status]="getPlusButtonStatus()"></plus-button>
+            </div>
+        </div>
+
+        <div *ngIf="linkedDocuments.length > 0"
+             id="toggle-linked-documents-section-button"
+             class="grid-section-label"
+             (click)="toggleSection('linkedDocuments')">
+             <span [ngClass]="isSectionVisible('linkedDocuments')
+                ? 'mdi mdi-chevron-down'
+                : 'mdi mdi-chevron-right'">
+            </span>
+             <span *ngIf="isInTypesManagement()" i18n="@@resources.gridList.linkedFinds">
+                Zugeordnete Funde
+            </span>
+             <span *ngIf="isInInventoryManagement()" i18n="@@resources.gridList.storedObjects">
+                Enthaltene Objekte
+            </span>
+        </div>
+
+        <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('linkedDocuments')"
+             id="linked-documents-grid"
+             class="grid-section">
+            <grid [documents]="linkedDocuments"
+                  [images]="images"
+                  (clickDocument)="openResourceViewModal($event)"></grid>
+        </div>
+    </div>
+</div>

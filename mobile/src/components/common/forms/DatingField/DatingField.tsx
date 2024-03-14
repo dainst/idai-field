@@ -125,7 +125,7 @@ const DatingField: React.FC<FieldBaseProps> = ({ field, setFunction, currentValu
                             isUncertian={ isUncertain } setIsUncertian={ setIsUncertain }
                             source={ source } setSource={ setSource }
                             onCancel={ cancelHandler } onSubmit={ submitHandler } />}
-                    {(type === 'exact') &&
+                    {(type === 'single') &&
                         <ExactForm
                             end={ end } setEnd={ setEnd }
                             isUncertain={ isUncertain } setIsUncertian={ setIsUncertain }

@@ -20,14 +20,14 @@ interface DocumentHierarchyProps {
 }
 
 
-export default React.memo(function DocumentHierarchy({ documents, predecessors, project, searchParams,
+export default function DocumentHierarchy({ documents, predecessors, project, searchParams,
         onScroll, onMouseEnter, onMouseLeave }: DocumentHierarchyProps): ReactElement {
 
     const parent: string = searchParams.get('parent') ?? 'root';
     const previousPredecessors = useRef<ResultDocument[]>([]);
 
     const className: string = getTransitionClassname(previousPredecessors.current, parent);
-    previousPredecessors.current = predecessors || [];
+    previousPredecessors.current = predecessors || [];
 
     if (!documents || !predecessors) return <></>;
 
@@ -55,10 +55,7 @@ export default React.memo(function DocumentHierarchy({ documents, predecessors, 
             </CSSTransition>
         </TransitionGroup>
     </Card.Body>;
-}, (prevProps: DocumentHierarchyProps, nextProps: DocumentHierarchyProps) => {
-
-    return prevProps.documents === nextProps.documents;
-});
+}
 
 
 const renderDocumentRow = (document: ResultDocument, searchParams: URLSearchParams,

@@ -1,4 +1,4 @@
-import { Document } from 'idai-field-core';
+/*import { Document } from 'idai-field-core';
 
 const fs = require('fs');
 const axios = require('axios');
@@ -55,3 +55,4 @@ function getDocumentCSV(document: Document): string {
 }
 
 start(couchdbUrl, couchdbUser, couchdbPassword, projectName).then(() => console.log('Finished!'));
+*/

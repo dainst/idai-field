@@ -88,11 +88,7 @@ export namespace Relation {
      */
     export const IS_PRESENT_IN = 'isPresentIn';
 
-    /**
-     * @deprecated use isChildOf instead. 
-     *   Our index already works with isChildOf, while
-     *   in the documents the legacy relations are still stored.
-     */
+
     export namespace Hierarchy {
 
         export const RECORDEDIN = 'isRecordedIn';        
@@ -127,6 +123,14 @@ export namespace Relation {
         export const INSTANCEOF = 'isInstanceOf';
         export const HASINSTANCE = 'hasInstance';
         export const ALL = [INSTANCEOF, HASINSTANCE];
+    }
+
+
+    export module Inventory {
+
+        export const ISSTORAGEPLACEOF = 'isStoragePlaceOf';
+        export const ISSTOREDIN = 'isStoredIn';
+        export const ALL = [ISSTORAGEPLACEOF, ISSTOREDIN];
     }
 
 

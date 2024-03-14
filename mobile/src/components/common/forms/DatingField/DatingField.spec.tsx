@@ -12,7 +12,7 @@ const mockField: Field = {
 
 
 const dating1: Dating = {
-    type: 'exact',
+    type: 'single',
     end: {
     year: 1946,
     inputYear: 4,
@@ -65,7 +65,7 @@ describe('DatingField',() => {
         const { getByTestId, queryByTestId } = render(<DatingField field={ mockField } setFunction={ jest.fn() } />);
 
         fireEvent.press(getByTestId('addDating')); //press add button
-        fireEvent(getByTestId('typePicker'),'onValueChange','exact');
+        fireEvent(getByTestId('typePicker'),'onValueChange','single');
 
         expect(queryByTestId('end_DatingElement')).not.toBeNull();
         expect(queryByTestId(IS_UNCERTAIN_ID)).not.toBeNull();
@@ -169,7 +169,7 @@ describe('DatingField',() => {
         const end = 4;
         const endUnit = 'bp';
         const expectedDating: Dating[] = [{
-            type: 'exact',
+            type: 'single',
             end: {
                 year: 1946,
                 inputYear: end,
@@ -181,7 +181,7 @@ describe('DatingField',() => {
         const { getByTestId } = render(<DatingField field={ mockField } setFunction={ setFunc } />);
 
         fireEvent.press(getByTestId('addDating')); //press add button
-        fireEvent(getByTestId('typePicker'),'onValueChange','exact'); //select exact
+        fireEvent(getByTestId('typePicker'),'onValueChange','single'); //select exact
 
         //fill Exact Form
         fireEvent.changeText(getByTestId('end_DatingElementText'),end.toString());

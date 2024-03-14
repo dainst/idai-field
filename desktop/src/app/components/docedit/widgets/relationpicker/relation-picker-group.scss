@@ -3,27 +3,32 @@
  * @author Thomas Kleinke
  */
 
-.add-relation {
+relation-picker-group {
   display: block;
+  width: 100%;
 
-  &:hover {
-    color: #fff !important;
-    background-color: #28a745;
-    transition: color .3s ease, background-color .3s ease;
+  .add-relation {
+    display: block;
+
+    &:hover {
+      color: #fff !important;
+      background-color: #28a745;
+      transition: color .3s ease, background-color .3s ease;
+    }
   }
-}
 
-.add-relation {
-  position: relative !important;
-  color: #555 !important;
-  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
-  user-select: none;
+  .add-relation {
+    position: relative !important;
+    color: #555 !important;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
+    user-select: none;
 
-  &.with-margin {
-    margin-top: 5px;
+    &.with-margin {
+      margin-top: 5px;
+    }
   }
-}
-  
-.relation-picker-group-space {
-  height: 5px;
+    
+  .relation-picker-group-space {
+    height: 5px;
+  }
 }

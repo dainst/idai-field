@@ -3,19 +3,53 @@ import { isString } from 'tsfun';
 
 const fs = require('fs');
 
+
+export interface StartOptions {
+
+    config?: any;
+    fakeVideoPath?: string;
+};
+
+
 let electronApp;
 let window;
 
+const defaultConfig = {
+    'dbs': ['test'],
+    'username': 'Test-User'
+};
 
-export async function start() {
 
-    electronApp = await electron.launch({ args: ['.', 'test'] });
+/**
+ * Use Playwright to start the Electron application for running e2e tests.
+ * 
+ * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
+ * @returns Promise<any> that will resolve once the application is started.
+ */
+export async function start(options?: StartOptions): Promise<any> {
+
+    resetConfigJson(options?.config);
+
+    let args = ['.', 'test'];
+
+    if (options?.fakeVideoPath) {
+        args = args.concat([
+            '--use-fake-device-for-media-stream',
+            `--use-file-for-fake-video-capture=${options.fakeVideoPath}`
+        ]);
+    }
+
+    electronApp = await electron.launch({ args });
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
 }
 
-
-export function stop() {
+/**
+ * Stop the Electron application started by Playwright.
+ * 
+ * @returns Promise<any> that will resolve once the application is stopped.
+ */
+export function stop(): Promise<any> {
 
     return electronApp.close();
 }
@@ -38,21 +72,20 @@ export async function navigateTo(menu) {
 
 export async function resetApp() {
 
-    await window.evaluate(() => require('@electron/remote').getCurrentWindow().webContents.send('resetApp'));
-    return waitForExist("//span[@class='message-content' and contains(text(), 'erfolgreich zurückgesetzt')]", 120000);
+    await sendMessageToAppController('resetApp');
 }
 
 
-export async function resetConfigJson() {
+export async function sendMessageToAppController(message: string) {
 
-    const configPath = await getGlobal('configPath');
+    await window.evaluate(value => require('@electron/remote').getCurrentWindow().webContents.send(value), message);
+    return waitForExist("//span[@class='message-content' and contains(text(), 'Erfolgreich ausgeführt')]", 120000);
+}
 
-    return new Promise(resolve => {
-        fs.writeFile(configPath, '', err => {
-            if (err) console.error('Failure while resetting config.json', err);
-            resolve(undefined);
-        });
-    });
+
+export function resetConfigJson(config = defaultConfig) {
+
+    fs.writeFileSync('test/config/config.test.json', JSON.stringify(config));
 }
 
 
@@ -67,8 +100,15 @@ export function getLocator(selector: string) {
     return window.locator(selector);
 }
 
-
-export async function click(element, x?, y?) {
+/**
+ * Use Playwright to simulate a click on a specified element.
+ * 
+ * @param element either a selector (`string`) for the element or an already existing reference to an element.
+ * @param x (optional) position relative to the top left corner of the element padding box.
+ * @param y (optional) position relative to the top left corner of the element padding box.
+ * @returns Promise<any> that will resolve after the click happened.
+ */
+export async function click(element, x?: number, y?: number) {
 
     if (isString(element)) element = await getLocator(element);
     const options = x && y ? { position: { x, y } } : {};
@@ -222,3 +262,4 @@ function getGlobal(globalName: string): Promise<any> {
 
     return window.evaluate(value => require('@electron/remote').getGlobal(value), globalName);
 }
+

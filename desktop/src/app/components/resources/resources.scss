@@ -4,21 +4,26 @@
  * @author Thomas Kleinke
  */
 @import 'plus-button';
-@import 'move-modal';
 @import 'navigation/navigation';
 @import 'map/map/map';
 @import 'map/resources-map';
 @import 'map/list/geometry-view';
-@import 'widgets/popovermenu/children-view';
 @import 'list/list';
 @import 'list/row';
-@import 'types/types';
-@import 'types/type-icon';
+@import 'actions/delete/delete-modal';
+@import 'actions/move/move-modal';
+@import 'actions/edit-qr-code/qr-code-editor-modal';
+@import 'actions/edit-qr-code/delete-qr-code-modal';
+@import 'actions/edit-qr-code/print-settings-modal';
+@import 'actions/scan-storage-place/scan-storage-place-modal';
+@import 'grid-list/grid-list';
+@import 'grid-list/grid';
+@import 'grid-list/grid-item';
+@import 'grid-list/grid-item-icon';
 @import 'searchbar/resources-search-bar';
 @import 'searchbar/search-suggestions';
-@import 'deletion/delete-modal';
 @import 'widgets/list-button-group';
-@import 'widgets/popovermenu/popover-menu';
+@import 'widgets/popover-menu';
 
 
 $deactivated-button-color: lightgray;
@@ -61,6 +66,11 @@ $deactivated-button-color: lightgray;
     .resources-mode-buttons {
       margin-top: 3px;
       margin-right: 8px;
+
+      .btn {
+        width: 38px !important;
+        height: 38px !important;
+      }
     }
   }
 }
@@ -73,7 +83,7 @@ $deactivated-button-color: lightgray;
   top: -2px;
   left: 55px;
   width: 235px;
-  max-height: 39px;
+  max-height: 38px;
   padding: 8px;
   margin-top: 5px;
   font-size: 14px;
@@ -81,6 +91,11 @@ $deactivated-button-color: lightgray;
   cursor: default;
   user-select: none;
   background-color: #fefefe;
+
+  span {
+    position: relative;
+    bottom: 1px;
+  }
 
   &.document-limit-exceeded {
     padding-top: 0;
@@ -95,9 +110,16 @@ $deactivated-button-color: lightgray;
 #remove-document-limit {
   position: absolute;
   top: 3px;
-  left: 303px;
-  height: 39px;
+  left: 299px;
+  width: 38px !important;
+  height: 38px !important;
   white-space: nowrap;
+
+  .mdi {
+    position: relative;
+    top: 6px;
+    left: 1px;
+  }
 }
 
 .resources-listing {
@@ -119,7 +141,6 @@ $deactivated-button-color: lightgray;
 
     &:hover {
       background-color: $list-item-hover-color;
-      transition: background-color .5s ease;
     }
   }
 

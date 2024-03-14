@@ -64,6 +64,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoInventoryTab() {
+
+        return click('#edit-form-goto-inventory');
+    }
+
+
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');
@@ -73,6 +79,12 @@ export class DoceditPage {
     public static clickGotoDimensionTab() {
 
         return click('#edit-form-goto-dimension');
+    }
+
+
+    public static clickGotoHierarchyTab() {
+
+        return click('#edit-form-goto-hierarchy');
     }
 
 
@@ -101,7 +113,7 @@ export class DoceditPage {
 
     public static async clickConfirmDuplicateInModal() {
 
-        await click('#duplicate-confirm');
+        await click(await this.getConfirmDuplicateButton());
         return waitForNotExist('#document-edit-wrapper');
     }
 
@@ -133,35 +145,53 @@ export class DoceditPage {
 
     public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
 
-        return selectSearchableSelectOption('#edit-form-element-' + fieldName, optionValueLabel);
+        return selectSearchableSelectOption((await this.getField(fieldName)), optionValueLabel);
     }
 
 
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
-        await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getLocator('#edit-form-element-' + fieldName + ' .checkbox')).nth(checkboxIndex);
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.checkbox')).nth(checkboxIndex);
         return click(element);
     }
 
 
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
-        await waitForExist('#edit-form-element-' + fieldName);
-        const element = (await getLocator('#edit-form-element-' + fieldName + ' input')).nth(radioButtonIndex);
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('input')).nth(radioButtonIndex);
         return click(element);
     }
 
 
-    public static clickLanguageTab(fieldName: string, language: string) {
+    public static async clickDeleteInvalidFieldDataButton(fieldName: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .language-tab-' + language);
+        return click((await this.getField(fieldName).locator('.delete-invalid-field-data-button')));
     }
 
 
-    public static clickCreateCompositeEntry(fieldName: string) {
+    public static async clickLanguageTab(fieldName: string, language: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .create-composite-entry-button');
+        return click((await this.getField(fieldName)).locator('.language-tab-' + language));
+    }
+
+
+    public static async clickCreateCompositeEntry(fieldName: string) {
+
+        return click((await this.getField(fieldName)).locator('.create-composite-entry-button'));
+    }
+
+
+    public static async clickRemoveOutlierValue(fieldName: string, outlierValueIndex: number) {
+
+        const outlierValues = await this.getOutlierValues(fieldName);
+        const valueToRemove = await outlierValues.nth(outlierValueIndex);
+        return click(valueToRemove.locator('.remove-outlier-button'));
     }
 
 
@@ -209,9 +239,9 @@ export class DoceditPage {
     }
 
 
-    public static getCheckboxes(fieldName: string) {
+    public static async getCheckboxes(fieldName: string) {
 
-        return getLocator('#edit-form-element-' + fieldName + ' .checkbox');
+        return (await this.getField(fieldName)).locator('.checkbox');
     }
 
 
@@ -239,9 +269,9 @@ export class DoceditPage {
     }
 
 
-    public static getLanguageTabs(fieldName: string) {
+    public static async getLanguageTabs(fieldName: string) {
 
-        return getLocator('#edit-form-element-' + fieldName + ' .language-tab');
+        return (await this.getField(fieldName)).locator('.language-tab');
     }
 
 
@@ -251,17 +281,32 @@ export class DoceditPage {
     }
 
 
-    // type in
+    public static getConfirmDuplicateButton(disabled: boolean = false) {
 
-    public static typeInInputField(fieldName: string, text: string) {
+        let locatorString: string = '#duplicate-confirm';
+        if (disabled) locatorString += '.disabled';
 
-        return typeIn('#edit-form-element-' + fieldName + ' input', text);
+        return getLocator(locatorString);
     }
 
 
-    public static removeTextFromInputField(fieldName: string) {
+    public static async getOutlierValues(fieldName: string) {
 
-        return clearText('#edit-form-element-' + fieldName + ' input');
+        return (await this.getField(fieldName)).locator('.outlier');
+    }
+
+
+    // type in
+
+    public static async typeInInputField(fieldName: string, text: string) {
+
+        return typeIn((await this.getField(fieldName)).locator('input'), text);
+    }
+
+
+    public static async removeTextFromInputField(fieldName: string) {
+
+        return clearText((await this.getField(fieldName)).locator('input'));
     }
 
 

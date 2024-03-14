@@ -19,6 +19,7 @@ ngb-modal-window {
   border-bottom: 1px solid #ccc;
 
   .heading {
+    width: calc(100% - 50px);
     height: 40px;
     font-size: 1.5em;
     line-height: 40px;
@@ -28,7 +29,7 @@ ngb-modal-window {
 }
 
 #view-modal-body {
-  height: calc(100vh - 119px);
+  height: calc(100vh - 138px);
   padding: 0;
 
   #view-modal-content {

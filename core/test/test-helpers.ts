@@ -11,10 +11,10 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategories', 'getTypeCategories']
+        ['getCategory', 'getCategories', 'getTypeCategories']
     );
 
-    const defaultFieldConfiguration = {
+    const defaultCategoryConfiguration = {
         name: '',
         groups: [{
             fields: [
@@ -30,12 +30,16 @@ export function createMockProjectConfiguration(): any {
         }]
     };
 
+    projectConfiguration.getCategory.and.callFake(categoryName => {
+        return update('name', categoryName, defaultCategoryConfiguration);
+    });
+
     projectConfiguration.getCategories.and.returnValue([
-        { item: update('name', 'category1', defaultFieldConfiguration), trees: [] },
-        { item: update('name', 'category2', defaultFieldConfiguration), trees: [] },
-        { item: update('name', 'category3', defaultFieldConfiguration), trees: [] },
-        { item: update('name', 'Find', defaultFieldConfiguration), trees: [] },
-        { item: update('name', 'Type', defaultFieldConfiguration), trees: [] }
+        { item: update('name', 'category1', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'category2', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'category3', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'Find', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] }
     ]);
 
     projectConfiguration.getTypeCategories.and.returnValue([{ name: 'Type' }]);
@@ -68,7 +72,6 @@ export const doc = (sd, identifier?, category?, id?): Document => {
             id: 'A',
             shortDescription: sd,
             identifier: identifier,
-            title: 'title',
             category: category,
             relations : {}
         },

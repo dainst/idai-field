@@ -1,25 +1,33 @@
-<div id="document-picker">
+<div id="document-picker" [class.has-search-results]="documents?.length">
     <search-bar [filterOptions]="filterOptions"
                 [categories]="getQueryCategories()"
                 (onQueryStringChanged)="setQueryString($event)"
                 (onCategoriesChanged)="setQueryCategories($event)"></search-bar>
 
-    <ul *ngIf="documents?.length > 0" class="list-group" id="document-picker-list">
-        <li *ngFor="let document of documents; let index = index"
-            (click)="documentSelected.emit(document)"
-            class="list-group-item"
-            [id]="'document-picker-resource-' + document.resource.identifier">
+    <cdk-virtual-scroll-viewport *ngIf="documents?.length" id="document-picker-viewport" itemSize="58"
+                                 [style]="'height: ' + getHeight() + 'px'">
+        <ul id="document-picker-list" class="list-group">
+            <li *cdkVirtualFor="let document of documents; trackBy: trackDocument"
+                (click)="select(document)"
+                (dblclick)="doubleClick(document)"
+                class="list-group-item"
+                [class.selected]="selectedDocument === document"
+                [id]="getElementId(document)">
+                <document-teaser [document]="document"></document-teaser>
+            </li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
 
-            <document-teaser [document]="document"></document-teaser>
-        </li>
-    </ul>
-
-    <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
-        <br>
+    <div *ngIf="isLoadingIconVisible()" id="document-picker-loading-icon-container">
         <loading-icon [context]="'documentPicker'"></loading-icon>
-        <span *ngIf="!isQuerySpecified()"
-              i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben</span>
-        <span *ngIf="isQuerySpecified() && !isLoading()"
-              i18n="@@widgets.documentPicker.noSearchResults">Keine Ziele gefunden</span>
+    </div>
+
+    <div *ngIf="!isLoading() && !documents?.length" id="document-picker-placeholder">
+        <div *ngIf="!isQuerySpecified() && showNoQueryMessage"
+             class="no-results-info"
+             i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben.</div>
+        <div *ngIf="isQuerySpecified() && !isLoading()"
+             class="no-results-info"
+             i18n="@@widgets.documentPicker.noSearchResults">Keine Ressourcen gefunden.</div>
     </div>
 </div>

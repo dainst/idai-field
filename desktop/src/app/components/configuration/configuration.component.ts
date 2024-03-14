@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    CategoryConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -72,35 +72,36 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
         { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
         { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
-        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
+        { name: 'types', label: this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' }) },
+        { name: 'inventory', label: this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' }) }
     ];
 
     public availableInputTypes: Array<InputType> = [
-        { name: 'input', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'simpleInput', label: this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'multiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
-        { name: 'simpleMultiInput', label: this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' }), searchable: true, customFields: true },
-        { name: 'text', label: this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' }), searchable: true, customFields: true },
-        { name: 'int', label: this.i18n({ id: 'config.inputType.int', value: 'Ganzzahl' }), searchable: true, customFields: true },
-        { name: 'unsignedInt', label: this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' }), searchable: true, customFields: true },
-        { name: 'float', label: this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' }), searchable: true, customFields: true },
-        { name: 'unsignedFloat', label: this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' }), searchable: true, customFields: true },
-        { name: 'url', label: this.i18n({ id: 'config.inputType.url', value: 'URL' }), searchable: true, customFields: true },
-        { name: 'dropdown', label: this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' }), searchable: true, customFields: true },
-        { name: 'dropdownRange', label: this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' }), searchable: true, customFields: true },
-        { name: 'radio', label: this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' }), searchable: true, customFields: true },
-        { name: 'boolean', label: this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' }), searchable: true, customFields: true },
-        { name: 'checkboxes', label: this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' }), searchable: true, customFields: true },
-        { name: 'dating', label: this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' }), customFields: true },
-        { name: 'date', label: this.i18n({ id: 'config.inputType.date', value: 'Datum' }), customFields: true },
-        { name: 'dimension', label: this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' }), customFields: true },
-        { name: 'literature', label: this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' }), customFields: true },
-        { name: 'composite', label: this.i18n({ id: 'config.inputType.composite', value: 'Kompositfeld' }), customFields: true },
-        { name: 'geometry', label: this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' }) },
-        { name: 'instanceOf', label: this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' }) },
-        { name: 'relation', label: this.i18n({ id: 'config.inputType.relation', value: 'Relation' }) },
-        { name: 'category', label: this.i18n({ id: 'config.inputType.category', value: 'Kategorie' }) },
-        { name: 'identifier', label: this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' }) }
+        { name: 'input', searchable: true, customFields: true },
+        { name: 'simpleInput', searchable: true, customFields: true },
+        { name: 'multiInput', searchable: true, customFields: true },
+        { name: 'simpleMultiInput', searchable: true, customFields: true },
+        { name: 'text', searchable: true, customFields: true },
+        { name: 'int', searchable: true, customFields: true },
+        { name: 'unsignedInt', searchable: true, customFields: true },
+        { name: 'float', searchable: true, customFields: true },
+        { name: 'unsignedFloat', searchable: true, customFields: true },
+        { name: 'url', searchable: true, customFields: true },
+        { name: 'dropdown',  searchable: true, customFields: true },
+        { name: 'dropdownRange', searchable: true, customFields: true },
+        { name: 'radio', searchable: true, customFields: true },
+        { name: 'boolean', searchable: true, customFields: true },
+        { name: 'checkboxes', searchable: true, customFields: true },
+        { name: 'dating', customFields: true },
+        { name: 'date', customFields: true },
+        { name: 'dimension', customFields: true },
+        { name: 'literature', customFields: true },
+        { name: 'composite', customFields: true },
+        { name: 'geometry'  },
+        { name: 'instanceOf' },
+        { name: 'relation' },
+        { name: 'category' },
+        { name: 'identifier' }
     ];
 
     public applyChanges = (configurationDocument: ConfigurationDocument,
@@ -125,7 +126,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private i18n: I18n) {}
@@ -366,6 +367,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = category;
         componentInstance.numberOfCategoryResources = await this.datastore.findIds({ categories: [category.name] }).totalCount;
         componentInstance.initialize();
@@ -447,7 +449,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteCategoryModalComponent>(
             DeleteCategoryModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.category = category;
@@ -468,7 +471,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteGroupModalComponent>(
             DeleteGroupModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.group = group;
@@ -484,7 +488,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             DeleteFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.field = field;
@@ -598,7 +603,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ProjectLanguagesModalComponent>(
             ProjectLanguagesModalComponent,
-            MenuContext.CONFIGURATION_MANAGEMENT
+            MenuContext.CONFIGURATION_MANAGEMENT,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
@@ -629,7 +635,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ImportConfigurationModalComponent>(
             ImportConfigurationModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
@@ -693,7 +700,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [, componentInstance] = this.modals.make<SaveProcessModalComponent>(
             SaveProcessModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         try {
@@ -746,7 +754,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            this.categoryConverter,
+            this.documentConverter,
+            this.projectConfiguration,
             true
         );
     }

@@ -1,0 +1,112 @@
+{
+  "fields": {
+    "category": {
+      "label": ""
+    },
+    "identifier": {
+      "label": "",
+      "description": ""
+    },
+    "shortDescription": {
+      "label": ""
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": ""
+        },
+        "shortName": {
+          "label": ""
+        }
+      }
+    },
+    "Image": {
+      "label": "",
+      "fields": {
+        "height": {
+          "label": ""
+        },
+        "width": {
+          "label": ""
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": ""
+    },
+    "liesWithin": {
+      "label": ""
+    },
+    "includes": {
+      "label": ""
+    },
+    "isPresentIn": {
+      "label": ""
+    },
+    "isAbove": {
+      "label": ""
+    },
+    "isBelow": {
+      "label": ""
+    },
+    "isSameAs": {
+      "label": ""
+    },
+    "cuts": {
+      "label": ""
+    },
+    "isCutBy": {
+      "label": ""
+    },
+    "fills": {
+      "label": ""
+    },
+    "isFilledBy": {
+      "label": ""
+    },
+    "borders": {
+      "label": ""
+    },
+    "abuts": {
+      "label": ""
+    },
+    "isAbuttedBy": {
+      "label": ""
+    },
+    "bondsWith": {
+      "label": ""
+    },
+    "isAfter": {
+      "label": ""
+    },
+    "isBefore": {
+      "label": ""
+    },
+    "isContemporaryWith": {
+      "label": ""
+    },
+    "depicts": {
+      "label": ""
+    },
+    "isDepictedIn": {
+      "label": ""
+    },
+    "isMapLayerOf": {
+      "label": ""
+    },
+    "hasMapLayer": {
+      "label": ""
+    },
+    "isInstanceOf": {
+      "label": ""
+    },
+    "hasInstance": {
+      "label": ""
+    }
+  }
+}

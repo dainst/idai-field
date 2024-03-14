@@ -33,10 +33,13 @@ export default function ProjectsOverview(): ReactElement {
 
     const documentListRef = useRef<HTMLDivElement>();
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) =>
-        searchDocuments(searchParams, newOffset, loginData.token)
-            .then(result => setDocuments(oldDocuments => oldDocuments.concat(result.documents)))
-    );
+    const getChunk = async (newOffset: number) => {
+
+        const result = await searchDocuments(searchParams, newOffset, loginData.token);
+        setDocuments(oldDocuments => oldDocuments.concat(result.documents));
+    };
+
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     useEffect (() => {
         

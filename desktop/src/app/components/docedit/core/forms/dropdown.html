@@ -1,8 +1,8 @@
 <searchable-select [selectedValue]="fieldContainer[field.name]"
                    [values]="getValues()"
                    [getLabel]="getLabel"
-                   (onValueSelected)="updateValue($event)">
-
-<empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
+                   (onValueSelected)="updateValue($event)"></searchable-select>
 
 <outliers [fieldContainer]="fieldContainer" [fieldName]="field.name" [valuelist]="valuelist"></outliers>
+
+<empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>

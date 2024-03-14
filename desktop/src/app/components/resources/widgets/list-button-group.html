@@ -1,22 +1,19 @@
 <div class="sidebar-list-button-group">
-    <div class="btn info-button"
-         [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'info'"
-         (click)="togglePopoverMenu('info'); $event.stopPropagation();"
+    <div *ngIf="shouldShowQrCodeButton()"
+         class="btn btn-outline-primary"
+         (click)="openQrCodeEditor(); $event.stopPropagation();"
          placement="right"
          container="body"
-         ngbTooltip="Daten anzeigen"
-         i18n-ngbTooltip="@@resources.showResourceData.tooltip"
+         ngbTooltip="QR-Code verwalten"
+         i18n-ngbTooltip="@@resources.contextMenu.editQrCode"
          #tooltip="ngbTooltip"
          (mousedown)="tooltip.close()">
-        <span
-              class="mdi mdi-information-outline sidebar-list-button-group-inner">
-        </span>
+        <span class="mdi mdi-qrcode"></span>
     </div>
 
     <div *ngIf="shouldShowArrowBottomRight()"
-         class="btn hierarchy-button"
-         [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'children'"
-         (click)="togglePopoverMenu('children'); $event.stopPropagation();"
+         class="btn btn-outline-primary hierarchy-button"
+         (click)="moveInto(); $event.stopPropagation();"
          placement="right"
          container="body"
          ngbTooltip="Untergeordnete Ressourcen anzeigen"
@@ -29,16 +26,17 @@
     </div>
 
     <div *ngIf="shouldShowArrowTopRightForSearchMode()"
-         class="btn hierarchy-button hierarchy-button-overview"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
          placement="right"
          container="body"
-         ngbTooltip="Im Kontext der Maßnahme anzeigen"
+         ngbTooltip="Im Kontext der Maßahme anzeigen"
          i18n-ngbTooltip="@@resources.showInOperationContext.tooltip">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowUpForSearchMode()" class="btn hierarchy-button hierarchy-button-overview"
+    <div *ngIf="shouldShowArrowUpForSearchMode()"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceInSameView(); $event.stopPropagation();"
          placement="right"
          container="body"
@@ -48,7 +46,7 @@
     </div>
 
     <div *ngIf="shouldShowArrowTopRight()"
-         class="btn hierarchy-button hierarchy-button-overview"
+         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          ngbTooltip="Zur Maßnahme wechseln"
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
          placement="right"

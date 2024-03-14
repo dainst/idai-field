@@ -15,7 +15,11 @@ defmodule Api.AppTest.Support.AppTestHelper do
   def opts, do: @opts
 
   def perform_query context do
-    conn = conn(:get, context[:path])
+    conn = if :post == context[:method] do
+      conn(:post, context[:path], context[:body])
+    else
+      conn(:get, context[:path])
+    end
     conn = Router.call((if login_info = context[:login] do
       {name, pass} = login_info
       token = sign_in(name, pass)

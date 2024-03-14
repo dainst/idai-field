@@ -1,4 +1,6 @@
 defmodule FieldHubWeb.ProjectShowLive do
+  alias FieldHub.Project
+
   alias FieldHubWeb.{
     Router.Helpers,
     UserAuth,
@@ -30,6 +32,9 @@ defmodule FieldHubWeb.ProjectShowLive do
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->
+        # For the overview portion we may have to look up the sizes of all files in the project, which may take some seconds. For this
+        # reason we implement that evaluation asynchronously. This Process.send/3 will get picked up further down by
+        # a handle_info/2.
         Process.send(self(), :update_overview, [])
 
         {
@@ -42,6 +47,9 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
+          |> assign(:confirm_project_name, "")
+          |> assign(:delete_files, false)
+          |> assign(:hide_cache_cleared_message, true)
           |> read_project_doc()
         }
 
@@ -50,12 +58,21 @@ defmodule FieldHubWeb.ProjectShowLive do
     end
   end
 
-  def handle_info(
-        :update_overview,
-        %{assigns: %{project: project}} = socket
-      ) do
-    stats = Project.evaluate_project(project)
+  def handle_info(:update_overview, %{assigns: %{project: project}} = socket) do
+    # Evaluate the project asynchronously. Once the task finishes, it will get picked up
+    # by another handle_info/2 below.
+    Task.async(fn ->
+      {:overview_task, Project.evaluate_project(project)}
+    end)
 
+    {:noreply, socket}
+  end
+
+  def handle_info({ref, {:overview_task, stats}}, socket) do
+    # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
+    Process.demonitor(ref, [:flush])
+
+    # Reschedule the task to be run again in 10 seconds, see above.
     Process.send_after(self(), :update_overview, 10000)
 
     {
@@ -66,11 +83,9 @@ defmodule FieldHubWeb.ProjectShowLive do
     }
   end
 
-  def handle_info(
-        :update_issues,
-        %{assigns: %{project: project}} = socket
-      ) do
-    issues = Issues.evaluate_all(project)
+  def handle_info({ref, {:issues_task, issues}}, socket) do
+    # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
+    Process.demonitor(ref, [:flush])
 
     grouped =
       issues
@@ -96,7 +111,10 @@ defmodule FieldHubWeb.ProjectShowLive do
       Project.check_project_authorization(project, user_name)
       |> case do
         :granted ->
-          Process.send(self(), :update_issues, [])
+          # Start the issue evaluation asynchronously, this will get picked up by a handle_info/2 above.
+          Task.async(fn ->
+            {:issues_task, Issues.evaluate_all(project)}
+          end)
 
           socket
           |> assign(:issue_status, :evaluating)
@@ -110,6 +128,68 @@ defmodule FieldHubWeb.ProjectShowLive do
 
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
+  end
+
+  def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
+    {:ok, true} = FieldHub.FileStore.clear_cache(project)
+
+    {:noreply, assign(socket, :hide_cache_cleared_message, false)}
+  end
+
+  def handle_event(
+        "delete_form_change",
+        %{
+          "repeat_project_name_input" => repeated_project_name,
+          "delete_files_radio" => delete_files
+        } = _values,
+        socket
+      ) do
+    delete_files =
+      case delete_files do
+        "delete_files" ->
+          true
+
+        "keep_files" ->
+          false
+      end
+
+    socket = assign(socket, :confirm_project_name, repeated_project_name)
+    socket = assign(socket, :delete_files, delete_files)
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "delete",
+        _values,
+        %{assigns: %{project: project, current_user: user_name, delete_files: delete_files}} =
+          socket
+      ) do
+    socket =
+      case User.is_admin?(user_name) do
+        true ->
+          %{database: :deleted} = Project.delete(project, delete_files)
+          :deleted = User.delete(project)
+
+          if delete_files == false do
+            {:ok, "Project database`#{project}` has been deleted successfully."}
+          else
+            {:ok, "Project database`#{project}` and images have been deleted successfully."}
+          end
+
+        false ->
+          {:error, "You are not authorized to delete the project."}
+      end
+      |> case do
+        {:ok, msg} ->
+          socket
+          |> put_flash(:info, msg)
+
+        {:error, msg} ->
+          socket
+          |> put_flash(:error, msg)
+      end
+
+    {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("generate_password", _values, socket) do

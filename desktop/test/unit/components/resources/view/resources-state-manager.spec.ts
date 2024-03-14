@@ -26,7 +26,10 @@ describe('ResourcesStateManager', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['get']);
         mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategoryForest'])
+        
+        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
+            ['getCategoryForest', 'getInventoryCategories']);
+        mockProjectConfiguration.getInventoryCategories.and.returnValue([]);
 
         mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
         mockIndexFacade.getCount.and.callFake(getCount);
@@ -40,12 +43,12 @@ describe('ResourcesStateManager', () => {
             mockIndexFacade,
             mockSerializer,
             mockTabManager,
+            'test',
             mockProjectConfiguration,
             undefined
         );
 
         resourcesStateManager.loaded = true;
-
 
         trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
     });

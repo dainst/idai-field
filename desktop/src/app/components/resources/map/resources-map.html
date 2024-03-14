@@ -15,7 +15,8 @@
                       [coordinateReferenceSystem]="coordinateReferenceSystem"
                       [viewName]="viewFacade.getView()"
                       [isEditing]="isEditingGeometry()"
-                      [update]="viewFacade.isReady()"
+                      [paddingLeft]="getPaddingLeft()"
+                      [update]="isMapUpdateAllowed()"
                       (onSelectDocument)="select($event.document, $event.multiSelect)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>

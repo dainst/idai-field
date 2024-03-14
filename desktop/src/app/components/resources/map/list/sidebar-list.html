@@ -1,8 +1,10 @@
 <resources-context-menu *ngIf="contextMenu.isOpen()"
-    [contextMenu]="contextMenu"
-    (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
+                        [contextMenu]="contextMenu"
+                        (onSelectAction)="performContextMenuAction($event)">
+</resources-context-menu>
 
-<popover-menu [document]="selectedDocument"></popover-menu>
+<popover-menu *ngIf="selectedDocument" [document]="selectedDocument"
+              (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
 <cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
     <ul #sidebar id="sidebar" class="resources-listing"
@@ -11,7 +13,7 @@
              class="resources-listing-item resources-listing-item-wide"
              (contextmenu)="contextMenu.open($event, getSelection())"
              [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-             [class.conflicted]="document['_conflicts']"
+             [class.has-warnings]="document.warnings"
              [class.selected]="selectedDocument?.resource.id === document.resource.id"
              [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
              [id]="'resource-' + document.resource.identifier">
@@ -20,9 +22,7 @@
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
             <list-button-group [document]="document"
-                            [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                            [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
-                            (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
+                               [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id">
             </list-button-group>
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { MoveUtility } from '../../../components/resources/move-utility';
+import { MoveUtility } from '../actions/move/move-utility';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
-export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
-    |'create-point'|'edit-geometry';
+export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
+    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -27,9 +28,10 @@ export class ResourcesContextMenuComponent implements OnChanges {
         = new EventEmitter<ResourcesContextMenuAction>();
 
     public orientation: ContextMenuOrientation = 'top';
+    
 
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private utilTranslations: UtilTranslations) {}
 
 
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
@@ -50,7 +52,11 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isCreateGeometryOptionAvailable()
             || this.isEditGeometryOptionAvailable()
             || this.isMoveOptionAvailable()
-            || this.isEditImagesOptionAvailable();
+            || this.isEditImagesOptionAvailable()
+            || this.isWarningsOptionAvailable()
+            || this.isAddQRCodeOptionAvailable()
+            || this.isEditQRCodeOptionAvailable()
+            || this.isScanStoragePlaceOptionIsAvailable();
     }
 
 
@@ -68,10 +74,15 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        return this.contextMenu.documents.length > 0 &&
-            (!this.isReadonly() || this.projectConfiguration.getTypeCategories()
-                .map(to(Named.NAME))
-                .includes(this.contextMenu.documents[0].resource.category));
+        return this.contextMenu.documents.length > 0
+            && (!this.isReadonly() || !this.isTypeResource());
+    }
+
+
+    public isWarningsOptionAvailable(): boolean {
+
+        return this.contextMenu.documents.length === 1
+            && this.contextMenu.documents[0].warnings !== undefined;
     }
 
 
@@ -100,13 +111,70 @@ export class ResourcesContextMenuComponent implements OnChanges {
         if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
         return MoveUtility.getAllowedTargetCategories(
-            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration
+            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration, this.utilTranslations,
         ).length > 0;
+    }
+
+
+    public isScanStoragePlaceOptionIsAvailable(): boolean {
+
+        if (this.isReadonly() || !this.isStoredInRelationAllowed()) return false;
+
+        return this.projectConfiguration.getInventoryCategories().filter(category => category.scanCodes).length > 0;
+    }
+
+
+    public isAddQRCodeOptionAvailable(): boolean {
+
+        return this.isQrCodeOptionAvailable()
+            && !this.contextMenu.documents[0].resource.scanCode;
+    }
+
+    
+    public isEditQRCodeOptionAvailable(): boolean {
+
+        return this.isQrCodeOptionAvailable()
+            && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    private isQrCodeOptionAvailable(): boolean {
+
+        if (!this.isEditOptionAvailable()) return false;
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.contextMenu.documents[0].resource.category
+        );
+
+        return category.scanCodes !== undefined;
     }
 
 
     private isReadonly(): boolean {
 
         return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
+    }
+
+
+    private isStoredInRelationAllowed(): boolean {
+
+        return this.contextMenu.documents.find(document => {
+            return !this.projectConfiguration.isAllowedRelationDomainCategory(
+                document.resource.category, 'StoragePlace', Relation.Inventory.ISSTOREDIN
+            );
+        }) === undefined;
+    }
+
+
+    private isTypeResource(): boolean {
+
+        return this.isCategoryResource(this.projectConfiguration.getTypeCategories());
+    }
+
+
+    private isCategoryResource(categories: Array<CategoryForm>): boolean {
+
+        return categories.map(to(Named.NAME))
+            .includes(this.contextMenu.documents[0].resource.category);
     }
 }

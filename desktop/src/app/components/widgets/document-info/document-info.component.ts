@@ -25,6 +25,7 @@ export class DocumentInfoComponent implements OnChanges {
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
     @Output() onThumbnailClicked: EventEmitter<void> = new EventEmitter<void>();
     @Output() onCloseButtonClicked: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onHeaderRightClicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
     public openSection: string|undefined = Groups.STEM;
     public parentDocument: FieldDocument|undefined;

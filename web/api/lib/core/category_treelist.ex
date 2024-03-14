@@ -6,4 +6,15 @@ defmodule Api.Core.CategoryTreeList do
       category_tree_list
     )
   end
+
+  def get_supercategory(target_name, category_tree_list) do
+    result = Enum.find(category_tree_list, fn %{ trees: trees } ->
+      Enum.find(trees, fn %{ item: %{ name: name } } -> name == target_name end)
+    end)
+    if is_nil(result) do
+      nil
+    else
+      result.item
+    end
+  end
 end

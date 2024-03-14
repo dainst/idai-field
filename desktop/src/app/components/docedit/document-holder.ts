@@ -1,6 +1,6 @@
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import { CategoryForm, Document, Datastore, Field, NewDocument, Resource, ProjectConfiguration,
-    RelationsManager} from 'idai-field-core';
+    RelationsManager, IdGenerator } from 'idai-field-core';
 import { Validations } from '../../model/validations';
 import { Validator } from '../../model/validator';
 import { trimFields } from '../../util/trim-fields';
@@ -33,7 +33,8 @@ export class DocumentHolder {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private relationsManager: RelationsManager,
                 private validator: Validator,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private idGenerator: IdGenerator) {}
 
 
     public isChanged(): boolean {
@@ -63,10 +64,18 @@ export class DocumentHolder {
     };
 
 
+    public isNewDocument(): boolean {
+
+        return this.clonedDocument && !this.clonedDocument.resource.id;
+    }
+
+
     /**
      * @throws [DoceditErrors.NOT_FOUND]
      */
     public async save(): Promise<Document> {
+
+        if (this.isNewDocument()) this.addScanCodeIfConfigured(this.clonedDocument);
 
         await this.performAssertions();
         this.convertStringsToNumbers();
@@ -96,6 +105,7 @@ export class DocumentHolder {
             identifierNumber = await DuplicationUtil.setUniqueIdentifierForDuplicate(
                 template, baseIdentifier, identifierNumber, minDigits, this.validator
             );
+            this.addScanCodeIfConfigured(template);
 
             await this.relationsManager.update(
                 template,
@@ -210,6 +220,14 @@ export class DocumentHolder {
             keys);
     }
 
+
+    private addScanCodeIfConfigured(document: NewDocument) {
+
+        if (this.projectConfiguration.getCategory(document.resource.category).scanCodes?.autoCreate) {
+            document.resource.scanCode = this.idGenerator.generateId();
+        }
+    }
+ 
 
     /**
      * @param document modified in place

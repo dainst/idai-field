@@ -14,6 +14,12 @@ export class ResourcesSearchBarPage {
     }
 
 
+    public static clickOpenQrScanner() {
+
+        return click('#qr-code-scanner-button');
+    }
+
+
     // elements
 
     public static getSuggestionsBox() {

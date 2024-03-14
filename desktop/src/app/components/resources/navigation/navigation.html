@@ -37,11 +37,12 @@
             <span i18n="@@resources.navigation.project">Projekt</span>
         </div>
 
-        <div *ngIf="viewFacade.isInTypesManagement()"
-             id="types-navigation-root" type="button" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="!navigationPath.selectedSegmentId"
-             (click)="moveInto(undefined)">
-            <span i18n="@@resources.navigation.typeCatalogs">Typenkataloge</span>
+        <div  *ngIf="viewFacade.isInTypesManagement() || viewFacade.isInInventoryManagement()"
+              id="grid-list-navigation-root" type="button" class="btn btn-outline-primary navigation-button"
+              [class.root-document]="!navigationPath.selectedSegmentId"
+              (click)="moveInto(undefined)">
+            <span *ngIf="viewFacade.isInTypesManagement()" i18n="@@resources.navigation.typeCatalogs">Typenkataloge</span>
+            <span *ngIf="viewFacade.isInInventoryManagement()" i18n="@@util.inventoryRegister">Inventarverzeichnis</span>
         </div>
 
         <div *ngFor="let document of getSegments()"

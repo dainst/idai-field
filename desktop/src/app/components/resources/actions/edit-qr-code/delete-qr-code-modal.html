@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.qrCodeEditor.delete.header">QR-Code löschen?</h5>
+</div>
+<div id="delete-qr-code-modal-body" class="modal-body">
+    <p i18n="@@resources.qrCodeEditor.delete.question">
+        Möchten Sie den QR-Code der Ressource <b>{{document.resource.identifier}}</b> wirklich löschen?
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" id="delete-qr-code-confirm" class="btn btn-danger"
+            (click)="activeModal.close('delete')" i18n="@@buttons.delete">Löschen</button>
+    <button type="button" id="delete-qr-code-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

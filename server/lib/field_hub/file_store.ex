@@ -4,6 +4,7 @@ defmodule FieldHub.FileStore do
   @valid_file_variants Application.compile_env(:field_hub, :valid_file_variants)
   @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @index_cache_expiration_ms 1000 * 60 * 60 * 24
+  # @index_cache_expiration_ms 3000
 
   require Logger
 
@@ -320,7 +321,7 @@ defmodule FieldHub.FileStore do
     end
   end
 
-  defp clear_cache(project) do
+  def clear_cache(project) do
     Cachex.del(@index_cache_name, project)
   end
 end

@@ -1,3 +1,4 @@
+import { Document } from '../../../src/model';
 import { doc, doc1 } from '../../test-helpers';
 import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
@@ -110,6 +111,28 @@ describe('subsystem/datastore', () => {
         const result = await app.datastore.find({ 
             constraints: { 'isChildOf:contain': { value: ['id1'], searchRecursively: true }}});
         expect(result.ids).toEqual(['id2', 'id3']);
+        done();
+    });
+
+
+    it('update non-unique identifier warnings', async done => {
+
+        let document1 = doc('sd1', '1', 'Find', 'id1');
+        let document2 = doc('sd2', '1', 'Find', 'id2');
+
+        document1 = await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+
+        expect(document1.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(document2.warnings?.nonUniqueIdentifier).toBe(true);
+
+        const clonedDocument2 = Document.clone(document2);
+        clonedDocument2.resource.identifier = '2';
+        await app.datastore.update(clonedDocument2);
+        
+        expect(document1.warnings).toBeUndefined();
+        expect(document2.warnings).toBeUndefined();
+
         done();
     });
 });

@@ -2,7 +2,7 @@ import { flow, map, update as updateD, assoc } from 'tsfun';
 import { Document, Resource, CategoryForm } from 'idai-field-core';
 import { Parser } from './parser';
 import { convertCsvRows } from './convert-csv-rows';
-import { convertFieldTypes } from './convert-field-types';
+import { convertFields } from './convert-fields';
 
 
 /**
@@ -48,7 +48,7 @@ export module CsvParser {
             convertCsvRows(separator),
             map(updateD('category', category.name)),
             map(insertRelations),
-            map(convertFieldTypes(category)),
+            map(convertFields(category)),
             map(toDocument) as any);
     }
 }

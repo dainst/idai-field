@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
-import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
@@ -27,7 +26,6 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private utilTranslations: UtilTranslations,
                 private labels: Labels) {}
 
 
@@ -40,8 +38,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (changes['resource']) {
             this.groups = await FieldsViewUtil.getGroupsForResource(
-                this.resource, this.projectConfiguration, this.datastore, this.labels,
-                this.utilTranslations.getTranslation('includesStratigraphicalUnits')
+                this.resource, this.projectConfiguration, this.datastore, this.labels
             );
             if (!this.openSection && this.groups.length > 0) this.openSection = this.groups[0].name;
         }

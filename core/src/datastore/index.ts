@@ -1,4 +1,4 @@
-export * from './category-converter';
+export * from './document-converter';
 export * from './changes';
 export * from './datastore';
 export { Datastore } from './datastore';

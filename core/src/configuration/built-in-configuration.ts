@@ -195,6 +195,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -209,6 +213,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -227,6 +235,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -241,6 +253,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -259,6 +275,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -274,6 +294,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['includesStratigraphicalUnits']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -287,6 +311,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['includesStratigraphicalUnits']
                     },
                     {
                         name: Groups.POSITION,
@@ -307,6 +335,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.PROPERTIES,
@@ -342,6 +374,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -358,6 +394,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -377,6 +417,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -393,6 +437,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -406,6 +454,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -425,6 +477,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -442,6 +498,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -455,6 +515,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -472,6 +536,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -487,6 +555,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.POSITION,
@@ -523,6 +595,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -538,6 +614,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren', 'isPresentIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -562,8 +642,12 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren', 'isPresentIn']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', Relation.IS_PRESENT_IN]
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -580,8 +664,12 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren', 'isPresentIn']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', Relation.IS_PRESENT_IN]
+                        fields: ['geometry']
                     }
                 ]
             }
@@ -589,16 +677,25 @@ export class BuiltInConfiguration {
         Find: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS, 'isStoredIn']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.IDENTIFICATION,
                         fields: ['isInstanceOf']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -610,16 +707,25 @@ export class BuiltInConfiguration {
         FindCollection: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
                     },
                     {
                         name: Groups.IDENTIFICATION,
                         fields: ['isInstanceOf']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -630,12 +736,21 @@ export class BuiltInConfiguration {
         },
         Sample: {
             mustLieWithin: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
+                    },
+                    {
+                        name: Groups.HIERARCHY,
+                        fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoredIn']
                     },
                     {
                         name: Groups.POSITION,
@@ -683,6 +798,24 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.IDENTIFICATION,
                         fields: ['hasInstance']
+                    }
+                ]
+            }
+        },
+        StoragePlace: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            scanCodesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.INVENTORY,
+                        fields: ['isStoragePlaceOf']
                     }
                 ]
             }
@@ -739,7 +872,7 @@ export class BuiltInConfiguration {
                     }
                 ]
             }
-        },
+        }
     };
 
 
@@ -763,6 +896,18 @@ export class BuiltInConfiguration {
             mandatory: true,
             fulltextIndexed: true,
             fixedInputType: true
+        },
+        hasChildren: {
+            inputType: Field.InputType.DERIVED_RELATION,
+            visible: true,
+            editable: false,
+            constraintName: 'isChildOf:contain'
+        },
+        includesStratigraphicalUnits: {
+            inputType: Field.InputType.DERIVED_RELATION,
+            visible: true,
+            editable: false,
+            constraintName: 'isPresentIn:contain'
         }
     };
 
@@ -1004,7 +1149,7 @@ export class BuiltInConfiguration {
         {
             name: 'isRecordedIn',
             domain: ['Level:inherit', 'Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling',
-                'Roof', 'Stairs', 'Opening', 'Damage:inherit', 'DesignElement:inherit'],
+                'Roof', 'Stairs', 'Opening:inherit', 'Damage:inherit', 'DesignElement:inherit'],
             range: ['Building'],
             editable: false,
             visible: false,
@@ -1144,7 +1289,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Opening'],
+            domain: ['Opening:inherit'],
             range: ['Room:inherit', 'RoomFloor', 'RoomWall:inherit', 'RoomCeiling', 'Roof', 'Stairs'],
             sameMainCategoryResource: true,
             editable: false,
@@ -1155,7 +1300,7 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Damage:inherit'],
             range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
-                'RoomCeiling', 'Roof', 'Stairs', 'Opening', 'DesignElement:inherit'],
+                'RoomCeiling', 'Roof', 'Stairs', 'Opening:inherit', 'DesignElement:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -1165,7 +1310,7 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['DesignElement:inherit'],
             range: ['BuildingPart:inherit', 'Room:inherit', 'Level:inherit', 'RoomFloor', 'RoomWall:inherit',
-                'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
+                'RoomCeiling', 'Roof', 'Stairs', 'Opening:inherit'],
             sameMainCategoryResource: true,
             editable: false,
             visible: false,
@@ -1175,6 +1320,14 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Type:inherit'],
             range: ['Type:inherit', 'TypeCatalog:inherit'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['StoragePlace:inherit'],
+            range: ['StoragePlace:inherit'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1193,6 +1346,24 @@ export class BuiltInConfiguration {
             inverse: 'isInstanceOf',
             domain: ['Type:inherit'],
             range: ['Find:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isStoredIn',
+            inverse: 'isStoragePlaceOf',
+            domain: ['Find:inherit', 'FindCollection:inherit', 'Sample'],
+            range: ['StoragePlace:inherit'],
+            editable: true,
+            visible: true,
+            inputType: 'relation'
+        },
+        {
+            name: 'isStoragePlaceOf',
+            inverse: 'isStoredIn',
+            domain: ['StoragePlace:inherit'],
+            range: ['Find:inherit', 'FindCollection:inherit', 'Sample'],
             editable: true,
             visible: true,
             inputType: 'relation'

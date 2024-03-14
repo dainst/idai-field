@@ -15,7 +15,6 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
-import { MsgWithParams } from '../messages/msg-with-params';
 
 
 @Component({
@@ -41,24 +40,27 @@ export class DoceditComponent {
     public fieldDefinitions: Array<Field>|undefined;
     public groups: Array<Group>|undefined;
     public identifierPrefix: string|undefined;
+    public scrollTargetField: string;
 
     public parentLabel: string|undefined = undefined;
     public resourceLabel: string;
     public resourceSubLabel: string;
 
+    public maxNumberOfDuplicates: number;
+
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
     private escapeKeyPressed = false;
 
 
-    constructor(public activeModal: NgbActiveModal,
-                public documentHolder: DocumentHolder,
+    constructor(public documentHolder: DocumentHolder,
+                public projectConfiguration: ProjectConfiguration,
+                private activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                public projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
                 private loading: Loading,
                 private menuService: Menus,
-                public labels: Labels,
                 private i18n: I18n) {}
 
 
@@ -98,8 +100,10 @@ export class DoceditComponent {
         return this.documentHolder.clonedDocument !== undefined
             && this.documentHolder.clonedDocument.resource.category !== 'Project'
             && !this.projectConfiguration.isSubcategory(
-                this.documentHolder.clonedDocument.resource.category, 'Image'
-            );
+                this.documentHolder.clonedDocument.resource.category, 'Image')
+            && (this.documentHolder.isNewDocument()
+                ? this.maxNumberOfDuplicates > 1
+                : this.maxNumberOfDuplicates > 0);
     }
 
 
@@ -136,6 +140,7 @@ export class DoceditComponent {
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFields();
+        this.maxNumberOfDuplicates = await this.computeMaxNumberOfDuplicates();
     }
 
 
@@ -167,7 +172,8 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 DuplicateModalComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
+            modalRef.componentInstance.initialize(this.documentHolder.isNewDocument());
+            modalRef.componentInstance.maxNumberOfDuplicates = this.maxNumberOfDuplicates;
             numberOfDuplicates = await modalRef.result;
         } catch (err) {
             // DuplicateModal has been canceled
@@ -236,9 +242,17 @@ export class DoceditComponent {
             return undefined;
         }
 
-        this.messages.add((errorWithParams.length > 0
-            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
-            : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
+        if (errorWithParams.length > 0) {
+            if (errorWithParams[0] === DatastoreErrors.GENERIC_ERROR && errorWithParams.length > 1) {
+                console.error(errorWithParams[1]);
+            }
+            this.messages.add(
+                MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
+            );
+        } else {
+            console.error(errorWithParams);
+            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
     }
 
 
@@ -367,13 +381,28 @@ export class DoceditComponent {
     }
 
 
+    private async computeMaxNumberOfDuplicates(): Promise<number> {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.documentHolder.clonedDocument.resource.category
+        );
+
+        if (category.resourceLimit) {
+            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            return Math.max(0, category.resourceLimit - resourcesCount);
+        } else {
+            return 100;
+        }
+    }
+
+
     private static detectSaveConflicts(documentBeforeSave: Document, documentAfterSave: Document): boolean {
 
         const conflictsBeforeSave: string[] = documentBeforeSave._conflicts;
         const conflictsAfterSave: string[] = documentAfterSave._conflicts;
 
-        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
+        if (!conflictsBeforeSave && conflictsAfterSave?.length) return true;
 
         return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }

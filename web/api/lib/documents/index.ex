@@ -8,6 +8,10 @@ defmodule Api.Documents.Index do
   @max_geometries 10000
   @exists_geometries ["resource.geometry"]
   @fields_geometries ["resource.category", "resource.geometry", "resource.identifier", "resource.id", "project"]
+  @fields_search ["resource.category", "resource.identifier", "resource.shortDescription",
+                  "resource.id", "project", "resource.shortName", "resource.geometry_wgs84", "resource.georeference",
+                  "resource.height", "resource.width", "resource.childrenCount", "resource.relations.isDepictedIn",
+                  "resource.relations.hasMapLayer", "resource.relations.hasDefaultMapLayer"]
 
   def get(nil), do: nil
   def get(id) do
@@ -21,31 +25,34 @@ defmodule Api.Documents.Index do
   must_not - pass nil to set no must_not filters
   """
   def search(q, size, from, filters, must_not, exists, not_exists, sort, vector_query, readable_projects) do
-    {filters, multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
+    {filters, multilanguage_filters, must_not, project_conf, dropdown_fields} = preprocess(filters, must_not)
+    filters_without_category_filters = Enum.filter(filters, fn {k, _v} -> k != "resource.category.name" end)
 
-    query = create_search_query q, size, from, filters, must_not, exists,
-      not_exists, sort, vector_query, readable_projects, multilanguage_filters
+    original_query_result = create_search_query(q, size, from, filters, must_not, exists,
+      not_exists, sort, vector_query, readable_projects, multilanguage_filters)
+      |> build_post_atomize
+      |> Mapping.map(project_conf)
 
-    result = query |> build_post_atomize |> Mapping.map(project_conf)
-
-    multilanguage_filters = []
-    filters = Enum.filter filters, fn {k, _v} -> k != "resource.category.name" end
-    # TODO remove dropdown filters and any other field specific filters here
-
-    query2 = create_search_query q, size, from, filters, must_not, exists,
-      not_exists, sort, vector_query, readable_projects, multilanguage_filters
-
-    result2 = query2 |> build_post_atomize |> Mapping.map(project_conf)
-
-    if Map.has_key? result2, :filters do
-      postprocess_search_result result, result2
-    else
-      result
+    if filters_without_category_filters == filters do
+      original_query_result
+    else # a category filter has been set, i.e. a (single) category has been "selected"
+      {_, categories} = filters
+        |> Enum.filter(fn {k, _v} -> k == "resource.category.name" end)
+        |> List.first
+      category = List.first categories
+      filtered_filters = filters_without_category_filters
+        |> Enum.filter(fn {k, _v} -> k not in dropdown_fields end)
+      replacement_query_result = create_search_query(
+          q, size, from, filtered_filters, must_not, exists,
+          not_exists, sort, vector_query, readable_projects, [])
+        |> build_post_atomize
+        |> Mapping.map(project_conf, nil, category)
+      postprocess_search_result original_query_result, replacement_query_result
     end
   end
 
   def search_geometries(q, filters, must_not, exists, not_exists, readable_projects) do
-    {filters, _multilanguage_filters, must_not, project_conf} = preprocess(filters, must_not)
+    {filters, _multilanguage_filters, must_not, project_conf, _} = preprocess(filters, must_not)
     Query.init(q, @max_geometries)
     |> Query.add_filters(filters)
     |> Query.add_must_not(must_not)
@@ -58,24 +65,19 @@ defmodule Api.Documents.Index do
     |> Mapping.map(project_conf)
   end
 
-  defp postprocess_search_result result, result2 do
-    category_filters = Enum.filter result2.filters, fn e -> e.name == "resource.category.name" end
+  defp postprocess_search_result original_query_result, unfiltered_query_result do
+    category_filters = Enum.filter unfiltered_query_result.filters, fn e -> e.name == "resource.category.name" end
+    category_filter = List.first category_filters
+    unfiltered_values = category_filter.values
 
-    if List.first category_filters do
-      category_filter = List.first category_filters
-      unfiltered_values = category_filter.values
-
-      result_category_filters = Enum.map result.filters, fn filter ->
-        if filter.name == "resource.category.name" do
-          put_in filter[:unfilteredValues], unfiltered_values
-        else
-          filter
-        end
+    result_category_filters = Enum.map original_query_result.filters, fn filter ->
+      if filter.name == "resource.category.name" do
+        put_in filter[:values], unfiltered_values
+      else
+        filter
       end
-      put_in result[:filters], result_category_filters
-    else
-      result
     end
+    put_in original_query_result[:filters], result_category_filters
   end
 
   defp create_search_query q, size, from, filters, must_not, exists,
@@ -89,6 +91,7 @@ defmodule Api.Documents.Index do
       |> Query.add_must_not(must_not)
       |> Query.add_exists(exists)
       |> Query.add_not_exists(not_exists)
+      |> Query.only_fields(@fields_search)
       |> Query.set_sort(sort)
       |> Query.set_readable_projects(readable_projects)
       |> Query.set_vector_query(vector_query)
@@ -100,7 +103,7 @@ defmodule Api.Documents.Index do
     project = get_project(filters)
     project_conf = ProjectConfigLoader.get project
     languages = ProjectConfigLoader.get_languages project
-    {filters, multilanguage_filters} = Filter.split_off_multilanguage_filters_and_add_name_suffixes filters, project_conf, languages
+    {filters, multilanguage_filters, dropdown_fields} = Filter.split_off_multilanguage_filters_and_add_name_suffixes filters, project_conf, languages
 
     filters =
       filters
@@ -112,7 +115,7 @@ defmodule Api.Documents.Index do
       |> Filter.wrap_values_as_singletons
       |> Filter.expand_categories(project_conf)
 
-    {filters, multilanguage_filters, must_not, project_conf}
+    {filters, multilanguage_filters, must_not, project_conf, dropdown_fields}
   end
 
   defp get_project(nil), do: "default"

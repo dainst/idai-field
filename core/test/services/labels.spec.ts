@@ -1,9 +1,8 @@
-import {Valuelist} from '../../src/model';
-import {Labels} from '../../src/services/labels';
+import { Valuelist } from '../../src/model';
+import { Labels } from '../../src/services/labels';
 
 
 describe('Labels', () => {
-
 
     const getLanguages = () => ['de'];
 
@@ -56,7 +55,7 @@ describe('Labels', () => {
         };
 
         const labels = new Labels(getLanguages);
-        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 
 
@@ -75,6 +74,6 @@ describe('Labels', () => {
         };
 
         const labels = new Labels(getLanguages);
-        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1'])
+        expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 });

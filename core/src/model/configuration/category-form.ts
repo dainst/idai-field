@@ -5,6 +5,7 @@ import { FieldResource } from '../field-resource';
 import { Field } from './field';
 import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';
+import { ScanCodeConfiguration } from './scan-code-configuration';
 
 
 export interface CategoryForm {
@@ -21,11 +22,12 @@ export interface CategoryForm {
 
     isAbstract: boolean;
     mustLieWithin: boolean|undefined; // = undefined;
-    userDefinedSubcategoriesAllowed?: boolean
+    userDefinedSubcategoriesAllowed?: boolean;
+    scanCodesAllowed?: boolean;
     required?: boolean;
 
     children: Array<CategoryForm>;
-    parentCategory: CategoryForm|undefined; //  = undefined;
+    parentCategory: CategoryForm|undefined; // = undefined;
     
     groups: Array<Group>;
     
@@ -43,6 +45,8 @@ export interface CategoryForm {
     defaultColor?: CategoryForm.Color;
 
     identifierPrefix?: string;
+    resourceLimit?: number;
+    scanCodes?: ScanCodeConfiguration;
 }
 
 

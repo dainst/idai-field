@@ -9,6 +9,12 @@
     },
     "shortDescription": {
       "label": "Kurzbeschreibung"
+    },
+    "hasChildren": {
+      "label": "Untergeordnete Ressourcen"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Umfasst stratigraphische Einheiten"
     }
   },
   "categories": {
@@ -107,6 +113,12 @@
     },
     "hasInstance": {
       "label": "Zugeordnete Funde"
+    },
+    "isStoredIn": {
+      "label": "Wird aufbewahrt in"
+    },
+    "isStoragePlaceOf": {
+      "label": "Ist Aufbewahrungsort von"
     }
   }
 }

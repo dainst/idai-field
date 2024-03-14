@@ -68,23 +68,21 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public onBlur() {
+    public async onBlur() {
 
-        this.updateSelectedTarget();
+        await this.updateSelectedTarget();
         if (!this.selectedTarget) this.deleteRelation();
     }
 
 
-    public getTargetLabel = (targetId: string) => {
+    public getTargetLabel = (targetId: string): string => {
 
-        const document: Document = this.availableTargets
-            .find(target => target.resource.id === targetId)
+        const target: Document = this.availableTargets.find(target => target.resource.id === targetId);
+        let label: string = target?.resource.identifier;
 
-        let label: string = document?.resource.identifier;
-
-        if (document?.resource.shortDescription) {
+        if (target?.resource.shortDescription) {
             const shortDescriptionLabel: string = Resource.getShortDescriptionLabel(
-                document.resource, this.labels, this.projectConfiguration
+                target.resource, this.labels, this.projectConfiguration
             );
             label += ' (' + shortDescriptionLabel + ')';
         }

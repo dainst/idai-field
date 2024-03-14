@@ -2,40 +2,16 @@
 @import 'type-relation-picker';
 
 .type-relation {
-  overflow: hidden;
-
   .add-type-relation {
     position: relative;
-    left: 16px;
     margin-bottom: 25px;
+    color: #555;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
 
     &:hover {
       color: #fff !important;
       background-color: #28a745;
       transition: color .3s ease, background-color .3s ease;
-    }
-  }
-
-  .type-relation-entry {
-    position: relative;
-    height: 40px;
-    left: 19px;
-    margin-bottom: 10px;
-
-    .mdi-delete {
-      position: relative;
-      top: -1px;
-    }
-
-    .relation-identifier {
-      position: relative;
-      left: 59px;
-      top: 6px;
-
-      .badge {
-        font-weight: normal;
-        user-select: none;
-      }
     }
   }
 }

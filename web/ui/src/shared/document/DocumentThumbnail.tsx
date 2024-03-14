@@ -45,7 +45,7 @@ export default React.memo(function DocumentThumbnail({ document, linkUrl, maxWid
 });
 
 
-const getImageId = (document: ResultDocument): string => document.resource.relations.isDepictedIn?.[0].resource.id;
+const getImageId = (document: ResultDocument): string => document.resource.relations?.isDepictedIn?.[0].resource.id;
 
 
 const outerStyle: CSSProperties = {

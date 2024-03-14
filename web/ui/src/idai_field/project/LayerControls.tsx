@@ -11,6 +11,7 @@ import { flatten, isDefined, clone } from 'tsfun';
 import { NAVBAR_HEIGHT } from '../../constants';
 import { ResultDocument } from '../../api/result';
 import { Document } from '../../api/document';
+import { getTranslation } from '../../shared/languages';
 import './layer-controls.css';
 
 
@@ -132,7 +133,7 @@ const renderLayerControl = (map: Map, tileLayerVisibility: { [id: string]: boole
                         style={ layerButtonStyle }>
                     <Icon path={ mdiImageFilterCenterFocus } size={ 0.7 } />
                 </Button>
-            { resource.shortDescription ?? resource.identifier }
+            { resource.shortDescription ? getTranslation(resource.shortDescription) : resource.identifier }
         </li>
     );
 };
@@ -155,7 +156,7 @@ const toggleLayer = (tileLayer: TileLayer, project: string, tileLayerVisibility:
 const applyTileLayerVisibility = (tileLayers: TileLayer[], layerGroups: LayerGroup[],
                                   tileLayerVisibility: { [id: string]: boolean }) => {
 
-    const groupLayers: TileLayer[] = flatten(layerGroups.map(group => group.tileLayers));
+    const groupLayers: TileLayer[] = flatten(layerGroups.map(group => group.tileLayers));
 
     tileLayers.forEach(tileLayer => {
         tileLayer.setVisible(groupLayers.includes(tileLayer)

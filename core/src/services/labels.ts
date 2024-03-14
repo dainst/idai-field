@@ -1,8 +1,9 @@
 import { isString } from 'tsfun';
-import { CategoryForm } from '../model';
-import { Valuelist } from '../model';
 import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
+import { Field } from '../model/configuration/field';
+import { Valuelist } from '../model/configuration/valuelist';
+import { CategoryForm } from '../model/configuration/category-form';
 
 
 /**
@@ -55,9 +56,9 @@ export class Labels {
 
     public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
-        const label = CategoryForm.getField(category, fieldName);
-        if (!label) return undefined;
-        return I18N.getLabel(label, this.getLanguages());
+        const field: Field = CategoryForm.getField(category, fieldName);
+        if (!field) return undefined;
+        return I18N.getLabel(field, this.getLanguages());
     }
 
 

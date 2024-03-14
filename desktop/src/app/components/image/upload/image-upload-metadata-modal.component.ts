@@ -75,10 +75,10 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     }
 
 
-    public getDraughtsmenLabel(): string {
+    public getFieldLabel(categoryName: string, fieldName: string): string {
         
-        const category: CategoryForm = this.projectConfiguration.getCategory('Image');
-        return this.labels.getFieldLabel(category, 'draughtsmen') ?? '';
+        const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+        return this.labels.getFieldLabel(category, fieldName) ?? '';
     }
 
 

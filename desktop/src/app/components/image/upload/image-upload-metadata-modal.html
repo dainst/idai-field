@@ -51,7 +51,7 @@
         <div *ngIf="!getParseFileMetadata()">
             <div *ngIf="projectStaff.length > 0" class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
                 <div class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
-                    {{getDraughtsmenLabel()}}
+                    {{getFieldLabel('Image', 'draughtsmen')}}
                 </div>
                 <div class="col">
                     <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
@@ -64,7 +64,8 @@
                 </div>
             </div>
             <div *ngIf="projectStaff.length == 0" class="small-info-text" i18n="@@imageUpload.imageMetadataModal.noStaffWarning">
-                Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen,
+                Es wurden keine Projektmitarbeiter in den Projekteigenschaften
+                (Feld <i>{{getFieldLabel('Project', 'staff')}}</i>) gefunden. Um Bildersteller explizit festzulegen,
                 müssten zuerst die Projekteigenschaften angepasst werden.
             </div>
         </div>

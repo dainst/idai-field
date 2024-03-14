@@ -12,7 +12,6 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { ResourcesViewMode, ViewFacade } from '../../components/resources/view/view-facade';
-import { NavigationService } from './navigation/navigation-service';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { Messages } from '../messages/messages';
@@ -37,6 +36,7 @@ export class ResourcesComponent implements OnDestroy {
     public popoverMenuOpened: boolean = false;
     public filterOptions: Array<CategoryForm> = [];
     public additionalSelectedDocuments: Array<FieldDocument> = [];
+    public mapUpdateAllowed: boolean = true;
 
     private clickEventObservers: Array<any> = [];
 
@@ -58,7 +58,6 @@ export class ResourcesComponent implements OnDestroy {
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
-                private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
                 private storagePlaceScanner: StoragePlaceScanner) {
@@ -162,14 +161,22 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public editDocument(document: Document|undefined,
-                        activeGroup?: string): Promise<FieldDocument|undefined> {
+    public async editDocument(document: Document|undefined,
+                              activeGroup?: string): Promise<FieldDocument|undefined> {
 
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
+        
+        this.mapUpdateAllowed = false;
 
-        return this.doceditLauncher.editDocument(document, activeGroup);
+        try {
+            return await this.doceditLauncher.editDocument(document, activeGroup);
+        } catch (err) {
+            throw err;
+        } finally {
+            this.mapUpdateAllowed = true;
+        }
     }
 
 

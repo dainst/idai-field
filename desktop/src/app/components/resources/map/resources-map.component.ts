@@ -69,6 +69,8 @@ export class ResourcesMapComponent {
     public getPaddingLeft = () => (this.viewFacade.getSelectedDocument()
         && this.resourcesComponent.popoverMenuOpened) ? 258 : 0;
 
+    public isMapUpdateAllowed = () => this.resourcesComponent.mapUpdateAllowed && this.viewFacade.isReady();
+
 
     public async onKeyDown(event: KeyboardEvent) {
 

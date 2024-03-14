@@ -899,7 +899,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign"]
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
         },
         {
           "name": "properties",

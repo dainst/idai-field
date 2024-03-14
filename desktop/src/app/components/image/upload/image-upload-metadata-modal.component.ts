@@ -25,6 +25,7 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     public fileCount: number;
     public depictsRelationTarget: Document;
+
     public topLevelCategories: Array<CategoryForm>;
     public projectStaff: string[];
     public metadata: ImageMetadata;
@@ -72,6 +73,13 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public setCategory(category: CategoryForm) {
 
         this.metadata.category = category.name;
+    }
+
+
+    public isFieldConfigured(categoryName: string, fieldName: string): boolean {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+        return CategoryForm.getField(category, fieldName) !== undefined;
     }
 
 

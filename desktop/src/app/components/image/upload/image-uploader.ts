@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference, ImageDocument, CategoryForm } from 'idai-field-core';
+    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -310,7 +310,7 @@ export class ImageUploader {
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
         if (CategoryForm.getField(category, 'date')) {
-            document.resource.date = extendedMetadata.date;
+            document.resource.date = formatDate(extendedMetadata.date);
         }
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;

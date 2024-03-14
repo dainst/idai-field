@@ -290,7 +290,7 @@ export class ImageUploader {
             }
         };
 
-        this.setOptionalMetadata(document, extendedMetadata);
+        await this.setOptionalMetadata(document, extendedMetadata);
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
             document.resource.relations.depicts = [depictsRelationTarget.resource.id];
@@ -305,16 +305,26 @@ export class ImageUploader {
     }
 
 
-    private setOptionalMetadata(document: NewImageDocument, extendedMetadata: ImageMetadata) {
+    private async setOptionalMetadata(document: NewImageDocument, extendedMetadata: ImageMetadata) {
 
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
+        const staff: string[] = await this.getStaff();
 
-        if (CategoryForm.getField(category, 'date')) {
+        if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
             document.resource.date = formatDate(extendedMetadata.date);
         }
-        if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
-            document.resource.draughtsmen = extendedMetadata.draughtsmen;
+        if (CategoryForm.getField(category, 'draughtsmen')) {
+            const filteredDraughtsmen: string[] = extendedMetadata.draughtsmen?.filter(value => staff.includes(value));
+            if (filteredDraughtsmen?.length) document.resource.draughtsmen = filteredDraughtsmen;
         }
+    }
+
+
+    private async getStaff(): Promise<string[]> {
+
+        const projectDocument: Document = await this.datastore.get('project');
+        const staff: string[] = projectDocument.resource.staff;
+        return isArray(staff) ? staff: [];
     }
 
 

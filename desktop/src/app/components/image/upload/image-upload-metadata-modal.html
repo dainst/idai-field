@@ -50,8 +50,8 @@
     <div class="container">
         <div *ngIf="!getParseFileMetadata()">
             <div *ngIf="projectStaff.length > 0" class="row" style="margin-top: 13px; border-top-style: solid; border-width: thin; border-color: rgba(0, 0, 0, 0.1); padding-top: 13px;">
-                <div i18n="@@imageUpload.imageMetadataModal.draughtsmen" class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
-                    Bildersteller/Bilderstellerin
+                <div class="col" style="border-right-style: solid; border-width: thin; font-size:small; border-color: rgba(0, 0, 0, 0.1);">
+                    {{getDraughtsmenLabel()}}
                 </div>
                 <div class="col">
                     <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">

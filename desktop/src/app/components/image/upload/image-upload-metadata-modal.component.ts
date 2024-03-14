@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, ProjectConfiguration, CategoryForm, Datastore } from 'idai-field-core';
+import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels } from 'idai-field-core';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -30,10 +30,11 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public metadata: ImageMetadata;
 
 
-    constructor(projectConfiguration: ProjectConfiguration,
-                public activeModal: NgbActiveModal,        
+    constructor(public activeModal: NgbActiveModal,
+                private projectConfiguration: ProjectConfiguration,
                 private imagesState: ImagesState,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private labels: Labels) {
 
         this.topLevelCategories = [projectConfiguration.getCategory('Image')];
 
@@ -71,6 +72,13 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public setCategory(category: CategoryForm) {
 
         this.metadata.category = category.name;
+    }
+
+
+    public getDraughtsmenLabel(): string {
+        
+        const category: CategoryForm = this.projectConfiguration.getCategory('Image');
+        return this.labels.getFieldLabel(category, 'draughtsmen') ?? '';
     }
 
 

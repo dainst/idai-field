@@ -1235,6 +1235,14 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "identification",
+          "fields": ["isInstanceOf"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "archaeoDox:material", "archaeoDox:typeOfWare", "amount", "weight"]
         },
@@ -1458,6 +1466,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn"]
         },
         {
           "name": "properties",

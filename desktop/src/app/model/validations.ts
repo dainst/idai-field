@@ -411,15 +411,15 @@ export module Validations {
             { name: 'scanCode' } as Field
         ];
 
-        const definedFields: Array<any> = projectFields.concat(defaultFields);
-
-        const invalidFields: Array<any> = [];
+        const definedFields: Array<Field> = projectFields.concat(defaultFields);
+        const invalidFields: string[] = [];
 
         for (let resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
                 let fieldFound: boolean = false;
                 for (let definedField of definedFields) {
-                    if (definedField.name === resourceField) {
+                    if (definedField.name === resourceField
+                            && !Field.InputType.RELATION_INPUT_TYPES.includes(definedField.inputType)) {
                         fieldFound = true;
                         break;
                     }

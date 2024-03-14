@@ -52,15 +52,15 @@ export class DoceditComponent {
     private escapeKeyPressed = false;
 
 
-    constructor(public activeModal: NgbActiveModal,
-                public documentHolder: DocumentHolder,
+    constructor(public documentHolder: DocumentHolder,
+                public projectConfiguration: ProjectConfiguration,
+                private activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                public projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
                 private loading: Loading,
                 private menuService: Menus,
-                public labels: Labels,
                 private i18n: I18n) {}
 
 

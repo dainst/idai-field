@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference, ImageDocument } from 'idai-field-core';
+    ImageStore, ImageGeoreference, ImageDocument, CategoryForm } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -273,7 +273,7 @@ export class ImageUploader {
                                         
         // Try to extend metadata set explicitely by the user with metadata contained within the image file
         // itself (exif/xmp/iptc).
-        const extendedMetadata = await extendMetadataByFileData(
+        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
             metadata, buffer, this.imagesState.getParseFileMetadata()
         );
 
@@ -282,8 +282,6 @@ export class ImageUploader {
                 identifier: fileName,
                 category: extendedMetadata.category,
                 originalFilename: fileName,
-                creationDate: extendedMetadata.creationDate,
-                draughtsmen: extendedMetadata.draughtsmen,
                 width: extendedMetadata.width,
                 height: extendedMetadata.height,
                 relations: {
@@ -291,6 +289,8 @@ export class ImageUploader {
                 }
             }
         };
+
+        this.setOptionalMetadata(document, extendedMetadata);
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
             document.resource.relations.depicts = [depictsRelationTarget.resource.id];
@@ -302,6 +302,19 @@ export class ImageUploader {
         if (georeference) document.resource.georeference = georeference;
 
         return await this.relationsManager.update(document);
+    }
+
+
+    private setOptionalMetadata(document: NewImageDocument, extendedMetadata: ImageMetadata) {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
+
+        if (CategoryForm.getField(category, 'date')) {
+            document.resource.date = extendedMetadata.date;
+        }
+        if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
+            document.resource.draughtsmen = extendedMetadata.draughtsmen;
+        }
     }
 
 

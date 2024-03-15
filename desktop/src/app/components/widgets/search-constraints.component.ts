@@ -203,6 +203,22 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public getExistIndexSearchTermLabel(searchTerm: string): string {
+
+        if (searchTerm === 'KNOWN') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.anyValue',
+                value: 'Beliebiger Wert'
+            });
+        } else {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.noValue',
+                value: 'Kein Wert'
+            });
+        }
+    }
+
+
     public getFieldLabel(field: Field): string {
 
         if (field.name.endsWith('.value')) {
@@ -442,22 +458,6 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         return (searchTerm === 'KNOWN' || searchTerm === 'UNKNOWN')
             && (searchInputType !== 'input' || this.existIndexForTextField);
-    }
-
-
-    public getExistIndexSearchTermLabel(searchTerm: string): string {
-
-        if (searchTerm === 'KNOWN') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.anyValue',
-                value: 'Beliebiger Wert'
-            });
-        } else {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.noValue',
-                value: 'Kein Wert'
-            });
-        }
     }
 
 

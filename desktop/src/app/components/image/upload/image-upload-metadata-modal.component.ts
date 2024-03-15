@@ -1,3 +1,4 @@
+import { isArray } from 'tsfun';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels } from 'idai-field-core';
@@ -100,7 +101,7 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     public toggleDraughtsman(person: string) {
 
-        if (person in this.metadata.draughtsmen) {
+        if (this.metadata.draughtsmen.includes(person)) {
             this.metadata.draughtsmen = this.metadata.draughtsmen.filter((selected) => selected !== person);
         } else {
             this.metadata.draughtsmen.push(person);
@@ -112,7 +113,7 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
         const projectDocument: Document = await this.datastore.get('project');
 
-        if ('staff' in projectDocument.resource) {
+        if (projectDocument.resource.staff && isArray(projectDocument.resource.staff)) {
             this.projectStaff = projectDocument.resource['staff'];
         }
     }

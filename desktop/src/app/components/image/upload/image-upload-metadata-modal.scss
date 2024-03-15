@@ -1,7 +1,25 @@
-#image-upload-metadata-modal {
+#image-upload-metadata-modal-body {
   user-select: none;
 
-  category-picker .list-group-item {
-    border-top: none !important;
+  category-picker {
+    display: block;
+    margin-bottom: 10px;
+
+    .list-group-item {
+      border-top: none !important;
+    }
+  }
+
+  #draughtsmen-options {
+    max-height: 220px;
+    overflow: auto;
+  }
+
+  #category-section-title {
+    margin-bottom: 5px;
+  }
+
+  #draughtsmen-section-title {
+    margin-bottom: 2px;
   }
 }

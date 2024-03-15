@@ -53,10 +53,6 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     public getSelectedCategoryNames = () => [this.metadata.category];
 
-    public getParseFileMetadata = () => this.imagesState.getParseFileMetadata();
-
-    public setParseFileMetadata = (expand: boolean) => this.imagesState.setParseFileMetadata(expand);
-
 
     ngOnInit() {
         
@@ -73,6 +69,18 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public setCategory(category: CategoryForm) {
 
         this.metadata.category = category.name;
+    }
+
+
+    public getParseFileMetadata(fieldName: string) {
+
+        return this.imagesState.getParseFileMetadata(fieldName);
+    }
+
+
+    public setParseFileMetadata(fieldName: string, value: boolean) {
+        
+        this.imagesState.setParseFileMetadata(fieldName, value);
     }
 
 

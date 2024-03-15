@@ -1,3 +1,4 @@
+import { Map } from 'tsfun';
 import { Injectable } from '@angular/core';
 import { Named, Query, ProjectConfiguration } from 'idai-field-core';
 
@@ -14,7 +15,7 @@ export class ImagesState {
     private customConstraints: { [name: string]: string } = {};
     private gridSize: number = 4;
     private expandAllGroups: boolean = false;
-    private parseFileMetadata: boolean = false;
+    private parseFileMetadata: Map<boolean> = { draughtsmen: false };
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
@@ -69,23 +70,23 @@ export class ImagesState {
 
 
     /**
-     * Does the user prefer to parse image metadata from each individual file? Otherwise, metadata is set using the application
-     * interface.
+     * Does the user prefer to parse image metadata for the given field from each individual file?
+     * Otherwise, metadata is set using the application interface.
      * 
      * @returns `true` if preference is set to parsing the data from exif, iptc and xmp.
      */
-    public getParseFileMetadata(): boolean {
+    public getParseFileMetadata(fieldName: string): boolean {
 
-        return this.parseFileMetadata;
+        return this.parseFileMetadata[fieldName];
     }
 
 
     /**
      * Set user preference for image metadata source.
      */
-    public setParseFileMetadata(value: boolean) {
+    public setParseFileMetadata(fieldName: string, value: boolean) {
 
-        this.parseFileMetadata = value;
+        this.parseFileMetadata[fieldName] = value;
     }
 
 
@@ -99,5 +100,6 @@ export class ImagesState {
         this.customConstraints = {};
         this.gridSize = 4;
         this.expandAllGroups = false;
+        this.parseFileMetadata = { draughtsmen: false };
     }
 }

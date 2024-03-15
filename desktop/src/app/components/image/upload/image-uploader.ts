@@ -274,7 +274,7 @@ export class ImageUploader {
         // Try to extend metadata set explicitely by the user with metadata contained within the image file
         // itself (exif/xmp/iptc).
         const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
-            metadata, buffer, this.imagesState.getParseFileMetadata()
+            metadata, buffer, this.imagesState.getParseFileMetadata('draughtsmen')
         );
 
         const document: NewImageDocument = {

@@ -35,21 +35,21 @@
         <div class="radio form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio"
-                    (click)="setParseFileMetadata(false)"
-                    [checked]="!getParseFileMetadata()">
+                    (click)="setParseFileMetadata('draughtsmen', false)"
+                    [checked]="!getParseFileMetadata('draughtsmen')">
                 <span i18n="@@imageUpload.imageMetadataModal.setFieldValues">Manuell setzen</span>
             </label>
         </div>
         <div class="radio form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio"    
-                    (click)="setParseFileMetadata(true)"
-                    [checked]="getParseFileMetadata()">
+                    (click)="setParseFileMetadata('draughtsmen', true)"
+                    [checked]="getParseFileMetadata('draughtsmen')">
                 <span i18n="@@imageUpload.imageMetadataModal.readFromMetadata">Aus Bild-Metadaten auslesen</span>
             </label>
         </div>
             
-        <div *ngIf="!getParseFileMetadata()" id="draughtsmen-options">
+        <div *ngIf="!getParseFileMetadata('draughtsmen')" id="draughtsmen-options">
             <div *ngFor="let person of projectStaff" class="checkbox form-check">
                 <label class="form-check-label">
                     <input class="form-check-input"

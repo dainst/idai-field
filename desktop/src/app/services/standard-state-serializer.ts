@@ -6,7 +6,7 @@ import { StateSerializer } from './state-serializer';
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
-export type StateType = 'app-state'|'resources-state'|'matrix-state'|'tabs-state'|'configuration-state';
+export type StateType = 'app-state'|'resources-state'|'matrix-state'|'tabs-state'|'configuration-state'|'images-state';
 
 
 @Injectable()

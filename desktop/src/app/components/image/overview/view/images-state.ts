@@ -1,6 +1,7 @@
 import { Map } from 'tsfun';
 import { Injectable } from '@angular/core';
 import { Named, Query, ProjectConfiguration } from 'idai-field-core';
+import { StateSerializer } from '../../../../services/state-serializer';
 
 
 @Injectable()
@@ -18,7 +19,8 @@ export class ImagesState {
     private parseFileMetadata: Map<boolean> = { draughtsmen: false };
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private stateSerializer: StateSerializer) {}
 
 
     public getQuery(): Query {
@@ -51,9 +53,10 @@ export class ImagesState {
     }
 
 
-    public setNrImagesPerRow(value: number) {
+    public async setNrImagesPerRow(value: number) {
 
         this.gridSize = value;
+        await this.store();
     }
 
 
@@ -84,9 +87,25 @@ export class ImagesState {
     /**
      * Set user preference for image metadata source.
      */
-    public setParseFileMetadata(fieldName: string, value: boolean) {
+    public async setParseFileMetadata(fieldName: string, value: boolean) {
 
         this.parseFileMetadata[fieldName] = value;
+        await this.store();
+    }
+
+
+    public async load() {
+
+        const loadedState: any = await this.stateSerializer.load('images-state');
+
+        if (loadedState.gridSize) this.gridSize = loadedState.gridSize;
+        if (loadedState.parseFileMetadata) this.parseFileMetadata = loadedState.parseFileMetadata;
+    }
+
+
+    public async store() {
+
+        await this.stateSerializer.store(this.createSerializationObject(), 'images-state');
     }
 
 
@@ -101,5 +120,14 @@ export class ImagesState {
         this.gridSize = 4;
         this.expandAllGroups = false;
         this.parseFileMetadata = { draughtsmen: false };
+    }
+
+
+    private createSerializationObject(): any {
+
+        return {
+            gridSize: this.gridSize,
+            parseFileMetadata: this.parseFileMetadata
+        };
     }
 }

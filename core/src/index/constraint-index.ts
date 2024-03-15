@@ -6,11 +6,14 @@ import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 
 
+type IndexType = 'match'|'contain'|'exist'|'links';
+
+
 export interface IndexDefinition {
 
     path: string;
     pathArray: string[];
-    type: string;
+    type: IndexType;
     recursivelySearchable?: boolean;
 }
 
@@ -289,7 +292,7 @@ export module ConstraintIndex {
     }
 
 
-    export function getIndexType(field: Field): string {
+    export function getIndexType(field: Field): IndexType {
 
         switch (field.inputType) {
             case 'checkboxes':
@@ -384,7 +387,7 @@ export module ConstraintIndex {
 
 
     function makeIndexDefinitionForField(field: Field,
-                                         indexType: string): Array<{ name: string, indexDefinition: IndexDefinition }> {
+                                         indexType: IndexType): Array<{ name: string, indexDefinition: IndexDefinition }> {
 
         if (field.inputType === Field.InputType.DROPDOWNRANGE) {
             return [
@@ -430,7 +433,7 @@ export module ConstraintIndex {
 
     function validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
 
-        const types = ['match', 'contain', 'exist', 'links'];
+        const types: Array<IndexType> = ['match', 'contain', 'exist', 'links'];
 
         for (let indexDefinition of indexDefinitions) {
             if (!indexDefinition.type) return 'Index definition type is undefined';

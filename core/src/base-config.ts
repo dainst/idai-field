@@ -1,3 +1,5 @@
+import { Map } from 'tsfun';
+import { IndexDefinition } from './index/constraint-index';
 import { Query } from './model/query';
 import { Resource } from './model/resource';
 
@@ -17,7 +19,7 @@ export const CHILDOF_EXIST = 'isChildOf:exist';
 export const UNKNOWN = 'UNKNOWN';
 
 
-export const basicIndexConfiguration = {
+export const basicIndexConfiguration: Map<IndexDefinition> = {
     'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
     'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
     'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },

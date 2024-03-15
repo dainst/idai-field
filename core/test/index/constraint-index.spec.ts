@@ -272,7 +272,7 @@ describe('ConstraintIndex', () => {
 
         expect(() => {
             ConstraintIndex.make({
-                'name': { path: 'testpath', pathArray: ['testpath'], type: 'unknown' }
+                'name': { path: 'testpath', pathArray: ['testpath'], type: 'unknown' as any }
             }, categories)
         }).toThrow();
     });

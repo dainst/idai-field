@@ -93,6 +93,9 @@ defmodule FieldPublication.Publications do
     |> Enum.reject(fn %Publication{publication_date: date} ->
       date == nil or Date.before?(Date.utc_today(), date)
     end)
+    |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
+      Date.compare(a, b) in [:eq, :gt]
+    end)
     |> List.first(:none)
   end
 

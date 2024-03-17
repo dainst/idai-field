@@ -5,6 +5,12 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications
   alias FieldPublication.Schemas.Publication
 
+  alias FieldPublication.Publications.Data
+
+  alias FieldPublicationWeb.Presentation.Data.{
+    I18n
+  }
+
   def mount(_assigns, _session, socket) do
     published_projects =
       Projects.list()
@@ -14,11 +20,22 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       |> Task.async_stream(fn publication ->
         {publication, Publications.Data.get_project_info(publication)}
       end)
-      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, %{"resource" => res} = doc}} ->
+      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
         %{
           name: project_name,
           doc: doc,
-          coordinates: %{longitude: Map.get(res, "longitude"), latitude: Map.get(res, "latitude")}
+          coordinates: %{
+            longitude:
+              Data.get_field_values_by_name(
+                doc,
+                "longitude"
+              ),
+            latitude:
+              Data.get_field_values_by_name(
+                doc,
+                "latitude"
+              )
+          }
         }
       end)
 

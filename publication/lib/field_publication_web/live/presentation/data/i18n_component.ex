@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Data.I18n do
   def text(assigns) do
     ~H"""
     <span>
-      <%= select_translation(@values) %>
+      <%= select_translation(assigns) %>
     </span>
     """
   end
@@ -12,31 +12,46 @@ defmodule FieldPublicationWeb.Presentation.Data.I18n do
   def markdown(assigns) do
     ~H"""
     <span class="markdown">
-      <%= @values
-      |> select_translation()
+      <%= select_translation(assigns)
       |> Earmark.as_html!()
       |> Phoenix.HTML.raw() %>
     </span>
     """
   end
 
-  defp select_translation(values) do
-    case values do
-      val when is_nil(val) ->
+  defp select_translation(%{values: translations} = assigns) do
+    lang =
+      if Map.has_key?(assigns, :lang) do
+        assigns[:lang]
+      else
+        :unspecified
+      end
+
+    case translations do
+      nil ->
         "No value"
 
       val when is_binary(val) ->
-        values
+        val
 
       val when is_map(val) ->
-        # TODO: Add preference selection
-        case Map.keys(val) do
-          [single_key] ->
-            values[single_key]
+        Map.get(val, lang, fallback(val))
+    end
+  end
 
-          [first, _] ->
-            values[first]
-        end
+  defp fallback(val) do
+    # English is the primary fallback, if it is not present
+    # we fallback to the first key found in the map.
+    case Map.get(val, "en") do
+      nil ->
+        first_key =
+          Map.keys(val)
+          |> List.first()
+
+        Map.get(val, first_key, "No value")
+
+      english ->
+        english
     end
   end
 end

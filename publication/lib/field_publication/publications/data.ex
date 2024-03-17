@@ -33,11 +33,14 @@ defmodule FieldPublication.Publications.Data do
     |> Map.get("config", [])
   end
 
-  def get_project_info(%Publication{database: db}) do
+  def get_project_info(%Publication{database: db} = publication) do
+    config = get_configuration(publication)
+
     CouchService.get_document("project", db)
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
+    |> apply_project_configuration(config)
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
@@ -64,26 +67,60 @@ defmodule FieldPublication.Publications.Data do
     )
   end
 
-  def apply_project_configuration(%{"resource" => resource} = doc, configuration) do
-    resource =
-      resource
-      |> Map.update!("category", fn category_name ->
-        category = search_category_tree(configuration, category_name)
+  def apply_project_configuration(%{"resource" => resource}, configuration) do
+    category_configuration = search_category_tree(configuration, resource["category"])
 
-        labels =
-          if category != :not_found do
-            category["item"]["label"]
-          else
-            []
-          end
+    %{
+      "category" => %{
+        "labels" => category_configuration["item"]["categoryLabel"],
+        "color" => category_configuration["item"]["color"],
+        "values" => resource["category"]
+      },
+      "groups" => group_and_extend_labels(category_configuration["item"], resource)
+    }
+  end
 
-        %{
-          "name" => category_name,
-          "labels" => labels
-        }
+  defp group_and_extend_labels(category_configuration, resource) do
+    keys = Map.keys(resource)
+
+    category_configuration["groups"]
+    |> Enum.map(fn group ->
+      extended_fields =
+        group["fields"]
+        |> Enum.map(&extend_fields(&1, keys))
+        |> Enum.reject(fn val -> val == nil end)
+        |> Enum.map(fn %{"key" => key} = map ->
+          Map.put(map, "values", resource[key])
+        end)
+
+      %{"key" => group["name"], "labels" => group["label"], "fields" => extended_fields}
+    end)
+  end
+
+  defp extend_fields(field, keys) do
+    if(field["name"] in keys) do
+      %{"key" => field["name"], "labels" => field["label"], "type" => field["inputType"]}
+    else
+      nil
+    end
+  end
+
+  def get_field_values_by_name(doc, searched_key) do
+    # Search all fields in all groups for the searched_key, this should probably be optimized further.
+    Enum.map(doc["groups"], fn group ->
+      Enum.find(group["fields"], fn %{"key" => key} ->
+        key == searched_key
       end)
+      |> case do
+        %{"values" => values} ->
+          values
 
-    Map.put(doc, "resource", resource)
+        nil ->
+          nil
+      end
+    end)
+    |> Enum.reject(fn val -> val == nil end)
+    |> List.first()
   end
 
   def extend_relations(

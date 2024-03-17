@@ -16,7 +16,7 @@
         <!-- The hook above requires the target attribute to know on which map the highlight is supposed to appear. -->
         <!-- In parallel to the hook, phx-click and phx-value-* implement the click behaviour with standard liveview attributes. -->
         <div class="text-center">
-          <FieldPublicationWeb.Presentation.Data.I18n.text values={doc["resource"]["shortName"]} />
+          <I18n.text values={Data.get_field_values_by_name(doc, "shortName")} />
         </div>
       </div>
     <% end %>

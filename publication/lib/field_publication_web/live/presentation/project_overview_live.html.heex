@@ -1,7 +1,36 @@
 <div>
-  <.header>
-    <I18n.text values={@project["resource"]["shortName"]} />
-  </.header>
+  <form id="project_options" phx-change="project_options_changed">
+    <div class="flex flex-row">
+      <div class="mt-4 mr-2">
+        <%= @project_name %> /
+      </div>
+      <%= if Enum.count(@publication_dates) == 1 do %>
+        <div class="mt-4 mr-2">
+          <%= List.first(@publication_dates) %>
+        </div>
+      <% else %>
+        <.input
+          type="select"
+          name="project_date_selection"
+          options={@publication_dates}
+          value={@publication.publication_date}
+        />
+      <% end %>
+      <div class="mt-4 ml-2 mr-2">/</div>
+      <.input
+        type="select"
+        name="project_language_selection"
+        options={@publication.languages}
+        value={@selected_lang}
+      />
+    </div>
+  </form>
 
-  <I18n.markdown values={@project["resource"]["description"]} />
+  <%= case String.downcase(@doc["category"]["values"]) do
+    "project" ->
+      DocumentComponent.project(%{
+        doc: @doc,
+        lang: @selected_lang
+      })
+  end %>
 </div>

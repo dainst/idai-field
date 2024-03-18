@@ -74,21 +74,6 @@ defmodule FieldPublicationWeb.Presentation.ProjectOverviewLive do
   end
 
   def handle_event(
-        "restoreLanguageSettings",
-        %{"projects" => projects},
-        %{assigns: %{project_name: project_name, publication: publication}} = socket
-      ) do
-    {
-      :noreply,
-      assign(
-        socket,
-        :selected_lang,
-        Map.get(projects, project_name, List.first(publication.languages))
-      )
-    }
-  end
-
-  def handle_event(
         "project_options_changed",
         %{"_target" => ["project_language_selection"], "project_language_selection" => lang},
         %{assigns: %{project_name: project_name, publication: publication}} = socket

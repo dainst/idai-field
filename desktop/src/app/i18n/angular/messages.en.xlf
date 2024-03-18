@@ -7549,14 +7549,6 @@
           <context context-type="linenumber">180,186</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.contextMenu.warnings" datatype="html">
-        <source>Warnungen</source>
-        <target state="translated">Warnings</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteFieldData" datatype="html">
         <source>Felddaten löschen</source>
         <target state="translated">Delete field data</target>

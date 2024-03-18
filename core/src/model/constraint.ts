@@ -8,11 +8,6 @@ export interface Constraint {
 
 export module Constraint {
 
-    export const VALUE = 'value';
-    export const SUBTRACT = 'subtract';
-    export const SEARCHRECURSIVELY = 'searchRecursively';
-
-
     export function convert(constraint: Constraint|string|string[]): Constraint {
 
         return (Array.isArray(constraint) || typeof(constraint) == 'string')

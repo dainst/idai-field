@@ -3325,14 +3325,6 @@
           <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.showResourceData.tooltip" datatype="html">
-        <source>Daten anzeigen</source>
-        <target state="needs-translation">Daten anzeigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.showChildResources.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen anzeigen</source>
         <target state="needs-translation">Untergeordnete Ressourcen anzeigen</target>
@@ -3371,22 +3363,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
           <context context-type="linenumber">78</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.childrenView.oneResource" datatype="html">
-        <source>Eine Ressource</source>
-        <target state="needs-translation">Eine Ressource</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.childrenView.resources" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
-          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
@@ -4460,14 +4436,6 @@
       <trans-unit id="util.optionalRange.to" datatype="html">
         <source>, bis:</source>
         <target state="needs-translation">, bis:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="util.includesStratigraphicalUnits" datatype="html">
-        <source>Umfasst stratigraphische Einheiten</source>
-        <target state="needs-translation">Umfasst stratigraphische Einheiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8150,6 +8118,226 @@
         <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.cannotDisableParentOption" datatype="html">
+        <source>Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</source>
+        <target state="needs-translation">Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.printedFieldSlotDisabled" datatype="html">
+        <source>Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</source>
+        <target state="needs-translation">Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.resourceCount.storagePlaces" datatype="html">
+        <source>Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </source>
+        <target state="needs-translation">Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">38,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.default" datatype="html">
+        <source>Standard</source>
+        <target state="needs-translation">Standard</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.languageInfo.tr" datatype="html">
+        <source>Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</source>
+        <target state="needs-translation">Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.derivedRelation" datatype="html">
+        <source>Abgeleitete Relation</source>
+        <target state="needs-translation">Abgeleitete Relation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="qrCode.printedFields.liesWithin" datatype="html">
+        <source>Übergeordnete Ressource</source>
+        <target state="needs-translation">Übergeordnete Ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.autoCreationOptionDisabled" datatype="html">
+        <source>Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</source>
+        <target state="needs-translation">Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.printedFieldUnselected" datatype="html">
+        <source>Wählen Sie ein Feld aus, um diese Option zu verwenden.</source>
+        <target state="needs-translation">Wählen Sie ein Feld aus, um diese Option zu verwenden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.qrCodes.printedFields" datatype="html">
+        <source>Felder des Drucketiketts:</source>
+        <target state="needs-translation">Felder des Drucketiketts:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">120,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.qrCodes.printFieldLabels" datatype="html">
+        <source>Feldbezeichnung drucken</source>
+        <target state="needs-translation">Feldbezeichnung drucken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">136,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.createPrintSettingsProfile" datatype="html">
+        <source>Neues Einstellungsprofil erstellen</source>
+        <target state="needs-translation">Neues Einstellungsprofil erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.createPrintSettingsProfileModal.info" datatype="html">
+        <source>Bitte geben Sie einen Namen für das neue Profil ein.</source>
+        <target state="needs-translation">Bitte geben Sie einen Namen für das neue Profil ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettings" datatype="html">
+        <source>Etikettendruck einrichten</source>
+        <target state="needs-translation">Etikettendruck einrichten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">50,65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
+          <context context-type="linenumber">34,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.settingsProfile" datatype="html">
+        <source>Einstellungsprofil</source>
+        <target state="needs-translation">Einstellungsprofil</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">86,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deletePrintSettingsProfile" datatype="html">
+        <source>Einstellungsprofil löschen</source>
+        <target state="needs-translation">Einstellungsprofil löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.size" datatype="html">
+        <source>Etikettgröße</source>
+        <target state="needs-translation">Etikettgröße</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.size.width" datatype="html">
+        <source>Breite (mm)</source>
+        <target state="needs-translation">Breite (mm)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.size.height" datatype="html">
+        <source>Höhe (mm)</source>
+        <target state="needs-translation">Höhe (mm)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.borderMargin" datatype="html">
+        <source>Abstand vom Rand</source>
+        <target state="needs-translation">Abstand vom Rand</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.borderMargin.left" datatype="html">
+        <source>Links (mm)</source>
+        <target state="needs-translation">Links (mm)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.borderMargin.top" datatype="html">
+        <source>Oben (mm)</source>
+        <target state="needs-translation">Oben (mm)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.scaling" datatype="html">
+        <source>Skalierung (Prozent)</source>
+        <target state="needs-translation">Skalierung (Prozent)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.success.qrCodeSaved" datatype="html">
+        <source>Der neu generierte QR-Code wurde erfolgreich gespeichert.</source>
+        <target state="needs-translation">Der neu generierte QR-Code wurde erfolgreich gespeichert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.success.qrCodeDeleted" datatype="html">
+        <source>Der QR-Code wurde erfolgreich gelöscht.</source>
+        <target state="needs-translation">Der QR-Code wurde erfolgreich gelöscht.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.hasChildren" datatype="html">
+        <source>Untergeordnete Ressourcen</source>
+        <target state="needs-translation">Untergeordnete Ressourcen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

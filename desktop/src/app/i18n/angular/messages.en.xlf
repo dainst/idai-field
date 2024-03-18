@@ -3325,14 +3325,6 @@
           <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.showResourceData.tooltip" datatype="html">
-        <source>Daten anzeigen</source>
-        <target state="translated">Show resource data</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.showChildResources.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen anzeigen</source>
         <target state="translated">Show child resources</target>
@@ -3407,14 +3399,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
           <context context-type="linenumber">78</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.childrenView.oneResource" datatype="html">
-        <source>Eine Ressource</source>
-        <target state="translated">One resource</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
-          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
@@ -5024,14 +5008,6 @@
       <trans-unit id="util.optionalRange.to" datatype="html">
         <source>, bis: </source>
         <target state="translated">, to:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="util.includesStratigraphicalUnits" datatype="html">
-        <source>Umfasst stratigraphische Einheiten</source>
-        <target state="translated">Includes stratigraphical units</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>

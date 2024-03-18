@@ -3598,11 +3598,11 @@
         <source>Neues Einstellungsprofil erstellen</source>
         <target state="final">Neues Einstellungsprofil erstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3610,7 +3610,7 @@
         <source> Bitte geben Sie einen Namen für das neue Profil ein. </source>
         <target state="final"> Bitte geben Sie einen Namen für das neue Profil ein. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
@@ -3634,27 +3634,27 @@
         <source>Etikettendruck einrichten</source>
         <target state="final">Etikettendruck einrichten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
-          <context context-type="linenumber">50,65</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
-          <context context-type="linenumber">34,44</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.settingsProfile" datatype="html">
         <source>Einstellungsprofil</source>
         <target state="final">Einstellungsprofil</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
-          <context context-type="linenumber">86,103</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletePrintSettingsProfile" datatype="html">
         <source>Einstellungsprofil löschen</source>
         <target state="final">Einstellungsprofil löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3662,7 +3662,7 @@
         <source>Etikettgröße</source>
         <target state="final">Etikettgröße</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3670,7 +3670,7 @@
         <source>Breite (mm)</source>
         <target state="final">Breite (mm)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3678,7 +3678,7 @@
         <source>Höhe (mm)</source>
         <target state="final">Höhe (mm)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3686,7 +3686,7 @@
         <source>Abstand vom Rand</source>
         <target state="final">Abstand vom Rand</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3694,7 +3694,7 @@
         <source>Links (mm)</source>
         <target state="final">Links (mm)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3702,7 +3702,7 @@
         <source>Oben (mm)</source>
         <target state="final">Oben (mm)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3710,7 +3710,7 @@
         <source>Skalierung (Prozent)</source>
         <target state="final">Skalierung (Prozent)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
@@ -3894,9 +3894,9 @@
           <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.contextMenu.warnings" datatype="html">
-        <source>Warnungen</source>
-        <target state="final">Warnungen</target>
+      <trans-unit id="resources.contextMenu.showWarnings" datatype="html">
+        <source>Warnungen anzeigen</source>
+        <target state="final">Warnungen anzeigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -7517,7 +7517,7 @@
         <source>Standard</source>
         <target state="final">Standard</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -7809,15 +7809,15 @@
           <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
         <context-group purpose="location">
@@ -8225,11 +8225,11 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
         <context-group purpose="location">

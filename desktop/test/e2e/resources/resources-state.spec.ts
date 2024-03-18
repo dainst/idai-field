@@ -375,6 +375,39 @@ test.describe('resources/state --', () => {
     });
 
 
+    test('search -- perform constraint search for default field "has children"', async () => {
+
+        await ResourcesPage.performCreateResource('S3', 'operation-trench');
+        await ResourcesPage.clickHierarchyButton('S3');
+        await ResourcesPage.performCreateResource('FeatureWithoutChildren', 'feature');
+        await ResourcesPage.performCreateResource('FeatureWithChildren', 'feature');
+        await ResourcesPage.clickHierarchyButton('FeatureWithChildren');
+        await ResourcesPage.performCreateResource('Find', 'find');
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('isChildOf');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(true);
+        await SearchConstraintsPage.clickAddConstraintButton();
+
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+
+        await SearchConstraintsPage.clickRemoveConstraintButton('isChildOf');
+
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+
+        await SearchConstraintsPage.clickSelectConstraintField('isChildOf');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(false);
+        await SearchConstraintsPage.clickAddConstraintButton();
+
+        await waitForNotExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+    });
+
+
     test('search -- remove field from dropdown after adding constraint', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();

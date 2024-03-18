@@ -6,7 +6,7 @@ import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 
 
-type IndexType = 'match'|'contain'|'exist'|'links';
+export type IndexType = 'match'|'contain'|'contained'|'exist'|'links';
 
 
 export interface IndexDefinition {
@@ -22,9 +22,9 @@ export interface ConstraintIndex {
 
     indexDefinitions: { [name: string]: IndexDefinition };
 
-    containIndex: {
+    containIndex: { // For index type contain & contained
         [path: string]: {
-            [resourceId: string]: { [id: string]: true };
+            [searchTerm: string]: { [id: string]: true };
         }
     };
 
@@ -115,14 +115,16 @@ export module ConstraintIndex {
     export function getWithDescendants(index: ConstraintIndex, indexName: string,
                                        matchTerm: string|string[]): Array<Resource.Id> {
 
-        const definition: IndexDefinition = index.indexDefinitions[indexName];
-        if (!definition) throw 'Ignoring unknown constraint "' + indexName + '".';
-        if (!definition.recursivelySearchable) throw 'illegal argument  - given index not recursively searchable ' + indexName;
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+        if (!indexDefinition.recursivelySearchable) {
+            throw 'Illegal argument: The given index is not recursively searchable: ' + indexName;
+        }
 
         return flow(
             matchTerm,
             cond(not(isArray), singleton),
-            map(getDescendants(index, definition)),
+            map(getDescendants(index, indexDefinition)),
             flatten() as any) as any /* TODO review any*/;
     }
 
@@ -169,6 +171,7 @@ export module ConstraintIndex {
                     break;
     
                 case 'contain':
+                case 'contained':
                     if (!element || !Array.isArray(element)) break;
                     for (let target of element) {
                         addToIndex(index.containIndex, document, definition.path, target);
@@ -237,10 +240,15 @@ export module ConstraintIndex {
     function getIndex(index: ConstraintIndex, definition: IndexDefinition): any {
 
         switch (definition.type) {
-            case 'contain': return index.containIndex;
-            case 'match':   return index.matchIndex;
-            case 'exist':   return index.existIndex;
-            case 'links':   return index.linksIndex;
+            case 'contain':
+            case 'contained':
+                return index.containIndex;
+            case 'match':
+                return index.matchIndex;
+            case 'exist':
+                return index.existIndex;
+            case 'links':
+                return index.linksIndex;
         }
     }
 
@@ -271,7 +279,9 @@ export module ConstraintIndex {
     function getMatchesForTerm(index: ConstraintIndex, definition: IndexDefinition,
                                matchTerm: string): Array<Resource.Id>|undefined {
 
-        if (definition.type === 'exist') return getMatchesFromExistIndex(index, definition, matchTerm);
+        if (definition.type === 'exist' || definition.type === 'contained') {
+            return getMatchesForKnownOrUnknown(index, definition, matchTerm);
+        }
 
         const result = getIndex(index, definition)[definition.path][matchTerm.toLowerCase()];
         if (!result) return undefined;
@@ -279,8 +289,8 @@ export module ConstraintIndex {
     }
 
 
-    function getMatchesFromExistIndex(index: ConstraintIndex, definition: IndexDefinition,
-                                      matchTerm: string): Array<Resource.Id> {
+    function getMatchesForKnownOrUnknown(index: ConstraintIndex, definition: IndexDefinition,
+                                         matchTerm: string): Array<Resource.Id> {
 
         const knownResourceIds: Array<Resource.Id> = Object.keys(
             getIndex(index, definition)[definition.path] ?? {}
@@ -433,7 +443,7 @@ export module ConstraintIndex {
 
     function validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
 
-        const types: Array<IndexType> = ['match', 'contain', 'exist', 'links'];
+        const types: Array<IndexType> = ['match', 'contain', 'contained', 'exist', 'links'];
 
         for (let indexDefinition of indexDefinitions) {
             if (!indexDefinition.type) return 'Index definition type is undefined';

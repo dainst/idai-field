@@ -303,6 +303,31 @@ describe('ConstraintIndex', () => {
     });
 
 
+    it('use constraint of type contained', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2')
+        ];
+        docs[0].resource.relations['depicts'] = [];
+        docs[1].resource.relations['depicts'] = ['1'];
+
+        ci = ConstraintIndex.make({
+            'depicts:contained': {
+                path: 'resource.relations.depicts',
+                pathArray: ['resource', 'relations', 'depicts'],
+                type: 'contained'
+            }
+        }, categories);
+
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+
+        expect(ConstraintIndex.get(ci, 'depicts:contained', 'KNOWN')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'depicts:contained', 'UNKNOWN')).toEqual(['2']);
+    });
+
+
     it('index i18n strings', () => {
 
         ci = ConstraintIndex.make({

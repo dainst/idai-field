@@ -1,4 +1,4 @@
-export { ConstraintIndex } from './constraint-index';
+export { ConstraintIndex, IndexDefinition, IndexType } from './constraint-index';
 export { FulltextIndex } from './fulltext-index';
 export { getFieldsToIndex } from './get-fields-to-index';
 export { IndexFacade } from './index-facade';

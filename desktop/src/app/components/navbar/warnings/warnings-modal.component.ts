@@ -93,10 +93,7 @@ export class WarningsModalComponent {
 
     public getFieldLabel(section: WarningSection): string {
         
-        return this.labels.getFieldLabel(
-            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
-            section.fieldName
-        ) ?? section.fieldName;
+        return this.getFieldOrRelationLabel(section) ?? section.fieldName;
     }
 
 
@@ -223,7 +220,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.fieldName = section.fieldName;
-        componentInstance.fieldLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
 
@@ -246,7 +243,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.relationName = section.fieldName;
-        componentInstance.relationLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.relationLabel = this.getFieldOrRelationLabel(section);
         componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
 
         await this.modals.awaitResult(
@@ -416,5 +413,14 @@ export class WarningsModalComponent {
         componentInstance.activeGroup = 'conflicts';
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private getFieldOrRelationLabel(section: WarningSection): string {
+
+        return this.labels.getFieldLabel(
+            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+            section.fieldName
+        ) ?? this.labels.getRelationLabel(section.fieldName)
     }
 }

@@ -1,13 +1,21 @@
-import { Valuelist } from '../../src/model';
+import { Relation, Valuelist } from '../../src/model';
 import { Labels } from '../../src/services/labels';
 
 
 describe('Labels', () => {
 
     const getLanguages = () => ['de'];
+    let projectConfiguration;
 
 
-    it('should get label for category', () => {
+    beforeAll(() => {
+
+        projectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getRelations']);
+        projectConfiguration.getRelations.and.returnValue([]);
+    });
+
+
+    it('should get field label', () => {
 
         const category = {
             name: 'T',
@@ -20,13 +28,13 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(getLanguages, projectConfiguration);
 
         expect(labels.getFieldLabel(category, 'aField')).toBe('Ein Feld');
     });
 
 
-    it('should get default label if not defined', () => {
+    it('should get default field label if not defined', () => {
 
         const category = {
             name: 'T',
@@ -37,8 +45,41 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(getLanguages, projectConfiguration);
         expect(labels.getFieldLabel(category,'aField')).toBe('aField');
+    });
+
+
+    it('should get relation label', () => {
+
+        const relation: Relation = {
+            name: 'aRelation',
+            label: { de: 'Eine Relation' },
+            domain: ['T'],
+            range: ['T'],
+            inputType: 'relation'
+        }
+
+        projectConfiguration.getRelations.and.returnValue([relation]);
+
+        const labels = new Labels(getLanguages, projectConfiguration);
+        expect(labels.getRelationLabel('aRelation')).toBe('Eine Relation');
+    });
+
+
+    it('should get default relation label if not defined', () => {
+
+        const relation: Relation = {
+            name: 'aRelation',
+            domain: ['T'],
+            range: ['T'],
+            inputType: 'relation'
+        }
+
+        projectConfiguration.getRelations.and.returnValue([relation]);
+
+        const labels = new Labels(getLanguages, projectConfiguration);
+        expect(labels.getRelationLabel('aRelation')).toBe('aRelation');
     });
 
 
@@ -54,7 +95,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(getLanguages, projectConfiguration);
         expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 
@@ -73,7 +114,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(getLanguages, projectConfiguration);
         expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 });

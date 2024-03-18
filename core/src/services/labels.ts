@@ -1,8 +1,10 @@
 import { isString } from 'tsfun';
-import { CategoryForm } from '../model';
-import { Valuelist } from '../model';
-import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
+import { Valuelist } from '../model/configuration/valuelist';
+import { ProjectConfiguration } from './project-configuration';
+import { CategoryForm } from '../model/configuration/category-form';
+import { SortUtil } from '../tools/sort-util';
+import { Relation } from '../model/configuration/relation';
 
 
 /**
@@ -10,7 +12,8 @@ import { I18N } from '../tools/i18n';
  */
 export class Labels {
 
-    constructor(private getLanguages: () => string[]) {}
+    constructor(private getLanguages: () => string[],
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -57,7 +60,19 @@ export class Labels {
 
         const label = CategoryForm.getField(category, fieldName);
         if (!label) return undefined;
+
         return I18N.getLabel(label, this.getLanguages());
+    }
+
+
+    public getRelationLabel(relationName: string): string {
+
+        const relation: Relation = this.projectConfiguration.getRelations().find(relation => {
+            return relation.name === relationName;
+        });
+        if (!relation) return undefined;
+
+        return I18N.getLabel(relation, this.getLanguages());
     }
 
 

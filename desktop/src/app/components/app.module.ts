@@ -104,8 +104,10 @@ registerLocaleData(localeUk, 'uk');
         Languages,
         {
             provide: Labels,
-            useFactory: (languages: Languages) => new Labels(() => languages.get()),
-            deps: [Languages]
+            useFactory: (languages: Languages, projectConfiguration: ProjectConfiguration) => {
+                return new Labels(() => languages.get(), projectConfiguration);
+            },
+            deps: [Languages, ProjectConfiguration]
         },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },

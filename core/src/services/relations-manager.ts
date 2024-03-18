@@ -8,7 +8,7 @@ import { ProjectConfiguration } from './project-configuration'
 import { ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
-import { childrenOf } from '../base-config';
+import { childrenOf } from '../basic-index-configuration';
 import { Name, Named } from '../tools/named';
 
 

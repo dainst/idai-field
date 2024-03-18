@@ -1,5 +1,5 @@
 import { on, set } from 'tsfun';
-import { childrenOf } from '../../base-config';
+import { childrenOf } from '../../basic-index-configuration';
 import { Datastore } from '../../datastore/datastore';
 import { Relation } from '../../model/configuration/relation';
 import { toResourceId, Document } from '../../model/document';

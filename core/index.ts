@@ -5,5 +5,5 @@ export * from './src/index';
 export * from './src/model';
 export * from './src/tools';
 export * from './src/services';
-export * from './src/base-config';
+export * from './src/basic-index-configuration';
 export * from './test';

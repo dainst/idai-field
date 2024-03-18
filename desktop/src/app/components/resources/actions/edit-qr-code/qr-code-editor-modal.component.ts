@@ -12,8 +12,8 @@ import { MenuContext } from '../../../../services/menu-context';
 import { ProjectLabelProvider } from '../../../../services/project-label-provider';
 import { QrCodeService } from '../../service/qr-code-service';
 import { UtilTranslations } from '../../../../util/util-translations';
-import { PrintSettingsModalComponent } from './print-settings-modal.component';
-import { PrintSettings } from './print-settings';
+import { PrintSettingsModalComponent } from './print-settings/print-settings-modal.component';
+import { PrintSettings } from './print-settings/print-settings';
 
 
 const QRCode = require('qrcode');

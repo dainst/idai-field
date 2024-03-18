@@ -27,7 +27,8 @@ config :field_publication,
   opensearch_url: "http://localhost:9200",
   known_data_sources: ["http://localhost:4000"],
   file_store_directory_root: "data/file_store",
-  web_images_directory_root: "data/cantaloupe"
+  web_images_directory_root: "data/cantaloupe",
+  cantaloupe_url: "http://localhost:8182"
 
 # ## SSL Support
 #

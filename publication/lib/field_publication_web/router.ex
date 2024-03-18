@@ -17,6 +17,10 @@ defmodule FieldPublicationWeb.Router do
     plug :accepts, ["json"]
   end
 
+  forward "/api/iiif/image", ReverseProxyPlug,
+    response_mode: :buffer,
+    upstream: &FieldPublication.cantaloupe_url/0
+
   # If user is already logged but tries to access '/log_in' we redirects to the user's
   # last known route or falls back on '/' .
   scope "/", FieldPublicationWeb do

@@ -1,18 +1,6 @@
 defmodule FieldPublication.Publications.Data do
-  alias FieldPublication.Publications
   alias FieldPublication.CouchService
   alias FieldPublication.Schemas.Publication
-
-  @core_document_properties [
-    "shortDescription",
-    "id",
-    "category",
-    "identifier",
-    "parentId",
-    "featureVectors"
-  ]
-
-  @reduced_docs_cache Application.compile_env(:field_publication, :reduced_docs_cache_name)
 
   def get_all_subcategories(publication, category_name) do
     publication
@@ -76,18 +64,19 @@ defmodule FieldPublication.Publications.Data do
         "color" => category_configuration["item"]["color"],
         "values" => resource["category"]
       },
-      "groups" => group_and_extend_labels(category_configuration["item"], resource)
+      "groups" => extend_field_groups(category_configuration["item"], resource),
+      "relations" => extend_relations(category_configuration["item"], resource)
     }
   end
 
-  defp group_and_extend_labels(category_configuration, resource) do
+  defp extend_field_groups(category_configuration, resource) do
     keys = Map.keys(resource)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       extended_fields =
         group["fields"]
-        |> Enum.map(&extend_fields(&1, keys))
+        |> Enum.map(&extend_field(&1, keys))
         |> Enum.reject(fn val -> val == nil end)
         |> Enum.map(fn %{"key" => key} = map ->
           Map.put(map, "values", resource[key])
@@ -97,12 +86,28 @@ defmodule FieldPublication.Publications.Data do
     end)
   end
 
-  defp extend_fields(field, keys) do
+  defp extend_field(field, keys) do
     if(field["name"] in keys) do
       %{"key" => field["name"], "labels" => field["label"], "type" => field["inputType"]}
     else
       nil
     end
+  end
+
+  defp extend_relations(category_configuration, resource) do
+    relations = Map.get(resource, "relations", %{})
+    keys = Map.keys(relations)
+
+    category_configuration["groups"]
+    |> Enum.map(fn group ->
+      group["fields"]
+      |> Enum.map(&extend_field(&1, keys))
+      |> Enum.reject(fn val -> val == nil end)
+      |> Enum.map(fn %{"key" => key} = map ->
+        Map.put(map, "values", relations[key])
+      end)
+    end)
+    |> List.flatten()
   end
 
   def get_field_values_by_name(doc, searched_key) do
@@ -123,32 +128,10 @@ defmodule FieldPublication.Publications.Data do
     |> List.first()
   end
 
-  def extend_relations(
-        %{"resource" => %{"relations" => relations} = resource} = doc,
-        %Publication{} = publication
-      ) do
-    extended_relations =
-      relations
-      |> Enum.map(fn {relation_name, uuids} ->
-        core_field_docs =
-          %{
-            selector: %{
-              "$or":
-                Enum.map(uuids, fn uuid ->
-                  %{"_id" => uuid}
-                end)
-            }
-          }
-          |> run_query(publication.database)
-          |> Enum.map(fn relation_doc ->
-            reduce_to_core_fields(relation_doc, publication)
-          end)
-
-        %{relation_name => core_field_docs}
-      end)
-
-    updated_resource = Map.put(resource, "relations", extended_relations)
-    Map.put(doc, "resource", updated_resource)
+  def get_relation_by_name(doc, name) do
+    Enum.find(doc["relations"], fn relation ->
+      relation["key"] == name
+    end)
   end
 
   defp run_query(query, database) do
@@ -179,24 +162,5 @@ defmodule FieldPublication.Publications.Data do
       |> Enum.filter(fn val -> val != :not_found end)
       |> List.first(:not_found)
     end
-  end
-
-  defp reduce_to_core_fields(%{"resource" => resource, "_id" => id}, %Publication{} = publication) do
-    key = "#{Publications.get_doc_id(publication)}-#{id}"
-
-    {_, result} =
-      Cachex.fetch(@reduced_docs_cache, key, fn _key ->
-        minimal_resource =
-          @core_document_properties
-          |> Enum.map(fn key ->
-            {key, Map.get(resource, key)}
-          end)
-          |> Enum.reject(fn {_key, value} -> value == nil end)
-          |> Enum.into(%{})
-
-        {:commit, %{"resource" => minimal_resource}}
-      end)
-
-    result
   end
 end

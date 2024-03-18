@@ -45,6 +45,9 @@ defmodule FieldPublication.MixProject do
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
+      # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch
+      {:httpoison, "~> 1.8"},
+      {:reverse_proxy_plug, "~> 2.4"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},

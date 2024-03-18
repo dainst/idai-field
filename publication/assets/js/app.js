@@ -23,12 +23,14 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 import getOpenLayersHook from "./open-layers-hook"
+import getIIIFHook from "./iiif-hook"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 let Hooks = {}
 
-Hooks.OpenLayersMap = getOpenLayersHook()
+Hooks.OpenLayersMap = getOpenLayersHook();
+Hooks.IIIFViewer = getIIIFHook();
 Hooks.HoverHighlightMapFeature = {
     // This hook allows arbitrary DOM elements to trigger highlights on a target open layers map on mousemove events.
     mounted() {

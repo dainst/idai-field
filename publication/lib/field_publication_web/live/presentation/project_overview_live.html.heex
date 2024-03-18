@@ -29,6 +29,7 @@
   <%= case String.downcase(@doc["category"]["values"]) do
     "project" ->
       DocumentComponent.project(%{
+        name: @project_name,
         doc: @doc,
         lang: @selected_lang
       })

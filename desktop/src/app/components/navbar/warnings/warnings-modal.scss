@@ -1,0 +1,108 @@
+.warnings-modal-header {
+  height: 54px;
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  user-select: none;
+  background-color: $modal-header-background-color;
+
+  .modal-title {
+    position: relative;
+    top: 5px;
+    left: 9px;
+  }
+}
+
+.warnings-modal-body {
+  height: calc(100vh - 127px);
+
+  #document-picker #document-picker-viewport {
+    max-height: calc(100vh - 250px);
+  }
+
+  label {
+    font-size: 13px;
+  }
+
+  #warning-filter-select {
+    margin-bottom: 1rem;
+  }
+
+  #document-warnings-container {
+    height: 100%;
+    padding-left: 0;
+
+    #document-warnings-header {
+      background-color: #e7e7e7;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-bottom: 0 !important;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      document-teaser {
+        display: block;
+      }
+    }
+
+    #document-warnings-content {
+      display: block;
+      width: 100%;
+      height: calc(100% - 58px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      user-select: none;
+
+      .card {
+        background-color: unset;
+        margin-bottom: 5px;
+
+        .card-title,
+        .card-block {
+          font-size: 15px !important;
+        }
+
+        .card-header {
+          padding-top: 6px;
+        }
+
+        &:not(:first-child) .card-header {
+          border-top: 1px solid rgba(0, 0, 0, 0.125);
+        }
+    
+        b {
+            font-weight: 600;
+        }
+        
+        .warning-info {
+          margin-bottom: 10px;
+        }
+
+        .data-info {
+          margin-bottom: 14px;
+        }
+
+        .data-info-content {
+          margin-top: 10px;
+          padding: 7px; 
+          background-color: rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(0, 0, 0, 0.125);
+          border-radius: 10px;
+        }
+
+        button {
+          height: 34px;
+          margin-right: 10px;
+          padding: 0 14px 0 10px;
+
+          .button-label {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

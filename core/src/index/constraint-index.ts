@@ -6,11 +6,14 @@ import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 
 
+export type IndexType = 'match'|'contain'|'contained'|'exist'|'links';
+
+
 export interface IndexDefinition {
 
     path: string;
     pathArray: string[];
-    type: string;
+    type: IndexType;
     recursivelySearchable?: boolean;
 }
 
@@ -19,9 +22,9 @@ export interface ConstraintIndex {
 
     indexDefinitions: { [name: string]: IndexDefinition };
 
-    containIndex: {
+    containIndex: { // For index type contain & contained
         [path: string]: {
-            [resourceId: string]: { [id: string]: true };
+            [searchTerm: string]: { [id: string]: true };
         }
     };
 
@@ -43,7 +46,6 @@ export interface ConstraintIndex {
 
     allIndex: { [resourceId: string]: true };
 }
-
 
 
 /**
@@ -80,22 +82,20 @@ export module ConstraintIndex {
     export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(index: ConstraintIndex,
-                        doc: Document,
-                        skipRemoval: boolean = false) {
+    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false) {
 
-        if (!skipRemoval) remove(index, doc);
+        if (!skipRemoval) remove(index, document);
         for (let key in index.indexDefinitions) {
-            putFor(index, index.indexDefinitions[key], doc);
+            putFor(index, index.indexDefinitions[key], document);
         }
-        addToAllIndex(index.allIndex, doc);
+        addToAllIndex(index.allIndex, document);
     }
 
 
-    export function remove(index: ConstraintIndex, doc: Document) {
+    export function remove(index: ConstraintIndex, document: Document) {
 
-        Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, doc));
-        if (index.allIndex[doc.resource.id]) delete index.allIndex[doc.resource.id];
+        Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, document));
+        if (index.allIndex[document.resource.id]) delete index.allIndex[document.resource.id];
     }
 
 
@@ -115,14 +115,16 @@ export module ConstraintIndex {
     export function getWithDescendants(index: ConstraintIndex, indexName: string,
                                        matchTerm: string|string[]): Array<Resource.Id> {
 
-        const definition: IndexDefinition = index.indexDefinitions[indexName];
-        if (!definition) throw 'Ignoring unknown constraint "' + indexName + '".';
-        if (!definition.recursivelySearchable) throw 'illegal argument  - given index not recursively searchable ' + indexName;
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+        if (!indexDefinition.recursivelySearchable) {
+            throw 'Illegal argument: The given index is not recursively searchable: ' + indexName;
+        }
 
         return flow(
             matchTerm,
             cond(not(isArray), singleton),
-            map(getDescendants(index, definition)),
+            map(getDescendants(index, indexDefinition)),
             flatten() as any) as any /* TODO review any*/;
     }
 
@@ -152,32 +154,33 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
+    function putFor(index: ConstraintIndex, definition: IndexDefinition, document: Document) {
 
-        const contentAtPath = getOn(definition.pathArray, doc);
+        const contentAtPath = getOn(definition.pathArray, document);
         const elements: any[] = getElements(contentAtPath);
 
         for (let element of elements) {
             switch(definition.type) {
                 case 'exist':
-                    if (!isMissing(element)) addToExistIndex(index.existIndex, doc, definition.path);
+                    if (!isMissing(element)) addToExistIndex(index.existIndex, document, definition.path);
                     break;
     
                 case 'match':
                     if ((!element && element !== false) || Array.isArray(element)) break;
-                    addToIndex(index.matchIndex, doc, definition.path, element.toString());
+                    addToIndex(index.matchIndex, document, definition.path, element.toString());
                     break;
     
                 case 'contain':
+                case 'contained':
                     if (!element || !Array.isArray(element)) break;
                     for (let target of element) {
-                        addToIndex(index.containIndex, doc, definition.path, target);
+                        addToIndex(index.containIndex, document, definition.path, target);
                     }
                     break;
     
                 case 'links':
                     if (!element || !Array.isArray(element)) break;
-                    addToLinksIndex(index.linksIndex, doc, definition.path, element);
+                    addToLinksIndex(index.linksIndex, document, definition.path, element);
                     break;
             }
         }
@@ -237,10 +240,15 @@ export module ConstraintIndex {
     function getIndex(index: ConstraintIndex, definition: IndexDefinition): any {
 
         switch (definition.type) {
-            case 'contain': return index.containIndex;
-            case 'match':   return index.matchIndex;
-            case 'exist':   return index.existIndex;
-            case 'links':   return index.linksIndex;
+            case 'contain':
+            case 'contained':
+                return index.containIndex;
+            case 'match':
+                return index.matchIndex;
+            case 'exist':
+                return index.existIndex;
+            case 'links':
+                return index.linksIndex;
         }
     }
 
@@ -271,7 +279,9 @@ export module ConstraintIndex {
     function getMatchesForTerm(index: ConstraintIndex, definition: IndexDefinition,
                                matchTerm: string): Array<Resource.Id>|undefined {
 
-        if (definition.type === 'exist') return getMatchesFromExistIndex(index, definition, matchTerm);
+        if (definition.type === 'exist' || definition.type === 'contained') {
+            return getMatchesForKnownOrUnknown(index, definition, matchTerm);
+        }
 
         const result = getIndex(index, definition)[definition.path][matchTerm.toLowerCase()];
         if (!result) return undefined;
@@ -279,8 +289,8 @@ export module ConstraintIndex {
     }
 
 
-    function getMatchesFromExistIndex(index: ConstraintIndex, definition: IndexDefinition,
-                                      matchTerm: string): Array<Resource.Id> {
+    function getMatchesForKnownOrUnknown(index: ConstraintIndex, definition: IndexDefinition,
+                                         matchTerm: string): Array<Resource.Id> {
 
         const knownResourceIds: Array<Resource.Id> = Object.keys(
             getIndex(index, definition)[definition.path] ?? {}
@@ -292,7 +302,7 @@ export module ConstraintIndex {
     }
 
 
-    export function getIndexType(field: Field): string {
+    export function getIndexType(field: Field): IndexType {
 
         switch (field.inputType) {
             case 'checkboxes':
@@ -387,7 +397,7 @@ export module ConstraintIndex {
 
 
     function makeIndexDefinitionForField(field: Field,
-                                         indexType: string): Array<{ name: string, indexDefinition: IndexDefinition }> {
+                                         indexType: IndexType): Array<{ name: string, indexDefinition: IndexDefinition }> {
 
         if (field.inputType === Field.InputType.DROPDOWNRANGE) {
             return [
@@ -433,7 +443,7 @@ export module ConstraintIndex {
 
     function validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
 
-        const types = ['match', 'contain', 'exist', 'links'];
+        const types: Array<IndexType> = ['match', 'contain', 'contained', 'exist', 'links'];
 
         for (let indexDefinition of indexDefinitions) {
             if (!indexDefinition.type) return 'Index definition type is undefined';
@@ -447,32 +457,32 @@ export module ConstraintIndex {
     }
 
 
-    function addToIndex(index: any, doc: Document, path: string, target: string) {
+    function addToIndex(index: any, document: Document, path: string, target: string) {
 
         target = target.toLowerCase();
         if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id] = true;
+        index[path][target][document.resource.id] = true;
     }
 
 
-    function addToExistIndex(index: any, doc: Document, path: string) {
+    function addToExistIndex(index: any, document: Document, path: string) {
 
         if (!index[path]) index[path] = {};
-        index[path][doc.resource.id] = true;
+        index[path][document.resource.id] = true;
     }
 
 
-    function addToLinksIndex(index: any, doc: Document, path: string, targets: Array<Resource.Id>) {
+    function addToLinksIndex(index: any, document: Document, path: string, targets: Array<Resource.Id>) {
 
         const ts = {};
         for (let t of targets) ts[t] = true;
-        index[path][doc.resource.id] = ts;
+        index[path][document.resource.id] = ts;
     }
 
 
-    function addToAllIndex(index: any, doc: Document) {
+    function addToAllIndex(index: any, document: Document) {
 
-        index[doc.resource.id] = true;
+        index[document.resource.id] = true;
     }
 
 

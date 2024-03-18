@@ -14,6 +14,10 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
 * [docker-compose](https://docs.docker.com/compose/)
 * [Elixir](https://elixir-lang.org/) >= 1.13
 
+For Linux make sure to install `inotify-tools`.
+
+For Ubuntu make sure to install `erlang-dev` and `erlang-xmerl`.
+
 Create an `.env` file:
 
 ```
@@ -29,6 +33,12 @@ Start a dockerized CouchDB:
 docker-compose up
 ```
 
+Or, if you want to run docker in the background:
+
+```bash
+docker-compose up -d
+```
+
 ### Phoenix Server
 
 FieldHub is written in [Elixir](https://elixir-lang.org/) with the [Phoenix Framework](https://www.phoenixframework.org/).
@@ -37,10 +47,10 @@ FieldHub tries to follow the Elixir and Phoenix conventions when it comes to nam
 
 ### Project setup
 
-Install dependencies, finish the CouchDB setup as single node and seed a project and user. This is a custom command defined in `aliases` in [mix.exs](mix.exs).
+Install dependencies:
 
 ```bash
-mix setup
+mix deps.get
 ```
 
 Start the server:

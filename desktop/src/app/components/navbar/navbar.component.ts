@@ -5,7 +5,7 @@ import { TabManager } from '../../services/tabs/tab-manager';
 import { Tab } from '../../services/tabs/tab';
 import { TabUtil } from '../../services/tabs/tab-util';
 import { ViewFacade } from '../../components/resources/view/view-facade';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 
 
 @Component({
@@ -31,11 +31,11 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private projectModalLauncher: ProjectModalLauncher,
+                private menuModalLauncher: MenuModalLauncher,
                 private i18n: I18n) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
-        this.projectModalLauncher.projectPropertiesNotifications().subscribe(() => this.onResize());
+        this.menuModalLauncher.projectPropertiesNotifications().subscribe(() => this.onResize());
     }
 
 
@@ -52,6 +52,9 @@ export class NavbarComponent implements DoCheck {
     public getTabRoute = (tab: Tab) => TabUtil.getTabRoute(tab);
 
     public getTabRouteArray = (tab: Tab) => TabUtil.getTabRouteArray(tab);
+
+    public isInDefaultResourcesView = () => this.isActiveRoute('/resources')
+        && !this.isActiveRoute('/resources/types') && !this.isActiveRoute('/resources/inventory');
 
 
     ngDoCheck() {
@@ -107,6 +110,8 @@ export class NavbarComponent implements DoCheck {
             return this.i18n({ id: 'navbar.tabs.images', value: 'Bilder' });
         } else if (this.activeRoute.startsWith('/resources/types')) {
             return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
+        } else if (this.activeRoute.startsWith('/resources/inventory')) {
+            return this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' });
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/downloadProject')) {

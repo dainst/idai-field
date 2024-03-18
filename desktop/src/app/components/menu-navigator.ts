@@ -5,7 +5,7 @@ import { ObserverUtil } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
-import { ProjectModalLauncher } from '../services/project-modal-launcher';
+import { MenuModalLauncher } from '../services/menu-modal-launcher';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 
@@ -23,7 +23,7 @@ export class MenuNavigator {
                 private zone: NgZone,
                 private settingsService: SettingsService,
                 private menuService: Menus,
-                private projectModalLauncher: ProjectModalLauncher) {}
+                private menuModalLauncher: MenuModalLauncher) {}
 
 
     public initialize() {
@@ -38,26 +38,36 @@ export class MenuNavigator {
 
     public async onMenuItemClicked(menuItem: string, projectIdentifier?: string) {
 
-        if (menuItem === 'openProject') {
-            await this.settingsService.selectProject(projectIdentifier);
-            reloadAndSwitchToHomeRoute();
-        } else if (menuItem === 'createProject') {
-            await this.zone.run(() => this.projectModalLauncher.createProject());
-        } else if (menuItem === 'editProject') {
-            await this.zone.run(() => this.projectModalLauncher.editProject());
-        }  else if (menuItem === 'projectInformation') {
-            await this.zone.run(() => this.projectModalLauncher.openInformationModal());
-        } else if (menuItem === 'projectImages') {
-            await this.zone.run(() => this.projectModalLauncher.openProjectImageViewModal());
-        } else if (menuItem === 'deleteProject') {
-            await this.zone.run(() => this.projectModalLauncher.deleteProject(projectIdentifier));
-        } else if (menuItem === 'projectSynchronization') {
-            await this.zone.run(() => this.projectModalLauncher.openSynchronizationModal());
-        } else if (menuItem === 'projectLanguages' || menuItem === 'valuelists'
-                || menuItem === 'importConfiguration') {
-            await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
-        } else {
-            await this.zone.run(async () => await this.router.navigate([menuItem]));
+        switch(menuItem) {
+            case 'openProject':
+                await this.settingsService.selectProject(projectIdentifier);
+                reloadAndSwitchToHomeRoute();
+                break;
+            case 'createProject':
+                await this.zone.run(() => this.menuModalLauncher.createProject());
+                break;
+            case 'editProject':
+                await this.zone.run(() => this.menuModalLauncher.editProject());
+                break;
+            case 'projectInformation':
+                await this.zone.run(() => this.menuModalLauncher.openInformationModal());
+                break;
+            case 'projectImages':
+                await this.zone.run(() => this.menuModalLauncher.openProjectImageViewModal());
+                break;
+            case 'deleteProject':
+                await this.zone.run(() => this.menuModalLauncher.deleteProject(projectIdentifier));
+                break;
+            case 'projectSynchronization':
+                await this.zone.run(() => this.menuModalLauncher.openSynchronizationModal());
+                break;
+            case 'projectLanguages':
+            case 'valuelists':
+            case 'importConfiguration':
+                await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
+                break;
+            default:
+                await this.zone.run(async () => await this.router.navigate([menuItem]));
         }
     }
 

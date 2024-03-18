@@ -3,7 +3,7 @@ defmodule Api.Core.CorePropertiesAtomizingTest do
   use Plug.Test
   import Api.Core.CorePropertiesAtomizing
 
-  test "base  case" do
+  test "base case" do
     result = format_document(%{ "resource" => %{ "category" => "Operation" }})
     assert result.resource.category == "Operation"
   end

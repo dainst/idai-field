@@ -45,7 +45,7 @@ export default function ProjectHome(): ReactElement {
     const [typeCatalogId, setTypeCatalogId] = useState<string>(null);
     
     const [projectDocument, setProjectDocument] = useState<Document>();
-    const [title, setTitle] = useState<I18N.String>({ unspecifiedLanguage: '' });
+    const [title, setTitle] = useState<I18N.String|string>({ unspecifiedLanguage: '' });
     const [images, setImages] = useState<ResultDocument[]>();
     const [highlightedCategories, setHighlightedCategories] = useState<string[]>([]);
     const [predecessors] = useState<ResultDocument[]>([]);
@@ -93,7 +93,7 @@ export default function ProjectHome(): ReactElement {
 }
 
 
-const renderTitle = (title: I18N.String, projectDocument: Document) => {
+const renderTitle = (title: I18N.String|string, projectDocument: Document) => {
 
     const titleStr: string = getTranslation(title);
 
@@ -213,10 +213,7 @@ const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     const institution: string = getTranslation(getFieldValue(projectDocument, 'institution') as undefined);
     const projectSupervisor: string = getTranslation(getFieldValue(projectDocument, 'projectSupervisor') as undefined);
     const contactPerson: string = getTranslation(getFieldValue(projectDocument, 'contactPerson') as undefined);
-    const staff: string =
-        (getFieldValue(projectDocument, 'staff') as undefined[])
-            .map(staff => getTranslation(staff))
-            .join(', ');
+    const staff: string = getStaffInfo(projectDocument);
 
     return <dl>
         <dt>{ t('projectHome.institution') }</dt>
@@ -307,11 +304,20 @@ const checkTypeCatalogs = async (id: string, searchParams: URLSearchParams, toke
 };
 
 
-const getProjectTitle = (projectDocument: Document): I18N.String => {
+const getProjectTitle = (projectDocument: Document): I18N.String|string => {
 
     return projectDocument.resource.shortDescription
         ?? projectDocument.resource.shortName
         ?? projectDocument.resource.identifier;
+};
+
+
+const getStaffInfo = (projectDocument: Document): string => {
+
+    const staffValues: I18N.String[]|string[] = getFieldValue(projectDocument, 'staff') as I18N.String[]|string[];
+    return staffValues
+        ? staffValues.map(staff => getTranslation(staff)).join(', ')
+        : '';
 };
 
 

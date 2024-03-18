@@ -1617,5 +1617,35 @@
         "valuelistId": "damages-default"
       }
     }
+  },
+  "StorageBuilding": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
+  },
+  "StorageRoom": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
+  },
+  "StorageShelf": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
+  },
+  "StorageCompartment": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
+  },
+  "StorageBox": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
+  },
+  "StorageBag": {
+    "parent": "StoragePlace",
+    "description": {},
+    "fields": {}
   }
 }

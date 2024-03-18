@@ -1,0 +1,95 @@
+/**
+ * @author Thomas Kleinke
+ */
+grid-list {
+  document-info {
+    position: relative;
+    z-index: 6;
+    font-size: 14px;
+
+    .document-info {
+      border-right: 1px solid #e9ecef;
+    }
+  }
+
+  #grid-list {
+    height: calc(100vh - #{$navbar-height + $toolbar-height});
+    margin-top: 2px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-top: 1px solid #e9ecef;
+
+    loading-icon {
+      position: absolute;
+      top: calc(50% - 45px);
+      left: calc(50% - 20px);
+
+      &.with-main-document {
+        left: calc(50% + 109px);
+      }
+    }
+
+    #grid-elements-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .grid-section-label {
+        height: 40px;
+        padding: 5px;
+        color: black;
+        background-color: white;
+        text-align: center;
+        line-height: 30px;
+        font-size: 14px;
+        user-select: none;
+        border-bottom: 1px solid #e9ecef;
+        border-top: 1px solid #e9ecef;
+
+        &:hover {
+          background-color: #e8e8e8;
+          color: black;
+        }
+
+        &:active {
+          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        &.first-grid-section-label {
+          border-top: none;
+        }
+
+        .mdi {
+          color: $brand-primary;
+        }
+      }
+
+      .grid-section {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        #plus-button-container {
+          height: 63px;
+          padding-top: 10px;
+          position: absolute;
+          bottom: 0;
+          left: calc(50% - 21px);
+
+          #create-document-button .circular-button {
+            margin: auto auto auto auto;
+          }
+
+          .loading-icon {
+            margin: -23px auto auto auto;
+          }
+        }
+
+        .grid-item-container + #plus-button-container {
+          padding-top: 9px;
+        }
+      }
+    }
+  }
+}

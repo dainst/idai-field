@@ -69,7 +69,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
     const [map, setMap] = useState<Map>(null);
     const [vectorLayer, setVectorLayer] = useState<VectorLayer>(null);
     const [select, setSelect] = useState<Select>(null);
-    const [tileLayers, setTileLayers] = useState<TileLayer[]>([]);
+    const [tileLayers, setTileLayers] = useState<TileLayer[]>(null);
  
     const mapClickFunction = useRef<(_: MapBrowserEvent) => void>(null);
 
@@ -103,6 +103,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
         getTileLayers(project, loginData, projectDocument, isMiniMap).then((newTileLayers) => {
             if (mounted) {
                 setTileLayers(currentTileLayers => {
+                    if (!currentTileLayers) currentTileLayers = [];
                     if (currentTileLayers.length === 0) {
                         newTileLayers.forEach(layer => map.addLayer(layer));
                         return newTileLayers;
@@ -130,7 +131,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!map || !documents?.length) return;
+        if (!map || !documents?.length || !tileLayers) return;
 
         const featureCollection = createFeatureCollection(documents);
         const newVectorLayer = getGeoJSONLayer(featureCollection);
@@ -156,7 +157,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!map || !vectorLayer) return;
+        if (!map || !vectorLayer) return;
         
         map.getView().fit(
             getExtent(vectorLayer, predecessors, selectedDocument),
@@ -166,7 +167,7 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
 
     useEffect(() => {
 
-        if (!select || !vectorLayer) return;
+        if (!select || !vectorLayer) return;
 
         select.getFeatures().clear();
 
@@ -187,13 +188,13 @@ export default function ProjectMap({ selectedDocument, hoverDocument, highlighte
             <Link to={ `/project/${project}/hierarchy?parent=root` } className="project-link">
                 <Icon path={ mdiRedo } size={ 1.0 } ></Icon>
             </Link> :
-            <LayerControls map={ map }
-                        tileLayers={ tileLayers }
-                        fitOptions={ fitOptions }
-                        selectedDocument={ selectedDocument }
-                        predecessors={ predecessors }
-                        project={ project }
-                        projectDocument={ projectDocument }></LayerControls>)
+            tileLayers && <LayerControls map={ map }
+                                         tileLayers={ tileLayers }
+                                         fitOptions={ fitOptions }
+                                         selectedDocument={ selectedDocument }
+                                         predecessors={ predecessors }
+                                         project={ project }
+                                         projectDocument={ projectDocument }></LayerControls>)
         }
     </>;
 }
@@ -235,12 +236,10 @@ const createSelect = (map: Map): Select => {
 
 const addToSelect = (select: Select, document: Document|ResultDocument, layer: VectorLayer) => {
 
-    if (document.resource?.geometry) {
-        const feature = (layer.getSource())
-            .getFeatureById(document.resource.id);
-        if (!feature) return;
-        select.getFeatures().push(feature);
-    }
+    const feature = (layer.getSource()).getFeatureById(document.resource.id);
+    if (!feature) return;
+
+    select.getFeatures().push(feature);
 };
 
 
@@ -496,6 +495,7 @@ const createFeature = (document: ResultDocument): Feature => ({
         id: document.resource.id,
         identifier: document.resource.identifier,
         category: document.resource.category.name,
+        supercategory: document.resource.category.parent,
         project: document.project
     }
 });
@@ -509,7 +509,7 @@ const getExtent = (layer: VectorLayer, predecessors: ResultDocument[], selectedD
         .filter(not(isUndefined));
 
     const feature = predecessorFeatures.find(predecessorFeature => {
-        return ['Trench', 'Building', 'Survey'].includes(predecessorFeature.getProperties().category);
+        return predecessorFeature.getProperties().supercategory === 'Operation';
     }) || (selectedDocument && getFeature(selectedDocument, layer));
 
     return feature ? feature.getGeometry().getExtent() : layer.getSource().getExtent();

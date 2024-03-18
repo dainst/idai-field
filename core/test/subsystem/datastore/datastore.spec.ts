@@ -1,3 +1,4 @@
+import { Document } from '../../../src/model';
 import { doc, doc1 } from '../../test-helpers';
 import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
@@ -23,7 +24,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('hi', async done => {
+    it('create document', async done => {
 
         await app.datastore.create(doc1('abc', 'Abc', 'Trench'));
 
@@ -32,7 +33,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - do not throw and return everything with all categories', async done => {
+    it('do not throw and return everything with all categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -50,7 +51,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - return everything when called without categories', async done => {
+    it('return everything when called without categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -68,7 +69,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('sort mode', async done => {
+    it('sort documents in different sort modes', async done => {
 
         const doc1 = doc('sd1', 'A-B-100', 'Find', '1');
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
@@ -99,7 +100,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('isChildOf', async done => {
+    it('use isChildOf constraint', async done => {
 
         await helpers.createDocuments([
             ['id1', 'Trench', ['id2']],
@@ -110,6 +111,28 @@ describe('subsystem/datastore', () => {
         const result = await app.datastore.find({ 
             constraints: { 'isChildOf:contain': { value: ['id1'], searchRecursively: true }}});
         expect(result.ids).toEqual(['id2', 'id3']);
+        done();
+    });
+
+
+    it('update non-unique identifier warnings', async done => {
+
+        let document1 = doc('sd1', '1', 'Find', 'id1');
+        let document2 = doc('sd2', '1', 'Find', 'id2');
+
+        document1 = await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+
+        expect(document1.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(document2.warnings?.nonUniqueIdentifier).toBe(true);
+
+        const clonedDocument2 = Document.clone(document2);
+        clonedDocument2.resource.identifier = '2';
+        await app.datastore.update(clonedDocument2);
+        
+        expect(document1.warnings).toBeUndefined();
+        expect(document2.warnings).toBeUndefined();
+
         done();
     });
 });

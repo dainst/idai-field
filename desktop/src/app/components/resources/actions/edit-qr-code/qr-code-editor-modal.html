@@ -1,0 +1,79 @@
+<div id="view-modal-header" class="modal-header">
+    <div class="text-truncate heading"
+         i18n="@@resources.qrCodeEditorModal.header">
+        QR-Code der Ressource <b>{{document.resource.identifier}}</b>
+    </div>
+    <button id="qr-code-editor-cancel-button" class="btn btn-primary btn-square" (click)="cancel()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+<div id="qr-code-editor-modal-body" class="modal-body bg-light">
+    <div id="qr-code-container">
+        <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
+        <div *ngIf="hasQrCode() && !saving"
+             id="qr-code-string"
+             class="badge badge-light">{{document.resource.scanCode}}</div>
+        <div *ngIf="hasQrCode()"
+             id="qr-code-print-label">
+            <div id="qr-code-identifier">{{document.resource.identifier}}</div>
+            <div id="printed-fields-container"
+                 [class.print-label-one-field]="printedFields.length === 1"
+                 [class.print-label-two-fields]="printedFields.length === 2"
+                 [class.print-label-three-fields]="printedFields.length === 3">
+                <div id="printed-fields">
+                    <div *ngFor="let field of printedFields"
+                        class="print-label-field">
+                        <b *ngIf="field.label">{{field.label}}:</b> {{field.contentLabel}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!hasQrCode()" id="qr-code-placeholder">
+            <span id="add-qr-code-button"
+                  class="mdi mdi-48px mdi-plus-circle"
+                  [ngbPopover]="addQrCodePopover"
+                  placement="bottom"
+                  container="body"
+                  popoverClass="add-qr-code-popover">
+            </span>
+        </div>
+    </div>
+
+    <div class="btn-group" id="print-settings-button-group">
+        <button id="print-qr-code-button"
+                class="btn btn-primary"
+                [class.disabled]="!hasQrCode()"
+                (click)="hasQrCode() && printCode()">
+            <span class="mdi mdi-printer-pos"></span>
+            <span class="button-label" i18n="@@buttons.print">Drucken</span>
+        </button>
+        <button id="print-settings-button"
+                class="btn btn-primary"
+                ngbTooltip="Etikettendruck einrichten"
+                i18n-ngbTooltip="@@resources.printSettings"
+                container="body"
+                placement="top"
+                (click)="openPrintSettingsModal()">
+            <span class="mdi mdi-cog"></span>
+        </button>
+    </div>
+
+    <button id="delete-qr-code-button"
+            class="btn btn-danger"
+            [class.disabled]="!hasQrCode()"
+            (click)="hasQrCode() && deleteCode()">
+        <span class="mdi mdi-delete"></span>
+        <span class="button-label" i18n="@@buttons.delete">Löschen</span>
+    </button>
+</div>
+
+<ng-template #addQrCodePopover>
+    <span id="generate-qr-code-button"
+          class="btn btn-primary"
+          (click)="createNewCode()"
+          i18n="@@resources.qrCodeEditorModal.addQrCode.generate">Neuen Code generieren</span>
+    <span id="set-existing-qr-code-button"
+          class="btn btn-primary"
+          (click)="setExistingCode()"
+          i18n="@@resources.qrCodeEditorModal.addQrCode.setExisting">Existierenden Code übernehmen</span>
+</ng-template>

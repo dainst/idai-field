@@ -60,7 +60,8 @@ describe('Validations', () => {
                         { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
                         { name: 'endDate', label: 'endDate', inputType: 'date' },
-                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 }
+                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
+                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' }
                     ]
 
             }]}, []],
@@ -119,7 +120,7 @@ describe('Validations', () => {
 
     it('validate defined fields', () => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
@@ -154,6 +155,26 @@ describe('Validations', () => {
 
         const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields.length).toBe(0);
+    });
+
+
+    it('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
+
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                isBelow: 'test',
+                relations: { isBelow: ['0'] },
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields).toContain('isBelow');
     });
 
 
@@ -394,9 +415,9 @@ describe('Validations', () => {
                 // Incomplete range
                 dating4: [{ type: 'range', begin: { inputYear: 10, inputType: 'ce'} }],
                 // No integer value
-                dating5: [{ type: 'exact', end: { inputYear: 10.5, inputType: 'ce'} }],
+                dating5: [{ type: 'single', end: { inputYear: 10.5, inputType: 'ce'} }],
                 // Negative value
-                dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
+                dating6: [{ type: 'single', end: { inputYear: -10, inputType: 'ce'} }],
                 // No array
                 dating7: 'Dating',
                 // Invalid field

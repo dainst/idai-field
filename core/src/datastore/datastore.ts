@@ -3,10 +3,13 @@ import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
 import { Query } from '../model/query';
 import { Name } from '../tools/named';
-import { CategoryConverter } from './category-converter';
+import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
+import { WarningsUpdater } from './warnings-updater';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { CategoryForm } from '../model/configuration/category-form';
 
 
 /**
@@ -38,7 +41,8 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter,
+                private documentConverter: DocumentConverter,
+                private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {
     }
 
@@ -68,9 +72,12 @@ export class Datastore {
 
     public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        return (await this.datastore.bulkCreate(documents, this.getUser())).map(document => {
-            return this.updateIndex(document);
-        });
+        const resultDocuments: Array<Document> = [];
+        for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
+            resultDocuments.push(await this.updateIndex(document));
+        }
+
+        return resultDocuments;
     }
 
 
@@ -90,26 +97,43 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
+        delete document.warnings;
+
         return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
-        return (await this.datastore.bulkUpdate(documents, this.getUser())).map(document => {
-            return this.updateIndex(document);
-        });
+        documents.forEach(document => delete document.warnings);
+
+        const resultDocuments: Array<Document> = [];
+        for (let document of await this.datastore.bulkUpdate(documents, this.getUser())) {
+            resultDocuments.push(await this.updateIndex(document));
+        }
+
+        return resultDocuments;
     }
 
 
-    private updateIndex(document: Document) {
+    private async updateIndex(document: Document): Promise<Document> {
 
-        const convertedDocument = this.categoryConverter.convert(document);
+        const convertedDocument = this.documentConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
-        return !this.documentCache.get(document.resource.id as any)
+        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        document = !previousVersion
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);
+        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, category, this, previousIdentifier, true
+        );
+
+        return document;
     }
 
 
@@ -134,6 +158,12 @@ export class Datastore {
 
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
+
+        await WarningsUpdater.updateResourceLimitWarnings(
+            this,
+            this.indexFacade,
+            this.projectConfiguration.getCategory(document.resource.category)
+        );
     }
 
 
@@ -157,7 +187,7 @@ export class Datastore {
             return cachedDocument;
         }
 
-        let document = this.categoryConverter.convert(await this.datastore.fetch(id, options?.conflicts));
+        let document = this.documentConverter.convert(await this.datastore.fetch(id, options?.conflicts));
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -200,7 +230,7 @@ export class Datastore {
 
     public convert: Datastore.Convert = (document: Document) => {
         
-        this.categoryConverter.convert(document);
+        this.documentConverter.convert(document);
     }  
 
 
@@ -229,7 +259,7 @@ export class Datastore {
      */
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
-        return this.categoryConverter.convert(
+        return this.documentConverter.convert(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 
@@ -312,11 +342,10 @@ export class Datastore {
     private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
-
         (await this.datastore.bulkFetch(ids)).forEach(document => {
 
             try {
-                const convertedDocument = this.categoryConverter.convert(document);
+                const convertedDocument = this.documentConverter.convert(document);
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
                 if (errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {

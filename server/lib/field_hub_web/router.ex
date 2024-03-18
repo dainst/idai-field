@@ -63,6 +63,7 @@ defmodule FieldHubWeb.Router do
     end
   end
 
+  # API Routes
   scope "/", FieldHubWeb.Api do
     pipe_through :api
     pipe_through :api_require_user_authentication
@@ -82,11 +83,6 @@ defmodule FieldHubWeb.Router do
       delete "/projects/:project", ProjectController, :delete
     end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", FieldHubWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

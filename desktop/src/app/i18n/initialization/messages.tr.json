@@ -3,7 +3,7 @@
   "loading2": "projesi yükleniyor...",
   "restart": "Yeniden başlat",
   "loadTestProject": "Test projesini başlat",
-  "phase/processingImages": "Resimler gösterim için optimize edilir.\nBu adım bir kez gerçekleştirilir ve birkaç dakika sürebilir.",
+  "phase/processingImages": "Görüntüler ön izleme için optimize ediliyor.\nBu adım bir kez gerçekleştirilir ve birkaç dakika sürebilir.",
   "alreadyOpenError": "Uygulama başlatılamadı. Lütfen Field Desktop'ın başka bir pencerede açık olup olmadığını kontrol edin.",
   "databaseError": "Bir hata oluştu: Proje veritabanı yüklenemedi.",
   "configurationError": "Bir hata oluştu: Proje konfigürasyonu yüklenemedi.",

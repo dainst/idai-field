@@ -2661,6 +2661,286 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow setting resource limit', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                resourceLimit: 2
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].resourceLimit).toBe(2);
+    });
+
+
+    it('allow using scan codes', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                scanCodesAllowed: true,
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true,
+                    printedFields: []
+                }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].scanCodes).toEqual({ type: 'qr', autoCreate: true, printedFields: [] });
+    });
+
+
+    it('inherit scan codes configuration from parent category', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                scanCodesAllowed: true,
+                minimalForm: {
+                    groups: []
+                }
+            },
+            A1: {
+                parent: 'A',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B: {
+                fields: {},
+                scanCodesAllowed: true,
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B1: {
+                parent: 'B',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            },
+            B2: {
+                parent: 'B',
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B:default': {
+                categoryName: 'B',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'A1:default': {
+                categoryName: 'A1',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B1:default': {
+                categoryName: 'B1',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            },
+            'B2:default': {
+                categoryName: 'B2',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true,
+                    printedFields: [{ name: 'a', printLabel: true }]
+                }
+            },
+            'A1:default': {
+                fields: {}
+            },
+            'B:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: false,
+                    printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
+                }
+            },
+            'B1:default': {
+                fields: {}
+            },
+            'B2:default': {
+                fields: {},
+                scanCodes: {
+                    type: 'qr',
+                    autoCreate: true,
+                    printedFields: [{ name: 'c', printLabel: true }, { name: 'd', printLabel: true }]
+                }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].scanCodes).toEqual(
+            { type: 'qr', autoCreate: true, printedFields: [{ name: 'a', printLabel: true }] }
+        );
+        expect(result['A1'].scanCodes).toEqual(
+            { type: 'qr', autoCreate: true, printedFields: [{ name: 'a', printLabel: true }] }
+        );
+        expect(result['B'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: false,
+                printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
+            }
+        );
+        expect(result['B1'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: false,
+                printedFields: [{ name: 'a', printLabel: true }, { name: 'b', printLabel: false }]
+            }
+        );
+        expect(result['B2'].scanCodes).toEqual(
+            {
+                type: 'qr', autoCreate: true,
+                printedFields: [
+                    { name: 'a', printLabel: true }, { name: 'b', printLabel: false }, { name: 'c', printLabel: true }
+                ]
+            }
+        );
+    });
+
+
+    it('prevent using scan codes if forbidden for category', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {},
+                color: 'red',
+                scanCodes: { type: 'qr', autoCreate: true, printedFields: [] }
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].scanCodes).toBeUndefined();
+    });
+
+
     it('set subfields', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

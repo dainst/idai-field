@@ -19,6 +19,7 @@ export function createMockValidator() {
         'isRecordedInTargetAllowedRelationDomainCategory',
         'assertNoForbiddenRelations',
         'assertIdentifierPrefixIsValid',
+        'assertResourceLimitNotExceeded',
         'getUndefinedFields'
     ]);
 }

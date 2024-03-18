@@ -32,7 +32,7 @@ defmodule Api.Documents.DescendantsImages do
     end
 
     defp get_image_ids(docs) do
-      Enum.filter(docs, fn doc -> Map.has_key?(doc.resource.relations, :isDepictedIn) end)
+      Enum.filter(docs, fn doc -> Map.has_key?(doc.resource, :relations) && Map.has_key?(doc.resource.relations, :isDepictedIn) end)
       |> Enum.map(fn doc -> Enum.at(doc.resource.relations.isDepictedIn, 0).resource.id end)
     end
 
@@ -40,7 +40,7 @@ defmodule Api.Documents.DescendantsImages do
     defp select_image_ids_evenly_from_children(children_ids_results, number_of_images) do
       Stream.unfold(
         { children_ids_results, 0, number_of_images },
-        fn 
+        fn
           { [], _, _ } -> nil
           { _, _, 0 } -> nil
           { children_ids, child_index, number } ->

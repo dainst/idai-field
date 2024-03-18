@@ -27,8 +27,9 @@
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>
-    <div class="configuration-editor-section form-group basic-settings">
-        <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
+    <div class="configuration-editor-section configuration-editor-switch-section form-group">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.basicSettings">
             Grundeinstellungen
         </div>
         <div *ngIf="hideable">
@@ -49,7 +50,7 @@
                      [inputType]="getInputType()"
                      (onChanged)="setInputType($event)"></i18n-switch>
         <div id="constraint-indexed-switch"
-             class="field-editor-switch"
+             class="configuration-editor-switch"
              ngbTooltip="{{getConstraintIndexedTooltip()}}"
              container="body">
             <div class="basic-settings-label">

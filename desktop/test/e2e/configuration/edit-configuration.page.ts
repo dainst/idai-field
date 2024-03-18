@@ -45,6 +45,18 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleScanCodesSlider() {
+
+        return click('#toggle-scan-codes-slider');
+    }
+
+
+    public static clickToggleAutoCreateScanCodesSlider() {
+
+        return click('#toggle-auto-create-scan-codes-slider');
+    }
+
+
     public static clickAddValuelist() {
 
         return click('#add-valuelist-button');
@@ -166,6 +178,12 @@ export class EditConfigurationPage {
     public static async typeInIdentifierPrefix(prefix: string) {
 
         return typeIn('#identifier-prefix', prefix);
+    }
+
+
+    public static async typeInResourceLimit(resourceLimit: string) {
+
+        return typeIn('#resource-limit', resourceLimit);
     }
 
 

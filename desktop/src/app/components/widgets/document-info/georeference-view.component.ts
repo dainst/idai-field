@@ -112,7 +112,7 @@ export class GeoreferenceViewComponent {
             );
         } catch (err) {
             console.error(err);
-            throw [M.APP_ERROR_GENERIC_SAVE_ERROR];
+            throw [M.DOCEDIT_ERROR_SAVE];
         }
     }
 }

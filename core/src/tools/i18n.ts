@@ -1,4 +1,4 @@
-import { Map, clone } from 'tsfun';
+import { Map, clone, isString } from 'tsfun';
 import { Named } from './named';
 
 
@@ -72,9 +72,10 @@ export namespace I18N {
      * undefined
      * ```
      */
-    export function getTranslation(labels: String, languages: string[]): string|undefined {
+    export function getTranslation(labels: String|string, languages: string[]): string|undefined {
 
         if (!labels) return undefined;
+        if (isString(labels)) return labels;
 
         const language = getLanguage(labels, languages);
         return language ? labels[language] : undefined;

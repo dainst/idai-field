@@ -7,3 +7,12 @@
     max-height: 400px;
     overflow-y: auto;
 }
+
+.dropdown-item.filter {
+    background-color: #fff;
+}
+
+.dropdown-item.filter.selected-filter,
+.dropdown-item.filter:hover {
+    background-color: #eceeef;
+}

@@ -19,14 +19,18 @@ export class OutliersComponent {
 
     public getOutliers(): string[]|undefined {
 
-        return ValuelistUtil.getValuesNotIncludedInValuelist(this.fieldContainer, this.fieldName, this.valuelist);
+        return ValuelistUtil.getValuesNotIncludedInValuelist(this.fieldContainer[this.fieldName], this.valuelist);
     }
 
 
     public remove(outlier: string) {
 
-        if (Array.isArray(this.fieldContainer[this.fieldName])) {
+        const fieldContent: any = this.fieldContainer[this.fieldName];
+
+        if (Array.isArray(fieldContent)) {
             this.removeFromArray(outlier);
+        } else if (fieldContent.endValue === outlier) {
+            delete fieldContent.endValue;
         } else {
             delete this.fieldContainer[this.fieldName];
         }

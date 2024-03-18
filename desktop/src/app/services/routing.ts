@@ -60,7 +60,7 @@ export class Routing {
     /**
      * @throws M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY
      */
-    public async jumpToResource(documentToSelect: Document) {
+    public async jumpToResource(documentToSelect: Document, fromLink: boolean = true) {
 
         if (!this.router.url.startsWith('/resources/')) this.currentRoute = undefined;
 
@@ -71,7 +71,7 @@ export class Routing {
         } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect);
         } else {
-            await this.jumpToFieldCategoryResource(documentToSelect);
+            await this.jumpToFieldCategoryResource(documentToSelect, fromLink);
         }
     }
 
@@ -110,11 +110,11 @@ export class Routing {
     }
 
 
-    private async jumpToFieldCategoryResource(documentToSelect: Document) {
+    private async jumpToFieldCategoryResource(documentToSelect: Document, fromLink: boolean) {
 
-        const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
+        const viewName: 'project'|'types'|'inventory'|string = this.getViewName(documentToSelect);
 
-        if (!['project', 'types'].includes(viewName)) {
+        if (!['project', 'types', 'inventory'].includes(viewName)) {
             try {
                 await this.datastore.get(viewName);
             } catch (errWithParams) {
@@ -128,7 +128,10 @@ export class Routing {
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
-            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, true);
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, fromLink);
+            if (['types', 'inventory'].includes(viewName)) {
+                await this.viewFacade.moveInto(documentToSelect.resource.id, false, fromLink);
+            }
         }
     }
 
@@ -160,14 +163,17 @@ export class Routing {
     }
 
 
-    private getViewName(document: Document): 'project'|'types'|string {
+    private getViewName(document: Document): 'project'|'types'|'inventory'|string {
 
         return this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)
             ? 'project'
             : this.projectConfiguration.getTypeManagementCategories()
                     .map(Named.toName).includes(document.resource.category)
                 ? 'types'
-                : document.resource.relations['isRecordedIn'][0];
+                : this.projectConfiguration.getInventoryCategories()
+                        .map(Named.toName).includes(document.resource.category)
+                    ? 'inventory'
+                    : document.resource.relations['isRecordedIn'][0];
     }
 
 

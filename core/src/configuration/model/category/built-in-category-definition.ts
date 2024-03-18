@@ -11,6 +11,7 @@ export interface BuiltInCategoryDefinition extends BaseCategoryDefinition {
     abstract?: boolean;
     supercategory?: boolean;
     userDefinedSubcategoriesAllowed?: boolean;
+    scanCodesAllowed?: boolean;
     required?: boolean;
 
     /**

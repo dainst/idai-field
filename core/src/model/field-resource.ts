@@ -14,6 +14,7 @@ export interface FieldResource extends Resource {
     shortDescription: I18N.String|string;
     geometry?: FieldGeometry;
     relations: FieldResource.Relations;
+    scanCode?: string;
 }
 
 
@@ -22,6 +23,8 @@ export module FieldResource {
     export const SHORTDESCRIPTION = 'shortDescription';
     export const GEOMETRY = 'geometry';
     export const RELATIONS = 'relations';
+    export const SCANCODE = 'scanCode';
+
 
     export interface Relations extends Resource.Relations {
 

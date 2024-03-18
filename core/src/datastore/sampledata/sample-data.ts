@@ -48,9 +48,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': sampleDataLabels[locale]['trenchShort'] + '2',
             'shortDescription': getI18nString('trench', ' 2'),
             'relations': {},
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [[
+                'coordinates': [[
                     [27.18933606147766, 39.14117097854614],
                     [27.189400672912598, 39.14119362831116],
                     [27.189414739608765, 39.14115810394287],
@@ -70,9 +70,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isRecordedIn': ['t2'],
                 'isAbove': ['si2', 'si5'],
             },
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [
+                'coordinates': [
                     [
                         [
                             27.18934252858162,
@@ -107,9 +107,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isBelow': ['si1'],
                 'isAbove': ['si3']
             },
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [
+                'coordinates': [
                     [
                         [
                             27.18934056162834,
@@ -145,9 +145,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isAbove': ['si4'],
                 'bondsWith': ['si5']
             },
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [
+                'coordinates': [
                     [
                         [
                             27.18934252858162,
@@ -193,9 +193,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isRecordedIn': ['t2'],
                 'isBelow': ['si3'],
             },
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [
+                'coordinates': [
                     [
                         [
                             27.18934690952301,
@@ -256,9 +256,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isBelow': ['si1'],
                 'bondsWith': ['si3']
             },
-            'geometry' : {
+            'geometry': {
                 'type': 'Polygon',
-                'coordinates' : [
+                'coordinates': [
                     [
                         [
                             27.189364075660706,
@@ -323,7 +323,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'si0',
             'identifier': sampleDataLabels[locale]['stratigraphicalUnitShort'] + '0',
             'shortDescription': getI18nString('stratigraphicalUnit'),
-                'relations': {
+            'relations': {
                 'isRecordedIn': ['t1']
             },
             'geometry': {
@@ -350,7 +350,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             },
             'geometry': {
                 'type': 'Point',
-                'coordinates': [ 27.189335972070694, 39.14122423529625]
+                'coordinates': [27.189335972070694, 39.14122423529625]
             },
             'category': 'Find'
         }
@@ -361,9 +361,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': 'PE07-So-07_Z001.jpg',
             'shortDescription': getI18nString('mapLayer', ' 1'),
             'category': 'Drawing',
-            'originalFilename' : 'PE07-So-07_Z001.jpg',
-            'height' : 2423,
-            'width' : 3513,
+            'originalFilename': 'PE07-So-07_Z001.jpg',
+            'height': 2423,
+            'width': 3513,
             'relations': {
                 'isMapLayerOf': ['project']
             },
@@ -371,6 +371,15 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'bottomLeftCoordinates': [39.1411810096, 27.1892609283],
                 'topLeftCoordinates': [39.1412672328, 27.1892609283],
                 'topRightCoordinates': [39.1412672328, 27.1893859555]
+            },
+            "draughtsmen": [
+                "Person 1"
+            ],
+            "imageRights": {
+                "en": "© Archaeological Example Association",
+                "de": "© Archaeological Example Association",
+                "it": "© Archaeological Example Association",
+                "uk": "© Archaeological Example Association"
             }
         }
     },
@@ -380,9 +389,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': 'mapLayerTest2.png',
             'shortDescription': getI18nString('mapLayer', ' 2'),
             'category': 'Image',
-            'originalFilename' : 'mapLayerTest2.png',
-            'height' : 782,
-            'width' : 748,
+            'originalFilename': 'mapLayerTest2.png',
+            'height': 782,
+            'width': 748,
             'relations': {
                 'isMapLayerOf': ['project']
             },
@@ -390,6 +399,15 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'bottomLeftCoordinates': [39.1412810096, 27.1893609283],
                 'topLeftCoordinates': [39.1413672328, 27.1893609283],
                 'topRightCoordinates': [39.1413672328, 27.1894859555]
+            },
+            "draughtsmen": [
+                "Person 2"
+            ],
+            "imageRights": {
+                "en": "© Archaeological Example Association",
+                "de": "© Archaeological Example Association",
+                "it": "© Archaeological Example Association",
+                "uk": "© Archaeological Example Association"
             }
         }
     },

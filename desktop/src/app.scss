@@ -246,10 +246,6 @@ html [type='button'],
   border-radius: 0 !important;
   border: none !important;
   background-color: #eee;
-
-  &.bg-warning {
-    background-color: $custom-highlight-color !important;
-  }
 }
 
 .card-header {
@@ -289,39 +285,15 @@ select.form-control:not([size]):not([multiple]) {
   padding-right: 1.5em;
   height: auto;
   user-select: none;
+
+  &:disabled {
+    background-image: url(img/chevron-down-disabled.png);
+  }
 }
 
 .form-check .form-check-label {
   font-size: 15px;
   padding-left: 1.4rem;
-}
-
-/* Relation Picker */
-
-#relation-picker .btn-secondary {
-  margin: 0 0 0 10px !important;
-  padding: 5px 5px 5px 15px!important;
-  border-radius: 2px !important;
-}
-
-#relation-picker .badge {
-  background-color: transparent;
-}
-
-.delete-relation {
-  margin-top: 1px !important;
-  padding-top: 5px !important;
-}
-
-.relation-link:before {
-  color: #333;
-  margin-right: 5px;
-  margin-left: -10px;
-  content: '\2022';
-}
-
-relations-view .fieldvalue:hover {
-  background-color: #ddd;
 }
 
 .fade {
@@ -346,6 +318,10 @@ relations-view .fieldvalue:hover {
 .modal-content {
   border: none;
   overflow: hidden;
+}
+
+.modal-dialog:not(.modal-dialog-centered) {
+  top: 14px;
 }
 
 ::-webkit-scrollbar {

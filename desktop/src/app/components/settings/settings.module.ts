@@ -7,6 +7,8 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { SettingsComponent } from './settings.component';
 import { LanguageSettingsComponent } from './language-settings.component';
 import { LanguagePickerModalComponent } from '../widgets/languages/language-picker-modal.component';
+import { UpdateUsernameModalComponent } from './update-username-modal.component';
+
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { LanguagePickerModalComponent } from '../widgets/languages/language-pick
     declarations: [
         SettingsComponent,
         LanguageSettingsComponent,
-        LanguagePickerModalComponent
+        LanguagePickerModalComponent,
+        UpdateUsernameModalComponent
     ],
     providers: [],
     entryComponents: [

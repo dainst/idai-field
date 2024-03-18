@@ -40,6 +40,8 @@ defmodule Api.Worker.Enricher.Relations do
 
   defp map_resource(resource) do
     result = %{ resource: Map.take(add_parent_id(resource), @result_document_properties) }
+    |> convert_short_description
+
     if Map.has_key?(result.resource, :type) do
       {category, result} = pop_in(result.resource[:type])
       put_in(result, [:resource, :category], category)
@@ -47,6 +49,12 @@ defmodule Api.Worker.Enricher.Relations do
       result
     end
   end
+
+  defp convert_short_description(document = %{ resource: %{ shortDescription: short_description } })
+      when not is_map(short_description) do
+    put_in(document, [:resource, :shortDescription], %{ "unspecifiedLanguage" => short_description })
+  end
+  defp convert_short_description(document), do: document
 
   defp add_parent_id(resource) do
     child_of_targets = get_child_of_relation_targets(resource.relations)

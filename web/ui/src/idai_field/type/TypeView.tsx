@@ -15,6 +15,7 @@ import { LoginContext } from '../../shared/login';
 import { useGetChunkOnScroll } from '../../shared/scroll';
 import CONFIGURATION from '../../configuration.json';
 import DocumentCard from '../../shared/document/DocumentCard';
+import { getSupercategoryName } from '../../shared/document/document-utils';
 import './typeView.css';
 
 
@@ -34,14 +35,16 @@ export default function TypeView(): ReactElement {
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
     const [loading, setLoading] = useState(0);
+    
+    const getChunk = async (newOffset: number) => {
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
+        const result = documentId
+            ? await getChildren(documentId, newOffset, loginData.token, project)
+            : await getCatalogsForProject(searchParams, newOffset, loginData.token, project);
+        setDocuments(oldDocs => oldDocs.concat(result.documents));
+    };
 
-        const promise = documentId
-            ? getChildren(documentId, newOffset, loginData.token, project)
-            : getCatalogsForProject(searchParams, newOffset, loginData.token, project);
-        promise.then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)));
-    });
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     useEffect(() => {
 
@@ -70,10 +73,10 @@ export default function TypeView(): ReactElement {
             setBreadcrumb(predecessorsToBreadcrumbItems(project, [], t));
             getCatalogsForProject(searchParams, 0, loginData.token, project).then(res => {
                 setDocuments(res.documents);
-                resetScrollOffset();
                 setLoading(4);
             });
         }
+        resetScrollOffset();
     // eslint-disable-next-line
     }, [documentId, loginData, searchParams]);
         
@@ -97,7 +100,7 @@ export default function TypeView(): ReactElement {
                                     <DocumentGrid documents={ documents }
                                         getLinkUrl={ (doc: ResultDocument): string => doc.resource.id } />
                                 </Tab>
-                                { document && document.resource.category.name === 'Type' &&
+                                { document && getSupercategoryName(document) === 'Type' &&
                                     <Tab eventKey="linkedFinds" title={ t('type.linkedFinds.header') }>
                                         <DocumentGrid documents={ finds }
                                             getLinkUrl={

@@ -1,6 +1,9 @@
-import { flow, isObject } from 'tsfun';
+import { isArray, isObject } from 'tsfun';
 import { Document } from '../model/document';
 import { OptionalRange } from '../model/optional-range';
+import { CategoryForm } from '../model/configuration/category-form';
+import { Field } from '../model/configuration/field';
+import { ProjectConfiguration } from '../services';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -17,22 +20,19 @@ export const singleToMultipleValuesFieldNames: string[] = [
  */
 export module Migrator {
 
-    export function migrate(document: Document): Document {
+    /**
+     * @param document is modified in place
+     * */
+    export function migrate(document: Document, projectConfiguration: ProjectConfiguration) {
 
-        return flow(
-            document,
-            migrateGeneralFieldsAndRelations,
-            migratePeriodFields,
-            migrateSingleToMultipleValues
-        );
+        migrateGeneralFieldsAndRelations(document);
+        migratePeriodFields(document);
+        migrateSingleToMultipleValues(document);
+        migrateDatings(document, projectConfiguration);
     }
 
 
-    /**
-     * @param document modified in place
-     * @return the original, now modified document
-     */
-    function migratePeriodFields(document: Document): Document {
+    function migratePeriodFields(document: Document) {
 
         const PERIOD = 'period';
         const PERIODEND = 'periodEnd';
@@ -47,11 +47,10 @@ export module Migrator {
                 delete document.resource[PERIODEND];
             }
         }
-        return document;
     }
 
 
-    function migrateGeneralFieldsAndRelations(document: Document): Document {
+    function migrateGeneralFieldsAndRelations(document: Document) {
 
         if (document.resource.relations) delete document.resource.relations['includes'];
 
@@ -59,18 +58,31 @@ export module Migrator {
             document.resource.category = document.resource['type'];
             delete document.resource['type'];
         }
-        return document;
     }
 
 
-    function migrateSingleToMultipleValues(document: Document): Document {
+    function migrateSingleToMultipleValues(document: Document) {
 
         singleToMultipleValuesFieldNames.forEach((fieldName: string) => {
            if (document.resource[fieldName] && !Array.isArray(document.resource[fieldName])) {
                document.resource[fieldName] = [document.resource[fieldName]];
            }
         });
+    }
 
-        return document;
+
+    function migrateDatings(document: Document, projectConfiguration: ProjectConfiguration) {
+        const category: CategoryForm = projectConfiguration.getCategory(document);
+        if (!category) return;
+
+        CategoryForm.getFields(category)
+            .filter(field => field.inputType === Field.InputType.DATING)
+            .forEach(field => {
+                const datings = document.resource[field.name];
+                if (!datings || !isArray(datings)) return;
+                datings.forEach(dating => {
+                    if (dating.type === 'exact') dating.type = 'single';
+                })
+            });
     }
 }

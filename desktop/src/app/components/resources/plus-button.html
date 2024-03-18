@@ -1,18 +1,18 @@
 <div *ngIf="toplevelCategoriesArray && status === 'enabled'">
     <div *ngIf="getButtonType() === 'multipleCategories'"
-             class="circular-button green-button"
-             [ngbPopover]="newObjectMenu" #popover="ngbPopover"
-             triggers="manual" [autoClose]="false"
-             (click)="reset(); popover.toggle();"
-             [placement]="placement">
+         class="circular-button green-button"
+         [ngbPopover]="newObjectMenu" #popover="ngbPopover"
+         triggers="manual" [autoClose]="false"
+         (click)="reset(); popover.toggle();"
+         [placement]="placement">
         <span class="mdi mdi-plus"></span>
     </div>
 
     <div *ngIf="getButtonType() === 'singleCategory' && preselectedGeometryType !== 'none'"
-             class="circular-button category-button"
-             [ngbPopover]="newObjectMenu" #popover="ngbPopover"
-             triggers="manual" [autoClose]="false" (click)="reset(); popover.toggle();"
-             [placement]="placement">
+         class="circular-button category-button"
+         [ngbPopover]="newObjectMenu" #popover="ngbPopover"
+         triggers="manual" [autoClose]="false" (click)="reset(); popover.toggle();"
+         [placement]="placement">
         <category-icon [category]="toplevelCategoriesArray[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
@@ -20,7 +20,7 @@
     </div>
 
     <div *ngIf="getButtonType() === 'singleCategory' && (preselectedGeometryType === 'none' || !isGeometryCategory(this.toplevelCategoriesArray[0].name))"
-            class="circular-button category-button" (click)="chooseCategory(toplevelCategoriesArray[0])">
+         class="circular-button category-button" (click)="chooseCategory(toplevelCategoriesArray[0])">
         <category-icon [category]="toplevelCategoriesArray[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
@@ -28,7 +28,8 @@
     </div>
 </div>
 
-<div *ngIf="status !== 'enabled'" class="circular-button green-button disabled"
+<div *ngIf="toplevelCategoriesArray && status !== 'enabled' && getButtonType() !== 'none'"
+     class="circular-button green-button disabled"
      ngbTooltip="{{getTooltip()}}" [placement]="placement">
     <span class="mdi mdi-plus"></span>
 </div>

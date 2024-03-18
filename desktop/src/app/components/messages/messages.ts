@@ -1,7 +1,7 @@
 import { Observer } from 'rxjs/internal/types';
 import { Observable } from 'rxjs/internal/Observable';
 import { ObserverUtil } from 'idai-field-core';
-import { Message } from './message';
+import { Message, MessageLevel, MessageTemplate } from './message';
 import { MD } from './md';
 import { MDInternal } from './md-internal';
 import { MsgWithParams } from './msg-with-params';
@@ -19,11 +19,11 @@ import { MsgWithParams } from './msg-with-params';
 export class Messages {
 
     private internalMessagesDictionary = new MDInternal();
-    private activeMessages: Message[] = [];
+    private activeMessages: Array<Message> = [];
     private newMessagesObservers: Array<Observer<Document>> = [];
 
-    // Messages of these types fade away after the given timeout.
-    private static TIMEOUT_TYPES: string[] = ['success', 'info'];
+    // Messages of these levels fade away after the given timeout.
+    private static TIMEOUT_LEVELS: MessageLevel[] = ['success', 'info'];
 
 
     constructor(private messagesDictionary: MD,
@@ -43,15 +43,15 @@ export class Messages {
     public add(msgWithParams: MsgWithParams) {
 
         if (msgWithParams.length == 0) {
-            return this.addUnknownError('no msg found for key of M with id: "undefined"');
+            return this.addUnknownError('No message template found for key: "undefined"');
         }
 
         const key: string = msgWithParams[0];
         msgWithParams.splice(0, 1);
 
-        const template: Message = this.fetchTemplate(key);
+        const template: MessageTemplate = this.fetchTemplate(key);
         if (!template) {
-            this.addUnknownError('no msg found for key of M with id: "' + key + '"', msgWithParams);
+            this.addUnknownError('No message template found for key: "' + key + '"', msgWithParams);
         } else {
             const message: Message = Messages.buildFromTemplate(template, msgWithParams);
             this.startTimeout(message);
@@ -96,10 +96,13 @@ export class Messages {
 
     private addUnknownError(consoleError: string, parameters?: string[]) {
 
-        if (parameters && parameters.length > 0) console.error(consoleError, parameters);
-        else console.error(consoleError);
+        if (parameters && parameters.length > 0) {
+            console.error(consoleError, parameters);
+        } else {
+            console.error(consoleError);
+        };
 
-        const message = Messages.buildFromTemplate(
+        const message: Message = Messages.buildFromTemplate(
             this.fetchTemplate(MDInternal.MESSAGES_ERROR_UNKNOWN_MESSAGE),
             undefined
         );
@@ -108,7 +111,7 @@ export class Messages {
     }
 
 
-    private fetchTemplate(key: string): Message {
+    private fetchTemplate(key: string): MessageTemplate {
 
         return this.messagesDictionary.msgs[key] || this.internalMessagesDictionary.msgs[key];
     }
@@ -117,24 +120,37 @@ export class Messages {
     private startTimeout(message: Message) {
 
         if (this.shouldSetTimeout(message)) {
-            setTimeout(() => message.hidden = true, this.timeout);
+            setTimeout(() => message.hidden = true, this.getTimeout(message));
         }
     }
 
 
     private shouldSetTimeout(message: Message): boolean {
 
-        return Messages.TIMEOUT_TYPES.includes(message.level) && this.timeout > 0;
+        return Messages.TIMEOUT_LEVELS.includes(message.level) && this.timeout > 0;
+    }
+
+    
+    private getTimeout(message: Message): number {
+
+        let timeout = this.timeout;
+        if (message.extendedTimeout) timeout *= 2;
+
+        return timeout;
     }
 
 
-    private static buildFromTemplate(template: Message, params?: Array<string>): Message {
+    private static buildFromTemplate(template: MessageTemplate, params?: Array<string>): Message {
 
-        return {
+        const message: Message = {
             content: template.content,
             level: template.level,
-            params: params ? params.slice() : template.params,
+            params: params ? params.slice() : [],
             hidden: false
         };
+    
+        if (template.extendedTimeout) message.extendedTimeout = true;
+
+        return message;
     }
 }

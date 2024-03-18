@@ -14,6 +14,7 @@ export module DuplicationUtil {
 
         delete template.resource.id;
         delete template.resource.geometry;
+        delete template.resource.scanCode;
 
         template.resource.relations = {};
         if (document.resource.relations.isRecordedIn) {

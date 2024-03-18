@@ -14,6 +14,7 @@ export interface ResourcesState { // 'the' resources state
 
     overviewState: ViewState;
     typesManagementState: ViewState;
+    inventoryState: ViewState;
     operationViewStates: { [operationId: string]: ViewState };
     view: 'project' | string; // <- active view state
     activeDocumentViewTab: string|undefined;
@@ -25,76 +26,76 @@ export module ResourcesState {
 
     export function getQueryString(state: ResourcesState) {
 
-        return viewState(state).bypassHierarchy
-            ? viewState(state).searchContext.q
+        return getViewState(state).bypassHierarchy
+            ? getViewState(state).searchContext.q
             : NavigationPath.getQueryString(getNavigationPath(state));
     }
 
 
     export function getCategoryFilters(state: ResourcesState) {
 
-        return viewState(state).bypassHierarchy
-            ? viewState(state).searchContext.categories
+        return getViewState(state).bypassHierarchy
+            ? getViewState(state).searchContext.categories
             : NavigationPath.getCategoryFilters(getNavigationPath(state));
     }
 
 
     export function getCustomConstraints(state: ResourcesState) {
 
-        return viewState(state).bypassHierarchy
-            ? viewState(state).customConstraints
+        return getViewState(state).bypassHierarchy
+            ? getViewState(state).customConstraints
             : {};
     }
 
 
     export function getSelectedDocument(state: ResourcesState): FieldDocument|undefined {
 
-        return viewState(state).bypassHierarchy
-            ? viewState(state).searchContext.selected
+        return getViewState(state).bypassHierarchy
+            ? getViewState(state).searchContext.selected
             : NavigationPath.getSelectedDocument(getNavigationPath(state));
     }
 
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const path = viewState(state).navigationPath;
+        const path = getViewState(state).navigationPath;
         return path ? path : NavigationPath.empty();
     }
 
 
     export function getCurrentOperation(state: ResourcesState): FieldDocument|undefined {
 
-        return viewState(state).operation;
+        return getViewState(state).operation;
     }
 
 
     export function getExpandAllGroups(state: ResourcesState) {
 
-        return viewState(state).expandAllGroups;
+        return getViewState(state).expandAllGroups;
     }
 
 
     export function isInExtendedSearchMode(state: ResourcesState): boolean {
 
-        return viewState(state).bypassHierarchy;
+        return getViewState(state).bypassHierarchy;
     }
 
 
     export function getActiveLayersIds(state: ResourcesState): string[]|undefined {
 
-        return viewState(state).layerIds;
+        return getViewState(state).layerIds;
     }
 
 
     export function getMode(state: ResourcesState): ResourcesViewMode {
 
-        return viewState(state).mode;
+        return getViewState(state).mode;
     }
 
 
     export function isLimitSearchResults(state: ResourcesState): boolean {
 
-        return viewState(state).limitSearchResults;
+        return getViewState(state).limitSearchResults;
     }
 
 
@@ -106,8 +107,8 @@ export module ResourcesState {
 
     export function setQueryString(state: ResourcesState, q: string) {
 
-        if (viewState(state).bypassHierarchy) {
-            viewState(state).searchContext.q = q;
+        if (getViewState(state).bypassHierarchy) {
+            getViewState(state).searchContext.q = q;
         } else {
             NavigationPath.setQueryString(getNavigationPath(state), q);
             updateNavigationPath(state, getNavigationPath(state));
@@ -117,8 +118,8 @@ export module ResourcesState {
 
     export function setCategoryFilters(state: ResourcesState, categories: string[]) {
 
-        if (viewState(state).bypassHierarchy) {
-            viewState(state).searchContext.categories = categories;
+        if (getViewState(state).bypassHierarchy) {
+            getViewState(state).searchContext.categories = categories;
         } else {
             NavigationPath.setCategoryFilters(getNavigationPath(state), categories);
             updateNavigationPath(state, getNavigationPath(state));
@@ -129,15 +130,15 @@ export module ResourcesState {
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}) {
 
-        viewState(state).customConstraints = constraints;
+        getViewState(state).customConstraints = constraints;
     }
 
 
     export function setSelectedDocument(state: ResourcesState,
                                         document: FieldDocument|undefined) {
 
-        if (viewState(state).bypassHierarchy) {
-            viewState(state).searchContext.selected = document;
+        if (getViewState(state).bypassHierarchy) {
+            getViewState(state).searchContext.selected = document;
         } else {
             NavigationPath.setSelectedDocument(getNavigationPath(state), document);
             updateNavigationPath(state, getNavigationPath(state));
@@ -147,25 +148,25 @@ export module ResourcesState {
 
     export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]) {
 
-        viewState(state).layerIds = activeLayersIds.slice(0);
+        getViewState(state).layerIds = activeLayersIds.slice(0);
     }
 
 
     export function setMode(state: ResourcesState, mode: ResourcesViewMode) {
 
-        viewState(state).mode = mode;
+        getViewState(state).mode = mode;
     }
 
 
     export function setLimitSearchResults(state: ResourcesState, limitSearchResults: boolean) {
 
-        viewState(state).limitSearchResults = limitSearchResults;
+        getViewState(state).limitSearchResults = limitSearchResults;
     }
 
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath) {
 
-        viewState(state).navigationPath = navPath;
+        getViewState(state).navigationPath = navPath;
     }
 
 
@@ -184,7 +185,17 @@ export module ResourcesState {
             },
             typesManagementState: {
                 operation: undefined,
-                mode: 'types',
+                mode: 'grid',
+                bypassHierarchy: false,
+                expandAllGroups: false,
+                limitSearchResults: true,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {}
+            },
+            inventoryState: {
+                operation: undefined,
+                mode: 'grid',
                 bypassHierarchy: false,
                 expandAllGroups: false,
                 limitSearchResults: true,
@@ -214,7 +225,8 @@ export module ResourcesState {
 
         return {
             overviewState: ViewState.build(),
-            typesManagementState: ViewState.build('types'),
+            typesManagementState: ViewState.build('grid'),
+            inventoryState: ViewState.build('grid'),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -238,13 +250,13 @@ export module ResourcesState {
 
     export function setExtendedSearchMode(state: ResourcesState, extendedSearchMode: boolean) {
 
-        viewState(state).bypassHierarchy = extendedSearchMode;
+        getViewState(state).bypassHierarchy = extendedSearchMode;
     }
 
 
     export function setExpandAllGroups(state: ResourcesState, expandAllGroups: boolean) {
 
-        viewState(state).expandAllGroups = expandAllGroups;
+        getViewState(state).expandAllGroups = expandAllGroups;
     }
 
 
@@ -258,12 +270,17 @@ export module ResourcesState {
     }
 
 
-    function viewState(state: ResourcesState): ViewState {
+    function getViewState(state: ResourcesState): ViewState {
 
-        return state.view === 'project'
-            ? state.overviewState
-            : state.view === 'types'
-                ? state.typesManagementState
-                : state.operationViewStates[state.view];
+        switch(state.view) {
+            case 'project':
+                return state.overviewState;
+            case 'types':
+                return state.typesManagementState;
+            case 'inventory':
+                return state.inventoryState;
+            default:
+                return state.operationViewStates[state.view];
+        }
     }
 }

@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.createPrintSettingsProfile">
+        Neues Einstellungsprofil erstellen
+    </h5>
+</div>
+<div class="modal-body">
+    <p i18n="@@resources.createPrintSettingsProfileModal.info">
+        Bitte geben Sie einen Namen für das neue Profil ein.
+    </p>
+    <input class="form-control" type="text" [(ngModel)]="profileName"> 
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!validate()"
+            (click)="confirm()" i18n="@@buttons.ok">OK</button>
+    <button type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

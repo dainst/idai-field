@@ -22,7 +22,7 @@ import LIES_WITHIN = Relation.Hierarchy.LIESWITHIN;
  */
 export class ImportValidator extends Validator {
 
-    constructor(projectConfiguration: ProjectConfiguration,
+    constructor(protected projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore) {
 
         super(projectConfiguration, (q: Query) => datastore.find(q));
@@ -78,17 +78,16 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertIsAllowedCategory(document: Document|NewDocument) {
+    public assertIsAllowedCategory(document: Document|NewDocument, mergeMode: boolean) {
 
-        if (document.resource.category === 'Operation'
-            || document.resource.category === 'Project') {
-
+        if (document.resource.category === 'Operation') {
             throw [E.CATEGORY_NOT_ALLOWED, document.resource.category];
         }
 
-        if (document.resource.category === 'Image' || this.projectConfiguration.isSubcategory(
-                document.resource.category, 'Image')) {
+        if (mergeMode) return;
 
+        if (document.resource.category === 'Project' || document.resource.category === 'Image'
+            || this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
             throw [E.CATEGORY_ONLY_ALLOWED_ON_UPDATE, document.resource.category];
         }
     }
@@ -206,7 +205,7 @@ export class ImportValidator extends Validator {
 
 
      /**
-     * @throws [INVALID_IDENTIFIER_PREFIX]
+     * @throws [E.INVALID_IDENTIFIER_PREFIX]
      */
        public assertIdentifierPrefixIsValid(document: Document|NewDocument): void {
 
@@ -233,6 +232,37 @@ export class ImportValidator extends Validator {
             operation.resource.category, RECORDED_IN)) {
 
             throw [E.INVALID_OPERATION, document.resource.category, operation.resource.category];
+        }
+    }
+
+
+    /**
+     * @throws [E.RESOURCE_LIMIT_EXCEEDED]
+     */
+    public assertResourceLimitNotExceeded(documents: Array<Document>) {
+
+        const categoryCounts: { [category: string]: number } = {};
+        const ids: string[] = documents.map(document => document.resource.id);
+
+        for (let document of documents) {
+            if (!categoryCounts[document.resource.category]) {
+                categoryCounts[document.resource.category] = 1;
+            } else {
+                categoryCounts[document.resource.category]++;
+            }
+        }
+
+        for (let categoryName of Object.keys(categoryCounts)) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+            if (!category.resourceLimit) continue;
+
+            const categoryResourceIds: string[] = this.datastore.findIds({ categories: [category.name] })
+                .ids.filter(id => !ids.includes(id));
+            const totalCategoryCount: number = categoryCounts[categoryName] + categoryResourceIds.length;
+
+            if (totalCategoryCount > category.resourceLimit) {
+                throw [E.RESOURCE_LIMIT_EXCEEDED, category.name, category.resourceLimit];
+            }
         }
     }
 }

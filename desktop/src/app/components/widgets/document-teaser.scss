@@ -4,6 +4,12 @@
 
   height: 100%;
 
+  category-icon,
+  .teasercontent {
+    position: relative;
+    bottom: 1px;
+  }
+
   category-icon {
     margin-top: 2px;
   }
@@ -19,6 +25,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
+    user-select: none;
   }
 
   .title {

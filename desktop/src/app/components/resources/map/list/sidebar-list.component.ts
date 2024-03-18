@@ -11,6 +11,7 @@ import { ResourcesContextMenu } from '../../widgets/resources-context-menu';
 import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
+import { WarningsService } from '../../../../services/warnings/warnings-service';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
 
     constructor(private navigationService: NavigationService,
+                private warningsService: WarningsService,
                 resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
@@ -46,7 +48,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
-            this.resourcesComponent.closePopover();
+            this.resourcesComponent.popoverMenuOpened = false;
         });
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
@@ -79,12 +81,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             event.preventDefault();
         }
 
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            await this.resourcesComponent
-                .navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
-            event.preventDefault();
-        }
-
         if (event.key === 'Enter') {
             await this.openChildCollection();
             event.preventDefault();
@@ -104,12 +100,15 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (event.shiftKey && this.lastSelectedDocument) {
             this.selectBetween(this.lastSelectedDocument, document);
             this.lastSelectedDocument = document;
+            this.resourcesComponent.popoverMenuOpened = false;
         } else if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
             this.resourcesComponent.toggleAdditionalSelected(document, allowDeselection);
             this.lastSelectedDocument = document;
+            this.resourcesComponent.popoverMenuOpened = false;
         } else if (!event.metaKey && !event.ctrlKey && (allowDeselection || !this.isPartOfSelection(document))) {
             this.resourcesComponent.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
+            if (event.type === 'click') this.resourcesComponent.popoverMenuOpened = true;
         }
     }
 
@@ -130,9 +129,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public async performContextMenuAction(action: ResourcesContextMenuAction) {
 
-        if (this.resourcesComponent.isPopoverMenuOpened() &&
+        if (this.resourcesComponent.popoverMenuOpened &&
                 ['edit-geometry', 'create-polygon', 'create-line-string', 'create-point'].includes(action)) {
-            this.resourcesComponent.closePopover();
+            this.resourcesComponent.popoverMenuOpened = false;
         }
 
         if (!this.selectedDocument) return;
@@ -143,13 +142,22 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.editDocument(this.selectedDocument);
                 break;
             case 'move':
-                await this.resourcesComponent.moveDocuments(this.getSelection());
+                await this.resourcesComponent.moveDocuments(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'delete':
-                await this.resourcesComponent.deleteDocument(this.getSelection());
+                await this.resourcesComponent.deleteDocument(this.contextMenu.documents as Array<FieldDocument>);
+                break;
+            case 'warnings':
+                await this.warningsService.openModal(this.selectedDocument);
                 break;
             case 'edit-images':
                 await this.resourcesComponent.editImages(this.selectedDocument);
+                break;
+            case 'edit-qr-code':
+                await this.resourcesComponent.editQRCode(this.selectedDocument);
+                break;
+            case 'scan-storage-place':
+                await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
@@ -176,14 +184,13 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (!this.contextMenu.position) return;
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
-            || rightClick && target.id && target.id.startsWith('resource-'))) {
-
+                || rightClick && target.id && target.id.startsWith('resource-'))) {
             this.contextMenu.close();
         }
     }
 
 
-    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+    public trackDocument = (_: number, document: FieldDocument) => document.resource.id;
 
 
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {

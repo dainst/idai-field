@@ -1,4 +1,4 @@
-import { Document, ProjectConfiguration, Forest } from 'idai-field-core';
+import { Document, ProjectConfiguration, Forest, IdGenerator } from 'idai-field-core';
 import { DocumentHolder } from '../../../../src/app/components/docedit/document-holder';
 import { M } from '../../../../src/app/components/messages/m';
 
@@ -28,17 +28,17 @@ describe('DocumentHolder', () => {
                             { name: 'id' },
                             { name: 'category' },
                             { name: 'emptyField' }
-                        ]}]}
-                    , []],
+                        ]}]
+                    }, []],
                     [{
                         name: 'Find',
                         groups: [{
                             name: 'stem', fields: [
-                                {name: 'id'},
-                                {name: 'category'},
-                                {name: 'unsignedIntField', inputType: 'unsignedInt'},
-                                {name: 'unsignedFloatField', inputType: 'unsignedFloat'},
-                                {name: 'floatField', inputType: 'float'}
+                                { name: 'id' },
+                                { name: 'category' },
+                                { name: 'unsignedIntField', inputType: 'unsignedInt' },
+                                { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
+                                { name: 'floatField', inputType: 'float' }
                             ]
                         }]
                     }, []]
@@ -119,7 +119,8 @@ describe('DocumentHolder', () => {
             pconf,
             persistenceManager,
             validator,
-            datastore
+            datastore,
+            new IdGenerator()
         );
     });
 

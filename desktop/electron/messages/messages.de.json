@@ -33,6 +33,7 @@
     "menu.tools.configuration": "Projektkonfiguration",
     "menu.tools.images": "Bilderverwaltung",
     "menu.tools.types": "Typenverwaltung",
+    "menu.tools.inventory": "Inventarisierung",
     "menu.tools.matrix": "Matrix",
     "menu.tools.import": "Import",
     "menu.tools.export": "Export",

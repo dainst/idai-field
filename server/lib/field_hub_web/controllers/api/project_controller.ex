@@ -10,6 +10,12 @@ defmodule FieldHubWeb.Api.ProjectController do
 
   alias FieldHubWeb.Api.StatusView
 
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
+  @moduledoc """
+  This API controller module handles the HTTP requests for listing, creating or deleting projects.
+  """
+
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
     render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
   end
@@ -60,7 +66,8 @@ defmodule FieldHubWeb.Api.ProjectController do
             |> put_status(:bad_request)
             |> put_view(StatusView)
             |> render(%{
-              error: "Invalid project name. Valid name regex: /^[a-z][a-z0-9_$()+/-]*$/"
+              error:
+                "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
             })
 
           _ ->
@@ -83,12 +90,12 @@ defmodule FieldHubWeb.Api.ProjectController do
   end
 
   def delete(conn, %{"project" => id}) do
-    project = Project.delete(id)
-    user = User.delete(id)
+    project_deletion_result = Project.delete(id)
+    user_deletion_result = User.delete(id)
 
     response_payload = %{
-      status_project: project,
-      status_user: user
+      status_project: project_deletion_result,
+      status_user: user_deletion_result
     }
 
     conn

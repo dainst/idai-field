@@ -1,4 +1,4 @@
-import { duplicates, size, to, update } from 'tsfun';
+import { duplicates, size, to, update, Map } from 'tsfun';
 import { RESOURCE_DOT_IDENTIFIER, Document } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { ImportValidator } from './import-validator';
@@ -16,7 +16,7 @@ export function processDocuments(documents: Array<Document>,
     const mergeMode = size(mergeDocs) > 0;
     if (!mergeMode) assertNoDuplicates(documents);
 
-    const finalDocuments = {};
+    const finalDocuments: Map<Document> = {};
 
     for (const document of documents) {
         if (!mergeMode) validator.assertIsKnownCategory(document);
@@ -36,18 +36,21 @@ export function processDocuments(documents: Array<Document>,
         document.resource.category = finalDocument.resource.category;
 
         if (ignoreUnconfiguredFields) {
-            validator.getUndefinedFields(document).forEach(fieldName => delete document.resource[fieldName]);
+            validator.getUndefinedFields(finalDocument).forEach(fieldName => delete finalDocument.resource[fieldName]);
         } else {
-            validator.assertFieldsDefined(document);
+            validator.assertFieldsDefined(finalDocument);
         }
 
-        if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
+        validator.assertIsAllowedCategory(finalDocument, mergeMode);
 
         validator.assertIdentifierPrefixIsValid(finalDocument);
         validator.assertIsWellformed(finalDocument);
     }
 
-    return Object.values(finalDocuments);
+    const result: Array<Document> = Object.values(finalDocuments);
+    validator.assertResourceLimitNotExceeded(result);
+
+    return result;
 }
 
 

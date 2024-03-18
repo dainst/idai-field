@@ -162,4 +162,15 @@ export class ConfigurationPage {
         await EditConfigurationPage.clickToggleMultiLanguageSlider();
         await EditConfigurationPage.clickConfirm();
     }
+
+
+    public static async enableQRCodes(categoriesFilter: string, categoryName: string, supercategoryName?: string) {
+
+        await ConfigurationPage.clickSelectCategoriesFilter(categoriesFilter);
+        await CategoryPickerPage.clickOpenContextMenu(categoryName, supercategoryName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickToggleScanCodesSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
 }

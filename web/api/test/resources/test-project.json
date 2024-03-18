@@ -29,17 +29,7 @@
                 "en": "Type of resource"
               },
               "name": "category",
-              "inputType": "input"
-            },
-            {
-              "editable": false,
-              "visible": false,
-              "group": "stem",
-              "source": "builtin",
-              "name": "id",
-              "label": {},
-              "description": {},
-              "inputType": "input"
+              "inputType": "category"
             },
             {
               "name": "shortDescription",
@@ -62,13 +52,13 @@
                 },
                 "values": {
                   "Blau": {
-                    "labels": {
+                    "label": {
                       "en": "Blue",
                       "de": "Blau"
                     }
                   },
                   "Gelb": {
-                    "labels": {
+                    "label": {
                       "en": "Yellow",
                       "de": "Gelb"
                     }
@@ -115,6 +105,90 @@
               "description": {}
             },
             {
+              "inputType": "composite",
+              "subfields": [
+                {
+                  "name": "color",
+                  "inputType": "checkboxes",
+                  "valuelist": {
+                    "description": {},
+                    "values": {
+                      "Blau": {
+                        "label": {
+                          "en": "Blue",
+                          "de": "Blau"
+                        }
+                      },
+                      "Gelb": {
+                        "label": {
+                          "en": "Yellow",
+                          "de": "Gelb"
+                        }
+                      },
+                      "Grün": {}
+                    }
+                  },
+                  "label": {
+                    "de": "Farbe",
+                    "en": "Color"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "shape",
+                  "inputType": "dropdown",
+                  "valuelist": {
+                    "values": {
+                      "Konvex": {
+                        "label": {
+                          "de": "Konvex",
+                          "en": "Convex"
+                        }
+                      },
+                      "Konkav": {
+                        "label": {
+                          "de": "Konkav",
+                          "en": "Concave"
+                        }
+                      }
+                    },
+                    "description": {},
+                    "id": "shape"
+                  },
+                  "label": {
+                    "de": "Form",
+                    "en": "Shape"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "description",
+                  "inputType": "text",
+                  "label": {
+                    "de": "Beschreibung",
+                    "en": "Description"
+                  },
+                  "description": {}
+                },
+                {
+                  "name": "number",
+                  "inputType": "number",
+                  "label": {
+                    "de": "Nummer",
+                    "en": "number"
+                  },
+                  "description": {}
+                }
+              ],
+              "source": "custom",
+              "name": "test-project:compositeField",
+              "label": {
+                "de": "Kompositfeld",
+                "en": "Composite field"
+              },
+              "description": {}
+            },
+            {
               "inputType": "relation",
               "source": "builtin",
               "name": "liesWithin",
@@ -150,13 +224,13 @@
                 "description": {},
                 "values": {
                   "Maximale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Maximale Ausdehnung",
                       "en": "Maximum expansion"
                     }
                   },
                   "Minimale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Minimale Ausdehnung",
                       "en": "Minimum expansion"
                     }
@@ -179,13 +253,13 @@
                 "description": {},
                 "values": {
                   "Maximale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Maximale Ausdehnung",
                       "en": "Maximum expansion"
                     }
                   },
                   "Minimale Ausdehnung": {
-                    "labels": {
+                    "label": {
                       "de": "Minimale Ausdehnung",
                       "en": "Minimum expansion"
                     }
@@ -217,13 +291,13 @@
                 },
                 "values": {
                   "Old Babylonian": {
-                    "labels": {
+                    "label": {
                       "de": "Altbabylonisch",
                       "en": "Old Babylonian"
                     }
                   },
                   "New Babylonian": {
-                    "labels": {
+                    "label": {
                       "de": "Neubabylonisch",
                       "en": "New Babylonian"
                     }
@@ -236,6 +310,16 @@
                 "en": "Period"
               },
               "description": {}
+            },
+            {
+              "inputType": "dating",
+              "source": "common",
+              "name": "dating",
+              "label": {
+                "de": "Datierung",
+                "en": "Dating"
+              },
+              "description": {}
             }
           ],
           "label": {
@@ -244,7 +328,24 @@
           }
         }
       ]
-    }
+    },
+    "trees": [
+      {
+          "item": {
+            "name": "Trench",
+            "isAbstract": false,
+            "libraryId": "Trench:default",
+            "label": {
+              "de": "Schnitt",
+              "en": "Trench"
+            },
+            "description": {},
+            "groups": [],
+            "color": "blue"
+          },
+          "trees": []
+      }
+    ]
   }
   ]
 }

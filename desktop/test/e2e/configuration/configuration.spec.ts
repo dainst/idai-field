@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -317,7 +317,7 @@ test.describe('configuration --', () => {
     });
 
 
-    test('show warning for invalid identifier after setting identifier prefix', async () => {
+    test('show warning for invalid identifier in docedit modal after setting identifier prefix', async () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickCreateResource();
@@ -343,6 +343,34 @@ test.describe('configuration --', () => {
         await DoceditPage.typeInInputField('identifier', '123');
         await DoceditPage.clickSaveDocument();
         await waitForExist(await ResourcesPage.getListItemEl('PL-123'));
+    });
+
+
+    test('set resource limit', async () => {
+
+        await CategoryPickerPage.clickOpenContextMenu('Place');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.typeInResourceLimit('2');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+        
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('1', 'place');
+
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ResourcesPage.getCategoryOption('place'));
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickDuplicateDocument();
+        await DoceditPage.typeInNumberOfDuplicates('2');
+        await waitForExist(await DoceditPage.getConfirmDuplicateButton(true));
+        await DoceditPage.typeInNumberOfDuplicates('1');
+        await waitForNotExist(await DoceditPage.getConfirmDuplicateButton(true));
+        await DoceditPage.clickConfirmDuplicateInModal();
+
+        await ResourcesPage.clickCreateResource();
+        await waitForExist(await ResourcesPage.getCategoryOption('operation-trench'));
+        await waitForNotExist(await ResourcesPage.getCategoryOption('place'));
     });
 
 

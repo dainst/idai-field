@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Labels } from 'idai-field-core';
-import { ProjectModalLauncher } from '../../services/project-modal-launcher';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangesStream } from 'idai-field-core';
+import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 import { SettingsProvider } from '../../services/settings/settings-provider';
+import { ProjectLabelProvider } from '../../services/project-label-provider';
 
 
 @Component({
@@ -12,29 +13,38 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent {
 
-    public selectedProject: string;
+    public projectLabel: string;
+    public username: string;
 
 
     constructor(private settingsProvider: SettingsProvider,
-                private projectModalLauncher: ProjectModalLauncher,
-                private labels: Labels) {}
+                private menuModalLauncher: MenuModalLauncher,
+                private projectLabelProvider: ProjectLabelProvider,
+                private changesStream: ChangesStream,
+                private changeDetectorRef: ChangeDetectorRef) {
 
+        this.username = this.settingsProvider.getSettings().username;
+        this.projectLabel = this.projectLabelProvider.getProjectLabel();
 
-    public openModal = () => this.projectModalLauncher.editProject();
-
-
-    ngOnInit() {
-
-        this.selectedProject = this.settingsProvider.getSettings().selectedProject;
+        this.settingsProvider.settingsChangesNotifications().subscribe(settings => {
+            this.username = settings.username;
+        });
+        this.changesStream.projectDocumentNotifications().subscribe(() => this.updateProjectLabel());
     }
 
 
-    public getProjectName(): string {
+    public openModal = () => this.menuModalLauncher.editProject();
 
-        return this.labels.getFromI18NString(
-            this.settingsProvider.getSettings().projectNames[this.selectedProject]
-        ) ?? this.selectedProject;
+    public openUsernameModal = () => this.menuModalLauncher.openUpdateUsernameModal();
+
+    public isHighDPIDisplay = () => window.devicePixelRatio > 1;
+
+
+    private updateProjectLabel() {
+
+        this.projectLabel = this.projectLabelProvider.getProjectLabel();
+        this.changeDetectorRef.detectChanges();
     }
 }

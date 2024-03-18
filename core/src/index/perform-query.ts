@@ -44,17 +44,14 @@ function performFulltext(fulltextIndex: FulltextIndex,
 function performConstraints(constraintIndex: ConstraintIndex,
                             constraints: { [name: string]: Constraint|string|string[] }): ResultSets<Resource.Id> {
 
-    return Object.keys(constraints)
-        .reduce((resultSets, name: string) => {
+    return Object.keys(constraints).reduce((resultSets, name: string) => {
+        const constraint: Constraint = Constraint.convert(constraints[name]);
+        const get: Function = !constraint.searchRecursively
+            ? ConstraintIndex.get
+            : ConstraintIndex.getWithDescendants;
 
-            const { subtract, value, searchRecursively } = Constraint.convert(constraints[name]);
-
-            const get = !searchRecursively
-                ? ConstraintIndex.get
-                : ConstraintIndex.getWithDescendants;
-
-            const indexItemIds = get(constraintIndex, name, value);
-            ResultSets.combine(resultSets, indexItemIds, subtract);
-            return resultSets;
-        }, ResultSets.make<Resource.Id>());
+        const indexItemIds = get(constraintIndex, name, constraint.value);
+        ResultSets.combine(resultSets, indexItemIds, constraint.subtract);
+        return resultSets;
+    }, ResultSets.make<Resource.Id>());
 }

@@ -24,7 +24,7 @@ export module CsvExporter {
 
                 const result: CSVExportResult = CSVExport.createExportable(
                     resources, CategoryForm.getFields(category), relations, projectLanguages,
-                    combineHierarchicalRelations
+                    combineHierarchicalRelations, category.scanCodes !== undefined
                 );
                 await writeFile(outputFilePath, result.csvData);
 

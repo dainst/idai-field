@@ -130,7 +130,6 @@ test.describe('resources/multi-select --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.performCreateResource('O1', 'place');
         await ResourcesPage.clickHierarchyButton('O1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('B2', 'operation-building');
 
         await ResourcesPage.clickSwitchHierarchyMode();

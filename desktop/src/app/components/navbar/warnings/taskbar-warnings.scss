@@ -1,0 +1,75 @@
+#warnings {
+  position: relative;
+  height: 40px;
+  margin-right: 12px;
+
+  #taskbar-warnings-container {
+    margin-left: 18px;
+
+    &:hover {
+      #taskbar-warnings-button-icon {
+        color: $link-hover-color;
+      }
+    }
+
+    #taskbar-warnings-button-icon {
+      color: $navbar-link-color;
+    }
+  }
+}
+
+.warnings-popover {
+  border-top: none !important;
+  box-shadow: none !important;
+
+  .popover-header {
+    width: 350px;
+    position: absolute;
+    right: 0;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
+
+  .popover-body {
+    position: absolute;
+    overflow: hidden;
+    width: 350px;
+    right: 0;
+    top: 33px;
+    background-color: rgb(238, 238, 238);
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+
+    .list-group {
+      max-height: calc(100vh - 337px);
+      border-radius: 0;
+
+      .list-group-item {
+        display: block;
+        border: 0;
+        border-radius: 0;
+        margin-bottom: 1px;
+        font-size: 1em;
+        padding: 10px 5px 10px 10px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        min-height: 62px;
+      }
+
+      .list-group-item:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .5s ease;
+      }
+
+      #taskbar-warning-Configuration {
+        padding-top: 21px;
+        padding-left: 14px;
+        font-size: 14px;
+      }
+    }
+  }
+}

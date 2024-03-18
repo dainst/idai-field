@@ -62,12 +62,96 @@
             <span class="mdi mdi-restore"></span>
         </button>
     </div>
-    <div *ngIf="isIdentifierPrefixAvailable()" class="configuration-editor-section">
+    <div *ngIf="isScanCodesOptionAvailable()"
+         class="configuration-editor-section configuration-editor-switch-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.qrCodes">
+            QR-Codes
+        </div>
+        <div class="configuration-editor-switch"
+             ngbTooltip="{{getTooltip('scanCodes')}}"
+             container="body">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.qrCodes.enable"
+                    [class.disabled]="!isScanCodesOptionEnabled()">
+                    QR-Codes zur Identifikation verwenden
+                </span>
+            </div>
+            <div>
+                <label id="toggle-scan-codes-slider"
+                    class="switch"
+                    [class.disabled]="!isScanCodesOptionEnabled()">
+                    <input type="checkbox"
+                        [checked]="isScanCodeUsageActivated()"
+                        [disabled]="!isScanCodesOptionEnabled()"
+                        (change)="toggleScanCodes()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="configuration-editor-switch" 
+             ngbTooltip="{{getTooltip('autoCreation')}}"
+             container="body">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.qrCodes.autoCreate"
+                      [class.disabled]="!isScanCodeAutoCreationOptionEnabled()">
+                    Für neue Ressourcen automatisch erzeugen
+                </span>
+            </div>
+            <div>
+                <label id="toggle-auto-create-scan-codes-slider"
+                       class="switch"
+                       [class.disabled]="!isScanCodeAutoCreationOptionEnabled()">
+                    <input type="checkbox"
+                           [checked]="isScanCodeAutoCreationActivated()"
+                           [disabled]="!isScanCodeAutoCreationOptionEnabled()"
+                           (change)="toggleAutoCreateScanCodes()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <label class="printed-fields-header"
+               [class.disabled]="!isScanCodeUsageActivated()"
+               i18n="@@configuration.qrCodes.printedFields">Felder des Drucketiketts:</label>
+        <div *ngFor="let index of [0, 1, 2]">
+            <div *ngIf="printedFields.length >= index" class="form-group row">
+                <div class="col-md-9"
+                     ngbTooltip="{{getTooltip('printedField', index)}}"
+                     container="body">
+                    <select (change)="setPrintedField($event.target.value, index)"
+                            [disabled]="!isPrintedFieldsSlotEnabled(index)"
+                            class="form-control">
+                        <option value=""></option>
+                        <option *ngFor="let field of getPrintableFieldsForSlot(index)"
+                                value="{{field}}"
+                                [selected]="isSelectedPrintedField(field, index)">
+                            {{getFieldLabel(field)}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 print-label-option"
+                     ngbTooltip="{{getTooltip('printedFieldLabel', index)}}"
+                     container="body">
+                    <label class="print-label-option-info"
+                          [class.disabled]="!isPrintedFieldsSlotActivated(index)"
+                          i18n="@@configuration.qrCodes.printFieldLabels">Feldbezeichnung drucken</label>
+                    <label class="switch"
+                        [class.disabled]="!isPrintedFieldsSlotActivated(index)">
+                        <input type="checkbox"
+                               [checked]="isPrintLabelOptionActivated(index)"
+                               [disabled]="!isPrintedFieldsSlotActivated(index)"
+                               (change)="togglePrintLabelOption(index)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isIdentifierPrefixOptionAvailable()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.identifierPrefix">
             Bezeichner-Präfix
         </div>
         <input type="text" id="identifier-prefix"
-               class="form-control reference-input"
+               class="form-control"
                [(ngModel)]="getClonedFormDefinition().identifierPrefix">
         <div *ngIf="isIdentifierPrefixWarningShown() && numberOfCategoryResources === 1"
              id="identifier-prefix-warning"
@@ -82,6 +166,21 @@
              i18n="@@configuration.identifierPrefix.warning.multiple">
             Es wurden bereits {{numberOfCategoryResources}} Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass
             das Präfix <b>nicht</b> automatisch für schon existierende Bezeichner gesetzt wird.
+        </div>
+    </div>
+    <div *ngIf="isResourceLimitAvailable()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.resourceLimit">
+            Ressourcenlimit
+        </div>
+        <input type="text" id="resource-limit"
+               class="form-control"
+               [(ngModel)]="getClonedFormDefinition().resourceLimit">
+        <div *ngIf="isResourceLimitWarningShown()"
+             id="resource-limit-warning"
+             class="alert alert-warning"
+             i18n="@@configuration.resourceLimit.warning">
+            Es wurden bereits {{numberOfCategoryResources}} Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass
+            bereits angelegte Ressourcen <b>nicht</b> automatisch entfernt werden.
         </div>
     </div>
 </div>

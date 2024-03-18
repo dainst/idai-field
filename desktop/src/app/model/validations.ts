@@ -160,9 +160,7 @@ export module Validations {
             projectConfiguration,
             Field.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
-            (dating: any) =>
-                Dating.isValid_deprecated(dating)
-                || (Dating.isDating(dating) && Dating.isValid(dating)),
+            (dating: any) => Dating.isDating(dating) && Dating.isValid(dating),
             previousDocumentVersion
         );
     }
@@ -178,8 +176,7 @@ export module Validations {
             Field.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) =>
-                Dimension.isValid_deprecated(dimension)
-                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)),
+                Dimension.isDimension(dimension) && Dimension.isValid(dimension, options),
             previousDocumentVersion
         );
     }
@@ -218,7 +215,7 @@ export module Validations {
             document.resource, projectConfiguration, inputType, isValid
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: string[] = getNewInvalidFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 
@@ -408,19 +405,21 @@ export module Validations {
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const defaultFields: Array<Field> = [
+            { name: 'identifier' } as Field,
             { name: 'relations' } as Field,
-            { name: 'id' } as Field
+            { name: 'id' } as Field,
+            { name: 'scanCode' } as Field
         ];
 
-        const definedFields: Array<any> = projectFields.concat(defaultFields);
-
-        const invalidFields: Array<any> = [];
+        const definedFields: Array<Field> = projectFields.concat(defaultFields);
+        const invalidFields: string[] = [];
 
         for (let resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
                 let fieldFound: boolean = false;
                 for (let definedField of definedFields) {
-                    if (definedField.name === resourceField) {
+                    if (definedField.name === resourceField
+                            && !Field.InputType.RELATION_INPUT_TYPES.includes(definedField.inputType)) {
                         fieldFound = true;
                         break;
                     }

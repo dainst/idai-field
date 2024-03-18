@@ -8,26 +8,26 @@
   },
   "position-values-expansion-default": {
     "values": {
-      "Maximale Ausdehnung": "",
-      "Minimale Ausdehnung": ""
+      "Maximale Ausdehnung": "Maksimum genişleme",
+      "Minimale Ausdehnung": "Minimum genişleme"
     }
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "",
-      "Unterkante": ""
+      "Oberkante": "Üst kenar",
+      "Unterkante": "Alt kenar"
     }
   },
   "orientation-default-1": {
     "values": {
-      "N-S": "",
-      "NNO - SSW": "",
-      "NNW-SSO": "",
-      "NO-SW": "",
-      "NW-SO": "",
-      "W-O": "",
-      "WNW-OSO": "",
-      "WSW-ONO": ""
+      "N-S": "Kuzey-Güney",
+      "NNO - SSW": "KKD-GGB",
+      "NNW-SSO": "KKB-GGD",
+      "NO-SW": "KD-GB",
+      "NW-SO": "KB-GD",
+      "W-O": "Batı-Doğu",
+      "WNW-OSO": "BKB-DGD",
+      "WSW-ONO": "BGB-DKD"
     }
   },
   "provenance-default-1": {
@@ -94,7 +94,7 @@
       "Neuzeitlich": "Yakın Çağ",
       "Osmanisch": "Osmanlı Dönemi",
       "Pleistozän": "Pleistosen",
-      "Rezent": "",
+      "Rezent": "Yakın tarih (Holosenden itibaren)",
       "Römisch": "Roma Dönemi",
       "Spätantik": "Geç Antik",
       "Spätbronzezeitlich": "Geç Tunç Çağı",
@@ -155,7 +155,7 @@
   "glass-decorationTechnique-default": {
     "values": {
       "Bemalung": "Bezeme",
-      "Diatretdekor": "",
+      "Diatretdekor": "diatret / kafes dekoru",
       "Emaille": "Emaye",
       "Facettschliffdekor": "",
       "Fadendekor (aufgelegt)": "",
@@ -183,12 +183,12 @@
       "halbkugelig": "",
       "hochoval": "",
       "konisch": "konik",
-      "kugelförmig": "",
-      "quadratisch": "",
-      "rechteckig": "",
-      "rund": "",
+      "kugelförmig": "küresel",
+      "quadratisch": "karesel",
+      "rechteckig": "dikdörtgensel",
+      "rund": "yuvarlak",
       "schlank": "",
-      "schmal": "",
+      "schmal": "dar",
       "spindelförmig": "",
       "tonnenförmig": "",
       "zylinderförmig": ""
@@ -196,9 +196,9 @@
   },
   "glass-manufacturingMethod-default": {
     "values": {
-      "Formgeblasen (mit Reliefdekor)": "",
+      "Formgeblasen (mit Reliefdekor)": "Kalıba Üfleme Tekniği (kabartma dekorlu)",
       "Formgeschmolzen": "",
-      "Freigeblasen": "",
+      "Freigeblasen": "Serbest Üfleme Tekniği",
       "In Vorformen geblasen": "",
       "In offene Halbformen geblasen": "",
       "Kerngeformt": "",
@@ -209,24 +209,24 @@
   "glass-objectType-default": {
     "values": {
       "Anhänger": "Pendant",
-      "Armreif": "",
-      "Einlage": "",
+      "Armreif": "Bileklik",
+      "Einlage": "Kakma",
       "Fensterglas": "",
       "Gefäß": "Kap",
-      "Gemme": "",
+      "Gemme": "Oymalı mücevher",
       "Gerät": "Alet",
-      "Glasschlacke": "",
-      "Lampe": "",
-      "Löffel": "",
-      "Perle": "",
+      "Glasschlacke": "cam cürufu",
+      "Lampe": "kandil",
+      "Löffel": "kaşık",
+      "Perle": "inci",
       "Produktionsfragment": "",
-      "Ring": "",
+      "Ring": "yüzük",
       "Rohglas": "",
       "Rührstab": "",
       "Scheiben": "",
       "Schmuck": "Takı",
       "Spielstein": "Oyun taşı/pulu",
-      "Tessera": "",
+      "Tessera": "Tessera",
       "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
       "Weinheber": ""
     }
@@ -234,8 +234,8 @@
   "glass-transparency-default": {
     "values": {
       "durchscheinend": "",
-      "durchsichtig": "",
-      "opak": "",
+      "durchsichtig": "şeffaf",
+      "opak": "opak",
       "versintert": ""
     }
   },
@@ -243,18 +243,18 @@
     "values": {
       "Aschenurne": "",
       "Becher": "",
-      "Deckel": "",
+      "Deckel": "kapak",
       "Deckelgefäß": "",
-      "Flasche": "",
+      "Flasche": "şişe",
       "Krug": "",
       "Napf": "",
       "Schale": "",
       "Schüssel": "",
-      "Tasse": "",
-      "Teller": "",
+      "Tasse": "Fincan",
+      "Teller": "tabak",
       "Topf": "",
-      "Unbestimmt": "",
-      "Vorratsgefäß": ""
+      "Unbestimmt": "belirsiz",
+      "Vorratsgefäß": "saklama kabı"
     }
   },
   "glass-vesselFormSpecific-default": {
@@ -263,7 +263,7 @@
       "Amphoriskos": "Amphoriskos",
       "Aryballos": "Aryballos",
       "Balsamarium": "",
-      "Dattelflasche": "",
+      "Dattelflasche": "Hurma şişesi",
       "Faltenbecher": "",
       "Hydria": "Hydria",
       "Kopfflasche": "",
@@ -301,26 +301,26 @@
   "Brick-brickForm-default": {
     "values": {
       "Bodenziegel": "",
-      "Dachziegel": "",
+      "Dachziegel": "(çatı) kiremit",
       "Flachziegel": "",
       "Formziegel": "",
       "Hypokaustziegel": "",
-      "Imbrex": "",
+      "Imbrex": "İmbrex",
       "Kalyptere": "Kalypter",
-      "Later": "",
+      "Later": "Later",
       "Leistenziegel": "",
       "Lochziegel/Hohlziegel": "",
-      "Stroter": "",
-      "Tegula": "",
-      "Tonrohr": "",
+      "Stroter": "Stroter",
+      "Tegula": "Tegula",
+      "Tonrohr": "künk",
       "Wandziegel": ""
     }
   },
   "Brick-brickUsage-default": {
     "values": {
-      "Dach": "",
+      "Dach": "çatı",
       "Decke": "",
-      "Fenster": "",
+      "Fenster": "pencere",
       "Fussboden": "",
       "Gewölbedecke": "",
       "Klosterformat": "",
@@ -332,14 +332,14 @@
   "Brick-decorationTechnique-default": {
     "values": {
       "Bemalung": "Bezeme",
-      "Fingerabdruck": "",
+      "Fingerabdruck": "Parmak izi",
       "Kammritzung": "",
-      "Reliefdekor": "",
+      "Reliefdekor": "Kabartma dekoru",
       "Riefeldekor": "",
       "Ritzungen": "",
       "Sonstige Abdrücke": "",
-      "Stempel": "",
-      "Stempeldekor": "",
+      "Stempel": "damga",
+      "Stempeldekor": "damga bezeme",
       "Tupfendekor": "",
       "Wischzeichen": "",
       "Überzug/Glasur": ""
@@ -373,13 +373,13 @@
       "Bodenziegel": "",
       "Bruchstein": "",
       "Dachziegel": "",
-      "Geröll": "",
+      "Geröll": "kayşat",
       "Hohlziegel": "",
       "Hypokaustziegel": "",
       "Kanalziegel": "",
       "Platten": "",
       "Quader": "",
-      "Tonrohr": "",
+      "Tonrohr": "künk",
       "Variierend": "",
       "Wandziegel": "",
       "Ziegelbruch": ""
@@ -394,7 +394,7 @@
       "Organische Partikel": "",
       "Quarz": "Kuvarz",
       "Schamotte": "",
-      "Sonstige": "",
+      "Sonstige": "Diğer",
       "Steinchen": "",
       "Stroh/Spreu": "",
       "Vacua": "",
@@ -424,7 +424,7 @@
   "Burial-burialDocumentation-default": {
     "values": {
       "Endoskopie": "",
-      "Foto": "",
+      "Foto": "Foto",
       "Histologie": "",
       "LM": "",
       "REM": "",
@@ -482,30 +482,30 @@
   "Building-buildingCategory-default": {
     "values": {
       "Altar": "Altar",
-      "Amphitheater": "",
-      "Basilika": "",
-      "Bogen": "",
-      "Brücke": "",
-      "Circus": "",
-      "Grabbau": "",
-      "Gymnasium": "",
+      "Amphitheater": "Amfitiyatro",
+      "Basilika": "Bazilika",
+      "Bogen": "Kemer",
+      "Brücke": "Köprü",
+      "Circus": "Sirk",
+      "Grabbau": "Mezar yapısı",
+      "Gymnasium": "Gymnasium",
       "Mauerkurtine": "",
-      "Nymphäum": "",
+      "Nymphäum": "Nymphaeum",
       "Odeion": "Odeion",
       "Strasse": "Cadde",
       "Stützmauer": "İstinat duvarı",
-      "Säulenhalle": "",
+      "Säulenhalle": "Sütunlu giriş",
       "Tempel": "Tapınak",
       "Theater": "Tiyatro",
       "Therme": "Ilıca",
-      "Toranlage": "",
+      "Toranlage": "Giriş",
       "Turm": "Kule",
       "Wohnbau": "Konut yapısı"
     }
   },
   "Building-buildingCategorySpecific-default": {
     "values": {
-      "Aediculabau": "",
+      "Aediculabau": "Aedikula",
       "Atriumhaus": "",
       "Bogen": "Kemer",
       "Dipteros": "Dipteros",
@@ -521,7 +521,7 @@
       "Pseudo-Peripteros": "Pseudo peripteros",
       "Rednertribüne": "",
       "Rundbau": "Yuvarlak planlı yapı",
-      "Schatzhaus": "",
+      "Schatzhaus": "Hazine binası",
       "Terassenheiligtum": "",
       "Tholos": "Tholos",
       "Torbogen": "",
@@ -539,10 +539,10 @@
   "Building-buildingTechnique-default": {
     "values": {
       "Blockverbandmauerwerk": "",
-      "Bruchsteinmauerwerk": "",
+      "Bruchsteinmauerwerk": "Moloz taş duvarcılık",
       "Feldsteinmauerwerk": "",
       "Kyklopenmauerwerk": "Kiklopik duvar",
-      "Lehmziegelmauerwerk": "",
+      "Lehmziegelmauerwerk": "Kerpiç tuğla duvarcılık",
       "Mischform Polygonal-/Quadermauerwerk": "",
       "Opus Caementitium": "Opus Caementitium",
       "Polygonalmauerwerk": "",
@@ -562,9 +562,9 @@
   },
   "Building-buildingType-default": {
     "values": {
-      "Befestigung": "",
+      "Befestigung": "Tahkimat",
       "Haus": "Konut",
-      "Lager": "",
+      "Lager": "Depo",
       "Werkstatt": "İşlik"
     }
   },
@@ -699,21 +699,21 @@
   },
   "Wood-typeOfWood-default": {
     "values": {
-      "Ahorn": "",
-      "Apfel": "",
-      "Birke": "",
-      "Birne": "",
-      "Buche": "",
-      "Eibe": "",
-      "Eiche": "",
-      "Erle": "",
-      "Esche": "",
-      "Fichte": "",
-      "Kastanie": "",
-      "Kiefer": "",
-      "Kirsche": "",
-      "Lerche": "",
-      "Linde": "",
+      "Ahorn": "Akçaağaç",
+      "Apfel": "Elma",
+      "Birke": "Huş",
+      "Birne": "Armut",
+      "Buche": "Avrupa kayını",
+      "Eibe": "Porsuk (Taxus)",
+      "Eiche": "Meşe",
+      "Erle": "Kızılağaç",
+      "Esche": "Dişbudak",
+      "Fichte": "Ladin",
+      "Kastanie": "Kestane",
+      "Kiefer": "Çam",
+      "Kirsche": "Kiraz",
+      "Lerche": "Larix",
+      "Linde": "Ihlamur",
       "Nußbaum": "",
       "Pappel": "",
       "Tanne": "",
@@ -1489,12 +1489,12 @@
     "values": {
       "Befliegung": "",
       "Begehung": "",
-      "Geoelektrik": "",
-      "Geomagnetik": "",
-      "Georadar": "",
-      "LIDAR": "",
-      "Luft- oder Satellitenbilder": "",
-      "Quadratisch": "",
+      "Geoelektrik": "Jeoelektrik",
+      "Geomagnetik": "Jeomanyetik",
+      "Georadar": "Jeoradar",
+      "LIDAR": "LIDAR",
+      "Luft- oder Satellitenbilder": "Hava veya uydu görüntüsü",
+      "Quadratisch": "Plankare",
       "Regelmäßig": "Düzenli",
       "Seismik": "Sismik"
     }
@@ -2157,22 +2157,22 @@
       "partialCollapse": "",
       "missingconst": "",
       "looseconst": "",
-      "fractures": "",
-      "riss1": "",
-      "riss2": "",
-      "riss3": "",
-      "riss4": "",
+      "fractures": "kırık",
+      "riss1": "çatlak (<1mm)",
+      "riss2": "çatlak (1mm-5mm)",
+      "riss3": "çatlak (5mm)",
+      "riss4": "çatlak (>10mm)",
       "deformationSwelling": "",
       "delamination": "",
-      "moisture": "",
+      "moisture": "Nem",
       "cavities": "",
       "exfoliation": "",
       "spalling": "",
       "efflorescence": "",
       "bioSettlement": "",
       "fireDamage": "",
-      "erosion": "",
-      "corrosion": "",
+      "erosion": "erozyon",
+      "corrosion": "korozyon",
       "crusting": "",
       "mechanicDamage": "",
       "discoloration": "",
@@ -2182,7 +2182,7 @@
       "weathering": "",
       "rotting": "",
       "rottingstr": "",
-      "vandalizm": "",
+      "vandalizm": "vandalizm",
       "fissure": ""
     }
   },

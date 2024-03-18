@@ -28,6 +28,17 @@ defmodule Api.Core.LayoutTest do
             }
           }
         }
+      ],
+      "test-project:compositeField" => [
+        %{
+          "color" => [
+            %{ "name" => "Blau", "label" => %{ "de" => "Blau", "en" => "Blue" } },
+            %{ "name" => "Grün", "label" => %{ "de" => "Grün", "en" => "Green" } }
+          ],
+          "shape" => %{ name: "Konkav", label: %{ de: "Konkav", en: "Concave" } },
+          "description" => %{ "de" => "Beispiel", "en" => "Example" }
+          # Number subfield is not filled out and should be ignored in layouted output
+        }
       ]
     }
 
@@ -61,13 +72,8 @@ defmodule Api.Core.LayoutTest do
             description: %{
               de: "Typ der Ressource",
               en: "Type of resource"
-            }
-           },
-           %{
-             name: "id",
-             value: "42",
-             label: %{},
-             description: %{}
+            },
+            inputType: "category"
            },
            %{
               name: "color",
@@ -91,20 +97,80 @@ defmodule Api.Core.LayoutTest do
                 de: "Farbe",
                 en: "Color"
               },
-              description: %{}
+              description: %{},
+              inputType: "checkboxes"
            },
            %{
+            name: "test-project:compositeField",
+            value: [
+              [
+                %{
+                  name: "color",
+                  label: %{
+                    de: "Farbe",
+                    en: "Color"
+                  },
+                  description: %{},
+                  inputType: "checkboxes",
+                  value: [
+                    %{
+                      name: "Blau",
+                      label: %{
+                        de: "Blau",
+                        en: "Blue"
+                      }
+                    },
+                    %{
+                      name: "Grün",
+                      label: %{
+                        de: "Grün",
+                        en: "Green"
+                      }
+                    }
+                  ]
+                },
+                %{
+                  name: "shape",
+                  label: %{
+                    de: "Form",
+                    en: "Shape"
+                  },
+                  description: %{},
+                  inputType: "dropdown",
+                  value: %{ name: "Konkav", label: %{ de: "Konkav", en: "Concave" } }
+                },
+                %{
+                  name: "description",
+                  label: %{
+                    de: "Beschreibung",
+                    en: "Description"
+                  },
+                  description: %{},
+                  inputType: "text",
+                  value: %{ de: "Beispiel", en: "Example" }
+                }
+              ]
+            ],
+            label: %{
+              de: "Kompositfeld",
+              en: "Composite field"
+            },
+            description: %{},
+            inputType: "composite"
+          },
+          %{
               name: "liesWithin",
               targets: [%{ resource: %{ id: "45", parentId: "40" } }],
               label: %{
                 de: "Liegt in",
                 en: "Lies within"
               },
-              description: %{}
+              description: %{},
+              inputType: "relation"
           }
         ]
        },
-       %{
+      %{
          name: "dimensions",
          fields: [
            %{
@@ -126,7 +192,8 @@ defmodule Api.Core.LayoutTest do
                de: "Breite",
                en: "Width"
              },
-             description: %{}
+             description: %{},
+             inputType: "dimension"
            }
          ]
        },

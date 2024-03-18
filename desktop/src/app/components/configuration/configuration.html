@@ -63,6 +63,11 @@
                                 (click)="setCategoriesFilter(categoriesFilterOptions[6])">
                             {{categoriesFilterOptions[6].label}}
                         </button>
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[7].name"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[7])">
+                            {{categoriesFilterOptions[7].label}}
+                        </button>
                     </div>
                 </div>
             </div>

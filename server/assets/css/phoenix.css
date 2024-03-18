@@ -28,6 +28,11 @@ select {
   width: auto;
 }
 
+label {
+  font-weight:300;
+  display:inline;
+}
+
 /* Phoenix promo and logo */
 .phx-hero {
   text-align: center;

@@ -1,4 +1,4 @@
-import { CategoryConverter } from '../../src/datastore/category-converter';
+import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
@@ -29,7 +29,8 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new CategoryConverter(projectConfiguration),
+            new DocumentConverter(projectConfiguration),
+            projectConfiguration,
             () => 'username'
         );
     }
@@ -44,27 +45,25 @@ describe('Datastore', () => {
     beforeEach(() => {
 
         mockdb = jasmine.createSpyObj('mockdb',
-                ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
-        mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
-            ['find', 'put', 'remove']);
-
+            ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
+        mockdb.create.and.callFake(function(document) {
+                return Promise.resolve(document);
+            });
         mockdb.update.and.callFake(function(document) {
             // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
             document.resource.id = '1';
             document['_rev'] = '2';
             return Promise.resolve(document);
         });
-        mockIndexFacade.find.and.callFake(function() {
-            const document = doc('sd1');
-            document.resource.id = '1';
-            return ['1'];
-        });
+        mockdb.bulkFetch.and.returnValue(new Promise(resolve => resolve([])));
+
+        mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
+            ['find', 'put', 'remove', 'getCount']);
+        mockIndexFacade.find.and.callFake(() => ['1']);
         mockIndexFacade.put.and.callFake(function(document) {
             return Promise.resolve(document);
         });
-        mockdb.create.and.callFake(function(document) {
-            return Promise.resolve(document);
-        });
+        mockIndexFacade.getCount.and.returnValue(0);
 
         datastore = createMockedDatastore(mockdb);
     });

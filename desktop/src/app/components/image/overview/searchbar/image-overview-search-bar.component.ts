@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {SearchBarComponent} from '../../../widgets/search-bar.component';
+import { Component } from '@angular/core';
+import { SearchBarComponent } from '../../../widgets/search-bar.component';
+
 
 @Component({
     selector: 'image-overview-search-bar',
@@ -15,12 +16,14 @@ export class ImageOverviewSearchBarComponent extends SearchBarComponent {
 
     public getSelectedCategory(): string|undefined {
 
-        return this.categories !== undefined && this.categories.length > 0 ? this.categories[0] : undefined
+        return this.isCategorySelected()
+            ? this.selectedCategories[0]
+            : undefined;
     }
 
 
     public isCategorySelected(): boolean {
 
-        return this.categories !== undefined && this.categories.length > 0;
+        return this.selectedCategories?.length > 0;
     }
 }

@@ -1,0 +1,9 @@
+<div class="grid-item-icon">
+    <div *ngFor="let imageUrl of imageUrls"
+         class="image-container d-flex align-items-center justify-content-center">
+        <img [src]="imageUrl">
+    </div>
+    <category-icon *ngIf="imageUrls.length === 0"
+                   [size]="60"
+                   [category]="category"></category-icon>
+</div>

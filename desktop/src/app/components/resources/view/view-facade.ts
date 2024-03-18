@@ -8,7 +8,7 @@ import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
 
-export type ResourcesViewMode = 'map'|'list'|'types';
+export type ResourcesViewMode = 'map'|'list'|'grid';
 
 
 /**
@@ -53,6 +53,10 @@ export class ViewFacade {
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
     public isInTypesManagement = () => this.resourcesStateManager.isInTypesManagement();
+
+    public isInInventoryManagement = () => this.resourcesStateManager.isInInventoryManagement();
+
+    public isInGridListView = () => this.resourcesStateManager.isInGridListView();
 
     public getMode = () => this.resourcesStateManager.getMode();
 
@@ -121,7 +125,7 @@ export class ViewFacade {
     public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
-    public async selectView(viewName: 'project'|'types'|string): Promise<void> {
+    public async selectView(viewName: 'project'|'types'|'inventory'|string): Promise<void> {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);

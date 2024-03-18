@@ -1,7 +1,6 @@
 defmodule FieldHubWeb.ProjectCreateLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
-  import ExUnit.CaptureLog
 
   use FieldHubWeb.ConnCase
 
@@ -12,15 +11,15 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
 
   alias FieldHub.{
     Project,
-    User,
     TestHelper
   }
 
   @endpoint FieldHubWeb.Endpoint
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
-  @project "test_project"
+  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
+  @project "test_project"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
     assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
@@ -203,6 +202,19 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       assert html =~ "Please provide a valid project identifier."
     end
 
+    test "project identifier longer than the maximum characters throws a warning", %{
+      conn: conn
+    } do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
+
+      html =
+        view
+        |> element("form")
+        |> render_change(%{identifier: String.duplicate("a", @identifier_length + 1)})
+
+      assert html =~ "Please provide a valid project identifier."
+    end
+
     test "using an existing project identifier results in warning", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
 
@@ -236,47 +248,6 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
       # html should now render the project_show content
       assert html =~
                "Project created project `#{@project}` with password `some_password` successfully."
-    end
-
-    test "error displayed and logged if project identifier already in use", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
-
-      Project.create(@project)
-
-      expected_msg =
-        "Error creating `#{@project}`, a database with the identifier already exists."
-
-      log =
-        capture_log(fn ->
-          html =
-            view
-            |> element("form")
-            |> render_submit(%{identifier: @project, password: "some_password"})
-
-          assert html =~ expected_msg
-        end)
-
-      assert log =~ expected_msg
-    end
-
-    test "error displayed and logged if default user already exists", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
-
-      User.create(@project, "password")
-
-      expected_msg = "Error creating default user `#{@project}`, the user already exists."
-
-      log =
-        capture_log(fn ->
-          html =
-            view
-            |> element("form")
-            |> render_submit(%{identifier: @project, password: "some_password"})
-
-          assert html =~ expected_msg
-        end)
-
-      assert log =~ expected_msg
     end
   end
 

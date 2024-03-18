@@ -28,7 +28,7 @@ navigation {
     }
 
     .navigation-button {
-      padding-top: 7px;
+      padding-top: 6px;
       white-space: nowrap;
 
       &:active {
@@ -62,6 +62,7 @@ navigation {
     }
 
     .navigation-button {
+      height: 38px;
       box-shadow: none !important;
     }
 
@@ -102,12 +103,13 @@ navigation {
 
     #hierarchy-mode-switch {
       padding: 0;
-      width: 39px;
-      height: 39px;
+      width: 38px !important;
+      height: 38px !important;
 
       .mdi {
         position: relative;
-        top: 7px;
+        top: 6px;
+        left: 1px;
       }
     }
   }

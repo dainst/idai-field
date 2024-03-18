@@ -24,10 +24,13 @@ export default function LinkedFinds({ type }: { type: Document }): ReactElement 
 
     const [linkedFinds, setLinkedFinds] = useState<ResultDocument[]>(null);
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) =>
-        getLinkedFinds(type, newOffset, loginData.token)
-            .then(result => setLinkedFinds(oldLinkedFinds => oldLinkedFinds.concat(result.documents)))
-    );
+    const getChunk = async (newOffset: number) => {
+
+        const result = await getLinkedFinds(type, newOffset, loginData.token);
+        setLinkedFinds(oldLinkedFinds => oldLinkedFinds.concat(result.documents));
+    };
+
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     useEffect(() => {
 

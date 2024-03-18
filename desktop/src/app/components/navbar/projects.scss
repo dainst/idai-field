@@ -1,11 +1,32 @@
-#projects-badge {
-  padding: 0.5em !important;
-  max-width: 400px;
+#projects-badge,
+#username {
+  position: relative;
+  max-width: 300px;
+  padding: 0 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: right;
 
   &:hover {
     color: #777;
+  }
+}
+
+#projects-badge {
+  top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+#username {
+  top: 3px;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+
+  &.high-dpi {
+    font-weight: 400;
   }
 }

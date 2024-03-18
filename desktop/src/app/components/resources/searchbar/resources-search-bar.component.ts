@@ -1,5 +1,8 @@
 import { Component, ElementRef, Input } from '@angular/core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
+import { QrCodeService } from '../service/qr-code-service';
+import { Routing } from '../../../services/routing';
 
 
 @Component({
@@ -11,6 +14,7 @@ import { SearchBarComponent } from '../../widgets/search-bar.component';
 })
 /**
  * @author Thomas Kleinke
+ * @author Danilo Guzzo
  */
 export class ResourcesSearchBarComponent extends SearchBarComponent {
 
@@ -19,15 +23,20 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public suggestionsVisible: boolean = false;
 
 
-    constructor(private elementRef: ElementRef) {
+    constructor(private elementRef: ElementRef,
+                private qrCodeService: QrCodeService,
+                private projectConfiguration: ProjectConfiguration,
+                private routingService: Routing) {
 
         super();
     }
 
 
-    public getSelectedCategory(): string|undefined {
+    public getSelectedCategory(): string | undefined {
 
-        return this.categories !== undefined && this.categories.length > 0 ? this.categories[0] : undefined
+        return this.selectedCategories?.length > 0
+            ? this.selectedCategories[0]
+            : undefined;
     }
 
 
@@ -45,7 +54,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     public isCategorySelected(): boolean {
 
-        return this.categories !== undefined && this.categories.length > 0;
+        return this.selectedCategories?.length > 0;
     }
 
 
@@ -67,5 +76,21 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
         if (!insideFilterMenu && this.popover) this.popover.close();
         if (!insideSearchBarComponent) this.hideSuggestions();
+    }
+
+
+    public isQrCodeScannerButtonVisible(): boolean {
+        
+        return this.projectConfiguration.getQrCodeCategories().length > 0;
+    }
+
+
+    public async scanQrCode() {
+
+        const scannedCode: string = await this.qrCodeService.scanCode();
+        if (!scannedCode) return;
+
+        const document: Document = await this.qrCodeService.getDocumentFromScannedCode(scannedCode);
+        if (document) this.routingService.jumpToResource(document);
     }
 }

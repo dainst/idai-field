@@ -4,8 +4,8 @@ defmodule FieldHub.MixProject do
   def project do
     [
       app: :field_hub,
-      version: "3.2.8",
-      elixir: "~> 1.12",
+      version: "3.2.9",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -47,8 +47,8 @@ defmodule FieldHub.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:httpoison, "~> 1.8"},
-      {:reverse_proxy_plug, "~> 2.1"},
+      {:httpoison, "~> 2.2"},
+      {:reverse_proxy_plug, "~> 2.2"},
       {:zarex, "~> 1.0.2"},
       {:ex_json_schema, "~> 0.9.1"},
       {:cachex, "~> 3.4"}
@@ -67,11 +67,7 @@ defmodule FieldHub.MixProject do
     [
       setup: [
         "deps.get",
-        "setup_field_hub",
-        "seed"
-      ],
-      setup_field_hub: [
-        "run --eval 'FieldHub.CLI.setup()'"
+        "run --eval FieldHub.CLI.setup() --no-start"
       ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"

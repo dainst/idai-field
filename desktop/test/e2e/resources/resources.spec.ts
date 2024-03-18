@@ -3,7 +3,6 @@ import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
 import { NavbarPage } from '../navbar.page';
-import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
@@ -114,7 +113,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- save changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('save');
 
@@ -126,7 +125,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- discard changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('discard');
 
@@ -137,7 +136,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- cancel dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('cancel');
         await expect(await DoceditPage.getIdentifierInputFieldValue()).toEqual('2');
@@ -177,7 +176,7 @@ test.describe('resources --', () => {
     test('fields', async () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture', 'diary', '100');
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
 
         const fieldName = await FieldsViewPage.getFieldName(0, 1);
         expect(fieldName).toBe('Tagebuch');
@@ -191,7 +190,7 @@ test.describe('resources --', () => {
     test('relations', async () => {
 
         await ResourcesPage.performCreateLink();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await FieldsViewPage.clickAccordionTab(1);
 
         let relationValue = await FieldsViewPage.getRelationValue(1, 0);
@@ -201,7 +200,7 @@ test.describe('resources --', () => {
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
 
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         relationValue = await FieldsViewPage.getRelationValue(1, 0);
         expect(relationValue).toBe('1');
         relationName = await FieldsViewPage.getRelationName(1, 0);
@@ -209,18 +208,18 @@ test.describe('resources --', () => {
 
         // docedit
         await ResourcesPage.openEditByDoubleClickResource('1');
-        expect(await DoceditRelationsPage.getRelationButtonText('isAfter')).toEqual('2');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isAfter')).toEqual('2');
         await DoceditPage.clickCloseEdit();
         await ResourcesPage.openEditByDoubleClickResource('2');
-        expect(await DoceditRelationsPage.getRelationButtonText('isBefore')).toEqual('1');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isBefore')).toEqual('1');
 
         // deletion
         await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isBefore');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         let tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
     });
@@ -234,14 +233,14 @@ test.describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture');
         await ResourcesPage.performCreateResource('2', 'feature-architecture');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
         await DoceditRelationsPage.typeInRelation('isContemporaryWith', '2');
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickCloseEdit('discard');
 
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await waitForExist('#popover-menu');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
@@ -367,7 +366,7 @@ test.describe('resources --', () => {
         await waitForNotExist(await ResourcesPage.getListItemEl('2'));
 
         // relations
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
     });
@@ -376,7 +375,7 @@ test.describe('resources --', () => {
     test('do not reflect changes in list while editing resource', async () => {
 
         await ResourcesPage.performCreateResource('1a');
-        await DetailSidebarPage.doubleClickEditDocument('1a');
+        await ResourcesPage.openEditByDoubleClickResource('1a');
         await DoceditPage.typeInInputField('identifier', '1b');
         const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
         expect(identifier).toBe('1a');
@@ -388,17 +387,17 @@ test.describe('resources --', () => {
 
         // toggleRangeOnOff to child category
         await ResourcesPage.performCreateResource('1', 'feature');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature-architecture');
         await waitForNotExist('#message-0');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const categoryLabel = await FieldsViewPage.getFieldValue(0, 0);
         expect(categoryLabel).toEqual('Architektur');
 
         // delete invalid fields when changing the category of a resource to its parent category
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
 
         await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('wallType', 'Außenmauer');
@@ -407,7 +406,7 @@ test.describe('resources --', () => {
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getFieldValue(1, 0)).toEqual('Außenmauer');
 
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
         await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
@@ -496,7 +495,6 @@ test.describe('resources --', () => {
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
@@ -567,7 +565,6 @@ test.describe('resources --', () => {
 
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.clickHierarchyButton('R1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('Floor1', 'roomfloor');
         await ResourcesPage.clickOpenContextMenu('Floor1');
         await ResourcesPage.clickContextMenuMoveButton();
@@ -597,7 +594,7 @@ test.describe('resources --', () => {
         }
 
         await ResourcesPage.clickCancelInMoveModal();
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
@@ -613,9 +610,9 @@ test.describe('resources --', () => {
 
     test('contextMenu/moveModal - do not suggest descendants of current resource', async () => {
 
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.performCreateResource('SE-D1', 'feature');
-        await ResourcesPage.performDescendHierarchy('SE-D1');
+        await ResourcesPage.clickHierarchyButton('SE-D1');
         await ResourcesPage.performCreateResource('SE-D2', 'feature');
 
         await ResourcesPage.clickOperationNavigationButton();
@@ -639,7 +636,6 @@ test.describe('resources --', () => {
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.performCreateResource('BW1', 'buildingpart');
         await ResourcesPage.clickHierarchyButton('BW1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('R2', 'room');
 
         await ResourcesPage.clickOperationNavigationButton();
@@ -657,7 +653,7 @@ test.describe('resources --', () => {
 
         // create links for images
         await addTwoImages('SE0');
-        await ResourcesPage.clickSelectResource('SE0', 'info');
+        await ResourcesPage.clickSelectResource('SE0');
         await ResourcesPage.clickThumbnail();
         let images = await ImageRowPage.getImages();
         expect(await images.count()).toBe(2);
@@ -696,5 +692,49 @@ test.describe('resources --', () => {
         await ImageViewModalPage.clickCloseButton();
 
         await waitForNotExist(await ResourcesPage.getThumbnail());
+    });
+
+
+    test('show children in fields view', async () => {
+
+        await ResourcesPage.clickSelectResource('SE0');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('testf1');
+
+        await NavbarPage.clickTab('project');
+
+        await ResourcesPage.clickSelectResource('S2');
+        await FieldsViewPage.clickAccordionTab(1);
+        relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(6);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE1');
+        expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SE2');
+        expect(await FieldsViewPage.getRelationValue(1, 2)).toBe('SE3');
+        expect(await FieldsViewPage.getRelationValue(1, 3)).toBe('SE4');
+        expect(await FieldsViewPage.getRelationValue(1, 4)).toBe('SE5');
+        expect(await FieldsViewPage.getRelationValue(1, 5)).toBe('SE6');
+    });
+
+
+    test('show stratigraphical units present in profile', async () => {
+
+        await ResourcesPage.performCreateResource('P1', 'profile');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoHierarchyTab();
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isPresentIn');
+        await DoceditRelationsPage.typeInRelation('isPresentIn', 'P1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Umfasst stratigraphische Einheiten')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
     });
 });

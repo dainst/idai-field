@@ -17,4 +17,4 @@ import { ContextMenu } from '../../widgets/context-menu';
         super.open(event);
         this.documents = documents;
     }
- }
+}

@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
 import { CategoryForm, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
-    ValuelistUtil, Labels } from 'idai-field-core';
+    ValuelistUtil, Labels, IndexType } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
 
@@ -493,11 +493,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getIndexType(field: Field, searchTerm: string) {
+    private getIndexType(field: Field, searchTerm: string): IndexType {
 
-        return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
-            ? 'exist'
-            : ConstraintIndex.getIndexType(field);
+        return field.name === 'isChildOf'
+            ? 'contained'
+            : this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
+                ? 'exist'
+                : ConstraintIndex.getIndexType(field);
     }
 
 

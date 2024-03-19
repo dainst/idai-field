@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, Document, RelationsManager } from 'idai-field-core';
+import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class DeleteResourceModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private modalService: NgbModal,
                 private datastore: Datastore,
                 private relationsManager: RelationsManager) {}
 
@@ -43,6 +45,8 @@ export class DeleteResourceModalComponent {
     public async performDeletion() {
 
         if (!this.isDeletionAllowed()) return;
+
+        const deletionInProgressModal: NgbModalRef = this.openDeletionInProgressModal();
         
         if (this.deleteAll) {
             await this.deleteMultiple();
@@ -50,7 +54,21 @@ export class DeleteResourceModalComponent {
             await this.deleteSingle();
         }
 
+        deletionInProgressModal.close();
         this.activeModal.close();
+    }
+
+
+    private openDeletionInProgressModal(): NgbModalRef {
+
+        const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
+            DeletionInProgressModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        deletionInProgressModalRef.componentInstance.mode = 'resource';
+        deletionInProgressModalRef.componentInstance.multiple = this.deleteAll;
+        
+        return deletionInProgressModalRef;
     }
 
 

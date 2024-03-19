@@ -2,16 +2,16 @@
     <div class="process-modal-container">
         <div class="spinner"></div>
         <div *ngIf="mode === 'resource' && !multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.info.single">Ressource wird gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.resource.single">Ressource wird gelöscht...</div>
         <div *ngIf="mode === 'resource' && multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.info.multiple">Ressourcen werden gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.resource.multiple">Ressourcen werden gelöscht...</div>
           <div *ngIf="mode === 'image' && !multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.info.single">Bild wird gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.image.single">Bild wird gelöscht...</div>
         <div *ngIf="mode === 'image' && multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.info.multiple">Bilder werden gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.image.multiple">Bilder werden gelöscht...</div>
         <div *ngIf="mode === 'field' && !multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.fields.single">Feld wird gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.field.single">Feld wird gelöscht...</div>
         <div *ngIf="mode === 'field' && multiple" class="process-info"
-             i18n="@@widgets.deletionInProgressModal.fields.multiple">Felder werden gelöscht...</div>
+             i18n="@@widgets.deletionInProgressModal.info.field.multiple">Felder werden gelöscht...</div>
     </div>
 </div>

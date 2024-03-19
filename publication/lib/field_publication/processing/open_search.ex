@@ -24,8 +24,7 @@ defmodule FieldPublication.Processing.OpenSearch do
       |> Map.put("id", doc["_id"])
       |> Map.delete("_id")
     end)
-    |> Stream.map(&Publications.Data.apply_project_configuration(&1, configuration))
-    |> Enum.map(&Publications.Data.extend_relations(&1, publication))
+    |> Enum.map(&Publications.Data.apply_project_configuration(&1, configuration))
     |> Task.async_stream(
       fn doc ->
         OpensearchService.put(publication_id, doc)

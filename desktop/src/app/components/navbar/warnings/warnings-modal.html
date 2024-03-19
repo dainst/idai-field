@@ -186,6 +186,14 @@
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'unconfiguredCategory'">
+                        <button class="btn btn-danger delete-resource-button"
+                                (click)="openDeleteResourceModal()">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteResource">Ressource löschen</span>
+                        </button>
+                    </span>
                     <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
                         <button class="btn btn-danger delete-field-data-button"
                                 (click)="openDeleteFieldDataModal(section)">

@@ -110,6 +110,7 @@ export module WarningsUpdater {
     export async function updateResourceLimitWarnings(datastore: Datastore, indexFacade: IndexFacade,
                                                       category: CategoryForm) {
 
+        if (!category) return;
         const documents: Array<Document> = (await datastore.find({ categories: [category.name] })).documents;
 
         for (let document of documents) {

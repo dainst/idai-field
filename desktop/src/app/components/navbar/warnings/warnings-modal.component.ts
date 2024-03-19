@@ -20,6 +20,7 @@ import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
 import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
+import { DeleteResourceModalComponent } from './delete-resource-modal.component';
 
 
 type WarningSection = {
@@ -203,6 +204,25 @@ export class WarningsModalComponent {
             });
             if (group) componentInstance.activeGroup = group.name;
         }        
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openDeleteResourceModal() {
+
+        const [result, componentInstance] = this.modals.make<DeleteResourceModalComponent>(
+            DeleteResourceModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
 
         await this.modals.awaitResult(
             result,

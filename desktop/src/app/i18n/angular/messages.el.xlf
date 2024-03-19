@@ -3004,14 +3004,6 @@
           <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deletionInProgressModal.info.multiple" datatype="html">
-        <source>Ressourcen werden gelöscht...</source>
-        <target state="needs-translation">Ressourcen werden gelöscht...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/deletion/deletion-in-progress-modal.component.ts</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
         <source>Eine Ressource gefunden</source>
         <target state="needs-translation">Eine Ressource gefunden</target>
@@ -7257,14 +7249,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.deletionInProgressModal.info.multiple" datatype="html">
-        <source>Bilder werden gelöscht...</source>
-        <target state="needs-translation">Bilder werden gelöscht...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.component.ts</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.tooLow" datatype="html">
         <source>Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</source>
         <target state="needs-translation">Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</target>
@@ -7403,14 +7387,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
           <context context-type="linenumber">58,64</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalid" datatype="html">
-        <source>Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">56,49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.outlierValues.multiple" datatype="html">
@@ -8287,6 +8263,166 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.resource.single" datatype="html">
+        <source>Ressource wird gelöscht...</source>
+        <target state="needs-translation">Ressource wird gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.resource.multiple" datatype="html">
+        <source>Ressourcen werden gelöscht...</source>
+        <target state="needs-translation">Ressourcen werden gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.image.single" datatype="html">
+        <source>Bild wird gelöscht...</source>
+        <target state="needs-translation">Bild wird gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.image.multiple" datatype="html">
+        <source>Bilder werden gelöscht...</source>
+        <target state="needs-translation">Bilder werden gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.field.single" datatype="html">
+        <source>Feld wird gelöscht...</source>
+        <target state="needs-translation">Feld wird gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.field.multiple" datatype="html">
+        <source>Felder werden gelöscht...</source>
+        <target state="needs-translation">Felder werden gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.all" datatype="html">
+        <source>Alle Ressourcen dieser Kategorie löschen</source>
+        <target state="needs-translation">Alle Ressourcen dieser Kategorie löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
+          <context context-type="linenumber">24,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
+        <source>Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</source>
+        <target state="needs-translation">Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
+          <context context-type="linenumber">45,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredCategory" datatype="html">
+        <source>Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
+        <target state="needs-translation">Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredField" datatype="html">
+        <source>Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
+        <target state="needs-translation">Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">57,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidField" datatype="html">
+        <source>Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
+        <target state="needs-translation">Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">61,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.unconfiguredCategory" datatype="html">
+        <source>Die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> ist für dieses Projekt nicht konfiguriert. Die Ressource wird daher nicht angezeigt. </source>
+        <target state="needs-translation">Die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> ist für dieses Projekt nicht konfiguriert. Die Ressource wird daher nicht angezeigt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">100,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField" datatype="html">
+        <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </source>
+        <target state="needs-translation">Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">110,105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.deleteResource" datatype="html">
+        <source>Ressource löschen</source>
+        <target state="needs-translation">Ressource löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.unconfiguredCategories" datatype="html">
+        <source>Unkonfigurierte Kategorien</source>
+        <target state="needs-translation">Unkonfigurierte Kategorien</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.unconfiguredFields" datatype="html">
+        <source>Unkonfigurierte Felder</source>
+        <target state="needs-translation">Unkonfigurierte Felder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.header" datatype="html">
+        <source>Ressource löschen?</source>
+        <target state="needs-translation">Ressource löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
+          <context context-type="linenumber">45,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.confirmation" datatype="html">
+        <source>Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
+        <target state="needs-translation">Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.all.info" datatype="html">
+        <source>Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gelöscht. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gelöscht. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
+          <context context-type="linenumber">52,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.unconfiguredField" datatype="html">
+        <source>Das Feld ist für die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht konfiguriert. Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt. </source>
+        <target state="needs-translation">Das Feld ist für die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht konfiguriert. Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">106,99</context>
         </context-group>
       </trans-unit>
     </body>

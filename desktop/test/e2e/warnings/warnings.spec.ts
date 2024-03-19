@@ -11,6 +11,7 @@ import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DeleteFieldDataModalPage } from './delete-field-data-modal.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
+import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -39,6 +40,30 @@ test.describe('warnings --', () => {
 
         await stop();
     });
+
+
+    async function createUnconfiguredCategoryWarnings(resourceIdentifiers: string[], categoryName: string) {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('trench');
+        await createCategory(categoryName);
+
+        const completeCategoryName: string = 'Test:' + categoryName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'feature-' + completeCategoryName);
+        }
+        await NavbarPage.clickTab('project');
+
+        await navigateTo('configuration');
+        await ConfigurationPage.deleteCategory(completeCategoryName, 'Feature', true);
+        await waitForNotExist(await CategoryPickerPage.getCategory(completeCategoryName, 'Feature'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
 
 
     async function createUnconfiguredFieldWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -159,6 +184,18 @@ test.describe('warnings --', () => {
     }
 
 
+    async function createCategory(categoryName: string) {
+        
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await AddCategoryFormModalPage.typeInSearchFilterInput(categoryName);
+        await AddCategoryFormModalPage.clickCreateNewCategory();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForExist(await CategoryPickerPage.getCategory('Test:' + categoryName, 'Feature'));
+        await ConfigurationPage.save();
+    }
+
+
     async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string) {
         
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -210,6 +247,26 @@ test.describe('warnings --', () => {
             expect(await WarningsModalPage.getSectionTitle(i)).toEqual(sectionTitles[i]);
         }
     }
+
+
+    test('solve single warning for unconfigured category via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+        await expectSectionTitles(['Unkonfigurierte Kategorie Test:CustomCategory']);
+
+        await WarningsModalPage.clickDeleteResourceButton(0);
+        await DeleteFieldDataModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
 
 
     test('solve single warning for unconfigured field via warnings modal', async () => {

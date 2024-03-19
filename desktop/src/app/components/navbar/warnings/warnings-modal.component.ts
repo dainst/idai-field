@@ -184,6 +184,8 @@ export class WarningsModalComponent {
 
     public async openDoceditModal(section?: WarningSection) {
 
+        if (section.type === 'unconfiguredCategory') return;
+
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
             DoceditComponent,
             MenuContext.DOCEDIT,

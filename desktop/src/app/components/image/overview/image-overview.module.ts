@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectConfiguration, Datastore } from 'idai-field-core';
 import { imagesRouting } from './image-overview.routing';
 import { ImageOverviewComponent } from './image-overview.component';
 import { WidgetsModule } from '../../widgets/widgets.module';
@@ -15,8 +16,6 @@ import { ImageOverviewSearchConstraintsComponent } from './searchbar/image-overv
 import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
 import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
-import { ProjectConfiguration, Datastore } from 'idai-field-core';
-import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
 
 
 @NgModule({
@@ -36,7 +35,6 @@ import { DeletionInProgressModalComponent } from './deletion/deletion-in-progres
         LinkModalComponent,
         RemoveLinkModalComponent,
         DeleteModalComponent,
-        DeletionInProgressModalComponent
     ],
     entryComponents: [
         LinkModalComponent,

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, FieldDocument, Named, ProjectConfiguration, RelationsManager, Hierarchy } from 'idai-field-core';
 import { DeleteModalComponent } from './delete-modal.component';
-import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { ImageRelationsManager } from '../../../../services/image-relations-manager';
+import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 
 
 /**
@@ -38,8 +38,10 @@ export class ResourceDeletion {
 
         const deleteRelatedImages: boolean = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
-            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+            DeletionInProgressModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
         );
+        deletionInProgressModalRef.componentInstance.mode = 'resource';
         deletionInProgressModalRef.componentInstance.multiple = documents.length + descendantsCount > 1;
 
         await this.performDeletion(documents, deleteRelatedImages);

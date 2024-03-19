@@ -29,6 +29,7 @@ import { QrCodeScannerModalComponent } from './qr-code-scanner-modal.component';
 import { DefaultFieldViewComponent } from './document-info/fields-view/default-field-view.component';
 import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 import { SearchableSelectComponent } from './searchable-select.component';
+import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { SearchableSelectComponent } from './searchable-select.component';
         EditSaveDialogComponent,
         LanguagesListComponent,
         QrCodeScannerModalComponent,
+        DeletionInProgressModalComponent,
         SearchableSelectComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],

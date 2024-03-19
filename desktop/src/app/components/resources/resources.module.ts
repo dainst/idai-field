@@ -17,7 +17,6 @@ import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { BaseList } from './base-list';
-import { DeletionInProgressModalComponent } from './actions/delete/deletion-in-progress-modal.component';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
@@ -96,7 +95,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         SearchSuggestionsComponent,
         ResourcesContextMenuComponent,
         MoveModalComponent,
-        DeletionInProgressModalComponent,
         BaseList,
         QrCodeEditorModalComponent,
         PrintSettingsModalComponent,
@@ -187,8 +185,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         GeometryViewComponent
     ],
     entryComponents: [
-        MoveModalComponent,
-        DeletionInProgressModalComponent
+        MoveModalComponent
     ]
 })
 

@@ -23,7 +23,6 @@ defmodule FieldPublication.Processing.OpenSearch do
       doc
       |> Map.put("id", doc["_id"])
       |> Map.delete("_id")
-      |> Map.delete("_attachments")
     end)
     |> Stream.map(&Publications.Data.apply_project_configuration(&1, configuration))
     |> Enum.map(&Publications.Data.extend_relations(&1, publication))

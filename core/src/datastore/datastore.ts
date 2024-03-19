@@ -184,10 +184,17 @@ export class Datastore {
         const cachedDocument = this.documentCache.get(id);
 
         if ((!options || !options.skipCache) && cachedDocument) {
-            return cachedDocument;
+            if (cachedDocument.warnings?.unconfiguredCategory) {
+                throw [DatastoreErrors.UNKNOWN_CATEGORY, cachedDocument.resource.category];
+            } else {
+                return cachedDocument;
+            }
         }
 
         let document = this.documentConverter.convert(await this.datastore.fetch(id, options?.conflicts));
+        if (document.warnings?.unconfiguredCategory) {
+            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
+        }
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -343,17 +350,8 @@ export class Datastore {
 
         const documents: Array<Document> = [];
         (await this.datastore.bulkFetch(ids)).forEach(document => {
-
-            try {
-                const convertedDocument = this.documentConverter.convert(document);
-                documents.push(this.documentCache.set(convertedDocument));
-            } catch (errWithParams) {
-                if (errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
-                    return; // Ignore documents of categories that are currently not included in configuration
-                } else {
-                    throw errWithParams;
-                }
-            }
+            const convertedDocument = this.documentConverter.convert(document);
+            documents.push(this.documentCache.set(convertedDocument));
         });
 
         return documents;

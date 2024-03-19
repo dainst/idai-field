@@ -29,6 +29,7 @@
                         [showConfigurationOption]="isConfigurationOptionVisible()"
                         [showNoQueryMessage]="false"
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
+                        [includeUnconfiguredCategories]="true"
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>
@@ -40,12 +41,16 @@
             <div *ngFor="let section of getSections()" class="card warnings-section">
                 <div class="card-header h4">
                     <span class="card-title">
-                        <span *ngIf="section.type === 'unconfigured'"
-                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfigured">
+                        <span *ngIf="section.type === 'unconfiguredCategory'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfiguredCategory">
+                            Unkonfigurierte Kategorie <b>{{section.unconfiguredCategoryName}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unconfiguredFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfiguredField">
                             Unkonfiguriertes Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'invalid'"
-                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalid">
+                        <span *ngIf="section.type === 'invalidFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
@@ -84,13 +89,18 @@
                 </div>
                 <div class="card-block">
                     <div class="warning-info">
-                        <span *ngIf="section.type === 'unconfigured'"
-                              i18n="@@navbar.taskbar.warnings.info.unconfigured">
+                        <span *ngIf="section.type === 'unconfiguredCategory'"
+                              i18n="@@navbar.taskbar.warnings.info.unconfiguredCategory">
+                            Die Kategorie <i>{{section.unconfiguredCategoryName}}</i> ist für dieses Projekt nicht
+                            konfiguriert. Die Ressource wird daher nicht angezeigt.
+                        </span>
+                        <span *ngIf="section.type === 'unconfiguredFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unconfiguredField">
                             Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
                             Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
                         </span>
-                        <span *ngIf="section.type === 'invalid'"
-                              i18n="@@navbar.taskbar.warnings.info.invalid">
+                        <span *ngIf="section.type === 'invalidFields'"
+                              i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
                         </span>
@@ -141,7 +151,7 @@
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
                     </div>
-                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
+                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
                         <div class="data-info-content">{{getDataLabel(section)}}</div>
@@ -167,7 +177,7 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
                             || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
@@ -176,7 +186,7 @@
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfigured' || section.type === 'invalid'">
+                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
                         <button class="btn btn-danger delete-field-data-button"
                                 (click)="openDeleteFieldDataModal(section)">
                             <span class="mdi mdi-delete"></span>

@@ -136,8 +136,12 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.conflicts', value: 'Konflikte' })
         );
         this.utilTranslations.addTranslation(
-            'warnings.unconfigured',
-            this.i18n({ id: 'util.warnings.unconfigured', value: 'Unkonfigurierte Felder' })
+            'warnings.unconfiguredCategories',
+            this.i18n({ id: 'util.warnings.unconfiguredCategories', value: 'Unkonfigurierte Kategorien' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unconfiguredFields',
+            this.i18n({ id: 'util.warnings.unconfiguredFields', value: 'Unkonfigurierte Felder' })
         );
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',

@@ -31,10 +31,11 @@ export module FulltextIndex {
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
-        if (!index[document.resource.category]) {
-            index[document.resource.category] = { '*' : {} } ;
-        }
-        index[document.resource.category]['*'][document.resource.id] = true;
+
+        const category: string = getCategory(document);
+
+        if (!index[category]) index[category] = { '*' : {} } ;
+        index[category]['*'][document.resource.id] = true;
 
         flow(
             fieldsToIndex,
@@ -101,7 +102,7 @@ export module FulltextIndex {
 
         return (tokenAsCharArray: string[]) => {
 
-            const categoryIndex = index[document.resource.category];
+            const categoryIndex = index[getCategory(document)];
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
@@ -196,5 +197,13 @@ export module FulltextIndex {
     function getTokensFromI18nString(i18nString: I18N.String): string[] {
 
         return flatten(Object.values(i18nString).map(text => StringUtils.split(tokenizationPattern)(text)));
+    }
+
+
+    function getCategory(document: Document): string {
+
+        return document.warnings?.unconfiguredCategory
+            ? 'UNCONFIGURED'
+            : document.resource.category;
     }
 }

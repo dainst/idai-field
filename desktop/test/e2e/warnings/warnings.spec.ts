@@ -569,7 +569,7 @@ test.describe('warnings --', () => {
             'Fehlendes Präfix im Feld Bezeichner'
         ]);
 
-        await WarningsModalPage.clickFilterOption('unconfigured:exist');
+        await WarningsModalPage.clickFilterOption('unconfiguredFields:exist');
         await expectResourcesInWarningsModal(['2', '3']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('2');
         await expectSectionTitles(['Unkonfiguriertes Feld test:unconfiguredField']);
@@ -579,7 +579,7 @@ test.describe('warnings --', () => {
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('4');
         await expectSectionTitles(['Ungültiger Wert im Feld test:outliersField']);
 
-        await WarningsModalPage.clickFilterOption('invalid:exist');
+        await WarningsModalPage.clickFilterOption('invalidFields:exist');
         await expectResourcesInWarningsModal(['1']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
         await expectSectionTitles(['Ungültige Daten im Feld test:invalidField']);

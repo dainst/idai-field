@@ -25,6 +25,7 @@ import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 type WarningSection = {
     type: WarningType;
     category?: CategoryForm;
+    unconfiguredCategoryName?: string;
     fieldName?: string;
 }
 
@@ -371,7 +372,9 @@ export class WarningsModalComponent {
             section.fieldName = fieldName;
         }
         
-        if (document.resource.category !== 'Configuration') {
+        if (document.warnings.unconfiguredCategory) {
+            section.unconfiguredCategoryName = document.resource.category;
+        } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
         };
 

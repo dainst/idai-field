@@ -1,6 +1,8 @@
 defmodule FieldPublicationWeb.Router do
   use FieldPublicationWeb, :router
 
+  alias FieldPublicationWeb.Cantaloupe
+
   import FieldPublicationWeb.UserAuth
 
   pipeline :browser do
@@ -18,8 +20,10 @@ defmodule FieldPublicationWeb.Router do
   end
 
   forward "/api/iiif/image", ReverseProxyPlug,
-    response_mode: :buffer,
-    upstream: &FieldPublication.cantaloupe_url/0
+    status_callbacks: %{
+      404 => &Cantaloupe.handle_404/2
+    },
+    upstream: &Cantaloupe.url/0
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
   # last known route or falls back on '/' .

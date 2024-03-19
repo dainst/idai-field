@@ -10,8 +10,7 @@ import { Field, Valuelist, ValuelistValue } from '../model';
 export interface FulltextIndex {
 
     [category: string]: {
-        [term: string]:
-            { [id: string]: true }
+        [term: string]: { [id: string]: true }
     }
 }
 
@@ -51,10 +50,10 @@ export module FulltextIndex {
     export function remove(index: FulltextIndex, document: Document) {
 
         Object.keys(index).forEach(category =>
-            Object.keys(index[category])
-                .forEach(term => {
-                    delete index[category][term][document.resource.id];
-                }))
+            Object.keys(index[category]).forEach(term => {
+                delete index[category][term][document.resource.id];
+            })
+        );
     }
 
 

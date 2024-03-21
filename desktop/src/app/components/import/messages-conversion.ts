@@ -143,6 +143,11 @@ export module MessagesConversion {
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE
         }
+        if (msg === ValidationErrors.INVALID_COMPOSITE_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE
+        }
         if (msg === ValidationErrors.INVALID_OPTIONALRANGE_VALUES) {
             replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
         }

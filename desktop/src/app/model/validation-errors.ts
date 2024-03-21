@@ -14,6 +14,7 @@ export module ValidationErrors {
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
     export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';
     export const INVALID_LITERATURE_VALUES = 'validationerror/invalidliteraturevalues';
+    export const INVALID_COMPOSITE_VALUES = 'validationerror/invalidcompositevalues';
     export const INVALID_OPTIONALRANGE_VALUES = 'validationerror/invalidoptionalrange';
     export const INVALID_MAP_LAYER_RELATION_VALUES = 'validationerror/invalidmaplayerrelationvalues';
     export const MAX_CHARACTERS_EXCEEDED = 'validationerror/maxcharactersexceeded';

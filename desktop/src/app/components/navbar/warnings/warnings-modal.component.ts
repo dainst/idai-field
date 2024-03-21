@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field, ValuelistUtil, Valuelist, Tree, MissingRelationTargetWarnings } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, ValuelistUtil, Valuelist, Tree,
+    MissingRelationTargetWarnings, InvalidDataUtil } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -63,7 +62,6 @@ export class WarningsModalComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
-                private decimalPipe: DecimalPipe,
                 private labels: Labels,
                 private i18n: I18n) {}
 
@@ -101,17 +99,7 @@ export class WarningsModalComponent {
 
     public getDataLabel(section: WarningSection): string {
 
-        const field: FieldsViewSubfield = {
-            definition: CategoryForm.getField(section.category, section.fieldName)
-        } as unknown as FieldsViewSubfield;
-
-        return FieldsViewUtil.getLabel(
-            field,
-            this.selectedDocument.resource[section.fieldName],
-            this.labels,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-        );
+        return InvalidDataUtil.generateLabel(this.selectedDocument.resource[section.fieldName], this.labels);
     }
 
 

@@ -2,7 +2,7 @@
     <div i18n="@@docedit.forms.invalidFieldData.info" class="invalid-field-data-info">
         Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:
     </div>
-   <div class="invalid-field-data-label">{{fieldDataLabel}}</div>
+   <div class="invalid-field-data-label" [innerHTML]="fieldDataLabel"></div>
     <button class="btn btn-danger delete-invalid-field-data-button" type="button" (click)="delete()">
         <span class="mdi mdi-delete"></span>
         <span class="delete-invalid-data-button-label" 

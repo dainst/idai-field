@@ -1,8 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
-import { UtilTranslations } from '../../../../../util/util-translations';
-import { Field, FieldsViewField, FieldsViewUtil, ProjectConfiguration, Resource, CategoryForm,
-    FieldsViewSubfield, Labels } from 'idai-field-core';
+import { Field, FieldsViewField, Resource, Labels, InvalidDataUtil } from 'idai-field-core';
 
 
 @Component({
@@ -21,39 +18,17 @@ export class InvalidFieldDataComponent implements OnChanges {
     public fieldDataLabel: string;
 
 
-    constructor(private projectConfiguration: ProjectConfiguration,
-                private labels: Labels,
-                private utilTranslations: UtilTranslations,
-                private decimalPipe: DecimalPipe) {}
+    constructor(private labels: Labels) {}
 
 
     async ngOnChanges() {
 
-        this.fieldDataLabel = this.createFieldDataLabel();
+        this.fieldDataLabel = InvalidDataUtil.generateLabel(this.resource[this.field.name], this.labels);
     }
 
 
     public delete() {
 
         delete this.resource[this.field.name];
-    }
-
-
-    private createFieldDataLabel(): string {
-
-        const category: CategoryForm = this.projectConfiguration.getCategory(this.resource.category);
-
-        const field: FieldsViewSubfield = {
-            name: this.field.name,
-            valuelist: CategoryForm.getField(category, this.field.name)?.valuelist
-        } as unknown as FieldsViewSubfield;
-    
-        return FieldsViewUtil.getLabel(
-            field,
-            this.resource[this.field.name],
-            this.labels,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-        );
     }
 }

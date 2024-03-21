@@ -16,6 +16,7 @@ import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
 import { Composite } from '../model';
+import { StringUtils } from './string-utils';
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -133,7 +134,7 @@ export module FieldsViewUtil {
         } else {
             const result = labels.getFromI18NString(object);
             return result && isString(result)
-                ? prepareString(result)
+                ? StringUtils.prepareStringForHTML(result)
                 : JSON.stringify(object);
         }
     }
@@ -229,7 +230,7 @@ function getValue(fieldContent: any, labels: Labels, valuelist?: Valuelist): any
     return valuelist
             ? labels.getValueLabel(valuelist, fieldContent)
             : isString(fieldContent)
-                ? prepareString(fieldContent)
+                ? StringUtils.prepareStringForHTML(fieldContent)
                 : fieldContent;
 }
 
@@ -246,16 +247,6 @@ function getCompositeFieldValue(fieldContent: any, labels: Labels, subfields: Ar
 
         return result;
     }, {});
-}
-
-
-function prepareString(stringValue: string): string {
-
-    return stringValue
-        .replace(/^\s+|\s+$/g, '')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
 }
 
 

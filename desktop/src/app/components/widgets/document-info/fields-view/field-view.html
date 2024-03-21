@@ -6,10 +6,10 @@
                 <li *ngFor="let subfield of getSubfields(field, entry)" class="subfield-section">
                     <h4 class="subfield-label field-label">{{subfield.label}}</h4>
                     <default-field-view *ngIf="subfield.type === 'default'"
-                                        [value]="entry[subfield.name]"
+                                        [value]="entry[subfield.definition.name]"
                                         [field]="subfield"></default-field-view>
                     <url-field-view *ngIf="subfield.type === 'url'"
-                                    [value]="entry[subfield.name]"></url-field-view>
+                                    [value]="entry[subfield.definition.name]"></url-field-view>
                 </li>
             </ul>
         </li>

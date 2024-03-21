@@ -102,9 +102,8 @@ export class WarningsModalComponent {
     public getDataLabel(section: WarningSection): string {
 
         const field: FieldsViewSubfield = {
-            name: section.fieldName,
-            valuelist: CategoryForm.getField(section.category, section.fieldName)?.valuelist
-        } as FieldsViewSubfield;
+            definition: CategoryForm.getField(section.category, section.fieldName)
+        } as unknown as FieldsViewSubfield;
 
         return FieldsViewUtil.getLabel(
             field,

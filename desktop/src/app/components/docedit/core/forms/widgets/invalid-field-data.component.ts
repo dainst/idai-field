@@ -46,7 +46,7 @@ export class InvalidFieldDataComponent implements OnChanges {
         const field: FieldsViewSubfield = {
             name: this.field.name,
             valuelist: CategoryForm.getField(category, this.field.name)?.valuelist
-        } as FieldsViewSubfield;
+        } as unknown as FieldsViewSubfield;
     
         return FieldsViewUtil.getLabel(
             field,

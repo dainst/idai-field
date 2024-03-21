@@ -10,11 +10,12 @@ import { OptionalRange } from '../model/optional-range';
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { CategoryForm } from '../model/configuration/category-form';
-import { Field, Subfield } from '../model/configuration/field';
+import { BaseField, Field, Subfield } from '../model/configuration/field';
 import { Constraints } from '../model/query';
 import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
+import { Composite } from '../model';
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -33,10 +34,9 @@ export interface FieldsViewField extends FieldsViewSubfield {
 
 export interface FieldsViewSubfield {
 
-    name: string;
+    definition: BaseField,
     label: string;
     type: FieldsViewFieldType;
-    valuelist?: Valuelist;
 }
 
 
@@ -97,31 +97,38 @@ export module FieldsViewUtil {
     export function getObjectLabel(object: any,  field: FieldsViewSubfield, getTranslation: (key: string) => string,
                                    formatDecimal: (value: number) => string, labels: Labels): string|null {
 
-        if (object.label) {
-            return object.label;
-        } else if (object.begin || object.end) {
-            return Dating.generateLabel(
+        if (field?.definition?.inputType === Field.InputType.DATING) {
+            return object.label ?? Dating.generateLabel(
                 object,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value)
             );
-        } else if (object.inputUnit && field.valuelist) {
-            return Dimension.generateLabel(
+        } else if (field?.definition?.inputType === Field.InputType.DIMENSION && field?.definition?.valuelist) {
+            return object.label ?? Dimension.generateLabel(
                 object,
                 formatDecimal,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
-                labels.getValueLabel(field.valuelist, object.measurementPosition)
+                labels.getValueLabel(field.definition.valuelist, object.measurementPosition)
             );
-        } else if (object.quotation) {
+        } else if (field?.definition?.inputType === Field.InputType.LITERATURE) {
             return Literature.generateLabel(
                 object, getTranslation
             );
-        } else if (object.value && field.valuelist) {
+        } else if (field?.definition?.inputType === Field.InputType.DROPDOWNRANGE) {
             return OptionalRange.generateLabel(
                 object,
                 getTranslation,
-                (value: string) => labels.getValueLabel(field.valuelist, value)
+                (value: string) => labels.getValueLabel(field.definition.valuelist, value)
+            );
+        } else if (field?.definition?.inputType === Field.InputType.COMPOSITE) {
+            return Composite.generateLabel(
+                object,
+                (field.definition as Field).subfields,
+                getTranslation,
+                (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
+                (value: I18N.String|string) => labels.getFromI18NString(value),
+                (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId)
             );
         } else {
             const result = labels.getFromI18NString(object);
@@ -140,18 +147,17 @@ export module FieldsViewUtil {
             case Field.InputType.INSTANCE_OF:
             case Field.InputType.DERIVED_RELATION:
                 return {
-                    name: field.name,
+                    definition: field,
                     label: labels.get(field),
                     type: 'relation',
                     targets: relationTargets[field.name]
                 };
             default:
                 return {
-                    name: field.name,
+                    definition: field,
                     label: labels.get(field),
                     value: getFieldValue(fieldContent, field, labels, projectConfiguration),
                     type: getFieldType(field.inputType),
-                    valuelist: field.valuelist,
                     subfields: makeSubfields(field.subfields, labels)
                 };
         }
@@ -164,10 +170,9 @@ export module FieldsViewUtil {
 
         return subfields.map(subfield => {
             return {
-                name: subfield.name,
+                definition: subfield,
                 label: labels.get(subfield),
                 type: getFieldType(subfield.inputType),
-                valuelist: subfield.valuelist
             };
         });
     }

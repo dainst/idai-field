@@ -363,6 +363,7 @@ defmodule FieldHub.CouchService do
       )
       |> Map.get(:body)
       |> Jason.decode!()
+      |> IO.inspect()
 
     last_sequence = Map.get(changes, "last_seq")
 
@@ -390,8 +391,8 @@ defmodule FieldHub.CouchService do
   iex> get_last_change_date("development")
   "2024-02-29 (edited by André Leroi-Gourhan)"
   """
-  def get_last_change_date(project_identifier) do
-    case Map.get(get_last_change_info(project_identifier), "id") do
+  def get_last_change_date(changes_data, project_identifier) do
+    case Map.get(changes_data, "id") do
       nil ->
         :no_changes_found
 

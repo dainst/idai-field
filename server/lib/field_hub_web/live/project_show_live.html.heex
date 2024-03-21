@@ -54,14 +54,17 @@
                         <% %{
                             database: %{
                                 doc_count: db_doc_count,
-                                file_size: db_file_size
+                                file_size: db_file_size,
+                                last_update_seq: last_update_seq,
+                                last_update_id: last_update_id,
+                                last_update_date: last_update_date
                             },
                             files: files
                         } -> %>
                             <section>Database documents: <%= db_doc_count %></section>
-                            <section>Last sequence: <%= @last_update_seq %></section>
-                            <section>Last change id: <%= @last_update_id %></section>
-                            <section> Last change date:  <%= @last_update_date %></section>
+                            <section>Last sequence: <%= last_update_seq %></section>
+                            <section>Last change id: <%= last_update_id %></section>
+                            <section>Last change date:  <%= last_update_date %></section>
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>
                                 <% :enoent -> %>

@@ -47,13 +47,6 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
-          |> assign(
-            :last_update_seq,
-            String.slice(Map.get(CouchService.get_last_change_info(project), "seq"), 0..27) <>
-              "[...]"
-          )
-          |> assign(:last_update_id, Map.get(CouchService.get_last_change_info(project), "id"))
-          |> assign(:last_update_date, CouchService.get_last_change_date(project))
           |> read_project_doc()
         }
 
@@ -68,7 +61,7 @@ defmodule FieldHubWeb.ProjectShowLive do
       ) do
     stats = Project.evaluate_project(project)
 
-    Process.send_after(self(), :update_overview, 10000)
+    # Process.send_after(self(), :update_overview, 10000)
 
     {
       :noreply,

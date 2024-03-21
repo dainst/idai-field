@@ -3,7 +3,6 @@ import { Map, clone } from 'tsfun';
 import { Field, Labels, Resource, Composite, I18N, Valuelist} from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
 import { UtilTranslations } from '../../../../../util/util-translations';
-import { Messages } from '../../../../messages/messages';
 import { Modals } from '../../../../../services/modals';
 import { CompositeEntryModalComponent as CompositeEntryModalComponent } from './composite-entry-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
@@ -32,7 +31,6 @@ export class CompositeComponent implements OnInit, OnChanges {
 
     constructor(private labels: Labels,
                 private utilTranslations: UtilTranslations,
-                private messages: Messages,
                 private menus: Menus,
                 private modals: Modals) {}
 

@@ -213,7 +213,7 @@ export module WarningsUpdater {
 
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
-        } else if (!Field.InputType.isValidFieldData(fieldContent, field.inputType)) {
+        } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
         } else if ([Field.InputType.DROPDOWN, Field.InputType.DROPDOWNRANGE, Field.InputType.CHECKBOXES]
                 .includes(field.inputType)

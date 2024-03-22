@@ -184,6 +184,7 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfCompositeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(document);

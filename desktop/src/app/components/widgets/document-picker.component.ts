@@ -27,6 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() showConfigurationOption: boolean = false;
     @Input() showInventoryRegisterOption: boolean = false;
     @Input() showLoadingIcon: boolean = false;
+    @Input() includeUnconfiguredCategories: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
@@ -190,11 +191,15 @@ export class DocumentPickerComponent implements OnChanges {
 
     private getAllAvailableCategoryNames(): string[] {
 
-        return tsfun.union(this.filterOptions.map(category => {
+        const result: string[] = tsfun.union(this.filterOptions.map(category => {
             return category.children
                 ? [category.name].concat(category.children.map(child => child.name))
                 : [category.name];
         }));
+
+        return this.includeUnconfiguredCategories
+            ? result.concat(['UNCONFIGURED'])
+            : result;
     }
 
 

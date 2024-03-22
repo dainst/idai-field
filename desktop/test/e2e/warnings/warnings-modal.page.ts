@@ -28,6 +28,13 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickDeleteResourceButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.delete-resource-button'));
+    }
+
+
     public static async clickDeleteFieldDataButton(sectionIndex: number) {
 
         const section = await this.getSection(sectionIndex);

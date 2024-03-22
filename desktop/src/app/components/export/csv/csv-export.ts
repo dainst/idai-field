@@ -124,7 +124,7 @@ export module CSVExport {
             if (!field) return;
 
             matrix.filter(row => {
-                return row[index] !== undefined && !Field.InputType.isValidFieldData(row[index], field.inputType);
+                return row[index] !== undefined && !Field.isValidFieldData(row[index], field);
             }).forEach(row => {
                 delete row[index];
                 invalidFields.push({ identifier: row[identifierIndex], fieldName: field.name });

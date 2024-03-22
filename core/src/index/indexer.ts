@@ -77,9 +77,7 @@ import { ProjectConfiguration } from '../services';
             try {
                 return converter.convert(doc);
             } catch (err) {
-                if (!err.length || err[0] !== DatastoreErrors.UNKNOWN_CATEGORY) {
-                    console.warn('Error while converting document: ', err);
-                }
+                console.warn('Error while converting document: ', err);
                 return undefined;
             }
         }).filter(not(isUndefined));

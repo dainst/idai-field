@@ -31,16 +31,22 @@ export module WarningFilters {
                 type: 'conflicts'
             },
             {
-                label: translations.getTranslation('warnings.unconfigured'),
-                constraintName: 'unconfigured:exist',
+                label: translations.getTranslation('warnings.unconfiguredCategories'),
+                constraintName: 'unconfiguredCategory:exist',
                 count: 0,
-                type: 'unconfigured'
+                type: 'unconfiguredCategory'
+            },
+            {
+                label: translations.getTranslation('warnings.unconfiguredFields'),
+                constraintName: 'unconfiguredFields:exist',
+                count: 0,
+                type: 'unconfiguredFields'
             },
             {
                 label: translations.getTranslation('warnings.invalidFieldData'),
-                constraintName: 'invalid:exist',
+                constraintName: 'invalidFields:exist',
                 count: 0,
-                type: 'invalid'
+                type: 'invalidFields'
             },
             {
                 label: translations.getTranslation('warnings.outlierValues'),

@@ -43,7 +43,8 @@ describe('WarningsUpdater', () => {
 
         const documents = [
             createDocument('1'),
-            createDocument('2')
+            createDocument('2'),
+            createDocument('3')
         ];
         documents[0]._conflicts = ['123'];
         documents[0].resource.identifier = '1';
@@ -52,20 +53,29 @@ describe('WarningsUpdater', () => {
         documents[0].resource.unconfiguredField = 'text';
 
         documents[1].resource.identifier = 'C2';
-        documents[1].resource.number = 1;
-        documents[1].resource.dropdown = 'value';
+
+        documents[2].resource.identifier = 'C3';
+        documents[2].resource.number = 1;
+        documents[2].resource.dropdown = 'value';
         
         WarningsUpdater.updateIndexIndependentWarnings(documents[0], categoryDefinition);
-        WarningsUpdater.updateIndexIndependentWarnings(documents[1], categoryDefinition);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[1], undefined);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[2], categoryDefinition);
         
         expect(documents[0].warnings).toEqual({
-            unconfigured: ['unconfiguredField'],
-            invalid: ['number'],
+            unconfiguredFields: ['unconfiguredField'],
+            invalidFields: ['number'],
             outlierValues: ['dropdown'],
             conflicts: true,
             missingIdentifierPrefix: true
         });
-        expect(documents[1].warnings).toBeUndefined();
+        expect(documents[1].warnings).toEqual({
+            unconfiguredFields: [],
+            invalidFields: [],
+            outlierValues: [],
+            unconfiguredCategory: true
+        });
+        expect(documents[2].warnings).toBeUndefined();
     });
 
     

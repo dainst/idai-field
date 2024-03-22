@@ -11,6 +11,7 @@ import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
 import { ImageViewModalPage } from '../image-view-modal.page';
 import { ConfigurationPage } from '../configuration/configuration.page';
+import { ProjectLanguagesModalPage } from '../configuration/project-languages-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -299,6 +300,10 @@ test.describe('resources --', () => {
     test('show string value in unspecifiedLanguage tab after changing input type from simpleInput to input', async () => {
 
         await navigateTo('configuration');
+        await waitForExist(await ConfigurationPage.getConfigurationEditor());
+        await navigateTo('projectLanguages');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('it');
+        await ProjectLanguagesModalPage.clickConfirm();
         await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
         await ConfigurationPage.save();
 
@@ -325,7 +330,7 @@ test.describe('resources --', () => {
         expect(await getText(languageTabs.nth(0))).toEqual('Ohne Sprachangabe');
         expect(await getText(languageTabs.nth(1))).toEqual('Deutsch');
         expect(await getText(languageTabs.nth(2))).toEqual('Englisch');
-        expect(await getText(languageTabs.nth(3))).toEqual('Italienisch');
+        expect(await getText(languageTabs.nth(3))).toEqual('Türkisch');
         expect(await getText(languageTabs.nth(4))).toEqual('Ukrainisch');
         
         await DoceditPage.removeTextFromInputField('shortDescription');
@@ -339,7 +344,7 @@ test.describe('resources --', () => {
         expect(await languageTabs.count()).toBe(4);
         expect(await getText(languageTabs.nth(0))).toEqual('Deutsch');
         expect(await getText(languageTabs.nth(1))).toEqual('Englisch');
-        expect(await getText(languageTabs.nth(2))).toEqual('Italienisch');
+        expect(await getText(languageTabs.nth(2))).toEqual('Türkisch');
         expect(await getText(languageTabs.nth(3))).toEqual('Ukrainisch');
         await DoceditPage.clickCloseEdit();
     });

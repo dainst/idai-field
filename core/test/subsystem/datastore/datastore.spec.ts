@@ -24,7 +24,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('hi', async done => {
+    it('create document', async done => {
 
         await app.datastore.create(doc1('abc', 'Abc', 'Trench'));
 
@@ -33,7 +33,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - do not throw and return everything with all categories', async done => {
+    it('do not throw and return everything with all categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -51,7 +51,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - return everything when called without categories', async done => {
+    it('return everything when called without categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -69,7 +69,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('sort mode', async done => {
+    it('sort documents in different sort modes', async done => {
 
         const doc1 = doc('sd1', 'A-B-100', 'Find', '1');
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
@@ -100,7 +100,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('isChildOf', async done => {
+    it('use isChildOf constraint', async done => {
 
         await helpers.createDocuments([
             ['id1', 'Trench', ['id2']],

@@ -17,7 +17,6 @@ import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { BaseList } from './base-list';
-import { DeletionInProgressModalComponent } from './actions/delete/deletion-in-progress-modal.component';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
@@ -54,8 +53,8 @@ import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-cod
 import { QrCodeService } from './service/qr-code-service';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
-import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings-modal.component';
-import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/create-print-settings-profile-modal.component';
+import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
+import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -96,7 +95,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         SearchSuggestionsComponent,
         ResourcesContextMenuComponent,
         MoveModalComponent,
-        DeletionInProgressModalComponent,
         BaseList,
         QrCodeEditorModalComponent,
         PrintSettingsModalComponent,
@@ -187,8 +185,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         GeometryViewComponent
     ],
     entryComponents: [
-        MoveModalComponent,
-        DeletionInProgressModalComponent
+        MoveModalComponent
     ]
 })
 

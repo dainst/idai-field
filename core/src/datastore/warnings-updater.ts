@@ -29,7 +29,7 @@ export module WarningsUpdater {
      * Updates all warnings for whose determination the index is not required. These warnings do no rely on
      * analyzing the document in the context of other documents.
      */
-    export function updateIndexIndependentWarnings(document: Document, category: CategoryForm) {
+    export function updateIndexIndependentWarnings(document: Document, category?: CategoryForm) {
 
         if (document.resource.category === 'Configuration') return;
 
@@ -46,9 +46,11 @@ export module WarningsUpdater {
      * Updates all warnings for whose determination the documents must have been previously indexed.
      */
     export async function updateIndexDependentWarnings(document: Document, indexFacade: IndexFacade,
-                                                       documentCache: DocumentCache, category: CategoryForm,
+                                                       documentCache: DocumentCache, category?: CategoryForm,
                                                        datastore?: Datastore, previousIdentifier?: string,
                                                        updateAll: boolean = false) {
+
+        if (!category) return;
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
@@ -108,6 +110,7 @@ export module WarningsUpdater {
     export async function updateResourceLimitWarnings(datastore: Datastore, indexFacade: IndexFacade,
                                                       category: CategoryForm) {
 
+        if (!category) return;
         const documents: Array<Document> = (await datastore.find({ categories: [category.name] })).documents;
 
         for (let document of documents) {
@@ -173,10 +176,16 @@ export module WarningsUpdater {
     }
 
 
-    function createWarnings(document: Document, category: CategoryForm): Warnings {
+    function createWarnings(document: Document, category?: CategoryForm): Warnings {
+
+        const warnings: Warnings = Warnings.createDefault();
+
+        if (!category) {
+            warnings.unconfiguredCategory = true;
+            return warnings;
+        }
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
-        const warnings: Warnings = Warnings.createDefault();
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
@@ -203,9 +212,9 @@ export module WarningsUpdater {
     function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
 
         if (!field) {
-            warnings.unconfigured.push(fieldName);
-        } else if (!Field.InputType.isValidFieldData(fieldContent, field.inputType)) {
-            warnings.invalid.push(fieldName);
+            warnings.unconfiguredFields.push(fieldName);
+        } else if (!Field.isValidFieldData(fieldContent, field)) {
+            warnings.invalidFields.push(fieldName);
         } else if ([Field.InputType.DROPDOWN, Field.InputType.DROPDOWNRANGE, Field.InputType.CHECKBOXES]
                 .includes(field.inputType)
                 && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, field.valuelist)) {

@@ -8,9 +8,10 @@ import { EditConfigurationPage } from '../configuration/edit-configuration.page'
 import { DoceditPage } from '../docedit/docedit.page';
 import { WarningsModalPage } from './warnings-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
-import { DeleteFieldDataModalPage } from './delete-field-data-modal.page';
+import { DeleteModalPage } from './delete-modal.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
+import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -39,6 +40,30 @@ test.describe('warnings --', () => {
 
         await stop();
     });
+
+
+    async function createUnconfiguredCategoryWarnings(resourceIdentifiers: string[], categoryName: string) {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('trench');
+        await createCategory(categoryName);
+
+        const completeCategoryName: string = 'Test:' + categoryName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'feature-' + completeCategoryName);
+        }
+        await NavbarPage.clickTab('project');
+
+        await navigateTo('configuration');
+        await ConfigurationPage.deleteCategory(completeCategoryName, 'Feature', true);
+        await waitForNotExist(await CategoryPickerPage.getCategory(completeCategoryName, 'Feature'));
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
 
 
     async function createUnconfiguredFieldWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -159,6 +184,18 @@ test.describe('warnings --', () => {
     }
 
 
+    async function createCategory(categoryName: string) {
+        
+        await ConfigurationPage.clickCreateSubcategory('Feature');
+        await AddCategoryFormModalPage.typeInSearchFilterInput(categoryName);
+        await AddCategoryFormModalPage.clickCreateNewCategory();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForExist(await CategoryPickerPage.getCategory('Test:' + categoryName, 'Feature'));
+        await ConfigurationPage.save();
+    }
+
+
     async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string) {
         
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -212,6 +249,44 @@ test.describe('warnings --', () => {
     }
 
 
+    test('solve single warning for unconfigured category via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+        await expectSectionTitles(['Unkonfigurierte Kategorie Test:CustomCategory']);
+
+        await WarningsModalPage.clickDeleteResourceButton(0);
+        await DeleteModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
+    test('solve multiple warnings for unconfigured category via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
+        
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteResourceButton(0);
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.typeInConfirmCategoryName('Test:CustomCategory');
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve single warning for unconfigured field via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -224,7 +299,7 @@ test.describe('warnings --', () => {
         await expectSectionTitles(['Unkonfiguriertes Feld test:field']);
 
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteFieldDataModalPage.clickConfirmButton();
+        await DeleteModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
@@ -241,9 +316,9 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteFieldDataModalPage.clickDeleteAllSwitch();
-        await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
-        await DeleteFieldDataModalPage.clickConfirmButton();
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -294,7 +369,7 @@ test.describe('warnings --', () => {
         await expectResourcesInWarningsModal(['1', '2']);
 
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteFieldDataModalPage.clickConfirmButton();
+        await DeleteModalPage.clickConfirmButton();
         await waitForExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
@@ -311,9 +386,9 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteFieldDataModalPage.clickDeleteAllSwitch();
-        await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
-        await DeleteFieldDataModalPage.clickConfirmButton();
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -330,9 +405,9 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteFieldDataModalPage.clickDeleteAllSwitch();
-        await DeleteFieldDataModalPage.typeInConfirmFieldName('test:field');
-        await DeleteFieldDataModalPage.clickConfirmButton();
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -397,7 +472,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await expectResourcesInWarningsModal(['1']);
-        await expectSectionTitles(['Fehlende Zielressource der Relation liesWithin']);
+        await expectSectionTitles(['Fehlende Zielressource der Relation Liegt in']);
 
         await WarningsModalPage.clickCleanUpRelationButton(0);
         await WarningsModalPage.clickConfirmCleanUpInModalButton();
@@ -569,7 +644,7 @@ test.describe('warnings --', () => {
             'Fehlendes Präfix im Feld Bezeichner'
         ]);
 
-        await WarningsModalPage.clickFilterOption('unconfigured:exist');
+        await WarningsModalPage.clickFilterOption('unconfiguredFields:exist');
         await expectResourcesInWarningsModal(['2', '3']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('2');
         await expectSectionTitles(['Unkonfiguriertes Feld test:unconfiguredField']);
@@ -579,7 +654,7 @@ test.describe('warnings --', () => {
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('4');
         await expectSectionTitles(['Ungültiger Wert im Feld test:outliersField']);
 
-        await WarningsModalPage.clickFilterOption('invalid:exist');
+        await WarningsModalPage.clickFilterOption('invalidFields:exist');
         await expectResourcesInWarningsModal(['1']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
         await expectSectionTitles(['Ungültige Daten im Feld test:invalidField']);

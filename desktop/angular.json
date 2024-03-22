@@ -27,6 +27,10 @@
             "translation": "src/app/i18n/angular/messages.it.xlf",
             "baseHref": "/"
           },
+          "tr": {
+            "translation": "src/app/i18n/angular/messages.tr.xlf",
+            "baseHref": "/"
+          },
           "uk": {
             "translation": "src/app/i18n/angular/messages.uk.xlf",
             "baseHref": "/"
@@ -85,6 +89,9 @@
             "it": {
               "localize": ["it"]
             },
+            "tr": {
+              "localize": ["tr"]
+            },
             "uk": {
               "localize": ["uk"]
             },
@@ -121,6 +128,9 @@
             },
             "it": {
               "browserTarget": "idai-field:build:it"
+            },
+            "tr": {
+              "browserTarget": "idai-field:build:tr"
             },
             "uk": {
               "browserTarget": "idai-field:build:uk"

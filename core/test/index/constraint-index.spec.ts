@@ -272,7 +272,7 @@ describe('ConstraintIndex', () => {
 
         expect(() => {
             ConstraintIndex.make({
-                'name': { path: 'testpath', pathArray: ['testpath'], type: 'unknown' }
+                'name': { path: 'testpath', pathArray: ['testpath'], type: 'unknown' as any }
             }, categories)
         }).toThrow();
     });
@@ -300,6 +300,31 @@ describe('ConstraintIndex', () => {
 
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'KNOWN')).toEqual(['2']);
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'UNKNOWN')).toEqual(['1']);
+    });
+
+
+    it('use constraint of type contained', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2')
+        ];
+        docs[0].resource.relations['depicts'] = [];
+        docs[1].resource.relations['depicts'] = ['1'];
+
+        ci = ConstraintIndex.make({
+            'depicts:contained': {
+                path: 'resource.relations.depicts',
+                pathArray: ['resource', 'relations', 'depicts'],
+                type: 'contained'
+            }
+        }, categories);
+
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+
+        expect(ConstraintIndex.get(ci, 'depicts:contained', 'KNOWN')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'depicts:contained', 'UNKNOWN')).toEqual(['2']);
     });
 
 

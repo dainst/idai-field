@@ -1,0 +1,17 @@
+<div id="deletion-in-progress-modal" class="modal-body process-modal">
+    <div class="process-modal-container">
+        <div class="spinner"></div>
+        <div *ngIf="mode === 'resource' && !multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.resource.single">Ressource wird gelöscht...</div>
+        <div *ngIf="mode === 'resource' && multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.resource.multiple">Ressourcen werden gelöscht...</div>
+          <div *ngIf="mode === 'image' && !multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.image.single">Bild wird gelöscht...</div>
+        <div *ngIf="mode === 'image' && multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.image.multiple">Bilder werden gelöscht...</div>
+        <div *ngIf="mode === 'field' && !multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.field.single">Feld wird gelöscht...</div>
+        <div *ngIf="mode === 'field' && multiple" class="process-info"
+             i18n="@@widgets.deletionInProgressModal.info.field.multiple">Felder werden gelöscht...</div>
+    </div>
+</div>

@@ -4,7 +4,7 @@ import { click, typeIn } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class DeleteFieldDataModalPage {
+export class DeleteModalPage {
 
     // click
 
@@ -21,6 +21,11 @@ export class DeleteFieldDataModalPage {
 
 
     // Type
+
+    public static async typeInConfirmCategoryName(fieldName: string) {
+
+        return typeIn('#confirm-category-name-input', fieldName);
+    }
 
     public static async typeInConfirmFieldName(fieldName: string) {
 

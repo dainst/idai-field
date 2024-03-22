@@ -11,9 +11,9 @@ import { Messages } from '../../messages/messages';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../services/image-relations-manager';
-import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
+import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
 
 
 @Component({
@@ -115,8 +115,10 @@ export class ImageOverviewTaskbarComponent {
     private async deleteSelected() {
 
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
-            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+            DeletionInProgressModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
         );
+        deletionInProgressModalRef.componentInstance.mode = 'image';
         deletionInProgressModalRef.componentInstance.multiple = this.imageOverviewFacade.getSelected().length > 1;
 
         try {

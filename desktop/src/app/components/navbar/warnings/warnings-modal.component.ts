@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field, ValuelistUtil, Valuelist, Tree, MissingRelationTargetWarnings } from 'idai-field-core';
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, ValuelistUtil, Valuelist, Tree,
+    MissingRelationTargetWarnings, InvalidDataUtil } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -20,12 +19,15 @@ import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
 import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
+import { DeleteResourceModalComponent } from './delete-resource-modal.component';
 
 
 type WarningSection = {
     type: WarningType;
     category?: CategoryForm;
+    unconfiguredCategoryName?: string;
     fieldName?: string;
+    dataLabel?: string;
 }
 
 
@@ -61,7 +63,6 @@ export class WarningsModalComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
-                private decimalPipe: DecimalPipe,
                 private labels: Labels,
                 private i18n: I18n) {}
 
@@ -93,27 +94,7 @@ export class WarningsModalComponent {
 
     public getFieldLabel(section: WarningSection): string {
         
-        return this.labels.getFieldLabel(
-            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
-            section.fieldName
-        ) ?? section.fieldName;
-    }
-
-
-    public getDataLabel(section: WarningSection): string {
-
-        const field: FieldsViewSubfield = {
-            name: section.fieldName,
-            valuelist: CategoryForm.getField(section.category, section.fieldName)?.valuelist
-        } as FieldsViewSubfield;
-
-        return FieldsViewUtil.getLabel(
-            field,
-            this.selectedDocument.resource[section.fieldName],
-            this.labels,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-        );
+        return this.getFieldOrRelationLabel(section) ?? section.fieldName;
     }
 
 
@@ -186,6 +167,8 @@ export class WarningsModalComponent {
 
     public async openDoceditModal(section?: WarningSection) {
 
+        if (section.type === 'unconfiguredCategory') return;
+
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
             DoceditComponent,
             MenuContext.DOCEDIT,
@@ -214,6 +197,25 @@ export class WarningsModalComponent {
     }
 
 
+    public async openDeleteResourceModal() {
+
+        const [result, componentInstance] = this.modals.make<DeleteResourceModalComponent>(
+            DeleteResourceModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
     public async openDeleteFieldDataModal(section: WarningSection) {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldDataModalComponent>(
@@ -223,7 +225,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.fieldName = section.fieldName;
-        componentInstance.fieldLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
 
@@ -246,7 +248,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.relationName = section.fieldName;
-        componentInstance.relationLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.relationLabel = this.getFieldOrRelationLabel(section);
         componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
 
         await this.modals.awaitResult(
@@ -374,9 +376,17 @@ export class WarningsModalComponent {
             section.fieldName = fieldName;
         }
         
-        if (document.resource.category !== 'Configuration') {
+        if (document.warnings.unconfiguredCategory) {
+            section.unconfiguredCategoryName = document.resource.category;
+        } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
         };
+
+        if (type === 'invalidFields' || type === 'unconfiguredFields') {
+            section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
+        } else if (type === 'missingIdentifierPrefix') {
+            section.dataLabel = document.resource.identifier
+        }
 
         return section;
     }
@@ -416,5 +426,14 @@ export class WarningsModalComponent {
         componentInstance.activeGroup = 'conflicts';
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private getFieldOrRelationLabel(section: WarningSection): string {
+
+        return this.labels.getFieldLabel(
+            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+            section.fieldName
+        ) ?? this.labels.getRelationLabel(section.fieldName)
     }
 }

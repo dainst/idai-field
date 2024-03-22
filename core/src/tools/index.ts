@@ -11,6 +11,7 @@ export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export { parseDate } from './parse-date';
 export { formatDate } from './format-date';
+export { InvalidDataUtil } from './invalid-data-util';
 export * from './utils';
 export * from './valuelist-util';
 export * from './i18n';

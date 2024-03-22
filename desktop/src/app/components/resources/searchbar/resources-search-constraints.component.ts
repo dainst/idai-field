@@ -41,43 +41,49 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     public getFieldLabel(field: Field): string {
 
-        if (field.name === 'geometry') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.geometry',
-                value: 'Geometrie'
-            });
-        } else if (field.name === 'isDepictedIn') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.linkedImages',
-                value: 'Verknüpfte Bilder'
-            });
-        } else if (field.name === 'isSameAs') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.isSameAs',
-                value: 'Verknüpfte identische Ressourcen'
-            });
-        } else if (field.name === 'isInstanceOf') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.isInstanceOf',
-                value: 'Verknüpfte Typen'
-            });
-        } else if (field.name === 'hasInstance') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.hasInstance',
-                value: 'Verknüpfte Funde'
-            });
-        } else if (field.name === 'isStoragePlaceOf') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.isStoragePlaceOf',
-                value: 'Verknüpfte Objekte'
-            });
-        } else if (field.name === 'isStoredIn') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.isStoredIn',
-                value: 'Verknüpfter Aufbewahrungsort'
-            });
-        } else {
-            return super.getFieldLabel(field);
+        switch (field.name) {
+            case 'isChildOf':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.hasChildren',
+                    value: 'Untergeordnete Ressourcen'
+                });
+            case 'geometry':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.geometry',
+                    value: 'Geometrie'
+                });
+            case 'isDepictedIn':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.linkedImages',
+                    value: 'Verknüpfte Bilder'
+                });
+            case 'isSameAs':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.isSameAs',
+                    value: 'Verknüpfte identische Ressourcen'
+                });
+            case 'isInstanceOf':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.isInstanceOf',
+                    value: 'Verknüpfte Typen'
+                });
+            case 'hasInstance':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.hasInstance',
+                    value: 'Verknüpfte Funde'
+                });
+            case 'isStoragePlaceOf':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.isStoragePlaceOf',
+                    value: 'Verknüpfte Objekte'
+                });
+            case 'isStoredIn':
+                return this.i18n({
+                    id: 'resources.searchBar.constraints.isStoredIn',
+                    value: 'Verknüpfter Aufbewahrungsort'
+                });
+            default:
+                return super.getFieldLabel(field);
         }
     }
 
@@ -85,6 +91,12 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
     private initializeDefaultFields() {
 
         this.defaultFields = [];
+
+        this.defaultFields.push({
+            name: 'isChildOf',
+            inputType: 'default',
+            constraintIndexed: true
+        });
 
         if (!this.viewFacade.isInTypesManagement()) {
             this.defaultFields.push({

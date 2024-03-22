@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { PrintSettings } from './print-settings';
-import { AngularUtility } from '../../../../angular/angular-utility';
+import { AngularUtility } from '../../../../../angular/angular-utility';
 import { PrintSettingsProfile } from './print-settings-profile';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 import { CreatePrintSettingsProfileModalComponent } from './create-print-settings-profile-modal.component';
 
 

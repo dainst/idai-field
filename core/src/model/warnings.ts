@@ -1,5 +1,6 @@
-export type WarningType = 'unconfigured'
-    |'invalid'
+export type WarningType = 'unconfiguredCategory'
+    |'unconfiguredFields'
+    |'invalidFields'
     |'outlierValues'
     |'missingRelationTargets'
     |'conflicts'
@@ -10,10 +11,11 @@ export type WarningType = 'unconfigured'
 
 export interface Warnings {
 
-    unconfigured: string[];
-    invalid: string[];
+    unconfiguredFields: string[];
+    invalidFields: string[];
     outlierValues: string[];
     missingRelationTargets?: MissingRelationTargetWarnings
+    unconfiguredCategory?: boolean;
     conflicts?: boolean;
     missingIdentifierPrefix?: boolean;
     nonUniqueIdentifier?: boolean;
@@ -35,10 +37,11 @@ export module Warnings {
 
     export function hasWarnings(warnings: Warnings): boolean {
 
-        return warnings.unconfigured.length > 0
-            || warnings.invalid.length > 0
+        return warnings.unconfiguredFields.length > 0
+            || warnings.invalidFields.length > 0
             || warnings.outlierValues.length > 0
             || warnings.missingRelationTargets !== undefined
+            || warnings.unconfiguredCategory
             || warnings.conflicts
             || warnings.missingIdentifierPrefix
             || warnings.nonUniqueIdentifier
@@ -49,8 +52,8 @@ export module Warnings {
     export function createDefault(): Warnings {
 
         return {
-            unconfigured: [],
-            invalid: [],
+            unconfiguredFields: [],
+            invalidFields: [],
             outlierValues: []
         };
     }

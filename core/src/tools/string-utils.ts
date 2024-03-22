@@ -29,6 +29,17 @@ export namespace StringUtils {
 
     export const toArray = (s: string) => Array.from(s);
 
+
+    export function prepareStringForHTML(stringValue: string): string {
+
+        return stringValue
+            .replace(/^\s+|\s+$/g, '')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\n/g, '<br>');
+    };
+
+
     // this function wraps parseInt to avoid cases where '0' was parsed to NaN, when passed directly to a higher order function
     // while doing this, we then also hand handle isNaN
     export function parseInt(s: string): number|undefined {

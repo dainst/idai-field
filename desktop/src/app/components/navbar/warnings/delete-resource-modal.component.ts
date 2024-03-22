@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, Labels, WarningType } from 'idai-field-core';
+import { Datastore, Document, RelationsManager } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
 
 
 @Component({
-    templateUrl: './delete-field-data-modal.html',
+    templateUrl: './delete-resource-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
     }
@@ -13,25 +13,19 @@ import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-prog
 /**
  * @author Thomas Kleinke
  */
-export class DeleteFieldDataModalComponent {
+export class DeleteResourceModalComponent {
 
     public document: Document;
-    public fieldName: string;
-    public fieldLabel: string|undefined;
-    public category: CategoryForm;
-    public warningType: WarningType;
-
+    
     public deleteAll: boolean;
-    public confirmFieldName: string;
+    public confirmCategoryName: string;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private relationsManager: RelationsManager) {}
 
-
-    public getCategoryLabel = () => this.labels.get(this.category);
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
@@ -44,9 +38,7 @@ export class DeleteFieldDataModalComponent {
 
     public isDeletionAllowed(): boolean {
 
-        return !this.deleteAll
-            || this.fieldName === this.confirmFieldName
-            || (this.fieldLabel && this.fieldLabel === this.confirmFieldName);
+        return !this.deleteAll || this.confirmCategoryName === this.document.resource.category;
     }
 
 
@@ -73,7 +65,7 @@ export class DeleteFieldDataModalComponent {
             DeletionInProgressModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
-        deletionInProgressModalRef.componentInstance.mode = 'field';
+        deletionInProgressModalRef.componentInstance.mode = 'resource';
         deletionInProgressModalRef.componentInstance.multiple = this.deleteAll;
         
         return deletionInProgressModalRef;
@@ -82,22 +74,17 @@ export class DeleteFieldDataModalComponent {
 
     private async deleteSingle() {
 
-        delete this.document.resource[this.fieldName];
-        await this.datastore.update(this.document);
+        await this.relationsManager.remove(this.document);
     }
 
 
     private async deleteMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { [this.warningType + ':contain']: this.fieldName }
-        })).documents;
-
-        documents.forEach(document => {
-            delete document.resource[this.fieldName];
-        });
-
-        await this.datastore.bulkUpdate(documents);
+        const documents = (await this.datastore.find({ categories: ['UNCONFIGURED'] })).documents
+            .filter(document => document.resource.category === this.document.resource.category);
+        
+        for (let document of documents) {
+            await this.relationsManager.remove(document);
+        }
     }
 }

@@ -5,7 +5,6 @@ import { ProjectConfiguration } from '../services/project-configuration';
 import { Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
 import { Named } from '../tools/named';
-import { DatastoreErrors } from './datastore-errors';
 import { Migrator } from './migrator';
 import { CategoryForm } from '../model/configuration/category-form';
 import { WarningsUpdater } from './warnings-updater';
@@ -22,7 +21,6 @@ export class DocumentConverter {
 
         if (document.resource.category !== 'Configuration') {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-            if (!category) throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
             WarningsUpdater.updateIndexIndependentWarnings(document, category);
         }
 

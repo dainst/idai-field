@@ -58,9 +58,47 @@ describe('Validations', () => {
                         { name: 'period2', label: 'period2', inputType: InputType.DROPDOWNRANGE },
                         { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
                         { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
+                        {
+                            name: 'composite1', label: 'composite1', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite2', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite3', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite4', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite5', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                {
+                                    name: 'subfield2', inputType: 'int',
+                                    condition: { subfieldName: 'subfield1', values: true }
+                                }
+                            ]
+                        },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
                         { name: 'endDate', label: 'endDate', inputType: 'date' },
-                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 }
+                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
+                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' }
                     ]
 
             }]}, []],
@@ -119,7 +157,7 @@ describe('Validations', () => {
 
     it('validate defined fields', () => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
@@ -154,6 +192,26 @@ describe('Validations', () => {
 
         const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields.length).toBe(0);
+    });
+
+
+    it('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
+
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                isBelow: 'test',
+                relations: { isBelow: ['0'] },
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields).toContain('isBelow');
     });
 
 
@@ -619,6 +677,77 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
+            );
+        }
+        done();
+    });
+
+
+    it('should report invalid composite fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                // Correct composite field value
+                composite1: [{ subfield1: true, subfield2: 10 }],
+                // No array
+                composite2: 'Composite field',
+                // Unconfigured subfield
+                composite3: [{ subfield1: true, subfield2: 10, subfield3: 'ABC' }],
+                // Invalid subfield value
+                composite4: [{ subfield1: true, subfield2: 'ABC' }],
+                // Unfulfilled subfield condition
+                composite5: [{ subfield1: false, subfield2: 10 }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfCompositeValues(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3, composite4, composite5']
+            );
+        }
+        done();
+    });
+
+
+    it('should only report newly entered invalid composite fields', async done => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                composite1: 'ABC',
+                composite2: 'DEF',
+                composite3: [{ subfield1: true, subfield2: 10 }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                composite1: 'ABC',
+                composite2: 'GHI',
+                composite3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfCompositeValues(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3']
             );
         }
         done();

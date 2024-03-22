@@ -9,6 +9,17 @@ import { Field, Subfield } from './configuration/field';
  */
 export module Composite {
 
+    export function isValid(entry: any, subfields: Array<Subfield>): boolean {
+
+        return Object.keys(entry).find(subfieldName => {
+            const subfieldDefinition: Subfield = subfields.find(subfield => subfield.name === subfieldName);
+            return !subfieldDefinition
+                || !Field.isValidFieldData(entry[subfieldName], subfieldDefinition)
+                || !isConditionFulfilled(entry, subfieldDefinition, subfields);
+        }) === undefined;
+    }
+
+
     export function isConditionFulfilled(entry: any, subfieldToCheck: Subfield, subfields: Array<Subfield>): boolean {
 
         if (!subfieldToCheck.condition) return true;

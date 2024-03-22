@@ -108,6 +108,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE = 'M.Import.ValidationErrors.invalidLiteratureValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES = 'M.Import.ValidationErrors.invalidLiteratureValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE = 'M.Import.ValidationErrors.invalidCompositeValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES = 'M.Import.ValidationErrors.invalidCompositeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
@@ -935,6 +937,20 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.validation.error.invalidLiteratureValues',
                 value: 'Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
+            }),
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidCompositeValue',
+                value: 'Ungültiger Kompositfeld-Eintrag im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
+            }),
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidCompositeValues',
+                value: 'Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger'
         };

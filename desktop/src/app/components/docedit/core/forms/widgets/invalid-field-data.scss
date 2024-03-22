@@ -20,5 +20,10 @@ invalid-field-data {
   .invalid-field-data-label {
     margin: 10px;
     font-size: 13px;
+
+    hr {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
   }
 }

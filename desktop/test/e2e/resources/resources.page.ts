@@ -114,7 +114,7 @@ export class ResourcesPage {
 
     public static clickSelectCategory(categoryName: string = 'feature-architecture') {
 
-        return click('#choose-category-option-' + categoryName);
+        return click('#choose-category-option-' + categoryName.replace(':', '-').toLowerCase());
     }
 
 

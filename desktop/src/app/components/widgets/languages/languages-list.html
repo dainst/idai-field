@@ -1,5 +1,6 @@
 <ul class="list-group list-group-flush">
     <li *ngFor="let language of selectedLanguages; let i = index"
+        id="language-item-{{language}}"
         class="list-group-item">
         <div class="language-item">
             <span class="language-label">{{languages[language].label}}

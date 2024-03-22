@@ -85,6 +85,12 @@ export class ConfigurationPage {
     
     // get
 
+    public static getConfigurationEditor() {
+
+        return getLocator('.project-configuration');
+    }
+
+
     public static getGroup(groupName: string) {
 
         return getLocator('#group-' + groupName.replace(':', '-'));

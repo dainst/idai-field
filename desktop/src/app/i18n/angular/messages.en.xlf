@@ -8433,6 +8433,30 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.metadataFormatsInfo" datatype="html">
+        <source>Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</source>
+        <target state="needs-translation">Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.draughtsmen" datatype="html">
+        <source>Bildersteller/Bilderstellerin</source>
+        <target state="needs-translation">Bildersteller/Bilderstellerin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">37,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.noStaffWarning" datatype="html">
+        <source>Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</source>
+        <target state="needs-translation">Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">59,69</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

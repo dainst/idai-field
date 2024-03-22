@@ -23,7 +23,19 @@ export module ImageOverviewPage {
 
     export function chooseImageSubcategory(index) {
 
-        return click('#choose-image-subcategory-option-' + index)
+        return click('#choose-image-subcategory-option-' + index);
+    }
+
+
+    export function clickUploadConfirm() {
+
+        return click('#confirmUploadButton');
+    }
+
+
+    export function selectStaffAsDraughtsmen(name: string) {
+
+        return click(`input[type="checkbox"][value="${name}"]`);
     }
 
 

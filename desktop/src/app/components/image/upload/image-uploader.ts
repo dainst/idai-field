@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
-import { CategoryForm, Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference, ImageDocument } from 'idai-field-core';
+import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
+    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
 import { M } from '../../messages/m';
-import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
+import { ImageUploadMetadataModalComponent } from './image-upload-metadata-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
-import { ImageManipulation, ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
+import { ImagesState } from '../overview/view/images-state';
 
 
 export interface ImageUploadResult {
@@ -36,7 +38,8 @@ export class ImageUploader {
         = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw', 'tifw', 'tiffw', 'tfw'];
 
 
-    public constructor(private imagestore: ImageStore,
+    public constructor(private imagesState: ImagesState,
+                       private imagestore: ImageStore,
                        private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
@@ -66,15 +69,15 @@ export class ImageUploader {
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
-            const category: CategoryForm|undefined = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
-            if (!category) return uploadResult;
+            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
+            if (!metadata) return uploadResult;
 
             this.menuService.setContext(MenuContext.MODAL);
             const uploadModalRef = this.modalService.open(
                 UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
             uploadResult = await this.uploadImageFiles(
-                imageFiles, category, uploadResult, depictsRelationTarget
+                imageFiles, metadata, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
             this.menuService.setContext(MenuContext.DEFAULT);
@@ -105,35 +108,30 @@ export class ImageUploader {
     }
 
 
-    private async chooseCategory(fileCount: number,
-                                 depictsRelationTarget?: Document): Promise<CategoryForm|undefined> {
+    private async selectMetadata(fileCount: number,
+                                 depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
 
-        const imageCategory = this.projectConfiguration.getCategory('Image');
-        if ((imageCategory.children.length > 0)
-                || fileCount >= 100 || depictsRelationTarget) {
-            this.menuService.setContext(MenuContext.MODAL);
-            const modal: NgbModalRef = this.modalService.open(
-                ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-            );
+        this.projectConfiguration.getCategory('Image');
 
-            modal.componentInstance.fileCount = fileCount;
-            modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
+        this.menuService.setContext(MenuContext.MODAL);
+        const modal: NgbModalRef = this.modalService.open(
+            ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+        );
 
-            try {
-                return await modal.result;
-            } catch (err) {
-                // Modal has been cancelled
-                return undefined;
-            } finally {
-                this.menuService.setContext(MenuContext.DEFAULT);
-            }
-        } else {
-            return imageCategory;
+        modal.componentInstance.fileCount = fileCount;
+        modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
+
+        try {
+            return await modal.result;
+        } catch (err) {
+            return undefined;
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 
 
-    private async uploadImageFiles(files: Array<File>, category: CategoryForm, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(files: Array<File>, metadata: ImageMetadata, uploadResult: ImageUploadResult,
                                    depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return uploadResult;
@@ -152,7 +150,7 @@ export class ImageUploader {
                     if (result.totalCount > 0) {
                         duplicateFilenames.push(file.name);
                     } else {
-                        await this.uploadFile(file, category, depictsRelationTarget);
+                        await this.uploadFile(file, metadata, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -220,14 +218,14 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(file: File, category: CategoryForm, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(file: File, metadata: ImageMetadata, depictsRelationTarget?: Document): Promise<any> {
 
         const buffer: Buffer = await this.readFile(file);
         
         let document: ImageDocument;
         
         try {
-            document = await this.createImageDocument(file.name, buffer, category, depictsRelationTarget);
+            document = await this.createImageDocument(file.name, buffer, metadata, depictsRelationTarget);
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
                 throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, file.name, err[1]];
@@ -270,23 +268,29 @@ export class ImageUploader {
     }
 
 
-    private async createImageDocument(fileName: string, buffer: Buffer, category: CategoryForm,
+    private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
                                       depictsRelationTarget?: Document): Promise<any> {
-
-        const { width, height } = await ImageManipulation.getSize(buffer);
+                                        
+        // Try to extend metadata set explicitely by the user with metadata contained within the image file
+        // itself (exif/xmp/iptc).
+        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
+            metadata, buffer, this.imagesState.getParseFileMetadata('draughtsmen')
+        );
 
         const document: NewImageDocument = {
             resource: {
                 identifier: fileName,
-                category: category.name,
+                category: extendedMetadata.category,
                 originalFilename: fileName,
-                width,
-                height,
+                width: extendedMetadata.width,
+                height: extendedMetadata.height,
                 relations: {
                     depicts: []
                 }
             }
         };
+
+        await this.setOptionalMetadata(document, extendedMetadata);
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
             document.resource.relations.depicts = [depictsRelationTarget.resource.id];
@@ -298,6 +302,19 @@ export class ImageUploader {
         if (georeference) document.resource.georeference = georeference;
 
         return await this.relationsManager.update(document);
+    }
+
+
+    private async setOptionalMetadata(document: NewImageDocument, extendedMetadata: ImageMetadata) {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
+
+        if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
+            document.resource.date = formatDate(extendedMetadata.date);
+        }
+        if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
+            document.resource.draughtsmen = extendedMetadata.draughtsmen;
+        }
     }
 
 

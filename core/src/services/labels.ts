@@ -5,6 +5,7 @@ import { ProjectConfiguration } from './project-configuration';
 import { CategoryForm } from '../model/configuration/category-form';
 import { SortUtil } from '../tools/sort-util';
 import { Relation } from '../model/configuration/relation';
+import { Field } from '../model/configuration/field';
 
 
 /**
@@ -59,10 +60,9 @@ export class Labels {
 
     public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
-        const label = CategoryForm.getField(category, fieldName);
-        if (!label) return undefined;
-
-        return I18N.getLabel(label, this.getLanguages());
+        const field: Field = CategoryForm.getField(category, fieldName);
+        if (!field) return undefined;
+        return I18N.getLabel(field, this.getLanguages());
     }
 
 

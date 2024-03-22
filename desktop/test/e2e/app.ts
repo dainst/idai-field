@@ -232,6 +232,12 @@ export async function getText(element, trim = true) {
 }
 
 
+export async function getByText(text: string) {
+
+    return window.getByText(text);
+}
+
+
 export async function getValue(element) {
 
     if (isString(element)) element = await getLocator(element);

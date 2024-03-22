@@ -214,7 +214,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         new IdGenerator()
     );
 
-    const imagesState = new ImagesState(projectConfiguration);
+    const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 

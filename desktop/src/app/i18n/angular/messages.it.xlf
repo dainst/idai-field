@@ -2287,7 +2287,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
+      <trans-unit id="imageUpload.imageMetadataModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
         <target state="translated">Attenzione: il trasferimento <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> delle immagini può richiedere del tempo. </target>
         <context-group purpose="location">
@@ -2295,7 +2295,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
+      <trans-unit id="imageUpload.imageMetadataModal.linkInfo.single" datatype="html">
         <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
         <target state="translated">L'immagine trasferita sarà collegata alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.</target>
         <context-group purpose="location">
@@ -2303,7 +2303,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
+      <trans-unit id="imageUpload.imageMetadataModal.linkInfo.multiple" datatype="html">
         <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
         <target state="translated">Le immagini trasferite saranno collegate alle risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.</target>
         <context-group purpose="location">
@@ -2311,7 +2311,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
+      <trans-unit id="imageUpload.imageMetadataModal.chooseCategory" datatype="html">
         <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
         <target state="translated">Selezionare la categoria desiderata.</target>
         <context-group purpose="location">

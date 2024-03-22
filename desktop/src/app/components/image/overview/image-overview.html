@@ -2,7 +2,7 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!hasSelectedImages()" class="col image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages() && getQuery()" class="col image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [categories]="getQuery().categories"

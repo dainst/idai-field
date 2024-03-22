@@ -23,16 +23,29 @@ export module InvalidDataUtil {
         if (value === undefined) {
             return '';
         } else if (isArray(value)) {
-            return value.map(valueEntry => generateValueLabel(valueEntry, labels)).join('/');
+            return generateArrayLabel(value, labels);
         } else if (isObject(value)) {
-            const label: string|undefined = labels.getFromI18NString(value);
-            return label && isString(label)
-                ? StringUtils.prepareStringForHTML(label)
-                : Object.keys(value).map(key => {
-                    return key + ': ' + generateValueLabel(value[key], labels);
-                }).join(', ');
+            return generateObjectLabel(value, labels);
         } else {
             return value;
         }
+    }
+
+
+    function generateArrayLabel(value: any[], labels: Labels): string {
+
+        return value.map(valueEntry => generateValueLabel(valueEntry, labels)).join('/');
+    }
+
+
+    function generateObjectLabel(value: any, labels: Labels): string {
+
+        const label: string|undefined = labels.getFromI18NString(value);
+    
+        return label && isString(label)
+            ? StringUtils.prepareStringForHTML(label)
+            : Object.keys(value).map(key => {
+                return key + ': ' + generateValueLabel(value[key], labels);
+            }).join(', ');
     }
 }

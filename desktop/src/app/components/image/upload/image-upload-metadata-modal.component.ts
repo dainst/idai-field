@@ -73,15 +73,18 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     }
 
 
-    public getParseFileMetadata(fieldName: string) {
+    public getParseFileMetadata(fieldName: string): boolean {
 
         return this.imagesState.getParseFileMetadata(fieldName);
     }
 
 
-    public async setParseFileMetadata(fieldName: string, value: boolean) {
+    public async toggleParseFileMetadata(fieldName: string) {
         
-        await this.imagesState.setParseFileMetadata(fieldName, value);
+        await this.imagesState.setParseFileMetadata(
+            fieldName,
+            !this.getParseFileMetadata(fieldName)
+        );
     }
 
 

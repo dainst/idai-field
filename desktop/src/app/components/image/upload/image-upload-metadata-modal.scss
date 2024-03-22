@@ -10,10 +10,32 @@
     }
   }
 
+  #draughtsmen-switch {
+    margin-left: 22px;
+    margin-bottom: 5px;
+
+    .switch {
+      position: relative;
+      top: 4px;
+      margin-bottom: 0;
+      margin-left: 10px;
+    }
+
+    .draughtsmen-switch-label {
+      position: relative;
+      bottom: 2px;
+      font-size: 14px;
+    }
+  }
+
   #draughtsmen-options {
     max-height: 220px;
     margin-top: 2px;
     overflow: auto;
+
+    .form-check-label {
+      font-size: 14px;
+    }
   }
 
   #category-section-title {

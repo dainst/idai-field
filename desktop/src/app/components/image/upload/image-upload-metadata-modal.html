@@ -32,20 +32,14 @@
         <div id="draughtsmen-section-title">
             {{getFieldLabel('Image', 'draughtsmen')}}
         </div>
-        <div class="radio form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio"
-                    (click)="setParseFileMetadata('draughtsmen', false)"
-                    [checked]="!getParseFileMetadata('draughtsmen')">
-                <span i18n="@@imageUpload.imageMetadataModal.setFieldValues">Manuell setzen</span>
-            </label>
-        </div>
-        <div class="radio form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio"    
-                    (click)="setParseFileMetadata('draughtsmen', true)"
-                    [checked]="getParseFileMetadata('draughtsmen')">
-                <span i18n="@@imageUpload.imageMetadataModal.readFromMetadata">Aus Bild-Metadaten auslesen</span>
+        <div id="draughtsmen-switch">
+            <span class="draughtsmen-switch-label"
+                  i18n="@@imageUpload.imageMetadataModal.readFromMetadata">Aus Bild-Metadaten auslesen</span> 
+            <label class="switch">
+                <input type="checkbox"
+                        [checked]="getParseFileMetadata('draughtsmen')"
+                        (change)="toggleParseFileMetadata('draughtsmen')">
+                <span class="slider round"></span>
             </label>
         </div>
             

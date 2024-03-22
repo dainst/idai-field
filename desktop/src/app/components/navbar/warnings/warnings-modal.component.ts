@@ -27,6 +27,7 @@ type WarningSection = {
     category?: CategoryForm;
     unconfiguredCategoryName?: string;
     fieldName?: string;
+    dataLabel?: string;
 }
 
 
@@ -94,12 +95,6 @@ export class WarningsModalComponent {
     public getFieldLabel(section: WarningSection): string {
         
         return this.getFieldOrRelationLabel(section) ?? section.fieldName;
-    }
-
-
-    public getDataLabel(section: WarningSection): string {
-
-        return InvalidDataUtil.generateLabel(this.selectedDocument.resource[section.fieldName], this.labels);
     }
 
 
@@ -386,6 +381,12 @@ export class WarningsModalComponent {
         } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
         };
+
+        if (type === 'invalidFields' || type === 'unconfiguredFields') {
+            section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
+        } else if (type === 'missingIdentifierPrefix') {
+            section.dataLabel = document.resource.identifier
+        }
 
         return section;
     }

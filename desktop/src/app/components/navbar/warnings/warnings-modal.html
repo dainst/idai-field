@@ -94,10 +94,13 @@
                             Die Kategorie <i>{{section.unconfiguredCategoryName}}</i> ist für dieses Projekt nicht
                             konfiguriert. Die Ressource wird daher nicht angezeigt.
                         </span>
-                        <span *ngIf="section.type === 'unconfiguredFields'"
-                              i18n="@@navbar.taskbar.warnings.info.unconfiguredField">
-                            Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
-                            Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                        <span *ngIf="section.type === 'unconfiguredFields'">
+                            <span i18n="@@navbar.taskbar.warnings.info.unconfiguredField.1">
+                                Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
+                            </span>
+                            <span *ngIf="section.dataLabel" i18n="@@navbar.taskbar.warnings.info.unconfiguredField.2">
+                                Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                            </span>
                         </span>
                         <span *ngIf="section.type === 'invalidFields'"
                               i18n="@@navbar.taskbar.warnings.info.invalidField">
@@ -154,7 +157,8 @@
                     <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div class="data-info-content" [innerHTML]="getDataLabel(section)"></div>
+                        <div *ngIf="section.dataLabel" class="data-info-content" [innerHTML]="section.dataLabel"></div>
+                        <div *ngIf="!section.dataLabel" class="data-info-content"><i>Keine</i></div>
                     </div>
                     <div *ngIf="section.type === 'outlierValues'" class="data-info">
                         <div *ngIf="getOutlierValues(section).length === 1">

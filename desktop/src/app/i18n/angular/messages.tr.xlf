@@ -2287,14 +2287,6 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
-        <source>Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
-        <target state="translated">İçe aktarılan görsel <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisine bağlanacaktır. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
         <source>Bitte wählen Sie die gewünschte Kategorie aus.</source>
         <target state="translated">Lütfen istediğiniz kategoriyi seçin.</target>
@@ -8411,6 +8403,62 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.linkInfo.single" datatype="html">
+        <source>Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="needs-translation">Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.chooseCategory" datatype="html">
+        <source>Bitte wählen Sie die gewünschte Kategorie aus.</source>
+        <target state="needs-translation">Bitte wählen Sie die gewünschte Kategorie aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.draughtsmen" datatype="html">
+        <source>Bildersteller/Bilderstellerin</source>
+        <target state="needs-translation">Bildersteller/Bilderstellerin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">37,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.metadataFormatsInfo" datatype="html">
+        <source>Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</source>
+        <target state="needs-translation">Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.warning" datatype="html">
+        <source>Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
+        <target state="needs-translation">Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.linkInfo.multiple" datatype="html">
+        <source>Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="needs-translation">Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.noStaffWarning" datatype="html">
+        <source>Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</source>
+        <target state="needs-translation">Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">59,69</context>
         </context-group>
       </trans-unit>
     </body>

@@ -7,22 +7,18 @@
     <:item title="Source URL"><%= @publication.source_url %></:item>
     <:item title="Source project name"><%= @publication.source_project_name %></:item>
     <:item title="Draft date"><%= @publication.draft_date %></:item>
-    <:item title="Publication date">
-      <%= if @publication.publication_date && @publication.publication_date <= @today do %>
-        <%= @publication.publication_date %>
-      <% else %>
-        <.form for={nil} id="publication_date_form">
-          <.input
-            form="publication_date_form"
-            type="date"
-            id="start"
-            name="publication-date"
-            value={@publication.publication_date}
-            phx-change="publication_date_selected"
-            min={@today}
-          />
-        </.form>
-      <% end %>
+    <:item title="Drafted by"><%= @publication.drafted_by %></:item>
+    <:item title="Version type">
+      <.form for={nil} id="publication_version_form">
+        <.input
+          form="publication_version_form"
+          type="select"
+          name="publication-version"
+          value={@publication.version}
+          options={Publication.get_version_options()}
+          phx-change="publication_version_selected"
+        />
+      </.form>
     </:item>
     <:item title="Data replication">
       <%= if @publication.replication_finished do %>
@@ -114,6 +110,23 @@
           </svg>
           Evaluating data...
         </div>
+      <% end %>
+    </:item>
+    <:item title="Publication date">
+      <%= if @publication.publication_date && @publication.publication_date <= @today do %>
+        <%= @publication.publication_date %>
+      <% else %>
+        <.form for={nil} id="publication_date_form">
+          <.input
+            form="publication_date_form"
+            type="date"
+            id="start"
+            name="publication-date"
+            value={@publication.publication_date}
+            phx-change="publication_date_selected"
+            min={@today}
+          />
+        </.form>
       <% end %>
     </:item>
   </.list>

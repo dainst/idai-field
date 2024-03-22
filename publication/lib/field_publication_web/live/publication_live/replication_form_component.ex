@@ -30,6 +30,7 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
         <.input field={@form[:source_user]} type="text" label="Source user name" />
         <.input field={@form[:source_password]} type="password" label="Source user password" />
         <.input field={@form[:project_name]} type="hidden" />
+        <.input field={@form[:drafted_by]} type="hidden" />
 
         <h2 class="text-2xl">Options</h2>
 
@@ -142,22 +143,29 @@ defmodule FieldPublicationWeb.PublicationLive.ReplicationFormComponent do
     {:noreply, socket}
   end
 
-  defp create_changeset(%{project_name: project_name, draft_date: draft_date, action: :edit}) do
+  defp create_changeset(%{
+         project_name: project_name,
+         draft_date: draft_date,
+         current_user: current_user,
+         action: :edit
+       }) do
     publication = Publications.get!(project_name, draft_date)
 
     ReplicationInput.changeset(%ReplicationInput{}, %{
       source_url: publication.source_url,
       source_project_name: publication.source_project_name,
       source_user: publication.source_project_name,
-      project_name: publication.project_name
+      project_name: publication.project_name,
+      drafted_by: current_user
     })
   end
 
-  defp create_changeset(%{project_name: project_name, action: :new}) do
+  defp create_changeset(%{project_name: project_name, current_user: current_user, action: :new}) do
     ReplicationInput.changeset(%ReplicationInput{}, %{
       source_project_name: project_name,
       source_user: project_name,
       project_name: project_name,
+      drafted_by: current_user,
       comments: []
     })
   end

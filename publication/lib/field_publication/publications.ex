@@ -16,7 +16,8 @@ defmodule FieldPublication.Publications do
         source_url: source_url,
         source_project_name: source_project_name,
         project_name: project_name,
-        delete_existing_publication: delete_existing
+        delete_existing_publication: delete_existing,
+        drafted_by: drafted_by
       }) do
     draft_date = Date.utc_today()
 
@@ -27,7 +28,8 @@ defmodule FieldPublication.Publications do
         source_project_name: source_project_name,
         configuration_doc: "configuration_#{project_name}_#{draft_date}",
         database: "publication_#{project_name}_#{draft_date}",
-        draft_date: draft_date
+        draft_date: draft_date,
+        drafted_by: drafted_by
       }
       |> Publication.changeset()
 

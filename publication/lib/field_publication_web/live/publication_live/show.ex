@@ -87,6 +87,17 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_event(
+        "publication_version_selected",
+        %{"publication-version" => new_version},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    {:ok, updated_publication} =
+      Publications.put(publication, %{"version" => new_version})
+
+    {:noreply, assign(socket, :publication, updated_publication)}
+  end
+
+  def handle_event(
         "publication_date_selected",
         %{"publication-date" => date_string},
         %{assigns: %{publication: publication}} = socket

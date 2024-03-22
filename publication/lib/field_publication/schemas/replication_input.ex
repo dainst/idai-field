@@ -4,6 +4,7 @@ defmodule FieldPublication.Schemas.ReplicationInput do
 
   @primary_key false
   embedded_schema do
+    field(:drafted_by, :string)
     field(:source_url, :string)
     field(:source_project_name, :string)
     field(:source_user, :string)
@@ -17,6 +18,7 @@ defmodule FieldPublication.Schemas.ReplicationInput do
   def changeset(input_struct, attrs \\ %{}) do
     input_struct
     |> cast(attrs, [
+      :drafted_by,
       :source_url,
       :source_project_name,
       :source_user,

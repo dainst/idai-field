@@ -1,4 +1,4 @@
-import { isArray, isObject } from 'tsfun';
+import { isArray, isObject, isString } from 'tsfun';
 import { Labels } from '../services/labels';
 import { StringUtils } from './string-utils';
 
@@ -26,7 +26,7 @@ export module InvalidDataUtil {
             return value.map(valueEntry => generateValueLabel(valueEntry, labels)).join('/');
         } else if (isObject(value)) {
             const label: string|undefined = labels.getFromI18NString(value);
-            return label
+            return label && isString(label)
                 ? StringUtils.prepareStringForHTML(label)
                 : Object.keys(value).map(key => {
                     return key + ': ' + generateValueLabel(value[key], labels);

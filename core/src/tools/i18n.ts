@@ -1,4 +1,4 @@
-import { Map, clone, isString } from 'tsfun';
+import { Map, clone, isObject, isString } from 'tsfun';
 import { Named } from './named';
 
 
@@ -100,6 +100,15 @@ export namespace I18N {
             result += languageLabels[language] + ': ' + i18nString[language];
             return result;
         }, '')
+    }
+
+
+    export function isI18NString(object: any): boolean {
+
+        return isObject(object) && Object.keys(object).every(key => {
+            return isString(object[key])
+                && (key.length === 2 || key === UNSPECIFIED_LANGUAGE);
+        });
     }
 
 

@@ -25,6 +25,7 @@ export class Labels {
     public getFromI18NString(i18nString: I18N.String|string): string {
 
         if (isString(i18nString)) return i18nString;
+        if (!I18N.isI18NString(i18nString)) return undefined;
 
         const fallbackValue: string|undefined = i18nString && Object.keys(i18nString).length > 0
             ? i18nString[I18N.UNSPECIFIED_LANGUAGE] ?? i18nString[Object.keys(i18nString)[0]]

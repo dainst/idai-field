@@ -9,16 +9,15 @@
     <:item title="Draft date"><%= @publication.draft_date %></:item>
     <:item title="Drafted by"><%= @publication.drafted_by %></:item>
     <:item title="Version type">
-      <.form for={nil} id="publication_version_form">
+      <form id="publication_version_form">
         <.input
-          form="publication_version_form"
           type="select"
           name="publication-version"
           value={@publication.version}
           options={Publication.get_version_options()}
           phx-change="publication_version_selected"
         />
-      </.form>
+      </form>
     </:item>
     <:item title="Data replication">
       <%= if @publication.replication_finished do %>
@@ -116,9 +115,8 @@
       <%= if @publication.publication_date && @publication.publication_date <= @today do %>
         <%= @publication.publication_date %>
       <% else %>
-        <.form for={nil} id="publication_date_form">
+        <form id="publication_date_form">
           <.input
-            form="publication_date_form"
             type="date"
             id="start"
             name="publication-date"
@@ -126,7 +124,7 @@
             phx-change="publication_date_selected"
             min={@today}
           />
-        </.form>
+        </form>
       <% end %>
     </:item>
   </.list>

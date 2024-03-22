@@ -2115,14 +2115,6 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageMetadataModal.chooseCategory" datatype="html">
-        <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
-        <target state="translated">Please select the desired category.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
         <source>Konflikt behandeln</source>
         <target state="translated">Handle conflict</target>
@@ -7149,14 +7141,6 @@
           <context context-type="linenumber">52,63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.composite.invalidData" datatype="html">
-        <source>Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt.</source>
-        <target state="translated">Invalid data. Please adjust the configuration or delete the object.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
-          <context context-type="linenumber">80,89</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.dropdown.notFound" datatype="html">
         <source>Wert nicht gefunden</source>
         <target state="translated">Value not found</target>
@@ -8409,14 +8393,6 @@
           <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.warnings.info.unconfiguredField" datatype="html">
-        <source>Das Feld ist für die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht konfiguriert. Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt. </source>
-        <target state="needs-translation">Das Feld ist für die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht konfiguriert. Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">106,99</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="util.warnings.unconfiguredCategories" datatype="html">
         <source>Unkonfigurierte Kategorien</source>
         <target state="needs-translation">Unkonfigurierte Kategorien</target>
@@ -8433,28 +8409,12 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.imageMetadataModal.metadataFormatsInfo" datatype="html">
-        <source>Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</source>
-        <target state="needs-translation">Liest EXIF-, IPTC- oder XMP-Daten, sofern diese extern konfiguriert wurden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.draughtsmen" datatype="html">
         <source>Bildersteller/Bilderstellerin</source>
         <target state="needs-translation">Bildersteller/Bilderstellerin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
           <context context-type="linenumber">37,46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageUpload.imageMetadataModal.noStaffWarning" datatype="html">
-        <source>Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</source>
-        <target state="needs-translation">Es wurden keine Projektmitarbeiter in den Projekteigenschaften (Team) gefunden. Um Bildersteller explizit festzulegen, müssten zuerst die Projekteigenschaften angepasst werden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
-          <context context-type="linenumber">59,69</context>
         </context-group>
       </trans-unit>
     </body>

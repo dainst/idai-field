@@ -98,7 +98,7 @@ describe('Import/Subsystem', () => {
             ' }'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Trench']});
         expect(result.documents.length).toBe(1);
         const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('t1');
@@ -151,11 +151,9 @@ describe('Import/Subsystem', () => {
             '"f1","SD","single","","","bce","5000","1234567"'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
-        const resource1 = result.documents[0].resource;
-        const resource2 = result.documents[1].resource;
-        const resource = resource1.identifier === 't1' ? resource2 : resource1;
+        const result = await datastore.find({ categories: ['Find']});
+        expect(result.documents.length).toBe(1);
+        const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('f1');
         expect(resource.category).toEqual('Find');
         expect(resource.shortDescription).toEqual('SD');
@@ -215,7 +213,7 @@ describe('Import/Subsystem', () => {
             '"f1","newSD","single","","","bce","5000","","","","","","","","","","","","",""'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Find'] });
         expect(result.documents.length).toBe(1);
         const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('f1');
@@ -244,7 +242,7 @@ describe('Import/Subsystem', () => {
             '{ "category": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Trench' ] });
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.identifier).toBe('t1');
         done();
@@ -317,8 +315,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(4);
-        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2');
+        expect(result.documents.length).toBe(5);
+        await helpers.expectResources('testdb', 'T1', 'F1', 'Find1', 'Find2');
 
         const findDocument1 = await helpers.getDocument('101');
         expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
@@ -377,8 +375,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(5);
-        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2', 'Find3');
+        expect(result.documents.length).toBe(6);
+        await helpers.expectResources('testdb', 'T1', 'F1', 'Find1', 'Find2', 'Find3');
 
         const findDocument1 = await helpers.getDocument('101');
         expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
@@ -450,8 +448,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
-        await helpers.expectResources('T1', 'F1');
+        expect(result.documents.length).toBe(3);
+        await helpers.expectResources('testdb', 'T1', 'F1');
         done();
     });
 
@@ -477,7 +475,7 @@ describe('Import/Subsystem', () => {
 
         expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_CATEGORY, 'InvalidCategory']);
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(1); // only the trench
+        expect(result.documents.length).toBe(2); // Trench & Project
         done();
     });
 
@@ -499,8 +497,9 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "F1", "shortDescription" : "feature_1" }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toBe('feature_1');
+        const result = await datastore.find({ categories: ['Feature'] });
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
     });
 
@@ -651,7 +650,7 @@ describe('Import/Subsystem', () => {
                 + '{ "category": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2" }'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Feature'] });
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();

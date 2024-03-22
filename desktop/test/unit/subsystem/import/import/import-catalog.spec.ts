@@ -42,7 +42,7 @@ describe('subsystem/import/importCatalog', () => {
         const documentsLookup = await createDocuments([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
 
-        await helpers.expectDocuments('tc1');
+        await helpers.expectDocuments('project', 'tc1');
         done();
     });
 
@@ -129,7 +129,7 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(1);
         expect(result.errors).toEqual([]);
 
-        await helpers.expectDocuments('tc1');
+        await helpers.expectDocuments('project', 'tc1');
         done();
     });
 

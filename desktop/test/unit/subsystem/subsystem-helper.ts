@@ -1,7 +1,7 @@
 import { sameset } from 'tsfun';
 import { AppConfigurator, DocumentConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
-    ImageSyncService } from 'idai-field-core';
+    ImageSyncService, Indexer } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
@@ -137,6 +137,15 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         documentConverter,
         projectConfiguration,
         () => settingsProvider.getSettings().username
+    );
+
+    Indexer.reindex(
+        createdIndexFacade,
+        pouchdbDatastore.getDb(),
+        documentCache,
+        documentConverter,
+        projectConfiguration,
+        false
     );
 
     const remoteChangesStream = new ChangesStream(

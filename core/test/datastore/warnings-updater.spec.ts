@@ -28,13 +28,6 @@ describe('WarningsUpdater', () => {
                         {
                             name: 'number',
                             inputType: Field.InputType.FLOAT
-                        },
-                        {
-                            name: 'dropdown',
-                            inputType: Field.InputType.DROPDOWN,
-                            valuelist: {
-                                values: { 'value': {} }
-                            }
                         }
                     ]
                 }
@@ -49,14 +42,12 @@ describe('WarningsUpdater', () => {
         documents[0]._conflicts = ['123'];
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
-        documents[0].resource.dropdown = 'invalidValue';
         documents[0].resource.unconfiguredField = 'text';
 
         documents[1].resource.identifier = 'C2';
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
-        documents[2].resource.dropdown = 'value';
         
         WarningsUpdater.updateIndexIndependentWarnings(documents[0], categoryDefinition);
         WarningsUpdater.updateIndexIndependentWarnings(documents[1], undefined);
@@ -65,7 +56,7 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField'],
             invalidFields: ['number'],
-            outlierValues: ['dropdown'],
+            outlierValues: [],
             conflicts: true,
             missingIdentifierPrefix: true
         });
@@ -293,6 +284,88 @@ describe('WarningsUpdater', () => {
 
         expect(documents[1].warnings).toBeUndefined();
         expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        done();
+    });
+
+
+    it('update outlier warnings', async done => {
+
+        const categoryDefinition = {
+            name: 'category',
+            identifierPrefix: 'C',
+            groups: [
+                {
+                    fields: [
+                        {
+                            name: 'dropdown',
+                            inputType: Field.InputType.DROPDOWN,
+                            valuelist: {
+                                values: { 'value-dropdown': {} }
+                            }
+                        },
+                        {
+                            name: 'checkboxes',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelist: {
+                                values: { 'value-checkboxes': {} }
+                            }
+                        },
+                        {
+                            name: 'dimension',
+                            inputType: Field.InputType.DIMENSION,
+                            valuelist: {
+                                values: { 'value-dimension': {} }
+                            }
+                        },
+                        {
+                            name: 'editor',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelistFromProjectField: 'staff'
+                        },
+                    ]
+                }
+            ]
+        } as any;
+
+        const documents = [
+            createDocument('project'),
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].resource.staff = ['Person'];
+
+        documents[1].resource.dropdown = 'outlier-value';
+        documents[1].resource.checkboxes = ['value-checkboxes', 'outlier-value'];
+        documents[1].resource.dimension = [{ measurementPosition: 'outlier-value' }];
+        documents[1].resource.editor = ['outlier-value'];
+
+        documents[2].resource.dropdown = 'value-dropdown';
+        documents[2].resource.checkboxes = ['value-checkboxes'];
+        documents[2].resource.dimension = [{ measurementPosition: 'value-dimension' }];
+        documents[2].resource.editor = ['Person'];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        await WarningsUpdater.updateOutlierWarnings(
+            documents[1], categoryDefinition, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[1].warnings?.outlierValues).toEqual(['dropdown', 'checkboxes', 'dimension', 'editor']);
+        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+
+        await WarningsUpdater.updateOutlierWarnings(
+            documents[2], categoryDefinition, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[2].warnings).toBeUndefined();
+        expect(mockIndexFacade.put).not.toHaveBeenCalledWith(documents[2]);
 
         done();
     });

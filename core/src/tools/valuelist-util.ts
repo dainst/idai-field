@@ -5,6 +5,7 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
+import { Dimension } from '../model';
 
 
 /**
@@ -18,7 +19,7 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent
+            ? fieldContent.map(entry => entry[Dimension.MEASUREMENTPOSITION] ?? entry)
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
                 : [fieldContent];

@@ -11,7 +11,8 @@ import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/query';
 import { DocumentCache } from './document-cache';
-import { FieldResource } from '../model';
+import { FieldResource, Valuelist } from '../model';
+import { Hierarchy } from '../services/utilities/hierarchy';
 
 
 /**
@@ -55,6 +56,7 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+        await updateOutlierWarnings(document, category, indexFacade, documentCache);
     }
 
 
@@ -150,6 +152,37 @@ export module WarningsUpdater {
     }
 
 
+    export async function updateOutlierWarnings(document: Document, category: CategoryForm, indexFacade: IndexFacade,
+                                                documentCache: DocumentCache) {
+
+        const fieldNames: string[] = Object.keys(document.resource)
+            .filter(fieldName => !FIELDS_TO_SKIP.includes(fieldName));
+        
+        const outlierValues: string[] = [];
+
+        for (let fieldName of fieldNames) {
+            const fieldContent: any = document.resource[fieldName];
+            const field: Field = CategoryForm.getField(category, fieldName);
+            if (field && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)) {
+                const valuelist: Valuelist = ValuelistUtil.getValuelist(
+                    field,
+                    documentCache.get('project'),
+                    await Hierarchy.getParentResource(id => Promise.resolve(documentCache.get(id)), document.resource)
+                );
+                if (valuelist && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist)) {
+                    outlierValues.push(fieldName);
+                }
+            }
+        }
+
+        if (outlierValues.length) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.outlierValues = outlierValues;
+            indexFacade.put(document);
+        }
+    }
+
+
     async function updateNonUniqueIdentifierWarnings(datastore: Datastore, indexFacade: IndexFacade,
                                                      identifier: string) {
 
@@ -215,10 +248,6 @@ export module WarningsUpdater {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
-        } else if ([Field.InputType.DROPDOWN, Field.InputType.DROPDOWNRANGE, Field.InputType.CHECKBOXES]
-                .includes(field.inputType)
-                && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, field.valuelist)) {
-            warnings.outlierValues.push(fieldName);
         }
     }
 }

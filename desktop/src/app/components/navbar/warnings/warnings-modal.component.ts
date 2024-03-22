@@ -4,7 +4,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, isArray, isObject, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, ValuelistUtil, Valuelist, Tree,
-    MissingRelationTargetWarnings, InvalidDataUtil } from 'idai-field-core';
+    MissingRelationTargetWarnings, InvalidDataUtil, Document, Hierarchy } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -28,6 +28,7 @@ type WarningSection = {
     unconfiguredCategoryName?: string;
     fieldName?: string;
     dataLabel?: string;
+    outlierValues?: string[];
 }
 
 
@@ -114,16 +115,6 @@ export class WarningsModalComponent {
     public getIdentifierPrefix(section: WarningSection): string {
 
         return section.category.identifierPrefix;
-    }
-
-
-    public getOutlierValues(section: WarningSection): string[] {
-
-        const valuelist: Valuelist = CategoryForm.getField(section.category, section.fieldName).valuelist;
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(
-            this.selectedDocument.resource[section.fieldName], valuelist
-        );
     }
 
 
@@ -331,7 +322,7 @@ export class WarningsModalComponent {
     }
 
 
-    private updateSections(document: FieldDocument) {
+    private async updateSections(document: FieldDocument) {
 
         if (!document) {
             this.sections = [];
@@ -340,33 +331,39 @@ export class WarningsModalComponent {
         } else if (!document?.warnings) {
             this.sections = [];
         } else {
-            this.sections = Object.keys(document.warnings).reduce((sections, type: WarningType) => {
+            this.sections = [];
+            for (let type of Object.keys(document.warnings)) {
                 if (isArray(document.warnings[type])) {
-                    return this.addSections(sections, type, document, document.warnings[type] as string[]);
-                } else if (isObject(document.warnings[type])) {
-                    return this.addSections(
-                        sections, type, document, (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                    this.sections = this.sections.concat(
+                        await this.createSections(type as WarningType, document, document.warnings[type] as string[])
                     );
+                } else if (isObject(document.warnings[type])) {
+                    this.sections = this.sections.concat(await this.createSections(
+                        type as WarningType, document,
+                        (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                    ));
                 } else {
-                    return sections.concat([this.createSection(type, document)]);
+                    this.sections = this.sections.concat([await this.createSection(type as WarningType, document)]);
                 }
-            }, []);
+            }
         }
     }
 
 
-    private addSections(sections: Array<WarningSection>, type: WarningType, document: FieldDocument,
-                        fieldNames: string[]): Array<WarningSection> {
+    private async createSections(type: WarningType, document: FieldDocument,
+                                 fieldNames: string[]): Promise<Array<WarningSection>> {
 
-        return sections.concat(
-            fieldNames.map(fieldName => {
-                return this.createSection(type, document, fieldName);
-            })
-        );
+        const newSections: Array<WarningSection> = [];
+
+        for (let fieldName of fieldNames) {
+            newSections.push(await this.createSection(type, document, fieldName));
+        }
+
+        return newSections;
     }
 
 
-    private createSection(type: WarningType, document: FieldDocument, fieldName?: string): WarningSection {
+    private async createSection(type: WarningType, document: FieldDocument, fieldName?: string): Promise<WarningSection> {
 
         const section: WarningSection = { type };
 
@@ -388,7 +385,23 @@ export class WarningsModalComponent {
             section.dataLabel = document.resource.identifier
         }
 
+        if (type === 'outlierValues') {
+            section.outlierValues = await this.getOutlierValues(document, fieldName, section.category);
+        }
+
         return section;
+    }
+
+
+    private async getOutlierValues(document: FieldDocument, fieldName: string, category: CategoryForm): Promise<string[]> {
+
+        const field: Field = CategoryForm.getField(category, fieldName);
+        const projectDocument: Document = await this.datastore.get('project');
+        const parentResource: Resource = await Hierarchy.getParentResource(this.datastore.get, document.resource);
+
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, parentResource);
+
+        return ValuelistUtil.getValuesNotIncludedInValuelist(document.resource[fieldName], valuelist);
     }
 
 

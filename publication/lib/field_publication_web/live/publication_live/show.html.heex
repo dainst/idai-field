@@ -9,15 +9,19 @@
     <:item title="Draft date"><%= @publication.draft_date %></:item>
     <:item title="Drafted by"><%= @publication.drafted_by %></:item>
     <:item title="Version type">
-      <form id="publication_version_form">
-        <.input
-          type="select"
-          name="publication-version"
-          value={@publication.version}
-          options={Publication.get_version_options()}
-          phx-change="publication_version_selected"
-        />
-      </form>
+      <%= if @publication.version == :initial do %>
+        Initial
+      <% else %>
+        <form id="publication_version_form">
+          <.input
+            type="select"
+            name="publication-version"
+            value={@publication.version}
+            options={get_version_options()}
+            phx-change="publication_version_selected"
+          />
+        </form>
+      <% end %>
     </:item>
     <:item title="Data replication">
       <%= if @publication.replication_finished do %>

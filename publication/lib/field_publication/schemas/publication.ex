@@ -70,10 +70,6 @@ defmodule FieldPublication.Schemas.Publication do
     @doc_type
   end
 
-  def get_version_options() do
-    %{"Initial release" => :initial, "Release" => :major, "Revision" => :revision}
-  end
-
   defp validate_project_exists(changeset) do
     name = get_field(changeset, :project_name)
 

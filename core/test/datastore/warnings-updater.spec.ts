@@ -28,6 +28,27 @@ describe('WarningsUpdater', () => {
                         {
                             name: 'number',
                             inputType: Field.InputType.FLOAT
+                        },
+                        {
+                            name: 'dropdown',
+                            inputType: Field.InputType.DROPDOWN,
+                            valuelist: {
+                                values: { 'valueDropdown': {} }
+                            }
+                        },
+                        {
+                            name: 'checkboxes',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelist: {
+                                values: { 'valueCheckboxes': {} }
+                            }
+                        },
+                        {
+                            name: 'dimension',
+                            inputType: Field.InputType.DIMENSION,
+                            valuelist: {
+                                values: { 'valueDimension': {} }
+                            }
                         }
                     ]
                 }
@@ -42,12 +63,18 @@ describe('WarningsUpdater', () => {
         documents[0]._conflicts = ['123'];
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
+        documents[0].resource.dropdown = 'outlierValue';
+        documents[0].resource.checkboxes = ['outlierValue'];
+        documents[0].resource.dimension = [{ measurementPosition: 'outlierValue', inputValue: 1, inputUnit: 'cm' }];
         documents[0].resource.unconfiguredField = 'text';
 
         documents[1].resource.identifier = 'C2';
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
+        documents[2].resource.dropdown = 'valueDropdown';
+        documents[2].resource.checkboxes = ['valueCheckboxes'];
+        documents[2].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
         
         WarningsUpdater.updateIndexIndependentWarnings(documents[0], categoryDefinition);
         WarningsUpdater.updateIndexIndependentWarnings(documents[1], undefined);
@@ -56,7 +83,7 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField'],
             invalidFields: ['number'],
-            outlierValues: [],
+            outlierValues: ['dropdown', 'checkboxes', 'dimension'],
             conflicts: true,
             missingIdentifierPrefix: true
         });
@@ -289,7 +316,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('update outlier warnings', async done => {
+    it('update outlier warnings for valuelists from project field', async done => {
 
         const categoryDefinition = {
             name: 'category',
@@ -298,31 +325,10 @@ describe('WarningsUpdater', () => {
                 {
                     fields: [
                         {
-                            name: 'dropdown',
-                            inputType: Field.InputType.DROPDOWN,
-                            valuelist: {
-                                values: { 'value-dropdown': {} }
-                            }
-                        },
-                        {
-                            name: 'checkboxes',
-                            inputType: Field.InputType.CHECKBOXES,
-                            valuelist: {
-                                values: { 'value-checkboxes': {} }
-                            }
-                        },
-                        {
-                            name: 'dimension',
-                            inputType: Field.InputType.DIMENSION,
-                            valuelist: {
-                                values: { 'value-dimension': {} }
-                            }
-                        },
-                        {
                             name: 'editor',
                             inputType: Field.InputType.CHECKBOXES,
                             valuelistFromProjectField: 'staff'
-                        },
+                        }
                     ]
                 }
             ]
@@ -336,14 +342,7 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.staff = ['Person'];
 
-        documents[1].resource.dropdown = 'outlier-value';
-        documents[1].resource.checkboxes = ['value-checkboxes', 'outlier-value'];
-        documents[1].resource.dimension = [{ measurementPosition: 'outlier-value' }];
-        documents[1].resource.editor = ['outlier-value'];
-
-        documents[2].resource.dropdown = 'value-dropdown';
-        documents[2].resource.checkboxes = ['value-checkboxes'];
-        documents[2].resource.dimension = [{ measurementPosition: 'value-dimension' }];
+        documents[1].resource.editor = ['outlierValue'];
         documents[2].resource.editor = ['Person'];
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
@@ -353,14 +352,14 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateOutlierWarnings(
+        await WarningsUpdater.updateProjectFieldOutlierWarnings(
             documents[1], categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
-        expect(documents[1].warnings?.outlierValues).toEqual(['dropdown', 'checkboxes', 'dimension', 'editor']);
+        expect(documents[1].warnings?.outlierValues).toEqual(['editor']);
         expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
 
-        await WarningsUpdater.updateOutlierWarnings(
+        await WarningsUpdater.updateProjectFieldOutlierWarnings(
             documents[2], categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 

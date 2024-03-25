@@ -56,7 +56,7 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateOutlierWarnings(document, category, indexFacade, documentCache);
+        await updateProjectFieldOutlierWarnings(document, category, indexFacade, documentCache);
     }
 
 
@@ -152,26 +152,27 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateOutlierWarnings(document: Document, category: CategoryForm, indexFacade: IndexFacade,
-                                                documentCache: DocumentCache) {
+    export async function updateProjectFieldOutlierWarnings(document: Document, category: CategoryForm,
+                                                            indexFacade: IndexFacade, documentCache: DocumentCache) {
 
-        const fieldNames: string[] = Object.keys(document.resource)
-            .filter(fieldName => !FIELDS_TO_SKIP.includes(fieldName));
+        const fields: Array<Field> = CategoryForm.getFields(category).filter(field => {
+            return field.valuelistFromProjectField && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
+        });
         
         const outlierValues: string[] = [];
 
-        for (let fieldName of fieldNames) {
-            const fieldContent: any = document.resource[fieldName];
-            const field: Field = CategoryForm.getField(category, fieldName);
-            if (field && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)) {
-                const valuelist: Valuelist = ValuelistUtil.getValuelist(
-                    field,
-                    documentCache.get('project'),
-                    await Hierarchy.getParentResource(id => Promise.resolve(documentCache.get(id)), document.resource)
-                );
-                if (valuelist && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist)) {
-                    outlierValues.push(fieldName);
-                }
+        for (let field of fields) {
+            const fieldContent: any = document.resource[field.name];
+            if (!fieldContent) return;
+
+            const valuelist: Valuelist = ValuelistUtil.getValuelist(
+                field,
+                documentCache.get('project'),
+                await Hierarchy.getParentResource(id => Promise.resolve(documentCache.get(id)), document.resource)
+            );
+
+            if (valuelist && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist)) {
+                outlierValues.push(field.name);
             }
         }
 
@@ -248,6 +249,10 @@ export module WarningsUpdater {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
+        }  else if (Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)
+                && !field.valuelistFromProjectField
+                && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, field.valuelist)) {
+            warnings.outlierValues.push(fieldName);
         }
     }
 }

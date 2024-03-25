@@ -6,7 +6,7 @@ import { Document } from '../../../src/model';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('RemoteChangesStream', () => {
+describe('ChangesStream', () => {
 
     let rcs;
     let doc;
@@ -64,7 +64,7 @@ describe('RemoteChangesStream', () => {
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
         projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'], ['getCategory']);
-        projectConfiguration.getCategory.and.returnValue({ name: 'Object' });
+        projectConfiguration.getCategory.and.returnValue({ name: 'Object', groups: [] });
 
         rcs = new ChangesStream(
             pouchdbDatastore,

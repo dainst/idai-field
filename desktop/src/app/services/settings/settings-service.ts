@@ -81,15 +81,14 @@ export class SettingsService {
         this.settingsProvider.setSettings(newSettings);
         const settings: Settings = this.settingsProvider.getSettings();
 
-        Object.values(settings.syncTargets).forEach(syncTarget => {
-            if (syncTarget.address) {
-                syncTarget.address = syncTarget.address.trim();
-                if (validate === 'synchronization' && !SettingsService.validateAddress(syncTarget.address)) {
-                    throw SettingsErrors.MALFORMED_ADDRESS;
-                }
+        const syncTarget: SyncTarget = settings.syncTargets[settings.selectedProject];
+        if (syncTarget?.address) {
+            syncTarget.address = syncTarget.address.trim();
+            if (validate === 'synchronization' && !SettingsService.validateAddress(syncTarget.address)) {
+                throw SettingsErrors.MALFORMED_ADDRESS;
             }
-            if (syncTarget.password) syncTarget.password = syncTarget.password.trim();
-        });
+        }
+        if (syncTarget?.password) syncTarget.password = syncTarget.password.trim();
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
 

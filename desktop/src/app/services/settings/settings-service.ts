@@ -83,9 +83,14 @@ export class SettingsService {
 
         Object.values(settings.syncTargets).forEach(syncTarget => {
             if (syncTarget.address) {
+                console.log('Original sync target address: ' + syncTarget.address);
                 syncTarget.address = syncTarget.address.trim();
+                console.log('Trimmed sync target address: ' + syncTarget.address);
                 if (validate === 'synchronization' && !SettingsService.validateAddress(syncTarget.address)) {
+                    console.warn('Address validation failed!');
                     throw SettingsErrors.MALFORMED_ADDRESS;
+                } else {
+                    console.log('Successfully validated address!')
                 }
             }
             if (syncTarget.password) syncTarget.password = syncTarget.password.trim();

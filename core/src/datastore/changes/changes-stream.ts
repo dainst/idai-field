@@ -82,10 +82,9 @@ export class ChangesStream {
             this.documentCache.set(convertedDocument);
         }
 
-        const category: CategoryForm = this.projectConfiguration.getCategory(convertedDocument.resource.category);
-        
         await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, category, this.datastore, previousIdentifier, true
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
+            previousIdentifier, true
         );
 
         ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);

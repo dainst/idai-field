@@ -13,6 +13,7 @@ import { Query } from '../model/query';
 import { DocumentCache } from './document-cache';
 import { FieldResource, Valuelist } from '../model';
 import { Hierarchy } from '../services/utilities/hierarchy';
+import { ProjectConfiguration } from '../services';
 
 
 /**
@@ -47,16 +48,19 @@ export module WarningsUpdater {
      * Updates all warnings for whose determination the documents must have been previously indexed.
      */
     export async function updateIndexDependentWarnings(document: Document, indexFacade: IndexFacade,
-                                                       documentCache: DocumentCache, category?: CategoryForm,
+                                                       documentCache: DocumentCache,
+                                                       projectConfiguration: ProjectConfiguration,
                                                        datastore?: Datastore, previousIdentifier?: string,
                                                        updateAll: boolean = false) {
 
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
         if (!category) return;
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateProjectFieldOutlierWarnings(document, category, indexFacade, documentCache);
+        await updateProjectFieldOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
+            datastore, updateAll);
     }
 
 
@@ -152,8 +156,11 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateProjectFieldOutlierWarnings(document: Document, category: CategoryForm,
-                                                            indexFacade: IndexFacade, documentCache: DocumentCache) {
+    export async function updateProjectFieldOutlierWarning(document: Document,
+                                                           projectConfiguration: ProjectConfiguration,
+                                                           category: CategoryForm, indexFacade: IndexFacade,
+                                                           documentCache: DocumentCache, datastore?: Datastore,
+                                                           updateAll: boolean = false) {
 
         const fields: Array<Field> = CategoryForm.getFields(category).filter(field => {
             return field.valuelistFromProjectField && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
@@ -187,6 +194,10 @@ export module WarningsUpdater {
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, 'outlierValues:exist');
         }
+
+        if (document.resource.category === 'Project' && updateAll) {
+            await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
+        }
     }
 
 
@@ -212,6 +223,25 @@ export module WarningsUpdater {
 
         for (let document of documents) {
             await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateProjectFieldOutlierWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                     indexFacade: IndexFacade,
+                                                     projectConfiguration: ProjectConfiguration) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'outlierValues:exist': 'KNOWN' }
+        })).documents;
+
+        for (let document of documents) {
+            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+            if (!category) continue;
+
+            await updateProjectFieldOutlierWarning(
+                document, projectConfiguration, category, indexFacade, documentCache, datastore
+            );
         }
     }
 

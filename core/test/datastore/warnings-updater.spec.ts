@@ -346,13 +346,16 @@ describe('WarningsUpdater', () => {
         } as any;
 
         const documents = [
-            createDocument('project'),
+            createDocument('project', 'Project'),
             createDocument('1')
         ];
 
         documents[0].resource.staff = ['Person'];
 
         documents[1].resource.editor = ['outlierValue'];
+
+        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory'])
+        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
@@ -361,8 +364,8 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateProjectFieldOutlierWarnings(
-            documents[1], categoryDefinition, mockIndexFacade, mockDocumentCache
+        await WarningsUpdater.updateProjectFieldOutlierWarning(
+            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[1].warnings?.outlierValues).toEqual(['editor']);
@@ -392,7 +395,7 @@ describe('WarningsUpdater', () => {
         } as any;
 
         const documents = [
-            createDocument('project'),
+            createDocument('project', 'Project'),
             createDocument('1'),
             createDocument('2')
         ];
@@ -407,6 +410,9 @@ describe('WarningsUpdater', () => {
         documents[2].warnings.outlierValues = ['editor', 'otherField'];
         documents[2].resource.editor = ['Person'];
 
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
+        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
@@ -414,22 +420,93 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateProjectFieldOutlierWarnings(
-            documents[1], categoryDefinition, mockIndexFacade, mockDocumentCache
+        await WarningsUpdater.updateProjectFieldOutlierWarning(
+            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[1].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
-
-        await WarningsUpdater.updateProjectFieldOutlierWarnings(
-            documents[2], categoryDefinition, mockIndexFacade, mockDocumentCache
+        await WarningsUpdater.updateProjectFieldOutlierWarning(
+            documents[2], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[2].warnings?.outlierValues).toEqual(['otherField'])
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('remove outlier warnings for valuelists from project field after updating project document', async done => {
+
+        const categoryDefinition = {
+            name: 'category',
+            identifierPrefix: 'C',
+            groups: [
+                {
+                    fields: [
+                        {
+                            name: 'editor',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelistFromProjectField: 'staff'
+                        }
+                    ]
+                }
+            ]
+        } as any;
+
+        const documents = [
+            createDocument('project', 'Project'),
+            createDocument('1'),
+            createDocument('2'),
+            createDocument('3')
+        ];
+
+        documents[0].resource.staff = ['Person'];
+
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.outlierValues = ['editor'];
+        documents[1].resource.editor = ['Person'];
+
+        documents[2].warnings = Warnings.createDefault();
+        documents[2].warnings.outlierValues = ['editor', 'otherField'];
+        documents[2].resource.editor = ['Person'];
+
+        documents[3].warnings = Warnings.createDefault();
+        documents[3].warnings.outlierValues = ['otherField'];
+
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
+        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1], documents[2], documents[3]] }));
+
+        await WarningsUpdater.updateProjectFieldOutlierWarning(
+            documents[0], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache,
+            mockDatastore, true
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+
+        expect(documents[2].warnings?.outlierValues).toEqual(['otherField']);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
+
+        expect(documents[3].warnings?.outlierValues).toEqual(['otherField']);
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'warnings:exist');
 
         done();
     });

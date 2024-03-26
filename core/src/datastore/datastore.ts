@@ -127,10 +127,9 @@ export class Datastore {
         document = !previousVersion
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);
-        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
         await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, category, this, previousIdentifier, true
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this, previousIdentifier, true
         );
 
         return document;

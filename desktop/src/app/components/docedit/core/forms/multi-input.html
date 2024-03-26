@@ -2,12 +2,12 @@
     <div *ngFor="let entry of fieldContainer[fieldName]; let i = index">
         <div class="input-group mb-2">
             <multi-language-text-field *ngIf="fieldLanguages"
-                                    [fieldData]="entry"
-                                    [languages]="fieldLanguages"
-                                    (onFieldDataChanged)="updateExistingEntry($event, i)">
+                                       [fieldData]="entry"
+                                       [languages]="fieldLanguages"
+                                       (onFieldDataChanged)="updateExistingEntry($event, i)">
             </multi-language-text-field>
             <div class="input-group-append" [class.with-language-tabs]="!hasNoConfiguredLanguages()">
-                <button class="btn btn-danger" type="button" (click)="deleteEntry(entry)">
+                <button class="btn btn-danger delete-multi-input-entry" type="button" (click)="deleteEntry(entry)">
                     <span class="mdi mdi-delete"></span>
                 </button>
             </div>
@@ -22,7 +22,7 @@
                                (onFieldDataChanged)="updateNewEntry($event)">
     </multi-language-text-field>
     <div class="input-group-append" [class.with-language-tabs]="!hasNoConfiguredLanguages()">
-        <button class="btn btn-success" [disabled]="!isValidEntry(newEntry)" type="button"
+        <button class="btn btn-success add-multi-input-entry" [disabled]="!isValidEntry(newEntry)" type="button"
                 (click)="addNewEntry()">
             <span class="mdi mdi-plus"></span>
         </button>

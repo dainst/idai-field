@@ -464,6 +464,38 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values by updating project document', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await navigateTo('editProject');
+        await DoceditPage.clickSelectGroup('properties');
+        await DoceditPage.typeInMultiInputField('staff', 'Test');
+        await DoceditPage.clickAddMultiInputEntry('staff');
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.performCreateResource('1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickCheckbox('processor', 2);
+        await DoceditPage.clickSaveDocument();
+
+        await navigateTo('editProject');
+        await DoceditPage.clickSelectGroup('properties');
+        await DoceditPage.clickDeleteMultiInputEntry('staff', 2);
+        await DoceditPage.clickSaveDocument();
+        
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await navigateTo('editProject');
+        await DoceditPage.clickSelectGroup('properties');
+        await DoceditPage.typeInMultiInputField('staff', 'Test');
+        await DoceditPage.clickAddMultiInputEntry('staff');
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing relation targets via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

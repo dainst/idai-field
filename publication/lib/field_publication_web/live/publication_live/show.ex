@@ -160,10 +160,17 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     # Replication has finished, now check for data consistency and necessary processing tasks.
     start_data_state_evaluation(publication)
 
+    # Update the form to reflect the final document revision, otherwise making changes based on an old revision will fail.
+    publication_form =
+      publication
+      |> Publication.changeset(%{})
+      |> to_form
+
     {
       :noreply,
       socket
       |> assign(:publication, publication)
+      |> assign(:publication_form, publication_form)
     }
   end
 

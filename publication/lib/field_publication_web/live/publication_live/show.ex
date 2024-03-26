@@ -197,6 +197,19 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
+  def handle_info(
+        {:updated_translations, "publication_comments", translations},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    # TODO: Catch _rev error if somebody else worked on the same publication document concurrently and this update got rejected.
+    {:ok, updated_publication} = Publications.update_comments(publication, translations)
+
+    {
+      :noreply,
+      assign(socket, :publication, updated_publication)
+    }
+  end
+
   def get_version_options() do
     %{"Release" => :major, "Revision" => :revision}
   end

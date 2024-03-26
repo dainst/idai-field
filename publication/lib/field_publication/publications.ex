@@ -185,6 +185,20 @@ defmodule FieldPublication.Publications do
     end
   end
 
+  def update_comments(%Publication{} = publication, translations) do
+    publication
+    |> Publication.changeset(%{})
+    |> Ecto.Changeset.put_embed(:comments, translations)
+    |> Ecto.Changeset.apply_action(:create)
+    |> case do
+      {:ok, %Publication{} = valid_data} ->
+        put(valid_data)
+
+      {:error, _changeset} = error ->
+        error
+    end
+  end
+
   def delete(
         %Publication{
           _rev: rev,

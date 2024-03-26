@@ -8,6 +8,19 @@
     <:item title="Source project name"><%= @publication.source_project_name %></:item>
     <:item title="Draft date"><%= @publication.draft_date %></:item>
     <:item title="Drafted by"><%= @publication.drafted_by %></:item>
+    <:item title="Data replication">
+      <%= if @publication.replication_finished do %>
+        <div>Replication finished <%= @publication.replication_finished %>.</div>
+      <% else %>
+        <.log_entry_list logs={@replication_logs} />
+        <%= if @replication_progress_state do %>
+          <.progress_bar state={@replication_progress_state}></.progress_bar>
+        <% end %>
+        <button class="font-bold font-mono float-right" type="button" phx-click="stop_replication">
+          Stop replication
+        </button>
+      <% end %>
+    </:item>
     <:item title="Version type">
       <%= if @publication.version == :initial do %>
         Initial
@@ -23,20 +36,14 @@
         </form>
       <% end %>
     </:item>
-    <:item title="Data replication">
-      <%= if @publication.replication_finished do %>
-        <div>Replication finished <%= @publication.replication_finished %>.</div>
-      <% else %>
-        <.log_entry_list logs={@replication_logs} />
-        <%= if @replication_progress_state do %>
-          <.progress_bar state={@replication_progress_state}></.progress_bar>
-        <% end %>
-        <button class="font-bold font-mono float-right" type="button" phx-click="stop_replication">
-          Stop replication
-        </button>
-      <% end %>
+    <:item title="Comments">
+      <.live_component
+        module={FieldPublicationWeb.PublicationLive.TranslationsFormComponent}
+        id="publication_comments"
+        translations={@publication.comments}
+        languages={@publication.languages}
+      />
     </:item>
-
     <:item :if={@publication.replication_finished} title="Data processing">
       <%= if @data_state do %>
         <table class="w-full">

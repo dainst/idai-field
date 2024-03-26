@@ -35,6 +35,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         type == :web_images
       end)
 
+    publication_form =
+      publication
+      |> Publication.changeset(%{})
+      |> to_form
+
     {
       :ok,
       socket
@@ -46,6 +51,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
+      |> assign(:publication_form, publication_form)
     }
   end
 

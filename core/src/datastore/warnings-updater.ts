@@ -1,4 +1,4 @@
-import { is, on } from 'tsfun';
+import { is, on, to } from 'tsfun';
 import { Document } from '../model/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
@@ -158,6 +158,7 @@ export module WarningsUpdater {
         const fields: Array<Field> = CategoryForm.getFields(category).filter(field => {
             return field.valuelistFromProjectField && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
         });
+        const fieldNames: string[] = fields.map(to(Named.NAME));
         const outlierValues: string[] = [];
 
         for (let field of fields) {
@@ -178,6 +179,12 @@ export module WarningsUpdater {
         if (outlierValues.length) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.outlierValues = outlierValues;
+            updateIndex(indexFacade, document, 'outlierValues:exist');
+        } else if (document.warnings?.outlierValues.find(fieldName => fieldNames.includes(fieldName))) {
+            document.warnings.outlierValues = document.warnings.outlierValues.filter(fieldName => {
+                return !fieldNames.includes(fieldName);
+            });
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, 'outlierValues:exist');
         }
     }

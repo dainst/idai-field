@@ -24,11 +24,6 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
     {:noreply, assign(socket, :project, project)}
   end

@@ -30,6 +30,10 @@
     "project" ->
       DocumentComponent.project(%{
         name: @project_name,
+        publication_comments:
+          @publication.comments
+          |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
+          |> Enum.into(%{}),
         doc: @doc,
         lang: @selected_lang
       })

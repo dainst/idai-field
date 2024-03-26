@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Data.Image do
 
   def show(assigns) do
     ~H"""
-    <img class={@class} src={construct_url(assigns)} />
+    <img src={construct_url(assigns)} />
     """
   end
 

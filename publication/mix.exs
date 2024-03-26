@@ -47,7 +47,7 @@ defmodule FieldPublication.MixProject do
       {:finch, "~> 0.13"},
       # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch
       {:httpoison, "~> 2.2.1"},
-      {:reverse_proxy_plug, "~> 2.4"},
+      {:reverse_proxy_plug, "~> 2.3.1"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},

@@ -196,6 +196,7 @@ defmodule FieldPublication.Replication do
      } = parameters} =
       Map.get(running_replications, publication_id)
 
+    # TODO: Move these final steps into their own task, so if something fails the genserver does not crash.
     {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
 
     # The reconstructed project configuration does not retain a simple list of the languages used for the

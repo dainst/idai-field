@@ -75,10 +75,13 @@ describe('WarningsUpdater', () => {
         documents[2].resource.dropdown = 'valueDropdown';
         documents[2].resource.checkboxes = ['valueCheckboxes'];
         documents[2].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
-        
-        WarningsUpdater.updateIndexIndependentWarnings(documents[0], categoryDefinition);
-        WarningsUpdater.updateIndexIndependentWarnings(documents[1], undefined);
-        WarningsUpdater.updateIndexIndependentWarnings(documents[2], categoryDefinition);
+
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
+        mockProjectConfiguration.getCategory.and.returnValues(categoryDefinition, undefined, categoryDefinition);
+
+        WarningsUpdater.updateIndexIndependentWarnings(documents[0], mockProjectConfiguration);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[1], mockProjectConfiguration);
+        WarningsUpdater.updateIndexIndependentWarnings(documents[2], mockProjectConfiguration);
         
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField'],
@@ -354,8 +357,9 @@ describe('WarningsUpdater', () => {
 
         documents[1].resource.editor = ['outlierValue'];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory'])
+        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
@@ -410,8 +414,9 @@ describe('WarningsUpdater', () => {
         documents[2].warnings.outlierValues = ['editor', 'otherField'];
         documents[2].resource.editor = ['Person'];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
@@ -478,8 +483,10 @@ describe('WarningsUpdater', () => {
         documents[3].warnings = Warnings.createDefault();
         documents[3].warnings.outlierValues = ['otherField'];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
+            ['getCategory', 'getCategories']);
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 

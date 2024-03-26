@@ -6,8 +6,6 @@ import { Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';
 import { Named } from '../tools/named';
 import { Migrator } from './migrator';
-import { CategoryForm } from '../model/configuration/category-form';
-import { WarningsUpdater } from './warnings-updater';
 
 
 export class DocumentConverter {
@@ -18,11 +16,6 @@ export class DocumentConverter {
     public convert(document: Document): Document {
 
         Migrator.migrate(document, this.projectConfiguration);
-
-        if (document.resource.category !== 'Configuration') {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-            WarningsUpdater.updateIndexIndependentWarnings(document, category);
-        }
 
         InPlace.takeOrMake(document, [Document.RESOURCE, Resource.IDENTIFIER], '');
 

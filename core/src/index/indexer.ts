@@ -37,14 +37,14 @@ import { ProjectConfiguration } from '../services';
                 documents = documents.filter(document => !documentCache.get(document.resource.id));
             }
             documents = convertDocuments(documents, converter);
-            documents.forEach(doc => documentCache.set(doc));
+            documents.forEach(document => {
+                WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
+                documentCache.set(document)
+            });
 
             if (keepCachedInstances) {
                 documentCache.getAll().forEach(document => {
-                    if (document.resource.category !== 'Configuration') {
-                        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-                        if (category) WarningsUpdater.updateIndexIndependentWarnings(document, category);
-                    }
+                    WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
                 });
                 documents = documents.concat(documentCache.getAll());
             }
@@ -73,9 +73,9 @@ import { ProjectConfiguration } from '../services';
 
     function convertDocuments(documents: Array<Document>, converter: DocumentConverter): Array<Document> {
 
-        return documents.map(doc => {
+        return documents.map(document => {
             try {
-                return converter.convert(doc);
+                return converter.convert(document);
             } catch (err) {
                 console.warn('Error while converting document: ', err);
                 return undefined;

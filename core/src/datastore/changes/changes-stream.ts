@@ -71,6 +71,7 @@ export class ChangesStream {
     private async welcomeDocument(document: Document) {
 
         const convertedDocument: Document = this.documentConverter.convert(document);
+        WarningsUpdater.updateIndexIndependentWarnings(convertedDocument, this.projectConfiguration);
         this.indexFacade.put(convertedDocument);
 
         const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);

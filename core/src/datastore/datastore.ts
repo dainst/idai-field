@@ -119,6 +119,7 @@ export class Datastore {
     private async updateIndex(document: Document): Promise<Document> {
 
         const convertedDocument = this.documentConverter.convert(document);
+        WarningsUpdater.updateIndexIndependentWarnings(convertedDocument, this.projectConfiguration);
         this.indexFacade.put(convertedDocument);
 
         const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);

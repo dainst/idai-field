@@ -14,6 +14,7 @@ import { DocumentCache } from './document-cache';
 import { FieldResource, Valuelist } from '../model';
 import { Hierarchy } from '../services/utilities/hierarchy';
 import { ProjectConfiguration } from '../services';
+import { Tree } from '../tools/forest';
 
 
 /**
@@ -31,9 +32,11 @@ export module WarningsUpdater {
      * Updates all warnings for whose determination the index is not required. These warnings do no rely on
      * analyzing the document in the context of other documents.
      */
-    export function updateIndexIndependentWarnings(document: Document, category?: CategoryForm) {
+    export function updateIndexIndependentWarnings(document: Document, projectConfiguration: ProjectConfiguration) {
 
         if (document.resource.category === 'Configuration') return;
+
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
 
         const warnings: Warnings = createWarnings(document, category);
         if (Warnings.hasWarnings(warnings)) {
@@ -231,9 +234,11 @@ export module WarningsUpdater {
                                                      indexFacade: IndexFacade,
                                                      projectConfiguration: ProjectConfiguration) {
 
-        const documents: Array<Document> = (await datastore.find({
-            constraints: { 'outlierValues:exist': 'KNOWN' }
-        })).documents;
+        const categoryNames: string[] = Tree.flatten(projectConfiguration.getCategories()).filter(category => {
+            return CategoryForm.getFields(category).find(field => field.valuelistFromProjectField);
+        }).map(to(Named.NAME));
+
+        const documents: Array<Document> = (await datastore.find({ categories: categoryNames })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);

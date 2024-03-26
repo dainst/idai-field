@@ -13,7 +13,7 @@ export class DocumentConverter {
     constructor(private projectConfiguration: ProjectConfiguration) { }
 
 
-    public convert(document: Document): Document {
+    public convert(document: Document) {
 
         Migrator.migrate(document, this.projectConfiguration);
 
@@ -36,7 +36,5 @@ export class DocumentConverter {
                         }
                 }
         }
-
-        return document;
     }
 }

@@ -182,7 +182,7 @@ describe('ChangesStream', () => {
 
     it('update non-unique identifier warnings', async done => {
 
-        const doc2: Document = {
+        let doc2: Document = {
             resource: {
                 id: 'id2', identifier: '1', category: 'Object', relations: {}
             },
@@ -200,6 +200,9 @@ describe('ChangesStream', () => {
 
         indexFacade.getCount.and.returnValue(2);
         datastore.find.and.returnValue(Promise.resolve({ documents: [doc2] }));
+        documentCache.reassign.and.callFake(document => {
+            document.id === 'id1' ? doc = document : doc2 = document;
+        });
 
         await onChange(doc);
         expect(doc.warnings.nonUniqueIdentifier).toBe(true);

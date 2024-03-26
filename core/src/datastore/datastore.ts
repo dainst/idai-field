@@ -9,7 +9,6 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
-import { CategoryForm } from '../model/configuration/category-form';
 
 
 /**
@@ -118,22 +117,21 @@ export class Datastore {
 
     private async updateIndex(document: Document): Promise<Document> {
 
-        const convertedDocument = this.documentConverter.convert(document);
-        WarningsUpdater.updateIndexIndependentWarnings(convertedDocument, this.projectConfiguration);
-        this.indexFacade.put(convertedDocument);
+        this.documentConverter.convert(document);
+        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+        this.indexFacade.put(document);
 
-        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
 
-        document = !previousVersion
-            ? this.documentCache.set(convertedDocument)
-            : this.documentCache.reassign(convertedDocument);
-
         await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, this.projectConfiguration, this, previousIdentifier, true
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
+            previousIdentifier, true
         );
 
-        return document;
+        return !previousVersion
+            ? this.documentCache.set(document)
+            : this.documentCache.reassign(document);
     }
 
 
@@ -191,7 +189,9 @@ export class Datastore {
             }
         }
 
-        let document = this.documentConverter.convert(await this.datastore.fetch(id, options?.conflicts));
+        let document = await this.datastore.fetch(id, options?.conflicts);
+        await this.convert(document);
+
         if (document.warnings?.unconfiguredCategory) {
             throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
         }
@@ -235,9 +235,10 @@ export class Datastore {
     }
 
 
-    public convert: Datastore.Convert = (document: Document) => {
+    public convert: Datastore.Convert = async (document: Document) => {
         
         this.documentConverter.convert(document);
+        await this.updateWarnings(document);
     }  
 
 
@@ -266,8 +267,9 @@ export class Datastore {
      */
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
-        return this.documentConverter.convert(
-            await this.datastore.fetchRevision(docId, revisionId));
+        const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
+        await this.convert(revision);
+        return revision;
     }
 
 
@@ -348,13 +350,16 @@ export class Datastore {
 
     private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
-        const documents: Array<Document> = [];
-        (await this.datastore.bulkFetch(ids)).forEach(document => {
-            const convertedDocument = this.documentConverter.convert(document);
-            documents.push(this.documentCache.set(convertedDocument));
-        });
+        const result: Array<Document> = [];
 
-        return documents;
+        const documents: Array<Document> = await this.datastore.bulkFetch(ids);
+        for (let document of documents) {
+            document = this.documentCache.set(document);
+            await this.convert(document);
+            result.push(document);
+        }
+
+        return result;
     }
 
 
@@ -371,6 +376,22 @@ export class Datastore {
         });
 
         return documents;
+    }
+
+
+    private async updateWarnings(document: Document) {
+
+        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+
+        this.indexFacade.put(document);
+        
+        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
+            previousIdentifier, true
+        );
     }
 }
 

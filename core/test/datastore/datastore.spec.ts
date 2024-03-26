@@ -73,7 +73,7 @@ describe('Datastore', () => {
 
     it('should add missing fields on get, bypassing cache', async done => {
 
-        mockdb.fetch.and.returnValues(Promise.resolve({
+        mockdb.fetch.and.returnValue(Promise.resolve({
             resource: {
                 id: '1',
                 category: 'Find',
@@ -91,7 +91,7 @@ describe('Datastore', () => {
 
     it('should add missing fields on getMultiple, bypassing cache', async done => {
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+        mockdb.bulkFetch.and.returnValue(Promise.resolve([
             {
                 resource: {
                     id: '1',
@@ -117,7 +117,7 @@ describe('Datastore', () => {
 
     it('should retain order when fetching documents from both cache and datastore on getMultiple', async done => {
 
-        mockdb.fetch.and.returnValues(Promise.resolve({
+        mockdb.fetch.and.returnValue(Promise.resolve({
             resource: {
                 id: '2',
                 category: 'Find',
@@ -125,7 +125,7 @@ describe('Datastore', () => {
             }
         }));
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+        mockdb.bulkFetch.and.returnValue(Promise.resolve([
             {
                 resource: {
                     id: '1',
@@ -156,7 +156,7 @@ describe('Datastore', () => {
 
     it('should add missing fields on getRevision (bypassing cache)', async done => {
 
-        mockdb.fetchRevision.and.returnValues(Promise.resolve({
+        mockdb.fetchRevision.and.returnValue(Promise.resolve({
             resource: {
                 id: '1',
                 category: 'Find',
@@ -174,8 +174,8 @@ describe('Datastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.find.and.returnValues(['1']);
-        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+        mockIndexFacade.find.and.returnValue(['1']);
+        mockdb.bulkFetch.and.returnValue(Promise.resolve([
             {
                 resource: {
                     id: '1',
@@ -201,7 +201,7 @@ describe('Datastore', () => {
                 relations: {}
             }
         } as any);
-        mockIndexFacade.find.and.returnValues(['1']);
+        mockIndexFacade.find.and.returnValue(['1']);
 
         const documents = (await datastore.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
@@ -215,7 +215,7 @@ describe('Datastore', () => {
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
 
-        mockIndexFacade.find.and.returnValues(['1', '2']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const { documents, totalCount } = await datastore.find({ limit: 1 });
         expect(documents.length).toBe(1);
@@ -231,7 +231,7 @@ describe('Datastore', () => {
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '3', category: 'Find', relations: {} } } as any);
 
-        mockIndexFacade.find.and.returnValues(['3','1','2']);
+        mockIndexFacade.find.and.returnValue(['3','1','2']);
 
         const { documents, totalCount } = await datastore.find({ limit: 1, offset: 1 });
         expect(documents.length).toBe(1);
@@ -249,7 +249,7 @@ describe('Datastore', () => {
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '3', category: 'Find', relations: {} } } as any);
 
-        mockIndexFacade.find.and.returnValues([
+        mockIndexFacade.find.and.returnValue([
             { id: '1', identifier: 'eins' },
             { id: '2', identifier: 'zwei' },
             { id: '3', identifier: 'drei' }
@@ -264,8 +264,8 @@ describe('Datastore', () => {
 
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.find.and.returnValues(['1']);
-        mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
+        mockIndexFacade.find.and.returnValue(['1']);
+        mockdb.bulkFetch.and.returnValue(Promise.resolve([]));
 
         const { documents, totalCount } = await datastore.find({});
         expect(documents.length).toBe(0);
@@ -276,7 +276,7 @@ describe('Datastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.find.and.returnValues(['1', '2']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
             {
@@ -286,7 +286,7 @@ describe('Datastore', () => {
                     relations: {}
                 }
             }
-        ]));
+        ]), Promise.resolve([]));
 
         const { documents, totalCount } = await datastore.find({});
         expect(documents.length).toBe(1);
@@ -302,7 +302,7 @@ describe('Datastore', () => {
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
 
-        mockIndexFacade.find.and.returnValues(['1', '2']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const result = datastore.findIds({});
         expect(result.ids.length).toBe(2);

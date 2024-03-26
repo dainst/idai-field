@@ -75,7 +75,8 @@ import { ProjectConfiguration } from '../services';
 
         return documents.map(document => {
             try {
-                return converter.convert(document);
+                converter.convert(document);
+                return document;
             } catch (err) {
                 console.warn('Error while converting document: ', err);
                 return undefined;

@@ -41,7 +41,8 @@ export class ChangesStream {
         pouchDbDatastore.changesNotifications().subscribe(async document => {
 
             if (isProjectDocument(document)) {
-                ObserverUtil.notify(this.projectDocumentObservers, this.documentConverter.convert(document));
+                await this.datastore.convert(document);
+                ObserverUtil.notify(this.projectDocumentObservers, document);
             }
 
             const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document, this.getUsername());
@@ -70,25 +71,24 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        const convertedDocument: Document = this.documentConverter.convert(document);
-        WarningsUpdater.updateIndexIndependentWarnings(convertedDocument, this.projectConfiguration);
-        this.indexFacade.put(convertedDocument);
+        this.documentConverter.convert(document);
+        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+        this.indexFacade.put(document);
 
-        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
+        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
-        if (previousVersion) {
-            // Explicitly assign by value in order for changes to be detected by Angular
-            this.documentCache.reassign(convertedDocument);
-        } else {
-            this.documentCache.set(convertedDocument);
-        }
-
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
             previousIdentifier, true
         );
 
-        ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
+        if (previousVersion) {
+            this.documentCache.reassign(document);
+        } else {
+            this.documentCache.set(document);
+        }
+
+        ObserverUtil.notify(this.remoteChangesObservers, document);
     }
 
 

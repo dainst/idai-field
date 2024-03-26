@@ -37,7 +37,9 @@ export namespace ConnectedDocs {
             true
         );
 
-        for (const doc of connectedDocs) datastore.convert(doc);
+        for (const doc of connectedDocs) {
+            await datastore.convert(doc);
+        }
 
         await updateDocs(datastore, docsToUpdate);
     }

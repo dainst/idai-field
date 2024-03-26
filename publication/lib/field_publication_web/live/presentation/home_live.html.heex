@@ -5,18 +5,18 @@
       No projects published.
     <% end %>
     <%= for %{doc: doc} = project <- @published_projects do %>
-      <div
-        class={"rounded #{if @highlighted == project[:name] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 mr-2 cursor-pointer"}
-        id={project[:name]}
-        phx-hook="HoverHighlightMapFeature"
-        target="project_overview_map"
-        phx-click="project_selected"
-        phx-value-id={project[:name]}
-      >
-        <!-- The hook above requires the target attribute to know on which map the highlight is supposed to appear. -->
-        <!-- In parallel to the hook, phx-click and phx-value-* implement the click behaviour with standard liveview attributes. -->
-        <div class="text-center">
-          <I18n.text values={Data.get_field_values_by_name(doc, "shortName")} />
+      <div id={project[:name]} phx-hook="HoverHighlightMapFeature" target="project_overview_map">
+        <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
+        <!-- In parallel to the hook above, phx-click and phx-value-* below implement the click behaviour
+          with standard liveview attributes. -->
+        <div
+          phx-click="project_selected"
+          phx-value-id={project[:name]}
+          class={"rounded #{if @highlighted == project[:name] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 mr-2 cursor-pointer"}
+        >
+          <div class="text-center">
+            <I18n.text values={Data.get_field_values_by_name(doc, "shortName")} />
+          </div>
         </div>
       </div>
     <% end %>

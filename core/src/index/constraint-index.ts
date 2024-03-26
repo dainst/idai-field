@@ -82,20 +82,33 @@ export module ConstraintIndex {
     export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false) {
+    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false, indexDefinitionName?: string) {
 
-        if (!skipRemoval) remove(index, document);
-        for (let key in index.indexDefinitions) {
-            putFor(index, index.indexDefinitions[key], document);
+        if (indexDefinitionName) {
+            const definition: IndexDefinition = index.indexDefinitions[indexDefinitionName];
+            if (!definition) throw 'Index definition not found: ' + indexDefinitionName;
+            if (!skipRemoval) remove(index, document, indexDefinitionName);
+            putFor(index, index.indexDefinitions[indexDefinitionName], document);
+        } else {
+            if (!skipRemoval) remove(index, document);
+            for (let key in index.indexDefinitions) {
+                putFor(index, index.indexDefinitions[key], document);
+            }
+            addToAllIndex(index.allIndex, document);
         }
-        addToAllIndex(index.allIndex, document);
     }
 
 
-    export function remove(index: ConstraintIndex, document: Document) {
+    export function remove(index: ConstraintIndex, document: Document, indexDefinitionName?: string) {
 
-        Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, document));
-        if (index.allIndex[document.resource.id]) delete index.allIndex[document.resource.id];
+        if (indexDefinitionName) {
+            const definition: IndexDefinition = index.indexDefinitions[indexDefinitionName];
+            if (!definition) throw 'Index definition not found: ' + indexDefinitionName;
+            removeFromIndex(index, index.indexDefinitions[indexDefinitionName], document);
+        } else {
+            Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, document));
+            if (index.allIndex[document.resource.id]) delete index.allIndex[document.resource.id];
+        }
     }
 
 

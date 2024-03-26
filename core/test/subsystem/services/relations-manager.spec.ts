@@ -1,7 +1,7 @@
 import {flatten} from 'tsfun';
 import { Document, FieldDocument, ImageDocument } from '../../../src/model';
 import { doc } from '../../test-helpers';
-import { CoreApp, createCoreApp, createHelpers, makeDocumentsLookup } from '../subsystem-helper';
+import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
 
 describe('subsystem/relations-manager', () => {

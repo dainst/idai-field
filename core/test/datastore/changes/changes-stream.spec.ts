@@ -43,13 +43,12 @@ describe('ChangesStream', () => {
 
         spyOn(console, 'warn'); // suppress console.warn
 
-        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove', 'getCount']);
+        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'putToSingleIndex', 'get', 'remove', 'getCount']);
         documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
 
         getUsername = () => 'localuser';
         documentConverter.convert.and.returnValue(doc);
-        indexFacade.put.and.returnValue(doc);
         indexFacade.getCount.and.returnValue(0);
         documentCache.get.and.returnValue({ resource: { id: '1', identifier: '1' } });
 

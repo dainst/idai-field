@@ -49,12 +49,19 @@ export class IndexFacade {
 
 
     /**
-     * @param document:
-     *   document.resource.identifier needs to be present, otherwise document does not get indexed
+     * @param document document.resource.identifier needs to be present, otherwise document does not get indexed
      */
     public put(document: Document) {
 
-        return this._put(document, false, true);
+        this._put(document, false, true);
+    }
+
+
+    public putToSingleIndex(document: Document, constraintIndexName: string) {
+
+        const adjustedDocument: Document = adjustIsChildOf(document);
+        ConstraintIndex.put(this.constraintIndex, adjustedDocument, false, constraintIndexName);
+        ObserverUtil.notify(this.observers, adjustedDocument);
     }
 
 

@@ -68,7 +68,7 @@ export module WarningsUpdater {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             if (!document.warnings.nonUniqueIdentifier) {
                 document.warnings.nonUniqueIdentifier = true;
-                indexFacade.put(document);
+                updateIndex(indexFacade, document, 'nonUniqueIdentifier:exist');
                 if (updateAll) {
                     await updateNonUniqueIdentifierWarnings(
                         datastore, indexFacade, document.resource.identifier
@@ -78,7 +78,7 @@ export module WarningsUpdater {
         } else if (document.warnings?.nonUniqueIdentifier) {
             delete document.warnings.nonUniqueIdentifier;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            indexFacade.put(document);   
+            updateIndex(indexFacade, document, 'nonUniqueIdentifier:exist');
         }
         
         if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
@@ -99,12 +99,12 @@ export module WarningsUpdater {
         if (category.resourceLimit && indexFacade.find(query).length  > category.resourceLimit) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.resourceLimitExceeded = true;
-            indexFacade.put(document);
+            updateIndex(indexFacade, document, 'resourceLimitExceeded:exist');
             if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, category);
         } else if (document.warnings?.resourceLimitExceeded) {
             delete document.warnings.resourceLimitExceeded;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            indexFacade.put(document);
+            updateIndex(indexFacade, document, 'resourceLimitExceeded:exist');
         }
     }
 
@@ -139,11 +139,11 @@ export module WarningsUpdater {
         if (warnings.relationNames.length > 0) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.missingRelationTargets = warnings;
-            indexFacade.put(document);
+            updateIndex(indexFacade, document, 'missingRelationTargets:exist');
         } else if (document.warnings?.missingRelationTargets) {
             delete document.warnings.missingRelationTargets;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            indexFacade.put(document);
+            updateIndex(indexFacade, document, 'missingRelationTargets:exist');
         }
 
         if (updateRelationTargets) {
@@ -158,12 +158,11 @@ export module WarningsUpdater {
         const fields: Array<Field> = CategoryForm.getFields(category).filter(field => {
             return field.valuelistFromProjectField && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
         });
-        
         const outlierValues: string[] = [];
 
         for (let field of fields) {
             const fieldContent: any = document.resource[field.name];
-            if (!fieldContent) return;
+            if (!fieldContent) continue;
 
             const valuelist: Valuelist = ValuelistUtil.getValuelist(
                 field,
@@ -179,7 +178,7 @@ export module WarningsUpdater {
         if (outlierValues.length) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.outlierValues = outlierValues;
-            indexFacade.put(document);
+            updateIndex(indexFacade, document, 'outlierValues:exist');
         }
     }
 
@@ -254,5 +253,12 @@ export module WarningsUpdater {
                 && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, field.valuelist)) {
             warnings.outlierValues.push(fieldName);
         }
+    }
+
+
+    function updateIndex(indexFacade: IndexFacade, document: Document, indexName: string) {
+
+        indexFacade.putToSingleIndex(document, indexName);
+        indexFacade.putToSingleIndex(document, 'warnings:exist');
     }
 }

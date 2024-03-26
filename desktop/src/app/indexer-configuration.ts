@@ -26,17 +26,6 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
-            'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
-            'invalidFields:exist': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'exist' },
-            'invalidFields:contain': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'contain' },
-            'unconfiguredCategory:exist': { path: 'warnings.unconfiguredCategory', pathArray: ['warnings', 'unconfiguredCategory'], type: 'exist' },
-            'unconfiguredFields:exist': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'exist' },
-            'unconfiguredFields:contain': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'contain' },
-            'outlierValues:exist': { path: 'warnings.outlierValues', pathArray: ['warnings', 'outlierValues'], type: 'exist' },
-            'missingRelationTargets:exist': { path: 'warnings.missingRelationTargets', pathArray: ['warnings', 'missingRelationTargets'], type: 'exist' },
-            'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
-            'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
-            'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },
             'scanCode:match': { path: 'resource.scanCode', pathArray: ['resource', 'scanCode'], type: 'match' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));

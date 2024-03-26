@@ -104,7 +104,7 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'getCount']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'getCount']);
         mockIndexFacade.getCount.and.returnValue(2);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -116,8 +116,10 @@ describe('WarningsUpdater', () => {
 
         expect(documents[0].warnings?.nonUniqueIdentifier).toBe(true);
         expect(documents[1].warnings?.nonUniqueIdentifier).toBe(true);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'nonUniqueIdentifier:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
@@ -135,7 +137,7 @@ describe('WarningsUpdater', () => {
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.nonUniqueIdentifier = true;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'getCount']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'getCount']);
         mockIndexFacade.getCount.and.returnValue(1);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -147,8 +149,10 @@ describe('WarningsUpdater', () => {
 
         expect(documents[0].warnings).toBeUndefined();
         expect(documents[1].warnings).toBeUndefined();
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'nonUniqueIdentifier:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
@@ -166,7 +170,7 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'find']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -178,8 +182,10 @@ describe('WarningsUpdater', () => {
 
         expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
         expect(documents[1].warnings?.resourceLimitExceeded).toBe(true);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
@@ -202,7 +208,7 @@ describe('WarningsUpdater', () => {
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.resourceLimitExceeded = true;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put', 'find']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -212,8 +218,10 @@ describe('WarningsUpdater', () => {
 
         expect(documents[0].warnings).toBeUndefined();
         expect(documents[1].warnings).toBeUndefined();
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
@@ -230,7 +238,7 @@ describe('WarningsUpdater', () => {
         documents[0].resource.relations['relation2'] = ['missing1'];
         documents[0].resource.relations['relation3'] = ['missing2'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -243,7 +251,8 @@ describe('WarningsUpdater', () => {
             relationNames: ['relation2', 'relation3'],
             targetIds: ['missing1', 'missing2']
         });
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
     });
@@ -264,7 +273,7 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.relations['relation'] = ['2'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -274,7 +283,8 @@ describe('WarningsUpdater', () => {
         await WarningsUpdater.updateRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
 
         expect(documents[0].warnings).toBeUndefined();
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[0]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
     });
@@ -295,7 +305,7 @@ describe('WarningsUpdater', () => {
 
         documents[1].resource.relations['relation'] = ['1'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
     
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -310,7 +320,8 @@ describe('WarningsUpdater', () => {
         );
 
         expect(documents[1].warnings).toBeUndefined();
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
@@ -345,7 +356,7 @@ describe('WarningsUpdater', () => {
         documents[1].resource.editor = ['outlierValue'];
         documents[2].resource.editor = ['Person'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['put']);
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -357,14 +368,16 @@ describe('WarningsUpdater', () => {
         );
 
         expect(documents[1].warnings?.outlierValues).toEqual(['editor']);
-        expect(mockIndexFacade.put).toHaveBeenCalledWith(documents[1]);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         await WarningsUpdater.updateProjectFieldOutlierWarnings(
             documents[2], categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[2].warnings).toBeUndefined();
-        expect(mockIndexFacade.put).not.toHaveBeenCalledWith(documents[2]);
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[2], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[2], 'warnings:exist');
 
         done();
     });

@@ -143,6 +143,26 @@ test.describe('warnings --', () => {
     };
 
 
+    async function createProjectOutlierValuesWarning(resourceIdentifier: string) {
+
+        await navigateTo('editProject');
+        await DoceditPage.clickSelectGroup('properties');
+        await DoceditPage.typeInMultiInputField('staff', 'Test');
+        await DoceditPage.clickAddMultiInputEntry('staff');
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.performCreateResource(resourceIdentifier, 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource(resourceIdentifier);
+        await DoceditPage.clickCheckbox('processor', 2);
+        await DoceditPage.clickSaveDocument();
+
+        await navigateTo('editProject');
+        await DoceditPage.clickSelectGroup('properties');
+        await DoceditPage.clickDeleteMultiInputEntry('staff', 2);
+        await DoceditPage.clickSaveDocument();
+    }
+
+
     async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
         await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
@@ -464,9 +484,30 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve warning for outlier values by updating project document', async () => {
+    test('solve warning for project outlier values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
+        await createProjectOutlierValuesWarning('1');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültiger Wert im Feld Bearbeiterin/Bearbeiter']);
+
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.clickRemoveOutlierValue('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for project outlier values by updating project document', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createProjectOutlierValuesWarning('1');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await navigateTo('editProject');
         await DoceditPage.clickSelectGroup('properties');
@@ -474,21 +515,27 @@ test.describe('warnings --', () => {
         await DoceditPage.clickAddMultiInputEntry('staff');
         await DoceditPage.clickSaveDocument();
 
-        await ResourcesPage.performCreateResource('1', 'operation-trench');
-        await ResourcesPage.openEditByDoubleClickResource('1');
-        await DoceditPage.clickCheckbox('processor', 2);
-        await DoceditPage.clickSaveDocument();
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for project outlier values in linked document by updating project document', async () => {
+
+        // The project document is already linked via isMapLayerOf relation with the image document for which
+        // the warning will occur.
+
+        await waitForNotExist(await NavbarPage.getWarnings());
 
         await navigateTo('editProject');
         await DoceditPage.clickSelectGroup('properties');
-        await DoceditPage.clickDeleteMultiInputEntry('staff', 2);
+        await DoceditPage.clickDeleteMultiInputEntry('staff', 0);
         await DoceditPage.clickSaveDocument();
-        
+
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await navigateTo('editProject');
         await DoceditPage.clickSelectGroup('properties');
-        await DoceditPage.typeInMultiInputField('staff', 'Test');
+        await DoceditPage.typeInMultiInputField('staff', 'Person 1');
         await DoceditPage.clickAddMultiInputEntry('staff');
         await DoceditPage.clickSaveDocument();
 
@@ -704,6 +751,7 @@ test.describe('warnings --', () => {
 
         await expectResourcesInWarningsModal(['1', '2', '3', '4', '5', '6', '7']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('1');
+
         await expectSectionTitles([
             'Fehlendes Präfix im Feld Bezeichner'
         ]);

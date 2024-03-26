@@ -169,6 +169,26 @@ export class DoceditPage {
     }
 
 
+    public static async clickAddMultiInputEntry(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await field.locator('.add-multi-input-entry');
+        return click(element);
+    }
+
+
+    public static async clickDeleteMultiInputEntry(fieldName: string, entryIndex: number) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.delete-multi-input-entry').nth(entryIndex));
+        return click(element);
+    }
+
+
     public static async clickDeleteInvalidFieldDataButton(fieldName: string) {
 
         return click((await this.getField(fieldName).locator('.delete-invalid-field-data-button')));
@@ -301,6 +321,15 @@ export class DoceditPage {
     public static async typeInInputField(fieldName: string, text: string) {
 
         return typeIn((await this.getField(fieldName)).locator('input'), text);
+    }
+
+
+    public static async typeInMultiInputField(fieldName: string, text: string) {
+
+        const elements = await (await this.getField(fieldName)).locator('input');
+        const element = await elements.nth(await elements.count() - 1);
+
+        return typeIn(element, text);
     }
 
 

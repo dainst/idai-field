@@ -732,7 +732,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async fetchConfigurationDocument(): Promise<ConfigurationDocument> {
 
         return await ConfigurationDocument.getConfigurationDocument(
-            (id: string) => this.datastore.get(id, { skipCache: true }),
+            (id: string) => this.datastore.get(id, { skipCache: true }),
             this.configReader,
             this.settingsProvider.getSettings().selectedProject,
             this.settingsProvider.getSettings().username

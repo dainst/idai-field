@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { set } from 'tsfun';
+import { set } from 'tsfun';
 import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource, Valuelist, 
     Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';

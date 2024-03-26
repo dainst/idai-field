@@ -395,7 +395,7 @@ describe('buildRawProjectConfiguration', () => {
         const libraryForms: Map<LibraryFormDefinition> = {
             'A:default': {
                 categoryName: 'A',
-                groups: [{ name: Groups.STEM, fields: ['aField'] }],
+                groups: [{ name: Groups.STEM, fields: ['aField'] }],
                 valuelists: { aField: 'aField-valuelist-id-2' },
                 description: {},
                 createdBy: '',
@@ -504,7 +504,7 @@ describe('buildRawProjectConfiguration', () => {
                     aField: { inputType: 'dropdown' }
                 },
                 minimalForm: {
-                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
+                    groups: [{ name: Groups.STEM, fields: ['aField'] }]
                 }
             }
         };
@@ -2335,7 +2335,7 @@ describe('buildRawProjectConfiguration', () => {
                 supercategory: true,
                 userDefinedSubcategoriesAllowed: true,
                 fields: {},
-                minimalForm: {
+                minimalForm: {
                     groups: []
                 }
             },

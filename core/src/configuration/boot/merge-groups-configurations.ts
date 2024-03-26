@@ -8,7 +8,7 @@ import { BaseGroupDefinition } from '../model/form/base-form-definition';
 export function mergeGroupsConfigurations(parentGroups: Array<BaseGroupDefinition>,
                                           childGroups: Array<BaseGroupDefinition>): Array<BaseGroupDefinition> {
                                    
-    return childGroups.reduce((result, childGroup) => {
+    return childGroups.reduce((result, childGroup) => {
         const parentGroup: BaseGroupDefinition|undefined = result.find(group => group.name === childGroup.name);
 
         if (parentGroup) {

@@ -246,7 +246,7 @@ const GLMap: React.FC<GLMapProps> = ({
     };
 
     
-    if (!camera || !scene.children.length) return null;
+    if (!camera || !scene.children.length) return null;
 
     return (
         <View style={ styles.mapSettingsContainer }>

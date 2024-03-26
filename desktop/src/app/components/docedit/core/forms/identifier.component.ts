@@ -33,7 +33,7 @@ export class IdentifierComponent implements OnChanges {
 
         if (value === '') {
             delete this.fieldContainer[this.fieldName];
-        } else {
+        } else {
             this.fieldContainer[this.fieldName] = this.identifierPrefix
                 ? this.identifierPrefix + value
                 : value;

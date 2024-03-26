@@ -60,9 +60,9 @@ export namespace ConfigurationDocument {
 
         const result: boolean = customDefinition.color !== undefined
             || customDefinition.groups !== undefined
-            || (customDefinition.valuelists !== undefined && !isEmpty(customDefinition.valuelists))
+            || (customDefinition.valuelists !== undefined && !isEmpty(customDefinition.valuelists))
             || (customDefinition.fields !== undefined && !isEmpty(customDefinition.fields))
-            || (customDefinition.hidden !== undefined && !isEmpty(customDefinition.hidden))
+            || (customDefinition.hidden !== undefined && !isEmpty(customDefinition.hidden))
             || CustomLanguageConfigurations.hasCustomTranslations(
                 configurationDocument.resource.languages, category
             );

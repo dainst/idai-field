@@ -13,7 +13,7 @@ export class ConfigurationGuard implements CanDeactivate<ConfigurationComponent>
         
         if (target.changed) {
             return await target.openDiscardChangesModal();
-        } else {
+        } else {
             return true;
         }
     }

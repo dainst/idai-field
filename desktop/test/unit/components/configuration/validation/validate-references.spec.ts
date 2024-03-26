@@ -5,24 +5,24 @@ describe('validate references', () => {
 
     it('perform validation', () => {
         
-        try {
+        try {
             validateReferences(['http://www.example.de']);
         } catch(err) {
             fail();
         }
 
-        try {
+        try {
             validateReferences(['https://www.example.de']);
         } catch(err) {
             fail();
         }
 
-        try {
+        try {
             validateReferences(['www.example.de']);
             fail();
         } catch(err) {}
 
-        try {
+        try {
             validateReferences(['abc']);
             fail();
         } catch(err) {}

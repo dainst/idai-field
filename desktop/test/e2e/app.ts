@@ -111,7 +111,7 @@ export function getLocator(selector: string) {
 export async function click(element, x?: number, y?: number) {
 
     if (isString(element)) element = await getLocator(element);
-    const options = x && y ? { position: { x, y } } : {};
+    const options = x && y ? { position: { x, y } } : {};
     return element.click(options);
 }
 

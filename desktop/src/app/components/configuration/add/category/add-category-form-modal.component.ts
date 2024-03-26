@@ -177,7 +177,7 @@ export class AddCategoryFormModalComponent {
 
     private getEmptyForm(): CategoryForm|undefined {
 
-        if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
+        if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
 
         const name: string = Naming.getCategoryName(this.searchTerm, this.settingsProvider.getSettings().selectedProject);
 

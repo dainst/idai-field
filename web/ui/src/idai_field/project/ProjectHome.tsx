@@ -171,7 +171,7 @@ const renderContent = (projectId: string, projectDocument: Document, images: Res
             { images &&
                 <div className="float-right p-2">
                     <ImageCarousel document={ projectDocument } images={ images } style={ imageCarouselStyle }
-                        location={ location } maxWidth={ 600 } maxHeight={ 400 } />
+                        location={ location } maxWidth={ 600 } maxHeight={ 400 } />
                 </div>
             }
             { description && renderDescription(description as string) }

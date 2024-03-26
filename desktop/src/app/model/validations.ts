@@ -30,7 +30,7 @@ export module Validations {
             Field.InputType.NUMBER_INPUT_TYPES
         );
         
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: string[] = getNewInvalidFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 
@@ -97,7 +97,7 @@ export module Validations {
             Field.InputType.DATE
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: string[] = getNewInvalidFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 

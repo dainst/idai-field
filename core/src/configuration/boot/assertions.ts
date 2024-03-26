@@ -142,7 +142,7 @@ export module Assertions {
                                                   builtInCategories: Map<BuiltInCategoryDefinition>,
                                                   libraryCategories: Map<LibraryCategoryDefinition>) {
 
-        const categoryNames: string[] = Object.keys(builtInCategories).concat(Object.keys(libraryCategories));
+        const categoryNames: string[] = Object.keys(builtInCategories).concat(Object.keys(libraryCategories));
         const assert = LibraryFormDefinition.makeAssertIsValid(categoryNames);
         keysValues(libraryForms).forEach(assert);
     }

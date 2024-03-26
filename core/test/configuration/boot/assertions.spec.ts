@@ -176,7 +176,7 @@ describe('Assertions', () => {
 
         const customForms: Map<CustomFormDefinition> = {
             'C:default': { fields: {} },
-            'C:other': { fields: {} }
+            'C:other': { fields: {} }
         };
 
         try {

@@ -30,7 +30,7 @@ export module ValuelistSearchQuery {
         
         return valuelists.filter(valuelist => {
             return !valuelist.deprecated
-                && (!query.onlyCustom || valuelist.source === 'custom')
+                && (!query.onlyCustom || valuelist.source === 'custom')
                 && (!query.onlyInUse
                     || configurationIndex.getValuelistUsage(valuelist.id).length > 0);
         });

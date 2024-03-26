@@ -490,7 +490,7 @@ describe('ConfigLoader', () => {
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Find: {
                 fields: {},
-                minimalForm: {
+                minimalForm: {
                     groups: []
                 },
                 userDefinedSubcategoriesAllowed: true,

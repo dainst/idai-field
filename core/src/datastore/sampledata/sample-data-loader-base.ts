@@ -18,7 +18,7 @@ export class SampleDataLoaderBase {
 
     protected async loadSampleDocuments(db: any): Promise<any> {
 
-        try {
+        try {
             const project = await db.get('project');
             await db.remove('project', project._rev);
         } catch {

@@ -215,6 +215,8 @@ defmodule FieldPublication.Replication do
           []
       end
 
+    log(parameters, :info, "Replication finished.")
+
     {:ok, final_publication} =
       publication
       |> Publications.get!()
@@ -223,17 +225,15 @@ defmodule FieldPublication.Replication do
         "languages" => languages
       })
 
+    if start_processing_immediately do
+      Processing.start(final_publication)
+    end
+
     PubSub.broadcast(
       FieldPublication.PubSub,
       publication_id,
       {:replication_result, final_publication}
     )
-
-    log(parameters, :info, "Replication finished.")
-
-    if start_processing_immediately do
-      Processing.start(final_publication)
-    end
 
     {:noreply, Map.delete(running_replications, publication_id)}
   end

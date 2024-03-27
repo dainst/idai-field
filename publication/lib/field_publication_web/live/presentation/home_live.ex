@@ -7,7 +7,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   alias FieldPublication.Publications.Data
 
-  alias FieldPublicationWeb.Presentation.Data.{
+  alias FieldPublicationWeb.Presentation.Components.{
     I18n
   }
 

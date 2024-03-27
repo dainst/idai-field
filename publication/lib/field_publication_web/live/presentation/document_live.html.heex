@@ -28,7 +28,7 @@
 
   <%= case String.downcase(@doc["category"]["values"]) do
     "project" ->
-      DocumentComponent.project(%{
+      ProjectDocument.render(%{
         name: @project_name,
         publication_comments:
           @publication.comments
@@ -37,5 +37,8 @@
         doc: @doc,
         lang: @selected_lang
       })
+
+    _ ->
+      GenericDocument.render(%{doc: @doc, project_name: @project_name, lang: @selected_lang})
   end %>
 </div>

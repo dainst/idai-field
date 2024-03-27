@@ -39,6 +39,8 @@ defmodule FieldPublication.Publications do
           get(project_name, draft_date)
           |> case do
             {:ok, existing} ->
+              # TODO: if the existing publication is already published, do not allow deletion?
+              # this is a rare edge case when somebody would draft and publish at the same date.
               delete(existing)
               :ok
 

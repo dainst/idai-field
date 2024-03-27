@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Data.Image do
+defmodule FieldPublicationWeb.Presentation.Components.Image do
   use Phoenix.Component
 
   def show(assigns) do

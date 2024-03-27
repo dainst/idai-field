@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.IIIFComponent do
+defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   use FieldPublicationWeb, :live_component
 
   @impl true

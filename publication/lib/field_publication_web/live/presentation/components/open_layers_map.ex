@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.MapLiveComponent do
+defmodule FieldPublicationWeb.Presentation.Components.OpenLayersMap do
   use FieldPublicationWeb, :live_component
 
   @impl true

@@ -21,6 +21,16 @@ defmodule FieldPublication.Publications.Data do
     |> Map.get("config", [])
   end
 
+  def get_document(uuid, %Publication{database: db} = publication) do
+    config = get_configuration(publication)
+
+    CouchService.get_document(uuid, db)
+    |> then(fn {:ok, %{body: body}} ->
+      Jason.decode!(body)
+    end)
+    |> apply_project_configuration(config)
+  end
+
   def get_project_info(%Publication{database: db} = publication) do
     config = get_configuration(publication)
 

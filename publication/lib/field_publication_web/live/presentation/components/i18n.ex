@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Data.I18n do
+defmodule FieldPublicationWeb.Presentation.Components.I18n do
   use Phoenix.Component
 
   def text(assigns) do

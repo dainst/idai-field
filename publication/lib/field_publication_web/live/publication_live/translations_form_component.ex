@@ -122,18 +122,18 @@ defmodule FieldPublicationWeb.PublicationLive.TranslationsFormComponent do
     }
   end
 
-  def handle_event(
-        "edit_translation",
-        %{"lang" => lang, "text" => text},
-        %{assigns: %{translations: translations, languages: languages}} = socket
-      ) do
-    IO.inspect("TODO")
+  # def handle_event(
+  #       "edit_translation",
+  #       %{"lang" => lang, "text" => text},
+  #       %{assigns: %{translations: translations, languages: languages}} = socket
+  #     ) do
+  #   IO.inspect("TODO")
 
-    {
-      :noreply,
-      socket
-    }
-  end
+  #   {
+  #     :noreply,
+  #     socket
+  #   }
+  # end
 
   def handle_event(
         "delete_translation",

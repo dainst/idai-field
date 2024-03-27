@@ -163,6 +163,39 @@ test.describe('warnings --', () => {
     }
 
 
+    async function createDimensionOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+
+        await navigateTo('configuration');
+        await createField(fieldName, 'dimension', 'position-values-edge-default');
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+            await ResourcesPage.openEditByDoubleClickResource(identifier);
+            await DoceditPage.clickCreateNewDimensionButton(completeFieldName);
+            await DoceditPage.typeInDimensionInputValue(completeFieldName, '1');
+            await DoceditPage.clickDimensionMeasurementPositionOption(completeFieldName, 'Oberkante');
+            await DoceditPage.clickSaveDimensionButton(completeFieldName);
+            await DoceditPage.clickSaveDocument();
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('position-values-expansion-default');
+        await ManageValuelistsModalPage.clickSelectValuelist('position-values-expansion-default');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
     async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
         await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
@@ -539,6 +572,24 @@ test.describe('warnings --', () => {
         await DoceditPage.clickAddMultiInputEntry('staff');
         await DoceditPage.clickSaveDocument();
 
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values in dimension field via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDimensionOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        const outlierValues = await DoceditPage.getOutlierValues('test:field');
+        expect(await outlierValues.count()).toBe(1);
+
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        expect(await outlierValues.count()).toBe(0);
+
+        await DoceditPage.clickSaveDocument();
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 

@@ -59,6 +59,9 @@
                             files: files
                         } -> %>
                             <section>Database documents: <%= db_doc_count %></section>
+                            <section>Last sequence: <%= @last_update_seq %></section>
+                            <section>Last change id: <%= @last_update_id %></section>
+                            <section> Last change date:  <%= @last_update_date %></section>
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>
                                 <% :enoent -> %>
@@ -108,11 +111,11 @@
                 <%= for {{type, severity}, issues} <- issue_groups do %>
                 <section id={"#{type}-issue-group"} class="issue-group hide">
                 <h3 class={issue_classes(severity)}>
-                    <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
-                        🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                    <span class="show-toggle folder-icon" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                     </span>
-                    <span class="hide-toggle" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
-                        🗁 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                    <span class="hide-toggle open-folder-icon" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
                     </span>
                 </h3>
 

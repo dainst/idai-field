@@ -6,7 +6,9 @@ defmodule FieldHub.CouchService do
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
-
+  alias Cachex
+  alias ExJsonSchema
+  alias ElixirLS
   require Logger
 
   @doc """
@@ -335,6 +337,102 @@ defmodule FieldHub.CouchService do
       "#{base_url()}/#{project_identifier}",
       headers()
     )
+  end
+
+  @doc """
+  Returns the information about the last change for the specified project.
+  Otherwise, it returns a map representing the last change if it exists.
+
+  __Parameters__
+  - `project_identifier` - The name of the project.
+
+  ## Example
+  iex> get_last_change_info("development")
+  %{
+    "seq" => "68-89221cbd0e434ddf10a997c068b293b6",
+    "id" => "project",
+    "changes" => [%{"rev" => "2-ed2a74eb95293ba7be1f66b070fe278e"}]
+  }
+  """
+  def get_last_change_info(project_identifier) do
+    changes =
+      HTTPoison.get!(
+        "#{base_url()}/#{project_identifier}/_changes?style=all_docs",
+        get_user_credentials()
+        |> headers()
+      )
+      |> Map.get(:body)
+      |> Jason.decode!()
+
+    last_sequence = Map.get(changes, "last_seq")
+
+    case changes do
+      %{"results" => []} ->
+        %{
+          "seq" => last_sequence,
+          "id" => "project",
+          "changes" => []
+        }
+
+      %{"results" => result} ->
+        Enum.find(result, fn map -> map["seq"] == last_sequence end)
+    end
+  end
+
+  @doc """
+  Returns a formatted string representing the date and author of the last change in a given project.
+  If the file has been deleted the date and the author can't be identified.
+
+  __Parameters__
+  - `project_identifier` - The name of the project.
+
+  ## Example
+  iex> get_last_change_date("development")
+  "2024-02-29 (edited by André Leroi-Gourhan)"
+  """
+  def get_last_change_date(project_identifier) do
+    case Map.get(get_last_change_info(project_identifier), "id") do
+      nil ->
+        :no_changes_found
+
+      result ->
+        HTTPoison.get!(
+          "#{base_url()}/#{project_identifier}/#{result}",
+          get_user_credentials()
+          |> headers()
+        )
+        |> case do
+          %{status_code: 200, body: body} = _ ->
+            body
+            |> Jason.decode()
+            |> case do
+              {:ok, result} ->
+                result
+                |> Map.fetch("modified")
+                |> case do
+                  {:ok, []} ->
+                    result["created"]["date"] <>
+                      " (created by " <> result["created"]["user"] <> ")"
+
+                  {:ok, time_stamp} ->
+                    ts = List.last(time_stamp)
+                    Map.get(ts, "date") <> " (edited by " <> Map.get(ts, "user") <> ")"
+                end
+            end
+
+          %{status_code: 404, body: body} = _ ->
+            body
+            |> Jason.decode()
+            |> case do
+              {:ok, reason} ->
+                Map.fetch(reason, "reason")
+                |> case do
+                  {:ok, "deleted"} -> "Unknown (the file has been deleted)"
+                  _ -> "unknown"
+                end
+            end
+        end
+    end
   end
 
   @doc """

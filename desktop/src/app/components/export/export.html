@@ -14,7 +14,6 @@
         <div class="row">
             <div class="form-group col default-container">
                 <div *ngIf="invalidFields.length < 2" class="col-lg-6 mx-lg-auto py-4">
-
                     <div class="form-group">
                         <label class="control-label col-form-label"
                                for="ExportFormatSelect" i18n="@@export.format">Format</label>
@@ -80,6 +79,14 @@
                                 {{getCategoryLabel(categoryCount[0])}} {{categoryCount[1] !== -1 ? '(' + categoryCount[1] + ')' : ''}}
                             </option>
                         </select>
+                    </div>
+
+                    <div *ngIf="format === 'csv'" class="form-group">
+                        <label class="control-label col-form-label"
+                               i18n="@@import.csv.separator">Feldtrennzeichen</label>
+                        <input class="form-control" id="separatorInput"
+                               type="text" maxlength="1"
+                               [(ngModel)]="csvSeparator">
                     </div>
 
                     <div *ngIf="format === 'csv'" id="combine-hierarchical-relations-checkbox"

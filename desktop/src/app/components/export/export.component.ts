@@ -47,6 +47,7 @@ export class ExportComponent implements OnInit {
     public selectedContext: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema'|'complete' = 'complete';
+    public csvSeparator: string = ',';
     public combineHierarchicalRelations: boolean = true;
     
     public invalidFields: Array<InvalidField> = [];
@@ -127,7 +128,8 @@ export class ExportComponent implements OnInit {
             && !this.initializing
             && !this.running
             && this.categoryCounts.length > 0
-            && (this.format !== 'catalog' || this.catalogs.length > 0);
+            && (this.format !== 'catalog' || this.catalogs.length > 0)
+            && (this.format !== 'csv' || this.csvSeparator?.length === 1);
     }
 
 
@@ -226,6 +228,7 @@ export class ExportComponent implements OnInit {
                 CsvExporter.performExport(
                     filePath,
                     this.projectConfiguration.getProjectLanguages(),
+                    this.csvSeparator,
                     this.combineHierarchicalRelations
                 )
             );

@@ -30,8 +30,6 @@ export type InvalidField = {
  */
 export module CSVExport {
 
-    const SEPARATOR = ',';
-
 
     /**
      * Creates a header line and lines for each record.
@@ -45,12 +43,15 @@ export module CSVExport {
                                      fieldDefinitions: Array<Field>,
                                      relations: Array<string>,
                                      projectLanguages: string[],
+                                     separator: string,
                                      combineHierarchicalRelations: boolean = true,
                                      addScanCode: boolean = false) {
 
         fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations, combineHierarchicalRelations, addScanCode);
+        const headings: string[] = makeHeadings(
+            fieldDefinitions, relations, combineHierarchicalRelations, addScanCode
+        );
         const matrix = resources
             .map(CsvExportUtils.convertToResourceWithFlattenedRelations(combineHierarchicalRelations))
             .map(toRowsArrangedBy(headings, addScanCode));
@@ -69,16 +70,19 @@ export module CSVExport {
             CSVMatrixExpansion.expandDimension(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandLiterature(fieldDefinitions),
             CSVMatrixExpansion.expandComposite(fieldDefinitions, projectLanguages),
-            combine
+            combine(separator)
         );
 
         return { csvData, invalidFields };
     }
 
 
-    function combine([headings, matrix]: HeadingsAndMatrix) {
+    function combine(separator: string) {
 
-        return [headings].concat(matrix).map(toCsvLine);
+        return ([headings, matrix]: HeadingsAndMatrix) => {
+
+            return [headings].concat(matrix).map(fields => toCsvLine(fields, separator));
+        };
     }
 
 
@@ -160,7 +164,7 @@ export module CSVExport {
     }
 
 
-    function toCsvLine(fields: string[]): string {
+    function toCsvLine(fields: string[], separator: string): string {
 
         return flow(
             fields,
@@ -175,7 +179,7 @@ export module CSVExport {
                         '""'
                     )
                 ),
-            StringUtils.join(SEPARATOR)
+            StringUtils.join(separator)
         );
     }
 

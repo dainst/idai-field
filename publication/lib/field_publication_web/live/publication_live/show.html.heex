@@ -25,9 +25,6 @@
     <%= if @publication.replication_finished do %>
       <.list>
       <:item title="Version type">
-        <%= if @publication.version == :initial do %>
-          Initial
-        <% else %>
           <form id="publication_version_form">
             <.input
               type="select"
@@ -37,7 +34,6 @@
               phx-change="publication_version_selected"
             />
           </form>
-        <% end %>
       </:item>
       <:item title="Comments">
         <.live_component

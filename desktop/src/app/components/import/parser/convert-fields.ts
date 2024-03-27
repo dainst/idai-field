@@ -6,7 +6,7 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 import InputType = Field.InputType;
 
 
-const UNCHECKED_FIELDS = ['relation', 'geometry', 'category'];
+const UNCHECKED_FIELDS = ['relations', 'geometry', 'category'];
 
 
 const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includedIn(UNCHECKED_FIELDS)));

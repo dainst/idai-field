@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    project_doc = Publications.Data.get_document("project", current_publication)
+    project_doc = Publications.Data.get_document("project", current_publication) |> IO.inspect()
 
     {
       :noreply,

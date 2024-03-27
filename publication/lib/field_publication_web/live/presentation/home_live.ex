@@ -26,12 +26,12 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
           doc: doc,
           coordinates: %{
             longitude:
-              Data.get_field_values_by_name(
+              Data.get_field_values(
                 doc,
                 "longitude"
               ),
             latitude:
-              Data.get_field_values_by_name(
+              Data.get_field_values(
                 doc,
                 "latitude"
               )

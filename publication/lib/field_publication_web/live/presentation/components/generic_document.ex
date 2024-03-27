@@ -13,9 +13,9 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
   def render(assigns) do
     ~H"""
     <div>
-      <.document_heading><%= Data.get_field_values_by_name(@doc, "identifier") %></.document_heading>
+      <.document_heading><%= Data.get_field_values(@doc, "identifier") %></.document_heading>
       <div>
-        <%= Data.get_field_values_by_name(@doc, "shortDescription") %>
+        <%= Data.get_field_values(@doc, "shortDescription") %>
       </div>
       <div class="flex flex-row">
         <div class="basis-1/3 m-5">

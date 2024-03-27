@@ -120,18 +120,29 @@ defmodule FieldPublication.Publications.Data do
     |> List.flatten()
   end
 
-  def get_field_values_by_name(doc, searched_key) do
-    # Search all fields in all groups for the searched_key, this should probably be optimized further.
+  def get_field_values(doc, name) do
+    doc
+    |> get_field(name)
+    |> Map.get("values")
+  end
+
+  def get_field_labels(doc, name) do
+    doc
+    |> get_field(name)
+    |> Map.get("labels")
+  end
+
+  def get_field(doc, name) do
     Enum.map(doc["groups"], fn group ->
       Enum.find(group["fields"], fn %{"key" => key} ->
-        key == searched_key
+        key == name
       end)
       |> case do
-        %{"values" => values} ->
-          values
-
         nil ->
           nil
+
+        field ->
+          field
       end
     end)
     |> Enum.reject(fn val -> val == nil end)

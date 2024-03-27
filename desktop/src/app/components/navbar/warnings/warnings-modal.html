@@ -169,7 +169,9 @@
                         </div>
                         <div class="data-info-content">
                             <div *ngFor="let outlierValue of section.outlierValues">
-                                {{outlierValue}}
+                                <span *ngIf="outlierValue">{{outlierValue}}</span>
+                                <i *ngIf="!outlierValue"
+                                   i18n="@@navbar.taskbar.warnings.outlierValue.empty">Leer</i>
                             </div>
                         </div>
                     </div>

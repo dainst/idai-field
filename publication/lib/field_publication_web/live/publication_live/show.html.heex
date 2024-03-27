@@ -123,7 +123,9 @@
       </:item>
       <:item title="Publication date">
         <%= if @publication.publication_date && @publication.publication_date <= @today do %>
-          <%= @publication.publication_date %>
+          <.link class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700" navigate={~p"/#{@publication.project_name}/#{@publication.publication_date}/#{List.first(@publication.languages)}"}>
+            <.icon name="hero-folder-open" class="h-4 w-4" /> <%= @publication.publication_date %> 
+          </.link>
         <% else %>
           <form id="publication_date_form">
             <.input

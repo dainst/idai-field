@@ -215,12 +215,13 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category')
         ];
         resources[0].dating = [
-            { begin: { inputYear: 10 }, end: { inputYear: 20 }, type: 'range',
+            { begin: { inputYear: 10, inputType: 'ce' }, end: { inputYear: 20, inputType: 'ce' }, type: 'range',
                 source: { en: 'Source 1', de: 'Quelle 1' } },
-            { begin: { inputYear: 20 }, end: { inputYear: 30 }, type: 'range', source: { en: 'Source 2' } }
+            { begin: { inputYear: 20, inputType: 'ce' }, end: { inputYear: 30, inputType: 'ce' }, type: 'range',
+                source: { en: 'Source 2' } }
         ];
         resources[1].dating = [
-            { begin: { inputYear: 40 }, end: { inputYear: 50 }, type: 'range' }
+            { begin: { inputYear: 40, inputType: 'ce' }, end: { inputYear: 50, inputType: 'ce' }, type: 'range' }
         ];
         resources[1].custom = 'custom';
 
@@ -360,7 +361,7 @@ describe('CSVExport', () => {
             { inputValue: 100, inputUnit: 'cm', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
             { inputValue: 200, inputUnit: 'cm', measurementComment: { en: 'Comment 2' }, measurementPosition: 'def' }];
         resources[1]['dimensionX'] = [
-            { inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc' }];
+            { inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 400 }];
         resources[1]['custom'] = 'custom';
 
         const result = CSVExport.createExportable(resources, t, [], ['en']).csvData.map(row => row.split(','));
@@ -390,7 +391,7 @@ describe('CSVExport', () => {
         expect(result[1][12]).toBe('""');
 
         expect(result[2][1]).toBe('"300"');
-        expect(result[2][2]).toBe('"ghc"');
+        expect(result[2][2]).toBe('"400"');
         expect(result[2][4]).toBe('""');
         expect(result[2][5]).toBe('""');
         expect(result[2][11]).toBe('""');
@@ -451,7 +452,7 @@ describe('CSVExport', () => {
         ];
         resources[0]['dimensionX'] = [{ inputValue: 100, inputUnit: 'cm',
             measurementComment: { en: 'A1', de: 'A2' } }];
-        resources[1]['dimensionY'] = [{ inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 'ghc',
+        resources[1]['dimensionY'] = [{ inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 400,
             measurementComment: 'B' }];
 
         const result = CSVExport.createExportable(resources, t, [], ['en']).csvData.map(row => row.split(','));
@@ -475,7 +476,7 @@ describe('CSVExport', () => {
         expect(result[1][4]).toBe('"A1"');
         expect(result[1][5]).toBe('"A2"');
         expect(result[2][8]).toBe('"300"');
-        expect(result[2][9]).toBe('"ghc"');
+        expect(result[2][9]).toBe('"400"');
         expect(result[2][11]).toBe('""');
         expect(result[2][12]).toBe('"B"');
     });

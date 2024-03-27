@@ -116,14 +116,21 @@ export module Field {
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:
-                return isArray(fieldData) && fieldData.every(element => Dating.isDating(element));
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Dating.isDating(element) && Dating.isValid(element);
+                });
             case InputType.DIMENSION:
-                return isArray(fieldData) && fieldData.every(element => Dimension.isDimension(element));
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Dimension.isDimension(element) && Dimension.isValid(element);
+                });
             case InputType.LITERATURE:
-                return isArray(fieldData) && fieldData.every(element => Literature.isLiterature(element));
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Literature.isLiterature(element) && Literature.isValid(element);
+                });
             case InputType.COMPOSITE:
-                return isArray(fieldData)
-                    && fieldData.every(element => Composite.isValid(element, (field as Field).subfields));
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Composite.isValid(element, (field as Field).subfields);
+                });
             case InputType.GEOMETRY:
                 return fieldData.type !== undefined && fieldData.coordinates !== undefined;
             case InputType.RELATION:

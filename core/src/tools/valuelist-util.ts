@@ -1,4 +1,4 @@
-import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
+import { clone, filter, includedIn, isArray, isDefined, isNot, isString } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
@@ -20,6 +20,7 @@ export module ValuelistUtil {
         
         const valuesToCheck: string[] = isArray(fieldContent)
             ? fieldContent.map(entry => entry[Dimension.MEASUREMENTPOSITION] ?? entry)
+                .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
                 : [fieldContent];

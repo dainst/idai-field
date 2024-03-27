@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource } from 'idai-field-core';
+import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field } from 'idai-field-core';
 
 @Component({
     selector: 'form-field-checkboxes',
@@ -15,7 +15,7 @@ export class CheckboxesComponent implements OnChanges {
 
     @Input() resource: Resource
     @Input() fieldContainer: any;
-    @Input() field: any;
+    @Input() field: Field;
 
     public valuelist: Valuelist;
 

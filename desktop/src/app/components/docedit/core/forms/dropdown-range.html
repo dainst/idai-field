@@ -38,6 +38,6 @@
     </div>
 </div>
 
-<outliers [fieldContainer]="fieldContainer" [fieldName]="field.name" [valuelist]="valuelist"></outliers>
+<outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>
 
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>

@@ -594,6 +594,25 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values in dimension field via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDimensionOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültiger Wert im Feld test:field']);
+
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing relation targets via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
